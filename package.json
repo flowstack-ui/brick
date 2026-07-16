@@ -28,6 +28,10 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./button": {
+      "types": "./dist/button.d.ts",
+      "default": "./dist/button.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"
@@ -50,7 +54,9 @@
     "test:node": "npm run build && node --test test/package/*.test.mjs",
     "test:components": "vitest run --coverage",
     "test:css": "node scripts/prototype-css.mjs",
-    "test:browser": "playwright test",
+    "test:browser": "npm run build:playground && playwright test --project=chromium",
+    "test:browser:release": "npm run build:playground && playwright test",
+    "test:visual:update": "npm run build:playground && playwright test playground/tests/visual.spec.ts --project=chromium --update-snapshots",
     "size:css": "node scripts/report-css-size.mjs",
     "pack:check": "node scripts/verify-package.mjs --dry-run",
     "verify:consumers": "npm run build && node scripts/verify-consumers.mjs",
@@ -69,7 +75,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.2.0"
+    "@flowstack-ui/atom": "0.2.1"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

@@ -32,6 +32,7 @@ await writeFile(
     '@import "../../src/styles/layers.css";',
     '@import "./tokens.source.css";',
     '@import "../../src/styles/foundations.css";',
+    '@import "../../src/components/button/button.css";',
   ].join("\n"),
 );
 

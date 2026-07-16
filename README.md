@@ -4,8 +4,7 @@ Opinionated styled React components built on `@flowstack-ui/atom`.
 
 Brick provides finished, accessible React components with static CSS, semantic
 design tokens, light and dark appearances, and a documented customization
-contract. The component catalog is currently being built; version `0.1.0`
-establishes the package foundation and intentionally exports no components.
+contract. The component catalog begins with Button in version `0.1.0`.
 
 ## Boundary
 
@@ -36,6 +35,12 @@ import "@flowstack-ui/brick/styles.css";
 
 Use `@flowstack-ui/brick/tokens.css` when only the visual tokens are needed.
 
+```tsx
+import { Button } from "@flowstack-ui/brick";
+
+<Button>Save changes</Button>;
+```
+
 See [`docs/README.md`](docs/README.md) for the public guides and component
 documentation contract.
 
@@ -47,5 +52,6 @@ npm run typecheck
 npm test
 npm run build:playground
 npm run test:browser
+npm run test:browser:release
 npm run pack:check
 ```

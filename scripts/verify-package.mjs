@@ -28,6 +28,8 @@ try {
     "README.md",
     "dist/index.js",
     "dist/index.d.ts",
+    "dist/button.js",
+    "dist/button.d.ts",
     "dist/styles.css",
     "dist/tokens.css",
     "dist/reset.css",

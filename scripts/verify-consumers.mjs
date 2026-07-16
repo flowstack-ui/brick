@@ -25,7 +25,8 @@ try {
   const tarball = join(temp, "flowstack-ui-brick-0.1.0.tgz");
 
   for (const reactVersion of ["18.3.1", "19.2.3"]) {
-    const consumer = join(temp, `react-${reactVersion.split(".")[0]}`);
+    const reactMajor = reactVersion.split(".")[0];
+    const consumer = join(temp, `react-${reactMajor}`);
     await import("node:fs/promises").then(({ mkdir }) => mkdir(consumer));
     await writeFile(
       join(consumer, "package.json"),
@@ -33,23 +34,27 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import * as Brick from "@flowstack-ui/brick";
+      `import { Button } from "@flowstack-ui/brick";
+import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { readFile } from "node:fs/promises";
 
-if (Object.keys(Brick).length !== 0) throw new Error("Unexpected pre-component export");
-const markup = renderToString(React.createElement("main", null, "Brick consumer"));
-if (!markup.includes("Brick consumer")) throw new Error("SSR smoke failed");
+if (Button !== SubpathButton) throw new Error("Button subpath export mismatch");
+const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
+if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
 if (!css.includes("--brick-color-accent-solid")) throw new Error("CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
-      `import * as Brick from "@flowstack-ui/brick";
-const publicKeys: string[] = Object.keys(Brick);
-void publicKeys;
+      `import { Button, type ButtonProps } from "@flowstack-ui/brick";
+import { Button as SubpathButton } from "@flowstack-ui/brick/button";
+const props: ButtonProps = { children: "Consumer" };
+void Button;
+void SubpathButton;
+void props;
 `,
     );
     await writeFile(
@@ -77,9 +82,11 @@ void publicKeys;
         "--ignore-scripts",
         "--save-exact",
         tarball,
-        "@flowstack-ui/atom@0.2.0",
+        "@flowstack-ui/atom@0.2.1",
         `react@${reactVersion}`,
         `react-dom@${reactVersion}`,
+        `@types/react@${reactMajor}`,
+        `@types/react-dom@${reactMajor}`,
         "typescript@5.9.3",
       ],
       consumer,
@@ -90,7 +97,7 @@ void publicKeys;
     if (installed.dependencies.react !== reactVersion) {
       throw new Error(`React ${reactVersion} consumer resolved incorrectly`);
     }
-    console.log(`Verified clean React ${reactVersion.split(".")[0]} consumer.`);
+    console.log(`Verified clean React ${reactMajor} consumer.`);
   }
 } finally {
   await rm(temp, { recursive: true, force: true });

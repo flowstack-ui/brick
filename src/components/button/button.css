@@ -1,0 +1,335 @@
+@layer brick.components {
+  .brick-button {
+    --brick-button-background: var(--brick-button-tone-solid);
+    --brick-button-background-hover: var(--brick-button-tone-solid-hover);
+    --brick-button-background-pressed: var(--brick-button-tone-solid-pressed);
+    --brick-button-foreground: var(--brick-button-tone-on-solid);
+    --brick-button-border-color: var(--brick-button-background);
+    --brick-button-focus-ring: var(--brick-color-focus-ring);
+    --brick-button-min-block-size: var(--brick-control-min-block-size-md);
+    --brick-button-padding-block: 0.5rem;
+    --brick-button-padding-inline: 1rem;
+    --brick-button-gap: 0.5rem;
+    --brick-button-radius: var(--brick-radius-control);
+    --brick-button-font-size: 0.9375rem;
+    --brick-button-icon-size: 1.125rem;
+
+    position: relative;
+    display: inline-flex;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    min-block-size: var(--brick-button-min-block-size);
+    align-items: center;
+    justify-content: center;
+    gap: var(--brick-button-gap);
+    padding-block: var(--brick-button-padding-block);
+    padding-inline: var(--brick-button-padding-inline);
+    border: var(--brick-border-width) solid var(--brick-button-border-color);
+    border-radius: var(--brick-button-radius);
+    appearance: none;
+    background: var(--brick-button-background);
+    color: var(--brick-button-foreground);
+    font: inherit;
+    font-size: var(--brick-button-font-size);
+    font-weight: var(--brick-font-weight-medium);
+    line-height: var(--brick-font-line-height-tight);
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    user-select: none;
+    vertical-align: middle;
+    transition:
+      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
+      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
+      color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+  }
+
+  .brick-button:not([data-disabled], [data-loading]) {
+    cursor: pointer;
+  }
+
+  .brick-button:focus-visible {
+    outline: var(--brick-border-focus-width) solid var(--brick-button-focus-ring);
+    outline-offset: var(--brick-border-focus-offset);
+  }
+
+  .brick-button:not([data-disabled], [data-loading]):active {
+    background: var(--brick-button-background-pressed);
+    border-color: var(--brick-button-background-pressed);
+  }
+
+  .brick-button[data-variant="soft"]:not([data-disabled], [data-loading]):active,
+  .brick-button[data-variant="outline"]:not([data-disabled], [data-loading]):active {
+    border-color: var(--brick-button-tone-border);
+  }
+
+  .brick-button[data-variant="ghost"]:not([data-disabled], [data-loading]):active {
+    border-color: transparent;
+  }
+
+  .brick-button[data-disabled] {
+    border-color: var(--brick-color-border-default);
+    background: var(--brick-color-surface-subtle);
+    color: var(--brick-color-text-secondary);
+    cursor: not-allowed;
+  }
+
+  .brick-button[data-loading] {
+    cursor: progress;
+    color: transparent;
+  }
+
+  .brick-button[data-loading] > * {
+    opacity: 0;
+  }
+
+  .brick-button[data-disabled][data-loading] {
+    --brick-button-spinner-color: var(--brick-color-text-secondary);
+  }
+
+  .brick-button[data-loading]::after {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    inline-size: 1em;
+    block-size: 1em;
+    border: 0.125rem solid transparent;
+    border-block-start-color: var(--brick-button-spinner-color, var(--brick-button-foreground));
+    border-inline-end-color: var(--brick-button-spinner-color, var(--brick-button-foreground));
+    border-radius: var(--brick-radius-full);
+    content: "";
+    animation: brick-button-spin 700ms linear infinite;
+  }
+
+  .brick-button__content {
+    min-inline-size: 0;
+  }
+
+  .brick-button__icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    inline-size: var(--brick-button-icon-size);
+    block-size: var(--brick-button-icon-size);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .brick-button__icon > :where(svg, img) {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .brick-button[data-full-width] {
+    inline-size: 100%;
+  }
+
+  .brick-button[data-shape="sharp"] {
+    --brick-button-radius: 0;
+  }
+
+  .brick-button[data-shape="pill"] {
+    --brick-button-radius: var(--brick-radius-full);
+  }
+
+  .brick-button[data-size="xs"] {
+    --brick-button-min-block-size: var(--brick-control-min-block-size-xs);
+    --brick-button-padding-block: 0.25rem;
+    --brick-button-padding-inline: 0.625rem;
+    --brick-button-gap: 0.375rem;
+    --brick-button-font-size: 0.75rem;
+    --brick-button-icon-size: 0.875rem;
+  }
+
+  .brick-button[data-size="sm"] {
+    --brick-button-min-block-size: var(--brick-control-min-block-size-sm);
+    --brick-button-padding-block: 0.375rem;
+    --brick-button-padding-inline: 0.75rem;
+    --brick-button-gap: 0.375rem;
+    --brick-button-font-size: var(--brick-font-size-sm);
+    --brick-button-icon-size: 1rem;
+  }
+
+  .brick-button[data-size="lg"] {
+    --brick-button-min-block-size: var(--brick-control-min-block-size-lg);
+    --brick-button-padding-block: 0.625rem;
+    --brick-button-padding-inline: 1.25rem;
+    --brick-button-gap: 0.625rem;
+    --brick-button-font-size: var(--brick-font-size-md);
+    --brick-button-icon-size: 1.25rem;
+  }
+
+  .brick-button[data-size="xl"] {
+    --brick-button-min-block-size: var(--brick-control-min-block-size-xl);
+    --brick-button-padding-block: 0.75rem;
+    --brick-button-padding-inline: 1.5rem;
+    --brick-button-gap: 0.75rem;
+    --brick-button-font-size: 1.125rem;
+    --brick-button-icon-size: 1.5rem;
+  }
+
+  .brick-button[data-tone="neutral"] {
+    --brick-button-tone-solid: var(--brick-color-text-primary);
+    --brick-button-tone-solid-hover: var(--brick-color-text-secondary);
+    --brick-button-tone-solid-pressed: color-mix(
+      in srgb,
+      var(--brick-color-text-primary),
+      var(--brick-color-text-secondary) 35%
+    );
+    --brick-button-tone-on-solid: var(--brick-color-text-inverse);
+    --brick-button-tone-soft: var(--brick-color-surface-subtle);
+    --brick-button-tone-soft-hover: var(--brick-color-surface-base);
+    --brick-button-tone-soft-pressed: var(--brick-color-border-subtle);
+    --brick-button-tone-on-soft: var(--brick-color-text-primary);
+    --brick-button-tone-border: var(--brick-color-border-strong);
+    --brick-button-tone-text: var(--brick-color-text-primary);
+  }
+
+  .brick-button[data-tone="accent"] {
+    --brick-button-tone-solid: var(--brick-color-accent-solid);
+    --brick-button-tone-solid-hover: var(--brick-color-accent-solid-hover);
+    --brick-button-tone-solid-pressed: var(--brick-color-accent-solid-pressed);
+    --brick-button-tone-on-solid: var(--brick-color-accent-on-solid);
+    --brick-button-tone-soft: var(--brick-color-accent-soft);
+    --brick-button-tone-soft-hover: var(--brick-color-accent-soft-hover);
+    --brick-button-tone-soft-pressed: var(--brick-color-accent-soft-pressed);
+    --brick-button-tone-on-soft: var(--brick-color-accent-on-soft);
+    --brick-button-tone-border: var(--brick-color-accent-border);
+    --brick-button-tone-text: var(--brick-color-accent-text);
+  }
+
+  .brick-button[data-tone="info"] {
+    --brick-button-tone-solid: var(--brick-color-info-solid);
+    --brick-button-tone-solid-hover: var(--brick-color-info-solid-hover);
+    --brick-button-tone-solid-pressed: var(--brick-color-info-solid-pressed);
+    --brick-button-tone-on-solid: var(--brick-color-info-on-solid);
+    --brick-button-tone-soft: var(--brick-color-info-soft);
+    --brick-button-tone-soft-hover: var(--brick-color-info-soft-hover);
+    --brick-button-tone-soft-pressed: var(--brick-color-info-soft-pressed);
+    --brick-button-tone-on-soft: var(--brick-color-info-on-soft);
+    --brick-button-tone-border: var(--brick-color-info-border);
+    --brick-button-tone-text: var(--brick-color-info-text);
+  }
+
+  .brick-button[data-tone="success"] {
+    --brick-button-tone-solid: var(--brick-color-success-solid);
+    --brick-button-tone-solid-hover: var(--brick-color-success-solid-hover);
+    --brick-button-tone-solid-pressed: var(--brick-color-success-solid-pressed);
+    --brick-button-tone-on-solid: var(--brick-color-success-on-solid);
+    --brick-button-tone-soft: var(--brick-color-success-soft);
+    --brick-button-tone-soft-hover: var(--brick-color-success-soft-hover);
+    --brick-button-tone-soft-pressed: var(--brick-color-success-soft-pressed);
+    --brick-button-tone-on-soft: var(--brick-color-success-on-soft);
+    --brick-button-tone-border: var(--brick-color-success-border);
+    --brick-button-tone-text: var(--brick-color-success-text);
+  }
+
+  .brick-button[data-tone="warning"] {
+    --brick-button-tone-solid: var(--brick-color-warning-solid);
+    --brick-button-tone-solid-hover: var(--brick-color-warning-solid-hover);
+    --brick-button-tone-solid-pressed: var(--brick-color-warning-solid-pressed);
+    --brick-button-tone-on-solid: var(--brick-color-warning-on-solid);
+    --brick-button-tone-soft: var(--brick-color-warning-soft);
+    --brick-button-tone-soft-hover: var(--brick-color-warning-soft-hover);
+    --brick-button-tone-soft-pressed: var(--brick-color-warning-soft-pressed);
+    --brick-button-tone-on-soft: var(--brick-color-warning-on-soft);
+    --brick-button-tone-border: var(--brick-color-warning-border);
+    --brick-button-tone-text: var(--brick-color-warning-text);
+  }
+
+  .brick-button[data-tone="danger"] {
+    --brick-button-tone-solid: var(--brick-color-danger-solid);
+    --brick-button-tone-solid-hover: var(--brick-color-danger-solid-hover);
+    --brick-button-tone-solid-pressed: var(--brick-color-danger-solid-pressed);
+    --brick-button-tone-on-solid: var(--brick-color-danger-on-solid);
+    --brick-button-tone-soft: var(--brick-color-danger-soft);
+    --brick-button-tone-soft-hover: var(--brick-color-danger-soft-hover);
+    --brick-button-tone-soft-pressed: var(--brick-color-danger-soft-pressed);
+    --brick-button-tone-on-soft: var(--brick-color-danger-on-soft);
+    --brick-button-tone-border: var(--brick-color-danger-border);
+    --brick-button-tone-text: var(--brick-color-danger-text);
+  }
+
+  .brick-button[data-variant="soft"] {
+    --brick-button-background: var(--brick-button-tone-soft);
+    --brick-button-background-hover: var(--brick-button-tone-soft-hover);
+    --brick-button-background-pressed: var(--brick-button-tone-soft-pressed);
+    --brick-button-foreground: var(--brick-button-tone-on-soft);
+    --brick-button-border-color: var(--brick-button-tone-border);
+  }
+
+  .brick-button[data-variant="outline"] {
+    --brick-button-background: transparent;
+    --brick-button-background-hover: var(--brick-button-tone-soft);
+    --brick-button-background-pressed: var(--brick-button-tone-soft-hover);
+    --brick-button-foreground: var(--brick-button-tone-text);
+    --brick-button-border-color: var(--brick-button-tone-border);
+  }
+
+  .brick-button[data-variant="ghost"] {
+    --brick-button-background: transparent;
+    --brick-button-background-hover: var(--brick-button-tone-soft);
+    --brick-button-background-pressed: var(--brick-button-tone-soft-hover);
+    --brick-button-foreground: var(--brick-button-tone-text);
+    --brick-button-border-color: transparent;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .brick-button:not([data-disabled], [data-loading]):hover {
+      background: var(--brick-button-background-hover);
+      border-color: var(--brick-button-background-hover);
+    }
+
+    .brick-button[data-variant="soft"]:not([data-disabled], [data-loading]):hover,
+    .brick-button[data-variant="outline"]:not([data-disabled], [data-loading]):hover {
+      border-color: var(--brick-button-tone-border);
+    }
+
+    .brick-button[data-variant="ghost"]:not([data-disabled], [data-loading]):hover {
+      border-color: transparent;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brick-button {
+      transition-duration: 0ms;
+    }
+
+    .brick-button[data-loading]::after {
+      animation-duration: 1400ms;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .brick-button {
+      border-color: ButtonText;
+      background: ButtonFace;
+      color: ButtonText;
+    }
+
+    .brick-button:focus-visible {
+      outline-color: Highlight;
+    }
+
+    .brick-button[data-disabled] {
+      border-color: GrayText;
+      color: GrayText;
+      opacity: 1;
+    }
+
+    .brick-button[data-loading]::after {
+      border-block-start-color: ButtonText;
+      border-inline-end-color: ButtonText;
+    }
+  }
+
+  @keyframes brick-button-spin {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+}

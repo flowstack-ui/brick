@@ -4,7 +4,8 @@ Before publishing a package version:
 
 1. Update the package changelog and every affected component changelog.
 2. Run `npm run check`.
-3. Run `npm run test:browser` with the release browser matrix.
+3. Run `npm run test:browser:release` for desktop Chromium, Firefox, WebKit,
+   Pixel, and iPhone coverage. Review Chromium visual diffs explicitly.
 4. Complete the affected numbered manual-test protocols.
 5. Run `npm run size:css` and review changes in readable, minified, gzip, and
    Brotli output.

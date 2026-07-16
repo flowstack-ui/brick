@@ -37,5 +37,6 @@ Override foreground and background roles together, then verify contrast and
 all supported states. Arbitrary consumer overrides are outside Brick's visual
 accessibility guarantee.
 
-The values in `0.1.0` are foundation prototypes. Reference components will
-validate their exact relationships before the first component release.
+Button validates the initial interaction-token and contrast relationships.
+Later reference components may refine private values without changing the
+public semantic roles.

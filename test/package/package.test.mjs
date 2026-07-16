@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.2.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.2.1");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -19,6 +19,10 @@ test("package metadata defines the public Brick boundary", async () => {
     ".": {
       types: "./dist/index.d.ts",
       default: "./dist/index.js",
+    },
+    "./button": {
+      types: "./dist/button.d.ts",
+      default: "./dist/button.js",
     },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
@@ -29,7 +33,9 @@ test("package metadata defines the public Brick boundary", async () => {
 
 test("built package entrypoint can be imported without a CSS loader", async () => {
   const brick = await import(new URL("../../dist/index.js", import.meta.url));
-  assert.deepEqual(Object.keys(brick), []);
+  const button = await import(new URL("../../dist/button.js", import.meta.url));
+  assert.deepEqual(Object.keys(brick), ["Button"]);
+  assert.equal(button.Button, brick.Button);
 });
 
 test("published CSS entrypoints are complete browser CSS", async () => {
@@ -41,6 +47,10 @@ test("published CSS entrypoints are complete browser CSS", async () => {
 
   assert.match(styles, /--brick-color-accent-solid/);
   assert.match(styles, /brick\.foundations/);
+  assert.match(styles, /\.brick-button/);
+  assert.match(styles, /box-sizing:\s*border-box/);
+  assert.match(styles, /--brick-button-background/);
+  assert.match(styles, /--brick-control-min-block-size-xl/);
   assert.match(tokens, /data-brick-appearance/);
   assert.match(reset, /brick\.reset/);
   assert.doesNotMatch(styles, /@(?:tailwind|source|theme|utility|custom-variant)/);
