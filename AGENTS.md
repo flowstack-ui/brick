@@ -17,3 +17,6 @@ This repository contains the public `@flowstack-ui/brick` package.
   primitives or compatibility wrappers.
 - Every component requires implementation, tests, playground evidence, public
   documentation, and a component changelog before release.
+- Before changing `playground/component-coverage.xlsx`, read
+  `playground/docs/coverage-workbook.md` and preserve its formulas, validation,
+  formatting, and completion rules.
