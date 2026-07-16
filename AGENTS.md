@@ -15,6 +15,9 @@ This repository contains the public `@flowstack-ui/brick` package.
 - Public CSS classes and variables use the `brick-` and `--brick-` prefixes.
 - Components use public Atom behavior directly; do not create local headless
   primitives or compatibility wrappers.
+- If implementation exposes missing or incorrect Atom behavior, stop the
+  affected slice and resolve it through a released public Atom version. Do not
+  reproduce the behavior inside Brick.
 - Every component requires implementation, tests, playground evidence, public
   documentation, and a component changelog before release.
 - Before changing `playground/component-coverage.xlsx`, read
