@@ -2,10 +2,10 @@
 
 Opinionated styled React components built on `@flowstack-ui/atom`.
 
-Brick is currently in product definition and intentionally exports no
-components yet. Its component system, visual language, CSS distribution,
-tokens, APIs, customization contract, and quality standards are being defined
-before implementation begins.
+Brick's product definition is complete, but the staged package intentionally
+exports no components yet. Shared styling, testing, playground, documentation,
+and cutover infrastructure will be planned before the Button, Dialog, and Card
+reference implementations begin.
 
 ## Boundary
 
@@ -27,4 +27,3 @@ npm run pack:check
 
 This package is staged inside the TemplateFlow workspace until it is ready to
 move to the standalone `flowstack-ui/brick` repository.
-

@@ -22,9 +22,9 @@ created for the standalone repository.
 - Source belongs in `src/`, tests in `test/`, package scripts in `scripts/`,
   and the repo-only development app in `playground/`.
 - Do not edit or commit `dist/` or `node_modules/`.
-- Do not implement components while the parent workspace marks product
-  definition as active.
+- Follow the adopted parent product decisions and current post-definition plan.
+  Do not begin a component until the user explicitly starts its implementation
+  workstream.
 
 Before standalone extraction, replace staging-only parent references with the
 public package documentation that the adopted product decisions require.
-
