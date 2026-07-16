@@ -1,30 +1,19 @@
-# AGENTS.md — Brick Public Package
+# AGENTS.md — @flowstack-ui/brick
 
-This folder is the future public repository and npm package for
-`@flowstack-ui/brick`.
-
-While it is staged inside TemplateFlow, also read:
-
-1. `../AGENTS.md`
-2. `../CURRENT.md`
-3. `../TODO.md`
-4. `../docs/README.md`
-
-Do not copy product-definition documents into this package. They belong to the
-private Brick workspace until a reviewed public document is intentionally
-created for the standalone repository.
+This repository contains the public `@flowstack-ui/brick` package.
 
 ## Boundary
 
 - Use public `@flowstack-ui/atom` entrypoints only.
-- Do not depend on `@templateflow/core`, Next.js, the showcase, or private
-  workspace documents.
+- Keep the package framework-neutral and independent of application code.
 - Source belongs in `src/`, tests in `test/`, package scripts in `scripts/`,
-  and the repo-only development app in `playground/`.
-- Do not edit or commit `dist/` or `node_modules/`.
-- Follow the adopted parent product decisions and current post-definition plan.
-  Do not begin a component until the user explicitly starts its implementation
-  workstream.
-
-Before standalone extraction, replace staging-only parent references with the
-public package documentation that the adopted product decisions require.
+  public documentation in `docs/`, and the repository-only development app in
+  `playground/`.
+- Do not edit or commit `dist/`, `.brick-cache/`, coverage output, playground
+  build output, or `node_modules/`.
+- Public JavaScript must never require consumers to run a CSS processor.
+- Public CSS classes and variables use the `brick-` and `--brick-` prefixes.
+- Components use public Atom behavior directly; do not create local headless
+  primitives or compatibility wrappers.
+- Every component requires implementation, tests, playground evidence, public
+  documentation, and a component changelog before release.

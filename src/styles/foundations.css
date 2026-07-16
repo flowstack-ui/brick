@@ -1,0 +1,24 @@
+@layer brick.foundations {
+  :where([class^="brick-"], [class*=" brick-"]) {
+    box-sizing: border-box;
+    font-family: var(--brick-font-family-body);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :where([class^="brick-"], [class*=" brick-"])::before,
+  :where([class^="brick-"], [class*=" brick-"])::after {
+    box-sizing: border-box;
+  }
+
+  @media (forced-colors: active) {
+    :where([class^="brick-"], [class*=" brick-"]) {
+      forced-color-adjust: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where([class^="brick-"], [class*=" brick-"]) {
+      scroll-behavior: auto;
+    }
+  }
+}

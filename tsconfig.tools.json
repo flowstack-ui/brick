@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "rootDir": "."
+  },
+  "include": [
+    "playwright.config.ts",
+    "vitest.config.ts",
+    "test/components/**/*.ts",
+    "test/components/**/*.tsx",
+    "test/setup.ts"
+  ],
+  "exclude": ["dist", "node_modules"]
+}

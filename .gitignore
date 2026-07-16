@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.brick-cache/
+coverage/
+playground/dist/
+playwright-report/
+test-results/
+*.tgz
+*.tsbuildinfo
+.DS_Store

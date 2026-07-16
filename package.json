@@ -1,7 +1,7 @@
 {
   "name": "@flowstack-ui/brick",
   "version": "0.1.0",
-  "description": "Styled React components built on Flowstack Atom.",
+  "description": "Opinionated styled React components built on @flowstack-ui/atom.",
   "type": "module",
   "license": "MIT",
   "sideEffects": [
@@ -19,8 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/templateflow-io/templateflow.git",
-    "directory": "packages/brick-ui/package"
+    "url": "git+https://github.com/flowstack-ui/brick.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,18 +27,42 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./styles.css": "./dist/styles.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./reset.css": "./dist/reset.css"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "dev": "tsc -p tsconfig.build.json --watch",
-    "typecheck": "tsc -p tsconfig.build.json --noEmit",
-    "test": "npm run build && node --test test/*.test.mjs",
-    "pack:check": "npm_config_cache=/tmp/brick-ui-npm-cache npm pack --dry-run",
+    "clean": "node scripts/clean.mjs",
+    "build": "npm run clean && npm run build:js && npm run build:css",
+    "build:js": "tsc -p tsconfig.build.json",
+    "build:css": "node scripts/build-styles.mjs --mode production",
+    "build:css:dev": "node scripts/build-styles.mjs --mode development",
+    "build:playground": "npm run build && vite build --config playground/vite.config.ts",
+    "dev": "npm run dev:playground",
+    "dev:playground": "npm run build && vite --config playground/vite.config.ts",
+    "preview:playground": "vite preview --config playground/vite.config.ts",
+    "typecheck": "tsc -p tsconfig.build.json --noEmit && tsc -p tsconfig.tools.json && tsc -p test/types/tsconfig.json && tsc -p playground/tsconfig.json",
+    "test": "npm run test:node && npm run test:components && npm run test:css",
+    "test:node": "npm run build && node --test test/package/*.test.mjs",
+    "test:components": "vitest run --coverage",
+    "test:css": "node scripts/prototype-css.mjs",
+    "test:browser": "playwright test",
+    "size:css": "node scripts/report-css-size.mjs",
+    "pack:check": "node scripts/verify-package.mjs --dry-run",
+    "verify:consumers": "npm run build && node scripts/verify-consumers.mjs",
+    "check": "npm run typecheck && npm test && npm run build:playground && npm run pack:check && npm run verify:consumers",
     "prepublishOnly": "npm run build"
+  },
+  "browserslist": [
+    "defaults and supports es6-module",
+    "not IE 11"
+  ],
+  "overrides": {
+    "glob": "13.0.6"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -49,10 +72,23 @@
     "@flowstack-ui/atom": "0.2.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.61.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^26.1.1",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "browserslist": "^4.28.6",
+    "jsdom": "^26.1.0",
+    "lightningcss": "^1.32.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^6.4.3",
+    "vitest": "^3.2.4"
   }
 }

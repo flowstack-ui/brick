@@ -1,0 +1,38 @@
+@layer brick.reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    min-block-size: 100%;
+    color-scheme: light dark;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-block-size: 100%;
+    margin: 0;
+  }
+
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  img,
+  picture,
+  svg,
+  video {
+    display: block;
+    max-inline-size: 100%;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
