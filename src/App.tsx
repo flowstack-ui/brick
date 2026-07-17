@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Button } from "@flowstack-ui/brick/button";
+import { Card } from "@flowstack-ui/brick/card";
 
 type Appearance = "light" | "dark";
 
@@ -84,8 +85,8 @@ export function App() {
             >
               Publish project
             </Button>
-            <Button asChild tone="neutral" variant="outline">
-              <a href="#workspace">View workspace</a>
+            <Button href="#workspace" tone="neutral" variant="outline">
+              View workspace
             </Button>
           </div>
           <p className="activity" aria-live="polite">
@@ -105,61 +106,87 @@ export function App() {
           </div>
 
           <div className="workspace-grid">
-            <article className="panel project-panel">
-              <div>
-                <p className="panel-label">Active project</p>
-                <h3>Mobile checkout refresh</h3>
-                <p>
-                  Review the responsive purchase path and prepare the release candidate.
-                </p>
-              </div>
-              <dl className="project-stats">
-                <div><dt>Progress</dt><dd>78%</dd></div>
-                <div><dt>Reviewers</dt><dd>4</dd></div>
-                <div><dt>Due</dt><dd>Friday</dd></div>
-              </dl>
-              <div className="panel-actions">
+            <Card.Root
+              aria-labelledby="project-title"
+              as="article"
+              className="project-panel"
+              size="lg"
+              variant="elevated"
+            >
+              <Card.Header>
+                <Card.Title as="h3" id="project-title">Mobile checkout refresh</Card.Title>
+                <Card.Description>
+                  Active project · Review the responsive purchase path and prepare the
+                  release candidate.
+                </Card.Description>
+              </Card.Header>
+              <Card.Content>
+                <dl className="project-stats">
+                  <div><dt>Progress</dt><dd>78%</dd></div>
+                  <div><dt>Reviewers</dt><dd>4</dd></div>
+                  <div><dt>Due</dt><dd>Friday</dd></div>
+                </dl>
+              </Card.Content>
+              <Card.Footer className="panel-actions">
                 <Button size="sm" variant="soft">Open project</Button>
                 <Button size="sm" tone="neutral" variant="ghost">View activity</Button>
-              </div>
-            </article>
+              </Card.Footer>
+            </Card.Root>
 
-            <aside className="panel checklist" aria-labelledby="checklist-title">
-              <div>
-                <p className="panel-label">Release health</p>
-                <h3 id="checklist-title">Ready for review</h3>
-              </div>
-              <ul>
-                <li><span aria-hidden="true">✓</span> Mobile layout checked</li>
-                <li><span aria-hidden="true">✓</span> Keyboard path checked</li>
-                <li><span aria-hidden="true">✓</span> Package build checked</li>
-              </ul>
-              <Button fullWidth tone="success" variant="soft">Review checklist</Button>
-            </aside>
+            <Card.Root
+              aria-labelledby="checklist-title"
+              as="section"
+              className="checklist"
+              variant="subtle"
+            >
+              <Card.Header>
+                <Card.Title as="h3" id="checklist-title">Ready for review</Card.Title>
+                <Card.Description>Release health</Card.Description>
+              </Card.Header>
+              <Card.Content>
+                <ul>
+                  <li><span aria-hidden="true">✓</span> Mobile layout checked</li>
+                  <li><span aria-hidden="true">✓</span> Keyboard path checked</li>
+                  <li><span aria-hidden="true">✓</span> Package build checked</li>
+                </ul>
+              </Card.Content>
+              <Card.Footer>
+                <Button fullWidth tone="success" variant="soft">Review checklist</Button>
+              </Card.Footer>
+            </Card.Root>
           </div>
         </section>
 
-        <section className="invite panel" id="invite" aria-labelledby="invite-title">
-          <div>
-            <p className="eyebrow">Collaboration</p>
-            <h2 id="invite-title">Invite a teammate</h2>
-            <p>Use a normal application form with a finished Brick action.</p>
-          </div>
-          <form onSubmit={handleInvite}>
-            <label htmlFor="email">Work email</label>
-            <div className="invite-controls">
-              <input id="email" name="email" type="email" autoComplete="email" required />
-              <Button type="submit">Prepare invitation</Button>
-            </div>
-            <p className="activity" aria-live="polite">{inviteStatus}</p>
-          </form>
-        </section>
+        <Card.Root
+          aria-labelledby="invite-title"
+          as="section"
+          className="invite"
+          id="invite"
+          size="lg"
+        >
+          <Card.Header>
+            <Card.Title as="h2" id="invite-title">Invite a teammate</Card.Title>
+            <Card.Description>
+              Collaboration · Use a normal application form with a finished Brick action.
+            </Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <form onSubmit={handleInvite}>
+              <label htmlFor="email">Work email</label>
+              <div className="invite-controls">
+                <input id="email" name="email" type="email" autoComplete="email" required />
+                <Button type="submit">Prepare invitation</Button>
+              </div>
+              <p className="activity" aria-live="polite">{inviteStatus}</p>
+            </form>
+          </Card.Content>
+        </Card.Root>
       </main>
 
       <footer>
         <p>Public Brick imports. Application-owned composition. No Core compatibility layer.</p>
-        <Button asChild size="sm" tone="neutral" variant="ghost">
-          <a href="#top">Back to top</a>
+        <Button href="#top" size="sm" tone="neutral" variant="ghost">
+          Back to top
         </Button>
       </footer>
     </div>
