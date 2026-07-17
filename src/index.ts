@@ -20,3 +20,4 @@ export {
   type CardTitleProps,
   type CardVariant,
 } from "./components/card/index.js";
+export { Dialog, type DialogSize } from "./components/dialog/index.js";

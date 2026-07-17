@@ -16,6 +16,12 @@ import {
   type CardVariant,
 } from "@flowstack-ui/brick";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
+import { Dialog, type DialogSize } from "@flowstack-ui/brick";
+import {
+  Dialog as SubpathDialog,
+  DialogContent,
+  type DialogContentProps,
+} from "@flowstack-ui/brick/dialog";
 
 const variant: ButtonVariant = "soft";
 const tone: ButtonTone = "success";
@@ -60,6 +66,17 @@ void SubpathCard;
 void cardTitleElement;
 void cardProps;
 
+const dialogSize: DialogSize = "lg";
+const dialogContentProps: DialogContentProps = {
+  "aria-label": "Settings",
+  children: createElement(Dialog.Body, null, "Settings form"),
+  size: dialogSize,
+};
+void Dialog;
+void SubpathDialog;
+void DialogContent;
+void dialogContentProps;
+
 // @ts-expect-error Brick exposes semantic tone instead of the native color attribute.
 const nativeColor: ButtonProps = { children: "Invalid", color: "red" };
 // @ts-expect-error asChild owns its content and does not accept icon props.
@@ -85,6 +102,10 @@ const invalidCardElement: CardRootProps = { as: "main", children: "Invalid" };
 const invalidFlatCard = createElement(Card, null, "Invalid");
 // @ts-expect-error Card Title exposes heading elements only.
 const invalidCardTitle = createElement(Card.Title, { as: "div" }, "Invalid");
+// @ts-expect-error Dialog sizes are a closed recipe set.
+const invalidDialogSize: DialogContentProps = { "aria-label": "Invalid", size: "full" };
+// @ts-expect-error Dialog is a namespace and not a callable flat component.
+const invalidFlatDialog = createElement(Dialog, { title: "Invalid" });
 
 void nativeColor;
 void composedIcon;
@@ -94,3 +115,5 @@ void invalidCardVariant;
 void invalidCardElement;
 void invalidFlatCard;
 void invalidCardTitle;
+void invalidDialogSize;
+void invalidFlatDialog;

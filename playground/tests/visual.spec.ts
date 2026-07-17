@@ -54,3 +54,28 @@ test("Card variants retain boundaries in forced colors", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
   await expect(page.getByTestId("card-variants")).toHaveScreenshot("card-variants-forced-colors.png");
 });
+
+test("Dialog surface and anatomy retain their visual hierarchy", async ({ page }) => {
+  await page.goto("/dialog");
+  await page.getByRole("button", { name: "Edit profile" }).click();
+  await expect(page).toHaveScreenshot("dialog-overview-light.png");
+
+  await page.keyboard.press("Escape");
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await page.getByRole("button", { name: "Inspect dialog anatomy" }).click();
+  await expect(page).toHaveScreenshot("dialog-anatomy-dark.png");
+});
+
+test("Dialog remains contained in narrow RTL layouts", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/dialog");
+  await page.getByRole("button", { name: "فتح إعدادات مساحة العمل المفصلة" }).click();
+  await expect(page).toHaveScreenshot("dialog-rtl-mobile.png");
+});
+
+test("Dialog retains its boundary in forced colors", async ({ page }) => {
+  await page.goto("/dialog");
+  await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
+  await page.getByRole("button", { name: "Edit profile" }).click();
+  await expect(page).toHaveScreenshot("dialog-overview-forced-colors.png");
+});

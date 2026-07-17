@@ -91,7 +91,7 @@ void cardProps;
         "--ignore-scripts",
         "--save-exact",
         tarball,
-        "@flowstack-ui/atom@0.2.1",
+        "@flowstack-ui/atom@0.3.2",
         `react@${reactVersion}`,
         `react-dom@${reactVersion}`,
         `@types/react@${reactMajor}`,

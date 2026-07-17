@@ -23,7 +23,9 @@ import { Button } from "@flowstack-ui/brick";
 import "@flowstack-ui/brick/styles.css";
 ```
 
-Brick requires Atom 0.2.1 and React 18 or newer.
+Brick requires Atom 0.3.2 and React 18 or newer. Button's composed-link
+contract was first established against Atom 0.2.1 and remains covered after
+the package-wide upgrade.
 
 ## Quick start
 

@@ -3,12 +3,14 @@ import { createRoot } from "react-dom/client";
 import {
   Button,
   Card,
+  Dialog,
   type ButtonShape,
   type ButtonSize,
   type ButtonTone,
   type ButtonVariant,
   type CardSize,
   type CardVariant,
+  type DialogSize,
 } from "@flowstack-ui/brick";
 import "@flowstack-ui/brick/styles.css";
 import "./playground.css";
@@ -21,6 +23,7 @@ const sizes: ButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
 const shapes: ButtonShape[] = ["sharp", "rounded", "pill"];
 const cardVariants: CardVariant[] = ["outline", "elevated", "subtle"];
 const cardSizes: CardSize[] = ["sm", "md", "lg"];
+const dialogSizes: DialogSize[] = ["sm", "md", "lg"];
 
 function ArrowIcon({ direction = "end" }: { direction?: "start" | "end" }) {
   return (
@@ -458,8 +461,157 @@ function CardPlayground() {
   );
 }
 
+function DialogDemo({
+  body = "A focused task stays explicit while the page behind it is unavailable.",
+  dir,
+  label,
+  size = "md",
+}: {
+  body?: ReactNode;
+  dir?: "ltr" | "rtl";
+  label: string;
+  size?: DialogSize;
+}) {
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <Button variant="outline">{label}</Button>
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Overlay />
+        <Dialog.Content dir={dir} size={size}>
+          <Dialog.Header>
+            <Dialog.Title>{label}</Dialog.Title>
+            <Dialog.Description>Brick presentation composed directly on Atom modal behavior.</Dialog.Description>
+          </Dialog.Header>
+          <Dialog.Body>{body}</Dialog.Body>
+          <Dialog.Footer>
+            <Dialog.Close asChild>
+              <Button tone="neutral" variant="outline">Cancel</Button>
+            </Dialog.Close>
+            <Dialog.Close asChild>
+              <Button>Save changes</Button>
+            </Dialog.Close>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+}
+
+function DialogPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+  const [eventLog, setEventLog] = useState("No dialog event yet");
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  return (
+    <div className="playground-shell">
+      <header className="playground-header">
+        <div>
+          <p className="playground-kicker">@flowstack-ui/brick</p>
+          <h1>Dialog workbench</h1>
+          <p>Modal anatomy, responsive surfaces, bounded body scrolling, focus, dismissal, and composition.</p>
+        </div>
+        <fieldset className="playground-appearance">
+          <legend>Appearance</legend>
+          {(["system", "light", "dark"] as const).map((value) => (
+            <Button
+              aria-pressed={appearance === value}
+              key={value}
+              onPress={() => selectAppearance(value)}
+              size="sm"
+              tone="neutral"
+              variant={appearance === value ? "soft" : "ghost"}
+            >
+              {value}
+            </Button>
+          ))}
+        </fieldset>
+      </header>
+
+      <main data-testid="dialog-workbench">
+        <Scenario description="The shortest finished modal keeps every behavioral and semantic choice visible." title="Overview">
+          <div className="dialog-stage" data-testid="dialog-overview">
+            <DialogDemo label="Edit profile" />
+          </div>
+        </Scenario>
+
+        <Scenario description="Small, medium, and large change only the preferred maximum inline measure." title="Sizes">
+          <div className="dialog-launch-grid" data-testid="dialog-sizes">
+            {dialogSizes.map((size) => <DialogDemo key={size} label={`Open ${size} dialog`} size={size} />)}
+          </div>
+        </Scenario>
+
+        <Scenario description="Header, scrollable Body, and Footer remain separate public regions." title="Anatomy">
+          <div className="dialog-stage" data-testid="dialog-anatomy">
+            <DialogDemo
+              body={<form className="dialog-form"><label>Display name<input defaultValue="Ada Lovelace" /></label><label>Team role<input defaultValue="Product engineer" /></label></form>}
+              label="Inspect dialog anatomy"
+            />
+          </div>
+        </Scenario>
+
+        <Scenario description="Escape, exact-overlay clicks, and explicit Close preserve Atom close reasons." title="States and dismissal">
+          <div className="dialog-stage">
+            <Dialog.Root onOpenChange={(open, reason) => setEventLog(open ? "Opened" : `Closed: ${reason ?? "controlled"}`)}>
+              <Dialog.Trigger asChild><Button>Open event dialog</Button></Dialog.Trigger>
+              <Dialog.Portal><Dialog.Overlay /><Dialog.Content><Dialog.Header><Dialog.Title>Dismissal evidence</Dialog.Title><Dialog.Description>Try Escape, the scrim, Cancel, or Save.</Dialog.Description></Dialog.Header><Dialog.Body>Only the top active modal responds.</Dialog.Body><Dialog.Footer><Dialog.Close asChild><Button tone="neutral" variant="outline">Cancel</Button></Dialog.Close><Dialog.Close asChild><Button>Save</Button></Dialog.Close></Dialog.Footer></Dialog.Content></Dialog.Portal>
+            </Dialog.Root>
+            <output aria-live="polite" className="dialog-event-log">{eventLog}</output>
+          </div>
+        </Scenario>
+
+        <Scenario description="A nested modal takes top-layer focus and dismissal ownership, then returns to its parent." title="Nested dialog">
+          <div className="dialog-stage" data-testid="dialog-nested">
+            <Dialog.Root>
+              <Dialog.Trigger asChild><Button variant="outline">Open parent dialog</Button></Dialog.Trigger>
+              <Dialog.Portal><Dialog.Overlay /><Dialog.Content><Dialog.Header><Dialog.Title>Parent settings</Dialog.Title><Dialog.Description>The child dialog is a separate modal layer.</Dialog.Description></Dialog.Header><Dialog.Body><Dialog.Root><Dialog.Trigger asChild><Button>Open nested dialog</Button></Dialog.Trigger><Dialog.Portal><Dialog.Overlay /><Dialog.Content size="sm"><Dialog.Header><Dialog.Title>Nested confirmation</Dialog.Title><Dialog.Description>Escape closes this layer first.</Dialog.Description></Dialog.Header><Dialog.Body>Parent focus remains owned but inactive.</Dialog.Body><Dialog.Footer><Dialog.Close asChild><Button>Done</Button></Dialog.Close></Dialog.Footer></Dialog.Content></Dialog.Portal></Dialog.Root></Dialog.Body><Dialog.Footer><Dialog.Close asChild><Button tone="neutral" variant="outline">Close parent</Button></Dialog.Close></Dialog.Footer></Dialog.Content></Dialog.Portal>
+            </Dialog.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Inline Portal preserves a scoped appearance; custom containers use the same inheritance rule." title="Appearance and scope">
+          <div className="dialog-scope-grid" data-testid="dialog-appearance">
+            <div data-brick-appearance="light"><Dialog.Root><Dialog.Trigger asChild><Button>Light scoped dialog</Button></Dialog.Trigger><Dialog.Portal disabled><Dialog.Overlay /><Dialog.Content size="sm"><Dialog.Header><Dialog.Title>Light scope</Dialog.Title></Dialog.Header><Dialog.Body>Inline portal inherits this scope.</Dialog.Body><Dialog.Footer><Dialog.Close asChild><Button>Close</Button></Dialog.Close></Dialog.Footer></Dialog.Content></Dialog.Portal></Dialog.Root></div>
+            <div data-brick-appearance="dark"><Dialog.Root><Dialog.Trigger asChild><Button>Dark scoped dialog</Button></Dialog.Trigger><Dialog.Portal disabled><Dialog.Overlay /><Dialog.Content size="sm"><Dialog.Header><Dialog.Title>Dark scope</Dialog.Title></Dialog.Header><Dialog.Body>Inline portal inherits this scope.</Dialog.Body><Dialog.Footer><Dialog.Close asChild><Button>Close</Button></Dialog.Close></Dialog.Footer></Dialog.Content></Dialog.Portal></Dialog.Root></div>
+          </div>
+        </Scenario>
+
+        <Scenario description="Public component tokens, classes, styles, and slots customize one surface without changing behavior." title="Customization">
+          <div className="dialog-stage">
+            <Dialog.Root><Dialog.Trigger asChild><Button variant="outline">Open customized dialog</Button></Dialog.Trigger><Dialog.Portal><Dialog.Overlay /><Dialog.Content className="dialog-customized" data-slot="account-dialog" style={{ "--brick-dialog-radius": "0.35rem", "--brick-dialog-space": "2rem" } as CSSProperties}><Dialog.Header data-slot="account-dialog-header"><Dialog.Title>Customized surface</Dialog.Title><Dialog.Description>Public hooks remain local and inspectable.</Dialog.Description></Dialog.Header><Dialog.Body>Behavior still comes directly from Atom.</Dialog.Body><Dialog.Footer><Dialog.Close asChild><Button>Close</Button></Dialog.Close></Dialog.Footer></Dialog.Content></Dialog.Portal></Dialog.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Long content scrolls only in Body while the title and critical actions remain reachable." title="Long content and mobile">
+          <div className="dialog-stage" data-testid="dialog-long-content">
+            <DialogDemo label="Open long mobile dialog" body={<div className="dialog-long-copy">{Array.from({ length: 12 }, (_, index) => <p key={index}>Section {index + 1}: realistic content remains readable, wraps naturally, and stays inside the bounded body region.</p>)}</div>} />
+          </div>
+        </Scenario>
+
+        <Scenario description="Logical layout tolerates RTL, long translation, unbroken content, zoom, and constrained height." title="Stress and RTL">
+          <div className="dialog-stage" dir="rtl" data-testid="dialog-stress">
+            <DialogDemo dir="rtl" label="فتح إعدادات مساحة العمل المفصلة" body="مرجع طويل غير منقطع: ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ" />
+          </div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {window.location.pathname.startsWith("/card") ? <CardPlayground /> : <ButtonPlayground />}
+    {window.location.pathname.startsWith("/dialog") ? (
+      <DialogPlayground />
+    ) : window.location.pathname.startsWith("/card") ? (
+      <CardPlayground />
+    ) : (
+      <ButtonPlayground />
+    )}
   </StrictMode>,
 );

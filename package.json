@@ -36,6 +36,10 @@
       "types": "./dist/card.d.ts",
       "default": "./dist/card.js"
     },
+    "./dialog": {
+      "types": "./dist/dialog.d.ts",
+      "default": "./dist/dialog.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"
@@ -79,7 +83,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.2.1"
+    "@flowstack-ui/atom": "0.3.2"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

@@ -1,0 +1,162 @@
+@layer brick.components {
+  .brick-dialog-overlay {
+    position: fixed;
+    z-index: var(--brick-layer-overlay);
+    inset: 0;
+    background: var(--brick-color-scrim);
+    opacity: 1;
+    transition: opacity var(--brick-motion-duration-fast) var(--brick-motion-easing-exit);
+  }
+
+  .brick-dialog-overlay[data-state="closed"] {
+    opacity: 0;
+  }
+
+  .brick-dialog-content {
+    --brick-dialog-max-inline-size: 32rem;
+    --brick-dialog-max-block-size: calc(100dvb - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    --brick-dialog-space: var(--brick-space-5);
+    --brick-dialog-radius: var(--brick-radius-overlay);
+    --brick-dialog-shadow: 0 1.5rem 4.5rem color-mix(
+      in srgb,
+      var(--brick-color-shadow),
+      transparent 4%
+    );
+
+    position: fixed;
+    z-index: calc(var(--brick-layer-overlay) + 1);
+    inset-block-start: 50%;
+    left: 50%;
+    display: flex;
+    box-sizing: border-box;
+    inline-size: min(
+      var(--brick-dialog-max-inline-size),
+      calc(100vi - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right))
+    );
+    max-inline-size: calc(100vi - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right));
+    max-block-size: var(--brick-dialog-max-block-size);
+    flex-direction: column;
+    overflow: hidden;
+    border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+    border-radius: var(--brick-dialog-radius);
+    background: var(--brick-color-surface-overlay);
+    box-shadow: var(--brick-dialog-shadow);
+    color: var(--brick-color-text-primary);
+    opacity: 1;
+    overflow-wrap: anywhere;
+    transform: translate(-50%, -50%) scale(1);
+    transform-origin: center;
+    transition:
+      opacity var(--brick-motion-duration-fast) var(--brick-motion-easing-exit),
+      transform var(--brick-motion-duration-fast) var(--brick-motion-easing-exit);
+  }
+
+  .brick-dialog-content[data-size="sm"] {
+    --brick-dialog-max-inline-size: 24rem;
+    --brick-dialog-space: var(--brick-space-4);
+  }
+
+  .brick-dialog-content[data-size="lg"] {
+    --brick-dialog-max-inline-size: 44rem;
+    --brick-dialog-space: var(--brick-space-6);
+  }
+
+  .brick-dialog-content[data-state="closed"] {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.985);
+  }
+
+  .brick-dialog-header {
+    display: grid;
+    flex: none;
+    gap: var(--brick-space-1);
+    min-inline-size: 0;
+    padding: var(--brick-dialog-space);
+    padding-block-end: var(--brick-space-3);
+  }
+
+  .brick-dialog-title,
+  .brick-dialog-description {
+    min-inline-size: 0;
+    margin: 0;
+  }
+
+  .brick-dialog-title {
+    color: var(--brick-color-text-primary);
+    font-family: var(--brick-font-family-heading);
+    font-size: var(--brick-font-size-lg);
+    font-weight: var(--brick-font-weight-semibold);
+    letter-spacing: -0.02em;
+    line-height: var(--brick-font-line-height-tight);
+  }
+
+  .brick-dialog-description {
+    color: var(--brick-color-text-secondary);
+    font-size: var(--brick-font-size-sm);
+    line-height: var(--brick-font-line-height-body);
+  }
+
+  .brick-dialog-body {
+    min-block-size: 0;
+    min-inline-size: 0;
+    flex: 1 1 auto;
+    padding-inline: var(--brick-dialog-space);
+    padding-block: var(--brick-space-2) var(--brick-dialog-space);
+    overflow: auto;
+    overscroll-behavior: contain;
+    color: var(--brick-color-text-primary);
+    line-height: var(--brick-font-line-height-body);
+    scrollbar-gutter: stable;
+  }
+
+  .brick-dialog-footer {
+    display: flex;
+    min-inline-size: 0;
+    flex: none;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--brick-space-2);
+    padding: var(--brick-space-3) var(--brick-dialog-space) var(--brick-dialog-space);
+  }
+
+  @supports not (height: 100dvb) {
+    .brick-dialog-content {
+      --brick-dialog-max-block-size: calc(100vh - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .brick-dialog-content {
+      --brick-dialog-space: var(--brick-space-4);
+    }
+
+    .brick-dialog-footer > .brick-button {
+      flex: 1 1 9rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brick-dialog-overlay,
+    .brick-dialog-content {
+      transition-duration: 1ms;
+    }
+
+    .brick-dialog-content,
+    .brick-dialog-content[data-state="closed"] {
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .brick-dialog-overlay {
+      background: Canvas;
+      opacity: 0.7;
+    }
+
+    .brick-dialog-content {
+      border-color: CanvasText;
+      box-shadow: none;
+    }
+  }
+}

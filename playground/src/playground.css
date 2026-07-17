@@ -130,11 +130,90 @@ main {
 
 .card-stage,
 .card-grid,
-.card-appearance-grid {
+.card-appearance-grid,
+.dialog-stage,
+.dialog-launch-grid,
+.dialog-scope-grid {
   box-sizing: border-box;
   inline-size: 100%;
   min-inline-size: 0;
   max-inline-size: 100%;
+}
+
+.dialog-stage,
+.dialog-launch-grid,
+.dialog-scope-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--brick-space-3);
+  padding: var(--brick-space-5);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-raised);
+}
+
+.dialog-stage {
+  min-block-size: 8rem;
+  justify-content: center;
+}
+
+.dialog-launch-grid > .brick-button {
+  flex: 1 1 11rem;
+}
+
+.dialog-scope-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 0;
+  overflow: hidden;
+}
+
+.dialog-scope-grid > div {
+  display: grid;
+  min-block-size: 8rem;
+  place-items: center;
+  padding: var(--brick-space-4);
+  background: var(--brick-color-surface-canvas);
+  color: var(--brick-color-text-primary);
+}
+
+.dialog-form,
+.dialog-form label {
+  display: grid;
+  gap: var(--brick-space-2);
+}
+
+.dialog-form {
+  gap: var(--brick-space-4);
+}
+
+.dialog-form input {
+  min-block-size: 2.75rem;
+  padding-inline: var(--brick-space-3);
+  border: var(--brick-border-width) solid var(--brick-color-border-default);
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-base);
+  color: var(--brick-color-text-primary);
+  font: inherit;
+}
+
+.dialog-event-log {
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+}
+
+.dialog-customized {
+  border-style: dashed;
+}
+
+.dialog-long-copy {
+  display: grid;
+  gap: var(--brick-space-4);
+}
+
+.dialog-long-copy p {
+  margin: 0;
 }
 
 .card-stage {
@@ -381,6 +460,9 @@ main {
 }
 
 @media (min-width: 48rem) {
+  .dialog-scope-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .playground-shell {
     padding: var(--brick-space-6);
   }
