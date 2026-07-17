@@ -352,6 +352,10 @@
       grid-template-columns: minmax(14rem, 0.75fr) minmax(20rem, 1.25fr);
       align-items: center;
     }
+
+    .invite > .brick-card-content {
+      padding-block-start: var(--brick-card-space);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
