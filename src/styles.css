@@ -275,6 +275,7 @@
 
   .invite > .brick-card-content {
     min-inline-size: 0;
+    padding-block-start: var(--brick-card-space);
   }
 
   .invite label {
@@ -351,13 +352,6 @@
     .invite {
       grid-template-columns: minmax(14rem, 0.75fr) minmax(20rem, 1.25fr);
       align-items: center;
-    }
-
-    .invite > .brick-card-content {
-      display: grid;
-      align-self: stretch;
-      align-content: center;
-      padding-block-start: var(--brick-card-space);
     }
   }
 
