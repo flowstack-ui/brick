@@ -8,6 +8,10 @@ This is not the Brick documentation site and does not duplicate the component
 playground. It composes released Brick components into a realistic mobile-first
 page using application-owned semantic HTML and CSS.
 
+The current integration surfaces use Button for application actions, Card for
+workspace and invitation structure, and Dialog for a focused publish-confirmation
+flow through their public package subpaths.
+
 ## Commands
 
 Run these from the repository root so Brick is built first:

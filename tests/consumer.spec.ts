@@ -10,12 +10,40 @@ test("renders and operates Brick through its public package", async ({ page }) =
     "Build useful interfaces",
   );
 
-  await page.getByRole("button", { name: "Publish project" }).click();
+  const publishTrigger = page.getByRole("button", { name: "Publish project" });
+  await publishTrigger.click();
+  const dialog = page.getByRole("dialog", { name: "Publish project?" });
+  await expect(dialog).toHaveAttribute("data-slot", "dialog-content");
+  await expect(dialog).toHaveAttribute("data-size", "sm");
+  await expect(dialog).toHaveAccessibleDescription(
+    "Review the release summary before making it available to the team.",
+  );
+  await page.getByRole("button", { name: "Publish now" }).click();
   await expect(page.getByText("Published 1 time.")).toBeVisible();
+  await expect(dialog).toBeHidden();
+  await expect(publishTrigger).toBeFocused();
 
   await page.getByRole("button", { name: "Dark appearance" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-brick-appearance", "dark");
   await expect(page.getByRole("button", { name: "Light appearance" })).toBeVisible();
+});
+
+test("composes Dialog as a focused consumer publishing flow", async ({ page }) => {
+  const trigger = page.getByRole("button", { name: "Publish project" });
+  await trigger.click();
+  const dialog = page.getByRole("dialog", { name: "Publish project?" });
+  await expect(dialog.getByText("Mobile checkout refresh")).toBeVisible();
+  await expect(dialog.getByText("Candidate 8")).toBeVisible();
+
+  await page.getByRole("button", { name: "Cancel" }).click();
+  await expect(dialog).toBeHidden();
+  await expect(page.getByText("Project has not been published.")).toBeVisible();
+  await expect(trigger).toBeFocused();
+
+  await trigger.click();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(trigger).toBeFocused();
 });
 
 test("composes Card through its public package without inventing interaction", async ({ page }) => {
@@ -46,6 +74,7 @@ test("has no automatically detectable accessibility violations", async ({ page }
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.getByRole("button", { name: "Dark appearance" }).click();
+  await page.getByRole("button", { name: "Publish project" }).click();
   const darkResults = await new AxeBuilder({ page }).analyze();
   expect(darkResults.violations).toEqual([]);
 });
@@ -56,4 +85,11 @@ test("contains the layout at the project viewport", async ({ page }) => {
     scrollWidth: document.documentElement.scrollWidth,
   }));
   expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth);
+
+  await page.getByRole("button", { name: "Publish project" }).click();
+  const dialog = page.getByRole("dialog", { name: "Publish project?" });
+  const box = await dialog.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.x).toBeGreaterThanOrEqual(0);
+  expect(box!.x + box!.width).toBeLessThanOrEqual(dimensions.clientWidth);
 });

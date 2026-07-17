@@ -185,6 +185,31 @@
     font-size: var(--brick-font-size-sm);
   }
 
+  .publish-summary {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+  }
+
+  .publish-summary div {
+    display: grid;
+    grid-template-columns: minmax(5rem, 0.4fr) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: baseline;
+  }
+
+  .publish-summary dt {
+    color: var(--brick-color-text-secondary);
+    font-size: var(--brick-font-size-sm);
+  }
+
+  .publish-summary dd {
+    min-inline-size: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-weight: var(--brick-font-weight-medium);
+  }
+
   .workspace {
     display: grid;
     gap: 1.5rem;

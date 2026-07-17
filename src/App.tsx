@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Button } from "@flowstack-ui/brick/button";
 import { Card } from "@flowstack-ui/brick/card";
+import { Dialog } from "@flowstack-ui/brick/dialog";
 
 type Appearance = "light" | "dark";
 
@@ -78,13 +79,41 @@ export function App() {
             exports. Application layout stays here; finished component styling stays in Brick.
           </p>
           <div className="hero-actions">
-            <Button
-              className="primary-action"
-              endIcon={<ArrowIcon />}
-              onPress={() => setPublishCount((count) => count + 1)}
-            >
-              Publish project
-            </Button>
+            <Dialog.Root>
+              <Dialog.Trigger asChild>
+                <Button className="primary-action" endIcon={<ArrowIcon />}>
+                  Publish project
+                </Button>
+              </Dialog.Trigger>
+              <Dialog.Portal>
+                <Dialog.Overlay />
+                <Dialog.Content size="sm">
+                  <Dialog.Header>
+                    <Dialog.Title>Publish project?</Dialog.Title>
+                    <Dialog.Description>
+                      Review the release summary before making it available to the team.
+                    </Dialog.Description>
+                  </Dialog.Header>
+                  <Dialog.Body>
+                    <dl className="publish-summary">
+                      <div><dt>Project</dt><dd>Mobile checkout refresh</dd></div>
+                      <div><dt>Release</dt><dd>Candidate 8</dd></div>
+                      <div><dt>Audience</dt><dd>Workspace reviewers</dd></div>
+                    </dl>
+                  </Dialog.Body>
+                  <Dialog.Footer>
+                    <Dialog.Close asChild>
+                      <Button tone="neutral" variant="outline">Cancel</Button>
+                    </Dialog.Close>
+                    <Dialog.Close asChild>
+                      <Button onPress={() => setPublishCount((count) => count + 1)}>
+                        Publish now
+                      </Button>
+                    </Dialog.Close>
+                  </Dialog.Footer>
+                </Dialog.Content>
+              </Dialog.Portal>
+            </Dialog.Root>
             <Button href="#workspace" tone="neutral" variant="outline">
               View workspace
             </Button>
