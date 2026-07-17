@@ -354,6 +354,9 @@
     }
 
     .invite > .brick-card-content {
+      display: grid;
+      align-self: stretch;
+      align-content: center;
       padding-block-start: var(--brick-card-space);
     }
   }
