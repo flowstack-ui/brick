@@ -30,6 +30,8 @@ try {
     "dist/index.d.ts",
     "dist/button.js",
     "dist/button.d.ts",
+    "dist/card.js",
+    "dist/card.d.ts",
     "dist/styles.css",
     "dist/tokens.css",
     "dist/reset.css",

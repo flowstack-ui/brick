@@ -141,16 +141,25 @@ correct arrow or chevron for the current writing direction.
 
 ## Composition, native props, and refs
 
-`asChild` supports anchors and components that tolerate inactive navigation
-props being removed. Strict router components use Atom's inactive-safe `render`
-callback and switch to a destination-free anchor while inactive. Brick does not
-detect or adapt routers.
+Use direct `href` for ordinary navigation. Atom renders the native anchor, so
+wrapping another native `<a>` with `asChild` is unnecessary:
+
+```tsx
+<Button href="/account" variant="outline">Account</Button>
+```
+
+`asChild` is reserved for a custom link adapter that forwards its ref and
+native props and tolerates inactive navigation props being removed:
 
 ```tsx
 <Button asChild variant="outline">
-  <a href="/account">Account</a>
+  <PermissiveLink href="/account">Account</PermissiveLink>
 </Button>
 ```
+
+Strict router components use Atom's inactive-safe `render` callback and switch
+to a destination-free anchor while inactive. Brick does not detect or adapt
+routers.
 
 Native form props, ARIA/data attributes, events, `className`, `style`, slot, and
 the broad `HTMLElement` ref are forwarded.

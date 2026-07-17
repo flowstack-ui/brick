@@ -21,3 +21,9 @@ test("Button canonical state has no detectable axe violations", async ({ page })
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });
+
+test("Card canonical state has no detectable axe violations", async ({ page }) => {
+  await page.goto("/card");
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
+});

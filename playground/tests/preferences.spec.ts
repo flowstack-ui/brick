@@ -50,3 +50,23 @@ test("Button honors reduced motion without hiding loading status", async ({ page
   expect(spinnerStyle.animationDuration).toBe("1.4s");
   expect(spinnerStyle.display).not.toBe("none");
 });
+
+test("Card keeps visible static boundaries in forced colors", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Forced-colors emulation is a Chromium release check.");
+  await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
+  await page.goto("/card");
+
+  for (const card of await page.getByTestId("card-variants").locator(".brick-card").all()) {
+    const style = await card.evaluate((element) => {
+      const computed = getComputedStyle(element);
+      return {
+        borderStyle: computed.borderTopStyle,
+        borderWidth: Number.parseFloat(computed.borderTopWidth),
+        boxShadow: computed.boxShadow,
+      };
+    });
+    expect(style.borderStyle).toBe("solid");
+    expect(style.borderWidth).toBeGreaterThanOrEqual(1);
+    expect(style.boxShadow).toBe("none");
+  }
+});

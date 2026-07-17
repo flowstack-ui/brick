@@ -16,6 +16,8 @@ This directory is the public documentation authority for
 
 - [`components/button/README.md`](components/button/README.md) — styled actions
   and button-like navigation
+- [`components/card/README.md`](components/card/README.md) — static compound
+  surfaces for one subject
 
 Every released component has one folder under `components/` containing its
 public guide and `CHANGELOG.md`. Start new documentation from the templates in

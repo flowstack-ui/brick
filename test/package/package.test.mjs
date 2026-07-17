@@ -24,6 +24,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/button.d.ts",
       default: "./dist/button.js",
     },
+    "./card": {
+      types: "./dist/card.d.ts",
+      default: "./dist/card.js",
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css",
@@ -34,8 +38,10 @@ test("package metadata defines the public Brick boundary", async () => {
 test("built package entrypoint can be imported without a CSS loader", async () => {
   const brick = await import(new URL("../../dist/index.js", import.meta.url));
   const button = await import(new URL("../../dist/button.js", import.meta.url));
-  assert.deepEqual(Object.keys(brick), ["Button"]);
+  const card = await import(new URL("../../dist/card.js", import.meta.url));
+  assert.deepEqual(Object.keys(brick), ["Button", "Card"]);
   assert.equal(button.Button, brick.Button);
+  assert.equal(card.Card, brick.Card);
 });
 
 test("published CSS entrypoints are complete browser CSS", async () => {
@@ -48,8 +54,10 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-color-accent-solid/);
   assert.match(styles, /brick\.foundations/);
   assert.match(styles, /\.brick-button/);
+  assert.match(styles, /\.brick-card/);
   assert.match(styles, /box-sizing:\s*border-box/);
   assert.match(styles, /--brick-button-background/);
+  assert.match(styles, /--brick-card-space/);
   assert.match(styles, /--brick-control-min-block-size-xl/);
   assert.match(tokens, /data-brick-appearance/);
   assert.match(reset, /brick\.reset/);

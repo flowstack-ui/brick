@@ -32,6 +32,10 @@
       "types": "./dist/button.d.ts",
       "default": "./dist/button.js"
     },
+    "./card": {
+      "types": "./dist/card.d.ts",
+      "default": "./dist/card.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"

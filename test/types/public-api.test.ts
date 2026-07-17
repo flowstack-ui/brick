@@ -8,6 +8,14 @@ import {
   type ButtonVariant,
 } from "@flowstack-ui/brick";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
+import {
+  Card,
+  type CardRootProps,
+  type CardSize,
+  type CardTitleElement,
+  type CardVariant,
+} from "@flowstack-ui/brick";
+import { Card as SubpathCard } from "@flowstack-ui/brick/card";
 
 const variant: ButtonVariant = "soft";
 const tone: ButtonTone = "success";
@@ -37,6 +45,21 @@ void props;
 void composed;
 void rendered;
 
+const cardVariant: CardVariant = "elevated";
+const cardSize: CardSize = "lg";
+const cardTitleElement: CardTitleElement = "h1";
+const cardProps: CardRootProps = {
+  as: "article",
+  children: createElement(Card.Content, null, "Report"),
+  size: cardSize,
+  variant: cardVariant,
+};
+
+void Card;
+void SubpathCard;
+void cardTitleElement;
+void cardProps;
+
 // @ts-expect-error Brick exposes semantic tone instead of the native color attribute.
 const nativeColor: ButtonProps = { children: "Invalid", color: "red" };
 // @ts-expect-error asChild owns its content and does not accept icon props.
@@ -54,7 +77,20 @@ const doubleComposition: ButtonProps = {
 // @ts-expect-error Button variants are a closed recipe set.
 const invalidVariant: ButtonProps = { children: "Invalid", variant: "link" };
 
+// @ts-expect-error Card variants are a closed recipe set.
+const invalidCardVariant: CardRootProps = { children: "Invalid", variant: "ghost" };
+// @ts-expect-error Card Root exposes only approved semantic containers.
+const invalidCardElement: CardRootProps = { as: "main", children: "Invalid" };
+// @ts-expect-error Card is a namespace and not a callable flat component.
+const invalidFlatCard = createElement(Card, null, "Invalid");
+// @ts-expect-error Card Title exposes heading elements only.
+const invalidCardTitle = createElement(Card.Title, { as: "div" }, "Invalid");
+
 void nativeColor;
 void composedIcon;
 void doubleComposition;
 void invalidVariant;
+void invalidCardVariant;
+void invalidCardElement;
+void invalidFlatCard;
+void invalidCardTitle;

@@ -32,3 +32,25 @@ test("Button constrained and RTL recipes remain contained", async ({ page }) => 
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByTestId("button-stress")).toHaveScreenshot("button-stress-mobile.png");
 });
+
+test("Card visual hierarchy remains stable across recipes and appearances", async ({ page }) => {
+  await page.goto("/card");
+  await expect(page.getByTestId("card-variants")).toHaveScreenshot("card-variants-light.png");
+  await expect(page.getByTestId("card-sizes")).toHaveScreenshot("card-sizes-light.png");
+
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await expect(page.getByTestId("card-overview")).toHaveScreenshot("card-overview-dark.png");
+  await expect(page.getByTestId("card-appearance")).toHaveScreenshot("card-appearance-scopes.png");
+});
+
+test("Card constrained and RTL recipes remain visually contained", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/card");
+  await expect(page.getByTestId("card-stress")).toHaveScreenshot("card-stress-mobile.png");
+});
+
+test("Card variants retain boundaries in forced colors", async ({ page }) => {
+  await page.goto("/card");
+  await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
+  await expect(page.getByTestId("card-variants")).toHaveScreenshot("card-variants-forced-colors.png");
+});

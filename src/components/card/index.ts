@@ -1,12 +1,4 @@
 export {
-  Button,
-  type ButtonProps,
-  type ButtonShape,
-  type ButtonSize,
-  type ButtonTone,
-  type ButtonVariant,
-} from "./components/button/index.js";
-export {
   Card,
   type CardActionProps,
   type CardContentProps,
@@ -19,4 +11,4 @@ export {
   type CardTitleElement,
   type CardTitleProps,
   type CardVariant,
-} from "./components/card/index.js";
+} from "./Card.js";

@@ -2,10 +2,13 @@ import { StrictMode, useState, type CSSProperties, type ReactNode } from "react"
 import { createRoot } from "react-dom/client";
 import {
   Button,
+  Card,
   type ButtonShape,
   type ButtonSize,
   type ButtonTone,
   type ButtonVariant,
+  type CardSize,
+  type CardVariant,
 } from "@flowstack-ui/brick";
 import "@flowstack-ui/brick/styles.css";
 import "./playground.css";
@@ -16,6 +19,8 @@ const variants: ButtonVariant[] = ["solid", "soft", "outline", "ghost"];
 const tones: ButtonTone[] = ["neutral", "accent", "info", "success", "warning", "danger"];
 const sizes: ButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
 const shapes: ButtonShape[] = ["sharp", "rounded", "pill"];
+const cardVariants: CardVariant[] = ["outline", "elevated", "subtle"];
+const cardSizes: CardSize[] = ["sm", "md", "lg"];
 
 function ArrowIcon({ direction = "end" }: { direction?: "start" | "end" }) {
   return (
@@ -263,8 +268,198 @@ function ButtonPlayground() {
   );
 }
 
+function CardPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  return (
+    <div className="playground-shell">
+      <header className="playground-header">
+        <div>
+          <p className="playground-kicker">@flowstack-ui/brick</p>
+          <h1>Card workbench</h1>
+          <p>Static compound anatomy, neutral surface hierarchy, semantic composition, and resilient content.</p>
+        </div>
+        <fieldset className="playground-appearance">
+          <legend>Appearance</legend>
+          {(["system", "light", "dark"] as const).map((value) => (
+            <Button
+              aria-pressed={appearance === value}
+              key={value}
+              onPress={() => selectAppearance(value)}
+              size="sm"
+              tone="neutral"
+              variant={appearance === value ? "soft" : "ghost"}
+            >
+              {value}
+            </Button>
+          ))}
+        </fieldset>
+      </header>
+
+      <main data-testid="card-workbench">
+        <Scenario
+          description="The default Card is a neutral outlined surface. Its visible subject and actions remain explicit parts."
+          title="Overview"
+        >
+          <div className="card-stage card-stage--hero" data-testid="card-overview">
+            <Card.Root as="article" aria-labelledby="quarterly-report-title">
+              <Card.Header>
+                <Card.Title as="h2" id="quarterly-report-title">Quarterly report</Card.Title>
+                <Card.Description>Performance snapshot · updated five minutes ago</Card.Description>
+                <Card.Action>
+                  <Button size="sm" tone="neutral" variant="ghost">More</Button>
+                </Card.Action>
+              </Card.Header>
+              <Card.Content>
+                <p className="card-metric">24.8%</p>
+                <p>Conversion improved across every mobile checkout step.</p>
+              </Card.Content>
+              <Card.Footer>
+                <Button size="sm">Open report</Button>
+                <Button size="sm" tone="neutral" variant="outline">Export</Button>
+              </Card.Footer>
+            </Card.Root>
+          </div>
+        </Scenario>
+
+        <Scenario
+          description="Variant changes surface prominence without changing Card semantics or interaction."
+          title="Variants"
+        >
+          <div className="card-grid" data-testid="card-variants">
+            {cardVariants.map((variant) => (
+              <Card.Root key={variant} variant={variant}>
+                <Card.Header>
+                  <Card.Title>{variant}</Card.Title>
+                  <Card.Description>{variant === "outline" ? "Clear boundary" : variant === "elevated" ? "Raised prominence" : "Quiet grouping"}</Card.Description>
+                </Card.Header>
+                <Card.Content>One subject, the same anatomy, and a different place in the visual hierarchy.</Card.Content>
+              </Card.Root>
+            ))}
+          </div>
+        </Scenario>
+
+        <Scenario
+          description="Size coordinates section inset, region spacing, and title scale; it never sets width or height."
+          title="Sizes"
+        >
+          <div className="card-grid card-grid--sizes" data-testid="card-sizes">
+            {cardSizes.map((size) => (
+              <Card.Root key={size} size={size}>
+                <Card.Header>
+                  <Card.Title>{size} Card</Card.Title>
+                  <Card.Description>Complete {size} density recipe</Card.Description>
+                </Card.Header>
+                <Card.Content>Content remains readable and wraps naturally.</Card.Content>
+                <Card.Footer><Button size="sm" variant="outline">Review</Button></Card.Footer>
+              </Card.Root>
+            ))}
+          </div>
+        </Scenario>
+
+        <Scenario
+          description="Every region is optional. Card does not generate titles, controls, separators, or action data."
+          title="Anatomy"
+        >
+          <div className="card-grid card-grid--anatomy" data-testid="card-anatomy">
+            <Card.Root>
+              <Card.Content><strong>Content only</strong><p>No empty header or footer is rendered.</p></Card.Content>
+            </Card.Root>
+            <Card.Root variant="subtle">
+              <Card.Header><Card.Title>Header only</Card.Title><Card.Description>Title and supporting copy</Card.Description></Card.Header>
+            </Card.Root>
+            <Card.Root>
+              <Card.Footer><Button size="sm">Footer action</Button><span>Secondary metadata</span></Card.Footer>
+            </Card.Root>
+            <Card.Root>
+              <Card.Header>
+                <Card.Title>Trailing action</Card.Title>
+                <Card.Description>Compact controls belong in Card.Action.</Card.Description>
+                <Card.Action><Button size="sm" tone="neutral" variant="ghost">Edit</Button></Card.Action>
+              </Card.Header>
+            </Card.Root>
+          </div>
+        </Scenario>
+
+        <Scenario
+          description="Native images and real controls compose through children; Card owns neither media semantics nor press behavior."
+          title="Composition"
+        >
+          <div className="card-grid card-grid--two" data-testid="card-composition">
+            <Card.Root as="article">
+              <div aria-hidden="true" className="card-media-demo" />
+              <Card.Header><Card.Title as="h2">Coastal workspace</Card.Title><Card.Description>Media remains ordinary composed content.</Card.Description></Card.Header>
+              <Card.Footer><Button size="sm">View workspace</Button></Card.Footer>
+            </Card.Root>
+            <a
+              aria-labelledby="single-action-card-title"
+              className="card-link"
+              href="#single-action-card"
+            >
+              <Card.Root as="article" id="single-action-card" variant="subtle">
+                <Card.Header><Card.Title as="h2" id="single-action-card-title">Single-action preview</Card.Title><Card.Description>A real link owns focus and navigation; this Card contains no nested controls.</Card.Description></Card.Header>
+              </Card.Root>
+            </a>
+          </div>
+        </Scenario>
+
+        <Scenario
+          description="Appearance scopes and the three public Card tokens customize material without changing anatomy."
+          title="Appearance and customization"
+        >
+          <div className="card-appearance-grid" data-testid="card-appearance">
+            <div data-brick-appearance="light"><Card.Root><Card.Header><Card.Title>Light scope</Card.Title></Card.Header><Card.Content>Finished light values.</Card.Content></Card.Root></div>
+            <div data-brick-appearance="dark"><Card.Root><Card.Header><Card.Title>Dark scope</Card.Title></Card.Header><Card.Content>Finished dark values.</Card.Content></Card.Root></div>
+          </div>
+          <Card.Root
+            className="card-customized"
+            data-slot="project-summary"
+            style={{
+              "--brick-card-radius": "0.25rem",
+              "--brick-card-shadow": "0 1rem 3rem rgb(53 46 91 / 25%)",
+              "--brick-card-space": "2rem",
+            } as CSSProperties}
+            variant="elevated"
+          >
+            <Card.Header data-slot="project-summary-header"><Card.Title>Component tokens</Card.Title><Card.Description>Local spacing, radius, shadow, classes, styles, and slots.</Card.Description></Card.Header>
+            <Card.Content>The supported recipe remains inspectable.</Card.Content>
+          </Card.Root>
+        </Scenario>
+
+        <Scenario
+          description="Logical properties, minimum-zero columns, wrapping footers, and application-owned grids protect narrow, zoomed, translated, and RTL layouts."
+          title="Mobile and stress"
+        >
+          <div className="stress-grid" data-testid="card-stress">
+            <div className="phone-frame">
+              <Card.Root>
+                <Card.Header><Card.Title>Extremely detailed delivery preferences and account verification</Card.Title><Card.Description>Unbroken reference: ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ</Card.Description><Card.Action><Button size="sm" tone="neutral" variant="ghost">Edit</Button></Card.Action></Card.Header>
+                <Card.Content>Long content wraps instead of expanding the page beyond its constrained canvas.</Card.Content>
+                <Card.Footer><Button size="sm">Confirm preferences</Button><Button size="sm" tone="neutral" variant="outline">Review everything again</Button></Card.Footer>
+              </Card.Root>
+            </div>
+            <div className="phone-frame" dir="rtl">
+              <Card.Root variant="subtle">
+                <Card.Header><Card.Title>إعداد مساحة العمل</Card.Title><Card.Description>يتكيف المحتوى من اليمين إلى اليسار دون تغيير ترتيب المصدر.</Card.Description><Card.Action><Button size="sm" tone="neutral" variant="ghost">تعديل</Button></Card.Action></Card.Header>
+                <Card.Content>تظل البنية واضحة وقابلة للقراءة على الشاشات الضيقة.</Card.Content>
+                <Card.Footer><Button size="sm">متابعة</Button><Button size="sm" tone="neutral" variant="outline">إلغاء</Button></Card.Footer>
+              </Card.Root>
+            </div>
+          </div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ButtonPlayground />
+    {window.location.pathname.startsWith("/card") ? <CardPlayground /> : <ButtonPlayground />}
   </StrictMode>,
 );

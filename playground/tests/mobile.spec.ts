@@ -23,3 +23,21 @@ test("Button remains operable in touch device profiles", async ({ page }, testIn
     await page.evaluate(() => innerWidth),
   );
 });
+
+test("Card remains contained and its child actions stay operable on touch devices", async ({ page }, testInfo) => {
+  test.skip(!mobileProjects.has(testInfo.project.name), "This check is specific to the release mobile profiles.");
+
+  await page.goto("/card");
+  expect(await page.evaluate(() => matchMedia("(pointer: coarse)").matches)).toBe(true);
+  const stress = page.getByTestId("card-stress");
+  for (const card of await stress.locator(".brick-card").all()) {
+    const cardBox = await card.boundingBox();
+    const frameBox = await card.locator("..").boundingBox();
+    expect(cardBox!.x).toBeGreaterThanOrEqual(frameBox!.x);
+    expect(cardBox!.x + cardBox!.width).toBeLessThanOrEqual(frameBox!.x + frameBox!.width);
+  }
+  await page.getByTestId("card-overview").getByRole("button", { name: "Open report" }).tap();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+    await page.evaluate(() => innerWidth),
+  );
+});

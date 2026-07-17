@@ -1,7 +1,7 @@
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { basename, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import browserslist from "browserslist";
+import browserslistModule from "browserslist";
 import { browserslistToTargets, bundleAsync } from "lightningcss";
 import { compileTokens } from "./token-compiler.mjs";
 
@@ -16,6 +16,9 @@ const production = mode === "production";
 const cacheRoot = resolve(packageRoot, ".brick-cache", mode);
 const outputRoot = production ? resolve(packageRoot, "dist") : cacheRoot;
 const tokenSource = resolve(packageRoot, "src/styles/tokens.tokens.json");
+const browserslist = typeof browserslistModule === "function"
+  ? browserslistModule
+  : browserslistModule.default;
 const targets = browserslistToTargets(browserslist(undefined, { path: packageRoot }));
 
 await rm(cacheRoot, { recursive: true, force: true });
@@ -33,6 +36,7 @@ await writeFile(
     '@import "./tokens.source.css";',
     '@import "../../src/styles/foundations.css";',
     '@import "../../src/components/button/button.css";',
+    '@import "../../src/components/card/card.css";',
   ].join("\n"),
 );
 

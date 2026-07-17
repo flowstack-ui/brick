@@ -2,12 +2,15 @@ import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { brotliCompressSync, gzipSync } from "node:zlib";
 import { resolve } from "node:path";
-import browserslist from "browserslist";
+import browserslistModule from "browserslist";
 import { browserslistToTargets, bundleAsync } from "lightningcss";
 
 const input = resolve("test/fixtures/css/compiler-contract.css");
 const outputRoot = resolve(".brick-cache/prototype");
 await mkdir(outputRoot, { recursive: true });
+const browserslist = typeof browserslistModule === "function"
+  ? browserslistModule
+  : browserslistModule.default;
 const targets = browserslistToTargets(browserslist());
 
 const readable = await bundleAsync({ filename: input, minify: false, targets });
