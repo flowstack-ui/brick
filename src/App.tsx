@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
+import { AlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button } from "@flowstack-ui/brick/button";
 import { Card } from "@flowstack-ui/brick/card";
 import { Dialog } from "@flowstack-ui/brick/dialog";
@@ -29,6 +30,7 @@ export function App() {
   const [appearance, setAppearance] = useState<Appearance>(getInitialAppearance);
   const [publishCount, setPublishCount] = useState(0);
   const [inviteStatus, setInviteStatus] = useState("No invitation sent yet.");
+  const [removalStatus, setRemovalStatus] = useState("Project is active.");
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -155,10 +157,46 @@ export function App() {
                   <div><dt>Reviewers</dt><dd>4</dd></div>
                   <div><dt>Due</dt><dd>Friday</dd></div>
                 </dl>
+                <p className="activity removal-status" aria-live="polite">{removalStatus}</p>
               </Card.Content>
               <Card.Footer className="panel-actions">
                 <Button size="sm" variant="soft">Open project</Button>
                 <Button size="sm" tone="neutral" variant="ghost">View activity</Button>
+                <AlertDialog.Root>
+                  <AlertDialog.Trigger asChild>
+                    <Button size="sm" tone="danger" variant="outline">
+                      Remove project
+                    </Button>
+                  </AlertDialog.Trigger>
+                  <AlertDialog.Portal>
+                    <AlertDialog.Overlay />
+                    <AlertDialog.Content size="sm">
+                      <AlertDialog.Header>
+                        <AlertDialog.Title>Remove Mobile checkout refresh?</AlertDialog.Title>
+                        <AlertDialog.Description>
+                          This permanently removes the project from the workspace and
+                          cannot be undone.
+                        </AlertDialog.Description>
+                      </AlertDialog.Header>
+                      <AlertDialog.Body>
+                        Four reviewers will lose access to this project.
+                      </AlertDialog.Body>
+                      <AlertDialog.Footer>
+                        <AlertDialog.Cancel asChild>
+                          <Button tone="neutral" variant="outline">Keep project</Button>
+                        </AlertDialog.Cancel>
+                        <AlertDialog.Action asChild>
+                          <Button
+                            onPress={() => setRemovalStatus("Project removal confirmed.")}
+                            tone="danger"
+                          >
+                            Remove permanently
+                          </Button>
+                        </AlertDialog.Action>
+                      </AlertDialog.Footer>
+                    </AlertDialog.Content>
+                  </AlertDialog.Portal>
+                </AlertDialog.Root>
               </Card.Footer>
             </Card.Root>
 

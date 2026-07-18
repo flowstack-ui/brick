@@ -17,6 +17,7 @@ test("the consumer uses public package exports without legacy or source aliases"
   assert.match(source, /@flowstack-ui\/brick\/button/);
   assert.match(source, /@flowstack-ui\/brick\/card/);
   assert.match(source, /@flowstack-ui\/brick\/dialog/);
+  assert.match(source, /@flowstack-ui\/brick\/alert-dialog/);
   assert.match(source, /@flowstack-ui\/brick\/styles\.css/);
   assert.match(source, /@flowstack-ui\/brick\/reset\.css/);
   assert.doesNotMatch(source, /@templateflow\/core/);

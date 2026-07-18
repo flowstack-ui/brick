@@ -46,6 +46,46 @@ test("composes Dialog as a focused consumer publishing flow", async ({ page }) =
   await expect(trigger).toBeFocused();
 });
 
+test("composes AlertDialog as an application-owned destructive decision", async ({ page }) => {
+  const trigger = page.getByRole("button", { name: "Remove project" });
+  await trigger.click();
+  const alert = page.getByRole("alertdialog", {
+    name: "Remove Mobile checkout refresh?",
+  });
+  await expect(alert).toHaveAttribute("data-slot", "alert-dialog-content");
+  await expect(alert).toHaveAttribute("data-size", "sm");
+  await expect(alert).toHaveAccessibleDescription(
+    "This permanently removes the project from the workspace and cannot be undone.",
+  );
+  const cancel = page.getByRole("button", { name: "Keep project" });
+  await expect(cancel).toBeFocused();
+  await cancel.click();
+  await expect(alert).toBeHidden();
+  await expect(page.getByText("Project is active.")).toBeVisible();
+  await expect(trigger).toBeFocused();
+
+  await trigger.click();
+  await page.getByRole("button", { name: "Remove permanently" }).click();
+  await expect(alert).toBeHidden();
+  await expect(page.getByText("Project removal confirmed.")).toBeVisible();
+  await expect(trigger).toBeFocused();
+});
+
+test("keeps AlertDialog open on its scrim and supports safe Escape dismissal", async ({ page }) => {
+  const trigger = page.getByRole("button", { name: "Remove project" });
+  await trigger.click();
+  const alert = page.getByRole("alertdialog", {
+    name: "Remove Mobile checkout refresh?",
+  });
+  const overlay = page.locator(".brick-alert-dialog-overlay");
+  await overlay.click({ position: { x: 4, y: 4 } });
+  await expect(alert).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(alert).toBeHidden();
+  await expect(page.getByText("Project is active.")).toBeVisible();
+  await expect(trigger).toBeFocused();
+});
+
 test("composes Card through its public package without inventing interaction", async ({ page }) => {
   const project = page.getByRole("article", { name: "Mobile checkout refresh" });
   await expect(project).toHaveAttribute("data-slot", "card");
@@ -77,6 +117,11 @@ test("has no automatically detectable accessibility violations", async ({ page }
   await page.getByRole("button", { name: "Publish project" }).click();
   const darkResults = await new AxeBuilder({ page }).analyze();
   expect(darkResults.violations).toEqual([]);
+
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Remove project" }).click();
+  const alertResults = await new AxeBuilder({ page }).analyze();
+  expect(alertResults.violations).toEqual([]);
 });
 
 test("contains the layout at the project viewport", async ({ page }) => {
@@ -92,4 +137,14 @@ test("contains the layout at the project viewport", async ({ page }) => {
   expect(box).not.toBeNull();
   expect(box!.x).toBeGreaterThanOrEqual(0);
   expect(box!.x + box!.width).toBeLessThanOrEqual(dimensions.clientWidth);
+
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Remove project" }).click();
+  const alert = page.getByRole("alertdialog", {
+    name: "Remove Mobile checkout refresh?",
+  });
+  const alertBox = await alert.boundingBox();
+  expect(alertBox).not.toBeNull();
+  expect(alertBox!.x).toBeGreaterThanOrEqual(0);
+  expect(alertBox!.x + alertBox!.width).toBeLessThanOrEqual(dimensions.clientWidth);
 });
