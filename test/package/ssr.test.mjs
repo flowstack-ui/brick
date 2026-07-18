@@ -4,6 +4,7 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import { Card } from "../../dist/card.js";
 import { Badge, NotificationBadge } from "../../dist/badge.js";
+import { Avatar } from "../../dist/avatar.js";
 
 test("Card renders on the server without browser state or a client boundary", () => {
   const markup = renderToString(
@@ -46,4 +47,23 @@ test("Badge family renders server-safe markup without behavior", () => {
   assert.match(notificationMarkup, /aria-label="Inbox, 4 unread messages"/);
   assert.match(notificationMarkup, /aria-hidden="true"/);
   assert.match(notificationMarkup, />4<\/span>/);
+});
+
+test("Avatar emits deterministic fallback and status metadata during SSR", () => {
+  const markup = renderToString(
+    React.createElement(Avatar, {
+      alt: "Ada Lovelace",
+      fallback: "AL",
+      shape: "rounded",
+      status: "online",
+    }),
+  );
+
+  assert.match(markup, /^<span/);
+  assert.match(markup, /class="brick-avatar"/);
+  assert.match(markup, /data-shape="rounded"/);
+  assert.match(markup, /data-status="online"/);
+  assert.match(markup, /role="img"/);
+  assert.match(markup, /aria-label="Ada Lovelace"/);
+  assert.match(markup, />AL<\/span>/);
 });

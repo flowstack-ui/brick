@@ -41,6 +41,7 @@ await writeFile(
     '@import "../../src/components/alert-dialog/alert-dialog.css";',
     '@import "../../src/components/drawer/drawer.css";',
     '@import "../../src/components/badge/badge.css";',
+    '@import "../../src/components/avatar/avatar.css";',
   ].join("\n"),
 );
 

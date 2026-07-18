@@ -44,6 +44,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/badge.d.ts",
       default: "./dist/badge.js",
     },
+    "./avatar": {
+      types: "./dist/avatar.d.ts",
+      default: "./dist/avatar.js",
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css",
@@ -59,7 +63,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const alertDialog = await import(new URL("../../dist/alert-dialog.js", import.meta.url));
   const drawer = await import(new URL("../../dist/drawer.js", import.meta.url));
   const badge = await import(new URL("../../dist/badge.js", import.meta.url));
-  assert.deepEqual(Object.keys(brick), ["AlertDialog", "Badge", "Button", "Card", "Dialog", "Drawer", "NotificationBadge"]);
+  const avatar = await import(new URL("../../dist/avatar.js", import.meta.url));
+  assert.deepEqual(Object.keys(brick), ["AlertDialog", "Avatar", "Badge", "Button", "Card", "Dialog", "Drawer", "NotificationBadge"]);
   assert.equal(button.Button, brick.Button);
   assert.equal(card.Card, brick.Card);
   assert.equal(dialog.Dialog, brick.Dialog);
@@ -70,6 +75,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(drawer.DrawerContent, brick.Drawer.Content);
   assert.equal(badge.Badge, brick.Badge);
   assert.equal(badge.NotificationBadge, brick.NotificationBadge);
+  assert.equal(avatar.Avatar, brick.Avatar);
 });
 
 test("published CSS entrypoints are complete browser CSS", async () => {
@@ -88,6 +94,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-drawer-content/);
   assert.match(styles, /\.brick-badge/);
   assert.match(styles, /\.brick-notification-badge/);
+  assert.match(styles, /\.brick-avatar/);
   assert.match(styles, /box-sizing:\s*border-box/);
   assert.match(styles, /--brick-button-background/);
   assert.match(styles, /--brick-card-space/);
@@ -95,6 +102,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-alert-dialog-max-inline-size/);
   assert.match(styles, /--brick-drawer-inline-size-md/);
   assert.match(styles, /--brick-badge-min-block-size/);
+  assert.match(styles, /--brick-avatar-status-ring-color/);
   assert.match(styles, /--brick-control-min-block-size-xl/);
   assert.match(tokens, /data-brick-appearance/);
   assert.match(reset, /brick\.reset/);

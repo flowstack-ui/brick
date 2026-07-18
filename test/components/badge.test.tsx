@@ -242,4 +242,17 @@ describe("NotificationBadge", () => {
       expect(wrapper).toHaveAttribute("data-size", size);
     }
   });
+
+  it("accepts a native image as its single positioning target", () => {
+    render(
+      <NotificationBadge count={2} overlap="circular">
+        <img alt="Workspace" src="/workspace.png" />
+      </NotificationBadge>,
+    );
+
+    const image = screen.getByRole("img", { name: "Workspace" });
+    expect(image.parentElement).toHaveClass("brick-notification-badge");
+    expect(image.parentElement).toHaveAttribute("data-overlap", "circular");
+    expect(screen.getByText("2")).toHaveAttribute("aria-hidden", "true");
+  });
 });

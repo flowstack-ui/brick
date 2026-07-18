@@ -4,12 +4,16 @@ import { createPortal } from "react-dom";
 import {
   Button,
   Badge,
+  Avatar,
   Card,
   Dialog,
   Drawer,
   AlertDialog,
   NotificationBadge,
   type AlertDialogSize,
+  type AvatarShape,
+  type AvatarSize,
+  type AvatarStatus,
   type BadgeShape,
   type BadgeSize,
   type BadgeTone,
@@ -45,6 +49,16 @@ const badgeTones: BadgeTone[] = ["neutral", "accent", "info", "success", "warnin
 const badgeSizes: BadgeSize[] = ["sm", "md", "lg"];
 const badgeShapes: BadgeShape[] = ["rounded", "pill"];
 const notificationPlacements: NotificationBadgePlacement[] = ["top-start", "top-end", "bottom-start", "bottom-end"];
+const avatarSizes: AvatarSize[] = ["xs", "sm", "md", "lg", "xl"];
+const avatarShapes: AvatarShape[] = ["circle", "rounded"];
+const avatarStatuses: AvatarStatus[] = ["online", "away", "busy", "offline"];
+const avatarStatusLabels: Record<AvatarStatus, string> = {
+  online: "Online",
+  away: "Away",
+  busy: "Busy",
+  offline: "Offline",
+};
+const avatarImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cdefs%3E%3ClinearGradient id='g' x2='1' y2='1'%3E%3Cstop stop-color='%236d5ce7'/%3E%3Cstop offset='1' stop-color='%23e58a5f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='96' height='96' fill='url(%23g)'/%3E%3Ccircle cx='48' cy='36' r='17' fill='%23fff' fill-opacity='.88'/%3E%3Cpath d='M17 91c3-23 15-35 31-35s28 12 31 35' fill='%23fff' fill-opacity='.88'/%3E%3C/svg%3E";
 
 function ArrowIcon({ direction = "end" }: { direction?: "start" | "end" }) {
   return (
@@ -1052,9 +1066,123 @@ function BadgePlayground() {
   );
 }
 
+function AvatarPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+  const [sourceMode, setSourceMode] = useState<"loaded" | "broken" | "missing">("loaded");
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  const interactiveSource = sourceMode === "loaded" ? avatarImage : sourceMode === "broken" ? "/__broken-avatar-image__.png" : undefined;
+
+  return (
+    <div className="playground-shell">
+      <header className="playground-header">
+        <div>
+          <p className="playground-kicker">@flowstack-ui/brick</p>
+          <h1>Avatar workbench</h1>
+          <p>Explicit identity fallback, Atom-owned image loading, shape-following status rings, and external notification composition.</p>
+        </div>
+        <fieldset className="playground-appearance">
+          <legend>Appearance</legend>
+          {(["system", "light", "dark"] as const).map((value) => (
+            <Button aria-pressed={appearance === value} key={value} onPress={() => selectAppearance(value)} size="sm" tone="neutral" variant={appearance === value ? "soft" : "ghost"}>
+              {value}
+            </Button>
+          ))}
+        </fieldset>
+      </header>
+
+      <main data-testid="avatar-workbench">
+        <Scenario description="The direct API keeps identity text visible while one source drives Atom Image and Fallback." title="Overview">
+          <div className="avatar-hero" data-testid="avatar-overview">
+            <Avatar alt="" fallback="AL" size="xl" src={avatarImage} status="online" />
+            <div><h2>Ada Lovelace</h2><p>Online · Design systems</p></div>
+          </div>
+        </Scenario>
+
+        <Scenario description="Five fixed frames remain square; fallback typography scales without becoming interactive." title="Sizes">
+          <div className="avatar-row" data-testid="avatar-sizes">
+            {avatarSizes.map((size) => <div key={size}><Avatar alt={`${size} Ada avatar`} fallback="AL" size={size} /><code>{size}</code></div>)}
+          </div>
+        </Scenario>
+
+        <Scenario description="Circle and rounded share one frame contract for loaded images and explicit fallbacks." title="Shapes">
+          <div className="avatar-row" data-testid="avatar-shapes">
+            {avatarShapes.flatMap((shape) => [
+              <div key={`${shape}-image`}><Avatar alt={`${shape} loaded avatar`} fallback="AL" shape={shape} src={avatarImage} size="lg" /><code>{shape} image</code></div>,
+              <div key={`${shape}-fallback`}><Avatar alt={`${shape} fallback avatar`} fallback="FS" shape={shape} size="lg" /><code>{shape} fallback</code></div>,
+            ])}
+          </div>
+        </Scenario>
+
+        <Scenario description="Online, away, busy, and offline rings inherit both geometries; visible text preserves meaning beyond color." title="Status rings">
+          <div className="avatar-status-grid" data-testid="avatar-statuses">
+            {avatarStatuses.flatMap((status) => avatarShapes.map((shape) => (
+              <div key={`${status}-${shape}`}>
+                <Avatar alt="" fallback={avatarStatusLabels[status].slice(0, 1)} shape={shape} size="lg" status={status} />
+                <span>{avatarStatusLabels[status]}</span>
+                <code>{shape}</code>
+              </div>
+            )))}
+            <div><Avatar alt="" fallback="N" size="lg" /><span>No status</span><code>circle</code></div>
+          </div>
+        </Scenario>
+
+        <Scenario description="Missing, loaded, and failed sources preserve one frame and the same informative fallback name." title="Image and fallback states">
+          <div className="avatar-state-panel" data-testid="avatar-states">
+            <div className="avatar-state-controls" role="group" aria-label="Avatar source state">
+              {(["loaded", "broken", "missing"] as const).map((mode) => <Button aria-pressed={sourceMode === mode} key={mode} onPress={() => setSourceMode(mode)} size="sm" variant={sourceMode === mode ? "soft" : "outline"}>{mode}</Button>)}
+            </div>
+            <div className="avatar-person-row">
+              <Avatar alt="Ada Lovelace" fallback="AL" fallbackDelayMs={150} size="xl" src={interactiveSource} />
+              <div><strong>Ada Lovelace</strong><span>Current source: {sourceMode}</span></div>
+            </div>
+          </div>
+        </Scenario>
+
+        <Scenario description="Informative fallback keeps a full name; decorative image/fallback stays silent beside one visible name." title="Accessibility contexts">
+          <div className="avatar-context-grid" data-testid="avatar-contexts">
+            <div><Avatar alt="Grace Hopper" fallback="GH" /><span>No repeated visible name</span></div>
+            <div><Avatar alt="" fallback="AL" /><span>Ada Lovelace</span></div>
+            <Button aria-label="Open Katherine Johnson profile" startIcon={<Avatar alt="" fallback="KJ" size="sm" />}>Profile</Button>
+          </div>
+        </Scenario>
+
+        <Scenario description="NotificationBadge positions count/dot indicators around Avatar or another single element; a distinct status ring may coexist." title="Notification composition">
+          <div className="avatar-notification-grid" data-testid="avatar-notifications">
+            <div><NotificationBadge count={3} overlap="circular"><Avatar alt="" fallback="AL" size="lg" status="online" /></NotificationBadge><span>Online · 3 updates</span></div>
+            <div><NotificationBadge dot overlap="rectangular" tone="warning"><img alt="Flowstack workspace" className="avatar-native-image" src={avatarImage} /></NotificationBadge><span>Workspace attention</span></div>
+          </div>
+        </Scenario>
+
+        <Scenario description="Light/dark scopes and public root/token hooks customize presentation without changing Atom behavior." title="Appearance and customization">
+          <div className="avatar-appearance-grid" data-testid="avatar-appearance">
+            <div data-brick-appearance="light"><Avatar alt="Light identity" fallback="LI" size="lg" status="away" /><span>Light · Away</span></div>
+            <div data-brick-appearance="dark"><Avatar alt="Dark identity" fallback="DI" size="lg" status="busy" /><span>Dark · Busy</span></div>
+          </div>
+          <div className="avatar-row"><Avatar alt="Customized identity" className="avatar-customized" data-slot="workspace-avatar" fallback="CX" shape="rounded" size="lg" status="online" style={{ "--brick-avatar-radius": "0.25rem", "--brick-avatar-status-ring-width": "0.2rem" } as CSSProperties} /><code>custom hooks</code></div>
+        </Scenario>
+
+        <Scenario description="Non-Latin fallback, long stress content, constrained width, and RTL preserve the square frame and adjacent reflow." title="Mobile, stress, and RTL">
+          <div className="stress-grid" data-testid="avatar-stress">
+            <div className="phone-frame"><div className="avatar-person-row"><Avatar alt="" fallback="李" shape="rounded" size="xl" status="offline" /><div><strong>李小龍</strong><span>Offline · ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</span></div></div></div>
+            <div className="phone-frame" dir="rtl"><div className="avatar-person-row"><Avatar alt="" fallback="ن" size="xl" status="away" /><div><strong>نور</strong><span>بعيد · حالة محلية طويلة لمساحة العمل</span></div></div></div>
+          </div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {window.location.pathname.startsWith("/badge") ? (
+    {window.location.pathname.startsWith("/avatar") ? (
+      <AvatarPlayground />
+    ) : window.location.pathname.startsWith("/badge") ? (
       <BadgePlayground />
     ) : window.location.pathname.startsWith("/drawer") ? (
       <DrawerPlayground />

@@ -43,3 +43,10 @@ export {
   type NotificationBadgeProps,
   type NotificationBadgeSize,
 } from "./components/badge/index.js";
+export {
+  Avatar,
+  type AvatarProps,
+  type AvatarShape,
+  type AvatarSize,
+  type AvatarStatus,
+} from "./components/avatar/index.js";

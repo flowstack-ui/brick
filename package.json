@@ -52,6 +52,10 @@
       "types": "./dist/badge.d.ts",
       "default": "./dist/badge.js"
     },
+    "./avatar": {
+      "types": "./dist/avatar.d.ts",
+      "default": "./dist/avatar.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"

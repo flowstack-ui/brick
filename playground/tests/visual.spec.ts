@@ -162,3 +162,29 @@ test("Badge family retains visible boundaries in forced colors", async ({ page }
   await expect(page.getByTestId("badge-recipes")).toHaveScreenshot("badge-recipes-forced-colors.png");
   await expect(page.getByTestId("notification-counts")).toHaveScreenshot("notification-badges-forced-colors.png");
 });
+
+test("Avatar sizes, shapes, and status rings retain their light hierarchy", async ({ page }) => {
+  await page.goto("/avatar");
+  await expect(page.getByTestId("avatar-sizes")).toHaveScreenshot("avatar-sizes-light.png");
+  await expect(page.getByTestId("avatar-shapes")).toHaveScreenshot("avatar-shapes-light.png");
+  await expect(page.getByTestId("avatar-statuses")).toHaveScreenshot("avatar-statuses-light.png");
+});
+
+test("Avatar loaded, fallback, and notification compositions retain dark geometry", async ({ page }) => {
+  await page.goto("/avatar");
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await expect(page.getByTestId("avatar-overview")).toHaveScreenshot("avatar-overview-dark.png");
+  await expect(page.getByTestId("avatar-notifications")).toHaveScreenshot("avatar-notifications-dark.png");
+});
+
+test("Avatar localized stress remains contained on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/avatar");
+  await expect(page.getByTestId("avatar-stress")).toHaveScreenshot("avatar-stress-mobile.png");
+});
+
+test("Avatar status geometry retains a visible forced-colors boundary", async ({ page }) => {
+  await page.goto("/avatar");
+  await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
+  await expect(page.getByTestId("avatar-statuses")).toHaveScreenshot("avatar-statuses-forced-colors.png");
+});

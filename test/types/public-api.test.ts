@@ -54,6 +54,14 @@ import {
   Badge as SubpathBadge,
   NotificationBadge as SubpathNotificationBadge,
 } from "@flowstack-ui/brick/badge";
+import {
+  Avatar,
+  type AvatarProps,
+  type AvatarShape,
+  type AvatarSize,
+  type AvatarStatus,
+} from "@flowstack-ui/brick";
+import { Avatar as SubpathAvatar } from "@flowstack-ui/brick/avatar";
 
 const variant: ButtonVariant = "soft";
 const tone: ButtonTone = "success";
@@ -286,3 +294,45 @@ void invalidBadgeColor;
 void invalidNotificationModes;
 void invalidNotificationChild;
 void invalidNotificationAsChild;
+
+const avatarSize: AvatarSize = "xl";
+const avatarShape: AvatarShape = "rounded";
+const avatarStatus: AvatarStatus = "online";
+const avatarProps: AvatarProps = {
+  alt: "Ada Lovelace",
+  fallback: "AL",
+  shape: avatarShape,
+  size: avatarSize,
+  src: "/ada.png",
+  status: avatarStatus,
+};
+const decorativeAvatarProps: AvatarProps = { alt: "", fallback: "AL" };
+void Avatar;
+void SubpathAvatar;
+void avatarProps;
+void decorativeAvatarProps;
+
+// @ts-expect-error Avatar requires an explicit alt decision.
+const missingAvatarAlt: AvatarProps = { fallback: "AL" };
+// @ts-expect-error Avatar requires explicit fallback content.
+const missingAvatarFallback: AvatarProps = { alt: "Ada Lovelace" };
+// @ts-expect-error Avatar sizes are a closed recipe set.
+const invalidAvatarSize: AvatarProps = { alt: "Ada", fallback: "A", size: "2xl" };
+// @ts-expect-error Avatar shapes are a closed recipe set.
+const invalidAvatarShape: AvatarProps = { alt: "Ada", fallback: "A", shape: "square" };
+// @ts-expect-error Avatar statuses are concrete availability states.
+const invalidAvatarStatus: AvatarProps = { alt: "Ada", fallback: "A", status: "success" };
+// @ts-expect-error Avatar does not expose a free native color prop.
+const invalidAvatarColor: AvatarProps = { alt: "Ada", fallback: "A", color: "red" };
+// @ts-expect-error Avatar does not expose legacy nested badge configuration.
+const invalidAvatarBadge: AvatarProps = { alt: "Ada", fallback: "A", badge: { count: 2 } };
+// @ts-expect-error Avatar is a direct component without a Group namespace.
+const invalidAvatarGroup = Avatar.Group;
+void missingAvatarAlt;
+void missingAvatarFallback;
+void invalidAvatarSize;
+void invalidAvatarShape;
+void invalidAvatarStatus;
+void invalidAvatarColor;
+void invalidAvatarBadge;
+void invalidAvatarGroup;

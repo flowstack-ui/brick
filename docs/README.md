@@ -26,6 +26,8 @@ This directory is the public documentation authority for
   modal surfaces, distinct mobile sizes, scrolling, portals, and Branch
 - [`components/badge/README.md`](components/badge/README.md) — passive inline
   labels and attached visual notification counts or dots
+- [`components/avatar/README.md`](components/avatar/README.md) — explicit
+  identity images/fallbacks, fixed sizes and shapes, and availability rings
 
 Every released component has one folder under `components/` containing its
 public guide and `CHANGELOG.md`. Start new documentation from the templates in

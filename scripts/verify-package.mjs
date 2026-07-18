@@ -40,6 +40,8 @@ try {
     "dist/drawer.d.ts",
     "dist/badge.js",
     "dist/badge.d.ts",
+    "dist/avatar.js",
+    "dist/avatar.d.ts",
     "dist/styles.css",
     "dist/tokens.css",
     "dist/reset.css",

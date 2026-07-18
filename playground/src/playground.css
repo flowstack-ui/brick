@@ -717,6 +717,132 @@ main {
   border-style: dashed;
 }
 
+.avatar-hero,
+.avatar-row,
+.avatar-status-grid,
+.avatar-state-panel,
+.avatar-context-grid,
+.avatar-notification-grid,
+.avatar-appearance-grid {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  padding: var(--brick-space-5);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-raised);
+}
+
+.avatar-hero,
+.avatar-person-row,
+.avatar-context-grid > div,
+.avatar-notification-grid > div,
+.avatar-appearance-grid > div {
+  display: flex;
+  min-inline-size: 0;
+  align-items: center;
+  gap: var(--brick-space-4);
+}
+
+.avatar-hero h2,
+.avatar-hero p,
+.avatar-person-row strong,
+.avatar-person-row span {
+  margin: 0;
+}
+
+.avatar-hero > div,
+.avatar-person-row > div {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--brick-space-1);
+}
+
+.avatar-hero p,
+.avatar-person-row span,
+.avatar-status-grid code,
+.avatar-row code {
+  color: var(--brick-color-text-secondary);
+}
+
+.avatar-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--brick-space-6);
+}
+
+.avatar-row > div,
+.avatar-status-grid > div {
+  display: grid;
+  justify-items: center;
+  gap: var(--brick-space-2);
+}
+
+.avatar-row code,
+.avatar-status-grid code {
+  font-family: var(--brick-font-family-mono);
+  font-size: 0.75rem;
+}
+
+.avatar-status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: var(--brick-space-6) var(--brick-space-4);
+}
+
+.avatar-state-panel,
+.avatar-context-grid,
+.avatar-notification-grid,
+.avatar-appearance-grid {
+  display: grid;
+  gap: var(--brick-space-5);
+}
+
+.avatar-state-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--brick-space-2);
+}
+
+.avatar-context-grid,
+.avatar-notification-grid,
+.avatar-appearance-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.avatar-notification-grid > div,
+.avatar-appearance-grid > div {
+  padding: var(--brick-space-4);
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-canvas);
+  color: var(--brick-color-text-primary);
+}
+
+.avatar-native-image {
+  display: block;
+  inline-size: 3rem;
+  block-size: 3rem;
+  border-radius: var(--brick-radius-control);
+  object-fit: cover;
+}
+
+.avatar-customized {
+  border: var(--brick-border-width) dashed var(--brick-color-accent-border);
+}
+
+@media (max-width: 22rem) {
+  .avatar-hero,
+  .avatar-row,
+  .avatar-status-grid,
+  .avatar-state-panel,
+  .avatar-context-grid,
+  .avatar-notification-grid,
+  .avatar-appearance-grid {
+    padding: var(--brick-space-3);
+  }
+}
+
 @media (min-width: 22rem) {
   .recipe-grid {
     grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
