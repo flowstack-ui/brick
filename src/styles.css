@@ -238,6 +238,59 @@
     font-weight: var(--brick-font-weight-medium);
   }
 
+  .workspace-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .filter-status {
+    margin: 0;
+    color: var(--brick-color-text-secondary);
+  }
+
+  .project-filter-form,
+  .project-filter-form fieldset {
+    display: grid;
+    gap: var(--brick-space-3);
+  }
+
+  .project-filter-form fieldset {
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .project-filter-form legend,
+  .filter-owner {
+    font-weight: var(--brick-font-weight-semibold);
+  }
+
+  .project-filter-form label:not(.filter-owner) {
+    display: flex;
+    align-items: center;
+    gap: var(--brick-space-2);
+  }
+
+  .filter-owner {
+    display: grid;
+    gap: var(--brick-space-2);
+  }
+
+  .filter-owner select {
+    inline-size: 100%;
+    min-block-size: var(--brick-control-min-block-size-md);
+    min-inline-size: 0;
+    padding-inline: var(--brick-space-control-inline);
+    border: var(--brick-border-width) solid var(--brick-color-border-strong);
+    border-radius: var(--brick-radius-control);
+    background: var(--brick-color-surface-base);
+    color: var(--brick-color-text-primary);
+    font: inherit;
+  }
+
   .workspace-grid {
     display: grid;
     gap: 1rem;

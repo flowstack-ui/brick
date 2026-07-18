@@ -1,5 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator } from "@playwright/test";
+
+async function expectDrawerSettled(drawer: Locator) {
+  await expect(drawer).toHaveAttribute("data-state", "open");
+  await expect.poll(async () => drawer.evaluate((element) => getComputedStyle(element).transform)).toBe(
+    "matrix(1, 0, 0, 1, 0, 0)",
+  );
+}
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
@@ -71,6 +78,34 @@ test("composes AlertDialog as an application-owned destructive decision", async 
   await expect(trigger).toBeFocused();
 });
 
+test("composes Drawer as an application-owned project filter workflow", async ({ page }) => {
+  const trigger = page.getByRole("button", { name: "Filter projects" });
+  await trigger.click();
+  const drawer = page.getByRole("dialog", { name: "Filter workspace projects" });
+  await expect(drawer).toHaveAttribute("data-slot", "drawer-content");
+  await expect(drawer).toHaveAttribute("data-placement", "end");
+  await expect(drawer).toHaveAttribute("data-size", "md");
+  await expect(drawer).toHaveAccessibleDescription(
+    "Choose which projects appear in this workspace view.",
+  );
+
+  await page.getByLabel("Archived projects").check();
+  await page.getByLabel("Owner").selectOption("ada");
+  await page.getByRole("button", { name: "Apply filters" }).click();
+  await expect(drawer).toBeHidden();
+  await expect(page.getByText("Showing active and archived projects for Ada Lovelace.")).toBeVisible();
+  await expect(trigger).toBeFocused();
+
+  await trigger.click();
+  await page.getByRole("button", { name: "Reset filters" }).click();
+  await expect(page.getByLabel("Active projects")).toBeChecked();
+  await expect(page.getByLabel("Archived projects")).not.toBeChecked();
+  await expect(page.getByLabel("Owner")).toHaveValue("any");
+  await page.keyboard.press("Escape");
+  await expect(drawer).toBeHidden();
+  await expect(trigger).toBeFocused();
+});
+
 test("keeps AlertDialog open on its scrim and supports safe Escape dismissal", async ({ page }) => {
   const trigger = page.getByRole("button", { name: "Remove project" });
   await trigger.click();
@@ -122,6 +157,11 @@ test("has no automatically detectable accessibility violations", async ({ page }
   await page.getByRole("button", { name: "Remove project" }).click();
   const alertResults = await new AxeBuilder({ page }).analyze();
   expect(alertResults.violations).toEqual([]);
+
+  await page.getByRole("button", { name: "Keep project" }).click();
+  await page.getByRole("button", { name: "Filter projects" }).click();
+  const drawerResults = await new AxeBuilder({ page }).analyze();
+  expect(drawerResults.violations).toEqual([]);
 });
 
 test("contains the layout at the project viewport", async ({ page }) => {
@@ -147,4 +187,14 @@ test("contains the layout at the project viewport", async ({ page }) => {
   expect(alertBox).not.toBeNull();
   expect(alertBox!.x).toBeGreaterThanOrEqual(0);
   expect(alertBox!.x + alertBox!.width).toBeLessThanOrEqual(dimensions.clientWidth);
+
+  await page.getByRole("button", { name: "Keep project" }).click();
+  await page.getByRole("button", { name: "Filter projects" }).click();
+  const drawer = page.getByRole("dialog", { name: "Filter workspace projects" });
+  await expect(drawer).toBeVisible();
+  await expectDrawerSettled(drawer);
+  const drawerBox = await drawer.boundingBox();
+  expect(drawerBox).not.toBeNull();
+  expect(drawerBox!.x).toBeGreaterThanOrEqual(0);
+  expect(drawerBox!.x + drawerBox!.width).toBeLessThanOrEqual(dimensions.clientWidth);
 });

@@ -3,6 +3,7 @@ import { AlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button } from "@flowstack-ui/brick/button";
 import { Card } from "@flowstack-ui/brick/card";
 import { Dialog } from "@flowstack-ui/brick/dialog";
+import { Drawer } from "@flowstack-ui/brick/drawer";
 
 type Appearance = "light" | "dark";
 
@@ -31,6 +32,10 @@ export function App() {
   const [publishCount, setPublishCount] = useState(0);
   const [inviteStatus, setInviteStatus] = useState("No invitation sent yet.");
   const [removalStatus, setRemovalStatus] = useState("Project is active.");
+  const [includeActive, setIncludeActive] = useState(true);
+  const [includeArchived, setIncludeArchived] = useState(false);
+  const [filterOwner, setFilterOwner] = useState("any");
+  const [filterStatus, setFilterStatus] = useState("Showing all active projects.");
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -133,8 +138,96 @@ export function App() {
               <p className="eyebrow">Today</p>
               <h2 id="workspace-title">Launch workspace</h2>
             </div>
-            <span className="status">3 tasks ready</span>
+            <div className="workspace-tools">
+              <span className="status">3 tasks ready</span>
+              <Drawer.Root>
+                <Drawer.Trigger asChild>
+                  <Button size="sm" tone="neutral" variant="outline">
+                    Filter projects
+                  </Button>
+                </Drawer.Trigger>
+                <Drawer.Portal>
+                  <Drawer.Overlay />
+                  <Drawer.Content placement="end" size="md">
+                    <Drawer.Header>
+                      <Drawer.Title>Filter workspace projects</Drawer.Title>
+                      <Drawer.Description>
+                        Choose which projects appear in this workspace view.
+                      </Drawer.Description>
+                    </Drawer.Header>
+                    <Drawer.Body>
+                      <form className="project-filter-form">
+                        <fieldset>
+                          <legend>Project status</legend>
+                          <label>
+                            <input
+                              checked={includeActive}
+                              onChange={(event) => setIncludeActive(event.currentTarget.checked)}
+                              type="checkbox"
+                            />
+                            Active projects
+                          </label>
+                          <label>
+                            <input
+                              checked={includeArchived}
+                              onChange={(event) => setIncludeArchived(event.currentTarget.checked)}
+                              type="checkbox"
+                            />
+                            Archived projects
+                          </label>
+                        </fieldset>
+                        <label className="filter-owner" htmlFor="filter-owner">
+                          Owner
+                          <select
+                            id="filter-owner"
+                            onChange={(event) => setFilterOwner(event.currentTarget.value)}
+                            value={filterOwner}
+                          >
+                            <option value="any">Any owner</option>
+                            <option value="ada">Ada Lovelace</option>
+                            <option value="grace">Grace Hopper</option>
+                          </select>
+                        </label>
+                      </form>
+                    </Drawer.Body>
+                    <Drawer.Footer>
+                      <Button
+                        onPress={() => {
+                          setIncludeActive(true);
+                          setIncludeArchived(false);
+                          setFilterOwner("any");
+                        }}
+                        tone="neutral"
+                        variant="ghost"
+                      >
+                        Reset filters
+                      </Button>
+                      <Drawer.Close asChild>
+                        <Button
+                          onPress={() => {
+                            const statuses = [
+                              includeActive ? "active" : null,
+                              includeArchived ? "archived" : null,
+                            ].filter(Boolean).join(" and ") || "no";
+                            const owner = filterOwner === "any"
+                              ? "all owners"
+                              : filterOwner === "ada"
+                                ? "Ada Lovelace"
+                                : "Grace Hopper";
+                            setFilterStatus(`Showing ${statuses} projects for ${owner}.`);
+                          }}
+                        >
+                          Apply filters
+                        </Button>
+                      </Drawer.Close>
+                    </Drawer.Footer>
+                  </Drawer.Content>
+                </Drawer.Portal>
+              </Drawer.Root>
+            </div>
           </div>
+
+          <p className="activity filter-status" aria-live="polite">{filterStatus}</p>
 
           <div className="workspace-grid">
             <Card.Root
