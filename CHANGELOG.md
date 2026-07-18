@@ -34,11 +34,20 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   added as an untracked Brick workaround.
 - A 218-pass, 82-intentional-skip desktop/mobile release matrix and clean
   packed-package verification on React 18 and React 19 after Drawer coverage.
+- Badge and NotificationBadge with passive inline recipes, deterministic
+  visual count/dot formatting, logical anchor placement, automatic circle-to-
+  pill geometry, server-safe Atom composition, and explicit owning-context
+  accessibility guidance.
+- A 258-pass, 102-intentional-skip desktop/mobile release matrix, seven
+  reviewed Chromium Badge-family baselines, 100% component-source coverage,
+  clean React 18/19 consumers, and independent Consumer verification.
 
 ### Fixed
 
 - Upgraded the exact Atom dependency to 0.3.2 so nested Dialog cleanup restores
   the application root after animated child and parent exits.
+- Upgraded the exact Atom dependency to 0.3.3 so the pure Badge subpath remains
+  server-safe without a Brick workaround.
 - Preserved explicit RTL direction across body portals and kept RTL Dialogs
   physically centered within the viewport.
 - Button full-width sizing and intrinsic reflow without requiring the optional

@@ -3,6 +3,7 @@ import test from "node:test";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { Card } from "../../dist/card.js";
+import { Badge, NotificationBadge } from "../../dist/badge.js";
 
 test("Card renders on the server without browser state or a client boundary", () => {
   const markup = renderToString(
@@ -23,4 +24,26 @@ test("Card renders on the server without browser state or a client boundary", ()
   assert.match(markup, /data-variant="elevated"/);
   assert.match(markup, /<h1[^>]*>Server report<\/h1>/);
   assert.doesNotMatch(markup, /tabindex|role=/i);
+});
+
+test("Badge family renders server-safe markup without behavior", () => {
+  const badgeMarkup = renderToString(
+    React.createElement(Badge, { tone: "success" }, "Published"),
+  );
+  assert.match(badgeMarkup, /^<span/);
+  assert.match(badgeMarkup, /class="brick-badge"/);
+  assert.match(badgeMarkup, /data-tone="success"/);
+  assert.doesNotMatch(badgeMarkup, /role=|aria-live|tabindex/i);
+
+  const notificationMarkup = renderToString(
+    React.createElement(
+      NotificationBadge,
+      { count: 4 },
+      React.createElement("button", { "aria-label": "Inbox, 4 unread messages" }, "Inbox"),
+    ),
+  );
+  assert.match(notificationMarkup, /class="brick-notification-badge"/);
+  assert.match(notificationMarkup, /aria-label="Inbox, 4 unread messages"/);
+  assert.match(notificationMarkup, /aria-hidden="true"/);
+  assert.match(notificationMarkup, />4<\/span>/);
 });

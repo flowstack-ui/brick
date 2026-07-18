@@ -48,6 +48,10 @@
       "types": "./dist/drawer.d.ts",
       "default": "./dist/drawer.js"
     },
+    "./badge": {
+      "types": "./dist/badge.d.ts",
+      "default": "./dist/badge.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"
@@ -94,7 +98,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.3.2"
+    "@flowstack-ui/atom": "0.3.3"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

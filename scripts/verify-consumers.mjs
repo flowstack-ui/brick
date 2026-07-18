@@ -34,10 +34,11 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, Button, Card } from "@flowstack-ui/brick";
+      `import { AlertDialog, Badge, Button, Card, NotificationBadge } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
+import { Badge as SubpathBadge, NotificationBadge as SubpathNotificationBadge } from "@flowstack-ui/brick/badge";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { readFile } from "node:fs/promises";
@@ -45,23 +46,31 @@ import { readFile } from "node:fs/promises";
 if (Button !== SubpathButton) throw new Error("Button subpath export mismatch");
 if (Card !== SubpathCard) throw new Error("Card subpath export mismatch");
 if (AlertDialog !== SubpathAlertDialog) throw new Error("AlertDialog subpath export mismatch");
+if (Badge !== SubpathBadge || NotificationBadge !== SubpathNotificationBadge) throw new Error("Badge subpath export mismatch");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
 const cardMarkup = renderToString(React.createElement(Card.Root, { as: "article" }, React.createElement(Card.Title, { as: "h1" }, "Card consumer")));
 if (!cardMarkup.includes("brick-card") || !cardMarkup.includes("Card consumer")) throw new Error("Card SSR smoke failed");
+const badgeMarkup = renderToString(React.createElement(Badge, { tone: "success" }, "Published"));
+if (!badgeMarkup.includes("brick-badge") || !badgeMarkup.includes("Published")) throw new Error("Badge SSR smoke failed");
+const notificationMarkup = renderToString(React.createElement(NotificationBadge, { count: 4 }, React.createElement("button", { "aria-label": "Inbox, 4 unread messages" }, "Inbox")));
+if (!notificationMarkup.includes("brick-notification-badge") || !notificationMarkup.includes('aria-hidden="true"')) throw new Error("NotificationBadge SSR smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
-if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content")) throw new Error("CSS export missing");
+if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge")) throw new Error("CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
-      `import { AlertDialog, Button, Card, type ButtonProps, type CardRootProps } from "@flowstack-ui/brick";
+      `import { createElement } from "react";
+import { AlertDialog, Badge, Button, Card, NotificationBadge, type BadgeProps, type ButtonProps, type CardRootProps, type NotificationBadgeProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
 const props: ButtonProps = { children: "Consumer" };
 const cardProps: CardRootProps = { as: "article", children: "Consumer" };
 const alertDialogProps: AlertDialogContentProps = { size: "sm", children: "Consumer" };
+const badgeProps: BadgeProps = { children: "Published", tone: "success" };
+const notificationBadgeProps: NotificationBadgeProps = { count: 4, children: createElement("button", null, "Inbox") };
 void AlertDialog;
 void SubpathAlertDialog;
 void Button;
@@ -71,6 +80,10 @@ void SubpathCard;
 void props;
 void cardProps;
 void alertDialogProps;
+void Badge;
+void NotificationBadge;
+void badgeProps;
+void notificationBadgeProps;
 `,
     );
     await writeFile(
@@ -98,7 +111,7 @@ void alertDialogProps;
         "--ignore-scripts",
         "--save-exact",
         tarball,
-        "@flowstack-ui/atom@0.3.2",
+        "@flowstack-ui/atom@0.3.3",
         `react@${reactVersion}`,
         `react-dom@${reactVersion}`,
         `@types/react@${reactMajor}`,

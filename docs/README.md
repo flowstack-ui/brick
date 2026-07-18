@@ -24,6 +24,8 @@ This directory is the public documentation authority for
   urgent decisions, safe focus, explicit responses, and blocked scrim dismissal
 - [`components/drawer/README.md`](components/drawer/README.md) — logical-edge
   modal surfaces, distinct mobile sizes, scrolling, portals, and Branch
+- [`components/badge/README.md`](components/badge/README.md) — passive inline
+  labels and attached visual notification counts or dots
 
 Every released component has one folder under `components/` containing its
 public guide and `CHANGELOG.md`. Start new documentation from the templates in

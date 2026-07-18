@@ -3,11 +3,17 @@ import { createRoot } from "react-dom/client";
 import { createPortal } from "react-dom";
 import {
   Button,
+  Badge,
   Card,
   Dialog,
   Drawer,
   AlertDialog,
+  NotificationBadge,
   type AlertDialogSize,
+  type BadgeShape,
+  type BadgeSize,
+  type BadgeTone,
+  type BadgeVariant,
   type ButtonShape,
   type ButtonSize,
   type ButtonTone,
@@ -17,6 +23,7 @@ import {
   type DialogSize,
   type DrawerPlacement,
   type DrawerSize,
+  type NotificationBadgePlacement,
 } from "@flowstack-ui/brick";
 import "@flowstack-ui/brick/styles.css";
 import "./playground.css";
@@ -33,6 +40,11 @@ const dialogSizes: DialogSize[] = ["sm", "md", "lg"];
 const alertDialogSizes: AlertDialogSize[] = ["sm", "md"];
 const drawerPlacements: DrawerPlacement[] = ["start", "end", "top", "bottom"];
 const drawerSizes: DrawerSize[] = ["sm", "md", "lg", "full"];
+const badgeVariants: BadgeVariant[] = ["soft", "solid", "outline"];
+const badgeTones: BadgeTone[] = ["neutral", "accent", "info", "success", "warning", "danger"];
+const badgeSizes: BadgeSize[] = ["sm", "md", "lg"];
+const badgeShapes: BadgeShape[] = ["rounded", "pill"];
+const notificationPlacements: NotificationBadgePlacement[] = ["top-start", "top-end", "bottom-start", "bottom-end"];
 
 function ArrowIcon({ direction = "end" }: { direction?: "start" | "end" }) {
   return (
@@ -942,9 +954,109 @@ function DrawerPlayground() {
   );
 }
 
+function BadgePlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  return (
+    <div className="playground-shell">
+      <header className="playground-header">
+        <div>
+          <p className="playground-kicker">@flowstack-ui/brick</p>
+          <h1>Badge family workbench</h1>
+          <p>Passive inline labels and visual notification counts with explicit accessible context.</p>
+        </div>
+        <fieldset className="playground-appearance">
+          <legend>Appearance</legend>
+          {(["system", "light", "dark"] as const).map((value) => (
+            <Button aria-pressed={appearance === value} key={value} onPress={() => selectAppearance(value)} size="sm" tone="neutral" variant={appearance === value ? "soft" : "ghost"}>
+              {value}
+            </Button>
+          ))}
+        </fieldset>
+      </header>
+
+      <main data-testid="badge-workbench">
+        <Scenario description="Badge is ordinary inline content; visible words carry the meaning and tone reinforces it." title="Overview">
+          <div className="badge-hero" data-testid="badge-overview">
+            <div><span>Release status</span><Badge tone="success">Published</Badge></div>
+            <p>Open issues <Badge>12</Badge></p>
+            <p>Category <Badge shape="pill" tone="accent">Design system</Badge></p>
+          </div>
+        </Scenario>
+
+        <Scenario description="Three paint recipes share six semantic tones without changing content semantics." title="Variants and tones">
+          <div className="badge-matrix" data-testid="badge-recipes">
+            {badgeVariants.flatMap((variant) => badgeTones.map((tone) => (
+              <div className="badge-cell" key={`${variant}-${tone}`}><code>{variant} · {tone}</code><Badge tone={tone} variant={variant}>{tone}</Badge></div>
+            )))}
+          </div>
+        </Scenario>
+
+        <Scenario description="All sizes remain readable. Rounded is the default; pill is intentional for passive tags." title="Sizes, shapes, and tags">
+          <div className="badge-section-stack" data-testid="badge-sizes-shapes">
+            <div className="badge-inline-row">{badgeSizes.map((size) => <Badge key={size} size={size}>{size} status</Badge>)}</div>
+            <div className="badge-inline-row">
+              {badgeShapes.map((shape) => <Badge key={shape} shape={shape} tone="info">{shape}</Badge>)}
+              <Badge shape="pill">TypeScript</Badge>
+              <Button shape="pill" size="sm" tone="neutral" variant="outline">Clear filters</Button>
+            </div>
+          </div>
+        </Scenario>
+
+        <Scenario description="Counts stay in normal reading order and need enough nearby context; Badge adds no role or live region." title="Semantic contexts">
+          <div className="badge-context-grid" data-testid="badge-contexts">
+            <h3>Deployments <Badge tone="success">Healthy</Badge></h3>
+            <p>Pending reviews <Badge tone="warning">4</Badge></p>
+            <p>Environment <Badge shape="pill">Staging</Badge></p>
+          </div>
+        </Scenario>
+
+        <Scenario description="NotificationBadge attaches a visual-only count or dot while the owning control supplies the complete accessible name." title="Notification counts and dots">
+          <div className="notification-grid" data-testid="notification-counts">
+            {[1, 9, 12, 125].map((count) => <NotificationBadge count={count} key={count}><button aria-label={`Inbox, ${count} unread messages`} className="badge-icon-button" type="button">✉</button></NotificationBadge>)}
+            <NotificationBadge count={0} showZero><button aria-label="Tasks, no tasks ready" className="badge-icon-button" type="button">✓</button></NotificationBadge>
+            <NotificationBadge dot tone="success"><span aria-label="Ada Lovelace, online" className="badge-avatar" role="img">AL</span></NotificationBadge>
+          </div>
+        </Scenario>
+
+        <Scenario description="Logical start/end placement mirrors in RTL; circular overlap follows Avatar geometry." title="Placement and overlap">
+          <div className="notification-placement-grid" data-testid="notification-placements">
+            {notificationPlacements.map((placement) => <div key={placement}><code>{placement}</code><NotificationBadge count={4} placement={placement}><button aria-label={`${placement}, 4 notifications`} className="badge-icon-button" type="button">◆</button></NotificationBadge></div>)}
+            <div><code>circular</code><NotificationBadge count={8} overlap="circular"><span aria-label="Grace Hopper, 8 updates" className="badge-avatar" role="img">GH</span></NotificationBadge></div>
+            <div dir="rtl"><code>RTL top-start</code><NotificationBadge count={3} placement="top-start"><button aria-label="صندوق الوارد، 3 رسائل" className="badge-icon-button" type="button">✉</button></NotificationBadge></div>
+          </div>
+        </Scenario>
+
+        <Scenario description="Light and dark scopes plus public tokens, class, style, and slot hooks remain local and inspectable." title="Appearance and customization">
+          <div className="badge-appearance-grid" data-testid="badge-appearance">
+            <div data-brick-appearance="light"><Badge tone="danger">Light error</Badge><NotificationBadge count={7}><button aria-label="Light inbox, 7 unread" className="badge-icon-button" type="button">✉</button></NotificationBadge></div>
+            <div data-brick-appearance="dark"><Badge tone="danger">Dark error</Badge><NotificationBadge count={7}><button aria-label="Dark inbox, 7 unread" className="badge-icon-button" type="button">✉</button></NotificationBadge></div>
+          </div>
+          <div className="badge-inline-row"><Badge className="badge-customized" data-slot="custom-status" style={{ "--brick-badge-radius": "0.2rem" } as CSSProperties} tone="accent">Custom hooks</Badge></div>
+        </Scenario>
+
+        <Scenario description="Long localization, mixed direction, constrained width, and unbroken content wrap without clipping." title="Mobile, stress, and RTL">
+          <div className="stress-grid" data-testid="badge-stress">
+            <div className="phone-frame"><p>Localized status</p><Badge size="lg" tone="warning">Awaiting detailed workspace verification</Badge><Badge>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ</Badge></div>
+            <div className="phone-frame" dir="rtl"><p>محتوى من اليمين إلى اليسار</p><Badge shape="pill" tone="info">قيد مراجعة إعداد مساحة العمل</Badge><p>Open issues <Badge>12</Badge></p></div>
+          </div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {window.location.pathname.startsWith("/drawer") ? (
+    {window.location.pathname.startsWith("/badge") ? (
+      <BadgePlayground />
+    ) : window.location.pathname.startsWith("/drawer") ? (
       <DrawerPlayground />
     ) : window.location.pathname.startsWith("/alert-dialog") ? (
       <AlertDialogPlayground />

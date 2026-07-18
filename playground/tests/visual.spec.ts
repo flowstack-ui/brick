@@ -136,3 +136,29 @@ test("top Drawer retains its boundary in forced colors", async ({ page }) => {
   await page.getByRole("button", { name: "Open top drawer" }).click();
   await expect(page).toHaveScreenshot("drawer-top-forced-colors.png");
 });
+
+test("Badge recipes and sizes retain their light hierarchy", async ({ page }) => {
+  await page.goto("/badge");
+  await expect(page.getByTestId("badge-recipes")).toHaveScreenshot("badge-recipes-light.png");
+  await expect(page.getByTestId("badge-sizes-shapes")).toHaveScreenshot("badge-sizes-shapes-light.png");
+});
+
+test("Notification counts, dots, and placements retain dark geometry", async ({ page }) => {
+  await page.goto("/badge");
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await expect(page.getByTestId("notification-counts")).toHaveScreenshot("notification-badges-dark.png");
+  await expect(page.getByTestId("notification-placements")).toHaveScreenshot("notification-placements-dark.png");
+});
+
+test("Badge family remains contained in narrow localized layouts", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/badge");
+  await expect(page.getByTestId("badge-stress")).toHaveScreenshot("badge-stress-mobile.png");
+});
+
+test("Badge family retains visible boundaries in forced colors", async ({ page }) => {
+  await page.goto("/badge");
+  await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
+  await expect(page.getByTestId("badge-recipes")).toHaveScreenshot("badge-recipes-forced-colors.png");
+  await expect(page.getByTestId("notification-counts")).toHaveScreenshot("notification-badges-forced-colors.png");
+});

@@ -37,6 +37,23 @@ import {
   type DrawerContentProps,
   type DrawerRootProps,
 } from "@flowstack-ui/brick/drawer";
+import {
+  Badge,
+  NotificationBadge,
+  type BadgeProps,
+  type BadgeShape,
+  type BadgeSize,
+  type BadgeTone,
+  type BadgeVariant,
+  type NotificationBadgeOverlap,
+  type NotificationBadgePlacement,
+  type NotificationBadgeProps,
+  type NotificationBadgeSize,
+} from "@flowstack-ui/brick";
+import {
+  Badge as SubpathBadge,
+  NotificationBadge as SubpathNotificationBadge,
+} from "@flowstack-ui/brick/badge";
 
 const variant: ButtonVariant = "soft";
 const tone: ButtonTone = "success";
@@ -212,3 +229,60 @@ const invalidFlatDrawer = createElement(Drawer, { title: "Invalid" });
 void invalidDrawerPlacement;
 void invalidDrawerSize;
 void invalidFlatDrawer;
+
+const badgeVariant: BadgeVariant = "outline";
+const badgeTone: BadgeTone = "warning";
+const badgeSize: BadgeSize = "lg";
+const badgeShape: BadgeShape = "pill";
+const badgeProps: BadgeProps = {
+  children: "Pending",
+  shape: badgeShape,
+  size: badgeSize,
+  tone: badgeTone,
+  variant: badgeVariant,
+};
+const notificationPlacement: NotificationBadgePlacement = "bottom-start";
+const notificationOverlap: NotificationBadgeOverlap = "circular";
+const notificationSize: NotificationBadgeSize = "sm";
+const notificationCountProps: NotificationBadgeProps = {
+  children: createElement("button", { "aria-label": "Tasks, 4 ready" }, "Tasks"),
+  count: 4,
+  overlap: notificationOverlap,
+  placement: notificationPlacement,
+  size: notificationSize,
+};
+const notificationDotProps: NotificationBadgeProps = {
+  children: createElement("span", null, "Avatar"),
+  dot: true,
+};
+void Badge;
+void SubpathBadge;
+void NotificationBadge;
+void SubpathNotificationBadge;
+void badgeProps;
+void notificationCountProps;
+void notificationDotProps;
+
+// @ts-expect-error Badge variants are a closed recipe set.
+const invalidBadgeVariant: BadgeProps = { children: "Invalid", variant: "ghost" };
+// @ts-expect-error Badge exposes semantic tone instead of native color.
+const invalidBadgeColor: BadgeProps = { children: "Invalid", color: "red" };
+// @ts-expect-error NotificationBadge count and dot modes are mutually exclusive.
+const invalidNotificationModes: NotificationBadgeProps = {
+  children: createElement("span"),
+  count: 4,
+  dot: true,
+};
+// @ts-expect-error NotificationBadge requires one React element anchor.
+const invalidNotificationChild: NotificationBadgeProps = { children: "Inbox", count: 4 };
+const invalidNotificationAsChild: NotificationBadgeProps = {
+  // @ts-expect-error NotificationBadge keeps its stable positioning wrapper.
+  asChild: true,
+  children: createElement("span"),
+  count: 4,
+};
+void invalidBadgeVariant;
+void invalidBadgeColor;
+void invalidNotificationModes;
+void invalidNotificationChild;
+void invalidNotificationAsChild;
