@@ -44,6 +44,10 @@
       "types": "./dist/alert-dialog.d.ts",
       "default": "./dist/alert-dialog.js"
     },
+    "./drawer": {
+      "types": "./dist/drawer.d.ts",
+      "default": "./dist/drawer.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"

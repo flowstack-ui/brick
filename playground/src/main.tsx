@@ -1,9 +1,11 @@
 import { StrictMode, useState, type CSSProperties, type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
+import { createPortal } from "react-dom";
 import {
   Button,
   Card,
   Dialog,
+  Drawer,
   AlertDialog,
   type AlertDialogSize,
   type ButtonShape,
@@ -13,6 +15,8 @@ import {
   type CardSize,
   type CardVariant,
   type DialogSize,
+  type DrawerPlacement,
+  type DrawerSize,
 } from "@flowstack-ui/brick";
 import "@flowstack-ui/brick/styles.css";
 import "./playground.css";
@@ -27,6 +31,8 @@ const cardVariants: CardVariant[] = ["outline", "elevated", "subtle"];
 const cardSizes: CardSize[] = ["sm", "md", "lg"];
 const dialogSizes: DialogSize[] = ["sm", "md", "lg"];
 const alertDialogSizes: AlertDialogSize[] = ["sm", "md"];
+const drawerPlacements: DrawerPlacement[] = ["start", "end", "top", "bottom"];
+const drawerSizes: DrawerSize[] = ["sm", "md", "lg", "full"];
 
 function ArrowIcon({ direction = "end" }: { direction?: "start" | "end" }) {
   return (
@@ -775,9 +781,172 @@ function AlertDialogPlayground() {
   );
 }
 
+function DrawerDemo({
+  body = "Application-owned controls remain explicit while Atom owns the modal layer.",
+  dir,
+  label,
+  placement = "end",
+  size = "md",
+}: {
+  body?: ReactNode;
+  dir?: "ltr" | "rtl";
+  label: string;
+  placement?: DrawerPlacement;
+  size?: DrawerSize;
+}) {
+  return (
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button variant="outline">{label}</Button>
+      </Drawer.Trigger>
+      <Drawer.Portal>
+        <Drawer.Overlay />
+        <Drawer.Content dir={dir} placement={placement} size={size}>
+          <Drawer.Header>
+            <Drawer.Title>{label}</Drawer.Title>
+            <Drawer.Description>
+              Edge-attached presentation composed directly on Atom modal behavior.
+            </Drawer.Description>
+          </Drawer.Header>
+          <Drawer.Body>{body}</Drawer.Body>
+          <Drawer.Footer>
+            <Drawer.Close asChild>
+              <Button tone="neutral" variant="outline">Cancel</Button>
+            </Drawer.Close>
+            <Drawer.Close asChild>
+              <Button>Apply changes</Button>
+            </Drawer.Close>
+          </Drawer.Footer>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  );
+}
+
+function DrawerPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+  const [eventLog, setEventLog] = useState("No drawer event yet");
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  return (
+    <div className="playground-shell">
+      <header className="playground-header">
+        <div>
+          <p className="playground-kicker">@flowstack-ui/brick</p>
+          <h1>Drawer workbench</h1>
+          <p>Logical edge placement, distinct mobile sizes, bounded scrolling, modal cleanup, and public composition.</p>
+        </div>
+        <fieldset className="playground-appearance">
+          <legend>Appearance</legend>
+          {(["system", "light", "dark"] as const).map((value) => (
+            <Button
+              aria-pressed={appearance === value}
+              key={value}
+              onPress={() => selectAppearance(value)}
+              size="sm"
+              tone="neutral"
+              variant={appearance === value ? "soft" : "ghost"}
+            >
+              {value}
+            </Button>
+          ))}
+        </fieldset>
+      </header>
+
+      <main data-testid="drawer-workbench">
+        <Scenario description="The shortest finished Drawer uses the logical end edge and medium size." title="Overview">
+          <div className="drawer-stage" data-testid="drawer-overview">
+            <DrawerDemo label="Filter projects" />
+          </div>
+        </Scenario>
+
+        <Scenario description="Start and end mirror through document direction; top and bottom remain block edges." title="Placements">
+          <div className="drawer-launch-grid" data-testid="drawer-placements">
+            {drawerPlacements.map((placement) => (
+              <DrawerDemo key={placement} label={`Open ${placement} drawer`} placement={placement} size="sm" />
+            ))}
+          </div>
+        </Scenario>
+
+        <Scenario description="Every size stays available and visibly distinct on mobile; only full occupies the viewport." title="Sizes">
+          <div className="drawer-launch-grid" data-testid="drawer-sizes">
+            {drawerSizes.map((size) => (
+              <DrawerDemo key={size} label={`Open ${size} drawer`} size={size} />
+            ))}
+          </div>
+        </Scenario>
+
+        <Scenario description="Header, independently scrollable Body, Footer, and visible Close paths are public regions." title="Anatomy">
+          <div className="drawer-stage" data-testid="drawer-anatomy">
+            <DrawerDemo
+              body={<form className="drawer-filter-form"><label><input defaultChecked type="checkbox" /> Active projects</label><label><input type="checkbox" /> Archived projects</label><label>Owner<select defaultValue="any"><option value="any">Any owner</option><option>Ada</option></select></label></form>}
+              label="Inspect drawer anatomy"
+              size="lg"
+            />
+          </div>
+        </Scenario>
+
+        <Scenario description="Escape, exact-overlay clicks, disabled dismissal, and disabled opening preserve Atom policy." title="States and dismissal">
+          <div className="drawer-stage" data-testid="drawer-states">
+            <Drawer.Root onOpenChange={(open, reason) => setEventLog(open ? "Opened" : `Closed: ${reason ?? "controlled"}`)}>
+              <Drawer.Trigger asChild><Button>Open event drawer</Button></Drawer.Trigger>
+              <Drawer.Portal><Drawer.Overlay /><Drawer.Content><Drawer.Header><Drawer.Title>Dismissal evidence</Drawer.Title><Drawer.Description>Try Escape, the scrim, or Close.</Drawer.Description></Drawer.Header><Drawer.Body>Only the active top layer responds.</Drawer.Body><Drawer.Footer><Drawer.Close asChild><Button>Close event drawer</Button></Drawer.Close></Drawer.Footer></Drawer.Content></Drawer.Portal>
+            </Drawer.Root>
+            <output aria-live="polite" className="dialog-event-log">{eventLog}</output>
+            <Drawer.Root disabled><Drawer.Trigger asChild><Button>Unavailable drawer</Button></Drawer.Trigger></Drawer.Root>
+            <Drawer.Root closeOnBackdropClick={false} closeOnEscape={false}>
+              <Drawer.Trigger asChild><Button variant="outline">Open dismissal-disabled drawer</Button></Drawer.Trigger>
+              <Drawer.Portal><Drawer.Overlay /><Drawer.Content><Drawer.Header><Drawer.Title>Explicit close required</Drawer.Title><Drawer.Description>Escape and the scrim are disabled.</Drawer.Description></Drawer.Header><Drawer.Body>Use the visible close control.</Drawer.Body><Drawer.Footer><Drawer.Close asChild><Button>Close persistent drawer</Button></Drawer.Close></Drawer.Footer></Drawer.Content></Drawer.Portal>
+            </Drawer.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="A child Dialog takes top-layer ownership and closing both layers restores the application." title="Nested modal">
+          <div className="drawer-stage" data-testid="drawer-nested">
+            <Drawer.Root>
+              <Drawer.Trigger asChild><Button variant="outline">Open parent drawer</Button></Drawer.Trigger>
+              <Drawer.Portal><Drawer.Overlay /><Drawer.Content><Drawer.Header><Drawer.Title>Parent filters</Drawer.Title><Drawer.Description>A Dialog may open above this Drawer.</Drawer.Description></Drawer.Header><Drawer.Body><Dialog.Root><Dialog.Trigger asChild><Button>Open nested dialog from drawer</Button></Dialog.Trigger><Dialog.Portal><Dialog.Overlay /><Dialog.Content size="sm"><Dialog.Header><Dialog.Title>Save filter preset?</Dialog.Title><Dialog.Description>The Drawer remains beneath this layer.</Dialog.Description></Dialog.Header><Dialog.Footer><Dialog.Close asChild><Button>Done with nested dialog</Button></Dialog.Close></Dialog.Footer></Dialog.Content></Dialog.Portal></Dialog.Root></Drawer.Body><Drawer.Footer><Drawer.Close asChild><Button tone="neutral" variant="outline">Close parent drawer</Button></Drawer.Close></Drawer.Footer></Drawer.Content></Drawer.Portal>
+            </Drawer.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Branch registers a portalled composite surface as part of the active Drawer layer." title="Portals and Branch">
+          <div className="drawer-stage" data-testid="drawer-branch">
+            <Drawer.Root>
+              <Drawer.Trigger asChild><Button variant="outline">Open branch drawer</Button></Drawer.Trigger>
+              <Drawer.Portal><Drawer.Overlay /><Drawer.Content><Drawer.Header><Drawer.Title>Branch composition</Drawer.Title><Drawer.Description>Portalled composite content remains owned by this modal.</Drawer.Description></Drawer.Header><Drawer.Body>The action below is rendered through a separate document-body portal.</Drawer.Body><Drawer.Footer><Drawer.Close asChild><Button>Close branch drawer</Button></Drawer.Close></Drawer.Footer>{createPortal(<Drawer.Branch className="drawer-branch-demo" render={<aside aria-label="Owned branch surface" />}><Button variant="soft">Branch action</Button></Drawer.Branch>, document.body)}</Drawer.Content></Drawer.Portal>
+            </Drawer.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Public tokens, class, style, slot, and inline Portal scope customize presentation without behavior." title="Appearance and customization">
+          <div className="drawer-scope-grid" data-testid="drawer-appearance">
+            <div data-brick-appearance="light"><Drawer.Root><Drawer.Trigger asChild><Button>Light scoped Drawer</Button></Drawer.Trigger><Drawer.Portal disabled><Drawer.Overlay /><Drawer.Content size="sm"><Drawer.Header><Drawer.Title>Light scope</Drawer.Title></Drawer.Header><Drawer.Body>Inline Portal inherits this scope.</Drawer.Body><Drawer.Footer><Drawer.Close asChild><Button>Close</Button></Drawer.Close></Drawer.Footer></Drawer.Content></Drawer.Portal></Drawer.Root></div>
+            <div data-brick-appearance="dark"><Drawer.Root><Drawer.Trigger asChild><Button>Dark scoped Drawer</Button></Drawer.Trigger><Drawer.Portal disabled><Drawer.Overlay /><Drawer.Content size="sm"><Drawer.Header><Drawer.Title>Dark scope</Drawer.Title></Drawer.Header><Drawer.Body>Inline Portal inherits this scope.</Drawer.Body><Drawer.Footer><Drawer.Close asChild><Button>Close</Button></Drawer.Close></Drawer.Footer></Drawer.Content></Drawer.Portal></Drawer.Root></div>
+          </div>
+          <Drawer.Root><Drawer.Trigger asChild><Button variant="outline">Open customized drawer</Button></Drawer.Trigger><Drawer.Portal><Drawer.Overlay /><Drawer.Content className="drawer-customized" data-slot="account-drawer" style={{ "--brick-drawer-radius": "0.35rem", "--brick-drawer-space": "2rem" } as CSSProperties}><Drawer.Header data-slot="account-drawer-header"><Drawer.Title>Customized Drawer</Drawer.Title><Drawer.Description>Public hooks remain local and inspectable.</Drawer.Description></Drawer.Header><Drawer.Body>Behavior still comes from Atom.</Drawer.Body><Drawer.Footer><Drawer.Close asChild><Button>Close</Button></Drawer.Close></Drawer.Footer></Drawer.Content></Drawer.Portal></Drawer.Root>
+        </Scenario>
+
+        <Scenario description="Long content scrolls inside Body while mobile geometry, RTL direction, and visible actions remain reachable." title="Mobile, stress, and RTL">
+          <div className="drawer-stage" dir="rtl" data-testid="drawer-stress">
+            <DrawerDemo dir="rtl" label="فتح مرشحات مساحة العمل المفصلة" placement="start" size="lg" body={<div className="dialog-long-copy">{Array.from({ length: 14 }, (_, index) => <p key={index}>القسم {index + 1}: يبقى المحتوى الطويل داخل منطقة قابلة للتمرير مع مرجع ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.</p>)}</div>} />
+          </div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {window.location.pathname.startsWith("/alert-dialog") ? (
+    {window.location.pathname.startsWith("/drawer") ? (
+      <DrawerPlayground />
+    ) : window.location.pathname.startsWith("/alert-dialog") ? (
       <AlertDialogPlayground />
     ) : window.location.pathname.startsWith("/dialog") ? (
       <DialogPlayground />

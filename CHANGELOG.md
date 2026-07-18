@@ -26,8 +26,14 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   permanently blocked backdrop dismissal.
 - Four AlertDialog Chromium baselines covering light, dark, mobile RTL, and
   forced colors, plus desktop/mobile interaction, nesting, and axe evidence.
-- A 159-pass, 66-intentional-skip desktop/mobile release matrix and clean
-  packed-package verification on React 18 and React 19.
+- Drawer with twelve public parts, four logical edge placements, four distinct
+  mobile-aware sizes including full, bounded Body scrolling, Branch
+  composition, and public CSS hooks.
+- A named post-Drawer Gesture Drawer / Bottom Sheet capability audit so future
+  swipe, drag, and snap behavior is decided at the Atom boundary rather than
+  added as an untracked Brick workaround.
+- A 218-pass, 82-intentional-skip desktop/mobile release matrix and clean
+  packed-package verification on React 18 and React 19 after Drawer coverage.
 
 ### Fixed
 

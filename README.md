@@ -4,8 +4,8 @@ Opinionated styled React components built on `@flowstack-ui/atom`.
 
 Brick provides finished, accessible React components with static CSS, semantic
 design tokens, light and dark appearances, and a documented customization
-contract. The initial catalog includes Button, Card, Dialog, and AlertDialog in
-version `0.1.0`.
+contract. The initial catalog includes Button, Card, Dialog, AlertDialog, and
+Drawer in version `0.1.0`.
 
 ## Boundary
 
@@ -37,7 +37,7 @@ import "@flowstack-ui/brick/styles.css";
 Use `@flowstack-ui/brick/tokens.css` when only the visual tokens are needed.
 
 ```tsx
-import { AlertDialog, Button, Card, Dialog } from "@flowstack-ui/brick";
+import { AlertDialog, Button, Card, Dialog, Drawer } from "@flowstack-ui/brick";
 
 <Button>Save changes</Button>;
 
@@ -69,6 +69,18 @@ import { AlertDialog, Button, Card, Dialog } from "@flowstack-ui/brick";
     </AlertDialog.Content>
   </AlertDialog.Portal>
 </AlertDialog.Root>;
+
+<Drawer.Root>
+  <Drawer.Trigger asChild><Button variant="outline">Filters</Button></Drawer.Trigger>
+  <Drawer.Portal>
+    <Drawer.Overlay />
+    <Drawer.Content placement="end" size="md">
+      <Drawer.Title>Filter projects</Drawer.Title>
+      <Drawer.Description>Narrow the visible project list.</Drawer.Description>
+      <Drawer.Close asChild><Button>Apply</Button></Drawer.Close>
+    </Drawer.Content>
+  </Drawer.Portal>
+</Drawer.Root>;
 ```
 
 See [`docs/README.md`](docs/README.md) for the public guides and component

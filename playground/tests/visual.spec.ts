@@ -104,3 +104,35 @@ test("AlertDialog retains its boundary in forced colors", async ({ page }) => {
   await page.getByRole("button", { name: "Delete project?" }).click();
   await expect(page).toHaveScreenshot("alert-dialog-overview-forced-colors.png");
 });
+
+test("Drawer end surface and anatomy retain their visual hierarchy", async ({ page }) => {
+  await page.goto("/drawer");
+  await page.getByRole("button", { name: "Filter projects" }).click();
+  await expect(page).toHaveScreenshot("drawer-end-md-light.png");
+
+  await page.getByRole("button", { name: "Cancel" }).click();
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await page.getByRole("button", { name: "Inspect drawer anatomy" }).click();
+  await expect(page).toHaveScreenshot("drawer-anatomy-lg-dark.png");
+});
+
+test("Drawer remains distinct and contained in a narrow RTL layout", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/drawer");
+  await page.getByRole("button", { name: "فتح مرشحات مساحة العمل المفصلة" }).click();
+  await expect(page).toHaveScreenshot("drawer-start-lg-rtl-mobile.png");
+});
+
+test("full mobile Drawer is visually distinct from large", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/drawer");
+  await page.getByRole("button", { name: "Open full drawer" }).click();
+  await expect(page).toHaveScreenshot("drawer-full-mobile.png");
+});
+
+test("top Drawer retains its boundary in forced colors", async ({ page }) => {
+  await page.goto("/drawer");
+  await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
+  await page.getByRole("button", { name: "Open top drawer" }).click();
+  await expect(page).toHaveScreenshot("drawer-top-forced-colors.png");
+});

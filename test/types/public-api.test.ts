@@ -30,6 +30,13 @@ import {
   type AlertDialogOverlayProps,
   type AlertDialogRootProps,
 } from "@flowstack-ui/brick/alert-dialog";
+import { Drawer, type DrawerPlacement, type DrawerSize } from "@flowstack-ui/brick";
+import {
+  Drawer as SubpathDrawer,
+  DrawerContent,
+  type DrawerContentProps,
+  type DrawerRootProps,
+} from "@flowstack-ui/brick/drawer";
 
 const variant: ButtonVariant = "soft";
 const tone: ButtonTone = "success";
@@ -169,3 +176,39 @@ void invalidAlertDialogSize;
 void invalidFlatAlertDialog;
 void invalidAlertDialogBackdrop;
 void invalidAlertDialogOverlay;
+
+const drawerPlacement: DrawerPlacement = "start";
+const drawerSize: DrawerSize = "full";
+const drawerRootProps: DrawerRootProps = {
+  children: createElement(Drawer.Trigger, null, "Open drawer"),
+  closeOnBackdropClick: false,
+};
+const drawerContentProps: DrawerContentProps = {
+  "aria-label": "Filters",
+  children: createElement(Drawer.Body, null, "Filter controls"),
+  placement: drawerPlacement,
+  size: drawerSize,
+};
+void Drawer;
+void SubpathDrawer;
+void DrawerContent;
+void drawerRootProps;
+void drawerContentProps;
+
+const invalidDrawerPlacement: DrawerContentProps = {
+  "aria-label": "Invalid",
+  children: "Invalid",
+  // @ts-expect-error Drawer placement uses logical edges.
+  placement: "left",
+};
+const invalidDrawerSize: DrawerContentProps = {
+  "aria-label": "Invalid",
+  children: "Invalid",
+  // @ts-expect-error Drawer sizes are a closed recipe set.
+  size: "xl",
+};
+// @ts-expect-error Drawer is a namespace and not a callable flat component.
+const invalidFlatDrawer = createElement(Drawer, { title: "Invalid" });
+void invalidDrawerPlacement;
+void invalidDrawerSize;
+void invalidFlatDrawer;

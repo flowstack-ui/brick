@@ -4,6 +4,96 @@
   font-family: var(--brick-font-family-body);
 }
 
+.drawer-stage {
+  display: flex;
+  min-block-size: 6rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--brick-space-3);
+  padding: var(--brick-space-5);
+  border: 1px dashed var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-overlay);
+  background: var(--brick-color-surface-subtle);
+}
+
+.drawer-launch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: var(--brick-space-3);
+}
+
+.drawer-launch-grid > .brick-button {
+  inline-size: 100%;
+}
+
+.drawer-filter-form {
+  display: grid;
+  gap: var(--brick-space-4);
+}
+
+.drawer-filter-form label {
+  display: flex;
+  min-inline-size: 0;
+  align-items: center;
+  gap: var(--brick-space-2);
+}
+
+.drawer-filter-form label:has(select) {
+  display: grid;
+}
+
+.drawer-filter-form select {
+  min-block-size: 2.75rem;
+  min-inline-size: 0;
+  border: var(--brick-border-width) solid var(--brick-color-border-strong);
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-canvas);
+  color: var(--brick-color-text-primary);
+  padding-inline: var(--brick-space-3);
+}
+
+.drawer-scope-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--brick-space-4);
+  margin-block-end: var(--brick-space-4);
+}
+
+.drawer-scope-grid > div {
+  padding: var(--brick-space-5);
+  border: 1px solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-overlay);
+  background: var(--brick-color-surface-canvas);
+  color: var(--brick-color-text-primary);
+}
+
+.drawer-customized {
+  border-width: 0.2rem;
+}
+
+.drawer-branch-demo {
+  position: fixed;
+  z-index: calc(var(--brick-layer-overlay) + 2);
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  padding: var(--brick-space-3);
+  border: var(--brick-border-width) solid var(--brick-color-border-strong);
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-raised);
+  box-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 30%);
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 30rem) {
+  .drawer-stage {
+    padding: var(--brick-space-3);
+  }
+
+  .drawer-launch-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 body {
   margin: 0;
 }

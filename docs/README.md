@@ -22,6 +22,8 @@ This directory is the public documentation authority for
   focus, scrolling, portals, and responsive surfaces
 - [`components/alert-dialog/README.md`](components/alert-dialog/README.md) —
   urgent decisions, safe focus, explicit responses, and blocked scrim dismissal
+- [`components/drawer/README.md`](components/drawer/README.md) — logical-edge
+  modal surfaces, distinct mobile sizes, scrolling, portals, and Branch
 
 Every released component has one folder under `components/` containing its
 public guide and `CHANGELOG.md`. Start new documentation from the templates in

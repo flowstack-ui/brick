@@ -25,3 +25,8 @@ export {
   AlertDialog,
   type AlertDialogSize,
 } from "./components/alert-dialog/index.js";
+export {
+  Drawer,
+  type DrawerPlacement,
+  type DrawerSize,
+} from "./components/drawer/index.js";
