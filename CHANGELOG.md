@@ -6,6 +6,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Standardized strict development and browser-test ports for the Brick
+  playground, added a matching LAN command, and added watch/comprehensive test
+  command aliases.
 - Static CSS, token, and optional reset entrypoints.
 - Package test, playground, documentation, and release-verification foundation.
 - Reviewed Chromium visual baselines and a desktop/mobile Playwright release

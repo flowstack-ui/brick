@@ -14,7 +14,7 @@ export default defineConfig({
     },
   },
   use: {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL: "http://127.0.0.1:4010",
     trace: "retain-on-failure",
   },
   projects: [
@@ -26,7 +26,7 @@ export default defineConfig({
   ],
   webServer: {
     command: "npm run preview:playground -- --host 127.0.0.1",
-    port: 4173,
+    port: 4010,
     reuseExistingServer: !process.env.CI,
   },
 });

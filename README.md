@@ -55,7 +55,16 @@ npm run build
 npm run typecheck
 npm test
 npm run build:playground
+npm run dev:playground
+npm run dev:playground:network
+npm run dev:test
 npm run test:browser
 npm run test:browser:release
+npm run test:all
 npm run pack:check
 ```
+
+The playground uses `http://127.0.0.1:3010` locally. Its network command uses
+the same port for real-device review. Playwright uses local preview port `4010`
+and stops that server after the run. Both ports are strict and will not
+silently increment when occupied.
