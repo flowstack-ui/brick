@@ -563,6 +563,14 @@ function DialogPlayground() {
               <Dialog.Portal><Dialog.Overlay /><Dialog.Content><Dialog.Header><Dialog.Title>Dismissal evidence</Dialog.Title><Dialog.Description>Try Escape, the scrim, Cancel, or Save.</Dialog.Description></Dialog.Header><Dialog.Body>Only the top active modal responds.</Dialog.Body><Dialog.Footer><Dialog.Close asChild><Button tone="neutral" variant="outline">Cancel</Button></Dialog.Close><Dialog.Close asChild><Button>Save</Button></Dialog.Close></Dialog.Footer></Dialog.Content></Dialog.Portal>
             </Dialog.Root>
             <output aria-live="polite" className="dialog-event-log">{eventLog}</output>
+            <Dialog.Root disabled>
+              <Dialog.Trigger asChild><Button>Unavailable dialog</Button></Dialog.Trigger>
+              <Dialog.Portal><Dialog.Overlay /><Dialog.Content aria-label="Unavailable content">Unavailable content</Dialog.Content></Dialog.Portal>
+            </Dialog.Root>
+            <Dialog.Root>
+              <Dialog.Trigger asChild><Button variant="outline">Open overlay-disabled dialog</Button></Dialog.Trigger>
+              <Dialog.Portal><Dialog.Overlay disabled /><Dialog.Content><Dialog.Header><Dialog.Title>Overlay dismissal disabled</Dialog.Title><Dialog.Description>The scrim cannot dismiss this dialog.</Dialog.Description></Dialog.Header><Dialog.Body>Use the explicit close control to leave.</Dialog.Body><Dialog.Footer><Dialog.Close asChild><Button>Close persistent dialog</Button></Dialog.Close></Dialog.Footer></Dialog.Content></Dialog.Portal>
+            </Dialog.Root>
           </div>
         </Scenario>
 

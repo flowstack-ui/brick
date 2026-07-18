@@ -4,17 +4,21 @@ Dialog presents a focused modal task or information surface above the current
 page. Atom owns modal state, focus, dismissal, portals, background isolation,
 scroll containment, and presence; Brick supplies the finished visual anatomy.
 
-## When to use
+## When and where to use
 
 Use Dialog for short forms, settings, details, previews, and multi-control tasks
-that temporarily block interaction with the page. Use a future AlertDialog for
-urgent destructive confirmation, Drawer for side-attached modal content, and
-Popover or Menu when the page must remain interactive.
+that temporarily block interaction with the page.
+
+## When not to use
+
+Use a future AlertDialog for urgent destructive confirmation, Drawer for
+side-attached modal content, and Popover or Menu when the page must remain
+interactive.
 
 Dialog is modal-only. It does not own application workflow, submission, data
 loading, routing, or generated action copy.
 
-## Import
+## Installation and imports
 
 ```tsx
 import { Dialog } from "@flowstack-ui/brick/dialog";
@@ -24,7 +28,7 @@ import "@flowstack-ui/brick/styles.css";
 The namespace is also available from `@flowstack-ui/brick`. Advanced consumers
 may import the canonical direct parts from the Dialog subpath.
 
-## Example
+## Quick start
 
 ```tsx
 import { Button } from "@flowstack-ui/brick/button";
@@ -62,7 +66,7 @@ export function ProfileDialog() {
 Overlay and Content must remain siblings. Nesting Content inside Overlay places
 the dialog inside an accessibility-hidden subtree and is rejected by Atom.
 
-## Anatomy
+## Anatomy and DOM ownership
 
 | Part | Default output | Responsibility |
 | --- | --- | --- |
@@ -113,52 +117,14 @@ Title defaults to `h2`; `as` accepts `h1` through `h6`. A visible Title supplies
 the generated accessible name. Consumers that intentionally omit it must add
 an explicit native `aria-label` or `aria-labelledby` to Content.
 
-## Keyboard and focus
+## Visual recipes and states
 
-| Input | Result |
-| --- | --- |
-| Enter or Space on Trigger | Opens through native/composed control behavior |
-| Tab | Advances within the active modal and owned branches |
-| Shift+Tab | Moves backward within the active modal |
-| Escape | Closes only the top Dialog when enabled |
+Content supports `sm`, `md`, and `lg`; `md` is the default. Atom's public
+`data-state`, `data-positioned`, and disabled outputs drive open, closed,
+positioned, and unavailable styling. Dialog intentionally has no tone, variant,
+placement, fullscreen, or arbitrary-width prop.
 
-Focus enters according to Atom's interaction-aware policy and restores to an
-explicit `finalFocus`, the prior connected target, or the mounted Trigger.
-Touch opening avoids focusing the first input automatically unless native
-`autoFocus` or explicit `initialFocus` requests it.
-
-## Scrolling and responsive behavior
-
-Content is centered and bounded by safe-area-aware viewport gaps and dynamic
-viewport height. Body uses contained scrolling so Header and Footer remain
-reachable with long content. All sizes shrink to available width. Footer wraps
-without reversing action or focus order, and logical properties support RTL.
-
-## Portals, scopes, and Branch
-
-A default body portal uses document-level tokens. To retain a scoped theme,
-portal into an element inside that scope or render inline:
-
-```tsx
-<Dialog.Portal container={scopedLayerElement}>...</Dialog.Portal>
-<Dialog.Portal disabled>...</Dialog.Portal>
-```
-
-Register third-party content that must portal outside Content:
-
-```tsx
-<ThirdParty.Portal>
-  <Dialog.Branch asChild>
-    <ThirdParty.Content />
-  </Dialog.Branch>
-</ThirdParty.Portal>
-```
-
-Prefer placing the third-party portal inside Content when its API supports a
-container. Branch preserves the third party's keyboard model while keeping it
-inside the active modal boundary.
-
-## Customization
+## Tokens and CSS hooks
 
 Stable classes and default slots are:
 
@@ -186,6 +152,73 @@ Content exposes these component tokens:
 Atom owns `data-state` and `data-positioned`; Content adds `data-size`. Brick
 honors reduced motion and forced colors. Consumers own accessibility and layout
 verification after arbitrary class, style, or token overrides.
+
+## Customization
+
+Prefer the documented size prop and semantic tokens first, then the five
+component tokens above. Use part-level classes, slots, `className`, and `style`
+only for localized needs that cannot be expressed through those supported
+contracts.
+
+## Responsive behavior
+
+Content is centered and bounded by safe-area-aware viewport gaps and dynamic
+viewport height. Body uses contained scrolling so Header and Footer remain
+reachable with long content. All sizes shrink to available width. Footer wraps
+without reversing action or focus order, and logical properties support RTL.
+
+## Accessibility
+
+Title supplies the accessible name and Description supplies the optional
+accessible description. If Title is intentionally omitted, Content requires an
+explicit native `aria-label` or `aria-labelledby`. Consumers keep action labels
+clear and preserve a logical source and focus order.
+
+### Keyboard and focus
+
+| Input | Result |
+| --- | --- |
+| Enter or Space on Trigger | Opens through native/composed control behavior |
+| Tab | Advances within the active modal and owned branches |
+| Shift+Tab | Moves backward within the active modal |
+| Escape | Closes only the top Dialog when enabled |
+
+Focus enters according to Atom's interaction-aware policy and restores to an
+explicit `finalFocus`, the prior connected target, or the mounted Trigger.
+Touch opening avoids focusing the first input automatically unless native
+`autoFocus` or explicit `initialFocus` requests it.
+
+## Composition, native props, and refs
+
+Trigger, Close, and Branch preserve Atom's `asChild` and `render` composition.
+All DOM-rendering parts forward their documented native props and refs. Root
+and Portal render no element and therefore expose no DOM ref.
+
+## Examples
+
+### Portals, scopes, and Branch
+
+A default body portal uses document-level tokens. To retain a scoped theme,
+portal into an element inside that scope or render inline:
+
+```tsx
+<Dialog.Portal container={scopedLayerElement}>...</Dialog.Portal>
+<Dialog.Portal disabled>...</Dialog.Portal>
+```
+
+Register third-party content that must portal outside Content:
+
+```tsx
+<ThirdParty.Portal>
+  <Dialog.Branch asChild>
+    <ThirdParty.Content />
+  </Dialog.Branch>
+</ThirdParty.Portal>
+```
+
+Prefer placing the third-party portal inside Content when its API supports a
+container. Branch preserves the third party's keyboard model while keeping it
+inside the active modal boundary.
 
 ## Changelog
 

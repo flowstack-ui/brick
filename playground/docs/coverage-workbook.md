@@ -69,6 +69,13 @@ Replace generic `Component` part labels with the approved public part names
 when the component brief is adopted. Add component-specific rows rather than
 forcing a generic row to represent behavior it does not cover.
 
+Write evidence descriptions at assertion granularity. Identify whether a row
+is proven by Atom's released behavior suite, a Brick adapter test, a real
+browser integration test, or a manual result. A file that merely renders the
+part, or a neighboring test that exercises a different path, does not support a
+`tested` status. Split a broad row when its claims belong to different owners or
+evidence layers.
+
 ## Completion
 
 The `Index` derives its counts and completion from component sheets.
@@ -83,4 +90,6 @@ The `Index` derives its counts and completion from component sheets.
 
 Update the workbook in the same workstream as the evidence. After editing,
 recalculate formulas, scan for formula errors, visually inspect every changed
-sheet, and confirm the Index agrees with the component sheets.
+sheet, and confirm the Index agrees with the component sheets. Before declaring
+package completion, sample every `tested` and `verified` row against its exact
+assertion; formulas summarize statuses but cannot validate the evidence claim.

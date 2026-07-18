@@ -9,6 +9,11 @@ Playground route:
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result. Record a
 follow-up issue for each failure or blocker.
 
+Keep only steps that require human visual, interaction-quality, device, or
+assistive-technology judgment. Do not add a manual step solely to repeat a
+component or browser assertion; link that automated evidence from the coverage
+workbook instead.
+
 ## Step 1 — Shortest finished state
 
 Setup: Open the canonical overview state at the constrained mobile viewport.

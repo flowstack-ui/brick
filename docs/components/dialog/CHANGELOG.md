@@ -17,3 +17,6 @@ Dialog follows the package version of `@flowstack-ui/brick`.
   playground.
 - Four reviewed Chromium baselines for light, dark, mobile RTL, and forced
   colors, plus independent Brick Consumer publishing-flow verification.
+- Focused adapter and browser evidence for disabled triggers, disabled overlay
+  dismissal, render composition, custom portal containers, and heading-level
+  forwarding.

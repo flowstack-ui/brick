@@ -39,6 +39,38 @@ test("Dialog traps focus, closes on Escape, and restores document scrolling", as
   await expect(page.getByText("Closed: escapeKeyDown")).toBeVisible();
 });
 
+test("disabled Dialog trigger cannot open through pointer or keyboard", async ({ page }) => {
+  await page.goto("/dialog");
+  const trigger = page.getByRole("button", { name: "Unavailable dialog" });
+
+  await expect(trigger).toBeDisabled();
+  await expect(trigger).toHaveAttribute("data-disabled", "");
+  await expect(trigger).toHaveAttribute("tabindex", "-1");
+  await trigger.click({ force: true });
+  await expect(page.getByRole("dialog", { name: "Unavailable content" })).toHaveCount(0);
+
+  await page.keyboard.press("Enter");
+  await page.keyboard.press("Space");
+  await expect(page.getByRole("dialog", { name: "Unavailable content" })).toHaveCount(0);
+  await expect(trigger).not.toBeFocused();
+  await expect(page.getByRole("button", { name: "Open event dialog" })).toBeEnabled();
+});
+
+test("disabled Overlay preserves the active Dialog until explicit close", async ({ page }) => {
+  await page.goto("/dialog");
+  const trigger = page.getByRole("button", { name: "Open overlay-disabled dialog" });
+  await trigger.click();
+  const dialog = page.getByRole("dialog", { name: "Overlay dismissal disabled" });
+  const overlay = page.locator(".brick-dialog-overlay").filter({ visible: true });
+
+  await expect(dialog).toBeVisible();
+  await overlay.click({ position: { x: 4, y: 4 } });
+  await expect(dialog).toBeVisible();
+  await page.getByRole("button", { name: "Close persistent dialog" }).click();
+  await expect(dialog).toBeHidden();
+  await expect(trigger).toBeFocused();
+});
+
 test("nested Dialog cleanup restores the application after both layers close", async ({ page }) => {
   await page.goto("/dialog");
 
