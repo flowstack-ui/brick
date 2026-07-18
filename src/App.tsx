@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { AlertDialog } from "@flowstack-ui/brick/alert-dialog";
+import { Avatar } from "@flowstack-ui/brick/avatar";
 import { Badge, NotificationBadge } from "@flowstack-ui/brick/badge";
 import { Button } from "@flowstack-ui/brick/button";
 import { Card } from "@flowstack-ui/brick/card";
@@ -7,6 +8,9 @@ import { Dialog } from "@flowstack-ui/brick/dialog";
 import { Drawer } from "@flowstack-ui/brick/drawer";
 
 type Appearance = "light" | "dark";
+
+const adaAvatar =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%236d5bd0'/%3E%3Cstop offset='1' stop-color='%23d86f85'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='96' height='96' rx='48' fill='url(%23g)'/%3E%3Ccircle cx='48' cy='36' r='16' fill='%23fff' fill-opacity='.92'/%3E%3Cpath d='M20 88c2-21 13-32 28-32s26 11 28 32' fill='%23fff' fill-opacity='.92'/%3E%3C/svg%3E";
 
 function ArrowIcon() {
   return (
@@ -249,6 +253,31 @@ export function App() {
                   Active project · Review the responsive purchase path and prepare the
                   release candidate.
                 </Card.Description>
+                <div className="project-collaborators" aria-label="Project collaborators">
+                  <div className="collaborator">
+                    <NotificationBadge count={2} tone="accent" overlap="circular">
+                      <Avatar
+                        alt="Ada Lovelace"
+                        fallback="AL"
+                        size="lg"
+                        src={adaAvatar}
+                        status="online"
+                      />
+                    </NotificationBadge>
+                    <span><strong>Ada Lovelace</strong><small>Online · 2 updates</small></span>
+                  </div>
+                  <div className="collaborator">
+                    <Avatar
+                      alt="Grace Hopper"
+                      fallback="GH"
+                      shape="rounded"
+                      size="lg"
+                      src="/missing-grace-avatar.png"
+                      status="busy"
+                    />
+                    <span><strong>Grace Hopper</strong><small>Busy · fallback shown</small></span>
+                  </div>
+                </div>
               </Card.Header>
               <Card.Content>
                 <dl className="project-stats">

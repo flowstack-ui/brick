@@ -293,6 +293,34 @@
     margin: 0;
   }
 
+  .project-collaborators {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    margin-block-start: var(--brick-space-3);
+  }
+
+  .collaborator {
+    display: flex;
+    gap: var(--brick-space-3);
+    align-items: center;
+    min-inline-size: 0;
+  }
+
+  .collaborator > span:last-child {
+    display: grid;
+    min-inline-size: 0;
+  }
+
+  .collaborator strong,
+  .collaborator small {
+    overflow-wrap: anywhere;
+  }
+
+  .collaborator small {
+    color: var(--brick-color-text-secondary);
+  }
+
   .project-stats div {
     min-inline-size: 0;
     padding: 0.85rem;

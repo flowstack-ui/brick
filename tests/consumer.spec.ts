@@ -161,6 +161,29 @@ test("composes Badge and NotificationBadge through their public subpath", async 
   expect(await indicator.evaluate((element) => getComputedStyle(element).pointerEvents)).toBe("none");
 });
 
+test("composes Avatar status and fallback states through its public subpath", async ({ page }) => {
+  const adaImage = page.getByRole("img", { name: "Ada Lovelace" });
+  const ada = adaImage.locator("..");
+  await expect(ada).toHaveAttribute("data-slot", "avatar");
+  await expect(ada).toHaveAttribute("data-size", "lg");
+  await expect(ada).toHaveAttribute("data-shape", "circle");
+  await expect(ada).toHaveAttribute("data-status", "online");
+  await expect(adaImage).toHaveAttribute("data-slot", "avatar-image");
+  await expect(adaImage).toHaveAttribute("src", /^data:image\/svg\+xml/);
+  await expect(page.getByText("Online · 2 updates")).toBeVisible();
+
+  const adaWrapper = ada.locator("..");
+  await expect(adaWrapper).toHaveClass(/brick-notification-badge/);
+  await expect(adaWrapper.locator("[data-slot='notification-badge-indicator']")).toHaveText("2");
+
+  const graceFallback = page.getByRole("img", { name: "Grace Hopper" });
+  const grace = graceFallback.locator("..");
+  await expect(grace).toHaveAttribute("data-shape", "rounded");
+  await expect(grace).toHaveAttribute("data-status", "busy");
+  await expect(graceFallback).toContainText("GH");
+  await expect(page.getByText("Busy · fallback shown")).toBeVisible();
+});
+
 test("has no automatically detectable accessibility violations", async ({ page }) => {
   const lightResults = await new AxeBuilder({ page }).analyze();
   expect(lightResults.violations).toEqual([]);
