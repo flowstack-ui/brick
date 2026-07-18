@@ -143,6 +143,24 @@ test("supports a normal consumer form", async ({ page }) => {
   await expect(page.getByText("Invitation ready for team@example.com.")).toBeVisible();
 });
 
+test("composes Badge and NotificationBadge through their public subpath", async ({ page }) => {
+  const status = page.getByText("3 tasks ready", { exact: true });
+  await expect(status).toHaveClass("brick-badge");
+  await expect(status).toHaveAttribute("data-tone", "success");
+  await expect(status).not.toHaveAttribute("role");
+  await expect(status).not.toHaveAttribute("aria-live");
+
+  const taskControl = page.getByRole("button", { name: "Review tasks, 3 ready" });
+  const wrapper = taskControl.locator("..");
+  const indicator = wrapper.locator("[data-slot='notification-badge-indicator']");
+  await expect(wrapper).toHaveClass(/brick-notification-badge/);
+  await expect(indicator).toHaveText("3");
+  await expect(indicator).toHaveAttribute("aria-hidden", "true");
+  await taskControl.focus();
+  await expect(taskControl).toBeFocused();
+  expect(await indicator.evaluate((element) => getComputedStyle(element).pointerEvents)).toBe("none");
+});
+
 test("has no automatically detectable accessibility violations", async ({ page }) => {
   const lightResults = await new AxeBuilder({ page }).analyze();
   expect(lightResults.violations).toEqual([]);

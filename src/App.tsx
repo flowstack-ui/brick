@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { AlertDialog } from "@flowstack-ui/brick/alert-dialog";
+import { Badge, NotificationBadge } from "@flowstack-ui/brick/badge";
 import { Button } from "@flowstack-ui/brick/button";
 import { Card } from "@flowstack-ui/brick/card";
 import { Dialog } from "@flowstack-ui/brick/dialog";
@@ -139,7 +140,12 @@ export function App() {
               <h2 id="workspace-title">Launch workspace</h2>
             </div>
             <div className="workspace-tools">
-              <span className="status">3 tasks ready</span>
+              <Badge tone="success">3 tasks ready</Badge>
+              <NotificationBadge count={3} tone="accent">
+                <Button aria-label="Review tasks, 3 ready" size="sm" tone="neutral" variant="ghost">
+                  Review tasks
+                </Button>
+              </NotificationBadge>
               <Drawer.Root>
                 <Drawer.Trigger asChild>
                   <Button size="sm" tone="neutral" variant="outline">

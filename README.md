@@ -10,8 +10,9 @@ page using application-owned semantic HTML and CSS.
 
 The current integration surfaces use Button for application actions, Card for
 workspace and invitation structure, Dialog for a focused publish-confirmation
-flow, AlertDialog for a destructive decision, and Drawer for an
-application-owned filter workflow through their public package subpaths.
+flow, AlertDialog for a destructive decision, Drawer for an application-owned
+filter workflow, Badge for passive workspace status, and NotificationBadge for
+a clearly named task control through their public package subpaths.
 
 ## Commands
 
