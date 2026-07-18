@@ -21,6 +21,13 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   Body, scoped portal and Branch composition, and direct Atom modal behavior.
 - Four reviewed Dialog visual baselines covering light, dark, mobile RTL, and
   forced colors.
+- AlertDialog with twelve public parts, two bounded responsive sizes, required
+  alert-message guidance, Cancel-safe autofocus, explicit outcomes, and
+  permanently blocked backdrop dismissal.
+- Four AlertDialog Chromium baselines covering light, dark, mobile RTL, and
+  forced colors, plus desktop/mobile interaction, nesting, and axe evidence.
+- A 159-pass, 66-intentional-skip desktop/mobile release matrix and clean
+  packed-package verification on React 18 and React 19.
 
 ### Fixed
 

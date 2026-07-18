@@ -4,6 +4,8 @@ import {
   Button,
   Card,
   Dialog,
+  AlertDialog,
+  type AlertDialogSize,
   type ButtonShape,
   type ButtonSize,
   type ButtonTone,
@@ -24,6 +26,7 @@ const shapes: ButtonShape[] = ["sharp", "rounded", "pill"];
 const cardVariants: CardVariant[] = ["outline", "elevated", "subtle"];
 const cardSizes: CardSize[] = ["sm", "md", "lg"];
 const dialogSizes: DialogSize[] = ["sm", "md", "lg"];
+const alertDialogSizes: AlertDialogSize[] = ["sm", "md"];
 
 function ArrowIcon({ direction = "end" }: { direction?: "start" | "end" }) {
   return (
@@ -612,9 +615,171 @@ function DialogPlayground() {
   );
 }
 
+function AlertDialogDemo({
+  body,
+  dir,
+  label,
+  size = "md",
+}: {
+  body?: ReactNode;
+  dir?: "ltr" | "rtl";
+  label: string;
+  size?: AlertDialogSize;
+}) {
+  return (
+    <AlertDialog.Root>
+      <AlertDialog.Trigger asChild>
+        <Button tone="danger" variant="outline">{label}</Button>
+      </AlertDialog.Trigger>
+      <AlertDialog.Portal>
+        <AlertDialog.Overlay />
+        <AlertDialog.Content dir={dir} size={size}>
+          <AlertDialog.Header>
+            <AlertDialog.Title>{label}</AlertDialog.Title>
+            <AlertDialog.Description>
+              This permanently removes the selected project and cannot be undone.
+            </AlertDialog.Description>
+          </AlertDialog.Header>
+          {body !== undefined ? <AlertDialog.Body>{body}</AlertDialog.Body> : null}
+          <AlertDialog.Footer>
+            <AlertDialog.Cancel asChild>
+              <Button tone="neutral" variant="outline">Keep project</Button>
+            </AlertDialog.Cancel>
+            <AlertDialog.Action asChild>
+              <Button tone="danger">Delete project</Button>
+            </AlertDialog.Action>
+          </AlertDialog.Footer>
+        </AlertDialog.Content>
+      </AlertDialog.Portal>
+    </AlertDialog.Root>
+  );
+}
+
+function AlertDialogPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+  const [decisionLog, setDecisionLog] = useState("No decision yet");
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  return (
+    <div className="playground-shell">
+      <header className="playground-header">
+        <div>
+          <p className="playground-kicker">@flowstack-ui/brick</p>
+          <h1>AlertDialog workbench</h1>
+          <p>Urgent decision semantics, safe initial focus, explicit outcomes, responsive containment, and Atom modal ownership.</p>
+        </div>
+        <fieldset className="playground-appearance">
+          <legend>Appearance</legend>
+          {(["system", "light", "dark"] as const).map((value) => (
+            <Button
+              aria-pressed={appearance === value}
+              key={value}
+              onPress={() => selectAppearance(value)}
+              size="sm"
+              tone="neutral"
+              variant={appearance === value ? "soft" : "ghost"}
+            >
+              {value}
+            </Button>
+          ))}
+        </fieldset>
+      </header>
+
+      <main data-testid="alert-dialog-workbench">
+        <Scenario description="The shortest destructive decision keeps the alert message and both responses explicit." title="Overview">
+          <div className="alert-dialog-stage" data-testid="alert-dialog-overview">
+            <AlertDialogDemo label="Delete project?" />
+          </div>
+        </Scenario>
+
+        <Scenario description="Small and medium remain intentionally narrower than ordinary Dialog." title="Sizes">
+          <div className="alert-dialog-launch-grid" data-testid="alert-dialog-sizes">
+            {alertDialogSizes.map((size) => (
+              <AlertDialogDemo key={size} label={`Open ${size} decision`} size={size} />
+            ))}
+          </div>
+        </Scenario>
+
+        <Scenario description="Header, required Description, optional Body, Footer, Cancel, and Action remain visible public parts." title="Anatomy">
+          <div className="alert-dialog-stage" data-testid="alert-dialog-anatomy">
+            <AlertDialogDemo
+              body={<strong>Project: Mobile checkout refresh</strong>}
+              label="Inspect decision anatomy"
+            />
+          </div>
+        </Scenario>
+
+        <Scenario description="Cancel, Action, Escape policy, prevented async closure, and disabled opening remain inspectable." title="Decisions and state">
+          <div className="alert-dialog-stage" data-testid="alert-dialog-decisions">
+            <AlertDialog.Root onOpenChange={(open, reason) => {
+              if (!open) setDecisionLog(`Closed: ${reason ?? "controlled"}`);
+            }}>
+              <AlertDialog.Trigger asChild><Button tone="danger">Open tracked decision</Button></AlertDialog.Trigger>
+              <AlertDialog.Portal><AlertDialog.Overlay /><AlertDialog.Content><AlertDialog.Header><AlertDialog.Title>Remove tracked project?</AlertDialog.Title><AlertDialog.Description>This action records the exact decision reason.</AlertDialog.Description></AlertDialog.Header><AlertDialog.Footer><AlertDialog.Cancel asChild><Button tone="neutral" variant="outline">Cancel tracked decision</Button></AlertDialog.Cancel><AlertDialog.Action asChild><Button tone="danger">Confirm tracked decision</Button></AlertDialog.Action></AlertDialog.Footer></AlertDialog.Content></AlertDialog.Portal>
+            </AlertDialog.Root>
+            <AlertDialog.Root closeOnEscape={false}>
+              <AlertDialog.Trigger asChild><Button variant="outline">Open Escape-disabled decision</Button></AlertDialog.Trigger>
+              <AlertDialog.Portal><AlertDialog.Overlay /><AlertDialog.Content><AlertDialog.Header><AlertDialog.Title>Explicit response required</AlertDialog.Title><AlertDialog.Description>Escape and the scrim cannot close this decision.</AlertDialog.Description></AlertDialog.Header><AlertDialog.Footer><AlertDialog.Cancel asChild><Button tone="neutral" variant="outline">Close explicit decision</Button></AlertDialog.Cancel><AlertDialog.Action asChild><Button>Continue explicitly</Button></AlertDialog.Action></AlertDialog.Footer></AlertDialog.Content></AlertDialog.Portal>
+            </AlertDialog.Root>
+            <AlertDialog.Root disabled>
+              <AlertDialog.Trigger asChild><Button>Unavailable decision</Button></AlertDialog.Trigger>
+            </AlertDialog.Root>
+            <AlertDialog.Root>
+              <AlertDialog.Trigger asChild><Button variant="outline">Open pending decision</Button></AlertDialog.Trigger>
+              <AlertDialog.Portal><AlertDialog.Overlay /><AlertDialog.Content><AlertDialog.Header><AlertDialog.Title>Start asynchronous removal?</AlertDialog.Title><AlertDialog.Description>The Action prevents automatic closure while application work is pending.</AlertDialog.Description></AlertDialog.Header><AlertDialog.Footer><AlertDialog.Cancel asChild><Button tone="neutral" variant="outline">Cancel pending decision</Button></AlertDialog.Cancel><AlertDialog.Action className="brick-button" data-shape="rounded" data-size="md" data-tone="danger" data-variant="solid" onClick={(event) => { event.preventDefault(); setDecisionLog("Pending action kept open"); }}>Start pending action</AlertDialog.Action></AlertDialog.Footer></AlertDialog.Content></AlertDialog.Portal>
+            </AlertDialog.Root>
+            <output aria-live="polite" className="dialog-event-log">{decisionLog}</output>
+          </div>
+        </Scenario>
+
+        <Scenario description="A child confirmation becomes the only active modal, then returns focus and control to its parent Dialog." title="Nested workflow">
+          <div className="alert-dialog-stage" data-testid="alert-dialog-nested">
+            <Dialog.Root>
+              <Dialog.Trigger asChild><Button variant="outline">Edit draft project</Button></Dialog.Trigger>
+              <Dialog.Portal><Dialog.Overlay /><Dialog.Content><Dialog.Header><Dialog.Title>Edit draft project</Dialog.Title><Dialog.Description>Closing with unsaved work requires a separate decision.</Dialog.Description></Dialog.Header><Dialog.Body><AlertDialog.Root><AlertDialog.Trigger asChild><Button tone="danger" variant="outline">Discard draft</Button></AlertDialog.Trigger><AlertDialog.Portal><AlertDialog.Overlay /><AlertDialog.Content size="sm"><AlertDialog.Header><AlertDialog.Title>Discard draft?</AlertDialog.Title><AlertDialog.Description>Unsaved project changes will be lost.</AlertDialog.Description></AlertDialog.Header><AlertDialog.Footer><AlertDialog.Cancel asChild><Button tone="neutral" variant="outline">Keep editing draft</Button></AlertDialog.Cancel><AlertDialog.Action asChild><Button tone="danger">Discard draft changes</Button></AlertDialog.Action></AlertDialog.Footer></AlertDialog.Content></AlertDialog.Portal></AlertDialog.Root></Dialog.Body><Dialog.Footer><Dialog.Close asChild><Button>Finish editing</Button></Dialog.Close></Dialog.Footer></Dialog.Content></Dialog.Portal>
+            </Dialog.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Inline portals inherit scoped appearance while preserving the same alert semantics." title="Appearance and scope">
+          <div className="alert-dialog-scope-grid" data-testid="alert-dialog-appearance">
+            <div data-brick-appearance="light"><AlertDialog.Root><AlertDialog.Trigger asChild><Button tone="danger" variant="outline">Light decision</Button></AlertDialog.Trigger><AlertDialog.Portal disabled><AlertDialog.Overlay /><AlertDialog.Content size="sm"><AlertDialog.Header><AlertDialog.Title>Light scoped decision</AlertDialog.Title><AlertDialog.Description>The inline surface inherits light tokens.</AlertDialog.Description></AlertDialog.Header><AlertDialog.Footer><AlertDialog.Cancel asChild><Button tone="neutral" variant="outline">Cancel light decision</Button></AlertDialog.Cancel><AlertDialog.Action asChild><Button tone="danger">Confirm light decision</Button></AlertDialog.Action></AlertDialog.Footer></AlertDialog.Content></AlertDialog.Portal></AlertDialog.Root></div>
+            <div data-brick-appearance="dark"><AlertDialog.Root><AlertDialog.Trigger asChild><Button tone="danger" variant="outline">Dark decision</Button></AlertDialog.Trigger><AlertDialog.Portal disabled><AlertDialog.Overlay /><AlertDialog.Content size="sm"><AlertDialog.Header><AlertDialog.Title>Dark scoped decision</AlertDialog.Title><AlertDialog.Description>The inline surface inherits dark tokens.</AlertDialog.Description></AlertDialog.Header><AlertDialog.Footer><AlertDialog.Cancel asChild><Button tone="neutral" variant="outline">Cancel dark decision</Button></AlertDialog.Cancel><AlertDialog.Action asChild><Button tone="danger">Confirm dark decision</Button></AlertDialog.Action></AlertDialog.Footer></AlertDialog.Content></AlertDialog.Portal></AlertDialog.Root></div>
+          </div>
+        </Scenario>
+
+        <Scenario description="Public tokens, classes, style, slots, and explicit Button tone customize presentation without changing behavior." title="Customization">
+          <div className="alert-dialog-stage">
+            <AlertDialog.Root><AlertDialog.Trigger asChild><Button variant="outline">Open customized decision</Button></AlertDialog.Trigger><AlertDialog.Portal><AlertDialog.Overlay /><AlertDialog.Content className="alert-dialog-customized" data-slot="account-removal-alert" style={{ "--brick-alert-dialog-radius": "0.35rem", "--brick-alert-dialog-space": "2rem" } as CSSProperties}><AlertDialog.Header data-slot="account-removal-header"><AlertDialog.Title>Customized decision</AlertDialog.Title><AlertDialog.Description>Public visual hooks remain local and inspectable.</AlertDialog.Description></AlertDialog.Header><AlertDialog.Footer><AlertDialog.Cancel asChild><Button tone="neutral" variant="outline">Keep account</Button></AlertDialog.Cancel><AlertDialog.Action asChild><Button tone="danger">Remove account</Button></AlertDialog.Action></AlertDialog.Footer></AlertDialog.Content></AlertDialog.Portal></AlertDialog.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="A bounded Body scrolls while the required message and critical actions remain reachable." title="Responsive and long detail">
+          <div className="alert-dialog-stage" data-testid="alert-dialog-long-content">
+            <AlertDialogDemo label="Open long decision" body={<div className="dialog-long-copy">{Array.from({ length: 12 }, (_, index) => <p key={index}>Consequence {index + 1}: supplemental detail remains readable and contained without replacing the concise alert message.</p>)}</div>} />
+          </div>
+        </Scenario>
+
+        <Scenario description="Long localization, RTL, unbroken names, zoom, and constrained height preserve logical order and containment." title="Stress and RTL">
+          <div className="alert-dialog-stage" dir="rtl" data-testid="alert-dialog-stress">
+            <AlertDialogDemo dir="rtl" label="حذف مشروع مساحة العمل بالتأكيد؟" body="مرجع غير منقطع: ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ" />
+          </div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {window.location.pathname.startsWith("/dialog") ? (
+    {window.location.pathname.startsWith("/alert-dialog") ? (
+      <AlertDialogPlayground />
+    ) : window.location.pathname.startsWith("/dialog") ? (
       <DialogPlayground />
     ) : window.location.pathname.startsWith("/card") ? (
       <CardPlayground />

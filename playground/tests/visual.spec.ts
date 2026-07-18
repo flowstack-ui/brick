@@ -79,3 +79,28 @@ test("Dialog retains its boundary in forced colors", async ({ page }) => {
   await page.getByRole("button", { name: "Edit profile" }).click();
   await expect(page).toHaveScreenshot("dialog-overview-forced-colors.png");
 });
+
+test("AlertDialog surface and urgent actions retain their visual hierarchy", async ({ page }) => {
+  await page.goto("/alert-dialog");
+  await page.getByRole("button", { name: "Delete project?" }).click();
+  await expect(page).toHaveScreenshot("alert-dialog-overview-light.png");
+
+  await page.getByRole("button", { name: "Keep project" }).click();
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await page.getByRole("button", { name: "Inspect decision anatomy" }).click();
+  await expect(page).toHaveScreenshot("alert-dialog-anatomy-dark.png");
+});
+
+test("AlertDialog remains contained in narrow RTL layouts", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/alert-dialog");
+  await page.getByRole("button", { name: "حذف مشروع مساحة العمل بالتأكيد؟" }).click();
+  await expect(page).toHaveScreenshot("alert-dialog-rtl-mobile.png");
+});
+
+test("AlertDialog retains its boundary in forced colors", async ({ page }) => {
+  await page.goto("/alert-dialog");
+  await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
+  await page.getByRole("button", { name: "Delete project?" }).click();
+  await expect(page).toHaveScreenshot("alert-dialog-overview-forced-colors.png");
+});

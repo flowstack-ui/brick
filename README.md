@@ -4,8 +4,8 @@ Opinionated styled React components built on `@flowstack-ui/atom`.
 
 Brick provides finished, accessible React components with static CSS, semantic
 design tokens, light and dark appearances, and a documented customization
-contract. The initial catalog includes Button, Card, and Dialog in version
-`0.1.0`.
+contract. The initial catalog includes Button, Card, Dialog, and AlertDialog in
+version `0.1.0`.
 
 ## Boundary
 
@@ -37,7 +37,7 @@ import "@flowstack-ui/brick/styles.css";
 Use `@flowstack-ui/brick/tokens.css` when only the visual tokens are needed.
 
 ```tsx
-import { Button, Card, Dialog } from "@flowstack-ui/brick";
+import { AlertDialog, Button, Card, Dialog } from "@flowstack-ui/brick";
 
 <Button>Save changes</Button>;
 
@@ -54,6 +54,21 @@ import { Button, Card, Dialog } from "@flowstack-ui/brick";
     <Dialog.Content aria-label="Example dialog">Dialog content</Dialog.Content>
   </Dialog.Portal>
 </Dialog.Root>;
+
+<AlertDialog.Root>
+  <AlertDialog.Trigger asChild>
+    <Button tone="danger" variant="outline">Remove project</Button>
+  </AlertDialog.Trigger>
+  <AlertDialog.Portal>
+    <AlertDialog.Overlay />
+    <AlertDialog.Content>
+      <AlertDialog.Title>Remove project?</AlertDialog.Title>
+      <AlertDialog.Description>This cannot be undone.</AlertDialog.Description>
+      <AlertDialog.Cancel asChild><Button variant="outline">Cancel</Button></AlertDialog.Cancel>
+      <AlertDialog.Action asChild><Button tone="danger">Remove</Button></AlertDialog.Action>
+    </AlertDialog.Content>
+  </AlertDialog.Portal>
+</AlertDialog.Root>;
 ```
 
 See [`docs/README.md`](docs/README.md) for the public guides and component

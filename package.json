@@ -40,6 +40,10 @@
       "types": "./dist/dialog.d.ts",
       "default": "./dist/dialog.js"
     },
+    "./alert-dialog": {
+      "types": "./dist/alert-dialog.d.ts",
+      "default": "./dist/alert-dialog.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"

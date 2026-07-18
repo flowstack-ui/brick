@@ -34,7 +34,8 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { Button, Card } from "@flowstack-ui/brick";
+      `import { AlertDialog, Button, Card } from "@flowstack-ui/brick";
+import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
 import React from "react";
@@ -43,27 +44,33 @@ import { readFile } from "node:fs/promises";
 
 if (Button !== SubpathButton) throw new Error("Button subpath export mismatch");
 if (Card !== SubpathCard) throw new Error("Card subpath export mismatch");
+if (AlertDialog !== SubpathAlertDialog) throw new Error("AlertDialog subpath export mismatch");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
 const cardMarkup = renderToString(React.createElement(Card.Root, { as: "article" }, React.createElement(Card.Title, { as: "h1" }, "Card consumer")));
 if (!cardMarkup.includes("brick-card") || !cardMarkup.includes("Card consumer")) throw new Error("Card SSR smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
-if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-card")) throw new Error("CSS export missing");
+if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content")) throw new Error("CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
-      `import { Button, Card, type ButtonProps, type CardRootProps } from "@flowstack-ui/brick";
+      `import { AlertDialog, Button, Card, type ButtonProps, type CardRootProps } from "@flowstack-ui/brick";
+import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
 const props: ButtonProps = { children: "Consumer" };
 const cardProps: CardRootProps = { as: "article", children: "Consumer" };
+const alertDialogProps: AlertDialogContentProps = { size: "sm", children: "Consumer" };
+void AlertDialog;
+void SubpathAlertDialog;
 void Button;
 void SubpathButton;
 void Card;
 void SubpathCard;
 void props;
 void cardProps;
+void alertDialogProps;
 `,
     );
     await writeFile(

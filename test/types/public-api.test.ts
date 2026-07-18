@@ -22,6 +22,14 @@ import {
   DialogContent,
   type DialogContentProps,
 } from "@flowstack-ui/brick/dialog";
+import { AlertDialog, type AlertDialogSize } from "@flowstack-ui/brick";
+import {
+  AlertDialog as SubpathAlertDialog,
+  AlertDialogContent,
+  type AlertDialogContentProps,
+  type AlertDialogOverlayProps,
+  type AlertDialogRootProps,
+} from "@flowstack-ui/brick/alert-dialog";
 
 const variant: ButtonVariant = "soft";
 const tone: ButtonTone = "success";
@@ -77,6 +85,29 @@ void SubpathDialog;
 void DialogContent;
 void dialogContentProps;
 
+const alertDialogSize: AlertDialogSize = "sm";
+const alertDialogRootProps: AlertDialogRootProps = {
+  children: createElement(AlertDialog.Trigger, null, "Open decision"),
+  closeOnEscape: false,
+};
+const alertDialogContentProps: AlertDialogContentProps = {
+  children: createElement(
+    AlertDialog.Description,
+    null,
+    "This action cannot be undone.",
+  ),
+  size: alertDialogSize,
+};
+const alertDialogOverlayProps: AlertDialogOverlayProps = {
+  "aria-label": "Decision backdrop",
+};
+void AlertDialog;
+void SubpathAlertDialog;
+void AlertDialogContent;
+void alertDialogRootProps;
+void alertDialogContentProps;
+void alertDialogOverlayProps;
+
 // @ts-expect-error Brick exposes semantic tone instead of the native color attribute.
 const nativeColor: ButtonProps = { children: "Invalid", color: "red" };
 // @ts-expect-error asChild owns its content and does not accept icon props.
@@ -106,6 +137,23 @@ const invalidCardTitle = createElement(Card.Title, { as: "div" }, "Invalid");
 const invalidDialogSize: DialogContentProps = { "aria-label": "Invalid", size: "full" };
 // @ts-expect-error Dialog is a namespace and not a callable flat component.
 const invalidFlatDialog = createElement(Dialog, { title: "Invalid" });
+const invalidAlertDialogSize: AlertDialogContentProps = {
+  children: "Invalid",
+  // @ts-expect-error AlertDialog sizes are a closed recipe set.
+  size: "lg",
+};
+// @ts-expect-error AlertDialog is a namespace and not a callable flat component.
+const invalidFlatAlertDialog = createElement(AlertDialog, {
+  title: "Invalid",
+  description: "Invalid",
+});
+const invalidAlertDialogBackdrop: AlertDialogRootProps = {
+  children: "Invalid",
+  // @ts-expect-error AlertDialog backdrop dismissal is permanently disabled.
+  closeOnBackdropClick: true,
+};
+// @ts-expect-error AlertDialog Overlay has no redundant disabled control.
+const invalidAlertDialogOverlay: AlertDialogOverlayProps = { disabled: true };
 
 void nativeColor;
 void composedIcon;
@@ -117,3 +165,7 @@ void invalidFlatCard;
 void invalidCardTitle;
 void invalidDialogSize;
 void invalidFlatDialog;
+void invalidAlertDialogSize;
+void invalidFlatAlertDialog;
+void invalidAlertDialogBackdrop;
+void invalidAlertDialogOverlay;

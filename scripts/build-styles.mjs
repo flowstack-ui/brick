@@ -38,6 +38,7 @@ await writeFile(
     '@import "../../src/components/button/button.css";',
     '@import "../../src/components/card/card.css";',
     '@import "../../src/components/dialog/dialog.css";',
+    '@import "../../src/components/alert-dialog/alert-dialog.css";',
   ].join("\n"),
 );
 

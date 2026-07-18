@@ -21,3 +21,7 @@ export {
   type CardVariant,
 } from "./components/card/index.js";
 export { Dialog, type DialogSize } from "./components/dialog/index.js";
+export {
+  AlertDialog,
+  type AlertDialogSize,
+} from "./components/alert-dialog/index.js";

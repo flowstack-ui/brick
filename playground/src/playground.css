@@ -140,6 +140,57 @@ main {
   max-inline-size: 100%;
 }
 
+.alert-dialog-stage,
+.alert-dialog-launch-grid,
+.alert-dialog-scope-grid {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+.alert-dialog-stage,
+.alert-dialog-launch-grid,
+.alert-dialog-scope-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--brick-space-3);
+  padding: var(--brick-space-5);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-raised);
+}
+
+.alert-dialog-stage {
+  min-block-size: 8rem;
+  justify-content: center;
+}
+
+.alert-dialog-launch-grid > .brick-button {
+  flex: 1 1 11rem;
+}
+
+.alert-dialog-scope-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 0;
+  overflow: hidden;
+}
+
+.alert-dialog-scope-grid > div {
+  display: grid;
+  min-block-size: 8rem;
+  place-items: center;
+  padding: var(--brick-space-4);
+  background: var(--brick-color-surface-canvas);
+  color: var(--brick-color-text-primary);
+}
+
+.alert-dialog-customized {
+  border-style: dashed;
+}
+
 .dialog-stage,
 .dialog-launch-grid,
 .dialog-scope-grid {
