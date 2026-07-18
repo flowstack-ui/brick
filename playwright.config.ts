@@ -6,12 +6,12 @@ export default defineConfig({
   forbidOnly: true,
   reporter: "list",
   use: {
-    baseURL: "http://127.0.0.1:4180",
+    baseURL: "http://127.0.0.1:4011",
     trace: "retain-on-failure",
   },
   webServer: {
     command: "npm run preview",
-    url: "http://127.0.0.1:4180",
+    url: "http://127.0.0.1:4011",
     reuseExistingServer: false,
   },
   projects: [

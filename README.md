@@ -22,9 +22,14 @@ npm run build:consumer
 npm run test:consumer
 ```
 
-The local development server uses `http://127.0.0.1:4174` by default. Use
-`npm run dev:consumer:network` when testing from another device on the local
-network.
+The local development server uses `http://127.0.0.1:3011`. From the TemplateFlow
+root, use `npm run dev:consumer:network` when testing from another device on the
+local network. From this app directory, use `npm run dev:network`. With the
+currently used LAN address, the URL is `http://192.168.4.36:3011`; prefer the
+Network URL printed by Vite if the address changes.
+
+Playwright uses local preview port `4011` only while browser tests run. Both
+development and preview ports are strict and do not silently increment.
 
 ## Boundary
 
