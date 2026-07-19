@@ -7,6 +7,7 @@ import { Badge, NotificationBadge } from "../../dist/badge.js";
 import { Avatar } from "../../dist/avatar.js";
 import { Toggle } from "../../dist/toggle.js";
 import { ToggleGroup } from "../../dist/toggle-group.js";
+import { AppBar } from "../../dist/app-bar.js";
 
 test("Card renders on the server without browser state or a client boundary", () => {
   const markup = renderToString(
@@ -92,4 +93,26 @@ test("Toggle family emits deterministic pressed semantics during SSR", () => {
   assert.match(groupMarkup, /role="group"/);
   assert.match(groupMarkup, /aria-label="View"/);
   assert.match(groupMarkup, /class="brick-toggle-group-item"/);
+});
+
+test("AppBar emits server-safe landmark and layout anatomy", () => {
+  const markup = renderToString(
+    React.createElement(
+      AppBar.Root,
+      { "aria-label": "Application", position: "sticky", variant: "solid" },
+      React.createElement(
+        AppBar.Toolbar,
+        { density: "compact" },
+        React.createElement(AppBar.Start, null, "Brand"),
+        React.createElement(AppBar.Center, null, "Workspace"),
+        React.createElement(AppBar.End, null, "Actions"),
+      ),
+    ),
+  );
+  assert.match(markup, /^<header/);
+  assert.match(markup, /class="brick-app-bar"/);
+  assert.match(markup, /data-position="sticky"/);
+  assert.match(markup, /data-density="compact"/);
+  assert.match(markup, /data-slot="appbar-(?:start|center|end)"/);
+  assert.doesNotMatch(markup, /role="toolbar"/);
 });

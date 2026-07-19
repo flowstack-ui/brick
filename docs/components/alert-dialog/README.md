@@ -174,6 +174,8 @@ Content remains centered and bounded by safe-area-aware viewport gaps and
 dynamic viewport height. Body scrolls independently so the message and
 responses remain reachable. The Footer wraps in source order and its responses
 fill the available width on narrow screens. Logical properties support RTL.
+At extreme zoom or unusually short viewports where fixed regions cannot fit,
+the bounded Content becomes the scroll fallback so no response is clipped.
 
 ## Accessibility
 

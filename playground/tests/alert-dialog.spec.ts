@@ -27,7 +27,13 @@ test("AlertDialog reports Cancel and Action outcomes", async ({ page }) => {
 
   const trigger = page.getByRole("button", { name: "Open tracked decision" });
   await trigger.click();
-  await page.getByRole("button", { name: "Cancel tracked decision" }).click();
+  const cancel = page.getByRole("button", { name: "Cancel tracked decision" });
+  const action = page.getByRole("button", { name: "Confirm tracked decision" });
+  const cancelBox = await cancel.boundingBox();
+  const actionBox = await action.boundingBox();
+  expect(Math.abs(cancelBox!.y - actionBox!.y)).toBeLessThan(1);
+  expect(Math.abs(cancelBox!.height - actionBox!.height)).toBeLessThan(1);
+  await cancel.click();
   await expect(page.getByText("Closed: cancel")).toBeVisible();
 
   await trigger.click();
@@ -121,6 +127,31 @@ test("AlertDialog long-body and RTL mobile geometry remain bounded", async ({ pa
   box = await dialog.boundingBox();
   expect(box!.x).toBeGreaterThanOrEqual(0);
   expect(box!.x + box!.width).toBeLessThanOrEqual(390);
+});
+
+test("AlertDialog responses remain reachable under extreme reflow", async ({ page }) => {
+  for (const viewport of [
+    { width: 128, height: 422 },
+    { width: 320, height: 200 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/alert-dialog");
+    await page.getByRole("button", { name: "Open tracked decision" }).click();
+
+    const dialog = page.getByRole("alertdialog", { name: "Remove tracked project?" });
+    const action = page.getByRole("button", { name: "Confirm tracked decision" });
+    await expect(dialog).toHaveCSS("overflow-y", "auto");
+    await action.scrollIntoViewIfNeeded();
+
+    const dialogBox = await dialog.boundingBox();
+    const actionBox = await action.boundingBox();
+    expect(actionBox!.y).toBeGreaterThanOrEqual(dialogBox!.y);
+    expect(actionBox!.y + actionBox!.height).toBeLessThanOrEqual(
+      dialogBox!.y + dialogBox!.height + 1,
+    );
+    await action.click();
+    await expect(dialog).toBeHidden();
+  }
 });
 
 test("AlertDialog canonical open state has no automated accessibility violations", async ({ page }) => {

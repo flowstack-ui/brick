@@ -32,6 +32,14 @@
       "types": "./dist/button.d.ts",
       "default": "./dist/button.js"
     },
+    "./icon-button": {
+      "types": "./dist/icon-button.d.ts",
+      "default": "./dist/icon-button.js"
+    },
+    "./app-bar": {
+      "types": "./dist/app-bar.d.ts",
+      "default": "./dist/app-bar.js"
+    },
     "./card": {
       "types": "./dist/card.d.ts",
       "default": "./dist/card.js"
@@ -110,7 +118,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.3.3"
+    "@flowstack-ui/atom": "0.3.4"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

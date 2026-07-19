@@ -9,6 +9,16 @@ import {
 } from "@flowstack-ui/brick";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import {
+  AppBar,
+  IconButton,
+  type AppBarRootProps,
+  type AppBarVariant,
+  type IconButtonProps,
+  type IconButtonShape,
+} from "@flowstack-ui/brick";
+import { AppBar as SubpathAppBar } from "@flowstack-ui/brick/app-bar";
+import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
+import {
   Card,
   type CardRootProps,
   type CardSize,
@@ -102,6 +112,36 @@ void props;
 void composed;
 void rendered;
 
+const iconButtonShape: IconButtonShape = "circle";
+const iconButtonProps: IconButtonProps = {
+  "aria-label": "Open documentation",
+  children: createElement("svg"),
+  href: "/docs",
+  shape: iconButtonShape,
+  tone: "accent",
+  variant: "soft",
+};
+const composedIconButton: IconButtonProps = {
+  "aria-label": "Custom action",
+  asChild: true,
+  children: createElement("button", null, createElement("svg")),
+};
+void IconButton;
+void SubpathIconButton;
+void iconButtonProps;
+void composedIconButton;
+
+const appBarVariant: AppBarVariant = "transparent";
+const appBarProps: AppBarRootProps = {
+  blurred: true,
+  children: createElement(AppBar.Toolbar, null, "Workspace"),
+  position: "fixed",
+  variant: appBarVariant,
+};
+void AppBar;
+void SubpathAppBar;
+void appBarProps;
+
 const cardVariant: CardVariant = "elevated";
 const cardSize: CardSize = "lg";
 const cardTitleElement: CardTitleElement = "h1";
@@ -167,6 +207,12 @@ const doubleComposition: ButtonProps = {
 };
 // @ts-expect-error Button variants are a closed recipe set.
 const invalidVariant: ButtonProps = { children: "Invalid", variant: "link" };
+// @ts-expect-error IconButton shapes are a closed recipe set.
+const invalidIconButtonShape: IconButtonProps = { "aria-label": "Invalid", children: createElement("svg"), shape: "pill" };
+// @ts-expect-error AppBar is a namespace and not a callable flat component.
+const invalidFlatAppBar = createElement(AppBar, null, "Invalid");
+// @ts-expect-error AppBar variants are a closed recipe set.
+const invalidAppBarVariant: AppBarRootProps = { children: "Invalid", variant: "blur" };
 
 // @ts-expect-error Card variants are a closed recipe set.
 const invalidCardVariant: CardRootProps = { children: "Invalid", variant: "ghost" };
@@ -202,6 +248,9 @@ void nativeColor;
 void composedIcon;
 void doubleComposition;
 void invalidVariant;
+void invalidIconButtonShape;
+void invalidFlatAppBar;
+void invalidAppBarVariant;
 void invalidCardVariant;
 void invalidCardElement;
 void invalidFlatCard;

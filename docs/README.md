@@ -32,6 +32,10 @@ This directory is the public documentation authority for
   pressed/unpressed command with stable labeling
 - [`components/toggle-group/README.md`](components/toggle-group/README.md) —
   related single or multiple pressed commands with roving focus
+- [`components/icon-button/README.md`](components/icon-button/README.md) — named
+  compact actions and genuine icon-only links
+- [`components/app-bar/README.md`](components/app-bar/README.md) — compound
+  top-surface structure with four positioning modes
 
 Every released component has one folder under `components/` containing its
 public guide and `CHANGELOG.md`. Start new documentation from the templates in

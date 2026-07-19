@@ -4,6 +4,105 @@
   font-family: var(--brick-font-family-body);
 }
 
+@layer playground {
+  .icon-button-hero {
+    display: flex;
+    gap: var(--brick-space-4);
+    align-items: center;
+    padding: var(--brick-space-5);
+    border-radius: var(--brick-radius-surface);
+    background: var(--brick-color-surface-subtle);
+  }
+
+  .icon-button-hero p {
+    margin: var(--brick-space-1) 0 0;
+    color: var(--brick-color-text-secondary);
+  }
+
+  .icon-button-row {
+    display: flex;
+    min-inline-size: 0;
+    flex-wrap: wrap;
+    gap: var(--brick-space-4);
+    align-items: center;
+  }
+
+  .icon-button-row > div {
+    display: grid;
+    gap: var(--brick-space-2);
+    justify-items: center;
+  }
+
+  .icon-button-stack,
+  .app-bar-stack {
+    display: grid;
+    gap: var(--brick-space-4);
+  }
+
+  .app-bar-frame,
+  .position-sample {
+    position: relative;
+    min-inline-size: 0;
+    overflow: clip;
+    border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+    border-radius: var(--brick-radius-surface);
+    background: var(--brick-color-surface-canvas);
+  }
+
+  .app-bar-frame > code,
+  .position-sample > code {
+    display: block;
+    padding: var(--brick-space-2) var(--brick-space-3);
+    color: var(--brick-color-text-secondary);
+  }
+
+  .brick-app-bar-center nav {
+    display: flex;
+    gap: var(--brick-space-4);
+  }
+
+  .brick-app-bar-center nav a {
+    color: var(--brick-color-text-secondary);
+    text-decoration: none;
+  }
+
+  .app-bar-position-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--brick-space-4);
+  }
+
+  .position-sample {
+    min-block-size: 7rem;
+    transform: translateZ(0);
+  }
+
+  .position-sample .brick-app-bar[data-position="sticky"] {
+    position: sticky;
+  }
+
+  .phone-frame .brick-app-bar-start strong {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .phone-frame .brick-app-bar-start {
+    flex: 1 1 auto;
+  }
+
+  @media (max-width: 38rem) {
+    .app-bar-position-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .app-bar-frame .brick-app-bar-center {
+      display: none;
+    }
+  }
+}
+
 .drawer-stage {
   display: flex;
   min-block-size: 6rem;

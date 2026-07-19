@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.3.3");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.3.4");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -23,6 +23,14 @@ test("package metadata defines the public Brick boundary", async () => {
     "./button": {
       types: "./dist/button.d.ts",
       default: "./dist/button.js",
+    },
+    "./icon-button": {
+      types: "./dist/icon-button.d.ts",
+      default: "./dist/icon-button.js",
+    },
+    "./app-bar": {
+      types: "./dist/app-bar.d.ts",
+      default: "./dist/app-bar.js",
     },
     "./card": {
       types: "./dist/card.d.ts",
@@ -66,6 +74,8 @@ test("package metadata defines the public Brick boundary", async () => {
 test("built package entrypoint can be imported without a CSS loader", async () => {
   const brick = await import(new URL("../../dist/index.js", import.meta.url));
   const button = await import(new URL("../../dist/button.js", import.meta.url));
+  const iconButton = await import(new URL("../../dist/icon-button.js", import.meta.url));
+  const appBar = await import(new URL("../../dist/app-bar.js", import.meta.url));
   const card = await import(new URL("../../dist/card.js", import.meta.url));
   const dialog = await import(new URL("../../dist/dialog.js", import.meta.url));
   const alertDialog = await import(new URL("../../dist/alert-dialog.js", import.meta.url));
@@ -74,8 +84,12 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const avatar = await import(new URL("../../dist/avatar.js", import.meta.url));
   const toggle = await import(new URL("../../dist/toggle.js", import.meta.url));
   const toggleGroup = await import(new URL("../../dist/toggle-group.js", import.meta.url));
-  assert.deepEqual(Object.keys(brick), ["AlertDialog", "Avatar", "Badge", "Button", "Card", "Dialog", "Drawer", "NotificationBadge", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot"]);
+  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Button", "Card", "Dialog", "Drawer", "IconButton", "NotificationBadge", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot"]);
   assert.equal(button.Button, brick.Button);
+  assert.equal(iconButton.IconButton, brick.IconButton);
+  assert.equal(appBar.AppBar, brick.AppBar);
+  assert.equal(appBar.AppBarRoot, brick.AppBar.Root);
+  assert.equal(appBar.AppBarToolbar, brick.AppBar.Toolbar);
   assert.equal(card.Card, brick.Card);
   assert.equal(dialog.Dialog, brick.Dialog);
   assert.equal(dialog.DialogContent, brick.Dialog.Content);
@@ -102,6 +116,8 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-color-accent-solid/);
   assert.match(styles, /brick\.foundations/);
   assert.match(styles, /\.brick-button/);
+  assert.match(styles, /\.brick-icon-button/);
+  assert.match(styles, /\.brick-app-bar/);
   assert.match(styles, /\.brick-card/);
   assert.match(styles, /\.brick-dialog-content/);
   assert.match(styles, /\.brick-alert-dialog-content/);
@@ -113,6 +129,9 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-toggle-group/);
   assert.match(styles, /box-sizing:\s*border-box/);
   assert.match(styles, /--brick-button-background/);
+  assert.match(styles, /--brick-icon-button-size/);
+  assert.match(styles, /--brick-app-bar-background/);
+  assert.match(styles, /prefers-reduced-transparency/);
   assert.match(styles, /--brick-card-space/);
   assert.match(styles, /--brick-dialog-max-inline-size/);
   assert.match(styles, /--brick-alert-dialog-max-inline-size/);

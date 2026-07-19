@@ -44,6 +44,12 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Fixed
 
+- Upgraded the exact Atom dependency to 0.3.4 so modal scroll locking preserves
+  stable scrollbar gutters without shifting Consumer layouts.
+- Increased the default AlertDialog medium surface to keep ordinary paired
+  decision labels on one row without shortening consumer copy.
+- Kept AlertDialog responses reachable under extreme width and height reflow by
+  falling back to bounded whole-surface scrolling when fixed regions cannot fit.
 - Upgraded the exact Atom dependency to 0.3.2 so nested Dialog cleanup restores
   the application root after animated child and parent exits.
 - Upgraded the exact Atom dependency to 0.3.3 so the pure Badge subpath remains

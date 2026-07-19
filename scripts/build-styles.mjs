@@ -36,6 +36,8 @@ await writeFile(
     '@import "./tokens.source.css";',
     '@import "../../src/styles/foundations.css";',
     '@import "../../src/components/button/button.css";',
+    '@import "../../src/components/icon-button/icon-button.css";',
+    '@import "../../src/components/app-bar/app-bar.css";',
     '@import "../../src/components/card/card.css";',
     '@import "../../src/components/dialog/dialog.css";',
     '@import "../../src/components/alert-dialog/alert-dialog.css";',

@@ -34,9 +34,11 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, Avatar, Badge, Button, Card, NotificationBadge, Toggle, ToggleGroup } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, Button, Card, IconButton, NotificationBadge, Toggle, ToggleGroup } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
+import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
+import { AppBar as SubpathAppBar } from "@flowstack-ui/brick/app-bar";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
 import { Badge as SubpathBadge, NotificationBadge as SubpathNotificationBadge } from "@flowstack-ui/brick/badge";
 import { Avatar as SubpathAvatar } from "@flowstack-ui/brick/avatar";
@@ -47,6 +49,8 @@ import { renderToString } from "react-dom/server";
 import { readFile } from "node:fs/promises";
 
 if (Button !== SubpathButton) throw new Error("Button subpath export mismatch");
+if (IconButton !== SubpathIconButton) throw new Error("IconButton subpath export mismatch");
+if (AppBar !== SubpathAppBar) throw new Error("AppBar subpath export mismatch");
 if (Card !== SubpathCard) throw new Error("Card subpath export mismatch");
 if (AlertDialog !== SubpathAlertDialog) throw new Error("AlertDialog subpath export mismatch");
 if (Badge !== SubpathBadge || NotificationBadge !== SubpathNotificationBadge) throw new Error("Badge subpath export mismatch");
@@ -55,6 +59,10 @@ if (Toggle !== SubpathToggle) throw new Error("Toggle subpath export mismatch");
 if (ToggleGroup !== SubpathToggleGroup) throw new Error("ToggleGroup subpath export mismatch");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
+const iconButtonMarkup = renderToString(React.createElement(IconButton, { "aria-label": "Search" }, React.createElement("svg")));
+if (!iconButtonMarkup.includes("brick-icon-button") || !iconButtonMarkup.includes('aria-label="Search"')) throw new Error("IconButton SSR smoke failed");
+const appBarMarkup = renderToString(React.createElement(AppBar.Root, { position: "sticky" }, React.createElement(AppBar.Toolbar, null, "Workspace")));
+if (!appBarMarkup.includes("brick-app-bar") || !appBarMarkup.includes('data-position="sticky"')) throw new Error("AppBar SSR smoke failed");
 const cardMarkup = renderToString(React.createElement(Card.Root, { as: "article" }, React.createElement(Card.Title, { as: "h1" }, "Card consumer")));
 if (!cardMarkup.includes("brick-card") || !cardMarkup.includes("Card consumer")) throw new Error("Card SSR smoke failed");
 const badgeMarkup = renderToString(React.createElement(Badge, { tone: "success" }, "Published"));
@@ -68,17 +76,21 @@ if (!toggleMarkup.includes("brick-toggle") || !toggleMarkup.includes('aria-press
 const toggleGroupMarkup = renderToString(React.createElement(ToggleGroup.Root, { value: "cards" }, React.createElement(ToggleGroup.Item, { value: "cards" }, "Cards")));
 if (!toggleGroupMarkup.includes("brick-toggle-group") || !toggleGroupMarkup.includes("brick-toggle-group-item")) throw new Error("ToggleGroup SSR smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
-if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group")) throw new Error("CSS export missing");
+if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group")) throw new Error("CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
       `import { createElement } from "react";
-import { AlertDialog, Avatar, Badge, Button, Card, NotificationBadge, Toggle, ToggleGroup, type AvatarProps, type BadgeProps, type ButtonProps, type CardRootProps, type NotificationBadgeProps, type ToggleProps, type ToggleGroupRootProps } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, Button, Card, IconButton, NotificationBadge, Toggle, ToggleGroup, type AppBarRootProps, type AvatarProps, type BadgeProps, type ButtonProps, type CardRootProps, type IconButtonProps, type NotificationBadgeProps, type ToggleProps, type ToggleGroupRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
+import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
+import { AppBar as SubpathAppBar } from "@flowstack-ui/brick/app-bar";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
 const props: ButtonProps = { children: "Consumer" };
+const iconButtonProps: IconButtonProps = { "aria-label": "Search", children: createElement("svg"), href: "/search" };
+const appBarProps: AppBarRootProps = { children: createElement(AppBar.Toolbar, null, "Workspace"), position: "sticky" };
 const cardProps: CardRootProps = { as: "article", children: "Consumer" };
 const alertDialogProps: AlertDialogContentProps = { size: "sm", children: "Consumer" };
 const badgeProps: BadgeProps = { children: "Published", tone: "success" };
@@ -90,6 +102,12 @@ void AlertDialog;
 void SubpathAlertDialog;
 void Button;
 void SubpathButton;
+void IconButton;
+void SubpathIconButton;
+void iconButtonProps;
+void AppBar;
+void SubpathAppBar;
+void appBarProps;
 void Card;
 void SubpathCard;
 void props;
@@ -132,7 +150,7 @@ void toggleGroupProps;
         "--ignore-scripts",
         "--save-exact",
         tarball,
-        "@flowstack-ui/atom@0.3.3",
+        "@flowstack-ui/atom@0.3.4",
         `react@${reactVersion}`,
         `react-dom@${reactVersion}`,
         `@types/react@${reactMajor}`,

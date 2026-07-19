@@ -10,6 +10,8 @@ import {
   Drawer,
   AlertDialog,
   NotificationBadge,
+  IconButton,
+  AppBar,
   Toggle,
   ToggleGroup,
   type AlertDialogSize,
@@ -30,6 +32,11 @@ import {
   type DrawerPlacement,
   type DrawerSize,
   type NotificationBadgePlacement,
+  type IconButtonShape,
+  type IconButtonSize,
+  type IconButtonTone,
+  type IconButtonVariant,
+  type AppBarVariant,
   type ToggleShape,
   type ToggleSize,
   type ToggleVariant,
@@ -60,6 +67,11 @@ const avatarStatuses: AvatarStatus[] = ["online", "away", "busy", "offline"];
 const toggleVariants: ToggleVariant[] = ["soft", "outline", "ghost"];
 const toggleSizes: ToggleSize[] = ["sm", "md", "lg"];
 const toggleShapes: ToggleShape[] = ["rounded", "pill"];
+const iconButtonVariants: IconButtonVariant[] = ["solid", "soft", "outline", "ghost"];
+const iconButtonTones: IconButtonTone[] = ["neutral", "accent", "info", "success", "warning", "danger"];
+const iconButtonSizes: IconButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
+const iconButtonShapes: IconButtonShape[] = ["rounded", "circle"];
+const appBarVariants: AppBarVariant[] = ["solid", "surface", "transparent"];
 const avatarStatusLabels: Record<AvatarStatus, string> = {
   online: "Online",
   away: "Away",
@@ -80,6 +92,14 @@ function ArrowIcon({ direction = "end" }: { direction?: "start" | "end" }) {
       />
     </svg>
   );
+}
+
+function MenuIcon() {
+  return <svg aria-hidden="true" fill="none" viewBox="0 0 20 20"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeLinecap="round" strokeWidth="1.75" /></svg>;
+}
+
+function SearchIcon() {
+  return <svg aria-hidden="true" fill="none" viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5" stroke="currentColor" strokeWidth="1.75" /><path d="m12.25 12.25 4 4" stroke="currentColor" strokeLinecap="round" strokeWidth="1.75" /></svg>;
 }
 
 function Scenario({ children, description, title }: { children: ReactNode; description: string; title: string }) {
@@ -1186,6 +1206,63 @@ function AvatarPlayground() {
   );
 }
 
+function IconButtonPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+  const [pressCount, setPressCount] = useState(0);
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  return (
+    <div className="playground-shell">
+      <header className="playground-header">
+        <div><p className="playground-kicker">@flowstack-ui/brick</p><h1>IconButton workbench</h1><p>Named compact actions and genuine links using Atom Button behavior.</p></div>
+        <fieldset className="playground-appearance"><legend>Appearance</legend>{(["system", "light", "dark"] as const).map((value) => <Button aria-pressed={appearance === value} key={value} onPress={() => selectAppearance(value)} size="sm" tone="neutral" variant={appearance === value ? "soft" : "ghost"}>{value}</Button>)}</fieldset>
+      </header>
+      <main data-testid="icon-button-workbench">
+        <Scenario description="The icon is visual while the owning button supplies one concise action name." title="Overview">
+          <div className="icon-button-hero" data-testid="icon-button-overview"><IconButton aria-label="Search workspace" onPress={() => setPressCount((count) => count + 1)} shape="circle" size="lg" tone="accent" variant="solid"><SearchIcon /></IconButton><div><h2>Search workspace</h2><p aria-live="polite">Activated {pressCount} times</p></div></div>
+        </Scenario>
+        <Scenario description="Four visual hierarchies share the same Atom action contract." title="Variants">
+          <div className="icon-button-row" data-testid="icon-button-variants">{iconButtonVariants.map((variant) => <div key={variant}><IconButton aria-label={`${variant} menu`} variant={variant}><MenuIcon /></IconButton><code>{variant}</code></div>)}</div>
+        </Scenario>
+        <Scenario description="Semantic tones are available without generating or interpreting the icon." title="Tones">
+          <div className="icon-button-row" data-testid="icon-button-tones">{iconButtonTones.map((tone) => <div key={tone}><IconButton aria-label={`${tone} action`} tone={tone} variant="soft"><SearchIcon /></IconButton><code>{tone}</code></div>)}</div>
+        </Scenario>
+        <Scenario description="Five square sizes and two intentional geometries align with the Button system." title="Sizes and shapes">
+          <div className="icon-button-stack" data-testid="icon-button-sizes"> <div className="icon-button-row">{iconButtonSizes.map((size) => <IconButton aria-label={`${size} action`} key={size} size={size}><MenuIcon /></IconButton>)}</div><div className="icon-button-row">{iconButtonShapes.map((shape) => <IconButton aria-label={`${shape} action`} key={shape} shape={shape} variant="outline"><SearchIcon /></IconButton>)}</div></div>
+        </Scenario>
+        <Scenario description="Disabled and loading actions remain distinct; href renders a genuine anchor." title="State and link semantics">
+          <div className="icon-button-row" data-testid="icon-button-states"><IconButton aria-label="Disabled search" disabled><SearchIcon /></IconButton><IconButton aria-label="Loading search" loading tone="accent" variant="solid"><SearchIcon /></IconButton><IconButton aria-label="Read documentation" href="#icon-button-docs" target="_blank" variant="outline"><ArrowIcon /></IconButton></div>
+        </Scenario>
+        <Scenario description="Long context, constrained width, RTL, dark appearance, and forced colors remain inspectable." title="Mobile, stress, and RTL">
+          <div className="stress-grid" data-testid="icon-button-stress"><div className="phone-frame"><p>Dense application actions</p><div className="icon-button-row"><IconButton aria-label="Open a very detailed workspace navigation menu"><MenuIcon /></IconButton><IconButton aria-label="Search all localized workspace content"><SearchIcon /></IconButton></div></div><div className="phone-frame" dir="rtl"><p>إجراءات مساحة العمل</p><div className="icon-button-row"><IconButton aria-label="فتح القائمة"><MenuIcon /></IconButton><IconButton aria-label="البحث"><SearchIcon /></IconButton></div></div></div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
+function AppBarExample({ navigationLabel, position = "static", variant = "surface", ...props }: { navigationLabel: string; position?: "static" | "absolute" | "sticky" | "fixed"; variant?: AppBarVariant; bordered?: boolean; elevated?: boolean; blurred?: boolean }) {
+  return <AppBar.Root aria-label={`${position} ${variant} example`} position={position} variant={variant} {...props}><AppBar.Toolbar><AppBar.Start><IconButton aria-label="Open menu" size="sm"><MenuIcon /></IconButton><strong>Flowstack</strong></AppBar.Start><AppBar.Center><nav aria-label={navigationLabel}><a href="#overview">Overview</a><a href="#activity">Activity</a></nav></AppBar.Center><AppBar.End><IconButton aria-label="Search" size="sm"><SearchIcon /></IconButton><Avatar alt="" fallback="AL" size="sm" /></AppBar.End></AppBar.Toolbar></AppBar.Root>;
+}
+
+function AppBarPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+  function selectAppearance(next: Appearance) { setAppearance(next); if (next === "system") document.documentElement.removeAttribute("data-brick-appearance"); else document.documentElement.dataset.brickAppearance = next; }
+  return <div className="playground-shell app-bar-playground"><header className="playground-header"><div><p className="playground-kicker">@flowstack-ui/brick</p><h1>AppBar workbench</h1><p>Server-safe top surfaces with application-supplied content and policy.</p></div><fieldset className="playground-appearance"><legend>Appearance</legend>{(["system", "light", "dark"] as const).map((value) => <Button aria-pressed={appearance === value} key={value} onPress={() => selectAppearance(value)} size="sm" tone="neutral" variant={appearance === value ? "soft" : "ghost"}>{value}</Button>)}</fieldset></header><main data-testid="app-bar-workbench">
+    <Scenario description="Root, Toolbar, Start, Center, and End align real public Brick content without becoming a complete header product." title="Overview"><div className="app-bar-frame" data-testid="app-bar-overview"><AppBarExample navigationLabel="Overview example navigation" /></div></Scenario>
+    <Scenario description="Solid, surface, and transparent treatments keep application content unchanged." title="Variants"><div className="app-bar-stack" data-testid="app-bar-variants">{appBarVariants.map((variant) => <div className="app-bar-frame" key={variant}><code>{variant}</code><AppBarExample navigationLabel={`${variant} variant navigation`} variant={variant} /></div>)}</div></Scenario>
+    <Scenario description="Comfortable and compact alter only structural density; Toolbar is not an ARIA toolbar." title="Density"><div className="app-bar-stack" data-testid="app-bar-density"><div className="app-bar-frame"><AppBarExample navigationLabel="Comfortable density navigation" /></div><div className="app-bar-frame"><AppBar.Root aria-label="Compact example"><AppBar.Toolbar density="compact"><AppBar.Start>Compact</AppBar.Start><AppBar.End><IconButton aria-label="Search compact bar" size="xs"><SearchIcon /></IconButton></AppBar.End></AppBar.Toolbar></AppBar.Root></div></div></Scenario>
+    <Scenario description="Border, static elevation, blur, and transparency are independent visual choices." title="Surface options"><div className="app-bar-stack" data-testid="app-bar-options"><div className="app-bar-frame"><AppBarExample elevated navigationLabel="Elevated option navigation" /></div><div className="app-bar-frame"><AppBarExample blurred navigationLabel="Blurred option navigation" variant="transparent" /></div><div className="app-bar-frame"><AppBarExample bordered={false} navigationLabel="Borderless option navigation" /></div></div></Scenario>
+    <Scenario description="Static, absolute, sticky, and fixed are public modes; the application owns fixed/absolute page offsets." title="Positions"><div className="app-bar-position-grid" data-testid="app-bar-positions">{(["static", "absolute", "sticky", "fixed"] as const).map((position) => <div className="position-sample" key={position}><code>{position}</code><AppBar.Root aria-label={`${position} position sample`} position={position}><AppBar.Toolbar density="compact"><AppBar.Start>{position}</AppBar.Start><AppBar.End><IconButton aria-label={`Search ${position} bar`} size="xs"><SearchIcon /></IconButton></AppBar.End></AppBar.Toolbar></AppBar.Root></div>)}</div></Scenario>
+    <Scenario description="The application hides optional navigation at narrow widths while AppBar preserves one logical row and RTL alignment." title="Mobile, stress, and RTL"><div className="stress-grid" data-testid="app-bar-stress"><div className="phone-frame"><AppBar.Root aria-label="Mobile bar"><AppBar.Toolbar density="compact"><AppBar.Start><IconButton aria-label="Open mobile menu" size="sm"><MenuIcon /></IconButton><strong>Very long workspace name</strong></AppBar.Start><AppBar.End><Avatar alt="" fallback="FS" size="sm" /></AppBar.End></AppBar.Toolbar></AppBar.Root></div><div className="phone-frame" dir="rtl"><AppBar.Root aria-label="شريط التطبيق"><AppBar.Toolbar density="compact"><AppBar.Start><IconButton aria-label="فتح القائمة" size="sm"><MenuIcon /></IconButton><strong>مساحة العمل</strong></AppBar.Start><AppBar.End><IconButton aria-label="البحث" size="sm"><SearchIcon /></IconButton></AppBar.End></AppBar.Toolbar></AppBar.Root></div></div></Scenario>
+  </main></div>;
+}
+
 function ToggleFamilyPlayground() {
   const [appearance, setAppearance] = useState<Appearance>("system");
   const [favorite, setFavorite] = useState(false);
@@ -1285,7 +1362,11 @@ function ToggleFamilyPlayground() {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {window.location.pathname.startsWith("/toggle") ? (
+    {window.location.pathname.startsWith("/app-bar") ? (
+      <AppBarPlayground />
+    ) : window.location.pathname.startsWith("/icon-button") ? (
+      <IconButtonPlayground />
+    ) : window.location.pathname.startsWith("/toggle") ? (
       <ToggleFamilyPlayground />
     ) : window.location.pathname.startsWith("/avatar") ? (
       <AvatarPlayground />

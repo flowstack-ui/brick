@@ -7,6 +7,26 @@ export {
   type ButtonVariant,
 } from "./components/button/index.js";
 export {
+  IconButton,
+  type IconButtonProps,
+  type IconButtonShape,
+  type IconButtonSize,
+  type IconButtonTone,
+  type IconButtonVariant,
+} from "./components/icon-button/index.js";
+export {
+  AppBar,
+  AppBarCenter,
+  AppBarEnd,
+  AppBarRoot,
+  AppBarStart,
+  AppBarToolbar,
+  type AppBarRootProps,
+  type AppBarSectionProps,
+  type AppBarToolbarProps,
+  type AppBarVariant,
+} from "./components/app-bar/index.js";
+export {
   Card,
   type CardActionProps,
   type CardContentProps,

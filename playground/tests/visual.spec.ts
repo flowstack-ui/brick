@@ -33,6 +33,38 @@ test("Button constrained and RTL recipes remain contained", async ({ page }) => 
   await expect(page.getByTestId("button-stress")).toHaveScreenshot("button-stress-mobile.png");
 });
 
+test("IconButton recipes retain compact hierarchy", async ({ page }) => {
+  await page.goto("/icon-button");
+  await expect(page.getByTestId("icon-button-variants")).toHaveScreenshot("icon-button-variants-light.png");
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await expect(page.getByTestId("icon-button-tones")).toHaveScreenshot("icon-button-tones-dark.png");
+});
+
+test("IconButton states remain visible in forced colors and constrained layouts", async ({ page }) => {
+  await page.goto("/icon-button");
+  await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
+  await expect(page.getByTestId("icon-button-states")).toHaveScreenshot("icon-button-states-forced-colors.png");
+  await page.emulateMedia({ forcedColors: "none", reducedMotion: "reduce" });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.getByTestId("icon-button-stress")).toHaveScreenshot("icon-button-stress-mobile.png");
+});
+
+test("AppBar surfaces and anatomy retain hierarchy", async ({ page }) => {
+  await page.goto("/app-bar");
+  await expect(page.getByTestId("app-bar-variants")).toHaveScreenshot("app-bar-variants-light.png");
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await expect(page.getByTestId("app-bar-options")).toHaveScreenshot("app-bar-options-dark.png");
+});
+
+test("AppBar remains contained on mobile and visible in forced colors", async ({ page }) => {
+  await page.goto("/app-bar");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.getByTestId("app-bar-stress")).toHaveScreenshot("app-bar-stress-mobile.png");
+  await page.setViewportSize({ width: 1120, height: 900 });
+  await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
+  await expect(page.getByTestId("app-bar-density")).toHaveScreenshot("app-bar-density-forced-colors.png");
+});
+
 test("Card visual hierarchy remains stable across recipes and appearances", async ({ page }) => {
   await page.goto("/card");
   await expect(page.getByTestId("card-variants")).toHaveScreenshot("card-variants-light.png");

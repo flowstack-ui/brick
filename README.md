@@ -5,8 +5,8 @@ Opinionated styled React components built on `@flowstack-ui/atom`.
 Brick provides finished, accessible React components with static CSS, semantic
 design tokens, light and dark appearances, and a documented customization
 contract. The initial catalog includes Button, Card, Dialog, AlertDialog,
-Drawer, Badge, NotificationBadge, Avatar, Toggle, and ToggleGroup in version
-`0.1.0`.
+Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton, and
+AppBar in version `0.1.0`.
 
 ## Boundary
 
@@ -38,9 +38,18 @@ import "@flowstack-ui/brick/styles.css";
 Use `@flowstack-ui/brick/tokens.css` when only the visual tokens are needed.
 
 ```tsx
-import { AlertDialog, Avatar, Badge, Button, Card, Dialog, Drawer, NotificationBadge, Toggle, ToggleGroup } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Dialog, Drawer, IconButton, NotificationBadge, Toggle, ToggleGroup } from "@flowstack-ui/brick";
 
 <Button>Save changes</Button>;
+
+<IconButton aria-label="Search" href="/search"><SearchIcon /></IconButton>;
+
+<AppBar.Root position="sticky">
+  <AppBar.Toolbar>
+    <AppBar.Start>Workspace</AppBar.Start>
+    <AppBar.End><IconButton aria-label="Search"><SearchIcon /></IconButton></AppBar.End>
+  </AppBar.Toolbar>
+</AppBar.Root>;
 
 <Badge tone="success">Published</Badge>;
 

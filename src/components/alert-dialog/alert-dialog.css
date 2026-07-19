@@ -13,7 +13,7 @@
   }
 
   .brick-alert-dialog-content {
-    --brick-alert-dialog-max-inline-size: 28rem;
+    --brick-alert-dialog-max-inline-size: 30rem;
     --brick-alert-dialog-max-block-size: calc(100dvb - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     --brick-alert-dialog-space: var(--brick-space-5);
     --brick-alert-dialog-radius: var(--brick-radius-overlay);
@@ -129,6 +129,20 @@
 
     .brick-alert-dialog-footer > .brick-button {
       flex: 1 1 9rem;
+    }
+  }
+
+  @media (max-width: 12rem), (max-height: 24rem) {
+    .brick-alert-dialog-content {
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .brick-alert-dialog-body {
+      flex: 0 0 auto;
+      overflow: visible;
+      overscroll-behavior: auto;
+      scrollbar-gutter: auto;
     }
   }
 
