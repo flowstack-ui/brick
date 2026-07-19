@@ -28,6 +28,10 @@ This directory is the public documentation authority for
   labels and attached visual notification counts or dots
 - [`components/avatar/README.md`](components/avatar/README.md) — explicit
   identity images/fallbacks, fixed sizes and shapes, and availability rings
+- [`components/toggle/README.md`](components/toggle/README.md) — one persistent
+  pressed/unpressed command with stable labeling
+- [`components/toggle-group/README.md`](components/toggle-group/README.md) —
+  related single or multiple pressed commands with roving focus
 
 Every released component has one folder under `components/` containing its
 public guide and `CHANGELOG.md`. Start new documentation from the templates in

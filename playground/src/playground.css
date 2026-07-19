@@ -831,6 +831,96 @@ main {
   border: var(--brick-border-width) dashed var(--brick-color-accent-border);
 }
 
+.toggle-hero,
+.toggle-matrix,
+.toggle-stack,
+.toggle-layout-grid {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  padding: var(--brick-space-5);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-raised);
+}
+
+.toggle-hero {
+  display: grid;
+  align-items: center;
+  gap: var(--brick-space-4);
+}
+
+.toggle-hero h2,
+.toggle-hero p {
+  margin: 0;
+}
+
+.toggle-hero > div {
+  display: grid;
+  gap: var(--brick-space-1);
+}
+
+.toggle-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: var(--brick-space-3);
+}
+
+.toggle-cell {
+  display: grid;
+  align-content: space-between;
+  justify-items: start;
+  gap: var(--brick-space-3);
+  min-inline-size: 0;
+  padding: var(--brick-space-4);
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-canvas);
+}
+
+.toggle-cell code,
+.toggle-stack > span,
+.toggle-hero > span {
+  color: var(--brick-color-text-secondary);
+}
+
+.toggle-stack {
+  display: grid;
+  gap: var(--brick-space-5);
+}
+
+.toggle-row,
+.toggle-layout-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--brick-space-4);
+}
+
+.toggle-layout-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.toggle-customized {
+  padding: var(--brick-space-2);
+  border: var(--brick-border-width) dashed var(--brick-color-accent-border);
+  border-radius: var(--brick-radius-control);
+}
+
+.phone-frame .brick-toggle-group {
+  inline-size: 100%;
+}
+
+@media (min-width: 48rem) {
+  .toggle-hero {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .toggle-hero > span {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 22rem) {
   .avatar-hero,
   .avatar-row,
@@ -838,7 +928,11 @@ main {
   .avatar-state-panel,
   .avatar-context-grid,
   .avatar-notification-grid,
-  .avatar-appearance-grid {
+  .avatar-appearance-grid,
+  .toggle-hero,
+  .toggle-matrix,
+  .toggle-stack,
+  .toggle-layout-grid {
     padding: var(--brick-space-3);
   }
 }

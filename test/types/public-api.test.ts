@@ -62,6 +62,17 @@ import {
   type AvatarStatus,
 } from "@flowstack-ui/brick";
 import { Avatar as SubpathAvatar } from "@flowstack-ui/brick/avatar";
+import {
+  Toggle,
+  ToggleGroup,
+  type ToggleProps,
+  type ToggleShape,
+  type ToggleSize,
+  type ToggleVariant,
+  type ToggleGroupRootProps,
+} from "@flowstack-ui/brick";
+import { Toggle as SubpathToggle } from "@flowstack-ui/brick/toggle";
+import { ToggleGroup as SubpathToggleGroup } from "@flowstack-ui/brick/toggle-group";
 
 const variant: ButtonVariant = "soft";
 const tone: ButtonTone = "success";
@@ -336,3 +347,52 @@ void invalidAvatarStatus;
 void invalidAvatarColor;
 void invalidAvatarBadge;
 void invalidAvatarGroup;
+
+const toggleVariant: ToggleVariant = "ghost";
+const toggleSize: ToggleSize = "lg";
+const toggleShape: ToggleShape = "pill";
+const toggleProps: ToggleProps = {
+  children: "Favorite",
+  defaultPressed: true,
+  shape: toggleShape,
+  size: toggleSize,
+  variant: toggleVariant,
+};
+const singleToggleGroup: ToggleGroupRootProps = {
+  children: createElement(ToggleGroup.Item, { value: "cards" }, "Cards"),
+  onValueChange: (value: string) => void value,
+  type: "single",
+  value: "cards",
+};
+const multipleToggleGroup: ToggleGroupRootProps = {
+  children: createElement(ToggleGroup.Item, { value: "bold" }, "Bold"),
+  onValueChange: (value: string[]) => void value,
+  type: "multiple",
+  value: ["bold"],
+};
+void Toggle;
+void SubpathToggle;
+void ToggleGroup;
+void SubpathToggleGroup;
+void toggleProps;
+void singleToggleGroup;
+void multipleToggleGroup;
+
+// @ts-expect-error Toggle variants are a closed recipe set.
+const invalidToggleVariant: ToggleProps = { children: "Invalid", variant: "solid" };
+// @ts-expect-error Standalone Toggle intentionally omits Atom's value convenience.
+const invalidToggleValue: ToggleProps = { children: "Invalid", value: "favorite" };
+// @ts-expect-error Toggle exposes selected accent styling rather than semantic tones.
+const invalidToggleTone: ToggleProps = { children: "Invalid", tone: "danger" };
+// @ts-expect-error Multiple groups require an array value.
+const invalidMultipleToggleGroup: ToggleGroupRootProps = { children: null, type: "multiple", value: "bold" };
+// @ts-expect-error Group Item visual recipes are owned by Root.
+const invalidToggleGroupItem = createElement(ToggleGroup.Item, { value: "bold", variant: "ghost" });
+// @ts-expect-error ToggleGroup is a namespace and not a callable flat component.
+const invalidFlatToggleGroup = createElement(ToggleGroup, null);
+void invalidToggleVariant;
+void invalidToggleValue;
+void invalidToggleTone;
+void invalidMultipleToggleGroup;
+void invalidToggleGroupItem;
+void invalidFlatToggleGroup;

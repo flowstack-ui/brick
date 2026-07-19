@@ -42,6 +42,8 @@ await writeFile(
     '@import "../../src/components/drawer/drawer.css";',
     '@import "../../src/components/badge/badge.css";',
     '@import "../../src/components/avatar/avatar.css";',
+    '@import "../../src/components/toggle/toggle.css";',
+    '@import "../../src/components/toggle-group/toggle-group.css";',
   ].join("\n"),
 );
 

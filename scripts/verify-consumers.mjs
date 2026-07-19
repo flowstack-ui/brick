@@ -34,12 +34,14 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, Avatar, Badge, Button, Card, NotificationBadge } from "@flowstack-ui/brick";
+      `import { AlertDialog, Avatar, Badge, Button, Card, NotificationBadge, Toggle, ToggleGroup } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
 import { Badge as SubpathBadge, NotificationBadge as SubpathNotificationBadge } from "@flowstack-ui/brick/badge";
 import { Avatar as SubpathAvatar } from "@flowstack-ui/brick/avatar";
+import { Toggle as SubpathToggle } from "@flowstack-ui/brick/toggle";
+import { ToggleGroup as SubpathToggleGroup } from "@flowstack-ui/brick/toggle-group";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { readFile } from "node:fs/promises";
@@ -49,6 +51,8 @@ if (Card !== SubpathCard) throw new Error("Card subpath export mismatch");
 if (AlertDialog !== SubpathAlertDialog) throw new Error("AlertDialog subpath export mismatch");
 if (Badge !== SubpathBadge || NotificationBadge !== SubpathNotificationBadge) throw new Error("Badge subpath export mismatch");
 if (Avatar !== SubpathAvatar) throw new Error("Avatar subpath export mismatch");
+if (Toggle !== SubpathToggle) throw new Error("Toggle subpath export mismatch");
+if (ToggleGroup !== SubpathToggleGroup) throw new Error("ToggleGroup subpath export mismatch");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
 const cardMarkup = renderToString(React.createElement(Card.Root, { as: "article" }, React.createElement(Card.Title, { as: "h1" }, "Card consumer")));
@@ -59,14 +63,18 @@ const notificationMarkup = renderToString(React.createElement(NotificationBadge,
 if (!notificationMarkup.includes("brick-notification-badge") || !notificationMarkup.includes('aria-hidden="true"')) throw new Error("NotificationBadge SSR smoke failed");
 const avatarMarkup = renderToString(React.createElement(Avatar, { alt: "Ada Lovelace", fallback: "AL", shape: "rounded", status: "online" }));
 if (!avatarMarkup.includes("brick-avatar") || !avatarMarkup.includes('data-status="online"') || !avatarMarkup.includes("Ada Lovelace")) throw new Error("Avatar SSR smoke failed");
+const toggleMarkup = renderToString(React.createElement(Toggle, { pressed: true }, "Favorite"));
+if (!toggleMarkup.includes("brick-toggle") || !toggleMarkup.includes('aria-pressed="true"')) throw new Error("Toggle SSR smoke failed");
+const toggleGroupMarkup = renderToString(React.createElement(ToggleGroup.Root, { value: "cards" }, React.createElement(ToggleGroup.Item, { value: "cards" }, "Cards")));
+if (!toggleGroupMarkup.includes("brick-toggle-group") || !toggleGroupMarkup.includes("brick-toggle-group-item")) throw new Error("ToggleGroup SSR smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
-if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-avatar")) throw new Error("CSS export missing");
+if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group")) throw new Error("CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
       `import { createElement } from "react";
-import { AlertDialog, Avatar, Badge, Button, Card, NotificationBadge, type AvatarProps, type BadgeProps, type ButtonProps, type CardRootProps, type NotificationBadgeProps } from "@flowstack-ui/brick";
+import { AlertDialog, Avatar, Badge, Button, Card, NotificationBadge, Toggle, ToggleGroup, type AvatarProps, type BadgeProps, type ButtonProps, type CardRootProps, type NotificationBadgeProps, type ToggleProps, type ToggleGroupRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
@@ -76,6 +84,8 @@ const alertDialogProps: AlertDialogContentProps = { size: "sm", children: "Consu
 const badgeProps: BadgeProps = { children: "Published", tone: "success" };
 const notificationBadgeProps: NotificationBadgeProps = { count: 4, children: createElement("button", null, "Inbox") };
 const avatarProps: AvatarProps = { alt: "Ada Lovelace", fallback: "AL", status: "online" };
+const toggleProps: ToggleProps = { children: "Favorite", pressed: true };
+const toggleGroupProps: ToggleGroupRootProps = { children: createElement(ToggleGroup.Item, { value: "cards" }, "Cards"), value: "cards" };
 void AlertDialog;
 void SubpathAlertDialog;
 void Button;
@@ -91,6 +101,10 @@ void badgeProps;
 void notificationBadgeProps;
 void Avatar;
 void avatarProps;
+void Toggle;
+void ToggleGroup;
+void toggleProps;
+void toggleGroupProps;
 `,
     );
     await writeFile(

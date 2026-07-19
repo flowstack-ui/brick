@@ -5,6 +5,8 @@ import { renderToString } from "react-dom/server";
 import { Card } from "../../dist/card.js";
 import { Badge, NotificationBadge } from "../../dist/badge.js";
 import { Avatar } from "../../dist/avatar.js";
+import { Toggle } from "../../dist/toggle.js";
+import { ToggleGroup } from "../../dist/toggle-group.js";
 
 test("Card renders on the server without browser state or a client boundary", () => {
   const markup = renderToString(
@@ -66,4 +68,28 @@ test("Avatar emits deterministic fallback and status metadata during SSR", () =>
   assert.match(markup, /role="img"/);
   assert.match(markup, /aria-label="Ada Lovelace"/);
   assert.match(markup, />AL<\/span>/);
+});
+
+test("Toggle family emits deterministic pressed semantics during SSR", () => {
+  const toggleMarkup = renderToString(
+    React.createElement(Toggle, { pressed: true, variant: "outline" }, "Pinned"),
+  );
+  assert.match(toggleMarkup, /^<button/);
+  assert.match(toggleMarkup, /class="brick-toggle"/);
+  assert.match(toggleMarkup, /aria-pressed="true"/);
+  assert.match(toggleMarkup, /data-variant="outline"/);
+
+  const groupMarkup = renderToString(
+    React.createElement(
+      ToggleGroup.Root,
+      { ariaLabel: "View", value: "cards" },
+      React.createElement(ToggleGroup.Item, { value: "cards" }, "Cards"),
+      React.createElement(ToggleGroup.Item, { value: "list" }, "List"),
+    ),
+  );
+  assert.match(groupMarkup, /^<div/);
+  assert.match(groupMarkup, /class="brick-toggle-group"/);
+  assert.match(groupMarkup, /role="group"/);
+  assert.match(groupMarkup, /aria-label="View"/);
+  assert.match(groupMarkup, /class="brick-toggle-group-item"/);
 });

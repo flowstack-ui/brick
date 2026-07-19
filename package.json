@@ -56,6 +56,14 @@
       "types": "./dist/avatar.d.ts",
       "default": "./dist/avatar.js"
     },
+    "./toggle": {
+      "types": "./dist/toggle.d.ts",
+      "default": "./dist/toggle.js"
+    },
+    "./toggle-group": {
+      "types": "./dist/toggle-group.d.ts",
+      "default": "./dist/toggle-group.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"

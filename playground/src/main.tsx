@@ -10,6 +10,8 @@ import {
   Drawer,
   AlertDialog,
   NotificationBadge,
+  Toggle,
+  ToggleGroup,
   type AlertDialogSize,
   type AvatarShape,
   type AvatarSize,
@@ -28,6 +30,9 @@ import {
   type DrawerPlacement,
   type DrawerSize,
   type NotificationBadgePlacement,
+  type ToggleShape,
+  type ToggleSize,
+  type ToggleVariant,
 } from "@flowstack-ui/brick";
 import "@flowstack-ui/brick/styles.css";
 import "./playground.css";
@@ -52,6 +57,9 @@ const notificationPlacements: NotificationBadgePlacement[] = ["top-start", "top-
 const avatarSizes: AvatarSize[] = ["xs", "sm", "md", "lg", "xl"];
 const avatarShapes: AvatarShape[] = ["circle", "rounded"];
 const avatarStatuses: AvatarStatus[] = ["online", "away", "busy", "offline"];
+const toggleVariants: ToggleVariant[] = ["soft", "outline", "ghost"];
+const toggleSizes: ToggleSize[] = ["sm", "md", "lg"];
+const toggleShapes: ToggleShape[] = ["rounded", "pill"];
 const avatarStatusLabels: Record<AvatarStatus, string> = {
   online: "Online",
   away: "Away",
@@ -1178,9 +1186,108 @@ function AvatarPlayground() {
   );
 }
 
+function ToggleFamilyPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+  const [favorite, setFavorite] = useState(false);
+  const [view, setView] = useState("cards");
+  const [filters, setFilters] = useState<string[]>(["active"]);
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  return (
+    <div className="playground-shell">
+      <header className="playground-header">
+        <div>
+          <p className="playground-kicker">@flowstack-ui/brick</p>
+          <h1>Toggle family workbench</h1>
+          <p>Persistent pressed commands and related single- or multiple-selection groups, with Atom owning behavior.</p>
+        </div>
+        <fieldset className="playground-appearance">
+          <legend>Appearance</legend>
+          {(["system", "light", "dark"] as const).map((value) => (
+            <Button aria-pressed={appearance === value} key={value} onPress={() => selectAppearance(value)} size="sm" tone="neutral" variant={appearance === value ? "soft" : "ghost"}>{value}</Button>
+          ))}
+        </fieldset>
+      </header>
+
+      <main data-testid="toggle-workbench">
+        <Scenario description="A stable label describes one persistent on/off command while Atom supplies native button and pressed semantics." title="Overview">
+          <div className="toggle-hero" data-testid="toggle-overview">
+            <div><h2>Keep a project close</h2><p>Favorite remains the same command whether it is on or off.</p></div>
+            <Toggle onPressedChange={setFavorite} pressed={favorite}>★ Favorite</Toggle>
+            <span aria-live="polite">Favorite is {favorite ? "on" : "off"}</span>
+          </div>
+        </Scenario>
+
+        <Scenario description="Soft, outline, and ghost share a neutral rest and unmistakable accent selected state." title="Variants and states">
+          <div className="toggle-matrix" data-testid="toggle-recipes">
+            {toggleVariants.flatMap((variant) => [
+              <div className="toggle-cell" key={`${variant}-off`}><code>{variant} · off</code><Toggle variant={variant}>Preview</Toggle></div>,
+              <div className="toggle-cell" key={`${variant}-on`}><code>{variant} · on</code><Toggle defaultPressed variant={variant}>Preview</Toggle></div>,
+              <div className="toggle-cell" key={`${variant}-disabled`}><code>{variant} · disabled</code><Toggle disabled variant={variant}>Preview</Toggle></div>,
+            ])}
+          </div>
+        </Scenario>
+
+        <Scenario description="All sizes support text and accessible icon-only content; rounded and pill are intentional geometries." title="Sizes, shapes, and icons">
+          <div className="toggle-stack" data-testid="toggle-sizes-shapes">
+            <div className="toggle-row">{toggleSizes.map((size) => <Toggle key={size} size={size}>{size} toggle</Toggle>)}</div>
+            <div className="toggle-row">{toggleShapes.map((shape) => <Toggle defaultPressed key={shape} shape={shape}>{shape}</Toggle>)}<Toggle ariaLabel="Pin project" iconOnly>◆</Toggle></div>
+          </div>
+        </Scenario>
+
+        <Scenario description="A controlled attached single group behaves like a compact view chooser; the application rejects an empty view." title="Attached single group">
+          <div className="toggle-stack" data-testid="toggle-single-group">
+            <ToggleGroup.Root ariaLabel="Project view" attached fullWidth onValueChange={(next) => { if (next) setView(next); }} type="single" value={view} variant="outline">
+              <ToggleGroup.Item value="cards">Cards</ToggleGroup.Item>
+              <ToggleGroup.Item value="list">List</ToggleGroup.Item>
+              <ToggleGroup.Item value="timeline">Timeline</ToggleGroup.Item>
+            </ToggleGroup.Root>
+            <span aria-live="polite">Current view: {view}</span>
+          </div>
+        </Scenario>
+
+        <Scenario description="Separated pill items wrap naturally and allow several independent filters to remain selected." title="Separated multiple group">
+          <div className="toggle-stack" data-testid="toggle-multiple-group">
+            <ToggleGroup.Root ariaLabel="Project filters" onValueChange={setFilters} shape="pill" type="multiple" value={filters}>
+              <ToggleGroup.Item value="active">Active</ToggleGroup.Item>
+              <ToggleGroup.Item value="owned">Owned by me</ToggleGroup.Item>
+              <ToggleGroup.Item value="shared">Shared</ToggleGroup.Item>
+              <ToggleGroup.Item disabled value="archived">Archived</ToggleGroup.Item>
+            </ToggleGroup.Root>
+            <span>Selected filters: {filters.length ? filters.join(", ") : "none"}</span>
+          </div>
+        </Scenario>
+
+        <Scenario description="Vertical orientation, group disabled state, public root hooks, and full-width distribution remain explicit." title="Orientation and customization">
+          <div className="toggle-layout-grid" data-testid="toggle-orientation">
+            <ToggleGroup.Root ariaLabel="Text alignment" className="toggle-customized" defaultValue="start" orientation="vertical" style={{ "--brick-toggle-group-gap": "0.25rem" } as CSSProperties}>
+              <ToggleGroup.Item value="start">Start</ToggleGroup.Item><ToggleGroup.Item value="center">Center</ToggleGroup.Item><ToggleGroup.Item value="end">End</ToggleGroup.Item>
+            </ToggleGroup.Root>
+            <ToggleGroup.Root ariaLabel="Disabled modes" defaultValue="one" disabled><ToggleGroup.Item value="one">One</ToggleGroup.Item><ToggleGroup.Item value="two">Two</ToggleGroup.Item></ToggleGroup.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Long localization, mixed direction, narrow width, and attached logical corners remain contained." title="Mobile, stress, and RTL">
+          <div className="stress-grid" data-testid="toggle-stress">
+            <div className="phone-frame"><Toggle shape="pill">Awaiting detailed workspace verification</Toggle><ToggleGroup.Root ariaLabel="Localized filters" defaultValue={["long"]} type="multiple"><ToggleGroup.Item value="long">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</ToggleGroup.Item><ToggleGroup.Item value="short">Ready</ToggleGroup.Item></ToggleGroup.Root></div>
+            <div className="phone-frame" dir="rtl"><Toggle defaultPressed>إظهار المشاريع المكتملة</Toggle><ToggleGroup.Root ariaLabel="طريقة عرض المشروع" attached defaultValue="cards"><ToggleGroup.Item value="cards">بطاقات</ToggleGroup.Item><ToggleGroup.Item value="list">قائمة</ToggleGroup.Item></ToggleGroup.Root></div>
+          </div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {window.location.pathname.startsWith("/avatar") ? (
+    {window.location.pathname.startsWith("/toggle") ? (
+      <ToggleFamilyPlayground />
+    ) : window.location.pathname.startsWith("/avatar") ? (
       <AvatarPlayground />
     ) : window.location.pathname.startsWith("/badge") ? (
       <BadgePlayground />

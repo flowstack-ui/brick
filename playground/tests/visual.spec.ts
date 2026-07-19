@@ -188,3 +188,29 @@ test("Avatar status geometry retains a visible forced-colors boundary", async ({
   await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
   await expect(page.getByTestId("avatar-statuses")).toHaveScreenshot("avatar-statuses-forced-colors.png");
 });
+
+test("Toggle recipes and group geometry retain their light hierarchy", async ({ page }) => {
+  await page.goto("/toggle");
+  await expect(page.getByTestId("toggle-recipes")).toHaveScreenshot("toggle-recipes-light.png");
+  await expect(page.getByTestId("toggle-sizes-shapes")).toHaveScreenshot("toggle-sizes-shapes-light.png");
+  await expect(page.getByTestId("toggle-single-group")).toHaveScreenshot("toggle-single-group-light.png");
+});
+
+test("Toggle selected state and separated filters retain dark geometry", async ({ page }) => {
+  await page.goto("/toggle");
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await expect(page.getByTestId("toggle-overview")).toHaveScreenshot("toggle-overview-dark.png");
+  await expect(page.getByTestId("toggle-multiple-group")).toHaveScreenshot("toggle-multiple-group-dark.png");
+});
+
+test("Toggle family remains contained in narrow localized layouts", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/toggle");
+  await expect(page.getByTestId("toggle-stress")).toHaveScreenshot("toggle-stress-mobile.png");
+});
+
+test("Toggle selected boundaries survive forced colors", async ({ page }) => {
+  await page.goto("/toggle");
+  await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
+  await expect(page.getByTestId("toggle-recipes")).toHaveScreenshot("toggle-recipes-forced-colors.png");
+});

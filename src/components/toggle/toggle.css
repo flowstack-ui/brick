@@ -1,0 +1,179 @@
+@layer brick.components {
+  :where(.brick-toggle, .brick-toggle-group-item) {
+    --brick-toggle-min-block-size: var(--brick-control-min-block-size-md);
+    --brick-toggle-padding-inline: 1rem;
+    --brick-toggle-gap: 0.5rem;
+    --brick-toggle-radius: var(--brick-radius-control);
+    --brick-toggle-icon-size: 1.125rem;
+
+    display: inline-flex;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    min-block-size: var(--brick-toggle-min-block-size);
+    align-items: center;
+    justify-content: center;
+    gap: var(--brick-toggle-gap);
+    padding-block: 0.375rem;
+    padding-inline: var(--brick-toggle-padding-inline);
+    border: var(--brick-border-width) solid transparent;
+    border-radius: var(--brick-toggle-radius);
+    appearance: none;
+    background: var(--brick-color-surface-subtle);
+    color: var(--brick-color-text-primary);
+    font: inherit;
+    font-size: 0.9375rem;
+    font-weight: var(--brick-font-weight-medium);
+    line-height: var(--brick-font-line-height-tight);
+    overflow-wrap: anywhere;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    vertical-align: middle;
+    transition:
+      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
+      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
+      color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item) > :where(svg, img) {
+    flex: 0 0 auto;
+    inline-size: var(--brick-toggle-icon-size);
+    block-size: var(--brick-toggle-icon-size);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item):not([data-disabled]) {
+    cursor: pointer;
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item):focus-visible {
+    z-index: 1;
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: var(--brick-border-focus-offset);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-state="on"] {
+    border-color: var(--brick-color-accent-border);
+    background: var(--brick-color-accent-soft);
+    color: var(--brick-color-accent-on-soft);
+    box-shadow: inset 0 -0.125rem 0 var(--brick-color-accent-solid);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-variant="outline"] {
+    border-color: var(--brick-color-border-default);
+    background: transparent;
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-variant="outline"][data-state="on"] {
+    border-color: var(--brick-color-accent-border);
+    background: var(--brick-color-accent-soft);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-variant="ghost"] {
+    background: transparent;
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-variant="ghost"][data-state="on"] {
+    border-color: transparent;
+    background: var(--brick-color-accent-soft);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item):not([data-disabled]):active {
+    background: var(--brick-color-accent-soft-pressed);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-disabled] {
+    border-color: var(--brick-color-border-subtle);
+    background: var(--brick-color-surface-subtle);
+    color: var(--brick-color-text-secondary);
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-disabled][data-state="on"] {
+    border-color: var(--brick-color-border-strong);
+    box-shadow: inset 0 -0.125rem 0 var(--brick-color-text-secondary);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-size="sm"] {
+    --brick-toggle-min-block-size: var(--brick-control-min-block-size-sm);
+    --brick-toggle-padding-inline: 0.75rem;
+    --brick-toggle-gap: 0.375rem;
+    --brick-toggle-icon-size: 1rem;
+
+    padding-block: 0.25rem;
+    font-size: var(--brick-font-size-sm);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-size="lg"] {
+    --brick-toggle-min-block-size: var(--brick-control-min-block-size-lg);
+    --brick-toggle-padding-inline: 1.25rem;
+    --brick-toggle-gap: 0.625rem;
+    --brick-toggle-icon-size: 1.25rem;
+
+    padding-block: 0.5rem;
+    font-size: var(--brick-font-size-md);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-shape="pill"] {
+    --brick-toggle-radius: var(--brick-radius-full);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-icon-only] {
+    inline-size: var(--brick-toggle-min-block-size);
+    padding-inline: 0;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    :where(.brick-toggle, .brick-toggle-group-item):not([data-disabled]):hover {
+      background: var(--brick-color-surface-base);
+    }
+
+    :where(.brick-toggle, .brick-toggle-group-item):not([data-disabled])[data-state="on"]:hover {
+      background: var(--brick-color-accent-soft-hover);
+    }
+
+    :where(.brick-toggle, .brick-toggle-group-item)[data-variant="ghost"]:not([data-disabled]):hover {
+      background: var(--brick-color-surface-subtle);
+    }
+
+    :where(.brick-toggle, .brick-toggle-group-item)[data-variant="ghost"]:not([data-disabled])[data-state="on"]:hover {
+      background: var(--brick-color-accent-soft-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.brick-toggle, .brick-toggle-group-item) {
+      transition-duration: 0ms;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.brick-toggle, .brick-toggle-group-item) {
+      border-color: ButtonText;
+      background: ButtonFace;
+      color: ButtonText;
+    }
+
+    :where(.brick-toggle, .brick-toggle-group-item)[data-state="on"] {
+      border-color: Highlight;
+      background: ButtonFace;
+      color: ButtonText;
+      outline: 0.125rem solid Highlight;
+      outline-offset: -0.25rem;
+      box-shadow: none;
+    }
+
+    :where(.brick-toggle, .brick-toggle-group-item):focus-visible {
+      outline-color: Highlight;
+      outline-offset: var(--brick-border-focus-offset);
+    }
+
+    :where(.brick-toggle, .brick-toggle-group-item)[data-disabled] {
+      border-color: GrayText;
+      color: GrayText;
+      opacity: 1;
+    }
+  }
+}
