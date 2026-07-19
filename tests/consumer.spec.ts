@@ -30,9 +30,11 @@ test("renders and operates Brick through its public package", async ({ page }) =
   await expect(dialog).toBeHidden();
   await expect(publishTrigger).toBeFocused();
 
-  await page.getByRole("button", { name: "Dark appearance" }).click();
+  const appearanceToggle = page.getByRole("button", { name: "Dark appearance" });
+  await expect(appearanceToggle).toHaveAttribute("aria-pressed", "false");
+  await appearanceToggle.click();
   await expect(page.locator("html")).toHaveAttribute("data-brick-appearance", "dark");
-  await expect(page.getByRole("button", { name: "Light appearance" })).toBeVisible();
+  await expect(appearanceToggle).toHaveAttribute("aria-pressed", "true");
 });
 
 test("composes Dialog as a focused consumer publishing flow", async ({ page }) => {
@@ -182,6 +184,24 @@ test("composes Avatar status and fallback states through its public subpath", as
   await expect(grace).toHaveAttribute("data-status", "busy");
   await expect(graceFallback).toContainText("GH");
   await expect(page.getByText("Busy · fallback shown")).toBeVisible();
+});
+
+test("composes Toggle and ToggleGroup as application-owned persistent views", async ({ page }) => {
+  const appearance = page.getByRole("button", { name: "Dark appearance" });
+  await expect(appearance).toHaveClass(/brick-toggle/);
+  await expect(appearance).toHaveAttribute("data-variant", "ghost");
+
+  const group = page.getByRole("group", { name: "Workspace view" });
+  const cards = group.getByRole("button", { name: "Cards" });
+  const list = group.getByRole("button", { name: "List" });
+  await expect(group).toHaveClass(/brick-toggle-group/);
+  await expect(group).toHaveAttribute("data-attached", "true");
+  await expect(cards).toHaveAttribute("aria-pressed", "true");
+  await cards.click();
+  await expect(cards).toHaveAttribute("aria-pressed", "true");
+  await list.click();
+  await expect(list).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".workspace-grid")).toHaveAttribute("data-view", "list");
 });
 
 test("has no automatically detectable accessibility violations", async ({ page }) => {

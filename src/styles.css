@@ -169,7 +169,8 @@
     inline-size: 100%;
   }
 
-  .brick-button svg {
+  .brick-button svg,
+  .brick-toggle svg {
     inline-size: 1em;
     block-size: 1em;
     fill: none;
@@ -284,6 +285,10 @@
   .workspace-grid {
     display: grid;
     gap: 1rem;
+  }
+
+  .workspace-grid[data-view="list"] {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .project-stats {
@@ -445,7 +450,7 @@
       justify-self: end;
     }
 
-    .workspace-grid {
+    .workspace-grid[data-view="cards"] {
       grid-template-columns: minmax(0, 1.55fr) minmax(16rem, 0.85fr);
     }
 

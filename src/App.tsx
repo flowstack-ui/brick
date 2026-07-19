@@ -6,6 +6,8 @@ import { Button } from "@flowstack-ui/brick/button";
 import { Card } from "@flowstack-ui/brick/card";
 import { Dialog } from "@flowstack-ui/brick/dialog";
 import { Drawer } from "@flowstack-ui/brick/drawer";
+import { Toggle } from "@flowstack-ui/brick/toggle";
+import { ToggleGroup } from "@flowstack-ui/brick/toggle-group";
 
 type Appearance = "light" | "dark";
 
@@ -41,6 +43,7 @@ export function App() {
   const [includeArchived, setIncludeArchived] = useState(false);
   const [filterOwner, setFilterOwner] = useState("any");
   const [filterStatus, setFilterStatus] = useState("Showing all active projects.");
+  const [workspaceView, setWorkspaceView] = useState("cards");
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -67,16 +70,15 @@ export function App() {
           <a href="#invite">Invite</a>
         </nav>
 
-        <Button
+        <Toggle
           className="appearance-button"
           size="sm"
-          tone="neutral"
           variant="ghost"
-          startIcon={<SparkIcon />}
-          onPress={() => setAppearance((current) => current === "light" ? "dark" : "light")}
+          pressed={appearance === "dark"}
+          onPressedChange={(pressed) => setAppearance(pressed ? "dark" : "light")}
         >
-          {appearance === "light" ? "Dark appearance" : "Light appearance"}
-        </Button>
+          <SparkIcon /> Dark appearance
+        </Toggle>
       </header>
 
       <main>
@@ -144,6 +146,17 @@ export function App() {
               <h2 id="workspace-title">Launch workspace</h2>
             </div>
             <div className="workspace-tools">
+              <ToggleGroup.Root
+                ariaLabel="Workspace view"
+                attached
+                onValueChange={(next) => { if (next) setWorkspaceView(next); }}
+                size="sm"
+                value={workspaceView}
+                variant="outline"
+              >
+                <ToggleGroup.Item value="cards">Cards</ToggleGroup.Item>
+                <ToggleGroup.Item value="list">List</ToggleGroup.Item>
+              </ToggleGroup.Root>
               <Badge tone="success">3 tasks ready</Badge>
               <NotificationBadge count={3} tone="accent">
                 <Button aria-label="Review tasks, 3 ready" size="sm" tone="neutral" variant="ghost">
@@ -239,7 +252,7 @@ export function App() {
 
           <p className="activity filter-status" aria-live="polite">{filterStatus}</p>
 
-          <div className="workspace-grid">
+          <div className="workspace-grid" data-view={workspaceView}>
             <Card.Root
               aria-labelledby="project-title"
               as="article"
