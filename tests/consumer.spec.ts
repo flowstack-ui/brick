@@ -17,6 +17,12 @@ test("renders and operates Brick through its public package", async ({ page }) =
     "Build useful interfaces",
   );
 
+  const appBar = page.getByRole("banner", { name: "Primary" });
+  await expect(appBar).toHaveClass(/brick-app-bar/);
+  await expect(appBar).toHaveAttribute("data-position", "sticky");
+  await expect(appBar.locator("[data-slot='appbar-toolbar']")).toHaveAttribute("data-density", "compact");
+  await expect(page.getByRole("link", { name: "Jump to workspace" })).toHaveClass(/brick-icon-button/);
+
   const publishTrigger = page.getByRole("button", { name: "Publish project" });
   await publishTrigger.click();
   const dialog = page.getByRole("dialog", { name: "Publish project?" });
@@ -35,6 +41,9 @@ test("renders and operates Brick through its public package", async ({ page }) =
   await appearanceToggle.click();
   await expect(page.locator("html")).toHaveAttribute("data-brick-appearance", "dark");
   await expect(appearanceToggle).toHaveAttribute("aria-pressed", "true");
+  await appearanceToggle.click();
+  await expect(page.locator("html")).toHaveAttribute("data-brick-appearance", "light");
+  await expect(appearanceToggle).toHaveAttribute("aria-pressed", "false");
 });
 
 test("composes Dialog as a focused consumer publishing flow", async ({ page }) => {
@@ -232,6 +241,11 @@ test("contains the layout at the project viewport", async ({ page }) => {
   }));
   expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth);
 
+  const headerBox = await page.locator(".site-header").boundingBox();
+  expect(headerBox).not.toBeNull();
+  expect(headerBox!.x).toBeCloseTo(0, 0);
+  expect(headerBox!.width).toBeCloseTo(dimensions.clientWidth, 0);
+
   await page.getByRole("button", { name: "Publish project" }).click();
   const dialog = page.getByRole("dialog", { name: "Publish project?" });
   const box = await dialog.boundingBox();
@@ -258,4 +272,67 @@ test("contains the layout at the project viewport", async ({ page }) => {
   expect(drawerBox).not.toBeNull();
   expect(drawerBox!.x).toBeGreaterThanOrEqual(0);
   expect(drawerBox!.x + drawerBox!.width).toBeLessThanOrEqual(dimensions.clientWidth);
+});
+
+test("keeps the page stable while Dialog and Drawer own scroll lock", async ({ page }) => {
+  const shell = page.locator(".site-shell");
+  const before = await shell.boundingBox();
+  expect(before).not.toBeNull();
+  const paddingBefore = await page.evaluate(() => document.body.style.paddingRight);
+
+  async function expectStable(label: string) {
+    const current = await shell.boundingBox();
+    expect(current, label).not.toBeNull();
+    expect(current!.x, `${label} x`).toBeCloseTo(before!.x, 0);
+    expect(current!.width, `${label} width`).toBeCloseTo(before!.width, 0);
+    expect(
+      await page.evaluate(() => document.body.style.paddingRight),
+      `${label} body padding`,
+    ).toBe(paddingBefore);
+  }
+
+  await page.getByRole("button", { name: "Publish project" }).click();
+  const dialog = page.getByRole("dialog", { name: "Publish project?" });
+  await expect(dialog).toBeVisible();
+  await expectStable("open Dialog");
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expectStable("closed Dialog");
+
+  await page.getByRole("button", { name: "Filter projects" }).click();
+  const drawer = page.getByRole("dialog", { name: "Filter workspace projects" });
+  await expectDrawerSettled(drawer);
+  await expectStable("open Drawer");
+  await page.keyboard.press("Escape");
+  await expect(drawer).toBeHidden();
+  await expectStable("closed Drawer");
+});
+
+test("keeps the mobile header and Card content intentionally contained", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 720 });
+  const header = page.locator(".site-header");
+  const brand = page.locator(".brand");
+  const appearance = page.getByRole("button", { name: "Dark appearance" });
+  const [headerBox, brandBox, appearanceBox] = await Promise.all([
+    header.boundingBox(),
+    brand.boundingBox(),
+    appearance.boundingBox(),
+  ]);
+  expect(headerBox).not.toBeNull();
+  expect(brandBox).not.toBeNull();
+  expect(appearanceBox).not.toBeNull();
+  expect(Math.abs(brandBox!.y - appearanceBox!.y)).toBeLessThan(8);
+  expect(appearanceBox!.x + appearanceBox!.width).toBeLessThanOrEqual(headerBox!.x + headerBox!.width);
+
+  const collaborators = page.locator(".project-collaborators");
+  const card = page.getByRole("article", { name: "Mobile checkout refresh" });
+  const [collaboratorsBox, cardBox] = await Promise.all([
+    collaborators.boundingBox(),
+    card.boundingBox(),
+  ]);
+  expect(collaboratorsBox).not.toBeNull();
+  expect(cardBox).not.toBeNull();
+  expect(collaboratorsBox!.x).toBeGreaterThanOrEqual(cardBox!.x);
+  expect(collaboratorsBox!.x + collaboratorsBox!.width).toBeLessThanOrEqual(cardBox!.x + cardBox!.width);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
 });

@@ -7,6 +7,7 @@
 
   html {
     min-inline-size: 20rem;
+    scrollbar-gutter: stable;
     scroll-behavior: smooth;
   }
 
@@ -41,13 +42,10 @@
     padding-inline: clamp(1rem, 4vw, 2.5rem);
   }
 
-  .site-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0.75rem 1rem;
-    align-items: center;
-    padding-block: 1rem;
-    border-block-end: 1px solid var(--brick-color-border-subtle);
+  .site-header-toolbar {
+    max-inline-size: 76rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2.5rem);
   }
 
   .brand {
@@ -83,11 +81,6 @@
 
   .site-nav a:hover {
     color: var(--brick-color-text-primary);
-  }
-
-  .appearance-button {
-    grid-column: 1 / -1;
-    justify-self: start;
   }
 
   main {
@@ -170,7 +163,8 @@
   }
 
   .brick-button svg,
-  .brick-toggle svg {
+  .brick-toggle svg,
+  .brick-icon-button svg {
     inline-size: 1em;
     block-size: 1em;
     fill: none;
@@ -285,6 +279,7 @@
   .workspace-grid {
     display: grid;
     gap: 1rem;
+    align-items: start;
   }
 
   .workspace-grid[data-view="list"] {
@@ -300,6 +295,7 @@
 
   .project-collaborators {
     display: flex;
+    grid-column: 1 / -1;
     flex-wrap: wrap;
     gap: 1rem 1.5rem;
     margin-block-start: var(--brick-space-3);
@@ -436,18 +432,8 @@
   }
 
   @media (min-width: 48rem) {
-    .site-header {
-      grid-template-columns: auto 1fr auto;
-    }
-
     .site-nav {
       display: flex;
-      justify-self: center;
-    }
-
-    .appearance-button {
-      grid-column: auto;
-      justify-self: end;
     }
 
     .workspace-grid[data-view="cards"] {

@@ -15,6 +15,8 @@ test("the consumer uses public package exports without legacy or source aliases"
   const source = files.join("\n");
 
   assert.match(source, /@flowstack-ui\/brick\/button/);
+  assert.match(source, /@flowstack-ui\/brick\/icon-button/);
+  assert.match(source, /@flowstack-ui\/brick\/app-bar/);
   assert.match(source, /@flowstack-ui\/brick\/card/);
   assert.match(source, /@flowstack-ui\/brick\/dialog/);
   assert.match(source, /@flowstack-ui\/brick\/alert-dialog/);

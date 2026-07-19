@@ -1,11 +1,13 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { AlertDialog } from "@flowstack-ui/brick/alert-dialog";
+import { AppBar } from "@flowstack-ui/brick/app-bar";
 import { Avatar } from "@flowstack-ui/brick/avatar";
 import { Badge, NotificationBadge } from "@flowstack-ui/brick/badge";
 import { Button } from "@flowstack-ui/brick/button";
 import { Card } from "@flowstack-ui/brick/card";
 import { Dialog } from "@flowstack-ui/brick/dialog";
 import { Drawer } from "@flowstack-ui/brick/drawer";
+import { IconButton } from "@flowstack-ui/brick/icon-button";
 import { Toggle } from "@flowstack-ui/brick/toggle";
 import { ToggleGroup } from "@flowstack-ui/brick/toggle-group";
 
@@ -58,30 +60,45 @@ export function App() {
   }
 
   return (
-    <div className="site-shell" id="top">
-      <header className="site-header" aria-label="Primary">
-        <a className="brand" href="#top" aria-label="Brick Consumer home">
-          <span className="brand-mark" aria-hidden="true">B</span>
-          <span>Brick Consumer</span>
-        </a>
+    <div id="top">
+      <AppBar.Root aria-label="Primary" blurred className="site-header" position="sticky">
+        <AppBar.Toolbar className="site-header-toolbar" density="compact">
+          <AppBar.Start>
+            <a className="brand" href="#top" aria-label="Brick Consumer home">
+              <span className="brand-mark" aria-hidden="true">B</span>
+              <span>Brick Consumer</span>
+            </a>
+          </AppBar.Start>
 
-        <nav className="site-nav" aria-label="Page sections">
-          <a href="#workspace">Workspace</a>
-          <a href="#invite">Invite</a>
-        </nav>
+          <AppBar.Center>
+            <nav className="site-nav" aria-label="Page sections">
+              <a href="#workspace">Workspace</a>
+              <a href="#invite">Invite</a>
+            </nav>
+          </AppBar.Center>
 
-        <Toggle
-          className="appearance-button"
-          size="sm"
-          variant="ghost"
-          pressed={appearance === "dark"}
-          onPressedChange={(pressed) => setAppearance(pressed ? "dark" : "light")}
-        >
-          <SparkIcon /> Dark appearance
-        </Toggle>
-      </header>
+          <AppBar.End>
+            <IconButton aria-label="Jump to workspace" href="#workspace" size="sm">
+              <ArrowIcon />
+            </IconButton>
+            <Toggle
+              aria-label="Dark appearance"
+              className="appearance-button"
+              iconOnly
+              size="sm"
+              title="Dark appearance"
+              variant="ghost"
+              pressed={appearance === "dark"}
+              onPressedChange={(pressed) => setAppearance(pressed ? "dark" : "light")}
+            >
+              <SparkIcon />
+            </Toggle>
+          </AppBar.End>
+        </AppBar.Toolbar>
+      </AppBar.Root>
 
-      <main>
+      <div className="site-shell">
+        <main>
         <section className="hero" aria-labelledby="hero-title">
           <p className="eyebrow">Independent package integration</p>
           <h1 id="hero-title">
@@ -389,14 +406,15 @@ export function App() {
             </form>
           </Card.Content>
         </Card.Root>
-      </main>
+        </main>
 
-      <footer>
-        <p>Public Brick imports. Application-owned composition. No Core compatibility layer.</p>
-        <Button href="#top" size="sm" tone="neutral" variant="ghost">
-          Back to top
-        </Button>
-      </footer>
+        <footer>
+          <p>Public Brick imports. Application-owned composition. No Core compatibility layer.</p>
+          <Button href="#top" size="sm" tone="neutral" variant="ghost">
+            Back to top
+          </Button>
+        </footer>
+      </div>
     </div>
   );
 }
