@@ -36,6 +36,12 @@ This directory is the public documentation authority for
   compact actions and genuine icon-only links
 - [`components/app-bar/README.md`](components/app-bar/README.md) — compound
   top-surface structure with four positioning modes
+- [`components/tooltip/README.md`](components/tooltip/README.md) — plain and
+  rich supplemental descriptions with shared arrow styling
+- [`components/hover-card/README.md`](components/hover-card/README.md) —
+  non-interactive genuine-link previews with bounded elevated surfaces
+- [`components/popover/README.md`](components/popover/README.md) — intentionally
+  opened compact interactive panels with native dialog semantics and focus
 
 Every released component has one folder under `components/` containing its
 public guide and `CHANGELOG.md`. Start new documentation from the templates in

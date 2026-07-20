@@ -83,6 +83,26 @@ import {
 } from "@flowstack-ui/brick";
 import { Toggle as SubpathToggle } from "@flowstack-ui/brick/toggle";
 import { ToggleGroup as SubpathToggleGroup } from "@flowstack-ui/brick/toggle-group";
+import {
+  Tooltip,
+  type TooltipContentProps,
+  type TooltipRootProps,
+} from "@flowstack-ui/brick";
+import { Tooltip as SubpathTooltip } from "@flowstack-ui/brick/tooltip";
+import {
+  HoverCard,
+  type HoverCardContentProps,
+  type HoverCardRootProps,
+  type HoverCardSize,
+} from "@flowstack-ui/brick";
+import { HoverCard as SubpathHoverCard } from "@flowstack-ui/brick/hover-card";
+import {
+  Popover,
+  type PopoverContentProps,
+  type PopoverRootProps,
+  type PopoverSize,
+} from "@flowstack-ui/brick";
+import { Popover as SubpathPopover } from "@flowstack-ui/brick/popover";
 
 const variant: ButtonVariant = "soft";
 const tone: ButtonTone = "success";
@@ -111,6 +131,94 @@ void SubpathButton;
 void props;
 void composed;
 void rendered;
+
+const tooltipRootProps: TooltipRootProps = {
+  children: createElement(Tooltip.Trigger, null, "More information"),
+  variant: "rich",
+};
+const tooltipContentProps: TooltipContentProps = {
+  children: createElement(Tooltip.Description, null, "Supplemental description"),
+  side: "bottom",
+  sideOffset: 8,
+};
+void Tooltip;
+void SubpathTooltip;
+void tooltipRootProps;
+void tooltipContentProps;
+
+// @ts-expect-error Tooltip has no semantic tone API.
+const invalidTooltipTone: TooltipRootProps = { children: "Invalid", tone: "danger" };
+// @ts-expect-error Tooltip Content intentionally omits accessible-label overrides.
+const invalidTooltipLabel: TooltipContentProps = { children: "Invalid", "aria-label": "Other meaning" };
+// @ts-expect-error Tooltip is a namespace and not a callable component.
+const invalidFlatTooltip = createElement(Tooltip, { content: "Invalid" });
+void invalidTooltipTone;
+void invalidTooltipLabel;
+void invalidFlatTooltip;
+
+const hoverCardSize: HoverCardSize = "lg";
+const hoverCardRootProps: HoverCardRootProps = {
+  children: createElement(HoverCard.Trigger, null, "Preview"),
+  openDelay: 700,
+};
+const hoverCardContentProps: HoverCardContentProps = {
+  children: "Profile preview",
+  side: "bottom",
+  sideOffset: 8,
+  size: hoverCardSize,
+};
+void HoverCard;
+void SubpathHoverCard;
+void hoverCardRootProps;
+void hoverCardContentProps;
+
+// @ts-expect-error HoverCard sizes are a closed recipe set.
+const invalidHoverCardSize: HoverCardContentProps = { children: "Invalid", size: "xl" };
+// @ts-expect-error HoverCard Content intentionally omits accessible-label overrides.
+const invalidHoverCardLabel: HoverCardContentProps = { children: "Invalid", ariaLabel: "Profile" };
+// @ts-expect-error HoverCard Content intentionally omits native accessible-label overrides.
+const invalidNativeHoverCardLabel: HoverCardContentProps = { children: "Invalid", "aria-label": "Profile" };
+// @ts-expect-error HoverCard is a namespace and not a callable component.
+const invalidFlatHoverCard = createElement(HoverCard, { content: "Invalid" });
+void invalidHoverCardSize;
+void invalidHoverCardLabel;
+void invalidNativeHoverCardLabel;
+void invalidFlatHoverCard;
+
+const popoverSize: PopoverSize = "lg";
+const popoverRootProps: PopoverRootProps = {
+  children: createElement(Popover.Trigger, null, "Open settings"),
+  closeOnEscape: true,
+  modal: false,
+};
+const popoverContentProps: PopoverContentProps = {
+  "aria-label": "Quick settings",
+  children: createElement(Popover.Body, null, "Controls"),
+  initialFocus: false,
+  side: "bottom",
+  sideOffset: 8,
+  size: popoverSize,
+};
+void Popover;
+void SubpathPopover;
+void popoverRootProps;
+void popoverContentProps;
+
+// @ts-expect-error Popover sizes are a closed recipe set.
+const invalidPopoverSize: PopoverContentProps = { children: "Invalid", size: "xl" };
+// @ts-expect-error Brick Popover intentionally omits hover activation.
+const invalidPopoverMode: PopoverRootProps = { children: "Invalid", triggerMode: "hover" };
+// @ts-expect-error Brick Popover intentionally omits hover timing.
+const invalidPopoverDelay: PopoverRootProps = { children: "Invalid", openDelay: 200 };
+// @ts-expect-error Popover uses native ARIA and has no ariaLabel alias.
+const invalidPopoverLabelAlias: PopoverContentProps = { children: "Invalid", ariaLabel: "Settings" };
+// @ts-expect-error Popover is a namespace and not a callable component.
+const invalidFlatPopover = createElement(Popover, { content: "Invalid" });
+void invalidPopoverSize;
+void invalidPopoverMode;
+void invalidPopoverDelay;
+void invalidPopoverLabelAlias;
+void invalidFlatPopover;
 
 const iconButtonShape: IconButtonShape = "circle";
 const iconButtonProps: IconButtonProps = {

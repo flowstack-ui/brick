@@ -14,6 +14,9 @@ import {
   AppBar,
   Toggle,
   ToggleGroup,
+  Tooltip,
+  HoverCard,
+  Popover,
   type AlertDialogSize,
   type AvatarShape,
   type AvatarSize,
@@ -40,6 +43,8 @@ import {
   type ToggleShape,
   type ToggleSize,
   type ToggleVariant,
+  type HoverCardSize,
+  type PopoverSize,
 } from "@flowstack-ui/brick";
 import "@flowstack-ui/brick/styles.css";
 import "./playground.css";
@@ -72,6 +77,8 @@ const iconButtonTones: IconButtonTone[] = ["neutral", "accent", "info", "success
 const iconButtonSizes: IconButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
 const iconButtonShapes: IconButtonShape[] = ["rounded", "circle"];
 const appBarVariants: AppBarVariant[] = ["solid", "surface", "transparent"];
+const hoverCardSizes: HoverCardSize[] = ["sm", "md", "lg"];
+const popoverSizes: PopoverSize[] = ["sm", "md", "lg"];
 const avatarStatusLabels: Record<AvatarStatus, string> = {
   online: "Online",
   away: "Away",
@@ -1360,9 +1367,224 @@ function ToggleFamilyPlayground() {
   );
 }
 
+function HoverCardPreview({
+  align = "center",
+  arrow = true,
+  children,
+  disabled = false,
+  href,
+  label,
+  side = "bottom",
+  size = "md",
+}: {
+  align?: "start" | "center" | "end";
+  arrow?: boolean;
+  children: ReactNode;
+  disabled?: boolean;
+  href: string;
+  label: string;
+  side?: "top" | "right" | "bottom" | "left";
+  size?: HoverCardSize;
+}) {
+  return (
+    <HoverCard.Root closeDelay={100} disabled={disabled} openDelay={0}>
+      <HoverCard.Trigger asChild><a href={href}>{label}</a></HoverCard.Trigger>
+      <HoverCard.Portal>
+        <HoverCard.Content align={align} side={side} size={size}>
+          {children}
+          {arrow ? <HoverCard.Arrow /> : null}
+        </HoverCard.Content>
+      </HoverCard.Portal>
+    </HoverCard.Root>
+  );
+}
+
+function ProfilePreview({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className="hover-card-profile">
+      <Avatar alt="" fallback="AL" size={compact ? "sm" : "md"} status="online" />
+      <div><strong>Ada Lovelace</strong><p>Mathematician and early computing author.</p><Badge size="sm" tone="success">Available</Badge></div>
+    </div>
+  );
+}
+
+function HoverCardPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+  const [controlledOpen, setControlledOpen] = useState(false);
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  return (
+    <div className="playground-shell">
+      <header className="playground-header">
+        <div><p className="playground-kicker">@flowstack-ui/brick</p><h1>HoverCard workbench</h1><p>Non-interactive previews for genuine links, with Atom-owned hover, focus, timing, Escape, portal, and collision behavior.</p></div>
+        <fieldset className="playground-appearance"><legend>Appearance</legend>{(["system", "light", "dark"] as const).map((value) => <Button aria-pressed={appearance === value} key={value} onPress={() => selectAppearance(value)} size="sm" tone="neutral" variant={appearance === value ? "soft" : "ghost"}>{value}</Button>)}</fieldset>
+      </header>
+      <main data-testid="hover-card-workbench">
+        <Scenario description="Focus or hover the named profile link. Activating it still follows the real destination; the preview is duplicate, nonessential information." title="Overview">
+          <div className="hover-card-stage" data-testid="hover-card-overview"><HoverCardPreview href="#ada-profile" label="Ada Lovelace"><ProfilePreview /></HoverCardPreview><p id="ada-profile">Ada's complete profile remains available at the link destination.</p></div>
+        </Scenario>
+
+        <Scenario description="Size changes only the preferred maximum width; child typography and components retain their own scales." title="Sizes">
+          <div className="hover-card-grid" data-testid="hover-card-sizes">{hoverCardSizes.map((size) => <HoverCardPreview href="#scenario-sizes" key={size} label={`${size} preview`} size={size}><div className="hover-card-document"><Badge size="sm">{size}</Badge><strong>Analytical Engine notes</strong><p>A concise document preview with a stable destination.</p></div></HoverCardPreview>)}</div>
+        </Scenario>
+
+        <Scenario description="The explicit shared Arrow follows Atom's collision-resolved side and alignment. The last preview intentionally omits it." title="Placement and Arrow">
+          <div className="hover-card-grid" data-testid="hover-card-placement"><HoverCardPreview href="#scenario-placement-and-arrow" label="Top" side="top"><ProfilePreview compact /></HoverCardPreview><HoverCardPreview href="#scenario-placement-and-arrow" label="Right" side="right"><ProfilePreview compact /></HoverCardPreview><HoverCardPreview href="#scenario-placement-and-arrow" label="Bottom" side="bottom"><ProfilePreview compact /></HoverCardPreview><HoverCardPreview arrow={false} href="#scenario-placement-and-arrow" label="Left, no arrow" side="left"><ProfilePreview compact /></HoverCardPreview></div>
+        </Scenario>
+
+        <Scenario description="Controlled state, disabled blocking, and the released 700/300 millisecond defaults remain Atom behavior." title="State and timing">
+          <div className="hover-card-grid" data-testid="hover-card-state"><HoverCard.Root onOpenChange={setControlledOpen} open={controlledOpen} openDelay={0}><HoverCard.Trigger asChild><a href="#scenario-state-and-timing">Controlled preview</a></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content><strong>Controlled resource</strong><p>State is owned by the application.</p><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root><HoverCardPreview disabled href="#scenario-state-and-timing" label="Disabled preview"><p>This preview must not open.</p></HoverCardPreview><HoverCard.Root><HoverCard.Trigger asChild><a href="#scenario-state-and-timing">Default delay preview</a></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content><strong>Default timing</strong><p>700 ms open and 300 ms close.</p><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></div>
+        </Scenario>
+
+        <Scenario description="Profile and document previews compose existing Brick primitives and semantic HTML, never controls or required instructions." title="Composition">
+          <div className="hover-card-grid" data-testid="hover-card-composition"><HoverCardPreview href="#scenario-composition" label="Grace Hopper"><div className="hover-card-profile"><Avatar alt="" fallback="GH" size="md" status="away" /><div><strong>Grace Hopper</strong><p>Computer scientist and compiler pioneer.</p><Badge size="sm" tone="warning">In a meeting</Badge></div></div></HoverCardPreview><HoverCardPreview href="#scenario-composition" label="Compiler project notes" size="lg"><div className="hover-card-document"><Badge size="sm">Document</Badge><strong>Compiler project notes</strong><p>Updated July 18 · 12 minute read · Engineering workspace.</p></div></HoverCardPreview></div>
+        </Scenario>
+
+        <Scenario description="Long localization, 256 px containment, collision edges, and logical RTL layout remain inspectable without horizontal page overflow." title="Mobile, stress, and RTL">
+          <div className="stress-grid" data-testid="hover-card-stress"><div className="phone-frame hover-card-edge"><HoverCardPreview align="start" href="#scenario-mobile-stress-and-rtl" label="Very long localized document preview" size="lg"><div className="hover-card-document"><strong>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break</strong><p>A deliberately long localized description that wraps and remains within the dynamic viewport.</p></div></HoverCardPreview></div><div className="phone-frame hover-card-edge" dir="rtl"><HoverCardPreview align="end" href="#scenario-mobile-stress-and-rtl" label="ملف آدا لوفلايس"><div className="hover-card-profile"><Avatar alt="" fallback="آل" size="sm" /><div><strong>آدا لوفلايس</strong><p>عالمة رياضيات وكاتبة في الحوسبة المبكرة.</p></div></div></HoverCardPreview></div></div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
+function SettingsPopover({
+  label,
+  modal = false,
+  side = "bottom",
+  size = "md",
+}: {
+  label: string;
+  modal?: boolean;
+  side?: "top" | "right" | "bottom" | "left";
+  size?: PopoverSize;
+}) {
+  return (
+    <Popover.Root modal={modal}>
+      <Popover.Trigger asChild><Button tone="neutral" variant="outline">{label}</Button></Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content side={side} size={size}>
+          <Popover.Title>{label}</Popover.Title>
+          <Popover.Description>Change compact workspace options without leaving this page.</Popover.Description>
+          <Popover.Body>
+            <label className="popover-field"><span>Project name</span><input defaultValue="Analytical Engine" /></label>
+            <label className="popover-check"><input defaultChecked type="checkbox" /> Share activity updates</label>
+          </Popover.Body>
+          <Popover.Footer><Button tone="neutral" variant="ghost">Reset</Button><Popover.Close asChild><Button>Done</Button></Popover.Close></Popover.Footer>
+          <Popover.Arrow />
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
+  );
+}
+
+function PopoverPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+  const [controlledOpen, setControlledOpen] = useState(false);
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  return (
+    <div className="playground-shell">
+      <header className="playground-header">
+        <div><p className="playground-kicker">@flowstack-ui/brick</p><h1>Popover workbench</h1><p>Intentionally opened compact interactive panels with Atom-owned semantics, focus, dismissal, nesting, portals, and collision behavior.</p></div>
+        <fieldset className="playground-appearance"><legend>Appearance</legend>{(["system", "light", "dark"] as const).map((value) => <Button aria-pressed={appearance === value} key={value} onPress={() => selectAppearance(value)} size="sm" tone="neutral" variant={appearance === value ? "soft" : "ghost"}>{value}</Button>)}</fieldset>
+      </header>
+      <main data-testid="popover-workbench">
+        <Scenario description="Click, press, or use Enter/Space. The visible title and description are direct semantic parts so their generated relationships are server-stable." title="Overview">
+          <div className="popover-stage" data-testid="popover-overview"><SettingsPopover label="Project settings" /></div>
+        </Scenario>
+
+        <Scenario description="Size changes the preferred maximum width; compact controls and action heights remain component-owned." title="Sizes">
+          <div className="popover-grid" data-testid="popover-sizes">{popoverSizes.map((size) => <SettingsPopover key={size} label={`Open ${size} settings`} size={size} />)}</div>
+        </Scenario>
+
+        <Scenario description="Header is an optional presentational group. When it wraps semantic parts, explicit native relationships keep the server contract deterministic." title="Anatomy and customization">
+          <div className="popover-stage" data-testid="popover-anatomy">
+            <Popover.Root><Popover.Trigger asChild><Button variant="outline">Inspect anatomy</Button></Popover.Trigger><Popover.Portal><Popover.Content aria-describedby="custom-popover-description" aria-labelledby="custom-popover-title" className="popover-customized" style={{ "--brick-popover-radius": "0.4rem", "--brick-popover-space": "1.25rem" } as CSSProperties}><Popover.Header><h3 data-slot="popover-title" id="custom-popover-title">Custom workspace panel</h3><p data-slot="popover-description" id="custom-popover-description">Explicit native ARIA supports native semantic text inside the visual Header.</p></Popover.Header><Popover.Body>Header, Body, and Footer remain presentational layout parts.</Popover.Body><Popover.Footer><Popover.Close asChild><Button>Close anatomy</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Controlled and disabled state, modal focus containment, and explicit dismissal policy remain Atom behavior." title="State and policy">
+          <div className="popover-grid" data-testid="popover-state">
+            <Popover.Root onOpenChange={setControlledOpen} open={controlledOpen}><Popover.Trigger asChild><Button variant="outline">Controlled settings</Button></Popover.Trigger><Popover.Portal><Popover.Content aria-label="Controlled settings"><Popover.Body>Open state belongs to the application.</Popover.Body><Popover.Footer><Popover.Close asChild><Button>Close controlled</Button></Popover.Close></Popover.Footer></Popover.Content></Popover.Portal></Popover.Root>
+            <Popover.Root disabled><Popover.Trigger asChild><Button>Unavailable settings</Button></Popover.Trigger></Popover.Root>
+            <SettingsPopover label="Open modal settings" modal />
+            <Popover.Root closeOnEscape={false} closeOnInteractOutside={false}><Popover.Trigger asChild><Button variant="outline">Explicit close only</Button></Popover.Trigger><Popover.Portal><Popover.Content aria-label="Explicit close settings"><Popover.Body>Escape and outside interaction are disabled.</Popover.Body><Popover.Footer><Popover.Close asChild><Button>Close explicitly</Button></Popover.Close></Popover.Footer></Popover.Content></Popover.Portal></Popover.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Anchor may differ from Trigger, all collision-aware sides remain available, and a nested Popover owns the top layer until it closes." title="Placement, Anchor, and nesting">
+          <div className="popover-grid" data-testid="popover-placement">
+            {(["top", "right", "bottom", "left"] as const).map((side) => <SettingsPopover key={side} label={`Open ${side}`} side={side} size="sm" />)}
+            <Popover.Root><Popover.Anchor asChild><span className="popover-anchor-marker">Anchor target</span></Popover.Anchor><Popover.Trigger asChild><Button variant="outline">Open anchored panel</Button></Popover.Trigger><Popover.Portal><Popover.Content aria-label="Anchored panel" align="start"><Popover.Body>Position follows the separate marker.</Popover.Body><Popover.Footer><Popover.Close asChild><Button>Done</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root>
+            <Popover.Root><Popover.Trigger asChild><Button variant="outline">Open parent panel</Button></Popover.Trigger><Popover.Portal><Popover.Content aria-label="Parent panel"><Popover.Body><Popover.Root><Popover.Trigger asChild><Button>Open nested panel</Button></Popover.Trigger><Popover.Portal><Popover.Content aria-label="Nested panel"><Popover.Body>Nested content is the active top layer.</Popover.Body><Popover.Footer><Popover.Close asChild><Button>Close nested panel</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root></Popover.Body><Popover.Footer><Popover.Close asChild><Button variant="outline">Close parent panel</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Long localization, 256 px containment, scrollable content, wrapping actions, and logical RTL layout remain inspectable." title="Mobile, stress, and RTL">
+          <div className="stress-grid" data-testid="popover-stress">
+            <div className="phone-frame popover-edge"><Popover.Root><Popover.Trigger asChild><Button variant="outline">Open long settings</Button></Popover.Trigger><Popover.Portal><Popover.Content align="start" size="lg"><Popover.Title>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break</Popover.Title><Popover.Description>A deliberately long localized description remains readable and contained.</Popover.Description><Popover.Body><div className="popover-long-copy">{Array.from({ length: 8 }, (_, index) => <p key={index}>Compact setting {index + 1} remains reachable at high zoom.</p>)}</div></Popover.Body><Popover.Footer><Button variant="outline">Reset all settings</Button><Popover.Close asChild><Button>Save workspace settings</Button></Popover.Close></Popover.Footer></Popover.Content></Popover.Portal></Popover.Root></div>
+            <div className="phone-frame popover-edge" dir="rtl"><Popover.Root><Popover.Trigger asChild><Button variant="outline">فتح إعدادات المشروع</Button></Popover.Trigger><Popover.Portal><Popover.Content align="end"><Popover.Title>إعدادات المشروع</Popover.Title><Popover.Description>غيّر الخيارات المختصرة بدون مغادرة مساحة العمل.</Popover.Description><Popover.Body><label className="popover-check"><input defaultChecked type="checkbox" /> مشاركة تحديثات النشاط</label></Popover.Body><Popover.Footer><Popover.Close asChild><Button tone="neutral" variant="outline">تم</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root></div>
+          </div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
+function TooltipPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  const hint = (label: string, side: "top" | "right" | "bottom" | "left" = "top") => (
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild><IconButton aria-label={label}><SearchIcon /></IconButton></Tooltip.Trigger>
+      <Tooltip.Portal><Tooltip.Content side={side}>{label}<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal>
+    </Tooltip.Root>
+  );
+
+  return (
+    <Tooltip.Provider>
+      <div className="playground-shell">
+        <header className="playground-header">
+          <div><p className="playground-kicker">@flowstack-ui/brick</p><h1>Tooltip workbench</h1><p>Brief supplemental descriptions with Atom-owned pointer, focus, touch, timing, and positioning behavior.</p></div>
+          <fieldset className="playground-appearance"><legend>Appearance</legend>{(["system", "light", "dark"] as const).map((value) => <Button aria-pressed={appearance === value} key={value} onPress={() => selectAppearance(value)} size="sm" tone="neutral" variant={appearance === value ? "soft" : "ghost"}>{value}</Button>)}</fieldset>
+        </header>
+        <main data-testid="tooltip-workbench">
+          <Scenario description="Hover, focus, or use a deliberate touch hold. The trigger retains its complete accessible name." title="Overview"><div className="tooltip-stage" data-testid="tooltip-overview">{hint("Search workspace", "bottom")}<p>Search remains independently named; the Tooltip is supplemental.</p></div></Scenario>
+          <Scenario description="The optional shared arrow follows all four collision-aware sides." title="Placement"><div className="tooltip-placement" data-testid="tooltip-placement">{hint("Above", "top")}{hint("To the right", "right")}{hint("Below", "bottom")}{hint("To the left", "left")}</div></Scenario>
+          <Scenario description="Rich mode adds presentational title and description, while remaining short and non-interactive." title="Rich composition"><div className="tooltip-stage" data-testid="tooltip-rich"><Tooltip.Root variant="rich"><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">Project status</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content side="bottom"><Tooltip.Title>Ready for review</Tooltip.Title><Tooltip.Description>All required checks have passed.</Tooltip.Description><Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></div></Scenario>
+          <Scenario description="Long localized text, a narrow container, RTL, dark appearance, reduced motion, and forced colors remain inspectable." title="Mobile, stress, and RTL"><div className="stress-grid" data-testid="tooltip-stress"><div className="phone-frame">{hint("Search projects, files, and localized workspace commands", "bottom")}</div><div className="phone-frame" dir="rtl">{hint("البحث في المشاريع والملفات", "bottom")}</div></div></Scenario>
+        </main>
+      </div>
+    </Tooltip.Provider>
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {window.location.pathname.startsWith("/app-bar") ? (
+    {window.location.pathname.startsWith("/popover") ? (
+      <PopoverPlayground />
+    ) : window.location.pathname.startsWith("/hover-card") ? (
+      <HoverCardPlayground />
+    ) : window.location.pathname.startsWith("/tooltip") ? (
+      <TooltipPlayground />
+    ) : window.location.pathname.startsWith("/app-bar") ? (
       <AppBarPlayground />
     ) : window.location.pathname.startsWith("/icon-button") ? (
       <IconButtonPlayground />

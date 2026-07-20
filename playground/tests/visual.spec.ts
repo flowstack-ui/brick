@@ -246,3 +246,32 @@ test("Toggle selected boundaries survive forced colors", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
   await expect(page.getByTestId("toggle-recipes")).toHaveScreenshot("toggle-recipes-forced-colors.png");
 });
+
+test("HoverCard elevated preview retains its light and dark hierarchy", async ({ page }) => {
+  await page.goto("/hover-card");
+  await page.getByRole("link", { name: "Ada Lovelace" }).focus();
+  await expect(page.locator("[data-slot='hover-card']").filter({ hasText: "Mathematician" })).toHaveAttribute("data-positioned", "");
+  await expect(page).toHaveScreenshot("hover-card-overview-light.png");
+
+  await page.keyboard.press("Escape");
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await page.getByRole("link", { name: "Compiler project notes" }).focus();
+  await expect(page.locator("[data-slot='hover-card']").filter({ hasText: "12 minute read" })).toHaveAttribute("data-positioned", "");
+  await expect(page).toHaveScreenshot("hover-card-composition-dark.png");
+});
+
+test("HoverCard remains visually contained in a narrow RTL layout", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/hover-card");
+  await page.getByRole("link", { name: "ملف آدا لوفلايس" }).focus();
+  await expect(page.locator("[data-slot='hover-card']").filter({ hasText: "عالمة رياضيات" })).toHaveAttribute("data-positioned", "");
+  await expect(page).toHaveScreenshot("hover-card-rtl-mobile.png");
+});
+
+test("HoverCard surface and Arrow retain boundaries in forced colors", async ({ page }) => {
+  await page.goto("/hover-card");
+  await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
+  await page.getByRole("link", { name: "Ada Lovelace" }).focus();
+  await expect(page.locator("[data-slot='hover-card']").filter({ hasText: "Mathematician" })).toHaveAttribute("data-positioned", "");
+  await expect(page).toHaveScreenshot("hover-card-overview-forced-colors.png");
+});

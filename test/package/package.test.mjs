@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.3.4");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.4.0");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -64,6 +64,18 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/toggle-group.d.ts",
       default: "./dist/toggle-group.js",
     },
+    "./tooltip": {
+      types: "./dist/tooltip.d.ts",
+      default: "./dist/tooltip.js",
+    },
+    "./hover-card": {
+      types: "./dist/hover-card.d.ts",
+      default: "./dist/hover-card.js",
+    },
+    "./popover": {
+      types: "./dist/popover.d.ts",
+      default: "./dist/popover.js",
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css",
@@ -84,7 +96,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const avatar = await import(new URL("../../dist/avatar.js", import.meta.url));
   const toggle = await import(new URL("../../dist/toggle.js", import.meta.url));
   const toggleGroup = await import(new URL("../../dist/toggle-group.js", import.meta.url));
-  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Button", "Card", "Dialog", "Drawer", "IconButton", "NotificationBadge", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot"]);
+  const tooltip = await import(new URL("../../dist/tooltip.js", import.meta.url));
+  const hoverCard = await import(new URL("../../dist/hover-card.js", import.meta.url));
+  const popover = await import(new URL("../../dist/popover.js", import.meta.url));
+  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Button", "Card", "Dialog", "Drawer", "HoverCard", "IconButton", "NotificationBadge", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverBody", "PopoverClose", "PopoverContent", "PopoverDescription", "PopoverFooter", "PopoverHeader", "PopoverPortal", "PopoverRoot", "PopoverTitle", "PopoverTrigger", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot", "Tooltip"]);
   assert.equal(button.Button, brick.Button);
   assert.equal(iconButton.IconButton, brick.IconButton);
   assert.equal(appBar.AppBar, brick.AppBar);
@@ -104,6 +119,12 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(toggleGroup.ToggleGroup, brick.ToggleGroup);
   assert.equal(toggleGroup.ToggleGroupRoot, brick.ToggleGroup.Root);
   assert.equal(toggleGroup.ToggleGroupItem, brick.ToggleGroup.Item);
+  assert.equal(tooltip.Tooltip, brick.Tooltip);
+  assert.equal(tooltip.TooltipContent, brick.Tooltip.Content);
+  assert.equal(hoverCard.HoverCard, brick.HoverCard);
+  assert.equal(hoverCard.HoverCardContent, brick.HoverCard.Content);
+  assert.equal(popover.Popover, brick.Popover);
+  assert.equal(popover.PopoverContent, brick.Popover.Content);
 });
 
 test("published CSS entrypoints are complete browser CSS", async () => {
@@ -127,6 +148,9 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-avatar/);
   assert.match(styles, /\.brick-toggle/);
   assert.match(styles, /\.brick-toggle-group/);
+  assert.match(styles, /\.brick-tooltip/);
+  assert.match(styles, /\.brick-hover-card/);
+  assert.match(styles, /\.brick-popover/);
   assert.match(styles, /box-sizing:\s*border-box/);
   assert.match(styles, /--brick-button-background/);
   assert.match(styles, /--brick-icon-button-size/);
@@ -139,6 +163,9 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-badge-min-block-size/);
   assert.match(styles, /--brick-avatar-status-ring-color/);
   assert.match(styles, /--brick-toggle-min-block-size/);
+  assert.match(styles, /--brick-tooltip-background/);
+  assert.match(styles, /--brick-hover-card-background/);
+  assert.match(styles, /--brick-popover-background/);
   assert.match(styles, /--brick-control-min-block-size-xl/);
   assert.match(tokens, /data-brick-appearance/);
   assert.match(reset, /brick\.reset/);

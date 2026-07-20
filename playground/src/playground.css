@@ -1010,6 +1010,78 @@ main {
   inline-size: 100%;
 }
 
+.tooltip-stage,
+.tooltip-placement {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--brick-space-4);
+  min-block-size: 10rem;
+  padding: var(--brick-space-6);
+  border: var(--brick-border-width) solid var(--brick-color-neutral-border);
+  border-radius: var(--brick-radius-surface);
+}
+
+.tooltip-stage p {
+  max-inline-size: 28rem;
+}
+
+.tooltip-placement {
+  justify-content: space-around;
+}
+
+.hover-card-stage,
+.hover-card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--brick-space-5);
+  min-block-size: 10rem;
+  padding: var(--brick-space-6);
+  border: var(--brick-border-width) solid var(--brick-color-neutral-border);
+  border-radius: var(--brick-radius-surface);
+}
+
+.hover-card-stage > p {
+  max-inline-size: 30rem;
+}
+
+.hover-card-grid {
+  justify-content: space-around;
+}
+
+.hover-card-profile {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--brick-space-3);
+}
+
+.hover-card-profile > div,
+.hover-card-document {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--brick-space-2);
+}
+
+.hover-card-profile strong,
+.hover-card-document strong {
+  font-family: var(--brick-font-family-heading);
+  line-height: var(--brick-font-line-height-tight);
+}
+
+.hover-card-profile .brick-badge,
+.hover-card-document .brick-badge {
+  justify-self: start;
+}
+
+.hover-card-edge {
+  display: grid;
+  place-items: center;
+}
+
 @media (min-width: 48rem) {
   .toggle-hero {
     grid-template-columns: minmax(0, 1fr) auto;
@@ -1017,6 +1089,80 @@ main {
 
   .toggle-hero > span {
     grid-column: 1 / -1;
+  }
+}
+
+.popover-stage,
+.popover-grid {
+  min-inline-size: 0;
+  padding: var(--brick-space-6);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-card);
+  background: var(--brick-color-surface-raised);
+}
+
+.popover-stage {
+  display: grid;
+  min-block-size: 12rem;
+  place-items: center;
+}
+
+.popover-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--brick-space-4);
+}
+
+.popover-field,
+.popover-check {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--brick-space-2);
+  font-size: var(--brick-font-size-sm);
+}
+
+.popover-field + .popover-check {
+  margin-block-start: var(--brick-space-3);
+}
+
+.popover-field input {
+  box-sizing: border-box;
+  min-block-size: var(--brick-control-min-block-size-md);
+  min-inline-size: 0;
+  inline-size: 100%;
+  padding-inline: var(--brick-space-3);
+  border: var(--brick-border-width) solid var(--brick-color-border-strong);
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-base);
+  color: var(--brick-color-text-primary);
+  font: inherit;
+}
+
+.popover-check {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+}
+
+.popover-anchor-marker {
+  padding: var(--brick-space-2);
+  border: 1px dashed var(--brick-color-border-strong);
+  border-radius: var(--brick-radius-control);
+  color: var(--brick-color-text-secondary);
+}
+
+.popover-edge {
+  min-block-size: 18rem;
+}
+
+.popover-long-copy p {
+  margin-block: 0 var(--brick-space-3);
+}
+
+@media (max-width: 22rem) {
+  .popover-stage,
+  .popover-grid {
+    padding: var(--brick-space-3);
   }
 }
 

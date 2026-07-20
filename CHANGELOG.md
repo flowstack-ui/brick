@@ -6,6 +6,18 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Popover with a strict twelve-part namespace, click/press/keyboard activation,
+  native semantic relationships, modal/non-modal focus behavior, three bounded
+  elevated sizes, explicit Close/Arrow, and exact Atom 0.4.0 behavior.
+
+- HoverCard with a strict frozen five-part namespace, genuine-link trigger
+  guidance, three bounded elevated sizes, optional shared Arrow, and direct
+  Atom 0.3.5 hover/focus, Escape, timing, portal, and collision behavior.
+
+- Tooltip with an eight-part compound namespace, plain and rich neutral
+  recipes, optional shared arrow, responsive wrapping, and direct Atom 0.3.5
+  hover, focus, keyboard, touch-hold, dismissal, timing, and positioning.
+
 - Standardized strict development and browser-test ports for the Brick
   playground, added a matching LAN command, and added watch/comprehensive test
   command aliases.

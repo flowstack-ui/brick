@@ -8,6 +8,8 @@ import { Avatar } from "../../dist/avatar.js";
 import { Toggle } from "../../dist/toggle.js";
 import { ToggleGroup } from "../../dist/toggle-group.js";
 import { AppBar } from "../../dist/app-bar.js";
+import { HoverCard } from "../../dist/hover-card.js";
+import { Popover } from "../../dist/popover.js";
 
 test("Card renders on the server without browser state or a client boundary", () => {
   const markup = renderToString(
@@ -115,4 +117,53 @@ test("AppBar emits server-safe landmark and layout anatomy", () => {
   assert.match(markup, /data-density="compact"/);
   assert.match(markup, /data-slot="appbar-(?:start|center|end)"/);
   assert.doesNotMatch(markup, /role="toolbar"/);
+});
+
+test("HoverCard trigger renders server-safe link semantics without popup ARIA", () => {
+  const markup = renderToString(
+    React.createElement(
+      HoverCard.Root,
+      null,
+      React.createElement(
+        HoverCard.Trigger,
+        { asChild: true },
+        React.createElement("a", { href: "/people/ada" }, "Ada Lovelace"),
+      ),
+    ),
+  );
+
+  assert.match(markup, /^<a/);
+  assert.match(markup, /class="brick-hover-card__trigger"/);
+  assert.match(markup, /href="\/people\/ada"/);
+  assert.doesNotMatch(markup, /aria-(?:expanded|haspopup|describedby)|role=/i);
+});
+
+test("Popover renders server-stable generated naming when semantic parts are direct children", () => {
+  const markup = renderToString(
+    React.createElement(
+      Popover.Root,
+      { defaultOpen: true },
+      React.createElement(Popover.Trigger, null, "Settings"),
+      React.createElement(
+        Popover.Portal,
+        { disabled: true },
+        React.createElement(
+          Popover.Content,
+          null,
+          React.createElement(Popover.Title, null, "Workspace settings"),
+          React.createElement(Popover.Description, null, "Compact options"),
+          React.createElement(Popover.Body, null, "Controls"),
+        ),
+      ),
+    ),
+  );
+
+  const labelledBy = markup.match(/aria-labelledby="([^"]+)"/)?.[1];
+  const describedBy = markup.match(/aria-describedby="([^"]+)"/)?.[1];
+  assert.ok(labelledBy);
+  assert.ok(describedBy);
+  assert.match(markup, new RegExp(`id="${labelledBy}"[^>]*>Workspace settings`));
+  assert.match(markup, new RegExp(`id="${describedBy}"[^>]*>Compact options`));
+  assert.match(markup, /class="brick-popover"/);
+  assert.match(markup, /class="brick-popover__body"/);
 });

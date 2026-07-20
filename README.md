@@ -6,7 +6,7 @@ Brick provides finished, accessible React components with static CSS, semantic
 design tokens, light and dark appearances, and a documented customization
 contract. The initial catalog includes Button, Card, Dialog, AlertDialog,
 Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton, and
-AppBar in version `0.1.0`.
+AppBar, Tooltip, HoverCard, and Popover in version `0.1.0`.
 
 ## Boundary
 
@@ -38,7 +38,7 @@ import "@flowstack-ui/brick/styles.css";
 Use `@flowstack-ui/brick/tokens.css` when only the visual tokens are needed.
 
 ```tsx
-import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Dialog, Drawer, IconButton, NotificationBadge, Toggle, ToggleGroup } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Dialog, Drawer, HoverCard, IconButton, NotificationBadge, Popover, Toggle, ToggleGroup } from "@flowstack-ui/brick";
 
 <Button>Save changes</Button>;
 
@@ -111,6 +111,30 @@ import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Dialog, Drawer, IconB
     </Drawer.Content>
   </Drawer.Portal>
 </Drawer.Root>;
+
+<HoverCard.Root>
+  <HoverCard.Trigger asChild><a href="/people/ada">Ada Lovelace</a></HoverCard.Trigger>
+  <HoverCard.Portal>
+    <HoverCard.Content size="md">
+      <strong>Ada Lovelace</strong>
+      <p>Mathematician and early computing author.</p>
+      <HoverCard.Arrow />
+    </HoverCard.Content>
+  </HoverCard.Portal>
+</HoverCard.Root>;
+
+<Popover.Root>
+  <Popover.Trigger asChild><Button variant="outline">Project settings</Button></Popover.Trigger>
+  <Popover.Portal>
+    <Popover.Content size="md">
+      <Popover.Title>Project settings</Popover.Title>
+      <Popover.Description>Change compact workspace options.</Popover.Description>
+      <Popover.Body>{/* application controls */}</Popover.Body>
+      <Popover.Footer><Popover.Close asChild><Button>Done</Button></Popover.Close></Popover.Footer>
+      <Popover.Arrow />
+    </Popover.Content>
+  </Popover.Portal>
+</Popover.Root>;
 ```
 
 See [`docs/README.md`](docs/README.md) for the public guides and component

@@ -72,6 +72,18 @@
       "types": "./dist/toggle-group.d.ts",
       "default": "./dist/toggle-group.js"
     },
+    "./tooltip": {
+      "types": "./dist/tooltip.d.ts",
+      "default": "./dist/tooltip.js"
+    },
+    "./hover-card": {
+      "types": "./dist/hover-card.d.ts",
+      "default": "./dist/hover-card.js"
+    },
+    "./popover": {
+      "types": "./dist/popover.d.ts",
+      "default": "./dist/popover.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"
@@ -118,7 +130,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.3.4"
+    "@flowstack-ui/atom": "0.4.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

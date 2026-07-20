@@ -46,6 +46,10 @@ await writeFile(
     '@import "../../src/components/avatar/avatar.css";',
     '@import "../../src/components/toggle/toggle.css";',
     '@import "../../src/components/toggle-group/toggle-group.css";',
+    '@import "../../src/styles/floating-arrow.css";',
+    '@import "../../src/components/tooltip/tooltip.css";',
+    '@import "../../src/components/hover-card/hover-card.css";',
+    '@import "../../src/components/popover/popover.css";',
   ].join("\n"),
 );
 

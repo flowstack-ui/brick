@@ -1,0 +1,7 @@
+@layer brick.components {
+  :where(.brick-tooltip__arrow, .brick-hover-card__arrow, .brick-popover__arrow) {
+    color: var(--brick-floating-arrow-stroke, var(--brick-tooltip-border-color));
+    fill: var(--brick-floating-arrow-fill, var(--brick-tooltip-background));
+    filter: drop-shadow(0 1px 0 var(--brick-floating-arrow-stroke, var(--brick-tooltip-border-color)));
+  }
+}
