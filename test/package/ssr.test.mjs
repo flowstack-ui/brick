@@ -10,6 +10,12 @@ import { ToggleGroup } from "../../dist/toggle-group.js";
 import { AppBar } from "../../dist/app-bar.js";
 import { HoverCard } from "../../dist/hover-card.js";
 import { Popover } from "../../dist/popover.js";
+import { Form } from "../../dist/form.js";
+import { Field } from "../../dist/field.js";
+import { Fieldset } from "../../dist/fieldset.js";
+import { Checkbox } from "../../dist/checkbox.js";
+import { CheckboxGroup } from "../../dist/checkbox-group.js";
+import { Input } from "@flowstack-ui/atom/input";
 
 test("Card renders on the server without browser state or a client boundary", () => {
   const markup = renderToString(
@@ -166,4 +172,78 @@ test("Popover renders server-stable generated naming when semantic parts are dir
   assert.match(markup, new RegExp(`id="${describedBy}"[^>]*>Compact options`));
   assert.match(markup, /class="brick-popover"/);
   assert.match(markup, /class="brick-popover__body"/);
+});
+
+test("Form foundation preserves styled semantic relationships in server markup", () => {
+  const markup = renderToString(
+    React.createElement(
+      Form,
+      { "aria-label": "Profile" },
+      React.createElement(
+        Field.Root,
+        { id: "profile-email", invalid: true },
+        React.createElement(Field.Label, null, "Email"),
+        React.createElement(Input.Root, { name: "email" }),
+        React.createElement(Field.Description, null, "Use a work address."),
+        React.createElement(Field.Error, null, "Invalid address."),
+      ),
+      React.createElement(
+        Fieldset.Root,
+        { id: "contact-methods", invalid: true },
+        React.createElement(Fieldset.Legend, null, "Contact methods"),
+        React.createElement(Fieldset.Description, null, "Choose one."),
+        React.createElement(Fieldset.Error, null, "Selection required."),
+      ),
+    ),
+  );
+
+  assert.match(markup, /^<form/);
+  assert.match(markup, /class="brick-form"/);
+  assert.match(markup, /class="brick-field"/);
+  assert.match(markup, /class="brick-field-description"/);
+  assert.match(
+    markup,
+    /aria-describedby="profile-email-description profile-email-error"/,
+  );
+  assert.match(markup, /class="brick-fieldset"/);
+  assert.match(markup, /id="contact-methods-legend"/);
+  assert.match(
+    markup,
+    /aria-describedby="contact-methods-description contact-methods-error"/,
+  );
+});
+
+test("Checkbox family renders server-stable visual and semantic anatomy", () => {
+  const directMarkup = renderToString(
+    React.createElement(Checkbox, { defaultChecked: "indeterminate", size: "lg" }, "Terms"),
+  );
+  assert.match(directMarkup, /^<button/);
+  assert.match(directMarkup, /class="brick-checkbox"/);
+  assert.match(directMarkup, /data-size="lg"/);
+  assert.match(directMarkup, /aria-checked="mixed"/);
+  assert.match(directMarkup, /class="brick-checkbox-control"/);
+  assert.match(directMarkup, /aria-hidden="true"/);
+
+  const groupMarkup = renderToString(
+    React.createElement(
+      CheckboxGroup.Root,
+      { "aria-label": "Channels", allValues: ["email", "sms"] },
+      React.createElement(CheckboxGroup.Parent, null, "All channels"),
+      React.createElement(
+        CheckboxGroup.Item,
+        { value: "email" },
+        React.createElement(CheckboxGroup.ItemLabel, null, "Email"),
+        React.createElement(CheckboxGroup.ItemDescription, null, "Weekly summary"),
+      ),
+    ),
+  );
+  const labelledBy = groupMarkup.match(/aria-labelledby="([^"]+)"/)?.[1];
+  const describedBy = groupMarkup.match(/aria-describedby="([^"]+)"/)?.[1];
+  assert.ok(labelledBy);
+  assert.ok(describedBy);
+  assert.match(groupMarkup, /class="brick-checkbox-group"/);
+  assert.match(groupMarkup, /class="brick-checkbox-group-parent"/);
+  assert.match(groupMarkup, /class="brick-checkbox-group-item"/);
+  assert.match(groupMarkup, new RegExp(`id="${labelledBy}"[^>]*>Email`));
+  assert.match(groupMarkup, new RegExp(`id="${describedBy}"[^>]*>Weekly summary`));
 });

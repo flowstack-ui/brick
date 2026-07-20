@@ -21,6 +21,22 @@ test("Button visual recipes retain their hierarchy", async ({ page }) => {
   await expect(page.getByTestId("button-sizes")).toHaveScreenshot("button-sizes-dark.png");
 });
 
+test("Checkbox family retains state, size, and structured-content hierarchy", async ({ page }) => {
+  await page.goto("/checkbox");
+  await expect(page.getByTestId("checkbox-sizes-states")).toHaveScreenshot("checkbox-sizes-states-light.png");
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await expect(page.getByTestId("checkbox-overview")).toHaveScreenshot("checkbox-overview-dark.png");
+});
+
+test("Checkbox family remains logical and contained in mobile RTL and forced colors", async ({ page }) => {
+  await page.goto("/checkbox");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.getByTestId("checkbox-stress")).toHaveScreenshot("checkbox-stress-mobile.png");
+  await page.setViewportSize({ width: 1120, height: 900 });
+  await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
+  await expect(page.getByTestId("checkbox-sizes-states")).toHaveScreenshot("checkbox-sizes-states-forced-colors.png");
+});
+
 test("Button high-risk states retain visible boundaries", async ({ page }) => {
   await expect(page.getByTestId("button-states")).toHaveScreenshot("button-states-light.png");
 
@@ -274,4 +290,23 @@ test("HoverCard surface and Arrow retain boundaries in forced colors", async ({ 
   await page.getByRole("link", { name: "Ada Lovelace" }).focus();
   await expect(page.locator("[data-slot='hover-card']").filter({ hasText: "Mathematician" })).toHaveAttribute("data-positioned", "");
   await expect(page).toHaveScreenshot("hover-card-overview-forced-colors.png");
+});
+
+test("Form foundation anatomy and states retain their visual hierarchy", async ({ page }) => {
+  await page.goto("/form-foundation");
+  await expect(page.getByTestId("form-foundation-overview")).toHaveScreenshot("form-foundation-overview-light.png");
+  await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
+  await expect(page.getByTestId("form-foundation-appearance")).toHaveScreenshot("form-foundation-appearance-dark.png");
+});
+
+test("Form foundation remains visually contained in a narrow RTL layout", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/form-foundation");
+  await expect(page.getByTestId("form-foundation-stress")).toHaveScreenshot("form-foundation-stress-mobile.png");
+});
+
+test("Form foundation invalid boundaries survive forced colors", async ({ page }) => {
+  await page.goto("/form-foundation");
+  await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
+  await expect(page.getByTestId("form-foundation-overview")).toHaveScreenshot("form-foundation-overview-forced-colors.png");
 });

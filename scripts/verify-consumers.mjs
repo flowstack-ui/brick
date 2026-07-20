@@ -34,7 +34,7 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, Button, Card, HoverCard, IconButton, NotificationBadge, Popover, Toggle, ToggleGroup } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, HoverCard, IconButton, NotificationBadge, Popover, Toggle, ToggleGroup } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -47,6 +47,8 @@ import { ToggleGroup as SubpathToggleGroup } from "@flowstack-ui/brick/toggle-gr
 import { Tooltip as SubpathTooltip } from "@flowstack-ui/brick/tooltip";
 import { HoverCard as SubpathHoverCard } from "@flowstack-ui/brick/hover-card";
 import { Popover as SubpathPopover } from "@flowstack-ui/brick/popover";
+import { Checkbox as SubpathCheckbox } from "@flowstack-ui/brick/checkbox";
+import { CheckboxGroup as SubpathCheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { readFile } from "node:fs/promises";
@@ -62,6 +64,8 @@ if (Toggle !== SubpathToggle) throw new Error("Toggle subpath export mismatch");
 if (ToggleGroup !== SubpathToggleGroup) throw new Error("ToggleGroup subpath export mismatch");
 if (HoverCard !== SubpathHoverCard || Object.keys(SubpathHoverCard).length !== 5) throw new Error("HoverCard subpath smoke failed");
 if (Popover !== SubpathPopover || Object.keys(SubpathPopover).length !== 12) throw new Error("Popover subpath smoke failed");
+if (Checkbox !== SubpathCheckbox) throw new Error("Checkbox subpath export mismatch");
+if (CheckboxGroup !== SubpathCheckboxGroup || Object.keys(SubpathCheckboxGroup).length !== 5) throw new Error("CheckboxGroup subpath smoke failed");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
 const iconButtonMarkup = renderToString(React.createElement(IconButton, { "aria-label": "Search" }, React.createElement("svg")));
@@ -80,15 +84,19 @@ const toggleMarkup = renderToString(React.createElement(Toggle, { pressed: true 
 if (!toggleMarkup.includes("brick-toggle") || !toggleMarkup.includes('aria-pressed="true"')) throw new Error("Toggle SSR smoke failed");
 const toggleGroupMarkup = renderToString(React.createElement(ToggleGroup.Root, { value: "cards" }, React.createElement(ToggleGroup.Item, { value: "cards" }, "Cards")));
 if (!toggleGroupMarkup.includes("brick-toggle-group") || !toggleGroupMarkup.includes("brick-toggle-group-item")) throw new Error("ToggleGroup SSR smoke failed");
+const checkboxMarkup = renderToString(React.createElement(Checkbox, { defaultChecked: "indeterminate" }, "Terms"));
+if (!checkboxMarkup.includes("brick-checkbox") || !checkboxMarkup.includes('aria-checked="mixed"')) throw new Error("Checkbox SSR smoke failed");
+const checkboxGroupMarkup = renderToString(React.createElement(CheckboxGroup.Root, { "aria-label": "Channels" }, React.createElement(CheckboxGroup.Item, { value: "email" }, "Email")));
+if (!checkboxGroupMarkup.includes("brick-checkbox-group") || !checkboxGroupMarkup.includes("brick-checkbox-group-item")) throw new Error("CheckboxGroup SSR smoke failed");
 if (!SubpathTooltip || Object.keys(SubpathTooltip).length !== 8) throw new Error("Tooltip subpath smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
-if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover")) throw new Error("CSS export missing");
+if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover") || !css.includes(".brick-checkbox") || !css.includes(".brick-checkbox-group")) throw new Error("CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
 	`import { createElement } from "react";
-import { AlertDialog, AppBar, Avatar, Badge, Button, Card, HoverCard, IconButton, NotificationBadge, Popover, Toggle, ToggleGroup, type AppBarRootProps, type AvatarProps, type BadgeProps, type ButtonProps, type CardRootProps, type HoverCardContentProps, type IconButtonProps, type NotificationBadgeProps, type PopoverContentProps, type ToggleProps, type ToggleGroupRootProps } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, HoverCard, IconButton, NotificationBadge, Popover, Toggle, ToggleGroup, type AppBarRootProps, type AvatarProps, type BadgeProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type HoverCardContentProps, type IconButtonProps, type NotificationBadgeProps, type PopoverContentProps, type ToggleProps, type ToggleGroupRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -106,6 +114,8 @@ const toggleProps: ToggleProps = { children: "Favorite", pressed: true };
 const toggleGroupProps: ToggleGroupRootProps = { children: createElement(ToggleGroup.Item, { value: "cards" }, "Cards"), value: "cards" };
 const hoverCardProps: HoverCardContentProps = { children: "Preview", size: "md" };
 const popoverProps: PopoverContentProps = { "aria-label": "Settings", children: "Controls", size: "md" };
+const checkboxProps: CheckboxProps = { children: "Terms", defaultChecked: "indeterminate", size: "lg" };
+const checkboxGroupProps: CheckboxGroupRootProps = { "aria-label": "Channels", allValues: ["email"], children: createElement(CheckboxGroup.Item, { value: "email" }, "Email") };
 void AlertDialog;
 void SubpathAlertDialog;
 void Button;
@@ -135,6 +145,10 @@ void HoverCard;
 void hoverCardProps;
 void Popover;
 void popoverProps;
+void Checkbox;
+void CheckboxGroup;
+void checkboxProps;
+void checkboxGroupProps;
 `,
     );
     await writeFile(
@@ -162,7 +176,7 @@ void popoverProps;
         "--ignore-scripts",
         "--save-exact",
         tarball,
-        "@flowstack-ui/atom@0.4.0",
+        "@flowstack-ui/atom@0.6.0",
         `react@${reactVersion}`,
         `react-dom@${reactVersion}`,
         `@types/react@${reactMajor}`,

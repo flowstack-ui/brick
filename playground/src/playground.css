@@ -4,6 +4,219 @@
   font-family: var(--brick-font-family-body);
 }
 
+.checkbox-stage,
+.checkbox-composition,
+.checkbox-form {
+  display: grid;
+  min-inline-size: 0;
+  gap: 1rem;
+}
+
+.checkbox-stage {
+  max-inline-size: 38rem;
+}
+
+.checkbox-matrix {
+  display: grid;
+  min-inline-size: 0;
+  gap: 0.75rem;
+}
+
+.checkbox-matrix-row {
+  display: flex;
+  min-inline-size: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-matrix-row > strong {
+  inline-size: 2rem;
+  text-transform: uppercase;
+}
+
+.checkbox-custom {
+  --brick-checkbox-radius: var(--brick-radius-control);
+}
+
+.checkbox-workbench output {
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+}
+
+.checkbox-workbench .appearance-grid > div {
+  padding: var(--brick-space-5);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-canvas);
+  color: var(--brick-color-text-primary);
+}
+
+@media (max-width: 32rem) {
+  .checkbox-matrix-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .checkbox-matrix-row > strong {
+    inline-size: auto;
+  }
+}
+
+.form-foundation-stage,
+.form-foundation-grid,
+.form-foundation-orientation,
+.form-foundation-custom {
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.form-foundation-stage,
+.form-foundation-custom,
+.form-foundation-constrained,
+.form-foundation-grid > .brick-form,
+.form-foundation-grid > .brick-field,
+.form-foundation-grid > .brick-fieldset,
+.form-foundation-grid > section {
+  padding: var(--brick-space-5);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-raised);
+}
+
+.form-foundation-stage > .brick-form {
+  max-inline-size: 42rem;
+  margin-inline: auto;
+}
+
+.form-foundation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: var(--brick-space-4);
+  align-items: start;
+}
+
+.form-foundation-orientation {
+  display: grid;
+  gap: var(--brick-space-5);
+}
+
+.form-foundation-constrained {
+  inline-size: min(100%, 18rem);
+}
+
+.form-foundation-control {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: var(--brick-control-min-block-size-md);
+  padding-inline: var(--brick-space-3);
+  border: var(--brick-border-width) solid var(--brick-color-border-strong);
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-canvas);
+  color: var(--brick-color-text-primary);
+  font: inherit;
+}
+
+.form-foundation-control:focus-visible,
+.form-foundation-choice-group > :where(button, [role="radio"], [role="checkbox"]):focus-visible {
+  outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+  outline-offset: var(--brick-border-focus-offset);
+}
+
+.form-foundation-control:disabled {
+  border-color: var(--brick-color-border-default);
+  background: var(--brick-color-surface-subtle);
+  color: var(--brick-color-text-secondary);
+}
+
+.form-foundation-choice-group {
+  display: grid;
+  gap: var(--brick-space-2);
+}
+
+.form-foundation-choice-group > :where(button, [role="radio"], [role="checkbox"]) {
+  min-block-size: var(--brick-control-min-block-size-md);
+  padding: var(--brick-space-2) var(--brick-space-3);
+  border: var(--brick-border-width) solid var(--brick-color-border-default);
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-canvas);
+  color: var(--brick-color-text-primary);
+  font: inherit;
+  text-align: start;
+}
+
+.form-foundation-choice-group > [data-state="checked"] {
+  border-color: var(--brick-color-accent-border);
+  background: var(--brick-color-accent-soft);
+  color: var(--brick-color-accent-on-soft);
+  font-weight: var(--brick-font-weight-medium);
+}
+
+.form-foundation-choice-group > [data-disabled] {
+  color: var(--brick-color-text-secondary);
+  cursor: not-allowed;
+}
+
+.form-foundation-actions {
+  display: flex;
+  min-inline-size: 0;
+  flex-wrap: wrap;
+  gap: var(--brick-space-3);
+}
+
+.form-foundation-status {
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+}
+
+.form-foundation-grid .brick-form {
+  --brick-form-gap: var(--brick-space-4);
+}
+
+.form-foundation-custom {
+  border-style: dashed;
+}
+
+.form-foundation-workbench .appearance-grid > div {
+  padding: var(--brick-space-5);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-canvas);
+  color: var(--brick-color-text-primary);
+}
+
+.form-foundation-phone {
+  inline-size: min(100%, 16rem);
+}
+
+@media (max-width: 34rem) {
+  .form-foundation-stage,
+  .form-foundation-custom,
+  .form-foundation-constrained,
+  .form-foundation-grid > .brick-form,
+  .form-foundation-grid > .brick-field,
+  .form-foundation-grid > .brick-fieldset,
+  .form-foundation-grid > section {
+    padding: var(--brick-space-3);
+  }
+
+  .form-foundation-actions > .brick-button {
+    inline-size: 100%;
+  }
+}
+
+@media (forced-colors: active) {
+  .form-foundation-control,
+  .form-foundation-choice-group > :where(button, [role="radio"], [role="checkbox"]) {
+    border-color: CanvasText;
+  }
+
+  .form-foundation-choice-group > [data-state="checked"] {
+    outline: var(--brick-border-width) solid Highlight;
+  }
+}
+
 @layer playground {
   .icon-button-hero {
     display: flex;

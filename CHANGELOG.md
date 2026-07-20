@@ -6,6 +6,14 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Checkbox and the complete five-part CheckboxGroup family with three shared
+  sizes, built-in checked/mixed artwork, structured item relationships,
+  deterministic Parent selection, native forms, Field/Fieldset composition,
+  responsive logical layout, public tokens, and exact Atom 0.6.0 behavior.
+
+- Checkbox-family package, type, SSR, component, browser, visual, playground,
+  React 18/19 packed-consumer, and independent Consumer evidence.
+
 - Popover with a strict twelve-part namespace, click/press/keyboard activation,
   native semantic relationships, modal/non-modal focus behavior, three bounded
   elevated sizes, explicit Close/Arrow, and exact Atom 0.4.0 behavior.
@@ -56,6 +64,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Fixed
 
+- Upgraded the exact Atom dependency to 0.6.0 for CheckboxGroup stable
+  ItemLabel/ItemDescription relationships, allValues Parent aggregation, and
+  complete form/state composition capabilities.
 - Upgraded the exact Atom dependency to 0.3.4 so modal scroll locking preserves
   stable scrollbar gutters without shifting Consumer layouts.
 - Increased the default AlertDialog medium surface to keep ordinary paired

@@ -5,8 +5,9 @@ Opinionated styled React components built on `@flowstack-ui/atom`.
 Brick provides finished, accessible React components with static CSS, semantic
 design tokens, light and dark appearances, and a documented customization
 contract. The initial catalog includes Button, Card, Dialog, AlertDialog,
-Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton, and
-AppBar, Tooltip, HoverCard, and Popover in version `0.1.0`.
+Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton,
+AppBar, Tooltip, HoverCard, Popover, Form, Field, Fieldset, Checkbox, and
+CheckboxGroup in version `0.1.0`.
 
 ## Boundary
 
@@ -38,7 +39,7 @@ import "@flowstack-ui/brick/styles.css";
 Use `@flowstack-ui/brick/tokens.css` when only the visual tokens are needed.
 
 ```tsx
-import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Dialog, Drawer, HoverCard, IconButton, NotificationBadge, Popover, Toggle, ToggleGroup } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, Dialog, Drawer, Fieldset, Form, HoverCard, IconButton, NotificationBadge, Popover, Toggle, ToggleGroup } from "@flowstack-ui/brick";
 
 <Button>Save changes</Button>;
 
@@ -70,6 +71,22 @@ import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Dialog, Drawer, Hover
   <ToggleGroup.Item value="cards">Cards</ToggleGroup.Item>
   <ToggleGroup.Item value="list">List</ToggleGroup.Item>
 </ToggleGroup.Root>;
+
+<Checkbox name="terms" required value="accepted">Accept the terms</Checkbox>;
+
+<Form>
+  <Fieldset.Root required>
+    <Fieldset.Legend>Notifications</Fieldset.Legend>
+    <CheckboxGroup.Root allValues={["email", "push"]} name="notifications">
+      <CheckboxGroup.Parent>Select all</CheckboxGroup.Parent>
+      <CheckboxGroup.Item value="email">
+        <CheckboxGroup.ItemLabel>Email</CheckboxGroup.ItemLabel>
+        <CheckboxGroup.ItemDescription>Weekly account report.</CheckboxGroup.ItemDescription>
+      </CheckboxGroup.Item>
+      <CheckboxGroup.Item value="push">Push</CheckboxGroup.Item>
+    </CheckboxGroup.Root>
+  </Fieldset.Root>
+</Form>;
 
 <Card.Root>
   <Card.Content>Project summary</Card.Content>

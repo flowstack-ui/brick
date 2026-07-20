@@ -50,6 +50,11 @@ await writeFile(
     '@import "../../src/components/tooltip/tooltip.css";',
     '@import "../../src/components/hover-card/hover-card.css";',
     '@import "../../src/components/popover/popover.css";',
+    '@import "../../src/components/form/form.css";',
+    '@import "../../src/components/field/field.css";',
+    '@import "../../src/components/fieldset/fieldset.css";',
+    '@import "../../src/components/checkbox/checkbox.css";',
+    '@import "../../src/components/checkbox-group/checkbox-group.css";',
   ].join("\n"),
 );
 

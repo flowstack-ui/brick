@@ -14,6 +14,16 @@ This directory is the public documentation authority for
 
 ## Components
 
+- [`components/checkbox/README.md`](components/checkbox/README.md) — independent
+  checked/mixed selections, native forms, Field composition, and three sizes
+- [`components/checkbox-group/README.md`](components/checkbox-group/README.md) —
+  related multi-selection, structured items, deterministic Parent, and Fieldset
+- [`components/form/README.md`](components/form/README.md) — native submission,
+  reset, callback validation state, composition, and finished form rhythm
+- [`components/field/README.md`](components/field/README.md) — complete labeled
+  control anatomy, generated relationships, states, and responsive layout
+- [`components/fieldset/README.md`](components/fieldset/README.md) — native
+  grouped-control semantics, Legend, descriptions, errors, and group state
 - [`components/button/README.md`](components/button/README.md) — styled actions
   and button-like navigation
 - [`components/card/README.md`](components/card/README.md) — static compound

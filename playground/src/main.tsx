@@ -17,6 +17,11 @@ import {
   Tooltip,
   HoverCard,
   Popover,
+  Field,
+  Fieldset,
+  Form,
+  Checkbox,
+  CheckboxGroup,
   type AlertDialogSize,
   type AvatarShape,
   type AvatarSize,
@@ -45,7 +50,10 @@ import {
   type ToggleVariant,
   type HoverCardSize,
   type PopoverSize,
+  type CheckboxSize,
 } from "@flowstack-ui/brick";
+import { Input } from "@flowstack-ui/atom/input";
+import { RadioGroup } from "@flowstack-ui/atom/radio-group";
 import "@flowstack-ui/brick/styles.css";
 import "./playground.css";
 
@@ -79,6 +87,7 @@ const iconButtonShapes: IconButtonShape[] = ["rounded", "circle"];
 const appBarVariants: AppBarVariant[] = ["solid", "surface", "transparent"];
 const hoverCardSizes: HoverCardSize[] = ["sm", "md", "lg"];
 const popoverSizes: PopoverSize[] = ["sm", "md", "lg"];
+const checkboxSizes: CheckboxSize[] = ["sm", "md", "lg"];
 const avatarStatusLabels: Record<AvatarStatus, string> = {
   online: "Online",
   away: "Away",
@@ -1613,9 +1622,258 @@ function TooltipPlayground() {
   );
 }
 
+function CheckboxFamilyPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+  const [controlled, setControlled] = useState<false | true | "indeterminate">("indeterminate");
+  const [channels, setChannels] = useState(["email"]);
+  const [status, setStatus] = useState("No form event yet");
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  return (
+    <div className="playground-shell checkbox-workbench">
+      <header className="playground-header">
+        <div><p className="playground-kicker">@flowstack-ui/brick</p><h1>Checkbox family workbench</h1><p>Complete independent and grouped selection, Parent aggregation, native forms, structured item content, composition, responsive layout, and Atom 0.6.0 behavior.</p></div>
+        <fieldset className="playground-appearance"><legend>Appearance</legend>{(["system", "light", "dark"] as const).map((value) => <Button aria-pressed={appearance === value} key={value} onPress={() => selectAppearance(value)} size="sm" tone="neutral" variant={appearance === value ? "soft" : "ghost"}>{value}</Button>)}</fieldset>
+      </header>
+      <main data-testid="checkbox-workbench">
+        <Scenario description="Independent choices use Checkbox directly; related choices use the complete CheckboxGroup namespace and explicit allValues for Parent." title="Overview">
+          <div className="checkbox-stage" data-testid="checkbox-overview">
+            <Checkbox defaultChecked name="release-ready" value="yes">Ready to publish</Checkbox>
+            <Checkbox checked={controlled} onCheckedChange={setControlled}>Controlled tri-state</Checkbox>
+            <output aria-live="polite">Controlled state: {String(controlled)}</output>
+            <CheckboxGroup.Root aria-label="Release channels" allValues={["email", "sms", "push"]} name="release-channels" value={channels} onValueChange={setChannels}>
+              <CheckboxGroup.Parent>All release channels</CheckboxGroup.Parent>
+              <CheckboxGroup.Item value="email"><CheckboxGroup.ItemLabel>Email</CheckboxGroup.ItemLabel><CheckboxGroup.ItemDescription>Delivery and account notices.</CheckboxGroup.ItemDescription></CheckboxGroup.Item>
+              <CheckboxGroup.Item value="sms"><CheckboxGroup.ItemLabel>SMS</CheckboxGroup.ItemLabel><CheckboxGroup.ItemDescription>Urgent publishing failures only.</CheckboxGroup.ItemDescription></CheckboxGroup.Item>
+              <CheckboxGroup.Item value="push">Push notifications</CheckboxGroup.Item>
+            </CheckboxGroup.Root>
+            <output aria-live="polite">Selected channels: {channels.join(", ") || "none"}</output>
+          </div>
+        </Scenario>
+
+        <Scenario description="Small, medium, and large coordinate the full row target, visible control, check/dash artwork, gap, and text." title="Sizes and state">
+          <div className="checkbox-matrix" data-testid="checkbox-sizes-states">
+            {checkboxSizes.map((size) => <div className="checkbox-matrix-row" key={size}><strong>{size}</strong><Checkbox size={size}>Unchecked</Checkbox><Checkbox defaultChecked size={size}>Checked</Checkbox><Checkbox defaultChecked="indeterminate" size={size}>Mixed</Checkbox></div>)}
+            <Checkbox disabled>Disabled</Checkbox><Checkbox disabled defaultChecked>Disabled checked</Checkbox><Checkbox readOnly defaultChecked>Read only</Checkbox><Checkbox invalid>Invalid</Checkbox><Checkbox required>Required</Checkbox>
+          </div>
+        </Scenario>
+
+        <Scenario description="Field and Fieldset provide visible labels, shared instructions, required/invalid state, and errors without hidden automatic wrappers." title="Form, Fieldset, and native submission">
+          <Form aria-label="Publishing preferences" className="checkbox-form" id="checkbox-preferences" onReset={() => setStatus("Preferences reset")} onSubmit={(event) => { const formData = new FormData(event.currentTarget); setStatus(`Submitted: ${formData.get("acknowledgement") ?? "no acknowledgement"}; ${formData.getAll("delivery").join(", ") || "no delivery"}`); }} preventDefaultOnSubmit>
+            <Field.Root id="acknowledgement" required><Field.Label>Release acknowledgement</Field.Label><Checkbox name="acknowledgement" required value="accepted">I reviewed the release notes</Checkbox><Field.Description>This selection is submitted as a native checkbox value.</Field.Description><Field.Error>Review is required.</Field.Error></Field.Root>
+            <Fieldset.Root id="delivery-methods" required><Fieldset.Legend>Delivery methods</Fieldset.Legend><Fieldset.Description>Choose one or more ways to receive publishing results.</Fieldset.Description><CheckboxGroup.Root allValues={["email", "push"]} name="delivery"><CheckboxGroup.Parent>Select every available method</CheckboxGroup.Parent><CheckboxGroup.Item value="email"><CheckboxGroup.ItemLabel>Email report</CheckboxGroup.ItemLabel><CheckboxGroup.ItemDescription>Includes build and package details.</CheckboxGroup.ItemDescription></CheckboxGroup.Item><CheckboxGroup.Item value="push">Push notification</CheckboxGroup.Item><CheckboxGroup.Item disabled value="sms">SMS unavailable</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>Choose at least one delivery method.</Fieldset.Error></Fieldset.Root>
+            <div className="form-foundation-actions"><Button type="submit">Save preferences</Button><Button tone="neutral" type="reset" variant="outline">Reset</Button></div><output aria-live="polite" className="form-foundation-status">{status}</output>
+          </Form>
+          <Checkbox form="checkbox-preferences" name="external-consent" value="yes">Externally owned preference</Checkbox>
+        </Scenario>
+
+        <Scenario description="Horizontal groups wrap logically; mapped items, native props, custom classes/tokens, render, and asChild stay available." title="Orientation and composition">
+          <div className="checkbox-composition" data-testid="checkbox-composition">
+            <CheckboxGroup.Root aria-label="Mapped formats" allValues={["pdf", "csv", "json"]} orientation="horizontal" size="sm">{["pdf", "csv", "json"].map((value) => <CheckboxGroup.Item key={value} value={value}>{value.toUpperCase()}</CheckboxGroup.Item>)}</CheckboxGroup.Root>
+            <Checkbox className="checkbox-custom" render={<button data-adapter="rendered-checkbox" />} style={{ "--brick-checkbox-control-checked-background": "#18794e" } as CSSProperties}>Rendered adapter</Checkbox>
+            <Checkbox asChild><button data-adapter="composed-checkbox"><strong>Composed adapter</strong></button></Checkbox>
+            <CheckboxGroup.Root asChild aria-label="Composed group"><section data-adapter="composed-group"><CheckboxGroup.Item asChild value="one"><button data-adapter="composed-item"><CheckboxGroup.ItemLabel asChild><strong>Composed item</strong></CheckboxGroup.ItemLabel><CheckboxGroup.ItemDescription render={<small data-adapter="rendered-description" />}>Description remains related.</CheckboxGroup.ItemDescription></button></CheckboxGroup.Item></section></CheckboxGroup.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Light/dark scopes, long unbroken copy, 256-pixel containment, RTL, zoom, reduced motion, and forced colors remain inspectable." title="Appearance, mobile, stress, and RTL">
+          <div className="appearance-grid" data-testid="checkbox-appearance"><div data-brick-appearance="light"><Checkbox defaultChecked>Light checked</Checkbox></div><div data-brick-appearance="dark"><Checkbox defaultChecked="indeterminate">Dark mixed</Checkbox></div></div>
+          <div className="stress-grid" data-testid="checkbox-stress"><div className="phone-frame"><CheckboxGroup.Root aria-label="Narrow localized choices" allValues={["long"]}><CheckboxGroup.Parent>Select every translated preference</CheckboxGroup.Parent><CheckboxGroup.Item value="long"><CheckboxGroup.ItemLabel>Extremely detailed localized publishing and emergency-notification preference</CheckboxGroup.ItemLabel><CheckboxGroup.ItemDescription>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains inside the available width.</CheckboxGroup.ItemDescription></CheckboxGroup.Item></CheckboxGroup.Root></div><div className="phone-frame" dir="rtl"><CheckboxGroup.Root aria-label="طرق الإشعار" allValues={["email", "phone"]}><CheckboxGroup.Parent>اختيار جميع طرق الإشعار</CheckboxGroup.Parent><CheckboxGroup.Item value="email"><CheckboxGroup.ItemLabel>البريد الإلكتروني</CheckboxGroup.ItemLabel><CheckboxGroup.ItemDescription>تقارير النشر الأسبوعية وتحديثات الحساب.</CheckboxGroup.ItemDescription></CheckboxGroup.Item><CheckboxGroup.Item value="phone">الهاتف</CheckboxGroup.Item></CheckboxGroup.Root></div></div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
+function FormFoundationPlayground() {
+  const [appearance, setAppearance] = useState<Appearance>("system");
+  const [email, setEmail] = useState("");
+  const [invalid, setInvalid] = useState(false);
+  const [status, setStatus] = useState("No form event yet");
+  const path = window.location.pathname;
+  const focus = path.startsWith("/fieldset")
+    ? "Fieldset"
+    : path.startsWith("/field")
+      ? "Field"
+      : path.startsWith("/form-foundation")
+        ? "Form foundation"
+        : "Form";
+
+  function selectAppearance(next: Appearance) {
+    setAppearance(next);
+    if (next === "system") document.documentElement.removeAttribute("data-brick-appearance");
+    else document.documentElement.dataset.brickAppearance = next;
+  }
+
+  return (
+    <div className="playground-shell form-foundation-workbench">
+      <header className="playground-header">
+        <div>
+          <p className="playground-kicker">@flowstack-ui/brick</p>
+          <h1>{focus} workbench</h1>
+          <p>Complete native submission, one-control Field, related-control Fieldset, server-stable relationships, responsive layout, state, and composition.</p>
+        </div>
+        <fieldset className="playground-appearance">
+          <legend>Appearance</legend>
+          {(["system", "light", "dark"] as const).map((value) => (
+            <Button aria-pressed={appearance === value} key={value} onPress={() => selectAppearance(value)} size="sm" tone="neutral" variant={appearance === value ? "soft" : "ghost"}>{value}</Button>
+          ))}
+        </fieldset>
+      </header>
+
+      <main data-testid="form-foundation-workbench">
+        <Scenario description="The shortest finished workflow uses one native Form, one Field per value, one Fieldset per related choice, and explicit actions." title="Overview">
+          <div className="form-foundation-stage" data-testid="form-foundation-overview">
+            <Form
+              aria-label="Create account"
+              onReset={() => {
+                setEmail("");
+                setInvalid(false);
+                setStatus("Form reset");
+              }}
+              onSubmit={async () => {
+                await new Promise((resolve) => window.setTimeout(resolve, 350));
+                setStatus("Account form submitted");
+              }}
+              preventDefaultOnSubmit
+              validateOnSubmit={() => {
+                const valid = email.includes("@");
+                setInvalid(!valid);
+                if (!valid) setStatus("Validation rejected the submission");
+                return valid;
+              }}
+            >
+              <Field.Root id="work-email" invalid={invalid} required>
+                <Field.Label>Work email</Field.Label>
+                <Input.Root className="form-foundation-control" name="email" onValueChange={setEmail} placeholder="name@example.com" value={email} />
+                <Field.Description>We use this address for account notices.</Field.Description>
+                <Field.Error>Enter a complete email address.</Field.Error>
+              </Field.Root>
+              <Fieldset.Root id="contact-method" required>
+                <Fieldset.Legend>Preferred contact method</Fieldset.Legend>
+                <Fieldset.Description>Choose the method you check most often.</Fieldset.Description>
+                <RadioGroup.Root className="form-foundation-choice-group" defaultValue="email" name="contact-method">
+                  <RadioGroup.Radio value="email">Email</RadioGroup.Radio>
+                  <RadioGroup.Radio value="phone">Phone</RadioGroup.Radio>
+                </RadioGroup.Root>
+              </Fieldset.Root>
+              <div className="form-foundation-actions">
+                <Button type="submit">Create account</Button>
+                <Button tone="neutral" type="reset" variant="outline">Reset</Button>
+              </div>
+              <output aria-live="polite" className="form-foundation-status">{status}</output>
+            </Form>
+          </div>
+        </Scenario>
+
+        <Scenario description="URL, callback, async callback, validation, function action, and reset remain native or Atom behavior rather than Brick policy." title="Submission models">
+          <div className="form-foundation-grid" data-testid="form-submission-models">
+            <Form action="#native-result" method="get">
+              <Field.Root id="native-search"><Field.Label>Native URL search</Field.Label><Input.Root className="form-foundation-control" name="query" /></Field.Root>
+              <Button size="sm" type="submit">Submit URL form</Button>
+            </Form>
+            <Form action={async (formData) => setStatus(`Function action: ${String(formData.get("project") ?? "empty")}`)}>
+              <Field.Root id="function-project"><Field.Label>React function action</Field.Label><Input.Root className="form-foundation-control" defaultValue="Analytical Engine" name="project" /></Field.Root>
+              <Button size="sm" type="submit">Run function action</Button>
+            </Form>
+            <Form onSubmit={() => setStatus("Synchronous callback submitted")} preventDefaultOnSubmit>
+              <Field.Root id="callback-name"><Field.Label>Callback value</Field.Label><Input.Root className="form-foundation-control" name="callback" /></Field.Root>
+              <Button size="sm" type="submit">Run callback</Button>
+            </Form>
+          </div>
+        </Scenario>
+
+        <Scenario description="Required, optional, disabled, read-only, invalid, forced server error, and invalid-without-message states use one coherent visual language." title="Field states">
+          <div className="form-foundation-grid" data-testid="field-states">
+            <Field.Root id="required-field" required><Field.Label>Required field</Field.Label><Input.Root className="form-foundation-control" /><Field.Description>Required state reaches a Field-aware control.</Field.Description></Field.Root>
+            <Field.Root id="optional-field"><Field.Label optionalIndicator=" (optional)">Optional field</Field.Label><Input.Root className="form-foundation-control" /><Field.RequiredIndicator fallback="Optional metadata" /></Field.Root>
+            <Field.Root disabled id="disabled-field"><Field.Label>Disabled field</Field.Label><Input.Root className="form-foundation-control" /><Field.Description>Metadata stays readable.</Field.Description></Field.Root>
+            <Field.Root id="readonly-field" readOnly><Field.Label>Read-only field</Field.Label><Input.Root className="form-foundation-control" defaultValue="Fixed value" /></Field.Root>
+            <Field.Root id="invalid-field" invalid><Field.Label>Invalid field</Field.Label><Input.Root className="form-foundation-control" /><Field.Error role="alert">A newly inserted error may opt into announcement.</Field.Error></Field.Root>
+            <Field.Root id="forced-field"><Field.Label>Server response</Field.Label><Input.Root className="form-foundation-control" /><Field.Error forceMatch>That value is already in use.</Field.Error></Field.Root>
+            <Field.Root id="invalid-without-error" invalid><Field.Label>Invalid without Error</Field.Label><Input.Root className="form-foundation-control" /></Field.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Horizontal Field uses intrinsic tracks at wide widths and returns to one column before labels or controls overflow." title="Responsive orientation">
+          <div className="form-foundation-orientation" data-testid="field-orientation">
+            <Field.Root id="horizontal-wide" orientation="horizontal"><Field.Label>Account recovery address</Field.Label><Input.Root className="form-foundation-control" /><Field.Description>Description and errors align to the final control column.</Field.Description></Field.Root>
+            <div className="form-foundation-constrained">
+              <Field.Root id="horizontal-narrow" orientation="horizontal" invalid><Field.Label>A deliberately long localized recovery-address label</Field.Label><Input.Root className="form-foundation-control" /><Field.Description>This narrow fixture stacks intrinsically.</Field.Description><Field.Error>Correct the value without horizontal scrolling.</Field.Error></Field.Root>
+            </div>
+          </div>
+        </Scenario>
+
+        <Scenario description="Fieldset keeps native grouping plain while CheckboxGroup, RadioGroup, and nested Fields retain their own semantics and item state." title="Fieldset groups">
+          <div className="form-foundation-grid" data-testid="fieldset-groups">
+            <Fieldset.Root id="notification-methods" invalid required>
+              <Fieldset.Legend>Notification methods</Fieldset.Legend>
+              <Fieldset.Description>Select at least one method.</Fieldset.Description>
+              <CheckboxGroup.Root className="form-foundation-choice-group" name="notifications">
+                <CheckboxGroup.Item value="email">Email</CheckboxGroup.Item>
+                <CheckboxGroup.Item value="push">Push notification</CheckboxGroup.Item>
+              </CheckboxGroup.Root>
+              <Fieldset.Error>Select at least one method.</Fieldset.Error>
+            </Fieldset.Root>
+            <Fieldset.Root disabled id="disabled-preferences">
+              <Fieldset.Legend optionalIndicator=" (optional)">Disabled preferences</Fieldset.Legend>
+              <Fieldset.Description>Native fieldset disabling reaches descendants.</Fieldset.Description>
+              <RadioGroup.Root className="form-foundation-choice-group" defaultValue="daily" name="digest"><RadioGroup.Radio value="daily">Daily</RadioGroup.Radio><RadioGroup.Radio value="weekly">Weekly</RadioGroup.Radio></RadioGroup.Root>
+            </Fieldset.Root>
+            <Fieldset.Root id="address-group">
+              <Fieldset.Legend>Address details</Fieldset.Legend>
+              <Field.Root id="city"><Field.Label>City</Field.Label><Input.Root className="form-foundation-control" /></Field.Root>
+              <Field.Root id="postal"><Field.Label>Postal code</Field.Label><Input.Root className="form-foundation-control" /></Field.Root>
+            </Fieldset.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Default, render, and asChild paths preserve the selected semantic elements, classes, slots, refs, and generated relationships." title="Composition">
+          <div className="form-foundation-grid" data-testid="form-foundation-composition">
+            <Form render={<form data-adapter="rendered-form" />} onSubmit={() => setStatus("Rendered Form submitted")} preventDefaultOnSubmit><Field.Root render={<section data-adapter="rendered-field" />} id="rendered-field"><Field.Label asChild><label data-adapter="composed-label">Rendered Field</label></Field.Label><Input.Root className="form-foundation-control" /><Field.Description render={<div data-adapter="rendered-description" />}>Rendered description</Field.Description></Field.Root><Button size="sm" type="submit">Submit rendered Form</Button></Form>
+            <Field.Root asChild id="composed-field" invalid><section data-adapter="composed-field"><Field.Label>Composed Field</Field.Label><Input.Root className="form-foundation-control" /><Field.Description>Server-stable composed description</Field.Description><Field.Error asChild><div data-adapter="composed-error">Composed error</div></Field.Error></section></Field.Root>
+            <Fieldset.Root asChild id="composed-fieldset" invalid><fieldset data-adapter="composed-fieldset"><Fieldset.Legend asChild><legend>Composed Fieldset</legend></Fieldset.Legend><Fieldset.Description render={<div data-adapter="fieldset-description" />}>Composed group description</Fieldset.Description><Fieldset.Error>Composed group error</Fieldset.Error></fieldset></Fieldset.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Light and dark scopes plus public anatomy tokens customize a local foundation without replacing semantics or behavior." title="Appearance and tokens">
+          <div className="appearance-grid" data-testid="form-foundation-appearance">
+            <div data-brick-appearance="light"><Field.Root id="light-field" required><Field.Label>Light field</Field.Label><Input.Root className="form-foundation-control" /><Field.Description>Light appearance scope.</Field.Description></Field.Root></div>
+            <div data-brick-appearance="dark"><Field.Root id="dark-field" invalid><Field.Label>Dark field</Field.Label><Input.Root className="form-foundation-control" /><Field.Error>Dark appearance error.</Field.Error></Field.Root></div>
+          </div>
+          <Field.Root className="form-foundation-custom" id="custom-field" style={{ "--brick-field-label-foreground": "#6b2f88", "--brick-field-row-gap": "1rem", "--brick-field-error-foreground": "#8a273d" } as CSSProperties} invalid><Field.Label>Scoped token field</Field.Label><Input.Root className="form-foundation-control" /><Field.Description>Class, style, and stable tokens remain local.</Field.Description><Field.Error>Customized error treatment.</Field.Error></Field.Root>
+        </Scenario>
+
+        <Scenario description="Native ARIA remains authoritative, Error is not live by default, and generated IDs are inspectable before interaction." title="Relationships and announcements">
+          <div className="form-foundation-grid" data-testid="form-foundation-relationships">
+            <Field.Root id="native-aria" invalid><Field.Label>Native ARIA field</Field.Label><Input.Root aria-describedby="explicit-description" className="form-foundation-control" /><Field.Description>Generated description does not override explicit native ARIA.</Field.Description><Field.Error>Error has no automatic live role.</Field.Error><p id="explicit-description">Explicit application description.</p></Field.Root>
+            <Fieldset.Root id="forced-group"><Fieldset.Legend>Application group error</Fieldset.Legend><Fieldset.Description>Ordinary descriptive text.</Fieldset.Description><Fieldset.Error aria-live="polite" forceMatch>Deliberately live server response.</Fieldset.Error></Fieldset.Root>
+          </div>
+        </Scenario>
+
+        <Scenario description="Long localization, unbroken text, 256 CSS-pixel containment, RTL, zoom, dark appearance, and logical borders remain inspectable." title="Mobile, stress, and RTL">
+          <div className="stress-grid" data-testid="form-foundation-stress">
+            <div className="phone-frame form-foundation-phone"><Field.Root id="long-field" invalid required><Field.Label>Extremely detailed localized account recovery and emergency contact address</Field.Label><Input.Root className="form-foundation-control" /><Field.Description>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break must remain inside the available inline size.</Field.Description><Field.Error>The translated error remains fully reachable and does not clip at 200% or 400% zoom.</Field.Error></Field.Root></div>
+            <div className="phone-frame form-foundation-phone" dir="rtl"><Fieldset.Root id="rtl-group" invalid required><Fieldset.Legend>طرق الاتصال المفضلة للحساب</Fieldset.Legend><Fieldset.Description>اختر طريقة واحدة على الأقل لتلقي التنبيهات المهمة.</Fieldset.Description><CheckboxGroup.Root className="form-foundation-choice-group" name="rtl-methods"><CheckboxGroup.Item value="email">البريد الإلكتروني</CheckboxGroup.Item><CheckboxGroup.Item value="phone">الهاتف</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>يرجى اختيار طريقة اتصال واحدة.</Fieldset.Error></Fieldset.Root></div>
+          </div>
+        </Scenario>
+      </main>
+    </div>
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {window.location.pathname.startsWith("/popover") ? (
+    {window.location.pathname.startsWith("/checkbox") ? (
+      <CheckboxFamilyPlayground />
+    ) : window.location.pathname.startsWith("/form") || window.location.pathname.startsWith("/field") ? (
+      <FormFoundationPlayground />
+    ) : window.location.pathname.startsWith("/popover") ? (
       <PopoverPlayground />
     ) : window.location.pathname.startsWith("/hover-card") ? (
       <HoverCardPlayground />

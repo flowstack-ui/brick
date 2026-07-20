@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.4.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.6.0");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -76,6 +76,26 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/popover.d.ts",
       default: "./dist/popover.js",
     },
+    "./form": {
+      types: "./dist/form.d.ts",
+      default: "./dist/form.js",
+    },
+    "./field": {
+      types: "./dist/field.d.ts",
+      default: "./dist/field.js",
+    },
+    "./fieldset": {
+      types: "./dist/fieldset.d.ts",
+      default: "./dist/fieldset.js",
+    },
+    "./checkbox": {
+      types: "./dist/checkbox.d.ts",
+      default: "./dist/checkbox.js",
+    },
+    "./checkbox-group": {
+      types: "./dist/checkbox-group.d.ts",
+      default: "./dist/checkbox-group.js",
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css",
@@ -99,7 +119,12 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const tooltip = await import(new URL("../../dist/tooltip.js", import.meta.url));
   const hoverCard = await import(new URL("../../dist/hover-card.js", import.meta.url));
   const popover = await import(new URL("../../dist/popover.js", import.meta.url));
-  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Button", "Card", "Dialog", "Drawer", "HoverCard", "IconButton", "NotificationBadge", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverBody", "PopoverClose", "PopoverContent", "PopoverDescription", "PopoverFooter", "PopoverHeader", "PopoverPortal", "PopoverRoot", "PopoverTitle", "PopoverTrigger", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot", "Tooltip"]);
+  const form = await import(new URL("../../dist/form.js", import.meta.url));
+  const field = await import(new URL("../../dist/field.js", import.meta.url));
+  const fieldset = await import(new URL("../../dist/fieldset.js", import.meta.url));
+  const checkbox = await import(new URL("../../dist/checkbox.js", import.meta.url));
+  const checkboxGroup = await import(new URL("../../dist/checkbox-group.js", import.meta.url));
+  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Button", "Card", "Checkbox", "CheckboxGroup", "Dialog", "Drawer", "Field", "Fieldset", "Form", "HoverCard", "IconButton", "NotificationBadge", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverBody", "PopoverClose", "PopoverContent", "PopoverDescription", "PopoverFooter", "PopoverHeader", "PopoverPortal", "PopoverRoot", "PopoverTitle", "PopoverTrigger", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot", "Tooltip"]);
   assert.equal(button.Button, brick.Button);
   assert.equal(iconButton.IconButton, brick.IconButton);
   assert.equal(appBar.AppBar, brick.AppBar);
@@ -125,6 +150,20 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(hoverCard.HoverCardContent, brick.HoverCard.Content);
   assert.equal(popover.Popover, brick.Popover);
   assert.equal(popover.PopoverContent, brick.Popover.Content);
+  assert.equal(form.Form, brick.Form);
+  assert.equal(field.Field, brick.Field);
+  assert.equal(field.FieldRoot, brick.Field.Root);
+  assert.equal(field.FieldDescription, brick.Field.Description);
+  assert.equal(fieldset.Fieldset, brick.Fieldset);
+  assert.equal(fieldset.FieldsetRoot, brick.Fieldset.Root);
+  assert.equal(fieldset.FieldsetLegend, brick.Fieldset.Legend);
+  assert.equal(checkbox.Checkbox, brick.Checkbox);
+  assert.equal(checkboxGroup.CheckboxGroup, brick.CheckboxGroup);
+  assert.equal(checkboxGroup.CheckboxGroupRoot, brick.CheckboxGroup.Root);
+  assert.equal(checkboxGroup.CheckboxGroupItem, brick.CheckboxGroup.Item);
+  assert.equal(checkboxGroup.CheckboxGroupItemLabel, brick.CheckboxGroup.ItemLabel);
+  assert.equal(checkboxGroup.CheckboxGroupItemDescription, brick.CheckboxGroup.ItemDescription);
+  assert.equal(checkboxGroup.CheckboxGroupParent, brick.CheckboxGroup.Parent);
 });
 
 test("published CSS entrypoints are complete browser CSS", async () => {
@@ -151,6 +190,11 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-tooltip/);
   assert.match(styles, /\.brick-hover-card/);
   assert.match(styles, /\.brick-popover/);
+  assert.match(styles, /\.brick-form/);
+  assert.match(styles, /\.brick-field/);
+  assert.match(styles, /\.brick-fieldset/);
+  assert.match(styles, /\.brick-checkbox/);
+  assert.match(styles, /\.brick-checkbox-group/);
   assert.match(styles, /box-sizing:\s*border-box/);
   assert.match(styles, /--brick-button-background/);
   assert.match(styles, /--brick-icon-button-size/);
@@ -166,6 +210,11 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-tooltip-background/);
   assert.match(styles, /--brick-hover-card-background/);
   assert.match(styles, /--brick-popover-background/);
+  assert.match(styles, /--brick-form-gap/);
+  assert.match(styles, /--brick-field-label-foreground/);
+  assert.match(styles, /--brick-fieldset-legend-foreground/);
+  assert.match(styles, /--brick-checkbox-control-size/);
+  assert.match(styles, /--brick-checkbox-group-gap/);
   assert.match(styles, /--brick-control-min-block-size-xl/);
   assert.match(tokens, /data-brick-appearance/);
   assert.match(reset, /brick\.reset/);

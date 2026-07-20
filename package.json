@@ -84,6 +84,26 @@
       "types": "./dist/popover.d.ts",
       "default": "./dist/popover.js"
     },
+    "./form": {
+      "types": "./dist/form.d.ts",
+      "default": "./dist/form.js"
+    },
+    "./field": {
+      "types": "./dist/field.d.ts",
+      "default": "./dist/field.js"
+    },
+    "./fieldset": {
+      "types": "./dist/fieldset.d.ts",
+      "default": "./dist/fieldset.js"
+    },
+    "./checkbox": {
+      "types": "./dist/checkbox.d.ts",
+      "default": "./dist/checkbox.js"
+    },
+    "./checkbox-group": {
+      "types": "./dist/checkbox-group.d.ts",
+      "default": "./dist/checkbox-group.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"
@@ -130,7 +150,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.4.0"
+    "@flowstack-ui/atom": "0.6.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

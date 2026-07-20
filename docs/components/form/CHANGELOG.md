@@ -1,0 +1,14 @@
+# Form changelog
+
+Form follows the package version of `@flowstack-ui/brick`.
+
+## Unreleased
+
+### Added
+
+- Initial direct `Form` API with root and component-subpath exports.
+- Native URL, function-action, callback, reset, validation, external-control,
+  native-prop, ref, `asChild`, and `render` support through Atom 0.5.3.
+- Visible submitting, submitted, and invalid state treatment.
+- Stable class, slot, state attributes, spacing tokens, appearance support,
+  constrained-layout coverage, and independent Consumer proof.

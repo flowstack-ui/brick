@@ -1,0 +1,38 @@
+@layer brick.components {
+  .brick-form {
+    --brick-form-gap: var(--brick-space-5);
+    --brick-form-fieldset-gap: var(--brick-space-6);
+
+    display: grid;
+    min-inline-size: 0;
+    row-gap: var(--brick-form-gap);
+  }
+
+  .brick-form > .brick-fieldset {
+    --brick-fieldset-gap: var(--brick-form-fieldset-gap);
+  }
+
+  .brick-form[data-submitting] {
+    outline: var(--brick-border-width) dashed var(--brick-color-accent-border);
+    outline-offset: var(--brick-space-2);
+    cursor: progress;
+  }
+
+  .brick-form[data-submitted]:not([data-invalid], [data-submitting]) {
+    outline: var(--brick-border-width) solid var(--brick-color-success-border);
+    outline-offset: var(--brick-space-2);
+  }
+
+  .brick-form[data-invalid]:not([data-submitting]) {
+    outline: var(--brick-border-width) solid var(--brick-color-danger-border);
+    outline-offset: var(--brick-space-2);
+  }
+
+  @media (forced-colors: active) {
+    .brick-form[data-submitting],
+    .brick-form[data-submitted],
+    .brick-form[data-invalid] {
+      outline-color: CanvasText;
+    }
+  }
+}

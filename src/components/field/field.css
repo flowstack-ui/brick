@@ -1,0 +1,146 @@
+@layer brick.components {
+  .brick-field {
+    --brick-field-row-gap: var(--brick-space-2);
+    --brick-field-column-gap: var(--brick-space-5);
+    --brick-field-label-min-inline-size: 8rem;
+    --brick-field-control-min-inline-size: 12rem;
+    --brick-field-label-foreground: var(--brick-color-text-primary);
+    --brick-field-label-foreground-disabled: var(--brick-color-text-secondary);
+    --brick-field-label-font-family: var(--brick-font-family-body);
+    --brick-field-label-font-size: var(--brick-font-size-md);
+    --brick-field-label-font-weight: var(--brick-font-weight-medium);
+    --brick-field-label-line-height: var(--brick-font-line-height-body);
+    --brick-field-indicator-foreground: var(--brick-color-danger-text);
+    --brick-field-indicator-gap: var(--brick-space-1);
+    --brick-field-optional-foreground: var(--brick-color-text-secondary);
+    --brick-field-description-foreground: var(--brick-color-text-secondary);
+    --brick-field-description-font-size: var(--brick-font-size-sm);
+    --brick-field-description-line-height: var(--brick-font-line-height-body);
+    --brick-field-error-foreground: var(--brick-color-danger-text);
+    --brick-field-error-font-size: var(--brick-font-size-sm);
+    --brick-field-error-font-weight: var(--brick-font-weight-medium);
+    --brick-field-error-line-height: var(--brick-font-line-height-body);
+
+    display: grid;
+    min-inline-size: 0;
+    align-items: start;
+    gap: var(--brick-field-row-gap) var(--brick-field-column-gap);
+  }
+
+  .brick-field[data-orientation="horizontal"] {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(
+        min(
+          100%,
+          max(
+            var(--brick-field-label-min-inline-size),
+            var(--brick-field-control-min-inline-size),
+            calc((100% - var(--brick-field-column-gap)) / 2)
+          )
+        ),
+        1fr
+      )
+    );
+  }
+
+  .brick-field[data-orientation="horizontal"] > :where(
+      .brick-field-description,
+      .brick-field-error
+    ) {
+    grid-column: -2 / -1;
+  }
+
+  .brick-field > :not(
+      .brick-field-label,
+      .brick-field-description,
+      .brick-field-error,
+      .brick-field-required-indicator
+    ) {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  .brick-field-label {
+    min-inline-size: 0;
+    margin: 0;
+    color: var(--brick-field-label-foreground);
+    font-family: var(--brick-field-label-font-family);
+    font-size: var(--brick-field-label-font-size);
+    font-weight: var(--brick-field-label-font-weight);
+    line-height: var(--brick-field-label-line-height);
+    overflow-wrap: anywhere;
+  }
+
+  .brick-field-label > :where(
+      [data-slot="field-required-indicator"],
+      [data-slot="field-optional-indicator"]
+    ) {
+    margin-inline-start: var(--brick-field-indicator-gap);
+  }
+
+  .brick-field-label > [data-slot="field-required-indicator"],
+  .brick-field-required-indicator[data-slot="field-required-indicator"] {
+    color: var(--brick-field-indicator-foreground);
+  }
+
+  .brick-field-label > [data-slot="field-optional-indicator"],
+  .brick-field-required-indicator[data-slot="field-optional-indicator"] {
+    color: var(--brick-field-optional-foreground);
+    font-weight: var(--brick-font-weight-regular);
+  }
+
+  .brick-field-required-indicator {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .brick-field-description,
+  .brick-field-error {
+    min-inline-size: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .brick-field-description {
+    color: var(--brick-field-description-foreground);
+    font-size: var(--brick-field-description-font-size);
+    line-height: var(--brick-field-description-line-height);
+  }
+
+  .brick-field-error {
+    padding-inline-start: var(--brick-space-2);
+    border-inline-start: max(var(--brick-border-width), 0.125rem) solid
+      var(--brick-field-error-foreground);
+    color: var(--brick-field-error-foreground);
+    font-size: var(--brick-field-error-font-size);
+    font-weight: var(--brick-field-error-font-weight);
+    line-height: var(--brick-field-error-line-height);
+  }
+
+  .brick-field[data-disabled] .brick-field-label {
+    color: var(--brick-field-label-foreground-disabled);
+  }
+
+  .brick-field[data-readonly] .brick-field-label {
+    font-style: italic;
+  }
+
+  .brick-field[data-invalid] .brick-field-label {
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: var(--brick-field-error-foreground);
+    text-underline-offset: 0.2em;
+  }
+
+  @media (forced-colors: active) {
+    .brick-field-error {
+      border-inline-start-color: Mark;
+      color: CanvasText;
+    }
+
+    .brick-field[data-invalid] .brick-field-label {
+      text-decoration-color: Mark;
+    }
+  }
+}
