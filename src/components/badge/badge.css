@@ -25,7 +25,7 @@
     min-block-size: var(--brick-badge-min-block-size);
     max-inline-size: 100%;
     align-items: center;
-    justify-content: center;
+    justify-content: safe center;
     padding-block: var(--brick-badge-block-padding);
     padding-inline: var(--brick-badge-inline-padding);
     border: var(--brick-border-width) solid var(--brick-badge-border-color);
@@ -38,6 +38,7 @@
     font-variant-numeric: tabular-nums;
     line-height: var(--brick-font-line-height-tight);
     overflow-wrap: anywhere;
+    word-break: break-word;
     text-align: start;
     vertical-align: baseline;
   }
@@ -209,21 +210,47 @@
   }
 
   .brick-notification-badge[data-overlap="circular"] {
-    --brick-notification-badge-translate-inline: 35%;
-    --brick-notification-badge-translate-block: -35%;
+    --brick-notification-badge-translate-inline: 50%;
+    --brick-notification-badge-translate-block: -50%;
   }
 
   .brick-notification-badge[data-overlap="circular"][data-placement^="bottom"] {
-    --brick-notification-badge-translate-block: 35%;
+    --brick-notification-badge-translate-block: 50%;
   }
 
-  :dir(rtl) .brick-notification-badge[data-placement$="end"]
+  .brick-notification-badge[data-overlap="circular"][data-placement^="top"]
+    > .brick-notification-badge__indicator {
+    inset-block-start: 14.6447%;
+  }
+
+  .brick-notification-badge[data-overlap="circular"][data-placement^="bottom"]
+    > .brick-notification-badge__indicator {
+    inset-block-end: 14.6447%;
+  }
+
+  .brick-notification-badge[data-overlap="circular"][data-placement$="start"]
+    > .brick-notification-badge__indicator {
+    inset-inline-start: 14.6447%;
+  }
+
+  .brick-notification-badge[data-overlap="circular"][data-placement$="end"]
+    > .brick-notification-badge__indicator {
+    inset-inline-end: 14.6447%;
+  }
+
+  :is([dir="rtl"], :dir(rtl))
+    .brick-notification-badge[data-placement$="end"]
+    > .brick-notification-badge__indicator,
+  .brick-notification-badge[dir="rtl"][data-placement$="end"]
     > .brick-notification-badge__indicator {
     translate: calc(var(--brick-notification-badge-translate-inline) * -1)
       var(--brick-notification-badge-translate-block);
   }
 
-  :dir(rtl) .brick-notification-badge[data-placement$="start"]
+  :is([dir="rtl"], :dir(rtl))
+    .brick-notification-badge[data-placement$="start"]
+    > .brick-notification-badge__indicator,
+  .brick-notification-badge[dir="rtl"][data-placement$="start"]
     > .brick-notification-badge__indicator {
     translate: var(--brick-notification-badge-translate-inline)
       var(--brick-notification-badge-translate-block);

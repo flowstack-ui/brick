@@ -1005,6 +1005,7 @@ function DrawerPlayground() {
 
 function BadgePlayground() {
   const [appearance, setAppearance] = useState<Appearance>("system");
+  const [notificationActivation, setNotificationActivation] = useState("None yet");
 
   function selectAppearance(next: Appearance) {
     setAppearance(next);
@@ -1049,12 +1050,44 @@ function BadgePlayground() {
 
         <Scenario description="All sizes remain readable. Rounded is the default; pill is intentional for passive tags." title="Sizes, shapes, and tags">
           <div className="badge-section-stack" data-testid="badge-sizes-shapes">
-            <div className="badge-inline-row">{badgeSizes.map((size) => <Badge key={size} size={size}>{size} status</Badge>)}</div>
-            <div className="badge-inline-row">
-              {badgeShapes.map((shape) => <Badge key={shape} shape={shape} tone="info">{shape}</Badge>)}
-              <Badge shape="pill">TypeScript</Badge>
-              <Button shape="pill" size="sm" tone="neutral" variant="outline">Clear filters</Button>
-            </div>
+            <fieldset className="badge-example-group">
+              <legend>Sizes</legend>
+              <p>Compare the three fixed text and padding scales.</p>
+              <div className="badge-matrix">
+                {badgeSizes.map((size) => (
+                  <div className="badge-cell" key={size}>
+                    <code>{size}</code>
+                    <Badge size={size}>{size} status</Badge>
+                  </div>
+                ))}
+              </div>
+            </fieldset>
+            <fieldset className="badge-example-group">
+              <legend>Shapes</legend>
+              <p>Compare the moderate default corner with the fully rounded tag shape.</p>
+              <div className="badge-matrix">
+                {badgeShapes.map((shape) => (
+                  <div className="badge-cell" key={shape}>
+                    <code>{shape}</code>
+                    <Badge shape={shape} tone="info">{shape}</Badge>
+                  </div>
+                ))}
+              </div>
+            </fieldset>
+            <fieldset className="badge-example-group">
+              <legend>Component routing</legend>
+              <p>Use Badge for passive information and Button for a user command.</p>
+              <div className="badge-matrix">
+                <div className="badge-cell">
+                  <code>Badge · passive tag</code>
+                  <Badge shape="pill">TypeScript</Badge>
+                </div>
+                <div className="badge-cell">
+                  <code>Button · interactive control</code>
+                  <Button shape="pill" size="sm" tone="neutral" variant="outline">Clear filters</Button>
+                </div>
+              </div>
+            </fieldset>
           </div>
         </Scenario>
 
@@ -1068,18 +1101,20 @@ function BadgePlayground() {
 
         <Scenario description="NotificationBadge attaches a visual-only count or dot while the owning control supplies the complete accessible name." title="Notification counts and dots">
           <div className="notification-grid" data-testid="notification-counts">
-            {[1, 9, 12, 125].map((count) => <NotificationBadge count={count} key={count}><button aria-label={`Inbox, ${count} unread messages`} className="badge-icon-button" type="button">✉</button></NotificationBadge>)}
-            <NotificationBadge count={0} showZero><button aria-label="Tasks, no tasks ready" className="badge-icon-button" type="button">✓</button></NotificationBadge>
-            <NotificationBadge dot tone="success"><span aria-label="Ada Lovelace, online" className="badge-avatar" role="img">AL</span></NotificationBadge>
+            {[1, 9, 12, 125].map((count) => <NotificationBadge count={count} key={count}><button aria-label={`Inbox, ${count} unread messages`} className="badge-icon-button" onClick={() => setNotificationActivation(`Inbox ${count}`)} type="button">✉</button></NotificationBadge>)}
+            <NotificationBadge count={0} showZero><button aria-label="Tasks, no tasks ready" className="badge-icon-button" onClick={() => setNotificationActivation("Tasks 0")} type="button">✓</button></NotificationBadge>
+            <NotificationBadge dot overlap="circular" tone="success"><span aria-label="Ada Lovelace, online" className="badge-avatar" role="img">AL</span></NotificationBadge>
+            <p className="notification-activation">Last activation: <strong>{notificationActivation}</strong></p>
           </div>
         </Scenario>
 
         <Scenario description="Logical start/end placement mirrors in RTL; circular overlap follows Avatar geometry." title="Placement and overlap">
           <div className="notification-placement-grid" data-testid="notification-placements">
-            {notificationPlacements.map((placement) => <div key={placement}><code>{placement}</code><NotificationBadge count={4} placement={placement}><button aria-label={`${placement}, 4 notifications`} className="badge-icon-button" type="button">◆</button></NotificationBadge></div>)}
+            {notificationPlacements.map((placement) => <div key={`ltr-${placement}`}><code>LTR {placement}</code><NotificationBadge count={4} placement={placement}><button aria-label={`LTR ${placement}, 4 notifications`} className="badge-icon-button" onClick={() => setNotificationActivation(`LTR ${placement}`)} type="button">◆</button></NotificationBadge></div>)}
+            {notificationPlacements.map((placement) => <div dir="rtl" key={`rtl-${placement}`}><code>RTL {placement}</code><NotificationBadge count={3} placement={placement}><button aria-label={`RTL ${placement}, 3 notifications`} className="badge-icon-button" onClick={() => setNotificationActivation(`RTL ${placement}`)} type="button">◆</button></NotificationBadge></div>)}
             <div><code>circular</code><NotificationBadge count={8} overlap="circular"><span aria-label="Grace Hopper, 8 updates" className="badge-avatar" role="img">GH</span></NotificationBadge></div>
-            <div dir="rtl"><code>RTL top-start</code><NotificationBadge count={3} placement="top-start"><button aria-label="صندوق الوارد، 3 رسائل" className="badge-icon-button" type="button">✉</button></NotificationBadge></div>
           </div>
+          <p className="notification-activation">Last activation: <strong>{notificationActivation}</strong></p>
         </Scenario>
 
         <Scenario description="Light and dark scopes plus public tokens, class, style, and slot hooks remain local and inspectable." title="Appearance and customization">

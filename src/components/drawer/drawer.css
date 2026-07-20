@@ -137,11 +137,11 @@
     transform: translate3d(100%, 0, 0);
   }
 
-  .brick-drawer-content:dir(rtl)[data-placement="start"][data-state="closed"] {
+  .brick-drawer-content:is(:dir(rtl), [dir="rtl"])[data-placement="start"][data-state="closed"] {
     transform: translate3d(100%, 0, 0);
   }
 
-  .brick-drawer-content:dir(rtl)[data-placement="end"][data-state="closed"] {
+  .brick-drawer-content:is(:dir(rtl), [dir="rtl"])[data-placement="end"][data-state="closed"] {
     transform: translate3d(-100%, 0, 0);
   }
 
@@ -230,6 +230,19 @@
 
     .brick-drawer-footer > .brick-button {
       flex: 1 1 9rem;
+    }
+  }
+
+  @media (max-height: 24rem) {
+    .brick-drawer-content {
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+    }
+
+    .brick-drawer-body {
+      flex: none;
+      overflow: visible;
     }
   }
 

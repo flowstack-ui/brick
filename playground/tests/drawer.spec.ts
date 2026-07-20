@@ -149,6 +149,30 @@ test("RTL start placement resolves to the physical right and long Body remains r
   expect(box!.x + box!.width).toBeCloseTo(390, 0);
 });
 
+test("RTL start placement enters and exits through the physical right edge", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 640 });
+  await page.goto("/drawer");
+  const trigger = page.getByRole("button", { name: "فتح مرشحات مساحة العمل المفصلة" });
+  await trigger.click();
+  const drawer = page.getByRole("dialog", { name: "فتح مرشحات مساحة العمل المفصلة" });
+  const openingBox = await drawer.boundingBox();
+  expect(openingBox!.x).toBeGreaterThanOrEqual(0);
+  await expectDrawerSettled(drawer);
+  await page.getByRole("button", { name: "Cancel" }).click();
+  await expect(drawer).toBeHidden();
+});
+
+test("extreme-height reflow keeps the complete Drawer reachable", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 160 });
+  await page.goto("/drawer");
+  await page.getByRole("button", { name: "فتح مرشحات مساحة العمل المفصلة" }).click();
+  const drawer = page.getByRole("dialog", { name: "فتح مرشحات مساحة العمل المفصلة" });
+  await expectDrawerSettled(drawer);
+  expect(await drawer.evaluate((element) => element.scrollHeight > element.clientHeight)).toBe(true);
+  await drawer.evaluate((element) => element.scrollTo({ top: element.scrollHeight }));
+  await expect(drawer.getByRole("button", { name: "Apply changes" })).toBeVisible();
+});
+
 test("top and bottom placements remain viewport-bound", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 640 });
   await page.goto("/drawer");

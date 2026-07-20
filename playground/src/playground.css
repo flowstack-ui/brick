@@ -733,6 +733,7 @@ main {
 .badge-cell,
 .notification-placement-grid > div {
   display: grid;
+  align-content: start;
   justify-items: start;
   gap: var(--brick-space-4);
   padding: var(--brick-space-4);
@@ -752,15 +753,58 @@ main {
   align-items: stretch;
 }
 
+.badge-example-group {
+  min-inline-size: 0;
+  margin: 0;
+  padding: var(--brick-space-4);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+}
+
+.badge-example-group legend {
+  padding-inline: var(--brick-space-2);
+  color: var(--brick-color-text-primary);
+  font-weight: var(--brick-font-weight-semibold);
+}
+
+.badge-example-group > p {
+  margin: 0 0 var(--brick-space-3);
+  color: var(--brick-color-text-secondary);
+}
+
 .notification-grid {
   gap: var(--brick-space-6);
   padding: var(--brick-space-6);
 }
 
+.notification-activation {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+}
+
+.notification-activation strong {
+  color: var(--brick-color-text-primary);
+  font-weight: var(--brick-font-weight-semibold);
+}
+
 .notification-placement-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  grid-template-columns: repeat(4, minmax(9rem, 1fr));
   align-items: stretch;
+}
+
+@media (max-width: 48rem) {
+  .notification-placement-grid {
+    grid-template-columns: repeat(2, minmax(9rem, 1fr));
+  }
+}
+
+@media (max-width: 24rem) {
+  .notification-placement-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .badge-icon-button,

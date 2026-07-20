@@ -38,11 +38,28 @@ test("NotificationBadge formats counts and hides its indicator from assistive te
   const overflow = page.getByRole("button", { name: "Inbox, 125 unread messages" }).locator("..").locator("[data-slot='notification-badge-indicator']");
   await expect(overflow).toHaveText("99+");
   await expect(page.getByRole("button", { name: "Tasks, no tasks ready" }).locator("..").locator("[data-slot='notification-badge-indicator']")).toHaveText("0");
-  await expect(page.getByRole("img", { name: "Ada Lovelace, online" }).locator("..").locator("[data-variant='dot']")).toBeVisible();
+  const avatarWrapper = page.getByRole("img", { name: "Ada Lovelace, online" }).locator("..");
+  await expect(avatarWrapper).toHaveAttribute("data-overlap", "circular");
+  const avatarDot = avatarWrapper.locator("[data-variant='dot']");
+  await expect(avatarDot).toBeVisible();
+  const circularPosition = await avatarWrapper.evaluate((wrapper) => {
+    const root = wrapper.getBoundingClientRect();
+    const indicator = wrapper.querySelector("[data-slot='notification-badge-indicator']")!.getBoundingClientRect();
+    return {
+      inlineCenter: (indicator.x + indicator.width / 2 - root.x) / root.width,
+      blockCenter: (indicator.y + indicator.height / 2 - root.y) / root.height,
+    };
+  });
+  expect(circularPosition.inlineCenter).toBeCloseTo(0.8536, 2);
+  expect(circularPosition.blockCenter).toBeCloseTo(0.1464, 2);
 });
 
 test("notification anchors keep focus, target size, and pointer ownership", async ({ page }) => {
   const button = page.getByRole("button", { name: "Inbox, 1 unread messages" });
+  const activation = page.getByTestId("notification-counts").locator(".notification-activation");
+  await expect(activation).not.toHaveAttribute("role");
+  await expect(activation).not.toHaveAttribute("aria-live");
+  await expect(activation.locator("output")).toHaveCount(0);
   await button.focus();
   await expect(button).toBeFocused();
   const evidence = await button.evaluate((element) => {
@@ -66,35 +83,55 @@ test("notification anchors keep focus, target size, and pointer ownership", asyn
   await expect(button).toHaveAttribute("data-clicked", "");
 });
 
-test("logical top-start placement mirrors in RTL", async ({ page }) => {
+test("all logical placements mirror between LTR and RTL", async ({ page }) => {
   const placements = page.getByTestId("notification-placements");
-  const ltrWrapper = placements.getByRole("button", { name: "top-start, 4 notifications" }).locator("..");
-  const rtlWrapper = placements.getByRole("button", { name: "صندوق الوارد، 3 رسائل" }).locator("..");
-  const [ltr, rtl] = await Promise.all([
-    ltrWrapper.evaluate((wrapper) => {
-      const root = wrapper.getBoundingClientRect();
-      const indicator = wrapper.querySelector("[data-slot='notification-badge-indicator']")!.getBoundingClientRect();
-      return indicator.x + indicator.width / 2 < root.x + root.width / 2;
-    }),
-    rtlWrapper.evaluate((wrapper) => {
-      const root = wrapper.getBoundingClientRect();
-      const indicator = wrapper.querySelector("[data-slot='notification-badge-indicator']")!.getBoundingClientRect();
-      return indicator.x + indicator.width / 2 > root.x + root.width / 2;
-    }),
-  ]);
-  expect(ltr).toBe(true);
-  expect(rtl).toBe(true);
+  for (const placement of ["top-start", "top-end", "bottom-start", "bottom-end"]) {
+    const ltrWrapper = placements.getByRole("button", { name: `LTR ${placement}, 4 notifications` }).locator("..");
+    const rtlWrapper = placements.getByRole("button", { name: `RTL ${placement}, 3 notifications` }).locator("..");
+    const [ltr, rtl] = await Promise.all([ltrWrapper, rtlWrapper].map((wrapper) => wrapper.evaluate((root) => {
+      const rootBox = root.getBoundingClientRect();
+      const indicator = root.querySelector("[data-slot='notification-badge-indicator']")!.getBoundingClientRect();
+      return {
+        inline: (indicator.x + indicator.width / 2 - rootBox.x) / rootBox.width,
+        block: (indicator.y + indicator.height / 2 - rootBox.y) / rootBox.height,
+      };
+    })));
+    expect(rtl.inline).toBeCloseTo(1 - ltr.inline, 2);
+    expect(rtl.block).toBeCloseTo(ltr.block, 2);
+  }
+  await expect(placements.locator(".badge-icon-button")).toHaveCount(8);
+  await expect(placements.locator(".badge-avatar")).toHaveCount(1);
 });
 
 test("Badge stress content reflows without page overflow", async ({ page }) => {
-  await page.setViewportSize({ width: 320, height: 720 });
-  const stress = page.getByTestId("badge-stress");
-  await expect(stress).toBeVisible();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
-  for (const badge of await stress.locator(".brick-badge").all()) {
-    const box = await badge.boundingBox();
-    expect(box!.x).toBeGreaterThanOrEqual(0);
-    expect(box!.x + box!.width).toBeLessThanOrEqual(320.5);
+  for (const width of [320, 256]) {
+    await page.setViewportSize({ width, height: 720 });
+    const stress = page.getByTestId("badge-stress");
+    await expect(stress).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+    for (const badge of await stress.locator(".brick-badge").all()) {
+      const evidence = await badge.evaluate((element) => {
+        const box = element.getBoundingClientRect();
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        const content = range.getBoundingClientRect();
+        return { box: { left: box.left, right: box.right }, content: { left: content.left, right: content.right } };
+      });
+      expect(evidence.box.left).toBeGreaterThanOrEqual(0);
+      expect(evidence.box.right).toBeLessThanOrEqual(width + 0.5);
+      expect(evidence.content.left).toBeGreaterThanOrEqual(evidence.box.left - 0.5);
+      expect(evidence.content.right).toBeLessThanOrEqual(evidence.box.right + 0.5);
+    }
+  }
+});
+
+test("recipe badges retain intrinsic height when the matrix reflows", async ({ page }) => {
+  for (const width of [1280, 720, 480]) {
+    await page.setViewportSize({ width, height: 900 });
+    const heights = await page.getByTestId("badge-recipes").locator(".brick-badge").evaluateAll((badges) =>
+      badges.map((badge) => badge.getBoundingClientRect().height),
+    );
+    expect(Math.max(...heights) - Math.min(...heights)).toBeLessThanOrEqual(0.5);
   }
 });
 
