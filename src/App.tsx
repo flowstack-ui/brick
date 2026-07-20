@@ -13,6 +13,11 @@ import { ToggleGroup } from "@flowstack-ui/brick/toggle-group";
 import { Tooltip } from "@flowstack-ui/brick/tooltip";
 import { HoverCard } from "@flowstack-ui/brick/hover-card";
 import { Popover } from "@flowstack-ui/brick/popover";
+import { Form } from "@flowstack-ui/brick/form";
+import { Field } from "@flowstack-ui/brick/field";
+import { Fieldset } from "@flowstack-ui/brick/fieldset";
+import { Checkbox } from "@flowstack-ui/brick/checkbox";
+import { CheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 
 type Appearance = "light" | "dark";
 
@@ -52,6 +57,7 @@ export function App() {
   const [appearance, setAppearance] = useState<Appearance>(getInitialAppearance);
   const [publishCount, setPublishCount] = useState(0);
   const [inviteStatus, setInviteStatus] = useState("No invitation sent yet.");
+  const [inviteInvalid, setInviteInvalid] = useState(false);
   const [removalStatus, setRemovalStatus] = useState("Project is active.");
   const [includeActive, setIncludeActive] = useState(true);
   const [includeArchived, setIncludeArchived] = useState(false);
@@ -59,6 +65,7 @@ export function App() {
   const [filterStatus, setFilterStatus] = useState("Showing all active projects.");
   const [workspaceView, setWorkspaceView] = useState("cards");
   const [compactWorkspace, setCompactWorkspace] = useState(false);
+  const [preferenceStatus, setPreferenceStatus] = useState("Publishing preferences have not been saved.");
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -69,6 +76,7 @@ export function App() {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const email = String(form.get("email") ?? "").trim();
+    setInviteInvalid(!email);
     setInviteStatus(email ? `Invitation ready for ${email}.` : "Enter an email address.");
   }
 
@@ -430,18 +438,100 @@ export function App() {
           <Card.Header>
             <Card.Title as="h2" id="invite-title">Invite a teammate</Card.Title>
             <Card.Description>
-              Collaboration · Use a normal application form with a finished Brick action.
+              Collaboration · Complete public Form, Field, and Fieldset composition.
             </Card.Description>
           </Card.Header>
           <Card.Content>
-            <form onSubmit={handleInvite}>
-              <label htmlFor="email">Work email</label>
+            <Form
+              aria-label="Invite teammate"
+              className="invite-form"
+              onInvalid={() => {
+                setInviteInvalid(true);
+                setInviteStatus("Enter a valid work email address.");
+              }}
+              onReset={() => {
+                setInviteInvalid(false);
+                setInviteStatus("Invitation form reset.");
+              }}
+              onSubmit={handleInvite}
+            >
+              <Field.Root id="invite-email-field" invalid={inviteInvalid} required>
+                <Field.Label htmlFor="invite-email">Work email</Field.Label>
+                <input
+                  aria-describedby="invite-email-field-description invite-email-field-error"
+                  aria-invalid={inviteInvalid || undefined}
+                  autoComplete="email"
+                  id="invite-email"
+                  name="email"
+                  required
+                  type="email"
+                />
+                <Field.Description>
+                  We use this address only for the workspace invitation.
+                </Field.Description>
+                <Field.Error>Enter a valid work email address.</Field.Error>
+              </Field.Root>
+              <Fieldset.Root id="invite-role" required>
+                <Fieldset.Legend>Workspace role</Fieldset.Legend>
+                <Fieldset.Description>
+                  Choose the access level included with the invitation.
+                </Fieldset.Description>
+                <div className="invite-role-options">
+                  <label><input defaultChecked name="role" type="radio" value="reviewer" /> Reviewer</label>
+                  <label><input name="role" type="radio" value="editor" /> Editor</label>
+                </div>
+              </Fieldset.Root>
               <div className="invite-controls">
-                <input id="email" name="email" type="email" autoComplete="email" required />
                 <Button type="submit">Prepare invitation</Button>
+                <Button tone="neutral" type="reset" variant="outline">Reset</Button>
               </div>
-              <p className="activity" aria-live="polite">{inviteStatus}</p>
-            </form>
+              <output className="activity" aria-live="polite">{inviteStatus}</output>
+            </Form>
+          </Card.Content>
+        </Card.Root>
+
+        <Card.Root as="section" className="publishing-preferences" id="publishing-preferences" size="lg" variant="outline">
+          <Card.Header>
+            <Card.Title as="h2">Publishing preferences</Card.Title>
+            <Card.Description>Choose how this application confirms and reports future releases.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <Form
+              aria-label="Publishing preferences"
+              className="publishing-preferences-form"
+              onReset={() => setPreferenceStatus("Publishing preferences reset.")}
+              onSubmit={(event) => {
+                const data = new FormData(event.currentTarget);
+                setPreferenceStatus(`Preferences saved for ${data.getAll("publish-channel").join(", ")}.`);
+              }}
+              preventDefaultOnSubmit
+            >
+              <Field.Root id="publish-acknowledgement" required>
+                <Field.Label>Release acknowledgement</Field.Label>
+                <Checkbox name="publish-acknowledgement" required value="accepted">I reviewed the publishing checklist</Checkbox>
+                <Field.Description>Required before saving delivery choices.</Field.Description>
+                <Field.Error>Review the checklist before continuing.</Field.Error>
+              </Field.Root>
+              <Fieldset.Root id="publish-channels" required>
+                <Fieldset.Legend>Result delivery</Fieldset.Legend>
+                <Fieldset.Description>Choose one or more channels for publishing results.</Fieldset.Description>
+                <CheckboxGroup.Root allValues={["email", "push"]} name="publish-channel">
+                  <CheckboxGroup.Parent>Select every available channel</CheckboxGroup.Parent>
+                  <CheckboxGroup.Item value="email">
+                    <CheckboxGroup.ItemLabel>Email report</CheckboxGroup.ItemLabel>
+                    <CheckboxGroup.ItemDescription>Build, package, and review details.</CheckboxGroup.ItemDescription>
+                  </CheckboxGroup.Item>
+                  <CheckboxGroup.Item value="push">Push notification</CheckboxGroup.Item>
+                  <CheckboxGroup.Item disabled value="sms">SMS unavailable</CheckboxGroup.Item>
+                </CheckboxGroup.Root>
+                <Fieldset.Error>Choose at least one delivery channel.</Fieldset.Error>
+              </Fieldset.Root>
+              <div className="publishing-preferences-actions">
+                <Button type="submit">Save publishing preferences</Button>
+                <Button tone="neutral" type="reset" variant="outline">Reset preferences</Button>
+              </div>
+              <output aria-live="polite" className="activity">{preferenceStatus}</output>
+            </Form>
           </Card.Content>
         </Card.Root>
         </main>

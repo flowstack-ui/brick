@@ -201,10 +201,63 @@ test("composes Card through its public package without inventing interaction", a
   await expect(invite.getByLabel("Work email")).toBeVisible();
 });
 
-test("supports a normal consumer form", async ({ page }) => {
-  await page.getByLabel("Work email").fill("team@example.com");
-  await page.getByRole("button", { name: "Prepare invitation" }).click();
+test("composes the complete public Form, Field, and Fieldset foundation", async ({ page }) => {
+  const form = page.getByRole("form", { name: "Invite teammate" });
+  const field = form.locator("#invite-email-field");
+  const fieldset = form.locator("#invite-role");
+  const email = form.getByLabel("Work email");
+
+  await expect(form).toHaveClass(/brick-form/);
+  await expect(field).toHaveClass(/brick-field/);
+  await expect(fieldset).toHaveClass(/brick-fieldset/);
+  await expect(fieldset).toHaveAttribute("data-required", "");
+  await expect(form.getByRole("group", { name: "Workspace role" })).toBeVisible();
+  await expect(form.getByLabel("Reviewer")).toBeChecked();
+
+  await form.getByRole("button", { name: "Prepare invitation" }).click();
+  await expect(field).toHaveAttribute("data-invalid", "");
+  await expect(email).toHaveAttribute("aria-invalid", "true");
+  await expect(form.locator("#invite-email-field-error")).toBeVisible();
+
+  await email.fill("team@example.com");
+  await form.getByLabel("Editor").check();
+  await form.getByRole("button", { name: "Prepare invitation" }).click();
   await expect(page.getByText("Invitation ready for team@example.com.")).toBeVisible();
+
+  await form.getByRole("button", { name: "Reset" }).click();
+  await expect(email).toHaveValue("");
+  await expect(field).not.toHaveAttribute("data-invalid");
+  await expect(page.getByText("Invitation form reset.")).toBeVisible();
+});
+
+test("composes Checkbox and CheckboxGroup as a complete publishing-preferences workflow", async ({ page }) => {
+  const form = page.getByRole("form", { name: "Publishing preferences" });
+  const acknowledgement = form.getByRole("checkbox", { name: "Release acknowledgement" });
+  const group = form.locator(".brick-checkbox-group");
+  const parent = group.getByRole("checkbox", { name: "Select every available channel" });
+  const email = group.getByRole("checkbox", { name: "Email report" });
+  const push = group.getByRole("checkbox", { name: "Push notification" });
+  const sms = group.getByRole("checkbox", { name: "SMS unavailable" });
+
+  await expect(acknowledgement).toHaveClass(/brick-checkbox/);
+  await expect(group).toHaveClass(/brick-checkbox-group/);
+  await expect(email).toHaveAccessibleDescription("Build, package, and review details.");
+  await expect(sms).toBeDisabled();
+  await acknowledgement.click();
+  await email.click();
+  await expect(parent).toHaveAttribute("aria-checked", "mixed");
+  await parent.click();
+  await expect(email).toHaveAttribute("aria-checked", "true");
+  await expect(push).toHaveAttribute("aria-checked", "true");
+  await expect(sms).toHaveAttribute("aria-checked", "false");
+  await form.getByRole("button", { name: "Save publishing preferences" }).click();
+  await expect(page.getByText("Preferences saved for email, push.")).toBeVisible();
+
+  await form.getByRole("button", { name: "Reset preferences" }).click();
+  await expect(acknowledgement).toHaveAttribute("aria-checked", "false");
+  await expect(email).toHaveAttribute("aria-checked", "false");
+  await expect(push).toHaveAttribute("aria-checked", "false");
+  await expect(page.getByText("Publishing preferences reset.")).toBeVisible();
 });
 
 test("composes Badge and NotificationBadge through their public subpath", async ({ page }) => {

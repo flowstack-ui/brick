@@ -28,6 +28,11 @@ test("the consumer uses public package exports without legacy or source aliases"
   assert.match(source, /@flowstack-ui\/brick\/tooltip/);
   assert.match(source, /@flowstack-ui\/brick\/hover-card/);
   assert.match(source, /@flowstack-ui\/brick\/popover/);
+  assert.match(source, /@flowstack-ui\/brick\/form/);
+  assert.match(source, /@flowstack-ui\/brick\/field/);
+  assert.match(source, /@flowstack-ui\/brick\/fieldset/);
+  assert.match(source, /@flowstack-ui\/brick\/checkbox/);
+  assert.match(source, /@flowstack-ui\/brick\/checkbox-group/);
   assert.match(source, /@flowstack-ui\/brick\/styles\.css/);
   assert.match(source, /@flowstack-ui\/brick\/reset\.css/);
   assert.doesNotMatch(source, /@templateflow\/core/);

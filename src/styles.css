@@ -402,7 +402,7 @@
     scroll-margin-block-start: 2rem;
   }
 
-  .invite form {
+  .invite-form {
     min-inline-size: 0;
   }
 
@@ -415,20 +415,14 @@
     padding-block-start: var(--brick-card-space);
   }
 
-  .invite label {
-    display: block;
-    margin-block-end: 0.5rem;
-    font-size: var(--brick-font-size-sm);
-    font-weight: var(--brick-font-weight-medium);
-  }
-
   .invite-controls {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.75rem;
     min-inline-size: 0;
   }
 
-  .invite input {
+  .invite-form > .brick-field input {
     inline-size: 100%;
     min-inline-size: 0;
     min-block-size: var(--brick-control-min-block-size-md);
@@ -437,6 +431,38 @@
     border-radius: var(--brick-radius-control);
     background: var(--brick-color-surface-base);
     color: var(--brick-color-text-primary);
+  }
+
+  .invite-role-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--brick-space-3) var(--brick-space-5);
+  }
+
+  .invite-role-options label {
+    display: inline-flex;
+    gap: var(--brick-space-2);
+    align-items: center;
+  }
+
+  .publishing-preferences,
+  .publishing-preferences-form {
+    min-inline-size: 0;
+  }
+
+  .publishing-preferences-form {
+    max-inline-size: 42rem;
+  }
+
+  .publishing-preferences-form > .activity {
+    color: var(--brick-color-text-secondary);
+  }
+
+  .publishing-preferences-actions {
+    display: flex;
+    min-inline-size: 0;
+    flex-wrap: wrap;
+    gap: var(--brick-space-3);
   }
 
   footer {
@@ -461,10 +487,7 @@
       inline-size: auto;
     }
 
-    .invite-controls {
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: start;
-    }
+    .invite-controls { align-items: start; }
   }
 
   @media (min-width: 48rem) {
