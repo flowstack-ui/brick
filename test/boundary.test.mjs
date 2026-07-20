@@ -25,6 +25,9 @@ test("the consumer uses public package exports without legacy or source aliases"
   assert.match(source, /@flowstack-ui\/brick\/avatar/);
   assert.match(source, /@flowstack-ui\/brick\/toggle/);
   assert.match(source, /@flowstack-ui\/brick\/toggle-group/);
+  assert.match(source, /@flowstack-ui\/brick\/tooltip/);
+  assert.match(source, /@flowstack-ui\/brick\/hover-card/);
+  assert.match(source, /@flowstack-ui\/brick\/popover/);
   assert.match(source, /@flowstack-ui\/brick\/styles\.css/);
   assert.match(source, /@flowstack-ui\/brick\/reset\.css/);
   assert.doesNotMatch(source, /@templateflow\/core/);

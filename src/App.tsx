@@ -10,6 +10,9 @@ import { Drawer } from "@flowstack-ui/brick/drawer";
 import { IconButton } from "@flowstack-ui/brick/icon-button";
 import { Toggle } from "@flowstack-ui/brick/toggle";
 import { ToggleGroup } from "@flowstack-ui/brick/toggle-group";
+import { Tooltip } from "@flowstack-ui/brick/tooltip";
+import { HoverCard } from "@flowstack-ui/brick/hover-card";
+import { Popover } from "@flowstack-ui/brick/popover";
 
 type Appearance = "light" | "dark";
 
@@ -32,6 +35,15 @@ function SparkIcon() {
   );
 }
 
+function SettingsIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16">
+      <circle cx="8" cy="8" r="2.25" />
+      <path d="M8 1.5v1.25M8 13.25v1.25M1.5 8h1.25M13.25 8h1.25M3.4 3.4l.9.9M11.7 11.7l.9.9M12.6 3.4l-.9.9M4.3 11.7l-.9.9" />
+    </svg>
+  );
+}
+
 function getInitialAppearance(): Appearance {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
@@ -46,6 +58,7 @@ export function App() {
   const [filterOwner, setFilterOwner] = useState("any");
   const [filterStatus, setFilterStatus] = useState("Showing all active projects.");
   const [workspaceView, setWorkspaceView] = useState("cards");
+  const [compactWorkspace, setCompactWorkspace] = useState(false);
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -60,6 +73,7 @@ export function App() {
   }
 
   return (
+    <Tooltip.Provider>
     <div id="top">
       <AppBar.Root aria-label="Primary" blurred className="site-header" position="sticky">
         <AppBar.Toolbar className="site-header-toolbar" density="compact">
@@ -78,21 +92,25 @@ export function App() {
           </AppBar.Center>
 
           <AppBar.End>
-            <IconButton aria-label="Jump to workspace" href="#workspace" size="sm">
-              <ArrowIcon />
-            </IconButton>
-            <Toggle
-              aria-label="Dark appearance"
-              className="appearance-button"
-              iconOnly
-              size="sm"
-              title="Dark appearance"
-              variant="ghost"
-              pressed={appearance === "dark"}
-              onPressedChange={(pressed) => setAppearance(pressed ? "dark" : "light")}
-            >
-              <SparkIcon />
-            </Toggle>
+            <Tooltip.Root><Tooltip.Trigger asChild><IconButton aria-label="Jump to workspace" href="#workspace" size="sm"><ArrowIcon /></IconButton></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>Jump to workspace<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root>
+            <Popover.Root>
+              <Popover.Trigger asChild><IconButton aria-label="Workspace settings" size="sm" tone="neutral" variant="ghost"><SettingsIcon /></IconButton></Popover.Trigger>
+              <Popover.Portal>
+                <Popover.Content align="end" size="sm">
+                  <Popover.Title>Workspace settings</Popover.Title>
+                  <Popover.Description>Change compact display options for this workspace.</Popover.Description>
+                  <Popover.Body>
+                    <label className="workspace-setting">
+                      <input checked={compactWorkspace} onChange={(event) => setCompactWorkspace(event.currentTarget.checked)} type="checkbox" />
+                      Compact project spacing
+                    </label>
+                  </Popover.Body>
+                  <Popover.Footer><Popover.Close asChild><Button size="sm">Done</Button></Popover.Close></Popover.Footer>
+                  <Popover.Arrow />
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
+            <Tooltip.Root><Tooltip.Trigger asChild><Toggle aria-label="Dark appearance" className="appearance-button" iconOnly size="sm" variant="ghost" pressed={appearance === "dark"} onPressedChange={(pressed) => setAppearance(pressed ? "dark" : "light")}><SparkIcon /></Toggle></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>Toggle dark appearance<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root>
           </AppBar.End>
         </AppBar.Toolbar>
       </AppBar.Root>
@@ -269,7 +287,7 @@ export function App() {
 
           <p className="activity filter-status" aria-live="polite">{filterStatus}</p>
 
-          <div className="workspace-grid" data-view={workspaceView}>
+          <div className="workspace-grid" data-compact={compactWorkspace ? "true" : undefined} data-view={workspaceView}>
             <Card.Root
               aria-labelledby="project-title"
               as="article"
@@ -284,7 +302,7 @@ export function App() {
                   release candidate.
                 </Card.Description>
                 <div className="project-collaborators" aria-label="Project collaborators">
-                  <div className="collaborator">
+                  <div className="collaborator" id="ada-profile">
                     <NotificationBadge count={2} tone="accent" overlap="circular">
                       <Avatar
                         alt="Ada Lovelace"
@@ -294,7 +312,27 @@ export function App() {
                         status="online"
                       />
                     </NotificationBadge>
-                    <span><strong>Ada Lovelace</strong><small>Online · 2 updates</small></span>
+                    <span>
+                      <HoverCard.Root>
+                        <HoverCard.Trigger asChild>
+                          <a className="collaborator-link" href="#ada-profile">Ada Lovelace</a>
+                        </HoverCard.Trigger>
+                        <HoverCard.Portal>
+                          <HoverCard.Content className="collaborator-preview" size="md">
+                            <div className="collaborator-preview-profile">
+                              <Avatar alt="" fallback="AL" size="md" status="online" />
+                              <div>
+                                <strong>Ada Lovelace</strong>
+                                <p>Lead reviewer · Online · 2 project updates.</p>
+                                <Badge size="sm" tone="success">Available</Badge>
+                              </div>
+                            </div>
+                            <HoverCard.Arrow />
+                          </HoverCard.Content>
+                        </HoverCard.Portal>
+                      </HoverCard.Root>
+                      <small>Online · 2 updates</small>
+                    </span>
                   </div>
                   <div className="collaborator">
                     <Avatar
@@ -416,5 +454,6 @@ export function App() {
         </footer>
       </div>
     </div>
+    </Tooltip.Provider>
   );
 }

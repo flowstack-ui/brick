@@ -64,6 +64,59 @@ test("composes Dialog as a focused consumer publishing flow", async ({ page }) =
   await expect(trigger).toBeFocused();
 });
 
+test("uses Tooltip as supplemental help for AppBar controls", async ({ page }) => {
+  const jump = page.getByRole("link", { name: "Jump to workspace" });
+  await jump.focus();
+  const tooltip = page.getByRole("tooltip");
+  await expect(tooltip).toHaveText("Jump to workspace");
+  await expect(tooltip.locator("[data-slot='tooltip-arrow']")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(tooltip).toBeHidden();
+  await expect(jump).toBeFocused();
+
+  const appearance = page.getByRole("button", { name: "Dark appearance" });
+  await appearance.focus();
+  await expect(page.getByRole("tooltip")).toHaveText("Toggle dark appearance");
+});
+
+test("composes HoverCard as a noninteractive preview for a genuine collaborator link", async ({ page }) => {
+  const link = page.getByRole("link", { name: "Ada Lovelace" });
+  await expect(link).toHaveAttribute("href", "#ada-profile");
+  await expect(link).toHaveClass(/brick-hover-card__trigger/);
+  await link.focus();
+
+  const preview = page.locator("[data-slot='hover-card']").filter({ hasText: "Lead reviewer" });
+  await expect(preview).toBeVisible();
+  await expect(preview).toHaveAttribute("data-size", "md");
+  await expect(preview).not.toHaveAttribute("role");
+  await expect(preview.locator("[data-slot='hover-card-arrow']")).toBeVisible();
+  await expect(preview.locator("a,button,input,select,textarea,[tabindex]")).toHaveCount(0);
+  await expect(link).not.toHaveAttribute("aria-expanded");
+  await expect(link).not.toHaveAttribute("aria-haspopup");
+
+  await page.keyboard.press("Escape");
+  await expect(preview).toBeHidden();
+  await expect(link).toBeFocused();
+  await link.press("Enter");
+  await expect(page).toHaveURL(/#ada-profile$/);
+});
+
+test("composes Popover as a compact AppBar settings panel", async ({ page }) => {
+  const trigger = page.getByRole("button", { name: "Workspace settings" });
+  await trigger.click();
+  const popover = page.getByRole("dialog", { name: "Workspace settings" });
+  await expect(popover).toHaveAttribute("data-slot", "popover");
+  await expect(popover).toHaveAttribute("data-size", "sm");
+  await expect(popover).toHaveAccessibleDescription(
+    "Change compact display options for this workspace.",
+  );
+  await page.getByLabel("Compact project spacing").check();
+  await expect(page.locator(".workspace-grid")).toHaveAttribute("data-compact", "true");
+  await popover.getByRole("button", { name: "Done" }).click();
+  await expect(popover).toBeHidden();
+  await expect(trigger).toBeFocused();
+});
+
 test("composes AlertDialog as an application-owned destructive decision", async ({ page }) => {
   const trigger = page.getByRole("button", { name: "Remove project" });
   await trigger.click();

@@ -259,6 +259,18 @@
     gap: var(--brick-space-2);
   }
 
+  .workspace-setting {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--brick-space-2);
+    font-size: var(--brick-font-size-sm);
+  }
+
+  .workspace-grid[data-compact="true"] {
+    gap: var(--brick-space-3);
+  }
+
   .filter-owner {
     display: grid;
     gap: var(--brick-space-2);
@@ -320,6 +332,30 @@
 
   .collaborator small {
     color: var(--brick-color-text-secondary);
+  }
+
+  .collaborator-link {
+    color: inherit;
+    font-weight: var(--brick-font-weight-semibold);
+    text-decoration-color: var(--brick-color-border-strong);
+    text-underline-offset: 0.18em;
+  }
+
+  .collaborator-preview-profile {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--brick-space-3);
+  }
+
+  .collaborator-preview-profile > div {
+    display: grid;
+    min-inline-size: 0;
+    gap: var(--brick-space-2);
+  }
+
+  .collaborator-preview-profile .brick-badge {
+    justify-self: start;
   }
 
   .project-stats div {
