@@ -29,23 +29,18 @@
     vertical-align: middle;
   }
 
-  .brick-avatar[data-status] {
-    box-shadow:
-      0 0 0 var(--brick-avatar-outline-width)
-        var(--brick-avatar-outline-color),
-      0 0 0
-        calc(
-          var(--brick-avatar-outline-width) +
-            var(--brick-avatar-status-ring-offset)
-        )
-        var(--brick-avatar-outline-color),
-      0 0 0
-        calc(
-          var(--brick-avatar-outline-width) +
-            var(--brick-avatar-status-ring-offset) +
-            var(--brick-avatar-status-ring-width)
-        )
-        var(--brick-avatar-status-ring-color);
+  .brick-avatar[data-status]::after {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    box-sizing: border-box;
+    border: var(--brick-avatar-status-ring-width) solid
+      var(--brick-avatar-status-ring-color);
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 var(--brick-avatar-status-ring-offset)
+      var(--brick-avatar-outline-color);
+    content: "";
+    pointer-events: none;
   }
 
   .brick-avatar[data-shape="rounded"] {
@@ -125,10 +120,9 @@
       color: CanvasText;
     }
 
-    .brick-avatar[data-status] {
-      outline: var(--brick-avatar-status-ring-width) solid Highlight;
-      outline-offset: var(--brick-avatar-status-ring-offset);
-      box-shadow: none;
+    .brick-avatar[data-status]::after {
+      border-color: Highlight;
+      box-shadow: inset 0 0 0 var(--brick-avatar-status-ring-offset) Canvas;
     }
   }
 }

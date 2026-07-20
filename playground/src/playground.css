@@ -962,16 +962,28 @@ main {
   color: var(--brick-color-text-primary);
 }
 
+.avatar-notification-grid > div {
+  flex-wrap: wrap;
+}
+
+.avatar-notification-grid > div > span:last-child {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
 .avatar-native-image {
   display: block;
+  flex: none;
   inline-size: 3rem;
   block-size: 3rem;
+  aspect-ratio: 1;
   border-radius: var(--brick-radius-control);
   object-fit: cover;
 }
 
 .avatar-customized {
-  border: var(--brick-border-width) dashed var(--brick-color-accent-border);
+  --brick-avatar-background: var(--brick-color-accent-soft);
+  --brick-avatar-foreground: var(--brick-color-accent-on-soft);
 }
 
 .toggle-hero,

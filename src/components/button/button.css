@@ -109,15 +109,13 @@
   .brick-button__icon {
     display: inline-flex;
     flex: 0 0 auto;
-    inline-size: var(--brick-button-icon-size);
-    block-size: var(--brick-button-icon-size);
     align-items: center;
     justify-content: center;
   }
 
   .brick-button__icon > :where(svg, img) {
-    inline-size: 100%;
-    block-size: 100%;
+    inline-size: var(--brick-button-icon-size);
+    block-size: var(--brick-button-icon-size);
   }
 
   .brick-button[data-full-width] {

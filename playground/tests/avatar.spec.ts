@@ -51,9 +51,12 @@ test("all statuses add shape-following rings without changing layout", async ({ 
   const evidence = await roots.evaluateAll((elements) =>
     elements.map((element) => {
       const style = getComputedStyle(element);
+      const ring = getComputedStyle(element, "::after");
       const box = element.getBoundingClientRect();
       return {
-        boxShadow: style.boxShadow,
+        ringBorderWidth: Number.parseFloat(ring.borderTopWidth),
+        ringPointerEvents: ring.pointerEvents,
+        ringRadius: ring.borderRadius,
         height: box.height,
         radius: style.borderRadius,
         shape: element.getAttribute("data-shape"),
@@ -62,7 +65,9 @@ test("all statuses add shape-following rings without changing layout", async ({ 
     }),
   );
   for (const item of evidence) {
-    expect(item.boxShadow).not.toBe("none");
+    expect(item.ringBorderWidth).toBe(2);
+    expect(item.ringPointerEvents).toBe("none");
+    expect(item.ringRadius).toBe(item.radius);
     expect(item.height).toBe(48);
     expect(item.width).toBe(48);
     if (item.shape === "circle") expect(Number.parseFloat(item.radius)).toBeGreaterThan(20);
@@ -71,8 +76,31 @@ test("all statuses add shape-following rings without changing layout", async ({ 
 
   const noStatus = region.locator(".brick-avatar:not([data-status])");
   await expect(noStatus).toHaveCount(1);
-  const noStatusShadow = await noStatus.evaluate((element) => getComputedStyle(element).boxShadow);
-  expect(noStatusShadow).not.toBe(evidence[0].boxShadow);
+  const noStatusRing = await noStatus.evaluate((element) => getComputedStyle(element, "::after").content);
+  expect(noStatusRing).toBe("none");
+
+  const sizeComparisons = await page.evaluate(() => {
+    const host = document.createElement("div");
+    host.style.display = "flex";
+    document.body.append(host);
+    const result = ["xs", "sm", "md", "lg", "xl"].map((size) => {
+      const plain = document.createElement("span");
+      plain.className = "brick-avatar";
+      plain.dataset.size = size;
+      const status = plain.cloneNode() as HTMLSpanElement;
+      status.dataset.status = "online";
+      host.append(plain, status);
+      const plainBox = plain.getBoundingClientRect();
+      const statusBox = status.getBoundingClientRect();
+      return {
+        plain: [plainBox.width, plainBox.height],
+        status: [statusBox.width, statusBox.height],
+      };
+    });
+    host.remove();
+    return result;
+  });
+  for (const comparison of sizeComparisons) expect(comparison.status).toEqual(comparison.plain);
 });
 
 test("loaded, broken, and missing sources preserve informative fallback semantics", async ({ page }) => {
@@ -99,6 +127,29 @@ test("informative and decorative contexts remain distinct and Avatar stays passi
   await button.focus();
   await expect(button).toBeFocused();
   await expect(button.locator(".brick-avatar")).not.toHaveAttribute("tabindex");
+  await button.press("Enter");
+  await expect(contexts.getByText("Last activation: Katherine Johnson profile")).toBeVisible();
+  const spacing = await button.evaluate((element) => {
+    const avatar = element.querySelector(".brick-avatar")!.getBoundingClientRect();
+    const content = element.querySelector(".brick-button__content")!.getBoundingClientRect();
+    return content.left - avatar.right;
+  });
+  expect(spacing).toBeGreaterThanOrEqual(8);
+});
+
+test("custom hooks remain local without competing with the inset status ring", async ({ page }) => {
+  const custom = page.locator(".avatar-customized");
+  const evidence = await custom.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      borderStyle: style.borderTopStyle,
+      radius: style.borderRadius,
+      ringWidth: getComputedStyle(element, "::after").borderTopWidth,
+    };
+  });
+  expect(evidence.borderStyle).toBe("none");
+  expect(evidence.radius).toBe("4px");
+  expect(Number.parseFloat(evidence.ringWidth)).toBeGreaterThanOrEqual(3);
 });
 
 test("NotificationBadge wraps Avatar and native image without obscuring status geometry", async ({ page }) => {
@@ -117,6 +168,22 @@ test("NotificationBadge wraps Avatar and native image without obscuring status g
     avatarWrapper.locator("[data-variant='count']").boundingBox(),
   ]);
   expect(indicatorBox!.x).toBeGreaterThan(avatarBox!.x + avatarBox!.width / 2);
+
+  await page.setViewportSize({ width: 256, height: 720 });
+  const nativeBox = await nativeImage.boundingBox();
+  expect(nativeBox?.width).toBe(48);
+  expect(nativeBox?.height).toBe(48);
+  const rows = await region.locator(":scope > div").evaluateAll((elements) =>
+    elements.map((element) => {
+      const box = element.getBoundingClientRect();
+      return { bottom: box.bottom, left: box.left, right: box.right, top: box.top };
+    }),
+  );
+  expect(rows[0].bottom).toBeLessThanOrEqual(rows[1].top);
+  for (const row of rows) {
+    expect(row.left).toBeGreaterThanOrEqual(0);
+    expect(row.right).toBeLessThanOrEqual(256.5);
+  }
 });
 
 test("Avatar remains contained at constrained width and in RTL", async ({ page }) => {
@@ -145,12 +212,13 @@ test("Avatar frame and status geometry survive forced colors", async ({ page }, 
   const statusAvatar = page.getByTestId("avatar-statuses").locator(".brick-avatar[data-status='online']").first();
   const computed = await statusAvatar.evaluate((element) => {
     const style = getComputedStyle(element);
+    const ring = getComputedStyle(element, "::after");
     return {
       borderWidth: Number.parseFloat(style.borderTopWidth),
-      outlineWidth: Number.parseFloat(style.outlineWidth),
+      ringWidth: Number.parseFloat(ring.borderTopWidth),
     };
   });
   expect(computed.borderWidth).toBeGreaterThanOrEqual(1);
-  expect(computed.outlineWidth).toBeGreaterThanOrEqual(2);
+  expect(computed.ringWidth).toBeGreaterThanOrEqual(2);
   await expect(page.getByTestId("avatar-statuses").getByText("Online").first()).toBeVisible();
 });

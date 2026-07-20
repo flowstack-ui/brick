@@ -37,6 +37,18 @@ test("Button preserves loading layout and adopted target sizes", async ({ page }
   }
 });
 
+test("Button keeps standard icons token-sized while its slot follows larger component content", async ({ page }) => {
+  await page.goto("/button");
+
+  const button = page.getByRole("button", { name: "Publish project" });
+  const icon = button.locator(".brick-button__icon");
+  const svg = icon.locator("svg");
+  const [iconBox, svgBox] = await Promise.all([icon.boundingBox(), svg.boundingBox()]);
+  expect(iconBox).toEqual(svgBox);
+  expect(svgBox?.width).toBe(18);
+  expect(svgBox?.height).toBe(18);
+});
+
 test("Button preserves native keyboard activation and visible focus", async ({ page }) => {
   await page.goto("/button");
 

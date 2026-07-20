@@ -1139,6 +1139,7 @@ function BadgePlayground() {
 function AvatarPlayground() {
   const [appearance, setAppearance] = useState<Appearance>("system");
   const [sourceMode, setSourceMode] = useState<"loaded" | "broken" | "missing">("loaded");
+  const [avatarActivation, setAvatarActivation] = useState("None yet");
 
   function selectAppearance(next: Appearance) {
     setAppearance(next);
@@ -1218,7 +1219,8 @@ function AvatarPlayground() {
           <div className="avatar-context-grid" data-testid="avatar-contexts">
             <div><Avatar alt="Grace Hopper" fallback="GH" /><span>No repeated visible name</span></div>
             <div><Avatar alt="" fallback="AL" /><span>Ada Lovelace</span></div>
-            <Button aria-label="Open Katherine Johnson profile" startIcon={<Avatar alt="" fallback="KJ" size="sm" />}>Profile</Button>
+            <Button aria-label="Open Katherine Johnson profile" onPress={() => setAvatarActivation("Katherine Johnson profile")} startIcon={<Avatar alt="" fallback="KJ" size="sm" />}>Profile</Button>
+            <p className="press-status">Last activation: <strong>{avatarActivation}</strong></p>
           </div>
         </Scenario>
 
