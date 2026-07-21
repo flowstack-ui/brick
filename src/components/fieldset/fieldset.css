@@ -1,7 +1,7 @@
 @layer brick.components {
   .brick-fieldset {
     --brick-fieldset-gap: var(--brick-space-4);
-    --brick-fieldset-control-gap: var(--brick-space-3);
+    --brick-fieldset-control-gap: var(--brick-space-4);
     --brick-fieldset-legend-foreground: var(--brick-color-text-primary);
     --brick-fieldset-legend-foreground-disabled: var(--brick-color-text-secondary);
     --brick-fieldset-legend-font-family: var(--brick-font-family-heading);
@@ -19,6 +19,7 @@
     --brick-fieldset-error-font-weight: var(--brick-font-weight-medium);
     --brick-fieldset-error-line-height: var(--brick-font-line-height-body);
 
+    display: block;
     min-inline-size: 0;
     margin: 0;
     padding: 0;
@@ -30,13 +31,16 @@
     margin-block-start: var(--brick-fieldset-control-gap);
   }
 
-  .brick-fieldset > :where(.brick-fieldset-description, .brick-fieldset-error) {
-    margin-block-start: var(--brick-fieldset-gap);
+  .brick-fieldset > .brick-fieldset-legend + * {
+    clear: both;
+    margin-block-start: 0;
   }
 
   .brick-fieldset-legend {
+    float: inline-start;
+    inline-size: 100%;
     max-inline-size: 100%;
-    margin: 0;
+    margin: 0 0 var(--brick-fieldset-gap);
     padding: 0;
     color: var(--brick-fieldset-legend-foreground);
     font-family: var(--brick-fieldset-legend-font-family);
@@ -67,6 +71,10 @@
     min-inline-size: 0;
     margin: 0;
     overflow-wrap: anywhere;
+  }
+
+  .brick-fieldset > .brick-fieldset-error {
+    margin-block-start: var(--brick-fieldset-control-gap);
   }
 
   .brick-fieldset-description {

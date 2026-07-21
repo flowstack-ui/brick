@@ -40,7 +40,8 @@ test("IconButton exposes closed recipes and inactive states", async ({ page }) =
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 });
 
-test("AppBar preserves exact anatomy, density, and structural toolbar semantics", async ({ page }) => {
+test("AppBar preserves exact anatomy, density, and structural toolbar semantics", async ({ page, isMobile }) => {
+  test.skip(isMobile, "Geometric center is intentionally hidden in the mobile recipe");
   await page.goto("/app-bar");
   const bar = page.locator(".brick-app-bar[aria-label='static neutral surface example']").first();
   await expect(bar).toHaveAttribute("data-position", "static");

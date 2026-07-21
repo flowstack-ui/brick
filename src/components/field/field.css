@@ -1,6 +1,6 @@
 @layer brick.components {
   .brick-field {
-    --brick-field-row-gap: var(--brick-space-2);
+    --brick-field-row-gap: var(--brick-space-3);
     --brick-field-column-gap: var(--brick-space-5);
     --brick-field-label-min-inline-size: 8rem;
     --brick-field-control-min-inline-size: 12rem;
@@ -131,6 +131,19 @@
     text-decoration-style: wavy;
     text-decoration-color: var(--brick-field-error-foreground);
     text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 34rem) {
+    .brick-field[data-orientation="horizontal"] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .brick-field[data-orientation="horizontal"] > :where(
+        .brick-field-description,
+        .brick-field-error
+      ) {
+      grid-column: auto;
+    }
   }
 
   @media (forced-colors: active) {

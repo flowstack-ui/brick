@@ -210,8 +210,10 @@
     .brick-checkbox-group-item,
     .brick-checkbox-group-parent
   )[data-invalid] {
+    border-inline-start: var(--brick-border-focus-width) solid
+      var(--brick-checkbox-invalid-foreground);
     color: var(--brick-checkbox-invalid-foreground);
-    box-shadow: inset var(--brick-border-focus-width) 0 0 var(--brick-checkbox-invalid-foreground);
+    box-shadow: none;
   }
 
   :where(
@@ -219,7 +221,7 @@
     .brick-checkbox-group-item,
     .brick-checkbox-group-parent
   )[data-invalid] .brick-checkbox-control {
-    border-color: var(--brick-color-danger-border);
+    border-color: var(--brick-checkbox-invalid-foreground);
   }
 
   :where(.brick-checkbox)[data-size="sm"],
@@ -253,7 +255,7 @@
       .brick-checkbox,
       .brick-checkbox-group-item,
       .brick-checkbox-group-parent
-    ):not([data-disabled], [data-readonly]):hover .brick-checkbox-control {
+    ):not([data-disabled], [data-readonly], [data-invalid]):hover .brick-checkbox-control {
       border-color: var(--brick-color-accent-border);
     }
   }

@@ -48,9 +48,11 @@ the supplied props and ref and retain valid form semantics.
 ## Submission state
 
 Atom exposes callback-path state through `[data-submitting]`,
-`[data-submitted]`, and `[data-invalid]`; Brick gives each state a visible,
-non-color-only outline. React function-action pending state remains owned by
-React's `useFormStatus` and is not merged into Atom state automatically.
+`[data-submitted]`, and `[data-invalid]`. Brick preserves those styling hooks
+without drawing a container outline around the otherwise unboxed Form;
+applications provide explicit inline feedback or a transient Toast according
+to the workflow. React function-action pending state remains owned by React's
+`useFormStatus` and is not merged into Atom state automatically.
 
 Native submission, uncontrolled `FormData`, controlled state, React Hook Form,
 sync or async `onSubmit`, and function actions are all supported. Brick does

@@ -4,6 +4,23 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Removed imposed Form-wide submission and validation outlines while retaining
+  state hooks and application-owned inline or Toast feedback paths.
+- Separated Form, Field, and Fieldset owner-review sections and tracker results
+  within the shared Form Foundation workbench and verification protocol.
+- Increased Field control-to-message clearance so focus outlines do not crowd
+  an immediately following Description or Error.
+- Made horizontal Fields stack at phone viewport widths, including the 440px
+  iPhone Pro Max viewport, before long labels become cramped.
+- Stabilized the playground's choice text weight across selection and replaced
+  native Fieldset margin behavior with explicit group, description, and error
+  rhythm.
+- Normalized native Legend flow so Fieldset spacing remains identical in LTR
+  and RTL while logical error borders follow the content direction.
+- Made Checkbox invalid-row markers follow logical start so they move to the
+  right in RTL instead of remaining physically left-aligned.
+- Restored the Form Foundation choice-row hover surface while keeping Checkbox
+  invalid control borders on their semantic error color during hover.
 - Completed Popover's 13-step owner verification and package gate while keeping
   Sidebar-dependent legacy Core retirement separate.
 - Upgraded the exact Atom dependency to 0.6.10 so touch and pen scrolling no

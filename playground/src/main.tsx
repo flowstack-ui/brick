@@ -1714,7 +1714,7 @@ function FormFoundationPlayground() {
     : path.startsWith("/field")
       ? "Field"
       : path.startsWith("/form-foundation")
-        ? "Form foundation"
+        ? "Form Foundation"
         : "Form";
 
   function selectAppearance(next: Appearance) {
@@ -1740,7 +1740,12 @@ function FormFoundationPlayground() {
       </header>
 
       <main data-testid="form-foundation-workbench">
-        <Scenario description="The shortest finished workflow uses one native Form, one Field per value, one Fieldset per related choice, and explicit actions." title="Overview">
+        <section className="form-foundation-component-heading" data-component="integration">
+          <p className="playground-kicker">Family integration</p>
+          <h2>Form Foundation</h2>
+          <p>Form, Field, and Fieldset compose here as one native workflow without losing their individual contracts.</p>
+        </section>
+        <Scenario description="The shortest finished workflow uses one native Form, one Field per value, one Fieldset per related choice, and explicit actions." title="Integration overview">
           <div className="form-foundation-stage" data-testid="form-foundation-overview">
             <Form
               aria-label="Create account"
@@ -1784,6 +1789,11 @@ function FormFoundationPlayground() {
           </div>
         </Scenario>
 
+        <section className="form-foundation-component-heading" data-component="form">
+          <p className="playground-kicker">Component</p>
+          <h2>Form</h2>
+          <p>Native submission, validation callbacks, pending state, completion, and reset behavior.</p>
+        </section>
         <Scenario description="URL, callback, async callback, validation, function action, and reset remain native or Atom behavior rather than Brick policy." title="Submission models">
           <div className="form-foundation-grid" data-testid="form-submission-models">
             <Form action="#native-result" method="get">
@@ -1801,10 +1811,15 @@ function FormFoundationPlayground() {
           </div>
         </Scenario>
 
+        <section className="form-foundation-component-heading" data-component="field">
+          <p className="playground-kicker">Component</p>
+          <h2>Field</h2>
+          <p>One-control naming, description, error, state, orientation, appearance, and responsive behavior.</p>
+        </section>
         <Scenario description="Required, optional, disabled, read-only, invalid, forced server error, and invalid-without-message states use one coherent visual language." title="Field states">
           <div className="form-foundation-grid" data-testid="field-states">
             <Field.Root id="required-field" required><Field.Label>Required field</Field.Label><Input.Root className="form-foundation-control" /><Field.Description>Required state reaches a Field-aware control.</Field.Description></Field.Root>
-            <Field.Root id="optional-field"><Field.Label optionalIndicator=" (optional)">Optional field</Field.Label><Input.Root className="form-foundation-control" /><Field.RequiredIndicator fallback="Optional metadata" /></Field.Root>
+            <Field.Root id="optional-field"><Field.Label>Optional field<Field.RequiredIndicator fallback=" (optional)" /></Field.Label><Input.Root className="form-foundation-control" /><Field.Description>Optional metadata</Field.Description></Field.Root>
             <Field.Root disabled id="disabled-field"><Field.Label>Disabled field</Field.Label><Input.Root className="form-foundation-control" /><Field.Description>Metadata stays readable.</Field.Description></Field.Root>
             <Field.Root id="readonly-field" readOnly><Field.Label>Read-only field</Field.Label><Input.Root className="form-foundation-control" defaultValue="Fixed value" /></Field.Root>
             <Field.Root id="invalid-field" invalid><Field.Label>Invalid field</Field.Label><Input.Root className="form-foundation-control" /><Field.Error role="alert">A newly inserted error may opt into announcement.</Field.Error></Field.Root>
@@ -1822,6 +1837,11 @@ function FormFoundationPlayground() {
           </div>
         </Scenario>
 
+        <section className="form-foundation-component-heading" data-component="fieldset">
+          <p className="playground-kicker">Component</p>
+          <h2>Fieldset</h2>
+          <p>Native related-control grouping, Legend naming, shared descriptions, group errors, and disabled propagation.</p>
+        </section>
         <Scenario description="Fieldset keeps native grouping plain while CheckboxGroup, RadioGroup, and nested Fields retain their own semantics and item state." title="Fieldset groups">
           <div className="form-foundation-grid" data-testid="fieldset-groups">
             <Fieldset.Root id="notification-methods" invalid required>
@@ -1846,6 +1866,11 @@ function FormFoundationPlayground() {
           </div>
         </Scenario>
 
+        <section className="form-foundation-component-heading" data-component="integration-evidence">
+          <p className="playground-kicker">Family integration</p>
+          <h2>Composition and stress</h2>
+          <p>Cross-component composition, relationships, appearance scopes, localization, direction, and constrained layouts.</p>
+        </section>
         <Scenario description="Default, render, and asChild paths preserve the selected semantic elements, classes, slots, refs, and generated relationships." title="Composition">
           <div className="form-foundation-grid" data-testid="form-foundation-composition">
             <Form render={<form data-adapter="rendered-form" />} onSubmit={() => setStatus("Rendered Form submitted")} preventDefaultOnSubmit><Field.Root render={<section data-adapter="rendered-field" />} id="rendered-field"><Field.Label asChild><label data-adapter="composed-label">Rendered Field</label></Field.Label><Input.Root className="form-foundation-control" /><Field.Description render={<div data-adapter="rendered-description" />}>Rendered description</Field.Description></Field.Root><Button size="sm" type="submit">Submit rendered Form</Button></Form>

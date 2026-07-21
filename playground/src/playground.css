@@ -71,6 +71,26 @@
   min-inline-size: 0;
 }
 
+.form-foundation-component-heading {
+  margin-block: 2rem 0.75rem;
+  max-inline-size: 48rem;
+}
+
+.form-foundation-component-heading:first-child {
+  margin-block-start: 0;
+}
+
+.form-foundation-component-heading h2 {
+  margin: 0.25rem 0 0.35rem;
+  font-size: 1.25rem;
+  letter-spacing: 0;
+}
+
+.form-foundation-component-heading p:last-child {
+  margin: 0;
+  color: var(--brick-color-text-secondary);
+}
+
 .form-foundation-stage,
 .form-foundation-custom,
 .form-foundation-constrained,
@@ -150,12 +170,22 @@
   border-color: var(--brick-color-accent-border);
   background: var(--brick-color-accent-soft);
   color: var(--brick-color-accent-on-soft);
-  font-weight: var(--brick-font-weight-medium);
+}
+
+.form-foundation-choice-group > [data-invalid] {
+  border-inline-start-color: var(--brick-checkbox-invalid-foreground);
+  border-inline-start-width: var(--brick-border-focus-width);
 }
 
 .form-foundation-choice-group > [data-disabled] {
   color: var(--brick-color-text-secondary);
   cursor: not-allowed;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .form-foundation-choice-group > :not([data-disabled]):hover {
+    background: var(--brick-color-accent-soft);
+  }
 }
 
 .form-foundation-actions {
@@ -942,6 +972,27 @@ main {
 .phone-frame p {
   color: var(--brick-color-text-secondary);
   font-size: var(--brick-font-size-sm);
+}
+
+.form-foundation-workbench .brick-fieldset-error {
+  margin-block-start: var(--brick-fieldset-control-gap);
+  color: var(--brick-fieldset-error-foreground);
+  font-size: var(--brick-fieldset-error-font-size);
+}
+
+.form-foundation-workbench .phone-frame .brick-field-description {
+  color: var(--brick-field-description-foreground);
+  font-size: var(--brick-field-description-font-size);
+}
+
+.form-foundation-workbench .phone-frame .brick-field-error {
+  color: var(--brick-field-error-foreground);
+  font-size: var(--brick-field-error-font-size);
+}
+
+.form-foundation-workbench .phone-frame .brick-fieldset-description {
+  color: var(--brick-fieldset-description-foreground);
+  font-size: var(--brick-fieldset-description-font-size);
 }
 
 .playground-dashed-button {
