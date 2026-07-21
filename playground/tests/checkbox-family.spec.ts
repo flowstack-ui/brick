@@ -50,11 +50,27 @@ test("native FormData, required validity, external ownership, and reset work", a
   const acknowledgement = form.getByRole("checkbox", { name: "Release acknowledgement" });
   const email = form.getByRole("checkbox", { name: "Email report" });
   const external = page.getByRole("checkbox", { name: "Externally owned preference" });
+  const status = page.locator(".form-foundation-status");
+  const requiredInputs = form.locator('input[type="checkbox"][required]');
+  await expect(requiredInputs).toHaveCount(2);
+  for (const input of await requiredInputs.all()) {
+    expect(await input.evaluate((element: HTMLInputElement) => element.willValidate)).toBe(true);
+    expect(await input.evaluate((element: HTMLInputElement) => element.validity.valueMissing)).toBe(true);
+  }
+  expect(await form.evaluate((element: HTMLFormElement) => element.checkValidity())).toBe(false);
+  await form.getByRole("button", { name: "Save preferences" }).click();
+  await expect(status).toHaveText("No form event yet");
+
   await acknowledgement.click();
+  expect(await form.evaluate((element: HTMLFormElement) => element.checkValidity())).toBe(false);
+  await form.getByRole("button", { name: "Save preferences" }).click();
+  await expect(status).toHaveText("No form event yet");
+
   await email.click();
   await external.click();
+  expect(await form.evaluate((element: HTMLFormElement) => element.checkValidity())).toBe(true);
   await form.getByRole("button", { name: "Save preferences" }).click();
-  await expect(page.getByText(/Submitted: accepted; email/)).toBeVisible();
+  await expect(status).toContainText("Submitted: accepted; email");
   await form.getByRole("button", { name: "Reset" }).click();
   for (const checkbox of [acknowledgement, email, external]) {
     await expect(checkbox).toHaveAttribute("aria-checked", "false");

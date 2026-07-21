@@ -4,6 +4,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Upgraded the exact Atom dependency to 0.6.11 so required Checkbox and
+  CheckboxGroup inputs block empty native form submission as documented.
 - Removed imposed Form-wide submission and validation outlines while retaining
   state hooks and application-owned inline or Toast feedback paths.
 - Separated Form, Field, and Fieldset owner-review sections and tracker results

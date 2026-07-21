@@ -23,7 +23,7 @@ import "@flowstack-ui/brick/styles.css";
 ```
 
 Checkbox is also exported from the package root. Brick requires exactly
-`@flowstack-ui/atom` 0.6.0 and React 18 or newer.
+`@flowstack-ui/atom` 0.6.11 and React 18 or newer.
 
 ## API
 
