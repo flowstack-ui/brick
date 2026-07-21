@@ -77,7 +77,7 @@ const notificationPlacements: NotificationBadgePlacement[] = ["top-start", "top-
 const avatarSizes: AvatarSize[] = ["xs", "sm", "md", "lg", "xl"];
 const avatarShapes: AvatarShape[] = ["circle", "rounded"];
 const avatarStatuses: AvatarStatus[] = ["online", "away", "busy", "offline"];
-const toggleVariants: ToggleVariant[] = ["soft", "outline", "ghost"];
+const toggleVariants: ToggleVariant[] = ["solid", "soft", "outline", "ghost"];
 const toggleSizes: ToggleSize[] = ["sm", "md", "lg"];
 const toggleShapes: ToggleShape[] = ["rounded", "pill"];
 const iconButtonVariants: IconButtonVariant[] = ["solid", "soft", "outline", "ghost"];
@@ -1353,7 +1353,7 @@ function ToggleFamilyPlayground() {
           </div>
         </Scenario>
 
-        <Scenario description="Soft, outline, and ghost share a neutral rest and unmistakable accent selected state." title="Variants and states">
+        <Scenario description="Solid, soft, outline, and ghost share a neutral rest; selected state ranges from accent-solid to quieter accent-soft treatments." title="Variants and states">
           <div className="toggle-matrix" data-testid="toggle-recipes">
             {toggleVariants.flatMap((variant) => [
               <div className="toggle-cell" key={`${variant}-off`}><code>{variant} · off</code><Toggle variant={variant}>Preview</Toggle></div>,

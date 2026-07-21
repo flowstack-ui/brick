@@ -18,12 +18,22 @@ test("standalone Toggle exposes native pressed behavior and stable labeling", as
 
 test("closed recipes, sizes, shapes, disabled state, and icon-only naming are rendered", async ({ page }) => {
   const recipes = page.getByTestId("toggle-recipes");
-  await expect(recipes.locator(".brick-toggle")).toHaveCount(9);
-  for (const variant of ["soft", "outline", "ghost"]) {
+  await expect(recipes.locator(".brick-toggle")).toHaveCount(12);
+  for (const variant of ["solid", "soft", "outline", "ghost"]) {
     await expect(recipes.locator(`.brick-toggle[data-variant='${variant}']`)).toHaveCount(3);
   }
-  await expect(recipes.locator(".brick-toggle[data-state='on']")).toHaveCount(3);
-  await expect(recipes.locator(".brick-toggle[data-disabled]")).toHaveCount(3);
+  await expect(recipes.locator(".brick-toggle[data-state='on']")).toHaveCount(4);
+  await expect(recipes.locator(".brick-toggle[data-disabled]")).toHaveCount(4);
+  const solidOn = recipes.locator(".brick-toggle[data-variant='solid'][data-state='on']");
+  const solidOff = recipes.locator(".brick-toggle[data-variant='solid'][data-state='off']:not([data-disabled])");
+  const softOn = recipes.locator(".brick-toggle[data-variant='soft'][data-state='on']");
+  const colors = await Promise.all([solidOn, solidOff, softOn].map((item) => item.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { background: style.backgroundColor, foreground: style.color };
+  })));
+  expect(colors[0].background).not.toBe(colors[1].background);
+  expect(colors[0].background).not.toBe(colors[2].background);
+  expect(colors[0].foreground).not.toBe(colors[1].foreground);
   const geometry = page.getByTestId("toggle-sizes-shapes");
   for (const size of ["sm", "md", "lg"]) {
     await expect(geometry.getByRole("button", { name: `${size} toggle` })).toHaveAttribute("data-size", size);

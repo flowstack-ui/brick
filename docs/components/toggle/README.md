@@ -33,12 +33,13 @@ Button icon-placement props are intentionally absent.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `soft`, `outline`, `ghost` | `soft` |
+| `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `shape` | `rounded`, `pill` | `rounded` |
 | `iconOnly` | boolean | `false` |
 
-Selected state uses the accent token family. The stable root hook is
+Selected state uses the accent token family. `solid` keeps a quiet neutral
+resting surface and uses accent-solid paint only while selected. The stable root hook is
 `.brick-toggle`, the slot defaults to `toggle`, and visual state is exposed by
 `data-state`, `data-variant`, `data-size`, `data-shape`, and `data-icon-only`.
 Public component tokens begin with `--brick-toggle-`, including min block size,

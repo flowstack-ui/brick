@@ -4,7 +4,7 @@ import {
   type ToggleRootProps as AtomToggleRootProps,
 } from "@flowstack-ui/atom/toggle";
 
-export type ToggleVariant = "soft" | "outline" | "ghost";
+export type ToggleVariant = "solid" | "soft" | "outline" | "ghost";
 export type ToggleSize = "sm" | "md" | "lg";
 export type ToggleShape = "rounded" | "pill";
 

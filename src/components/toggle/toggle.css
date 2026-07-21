@@ -59,6 +59,13 @@
     box-shadow: inset 0 -0.125rem 0 var(--brick-color-accent-solid);
   }
 
+  :where(.brick-toggle, .brick-toggle-group-item)[data-variant="solid"][data-state="on"] {
+    border-color: var(--brick-color-accent-solid);
+    background: var(--brick-color-accent-solid);
+    color: var(--brick-color-accent-on-solid);
+    box-shadow: none;
+  }
+
   :where(.brick-toggle, .brick-toggle-group-item)[data-variant="outline"] {
     border-color: var(--brick-color-border-default);
     background: transparent;
@@ -80,6 +87,11 @@
 
   :where(.brick-toggle, .brick-toggle-group-item):not([data-disabled]):active {
     background: var(--brick-color-accent-soft-pressed);
+  }
+
+  :where(.brick-toggle, .brick-toggle-group-item)[data-variant="solid"][data-state="on"]:not([data-disabled]):active {
+    border-color: var(--brick-color-accent-solid-pressed);
+    background: var(--brick-color-accent-solid-pressed);
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-disabled] {
@@ -132,6 +144,11 @@
 
     :where(.brick-toggle, .brick-toggle-group-item):not([data-disabled])[data-state="on"]:hover {
       background: var(--brick-color-accent-soft-hover);
+    }
+
+    :where(.brick-toggle, .brick-toggle-group-item)[data-variant="solid"][data-state="on"]:not([data-disabled]):hover {
+      border-color: var(--brick-color-accent-solid-hover);
+      background: var(--brick-color-accent-solid-hover);
     }
 
     :where(.brick-toggle, .brick-toggle-group-item)[data-variant="ghost"]:not([data-disabled]):hover {

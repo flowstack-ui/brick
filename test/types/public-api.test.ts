@@ -505,7 +505,7 @@ void invalidAvatarColor;
 void invalidAvatarBadge;
 void invalidAvatarGroup;
 
-const toggleVariant: ToggleVariant = "ghost";
+const toggleVariant: ToggleVariant = "solid";
 const toggleSize: ToggleSize = "lg";
 const toggleShape: ToggleShape = "pill";
 const toggleProps: ToggleProps = {
@@ -536,7 +536,7 @@ void singleToggleGroup;
 void multipleToggleGroup;
 
 // @ts-expect-error Toggle variants are a closed recipe set.
-const invalidToggleVariant: ToggleProps = { children: "Invalid", variant: "solid" };
+const invalidToggleVariant: ToggleProps = { children: "Invalid", variant: "raised" };
 // @ts-expect-error Standalone Toggle intentionally omits Atom's value convenience.
 const invalidToggleValue: ToggleProps = { children: "Invalid", value: "favorite" };
 // @ts-expect-error Toggle exposes selected accent styling rather than semantic tones.

@@ -54,7 +54,7 @@ describe("Toggle", () => {
   });
 
   it("exposes every closed visual recipe", () => {
-    const variants: ToggleVariant[] = ["soft", "outline", "ghost"];
+    const variants: ToggleVariant[] = ["solid", "soft", "outline", "ghost"];
     const sizes: ToggleSize[] = ["sm", "md", "lg"];
     const shapes: ToggleShape[] = ["rounded", "pill"];
     const { rerender } = render(<Toggle>Recipe</Toggle>);
