@@ -10,6 +10,18 @@ test("Popover opens intentionally with generated name and description, then rest
   await expect(popover).toBeVisible();
   await expect(popover).toHaveAttribute("aria-describedby", /.+/);
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  expect(
+    await popover.locator("[data-slot='popover-viewport']").evaluate(
+      (element) => getComputedStyle(element).boxShadow,
+    ),
+  ).not.toBe("none");
+  const arrow = popover.locator("[data-slot='popover-arrow']");
+  await expect(arrow).toBeVisible();
+  const arrowBox = await arrow.boundingBox();
+  expect(arrowBox).not.toBeNull();
+  expect(arrowBox!.width).toBeGreaterThan(0);
+  expect(arrowBox!.height).toBeGreaterThan(0);
+  await expect(popover.getByRole("button", { name: "Reset" })).toHaveAttribute("data-variant", "outline");
   await page.keyboard.press("Escape");
   await expect(popover).toBeHidden();
   await expect(trigger).toBeFocused();
@@ -74,6 +86,8 @@ test("Popover remains contained at 256 px, supports RTL, and passes focused axe"
   await page.getByRole("button", { name: "فتح إعدادات المشروع" }).click();
   const popover = page.getByRole("dialog", { name: "إعدادات المشروع" });
   await expect(popover).toBeVisible();
+  await expect(popover).toHaveAttribute("dir", "rtl");
+  await expect.poll(() => popover.evaluate((element) => getComputedStyle(element).direction)).toBe("rtl");
   const box = await popover.boundingBox();
   expect(box).not.toBeNull();
   expect(box!.x).toBeGreaterThanOrEqual(0);
@@ -81,4 +95,75 @@ test("Popover remains contained at 256 px, supports RTL, and passes focused axe"
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
   await expect.poll(() => popover.evaluate((element) => getComputedStyle(element).opacity)).toBe("1");
   expect((await new AxeBuilder({ page }).disableRules(["region"]).analyze()).violations).toEqual([]);
+});
+
+test("Popover stays open during outside touch scrolling and closes on an outside touch tap", async ({ page }) => {
+  await page.goto("/popover");
+  await page.getByRole("button", { name: "Project settings" }).click();
+  const popover = page.getByRole("dialog", { name: "Project settings" });
+  await expect(popover).toBeVisible();
+
+  await page.dispatchEvent("body", "pointerdown", {
+    pointerType: "touch",
+    pointerId: 7,
+    clientX: 10,
+    clientY: 10,
+  });
+  await page.dispatchEvent("body", "pointermove", {
+    pointerType: "touch",
+    pointerId: 7,
+    clientX: 10,
+    clientY: 40,
+  });
+  await page.evaluate(() => window.dispatchEvent(new Event("scroll")));
+  await page.dispatchEvent("body", "pointerup", {
+    pointerType: "touch",
+    pointerId: 7,
+    clientX: 10,
+    clientY: 40,
+  });
+  await expect(popover).toBeVisible();
+
+  await page.dispatchEvent("body", "pointerdown", {
+    pointerType: "touch",
+    pointerId: 8,
+    clientX: 10,
+    clientY: 10,
+  });
+  await page.dispatchEvent("body", "pointerup", {
+    pointerType: "touch",
+    pointerId: 8,
+    clientX: 11,
+    clientY: 11,
+  });
+  await expect(popover).toBeHidden();
+});
+
+test("Popover stacks long Footer actions inside an extreme narrow viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 150, height: 200 });
+  await page.goto("/popover");
+  await page.getByRole("button", { name: "Open long settings" }).click();
+
+  const popover = page.getByRole("dialog", {
+    name: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break",
+  });
+  const actions = [
+    popover.getByRole("button", { name: "Reset all settings" }),
+    popover.getByRole("button", { name: "Save workspace settings" }),
+  ];
+  const viewport = popover.locator("[data-slot='popover-viewport']");
+  await expect(popover.locator("[data-slot='popover-arrow']")).toBeVisible();
+  expect(await viewport.evaluate((element) => element.scrollHeight > element.clientHeight)).toBe(true);
+
+  for (const action of actions) {
+    await action.evaluate((element) => element.scrollIntoView({ block: "nearest" }));
+    const [actionBox, popoverBox] = await Promise.all([action.boundingBox(), viewport.boundingBox()]);
+    expect(actionBox).not.toBeNull();
+    expect(popoverBox).not.toBeNull();
+    expect(actionBox!.x).toBeGreaterThanOrEqual(popoverBox!.x);
+    expect(actionBox!.x + actionBox!.width).toBeLessThanOrEqual(popoverBox!.x + popoverBox!.width);
+    expect(actionBox!.y).toBeGreaterThanOrEqual(popoverBox!.y);
+    expect(actionBox!.y + actionBox!.height).toBeLessThanOrEqual(popoverBox!.y + popoverBox!.height);
+  }
+
 });

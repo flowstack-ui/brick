@@ -9,4 +9,5 @@ export {
   type AppBarSectionProps,
   type AppBarToolbarProps,
   type AppBarVariant,
+  type AppBarTone,
 } from "./AppBar.js";

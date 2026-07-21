@@ -24,10 +24,14 @@ export type TooltipProviderProps = AtomTooltipProviderProps;
 export type TooltipRootProps = AtomTooltipRootProps;
 export type TooltipTriggerProps = AtomTooltipTriggerProps;
 export type TooltipPortalProps = AtomTooltipPortalProps;
+export type TooltipShape = "rounded" | "pill";
 export type TooltipContentProps = Omit<
   AtomTooltipContentProps,
   "aria-label" | "ariaLabel"
->;
+> & {
+  /** Surface shape. @default "rounded" */
+  shape?: TooltipShape;
+};
 export type TooltipArrowProps = AtomTooltipArrowProps;
 
 export interface TooltipTextProps extends HTMLAttributes<HTMLElement> {
@@ -116,13 +120,14 @@ export const TooltipTrigger = forwardRef<HTMLElement, TooltipTriggerProps>(
 
 export const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
   function TooltipContent(
-    { className, sideOffset = 8, "data-slot": dataSlot, ...props },
+    { className, shape = "rounded", sideOffset = 8, "data-slot": dataSlot, ...props },
     ref,
   ) {
     return (
       <AtomTooltip.Content
         {...props}
         className={mergeClassName("brick-tooltip", className)}
+        data-shape={shape}
         data-slot={slotOrDefault(dataSlot, "tooltip")}
         ref={ref}
         sideOffset={sideOffset}

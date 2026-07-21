@@ -1,6 +1,6 @@
 # HoverCard Manual Verification
 
-Status: **Owner run required before Core retirement**
+Status: **Completed July 21, 2026 with one non-blocking touch follow-up**
 Route: `/hover-card`
 
 HoverCard is a progressive visual preview. Every trigger must remain a genuine,
@@ -40,3 +40,12 @@ complete link and every preview must remain non-interactive and nonessential.
 16. Audit the examples one last time: every preview fact is duplicated on the
     visible page or available at the destination. Record pass/fail and device
     coverage in the component workbook.
+
+## Recorded outcome
+
+The owner passed the visual, pointer, keyboard, VoiceOver, responsive, RTL,
+preference, and content audits. Physical mobile/tablet testing found that some
+fast taps near a Trigger edge can still open the preview intermittently. Native
+link activation remains available and the preview is duplicate, noninteractive,
+and nonessential, so this finding remains a non-blocking Atom follow-up rather
+than a HoverCard completion or Core-retirement blocker.

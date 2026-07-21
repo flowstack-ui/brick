@@ -5,7 +5,7 @@
     --brick-popover-muted-foreground: var(--brick-color-text-secondary);
     --brick-popover-border: var(--brick-color-border-subtle);
     --brick-popover-radius: var(--brick-radius-overlay);
-    --brick-popover-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 62%);
+    --brick-popover-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 48%);
     --brick-popover-space: var(--brick-space-4);
     --brick-popover-max-inline-size-sm: 18rem;
     --brick-popover-max-inline-size-md: 24rem;
@@ -14,19 +14,12 @@
 
     z-index: calc(var(--brick-layer-overlay) - 1);
     box-sizing: border-box;
-    display: flex;
     inline-size: max-content;
-    max-block-size: var(--brick-popover-max-block-size);
     max-inline-size: min(
       var(--brick-popover-max-inline-size-md),
       calc(100dvi - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right))
     );
-    flex-direction: column;
-    overflow: hidden;
-    border: var(--brick-border-width) solid var(--brick-popover-border);
-    border-radius: var(--brick-popover-radius);
-    background: var(--brick-popover-background);
-    box-shadow: var(--brick-popover-shadow);
+    overflow: visible;
     color: var(--brick-popover-foreground);
     opacity: 0;
     overflow-wrap: anywhere;
@@ -51,6 +44,22 @@
     );
   }
 
+  .brick-popover > [data-slot="popover-viewport"] {
+    box-sizing: border-box;
+    display: flex;
+    inline-size: 100%;
+    max-block-size: min(
+      var(--brick-popover-max-block-size),
+      calc(100dvb - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom))
+    );
+    flex-direction: column;
+    overflow: hidden;
+    border: var(--brick-border-width) solid var(--brick-popover-border);
+    border-radius: var(--brick-popover-radius);
+    background: var(--brick-popover-background);
+    box-shadow: var(--brick-popover-shadow);
+  }
+
   .brick-popover[data-positioned] {
     opacity: 1;
     scale: 1;
@@ -62,7 +71,7 @@
   }
 
   .brick-popover__header,
-  .brick-popover > :where([data-slot="popover-title"], [data-slot="popover-description"]) {
+  .brick-popover > [data-slot="popover-viewport"] > :where([data-slot="popover-title"], [data-slot="popover-description"]) {
     flex: none;
     min-inline-size: 0;
   }
@@ -74,19 +83,19 @@
     padding-block-end: var(--brick-space-2);
   }
 
-  .brick-popover > [data-slot="popover-title"],
-  .brick-popover > [data-slot="popover-description"],
+  .brick-popover > [data-slot="popover-viewport"] > [data-slot="popover-title"],
+  .brick-popover > [data-slot="popover-viewport"] > [data-slot="popover-description"],
   .brick-popover__header > :where([data-slot="popover-title"], [data-slot="popover-description"]) {
     min-inline-size: 0;
     margin: 0;
     padding-inline: var(--brick-popover-space);
   }
 
-  .brick-popover > [data-slot="popover-title"] {
+  .brick-popover > [data-slot="popover-viewport"] > [data-slot="popover-title"] {
     padding-block-start: var(--brick-popover-space);
   }
 
-  .brick-popover > [data-slot="popover-description"] {
+  .brick-popover > [data-slot="popover-viewport"] > [data-slot="popover-description"] {
     padding-block-start: var(--brick-space-1);
   }
 
@@ -137,6 +146,26 @@
     --brick-floating-arrow-stroke: var(--brick-popover-border);
   }
 
+  .brick-popover[data-side="top"] .brick-popover__arrow {
+    translate: 0 calc(var(--brick-border-width) * -1);
+    filter: drop-shadow(0 1px 0 var(--brick-popover-border));
+  }
+
+  .brick-popover[data-side="right"] .brick-popover__arrow {
+    translate: var(--brick-border-width) 0;
+    filter: drop-shadow(-1px 0 0 var(--brick-popover-border));
+  }
+
+  .brick-popover[data-side="bottom"] .brick-popover__arrow {
+    translate: 0 var(--brick-border-width);
+    filter: drop-shadow(0 -1px 0 var(--brick-popover-border));
+  }
+
+  .brick-popover[data-side="left"] .brick-popover__arrow {
+    translate: calc(var(--brick-border-width) * -1) 0;
+    filter: drop-shadow(1px 0 0 var(--brick-popover-border));
+  }
+
   @supports not (height: 100dvb) {
     .brick-popover {
       --brick-popover-max-block-size: min(32rem, calc(100vh - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
@@ -149,7 +178,21 @@
     }
 
     .brick-popover__footer > .brick-button {
-      flex: 1 1 8rem;
+      inline-size: 100%;
+      flex: 1 1 100%;
+    }
+  }
+
+  @media (max-height: 20rem) {
+    .brick-popover > [data-slot="popover-viewport"] {
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+    }
+
+    .brick-popover__body {
+      flex: none;
+      overflow: visible;
     }
   }
 

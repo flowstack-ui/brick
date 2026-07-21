@@ -42,7 +42,11 @@ uncontrolled state, delays, `disabled`, and `variant="plain|rich"`.
 The namespace contains exactly `Provider`, `Root`, `Trigger`, `Portal`,
 `Content`, `Title`, `Description`, and `Arrow`. Public controls normally use
 `Trigger asChild` so the actual focusable element is the positioning reference.
-Content defaults to an 8px side offset and forwards Atom's `side` and `align`.
+Content defaults to an 8px side offset and `shape="rounded"`, supports
+`shape="pill"`, and forwards Atom's `side` and `align`.
+
+Rounded is the normal readable treatment. Reserve pill for deliberately compact
+single-line labels; wrapped and rich content should remain rounded.
 
 ## Rich mode
 

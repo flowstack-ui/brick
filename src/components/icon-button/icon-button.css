@@ -13,6 +13,7 @@
     position: relative;
     display: inline-flex;
     box-sizing: border-box;
+    flex: 0 0 var(--brick-icon-button-size);
     inline-size: var(--brick-icon-button-size);
     min-inline-size: var(--brick-icon-button-size);
     block-size: var(--brick-icon-button-size);
@@ -222,7 +223,6 @@
     border-inline-end-color: var(--brick-icon-button-spinner-color);
     border-radius: var(--brick-radius-full);
     content: "";
-    translate: -50% -50%;
     animation: brick-button-spin 700ms linear infinite;
   }
 

@@ -4,6 +4,26 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Completed Popover's 13-step owner verification and package gate while keeping
+  Sidebar-dependent legacy Core retirement separate.
+- Upgraded the exact Atom dependency to 0.6.10 so touch and pen scrolling no
+  longer dismisses Popover while genuine outside taps still close it.
+- Upgraded the exact Atom dependency to 0.6.9 so portalled Popover, HoverCard,
+  and Tooltip content preserves the trigger's logical text direction.
+- Upgraded the exact Atom dependency to 0.6.8 and adopted its measured
+  floating dimensions and non-clipping Popover viewport/Arrow structure.
+- Upgraded the exact Atom dependency to 0.6.7 for safe HoverCard pointer/touch
+  handling and root-overflow modal scroll locking without iOS fixed-body
+  browser-toolbar transitions.
+- Removed disruptive same-page HoverCard test hashes in favor of genuine
+  playground destination routes and disabled hit testing during exit motion.
+- Added rounded and pill Tooltip shapes and corrected initial positioning,
+  plain hover persistence, and side-aware Arrow seams.
+- Upgraded the exact Atom dependency to 0.6.1 for immediate Tooltip dismissal
+  on outside touch and scrolling after long-press release.
+- Added neutral and accent AppBar tones across solid, surface, and transparent
+  variants, plus geometric center alignment and documented custom-color tokens.
+
 ### Added
 
 - Checkbox and the complete five-part CheckboxGroup family with three shared

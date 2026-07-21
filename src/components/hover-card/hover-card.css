@@ -15,13 +15,9 @@
 
     z-index: calc(var(--brick-layer-overlay) - 1);
     box-sizing: border-box;
-    display: grid;
+    display: block;
     inline-size: max-content;
-    max-block-size: var(--brick-hover-card-max-block-size);
     max-inline-size: min(var(--brick-hover-card-max-inline-size-md), calc(100dvi - 2rem));
-    gap: var(--brick-hover-card-gap);
-    padding: var(--brick-hover-card-padding);
-    overflow: auto;
     border: var(--brick-border-width) solid var(--brick-hover-card-border);
     border-radius: var(--brick-hover-card-radius);
     background: var(--brick-hover-card-background);
@@ -34,6 +30,16 @@
     transition:
       opacity var(--brick-motion-duration-fast) var(--brick-motion-easing-enter),
       scale var(--brick-motion-duration-fast) var(--brick-motion-easing-enter);
+  }
+
+  .brick-hover-card__viewport {
+    box-sizing: border-box;
+    display: grid;
+    max-block-size: var(--brick-hover-card-max-block-size);
+    gap: var(--brick-hover-card-gap);
+    padding: var(--brick-hover-card-padding);
+    overflow: auto;
+    border-radius: inherit;
   }
 
   .brick-hover-card[data-size="sm"] {
@@ -51,12 +57,33 @@
 
   .brick-hover-card[data-state="closed"] {
     opacity: 0;
+    pointer-events: none;
     scale: 0.98;
   }
 
   .brick-hover-card__arrow {
     --brick-floating-arrow-fill: var(--brick-hover-card-background);
     --brick-floating-arrow-stroke: var(--brick-hover-card-border);
+  }
+
+  .brick-hover-card[data-side="top"] .brick-hover-card__arrow {
+    translate: 0 calc(var(--brick-border-width) * -1);
+    filter: drop-shadow(0 1px 0 var(--brick-hover-card-border));
+  }
+
+  .brick-hover-card[data-side="right"] .brick-hover-card__arrow {
+    translate: var(--brick-border-width) 0;
+    filter: drop-shadow(-1px 0 0 var(--brick-hover-card-border));
+  }
+
+  .brick-hover-card[data-side="bottom"] .brick-hover-card__arrow {
+    translate: 0 var(--brick-border-width);
+    filter: drop-shadow(0 -1px 0 var(--brick-hover-card-border));
+  }
+
+  .brick-hover-card[data-side="left"] .brick-hover-card__arrow {
+    translate: calc(var(--brick-border-width) * -1) 0;
+    filter: drop-shadow(1px 0 0 var(--brick-hover-card-border));
   }
 
   .brick-hover-card :where(p) {

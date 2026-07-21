@@ -16,5 +16,6 @@ export {
   type TooltipRootProps,
   type TooltipTextProps,
   type TooltipTitleProps,
+  type TooltipShape,
   type TooltipTriggerProps,
 } from "./Tooltip.js";

@@ -1,7 +1,18 @@
 # Popover Manual Verification
 
-Status: **Owner run required before package completion**
+Status: **Owner run complete**
 Route: `/popover`
+
+Running observation: released Atom 0.6.7 root/body overflow locking passed the
+physical iPhone/iPad Safari modal Popover retest. Brick now consumes Atom 0.6.10
+for measured floating bounds, an internal scroll viewport that keeps Arrow
+outside the clipping boundary, logical direction on portalled content, and
+touch-scroll-safe outside dismissal. The Atom 0.6.10 physical-mobile
+touch-scroll/outside-tap retest passes. Steps through 12 pass. iOS focus zoom
+from the raw sub-16px input fixture is assigned to future Brick Input work,
+not Popover.
+
+Final result: all 13 steps pass. Popover manual verification is complete.
 
 1. In light mode, open **Project settings** by pointer, Enter, and Space. Confirm
    the elevated surface, spacing, border, shadow, controls, actions, and Arrow.

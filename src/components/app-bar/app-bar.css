@@ -1,7 +1,14 @@
 @layer brick.components {
   .brick-app-bar {
     --brick-app-bar-background: var(--brick-color-surface-base);
+    --brick-app-bar-foreground: var(--brick-color-text-primary);
     --brick-app-bar-border-color: var(--brick-color-border-subtle);
+    --brick-app-bar-blurred-background: color-mix(
+      in srgb,
+      var(--brick-color-surface-base),
+      transparent 12%
+    );
+    --brick-app-bar-reduced-transparency-background: var(--brick-color-surface-base);
     --brick-app-bar-shadow: 0 0.5rem 1.5rem color-mix(
       in srgb,
       var(--brick-color-shadow),
@@ -13,7 +20,7 @@
     inline-size: 100%;
     min-inline-size: 0;
     background: var(--brick-app-bar-background);
-    color: var(--brick-color-text-primary);
+    color: var(--brick-app-bar-foreground);
   }
 
   .brick-app-bar[data-position="absolute"],
@@ -49,6 +56,41 @@
     --brick-app-bar-background: transparent;
   }
 
+  .brick-app-bar[data-tone="accent"][data-variant="solid"] {
+    --brick-app-bar-background: var(--brick-color-accent-solid);
+    --brick-app-bar-foreground: var(--brick-color-accent-on-solid);
+    --brick-app-bar-border-color: var(--brick-color-accent-solid-pressed);
+    --brick-app-bar-blurred-background: color-mix(
+      in srgb,
+      var(--brick-color-accent-solid),
+      transparent 12%
+    );
+    --brick-app-bar-reduced-transparency-background: var(--brick-color-accent-solid);
+  }
+
+  .brick-app-bar[data-tone="accent"][data-variant="surface"] {
+    --brick-app-bar-background: var(--brick-color-accent-soft);
+    --brick-app-bar-foreground: var(--brick-color-accent-on-soft);
+    --brick-app-bar-border-color: var(--brick-color-accent-border);
+    --brick-app-bar-blurred-background: color-mix(
+      in srgb,
+      var(--brick-color-accent-soft),
+      transparent 12%
+    );
+    --brick-app-bar-reduced-transparency-background: var(--brick-color-accent-soft);
+  }
+
+  .brick-app-bar[data-tone="accent"][data-variant="transparent"] {
+    --brick-app-bar-foreground: var(--brick-color-accent-text);
+    --brick-app-bar-border-color: var(--brick-color-accent-border);
+    --brick-app-bar-blurred-background: color-mix(
+      in srgb,
+      var(--brick-color-accent-soft),
+      transparent 12%
+    );
+    --brick-app-bar-reduced-transparency-background: var(--brick-color-accent-soft);
+  }
+
   .brick-app-bar[data-bordered] {
     border-block-end: var(--brick-border-width) solid var(--brick-app-bar-border-color);
   }
@@ -58,17 +100,26 @@
   }
 
   .brick-app-bar[data-blurred] {
-    background: color-mix(in srgb, var(--brick-color-surface-base), transparent 12%);
+    background: var(--brick-app-bar-blurred-background);
+    -webkit-backdrop-filter: blur(0.75rem) saturate(1.15);
     backdrop-filter: blur(0.75rem) saturate(1.15);
   }
 
+  .brick-app-bar[data-tone="accent"][data-variant="solid"]
+    .brick-icon-button[data-tone="neutral"] {
+    --brick-icon-button-background-hover: color-mix(in srgb, currentColor, transparent 88%);
+    --brick-icon-button-background-pressed: color-mix(in srgb, currentColor, transparent 78%);
+    --brick-icon-button-border-color: transparent;
+    --brick-icon-button-foreground: var(--brick-app-bar-foreground);
+  }
+
   .brick-app-bar-toolbar {
-    display: flex;
+    display: grid;
     box-sizing: border-box;
     inline-size: 100%;
     min-inline-size: 0;
     min-block-size: 4rem;
-    flex-wrap: nowrap;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     gap: var(--brick-space-3);
     padding-inline: clamp(var(--brick-space-4), 4vw, var(--brick-space-6));
@@ -86,24 +137,24 @@
     gap: var(--brick-space-2);
   }
 
-  .brick-app-bar-start,
-  .brick-app-bar-end {
-    flex: 0 0 auto;
+  .brick-app-bar-start {
+    grid-column: 1;
   }
 
   .brick-app-bar-center {
-    flex: 1 1 auto;
+    grid-column: 2;
     justify-content: center;
   }
 
   .brick-app-bar-end {
+    grid-column: 3;
     justify-content: flex-end;
-    margin-inline-start: auto;
   }
 
   @media (prefers-reduced-transparency: reduce) {
     .brick-app-bar[data-blurred] {
-      background: var(--brick-color-surface-base);
+      background: var(--brick-app-bar-reduced-transparency-background);
+      -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
   }

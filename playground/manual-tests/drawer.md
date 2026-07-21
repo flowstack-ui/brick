@@ -107,8 +107,8 @@ boundary. Normal automatic toolbar collapse works. Adding
 Drawer already consumes safe-area inset variables. Opening Brick Dialog after
 the same Hide Toolbar command reproduces the compact black address bar, so the
 finding is shared modal behavior rather than Drawer presentation. Keep package
-completion open while Atom's scroll-lock and visual-viewport behavior is
-reproduced and corrected through a released public Atom version.
+completion open while the released Atom 0.6.7 root-overflow scroll-lock patch
+is confirmed on the affected physical devices.
 
 ## Step 6 — Appearance and preferences
 
@@ -183,12 +183,12 @@ focus, and dismissal behavior remains intact without leaking styles.
 ## Completion
 
 Overall result: blocked
-Follow-up issues: Step 5 reproduces shared Atom modal scroll-lock and visual-
-viewport failure on iPhone 16 Pro Max with iOS 26.5.2. Opening Drawer or Dialog
-after Safari's explicit Hide Toolbar command summons the compact black address
-bar above the page but leaves fixed modal content underneath it. Resolve at the
-public Atom boundary, release Atom, upgrade Brick's exact dependency, and
-retest. Step 7's initial RTL travel and 400% reachability findings were
+Follow-up issues: Step 5 reproduced a shared Atom fixed-body scroll-lock and
+visual-viewport failure on iPhone 16 Pro Max with iOS 26.5.2. Atom 0.6.7 now
+uses root/body overflow locking without fixed-body repositioning or unlock-time
+scroll restoration, and Brick consumes that exact registry release. Physical
+Drawer, Dialog, and modal Popover confirmation remains pending. Step 7's
+initial RTL travel and 400% reachability findings were
 corrected in Brick and pass focused automation plus owner retesting.
 Workbook updated: Pending spreadsheet authoring runtime. Keep the manual row
 and package-complete gate open while the Atom-owned Step 5 blocker remains.

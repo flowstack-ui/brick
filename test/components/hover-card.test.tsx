@@ -37,12 +37,14 @@ describe("HoverCard", () => {
     );
 
     const trigger = screen.getByRole("link", { name: "Ada Lovelace" });
-    const content = screen.getByText("Mathematician and computing author.").parentElement;
+    const viewport = screen.getByText("Mathematician and computing author.").parentElement;
+    const content = viewport?.parentElement;
     expect(trigger).toHaveAttribute("href", "/people/ada");
     expect(trigger).toHaveClass("brick-hover-card__trigger");
     expect(trigger).toHaveAttribute("data-slot", "hover-card-trigger");
     expect(content).toHaveClass("brick-hover-card");
     expect(content).toHaveAttribute("data-size", "md");
+    expect(viewport).toHaveClass("brick-hover-card__viewport");
     expect(content).not.toHaveAttribute("role");
     expect(content).not.toHaveAttribute("aria-label");
     expect(trigger).not.toHaveAttribute("aria-expanded");
@@ -87,6 +89,10 @@ describe("HoverCard", () => {
     expect(arrowRef.current).toHaveAttribute("data-slot", "hover-card-arrow");
     expect(arrowRef.current).toHaveAttribute("width", "12");
     expect(arrowRef.current).toHaveAttribute("height", "6");
+    expect(arrowRef.current?.parentElement).toBe(contentRef.current);
+    expect(contentRef.current?.querySelector(".brick-hover-card__viewport")).toHaveTextContent(
+      "Profile",
+    );
   });
 
   it("preserves Trigger render composition", () => {

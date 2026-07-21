@@ -7,10 +7,13 @@ import {
 } from "@flowstack-ui/atom/app-bar";
 
 export type AppBarVariant = "solid" | "surface" | "transparent";
+export type AppBarTone = "neutral" | "accent";
 
 export interface AppBarRootProps extends AtomAppBarRootProps {
   /** Surface treatment. @default "surface" */
   variant?: AppBarVariant;
+  /** Color treatment. @default "neutral" */
+  tone?: AppBarTone;
   /** Draw the logical bottom separator. @default true */
   bordered?: boolean;
   /** Add static surface elevation. @default false */
@@ -30,6 +33,7 @@ export const AppBarRoot = forwardRef<HTMLElement, AppBarRootProps>(
   function AppBarRoot(
     {
       variant = "surface",
+      tone = "neutral",
       bordered = true,
       elevated = false,
       blurred = false,
@@ -45,6 +49,7 @@ export const AppBarRoot = forwardRef<HTMLElement, AppBarRootProps>(
         data-blurred={blurred ? "" : undefined}
         data-bordered={bordered ? "" : undefined}
         data-elevated={elevated ? "" : undefined}
+        data-tone={tone}
         data-variant={variant}
         ref={ref}
       />

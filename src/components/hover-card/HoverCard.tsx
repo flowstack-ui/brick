@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { Children, forwardRef, isValidElement } from "react";
 import {
   HoverCard as AtomHoverCard,
   type HoverCardArrowProps as AtomHoverCardArrowProps,
@@ -45,30 +45,6 @@ export const HoverCardTrigger = forwardRef<HTMLElement, HoverCardTriggerProps>(
   },
 );
 
-export const HoverCardContent = forwardRef<HTMLDivElement, HoverCardContentProps>(
-  function HoverCardContent(
-    {
-      className,
-      sideOffset = 8,
-      size = "md",
-      "data-slot": dataSlot,
-      ...props
-    },
-    ref,
-  ) {
-    return (
-      <AtomHoverCard.Content
-        {...props}
-        className={mergeClassName("brick-hover-card", className)}
-        data-size={size}
-        data-slot={slotOrDefault(dataSlot, "hover-card")}
-        ref={ref}
-        sideOffset={sideOffset}
-      />
-    );
-  },
-);
-
 export const HoverCardArrow = forwardRef<SVGSVGElement, HoverCardArrowProps>(
   function HoverCardArrow({ className, "data-slot": dataSlot, ...props }, ref) {
     return (
@@ -78,6 +54,42 @@ export const HoverCardArrow = forwardRef<SVGSVGElement, HoverCardArrowProps>(
         data-slot={slotOrDefault(dataSlot, "hover-card-arrow")}
         ref={ref}
       />
+    );
+  },
+);
+
+export const HoverCardContent = forwardRef<HTMLDivElement, HoverCardContentProps>(
+  function HoverCardContent(
+    {
+      children,
+      className,
+      sideOffset = 8,
+      size = "md",
+      "data-slot": dataSlot,
+      ...props
+    },
+    ref,
+  ) {
+    const childArray = Children.toArray(children);
+    const arrows = childArray.filter(
+      (child) => isValidElement(child) && child.type === HoverCardArrow,
+    );
+    const content = childArray.filter(
+      (child) => !isValidElement(child) || child.type !== HoverCardArrow,
+    );
+
+    return (
+      <AtomHoverCard.Content
+        {...props}
+        className={mergeClassName("brick-hover-card", className)}
+        data-size={size}
+        data-slot={slotOrDefault(dataSlot, "hover-card")}
+        ref={ref}
+        sideOffset={sideOffset}
+      >
+        <div className="brick-hover-card__viewport">{content}</div>
+        {arrows}
+      </AtomHoverCard.Content>
     );
   },
 );

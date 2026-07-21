@@ -59,8 +59,11 @@ relationship exists.
 
 Stable slots are `hover-card-trigger`, `hover-card`, and `hover-card-arrow`;
 matching classes are `.brick-hover-card__trigger`, `.brick-hover-card`, and
-`.brick-hover-card__arrow`. Content exposes `data-size`; Atom supplies
-`data-state`, final `data-side`, and `data-positioned`.
+`.brick-hover-card__arrow`. The internal `.brick-hover-card__viewport` owns
+constrained scrolling so the outer surface does not clip Arrow. Content exposes
+`data-size`; Atom supplies `data-state`, final `data-side`, and
+`data-positioned`. Collision handling may resolve to the opposite or a
+perpendicular side when the preferred axis cannot fit.
 
 Component tokens cover background, foreground, muted foreground, border,
 radius, shadow, padding, gap, three maximum inline sizes, and maximum block
