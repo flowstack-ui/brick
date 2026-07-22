@@ -342,6 +342,7 @@ test("has no automatically detectable accessibility violations", async ({ page }
 
 test("contains the layout at the project viewport", async ({ page }) => {
   const dimensions = await page.evaluate(() => ({
+    bodyClientWidth: document.body.clientWidth,
     clientWidth: document.documentElement.clientWidth,
     scrollWidth: document.documentElement.scrollWidth,
   }));
@@ -350,7 +351,7 @@ test("contains the layout at the project viewport", async ({ page }) => {
   const headerBox = await page.locator(".site-header").boundingBox();
   expect(headerBox).not.toBeNull();
   expect(headerBox!.x).toBeCloseTo(0, 0);
-  expect(headerBox!.width).toBeCloseTo(dimensions.clientWidth, 0);
+  expect(headerBox!.width).toBeCloseTo(dimensions.bodyClientWidth, 0);
 
   await page.getByRole("button", { name: "Publish project" }).click();
   const dialog = page.getByRole("dialog", { name: "Publish project?" });
