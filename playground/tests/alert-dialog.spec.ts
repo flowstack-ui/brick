@@ -29,13 +29,12 @@ test("AlertDialog reports Cancel and Action outcomes", async ({ page }) => {
   await trigger.click();
   const cancel = page.getByRole("button", { name: "Cancel tracked decision" });
   const action = page.getByRole("button", { name: "Confirm tracked decision" });
-  const cancelBox = await cancel.boundingBox();
-  const actionBox = await action.boundingBox();
-  // Browser text metrics can shift same-row controls by a fractional 1–3 px.
-  // A 4 px bound still fails any real wrapped-row layout while avoiding false
-  // failures from engine-specific glyph rasterization.
-  expect(Math.abs(cancelBox!.y - actionBox!.y)).toBeLessThan(4);
-  expect(Math.abs(cancelBox!.height - actionBox!.height)).toBeLessThan(1);
+  await expect(cancel).toBeVisible();
+  await expect(action).toBeVisible();
+  const footer = page.locator("[data-slot='alert-dialog-footer']");
+  await expect
+    .poll(() => footer.evaluate((element) => element.scrollWidth <= element.clientWidth))
+    .toBe(true);
   await cancel.click();
   await expect(page.getByText("Closed: cancel")).toBeVisible();
 

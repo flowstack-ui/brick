@@ -2,6 +2,10 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./playground/tests",
+  // Reviewed image baselines are captured on the owner's macOS environment.
+  // CI runs portable behavior/a11y coverage and leaves those host-specific
+  // visual comparisons to the explicit local release matrix.
+  testIgnore: process.env.CI ? "**/visual.spec.ts" : undefined,
   outputDir: "./test-results",
   reporter: [["list"], ["html", { open: "never", outputFolder: "playwright-report" }]],
   snapshotPathTemplate: "{testDir}/{testFilePath}-snapshots/{arg}{ext}",
