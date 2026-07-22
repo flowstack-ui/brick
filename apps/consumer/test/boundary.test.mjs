@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const appDirectory = fileURLToPath(new URL("../", import.meta.url));
 
-test("the consumer uses public package exports without legacy or source aliases", async () => {
+test("the consumer uses public package exports without source aliases", async () => {
   const files = await Promise.all([
     readFile(new URL("../src/main.tsx", import.meta.url), "utf8"),
     readFile(new URL("../src/App.tsx", import.meta.url), "utf8"),
@@ -35,20 +35,18 @@ test("the consumer uses public package exports without legacy or source aliases"
   assert.match(source, /@flowstack-ui\/brick\/checkbox-group/);
   assert.match(source, /@flowstack-ui\/brick\/styles\.css/);
   assert.match(source, /@flowstack-ui\/brick\/reset\.css/);
-  assert.doesNotMatch(source, /@templateflow\/core/);
-  assert.doesNotMatch(source, /packages\/brick-ui|\.\.\/\.\.\/packages/);
+  assert.doesNotMatch(source, /\.\.\/\.\.\/(?:src|dist)/);
   assert.doesNotMatch(source, /resolve\s*:\s*\{[^}]*alias/s);
 });
 
-test("the consumer declares Brick as a workspace dependency and no legacy stack", async () => {
+test("the consumer declares the standalone Brick package and a lean toolchain", async () => {
   const packageJson = JSON.parse(
     await readFile(new URL("../package.json", import.meta.url), "utf8"),
   );
 
   assert.equal(packageJson.private, true);
-  assert.equal(packageJson.dependencies["@flowstack-ui/brick"], "*");
-  assert.equal(packageJson.dependencies["@templateflow/core"], undefined);
+  assert.match(packageJson.dependencies["@flowstack-ui/brick"], /^file:/);
   assert.equal(packageJson.dependencies.next, undefined);
   assert.equal(packageJson.devDependencies.tailwindcss, undefined);
-  assert.ok(appDirectory.endsWith("apps/brick-consumer/"));
+  assert.ok(appDirectory.endsWith("/consumer/"));
 });

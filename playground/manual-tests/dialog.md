@@ -141,5 +141,5 @@ behavior remain intact.
 Overall result: pass
 Follow-up issues: Real-Windows forced-colors review remains optional
 compatibility evidence.
-Workbook updated: Yes. The physical workbook records package and consumer gates
-complete, with only dependency-led Core retirement blocked.
+Workbook updated: Yes. The physical workbook records the package and Consumer
+gates complete.

@@ -15,7 +15,7 @@
     "test:all": "npm test"
   },
   "dependencies": {
-    "@flowstack-ui/brick": "*",
+    "@flowstack-ui/brick": "file:../..",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },

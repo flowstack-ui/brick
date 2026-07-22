@@ -166,6 +166,10 @@ npm test
 npm run build:playground
 npm run dev:playground
 npm run dev:playground:network
+npm run build:consumer
+npm run dev:consumer
+npm run dev:consumer:network
+npm run test:consumer
 npm run dev:test
 npm run test:browser
 npm run test:browser:release

@@ -57,8 +57,7 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   right in RTL instead of remaining physically left-aligned.
 - Restored the Form Foundation choice-row hover surface while keeping Checkbox
   invalid control borders on their semantic error color during hover.
-- Completed Popover's 13-step owner verification and package gate while keeping
-  Sidebar-dependent legacy Core retirement separate.
+- Completed Popover's 13-step owner verification and package gate.
 - Upgraded the exact Atom dependency to 0.6.10 so touch and pen scrolling no
   longer dismisses Popover while genuine outside taps still close it.
 - Upgraded the exact Atom dependency to 0.6.9 so portalled Popover, HoverCard,

@@ -1,8 +1,7 @@
 # Coverage Workbook
 
 `component-coverage.xlsx` is Brick's reviewable component evidence tracker. It
-does not replace source, tests, manual protocols, public documentation, or the
-private Core dependency ledger.
+does not replace source, tests, manual protocols, or public documentation.
 
 This file is portable repository guidance. It intentionally does not reference
 a contributor's personal filesystem or require one specific spreadsheet
@@ -63,7 +62,7 @@ Each component sheet tracks:
 - component, type, browser, axe, visual, and relevant mobile tests
 - the numbered manual protocol and latest completed run
 - public documentation and component changelog
-- live-consumer cutover and legacy Core retirement
+- live-consumer composition and package verification
 
 Replace generic `Component` part labels with the approved public part names
 when the component brief is adopted. Add component-specific rows rather than
@@ -84,9 +83,9 @@ The `Index` derives its counts and completion from component sheets.
 - Requirements that do not need human review count as complete at `tested` or
   `verified`.
 - `not applicable` counts as resolved only when its reason is recorded.
-- Package completion and Core retirement remain separate visible gates.
-- A component is not `complete` while any required row is unresolved or either
-  completion gate remains open.
+- Package completion remains a separate visible gate.
+- A component is not `complete` while any required row is unresolved or its
+  package-completion gate remains open.
 
 Update the workbook in the same workstream as the evidence. After editing,
 recalculate formulas, scan for formula errors, visually inspect every changed

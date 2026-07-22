@@ -48,4 +48,4 @@ preference, and content audits. Physical mobile/tablet testing found that some
 fast taps near a Trigger edge can still open the preview intermittently. Native
 link activation remains available and the preview is duplicate, noninteractive,
 and nonessential, so this finding remains a non-blocking Atom follow-up rather
-than a HoverCard completion or Core-retirement blocker.
+than a HoverCard completion blocker.

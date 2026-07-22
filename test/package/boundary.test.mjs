@@ -4,7 +4,8 @@ import { extname } from "node:path";
 import test from "node:test";
 
 const packageRoot = new URL("../../", import.meta.url);
-const roots = ["src", "scripts", "playground", "docs"];
+const roots = ["src", "scripts", "playground", "docs", "apps"];
+const rootFiles = ["AGENTS.md", "README.md", "CHANGELOG.md", "package.json"];
 const checkedExtensions = new Set([".css", ".html", ".js", ".json", ".md", ".mjs", ".ts", ".tsx"]);
 
 async function files(directory) {
@@ -20,7 +21,25 @@ async function files(directory) {
 }
 
 test("public repository content has no staging or private-product coupling", async () => {
-  const prohibited = ["template" + "flow", "@template" + "flow/core", "packages/" + "core"];
+  const prohibited = [
+    "template" + "flow",
+    "@template" + "flow/core",
+    "packages/" + "core",
+    "legacy " + "core",
+    "core " + "retirement",
+    "core-" + "retirement",
+  ];
+  const repositoryFiles = await Promise.all(
+    rootFiles.map(async (file) => ({
+      contents: (await readFile(new URL(file, packageRoot), "utf8")).toLowerCase(),
+      name: file,
+    })),
+  );
+  for (const file of repositoryFiles) {
+    for (const phrase of prohibited) {
+      assert.ok(!file.contents.includes(phrase), `${file.name} contains ${phrase}`);
+    }
+  }
   for (const root of roots) {
     for (const file of await files(new URL(`${root}/`, packageRoot))) {
       const contents = (await readFile(file, "utf8")).toLowerCase();

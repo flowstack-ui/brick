@@ -4,6 +4,9 @@
   "description": "Opinionated styled React components built on @flowstack-ui/atom.",
   "type": "module",
   "license": "MIT",
+  "workspaces": [
+    "apps/consumer"
+  ],
   "sideEffects": [
     "**/*.css"
   ],
@@ -118,24 +121,29 @@
     "build:css": "node scripts/build-styles.mjs --mode production",
     "build:css:dev": "node scripts/build-styles.mjs --mode development",
     "build:playground": "npm run build && vite build --config playground/vite.config.ts",
+    "build:consumer": "npm run build && npm run build -w apps/consumer",
     "dev": "npm run dev:playground",
     "dev:playground": "npm run build && vite --config playground/vite.config.ts",
     "dev:playground:network": "npm run build && vite --config playground/vite.config.ts --host 0.0.0.0",
+    "dev:consumer": "npm run build && npm run dev -w apps/consumer",
+    "dev:consumer:network": "npm run build && npm run dev:network -w apps/consumer",
     "dev:test": "vitest",
     "preview:playground": "vite preview --config playground/vite.config.ts",
-    "typecheck": "tsc -p tsconfig.build.json --noEmit && tsc -p tsconfig.tools.json && tsc -p test/types/tsconfig.json && tsc -p playground/tsconfig.json",
+    "typecheck": "npm run build && tsc -p tsconfig.tools.json && tsc -p test/types/tsconfig.json && tsc -p playground/tsconfig.json",
     "test": "npm run test:node && npm run test:components && npm run test:css",
     "test:node": "npm run build && node --test test/package/*.test.mjs",
     "test:components": "vitest run --coverage",
     "test:css": "node scripts/prototype-css.mjs",
     "test:browser": "npm run build:playground && playwright test --project=chromium",
     "test:browser:release": "npm run build:playground && playwright test",
+    "test:consumer": "npm run build && npm test -w apps/consumer",
     "test:visual:update": "npm run build:playground && playwright test playground/tests/visual.spec.ts --project=chromium --update-snapshots",
-    "test:all": "npm run check && npm run test:browser:release",
+    "test:all": "npm run check && npm run test:browser:release && npm run verify:consumer",
     "size:css": "node scripts/report-css-size.mjs",
     "pack:check": "node scripts/verify-package.mjs --dry-run",
     "verify:consumers": "npm run build && node scripts/verify-consumers.mjs",
-    "check": "npm run typecheck && npm test && npm run build:playground && npm run pack:check && npm run verify:consumers",
+    "verify:consumer": "npm run build && node scripts/verify-app-consumer.mjs",
+    "check": "npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
     "prepublishOnly": "npm run build"
   },
   "browserslist": [

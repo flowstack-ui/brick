@@ -2,8 +2,7 @@
 
 ## Unreleased
 
-- Completed the 13-step owner verification and package gate; legacy Core
-  retirement remains separately blocked by Sidebar.
+- Completed the 13-step owner verification and package gate.
 - Upgraded to Atom 0.6.10 so touch and pen scrolling keeps Popover open while
   genuine outside taps retain dismissal behavior.
 - Upgraded to Atom 0.6.9 so portalled content preserves the trigger's logical
