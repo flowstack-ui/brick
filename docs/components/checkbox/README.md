@@ -23,14 +23,15 @@ import "@flowstack-ui/brick/styles.css";
 ```
 
 Checkbox is also exported from the package root. Brick requires exactly
-`@flowstack-ui/atom` 0.6.12 and React 18 or newer.
+`@flowstack-ui/atom` 0.6.13 and React 18 or newer.
 
 ## API
 
 Checkbox forwards Atom's complete `checked`, `defaultChecked`,
 `onCheckedChange`, `disabled`, `readOnly`, `invalid`, `required`, `name`,
-`value`, `form`, native button/global/ARIA/data/event props, `className`,
-`style`, `data-slot`, `render`, `asChild`, and button ref contract.
+`value`, `form`, `validationBehavior`, native button/global/ARIA/data/event
+props, `className`, `style`, `data-slot`, `render`, `asChild`, and button ref
+contract.
 
 | Prop | Values | Default |
 | --- | --- | --- |
@@ -51,8 +52,11 @@ Unchecked controls are absent from FormData. Checked controls submit their
 configured name/value, disabled controls are omitted, `required` participates
 in native validity, `form` supports an external owner, and native reset restores
 the uncontrolled default. Atom aligns its transparent native validity owner to
-the visible Checkbox, so browser validation messages and redirected focus occur
-at the control rather than at an unrelated hidden-input location.
+the visible Checkbox. Standalone Checkbox defaults to native browser validation
+presentation. Inside a Field with `Field.Error`, it automatically uses inline
+presentation: native invalid state reaches the visible Checkbox and Field, the
+authored error appears, and focus returns to the visible Checkbox. Set
+`validationBehavior` explicitly to override the inherited presentation.
 
 Compose Checkbox as the control inside Brick Field when it needs an external
 label, instructions, required/invalid state, and error. Checkbox does not create

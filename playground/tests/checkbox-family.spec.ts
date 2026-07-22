@@ -45,10 +45,15 @@ test("structured item name and description relationships are complete before int
   await expect(page.locator(`#${descriptionId}`)).toContainText("Delivery and account notices");
 });
 
-test("native FormData, required validity, external ownership, and reset work", async ({ page }) => {
+test("inline required validation, FormData, external ownership, and reset work", async ({ page }) => {
   const form = page.getByRole("form", { name: "Publishing preferences" });
   const acknowledgement = form.getByRole("checkbox", { name: "Release acknowledgement" });
   const email = form.getByRole("checkbox", { name: "Email report" });
+  const acknowledgementField = acknowledgement.locator("xpath=ancestor::*[contains(@class, 'brick-field')]");
+  const deliveryFieldset = email.locator("xpath=ancestor::*[contains(@class, 'brick-fieldset')]");
+  const deliveryGroup = email.locator("xpath=ancestor::*[contains(@class, 'brick-checkbox-group')]");
+  const acknowledgementError = form.getByText("Review is required.");
+  const deliveryError = form.getByText("Choose at least one delivery method.");
   const external = page.getByRole("checkbox", { name: "Externally owned preference" });
   const status = page.locator(".form-foundation-status");
   const requiredInputs = form.locator('input[type="checkbox"][required]');
@@ -66,18 +71,36 @@ test("native FormData, required validity, external ownership, and reset work", a
     expect(proxyBox!.width).toBeCloseTo(visibleBox!.width, 0);
     expect(proxyBox!.height).toBeCloseTo(visibleBox!.height, 0);
   }
-  expect(await form.evaluate((element: HTMLFormElement) => element.checkValidity())).toBe(false);
+  await expect(acknowledgementError).toHaveCount(0);
+  await expect(deliveryError).toHaveCount(0);
   await form.getByRole("button", { name: "Save preferences" }).click();
   await expect(status).toHaveText("No form event yet");
   await expect(acknowledgement).toBeFocused();
+  await expect(form).toHaveAttribute("data-invalid", "");
+  await expect(acknowledgementField).toHaveAttribute("data-invalid", "");
+  await expect(deliveryFieldset).toHaveAttribute("data-invalid", "");
+  await expect(deliveryGroup).toHaveAttribute("data-invalid", "");
+  await expect(acknowledgement).toHaveAttribute("data-invalid", "");
+  await expect(email).toHaveAttribute("data-invalid", "");
+  await expect(acknowledgementError).toBeVisible();
+  await expect(deliveryError).toBeVisible();
 
   await acknowledgement.click();
-  expect(await form.evaluate((element: HTMLFormElement) => element.checkValidity())).toBe(false);
+  await expect(acknowledgementField).not.toHaveAttribute("data-invalid", "");
+  await expect(acknowledgement).not.toHaveAttribute("data-invalid", "");
+  await expect(acknowledgementError).toHaveCount(0);
+  await expect(form).toHaveAttribute("data-invalid", "");
+  await expect(deliveryError).toBeVisible();
   await form.getByRole("button", { name: "Save preferences" }).click();
   await expect(status).toHaveText("No form event yet");
   await expect(email).toBeFocused();
 
   await email.click();
+  await expect(form).not.toHaveAttribute("data-invalid", "");
+  await expect(deliveryFieldset).not.toHaveAttribute("data-invalid", "");
+  await expect(deliveryGroup).not.toHaveAttribute("data-invalid", "");
+  await expect(email).not.toHaveAttribute("data-invalid", "");
+  await expect(deliveryError).toHaveCount(0);
   await external.click();
   expect(await form.evaluate((element: HTMLFormElement) => element.checkValidity())).toBe(true);
   await form.getByRole("button", { name: "Save preferences" }).click();

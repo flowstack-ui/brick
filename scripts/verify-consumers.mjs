@@ -4,6 +4,10 @@ import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 const packageRoot = resolve(".");
+const packageJson = JSON.parse(
+  await readFile(join(packageRoot, "package.json"), "utf8"),
+);
+const atomVersion = packageJson.dependencies["@flowstack-ui/atom"];
 const temp = await mkdtemp(join(tmpdir(), "brick-consumers-"));
 const cache = join(temp, "npm-cache");
 
@@ -176,7 +180,7 @@ void checkboxGroupProps;
         "--ignore-scripts",
         "--save-exact",
         tarball,
-        "@flowstack-ui/atom@0.6.0",
+        `@flowstack-ui/atom@${atomVersion}`,
         `react@${reactVersion}`,
         `react-dom@${reactVersion}`,
         `@types/react@${reactMajor}`,

@@ -30,16 +30,17 @@ import "@flowstack-ui/brick/styles.css";
 `Fieldset` is a frozen namespace with `Root`, `Legend`, `Description`, and
 `Error`; each part is also a named export from the
 `@flowstack-ui/brick/fieldset` subpath, while the root package exposes the
-namespace. Brick requires exactly Atom 0.6.12.
+namespace. Brick requires exactly Atom 0.6.13.
 
 ## API
 
 `Fieldset.Root` renders native `fieldset`, forwards an
 `HTMLFieldSetElement` ref and native props, and accepts `disabled`, `required`,
-and `invalid` booleans (all default `false`). Native `disabled` behavior is
-preserved. Invalid state emits `aria-invalid`; required state is communicated
-by Legend and the actual grouped controls rather than invalid
-`aria-required` on `fieldset` or `role="group"`.
+and `invalid` booleans (all default `false`) plus `validationBehavior` with
+`inline` and `native` values. Native `disabled` behavior is preserved. Invalid
+state emits `aria-invalid`; required state is communicated by Legend and the
+actual grouped controls rather than invalid `aria-required` on `fieldset` or
+`role="group"`.
 
 - `Fieldset.Legend` renders native `legend`, forwards an `HTMLLegendElement`
   ref, and accepts `requiredIndicator` (default `" *"`) and
@@ -62,6 +63,13 @@ accessible group name. Visible Description and Error IDs are included in the
 group's server-rendered and hydrated description relationship. Errors are not
 automatically live; add an appropriate native live role only when newly
 inserted feedback must be announced.
+
+When the Fieldset contains `Fieldset.Error`, native constraint failures from a
+compatible group automatically use inline presentation. The shared error
+appears, Fieldset and group expose invalid state, the browser bubble is
+suppressed, and focus moves to the group's first enabled visible control.
+Correction and Form reset clear native-derived invalid state. Set
+`validationBehavior="native"` to retain browser validation UI for the scope.
 
 Fieldset has no border, surface, radius, or elevation. Its semantic source
 order remains Legend, Description, controls/Fields, then Error. Long content,

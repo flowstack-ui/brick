@@ -6,6 +6,9 @@ Field follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Adopted Atom 0.6.13 automatic inline validation presentation when
+  `Field.Error` is present, including native-invalid aggregation, visible
+  control focus, correction/reset clearing, and explicit native override.
 - Initial complete `Field.Root`, `Label`, `Description`, `Error`, and
   `RequiredIndicator` namespace and direct exports.
 - Generated server/hydration relationships, complete state inheritance,

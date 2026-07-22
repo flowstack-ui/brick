@@ -29,7 +29,7 @@ import "@flowstack-ui/brick/styles.css";
 `Field` is a frozen namespace with `Root`, `Label`, `Description`, `Error`, and
 `RequiredIndicator`. Every part is also available as a named export from the
 `@flowstack-ui/brick/field` subpath, while the root package exposes the
-namespace. Brick requires exactly Atom 0.6.12.
+namespace. Brick requires exactly Atom 0.6.13.
 
 ## Root API
 
@@ -42,6 +42,7 @@ props, and accepts:
 | `disabled` | boolean | `false` |
 | `required` | boolean | `false` |
 | `readOnly` | boolean | `false` |
+| `validationBehavior` | `inline`, `native` | inherited/automatic |
 | `orientation` | `vertical`, `horizontal` | `vertical` |
 
 An explicit root `id` becomes the stable prefix for generated control, label,
@@ -84,6 +85,13 @@ decorative to assistive technology because required state reaches the control;
 optional text remains readable. Disabled, read-only, required, invalid, and
 orientation states are exposed as data attributes. Invalid styling uses both
 danger color and a wavy label underline.
+
+When the Field contains `Field.Error`, native constraint failures from a
+compatible control automatically use inline presentation. The error appears,
+Field and control expose invalid state, the browser bubble is suppressed, and
+focus moves to the visible control. Correcting the value or resetting its Form
+clears native-derived invalid state. Set `validationBehavior="native"` to opt
+that scope back into browser validation UI.
 
 Add `role="alert"`, `role="status"`, or `aria-live` to Error only when the
 timing of newly inserted feedback needs it.

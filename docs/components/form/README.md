@@ -24,7 +24,7 @@ import "@flowstack-ui/brick/styles.css";
 </Form>
 ```
 
-Brick requires exactly `@flowstack-ui/atom` 0.6.12 and React 18 or newer.
+Brick requires exactly `@flowstack-ui/atom` 0.6.13 and React 18 or newer.
 
 ## API and native behavior
 
@@ -37,6 +37,7 @@ native `form`, `onSubmit`, `onReset`, and `onInvalid`.
 
 | Atom prop | Default | Purpose |
 | --- | --- | --- |
+| `validationBehavior` | inherited/automatic | use `inline` to suppress browser bubbles and present invalid state through compatible Field/Fieldset errors, or `native` to retain browser validation UI |
 | `preventDefaultOnSubmit` | `false` | deliberately prevent native submission before `onSubmit` |
 | `validateOnSubmit` | none | synchronous or asynchronous callback validation |
 | `asChild` | `false` | compose one element/component that still renders a native form |
@@ -58,6 +59,14 @@ Native submission, uncontrolled `FormData`, controlled state, React Hook Form,
 sync or async `onSubmit`, and function actions are all supported. Brick does
 not prescribe one submission model. A native reset also clears Atom callback
 metadata unless the reset event is cancelled.
+
+Native constraint validation still blocks an invalid submission in both
+presentation modes. A compatible `Field.Error` or `Fieldset.Error` selects
+inline presentation for that scope automatically: the browser bubble is
+suppressed, native validity becomes the scope's `data-invalid` state, and the
+first invalid visible control receives focus. Set `validationBehavior="native"`
+on Form, Field, Fieldset, or an individual control when browser validation UI
+is deliberately required. An explicit value on the nearest control wins.
 
 ## Styling and customization
 

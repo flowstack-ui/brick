@@ -6,6 +6,9 @@ Form follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Adopted Atom 0.6.13 `validationBehavior` inheritance and aggregated native
+  invalid state. Compatible Field and Fieldset errors select inline validation
+  automatically while explicit `native` presentation remains available.
 - Initial direct `Form` API with root and component-subpath exports.
 - Native URL, function-action, callback, reset, validation, external-control,
   native-prop, ref, `asChild`, and `render` support through Atom 0.5.3.

@@ -26,6 +26,7 @@ const formProps: FormProps = {
   children: createElement("button", { type: "submit" }, "Save"),
   method: "post",
   preventDefaultOnSubmit: false,
+  validationBehavior: "inline",
 };
 const composedForm: FormProps = {
   asChild: true,
@@ -40,6 +41,7 @@ const fieldRootProps: FieldRootProps = {
   children: createElement(Field.Label, null, "Email"),
   invalid: true,
   orientation,
+  validationBehavior: "native",
 };
 const fieldLabelProps: FieldLabelProps = {
   children: "Email",
@@ -61,6 +63,7 @@ const fieldsetRootProps: FieldsetRootProps = {
   children: createElement(Fieldset.Legend, null, "Topics"),
   disabled: true,
   required: true,
+  validationBehavior: "inline",
 };
 const fieldsetLegendProps: FieldsetLegendProps = {
   children: "Topics",

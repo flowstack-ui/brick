@@ -19,6 +19,7 @@ const checkboxProps: CheckboxProps = {
   defaultChecked: "indeterminate",
   name: "terms",
   size,
+  validationBehavior: "inline",
   value: "accepted",
 };
 const checkboxChildProps: CheckboxProps = {
@@ -32,6 +33,7 @@ const rootProps: CheckboxGroupRootProps = {
   name: "channels",
   orientation: "horizontal",
   size: "sm",
+  validationBehavior: "native",
 };
 const itemProps: CheckboxGroupItemProps = {
   children: "Email",
@@ -82,6 +84,8 @@ const invalidCheckboxChild: CheckboxProps = { asChild: true, children: "Terms" }
 const invalidCheckboxVariant: CheckboxProps = { children: "Terms", variant: "soft" };
 // @ts-expect-error Checkbox size is constrained.
 const invalidCheckboxSize: CheckboxProps = { children: "Terms", size: "xl" };
+// @ts-expect-error Validation presentation is inline or native.
+const invalidCheckboxValidation: CheckboxProps = { children: "Terms", validationBehavior: "auto" };
 // @ts-expect-error Native aria-label replaces custom aliases.
 const invalidAriaAlias: CheckboxProps = { ariaLabel: "Terms" };
 // @ts-expect-error Root asChild requires one element.
@@ -101,6 +105,7 @@ void invalidCheckboxComposition;
 void invalidCheckboxChild;
 void invalidCheckboxVariant;
 void invalidCheckboxSize;
+void invalidCheckboxValidation;
 void invalidAriaAlias;
 void invalidRootChild;
 void invalidItemSize;

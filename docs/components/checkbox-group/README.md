@@ -35,7 +35,9 @@ shortcut, generated options API, or automatic Fieldset wrapper.
 
 Root forwards `value`, `defaultValue`, `onValueChange`, `allValues`, `name`,
 `form`, `disabled`, `readOnly`, `invalid`, `required`, `orientation`, native
-div/global/ARIA/data/event props, class, style, slot, render, asChild, and ref.
+div/global/ARIA/data/event props, class, style, slot, render, asChild, ref, and
+`validationBehavior` (`inline` or `native`). Brick requires exactly Atom
+0.6.13.
 
 | Prop | Values | Default |
 | --- | --- | --- |
@@ -67,7 +69,11 @@ unchecked and non-operative. Brick never infers children or owns a collection.
 Selected Items submit repeated name/value entries. Required means one or more
 selected values; disabled controls are omitted; external `form` ownership and
 native reset are supported. Compose Root inside Brick Fieldset when the set
-needs a shared Legend, description, required/invalid state, and error.
+needs a shared Legend, description, required/invalid state, and error. A
+Fieldset with `Fieldset.Error` automatically presents the native one-or-more
+failure inline, marks the group invalid, and focuses the first enabled Item.
+Standalone groups default to native browser presentation; an explicit
+`validationBehavior` overrides inheritance.
 
 ## Styling and accessibility
 

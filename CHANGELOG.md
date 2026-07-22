@@ -4,6 +4,11 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Upgraded the exact Atom dependency to 0.6.13 so Form, Field, Fieldset, and
+  validity-owning controls expose inherited inline/native validation
+  presentation, automatic authored errors, visible first-invalid focus, and
+  correction/reset clearing without Brick-owned validation behavior.
+
 - Upgraded the exact Atom dependency to 0.6.12 so required Checkbox and
   CheckboxGroup native validation messages align with and focus their visible
   controls instead of an unrelated transparent-input location.
