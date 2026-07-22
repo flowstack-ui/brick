@@ -30,7 +30,7 @@ import "@flowstack-ui/brick/styles.css";
 `Fieldset` is a frozen namespace with `Root`, `Legend`, `Description`, and
 `Error`; each part is also a named export from the
 `@flowstack-ui/brick/fieldset` subpath, while the root package exposes the
-namespace. Brick requires exactly Atom 0.6.0.
+namespace. Brick requires exactly Atom 0.6.12.
 
 ## API
 

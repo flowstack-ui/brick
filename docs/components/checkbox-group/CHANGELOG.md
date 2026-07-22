@@ -4,6 +4,8 @@
 
 ### Fixed
 
+- Upgraded to exact Atom 0.6.12 so required native validation messages anchor
+  to the first enabled Item and validation focus returns to that Item.
 - Upgraded to exact Atom 0.6.11 so the required one-or-more validation proxy
   remains eligible for native browser constraint validation.
 

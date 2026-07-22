@@ -24,7 +24,7 @@ import "@flowstack-ui/brick/styles.css";
 </Form>
 ```
 
-Brick requires exactly `@flowstack-ui/atom` 0.6.0 and React 18 or newer.
+Brick requires exactly `@flowstack-ui/atom` 0.6.12 and React 18 or newer.
 
 ## API and native behavior
 

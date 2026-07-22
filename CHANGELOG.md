@@ -4,6 +4,11 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Upgraded the exact Atom dependency to 0.6.12 so required Checkbox and
+  CheckboxGroup native validation messages align with and focus their visible
+  controls instead of an unrelated transparent-input location.
+- Restored direct workbench routes in the production preview server so the
+  release browser matrix tests the intended component pages instead of 404s.
 - Upgraded the exact Atom dependency to 0.6.11 so required Checkbox and
   CheckboxGroup inputs block empty native form submission as documented.
 - Removed imposed Form-wide submission and validation outlines while retaining

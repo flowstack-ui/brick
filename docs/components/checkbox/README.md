@@ -23,7 +23,7 @@ import "@flowstack-ui/brick/styles.css";
 ```
 
 Checkbox is also exported from the package root. Brick requires exactly
-`@flowstack-ui/atom` 0.6.11 and React 18 or newer.
+`@flowstack-ui/atom` 0.6.12 and React 18 or newer.
 
 ## API
 
@@ -50,7 +50,9 @@ announced through `aria-checked="mixed"`; it does not submit as checked.
 Unchecked controls are absent from FormData. Checked controls submit their
 configured name/value, disabled controls are omitted, `required` participates
 in native validity, `form` supports an external owner, and native reset restores
-the uncontrolled default.
+the uncontrolled default. Atom aligns its transparent native validity owner to
+the visible Checkbox, so browser validation messages and redirected focus occur
+at the control rather than at an unrelated hidden-input location.
 
 Compose Checkbox as the control inside Brick Field when it needs an external
 label, instructions, required/invalid state, and error. Checkbox does not create

@@ -1650,7 +1650,7 @@ function CheckboxFamilyPlayground() {
   return (
     <div className="playground-shell checkbox-workbench">
       <header className="playground-header">
-        <div><p className="playground-kicker">@flowstack-ui/brick</p><h1>Checkbox family workbench</h1><p>Complete independent and grouped selection, Parent aggregation, native forms, structured item content, composition, responsive layout, and Atom 0.6.0 behavior.</p></div>
+        <div><p className="playground-kicker">@flowstack-ui/brick</p><h1>Checkbox family workbench</h1><p>Complete independent and grouped selection, Parent aggregation, native forms, structured item content, composition, responsive layout, and Atom 0.6.12 behavior.</p></div>
         <fieldset className="playground-appearance"><legend>Appearance</legend>{(["system", "light", "dark"] as const).map((value) => <Button aria-pressed={appearance === value} key={value} onPress={() => selectAppearance(value)} size="sm" tone="neutral" variant={appearance === value ? "soft" : "ghost"}>{value}</Button>)}</fieldset>
       </header>
       <main data-testid="checkbox-workbench">

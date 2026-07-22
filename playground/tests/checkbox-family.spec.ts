@@ -53,18 +53,29 @@ test("native FormData, required validity, external ownership, and reset work", a
   const status = page.locator(".form-foundation-status");
   const requiredInputs = form.locator('input[type="checkbox"][required]');
   await expect(requiredInputs).toHaveCount(2);
-  for (const input of await requiredInputs.all()) {
+  const visibleValidityOwners = [acknowledgement, email];
+  for (const [index, input] of (await requiredInputs.all()).entries()) {
     expect(await input.evaluate((element: HTMLInputElement) => element.willValidate)).toBe(true);
     expect(await input.evaluate((element: HTMLInputElement) => element.validity.valueMissing)).toBe(true);
+    const proxyBox = await input.boundingBox();
+    const visibleBox = await visibleValidityOwners[index].boundingBox();
+    expect(proxyBox).not.toBeNull();
+    expect(visibleBox).not.toBeNull();
+    expect(proxyBox!.x).toBeCloseTo(visibleBox!.x, 0);
+    expect(proxyBox!.y).toBeCloseTo(visibleBox!.y, 0);
+    expect(proxyBox!.width).toBeCloseTo(visibleBox!.width, 0);
+    expect(proxyBox!.height).toBeCloseTo(visibleBox!.height, 0);
   }
   expect(await form.evaluate((element: HTMLFormElement) => element.checkValidity())).toBe(false);
   await form.getByRole("button", { name: "Save preferences" }).click();
   await expect(status).toHaveText("No form event yet");
+  await expect(acknowledgement).toBeFocused();
 
   await acknowledgement.click();
   expect(await form.evaluate((element: HTMLFormElement) => element.checkValidity())).toBe(false);
   await form.getByRole("button", { name: "Save preferences" }).click();
   await expect(status).toHaveText("No form event yet");
+  await expect(email).toBeFocused();
 
   await email.click();
   await external.click();
