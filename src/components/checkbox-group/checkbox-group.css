@@ -1,11 +1,21 @@
 @layer brick.components {
   .brick-checkbox-group {
     --brick-checkbox-group-gap: var(--brick-space-1);
+    --brick-checkbox-radius: var(--brick-radius-subtle);
+    --brick-checkbox-invalid-foreground: var(--brick-color-danger-text);
 
     display: flex;
+    box-sizing: border-box;
     min-inline-size: 0;
     max-inline-size: 100%;
     gap: var(--brick-checkbox-group-gap);
+  }
+
+  .brick-checkbox-group[data-invalid] {
+    padding-inline-start: var(--brick-space-2);
+    border-inline-start: var(--brick-border-focus-width) solid
+      var(--brick-checkbox-invalid-foreground);
+    border-radius: var(--brick-checkbox-radius);
   }
 
   .brick-checkbox-group[data-orientation="vertical"] {
@@ -56,6 +66,14 @@
   }
 
   @media (forced-colors: active) {
+    .brick-checkbox-group[data-invalid] {
+      border-inline-start-color: Mark;
+    }
+
+    .brick-checkbox-group-item-label {
+      color: ButtonText;
+    }
+
     .brick-checkbox-group-item-description {
       color: CanvasText;
     }

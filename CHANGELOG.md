@@ -4,6 +4,30 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Completed the fourteen-step Checkbox-family owner review after correcting
+  validation presentation, focus/scroll behavior, responsive layout, RTL,
+  invalid scope, and the rendered-adapter circle example. Physical touch and
+  VoiceOver passed; Windows forced colors was unavailable and remains optional
+  device evidence separate from the reviewed automated baseline.
+- Upgraded the exact Atom dependency to 0.6.17 so explicit browser validation
+  scrolling remains safe in non-browser DOM implementations.
+- Upgraded the exact Atom dependency to 0.6.16 so inline validation explicitly
+  scrolls its visible Checkbox and CheckboxGroup focus targets into view on
+  real mobile Safari.
+- Upgraded the exact Atom dependency to 0.6.15 and render validation-directed
+  Checkbox and CheckboxGroup focus with the standard visible focus ring after
+  pointer as well as keyboard submission.
+- Scoped Checkbox invalid presentation to its control and row cue, and scoped
+  shared CheckboxGroup failures to one group cue without coloring every option
+  as wrong. Separately invalid group Items retain an individual cue, and the
+  group cue uses the same rounded terminals as an invalid Checkbox.
+- Made Fieldset Error separation independent of consumer paragraph-margin
+  resets.
+- Aligned Fieldset Legend typography and its first-content gap with Field Label
+  while retaining the larger spacing inside related-control groups.
+- Upgraded the exact Atom dependency to 0.6.14 so required Checkbox and
+  CheckboxGroup remain neutral while untouched, then reveal inline invalid
+  state after blur or final-selection removal and clear it on correction/reset.
 - Upgraded the exact Atom dependency to 0.6.13 so Form, Field, Fieldset, and
   validity-owning controls expose inherited inline/native validation
   presentation, automatic authored errors, visible first-invalid focus, and

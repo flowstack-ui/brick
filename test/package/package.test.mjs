@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.6.13");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.6.17");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -195,6 +195,8 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-fieldset/);
   assert.match(styles, /\.brick-checkbox/);
   assert.match(styles, /\.brick-checkbox-group/);
+  assert.match(styles, /\.brick-checkbox-group\[data-invalid\]/);
+  assert.match(styles, /\.brick-checkbox-group:not\(\[data-invalid\]\)/);
   assert.match(styles, /box-sizing:\s*border-box/);
   assert.match(styles, /--brick-button-background/);
   assert.match(styles, /--brick-icon-button-size/);

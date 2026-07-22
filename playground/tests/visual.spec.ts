@@ -24,8 +24,10 @@ test("Button visual recipes retain their hierarchy", async ({ page }) => {
 test("Checkbox family retains state, size, and structured-content hierarchy", async ({ page }) => {
   await page.goto("/checkbox");
   await expect(page.getByTestId("checkbox-sizes-states")).toHaveScreenshot("checkbox-sizes-states-light.png");
+  await expect(page.getByTestId("checkbox-invalid-scope")).toHaveScreenshot("checkbox-invalid-scope-light.png");
   await page.evaluate(() => { document.documentElement.dataset.brickAppearance = "dark"; });
   await expect(page.getByTestId("checkbox-overview")).toHaveScreenshot("checkbox-overview-dark.png");
+  await expect(page.getByTestId("checkbox-invalid-scope")).toHaveScreenshot("checkbox-invalid-scope-dark.png");
 });
 
 test("Checkbox family remains logical and contained in mobile RTL and forced colors", async ({ page }) => {
@@ -35,6 +37,7 @@ test("Checkbox family remains logical and contained in mobile RTL and forced col
   await page.setViewportSize({ width: 1120, height: 900 });
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
   await expect(page.getByTestId("checkbox-sizes-states")).toHaveScreenshot("checkbox-sizes-states-forced-colors.png");
+  await expect(page.getByTestId("checkbox-invalid-scope")).toHaveScreenshot("checkbox-invalid-scope-forced-colors.png");
 });
 
 test("Button high-risk states retain visible boundaries", async ({ page }) => {

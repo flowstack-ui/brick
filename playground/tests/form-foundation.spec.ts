@@ -81,7 +81,7 @@ test("Fieldset preserves native disabled state and group relationships", async (
       controlBorder: await control.evaluate((element) => getComputedStyle(element).borderColor),
     };
     expect(hoverAfter.background).not.toBe(hoverBefore.background);
-    expect(hoverAfter.controlBorder).toBe(hoverBefore.controlBorder);
+    expect(hoverAfter.controlBorder).not.toBe(hoverBefore.controlBorder);
   }
 
   const weightBefore = await firstChoice.evaluate((element) => getComputedStyle(element).fontWeight);
@@ -89,11 +89,9 @@ test("Fieldset preserves native disabled state and group relationships", async (
   const weightAfter = await firstChoice.evaluate((element) => getComputedStyle(element).fontWeight);
   expect(weightAfter).toBe(weightBefore);
 
-  const visibleSpacing = await invalidGroup.evaluate((element) => {
-    const lastChoice = element.querySelector<HTMLElement>('[role="checkbox"]:last-of-type');
-    const error = element.querySelector<HTMLElement>(".brick-fieldset-error");
-    return error!.getBoundingClientRect().top - lastChoice!.getBoundingClientRect().bottom;
-  });
+  const visibleSpacing = await invalidGroup
+    .locator(".brick-fieldset-error")
+    .evaluate((element) => Number.parseFloat(getComputedStyle(element).paddingBlockStart));
   expect(visibleSpacing).toBeGreaterThanOrEqual(16);
 
   const addressSpacing = await groups.locator("#address-group").evaluate((element) => {
@@ -150,26 +148,26 @@ test("Form foundation remains contained at 256 px, supports RTL, and passes axe"
     const error = element.querySelector<HTMLElement>(".brick-fieldset-error")!;
     const checkbox = element.querySelector<HTMLElement>('[role="checkbox"]')!;
     const checkboxControl = checkbox.querySelector<HTMLElement>(".brick-checkbox-control")!;
-    const errorStyle = getComputedStyle(error);
+    const errorCueStyle = getComputedStyle(error, "::before");
     const checkboxStyle = getComputedStyle(checkbox);
     const checkboxControlStyle = getComputedStyle(checkboxControl);
     return {
       legendGap: description.getBoundingClientRect().top - legend.getBoundingClientRect().bottom,
-      borderLeft: Number.parseFloat(errorStyle.borderLeftWidth),
-      borderRight: Number.parseFloat(errorStyle.borderRightWidth),
+      errorCueBackground: errorCueStyle.backgroundColor,
+      errorCueRight: errorCueStyle.right,
+      errorCueWidth: Number.parseFloat(errorCueStyle.width),
       checkboxBorderLeft: Number.parseFloat(checkboxStyle.borderLeftWidth),
       checkboxBorderRight: Number.parseFloat(checkboxStyle.borderRightWidth),
       checkboxBorderRightColor: checkboxStyle.borderRightColor,
       checkboxControlBorderColor: checkboxControlStyle.borderColor,
-      errorBorderRightColor: errorStyle.borderRightColor,
     };
   });
-  expect(rtlGeometry.legendGap).toBeGreaterThanOrEqual(16);
-  expect(rtlGeometry.borderLeft).toBe(0);
-  expect(rtlGeometry.borderRight).toBeGreaterThan(0);
+  expect(rtlGeometry.legendGap).toBeGreaterThanOrEqual(12);
+  expect(rtlGeometry.errorCueRight).toBe("0px");
+  expect(rtlGeometry.errorCueWidth).toBeGreaterThan(0);
   expect(rtlGeometry.checkboxBorderRight).toBeGreaterThan(rtlGeometry.checkboxBorderLeft);
-  expect(rtlGeometry.checkboxBorderRightColor).toBe(rtlGeometry.errorBorderRightColor);
-  expect(rtlGeometry.checkboxControlBorderColor).toBe(rtlGeometry.errorBorderRightColor);
+  expect(rtlGeometry.checkboxBorderRightColor).toBe(rtlGeometry.errorCueBackground);
+  expect(rtlGeometry.checkboxControlBorderColor).not.toBe(rtlGeometry.errorCueBackground);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
 
   for (const fixture of await stress.locator(".phone-frame").all()) {

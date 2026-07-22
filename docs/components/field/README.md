@@ -29,7 +29,7 @@ import "@flowstack-ui/brick/styles.css";
 `Field` is a frozen namespace with `Root`, `Label`, `Description`, `Error`, and
 `RequiredIndicator`. Every part is also available as a named export from the
 `@flowstack-ui/brick/field` subpath, while the root package exposes the
-namespace. Brick requires exactly Atom 0.6.13.
+namespace. Brick requires exactly Atom 0.6.17.
 
 ## Root API
 

@@ -30,7 +30,7 @@ import "@flowstack-ui/brick/styles.css";
 `Fieldset` is a frozen namespace with `Root`, `Legend`, `Description`, and
 `Error`; each part is also a named export from the
 `@flowstack-ui/brick/fieldset` subpath, while the root package exposes the
-namespace. Brick requires exactly Atom 0.6.13.
+namespace. Brick requires exactly Atom 0.6.17.
 
 ## API
 
@@ -75,6 +75,9 @@ Fieldset has no border, surface, radius, or elevation. Its semantic source
 order remains Legend, Description, controls/Fields, then Error. Long content,
 RTL, forced colors, narrow layouts, and zoom wrap without changing that order.
 Invalid styling combines danger color with a wavy Legend underline.
+Legend uses the same default typography and initial content gap as Field Label
+because both name one form question. Fieldset retains a larger control gap
+between its Description, grouped controls, and Error.
 
 ## Stable hooks and tokens
 

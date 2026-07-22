@@ -23,7 +23,7 @@ import "@flowstack-ui/brick/styles.css";
 ```
 
 Checkbox is also exported from the package root. Brick requires exactly
-`@flowstack-ui/atom` 0.6.13 and React 18 or newer.
+`@flowstack-ui/atom` 0.6.17 and React 18 or newer.
 
 ## API
 
@@ -57,6 +57,15 @@ presentation. Inside a Field with `Field.Error`, it automatically uses inline
 presentation: native invalid state reaches the visible Checkbox and Field, the
 authored error appears, and focus returns to the visible Checkbox. Set
 `validationBehavior` explicitly to override the inherited presentation.
+Untouched required Checkbox remains visually neutral. Leaving it unchecked or
+removing its checked state after interaction reveals the same invalid state;
+checking it or resetting the Form clears that derived presentation.
+Inline validation-directed focus scrolls the visible Checkbox into view,
+exposes Atom's `[data-focus-visible]` state until blur, and renders Brick's
+standard focus ring for that state.
+When invalid, the visible control border and logical row-start cue use the
+danger foreground while the choice text remains neutral. Field adds its wavy
+Label and authored error treatment when present.
 
 Compose Checkbox as the control inside Brick Field when it needs an external
 label, instructions, required/invalid state, and error. Checkbox does not create
@@ -66,7 +75,8 @@ Field automatically.
 
 The stable root is `.brick-checkbox`; the slot defaults to `checkbox` and Atom
 exposes `data-state`, `data-disabled`, `data-readonly`, `data-invalid`, and
-`data-required`. Brick adds `data-size`.
+`data-required`. Validation-directed focus temporarily exposes
+`data-focus-visible`. Brick adds `data-size`.
 
 Public component tokens are:
 
@@ -87,7 +97,9 @@ Public component tokens are:
 --brick-checkbox-invalid-foreground
 ```
 
-Every size retains at least a 44 CSS-pixel row target. Light, dark, forced
-colors, reduced motion, RTL, long text, and 200%/400% reflow are supported.
+Size changes coordinate the visible control, indicator, gap, row padding, and
+target height while label typography remains stable. Every size retains at
+least a 44 CSS-pixel row target. Light, dark, forced colors, reduced motion,
+RTL, long text, and 200%/400% reflow are supported.
 
 See [CHANGELOG.md](CHANGELOG.md).

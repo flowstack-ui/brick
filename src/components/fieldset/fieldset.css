@@ -1,13 +1,13 @@
 @layer brick.components {
   .brick-fieldset {
-    --brick-fieldset-gap: var(--brick-space-4);
+    --brick-fieldset-gap: var(--brick-space-3);
     --brick-fieldset-control-gap: var(--brick-space-4);
     --brick-fieldset-legend-foreground: var(--brick-color-text-primary);
     --brick-fieldset-legend-foreground-disabled: var(--brick-color-text-secondary);
-    --brick-fieldset-legend-font-family: var(--brick-font-family-heading);
-    --brick-fieldset-legend-font-size: var(--brick-font-size-lg);
-    --brick-fieldset-legend-font-weight: var(--brick-font-weight-semibold);
-    --brick-fieldset-legend-line-height: var(--brick-font-line-height-tight);
+    --brick-fieldset-legend-font-family: var(--brick-font-family-body);
+    --brick-fieldset-legend-font-size: var(--brick-font-size-md);
+    --brick-fieldset-legend-font-weight: var(--brick-font-weight-medium);
+    --brick-fieldset-legend-line-height: var(--brick-font-line-height-body);
     --brick-fieldset-indicator-foreground: var(--brick-color-danger-text);
     --brick-fieldset-indicator-gap: var(--brick-space-1);
     --brick-fieldset-optional-foreground: var(--brick-color-text-secondary);
@@ -73,10 +73,6 @@
     overflow-wrap: anywhere;
   }
 
-  .brick-fieldset > .brick-fieldset-error {
-    margin-block-start: var(--brick-fieldset-control-gap);
-  }
-
   .brick-fieldset-description {
     color: var(--brick-fieldset-description-foreground);
     font-size: var(--brick-fieldset-description-font-size);
@@ -84,13 +80,22 @@
   }
 
   .brick-fieldset-error {
+    position: relative;
+    padding-block-start: var(--brick-fieldset-control-gap);
     padding-inline-start: var(--brick-space-2);
-    border-inline-start: max(var(--brick-border-width), 0.125rem) solid
-      var(--brick-fieldset-error-foreground);
     color: var(--brick-fieldset-error-foreground);
     font-size: var(--brick-fieldset-error-font-size);
     font-weight: var(--brick-fieldset-error-font-weight);
     line-height: var(--brick-fieldset-error-line-height);
+  }
+
+  .brick-fieldset-error::before {
+    position: absolute;
+    inset-block: var(--brick-fieldset-control-gap) 0;
+    inset-inline-start: 0;
+    inline-size: max(var(--brick-border-width), 0.125rem);
+    background: var(--brick-fieldset-error-foreground);
+    content: "";
   }
 
   .brick-fieldset[data-disabled] .brick-fieldset-legend {
@@ -106,8 +111,11 @@
 
   @media (forced-colors: active) {
     .brick-fieldset-error {
-      border-inline-start-color: Mark;
       color: CanvasText;
+    }
+
+    .brick-fieldset-error::before {
+      background: Mark;
     }
 
     .brick-fieldset[data-invalid] .brick-fieldset-legend {

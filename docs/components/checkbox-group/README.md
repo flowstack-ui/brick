@@ -37,7 +37,7 @@ Root forwards `value`, `defaultValue`, `onValueChange`, `allValues`, `name`,
 `form`, `disabled`, `readOnly`, `invalid`, `required`, `orientation`, native
 div/global/ARIA/data/event props, class, style, slot, render, asChild, ref, and
 `validationBehavior` (`inline` or `native`). Brick requires exactly Atom
-0.6.13.
+0.6.17.
 
 | Prop | Values | Default |
 | --- | --- | --- |
@@ -74,6 +74,24 @@ Fieldset with `Fieldset.Error` automatically presents the native one-or-more
 failure inline, marks the group invalid, and focuses the first enabled Item.
 Standalone groups default to native browser presentation; an explicit
 `validationBehavior` overrides inheritance.
+Inline validation-directed focus scrolls the first enabled Item into view,
+exposes Atom's `[data-focus-visible]` state there until blur, and renders
+Brick's standard focus ring for that state.
+Untouched required groups remain visually neutral. Leaving the whole group
+empty or removing its final selection after interaction reveals one shared
+invalid state; moving between Items does not count as leaving the group.
+Selecting an Item or resetting the Form clears the derived presentation.
+The shared invalid treatment belongs to Root: one logical group-start cue is
+shown while Item controls, labels, and descriptions remain neutral because any
+eligible option can satisfy the requirement. Fieldset adds its wavy Legend and
+authored error treatment when present. An Item with its own explicit `invalid`
+state receives the individual control-and-row cue when Root is otherwise
+valid.
+
+Without Fieldset, Root still exposes its group-level invalid presentation. The
+consumer must provide an accessible group name through `aria-label` or
+`aria-labelledby` and associate any external error copy through
+`aria-describedby`. CheckboxGroup does not generate labels or error messages.
 
 ## Styling and accessibility
 
@@ -83,9 +101,14 @@ Stable public classes are `.brick-checkbox-group`,
 All rows share Checkbox's public tokens; Root additionally exposes
 `--brick-checkbox-group-gap`.
 
+Group size coordinates every Item and Parent control, indicator, gap, row
+padding, and target height while keeping label typography stable across the
+related set.
+
 Every control is one semantic checkbox and one tab stop. Visual artwork is
-hidden from assistive technology. Focus, checked/mixed, invalid, disabled, and
-read-only states remain perceptible in light, dark, forced colors, reduced
-motion, RTL, touch, and zoom/reflow environments.
+hidden from assistive technology. Group invalidity is not presented visually
+as though every option must be selected. Focus, checked/mixed, invalid,
+disabled, and read-only states remain perceptible in light, dark, forced
+colors, reduced motion, RTL, touch, and zoom/reflow environments.
 
 See [CHANGELOG.md](CHANGELOG.md).

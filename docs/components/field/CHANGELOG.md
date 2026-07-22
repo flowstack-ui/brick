@@ -6,6 +6,7 @@ Field follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Adopted Atom 0.6.14 touched Checkbox validation propagated through Field.
 - Adopted Atom 0.6.13 automatic inline validation presentation when
   `Field.Error` is present, including native-invalid aggregation, visible
   control focus, correction/reset clearing, and explicit native override.

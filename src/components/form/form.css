@@ -1,7 +1,7 @@
 @layer brick.components {
   .brick-form {
     --brick-form-gap: var(--brick-space-5);
-    --brick-form-fieldset-gap: var(--brick-space-6);
+    --brick-form-fieldset-gap: var(--brick-space-3);
 
     display: grid;
     min-inline-size: 0;

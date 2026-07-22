@@ -24,7 +24,7 @@ import "@flowstack-ui/brick/styles.css";
 </Form>
 ```
 
-Brick requires exactly `@flowstack-ui/atom` 0.6.13 and React 18 or newer.
+Brick requires exactly `@flowstack-ui/atom` 0.6.17 and React 18 or newer.
 
 ## API and native behavior
 
@@ -80,6 +80,9 @@ state attributes above. Public tokens are:
 
 The default is an unboxed, full-available-width vertical grid. Use ordinary
 application CSS for page columns, surfaces, and responsive action placement.
+The default `--brick-form-fieldset-gap` preserves the same initial rhythm
+between a Fieldset Legend and its first content as a Field Label and its
+control.
 
 ## Accessibility
 

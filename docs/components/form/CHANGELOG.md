@@ -6,6 +6,10 @@ Form follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Aligned the Form-provided Fieldset first-content gap with the default Field
+  label-to-control rhythm.
+- Adopted Atom 0.6.14 touched Checkbox-family invalid aggregation and reset
+  clearing.
 - Adopted Atom 0.6.13 `validationBehavior` inheritance and aggregated native
   invalid state. Compatible Field and Fieldset errors select inline validation
   automatically while explicit `native` presentation remains available.

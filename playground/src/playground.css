@@ -22,6 +22,29 @@
   gap: 0.75rem;
 }
 
+.checkbox-invalid-scope {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--brick-space-5);
+}
+
+.checkbox-invalid-scope > section {
+  display: grid;
+  min-inline-size: 0;
+  align-content: start;
+  gap: var(--brick-space-2);
+}
+
+.checkbox-invalid-scope h3 {
+  margin: 0;
+  color: var(--brick-color-text-secondary);
+  font-family: var(--brick-font-family-body);
+  font-size: var(--brick-font-size-sm);
+  font-weight: var(--brick-font-weight-semibold);
+  letter-spacing: 0;
+  line-height: var(--brick-font-line-height-body);
+}
+
 .checkbox-matrix-row {
   display: flex;
   min-inline-size: 0;
@@ -36,7 +59,7 @@
 }
 
 .checkbox-custom {
-  --brick-checkbox-radius: var(--brick-radius-control);
+  --brick-checkbox-radius: var(--brick-radius-full);
 }
 
 .checkbox-workbench output {
@@ -60,6 +83,12 @@
 
   .checkbox-matrix-row > strong {
     inline-size: auto;
+  }
+}
+
+@media (min-width: 48rem) {
+  .checkbox-invalid-scope {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -975,7 +1004,6 @@ main {
 }
 
 .form-foundation-workbench .brick-fieldset-error {
-  margin-block-start: var(--brick-fieldset-control-gap);
   color: var(--brick-fieldset-error-foreground);
   font-size: var(--brick-fieldset-error-font-size);
 }

@@ -4249,7 +4249,7 @@ function CheckboxFamilyPlayground() {
           <p>
             Complete independent and grouped selection, Parent aggregation,
             native forms, structured item content, composition, responsive
-            layout, and Atom 0.6.13 validation behavior.
+            layout, and Atom 0.6.17 validation behavior.
           </p>
         </div>
         <fieldset className="playground-appearance">
@@ -4339,6 +4339,53 @@ function CheckboxFamilyPlayground() {
             </Checkbox>
             <Checkbox invalid>Invalid</Checkbox>
             <Checkbox required>Required</Checkbox>
+          </div>
+        </Scenario>
+
+        <Scenario
+          description="An independent invalid choice marks its own control; a shared group error marks the group without implying that every option must be selected."
+          title="Invalid scope"
+        >
+          <div
+            className="checkbox-invalid-scope"
+            data-testid="checkbox-invalid-scope"
+          >
+            <section>
+              <h3>Independent checkbox</h3>
+              <Checkbox invalid>Standalone invalid choice</Checkbox>
+            </section>
+            <section>
+              <h3>Shared group requirement</h3>
+              <CheckboxGroup.Root
+                aria-label="Standalone invalid delivery group"
+                allValues={["email", "push"]}
+                invalid
+              >
+                <CheckboxGroup.Item value="email">
+                  <CheckboxGroup.ItemLabel>Email delivery</CheckboxGroup.ItemLabel>
+                  <CheckboxGroup.ItemDescription>
+                    Any one delivery method satisfies this group.
+                  </CheckboxGroup.ItemDescription>
+                </CheckboxGroup.Item>
+                <CheckboxGroup.Item value="push">Push delivery</CheckboxGroup.Item>
+              </CheckboxGroup.Root>
+            </section>
+            <section>
+              <h3>Individual option error</h3>
+              <CheckboxGroup.Root aria-label="Individual option validation">
+                <CheckboxGroup.Item invalid value="restricted">
+                  <CheckboxGroup.ItemLabel>
+                    Restricted destination
+                  </CheckboxGroup.ItemLabel>
+                  <CheckboxGroup.ItemDescription>
+                    This option has its own validation failure.
+                  </CheckboxGroup.ItemDescription>
+                </CheckboxGroup.Item>
+                <CheckboxGroup.Item value="available">
+                  Available destination
+                </CheckboxGroup.Item>
+              </CheckboxGroup.Root>
+            </section>
           </div>
         </Scenario>
 
@@ -4510,6 +4557,7 @@ function CheckboxFamilyPlayground() {
               <CheckboxGroup.Root
                 aria-label="طرق الإشعار"
                 allValues={["email", "phone"]}
+                invalid
               >
                 <CheckboxGroup.Parent>
                   اختيار جميع طرق الإشعار
