@@ -31,7 +31,10 @@ The workbook contains:
 - `_Lists` — hidden validation values
 
 The initial reference sheets are `Button`, `Card`, and `Dialog`. Add a component
-sheet only when its brief identifies the public anatomy and applicable evidence.
+sheet only when its contract identifies the public anatomy and applicable
+evidence. Every independently exported public component owns an independent
+sheet. A family sheet may summarize integration, but cannot replace those
+component sheets.
 
 ## Status vocabulary
 
@@ -92,3 +95,26 @@ recalculate formulas, scan for formula errors, visually inspect every changed
 sheet, and confirm the Index agrees with the component sheets. Before declaring
 package completion, sample every `tested` and `verified` row against its exact
 assertion; formulas summarize statuses but cannot validate the evidence claim.
+
+## Editing procedure
+
+1. Confirm the available structured workbook tool can preserve formulas,
+   styles, validation, conditional formatting, filters, freeze panes, hidden
+   data, and sheet structure. If it cannot, leave the workbook unchanged and
+   record the gate as blocked.
+2. Copy a compatible reference sheet, rename it for exactly one public
+   component, and replace all generic anatomy and evidence rows.
+3. Add or split rows until each status describes one assertion and one primary
+   evidence owner.
+4. Update the `Index` reference without replacing formulas with values.
+5. Recalculate in a compatible spreadsheet engine and scan every formula cell
+   for errors.
+6. Render or open every changed sheet and inspect text wrapping, row heights,
+   widths, frozen regions, filters, validation, conditional colors, and the
+   printable evidence area.
+7. Compare the Index totals to the component sheets and sample the cited files
+   before committing.
+
+Never use a raw XML edit for routine maintenance, flatten formulas, or mark a
+status from neighboring/shared evidence. The workbook is not complete until
+both structural validation and visual inspection pass.

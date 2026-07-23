@@ -5,6 +5,8 @@ This directory is the public documentation authority for
 
 ## Guides
 
+- [`contributing/README.md`](contributing/README.md) — component work and
+  evidence routing
 - [`guides/installation.md`](guides/installation.md) — package and CSS setup
 - [`guides/appearance-and-tokens.md`](guides/appearance-and-tokens.md) — light,
   dark, system appearance, and token scopes

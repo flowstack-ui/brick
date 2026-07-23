@@ -25,6 +25,10 @@ This repository contains the public `@flowstack-ui/brick` package.
   behavior inside Brick or depend on an unpublished Atom checkout.
 - Every component requires implementation, tests, playground evidence, public
   documentation, and a component changelog before release.
+- Read [`docs/contributing/README.md`](docs/contributing/README.md) before
+  component work. One public component owns one primary component test,
+  browser spec, manual protocol, public guide, changelog, and workbook sheet;
+  integration evidence cannot replace those files.
 - Before changing `playground/component-coverage.xlsx`, read
   `playground/docs/coverage-workbook.md` and preserve its formulas, validation,
   formatting, and completion rules.
