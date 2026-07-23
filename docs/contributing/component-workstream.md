@@ -21,10 +21,13 @@ build; this guide decides how evidence is represented in this repository.
 
 - `src/components/<component>/` — React adapter and static CSS
 - root and subpath exports — public runtime and type surface
-- `test/components/<component>.test.tsx` — Brick-owned DOM and adapter contract
-- `test/types/` — positive and negative public TypeScript fixtures
+- `test/components/<component>/<component>.test.tsx` — Brick-owned DOM and
+  adapter contract
+- `test/types/components/<component>.test.ts` — focused type owner, with
+  positive and negative public API matrices retained in `test/types/`
 - `test/package/` — exports, CSS, server, tarball, and boundary checks
-- `playground/tests/<component>.spec.ts` — real-browser contract
+- `playground/tests/components/<component>/behavior.spec.ts` — real-browser
+  contract
 - component-owned visual baselines — only risk-selected states
 - `playground/manual-tests/<component>.md` — numbered owner judgments
 - deterministic playground route — every contract scenario is findable
@@ -38,8 +41,9 @@ A row is complete only when the named assertion exists and passes. Rendering a
 part nearby, sharing a family test, or inheriting a percentage from the
 workbook is not evidence.
 
-During development run focused checks first. Before release, run every command
-and human gate in [Releasing](../guides/releasing.md).
+During development run `npm run test:component -- <component>` first. Before
+release, run every command and human gate in
+[Releasing](../guides/releasing.md).
 
 ## Change work
 

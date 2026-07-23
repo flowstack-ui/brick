@@ -7,8 +7,8 @@ import {
   DrawerContent,
   DrawerRoot,
   type DrawerRootProps,
-} from "../../src/drawer.js";
-import { Button } from "../../src/button.js";
+} from "../../../src/drawer.js";
+import { Button } from "../../../src/button.js";
 
 function OpenDrawer({
   onOpenChange,

@@ -5,7 +5,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipRoot,
-} from "../../src/tooltip.js";
+} from "../../../src/tooltip.js";
 
 describe("Tooltip", () => {
   it("exposes exactly the approved eight-part namespace", () => {

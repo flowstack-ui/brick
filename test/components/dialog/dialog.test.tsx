@@ -7,8 +7,8 @@ import {
   DialogContent,
   DialogRoot,
   type DialogRootProps,
-} from "../../src/dialog.js";
-import { Button } from "../../src/button.js";
+} from "../../../src/dialog.js";
+import { Button } from "../../../src/button.js";
 
 function OpenDialog({
   onOpenChange,

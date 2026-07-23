@@ -7,8 +7,8 @@ import {
   AlertDialogContent,
   AlertDialogRoot,
   type AlertDialogRootProps,
-} from "../../src/alert-dialog.js";
-import { Button } from "../../src/button.js";
+} from "../../../src/alert-dialog.js";
+import { Button } from "../../../src/button.js";
 
 function OpenAlertDialog({
   onOpenChange,

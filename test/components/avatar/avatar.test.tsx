@@ -6,7 +6,7 @@ import {
   type AvatarShape,
   type AvatarSize,
   type AvatarStatus,
-} from "../../src/avatar.js";
+} from "../../../src/avatar.js";
 
 class MockImage {
   complete = false;

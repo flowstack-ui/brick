@@ -6,7 +6,7 @@ import {
   Popover,
   PopoverContent,
   PopoverRoot,
-} from "../../src/popover.js";
+} from "../../../src/popover.js";
 
 describe("Popover", () => {
   it("exposes exactly the adopted frozen twelve-part namespace", () => {

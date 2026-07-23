@@ -8,7 +8,7 @@ import {
   type ButtonSize,
   type ButtonTone,
   type ButtonVariant,
-} from "../../src/button.js";
+} from "../../../src/button.js";
 
 describe("Button", () => {
   it("renders the adopted defaults without leaking visual props", () => {

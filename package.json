@@ -133,6 +133,12 @@
     "test": "npm run test:node && npm run test:components && npm run test:css",
     "test:node": "npm run build && node --test test/package/*.test.mjs",
     "test:components": "vitest run --coverage",
+    "test:component": "node scripts/test-component.mjs all",
+    "test:component:unit": "node scripts/test-component.mjs unit",
+    "test:component:types": "node scripts/test-component.mjs types",
+    "test:component:browser": "node scripts/test-component.mjs browser",
+    "test:ownership": "node scripts/verify-component-tests.mjs",
+    "test:integration": "vitest run test/integration --coverage=false && npm run build:playground && playwright test playground/tests/integration --project=chromium",
     "test:css": "node scripts/prototype-css.mjs",
     "test:browser": "npm run build:playground && playwright test --project=chromium",
     "test:browser:release": "npm run build:playground && playwright test",
@@ -143,7 +149,7 @@
     "pack:check": "node scripts/verify-package.mjs --dry-run",
     "verify:consumers": "npm run build && node scripts/verify-consumers.mjs",
     "verify:consumer": "npm run build && node scripts/verify-app-consumer.mjs",
-    "check": "npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
+    "check": "npm run test:ownership && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
     "prepublishOnly": "npm run build"
   },
   "browserslist": [

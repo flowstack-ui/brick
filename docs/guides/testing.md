@@ -14,6 +14,12 @@ npm run check
 Focused commands:
 
 ```bash
+npm run test:ownership
+npm run test:component -- button
+npm run test:component:unit -- button
+npm run test:component:types -- button
+npm run test:component:browser -- button
+npm run test:integration
 npm run typecheck
 npm run test:node
 npm run test:components
@@ -35,8 +41,10 @@ generated image, and never update baselines merely to make a failure pass.
 
 ## Fast component and type tests
 
-Each component owns `test/components/<component>.test.tsx`. Cover applicable
-claims explicitly:
+Each component owns
+`test/components/<component>/<component>.test.tsx`. Its focused public type
+entrypoint lives at `test/types/components/<component>.test.ts`. Cover
+applicable claims explicitly:
 
 - default DOM, public parts, classes, slots, and styles
 - every recipe, size, shape, and visual state
@@ -45,9 +53,11 @@ claims explicitly:
 - disabled, loading, validation, and fallback behavior
 - public token/class hooks and stable DOM required by the contract
 
-Type fixtures cover positive and negative root/subpath imports, refs, unions,
-composition, and server-safe imports. Do not duplicate Atom's exhaustive
-primitive behavior suite; test the boundary Brick relies on.
+The aggregate fixtures in `test/types/` retain positive and negative
+root/subpath imports, refs, unions, composition, and server-safe imports.
+Component-owned fixtures make ownership and focused failures discoverable. Do
+not duplicate Atom's exhaustive primitive behavior suite; test the boundary
+Brick relies on.
 
 ## Package and server tests
 
@@ -57,12 +67,14 @@ imports. Clean React 18 and React 19 consumers must resolve the built package.
 
 ## Browser and visual tests
 
-Each component owns `playground/tests/<component>.spec.ts`. Use roles, labels,
-and stable scenario identifiers. Avoid arbitrary timeouts and implementation
-selectors. During development, run a focused Chromium spec:
+Each component owns
+`playground/tests/components/<component>/behavior.spec.ts`. Use roles, labels,
+and stable scenario identifiers. Cross-component behavior belongs in
+`playground/tests/integration/`. Avoid arbitrary timeouts and implementation
+selectors. During development, run:
 
 ```bash
-npx playwright test playground/tests/button.spec.ts --project=chromium
+npm run test:component:browser -- button
 ```
 
 Cover only browser-owned risks: computed CSS/layout, focus and portals,
@@ -76,6 +88,10 @@ combination. Protect representative recipes, interactive states, appearance,
 mobile/RTL, preferences, and regression-prone composition. Use
 `test:visual:update` only for an approved visual change, inspect every diff,
 and never update all snapshots merely to clear a failure.
+
+The existing visual suite and snapshots remain centralized until the
+playground scenario and manual-review layout is approved. Do not relocate or
+rewrite them as part of behavior-test organization.
 
 ## Layer summary
 
@@ -93,4 +109,6 @@ The test layers have distinct responsibilities:
 
 One component owns one primary test and browser spec. Cross-component
 integration specs are additional evidence and never replace component-owned
-files. See [Component Workstream](../contributing/component-workstream.md).
+files. `npm run test:ownership` fails when any exported component is missing
+its unit, type, or browser owner. See
+[Component Workstream](../contributing/component-workstream.md).

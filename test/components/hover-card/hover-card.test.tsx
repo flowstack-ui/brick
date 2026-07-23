@@ -5,7 +5,7 @@ import {
   HoverCard,
   HoverCardContent,
   HoverCardRoot,
-} from "../../src/hover-card.js";
+} from "../../../src/hover-card.js";
 
 describe("HoverCard", () => {
   it("exposes exactly the approved frozen five-part namespace", () => {

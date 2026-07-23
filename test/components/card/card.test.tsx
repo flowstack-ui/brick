@@ -7,7 +7,7 @@ import {
   type CardSize,
   type CardTitleElement,
   type CardVariant,
-} from "../../src/card.js";
+} from "../../../src/card.js";
 
 describe("Card", () => {
   it("renders the adopted static defaults without invented semantics", () => {
