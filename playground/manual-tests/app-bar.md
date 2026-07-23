@@ -32,5 +32,5 @@ Overall result: pass
 Follow-up issues: None open. Geometric centering, narrow label truncation, and
 the neutral/accent color contract were completed during the review and covered
 by browser regression tests.
-Workbook updated: Automated, Consumer, and retirement evidence is recorded;
-the owner-run row is complete.
+Workbook updated: Automated and Consumer evidence is recorded; the owner-run
+row is complete.

@@ -38,5 +38,5 @@ as below the protocol's 256 CSS-pixel minimum.
 Overall result: pass
 Follow-up issues: None open. Loading centering and constrained flex sizing were
 corrected during the review and covered by browser regression tests.
-Workbook updated: Automated, Consumer, and retirement evidence is recorded;
-the owner-run row is complete.
+Workbook updated: Automated and Consumer evidence is recorded; the owner-run
+row is complete.

@@ -148,5 +148,5 @@ heading, button, and link semantics without an invented Card widget.
 Overall result: pass
 Follow-up issues: None. All findings discovered during the run were corrected
 and retested before completion.
-Workbook updated: Yes — Card requirements and package, consumer, and retirement
-gates were recorded and visually verified on July 17, 2026.
+Workbook updated: Yes — Card requirements and package and Consumer gates were
+recorded and visually verified on July 17, 2026.

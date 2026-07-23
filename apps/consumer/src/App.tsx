@@ -537,7 +537,7 @@ export function App() {
         </main>
 
         <footer>
-          <p>Public Brick imports. Application-owned composition. No Core compatibility layer.</p>
+          <p>Public Brick imports. Application-owned composition. No private compatibility layer.</p>
           <Button href="#top" size="sm" tone="neutral" variant="ghost">
             Back to top
           </Button>
