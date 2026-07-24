@@ -32,6 +32,8 @@ const failures = [];
 const componentSubpaths = {
   "notification-badge": "badge",
 };
+const documentationIndex = await readFile("docs/README.md", "utf8");
+const packageReadme = await readFile("README.md", "utf8");
 
 for (const componentId of requested) {
   const { changelog, guide } = componentTestPaths(componentId);
@@ -101,6 +103,24 @@ for (const componentId of requested) {
   }
 }
 
+for (const componentId of componentIds) {
+  const indexLink = `components/${componentId}/README.md`;
+  const indexOccurrences = documentationIndex.split(indexLink).length - 1;
+  if (indexOccurrences !== 1) {
+    failures.push(
+      `${componentId}: docs/README.md must contain exactly one guide link (${indexLink})`,
+    );
+  }
+
+  const packageLink = `docs/components/${componentId}/README.md`;
+  const packageOccurrences = packageReadme.split(packageLink).length - 1;
+  if (packageOccurrences !== 1) {
+    failures.push(
+      `${componentId}: README.md must contain exactly one guide link (${packageLink})`,
+    );
+  }
+}
+
 if (failures.length > 0) {
   console.error("Component documentation verification failed:\n");
   console.error(failures.map((failure) => `- ${failure}`).join("\n"));
@@ -108,5 +128,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `Verified README structure, ownership, imports, and evidence links for ${requested.length} component${requested.length === 1 ? "" : "s"}.`,
+  `Verified README structure, ownership, imports, evidence links, and public indexes for ${requested.length} component${requested.length === 1 ? "" : "s"}.`,
 );

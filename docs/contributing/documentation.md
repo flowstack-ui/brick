@@ -5,6 +5,11 @@ Every independently exported public component owns:
 - `docs/components/<component>/README.md`
 - `docs/components/<component>/CHANGELOG.md`
 
+It must also appear exactly once in both public entry points:
+
+- the categorized component index in `README.md`;
+- the categorized component index in `docs/README.md`.
+
 The README is the public usage contract for the released package. It explains
 what a consumer can rely on without exposing private planning or repository
 history. Start from `docs/components/_template/`.
@@ -87,6 +92,7 @@ A component documentation review is complete only when:
 - DOM, slots, state attributes, and tokens match adopted source;
 - examples use valid public imports and supported combinations;
 - evidence links resolve to component-owned files;
+- both public documentation indexes link to the component guide exactly once;
 - the guide contains no private paths, stale versions, or future API stated as
   current behavior.
 
@@ -133,6 +139,5 @@ npm run docs:component:semantic -- button
 
 This gate compares the adopted documentation manifest with actual exports,
 closed recipes, implementation defaults, visual attributes, CSS definitions,
-and README claims. Button and Icon Button are the initial reference manifests;
-extend the manifest only after auditing the component's source and adopted
-public hooks.
+and README claims. Every released component must remain covered; add a manifest
+only after auditing the component's source and adopted public hooks.

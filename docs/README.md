@@ -3,58 +3,82 @@
 This directory is the public documentation authority for
 `@flowstack-ui/brick`.
 
-## Guides
+## Start here
 
-- [`contributing/README.md`](contributing/README.md) — component work and
-  evidence routing
-- [`guides/installation.md`](guides/installation.md) — package and CSS setup
-- [`guides/appearance-and-tokens.md`](guides/appearance-and-tokens.md) — light,
-  dark, system appearance, and token scopes
-- [`guides/testing.md`](guides/testing.md) — local quality commands
-- [`guides/releasing.md`](guides/releasing.md) — package verification and
-  release checklist
+- [Installation](guides/installation.md) — package, peer dependency, and CSS
+  setup
+- [Appearance and tokens](guides/appearance-and-tokens.md) — light, dark,
+  system appearance, semantic tokens, and scoped customization
+- [Component guides](#component-guides) — public API and usage contracts
+- [Contributing](contributing/README.md) — component work and evidence routing
 
-## Components
+## Component guides
 
-- [`components/checkbox/README.md`](components/checkbox/README.md) — independent
-  checked/mixed selections, native forms, Field composition, and three sizes
-- [`components/checkbox-group/README.md`](components/checkbox-group/README.md) —
-  related multi-selection, structured items, deterministic Parent, and Fieldset
-- [`components/form/README.md`](components/form/README.md) — native submission,
-  reset, callback validation state, composition, and finished form rhythm
-- [`components/field/README.md`](components/field/README.md) — complete labeled
-  control anatomy, generated relationships, states, and responsive layout
-- [`components/fieldset/README.md`](components/fieldset/README.md) — native
-  grouped-control semantics, Legend, descriptions, errors, and group state
-- [`components/button/README.md`](components/button/README.md) — styled actions
-  and button-like navigation
-- [`components/card/README.md`](components/card/README.md) — static compound
-  surfaces for one subject
-- [`components/dialog/README.md`](components/dialog/README.md) — modal tasks,
-  focus, scrolling, portals, and responsive surfaces
-- [`components/alert-dialog/README.md`](components/alert-dialog/README.md) —
-  urgent decisions, safe focus, explicit responses, and blocked scrim dismissal
-- [`components/drawer/README.md`](components/drawer/README.md) — logical-edge
-  modal surfaces, distinct mobile sizes, scrolling, portals, and Branch
-- [`components/badge/README.md`](components/badge/README.md) — passive inline
-  labels and attached visual notification counts or dots
-- [`components/avatar/README.md`](components/avatar/README.md) — explicit
-  identity images/fallbacks, fixed sizes and shapes, and availability rings
-- [`components/toggle/README.md`](components/toggle/README.md) — one persistent
-  pressed/unpressed command with stable labeling
-- [`components/toggle-group/README.md`](components/toggle-group/README.md) —
-  related single or multiple pressed commands with roving focus
-- [`components/icon-button/README.md`](components/icon-button/README.md) — named
-  compact actions and genuine icon-only links
-- [`components/app-bar/README.md`](components/app-bar/README.md) — compound
-  top-surface structure with four positioning modes
-- [`components/tooltip/README.md`](components/tooltip/README.md) — plain and
-  rich supplemental descriptions with shared arrow styling
-- [`components/hover-card/README.md`](components/hover-card/README.md) —
-  non-interactive genuine-link previews with bounded elevated surfaces
-- [`components/popover/README.md`](components/popover/README.md) — intentionally
-  opened compact interactive panels with native dialog semantics and focus
+### Actions and selection
 
-Every released component has one folder under `components/` containing its
-public guide and `CHANGELOG.md`. Start new documentation from the templates in
+- [Button](components/button/README.md) — styled actions and button-like
+  navigation
+- [Icon Button](components/icon-button/README.md) — named compact actions and
+  icon-only links
+- [Toggle](components/toggle/README.md) — one persistent pressed command
+- [Toggle Group](components/toggle-group/README.md) — related single or
+  multiple pressed commands
+
+### Forms and choices
+
+- [Form](components/form/README.md) — native submission boundary and form
+  rhythm
+- [Field](components/field/README.md) — one labeled control and its
+  relationships
+- [Fieldset](components/fieldset/README.md) — native related-control grouping
+- [Checkbox](components/checkbox/README.md) — independent checked or mixed
+  selection
+- [Checkbox Group](components/checkbox-group/README.md) — related selections
+  and aggregate parent control
+
+### Content and status
+
+- [Avatar](components/avatar/README.md) — identity image, fallback, and visual
+  status
+- [Badge](components/badge/README.md) — passive inline labels
+- [Notification Badge](components/notification-badge/README.md) — attached
+  visual count or dot
+- [Card](components/card/README.md) — static compound surface for one subject
+
+### Contextual overlays
+
+- [Tooltip](components/tooltip/README.md) — short supplemental label or
+  description
+- [Hover Card](components/hover-card/README.md) — nonessential destination
+  preview
+- [Popover](components/popover/README.md) — click-open interactive panel
+
+### Modal surfaces
+
+- [Dialog](components/dialog/README.md) — modal task surface
+- [Alert Dialog](components/alert-dialog/README.md) — urgent decision with
+  explicit outcomes
+- [Drawer](components/drawer/README.md) — logical-edge modal surface
+
+### Navigation and layout
+
+- [App Bar](components/app-bar/README.md) — top surface and one-row alignment
+  structure
+
+Every released component owns one folder containing its public `README.md` and
+`CHANGELOG.md`. Start new documentation from
 [`components/_template/`](components/_template/).
+
+## Contributor workflows
+
+| Task | Guide |
+| --- | --- |
+| Route component work | [Contributing index](contributing/README.md) |
+| Build or change a component | [Component workstream](contributing/component-workstream.md) |
+| Write or review public docs | [Documentation contract](contributing/documentation.md) |
+| Add playground evidence | [Playground evidence](contributing/playground.md) |
+| Run human review | [Manual testing](contributing/manual-testing.md) |
+| Update the evidence workbook | [Coverage workbook](../playground/docs/coverage-workbook.md) |
+| Choose automated tests | [Testing](guides/testing.md) |
+| Verify the packed Consumer | [Consumer verification](contributing/consumer-verification.md) |
+| Release the package | [Releasing](guides/releasing.md) |

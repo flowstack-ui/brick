@@ -15,6 +15,8 @@ Focused commands:
 
 ```bash
 npm run test:ownership
+npm run docs:component
+npm run docs:component:semantic
 npm run test:component -- button
 npm run test:component:unit -- button
 npm run test:component:types -- button
