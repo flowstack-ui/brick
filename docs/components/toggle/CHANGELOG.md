@@ -1,14 +1,16 @@
 # Toggle changelog
 
-## Unreleased — 0.1.0
+Toggle follows the package version of `@flowstack-ui/brick`.
 
-- Added the Atom-backed direct Toggle API.
-- Added solid, soft, outline, and ghost variants; three sizes; rounded and pill
-  shapes; icon-only geometry; selected, disabled, forced-colors, and reduced-
-  motion recipes.
-- Added package, type, component, browser, SSR, playground, Consumer, and
-  coverage-workbook evidence.
-- Replaced the shared family workbench with an independent controlled-
-  comparison reference page and component-owned browser assertions.
-- Differentiated selected soft, outline, and ghost paint so every public
-  variant remains visually identifiable.
+## Unreleased
+
+### Added
+
+- Initial direct Toggle API with solid, soft, outline, and ghost variants.
+- Small, medium, and large sizes; rounded and pill shapes; icon-only geometry;
+  and selected, disabled, forced-colors, and reduced-motion presentation.
+
+### Fixed
+
+- Selected solid, soft, outline, and ghost recipes now remain visually
+  distinguishable.

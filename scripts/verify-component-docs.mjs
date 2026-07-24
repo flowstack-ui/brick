@@ -29,6 +29,22 @@ const requiredSections = [
 ];
 
 const failures = [];
+const allowedChangelogCategories = new Set([
+  "Added",
+  "Changed",
+  "Deprecated",
+  "Removed",
+  "Fixed",
+  "Security",
+]);
+const changelogDiaryPatterns = [
+  [/\b(?:playground|workbook)\b/i, "playground or workbook evidence"],
+  [/\b(?:browser|component|package|type|visual) evidence\b/i, "test evidence"],
+  [/\bmanual protocol\b/i, "manual-test evidence"],
+  [/\bconsumer proof\b/i, "Consumer evidence"],
+  [/\bowner verification\b/i, "internal review history"],
+  [/\b(?:upgraded|adopted) (?:the exact )?Atom \d+\.\d+\.\d+\b/i, "dependency-upgrade history"],
+];
 const componentSubpaths = {
   "notification-badge": "badge",
 };
@@ -58,8 +74,42 @@ for (const componentId of requested) {
       `${componentId}: changelog must start with "# ${expectedTitle} changelog"`,
     );
   }
-  if (!changelogText.includes("## Unreleased")) {
-    failures.push(`${componentId}: changelog is missing the Unreleased section`);
+  const expectedVersionStatement = `${expectedTitle} follows the package version of \`@flowstack-ui/brick\`.`;
+  if (!changelogText.includes(expectedVersionStatement)) {
+    failures.push(
+      `${componentId}: changelog must state "${expectedVersionStatement}"`,
+    );
+  }
+
+  const secondLevelHeadings = [
+    ...changelogText.matchAll(/^## (.+)$/gm),
+  ].map((match) => match[1]);
+  if (secondLevelHeadings[0] !== "Unreleased") {
+    failures.push(
+      `${componentId}: first changelog release heading must be exactly "## Unreleased"`,
+    );
+  }
+
+  const categories = [...changelogText.matchAll(/^### (.+)$/gm)].map(
+    (match) => match[1],
+  );
+  if (categories.length === 0) {
+    failures.push(`${componentId}: Unreleased must contain a change category`);
+  }
+  for (const category of categories) {
+    if (!allowedChangelogCategories.has(category)) {
+      failures.push(
+        `${componentId}: unsupported changelog category "${category}"`,
+      );
+    }
+  }
+
+  for (const [pattern, description] of changelogDiaryPatterns) {
+    if (pattern.test(changelogText)) {
+      failures.push(
+        `${componentId}: changelog contains ${description} instead of consumer-visible behavior`,
+      );
+    }
   }
 
   const headings = [...documentation.matchAll(/^## (.+)$/gm)].map((match) => match[1]);

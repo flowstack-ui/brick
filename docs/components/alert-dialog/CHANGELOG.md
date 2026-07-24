@@ -1,6 +1,6 @@
 # Alert Dialog changelog
 
-AlertDialog follows the package version of `@flowstack-ui/brick`.
+Alert Dialog follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
@@ -21,10 +21,3 @@ AlertDialog follows the package version of `@flowstack-ui/brick`.
   dismissal.
 - Public classes, slots, five component tokens, reduced-motion and
   forced-colors treatment, and direct root/subpath exports.
-- Component, type, package, desktop/mobile browser, nested-modal, responsive,
-  RTL, axe, visual, and independent-consumer evidence plus the
-  `/alert-dialog` playground.
-- Independent nine-scenario reference page and browser evidence for defaults,
-  sizes, authored anatomy, native description relationships, every Title
-  level, decision policies, nesting, scoped portals, exact customization,
-  bounded detail, RTL, extreme reflow, and preference boundaries.

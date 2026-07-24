@@ -1,27 +1,24 @@
 # Popover changelog
 
+Popover follows the package version of `@flowstack-ui/brick`.
+
 ## Unreleased
 
-- Added an independent controlled-comparison reference page covering sizes,
-  anatomy, placement, state/dismissal, Anchor/nesting, scoped portals,
-  customization, responsive stress, and RTL.
-- Kept persistent appearance/customization previews below the sticky review
-  header and moved specimen canvases behind the default raised surface for
-  clearer visual separation.
-- Completed the 13-step owner verification and package gate.
-- Upgraded to Atom 0.6.10 so touch and pen scrolling keeps Popover open while
-  genuine outside taps retain dismissal behavior.
-- Upgraded to Atom 0.6.9 so portalled content preserves the trigger's logical
-  text direction, including RTL examples.
-- Upgraded to Atom 0.6.8 and moved surface scrolling to its internal viewport
-  so extreme zoom keeps actions reachable without clipping the Arrow.
-- Upgraded to Atom 0.6.7 so modal Popover uses root/body overflow locking
-  without fixed-body repositioning or unlock-time scroll restoration on iOS
-  Safari.
-- Added the strict frozen twelve-part Popover namespace.
-- Added click/press/keyboard-only activation, native ARIA naming, controlled
-  initial/final focus, modal and non-modal modes, and exact Atom 0.4.0 behavior.
-- Added one elevated recipe with bounded `sm`, `md`, and `lg` widths,
-  presentational structure, explicit Close, and shared Arrow styling.
-- Added SSR, component, type, browser, playground, Consumer, documentation,
-  manual-protocol, and workbook evidence.
+### Added
+
+- Initial twelve-part Popover compound API with Trigger, Anchor, Portal,
+  Overlay, Content, Viewport, Arrow, Title, Description, and Close parts.
+- Click, press, and keyboard activation with modal and non-modal focus
+  behavior, controlled focus targets, and native dialog relationships.
+- Small, medium, and large bounded elevated surfaces, collision-aware
+  placement, nested ownership, scoped portals, and public customization hooks.
+
+### Fixed
+
+- Touch and pen scrolling no longer dismisses an open Popover, while genuine
+  outside taps still close it.
+- Portalled content now preserves the trigger's logical text direction.
+- Constrained surface scrolling now keeps actions reachable without clipping
+  the Arrow.
+- Modal scroll locking no longer repositions the page during mobile browser
+  toolbar changes.

@@ -1,6 +1,6 @@
 # Icon Button changelog
 
-This component follows the package version of `@flowstack-ui/brick`.
+Icon Button follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 

@@ -11,9 +11,5 @@ Avatar follows the package version of `@flowstack-ui/brick`.
   rounded shapes, and neutral finished styling.
 - Optional online, away, busy, and offline status rings that follow Avatar
   geometry without changing layout or adding semantic DOM.
-- Informative/decorative fallback mapping, native prop/ref forwarding,
-  root/subpath exports, static CSS, layered evidence, playground scenarios,
-  Consumer proof, and a numbered manual protocol.
-- Independent nine-scenario controlled reference page and focused browser
-  evidence for defaults, every recipe, loading/fallback states, semantics,
-  status geometry, NotificationBadge composition, customization, and reflow.
+- Informative and decorative fallback mapping, native prop and ref forwarding,
+  root and subpath exports, and static CSS.

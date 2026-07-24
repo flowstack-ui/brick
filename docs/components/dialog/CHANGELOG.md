@@ -12,15 +12,6 @@ Dialog follows the package version of `@flowstack-ui/brick`.
   viewport bounds and a dedicated scrollable Body.
 - Public classes, slots, five component tokens, reduced-motion and
   forced-colors treatment, scoped-portal guidance, and direct subpath exports.
-- Automated component, type, package, desktop/mobile browser interaction,
-  mobile layout, post-close interaction, and axe coverage plus the `/dialog`
-  playground.
-- Four reviewed Chromium baselines for light, dark, mobile RTL, and forced
-  colors, plus independent Brick Consumer publishing-flow verification.
-- Focused adapter and browser evidence for disabled triggers, disabled overlay
-  dismissal, render composition, custom portal containers, and heading-level
-  forwarding.
-- Independent nine-scenario reference page and browser evidence for defaults,
-  sizes, optional anatomy, title semantics, dismissal policies, nested modal
-  and Branch ownership, scoped portals, exact customization hooks, bounded
-  Body scrolling, RTL, and preference boundaries.
+- Disabled triggers, configurable overlay dismissal, render composition,
+  custom portal containers, heading-level forwarding, nested modal ownership,
+  and Branch support.

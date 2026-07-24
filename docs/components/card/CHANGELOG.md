@@ -14,9 +14,6 @@ Card follows the package version of `@flowstack-ui/brick`.
   and overridable slots on every public part.
 - Public Card spacing, radius, and shadow tokens plus mobile-first, RTL,
   forced-colors, media-composition, and long-content styling.
-- Independent controlled playground and browser evidence for defaults,
-  variants, sizes, optional anatomy, semantic elements, composition,
-  customization, constrained layout, RTL, and preference boundaries.
 
 ### Fixed
 
