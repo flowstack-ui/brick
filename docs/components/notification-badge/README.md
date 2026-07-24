@@ -1,86 +1,111 @@
-# NotificationBadge
+# Notification Badge
 
-NotificationBadge attaches a visual-only finite count or dot to exactly one
-React element. Its stable wrapper supplies positioning; the owning action or
-nearby context supplies the complete accessible meaning.
+NotificationBadge overlays a visual count or dot on exactly one child.
 
-## Use and avoid
+## When and where to use
 
-Use NotificationBadge for unread counts or presence dots attached to a named
-button, link, navigation item, avatar, or other single element. Use Badge for
-visible inline status text.
+Use it to add compact visual notification metadata to an icon, avatar, or
+other single element.
 
-NotificationBadge is not a live region, progress indicator, passive text
-label, or interactive control. Do not rely on its indicator color or content
-as the only accessible meaning.
+## When not to use
 
-## Import
+Use Badge for inline labels. Do not use the indicator as the only accessible
+name or as an automatic live-region announcement.
+
+## Installation and imports
 
 ```tsx
-import { NotificationBadge } from "@flowstack-ui/brick/badge";
+import { NotificationBadge } from "@flowstack-ui/brick/notification-badge";
 import "@flowstack-ui/brick/styles.css";
 ```
 
-NotificationBadge is also available from the package root. It currently shares
-the `badge` package subpath but owns a separate component contract and guide.
-
-## Count and dot modes
+## Quick start
 
 ```tsx
-<NotificationBadge count={4}>
-  <button aria-label="Inbox, 4 unread messages">...</button>
-</NotificationBadge>
-
-<NotificationBadge dot tone="success" overlap="circular">
-  <Avatar alt="" fallback="AL" />
+<NotificationBadge count={3}>
+  <button aria-label="Inbox, 3 unread">Inbox</button>
 </NotificationBadge>
 ```
 
-The required child is one React element. Count and dot modes are mutually
-exclusive. Counts must be finite non-negative integers. Zero is hidden unless
-`showZero` is true. `max` defaults to `99`; larger values render as `99+`.
-Invalid counts hide the indicator, and invalid maximums fall back to `99`.
+## Anatomy and DOM ownership
+
+The Atom Badge root is a `span` around exactly one `ReactElement` child. Brick
+adds a private, `aria-hidden` indicator span only when visible. The forwarded
+`HTMLSpanElement` ref targets the root.
+
+## API
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `count` | finite non-negative integer | count mode only |
-| `dot` | `true` | `false` |
-| `max` | finite positive integer | `99` |
-| `showZero` | `boolean` | `false` |
-| `invisible` | `boolean` | `false` |
-| `tone` | Badge tones | `danger` |
+| `tone` | any `BadgeTone` | `danger` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `placement` | `top-start`, `top-end`, `bottom-start`, `bottom-end` | `top-end` |
 | `overlap` | `rectangular`, `circular` | `rectangular` |
+| `invisible` | `boolean` | `false` |
 
-One-digit counts and dots are circular. Longer counts expand into a pill.
-Logical placement mirrors in RTL. Use rectangular overlap for box-shaped
-targets and circular overlap for round targets such as Avatar.
+Count mode requires `count: number` and accepts `max?: number` (valid positive
+integer, otherwise `99`) and `showZero?: boolean` (`false`). Dot mode requires
+`dot: true` and excludes count-only props. Count must be a finite non-negative
+integer to display. `children` must be one `ReactElement`; `asChild` and native
+`color` are excluded.
 
-## Native and accessibility contract
+## Visual recipes and states
 
-The root is a positioning `span`; the conditional internal indicator is always
-`aria-hidden="true"` and ignores pointer input. NotificationBadge never
-inspects, edits, or names its child. Give the owning control a complete name
-such as `Inbox, 4 unread messages`.
+Counts above `max` display as `max+`. Dot and single-digit indicators are
+circles; longer counts are pills. Zero hides unless `showZero`; invalid counts
+and `invisible` hide the indicator. Placement uses logical start/end.
 
-The wrapper forwards native span props, `className`, `style`, an
-`HTMLSpanElement` ref, `render`, and `data-slot`. It intentionally omits
-`asChild` because the parent and sibling indicator structure must remain
-stable.
+## Tokens and CSS hooks
 
-## CSS contract
+Stable root/indicator hooks are `.brick-notification-badge` and
+`.brick-notification-badge__indicator`; slots are `notification-badge` and
+`notification-badge-indicator`. Public attributes cover tone, size, placement,
+overlap, invisible, indicator variant, and shape. Public tokens are
+`--brick-notification-badge-size`, `--brick-notification-badge-dot-size`,
+`--brick-notification-badge-inline-padding`,
+`--brick-notification-badge-outline-color`,
+`--brick-notification-badge-translate-inline`, and
+`--brick-notification-badge-translate-block`.
 
-Stable hooks are `.brick-notification-badge` and
-`.brick-notification-badge__indicator`, with default slots
-`notification-badge` and `notification-badge-indicator`. Resolved tone, size,
-placement, overlap, visibility, and indicator-shape data attributes are public
-inspection/customization hooks.
+## Customization
 
-Public tokens cover indicator size, dot size, inline padding, outline color,
-and logical translation. Prefer supported props and semantic tokens before
-component-token, class, or style overrides.
+Use tone, size, placement, and overlap first, then public tokens. Root
+`className` and `style` are escape hatches; the indicator remains
+implementation-owned.
+
+## Responsive behavior
+
+The overlay follows its child's box and logical direction. The application
+owns child sizing, clipping, and responsive placement decisions.
+
+## Accessibility
+
+The visual indicator is `aria-hidden`. Put the count or notification meaning
+in the child’s accessible name or nearby status text and update it when the
+count changes.
+
+## Composition, native props, and refs
+
+Native span props are forwarded to the root, but `asChild` is excluded. The ref
+targets the root span, not the child or indicator.
+
+## Examples
+
+```tsx
+<NotificationBadge dot overlap="circular">
+  <Avatar alt="Ada Lovelace, online" fallback="AL" />
+</NotificationBadge>
+```
+
+## Evidence
+
+- [Playground](../../../playground/src/components/notification-badge/NotificationBadgePage.tsx)
+- [Unit test](../../../test/components/notification-badge/notification-badge.test.tsx)
+- [Type owner](../../../test/types/components/notification-badge.test.ts)
+- [Browser spec](../../../playground/tests/components/notification-badge/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/notification-badge/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/notification-badge.md)
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md).
+See [`CHANGELOG.md`](CHANGELOG.md).

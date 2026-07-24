@@ -168,6 +168,13 @@ Content exposes:
 Brick honors reduced motion and forced colors. Consumers must reverify layout
 and accessibility after arbitrary class, style, or token overrides.
 
+## Customization
+
+Prefer `size`, composed Brick actions, semantic tokens, AlertDialog tokens,
+then local `className` and `style`. Keep destructive meaning on the composed
+Action Button rather than recoloring the alert surface. Preserve the visible
+title, required alert message, safe initial focus, and explicit responses.
+
 ## Responsive behavior
 
 Content remains centered and bounded by safe-area-aware viewport gaps and
@@ -210,6 +217,17 @@ AlertDialog may open above a Dialog to confirm loss of unsaved work. Close or
 Cancel only the alert layer first; Atom then returns focus and control to the
 parent Dialog. Complex composite or third-party portalled content belongs in
 Dialog rather than AlertDialog.
+
+## Evidence
+
+- playground route: `/alert-dialog`
+- [playground scenarios](../../../playground/src/components/alert-dialog/AlertDialogPage.tsx)
+- [component test](../../../test/components/alert-dialog/alert-dialog.test.tsx)
+- [type owner](../../../test/types/components/alert-dialog.test.ts)
+- [browser specification](../../../playground/tests/components/alert-dialog/behavior.spec.ts)
+- [visual specification](../../../playground/tests/components/alert-dialog/visual.spec.ts)
+- [manual-test protocol](../../../playground/manual-tests/alert-dialog.md)
+- [consumer integration](../../../apps/consumer/src/App.tsx)
 
 ## Changelog
 

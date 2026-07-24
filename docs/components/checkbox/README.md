@@ -1,105 +1,91 @@
 # Checkbox
 
-Checkbox is one independent submitted selection. Atom owns checked and mixed
-state, native form participation, validation, reset, keyboard interaction,
-composition, and refs; Brick supplies the finished row, control, and built-in
-check/dash artwork.
+Checkbox is a styled binary or mixed-state form choice built on Atom Checkbox.
 
-## Use and avoid
+## When and where to use
 
-Use Checkbox for an acknowledgement or independent option. Use
-CheckboxGroup for multiple related choices, RadioGroup for exactly one choice,
-Switch for an immediately applied setting, and Toggle for a persistent command.
+Use it for independent submitted choices that can be checked or unchecked.
 
-## Import and quick start
+## When not to use
+
+Use Toggle for persistent commands, RadioGroup for one choice from a set, and
+CheckboxGroup when related choices need group ownership.
+
+## Installation and imports
 
 ```tsx
 import { Checkbox } from "@flowstack-ui/brick/checkbox";
 import "@flowstack-ui/brick/styles.css";
-
-<Checkbox name="terms" required value="accepted">
-  Accept the terms
-</Checkbox>
 ```
 
-Checkbox is also exported from the package root. Brick requires exactly
-`@flowstack-ui/atom` 0.6.17 and React 18 or newer.
+## Quick start
+
+```tsx
+<Checkbox name="updates" value="yes">Email updates</Checkbox>
+```
+
+## Anatomy and DOM ownership
+
+Atom Root renders a button-like checkbox control and receives an
+`HTMLButtonElement` ref. Brick inserts a private aria-hidden control span,
+forced-mounted Atom Indicator, and decorative SVG before consumer children.
 
 ## API
 
-Checkbox forwards Atom's complete `checked`, `defaultChecked`,
-`onCheckedChange`, `disabled`, `readOnly`, `invalid`, `required`, `name`,
-`value`, `form`, `validationBehavior`, native button/global/ARIA/data/event
-props, `className`, `style`, `data-slot`, `render`, `asChild`, and button ref
-contract.
+Checkbox inherits Atom checked/defaultChecked (`boolean | "indeterminate"`),
+change, required, disabled, invalid, name, value, form, and native props. It
+adds `size?: "sm" | "md" | "lg"` (`md`). `asChild: true` requires one element
+and excludes `render`; otherwise `render` and normal children are available.
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
+## Visual recipes and states
 
-`asChild` and `render` are mutually exclusive. `asChild` requires one element;
-Brick prepends its visual control to that element's existing children while
-Atom still merges semantics, events, class, style, slot, and ref.
+Size changes the complete row and visual control. Atom states drive checked,
+mixed, unchecked, disabled, invalid, hover, active, and focus-visible output.
 
-Visible children, `aria-label`, or `aria-labelledby` must name the control.
-Brick does not generate fallback copy or a hidden label.
+## Tokens and CSS hooks
 
-## State and forms
+Stable public root hook/slot is `.brick-checkbox`/`checkbox`, with Atom state
+attributes and `data-size`. Public component tokens are the
+`--brick-checkbox-*` variables for target/control size, row padding, gap,
+radius, border, control backgrounds/foreground, indicator size, and
+label/description/invalid foreground. Internal mark DOM is not composable.
 
-`checked` accepts `true`, `false`, or `"indeterminate"`. Mixed state is
-announced through `aria-checked="mixed"`; it does not submit as checked.
-Unchecked controls are absent from FormData. Checked controls submit their
-configured name/value, disabled controls are omitted, `required` participates
-in native validity, `form` supports an external owner, and native reset restores
-the uncontrolled default. Atom aligns its transparent native validity owner to
-the visible Checkbox. Standalone Checkbox defaults to native browser validation
-presentation. Inside a Field with `Field.Error`, it automatically uses inline
-presentation: native invalid state reaches the visible Checkbox and Field, the
-authored error appears, and focus returns to the visible Checkbox. Set
-`validationBehavior` explicitly to override the inherited presentation.
-Untouched required Checkbox remains visually neutral. Leaving it unchecked or
-removing its checked state after interaction reveals the same invalid state;
-checking it or resetting the Form clears that derived presentation.
-Inline validation-directed focus scrolls the visible Checkbox into view,
-exposes Atom's `[data-focus-visible]` state until blur, and renders Brick's
-standard focus ring for that state.
-When invalid, the visible control border and logical row-start cue use the
-danger foreground while the choice text remains neutral. Field adds its wavy
-Label and authored error treatment when present.
+## Customization
 
-Compose Checkbox as the control inside Brick Field when it needs an external
-label, instructions, required/invalid state, and error. Checkbox does not create
-Field automatically.
+Use size and state props first, then semantic and public Checkbox tokens.
+Customize the root with `className`/`style`; do not replace private marks.
 
-## Styling
+## Responsive behavior
 
-The stable root is `.brick-checkbox`; the slot defaults to `checkbox` and Atom
-exposes `data-state`, `data-disabled`, `data-readonly`, `data-invalid`, and
-`data-required`. Validation-directed focus temporarily exposes
-`data-focus-visible`. Brick adds `data-size`.
+The row can wrap while the visual control keeps its target size. Logical
+spacing supports RTL; surrounding form layout owns breakpoints.
 
-Public component tokens are:
+## Accessibility
 
-```text
---brick-checkbox-control-size
---brick-checkbox-target-min-size
---brick-checkbox-gap
---brick-checkbox-border-width
---brick-checkbox-radius
---brick-checkbox-indicator-size
---brick-checkbox-row-padding-inline
---brick-checkbox-label-foreground
---brick-checkbox-description-foreground
---brick-checkbox-control-background
---brick-checkbox-control-border
---brick-checkbox-control-checked-background
---brick-checkbox-control-checked-foreground
---brick-checkbox-invalid-foreground
+Atom owns checkbox semantics, keyboard activation, state, form participation,
+and focus. Provide a clear label, do not express state only by color, and use
+indeterminate only when its group meaning is understandable.
+
+## Composition, native props, and refs
+
+Atom/native props are forwarded. In `asChild`, Brick injects its visual before
+the child’s existing children. Ref targets the composed checkbox element.
+
+## Examples
+
+```tsx
+<Checkbox checked="indeterminate" aria-label="Select some rows" />
 ```
 
-Size changes coordinate the visible control, indicator, gap, row padding, and
-target height while label typography remains stable. Every size retains at
-least a 44 CSS-pixel row target. Light, dark, forced colors, reduced motion,
-RTL, long text, and 200%/400% reflow are supported.
+## Evidence
 
-See [CHANGELOG.md](CHANGELOG.md).
+- [Playground](../../../playground/src/components/checkbox/CheckboxPage.tsx)
+- [Unit test](../../../test/components/checkbox/checkbox.test.tsx)
+- [Type owner](../../../test/types/components/checkbox.test.ts)
+- [Browser spec](../../../playground/tests/components/checkbox/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/checkbox/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/checkbox.md)
+
+## Changelog
+
+See [`CHANGELOG.md`](CHANGELOG.md).

@@ -1,54 +1,110 @@
-# ToggleGroup
+# Toggle Group
 
-ToggleGroup coordinates related single- or multiple-selection pressed
-commands. Atom owns values, roving focus, keyboard navigation, orientation,
-looping, RTL behavior, disabled state, composition, semantics, and refs; Brick
-owns group/item presentation.
+ToggleGroup coordinates related single- or multiple-selection pressed commands
+using Atom state and keyboard behavior plus Brick recipes.
 
-## Import and use
+## When and where to use
+
+Use it for related view, formatting, or filter commands whose pressed state is
+meaningful.
+
+## When not to use
+
+Use Toggle for one command, RadioGroup for form choices, and Tabs for panel
+navigation. Required selection and persistence remain application policy.
+
+## Installation and imports
 
 ```tsx
 import { ToggleGroup } from "@flowstack-ui/brick/toggle-group";
+import "@flowstack-ui/brick/styles.css";
+```
 
-<ToggleGroup.Root ariaLabel="Project view" attached defaultValue="cards">
-  <ToggleGroup.Item value="cards">Cards</ToggleGroup.Item>
-  <ToggleGroup.Item value="list">List</ToggleGroup.Item>
-</ToggleGroup.Root>
+## Quick start
 
-<ToggleGroup.Root ariaLabel="Filters" type="multiple" shape="pill">
-  <ToggleGroup.Item value="active">Active</ToggleGroup.Item>
-  <ToggleGroup.Item value="owned">Owned by me</ToggleGroup.Item>
+```tsx
+<ToggleGroup.Root aria-label="Alignment" defaultValue="start">
+  <ToggleGroup.Item value="start">Start</ToggleGroup.Item>
+  <ToggleGroup.Item value="center">Center</ToggleGroup.Item>
 </ToggleGroup.Root>
 ```
 
-The namespace and named `ToggleGroupRoot`/`ToggleGroupItem` exports are also
-available from the package root and subpath. Root's type discriminates single
-string values from multiple string arrays. An empty single selection is valid;
-an application requiring a persistent choice should reject `""` in its
-controlled callback.
+## Anatomy and DOM ownership
 
-## Root API
+`Root` is an Atom group `div` with an `HTMLDivElement` ref. `Item` is an Atom
+toggle button with an `HTMLButtonElement` ref. Brick adds no private DOM.
 
-Root forwards Atom behavior/native props and adds `variant`, `size`, `shape`,
-`attached`, and `fullWidth`. It is separated and wrapping by default;
-`attached` joins borders and logical corners, while `fullWidth` distributes
-items. Root owns the recipe, so Item exposes only Atom item behavior plus
-`iconOnly`.
+## API
 
-Use a stable accessible group name through `ariaLabel`, `aria-label`, or
-`aria-labelledby`. Use horizontal orientation by default and choose vertical
-when the content/layout needs it. Arrow keys, Home/End, disabled-item skipping,
-one roving Tab stop, and RTL mirroring come from Atom.
+Root is a discriminated union: single mode uses `type?: "single"`, string
+values, and `(value: string) => void`; multiple mode requires
+`type="multiple"`, string-array values, and a string-array callback.
 
-Stable hooks are `.brick-toggle-group` and `.brick-toggle-group-item`; slots
-default to `toggle-group` and `toggle-group-item`. Group data includes
-orientation, attachment, full-width, variant, size, and shape. Items expose
-Atom `data-state` and `data-value`.
+| Root prop | Values | Default |
+| --- | --- | --- |
+| `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
+| `size` | `sm`, `md`, `lg` | `md` |
+| `shape` | `rounded`, `pill` | `rounded` |
+| `attached` | `boolean` | `false` |
+| `fullWidth` | `boolean` | `false` |
 
-Root variants cascade Toggle’s distinct selected recipes to every Item:
-accent-solid fill for `solid`, edged accent-soft fill for `soft`, transparent
-accent outline for `outline`, and borderless accent-soft fill for `ghost`.
+Item requires `value` and adds `iconOnly?: boolean` (`false`). Atom supplies
+orientation, direction, looping, disabled state, composition, and native props.
+Native `color` is excluded.
+
+## Visual recipes and states
+
+Root recipes cascade uniformly to Items. Separated groups use a gap and may
+wrap; attached groups join borders and logical corners. `fullWidth` distributes
+Items evenly. Every variant retains a distinct selected treatment.
+
+## Tokens and CSS hooks
+
+Stable hooks are `.brick-toggle-group`, `.brick-toggle-group-item`, their Atom
+slots/state attributes, and Root `data-orientation`, `data-attached`,
+`data-full-width`, `data-variant`, `data-size`, and `data-shape`. Item exposes
+`data-state`, `data-value`, `data-disabled`, and `data-icon-only`. Public tokens
+are `--brick-toggle-group-gap` and the public `--brick-toggle-*` geometry tokens.
+
+## Customization
+
+Set group props first so Items remain consistent, then use public group/Toggle
+tokens. Use part `className` or `style` only for scoped exceptions.
+
+## Responsive behavior
+
+Separated horizontal groups can wrap; vertical groups stack. Attached groups
+do not wrap. Logical corners and Atom arrow behavior respect direction.
+
+## Accessibility
+
+Atom owns group semantics, `aria-pressed`, roving focus, arrows, Home/End,
+looping, and disabled-item skipping. Give Root a name when context is
+insufficient and give every Item a stable complete name.
+
+## Composition, native props, and refs
+
+Root and Item inherit Atom composition and native props. Root ref targets its
+`div`; Item ref targets its `button`. Preserve these semantics when composing.
+
+## Examples
+
+```tsx
+<ToggleGroup.Root type="multiple" attached defaultValue={["bold"]}>
+  <ToggleGroup.Item value="bold">Bold</ToggleGroup.Item>
+  <ToggleGroup.Item value="italic">Italic</ToggleGroup.Item>
+</ToggleGroup.Root>
+```
+
+## Evidence
+
+- [Playground](../../../playground/src/components/toggle-group/ToggleGroupPage.tsx)
+- [Unit test](../../../test/components/toggle-group/toggle-group.test.tsx)
+- [Type owner](../../../test/types/components/toggle-group.test.ts)
+- [Browser spec](../../../playground/tests/components/toggle-group/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/toggle-group/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/toggle-group.md)
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md).
+See [`CHANGELOG.md`](CHANGELOG.md).

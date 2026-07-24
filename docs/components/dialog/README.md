@@ -220,6 +220,17 @@ Prefer placing the third-party portal inside Content when its API supports a
 container. Branch preserves the third party's keyboard model while keeping it
 inside the active modal boundary.
 
+## Evidence
+
+- playground route: `/dialog`
+- [playground scenarios](../../../playground/src/components/dialog/DialogPage.tsx)
+- [component test](../../../test/components/dialog/dialog.test.tsx)
+- [type owner](../../../test/types/components/dialog.test.ts)
+- [browser specification](../../../playground/tests/components/dialog/behavior.spec.ts)
+- [visual specification](../../../playground/tests/components/dialog/visual.spec.ts)
+- [manual-test protocol](../../../playground/manual-tests/dialog.md)
+- [consumer integration](../../../apps/consumer/src/App.tsx)
+
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md).

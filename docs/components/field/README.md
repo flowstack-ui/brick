@@ -1,133 +1,103 @@
 # Field
 
-Field supplies the finished structure, relationships, state, and layout for
-one labeled form control. Atom owns generated IDs and accessibility behavior;
-Brick owns the visual system.
+Field coordinates one control’s label, description, error, and required state.
 
-## When to use
+## When and where to use
 
-Use Field around a control with a visible label and optional description or
-error. Use Fieldset instead for a semantic group of controls. Field does not
-create a control, infer validation rules, or replace a visible label with a
-placeholder.
+Use it around one input, select, textarea, or compatible custom control.
 
-## Imports and anatomy
+## When not to use
+
+Use Fieldset for a related control group. Field does not validate values,
+manage data, or replace the control itself.
+
+## Installation and imports
 
 ```tsx
-import { Field } from "@flowstack-ui/brick";
-// or: import { Field } from "@flowstack-ui/brick/field";
+import { Field } from "@flowstack-ui/brick/field";
 import "@flowstack-ui/brick/styles.css";
+```
 
-<Field.Root required>
-  <Field.Label>Email</Field.Label>
-  <Input.Root name="email" type="email" />
-  <Field.Description>Use your work address.</Field.Description>
-  <Field.Error>Enter a valid address.</Field.Error>
+## Quick start
+
+```tsx
+<Field.Root name="email" required>
+  <Field.Label>Email <Field.RequiredIndicator /></Field.Label>
+  <input type="email" />
+  <Field.Description>Work email only.</Field.Description>
+  <Field.Error>Please enter a valid email.</Field.Error>
 </Field.Root>
 ```
 
-`Field` is a frozen namespace with `Root`, `Label`, `Description`, `Error`, and
-`RequiredIndicator`. Every part is also available as a named export from the
-`@flowstack-ui/brick/field` subpath, while the root package exposes the
-namespace. Brick requires exactly Atom 0.6.17.
+## Anatomy and DOM ownership
 
-## Root API
+Public parts are `Root` (`div`), `Label` (`label`), `Description` (`p`),
+`Error` (`p`), and `RequiredIndicator` (`span`) with matching element refs.
+All parts wrap public Atom Field parts; Brick adds no private DOM.
 
-`Field.Root` renders `div`, forwards an `HTMLDivElement` ref and native div
-props, and accepts:
+## API
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `invalid` | boolean | `false` |
-| `disabled` | boolean | `false` |
-| `required` | boolean | `false` |
-| `readOnly` | boolean | `false` |
-| `validationBehavior` | `inline`, `native` | inherited/automatic |
-| `orientation` | `vertical`, `horizontal` | `vertical` |
+Root inherits Atom relationship, generated-id, required, disabled, invalid,
+name, and control-ownership props and defaults `orientation` to `vertical`
+(`horizontal` is also supported). RequiredIndicator accepts `fallback`.
+Every part requires children and supports either one `asChild` element or
+Atom `render`, never both.
 
-An explicit root `id` becomes the stable prefix for generated control, label,
-description, and error IDs. Otherwise Atom uses a hydration-stable ID. State is
-provided to Field-aware Atom controls; explicit control ARIA remains
-authoritative.
+## Visual recipes and states
 
-## Parts
+Vertical layout stacks relationships; horizontal aligns label and control
+regions and can fall back under constraint. Atom ownership marks Description
+and Error for generated `aria-describedby` and state propagation.
 
-- `Field.Label` renders `label`, forwards an `HTMLLabelElement` ref, and
-  supports state overrides plus `requiredIndicator` (default `" *"`) and
-  `optionalIndicator`.
-- `Field.Description` renders `p`, forwards an `HTMLParagraphElement` ref, and
-  participates in the control's generated description relationship.
-- `Field.Error` conditionally renders `p`. `match` selects the matching invalid
-  condition and `forceMatch` exposes server/application errors independently.
-  It deliberately has no forced live-region role.
-- `Field.RequiredIndicator` conditionally renders `span`: children while
-  required and `fallback` while optional. Set Label's
-  `requiredIndicator={null}` when placing this part separately.
+## Tokens and CSS hooks
 
-Every part forwards applicable global, native, ARIA, data, event, class, style,
-and slot props plus its native ref. Every part supports mutually exclusive
-`asChild` and `render` composition. `asChild` requires one element; composed
-output must retain suitable semantics and forward props/ref.
+Stable classes/slots are `brick-field`, `brick-field-label`,
+`brick-field-description`, `brick-field-error`, and
+`brick-field-required-indicator` with their matching slots and Atom state/
+orientation attributes. Public `--brick-field-*` tokens cover row/column gap,
+control and label sizing, label/description/error typography and foreground,
+disabled/optional/indicator colors, and indicator gap.
 
-## Responsive layout
+## Customization
 
-Vertical fields follow semantic source order in one column. Horizontal fields
-use intrinsic CSS: label and control form two logical columns only while both
-minimums fit, then reflow to one column without a JavaScript breakpoint.
-Description and Error align with the control column at wide sizes. Long text,
-RTL, 200%/400% zoom, and 256 CSS-pixel layouts wrap rather than clip.
+Use orientation and Atom relationship props first, then public Field tokens.
+Customize public parts through `className`, `style`, `asChild`, or `render`.
 
-## Accessibility and state
+## Responsive behavior
 
-Use one visible Label. Description and the currently visible Error are linked
-to Field-aware controls in server markup and after hydration. Required text is
-decorative to assistive technology because required state reaches the control;
-optional text remains readable. Disabled, read-only, required, invalid, and
-orientation states are exposed as data attributes. Invalid styling uses both
-danger color and a wavy label underline.
+Vertical layout follows available width. Horizontal layout uses a minimum
+control width and must remain readable at zoom; applications choose when to
+switch orientation. Logical spacing supports RTL.
 
-When the Field contains `Field.Error`, native constraint failures from a
-compatible control automatically use inline presentation. The error appears,
-Field and control expose invalid state, the browser bubble is suppressed, and
-focus moves to the visible control. Correcting the value or resetting its Form
-clears native-derived invalid state. Set `validationBehavior="native"` to opt
-that scope back into browser validation UI.
+## Accessibility
 
-Add `role="alert"`, `role="status"`, or `aria-live` to Error only when the
-timing of newly inserted feedback needs it.
+Atom generates or preserves ids and label/description/error relationships.
+Use one visible Label, concise help, and actionable error text. Required and
+invalid visual state must agree with the owned control.
 
-## Stable hooks and tokens
+## Composition, native props, and refs
 
-Classes: `.brick-field`, `.brick-field-label`,
-`.brick-field-description`, `.brick-field-error`, and
-`.brick-field-required-indicator`. Slots use matching `field-*` names and may
-be overridden. Root states include `data-orientation`, `data-disabled`,
-`data-required`, `data-readonly`, and `data-invalid`.
+Each part forwards its Atom/native props and uses a discriminated `asChild` or
+`render` contract. Refs target the rendered elements listed under anatomy.
 
-```text
---brick-field-row-gap
---brick-field-column-gap
---brick-field-label-min-inline-size
---brick-field-control-min-inline-size
---brick-field-label-foreground
---brick-field-label-foreground-disabled
---brick-field-label-font-family
---brick-field-label-font-size
---brick-field-label-font-weight
---brick-field-label-line-height
---brick-field-indicator-foreground
---brick-field-indicator-gap
---brick-field-optional-foreground
---brick-field-description-foreground
---brick-field-description-font-size
---brick-field-description-line-height
---brick-field-error-foreground
---brick-field-error-font-size
---brick-field-error-font-weight
---brick-field-error-line-height
+## Examples
+
+```tsx
+<Field.Root orientation="horizontal">
+  <Field.Label htmlFor="city">City</Field.Label>
+  <input id="city" />
+</Field.Root>
 ```
 
-Prefer semantic token scopes, then these anatomy tokens, then `className` or
-`style`. Verify consumer color overrides across states and appearances.
+## Evidence
+
+- [Playground](../../../playground/src/components/field/FieldPage.tsx)
+- [Unit test](../../../test/components/field/field.test.tsx)
+- [Type owner](../../../test/types/components/field.test.ts)
+- [Browser spec](../../../playground/tests/components/field/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/field/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/field.md)
+
+## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).

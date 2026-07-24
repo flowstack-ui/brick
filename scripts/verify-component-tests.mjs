@@ -52,6 +52,6 @@ if (missing.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Verified unit, type, browser, visual, and manual owners for ${componentIds.length} components.`,
+    `Verified guide, changelog, unit, type, browser, visual, and manual owners for ${componentIds.length} components.`,
   );
 }

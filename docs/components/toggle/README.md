@@ -1,58 +1,104 @@
 # Toggle
 
-Toggle is one persistent pressed/unpressed command. Atom owns native button
-semantics, controlled or uncontrolled state, keyboard activation, composition,
-disabled behavior, `aria-pressed`, and refs; Brick supplies the finished visual
-recipe.
+Toggle is a persistent pressed/unpressed command built on Atom Toggle with
+Brick visual recipes.
 
-## Use and avoid
+## When and where to use
 
-Use Toggle for commands such as Favorite, Pin, Bold, or Show completed when the
-visible label remains stable. Use Button for one-shot actions, Checkbox for
-submitted selections, Switch for immediate settings, Badge for passive labels,
-and ToggleGroup for related pressed commands.
+Use it for commands such as Favorite, Pin, Bold, or Show completed when the
+control keeps the same meaning in both states.
 
-## Import and use
+## When not to use
+
+Use Button for one-shot actions, Checkbox for submitted choices, and
+ToggleGroup for related pressed commands. Toggle has no loading, tone, or icon
+placement API.
+
+## Installation and imports
 
 ```tsx
 import { Toggle } from "@flowstack-ui/brick/toggle";
 import "@flowstack-ui/brick/styles.css";
-
-<Toggle defaultPressed>Bold</Toggle>
-<Toggle ariaLabel="Pin project" iconOnly><PinIcon aria-hidden="true" /></Toggle>
-<Toggle shape="pill">Favorites</Toggle>
 ```
 
-Toggle is also exported from the package root. It renders a native button and
-forwards Atom's `pressed`, `defaultPressed`, `onPressedChange`, `disabled`,
-`ariaLabel`, `render`, `asChild`, native props, class, style, slot, and ref
-contract. Standalone `value`, semantic tone, loading, generated labels, and
-Button icon-placement props are intentionally absent.
+`Toggle` is also exported from `@flowstack-ui/brick`.
 
-## Visual API
+## Quick start
+
+```tsx
+<Toggle aria-label="Favorite" defaultPressed>Favorite</Toggle>
+```
+
+## Anatomy and DOM ownership
+
+Toggle renders Atom `Toggle.Root` as a native `button` and forwards an
+`HTMLButtonElement` ref. Brick adds no private DOM.
+
+## API
 
 | Prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `shape` | `rounded`, `pill` | `rounded` |
-| `iconOnly` | boolean | `false` |
+| `iconOnly` | `boolean` | `false` |
 
-Selected state uses the accent token family while preserving recipe
-distinction: `solid` uses accent-solid fill, `soft` uses accent-soft fill with
-an inset state edge, `outline` retains a transparent surface with an accent
-border, and `ghost` uses accent-soft fill without a visible border or inset
-edge. `solid` keeps a quiet neutral resting surface and uses accent-solid paint
-only while selected. The stable root hook is
-`.brick-toggle`, the slot defaults to `toggle`, and visual state is exposed by
-`data-state`, `data-variant`, `data-size`, `data-shape`, and `data-icon-only`.
-Public component tokens begin with `--brick-toggle-`, including min block size,
-inline padding, gap, radius, and icon size.
+Atom supplies `pressed`, `defaultPressed`, `onPressedChange`, `disabled`,
+native button props, `asChild`, and `render`. Native `color` and standalone
+`value` are excluded.
 
-Keep the label stable across pressed states and give icon-only content an
-accessible name. Toggle supports light/dark appearance, forced colors, RTL,
-zoom/reflow, and reduced-motion preferences.
+## Visual recipes and states
+
+Each variant keeps a distinct resting and pressed treatment. Sizes change the
+whole control geometry; `pill` changes radius; `iconOnly` makes the control
+square. Atom exposes pressed, hover, focus, active, and disabled state.
+
+## Tokens and CSS hooks
+
+Stable hooks are `.brick-toggle`, slot `toggle`, `data-variant`, `data-size`,
+`data-shape`, `data-icon-only`, `data-state`, and `data-disabled`. Public
+tokens are `--brick-toggle-min-block-size`, `--brick-toggle-padding-inline`,
+`--brick-toggle-gap`, `--brick-toggle-radius`, and
+`--brick-toggle-icon-size`.
+
+## Customization
+
+Choose props first, then semantic or public Toggle tokens. Use `className` or
+`style` for a local exception while preserving pressed and focus distinction.
+
+## Responsive behavior
+
+Text may wrap under narrow constraints. Geometry uses logical properties and
+works in RTL. The application owns placement and breakpoint behavior.
+
+## Accessibility
+
+Atom owns button activation and `aria-pressed`. Keep the accessible name stable
+between states and provide a complete name for icon-only controls. Brick owns
+visible focus, target geometry, contrast, and forced-color presentation.
+
+## Composition, native props, and refs
+
+Native button props, `asChild`, and `render` follow Atom. Preserve button
+semantics when composing. The ref targets the rendered `HTMLButtonElement`.
+
+## Examples
+
+```tsx
+<Toggle variant="outline" pressed={pinned} onPressedChange={setPinned}>
+  Pin
+</Toggle>
+```
+
+## Evidence
+
+- [Playground](../../../playground/src/components/toggle/TogglePage.tsx)
+- [Unit test](../../../test/components/toggle/toggle.test.tsx)
+- [Type owner](../../../test/types/components/toggle.test.ts)
+- [Browser spec](../../../playground/tests/components/toggle/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/toggle/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/toggle.md)
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md).
+See [`CHANGELOG.md`](CHANGELOG.md).

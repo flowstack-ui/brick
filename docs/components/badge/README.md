@@ -1,39 +1,35 @@
 # Badge
 
-Badge presents passive inline status, category, or nearby count text. It builds
-on Atom's server-safe Badge root; Brick adds finished visual recipes without
-adding interaction or announcement behavior.
+Badge is a compact passive label for categories, status, or short metadata.
 
-## Use and avoid
+## When and where to use
 
-Use Badge for visible words such as `Published`, `Pending`, or `Beta`, nearby
-contextual counts, and passive tags with `shape="pill"`.
+Use it for short labels whose meaning is understandable in surrounding content.
 
-Badge is not interactive. Use Button for a command, Toggle for a persistent
-selection, NotificationBadge for a count or dot attached to one element, and a
-separately audited Tag if removable value/control anatomy is needed. Badge is
-not a live region or progress indicator.
+## When not to use
 
-## Import
+Do not use Badge as a button, form control, live status announcer, or overlay
+count. Use NotificationBadge for a count or dot attached to another element.
+
+## Installation and imports
 
 ```tsx
 import { Badge } from "@flowstack-ui/brick/badge";
 import "@flowstack-ui/brick/styles.css";
 ```
 
-Badge is also available from the package root.
-
-## Basic use
+## Quick start
 
 ```tsx
-<Badge tone="success">Published</Badge>
-<span>Open issues <Badge>12</Badge></span>
-<Badge shape="pill">TypeScript</Badge>
+<Badge>Draft</Badge>
 ```
 
-Badge renders Atom's native `span`, forwards native props and its ref, and
-supports Atom `asChild` and `render` composition. It adds no role, tab stop,
-keyboard model, state, generated content, or announcement.
+## Anatomy and DOM ownership
+
+Badge renders Atom `Badge.Root` as a `span`, adds no private DOM, and forwards
+an `HTMLSpanElement` ref.
+
+## API
 
 | Prop | Values | Default |
 | --- | --- | --- |
@@ -42,29 +38,59 @@ keyboard model, state, generated content, or announcement.
 | `size` | `sm`, `md`, `lg` | `md` |
 | `shape` | `rounded`, `pill` | `rounded` |
 
-Normal content belongs in `children`. Visual props are removed before native
-forwarding. The native `color` attribute is intentionally omitted in favor of
-the semantic `tone` vocabulary.
+Atom/native span props are inherited except native `color`.
+
+## Visual recipes and states
+
+Variant changes fill and boundary, tone changes semantic color, size changes
+the complete label, and shape selects rounded or pill geometry. Badge is
+passive and has no interactive state.
+
+## Tokens and CSS hooks
+
+Stable hooks are `.brick-badge`, Atom slot `badge`, and `data-variant`,
+`data-tone`, `data-size`, `data-shape`. Public tokens are
+`--brick-badge-background`, `--brick-badge-foreground`,
+`--brick-badge-border-color`, `--brick-badge-min-block-size`,
+`--brick-badge-inline-padding`, `--brick-badge-block-padding`,
+`--brick-badge-font-size`, and `--brick-badge-radius`. Internal tone-mapping
+variables are not public customization hooks.
+
+## Customization
+
+Prefer recipe props, then semantic and public Badge tokens. Use `className` and
+`style` for scoped exceptions while maintaining contrast.
+
+## Responsive behavior
+
+Badge sizes to its content and does not own responsive layout. Keep labels
+short; surrounding layout owns wrapping and truncation.
 
 ## Accessibility
 
-Visible text carries Badge's meaning; tone only reinforces it. Do not add an
-`aria-label` to name the generic `span`. Use nearby visible or programmatically
-associated context. When changing content truly constitutes a status message,
-the application owns the deliberate live-region pattern.
+Badge contributes its text to normal reading order. Do not rely on tone alone
+or use it as the only announcement of an asynchronous change.
 
-## CSS contract
+## Composition, native props, and refs
 
-The stable root hook is `.brick-badge`, and the default slot is `badge`.
-Resolved variant, tone, size, and shape data attributes are public
-inspection/customization hooks.
+Atom composition and native span props are forwarded. The ref targets the
+rendered span; composed output must remain passive.
 
-Public component tokens cover background, foreground, border, minimum block
-size, padding, radius, font size, and semantic tone mappings. Prefer supported
-props and semantic tokens before component-token, class, or style overrides.
-Badge supports dark appearance, forced colors, zoom/reflow, long content, and
-direction without breakpoint props.
+## Examples
+
+```tsx
+<Badge variant="outline" tone="success">Ready</Badge>
+```
+
+## Evidence
+
+- [Playground](../../../playground/src/components/badge/BadgePage.tsx)
+- [Unit test](../../../test/components/badge/badge.test.tsx)
+- [Type owner](../../../test/types/components/badge.test.ts)
+- [Browser spec](../../../playground/tests/components/badge/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/badge/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/badge.md)
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md).
+See [`CHANGELOG.md`](CHANGELOG.md).

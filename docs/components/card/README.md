@@ -281,6 +281,17 @@ Links. Navigation should remain a real link. Card itself never interprets
 </Card.Root>
 ```
 
+## Evidence
+
+- playground route: `/card`
+- [playground scenarios](../../../playground/src/components/card/CardPage.tsx)
+- [component test](../../../test/components/card/card.test.tsx)
+- [type owner](../../../test/types/components/card.test.ts)
+- [browser specification](../../../playground/tests/components/card/behavior.spec.ts)
+- [visual specification](../../../playground/tests/components/card/visual.spec.ts)
+- [manual-test protocol](../../../playground/manual-tests/card.md)
+- [consumer integration](../../../apps/consumer/src/App.tsx)
+
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).

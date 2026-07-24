@@ -1,114 +1,105 @@
-# CheckboxGroup
+# Checkbox Group
 
-CheckboxGroup is a complete related multi-selection family. Atom owns values,
-item semantics, stable label/description relationships, form participation,
-validation/reset, context state, and deterministic Parent behavior; Brick owns
-the finished visual rows and group layout.
+CheckboxGroup coordinates related Checkbox-style items, optional item text, and
+an aggregate parent control.
 
-## Import and anatomy
+## When and where to use
+
+Use it when several submitted choices share group state or a select-all parent.
+
+## When not to use
+
+Use standalone Checkbox for independent choices and RadioGroup for exactly one
+choice. The group does not own business validation or persistence.
+
+## Installation and imports
 
 ```tsx
 import { CheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 import "@flowstack-ui/brick/styles.css";
+```
 
-<CheckboxGroup.Root
-  allValues={["email", "sms", "push"]}
-  name="notifications"
->
-  <CheckboxGroup.Parent>Select all</CheckboxGroup.Parent>
-  <CheckboxGroup.Item value="email">
-    <CheckboxGroup.ItemLabel>Email</CheckboxGroup.ItemLabel>
-    <CheckboxGroup.ItemDescription>
-      Account and product notices.
-    </CheckboxGroup.ItemDescription>
+## Quick start
+
+```tsx
+<CheckboxGroup.Root aria-label="Features" defaultValue={["search"]}>
+  <CheckboxGroup.Item value="search">
+    <CheckboxGroup.ItemLabel>Search</CheckboxGroup.ItemLabel>
   </CheckboxGroup.Item>
-  <CheckboxGroup.Item value="sms">SMS</CheckboxGroup.Item>
-  <CheckboxGroup.Item value="push">Push</CheckboxGroup.Item>
 </CheckboxGroup.Root>
 ```
 
-The exact frozen namespace is `Root`, `Item`, `ItemLabel`, `ItemDescription`,
-and `Parent`. It is also exported from the package root. There is no callable
-shortcut, generated options API, or automatic Fieldset wrapper.
+## Anatomy and DOM ownership
 
-## Root
+`Root` defaults to `div`; `Item` and `Parent` to checkbox buttons;
+`ItemLabel`/`ItemDescription` to spans. Brick injects the same private visual
+control/indicator/SVG used by Checkbox into Item and Parent. Refs target
+`HTMLDivElement`, `HTMLButtonElement`, and `HTMLSpanElement` respectively.
 
-Root forwards `value`, `defaultValue`, `onValueChange`, `allValues`, `name`,
-`form`, `disabled`, `readOnly`, `invalid`, `required`, `orientation`, native
-div/global/ARIA/data/event props, class, style, slot, render, asChild, ref, and
-`validationBehavior` (`inline` or `native`). Brick requires exactly Atom
-0.6.17.
+## API
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
-| `orientation` | `vertical`, `horizontal` | `vertical` |
+Root inherits Atom group value/defaultValue/change, orientation, disabled,
+invalid, required, name/form, and relationship props and adds
+`size?: "sm" | "md" | "lg"` (`md`); orientation defaults to `vertical`.
+Item requires Atom `value`. Parent inherits Atom aggregate behavior including
+`allValues`. Label and Description require children. Every part uses the
+discriminated `asChild` or `render` composition contract.
 
-Size belongs to Root and is inherited by every Item and Parent. Horizontal
-groups wrap in logical order rather than forcing page overflow.
+## Visual recipes and states
 
-## Items and relationships
+Root size cascades shared row/control geometry. Orientation arranges Items.
+Atom owns item checked/mixed state, aggregate Parent state, values, disabled/
+invalid state, and form behavior.
 
-Item requires a unique string `value` and forwards its item-level state,
-native, composition, and ref surface. Plain children are the concise path.
-Use direct ItemLabel and ItemDescription children for structured content; Atom
-generates stable `aria-labelledby` and `aria-describedby` relationships during
-SSR, hydration, and client rendering. Brick's styled wrappers are registered
-with Atom, so no client-only relationship repair is required.
+## Tokens and CSS hooks
 
-## Parent and allValues
+Stable classes/slots cover group, item, label, description, and parent with
+Atom state/value/orientation attributes and Root `data-size`. Public group
+token is `--brick-checkbox-group-gap`; public Checkbox tokens style the shared
+visual. Internal mark DOM is not composable.
 
-Parent derives unchecked, mixed, or checked state from Root `allValues`. Supply
-the complete currently selectable values and omit values of individually
-disabled items while disabled. Parent changes only declared values and
-preserves selected values outside its scope. Empty `allValues` leaves Parent
-unchecked and non-operative. Brick never infers children or owns a collection.
+## Customization
 
-## Forms and Fieldset
+Use Root size/orientation and Atom state props first, then public group and
+Checkbox tokens. Customize public parts with composition or part-level class/
+style without replacing private marks.
 
-Selected Items submit repeated name/value entries. Required means one or more
-selected values; disabled controls are omitted; external `form` ownership and
-native reset are supported. Compose Root inside Brick Fieldset when the set
-needs a shared Legend, description, required/invalid state, and error. A
-Fieldset with `Fieldset.Error` automatically presents the native one-or-more
-failure inline, marks the group invalid, and focuses the first enabled Item.
-Standalone groups default to native browser presentation; an explicit
-`validationBehavior` overrides inheritance.
-Inline validation-directed focus scrolls the first enabled Item into view,
-exposes Atom's `[data-focus-visible]` state there until blur, and renders
-Brick's standard focus ring for that state.
-Untouched required groups remain visually neutral. Leaving the whole group
-empty or removing its final selection after interaction reveals one shared
-invalid state; moving between Items does not count as leaving the group.
-Selecting an Item or resetting the Form clears the derived presentation.
-The shared invalid treatment belongs to Root: one logical group-start cue is
-shown while Item controls, labels, and descriptions remain neutral because any
-eligible option can satisfy the requirement. Fieldset adds its wavy Legend and
-authored error treatment when present. An Item with its own explicit `invalid`
-state receives the individual control-and-row cue when Root is otherwise
-valid.
+## Responsive behavior
 
-Without Fieldset, Root still exposes its group-level invalid presentation. The
-consumer must provide an accessible group name through `aria-label` or
-`aria-labelledby` and associate any external error copy through
-`aria-describedby`. CheckboxGroup does not generate labels or error messages.
+Vertical groups stack; horizontal groups can wrap under constraint. Item text
+may wrap while controls retain target geometry. Logical layout supports RTL.
 
-## Styling and accessibility
+## Accessibility
 
-Stable public classes are `.brick-checkbox-group`,
-`.brick-checkbox-group-item`, `.brick-checkbox-group-item-label`,
-`.brick-checkbox-group-item-description`, and `.brick-checkbox-group-parent`.
-All rows share Checkbox's public tokens; Root additionally exposes
-`--brick-checkbox-group-gap`.
+Give Root a group name or compose it inside Fieldset with a Legend. Atom owns
+item/parent semantics, state, form participation, and generated item
+relationships. Parent labels must explain the aggregate action.
 
-Group size coordinates every Item and Parent control, indicator, gap, row
-padding, and target height while keeping label typography stable across the
-related set.
+## Composition, native props, and refs
 
-Every control is one semantic checkbox and one tab stop. Visual artwork is
-hidden from assistive technology. Group invalidity is not presented visually
-as though every option must be selected. Focus, checked/mixed, invalid,
-disabled, and read-only states remain perceptible in light, dark, forced
-colors, reduced motion, RTL, touch, and zoom/reflow environments.
+All parts forward Atom/native props. In composed Item/Parent output Brick
+injects its visual before existing children. Refs target the rendered elements
+listed under anatomy.
 
-See [CHANGELOG.md](CHANGELOG.md).
+## Examples
+
+```tsx
+<CheckboxGroup.Root value={value} onValueChange={setValue}>
+  <CheckboxGroup.Parent allValues={["email", "sms"]}>Select all</CheckboxGroup.Parent>
+  <CheckboxGroup.Item value="email">Email</CheckboxGroup.Item>
+  <CheckboxGroup.Item value="sms">SMS</CheckboxGroup.Item>
+</CheckboxGroup.Root>
+```
+
+## Evidence
+
+- [Playground](../../../playground/src/components/checkbox-group/CheckboxGroupPage.tsx)
+- [Unit test](../../../test/components/checkbox-group/checkbox-group.test.tsx)
+- [Type owner](../../../test/types/components/checkbox-group.test.ts)
+- [Browser spec](../../../playground/tests/components/checkbox-group/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/checkbox-group/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/checkbox-group.md)
+
+## Changelog
+
+See [`CHANGELOG.md`](CHANGELOG.md).

@@ -1,72 +1,105 @@
-# HoverCard
+# Hover Card
 
-HoverCard presents a nonessential, non-interactive preview for a genuine link.
-Atom owns state, hover/focus persistence, Escape, timing, portals, positioning,
-collision, presence, native props, refs, and composition. Brick supplies one
-neutral elevated surface, three bounded widths, and shared Arrow styling.
+HoverCard shows nonessential preview information from a link-like trigger.
 
-## Use
+## When and where to use
 
-Use HoverCard to preview a profile, document, project, or resource whose
-essential information remains available at the destination or visibly on the
-page. Use Tooltip for a short supplemental description and Popover for
-intentionally opened interactive content. Never place links, buttons, inputs,
-menus, required instructions, validation, or recovery actions in HoverCard.
+Use it for a supplementary person, resource, or destination preview that can
+also be reached independently.
+
+## When not to use
+
+Do not put required instructions or primary actions only in a HoverCard. Use
+Popover for click-open interactive content and Tooltip for a short label.
+
+## Installation and imports
 
 ```tsx
-import { Avatar, HoverCard } from "@flowstack-ui/brick";
+import { HoverCard } from "@flowstack-ui/brick/hover-card";
 import "@flowstack-ui/brick/styles.css";
-
-export function ProfileLink() {
-  return (
-    <HoverCard.Root>
-      <HoverCard.Trigger asChild>
-        <a href="/people/ada">Ada Lovelace</a>
-      </HoverCard.Trigger>
-      <HoverCard.Portal>
-        <HoverCard.Content size="md">
-          <Avatar alt="" fallback="AL" />
-          <strong>Ada Lovelace</strong>
-          <p>Mathematician and early computing author.</p>
-          <HoverCard.Arrow />
-        </HoverCard.Content>
-      </HoverCard.Portal>
-    </HoverCard.Root>
-  );
-}
 ```
 
-The preview duplicates or summarizes destination content. Touch activates the
-link normally; HoverCard does not invent a long-press gesture or promise the
-preview to screen readers.
+## Quick start
+
+```tsx
+<HoverCard.Root>
+  <HoverCard.Trigger href="/ada">Ada Lovelace</HoverCard.Trigger>
+  <HoverCard.Portal>
+    <HoverCard.Content>Profile preview</HoverCard.Content>
+  </HoverCard.Portal>
+</HoverCard.Root>
+```
+
+## Anatomy and DOM ownership
+
+Public parts are `Root`, `Trigger`, `Portal`, `Content`, and `Arrow`. Content
+renders an Atom `div` and Brick adds a private viewport around non-Arrow
+children. Trigger ref is `HTMLElement`, Content `HTMLDivElement`, and Arrow
+`SVGSVGElement`.
 
 ## API
 
-The frozen namespace contains exactly `Root`, `Trigger`, `Portal`, `Content`,
-and `Arrow`. Root forwards Atom's controlled/uncontrolled state, `disabled`,
-`openDelay` (700 ms default), and `closeDelay` (300 ms default). Trigger
-forwards `asChild`/`render`; a genuine link through `asChild` is the normal
-path. Portal forwards body/custom-container/inline modes. Content keeps Atom's
-8px side offset and adds `size="sm|md|lg"`, default `md`, with preferred maximum
-widths of 16, 20, and 24rem. Arrow is explicit and optional.
+Root inherits Atom open state and hover/focus delay props. Content adds
+`size?: "sm" | "md" | "lg"` (`md`) and defaults `sideOffset` to `8`.
+Content excludes Atom `aria-label` spellings because this preview is
+described by its trigger relationship.
 
-Content remains a generic `div`: it has no popup role, accessible name,
-expanded state, trigger relationship, or managed focus. Brick intentionally
-omits Atom Content's accessible-label escape hatch because no screen-reader
-relationship exists.
+## Visual recipes and states
 
-## Hooks and customization
+Size changes maximum inline width. Atom owns open/closed state, delays,
+collision-aware placement, presence, and Arrow positioning. The private
+viewport owns overflow and maximum block size.
 
-Stable slots are `hover-card-trigger`, `hover-card`, and `hover-card-arrow`;
-matching classes are `.brick-hover-card__trigger`, `.brick-hover-card`, and
-`.brick-hover-card__arrow`. The internal `.brick-hover-card__viewport` owns
-constrained scrolling so the outer surface does not clip Arrow. Content exposes
-`data-size`; Atom supplies `data-state`, final `data-side`, and
-`data-positioned`. Collision handling may resolve to the opposite or a
-perpendicular side when the preferred axis cannot fit.
+## Tokens and CSS hooks
 
-Component tokens cover background, foreground, muted foreground, border,
-radius, shadow, padding, gap, three maximum inline sizes, and maximum block
-size. Preserve contrast, viewport containment, RTL, reduced motion, forced
-colors, zoom reflow, focus visibility, and the non-interactive content rule
-when customizing.
+Stable classes/slots cover trigger, content, viewport, and arrow. Public tokens
+are `--brick-hover-card-background`, `--brick-hover-card-foreground`,
+`--brick-hover-card-muted-foreground`, `--brick-hover-card-border`,
+`--brick-hover-card-radius`, `--brick-hover-card-shadow`,
+`--brick-hover-card-padding`, `--brick-hover-card-gap`,
+`--brick-hover-card-max-block-size`, and the `-max-inline-size-sm|md|lg`
+tokens. The viewport is implementation-owned.
+
+## Customization
+
+Use Atom placement props and Brick size first, then public tokens. Customize
+public parts with their `className`/`style`; do not depend on viewport markup.
+
+## Responsive behavior
+
+Atom collision handling may flip or shift Content. Maximum size respects the
+viewport and the inner viewport scrolls when needed. Direction-aware placement
+comes from Atom.
+
+## Accessibility
+
+The trigger must remain a usable destination without the preview. Atom owns
+hover/focus opening and dismissal. Do not require users to interact with
+preview-only content.
+
+## Composition, native props, and refs
+
+Atom composition/native props pass through public Atom parts. Refs target the
+elements listed under anatomy.
+
+## Examples
+
+```tsx
+<HoverCard.Content size="lg" side="bottom">
+  Preview
+  <HoverCard.Arrow />
+</HoverCard.Content>
+```
+
+## Evidence
+
+- [Playground](../../../playground/src/components/hover-card/HoverCardPage.tsx)
+- [Unit test](../../../test/components/hover-card/hover-card.test.tsx)
+- [Type owner](../../../test/types/components/hover-card.test.ts)
+- [Browser spec](../../../playground/tests/components/hover-card/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/hover-card/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/hover-card.md)
+
+## Changelog
+
+See [`CHANGELOG.md`](CHANGELOG.md).

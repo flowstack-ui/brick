@@ -1,221 +1,123 @@
-# AppBar
+# App Bar
 
-AppBar is a styled top surface with one aligned Toolbar and logical Start,
-Center, and End regions. Atom owns its server-safe anatomy while Brick supplies
-positioning, density, surface, color, and appearance recipes.
+AppBar is a top surface and one-row alignment structure built on Atom AppBar.
 
-## When to use
+## When and where to use
 
-Use AppBar for application-level branding, navigation, context, and persistent
-actions. Applications supply all content and decide which items hide, truncate,
-or move into a menu at narrow widths.
+Use it for branding, location, navigation, search, and persistent actions on
+one top surface.
 
-Do not use AppBar as a table header, complete navigation product, responsive
-menu, or scroll-reactive application shell.
+## When not to use
+
+It is not a complete header, menu system, multi-row navigation product,
+responsive shell, body-offset manager, or scroll-reactive policy.
 
 ## Installation and imports
 
 ```tsx
-import { AppBar, IconButton } from "@flowstack-ui/brick";
-// or: import { AppBar } from "@flowstack-ui/brick/app-bar";
+import { AppBar } from "@flowstack-ui/brick/app-bar";
 import "@flowstack-ui/brick/styles.css";
 ```
+
+Named part exports and the root package export are also available.
 
 ## Quick start
 
 ```tsx
-<AppBar.Root position="sticky" tone="accent" variant="solid">
+<AppBar.Root>
   <AppBar.Toolbar>
-    <AppBar.Start>Flowstack</AppBar.Start>
-    <AppBar.Center>Projects</AppBar.Center>
-    <AppBar.End>
-      <IconButton aria-label="Search"><SearchIcon /></IconButton>
-    </AppBar.End>
+    <AppBar.Start>Brand</AppBar.Start>
+    <AppBar.Center>Dashboard</AppBar.Center>
+    <AppBar.End>Actions</AppBar.End>
   </AppBar.Toolbar>
 </AppBar.Root>
 ```
 
 ## Anatomy and DOM ownership
 
-AppBar is a compound component rather than a callable flat component:
+| Part | Default DOM | Ref |
+| --- | --- | --- |
+| `Root` | Atom AppBar landmark/header | `HTMLElement` |
+| `Toolbar` | structural `div` | `HTMLDivElement` |
+| `Start`, `Center`, `End` | section `div` | `HTMLDivElement` |
 
-```tsx
-<AppBar.Root>
-  <AppBar.Toolbar>
-    <AppBar.Start />
-    <AppBar.Center />
-    <AppBar.End />
-  </AppBar.Toolbar>
-</AppBar.Root>
-```
-
-Root renders a native `<header>` by default. Toolbar and the three regions
-render structural `<div>` elements. Toolbar intentionally has no
-`role="toolbar"` because AppBar does not implement toolbar keyboard behavior.
-Start and End are logical regions; Center uses an independent center track.
+Brick adds no private DOM. Toolbar intentionally does not create toolbar-widget
+semantics.
 
 ## API
 
-### Root
-
-| Prop | Values | Default |
+| Root prop | Values | Default |
 | --- | --- | --- |
-| `position` | `static`, `absolute`, `sticky`, `fixed` | `static` |
 | `variant` | `solid`, `surface`, `transparent` | `surface` |
 | `tone` | `neutral`, `accent` | `neutral` |
-| `bordered` | boolean | `true` |
-| `elevated` | boolean | `false` |
-| `blurred` | boolean | `false` |
+| `bordered` | `boolean` | `true` |
+| `elevated` | `boolean` | `false` |
+| `blurred` | `boolean` | `false` |
 
-Root also forwards Atom composition, native props, ARIA/data attributes,
-`className`, `style`, slot, and ref.
+Atom Root supplies `position` (`static`, `absolute`, `sticky`, `fixed`) and
+native/composition props. Toolbar supplies Atom `density` (`comfortable`,
+`compact`). Sections inherit Atom section props.
 
-### Toolbar and regions
+## Visual recipes and states
 
-`AppBar.Toolbar` accepts Atom's `comfortable` and `compact` densities.
-`AppBar.Start`, `AppBar.Center`, and `AppBar.End` forward Atom section props and
-refs. Toolbar is structural and intentionally does not receive `role="toolbar"`.
+Variant controls surface fill, tone selects neutral or accent treatment, and
+border, elevation, and blur are independent options. Toolbar uses equal
+logical side tracks so Center remains geometrically centered.
 
-## Color and variants
+## Tokens and CSS hooks
 
-Neutral is ordinary application chrome. Accent is for branded or strongly
-emphasized application chrome.
+Stable classes are `.brick-app-bar`, `.brick-app-bar-toolbar`,
+`.brick-app-bar-start`, `.brick-app-bar-center`, `.brick-app-bar-end`. Public
+attributes include Atom position/density and Brick variant, tone, bordered,
+elevated, and blurred. Public tokens are `--brick-app-bar-background`,
+`--brick-app-bar-foreground`, `--brick-app-bar-border-color`,
+`--brick-app-bar-blurred-background`,
+`--brick-app-bar-reduced-transparency-background`, and
+`--brick-app-bar-shadow`.
 
-| Variant | Neutral | Accent |
-| --- | --- | --- |
-| `solid` | Raised neutral surface | Full accent surface with inverse content |
-| `surface` | Standard neutral surface | Soft accent surface |
-| `transparent` | Neutral content without fill | Accent content without fill |
+## Customization
 
-Status tones such as success, warning, and danger are intentionally excluded.
-Use a status component for transient or semantic status communication.
-
-## Positioning
-
-- `static` participates in normal flow and scrolls with the page.
-- `sticky` participates in flow, then sticks within its scrolling container.
-- `absolute` overlays content relative to its nearest positioned ancestor.
-- `fixed` overlays content relative to the viewport in ordinary layouts.
-
-Absolute and fixed bars do not reserve page space. The application owns any
-required content offset. AppBar's stacking level remains below modal overlays
-and is still constrained by ancestor stacking contexts.
-
-## Composition, native props, and refs
-
-Root, Toolbar, Start, Center, and End support Atom's `render` and `asChild`
-composition paths. Prefer the default anatomy. Use `render` to replace an
-element without changing the child structure, and reserve `asChild` for one
-permissive element that forwards its ref and native props:
-
-```tsx
-<AppBar.Root render={<header data-region="application" />}>
-  <AppBar.Toolbar>…</AppBar.Toolbar>
-</AppBar.Root>
-
-<AppBar.Root asChild>
-  <header data-region="application">
-    <AppBar.Toolbar>…</AppBar.Toolbar>
-  </header>
-</AppBar.Root>
-```
-
-Root refs target `HTMLElement`; Toolbar and region refs target
-`HTMLDivElement` on their default paths. Native props, ARIA/data attributes,
-events, `className`, `style`, and `data-slot` pass through.
+Use Root/Toolbar props, then semantic and AppBar tokens, then part
+`className`/`style`. The application owns branding, child visibility,
+truncation, offsets, and navigation behavior.
 
 ## Responsive behavior
 
-Toolbar remains one logical row. Start and End occupy equal flexible tracks so
-Center stays at the geometric center even when the side content has unequal
-widths. Applications must define overflow policy for their own content:
-
-```css
-.project-name {
-  min-inline-size: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-@media (max-width: 38rem) {
-  .optional-app-navigation { display: none; }
-}
-```
-
-## Tokens and customization
-
-Stable hooks are `.brick-app-bar`, `.brick-app-bar-toolbar`,
-`.brick-app-bar-start`, `.brick-app-bar-center`, and `.brick-app-bar-end`, plus
-Atom slots and Brick state data attributes.
-
-Public component tokens:
-
-```text
---brick-app-bar-background
---brick-app-bar-foreground
---brick-app-bar-border-color
---brick-app-bar-blurred-background
---brick-app-bar-reduced-transparency-background
---brick-app-bar-shadow
-```
-
-Prefer `tone` and `variant` for supported recipes. Use component tokens for a
-custom brand treatment:
-
-```css
-.brand-app-bar {
-  --brick-app-bar-background: #124e78;
-  --brick-app-bar-foreground: #ffffff;
-  --brick-app-bar-border-color: #0d3b5c;
-  --brick-app-bar-blurred-background: rgb(18 78 120 / 88%);
-}
-```
-
-Custom colors are outside Brick's contrast guarantee. Consumers must verify
-text, links, composed controls, focus indicators, appearances, and forced-color
-behavior. Composed components can be styled independently when their default
-recipe is unsuitable for a custom background.
-
-## Appearance and preferences
-
-AppBar consumes the nearest Brick appearance scope. A blurred surface becomes
-opaque when reduced transparency is requested. Forced colors removes custom
-background effects and shadows, then restores system surface, text, and
-boundary colors. AppBar adds no motion of its own.
+Root fills available inline size. AppBar does not wrap itself or prescribe
+breakpoints; applications decide what truncates, hides, scrolls, or moves.
+Logical tracks and edges support RTL.
 
 ## Accessibility
 
-Give Root a useful accessible label when multiple landmark-like top surfaces
-need differentiation. Keep navigation inside a native `nav` with its own label.
-Every composed action retains its own name and semantics. AppBar does not add
-roving focus, menu behavior, routing, or keyboard shortcuts.
+Atom owns landmark semantics. Label multiple comparable landmarks and nested
+navigation, and name every action. Brick owns visible boundaries, contrast,
+forced-color output, and reduced-transparency fallback.
 
-Use logical Start and End regions for RTL. Brick reverses their physical
-placement while preserving the geometric Center. Forced colors remove custom
-surface effects and restore system colors and visible boundaries.
+## Composition, native props, and refs
+
+Every part forwards its public Atom/native props and composition behavior.
+Refs target the elements in the anatomy table.
 
 ## Examples
 
 ```tsx
-<AppBar.Root elevated>
-  <AppBar.Toolbar>
-    <AppBar.Start>Workspace</AppBar.Start>
-    <AppBar.End>
-      <IconButton aria-label="Search"><SearchIcon /></IconButton>
-    </AppBar.End>
-  </AppBar.Toolbar>
-</AppBar.Root>
-
-<AppBar.Root blurred position="sticky">
+<AppBar.Root position="sticky" variant="solid" tone="accent" elevated>
   <AppBar.Toolbar density="compact">
-    <AppBar.Start>Project</AppBar.Start>
-    <AppBar.Center>Activity</AppBar.Center>
-    <AppBar.End>Actions</AppBar.End>
+    <AppBar.Start>Projects</AppBar.Start>
+    <AppBar.End><button>Account</button></AppBar.End>
   </AppBar.Toolbar>
 </AppBar.Root>
 ```
 
+## Evidence
+
+- [Playground](../../../playground/src/components/app-bar/AppBarPage.tsx)
+- [Unit test](../../../test/components/app-bar/app-bar.test.tsx)
+- [Type owner](../../../test/types/components/app-bar.test.ts)
+- [Browser spec](../../../playground/tests/components/app-bar/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/app-bar/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/app-bar.md)
+
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md).
+See [`CHANGELOG.md`](CHANGELOG.md).

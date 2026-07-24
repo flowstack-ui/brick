@@ -222,6 +222,17 @@ The playground exercises defaults, every recipe and size, both shapes, all
 three link paths, inactive states, icon naming, appearance, customization,
 constrained layouts, reduced motion, forced colors, and RTL loading.
 
+## Evidence
+
+- playground route: `/icon-button`
+- [playground scenarios](../../../playground/src/components/icon-button/IconButtonPage.tsx)
+- [component test](../../../test/components/icon-button/icon-button.test.tsx)
+- [type owner](../../../test/types/components/icon-button.test.ts)
+- [browser specification](../../../playground/tests/components/icon-button/behavior.spec.ts)
+- [visual specification](../../../playground/tests/components/icon-button/visual.spec.ts)
+- [manual-test protocol](../../../playground/manual-tests/icon-button.md)
+- [consumer integration](../../../apps/consumer/src/App.tsx)
+
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).

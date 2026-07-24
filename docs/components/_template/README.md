@@ -1,6 +1,7 @@
 # Component name
 
-One-sentence description of the component's public purpose.
+One short paragraph describing the component's public purpose and its Brick
+boundary.
 
 ## When and where to use
 
@@ -8,60 +9,70 @@ Explain the general-purpose situations this component is designed for.
 
 ## When not to use
 
-Explain misuse cases and name the related component or direct Atom primitive
-that fits those cases better.
+Name misuse cases, the correct related component or Atom primitive, and
+important exclusions that consumers could otherwise assume are supported.
 
 ## Installation and imports
 
-Show the root and stable component-subpath imports plus the required stylesheet.
+Show the root export, stable component subpath, and required stylesheet.
 
 ## Quick start
 
-Provide the shortest finished, accessible example using only public imports.
+Provide the shortest finished and accessible example using public imports.
 
 ## Anatomy and DOM ownership
 
-Document every public part, default element, ref target, backing Atom part when
-applicable, and any intentionally added DOM.
+Document each public part, default rendered element, ref target, backing Atom
+part, and any Brick-added DOM. Mark decorative or implementation-only anatomy
+as private.
 
 ## API
 
-Document every public component, part, prop, value, default, and event.
+Document every public export and component-owned prop in tables with allowed
+values and defaults. Describe inherited Atom/native behavior separately.
+Explicitly list important exclusions.
 
 ## Visual recipes and states
 
-Cover variants, tones, sizes, treatments, interaction states, validation,
-loading, disabled behavior, and other supported states.
+Describe each supported recipe dimension and observable state. Explain what
+changes and what remains stable without reproducing the stylesheet.
 
 ## Tokens and CSS hooks
 
-List semantic and component tokens, stable base classes, default slots, visual
-attributes, and public Atom state attributes.
+List only adopted public component tokens, stable classes, default slots,
+public visual attributes, and relevant Atom state attributes. Distinguish
+public hooks from private implementation variables or elements.
 
 ## Customization
 
-Show supported props, semantic tokens, selective component tokens, compound
-parts, then `className` and `style` escape hatches—in that order.
+Show the supported order: props, semantic tokens, component tokens, compound
+parts, then `className` and `style` escape hatches.
 
 ## Responsive behavior
 
-Explain the constrained mobile baseline, intrinsic behavior, and intentional
-wide-layout enhancements.
+Explain constrained-width behavior, zoom/reflow, wrapping, directionality,
+localization, and which responsive layout decisions remain application-owned.
 
 ## Accessibility
 
-Document semantics, accessible naming, focus, keyboard behavior, target size,
-contrast relationships, consumer responsibilities, and preference modes.
+Document semantics, accessible naming, keyboard and focus behavior, target
+size, contrast, unavailable/loading states, preferences, and consumer
+responsibilities.
 
 ## Composition, native props, and refs
 
-Document `asChild`, `render`, native prop forwarding, and the exact ref target
-only when the component exposes those capabilities.
+Document `asChild`, `render`, native prop forwarding, form behavior, and the
+exact ref target when applicable. State `Not applicable` with a reason when the
+component exposes no composition path.
 
 ## Examples
 
-Provide practical copy-paste examples that are exercised by tests or the
-playground.
+Provide practical, copyable examples exercised by tests or the playground.
+
+## Evidence
+
+Link the component playground route, focused unit test, type owner, browser
+spec, visual spec, manual protocol, and any relevant integration consumer.
 
 ## Changelog
 

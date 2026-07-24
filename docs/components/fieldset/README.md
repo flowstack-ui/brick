@@ -1,112 +1,100 @@
 # Fieldset
 
-Fieldset supplies native grouped-control semantics plus a finished Legend,
-Description, Error, state model, and rhythm.
+Fieldset coordinates a related control group with a legend, description, and
+group error.
 
-## When to use
+## When and where to use
 
-Use Fieldset for related checkboxes, radio buttons, or a set of Fields that
-needs one group name. Do not use it as a decorative Card or generic section;
-use ordinary layout and headings when no native control group exists.
+Use it for related checkboxes, radios, or controls that share one question.
 
-## Imports and anatomy
+## When not to use
+
+Use Field for one control. Fieldset does not validate children or manage their
+values.
+
+## Installation and imports
 
 ```tsx
-import { Fieldset } from "@flowstack-ui/brick";
-// or: import { Fieldset } from "@flowstack-ui/brick/fieldset";
+import { Fieldset } from "@flowstack-ui/brick/fieldset";
 import "@flowstack-ui/brick/styles.css";
+```
 
-<Fieldset.Root required>
-  <Fieldset.Legend>Contact method</Fieldset.Legend>
-  <Fieldset.Description>Choose one option.</Fieldset.Description>
-  <RadioGroup.Root name="contact">
-    <RadioGroup.Item value="email">Email</RadioGroup.Item>
-    <RadioGroup.Item value="phone">Phone</RadioGroup.Item>
-  </RadioGroup.Root>
-  <Fieldset.Error>Select a contact method.</Fieldset.Error>
+## Quick start
+
+```tsx
+<Fieldset.Root>
+  <Fieldset.Legend>Notifications</Fieldset.Legend>
+  <Fieldset.Description>Select all that apply.</Fieldset.Description>
+  {/* controls */}
 </Fieldset.Root>
 ```
 
-`Fieldset` is a frozen namespace with `Root`, `Legend`, `Description`, and
-`Error`; each part is also a named export from the
-`@flowstack-ui/brick/fieldset` subpath, while the root package exposes the
-namespace. Brick requires exactly Atom 0.6.17.
+## Anatomy and DOM ownership
+
+Public Atom-backed parts are `Root` (`fieldset`), `Legend` (`legend`),
+`Description` (`p`), and `Error` (`p`) with corresponding element refs. Brick
+adds no private DOM.
 
 ## API
 
-`Fieldset.Root` renders native `fieldset`, forwards an
-`HTMLFieldSetElement` ref and native props, and accepts `disabled`, `required`,
-and `invalid` booleans (all default `false`) plus `validationBehavior` with
-`inline` and `native` values. Native `disabled` behavior is preserved. Invalid
-state emits `aria-invalid`; required state is communicated by Legend and the
-actual grouped controls rather than invalid `aria-required` on `fieldset` or
-`role="group"`.
+All parts inherit Atom relationship/native props, require children, and support
+either one `asChild` element or `render`, never both. Root owns group required,
+disabled, invalid, generated relationship, and native fieldset behavior.
 
-- `Fieldset.Legend` renders native `legend`, forwards an `HTMLLegendElement`
-  ref, and accepts `requiredIndicator` (default `" *"`) and
-  `optionalIndicator`.
-- `Fieldset.Description` renders `p`, forwards an `HTMLParagraphElement` ref,
-  and supplies the generated group description.
-- `Fieldset.Error` conditionally renders `p` while invalid or when
-  `forceMatch` is true. It has no forced live-region role.
+## Visual recipes and states
 
-All parts forward applicable native/global/ARIA/data/event props, class,
-style, slot, and native refs. Every part supports mutually exclusive `asChild`
-and `render`. Root composition must still render a real fieldset and Legend
-composition must still render a real legend if native grouping and disabled
-behavior are expected.
+Root stacks legend, description, controls, and error with separate group and
+control gaps. Atom ownership marks parts so description/error ids and group
+state stay connected.
 
-## Relationships and accessibility
+## Tokens and CSS hooks
 
-Legend gives compatible Atom CheckboxGroup and RadioGroup controls their
-accessible group name. Visible Description and Error IDs are included in the
-group's server-rendered and hydrated description relationship. Errors are not
-automatically live; add an appropriate native live role only when newly
-inserted feedback must be announced.
+Stable classes/slots are `brick-fieldset`, `brick-fieldset-legend`,
+`brick-fieldset-description`, and `brick-fieldset-error` with matching slots
+and Atom state attributes. Public `--brick-fieldset-*` tokens cover group/
+control gaps, legend/description/error typography and foreground, disabled/
+optional/indicator colors, and indicator gap.
 
-When the Fieldset contains `Fieldset.Error`, native constraint failures from a
-compatible group automatically use inline presentation. The shared error
-appears, Fieldset and group expose invalid state, the browser bubble is
-suppressed, and focus moves to the group's first enabled visible control.
-Correction and Form reset clear native-derived invalid state. Set
-`validationBehavior="native"` to retain browser validation UI for the scope.
+## Customization
 
-Fieldset has no border, surface, radius, or elevation. Its semantic source
-order remains Legend, Description, controls/Fields, then Error. Long content,
-RTL, forced colors, narrow layouts, and zoom wrap without changing that order.
-Invalid styling combines danger color with a wavy Legend underline.
-Legend uses the same default typography and initial content gap as Field Label
-because both name one form question. Fieldset retains a larger control gap
-between its Description, grouped controls, and Error.
+Use native/Atom group props first, then public Fieldset tokens. Customize
+public parts with `className`, `style`, `asChild`, or `render`.
 
-## Stable hooks and tokens
+## Responsive behavior
 
-Classes are `.brick-fieldset`, `.brick-fieldset-legend`,
-`.brick-fieldset-description`, and `.brick-fieldset-error`. Matching slots are
-overridable. Root exposes `data-disabled`, `data-required`, and `data-invalid`;
-Legend exposes resolved required/disabled state.
+Fieldset follows available width and does not prescribe child columns or
+breakpoints. Keep legends and errors readable under zoom and localization.
 
-```text
---brick-fieldset-gap
---brick-fieldset-control-gap
---brick-fieldset-legend-foreground
---brick-fieldset-legend-foreground-disabled
---brick-fieldset-legend-font-family
---brick-fieldset-legend-font-size
---brick-fieldset-legend-font-weight
---brick-fieldset-legend-line-height
---brick-fieldset-indicator-foreground
---brick-fieldset-indicator-gap
---brick-fieldset-optional-foreground
---brick-fieldset-description-foreground
---brick-fieldset-description-font-size
---brick-fieldset-description-line-height
---brick-fieldset-error-foreground
---brick-fieldset-error-font-size
---brick-fieldset-error-font-weight
---brick-fieldset-error-line-height
+## Accessibility
+
+Use Legend as the group’s question. Atom maintains description/error
+relationships and native disabled/fieldset semantics. Errors must explain how
+to correct the group.
+
+## Composition, native props, and refs
+
+Parts forward Atom/native props through the discriminated composition contract.
+Refs target the rendered elements listed under anatomy.
+
+## Examples
+
+```tsx
+<Fieldset.Root invalid>
+  <Fieldset.Legend>Contact method</Fieldset.Legend>
+  {/* choices */}
+  <Fieldset.Error>Select at least one method.</Fieldset.Error>
+</Fieldset.Root>
 ```
 
-Prefer semantic scopes, then anatomy tokens, then class/style escape hatches.
+## Evidence
+
+- [Playground](../../../playground/src/components/fieldset/FieldsetPage.tsx)
+- [Unit test](../../../test/components/fieldset/fieldset.test.tsx)
+- [Type owner](../../../test/types/components/fieldset.test.ts)
+- [Browser spec](../../../playground/tests/components/fieldset/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/fieldset/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/fieldset.md)
+
+## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).

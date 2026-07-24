@@ -1,77 +1,101 @@
 # Tooltip
 
-Tooltip presents a brief supplemental description near one already named
-trigger. Atom owns hover, focus, Escape, touch-hold, timing, dismissal,
-positioning, portals, semantics, and trigger relationships; Brick supplies the
-plain and rich neutral recipes and the shared floating arrow treatment.
+Tooltip supplies a short supplementary label or description for a trigger.
 
-## Use
+## When and where to use
 
-Use Tooltip for an unfamiliar icon action, abbreviation, or compact control.
-The trigger must retain its complete accessible name without the Tooltip. Keep
-required instructions, validation, warnings, and recovery visible in the page.
-Use HoverCard for a larger preview and Popover for interactive content.
+Use it to clarify an icon or unfamiliar control on hover and keyboard focus.
+
+## When not to use
+
+Do not place required, interactive, or lengthy content in a Tooltip. Use
+HoverCard for previews and Popover for click-open interactive content.
+
+## Installation and imports
 
 ```tsx
 import { Tooltip } from "@flowstack-ui/brick/tooltip";
 import "@flowstack-ui/brick/styles.css";
-
-export function SearchHelp() {
-  return (
-    <Tooltip.Provider>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild>
-          <button aria-label="Search workspace">Search icon</button>
-        </Tooltip.Trigger>
-        <Tooltip.Portal>
-          <Tooltip.Content side="bottom">
-            Search workspace
-            <Tooltip.Arrow />
-          </Tooltip.Content>
-        </Tooltip.Portal>
-      </Tooltip.Root>
-    </Tooltip.Provider>
-  );
-}
 ```
 
-Provider normally wraps an application or coherent region. It forwards Atom's
-`openDelay`, `closeDelay`, and `skipDelay`. Root forwards controlled and
-uncontrolled state, delays, `disabled`, and `variant="plain|rich"`.
-
-The namespace contains exactly `Provider`, `Root`, `Trigger`, `Portal`,
-`Content`, `Title`, `Description`, and `Arrow`. Public controls normally use
-`Trigger asChild` so the actual focusable element is the positioning reference.
-Content defaults to an 8px side offset and `shape="rounded"`, supports
-`shape="pill"`, and forwards Atom's `side` and `align`.
-
-Rounded is the normal readable treatment. Reserve pill for deliberately compact
-single-line labels; wrapped and rich content should remain rounded.
-
-## Rich mode
+## Quick start
 
 ```tsx
-<Tooltip.Root variant="rich">
-  <Tooltip.Trigger asChild>{trigger}</Tooltip.Trigger>
-  <Tooltip.Portal>
-    <Tooltip.Content>
-      <Tooltip.Title>Ready for review</Tooltip.Title>
-      <Tooltip.Description>All required checks passed.</Tooltip.Description>
-      <Tooltip.Arrow />
-    </Tooltip.Content>
-  </Tooltip.Portal>
+<Tooltip.Root>
+  <Tooltip.Trigger aria-label="Delete">×</Tooltip.Trigger>
+  <Tooltip.Portal><Tooltip.Content>Delete</Tooltip.Content></Tooltip.Portal>
 </Tooltip.Root>
 ```
 
-Rich remains short and non-interactive. Never place links, buttons, inputs, or
-other focusable content inside either recipe.
+## Anatomy and DOM ownership
 
-## Hooks and customization
+Public parts are `Provider`, `Root`, `Trigger`, `Portal`, `Content`, `Title`,
+`Description`, and `Arrow`. Title/Description default to `span` and are
+Brick-owned structure parts; other behavior parts use Atom. Content ref is
+`HTMLDivElement`, Arrow `SVGSVGElement`, and composed parts `HTMLElement`.
 
-Stable slots are `tooltip-trigger`, `tooltip`, `tooltip-title`,
-`tooltip-description`, and `tooltip-arrow`; matching classes use
-`.brick-tooltip` and `.brick-tooltip__*`. Component tokens include background,
-foreground, border, shadow, radius, padding, gap, and plain/rich maximum inline
-sizes. Prefer those hooks over DOM structure. Appearance, RTL, reduced motion,
-forced colors, collision changes, long localization, zoom, and narrow screens
-remain required verification contexts.
+## API
+
+Root and Provider inherit Atom state/delay props. Content adds
+`shape?: "rounded" | "pill"` (`rounded`), defaults `sideOffset` to `8`, and
+excludes Atom `aria-label` spellings. Title and Description accept native
+attributes plus `asChild` or `render`.
+
+## Visual recipes and states
+
+Shape changes Content geometry. Plain text remains compact; Title and
+Description create rich structured content. Atom owns open/closed state,
+delays, presence, placement, collision handling, and Arrow coordinates.
+
+## Tokens and CSS hooks
+
+Stable classes/slots cover trigger, content, title, description, and arrow;
+Content exposes `data-shape` plus Atom state/placement data. Public tokens are
+`--brick-tooltip-background`, `--brick-tooltip-foreground`,
+`--brick-tooltip-border-color`, `--brick-tooltip-radius`,
+`--brick-tooltip-shadow`, `--brick-tooltip-padding-block`,
+`--brick-tooltip-padding-inline`, `--brick-tooltip-max-inline-size`,
+`--brick-tooltip-rich-gap`, and `--brick-tooltip-rich-max-inline-size`.
+
+## Customization
+
+Use placement/delay and shape props first, then public tokens. Use part
+`className`, `style`, `asChild`, or `render` for scoped structure.
+
+## Responsive behavior
+
+Text wraps within its maximum inline size and Atom flips/shifts Content around
+viewport collisions. Logical placement supports RTL.
+
+## Accessibility
+
+Atom owns tooltip relationship, hover/focus opening, Escape dismissal, and
+noninteractive semantics. The trigger still needs its own accessible name when
+the tooltip text is only supplementary.
+
+## Composition, native props, and refs
+
+Atom parts inherit Atom composition. Title/Description support exactly one
+`asChild` child or a `render` element and merge refs, class, and style.
+
+## Examples
+
+```tsx
+<Tooltip.Content shape="pill">
+  <Tooltip.Title>Keyboard shortcut</Tooltip.Title>
+  <Tooltip.Description>Command K</Tooltip.Description>
+</Tooltip.Content>
+```
+
+## Evidence
+
+- [Playground](../../../playground/src/components/tooltip/TooltipPage.tsx)
+- [Unit test](../../../test/components/tooltip/tooltip.test.tsx)
+- [Type owner](../../../test/types/components/tooltip.test.ts)
+- [Browser spec](../../../playground/tests/components/tooltip/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/tooltip/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/tooltip.md)
+
+## Changelog
+
+See [`CHANGELOG.md`](CHANGELOG.md).

@@ -128,6 +128,7 @@
     "dev:consumer": "npm run build && npm run dev -w apps/consumer",
     "dev:consumer:network": "npm run build && npm run dev:network -w apps/consumer",
     "dev:test": "vitest",
+    "docs:component": "node scripts/verify-component-docs.mjs",
     "preview:playground": "vite preview --config playground/vite.config.ts",
     "typecheck": "npm run build && tsc -p tsconfig.tools.json && tsc -p test/types/tsconfig.json && tsc -p playground/tsconfig.json",
     "test": "npm run test:node && npm run test:components && npm run test:css",
