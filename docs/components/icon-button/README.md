@@ -20,12 +20,12 @@ appropriate. Use `href` for a deliberate icon-only navigation link.
 ## Installation and imports
 
 ```tsx
-import { IconButton } from "@flowstack-ui/brick";
-// or: import { IconButton } from "@flowstack-ui/brick/icon-button";
+import { IconButton } from "@flowstack-ui/brick/icon-button";
 import "@flowstack-ui/brick/styles.css";
 ```
 
-Brick requires its exact published Atom dependency and React 18 or newer.
+`IconButton` and its public types are also exported from
+`@flowstack-ui/brick`.
 
 ## Quick start
 
@@ -53,8 +53,12 @@ pseudo-element and does not replace the accessible name.
 
 ## API
 
-`IconButtonProps` forwards Atom Button props and supported
-native/global/ARIA/data props except native `color`.
+Public exports are `IconButton`, `IconButtonProps`, `IconButtonVariant`,
+`IconButtonTone`, `IconButtonSize`, and `IconButtonShape`. The three recipe
+aliases reuse Button's closed variant, tone, and size unions.
+
+`IconButtonProps` forwards Atom Button props and supported native, global,
+ARIA, and data props except native `color`.
 
 | Prop | Values | Default |
 | --- | --- | --- |
@@ -64,13 +68,15 @@ native/global/ARIA/data props except native `color`.
 | `shape` | `rounded`, `circle` | `rounded` |
 | `disabled`, `loading` | boolean | `false` |
 | `href` | string | none |
-| `onPress` | mouse event handler | none |
+| `onPress` | Atom press callback | none |
 | `asChild` | boolean | `false` |
 | `render` | Atom render value/callback | none |
 
 `asChild: true` requires one React element and is mutually exclusive with
-`render`. IconButton accepts one visible icon as its child; it has no visible
-text mode, icon registry, inferred name, or pressed-state API.
+`render`; the ordinary path accepts `ReactNode`. The product contract requires
+one visible icon even though React's node type cannot enforce visual content.
+IconButton has no visible-text mode, icon registry, inferred name, or
+pressed-state API.
 
 ## Visual recipes and states
 
