@@ -1,4 +1,4 @@
-# AlertDialog
+# Alert Dialog
 
 AlertDialog interrupts the current workflow for a brief, important decision
 that requires an explicit response. Atom owns alert-dialog semantics, modal

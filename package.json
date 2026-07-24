@@ -151,7 +151,7 @@
     "pack:check": "node scripts/verify-package.mjs --dry-run",
     "verify:consumers": "npm run build && node scripts/verify-consumers.mjs",
     "verify:consumer": "npm run build && node scripts/verify-app-consumer.mjs",
-    "check": "npm run test:ownership && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
+    "check": "npm run test:ownership && npm run docs:component && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
     "prepublishOnly": "npm run build"
   },
   "browserslist": [

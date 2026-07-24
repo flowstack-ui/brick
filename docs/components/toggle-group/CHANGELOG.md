@@ -1,4 +1,4 @@
-# ToggleGroup changelog
+# Toggle Group changelog
 
 ## Unreleased — 0.1.0
 

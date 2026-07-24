@@ -9,9 +9,10 @@ Button follows the package version of `@flowstack-ui/brick`.
 - Initial direct `Button` API and root/component-subpath exports.
 - Four variants, six semantic tones, five sizes, and three shapes.
 - Explicit full-width layout, start/end icons, and stable loading presentation.
-- Native props, `HTMLElement` ref, `asChild`, and `render` forwarding from Atom
-  0.2.1.
-- Public Button tokens, stable class, visual attributes, and appearance support.
+- Native action and link semantics, form behavior, loading and disabled states,
+  `HTMLElement` ref, and mutually exclusive `asChild`/`render` composition.
+- Public Button tokens, stable root and content/icon classes, visual
+  attributes, logical icon placement, and appearance/preference support.
 
 ### Fixed
 

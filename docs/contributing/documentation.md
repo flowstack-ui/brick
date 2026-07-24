@@ -9,6 +9,9 @@ The README is the public usage contract for the released package. It explains
 what a consumer can rely on without exposing private planning or repository
 history. Start from `docs/components/_template/`.
 
+The component changelog records observable changes to that public contract.
+It is not a development diary, evidence log, or dependency-upgrade ledger.
+
 ## Source-of-truth order
 
 Write or review a component guide against these sources in order:
@@ -88,3 +91,35 @@ A component documentation review is complete only when:
   current behavior.
 
 Documentation is a release gate, not follow-up work.
+
+## Component changelog contract
+
+Each component changelog:
+
+- starts with the human-readable component name and states that it follows the
+  package version;
+- keeps current work under `## Unreleased`;
+- uses only applicable Keep a Changelog categories such as `Added`, `Changed`,
+  `Deprecated`, `Removed`, `Fixed`, or `Security`;
+- records consumer-visible API, semantics, DOM, CSS, token, accessibility,
+  responsive, and visual changes;
+- describes the resulting public behavior, not internal implementation steps,
+  test organization, private research, or obsolete dependency versions;
+- links to migration guidance when a change requires consumer action;
+- omits documentation-only corrections unless they repair a materially false
+  public instruction that consumers may have followed.
+
+Before closing component work, compare the changelog to the source diff and
+the package changelog. Every observable component change belongs in both
+places when release-facing; neither file should duplicate private history.
+
+## Commands
+
+Run the focused documentation gate while working:
+
+```sh
+npm run docs:component -- <component>
+```
+
+Run `npm run docs:component` to verify every component. The repository-wide
+`npm run check` command includes this all-component documentation gate.

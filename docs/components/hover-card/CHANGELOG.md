@@ -1,4 +1,4 @@
-# HoverCard changelog
+# Hover Card changelog
 
 ## Unreleased
 

@@ -1,4 +1,4 @@
-# AppBar changelog
+# App Bar changelog
 
 ## Unreleased — 0.1.0
 

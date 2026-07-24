@@ -42,6 +42,21 @@ for (const componentId of requested) {
     continue;
   }
 
+  const changelogText = await readFile(changelog, "utf8");
+  const expectedTitle = documentation.match(/^# (.+)$/m)?.[1];
+  if (!expectedTitle) {
+    failures.push(`${componentId}: README is missing its component title`);
+    continue;
+  }
+  if (!changelogText.startsWith(`# ${expectedTitle} changelog\n`)) {
+    failures.push(
+      `${componentId}: changelog must start with "# ${expectedTitle} changelog"`,
+    );
+  }
+  if (!changelogText.includes("## Unreleased")) {
+    failures.push(`${componentId}: changelog is missing the Unreleased section`);
+  }
+
   const headings = [...documentation.matchAll(/^## (.+)$/gm)].map((match) => match[1]);
   if (JSON.stringify(headings) !== JSON.stringify(requiredSections)) {
     failures.push(

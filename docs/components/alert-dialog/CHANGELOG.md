@@ -1,4 +1,4 @@
-# AlertDialog changelog
+# Alert Dialog changelog
 
 AlertDialog follows the package version of `@flowstack-ui/brick`.
 

@@ -1,4 +1,4 @@
-# IconButton
+# Icon Button
 
 IconButton presents one named icon-only action or a button-styled native link
 with finished Brick geometry and recipes over public Atom Button behavior.

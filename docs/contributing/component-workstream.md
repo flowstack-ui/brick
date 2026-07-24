@@ -35,14 +35,33 @@ build; this guide decides how evidence is represented in this repository.
 - `playground/component-coverage.xlsx` — assertion-level evidence rows
 - `apps/consumer/` — realistic packed-package composition when applicable
 
+## Documentation reconciliation
+
+Before the component is considered complete:
+
+1. Read the final public source and subpath exports rather than copying the
+   brief or playground prose.
+2. Reconcile every public export, prop, value, default, rendered element, ref,
+   composition path, state, slot, class, attribute, and adopted token with the
+   component README.
+3. Verify that examples use supported public imports and accessible
+   combinations.
+4. Link the component-owned unit, type, browser, visual, manual, and playground
+   evidence.
+5. Compare the source diff with the component and package changelogs. Record
+   every observable change and remove implementation-only or stale dependency
+   history.
+6. Run `npm run docs:component -- <component>`.
+
 ## Evidence gate
 
 A row is complete only when the named assertion exists and passes. Rendering a
 part nearby, sharing a family test, or inheriting a percentage from the
 workbook is not evidence.
 
-During development run `npm run test:component -- <component>` first. Before
-release, run every command and human gate in
+During development run `npm run test:component -- <component>` and
+`npm run docs:component -- <component>` first. Before release, run every
+command and human gate in
 [Releasing](../guides/releasing.md).
 
 ## Change work

@@ -1,4 +1,4 @@
-# CheckboxGroup changelog
+# Checkbox Group changelog
 
 ## Unreleased
 

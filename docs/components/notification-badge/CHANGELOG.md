@@ -1,4 +1,4 @@
-# NotificationBadge changelog
+# Notification Badge changelog
 
 NotificationBadge follows the package version of `@flowstack-ui/brick`.
 

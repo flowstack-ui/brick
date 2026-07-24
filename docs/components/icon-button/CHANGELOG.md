@@ -1,4 +1,4 @@
-# IconButton changelog
+# Icon Button changelog
 
 ## Unreleased — 0.1.0
 

@@ -7,7 +7,8 @@ Before publishing a package version:
    Atom version used by the evidence.
 2. Update source, tests, playground, manual protocol, public guide, component
    changelog, package changelog, workbook, and Consumer proof together.
-3. Run `npm run check`.
+3. Run `npm run check`. This includes all-component documentation structure,
+   ownership, import, and evidence-link verification.
 4. Run `npm run test:browser:release` for desktop Chromium, Firefox, WebKit,
    Pixel, and iPhone coverage. Review Chromium visual diffs explicitly.
 5. Complete each affected component's numbered manual protocol. Any required
