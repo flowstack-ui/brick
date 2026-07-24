@@ -119,6 +119,24 @@ Before closing component work, compare the changelog to the source diff and
 the package changelog. Every observable component change belongs in both
 places when release-facing; neither file should duplicate private history.
 
+## Package changelog contract
+
+The root `CHANGELOG.md` is the release-facing summary across the package. It:
+
+- starts with `# Changelog` and keeps current work under `## Unreleased`;
+- uses the same Keep a Changelog categories as component changelogs;
+- names every newly released component and consolidates related component
+  entries without hiding consumer-relevant differences;
+- records the resulting public package behavior, including migrations and
+  breaking changes when applicable;
+- omits test counts, evidence inventories, review milestones, tooling changes,
+  private plans, and dependency-version ledgers;
+- remains consistent with every affected component changelog.
+
+Package-level detail should help a consumer decide whether and how to upgrade.
+Component-specific implementation history belongs nowhere in the public
+changelog system.
+
 ## Commands
 
 Run the focused documentation gate while working:

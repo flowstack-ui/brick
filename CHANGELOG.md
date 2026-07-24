@@ -4,187 +4,88 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
-- Corrected CheckboxGroup size and public Checkbox-token inheritance so every
-  Item and Parent reflects Root `sm`/`md`/`lg` geometry and customization.
-- Added independent controlled-comparison reference pages for Toggle,
-  ToggleGroup, Tooltip, HoverCard, and Popover, including default-only
-  overviews, public API matrices, state/composition evidence, exact
-  customization examples, appearance scopes, responsive stress, RTL, and
-  component-owned browser coverage.
-- Corrected Toggle and ToggleGroup selected recipe paint so solid, soft,
-  outline, and ghost remain distinct, and strengthened their playground
-  customization and responsive size evidence.
-- Completed the fourteen-step Checkbox-family owner review after correcting
-  validation presentation, focus/scroll behavior, responsive layout, RTL,
-  invalid scope, and the rendered-adapter circle example. Physical touch and
-  VoiceOver passed; Windows forced colors was unavailable and remains optional
-  device evidence separate from the reviewed automated baseline.
-- Upgraded the exact Atom dependency to 0.6.17 so explicit browser validation
-  scrolling remains safe in non-browser DOM implementations.
-- Upgraded the exact Atom dependency to 0.6.16 so inline validation explicitly
-  scrolls its visible Checkbox and CheckboxGroup focus targets into view on
-  real mobile Safari.
-- Upgraded the exact Atom dependency to 0.6.15 and render validation-directed
-  Checkbox and CheckboxGroup focus with the standard visible focus ring after
-  pointer as well as keyboard submission.
-- Scoped Checkbox invalid presentation to its control and row cue, and scoped
-  shared CheckboxGroup failures to one group cue without coloring every option
-  as wrong. Separately invalid group Items retain an individual cue, and the
-  group cue uses the same rounded terminals as an invalid Checkbox.
-- Made Fieldset Error separation independent of consumer paragraph-margin
-  resets.
-- Aligned Fieldset Legend typography and its first-content gap with Field Label
-  while retaining the larger spacing inside related-control groups.
-- Upgraded the exact Atom dependency to 0.6.14 so required Checkbox and
-  CheckboxGroup remain neutral while untouched, then reveal inline invalid
-  state after blur or final-selection removal and clear it on correction/reset.
-- Upgraded the exact Atom dependency to 0.6.13 so Form, Field, Fieldset, and
-  validity-owning controls expose inherited inline/native validation
-  presentation, automatic authored errors, visible first-invalid focus, and
-  correction/reset clearing without Brick-owned validation behavior.
-
-- Upgraded the exact Atom dependency to 0.6.12 so required Checkbox and
-  CheckboxGroup native validation messages align with and focus their visible
-  controls instead of an unrelated transparent-input location.
-- Restored direct workbench routes in the production preview server so the
-  release browser matrix tests the intended component pages instead of 404s.
-- Upgraded the exact Atom dependency to 0.6.11 so required Checkbox and
-  CheckboxGroup inputs block empty native form submission as documented.
-- Removed imposed Form-wide submission and validation outlines while retaining
-  state hooks and application-owned inline or Toast feedback paths.
-- Separated Form, Field, and Fieldset owner-review sections and tracker results
-  within the shared Form Foundation workbench and verification protocol.
-- Increased Field control-to-message clearance so focus outlines do not crowd
-  an immediately following Description or Error.
-- Made horizontal Fields stack at phone viewport widths, including the 440px
-  iPhone Pro Max viewport, before long labels become cramped.
-- Stabilized the playground's choice text weight across selection and replaced
-  native Fieldset margin behavior with explicit group, description, and error
-  rhythm.
-- Normalized native Legend flow so Fieldset spacing remains identical in LTR
-  and RTL while logical error borders follow the content direction.
-- Made Checkbox invalid-row markers follow logical start so they move to the
-  right in RTL instead of remaining physically left-aligned.
-- Restored the Form Foundation choice-row hover surface while keeping Checkbox
-  invalid control borders on their semantic error color during hover.
-- Completed Popover's 13-step owner verification and package gate.
-- Upgraded the exact Atom dependency to 0.6.10 so touch and pen scrolling no
-  longer dismisses Popover while genuine outside taps still close it.
-- Upgraded the exact Atom dependency to 0.6.9 so portalled Popover, HoverCard,
-  and Tooltip content preserves the trigger's logical text direction.
-- Upgraded the exact Atom dependency to 0.6.8 and adopted its measured
-  floating dimensions and non-clipping Popover viewport/Arrow structure.
-- Upgraded the exact Atom dependency to 0.6.7 for safe HoverCard pointer/touch
-  handling and root-overflow modal scroll locking without iOS fixed-body
-  browser-toolbar transitions.
-- Removed disruptive same-page HoverCard test hashes in favor of genuine
-  playground destination routes and disabled hit testing during exit motion.
-- Added rounded and pill Tooltip shapes and corrected initial positioning,
-  plain hover persistence, and side-aware Arrow seams.
-- Upgraded the exact Atom dependency to 0.6.1 for immediate Tooltip dismissal
-  on outside touch and scrolling after long-press release.
-- Added neutral and accent AppBar tones across solid, surface, and transparent
-  variants, plus geometric center alignment and documented custom-color tokens.
-- Exported `AppBarTone` from the package root and added independent,
-  controlled AppBar playground/browser evidence for every public dimension.
-- Added Card's controlled reference page with independent coverage for every
-  recipe, semantic element, optional part, composition path, customization
-  hook, and responsive boundary.
-- Added Dialog's controlled reference page with independent coverage for its
-  default modal anatomy, sizes, heading semantics, dismissal policies, nested
-  and portalled ownership, scoped appearances, customization, responsive
-  scrolling, RTL, and preference boundaries.
-- Added independent controlled reference pages for AlertDialog and Drawer,
-  covering their complete public dimensions, authored regions, semantic
-  heading paths, modal policies, nested and portalled ownership, scoped
-  appearances, exact customization, responsive containment, RTL, and
-  preference boundaries.
-- Added independent controlled reference pages and focused evidence for Badge,
-  NotificationBadge, and Avatar, including a separate NotificationBadge public
-  guide and corrected default-only Avatar overview.
-
 ### Added
 
-- Checkbox and the complete five-part CheckboxGroup family with three shared
-  sizes, built-in checked/mixed artwork, structured item relationships,
-  deterministic Parent selection, native forms, Field/Fieldset composition,
-  responsive logical layout, public tokens, and exact Atom 0.6.0 behavior.
-
-- Checkbox-family package, type, SSR, component, browser, visual, playground,
-  React 18/19 packed-consumer, and independent Consumer evidence.
-
-- Popover with a strict twelve-part namespace, click/press/keyboard activation,
-  native semantic relationships, modal/non-modal focus behavior, three bounded
-  elevated sizes, explicit Close/Arrow, and exact Atom 0.4.0 behavior.
-
-- HoverCard with a strict frozen five-part namespace, genuine-link trigger
-  guidance, three bounded elevated sizes, optional shared Arrow, and direct
-  Atom 0.3.5 hover/focus, Escape, timing, portal, and collision behavior.
-
-- Tooltip with an eight-part compound namespace, plain and rich neutral
-  recipes, optional shared arrow, responsive wrapping, and direct Atom 0.3.5
-  hover, focus, keyboard, touch-hold, dismissal, timing, and positioning.
-
-- Standardized strict development and browser-test ports for the Brick
-  playground, added a matching LAN command, and added watch/comprehensive test
-  command aliases.
-- Static CSS, token, and optional reset entrypoints.
-- Package test, playground, documentation, and release-verification foundation.
-- Reviewed Chromium visual baselines and a desktop/mobile Playwright release
-  matrix covering Chromium, Firefox, WebKit, Pixel, and iPhone profiles.
-- Button with four variants, six semantic tones, five sizes, three shapes,
-  loading presentation, icons, native links, and Atom composition support.
-- Card with seven compound parts, three neutral surface variants, three sizes,
-  controlled semantic container and heading choices, and static server output.
-- Dialog with twelve public parts, three bounded responsive sizes, scrollable
-  Body, scoped portal and Branch composition, and direct Atom modal behavior.
-- Four reviewed Dialog visual baselines covering light, dark, mobile RTL, and
-  forced colors.
-- AlertDialog with twelve public parts, two bounded responsive sizes, required
-  alert-message guidance, Cancel-safe autofocus, explicit outcomes, and
-  permanently blocked backdrop dismissal.
-- Four AlertDialog Chromium baselines covering light, dark, mobile RTL, and
-  forced colors, plus desktop/mobile interaction, nesting, and axe evidence.
-- Drawer with twelve public parts, four logical edge placements, four distinct
-  mobile-aware sizes including full, bounded Body scrolling, Branch
-  composition, and public CSS hooks.
-- A named post-Drawer Gesture Drawer / Bottom Sheet capability audit so future
-  swipe, drag, and snap behavior is decided at the Atom boundary rather than
-  added as an untracked Brick workaround.
-- A 218-pass, 82-intentional-skip desktop/mobile release matrix and clean
-  packed-package verification on React 18 and React 19 after Drawer coverage.
-- Badge and NotificationBadge with passive inline recipes, deterministic
-  visual count/dot formatting, logical anchor placement, automatic circle-to-
-  pill geometry, server-safe Atom composition, and explicit owning-context
-  accessibility guidance.
-- A 258-pass, 102-intentional-skip desktop/mobile release matrix, seven
-  reviewed Chromium Badge-family baselines, 100% component-source coverage,
-  clean React 18/19 consumers, and independent Consumer verification.
+- Package root and component subpath exports, static `styles.css`, public
+  `tokens.css`, and optional `reset.css` entrypoints.
+- `Button` with four variants, six semantic tones, five sizes, three shapes,
+  loading presentation, icons, full-width layout, native actions and links,
+  form behavior, and Atom composition.
+- `IconButton` with action and genuine-link paths, four variants, six tones,
+  five square sizes, rounded and circle geometry, and loading presentation.
+- `Toggle` and `ToggleGroup` with single or multiple pressed state, four visual
+  variants, three sizes, rounded and pill geometry, attached or separated
+  groups, orientation, wrapping, and full-width layout.
+- `Form`, `Field`, and `Fieldset` with native and callback submission,
+  generated accessible relationships, inline or native validation, authored
+  errors, responsive layout, and composition adapters.
+- `Checkbox` and `CheckboxGroup` with three shared sizes, checked and mixed
+  artwork, structured item relationships, deterministic Parent aggregation,
+  native forms, validation, and Field or Fieldset composition.
+- `Card` with seven compound parts, three neutral surface variants, three
+  sizes, controlled semantic containers and headings, and server-safe output.
+- `Badge` and `NotificationBadge` with passive inline recipes, deterministic
+  count or dot formatting, logical placement, automatic circle-to-pill
+  geometry, server-safe composition, and owning-context accessibility.
+- `Avatar` with explicit alternative and fallback content, five sizes, circle
+  and rounded shapes, and optional visual availability rings.
+- `AppBar` with five compound parts, four positions, three surface variants,
+  neutral and accent tones, two densities, geometric center alignment, and
+  optional border, elevation, and blur.
+- `Tooltip` with plain and rich recipes, rounded and pill shapes, optional
+  Arrow, hover, focus, keyboard, and touch-hold activation, and
+  collision-aware placement.
+- `HoverCard` with genuine-link previews, three bounded elevated sizes,
+  optional Arrow, hover and focus timing, safe pointer movement, and scoped
+  portals.
+- `Popover` with click, press, and keyboard activation, modal and non-modal
+  focus behavior, three bounded elevated sizes, explicit Close and Arrow,
+  nesting, and scoped portals.
+- `Dialog` with twelve compound parts, three responsive sizes, bounded Body
+  scrolling, configurable dismissal, scoped portals, nesting, and Branch
+  composition.
+- `AlertDialog` with twelve compound parts, two responsive sizes, required
+  alert-message guidance, Cancel-safe initial focus, explicit outcomes, and
+  blocked backdrop dismissal.
+- `Drawer` with twelve compound parts, four logical-edge placements, four
+  mobile-aware sizes, bounded Body scrolling, configurable dismissal, scoped
+  portals, nesting, and Branch composition.
 
 ### Fixed
 
-- Centered the IconButton loading spinner when it inherits right-to-left
-  direction.
-- Kept direct IconButton SVG and image children at the configured icon size
-  under `asChild` composition.
-- Upgraded the exact Atom dependency to 0.6.0 for CheckboxGroup stable
-  ItemLabel/ItemDescription relationships, allValues Parent aggregation, and
-  complete form/state composition capabilities.
-- Upgraded the exact Atom dependency to 0.3.4 so modal scroll locking preserves
-  stable scrollbar gutters without shifting Consumer layouts.
-- Increased the default AlertDialog medium surface to keep ordinary paired
-  decision labels on one row without shortening consumer copy.
-- Kept AlertDialog responses reachable under extreme width and height reflow by
-  falling back to bounded whole-surface scrolling when fixed regions cannot fit.
-- Upgraded the exact Atom dependency to 0.3.2 so nested Dialog cleanup restores
-  the application root after animated child and parent exits.
-- Upgraded the exact Atom dependency to 0.3.3 so the pure Badge subpath remains
-  server-safe without a Brick workaround.
-- Preserved explicit RTL direction across body portals and kept RTL Dialogs
-  physically centered within the viewport.
-- Button full-width sizing and intrinsic reflow without requiring the optional
-  reset stylesheet.
-- Clarified direct `href` as the normal Button navigation path and reserved
-  `asChild` for custom permissive adapters.
-- Strengthened dark elevated Card hierarchy without adding a theme runtime or
-  new public token.
+- Button full-width and intrinsic sizing now reflows without clipping at
+  constrained widths or requiring the optional reset stylesheet.
+- Direct Button `href` remains the normal navigation path, while `asChild` is
+  reserved for custom permissive adapters.
+- Icon Button loading remains centered in right-to-left layouts, and direct SVG
+  or image children retain the configured icon size under composition.
+- Toggle and Toggle Group selected solid, soft, outline, and ghost recipes
+  remain visually distinguishable.
+- App Bar tone recipes and geometric center alignment remain consistent across
+  solid, surface, and transparent variants.
+- Elevated Cards retain visible hierarchy in dark appearance without relying
+  on shadow alone.
+- Dialog, Alert Dialog, Drawer, Popover, Hover Card, and Tooltip portalled
+  content preserves logical text direction.
+- Dialog and Drawer modal scroll locking preserves stable page geometry during
+  nested cleanup and mobile browser toolbar changes.
+- Alert Dialog medium content accommodates ordinary paired decisions, while
+  extreme reflow keeps every response reachable.
+- Tooltip first-open positioning, content hover persistence, outside-touch
+  dismissal, and side-aware Arrow seams now remain stable.
+- Hover Card avoids accidental touch activation and exit-motion hit testing
+  while preserving safe pointer movement.
+- Popover touch or pen scrolling no longer dismisses the surface, constrained
+  content remains reachable without clipping its Arrow, and genuine outside
+  taps still close it.
+- Form-family inline validation inherits correctly, focuses and scrolls to the
+  visible invalid control, clears after correction or reset, and retains an
+  explicit native-validation option.
+- Checkbox and Checkbox Group remain neutral until validation is actionable,
+  then expose scoped invalid cues without marking every group option as wrong.
+- Checkbox Group size and public Checkbox-token overrides inherit through
+  every Item and Parent.
+- Field spacing prevents focus outlines from crowding messages, and horizontal
+  Fields stack before narrow layouts become cramped.
+- Fieldset Legend typography and flow match Field Label while preserving group
+  spacing, logical RTL treatment, and Error separation under consumer resets.

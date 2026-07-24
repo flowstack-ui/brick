@@ -48,8 +48,80 @@ const changelogDiaryPatterns = [
 const componentSubpaths = {
   "notification-badge": "badge",
 };
+const componentSymbols = {
+  "alert-dialog": "AlertDialog",
+  "app-bar": "AppBar",
+  avatar: "Avatar",
+  badge: "Badge",
+  button: "Button",
+  card: "Card",
+  checkbox: "Checkbox",
+  "checkbox-group": "CheckboxGroup",
+  dialog: "Dialog",
+  drawer: "Drawer",
+  field: "Field",
+  fieldset: "Fieldset",
+  form: "Form",
+  "hover-card": "HoverCard",
+  "icon-button": "IconButton",
+  "notification-badge": "NotificationBadge",
+  popover: "Popover",
+  toggle: "Toggle",
+  "toggle-group": "ToggleGroup",
+  tooltip: "Tooltip",
+};
 const documentationIndex = await readFile("docs/README.md", "utf8");
 const packageReadme = await readFile("README.md", "utf8");
+const packageChangelog = await readFile("CHANGELOG.md", "utf8");
+
+if (!packageChangelog.startsWith("# Changelog\n")) {
+  failures.push('CHANGELOG.md must start with "# Changelog"');
+}
+
+const packageReleaseHeadings = [
+  ...packageChangelog.matchAll(/^## (.+)$/gm),
+].map((match) => match[1]);
+if (packageReleaseHeadings[0] !== "Unreleased") {
+  failures.push(
+    'CHANGELOG.md first release heading must be exactly "## Unreleased"',
+  );
+}
+
+for (const category of [
+  ...packageChangelog.matchAll(/^### (.+)$/gm),
+].map((match) => match[1])) {
+  if (!allowedChangelogCategories.has(category)) {
+    failures.push(`CHANGELOG.md has unsupported category "${category}"`);
+  }
+}
+
+for (const [pattern, description] of changelogDiaryPatterns) {
+  if (pattern.test(packageChangelog)) {
+    failures.push(
+      `CHANGELOG.md contains ${description} instead of release-facing behavior`,
+    );
+  }
+}
+
+const packageOnlyDiaryPatterns = [
+  [/\b\d+-pass\b/i, "test-result counts"],
+  [/\b(?:reviewed|automated) (?:baseline|coverage|matrix)\b/i, "review history"],
+  [/\b(?:development|browser-test) ports?\b/i, "local tooling history"],
+];
+for (const [pattern, description] of packageOnlyDiaryPatterns) {
+  if (pattern.test(packageChangelog)) {
+    failures.push(`CHANGELOG.md contains ${description}`);
+  }
+}
+
+for (const componentId of componentIds) {
+  const symbol = componentSymbols[componentId];
+  if (!packageChangelog.includes(`\`${symbol}\``)) {
+    failures.push(
+      `${componentId}: CHANGELOG.md must name the public component as \`${symbol}\``,
+    );
+  }
+}
 
 for (const componentId of requested) {
   const { changelog, guide } = componentTestPaths(componentId);
@@ -178,5 +250,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `Verified README structure, ownership, imports, evidence links, and public indexes for ${requested.length} component${requested.length === 1 ? "" : "s"}.`,
+  `Verified README structure, changelog contracts, ownership, imports, evidence links, and public indexes for ${requested.length} component${requested.length === 1 ? "" : "s"}.`,
 );
