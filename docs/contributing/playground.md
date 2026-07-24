@@ -40,6 +40,12 @@ or environment named by its scenario. Repeat the same representative content
 across a comparison so label length or content structure does not obscure the
 dimension under review.
 
+Representative content must be realistic, short, and unambiguous. A visible
+label and its entered value, status, description, or action text must not
+repeat the same words unless that repetition is itself the evidence. Reuse the
+same label/value pair across controlled comparisons, but give each part a
+distinct meaning so reviewers can identify what they are reading.
+
 Intentional multi-axis evidence, such as a complete variant-by-tone matrix, is
 allowed when the scenario names both dimensions. Composition, semantic
 hierarchy, stress, and customization may depart from defaults only when the
@@ -50,6 +56,26 @@ It renders Brick Badge explicitly as `soft`, `neutral`, `sm`, and `rounded` so
 labels remain consistent without competing with the component under review.
 Headings, code output, and appearance identifiers retain their own semantics
 and must not be converted into specimen badges.
+
+## Specimen layout and state styling
+
+Comparison cells must align their specimens from the same logical starting
+edge. Interactive state, validation text, conditional output, or differing
+content must not push one peer lower than another unless the layout shift is
+the behavior being tested. Use the shared preview-grid alignment utilities
+before adding component-specific offsets, fixed heights, or spacer elements.
+
+Decorative parts, adornments, badges, icons, clear actions, and loading
+indicators must remain inside the component boundary in every supported size,
+direction, and constrained width. Check both physical containment and logical
+placement: start/end behavior must reverse correctly in RTL while visual
+centering, hit targets, and spacing remain stable.
+
+State examples should change only the visual properties promised by the
+component contract. For example, an invalid state must not introduce an
+uncontracted fill, shadow, size, or layout change merely to make the state more
+obvious. Customization examples must visibly demonstrate the exact documented
+override without obscuring focus, text, or contrast.
 
 ## Rendered output
 
@@ -78,6 +104,19 @@ important visual dimensions, high-risk states, narrow/RTL behavior, and
 relevant dark or forced-color boundaries. Update a component’s snapshots only
 for an intentional reviewed change; never refresh every baseline simply to
 clear failures.
+
+When capturing a tall scenario state, exclude sticky playground shell chrome
+from the screenshot or otherwise ensure it cannot cover the scenario evidence.
+The shell may remain visible in ordinary page review, but it is not component
+evidence and must not obscure a baseline.
+
+Before calling a page complete, inspect every scenario at normal desktop width,
+its documented narrow width, RTL, and each appearance it claims. Compare peer
+bounding boxes and component boundaries rather than relying only on visual
+impression. Add browser geometry assertions for regressions such as unequal
+vertical starts, clipped or overflowing parts, misplaced logical adornments,
+or content touching a focus/border edge. Review the resulting screenshots
+after the assertions pass.
 
 ## Division of responsibility
 

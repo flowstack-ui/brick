@@ -209,6 +209,11 @@ test("composes the complete public Form, Field, and Fieldset foundation", async 
 
   await expect(form).toHaveClass(/brick-form/);
   await expect(field).toHaveClass(/brick-field/);
+  await expect(email.locator("..")).toHaveClass(/brick-input/);
+  await email.fill("draft@example.com");
+  await form.getByRole("button", { name: "Clear input" }).click();
+  await expect(email).toHaveValue("");
+  await expect(email).toBeFocused();
   await expect(fieldset).toHaveClass(/brick-fieldset/);
   await expect(fieldset).toHaveAttribute("data-required", "");
   await expect(form.getByRole("group", { name: "Workspace role" })).toBeVisible();

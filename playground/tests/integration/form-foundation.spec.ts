@@ -7,7 +7,7 @@ test("Field Label and Fieldset Legend share question typography and initial rhyt
   const field = page.getByTestId("field-overview").locator(".brick-field");
   const fieldPresentation = await field.evaluate((element) => {
     const label = element.querySelector<HTMLElement>(".brick-field-label")!;
-    const control = element.querySelector<HTMLElement>(".forms-control")!;
+    const control = element.querySelector<HTMLElement>(".brick-input")!;
     const style = getComputedStyle(label);
     return {
       gap: control.getBoundingClientRect().top - label.getBoundingClientRect().bottom,

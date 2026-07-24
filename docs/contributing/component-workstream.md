@@ -13,9 +13,16 @@ build; this guide decides how evidence is represented in this repository.
 3. Name the component's public anatomy, API, visual recipes, states,
    accessibility promises, responsive behavior, tokens, CSS hooks, and
    exclusions.
-4. Map every promise to exactly one primary evidence layer before coding.
-5. Create one component-owned file in each applicable evidence surface. Do not
+4. Audit collisions between Brick semantic props and inherited native
+   attributes before finalizing the API. Rename or intentionally omit the
+   native attribute when one public prop name cannot represent both meanings
+   safely.
+5. Map every promise to exactly one primary evidence layer before coding.
+6. Create one component-owned file in each applicable evidence surface. Do not
    append a new component to a family or neighboring component file.
+7. Choose one realistic, semantically distinct content set for controlled
+   playground comparisons. Labels, values, descriptions, statuses, and actions
+   must be understandable without repeating placeholder words.
 
 ## Implement together
 
@@ -35,6 +42,12 @@ build; this guide decides how evidence is represented in this repository.
 - `playground/component-coverage.xlsx` — assertion-level evidence rows
 - `apps/consumer/` — realistic packed-package composition when applicable
 
+For layout-sensitive components, implement browser geometry assertions with
+the playground rather than waiting for screenshot review. Cover aligned peer
+starts, containment of conditional parts and adornments, logical RTL
+placement, and the inset between content and its border/focus boundary.
+State-specific CSS must change only the properties promised by the contract.
+
 ## Documentation reconciliation
 
 Before the component is considered complete:
@@ -52,6 +65,23 @@ Before the component is considered complete:
    every observable change and remove implementation-only or stale dependency
    history.
 6. Run `npm run docs:component -- <component>`.
+
+## Visual reconciliation
+
+Before completion:
+
+1. Inspect every playground scenario at normal and narrow widths.
+2. Inspect every claimed appearance and RTL behavior.
+3. Confirm controlled comparisons keep the same defaults and content except
+   for their named variable.
+4. Confirm peer specimens align and conditional content does not create
+   accidental vertical offsets.
+5. Confirm icons, adornments, actions, loaders, and text remain centered or
+   logically placed and contained by the component.
+6. Confirm state styling adds no undocumented background, spacing, sizing, or
+   contrast change.
+7. Run the focused browser and visual owners, then inspect each changed
+   snapshot rather than accepting an update command as review.
 
 ## Evidence gate
 

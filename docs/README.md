@@ -31,6 +31,7 @@ This directory is the public documentation authority for
 - [Field](components/field/README.md) — one labeled control and its
   relationships
 - [Fieldset](components/fieldset/README.md) — native related-control grouping
+- [Input](components/input/README.md) — finished native single-line text entry
 - [Checkbox](components/checkbox/README.md) — independent checked or mixed
   selection
 - [Checkbox Group](components/checkbox-group/README.md) — related selections

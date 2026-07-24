@@ -22,6 +22,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 - `Checkbox` and `CheckboxGroup` with three shared sizes, checked and mixed
   artwork, structured item relationships, deterministic Parent aggregation,
   native forms, validation, and Field or Fieldset composition.
+- `Input` with three visual recipes, three sizes, three applicable shapes,
+  full-width or intrinsic layout, logical adornments, localized clear action,
+  native text-like types, Field/Form composition, and public customization
+  hooks.
 - `Card` with seven compound parts, three neutral surface variants, three
   sizes, controlled semantic containers and headings, and server-safe output.
 - `Badge` and `NotificationBadge` with passive inline recipes, deterministic

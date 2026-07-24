@@ -60,6 +60,7 @@ import {
   PopoverPage,
   popoverScenarios,
 } from "../components/popover/PopoverPage.js";
+import { InputPage, inputScenarios } from "../components/input/InputPage.js";
 import { FormPage, formScenarios } from "../components/form/FormPage.js";
 import { FieldPage, fieldScenarios } from "../components/field/FieldPage.js";
 import {
@@ -201,6 +202,14 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={formScenarios}>
         <FormPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "input") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={inputScenarios}>
+        <InputPage />
       </PlaygroundShell>
     );
   }

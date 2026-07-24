@@ -1,4 +1,4 @@
-import { Input, type InputRootProps } from "@flowstack-ui/atom/input";
+import { Input, type InputProps } from "@flowstack-ui/brick";
 import type { ReactNode } from "react";
 import { RenderedOutput } from "./RenderedOutput.js";
 import { SpecimenLabel } from "./SpecimenLabel.js";
@@ -48,6 +48,6 @@ export function FormRenderedOutput({
   return <RenderedOutput label={label}>{children}</RenderedOutput>;
 }
 
-export function FormEvidenceControl(props: InputRootProps) {
-  return <Input.Root {...props} className={`forms-control ${props.className ?? ""}`.trim()} />;
+export function FormEvidenceControl(props: InputProps) {
+  return <Input {...props} />;
 }

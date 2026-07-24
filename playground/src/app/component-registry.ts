@@ -114,6 +114,13 @@ export const componentEntries = [
   },
   {
     category: "Forms",
+    description: "Finished native single-line text entry.",
+    id: "input",
+    route: "/input",
+    title: "Input",
+  },
+  {
+    category: "Forms",
     description: "Styled native form submission boundary.",
     id: "form",
     route: "/form",

@@ -133,29 +133,6 @@
   align-items: start;
 }
 
-.forms-control {
-  box-sizing: border-box;
-  inline-size: 100%;
-  min-inline-size: 0;
-  min-block-size: 2.75rem;
-  padding: var(--brick-space-2) var(--brick-space-3);
-  border: var(--brick-border-width) solid var(--brick-color-border-strong);
-  border-radius: var(--brick-radius-control);
-  background: var(--brick-color-surface-base);
-  color: var(--brick-color-text-primary);
-  font: inherit;
-}
-
-.forms-control:focus-visible {
-  outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
-  outline-offset: var(--brick-border-focus-offset);
-}
-
-.forms-control:disabled {
-  cursor: not-allowed;
-  opacity: 0.65;
-}
-
 .forms-actions {
   display: flex;
   flex-wrap: wrap;

@@ -14,6 +14,7 @@ export const componentIds = [
   "form",
   "hover-card",
   "icon-button",
+  "input",
   "notification-badge",
   "popover",
   "toggle",

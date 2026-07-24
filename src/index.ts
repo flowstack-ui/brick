@@ -167,3 +167,11 @@ export {
   type CheckboxGroupParentProps,
   type CheckboxGroupRootProps,
 } from "./components/checkbox-group/index.js";
+export {
+  Input,
+  type InputProps,
+  type InputShape,
+  type InputSize,
+  type InputType,
+  type InputVariant,
+} from "./components/input/index.js";

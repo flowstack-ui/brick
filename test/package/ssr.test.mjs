@@ -15,7 +15,8 @@ import { Field } from "../../dist/field.js";
 import { Fieldset } from "../../dist/fieldset.js";
 import { Checkbox } from "../../dist/checkbox.js";
 import { CheckboxGroup } from "../../dist/checkbox-group.js";
-import { Input } from "@flowstack-ui/atom/input";
+import { Input } from "../../dist/input.js";
+import { Input as AtomInput } from "@flowstack-ui/atom/input";
 
 test("Card renders on the server without browser state or a client boundary", () => {
   const markup = renderToString(
@@ -183,7 +184,7 @@ test("Form foundation preserves styled semantic relationships in server markup",
         Field.Root,
         { id: "profile-email", invalid: true },
         React.createElement(Field.Label, null, "Email"),
-        React.createElement(Input.Root, { name: "email" }),
+        React.createElement(AtomInput.Root, { name: "email" }),
         React.createElement(Field.Description, null, "Use a work address."),
         React.createElement(Field.Error, null, "Invalid address."),
       ),
@@ -211,6 +212,29 @@ test("Form foundation preserves styled semantic relationships in server markup",
     markup,
     /aria-describedby="contact-methods-description contact-methods-error"/,
   );
+});
+
+test("Input renders styled native semantics and adornment order during SSR", () => {
+  const markup = renderToString(
+    React.createElement(Input, {
+      "aria-label": "Search",
+      defaultValue: "Brick",
+      startAdornment: React.createElement("span", null, "Start"),
+      endAdornment: React.createElement("span", null, "End"),
+      clearable: true,
+    }),
+  );
+
+  assert.match(markup, /^<span/);
+  assert.match(markup, /class="brick-input"/);
+  assert.match(markup, /data-variant="outline"/);
+  assert.match(markup, /data-size="md"/);
+  assert.match(markup, /data-shape="rounded"/);
+  assert.match(markup, /<input[^>]*aria-label="Search"[^>]*value="Brick"/);
+  assert.match(markup, /aria-label="Clear input"/);
+  assert.ok(markup.indexOf(">Start<") < markup.indexOf("<input"));
+  assert.ok(markup.indexOf("<input") < markup.indexOf(">End<"));
+  assert.ok(markup.indexOf(">End<") < markup.indexOf('aria-label="Clear input"'));
 });
 
 test("Checkbox family renders server-stable visual and semantic anatomy", () => {

@@ -1,0 +1,19 @@
+.input-page .brick-input-start > svg {
+  inline-size: 100%;
+}
+
+.input-controlled-example {
+  display: grid;
+  inline-size: 100%;
+  gap: var(--brick-space-2);
+}
+
+.input-controlled-example output {
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+}
+
+.input-page .forms-cell__preview > .brick-field,
+.input-page .forms-customization__preview > .brick-field {
+  inline-size: 100%;
+}

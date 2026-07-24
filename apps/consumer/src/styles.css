@@ -422,17 +422,6 @@
     min-inline-size: 0;
   }
 
-  .invite-form > .brick-field input {
-    inline-size: 100%;
-    min-inline-size: 0;
-    min-block-size: var(--brick-control-min-block-size-md);
-    padding-inline: var(--brick-space-control-inline);
-    border: var(--brick-border-width) solid var(--brick-color-border-strong);
-    border-radius: var(--brick-radius-control);
-    background: var(--brick-color-surface-base);
-    color: var(--brick-color-text-primary);
-  }
-
   .invite-role-options {
     display: flex;
     flex-wrap: wrap;

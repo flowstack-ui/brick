@@ -107,6 +107,10 @@
       "types": "./dist/checkbox-group.d.ts",
       "default": "./dist/checkbox-group.js"
     },
+    "./input": {
+      "types": "./dist/input.d.ts",
+      "default": "./dist/input.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"

@@ -64,6 +64,7 @@ const componentSymbols = {
   form: "Form",
   "hover-card": "HoverCard",
   "icon-button": "IconButton",
+  input: "Input",
   "notification-badge": "NotificationBadge",
   popover: "Popover",
   toggle: "Toggle",

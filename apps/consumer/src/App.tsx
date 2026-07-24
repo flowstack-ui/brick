@@ -18,6 +18,7 @@ import { Field } from "@flowstack-ui/brick/field";
 import { Fieldset } from "@flowstack-ui/brick/fieldset";
 import { Checkbox } from "@flowstack-ui/brick/checkbox";
 import { CheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
+import { Input } from "@flowstack-ui/brick/input";
 
 type Appearance = "light" | "dark";
 
@@ -457,10 +458,10 @@ export function App() {
             >
               <Field.Root id="invite-email-field" invalid={inviteInvalid} required>
                 <Field.Label htmlFor="invite-email">Work email</Field.Label>
-                <input
-                  aria-describedby="invite-email-field-description invite-email-field-error"
-                  aria-invalid={inviteInvalid || undefined}
+                <Input
                   autoComplete="email"
+                  clearable
+                  endAdornment={<span aria-hidden="true">work</span>}
                   id="invite-email"
                   name="email"
                   required
