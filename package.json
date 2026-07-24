@@ -129,6 +129,7 @@
     "dev:consumer:network": "npm run build && npm run dev:network -w apps/consumer",
     "dev:test": "vitest",
     "docs:component": "node scripts/verify-component-docs.mjs",
+    "docs:component:semantic": "node scripts/verify-component-documentation-contracts.mjs",
     "preview:playground": "vite preview --config playground/vite.config.ts",
     "typecheck": "npm run build && tsc -p tsconfig.tools.json && tsc -p test/types/tsconfig.json && tsc -p playground/tsconfig.json",
     "test": "npm run test:node && npm run test:components && npm run test:css",
@@ -151,7 +152,7 @@
     "pack:check": "node scripts/verify-package.mjs --dry-run",
     "verify:consumers": "npm run build && node scripts/verify-consumers.mjs",
     "verify:consumer": "npm run build && node scripts/verify-app-consumer.mjs",
-    "check": "npm run test:ownership && npm run docs:component && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
+    "check": "npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
     "prepublishOnly": "npm run build"
   },
   "browserslist": [

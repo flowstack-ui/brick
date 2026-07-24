@@ -124,7 +124,7 @@ Button preserves the applicable public Atom Button contract:
 | `onPress` | `MouseEventHandler<HTMLElement>` normalized by Atom |
 | `onClick`, `onKeyDown` | Native-compatible handlers composed by Atom |
 | `type` | `"button"`, `"submit"`, or `"reset"`; defaults to `"button"` |
-| `asChild` | Uses one child element as the host |
+| `asChild` | Uses one child element as the host; defaults to `false` |
 | `render` | Uses an Atom render element or callback as the host |
 | `data-slot` | Defaults to `"button"` and may be overridden |
 | native/global props | Applicable form, ARIA, `data-*`, event, `className`, and `style` props |

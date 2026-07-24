@@ -123,3 +123,16 @@ npm run docs:component -- <component>
 
 Run `npm run docs:component` to verify every component. The repository-wide
 `npm run check` command includes this all-component documentation gate.
+
+Components with a source-backed semantic manifest also run through:
+
+```sh
+npm run docs:component:semantic
+npm run docs:component:semantic -- button
+```
+
+This gate compares the adopted documentation manifest with actual exports,
+closed recipes, implementation defaults, visual attributes, CSS definitions,
+and README claims. Button and Icon Button are the initial reference manifests;
+extend the manifest only after auditing the component's source and adopted
+public hooks.
