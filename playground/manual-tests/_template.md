@@ -1,77 +1,74 @@
 # Component manual-test protocol
 
-Component:
-Version or commit:
-Reviewer:
-Date:
-Playground route:
+| Run information | Value |
+| --- | --- |
+| Component | Component name |
+| Version or commit | |
+| Reviewer | |
+| Date | |
+| Browser and version | |
+| Operating system | |
+| Viewport and zoom | |
+| Physical device | |
+| Assistive technology | |
+| Playground route | `/component-route` |
+
+Scenario order: `01 Overview`, `02 Scenario name`
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result. Record a
 follow-up issue for each failure or blocker.
 
-Keep only steps that require human visual, interaction-quality, device, or
-assistive-technology judgment. Do not add a manual step solely to repeat a
-component or browser assertion; link that automated evidence from the coverage
-workbook instead.
+Follow the playground top to bottom and cover every scenario exactly once.
+Combine adjacent scenarios when one uninterrupted flow is clearer. Keep only
+steps requiring human visual, interaction-quality, device, or
+assistive-technology judgment. When a scenario displays generated IDs, ARIA,
+or HTML, compare that output with the live result.
 
-## Step 1 — Shortest finished state
+## Step 1 — Overview and first scenario group
 
-Setup: Open the canonical overview state at the constrained mobile viewport.
+Setup: Open `/component-route` in system appearance.
 
-Action: Inspect the component without interacting.
+Action: Inspect and operate the named scenarios in top-to-bottom order.
 
-Expected: Purpose, hierarchy, content, state, and touch targets are immediately
-understandable with no clipping or horizontal scrolling.
-
-Result:
-Notes or issue:
-
-## Step 2 — Keyboard and focus
-
-Setup: Reload the canonical interactive state.
-
-Action: Operate the complete component using only the keyboard.
-
-Expected: Focus order is logical, every focus indicator is visible, all
-documented keys work, and focus restores to the documented target.
+Expected: State the observable visual, interaction, and semantic result in
+plain language, including what must remain unchanged.
 
 Result:
 Notes or issue:
 
-## Step 3 — Appearance and preferences
+## Step 2 — Next scenario group
 
-Setup: Review light, dark, forced-colors, reduced-motion, and any relevant
-reduced-transparency state.
+Setup: Open the next named scenarios.
 
-Action: Repeat the component's primary interaction in each applicable mode.
+Action: Give the shortest exact interaction needed to test them.
 
-Expected: Meaning, hierarchy, focus, state, and content remain perceivable.
-
-Result:
-Notes or issue:
-
-## Step 4 — Reflow and content stress
-
-Setup: Use 200% zoom, then 400% where applicable; load long localized content
-and right-to-left direction.
-
-Action: Inspect and operate the component at constrained and wide widths.
-
-Expected: Content reflows without loss, overlap, or unexpected scroll; order
-and directional styling remain correct.
+Expected: Give an unfamiliar tester an unambiguous pass condition.
 
 Result:
 Notes or issue:
 
-## Step 5 — Assistive-technology spot check
+## Step 3 — Theme, reflow, direction, and preferences
 
-Setup: Enable the selected screen reader for components that add meaningful
-structure, feedback, or visual affordances.
+Setup: Review the Theme and Stress scenarios in applicable light, dark,
+forced-colors, reduced-motion, 200%, 400%, mobile, and RTL environments.
 
-Action: Navigate and operate the documented path.
+Action: Repeat the primary interaction with keyboard, pointer, and touch where
+available.
 
-Expected: Names, roles, states, descriptions, and announcements match the
-public accessibility contract.
+Expected: Meaning, hierarchy, focus, state, content, and logical layout remain
+perceivable without clipping or unintended page scrolling.
+
+Result:
+Notes or issue:
+
+## Step 4 — Assistive technology
+
+Setup: Enable the recorded screen reader.
+
+Action: Navigate and operate important states and composition paths.
+
+Expected: Names, roles, states, descriptions, relationships, and announcements
+match the public accessibility contract without duplicate speech.
 
 Result:
 Notes or issue:
@@ -81,3 +78,6 @@ Notes or issue:
 Overall result:
 Follow-up issues:
 Workbook updated:
+
+Mark unavailable device or assistive-technology environments `blocked`; do not
+pre-fill a pass.

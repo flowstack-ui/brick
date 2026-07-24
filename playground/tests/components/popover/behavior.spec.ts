@@ -1,6 +1,20 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+test("persistent Popover previews stay below the sticky header", async ({ page }) => {
+  await page.goto("/popover");
+  const previews = page.locator(".popover-persistent-preview");
+  await expect(previews).toHaveCount(3);
+  const headerLayer = await page
+    .locator(".evidence-review-header")
+    .evaluate((element) => Number(getComputedStyle(element).zIndex));
+  for (const preview of await previews.all()) {
+    expect(
+      await preview.evaluate((element) => Number(getComputedStyle(element).zIndex)),
+    ).toBeLessThan(headerLayer);
+  }
+});
+
 test("Popover opens intentionally with generated name and description, then restores focus", async ({ page }) => {
   await page.goto("/popover");
   const trigger = page.getByRole("button", { name: "Project settings" });
@@ -8,6 +22,13 @@ test("Popover opens intentionally with generated name and description, then rest
   await page.keyboard.press("Enter");
   const popover = page.getByRole("dialog", { name: "Project settings" });
   await expect(popover).toBeVisible();
+  const [containerBackground, contentBackground] = await Promise.all([
+    page
+      .getByTestId("popover-overview")
+      .evaluate((element) => getComputedStyle(element).backgroundColor),
+    popover.evaluate((element) => getComputedStyle(element).backgroundColor),
+  ]);
+  expect(containerBackground).not.toBe(contentBackground);
   await expect(popover).toHaveAttribute("aria-describedby", /.+/);
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
   expect(
@@ -142,7 +163,8 @@ test("Popover stays open during outside touch scrolling and closes on an outside
 test("Popover stacks long Footer actions inside an extreme narrow viewport", async ({ page }) => {
   await page.setViewportSize({ width: 150, height: 200 });
   await page.goto("/popover");
-  await page.getByRole("button", { name: "Open long settings" }).click();
+  await page.getByRole("button", { name: "Open long settings" }).focus();
+  await page.keyboard.press("Enter");
 
   const popover = page.getByRole("dialog", {
     name: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break",

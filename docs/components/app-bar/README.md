@@ -35,6 +35,25 @@ import "@flowstack-ui/brick/styles.css";
 </AppBar.Root>
 ```
 
+## Anatomy and DOM ownership
+
+AppBar is a compound component rather than a callable flat component:
+
+```tsx
+<AppBar.Root>
+  <AppBar.Toolbar>
+    <AppBar.Start />
+    <AppBar.Center />
+    <AppBar.End />
+  </AppBar.Toolbar>
+</AppBar.Root>
+```
+
+Root renders a native `<header>` by default. Toolbar and the three regions
+render structural `<div>` elements. Toolbar intentionally has no
+`role="toolbar"` because AppBar does not implement toolbar keyboard behavior.
+Start and End are logical regions; Center uses an independent center track.
+
 ## API
 
 ### Root
@@ -82,6 +101,29 @@ Absolute and fixed bars do not reserve page space. The application owns any
 required content offset. AppBar's stacking level remains below modal overlays
 and is still constrained by ancestor stacking contexts.
 
+## Composition, native props, and refs
+
+Root, Toolbar, Start, Center, and End support Atom's `render` and `asChild`
+composition paths. Prefer the default anatomy. Use `render` to replace an
+element without changing the child structure, and reserve `asChild` for one
+permissive element that forwards its ref and native props:
+
+```tsx
+<AppBar.Root render={<header data-region="application" />}>
+  <AppBar.Toolbar>…</AppBar.Toolbar>
+</AppBar.Root>
+
+<AppBar.Root asChild>
+  <header data-region="application">
+    <AppBar.Toolbar>…</AppBar.Toolbar>
+  </header>
+</AppBar.Root>
+```
+
+Root refs target `HTMLElement`; Toolbar and region refs target
+`HTMLDivElement` on their default paths. Native props, ARIA/data attributes,
+events, `className`, `style`, and `data-slot` pass through.
+
 ## Responsive behavior
 
 Toolbar remains one logical row. Start and End occupy equal flexible tracks so
@@ -114,6 +156,7 @@ Public component tokens:
 --brick-app-bar-foreground
 --brick-app-bar-border-color
 --brick-app-bar-blurred-background
+--brick-app-bar-reduced-transparency-background
 --brick-app-bar-shadow
 ```
 
@@ -134,6 +177,13 @@ text, links, composed controls, focus indicators, appearances, and forced-color
 behavior. Composed components can be styled independently when their default
 recipe is unsuitable for a custom background.
 
+## Appearance and preferences
+
+AppBar consumes the nearest Brick appearance scope. A blurred surface becomes
+opaque when reduced transparency is requested. Forced colors removes custom
+background effects and shadows, then restores system surface, text, and
+boundary colors. AppBar adds no motion of its own.
+
 ## Accessibility
 
 Give Root a useful accessible label when multiple landmark-like top surfaces
@@ -144,6 +194,27 @@ roving focus, menu behavior, routing, or keyboard shortcuts.
 Use logical Start and End regions for RTL. Brick reverses their physical
 placement while preserving the geometric Center. Forced colors remove custom
 surface effects and restore system colors and visible boundaries.
+
+## Examples
+
+```tsx
+<AppBar.Root elevated>
+  <AppBar.Toolbar>
+    <AppBar.Start>Workspace</AppBar.Start>
+    <AppBar.End>
+      <IconButton aria-label="Search"><SearchIcon /></IconButton>
+    </AppBar.End>
+  </AppBar.Toolbar>
+</AppBar.Root>
+
+<AppBar.Root blurred position="sticky">
+  <AppBar.Toolbar density="compact">
+    <AppBar.Start>Project</AppBar.Start>
+    <AppBar.Center>Activity</AppBar.Center>
+    <AppBar.End>Actions</AppBar.End>
+  </AppBar.Toolbar>
+</AppBar.Root>
+```
 
 ## Changelog
 

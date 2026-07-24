@@ -1,39 +1,108 @@
 # Tooltip manual-test protocol
 
-Component: Tooltip
-Version or commit: Unreleased 0.1.0 with Atom 0.6.1
-Reviewer: Product owner
-Date: 2026-07-20
-Playground route: `/tooltip`
+| Run information | Value |
+| --- | --- |
+| Component | Tooltip |
+| Version or commit | Unreleased 0.1.0 |
+| Reviewer | |
+| Date | |
+| Browser and version | |
+| Operating system | |
+| Viewport and zoom | |
+| Physical device | |
+| Assistive technology | |
+| Playground route | `/tooltip` |
 
-Use `/tooltip` on desktop and the documented LAN URL on a physical touch
-device. Record browser/device, viewport, appearance, direction, zoom, result,
-and notes in the Tooltip coverage sheet.
+Scenario order: `01 Overview`, `02 Recipes`, `03 Shapes`, `04 Sides`,
+`05 Alignments`, `06 States`, `07 Composition`, `08 Theme`, `09 Stress`
 
-1. Hover the overview trigger: it opens after the delay, remains while moving
-   across the trigger/content bridge, and closes after leaving. Result: pass.
-   Initial positioning, plain hover persistence, arrow seams, and rounded/pill
-   shapes were corrected during review and covered by browser tests.
-2. Focus it by keyboard: the Tooltip opens without moving focus; Escape closes
-   it and focus remains on the trigger. Result: pass.
-3. Move quickly across placement triggers: provider skip-delay behavior is
-   predictable and each arrow follows the final side. Result: pass.
-4. Verify rich title/description are announced as supplemental description and
-   contain no interactive targets. Result: pass. VoiceOver exposes the rich
-   description through the current item's More Content command.
-5. On iPhone Safari and Android Chrome, a quick tap activates normally without
-   leaving a Tooltip open; a deliberate hold opens it without selecting text;
-   release/outside tap/scroll dismiss according to Atom's contract. Result:
-   pass on iPhone Safari after the Atom 0.6.1 fix; Android Chrome not applicable.
-6. Check light, dark, RTL, reduced motion, and forced colors where available.
-   Result: pass for light, dark, RTL, and reduced motion; forced colors not
-   applicable because no Windows device was available.
-7. Check 200% and 400% zoom plus a 256px-wide viewport: content wraps, remains
-   reachable, and introduces no page-level horizontal overflow. Result: pass.
+Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
+
+## Step 1 — Overview and input behavior
+
+Setup: Open `/tooltip` and `01 Overview`.
+
+Action: Focus the trigger, press Escape, hover across trigger and Tooltip, and
+perform a touch hold on a real touch device when available.
+
+Expected: Tooltip opens after the appropriate input/timing, remains open across
+the hover bridge, contains no interactive content, closes with Escape, and
+leaves focus on the trigger. It stays below the playground header.
+
+Result:
+Notes or issue:
+
+## Step 2 — Recipes, shapes, sides, and alignments
+
+Setup: Review `02 Recipes`, `03 Shapes`, `04 Sides`, and `05 Alignments`.
+
+Action: Open every specimen.
+
+Expected: Plain/rich recipes and optional Arrow match their labels. Shape
+changes radius only. Preferred side/alignment changes initial geometry; final
+placement stays in the viewport and Arrow overlaps the resolved surface edge.
+
+Result:
+Notes or issue:
+
+## Step 3 — Timing, state, and trigger composition
+
+Setup: Open `06 States` and `07 Composition`.
+
+Action: Test controlled, provider timing, default-open, and disabled examples;
+then inspect native, render, and asChild output and focus each trigger.
+
+Expected: Only the dedicated default-open specimen starts open. Disabled never
+opens. Every trigger remains the actual named focus owner, the HTML panel
+matches its live host, and Tooltip adds no focusable descendants.
+
+Result:
+Notes or issue:
+
+## Step 4 — Theme and customization
+
+Setup: Open `08 Theme`; switch system, light, and dark appearance.
+
+Action: Open scoped and customized Tooltips and compare code with output.
+
+Expected: Portal content uses its local scope. Text, Arrow, boundary, and focus
+remain readable; customization changes presentation only and preserves timing,
+placement, semantics, classes, and slots.
+
+Result:
+Notes or issue:
+
+## Step 5 — Reflow, RTL, and preferences
+
+Setup: Open `09 Stress`; test at 390 px, 200%, and 400% zoom, RTL, reduced
+motion, and forced colors.
+
+Action: Open long localized and unbroken Tooltip content.
+
+Expected: Content wraps and remains viewport-contained, reading order and
+placement are logical in RTL, motion is nonessential, and system colors
+preserve boundary/text/focus.
+
+Result:
+Notes or issue:
+
+## Step 6 — Screen reader
+
+Setup: Enable the recorded screen reader.
+
+Action: Navigate Overview, rich content, disabled, and composition triggers.
+
+Expected: Each trigger announces its independent name and Tooltip description
+once. Tooltip content is descriptive, not a second focus stop or interactive
+popup.
+
+Result:
+Notes or issue:
 
 ## Completion
 
-Overall result: pass
-Follow-up issues: None open.
-Workbook updated: Owner-run rows are complete; unavailable Android Chrome and
-forced-colors contexts are recorded as not applicable rather than passed.
+Overall result:
+Follow-up issues:
+Workbook updated:
+
+Mark unavailable touch or assistive-technology environments `blocked`.

@@ -1,79 +1,122 @@
-# Toggle family manual-test protocol
+# Toggle manual-test protocol
 
-Component: Toggle and ToggleGroup
-Version or commit: Unreleased 0.1.0
-Reviewer: Product owner
-Date: July 20, 2026
-Playground route: `/toggle`
+| Run information | Value |
+| --- | --- |
+| Component | Toggle |
+| Version or commit | Unreleased 0.1.0 |
+| Reviewer | |
+| Date | |
+| Browser and version | |
+| Operating system | |
+| Viewport and zoom | |
+| Physical device | |
+| Assistive technology | |
+| Playground route | `/toggle` |
 
-Use `pass`, `fail`, `blocked`, or `not applicable` for each completed result.
-Automated evidence does not pre-mark these human judgment checks.
+Scenario order: `01 Overview`, `02 Variants`, `03 States`, `04 Sizes`,
+`05 Shapes`, `06 Composition`, `07 Disabled`, `08 Theme`, `09 Stress`
 
-## Step 1 — Visual hierarchy and persistent meaning
+Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
-Review all variants, selected/unselected/disabled states, sizes, shapes, and
-icon-only content in light and dark. Expected: selected state is unmistakable,
-resting Toggle is quieter than Button, and labels keep the same meaning before
-and after activation. Result: pass.
-Notes: Solid, soft, outline, and ghost variants plus states, sizes, shapes, and
-icon-only examples preserve clear persistent selection hierarchy and readable
-disabled treatment in light/dark.
+## Step 1 — Overview, variants, and pressed states
 
-## Step 2 — Pointer, keyboard, focus, and disabled behavior
+Setup: Open `/toggle` in system appearance.
 
-Activate standalone Toggle with click, touch, Space, and Enter. Tab into each
-group once; use Arrow keys, Home, End, wrapping, and disabled-item skipping in
-horizontal and vertical examples. Expected: focus remains visible and behavior
-matches the visible state without duplicate activation. Result: pass.
-Notes: Pointer, touch, Space, and Enter update standalone state once; horizontal
-and vertical groups preserve visible roving focus, Home/End, wrapping, and
-disabled-item skipping.
+Action: Activate `01 Overview`; compare every recipe in `02 Variants` and both
+pressed states in `03 States`.
 
-## Step 3 — Single and multiple selection
+Expected: Default soft medium rounded Toggle changes pressed state once and
+retains focus. Variants remain visually distinct when pressed. State changes
+do not alter size, label, or geometry.
 
-Exercise the attached single view group and separated multiple filters,
-including clearing the optional single selection where shown by development
-tools. Expected: callbacks/state match one string or one string array; the
-Consumer's required view remains selected because that app rejects empty.
-Result: pass.
-Notes: Attached view selection remains one required string with a matching
-readout; separated filters preserve multiple values, clear to none, and keep
-disabled Archived unavailable.
+Result:
+Notes or issue:
 
-## Step 4 — Group geometry and customization
+## Step 2 — Sizes, shapes, and icon content
 
-Review separated wrapping, attached borders/corners, full width, both
-orientations, icon-only items, root class/style/slot hooks, and group-level
-disabled state. Expected: items share one recipe, attachment has no doubled
-borders, and customization does not alter behavior. Result: pass.
-Notes: Attached/separated geometry, wrapping, full-width distribution,
-orientation, icon-only targets, customization hooks, and disabled grouping
-remain consistent without changing behavior.
+Setup: Open `04 Sizes` and `05 Shapes`.
 
-## Step 5 — Zoom, mobile, RTL, and localization
+Action: Compare the full size scale, each shape, text content, and icon-only
+content.
 
-Review at 200% and 400% zoom, 256 CSS pixels where meaningful, mobile widths,
-long unbroken/localized labels, and RTL. Expected: content wraps without page
-overflow, logical corners mirror, and horizontal arrow direction mirrors in
-RTL. Result: pass.
-Notes: At 200%/400%, narrow/mobile widths, and RTL, long localized content
-reflows without page overflow, attached corners mirror, arrow navigation
-follows direction, and targets remain reachable.
+Expected: Sizes change coordinated target/content geometry only. Shapes change
+radius only. Icon-only Toggle remains completely named and its icon stays
+centered without changing the selected treatment.
 
-## Step 6 — Screen reader and preferences
+Result:
+Notes or issue:
 
-Read standalone, icon-only, single, multiple, selected, and disabled examples
-with VoiceOver. Review forced colors, reduced motion, reduced transparency,
-and system/light/dark appearance. Expected: names, group context, and pressed
-state are announced; selected/focus boundaries remain visible without relying
-on color or motion. Result: pass.
-Notes: VoiceOver announces standalone and icon-only names, pressed state,
-Project view/filters group context, selection, and disabled state. Light/dark,
-reduced motion, and reduced transparency preserve focus and selection; forced
-colors remains covered by Chromium automation on this Mac.
+## Step 3 — State ownership and composition output
+
+Setup: Open `06 Composition`.
+
+Action: Operate controlled/uncontrolled state examples, inspect render and
+asChild output, then activate the rendered Toggle while watching its HTML.
+
+Expected: Ownership changes only who stores state. Each host remains a native
+pressed button with expected classes/slots, and displayed `aria-pressed` and
+`data-state` update with the live control.
+
+Result:
+Notes or issue:
+
+## Step 4 — Disabled states
+
+Setup: Open `07 Disabled`.
+
+Action: Tab through and attempt to activate disabled unpressed and pressed
+examples.
+
+Expected: Both preserve their visible state and geometry, are skipped or
+announced unavailable according to native behavior, and never change state.
+
+Result:
+Notes or issue:
+
+## Step 5 — Theme and customization
+
+Setup: Open `08 Theme`; switch system, light, and dark appearance.
+
+Action: Inspect scoped examples and compare customization code with its live
+Toggle.
+
+Expected: Rest, hover, pressed, disabled, and focus remain clear. Customization
+visibly changes the Toggle itself, stays local, and preserves pressed behavior,
+classes, slots, and accessible name.
+
+Result:
+Notes or issue:
+
+## Step 6 — Reflow, RTL, input, and preferences
+
+Setup: Open `09 Stress`; test at 390 px, 200%, and 400% zoom and in RTL, then
+reduced motion and forced colors.
+
+Action: Operate long-content examples using keyboard, pointer, and touch.
+
+Expected: Content wraps without overflow, geometry remains usable, logical
+order mirrors in RTL, activation occurs once, touch retains no false hover,
+motion is nonessential, and system colors preserve state/focus.
+
+Result:
+Notes or issue:
+
+## Step 7 — Screen reader
+
+Setup: Enable the recorded screen reader.
+
+Action: Navigate Overview, icon-only, composition, and disabled examples.
+
+Expected: Every Toggle announces one complete name, button role, pressed state,
+and unavailable state without duplicate icon speech.
+
+Result:
+Notes or issue:
 
 ## Completion
 
-Overall result: pass
-Follow-up issues: None recorded.
-Workbook updated: Toggle manual evidence verified July 20, 2026.
+Overall result:
+Follow-up issues:
+Workbook updated:
+
+Mark unavailable touch or assistive-technology environments `blocked`.

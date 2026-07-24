@@ -1,51 +1,110 @@
-# HoverCard Manual Verification
+# Hover Card manual-test protocol
 
-Status: **Completed July 21, 2026 with one non-blocking touch follow-up**
-Route: `/hover-card`
+| Run information | Value |
+| --- | --- |
+| Component | Hover Card |
+| Version or commit | Unreleased 0.1.0 |
+| Reviewer | |
+| Date | |
+| Browser and version | |
+| Operating system | |
+| Viewport and zoom | |
+| Physical device | |
+| Assistive technology | |
+| Playground route | `/hover-card` |
 
-HoverCard is a progressive visual preview. Every trigger must remain a genuine,
-complete link and every preview must remain non-interactive and nonessential.
+Scenario order: `01 Overview`, `02 Sizes`, `03 Sides`, `04 Alignments`,
+`05 States`, `06 Composition`, `07 Theme`, `08 Stress`
 
-1. Open the route in light mode. Hover **Ada Lovelace**; confirm the elevated
-   preview, Avatar, Badge, spacing, border, shadow, and Arrow look intentional.
-2. Move the pointer from the Ada link into the preview. Confirm it stays open,
-   then closes after leaving both surfaces.
-3. Focus the Ada link with Tab. Confirm the preview opens without moving focus.
-   Press Escape; confirm it closes and focus stays on the link.
-4. Activate the Ada link with Enter and by pointer/touch. Confirm the link
-   destination still works and does not depend on preview content.
-5. Inspect `sm`, `md`, and `lg`. Confirm the preferred widths differ while text,
-   Avatar, and Badge sizing remain stable.
-6. Inspect Top, Right, Bottom, and Left. Confirm collision may change the final
-   side, Arrow follows it, and **Left, no arrow** has no visual artifact.
-7. Inspect controlled, disabled, and default-delay examples. Confirm controlled
-   opens, disabled never opens, and default delay feels like 700/300 ms.
-8. Inspect profile and document composition. Confirm there are no links,
-   buttons, inputs, menus, required instructions, or recovery actions inside.
-9. Switch to dark mode. Repeat the overview and composition checks; confirm
-   surface hierarchy and text/border contrast remain clear.
-10. Enable reduced motion. Confirm the preview does not scale or translate.
-11. Enable forced colors when available. Confirm a visible system-color border
-    and Arrow boundary remain without relying on shadow.
-12. At 200% and 400% zoom, and at 256 px CSS width, inspect long and Arabic
-    previews. Confirm wrapping, internal overflow, viewport containment, and no
-    horizontal page scroll.
-13. In RTL, confirm internal content follows RTL and collision alignment remains
-    logical rather than mirrored incorrectly.
-14. On physical iPhone Safari and Android Chrome, tap every link normally.
-    Confirm navigation works with no hold gesture or preview reliance.
-15. With VoiceOver or another screen reader, confirm each trigger is announced
-    as a complete link and no dialog, popup, expanded state, or preview content
-    is promised.
-16. Audit the examples one last time: every preview fact is duplicated on the
-    visible page or available at the destination. Record pass/fail and device
-    coverage in the component workbook.
+Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
-## Recorded outcome
+## Step 1 — Overview and genuine link behavior
 
-The owner passed the visual, pointer, keyboard, VoiceOver, responsive, RTL,
-preference, and content audits. Physical mobile/tablet testing found that some
-fast taps near a Trigger edge can still open the preview intermittently. Native
-link activation remains available and the preview is duplicate, noninteractive,
-and nonessential, so this finding remains a non-blocking Atom follow-up rather
-than a HoverCard completion blocker.
+Setup: Open `/hover-card` and `01 Overview`.
+
+Action: Focus and hover `Ada Lovelace`, move the pointer between link and
+preview, close with Escape, then activate the underlying link.
+
+Expected: Preview opens without moving focus, remains open across the pointer
+bridge, contains no interactive descendants, closes with Escape, and the
+genuine link still navigates to the complete destination.
+
+Result:
+Notes or issue:
+
+## Step 2 — Sizes, sides, Arrow, and alignments
+
+Setup: Review `02 Sizes`, `03 Sides`, and `04 Alignments`.
+
+Action: Open every preview.
+
+Expected: Size changes preferred width only. Side/alignment changes geometry
+only; collision handling keeps content visible. Arrow follows the resolved side
+except the explicitly arrowless specimen.
+
+Result:
+Notes or issue:
+
+## Step 3 — State, timing, content, and composition
+
+Setup: Open `05 States` and `06 Composition`.
+
+Action: Test controlled, default-delay, and disabled triggers. Inspect profile
+and document content plus asChild/render HTML output.
+
+Expected: Timing/state follow labels, disabled never opens, Escape leaves link
+focus in place, preview content remains passive, and actual anchor output
+matches each composition panel.
+
+Result:
+Notes or issue:
+
+## Step 4 — Theme and customization
+
+Setup: Open `07 Theme`; switch system, light, and dark appearance.
+
+Action: Open both scoped previews and the customized preview; compare code with
+the live surface.
+
+Expected: Portal content uses its local scope. Text, Arrow, surface, and focus
+remain readable; customization stays local and preserves link semantics,
+timing, placement, classes, and slots.
+
+Result:
+Notes or issue:
+
+## Step 5 — Reflow, RTL, touch, and preferences
+
+Setup: Open `08 Stress`; test at 390 px, 200%, and 400% zoom, RTL, reduced
+motion, and forced colors.
+
+Action: Open long/unbroken previews near viewport edges. Tap the trigger on a
+real touch device.
+
+Expected: Preview remains contained and readable, logical placement/content are
+correct in RTL, touch activates the link rather than trapping a hover preview,
+and preferences preserve boundaries, focus, and access to the destination.
+
+Result:
+Notes or issue:
+
+## Step 6 — Screen reader
+
+Setup: Enable the recorded screen reader.
+
+Action: Navigate Overview and Composition without forcing pointer hover.
+
+Expected: The genuine link name and destination semantics remain primary.
+Hover Card adds no dialog role, focus stop, or essential information unavailable
+at the destination.
+
+Result:
+Notes or issue:
+
+## Completion
+
+Overall result:
+Follow-up issues:
+Workbook updated:
+
+Mark unavailable touch or assistive-technology environments `blocked`.

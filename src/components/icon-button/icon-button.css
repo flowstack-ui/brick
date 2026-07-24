@@ -46,10 +46,14 @@
     pointer-events: none;
   }
 
-  .brick-icon-button__icon > :where(svg, img),
-  .brick-icon-button > :where(svg, img) {
+  .brick-icon-button__icon > :where(svg, img) {
     inline-size: 100%;
     block-size: 100%;
+  }
+
+  .brick-icon-button > :where(svg, img) {
+    inline-size: var(--brick-icon-button-icon-size);
+    block-size: var(--brick-icon-button-icon-size);
   }
 
   .brick-icon-button:not([data-disabled], [data-loading]) {
@@ -224,6 +228,10 @@
     border-radius: var(--brick-radius-full);
     content: "";
     animation: brick-button-spin 700ms linear infinite;
+  }
+
+  :where([dir="rtl"]) .brick-icon-button[data-loading]::after {
+    animation-name: brick-button-spin-rtl;
   }
 
   @media (hover: hover) and (pointer: fine) {

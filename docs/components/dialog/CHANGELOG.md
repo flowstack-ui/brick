@@ -20,3 +20,7 @@ Dialog follows the package version of `@flowstack-ui/brick`.
 - Focused adapter and browser evidence for disabled triggers, disabled overlay
   dismissal, render composition, custom portal containers, and heading-level
   forwarding.
+- Independent nine-scenario reference page and browser evidence for defaults,
+  sizes, optional anatomy, title semantics, dismissal policies, nested modal
+  and Branch ownership, scoped portals, exact customization hooks, bounded
+  Body scrolling, RTL, and preference boundaries.

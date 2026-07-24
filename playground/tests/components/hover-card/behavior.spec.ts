@@ -1,12 +1,33 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+test("HoverCard appearance and customization previews start closed", async ({ page }) => {
+  await page.goto("/hover-card");
+  await expect(page.locator("[data-slot='hover-card']")).toHaveCount(0);
+
+  await page.getByRole("link", { name: "light profile" }).focus();
+  await expect(
+    page.locator("[data-slot='hover-card']").filter({ hasText: "Ada Lovelace" }),
+  ).toBeVisible();
+  await page.keyboard.press("Escape");
+
+  await page.getByRole("link", { name: "Custom profile" }).focus();
+  await expect(page.locator("[data-slot='custom-hover-card']")).toBeVisible();
+});
+
 test("HoverCard opens from keyboard focus, closes with Escape, and keeps link focus", async ({ page }) => {
   await page.goto("/hover-card");
   const trigger = page.getByRole("link", { name: "Ada Lovelace" });
   await trigger.focus();
-  const content = page.locator("[data-slot='hover-card']").filter({ hasText: "Mathematician" });
+  const content = page.getByTestId("hover-card-content-ada-lovelace");
   await expect(content).toBeVisible();
+  const [containerBackground, contentBackground] = await Promise.all([
+    page
+      .getByTestId("hover-card-overview")
+      .evaluate((element) => getComputedStyle(element).backgroundColor),
+    content.evaluate((element) => getComputedStyle(element).backgroundColor),
+  ]);
+  expect(containerBackground).not.toBe(contentBackground);
   await expect(content).not.toHaveAttribute("role");
   await expect(trigger).not.toHaveAttribute("aria-expanded");
   await expect(trigger).not.toHaveAttribute("aria-haspopup");
@@ -53,9 +74,9 @@ test("HoverCard does not open from touch and preserves native link navigation", 
   await trigger.dispatchEvent("mouseenter");
   await trigger.dispatchEvent("focus");
   await page.waitForTimeout(50);
-  await expect(page.locator("[data-slot='hover-card']").filter({ hasText: "Mathematician" })).toHaveCount(0);
+  await expect(page.getByTestId("hover-card-content-ada-lovelace")).toHaveCount(0);
   await trigger.click();
-  await expect(page).toHaveURL(/\/hover-card\/destination\?resource=ada-profile$/);
+  await expect(page).toHaveURL(/\/hover-card\/destination\?resource=ada-lovelace$/);
   await expect(page.getByTestId("hover-card-destination")).toBeVisible();
 });
 
@@ -63,7 +84,7 @@ test("HoverCard exposes the three bounded sizes, optional shared Arrow, and disa
   await page.goto("/hover-card");
   for (const size of ["sm", "md", "lg"] as const) {
     await page.getByRole("link", { name: `${size} preview` }).focus();
-    const content = page.locator(`[data-slot='hover-card'][data-size='${size}']`);
+    const content = page.getByTestId(`hover-card-content-${size}-preview`);
     await expect(content).toBeVisible();
     const arrow = content.locator("[data-slot='hover-card-arrow']");
     await expect(arrow).toBeVisible();
@@ -82,7 +103,7 @@ test("HoverCard exposes the three bounded sizes, optional shared Arrow, and disa
   }
 
   await page.getByRole("link", { name: "Left, no arrow" }).focus();
-  const noArrow = page.locator("[data-slot='hover-card']").filter({ hasText: "early computing" });
+  const noArrow = page.getByTestId("hover-card-content-left-no-arrow");
   await expect(noArrow).toBeVisible();
   await expect(noArrow.locator("[data-slot='hover-card-arrow']")).toHaveCount(0);
   await page.keyboard.press("Escape");
@@ -95,6 +116,13 @@ test("HoverCard keeps its genuine link contract and passes the focused accessibi
   await page.goto("/hover-card");
   const link = page.getByRole("link", { name: "Compiler project notes" });
   await expect(link).toHaveAttribute("href", "/hover-card/destination?resource=compiler-project-notes");
+  const output = page
+    .getByTestId("hover-card-composition")
+    .locator("[data-rendered-output]");
+  await expect(output).toHaveCount(2);
+  await expect(output.last()).toContainText(
+    'href="/hover-card/destination?resource=render-resource"',
+  );
   await link.focus();
   await expect(page.locator("[data-slot='hover-card']").filter({ hasText: "12 minute read" })).toBeVisible();
   // Portalled preview content is intentionally generic and outside landmarks.
@@ -124,7 +152,7 @@ test("HoverCard can fall back to a perpendicular axis when neither horizontal si
     element.style.top = "20rem";
   });
   await trigger.focus();
-  const content = page.locator("[data-slot='hover-card']").filter({ hasText: "early computing" });
+  const content = page.getByTestId("hover-card-content-right");
   await expect(content).toBeVisible();
   await expect(content).toHaveAttribute("data-side", /^(top|bottom)$/);
 });
@@ -139,7 +167,7 @@ test("HoverCard preserves the requested side when another alignment fits", async
     element.style.top = "20rem";
   });
   await trigger.focus();
-  const content = page.locator("[data-slot='hover-card']").filter({ hasText: "early computing" });
+  const content = page.getByTestId("hover-card-content-top");
   await expect(content).toBeVisible();
   await expect(content).toHaveAttribute("data-side", "top");
   const box = await content.boundingBox();

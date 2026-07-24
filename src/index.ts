@@ -23,6 +23,7 @@ export {
   AppBarToolbar,
   type AppBarRootProps,
   type AppBarSectionProps,
+  type AppBarTone,
   type AppBarToolbarProps,
   type AppBarVariant,
 } from "./components/app-bar/index.js";

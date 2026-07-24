@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added an independent controlled-comparison reference page covering recipes,
+  shapes, placement, timing/state, composition, scoped portals,
+  customization, responsive stress, and RTL.
+- Limited initial open state to the dedicated `defaultOpen` specimen; scoped
+  appearance and customization examples now open only through their triggers,
+  and the persistent specimen remains below the sticky review header.
 - Upgraded to Atom 0.6.9 so portalled content preserves the trigger's logical
   text direction.
 - Added rounded and pill Content shapes, with rounded as the default.

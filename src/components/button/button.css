@@ -102,6 +102,10 @@
     animation: brick-button-spin 700ms linear infinite;
   }
 
+  :where([dir="rtl"]) .brick-button[data-loading]::after {
+    animation-name: brick-button-spin-rtl;
+  }
+
   .brick-button__content {
     min-inline-size: 0;
   }
@@ -328,6 +332,16 @@
 
     to {
       transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  @keyframes brick-button-spin-rtl {
+    from {
+      transform: translate(50%, -50%) rotate(0deg);
+    }
+
+    to {
+      transform: translate(50%, -50%) rotate(360deg);
     }
   }
 }

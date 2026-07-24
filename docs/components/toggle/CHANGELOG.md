@@ -8,3 +8,7 @@
   motion recipes.
 - Added package, type, component, browser, SSR, playground, Consumer, and
   coverage-workbook evidence.
+- Replaced the shared family workbench with an independent controlled-
+  comparison reference page and component-owned browser assertions.
+- Differentiated selected soft, outline, and ghost paint so every public
+  variant remains visually identifiable.

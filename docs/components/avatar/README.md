@@ -56,7 +56,7 @@ choose a hidden fallback icon.
 <Avatar alt="Ada" fallback="A" size="lg" />
 <Avatar alt="Ada" fallback="A" size="xl" />
 
-<Avatar alt="Flowstack workspace" fallback="FS" shape="rounded" />
+<Avatar alt="Design system workspace" fallback="DS" shape="rounded" />
 ```
 
 | Prop | Values | Default |

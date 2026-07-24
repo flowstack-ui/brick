@@ -1,0 +1,38 @@
+.hover-card-destination {
+  box-sizing: border-box;
+  display: grid;
+  inline-size: min(100% - 2rem, 44rem);
+  min-block-size: 100vh;
+  align-content: center;
+  gap: var(--brick-space-4);
+  margin-inline: auto;
+  padding-block: var(--brick-space-6);
+  color: var(--brick-color-text-primary);
+}
+
+.hover-card-destination h1,
+.hover-card-destination p {
+  margin: 0;
+}
+
+.hover-card-destination > p:first-child {
+  color: var(--brick-color-accent-text);
+  font-size: var(--brick-font-size-sm);
+  font-weight: var(--brick-font-weight-semibold);
+}
+
+.hover-card-destination h1 {
+  font-size: clamp(2rem, 10vw, 4rem);
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.hover-card-destination > p:not(:first-child) {
+  max-inline-size: 64ch;
+  color: var(--brick-color-text-secondary);
+  line-height: var(--brick-font-line-height-body);
+}
+
+.hover-card-destination > .brick-button {
+  justify-self: start;
+}

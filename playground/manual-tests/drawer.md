@@ -1,194 +1,112 @@
 # Drawer manual-test protocol
 
-Component: Drawer
-Version or commit: Unreleased 0.1.0
-Reviewer: Product owner
-Date: July 19, 2026
-Playground route: `/drawer`
+| Run information | Value |
+| --- | --- |
+| Component | Drawer |
+| Version or commit | Unreleased 0.1.0 |
+| Reviewer | |
+| Date | |
+| Browser and version | |
+| Operating system | |
+| Viewport and zoom | |
+| Physical device | |
+| Assistive technology | |
+| Playground route | `/drawer` |
 
-Use `pass`, `fail`, `blocked`, or `not applicable` for every completed result.
-Automated assertions are linked from the coverage workbook; these steps retain
-human visual, interaction, device, and assistive-technology judgment.
+Scenario order: `01 Overview`, `02 Placements`, `03 Sizes`, `04 Anatomy`,
+`05 States`, `06 Composition`, `07 Theme`, `08 Customization`, `09 Stress`
 
-## Step 1 — Finished surface, placements, and sizes
+Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
-Setup: Open `/drawer` at 390 × 844 with system appearance.
+## Step 1 — Overview and focus lifecycle
 
-Action: Open Overview, all four Placements, then all four Sizes.
+Setup: Open `/drawer` and `01 Overview`.
 
-Expected: Edge attachment is clear; every panel stays bounded; sm, md, lg, and
-full remain visually distinct; only full occupies the complete relevant
-viewport; the visible page context decreases progressively.
+Action: Open with keyboard, move through the filters and actions, close with
+the visible control, reopen, then press Escape.
 
-Result: pass
-Notes or issue: At 390 x 844 with system appearance, Overview, all four
-placements, and all four sizes remain correctly edge-attached and bounded.
-The sm, md, lg, and full sizes are visually distinct; only full occupies the
-complete relevant viewport, and visible page context decreases progressively.
+Expected: Drawer is named/described, focus enters safely and remains contained,
+internal controls work, background interaction is blocked, and focus returns
+to the trigger after closing.
 
-## Step 2 — Keyboard, focus, and dismissal
+Result:
+Notes or issue:
 
-Setup: Use only the keyboard in Overview and States and dismissal.
+## Step 2 — Placements, sizes, and anatomy
 
-Action: Open with Enter/Space, traverse forward and backward, then close
-separately with Close, Escape, and the Overlay. Repeat the dismissal-disabled
-case.
+Setup: Review `02 Placements`, `03 Sizes`, and `04 Anatomy`.
 
-Expected: Focus remains in the top Drawer, follows source order, and returns to
-the Trigger. Disabled dismissal does nothing and its visible Close path remains
-reachable. The page is immediately operable after exit.
+Action: Open every start/end/top/bottom placement and size; inspect optional
+parts and Title levels.
 
-Result: pass
-Notes or issue: Keyboard opening with Enter and Space, forward and reverse
-focus traversal, Close, Escape, Overlay dismissal, and Trigger focus
-restoration pass. The dismissal-disabled example remains open for Escape and
-Overlay interaction, its visible Close path remains reachable, and the page is
-immediately operable after exit.
+Expected: Each surface attaches to the labeled logical edge. Sizes change the
+correct axis; full uses the viewport intentionally. Authored Header, Body,
+Footer, Title, Description, and Close parts stay ordered and reachable.
 
-## Step 3 — Pointer, touch, and disabled Trigger
+Result:
+Notes or issue:
 
-Setup: Review Overview and States with mouse and a real touch device.
+## Step 3 — States and composition
 
-Action: Open and close through Trigger, controls, Overlay, and the disabled
-Trigger. Scroll Body without starting a page scroll.
+Setup: Open `05 States` and `06 Composition`.
 
-Expected: Exact Overlay interaction dismisses only when enabled; the disabled
-Trigger is visibly unavailable; controls are comfortable by touch; opening does
-not summon an unrelated virtual keyboard. No swipe/drag gesture is expected.
+Action: Test controlled and dismissal-policy examples, outside interaction,
+nested/portalled content, and composition paths.
 
-Result: pass
-Notes or issue: Mouse and real-touch Trigger, controls, enabled Overlay
-dismissal, disabled Trigger, and Body scrolling pass. Opening does not summon
-an unrelated virtual keyboard, background page scrolling does not replace Body
-scrolling, and no swipe or drag behavior is exposed. Follow-up observation:
-on iOS Safari, the browser menu's explicit Hide Toolbar command can leave the
-top of the open Drawer visually clipped. Normal automatic toolbar collapse
-does not reproduce the issue. Classify against Drawer dynamic-viewport sizing
-and the playground document shell before package completion; this may affect
-other modal components and is not yet assigned to Brick or the playground.
+Expected: Every policy behaves as labeled, the top layer owns focus and Escape,
+nested layers restore focus in order, and composition preserves one modal
+boundary, native semantics, classes, and slots.
 
-## Step 4 — Nested ownership and Branch
+Result:
+Notes or issue:
 
-Setup: Open the parent Drawer and nested Dialog, then Portals and Branch.
+## Step 4 — Theme and customization
 
-Action: Navigate and close the child, continue in the parent, operate the
-portalled Branch action, then close the parent.
+Setup: Open `07 Theme` and `08 Customization`.
 
-Expected: Only the top modal owns focus and dismissal. The child returns to its
-parent; Branch remains interactive without dismissing the Drawer; final close
-leaves no inert or unclickable page state.
+Action: Review each portal scope in system, light, and dark appearance; compare
+custom code with the live Drawer.
 
-Result: pass
-Notes or issue: The nested Dialog exclusively owns focus and dismissal while
-open, then returns control to the parent Drawer. The portalled Branch action
-remains interactive without dismissing the Drawer, and final close leaves no
-inert or unclickable page state.
+Expected: Overlay, surface, content, controls, and focus remain readable.
+Customization stays local and preserves placement, modal behavior, anatomy,
+classes, and slots.
 
-## Step 5 — Long Body, phone, and virtual keyboard
+Result:
+Notes or issue:
 
-Setup: Open Mobile, stress, and RTL on a real phone, then repeat with the
-on-screen keyboard visible where possible.
+## Step 5 — Mobile, scrolling, RTL, and touch
 
-Action: Scroll from first to last paragraph and operate Footer actions.
+Setup: Open `09 Stress` on a real phone when available; also test 390 px, 200%,
+400% zoom, and RTL.
 
-Expected: Only Body scrolls; Header, Footer, and Close remain reachable; safe
-areas protect controls; the visual keyboard does not make the workflow
-unreachable.
+Action: Open long Drawers from each relevant edge, scroll Body content, operate
+Footer actions, rotate the device if available, and close.
 
-Result: fail
-Notes or issue: On an iPhone 16 Pro Max running iOS 26.5.2, opening a modal
-summons Safari's compact black address bar both with and without the explicit
-Hide Toolbar option. In normal mode, the Drawer is laid out below that bar. If
-Hide Toolbar was selected, the bar instead obscures the top of start, end, and
-top Drawers. Bottom does not visibly reproduce at its current height, but a
-sufficiently tall bottom Drawer is expected to reach the same obscured top
-boundary. Normal automatic toolbar collapse works. Adding
-`viewport-fit=cover` to the playground did not correct the failure, even though
-Drawer already consumes safe-area inset variables. Opening Brick Dialog after
-the same Hide Toolbar command reproduces the compact black address bar, so the
-finding is shared modal behavior rather than Drawer presentation. Keep package
-completion open while the released Atom 0.6.7 root-overflow scroll-lock patch
-is confirmed on the affected physical devices.
+Expected: The Drawer stays attached and reachable, background scroll is locked,
+Body—not the whole modal—scrolls as intended, safe-area/keyboard constraints do
+not hide controls, actions wrap, and start/end mirror correctly in RTL.
 
-## Step 6 — Appearance and preferences
+Result:
+Notes or issue:
 
-Setup: Review light, dark, scoped examples, reduced motion, and forced colors.
+## Step 6 — Preferences and screen reader
 
-Action: Open and close representative side and block-edge Drawers.
+Setup: Enable reduced motion, forced colors, and the recorded screen reader.
 
-Expected: Surface, scrim, text, border, controls, and focus remain distinct;
-scope remains local; reduced motion removes travel; forced colors retains a
-system boundary and operable controls.
+Action: Open and close Overview and one alternate placement.
 
-Result: pass
-Notes or issue: Light, dark, scoped appearance, and reduced-motion review
-pass. Surface, scrim, text, borders, controls, focus, and local scope remain
-distinct and coherent, and reduced motion removes Drawer travel. Physical
-Windows forced-colors testing was unavailable; the automated forced-colors
-baseline remains the available evidence.
+Expected: Motion is nonessential, boundaries/focus remain visible, and dialog
+role, title, description, controls, placement-independent reading order, and
+modal state announce correctly.
 
-## Step 7 — Reflow, sizes, localization, and RTL
-
-Setup: Use 200% and 400% zoom, a 256 CSS-pixel width where meaningful, and the
-Arabic start-placement stress example.
-
-Action: Inspect every region and repeat sm, md, lg, and full.
-
-Expected: No meaningful content/control is lost; no horizontal page scroll
-appears; sizes remain distinct where the effective viewport permits; RTL start
-attaches right and preserves reading/focus order.
-
-Result: pass
-Notes or issue: The initial review found unreachable controls at 400% zoom
-and incorrect RTL start travel. An extreme-height whole-Drawer scrolling
-fallback now keeps Header, Body, Footer, and actions reachable when they cannot
-fit together, and explicit RTL selectors return entrance and exit through the
-physical right edge. Focused Playwright coverage passes, and owner retesting
-passes at 200%, 400%, constrained width, and RTL.
-
-## Step 8 — Screen reader
-
-Setup: Enable VoiceOver or the selected screen reader and open Overview.
-
-Action: Read the Drawer name, description, Body, and actions, close it, and
-continue on the page.
-
-Expected: The modal is announced once with its visible name and description;
-background content is unavailable; close and focus restoration are announced
-coherently.
-
-Result: pass
-Notes or issue: VoiceOver announces the modal once with its visible name and
-description, exposes Body content and actions coherently, and keeps background
-content unavailable while open. Closing and focus restoration are announced
-coherently, and page navigation resumes afterward.
-
-## Step 9 — Customization and scope
-
-Setup: Open Appearance and customization with developer tools.
-
-Action: Inspect stable classes, custom slots, tokens, state, placement, size,
-and inline Portal output.
-
-Expected: Local radius/space and slots apply without losing Brick styling;
-scoped Drawers inherit the expected appearance; Atom behavior remains intact.
-
-Result: pass
-Notes or issue: Light and dark inline Portal examples inherit their local
-appearance without changing the surrounding page. Stable Brick classes,
-custom Content and Header slots, local radius and spacing variables, state,
-placement, and size metadata remain inspectable. Customized opening, closing,
-focus, and dismissal behavior remains intact without leaking styles.
+Result:
+Notes or issue:
 
 ## Completion
 
-Overall result: blocked
-Follow-up issues: Step 5 reproduced a shared Atom fixed-body scroll-lock and
-visual-viewport failure on iPhone 16 Pro Max with iOS 26.5.2. Atom 0.6.7 now
-uses root/body overflow locking without fixed-body repositioning or unlock-time
-scroll restoration, and Brick consumes that exact registry release. Physical
-Drawer, Dialog, and modal Popover confirmation remains pending. Step 7's
-initial RTL travel and 400% reachability findings were
-corrected in Brick and pass focused automation plus owner retesting.
-Workbook updated: Pending spreadsheet authoring runtime. Keep the manual row
-and package-complete gate open while the Atom-owned Step 5 blocker remains.
+Overall result:
+Follow-up issues:
+Workbook updated:
+
+A physical phone check is required for scroll lock, virtual-keyboard reach,
+safe-area behavior, and touch quality. Mark it `blocked` if not performed.

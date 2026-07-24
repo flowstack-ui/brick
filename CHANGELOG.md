@@ -4,6 +4,16 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Corrected CheckboxGroup size and public Checkbox-token inheritance so every
+  Item and Parent reflects Root `sm`/`md`/`lg` geometry and customization.
+- Added independent controlled-comparison reference pages for Toggle,
+  ToggleGroup, Tooltip, HoverCard, and Popover, including default-only
+  overviews, public API matrices, state/composition evidence, exact
+  customization examples, appearance scopes, responsive stress, RTL, and
+  component-owned browser coverage.
+- Corrected Toggle and ToggleGroup selected recipe paint so solid, soft,
+  outline, and ghost remain distinct, and strengthened their playground
+  customization and responsive size evidence.
 - Completed the fourteen-step Checkbox-family owner review after correcting
   validation presentation, focus/scroll behavior, responsive layout, RTL,
   invalid scope, and the rendered-adapter circle example. Physical touch and
@@ -75,6 +85,23 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   on outside touch and scrolling after long-press release.
 - Added neutral and accent AppBar tones across solid, surface, and transparent
   variants, plus geometric center alignment and documented custom-color tokens.
+- Exported `AppBarTone` from the package root and added independent,
+  controlled AppBar playground/browser evidence for every public dimension.
+- Added Card's controlled reference page with independent coverage for every
+  recipe, semantic element, optional part, composition path, customization
+  hook, and responsive boundary.
+- Added Dialog's controlled reference page with independent coverage for its
+  default modal anatomy, sizes, heading semantics, dismissal policies, nested
+  and portalled ownership, scoped appearances, customization, responsive
+  scrolling, RTL, and preference boundaries.
+- Added independent controlled reference pages for AlertDialog and Drawer,
+  covering their complete public dimensions, authored regions, semantic
+  heading paths, modal policies, nested and portalled ownership, scoped
+  appearances, exact customization, responsive containment, RTL, and
+  preference boundaries.
+- Added independent controlled reference pages and focused evidence for Badge,
+  NotificationBadge, and Avatar, including a separate NotificationBadge public
+  guide and corrected default-only Avatar overview.
 
 ### Added
 
@@ -136,6 +163,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Fixed
 
+- Centered the IconButton loading spinner when it inherits right-to-left
+  direction.
+- Kept direct IconButton SVG and image children at the configured icon size
+  under `asChild` composition.
 - Upgraded the exact Atom dependency to 0.6.0 for CheckboxGroup stable
   ItemLabel/ItemDescription relationships, allValues Parent aggregation, and
   complete form/state composition capabilities.

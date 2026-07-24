@@ -24,6 +24,8 @@ export const componentIds = [
 export function componentTestPaths(componentId) {
   return {
     browser: `playground/tests/components/${componentId}/behavior.spec.ts`,
+    manual: `playground/manual-tests/${componentId}.md`,
+    visual: `playground/tests/components/${componentId}/visual.spec.ts`,
     types: `test/types/components/${componentId}.test.ts`,
     unit: `test/components/${componentId}/${componentId}.test.tsx`,
   };

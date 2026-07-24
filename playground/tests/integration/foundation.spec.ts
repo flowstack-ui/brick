@@ -5,7 +5,7 @@ test("Button workbench loads public CSS and switches appearance", async ({ page 
   await page.goto("/");
 
   await expect(page.getByTestId("button-workbench")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Button workbench" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Button", exact: true })).toBeVisible();
 
   const accent = await page.evaluate(() =>
     getComputedStyle(document.documentElement).getPropertyValue("--brick-color-accent-solid").trim(),

@@ -24,10 +24,10 @@ test("Button preserves system-color boundaries and focus in forced colors", asyn
   expect(primaryStyle.outlineStyle).toBe("solid");
   expect(primaryStyle.outlineWidth).toBeGreaterThanOrEqual(2);
 
-  const disabled = page.getByRole("button", { name: "Disabled" });
+  const disabled = page.getByTestId("button-disabled");
   await expect(disabled).toHaveCSS("opacity", "1");
 
-  const loading = page.getByRole("button", { name: "Saving changes" });
+  const loading = page.getByTestId("button-loading");
   const spinner = await loading.evaluate((element) => {
     const style = getComputedStyle(element, "::after");
     return [style.borderTopColor, style.borderRightColor];
@@ -42,7 +42,7 @@ test("Button honors reduced motion without hiding loading status", async ({ page
   const primary = page.getByRole("button", { name: "Publish project" });
   await expect(primary).toHaveCSS("transition-duration", "0s");
 
-  const loading = page.getByRole("button", { name: "Saving changes" });
+  const loading = page.getByTestId("button-loading");
   const spinnerStyle = await loading.evaluate((element) => {
     const style = getComputedStyle(element, "::after");
     return { animationDuration: style.animationDuration, display: style.display };

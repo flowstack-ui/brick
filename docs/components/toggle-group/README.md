@@ -45,6 +45,10 @@ default to `toggle-group` and `toggle-group-item`. Group data includes
 orientation, attachment, full-width, variant, size, and shape. Items expose
 Atom `data-state` and `data-value`.
 
+Root variants cascade Toggle’s distinct selected recipes to every Item:
+accent-solid fill for `solid`, edged accent-soft fill for `soft`, transparent
+accent outline for `outline`, and borderless accent-soft fill for `ghost`.
+
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md).

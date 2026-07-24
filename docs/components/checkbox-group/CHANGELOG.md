@@ -4,6 +4,8 @@
 
 ### Fixed
 
+- Root size and shared Checkbox token overrides now inherit through every Item
+  and Parent instead of being replaced by medium row defaults.
 - Upgraded to exact Atom 0.6.17 so explicit browser scrolling remains safe in
   non-browser DOM implementations used by tests and server tooling.
 - Upgraded to exact Atom 0.6.16 so inline validation explicitly scrolls its

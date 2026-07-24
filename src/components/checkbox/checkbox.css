@@ -1,9 +1,5 @@
 @layer brick.components {
-  :where(
-    .brick-checkbox,
-    .brick-checkbox-group-item,
-    .brick-checkbox-group-parent
-  ) {
+  :where(.brick-checkbox, .brick-checkbox-group) {
     --brick-checkbox-control-size: 1.125rem;
     --brick-checkbox-target-min-size: var(--brick-control-target-min);
     --brick-checkbox-gap: var(--brick-space-2);
@@ -18,7 +14,13 @@
     --brick-checkbox-control-checked-background: var(--brick-color-accent-solid);
     --brick-checkbox-control-checked-foreground: var(--brick-color-accent-on-solid);
     --brick-checkbox-invalid-foreground: var(--brick-color-danger-text);
+  }
 
+  :where(
+    .brick-checkbox,
+    .brick-checkbox-group-item,
+    .brick-checkbox-group-parent
+  ) {
     display: grid;
     box-sizing: border-box;
     min-inline-size: 0;

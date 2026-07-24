@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added an independent controlled-comparison reference page covering sizes,
+  placement, state/timing, passive content, genuine-link composition, scoped
+  portals, customization, responsive stress, and RTL.
+- Moved specimen canvases behind the default raised surface for clearer visual
+  separation, and made appearance/customization previews open only through
+  genuine-link hover or keyboard focus.
 - Upgraded to Atom 0.6.9 so portalled content preserves the trigger's logical
   text direction.
 - Added the strict frozen five-part HoverCard namespace.

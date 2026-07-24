@@ -40,6 +40,38 @@ describe("IconButton", () => {
     expect(link).not.toHaveAttribute("role", "button");
   });
 
+  it("preserves Brick anatomy across render and asChild composition", () => {
+    const { rerender } = render(
+      <IconButton
+        aria-label="Rendered documentation"
+        className="consumer-action"
+        data-slot="documentation-action"
+        render={<a href="/rendered" />}
+        style={{ borderWidth: "2px" }}
+      >
+        <TestIcon />
+      </IconButton>,
+    );
+    const rendered = screen.getByRole("link", { name: "Rendered documentation" });
+    expect(rendered).toHaveClass("brick-icon-button", "consumer-action");
+    expect(rendered).toHaveAttribute("data-slot", "documentation-action");
+    expect(rendered).toHaveStyle({ borderWidth: "2px" });
+    expect(rendered.querySelector(".brick-icon-button__icon")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+
+    rerender(
+      <IconButton aria-label="Composed documentation" asChild>
+        <a href="/composed"><TestIcon /></a>
+      </IconButton>,
+    );
+    const composed = screen.getByRole("link", { name: "Composed documentation" });
+    expect(composed).toHaveClass("brick-icon-button");
+    expect(composed.querySelector(".brick-icon-button__icon")).toBeNull();
+    expect(screen.getByTestId("icon")).toBeInTheDocument();
+  });
+
   it("keeps Atom as event, disabled, loading, composition, and ref owner", async () => {
     const user = userEvent.setup();
     const onPress = vi.fn();

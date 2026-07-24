@@ -73,7 +73,9 @@
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-variant="outline"][data-state="on"] {
     border-color: var(--brick-color-accent-border);
-    background: var(--brick-color-accent-soft);
+    background: transparent;
+    color: var(--brick-color-accent-text);
+    box-shadow: none;
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-variant="ghost"] {
@@ -83,6 +85,7 @@
   :where(.brick-toggle, .brick-toggle-group-item)[data-variant="ghost"][data-state="on"] {
     border-color: transparent;
     background: var(--brick-color-accent-soft);
+    box-shadow: none;
   }
 
   :where(.brick-toggle, .brick-toggle-group-item):not([data-disabled]):active {

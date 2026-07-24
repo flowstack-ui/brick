@@ -1,104 +1,94 @@
-# Badge family manual-test protocol
+# Badge manual-test protocol
 
-Component: Badge and NotificationBadge
-Version or commit: Unreleased 0.1.0
-Reviewer: Product owner
-Date: July 19, 2026
-Playground route: `/badge`
+| Run information | Value |
+| --- | --- |
+| Component | Badge |
+| Version or commit | Unreleased 0.1.0 |
+| Reviewer | |
+| Date | |
+| Browser and version | |
+| Operating system | |
+| Viewport and zoom | |
+| Physical device | |
+| Assistive technology | |
+| Playground route | `/badge` |
 
-Use `pass`, `fail`, `blocked`, or `not applicable` for each completed result.
-Automated evidence does not pre-mark these human judgment checks.
+Scenario order: `01 Overview`, `02 Variants`, `03 Tones`, `04 Sizes`,
+`05 Shapes`, `06 Composition`, `07 Theme`, `08 Stress`
 
-## Step 1 — Hierarchy and recipes
+Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
-Review Overview and the complete variant/tone matrix in light and dark.
-Expected: labels feel passive, every treatment is legible, semantic meaning is
-visible in text, and neither component looks like an action. Result: pass.
-Notes: Overview and the complete light/dark variant and tone matrix remain
-legible, communicate meaning through text, and read as passive labels rather
-than controls.
+## Step 1 — Overview and recipes
 
-## Step 2 — Sizes, shapes, and tag routing
+Setup: Open `/badge` in system appearance.
 
-Compare all sizes and shapes plus the pill Badge and pill Button examples.
-Expected: sizes are distinct and readable; rounded is moderate; pill clearly
-supports a passive tag while the Button remains visibly interactive. Result:
-pass.
-Notes: The revised Sizes, Shapes, and Component routing groups make each intent
-explicit. All three sizes are distinct and readable, rounded and pill remain
-visually distinct, and the passive Badge is clearly differentiated from the
-interactive Button.
+Action: Inspect `01 Overview`; compare all specimens in `02 Variants`,
+`03 Tones`, `04 Sizes`, and `05 Shapes`.
 
-## Step 3 — Inline content and localization
+Expected: The default passive Badge remains soft neutral, small, and rounded.
+Each comparison changes only its named visual dimension. Text stays centered,
+readable, and vertically balanced without implying a control.
 
-Inspect heading, paragraph, number, Arabic, mixed-direction, and long-token
-examples. Expected: baseline alignment is natural, reading order is correct,
-and content wraps without clipping or page overflow. Result: pass.
-Notes: Inline and localized content remains aligned and unclipped. The Arabic
-pill preserves the same symmetric inline padding as the other pill examples.
+Result:
+Notes or issue:
 
-## Step 4 — Notification geometry
+## Step 2 — Content and composition output
 
-Inspect one- and multi-digit counts, `99+`, zero, dot, four placements, and both
-overlaps on rectangular and circular anchors. Expected: one digit/dot is
-circular, longer values become pills, corners mirror in RTL, and indicators do
-not change layout or pointer targets. Result: pass.
-Notes: Corrected circular overlap geometry and inherited RTL placement. The
-playground now presents every LTR placement above its matching RTL placement
-on separate rounded-square anchors, with circular overlap last. All logical
-placement symmetry assertions pass.
+Setup: Open `06 Composition`.
 
-## Step 5 — Keyboard, pointer, and touch
+Action: Inspect representative text, icon/content, native, render, and asChild
+examples and compare each output panel with its live result.
 
-Tab to and activate every notification anchor with keyboard, mouse, and touch.
-Expected: only the owning control receives focus/activation, its target remains
-comfortable, the indicator ignores pointer events, and focus remains visible.
-Result: pass.
-Notes: The playground activation readout confirms keyboard, mouse, and touch
-activation reaches the owning control while the visual indicator remains
-non-focusable and does not intercept pointer input.
+Expected: Content remains concise and aligned. Native, render, and asChild
+hosts match the displayed HTML, preserve Badge classes/slots, and remain
+passive unless the consumer’s host supplies separate semantics.
 
-## Step 6 — Zoom and text spacing
+Result:
+Notes or issue:
 
-Review at 200% and 400% zoom, at 256 CSS pixels where meaningful, then apply
-increased text spacing. Expected: no meaningful text/control is lost, long
-Badge content reflows, and notification counts stay legible. Result: pass.
-Notes: Corrected recipe-cell stretching, safe narrow-content wrapping, and the
-extreme-narrow placement grid. Content remains contained and reachable at 200%
-and 400% zoom after the fixes.
+## Step 3 — Theme and customization
 
-## Step 7 — Screen reader
+Setup: Open `07 Theme`; switch system, light, and dark appearance.
 
-Read the inline contexts and notification anchors with VoiceOver. Expected:
-Badge text follows normal reading order; owning controls announce complete
-count/presence context once; visual indicators add no duplicate announcement;
-changing a count is silent unless the application deliberately supplies a live
-region. Result: pass.
-Notes: VoiceOver announces each owning button's complete accessible label once
-when focused, does not separately announce the visual indicator, and remains
-silent when the non-live manual activation readout changes.
+Action: Inspect scoped examples and compare customization code with its result.
 
-## Step 8 — Direction and preferences
+Expected: Every variant and tone retains readable contrast and a visible
+boundary where required. Customization remains local and preserves Badge
+geometry, content, classes, and slots.
 
-Review RTL/mixed direction, light/dark, forced colors, and reduced motion.
-Expected: logical corners mirror, visible boundaries survive forced colors,
-hierarchy survives dark mode, and no unnecessary motion is present. Result:
-pass.
-Notes: RTL placements mirror their LTR counterparts, light and dark hierarchy
-remains clear, and reduced motion introduces no unexpected behavior. Manual
-forced-colors review is unavailable on this Mac and remains covered by the
-Chromium automated release check.
+Result:
+Notes or issue:
 
-## Step 9 — Customization and public hooks
+## Step 4 — Reflow, RTL, and preferences
 
-Inspect classes, slots, data attributes, semantic/component tokens, and local
-style overrides. Expected: hooks are accurate and local, custom presentation
-does not alter semantics, and both components remain server-safe. Result: pass.
-Notes: Light and dark scoped examples remain contained, the local radius
-override is visible only on Custom hooks, and neighboring badges are unchanged.
+Setup: Open `08 Stress`; test at 390 px, 200%, and 400% zoom, then RTL and
+forced colors.
+
+Action: Inspect long/localized Badge content and surrounding layout.
+
+Expected: Text wraps or sizes without clipping, overlap, or page overflow;
+logical padding remains balanced in RTL, and system colors preserve content and
+boundaries.
+
+Result:
+Notes or issue:
+
+## Step 5 — Assistive technology
+
+Setup: Enable the recorded screen reader.
+
+Action: Navigate Overview and Composition.
+
+Expected: Badge text is read in document order without an invented button,
+status, or landmark role. Decorative icons add no duplicate speech.
+
+Result:
+Notes or issue:
 
 ## Completion
 
-Overall result: pass
-Follow-up issues: None recorded.
-Workbook updated: Badge manual evidence verified July 20, 2026.
+Overall result:
+Follow-up issues:
+Workbook updated:
+
+Mark unavailable assistive-technology environments `blocked`.

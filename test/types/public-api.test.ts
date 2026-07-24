@@ -12,6 +12,7 @@ import {
   AppBar,
   IconButton,
   type AppBarRootProps,
+  type AppBarTone,
   type AppBarVariant,
   type IconButtonProps,
   type IconButtonShape,
@@ -240,15 +241,18 @@ void iconButtonProps;
 void composedIconButton;
 
 const appBarVariant: AppBarVariant = "transparent";
+const appBarTone: AppBarTone = "accent";
 const appBarProps: AppBarRootProps = {
   blurred: true,
   children: createElement(AppBar.Toolbar, null, "Workspace"),
   position: "fixed",
+  tone: appBarTone,
   variant: appBarVariant,
 };
 void AppBar;
 void SubpathAppBar;
 void appBarProps;
+void appBarTone;
 
 const cardVariant: CardVariant = "elevated";
 const cardSize: CardSize = "lg";

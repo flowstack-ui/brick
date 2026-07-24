@@ -1,0 +1,265 @@
+.alert-dialog-page {
+  display: grid;
+  gap: 2.5rem;
+  min-inline-size: 0;
+  padding-block: var(--brick-space-4) 6rem;
+}
+
+.alert-dialog-page > .scenario:first-child {
+  padding-block-start: 0;
+}
+
+.alert-dialog-page .scenario {
+  container-type: inline-size;
+  gap: var(--brick-space-5);
+}
+
+.alert-dialog-page .scenario:has(> .alert-dialog-evidence-stack) {
+  gap: 3rem;
+}
+
+.alert-dialog-page .scenario:target {
+  scroll-margin-block-start: 22rem;
+}
+
+.alert-dialog-page .scenario-heading {
+  gap: var(--brick-space-2);
+}
+
+.alert-dialog-page .scenario-heading p {
+  max-inline-size: none;
+}
+
+.alert-dialog-evidence-stack {
+  display: grid;
+  gap: 3rem;
+}
+
+.alert-dialog-evidence-group {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--brick-space-3);
+  min-inline-size: 0;
+}
+
+.alert-dialog-evidence-group__heading {
+  display: grid;
+  gap: var(--brick-space-1);
+}
+
+.alert-dialog-evidence-group__heading h3,
+.alert-dialog-evidence-group__heading p,
+.alert-dialog-customization h4,
+.alert-dialog-customization p {
+  margin: 0;
+}
+
+.alert-dialog-evidence-group__heading h3 {
+  font-size: var(--brick-font-size-md);
+  letter-spacing: -0.01em;
+}
+
+.alert-dialog-evidence-group__heading p,
+.alert-dialog-customization p {
+  max-inline-size: none;
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+  line-height: var(--brick-font-line-height-body);
+}
+
+.alert-dialog-overview,
+.alert-dialog-specimen-grid,
+.alert-dialog-action-panel,
+.alert-dialog-scoped-appearance-grid,
+.alert-dialog-stress-panel {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  overflow: hidden;
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-border-subtle);
+}
+
+.alert-dialog-overview,
+.alert-dialog-action-panel,
+.alert-dialog-stress-panel {
+  display: flex;
+  min-block-size: 9rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--brick-space-4);
+  padding: var(--brick-space-6);
+  background: var(--brick-color-surface-raised);
+}
+
+.alert-dialog-specimen-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--brick-border-width);
+}
+
+.alert-dialog-specimen-cell {
+  display: grid;
+  min-block-size: 7.5rem;
+  align-content: space-between;
+  gap: var(--brick-space-4);
+  padding: var(--brick-space-4);
+  background: var(--brick-color-surface-raised);
+}
+
+.alert-dialog-specimen-cell > code {
+  color: var(--brick-color-text-secondary);
+  font-family: var(--brick-font-family-mono);
+  font-size: 0.6875rem;
+}
+
+.alert-dialog-specimen-cell__preview {
+  display: flex;
+  min-inline-size: 0;
+  min-block-size: 3.75rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert-dialog-event-log {
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+}
+
+.alert-dialog-scoped-appearance-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--brick-border-width);
+}
+
+.alert-dialog-appearance-panel {
+  display: grid;
+  min-block-size: 10rem;
+  place-items: center;
+  align-content: center;
+  gap: var(--brick-space-5);
+  min-inline-size: 0;
+  padding: var(--brick-space-5);
+  background: var(--brick-color-surface-raised);
+  color: var(--brick-color-text-primary);
+}
+
+.alert-dialog-appearance-panel > span {
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+}
+
+.alert-dialog-customization-list {
+  display: grid;
+  gap: var(--brick-space-4);
+}
+
+.alert-dialog-customization {
+  display: grid;
+  gap: var(--brick-space-5);
+  min-inline-size: 0;
+  padding: var(--brick-space-5);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-raised);
+}
+
+.alert-dialog-customization > div:first-child {
+  display: grid;
+  align-content: start;
+  gap: var(--brick-space-2);
+  min-inline-size: 0;
+}
+
+.alert-dialog-customization pre {
+  max-inline-size: 100%;
+  margin: var(--brick-space-2) 0 0;
+  padding: var(--brick-space-3);
+  overflow-x: auto;
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-subtle);
+  color: var(--brick-color-text-primary);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+.alert-dialog-customization pre:focus-visible {
+  outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+  outline-offset: var(--brick-border-focus-offset);
+}
+
+.alert-dialog-customization__preview {
+  display: grid;
+  min-inline-size: 0;
+  min-block-size: 12rem;
+  place-items: center;
+  padding: var(--brick-space-4);
+  border: var(--brick-border-width) dashed var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-canvas);
+}
+
+.brick-alert-dialog-content.dashed-alert-dialog {
+  border-style: dashed;
+}
+
+.alert-dialog-long-copy {
+  display: grid;
+  gap: var(--brick-space-4);
+}
+
+.alert-dialog-long-copy p {
+  margin: 0;
+}
+
+@container (min-width: 34rem) {
+  .alert-dialog-specimen-grid--two,
+  .alert-dialog-specimen-grid--four,
+  .alert-dialog-specimen-grid--six {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 48rem) {
+  .alert-dialog-specimen-grid--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .alert-dialog-scoped-appearance-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .alert-dialog-customization {
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    align-items: stretch;
+  }
+}
+
+@container (min-width: 68rem) {
+  .alert-dialog-specimen-grid--four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .alert-dialog-specimen-grid--six {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 84rem) {
+  .alert-dialog-specimen-grid--six {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 28rem) {
+  .alert-dialog-overview,
+  .alert-dialog-action-panel,
+  .alert-dialog-specimen-cell,
+  .alert-dialog-appearance-panel,
+  .alert-dialog-customization,
+  .alert-dialog-stress-panel {
+    padding: var(--brick-space-4);
+  }
+}

@@ -27,6 +27,7 @@ npm run test:css
 npm run build:playground
 npm run test:browser
 npm run test:browser:release
+npm run test:visual
 npm run test:consumer
 npm run verify:consumer
 npm run pack:check
@@ -68,7 +69,8 @@ imports. Clean React 18 and React 19 consumers must resolve the built package.
 ## Browser and visual tests
 
 Each component owns
-`playground/tests/components/<component>/behavior.spec.ts`. Use roles, labels,
+`playground/tests/components/<component>/behavior.spec.ts` and
+`playground/tests/components/<component>/visual.spec.ts`. Use roles, labels,
 and stable scenario identifiers. Cross-component behavior belongs in
 `playground/tests/integration/`. Avoid arbitrary timeouts and implementation
 selectors. During development, run:
@@ -89,9 +91,9 @@ mobile/RTL, preferences, and regression-prone composition. Use
 `test:visual:update` only for an approved visual change, inspect every diff,
 and never update all snapshots merely to clear a failure.
 
-The existing visual suite and snapshots remain centralized until the
-playground scenario and manual-review layout is approved. Do not relocate or
-rewrite them as part of behavior-test organization.
+Snapshots live beside the owning `visual.spec.ts`. Use `npm run test:visual`
+to verify every component-owned baseline and `npm run test:visual:update` only
+to regenerate an intentional, reviewed change.
 
 ## Layer summary
 
@@ -107,8 +109,8 @@ The test layers have distinct responsibilities:
 - Manual protocols record visual and accessibility judgments that automation
   cannot prove.
 
-One component owns one primary test and browser spec. Cross-component
-integration specs are additional evidence and never replace component-owned
-files. `npm run test:ownership` fails when any exported component is missing
-its unit, type, or browser owner. See
+One component owns unit, type, browser behavior, and visual specs.
+Cross-component integration specs are additional evidence and never replace
+component-owned files. `npm run test:ownership` fails when any exported
+component is missing any required owner. See
 [Component Workstream](../contributing/component-workstream.md).

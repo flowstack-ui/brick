@@ -1,162 +1,183 @@
 # Button manual-test protocol
 
-Component: Button
-Version or commit: Unreleased 0.1.0
-Reviewer: Project owner
-Date: 2026-07-16
-Playground route: `/button`
+| Run information | Value |
+| --- | --- |
+| Component | Button |
+| Version or commit | Unreleased 0.1.0 |
+| Reviewer | |
+| Date | |
+| Browser and version | |
+| Operating system | |
+| Viewport and zoom | |
+| Physical device | |
+| Assistive technology | |
+| Playground route | `/button` |
+Scenario order: `01 Overview`, `02 Variants`, `03 Tones`, `04 Sizes`,
+`05 Shape`, `06 Links`, `07 States`, `08 Theme`, `09 Stress`
 
-Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
+Use `pass`, `fail`, `blocked`, or `not applicable` for every result. Record the
+browser, operating system, viewport, zoom level, assistive technology, and
+physical device used for the run. A result from an earlier playground revision
+does not automatically apply after a route or scenario change.
 
-## Step 1 — Overview and hierarchy
+## Step 1 — Overview
 
-Setup: Open `/button` at 390 × 844 with system appearance.
+Setup: Open `/button` at the default review viewport with system appearance and
+LTR direction.
 
-Action: Inspect Overview, Variants, and Tones.
+Action: Inspect the Overview specimen, activate `Publish project` once, and
+observe the status message.
 
-Expected: Default action is highest emphasis; variants form a clear hierarchy;
-status tones retain the same anatomy; nothing scrolls horizontally.
+Expected: The canonical Button is a solid accent, medium, rounded action. It
+has a clear name and focus treatment, activates once, and the status announces
+`Pressed 1 time` without moving focus.
 
-Result: pass
-Notes or issue: Mobile hierarchy and horizontal reflow passed. Shape and width examples were clarified during review.
+Result:
+Notes or issue:
 
-## Step 2 — Keyboard and focus
+## Step 2 — Variants and tones
 
-Setup: Reload the route.
+Setup: Open `02 Variants`, then `03 Tones`.
 
-Action: Tab through the page and activate representative actions with Enter and Space.
+Action: Compare the four variants. In Tones, review every neutral, accent,
+info, success, warning, and danger tone inside each variant group.
 
-Expected: Focus order is logical, every focus ring is obvious, links use native
-link activation, buttons use native button activation, and the counter changes once.
+Expected: Variants change emphasis and boundary only. Tones change semantic
+color treatment without changing Button anatomy, size, label, or interaction.
+No comparison introduces horizontal scrolling or inconsistent specimen width.
 
-Result: pass
-Notes or issue: Enter and Space activate the action once. Active links retain native Enter activation; Space scrolls without navigation. The inactive anchor remains focusable and cannot navigate.
+Result:
+Notes or issue:
 
-## Step 3 — Pointer, touch, and target comfort
+## Step 3 — Sizes, shape, and width
 
-Setup: Review once with mouse and once with touch emulation.
+Setup: Open `04 Sizes` and `05 Shape`.
 
-Action: Hover, press, and tap each variant and representative size.
+Action: Compare xs, sm, md, lg, and xl. Then compare sharp, rounded, and pill;
+finally resize the browser around the Full-width behavior example.
 
-Expected: Hover appears only for mouse capability, pressed feedback remains,
-touch does not retain false hover, and md or larger targets feel comfortable.
+Expected: Sizes change coordinated control geometry and typography only. Shape
+changes corner geometry only. `fullWidth` fills its specimen container and
+does not overflow or change the Button’s intrinsic height unexpectedly.
 
-Result: pass
-Notes or issue: Real-phone touch review passed for representative variants and sizes without retained hover or pressed state.
+Result:
+Notes or issue:
 
-## Step 4 — Disabled and loading
+## Step 4 — Links and composition output
 
-Setup: Find Content and states.
+Setup: Open `06 Links`.
 
-Action: Try Disabled and Saving changes, then focus the loading Button.
+Action: Inspect the three rendered-output panels: `href Button HTML`, `asChild
+Button HTML`, and `render Button HTML`. Activate the asChild preview with Enter.
 
-Expected: Neither activates; loading stays focusable, preserves its dimensions
-and accessible name, and shows one centered spinner.
+Expected: Each live preview is paired with the actual DOM output on the right.
+All three results are native anchors with the expected `href`, Button classes,
+slots, and accessible content. The asChild link scrolls to `07 States`; no
+result becomes an ARIA button unexpectedly.
 
-Result: pass
-Notes or issue: Disabled is skipped by normal tab order. Loading remains focusable with one centered spinner and stable dimensions.
+Result:
+Notes or issue:
 
-## Step 5 — Native forms
+## Step 5 — Content and interaction states
 
-Setup: Find the Project name form.
+Setup: Open `07 States`.
 
-Action: Edit, submit, edit again, and reset.
+Action: Inspect start icon, end icon, disabled, and loading specimens. Focus
+the loading Button and attempt activation.
 
-Expected: Submit follows native behavior without navigation, Reset restores the
-initial value, and normal Buttons do not accidentally submit.
+Expected: Icons are decorative unless their surrounding content supplies the
+meaning. Disabled cannot activate and preserves the default medium geometry.
+Loading remains focusable, preserves its accessible name and dimensions, blocks
+repeat activation, and shows one centered spinner.
 
-Result: pass
-Notes or issue: Submit increments once without navigation; Reset restores the initial field value.
+Result:
+Notes or issue:
 
-## Step 6 — Links and composition
+## Step 6 — Native form behavior
 
-Setup: Find Links and composition.
+Setup: Stay in `07 States` and locate `Native form behavior`.
 
-Action: Inspect and activate all four examples with pointer and keyboard.
+Action: Edit `Project name`, submit with `Save form`, edit again, then activate
+`Reset`.
 
-Expected: Native, composed, and rendered links remain links. Inactive anchor has
-no destination and never navigates. No path becomes an ARIA button unexpectedly.
+Expected: Submit uses native `type="submit"` behavior and updates the local
+status without navigation. Reset uses native `type="reset"` behavior and
+restores `Mobile storefront`. The label is aligned with its input and ordinary
+Buttons do not submit accidentally.
 
-Result: pass
-Notes or issue: Native, composed, and rendered anchors navigate as links. The inactive anchor has no live destination.
+Result:
+Notes or issue:
 
-## Step 7 — Appearance and contrast
+## Step 7 — Appearance and customization
 
-Setup: Switch light, dark, and system, then inspect both scoped panels.
+Setup: Open `08 Theme`. Review the page appearance controls and both scoped
+light/dark panels.
 
-Action: Review solid tones and representative soft, outline, focus, disabled,
-and loading states.
+Action: Switch system, light, and dark appearance. Inspect component CSS
+properties, consumer hooks, class/style overrides, and the custom data slot.
 
-Expected: Labels remain readable, hierarchy stays consistent, scoped appearance
-is local, and every state retains its boundary and focus.
+Expected: Appearance controls affect the intended scope. Text, boundaries,
+focus, disabled, and loading states remain readable. Customization changes only
+the authored Button, preserves `.brick-button`, and the dashed-action preview
+matches its displayed code.
 
-Result: pass
-Notes or issue: Light, dark, system, and both scoped panels passed. Appearance-control spacing was improved during review.
+Result:
+Notes or issue:
 
-## Step 8 — Forced colors and reduced motion
+## Step 8 — Constrained width and RTL
 
-Setup: Enable each preference in a separate run.
+Setup: Open `09 Stress`. Review the constrained-width panel at mobile width and
+the genuine RTL panel with `dir="rtl"`.
 
-Action: Focus and activate representative Buttons and inspect loading.
+Action: Test at 390 px, 200% zoom, and 400% zoom where available. Inspect the
+long localized label, then focus the RTL Button and activate it.
 
-Expected: System colors preserve text, boundary, state, and focus. Reduced
-motion removes transition timing and slows loading motion without hiding status.
+Expected: The long label wraps without clipping, two-dimensional scrolling, or
+lost content. The Button inherits RTL direction, logical spacing is correct,
+and the directional icon remains semantically appropriate.
 
-Result: pass
-Notes or issue: Reduced motion removes the subtle color transitions and slows the loading spinner without hiding status. Forced colors was not applicable on the macOS/iPhone review environment and remains a later Windows check.
+Result:
+Notes or issue:
 
-## Step 9 — Reflow and localization
+## Step 9 — Keyboard, pointer, touch, and screen reader
 
-Setup: Use 200% and 400% zoom at constrained width.
+Setup: Reload `/button`. Use a keyboard, then a mouse or touch device. Enable
+the selected screen reader when available.
 
-Action: Inspect every section, especially the long full-width label.
+Action: Tab through the page. Activate representative Buttons with Enter and
+Space, hover and press with a mouse, tap representative sizes, and inspect
+Overview, loading, disabled, links, and form controls with the screen reader.
 
-Expected: Labels wrap, Buttons grow, content remains operable, and there is no
-two-dimensional scrolling or lost content.
+Expected: Focus order and focus rings are logical and visible. Enter and Space
+perform each action once. Touch does not retain false hover and targets are
+comfortable. Names, roles, unavailable/busy states, decorative icons, form
+semantics, and status announcements are correct without duplicate speech.
 
-Result: pass
-Notes or issue: Passed at 200% and 400% after correcting Button border-box sizing, intrinsic shrinking, playground grid containment, and narrow-column wrapping. No horizontal scrolling or clipped stress content remains.
+Result:
+Notes or issue:
 
-## Step 10 — RTL and icon order
+## Step 10 — Appearance and preferences
 
-Setup: Find the RTL phone frame and the start/end icon examples.
+Setup: Review the page in light, dark, and system appearance. Then run separate
+reduced-motion and forced-colors checks.
 
-Action: Inspect and focus each Button.
+Action: Focus and activate representative variants, disabled/loading states,
+and the customized Button in each applicable mode.
 
-Expected: Logical spacing and icon order follow direction. Decorative icons add
-no announced text.
+Expected: Text, boundaries, states, and focus remain visible in every mode.
+Scoped appearance affects only its panel. Reduced motion removes nonessential
+transitions without hiding loading status. Forced colors preserves usable
+system-color contrast and focus.
 
-Result: pass
-Notes or issue: Logical icon order passed. The RTL example now supplies the appropriate left-pointing directional arrow explicitly.
-
-## Step 11 — Customization hooks
-
-Setup: Find Appearance and customization.
-
-Action: Inspect token, class, style, and custom-slot examples in DevTools.
-
-Expected: Overrides stay local, `.brick-button` remains, the custom slot does not
-break styles, and visual attributes match their props.
-
-Result: pass
-Notes or issue: Token, class, style, and slot examples remain local and preserve interaction and appearance behavior.
-
-## Step 12 — Screen-reader spot check
-
-Setup: Enable the selected screen reader.
-
-Action: Navigate overview, loading, disabled, link, and form examples.
-
-Expected: Names, roles, busy and unavailable states match intent; decorative
-content is silent; live press feedback announces without moving focus.
-
-Result: pass
-Notes or issue: Names, roles, unavailable/busy states, decorative icons, and focus retention passed with VoiceOver. The press notification now uses one atomic status region and announces once.
+Result:
+Notes or issue:
 
 ## Completion
 
-Overall result: pass
-Follow-up issues: A real-Windows High Contrast review remains useful optional
-compatibility evidence. The reviewed Chromium forced-colors baseline,
-functional forced-colors checks, and full desktop/mobile browser matrix pass.
-Workbook updated: yes
+Overall result:
+Follow-up issues:
+Workbook updated:
+
+Use `blocked` when the required device, browser, operating system, or assistive
+technology was unavailable. Use `not applicable` only when the check does not
+apply to the tested environment or Button contract.

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added an independent controlled-comparison reference page covering sizes,
+  anatomy, placement, state/dismissal, Anchor/nesting, scoped portals,
+  customization, responsive stress, and RTL.
+- Kept persistent appearance/customization previews below the sticky review
+  header and moved specimen canvases behind the default raised surface for
+  clearer visual separation.
 - Completed the 13-step owner verification and package gate.
 - Upgraded to Atom 0.6.10 so touch and pen scrolling keeps Popover open while
   genuine outside taps retain dismissal behavior.

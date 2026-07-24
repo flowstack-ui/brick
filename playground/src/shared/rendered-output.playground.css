@@ -1,0 +1,72 @@
+.playground-output-stack {
+  display: grid;
+  gap: var(--brick-space-5);
+  min-inline-size: 0;
+}
+
+.playground-output-evidence {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--brick-border-width);
+  overflow: hidden;
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-border-subtle);
+}
+
+.playground-output-evidence__preview,
+.playground-output-evidence__output {
+  min-inline-size: 0;
+  padding: var(--brick-space-5);
+  background: var(--brick-color-surface-raised);
+}
+
+.playground-output-evidence__preview {
+  display: grid;
+  min-block-size: 10rem;
+  place-items: center;
+}
+
+.playground-output-evidence__preview
+  > :where(
+    .brick-app-bar,
+    .brick-checkbox-group,
+    .brick-field,
+    .brick-fieldset,
+    .brick-form
+  ) {
+  inline-size: min(100%, 30rem);
+}
+
+.playground-output-evidence__output {
+  display: grid;
+  align-content: start;
+  gap: var(--brick-space-3);
+}
+
+.playground-output-evidence__output > p {
+  margin: 0;
+  color: var(--brick-color-text-secondary);
+  font-family: var(--brick-font-family-mono);
+  font-size: 0.6875rem;
+}
+
+.playground-output-evidence__output pre {
+  max-inline-size: 100%;
+  max-block-size: 14rem;
+  margin: 0;
+  padding: var(--brick-space-3);
+  overflow: auto;
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-subtle);
+  font-size: 0.75rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+@media (min-width: 48rem) {
+  .playground-output-evidence {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,152 +1,110 @@
 # Card manual-test protocol
 
-Component: Card
-Version or commit: Unreleased 0.1.0
-Reviewer: Product owner
-Date: July 16, 2026
-Playground route: `/card`
+| Run information | Value |
+| --- | --- |
+| Component | Card |
+| Version or commit | Unreleased 0.1.0 |
+| Reviewer | |
+| Date | |
+| Browser and version | |
+| Operating system | |
+| Viewport and zoom | |
+| Physical device | |
+| Assistive technology | |
+| Playground route | `/card` |
 
-Use `pass`, `fail`, `blocked`, or `not applicable` for every result. Record a
-follow-up issue for each failure or blocker.
+Scenario order: `01 Overview`, `02 Variants`, `03 Sizes`, `04 Anatomy`,
+`05 Semantics`, `06 Composition`, `07 Theme`, `08 Stress`
 
-## Step 1 — Overview and hierarchy
+Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
-Setup: Open `/card` at 390 × 844 with system appearance.
+## Step 1 — Overview, variants, and sizes
 
-Action: Inspect Overview, Variants, and Sizes without interacting.
+Setup: Open `/card` in system appearance.
 
-Expected: Outline is the clear default; elevated and subtle communicate
-different prominence; all sizes remain readable; nothing scrolls horizontally.
+Action: Inspect `01 Overview`; compare outline, elevated, and subtle in
+`02 Variants`, then the complete scale in `03 Sizes`.
 
-Result: pass
-Notes or issue: The Sizes comparison was corrected to preserve each Card's
-natural height before approval.
+Expected: The Card surface is clearly distinguishable from the specimen
+background. Variants change prominence only. Sizes change coordinated padding
+and title scale without changing content order or semantics.
 
-## Step 2 — Anatomy and source order
+Result:
+Notes or issue:
 
-Setup: Find Anatomy and the canonical Overview Card.
+## Step 2 — Anatomy and semantic elements
 
-Action: Inspect each partial composition and tab through the Overview Card.
+Setup: Open `04 Anatomy` and `05 Semantics`.
 
-Expected: Omitted parts produce no empty regions; title and description precede
-the trailing action in reading order; Root itself is not a focus stop.
+Action: Compare the optional Header, Media, Content, and Footer arrangements,
+then inspect every supported Root and Title element in browser accessibility
+tools or the element inspector.
 
-Result: pass
-Notes or issue: None.
+Expected: Only authored parts appear; spacing remains coherent when parts are
+omitted. Root and Title use the elements shown by the example, preserve heading
+order, and do not make the whole Card interactive.
 
-## Step 3 — Explicit actions and focus
+Result:
+Notes or issue:
 
-Setup: Find Overview and Composition.
+## Step 3 — Composition and interaction
 
-Action: Operate the nested Buttons and single-action link using Tab, Enter,
-Space where native, pointer, and touch.
+Setup: Open `06 Composition`.
 
-Expected: Each real control owns one visible focus ring and native activation.
-Static Cards never gain a role, cursor, focus, hover, or press state.
+Action: Tab through Buttons, Icon Buttons, and links using keyboard, then use
+pointer and touch where available.
 
-Result: pass
-Notes or issue: The single-action link wrapper was corrected so its focus ring
-follows the Card's natural height.
+Expected: Only explicit controls receive focus and activate once. Media remains
+noninteractive unless authored otherwise. Card supplies layout and surface
+only; child controls retain their native names and roles.
 
-## Step 4 — Light, dark, and scoped appearance
+Result:
+Notes or issue:
 
-Setup: Switch system, light, and dark, then inspect both scoped Cards.
+## Step 4 — Theme and customization
 
-Action: Compare all variants and nested controls in every appearance.
+Setup: Open `07 Theme`; switch system, light, and dark appearance.
 
-Expected: Surface hierarchy, boundaries, text, and nested control contrast stay
-clear; scoped appearance remains local.
+Action: Inspect both scoped panels and compare the customization code with its
+live Card.
 
-Result: pass
-Notes or issue: Dark elevated surfaces were strengthened with a subtle raised
-surface difference so elevation does not depend on shadow alone.
+Expected: Card boundaries remain visible against the test background in every
+appearance. Customization stays local and preserves anatomy, content contrast,
+classes, slots, and child-control focus.
 
-## Step 5 — Forced colors and reduced motion
+Result:
+Notes or issue:
 
-Setup: Enable forced colors and reduced motion separately where supported.
+## Step 5 — Reflow, RTL, and preferences
 
-Action: Inspect every variant and focus each nested control.
+Setup: Open `08 Stress`; test at 390 px, 200%, and 400% zoom and in RTL.
 
-Expected: All variants retain a system-color boundary, elevated does not rely
-on shadow, focus remains visible, and Card adds no motion.
+Action: Read long content, operate all child actions, and inspect forced colors
+and reduced motion.
 
-Result: pass
-Notes or issue: Reduced motion passed manually on macOS. Forced colors remains
-covered by the passing automated Chromium evidence because macOS has no native
-Windows forced-colors mode.
+Expected: Content and Footer actions wrap without clipping or horizontal page
+scrolling, media remains contained, logical order is correct in RTL, static
+boundaries and focus remain visible, and Card adds no unnecessary motion.
 
-## Step 6 — Reflow and zoom
+Result:
+Notes or issue:
 
-Setup: Review at 200% and 400% zoom, then constrain the viewport to 256 CSS
-pixels.
+## Step 6 — Screen reader
 
-Action: Inspect every section, especially Mobile and stress.
+Setup: Enable the recorded screen reader.
 
-Expected: No document-level horizontal scrolling, clipped content, overlapping
-regions, hidden focus rings, or inaccessible actions.
+Action: Navigate Overview, Semantics, and Composition.
 
-Result: pass
-Notes or issue: Standard 400% reflow passed with no clipping or horizontal
-scrolling. A reduced-width browser also remained usable at 500%; presentation
-below the required effective viewport width was treated as exploratory only.
+Expected: Heading levels and explicit child controls announce correctly. The
+Card itself adds no invented landmark, group, or click action.
 
-## Step 7 — Long content and localization
-
-Setup: Find the long Latin and Arabic stress Cards.
-
-Action: Inspect long titles, unbroken references, action placement, and wrapping
-footer controls at narrow and wide widths.
-
-Expected: Content wraps inside Card, Footer wraps rather than clips, and large
-actions do not collide with header text.
-
-Result: pass
-Notes or issue: The 20rem stress frame is intentionally constrained and Card
-uses the width supplied by its surrounding layout.
-
-## Step 8 — RTL
-
-Setup: Find the right-to-left stress Card.
-
-Action: Read and tab through the complete Card.
-
-Expected: Logical inset and inline-end action placement mirror correctly while
-DOM, reading, and focus order remain meaningful.
-
-Result: pass
-Notes or issue: None.
-
-## Step 9 — Customization hooks
-
-Setup: Find Appearance and customization and open developer tools.
-
-Action: Inspect the custom Card and header slot, class, inline component tokens,
-and computed variant/size attributes.
-
-Expected: Stable `.brick-card*` classes remain; custom slots do not remove
-styles; spacing, radius, and shadow overrides stay local.
-
-Result: pass
-Notes or issue: None.
-
-## Step 10 — Screen-reader structure
-
-Setup: Enable the selected screen reader.
-
-Action: Navigate the Overview article, headings, supporting text, explicit
-actions, partial anatomy, and single-action link.
-
-Expected: Native article/heading/link/button semantics match the markup; Card
-adds no invented widget announcement or focus stop; source order is coherent.
-
-Result: pass
-Notes or issue: VoiceOver document navigation confirmed native article,
-heading, button, and link semantics without an invented Card widget.
+Result:
+Notes or issue:
 
 ## Completion
 
-Overall result: pass
-Follow-up issues: None. All findings discovered during the run were corrected
-and retested before completion.
-Workbook updated: Yes — Card requirements and package and Consumer gates were
-recorded and visually verified on July 17, 2026.
+Overall result:
+Follow-up issues:
+Workbook updated:
+
+Mark unavailable physical or assistive-technology environments `blocked`.

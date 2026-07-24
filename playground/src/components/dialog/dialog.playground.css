@@ -1,0 +1,317 @@
+.dialog-page {
+  display: grid;
+  gap: 2.5rem;
+  min-inline-size: 0;
+  padding-block: var(--brick-space-4) 6rem;
+}
+
+.dialog-page > .scenario:first-child {
+  padding-block-start: 0;
+}
+
+.dialog-page .scenario {
+  container-type: inline-size;
+  gap: var(--brick-space-5);
+}
+
+.dialog-page .scenario:has(> .dialog-evidence-group),
+.dialog-page .scenario:has(> .dialog-evidence-stack) {
+  gap: 3rem;
+}
+
+.dialog-page .scenario:target {
+  scroll-margin-block-start: 22rem;
+}
+
+.dialog-page .scenario-heading {
+  gap: var(--brick-space-2);
+}
+
+.dialog-page .scenario-heading p {
+  max-inline-size: none;
+}
+
+.dialog-evidence-stack {
+  display: grid;
+  gap: 3rem;
+}
+
+.dialog-evidence-group {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--brick-space-3);
+  min-inline-size: 0;
+}
+
+.dialog-evidence-group__heading {
+  display: grid;
+  gap: var(--brick-space-1);
+}
+
+.dialog-evidence-group__heading h3,
+.dialog-evidence-group__heading p,
+.dialog-customization h4,
+.dialog-customization p {
+  margin: 0;
+}
+
+.dialog-evidence-group__heading h3 {
+  font-size: var(--brick-font-size-md);
+  letter-spacing: -0.01em;
+}
+
+.dialog-evidence-group__heading p,
+.dialog-customization p {
+  max-inline-size: none;
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+  line-height: var(--brick-font-line-height-body);
+}
+
+.dialog-overview,
+.dialog-specimen-grid,
+.dialog-action-panel,
+.dialog-scoped-appearance-grid,
+.dialog-stress-panel {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  overflow: hidden;
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-border-subtle);
+}
+
+.dialog-overview,
+.dialog-action-panel,
+.dialog-stress-panel {
+  display: flex;
+  min-block-size: 9rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--brick-space-4);
+  padding: var(--brick-space-6);
+  background: var(--brick-color-surface-raised);
+}
+
+.dialog-profile-form,
+.dialog-profile-form .brick-field {
+  display: grid;
+}
+
+.dialog-profile-form {
+  gap: var(--brick-space-4);
+}
+
+.dialog-profile-form .brick-field {
+  gap: var(--brick-space-2);
+}
+
+.dialog-profile-form input {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: 2.75rem;
+  padding-inline: var(--brick-space-3);
+  border: var(--brick-border-width) solid var(--brick-color-border-default);
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-base);
+  color: var(--brick-color-text-primary);
+  font: inherit;
+}
+
+.dialog-profile-form input:focus-visible {
+  outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+  outline-offset: var(--brick-border-focus-offset);
+}
+
+.dialog-specimen-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--brick-border-width);
+}
+
+.dialog-specimen-cell {
+  display: grid;
+  min-block-size: 7.5rem;
+  align-content: space-between;
+  gap: var(--brick-space-4);
+  padding: var(--brick-space-4);
+  background: var(--brick-color-surface-raised);
+}
+
+.dialog-specimen-cell > code {
+  color: var(--brick-color-text-secondary);
+  font-family: var(--brick-font-family-mono);
+  font-size: 0.6875rem;
+}
+
+.dialog-specimen-cell__preview {
+  display: flex;
+  min-inline-size: 0;
+  min-block-size: 3.75rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog-event-log {
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+}
+
+.dialog-branch-panel {
+  position: fixed;
+  z-index: calc(var(--brick-layer-overlay) + 2);
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  display: grid;
+  inline-size: min(20rem, calc(100vi - 3rem));
+  gap: var(--brick-space-3);
+  padding: var(--brick-space-5);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-overlay);
+  background: var(--brick-color-surface-overlay);
+  box-shadow: 0 1.5rem 4rem color-mix(
+    in srgb,
+    var(--brick-color-shadow),
+    transparent 18%
+  );
+  color: var(--brick-color-text-primary);
+  transform: translate(-50%, -50%);
+}
+
+.dialog-branch-panel p {
+  margin: 0;
+  color: var(--brick-color-text-secondary);
+}
+
+.dialog-scoped-appearance-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--brick-border-width);
+}
+
+.dialog-appearance-panel {
+  display: grid;
+  min-block-size: 10rem;
+  place-items: center;
+  align-content: center;
+  gap: var(--brick-space-5);
+  min-inline-size: 0;
+  padding: var(--brick-space-5);
+  background: var(--brick-color-surface-raised);
+  color: var(--brick-color-text-primary);
+}
+
+.dialog-appearance-panel > span {
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+}
+
+.dialog-customization-list {
+  display: grid;
+  gap: var(--brick-space-4);
+}
+
+.dialog-customization {
+  display: grid;
+  gap: var(--brick-space-5);
+  min-inline-size: 0;
+  padding: var(--brick-space-5);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-raised);
+}
+
+.dialog-customization > div:first-child {
+  display: grid;
+  align-content: start;
+  gap: var(--brick-space-2);
+  min-inline-size: 0;
+}
+
+.dialog-customization pre {
+  max-inline-size: 100%;
+  margin: var(--brick-space-2) 0 0;
+  padding: var(--brick-space-3);
+  overflow-x: auto;
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-subtle);
+  color: var(--brick-color-text-primary);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+.dialog-customization pre:focus-visible {
+  outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+  outline-offset: var(--brick-border-focus-offset);
+}
+
+.dialog-customization__preview {
+  display: grid;
+  min-inline-size: 0;
+  min-block-size: 12rem;
+  place-items: center;
+  padding: var(--brick-space-4);
+  border: var(--brick-border-width) dashed var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-canvas);
+}
+
+.brick-dialog-content.dashed-dialog {
+  border-style: dashed;
+}
+
+.dialog-long-copy {
+  display: grid;
+  gap: var(--brick-space-4);
+}
+
+.dialog-long-copy p {
+  margin: 0;
+}
+
+@container (min-width: 34rem) {
+  .dialog-specimen-grid--two,
+  .dialog-specimen-grid--six {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 48rem) {
+  .dialog-specimen-grid--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .dialog-scoped-appearance-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dialog-customization {
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    align-items: stretch;
+  }
+}
+
+@container (min-width: 68rem) {
+  .dialog-specimen-grid--six {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 84rem) {
+  .dialog-specimen-grid--six {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 28rem) {
+  .dialog-overview,
+  .dialog-action-panel,
+  .dialog-specimen-cell,
+  .dialog-appearance-panel,
+  .dialog-customization,
+  .dialog-stress-panel {
+    padding: var(--brick-space-4);
+  }
+}

@@ -1,145 +1,110 @@
 # Dialog manual-test protocol
 
-Component: Dialog
-Version or commit: Unreleased 0.1.0
-Reviewer: Product owner
-Date: July 17, 2026
-Playground route: `/dialog`
+| Run information | Value |
+| --- | --- |
+| Component | Dialog |
+| Version or commit | Unreleased 0.1.0 |
+| Reviewer | |
+| Date | |
+| Browser and version | |
+| Operating system | |
+| Viewport and zoom | |
+| Physical device | |
+| Assistive technology | |
+| Playground route | `/dialog` |
 
-Use `pass`, `fail`, `blocked`, or `not applicable` for every result. Record a
-follow-up issue for each failure or blocker.
+Scenario order: `01 Overview`, `02 Sizes`, `03 Anatomy`, `04 Semantics`,
+`05 States`, `06 Composition`, `07 Theme`, `08 Customization`, `09 Stress`
 
-## Step 1 — Surface and size
+Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
-Setup: Open `/dialog` at 390 × 844 with system appearance.
+## Step 1 — Overview and focus lifecycle
 
-Action: Open Overview, then each Dialog under Sizes.
+Setup: Open `/dialog` and `01 Overview`.
 
-Expected: The surface is centered with a clear scrim and border; sm, md, and lg
-change preferred width without changing behavior; no panel crosses the viewport.
+Action: Open the Dialog with keyboard, inspect initial focus, Tab and
+Shift+Tab through it, close with its visible action, reopen, then press Escape.
 
-Result: pass
-Notes or issue: Overview and all three sizes remain centered, bounded, and
-operable at the reviewed phone viewport.
+Expected: The modal is named and described, focus enters a safe control, stays
+inside, closes once, and returns to the trigger. Background content cannot be
+operated while open.
 
-## Step 2 — Keyboard and focus restoration
+Result:
+Notes or issue:
 
-Setup: Open States and dismissal with a keyboard.
+## Step 2 — Sizes, anatomy, and headings
 
-Action: Tab forward and backward through every control, then close with Escape.
+Setup: Review `02 Sizes`, `03 Anatomy`, and `04 Semantics`.
 
-Expected: Focus remains in the top Dialog, follows source order, and returns to
-the opening Trigger. The page behind becomes operable immediately after exit.
+Action: Open every size and anatomy example; inspect optional parts and every
+Title heading level.
 
-Result: pass
-Notes or issue: Forward and reverse traversal remain contained; Escape closes
-once, restores the Trigger, and leaves the page operable.
+Expected: Sizes change preferred measure and inset only. Only authored Header,
+Body, Footer, Close, Title, and Description parts appear. Title uses the
+labeled heading level and relationships remain correct.
 
-## Step 3 — Pointer, touch, and dismissal policy
+Result:
+Notes or issue:
 
-Setup: Open States and dismissal using mouse, pen if available, and touch.
+## Step 3 — States, dismissal, and composition
 
-Action: Close separately with the scrim, Cancel, Save, and Escape.
+Setup: Open `05 States` and `06 Composition`.
 
-Expected: Only an exact scrim target dismisses; every method closes once; the
-event log shows the matching reason; touch opening does not summon a keyboard.
+Action: Test controlled/open states, disabled dismissal policies, outside
+interaction, nested modal/portalled content, and all composition examples.
 
-Result: pass
-Notes or issue: Overlay, Cancel, Save, and Escape dismissal pass with matching
-event evidence; clicks inside Content do not dismiss.
+Expected: Each policy behaves as labeled; unavailable dismissal paths do
+nothing. The top layer owns focus and Escape, nested layers restore focus in
+order, and composed parts preserve one modal boundary and correct semantics.
 
-## Step 4 — Nested ownership
+Result:
+Notes or issue:
 
-Setup: Open the parent and then the nested Dialog.
+## Step 4 — Theme and customization
 
-Action: Tab in the child, press Escape once, then continue in the parent.
+Setup: Open `07 Theme` and `08 Customization`.
 
-Expected: The child alone owns focus and Escape while open; closing it returns
-to the parent; a second Escape closes the parent and restores its Trigger.
+Action: Open each scoped Dialog in system, light, and dark appearance; compare
+customization code with the live surface.
 
-Result: pass
-Notes or issue: The child owns focus and Escape, returns control to the parent,
-and closing the parent restores the page without retained `inert` state.
+Expected: Portal content uses its intended scope. Surface, overlay, text,
+focus, and controls remain readable. Customization stays local and preserves
+modal semantics, focus lifecycle, anatomy, classes, and slots.
 
-## Step 5 — Long Body and virtual keyboard
+Result:
+Notes or issue:
 
-Setup: Open Long content and mobile at a phone viewport, then repeat with the
-on-screen keyboard visible on a real phone.
+## Step 5 — Reflow, RTL, touch, and preferences
 
-Action: Scroll from the first through final section and operate Footer actions.
+Setup: Open `09 Stress`; test at 390 px, 200%, and 400% zoom, RTL, reduced
+motion, and forced colors.
 
-Expected: Only Body scrolls, scrolling does not chain to the page, Header and
-Footer remain reachable, and the keyboard does not push the complete panel out
-of reach.
+Action: Operate the long-content Dialog using keyboard and touch.
 
-Result: pass
-Notes or issue: Reviewed on a real phone through the LAN playground. Body
-scrolling, viewport containment, and action reachability pass with the virtual
-keyboard.
+Expected: The surface remains reachable and contained; Body scrolls when
+needed, Footer actions wrap, close controls stay available, RTL order is
+logical, reduced motion removes nonessential animation, and forced colors
+preserves boundaries and focus.
 
-## Step 6 — Appearance and preferences
+Result:
+Notes or issue:
 
-Setup: Review light, dark, both scoped examples, reduced motion, and forced
-colors where available.
+## Step 6 — Screen reader
 
-Action: Open and close representative Dialogs in each mode.
+Setup: Enable the recorded screen reader.
 
-Expected: Text, border, focus, actions, scrim, and surface remain distinct;
-scope remains local; reduced motion removes scale; forced colors retains a
-system boundary and operable controls.
+Action: Open Overview, a semantic-title example, and a nested example.
 
-Result: pass
-Notes or issue: Light, dark, scoped appearance, and reduced motion pass.
-Real-Windows forced colors was unavailable; the automated forced-colors check
-passes and physical Windows review remains optional compatibility evidence.
+Expected: Dialog role, title, description, controls, modal state, and layer
+changes announce once; background content is not exposed as the active task.
 
-## Step 7 — Reflow, long content, and RTL
-
-Setup: Use 200% and 400% zoom, 256 CSS-pixel width, and Stress and RTL.
-
-Action: Open the Arabic/long-reference Dialog and inspect every region/action.
-
-Expected: No horizontal page scrolling or clipped content; logical alignment
-mirrors while DOM, reading, and focus order remain meaningful.
-
-Result: pass
-Notes or issue: Desktop 200% and 400% pass; 256px passes through 200%. Combining
-a 256px physical window with 400% produces an out-of-scope effective viewport
-near 64 CSS pixels. The review found and corrected lost portal RTL direction
-and direction-sensitive centering; the corrected title, description, body,
-footer, and viewport geometry pass the browser matrix.
-
-## Step 8 — Screen reader
-
-Setup: Enable VoiceOver or the selected screen reader and open Overview.
-
-Action: Read the Dialog, description, body, actions, then close and continue.
-
-Expected: The modal is announced once with its visible name and description;
-background content is unavailable; focus restoration is announced coherently.
-
-Result: pass
-Notes or issue: VoiceOver announces the dialog title and exposes its description
-through normal VO navigation. Background isolation, content navigation, close,
-and focus restoration pass.
-
-## Step 9 — Customization and scope
-
-Setup: Open Customization and both scoped examples with developer tools.
-
-Action: Inspect stable classes, custom slots, tokens, state, and portal output.
-
-Expected: Local radius/space and slots apply without losing Brick styling;
-inline scoped dialogs inherit the expected appearance; no behavior is copied.
-
-Result: pass
-Notes or issue: Custom radius, spacing, slots, classes, scoped appearance, and
-behavior remain intact.
+Result:
+Notes or issue:
 
 ## Completion
 
-Overall result: pass
-Follow-up issues: Real-Windows forced-colors review remains optional
-compatibility evidence.
-Workbook updated: Yes. The physical workbook records the package and Consumer
-gates complete.
+Overall result:
+Follow-up issues:
+Workbook updated:
+
+Mark unavailable physical or assistive-technology environments `blocked`.

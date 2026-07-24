@@ -14,7 +14,7 @@ export default defineConfig({
           const acceptsHtml = request.headers.accept?.includes("text/html");
           const path = request.url?.split("?", 1)[0] ?? "";
           if (request.method === "GET" && acceptsHtml && !path.includes(".")) {
-            request.url = "/";
+            request.url = "/index.html";
           }
           next();
         });
