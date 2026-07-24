@@ -28,10 +28,11 @@ Import Card from the package root or stable component subpath and import the
 required stylesheet once at the application root:
 
 ```tsx
-import { Card } from "@flowstack-ui/brick";
-// or: import { Card } from "@flowstack-ui/brick/card";
+import { Card } from "@flowstack-ui/brick/card";
 import "@flowstack-ui/brick/styles.css";
 ```
+
+`Card` and its public types are also exported from `@flowstack-ui/brick`.
 
 ## Quick start
 
@@ -77,6 +78,11 @@ parts through static CSS.
 
 ## API
 
+Public exports are `Card`, `CardRootProps`, `CardRootElement`,
+`CardHeaderProps`, `CardTitleProps`, `CardTitleElement`,
+`CardDescriptionProps`, `CardActionProps`, `CardContentProps`,
+`CardFooterProps`, `CardVariant`, and `CardSize`.
+
 ### Card.Root
 
 | Prop | Values | Default |
@@ -90,7 +96,8 @@ ARIA and data attributes, events, `className`, `style`, and `ref`.
 
 ### Card.Title
 
-`as` accepts `h1` through `h6` and defaults to `h3`. Choose the level from the
+`as` accepts `h1`, `h2`, `h3`, `h4`, `h5`, or `h6` and defaults to `h3`.
+Choose the level from the
 document hierarchy, not the desired visual size. An `h1` is valid when Card
 contains the page's real main title—for example, a sign-in page whose primary
 content is one Card. Repeated cards normally use `h2` or `h3`.

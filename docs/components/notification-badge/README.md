@@ -15,9 +15,13 @@ name or as an automatic live-region announcement.
 ## Installation and imports
 
 ```tsx
-import { NotificationBadge } from "@flowstack-ui/brick/notification-badge";
+import { NotificationBadge } from "@flowstack-ui/brick/badge";
 import "@flowstack-ui/brick/styles.css";
 ```
+
+`NotificationBadge` and its public types are also exported from
+`@flowstack-ui/brick`. There is no separate `notification-badge` package
+subpath.
 
 ## Quick start
 
@@ -35,9 +39,13 @@ adds a private, `aria-hidden` indicator span only when visible. The forwarded
 
 ## API
 
+Public exports are `NotificationBadge`, `NotificationBadgeProps`,
+`NotificationBadgePlacement`, `NotificationBadgeOverlap`, and
+`NotificationBadgeSize`. `BadgeTone` is shared with Badge.
+
 | Prop | Values | Default |
 | --- | --- | --- |
-| `tone` | any `BadgeTone` | `danger` |
+| `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `danger` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `placement` | `top-start`, `top-end`, `bottom-start`, `bottom-end` | `top-end` |
 | `overlap` | `rectangular`, `circular` | `rectangular` |
@@ -59,8 +67,10 @@ and `invisible` hide the indicator. Placement uses logical start/end.
 
 Stable root/indicator hooks are `.brick-notification-badge` and
 `.brick-notification-badge__indicator`; slots are `notification-badge` and
-`notification-badge-indicator`. Public attributes cover tone, size, placement,
-overlap, invisible, indicator variant, and shape. Public tokens are
+`notification-badge-indicator`. Public root attributes are `data-tone`,
+`data-size`, `data-placement`, `data-overlap`, and conditional
+`data-invisible`; the private indicator reflects `data-variant` and
+`data-shape` for its owned presentation. Public tokens are
 `--brick-notification-badge-size`, `--brick-notification-badge-dot-size`,
 `--brick-notification-badge-inline-padding`,
 `--brick-notification-badge-outline-color`,

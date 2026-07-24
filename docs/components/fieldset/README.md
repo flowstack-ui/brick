@@ -37,6 +37,15 @@ adds no private DOM.
 
 ## API
 
+Public exports are `Fieldset`, `FieldsetRoot`, `FieldsetLegend`,
+`FieldsetDescription`, `FieldsetError`, and their corresponding
+`FieldsetRootProps`, `FieldsetLegendProps`, `FieldsetDescriptionProps`, and
+`FieldsetErrorProps`.
+
+| Prop | Values | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
 All parts inherit Atom relationship/native props, require children, and support
 either one `asChild` element or `render`, never both. Root owns group required,
 disabled, invalid, generated relationship, and native fieldset behavior.
@@ -51,9 +60,23 @@ state stay connected.
 
 Stable classes/slots are `brick-fieldset`, `brick-fieldset-legend`,
 `brick-fieldset-description`, and `brick-fieldset-error` with matching slots
-and Atom state attributes. Public `--brick-fieldset-*` tokens cover group/
+and Atom state attributes. Every part forwards its overridable `data-slot`.
+Public `--brick-fieldset-*` tokens cover group/
 control gaps, legend/description/error typography and foreground, disabled/
-optional/indicator colors, and indicator gap.
+optional/indicator colors, and indicator gap:
+
+`--brick-fieldset-gap`, `--brick-fieldset-control-gap`,
+`--brick-fieldset-legend-font-family`, `--brick-fieldset-legend-font-size`,
+`--brick-fieldset-legend-font-weight`, `--brick-fieldset-legend-line-height`,
+`--brick-fieldset-legend-foreground`,
+`--brick-fieldset-legend-foreground-disabled`,
+`--brick-fieldset-description-font-size`,
+`--brick-fieldset-description-line-height`,
+`--brick-fieldset-description-foreground`,
+`--brick-fieldset-error-font-size`, `--brick-fieldset-error-font-weight`,
+`--brick-fieldset-error-line-height`, `--brick-fieldset-error-foreground`,
+`--brick-fieldset-indicator-foreground`, `--brick-fieldset-indicator-gap`, and
+`--brick-fieldset-optional-foreground`.
 
 ## Customization
 

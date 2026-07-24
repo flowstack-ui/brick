@@ -34,6 +34,12 @@ forwards an `HTMLFormElement` ref.
 
 ## API
 
+Public exports are `Form` and `FormProps`.
+
+| Prop | Values | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
 Form adds no component-specific prop. It inherits Atom/native form props,
 submission callbacks/state attributes, and a discriminated composition API:
 `asChild: true` requires one element and excludes `render`; otherwise `render`
@@ -47,8 +53,9 @@ remain behavior rather than visual recipes.
 
 ## Tokens and CSS hooks
 
-Stable hooks are `.brick-form`, slot `form`, Atom form state attributes, and
-`--brick-form-gap` plus `--brick-form-fieldset-gap`.
+Stable hooks are `.brick-form`, overridable `data-slot` with default `form`,
+Atom form state attributes, and `--brick-form-gap` plus
+`--brick-form-fieldset-gap`.
 
 ## Customization
 

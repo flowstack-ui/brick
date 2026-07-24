@@ -32,6 +32,9 @@ Image and fallback are implementation-owned, not public compound parts.
 
 ## API
 
+Public exports are `Avatar`, `AvatarProps`, `AvatarSize`, `AvatarShape`, and
+`AvatarStatus`.
+
 | Prop | Values | Default |
 | --- | --- | --- |
 | `src` | `string` | none |
@@ -57,10 +60,11 @@ Stable hooks are `.brick-avatar`, `.brick-avatar__image`,
 `.brick-avatar__fallback`, slots `avatar`, `avatar-image`, `avatar-fallback`,
 and root `data-size`, `data-shape`, `data-status`. Public tokens are
 `--brick-avatar-size`, `--brick-avatar-radius`, `--brick-avatar-background`,
-`--brick-avatar-foreground`, `--brick-avatar-fallback-font-size`,
-`--brick-avatar-outline-color`, `--brick-avatar-outline-width`,
+`--brick-avatar-foreground`, `--brick-avatar-outline-color`,
+`--brick-avatar-outline-width`,
 `--brick-avatar-status-ring-color`, `--brick-avatar-status-ring-width`, and
-`--brick-avatar-status-ring-offset`.
+`--brick-avatar-status-ring-offset`. The fallback-font variable is an internal
+size-recipe detail, not a public token.
 
 ## Customization
 

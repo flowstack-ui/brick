@@ -36,6 +36,10 @@ toggle button with an `HTMLButtonElement` ref. Brick adds no private DOM.
 
 ## API
 
+Public exports are `ToggleGroup`, `ToggleGroupRoot`, `ToggleGroupItem`,
+`ToggleGroupRootProps`, `ToggleGroupSingleProps`,
+`ToggleGroupMultipleProps`, and `ToggleGroupItemProps`.
+
 Root is a discriminated union: single mode uses `type?: "single"`, string
 values, and `(value: string) => void`; multiple mode requires
 `type="multiple"`, string-array values, and a string-array callback.
@@ -48,7 +52,11 @@ values, and `(value: string) => void`; multiple mode requires
 | `attached` | `boolean` | `false` |
 | `fullWidth` | `boolean` | `false` |
 
-Item requires `value` and adds `iconOnly?: boolean` (`false`). Atom supplies
+| Item prop | Values | Default |
+| --- | --- | --- |
+| `iconOnly` | `boolean` | `false` |
+
+Item requires `value`. Atom supplies
 orientation, direction, looping, disabled state, composition, and native props.
 Native `color` is excluded.
 
@@ -64,7 +72,9 @@ Stable hooks are `.brick-toggle-group`, `.brick-toggle-group-item`, their Atom
 slots/state attributes, and Root `data-orientation`, `data-attached`,
 `data-full-width`, `data-variant`, `data-size`, and `data-shape`. Item exposes
 `data-state`, `data-value`, `data-disabled`, and `data-icon-only`. Public tokens
-are `--brick-toggle-group-gap` and the public `--brick-toggle-*` geometry tokens.
+are `--brick-toggle-group-gap`, `--brick-toggle-min-block-size`,
+`--brick-toggle-padding-inline`, `--brick-toggle-gap`,
+`--brick-toggle-radius`, and `--brick-toggle-icon-size`.
 
 ## Customization
 

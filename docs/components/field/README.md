@@ -37,9 +37,18 @@ All parts wrap public Atom Field parts; Brick adds no private DOM.
 
 ## API
 
+Public exports are `Field`, `FieldRoot`, `FieldLabel`, `FieldDescription`,
+`FieldError`, `FieldRequiredIndicator`, their corresponding
+`FieldRootProps`, `FieldLabelProps`, `FieldDescriptionProps`,
+`FieldErrorProps`, `FieldRequiredIndicatorProps`, and `FieldOrientation`.
+
+| Root prop | Values | Default |
+| --- | --- | --- |
+| `orientation` | `vertical`, `horizontal` | `vertical` |
+| `asChild` | `boolean` | `false` |
+
 Root inherits Atom relationship, generated-id, required, disabled, invalid,
-name, and control-ownership props and defaults `orientation` to `vertical`
-(`horizontal` is also supported). RequiredIndicator accepts `fallback`.
+name, and control-ownership props. RequiredIndicator accepts `fallback`.
 Every part requires children and supports either one `asChild` element or
 Atom `render`, never both.
 
@@ -54,9 +63,22 @@ and Error for generated `aria-describedby` and state propagation.
 Stable classes/slots are `brick-field`, `brick-field-label`,
 `brick-field-description`, `brick-field-error`, and
 `brick-field-required-indicator` with their matching slots and Atom state/
-orientation attributes. Public `--brick-field-*` tokens cover row/column gap,
+orientation attributes. Every part forwards its overridable `data-slot`.
+Public `--brick-field-*` tokens cover row/column gap,
 control and label sizing, label/description/error typography and foreground,
-disabled/optional/indicator colors, and indicator gap.
+disabled/optional/indicator colors, and indicator gap:
+
+`--brick-field-row-gap`, `--brick-field-column-gap`,
+`--brick-field-control-min-inline-size`, `--brick-field-label-min-inline-size`,
+`--brick-field-label-font-family`, `--brick-field-label-font-size`,
+`--brick-field-label-font-weight`, `--brick-field-label-line-height`,
+`--brick-field-label-foreground`, `--brick-field-label-foreground-disabled`,
+`--brick-field-description-font-size`,
+`--brick-field-description-line-height`,
+`--brick-field-description-foreground`, `--brick-field-error-font-size`,
+`--brick-field-error-font-weight`, `--brick-field-error-line-height`,
+`--brick-field-error-foreground`, `--brick-field-indicator-foreground`,
+`--brick-field-indicator-gap`, and `--brick-field-optional-foreground`.
 
 ## Customization
 

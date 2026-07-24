@@ -29,6 +29,9 @@ const requiredSections = [
 ];
 
 const failures = [];
+const componentSubpaths = {
+  "notification-badge": "badge",
+};
 
 for (const componentId of requested) {
   const { changelog, guide } = componentTestPaths(componentId);
@@ -88,7 +91,8 @@ for (const componentId of requested) {
     }
   }
 
-  if (!documentation.includes(`@flowstack-ui/brick/${componentId}`)) {
+  const componentSubpath = componentSubpaths[componentId] ?? componentId;
+  if (!documentation.includes(`@flowstack-ui/brick/${componentSubpath}`)) {
     failures.push(`${componentId}: missing stable component-subpath import`);
   }
 

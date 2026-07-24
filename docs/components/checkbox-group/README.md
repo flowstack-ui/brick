@@ -38,9 +38,21 @@ control/indicator/SVG used by Checkbox into Item and Parent. Refs target
 
 ## API
 
+Public exports are `CheckboxGroup`, `CheckboxGroupRoot`, `CheckboxGroupItem`,
+`CheckboxGroupItemLabel`, `CheckboxGroupItemDescription`,
+`CheckboxGroupParent`, and their corresponding `CheckboxGroupRootProps`,
+`CheckboxGroupItemProps`, `CheckboxGroupItemLabelProps`,
+`CheckboxGroupItemDescriptionProps`, and `CheckboxGroupParentProps`.
+
+| Root prop | Values | Default |
+| --- | --- | --- |
+| `size` | `sm`, `md`, `lg` | `md` |
+| `orientation` | `vertical`, `horizontal` | `vertical` |
+| `asChild` | `boolean` | `false` |
+
 Root inherits Atom group value/defaultValue/change, orientation, disabled,
 invalid, required, name/form, and relationship props and adds
-`size?: "sm" | "md" | "lg"` (`md`); orientation defaults to `vertical`.
+the shared size recipe.
 Item requires Atom `value`. Parent inherits Atom aggregate behavior including
 `allValues`. Label and Description require children. Every part uses the
 discriminated `asChild` or `render` composition contract.

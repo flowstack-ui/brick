@@ -31,6 +31,10 @@ an `HTMLSpanElement` ref.
 
 ## API
 
+Badge's public exports are `Badge`, `BadgeProps`, `BadgeVariant`, `BadgeTone`,
+`BadgeSize`, and `BadgeShape`. The shared `badge` subpath also exports the
+separately documented Notification Badge family.
+
 | Prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `soft`, `solid`, `outline` | `soft` |
@@ -53,8 +57,10 @@ Stable hooks are `.brick-badge`, Atom slot `badge`, and `data-variant`,
 `--brick-badge-background`, `--brick-badge-foreground`,
 `--brick-badge-border-color`, `--brick-badge-min-block-size`,
 `--brick-badge-inline-padding`, `--brick-badge-block-padding`,
-`--brick-badge-font-size`, and `--brick-badge-radius`. Internal tone-mapping
-variables are not public customization hooks.
+`--brick-badge-font-size`, `--brick-badge-radius`,
+`--brick-badge-tone-solid`, `--brick-badge-tone-on-solid`,
+`--brick-badge-tone-soft`, `--brick-badge-tone-on-soft`,
+`--brick-badge-tone-border`, and `--brick-badge-tone-text`.
 
 ## Customization
 

@@ -32,10 +32,17 @@ forced-mounted Atom Indicator, and decorative SVG before consumer children.
 
 ## API
 
+Public exports are `Checkbox`, `CheckboxProps`, and `CheckboxSize`.
+
+| Prop | Values | Default |
+| --- | --- | --- |
+| `size` | `sm`, `md`, `lg` | `md` |
+| `asChild` | `boolean` | `false` |
+
 Checkbox inherits Atom checked/defaultChecked (`boolean | "indeterminate"`),
-change, required, disabled, invalid, name, value, form, and native props. It
-adds `size?: "sm" | "md" | "lg"` (`md`). `asChild: true` requires one element
-and excludes `render`; otherwise `render` and normal children are available.
+change, required, disabled, invalid, name, value, form, and native props.
+`asChild: true` requires one element and excludes `render`; otherwise `render`
+and normal children are available.
 
 ## Visual recipes and states
 
@@ -45,10 +52,16 @@ mixed, unchecked, disabled, invalid, hover, active, and focus-visible output.
 ## Tokens and CSS hooks
 
 Stable public root hook/slot is `.brick-checkbox`/`checkbox`, with Atom state
-attributes and `data-size`. Public component tokens are the
-`--brick-checkbox-*` variables for target/control size, row padding, gap,
-radius, border, control backgrounds/foreground, indicator size, and
-label/description/invalid foreground. Internal mark DOM is not composable.
+attributes and `data-size`. Public component tokens are
+`--brick-checkbox-target-min-size`, `--brick-checkbox-control-size`,
+`--brick-checkbox-row-padding-inline`, `--brick-checkbox-gap`,
+`--brick-checkbox-radius`, `--brick-checkbox-border-width`,
+`--brick-checkbox-control-background`, `--brick-checkbox-control-border`,
+`--brick-checkbox-control-checked-background`,
+`--brick-checkbox-control-checked-foreground`,
+`--brick-checkbox-indicator-size`, `--brick-checkbox-label-foreground`,
+`--brick-checkbox-description-foreground`, and
+`--brick-checkbox-invalid-foreground`. Internal mark DOM is not composable.
 
 ## Customization
 

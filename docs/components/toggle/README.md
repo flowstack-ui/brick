@@ -36,6 +36,9 @@ Toggle renders Atom `Toggle.Root` as a native `button` and forwards an
 
 ## API
 
+Public exports are `Toggle`, `ToggleProps`, `ToggleVariant`, `ToggleSize`, and
+`ToggleShape`.
+
 | Prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |

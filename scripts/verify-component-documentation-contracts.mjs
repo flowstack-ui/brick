@@ -105,7 +105,10 @@ for (const componentId of requested) {
   }
 
   for (const attribute of contract.dataAttributes) {
-    if (!source.includes(`${attribute}=`)) {
+    if (
+      !source.includes(`${attribute}=`) &&
+      !source.includes(`"${attribute}":`)
+    ) {
       failures.push(`${componentId}: source no longer emits ${attribute}`);
     }
     if (!documentation.includes(`\`${attribute}\``)) {
@@ -125,6 +128,18 @@ for (const componentId of requested) {
   for (const privateToken of contract.privateTokenPrefixes ?? []) {
     if (documentation.includes(privateToken)) {
       failures.push(`${componentId}: README exposes private token ${privateToken}`);
+    }
+  }
+
+  for (const claim of contract.sourceClaims ?? []) {
+    if (!source.includes(claim)) {
+      failures.push(`${componentId}: source claim changed: ${claim}`);
+    }
+  }
+
+  for (const claim of contract.documentationClaims ?? []) {
+    if (!documentation.includes(claim)) {
+      failures.push(`${componentId}: README claim is missing: ${claim}`);
     }
   }
 }
