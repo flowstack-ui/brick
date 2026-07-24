@@ -142,6 +142,17 @@ for (const componentId of requested) {
       failures.push(`${componentId}: README claim is missing: ${claim}`);
     }
   }
+
+  for (const dependency of contract.dependencyClaims ?? []) {
+    const dependencySource = await readFile(dependency.path, "utf8");
+    for (const claim of dependency.claims) {
+      if (!dependencySource.includes(claim)) {
+        failures.push(
+          `${componentId}: dependency claim changed in ${dependency.path}: ${claim}`,
+        );
+      }
+    }
+  }
 }
 
 if (failures.length > 0) {

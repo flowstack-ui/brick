@@ -39,10 +39,20 @@ children. Trigger ref is `HTMLElement`, Content `HTMLDivElement`, and Arrow
 
 ## API
 
+Public exports are the `HoverCard` namespace; named `HoverCardRoot`,
+`HoverCardTrigger`, `HoverCardPortal`, `HoverCardContent`, and
+`HoverCardArrow` parts; and `HoverCardRootProps`, `HoverCardTriggerProps`,
+`HoverCardPortalProps`, `HoverCardContentProps`, `HoverCardArrowProps`, and
+`HoverCardSize`.
+
+| Content prop | Values | Default |
+| --- | --- | --- |
+| `size` | `sm`, `md`, `lg` | `md` |
+| `sideOffset` | `number` | `8` |
+
 Root inherits Atom open state and hover/focus delay props. Content adds
-`size?: "sm" | "md" | "lg"` (`md`) and defaults `sideOffset` to `8`.
-Content excludes Atom `aria-label` spellings because this preview is
-described by its trigger relationship.
+the size recipe. Content excludes Atom `aria-label` spellings because this
+preview is described by its trigger relationship.
 
 ## Visual recipes and states
 
@@ -52,13 +62,16 @@ viewport owns overflow and maximum block size.
 
 ## Tokens and CSS hooks
 
-Stable classes/slots cover trigger, content, viewport, and arrow. Public tokens
+Stable classes and overridable `data-slot` values cover trigger, content,
+viewport, and arrow. Content reflects `data-size`. Public tokens
 are `--brick-hover-card-background`, `--brick-hover-card-foreground`,
 `--brick-hover-card-muted-foreground`, `--brick-hover-card-border`,
 `--brick-hover-card-radius`, `--brick-hover-card-shadow`,
 `--brick-hover-card-padding`, `--brick-hover-card-gap`,
-`--brick-hover-card-max-block-size`, and the `-max-inline-size-sm|md|lg`
-tokens. The viewport is implementation-owned.
+`--brick-hover-card-max-block-size`,
+`--brick-hover-card-max-inline-size-sm`,
+`--brick-hover-card-max-inline-size-md`, and
+`--brick-hover-card-max-inline-size-lg`. The viewport is implementation-owned.
 
 ## Customization
 

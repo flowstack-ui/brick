@@ -46,6 +46,11 @@ semantics.
 
 ## API
 
+Public exports are the `AppBar` namespace; named `AppBarRoot`,
+`AppBarToolbar`, `AppBarStart`, `AppBarCenter`, and `AppBarEnd` parts; and
+`AppBarRootProps`, `AppBarToolbarProps`, `AppBarSectionProps`,
+`AppBarVariant`, and `AppBarTone`.
+
 | Root prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `solid`, `surface`, `transparent` | `surface` |
@@ -54,9 +59,13 @@ semantics.
 | `elevated` | `boolean` | `false` |
 | `blurred` | `boolean` | `false` |
 
-Atom Root supplies `position` (`static`, `absolute`, `sticky`, `fixed`) and
-native/composition props. Toolbar supplies Atom `density` (`comfortable`,
-`compact`). Sections inherit Atom section props.
+| Atom-owned prop | Values | Default |
+| --- | --- | --- |
+| Root `position` | `static`, `absolute`, `sticky`, `fixed` | `static` |
+| Toolbar `density` | `compact`, `comfortable` | `comfortable` |
+
+Atom Root and Toolbar supply these layout values plus native/composition props.
+Sections inherit Atom section props.
 
 ## Visual recipes and states
 
@@ -68,8 +77,9 @@ logical side tracks so Center remains geometrically centered.
 
 Stable classes are `.brick-app-bar`, `.brick-app-bar-toolbar`,
 `.brick-app-bar-start`, `.brick-app-bar-center`, `.brick-app-bar-end`. Public
-attributes include Atom position/density and Brick variant, tone, bordered,
-elevated, and blurred. Public tokens are `--brick-app-bar-background`,
+attributes include Atom `data-position`/`data-density` and Brick
+`data-variant`, `data-tone`, `data-bordered`, `data-elevated`, and
+`data-blurred`. Public tokens are `--brick-app-bar-background`,
 `--brick-app-bar-foreground`, `--brick-app-bar-border-color`,
 `--brick-app-bar-blurred-background`,
 `--brick-app-bar-reduced-transparency-background`, and

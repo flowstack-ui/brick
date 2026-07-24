@@ -89,6 +89,27 @@ consumer class.
 
 ## API
 
+Public exports are the `Dialog` namespace; named `DialogRoot`,
+`DialogTrigger`, `DialogPortal`, `DialogOverlay`, `DialogContent`,
+`DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogBody`,
+`DialogFooter`, `DialogClose`, and `DialogBranch` parts; and their
+corresponding prop types plus `DialogSize`.
+
+```ts
+DialogRootProps
+DialogTriggerProps
+DialogPortalProps
+DialogOverlayProps
+DialogContentProps
+DialogHeaderProps
+DialogTitleProps
+DialogDescriptionProps
+DialogBodyProps
+DialogFooterProps
+DialogCloseProps
+DialogBranchProps
+```
+
 ### Root
 
 Forwards Atom's `open`, `defaultOpen`, `onOpenChange`, `closeOnEscape`,
@@ -97,7 +118,11 @@ DOM element and has no ref.
 
 ### Content
 
-`size` accepts `"sm"`, `"md"`, or `"lg"` and defaults to `"md"`. Size changes
+| Prop | Values | Default |
+| --- | --- | --- |
+| `size` | `sm`, `md`, `lg` | `md` |
+
+Size changes
 the preferred maximum inline measure only. Content also forwards native ARIA,
 `role`, `initialFocus`, and `finalFocus` supported by Atom.
 

@@ -43,9 +43,27 @@ anchor/structure refs are `HTMLElement`.
 
 ## API
 
+Public exports are the `Popover` namespace; named `PopoverRoot`,
+`PopoverAnchor`, `PopoverTrigger`, `PopoverPortal`, `PopoverContent`,
+`PopoverHeader`, `PopoverTitle`, `PopoverDescription`, `PopoverBody`,
+`PopoverFooter`, `PopoverClose`, and `PopoverArrow` parts; and
+`PopoverRootProps`, `PopoverAnchorProps`, `PopoverTriggerProps`,
+`PopoverPortalProps`, `PopoverContentProps`, `PopoverHeaderProps`,
+`PopoverTitleProps`, `PopoverDescriptionProps`, `PopoverBodyProps`,
+`PopoverFooterProps`, `PopoverCloseProps`, `PopoverArrowProps`,
+`PopoverStructureProps`, and `PopoverSize`.
+
+| Content prop | Values | Default |
+| --- | --- | --- |
+| `size` | `sm`, `md`, `lg` | `md` |
+| `sideOffset` | `number` | `8` |
+
+| Header/Body/Footer prop | Values | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
 Root always fixes Atom `triggerMode` to `click`; `triggerMode`, `openDelay`, and
-`closeDelay` are excluded. Content adds `size?: "sm" | "md" | "lg"` (`md`)
-and defaults `sideOffset` to `8`. Other public parts inherit their Atom props.
+`closeDelay` are excluded. Content adds the size recipe. Other public parts inherit their Atom props.
 Header/Body/Footer add native attributes, `asChild`, and `render`.
 
 ## Visual recipes and states
@@ -56,12 +74,15 @@ portal, and Arrow position.
 
 ## Tokens and CSS hooks
 
-Stable classes/slots cover every styled part. Public tokens are
+Stable classes and overridable `data-slot` values cover every styled part.
+Content reflects `data-size`. Public tokens are
 `--brick-popover-background`, `--brick-popover-foreground`,
 `--brick-popover-muted-foreground`, `--brick-popover-border`,
 `--brick-popover-radius`, `--brick-popover-shadow`,
-`--brick-popover-space`, `--brick-popover-max-block-size`, and the
-`-max-inline-size-sm|md|lg` tokens.
+`--brick-popover-space`, `--brick-popover-max-block-size`,
+`--brick-popover-max-inline-size-sm`,
+`--brick-popover-max-inline-size-md`, and
+`--brick-popover-max-inline-size-lg`.
 
 ## Customization
 

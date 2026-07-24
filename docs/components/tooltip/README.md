@@ -36,10 +36,26 @@ Brick-owned structure parts; other behavior parts use Atom. Content ref is
 
 ## API
 
+Public exports are the `Tooltip` namespace; named `TooltipProvider`,
+`TooltipRoot`, `TooltipTrigger`, `TooltipPortal`, `TooltipContent`,
+`TooltipTitle`, `TooltipDescription`, and `TooltipArrow` parts; and their
+corresponding `TooltipProviderProps`, `TooltipRootProps`,
+`TooltipTriggerProps`, `TooltipPortalProps`, `TooltipContentProps`,
+`TooltipTextProps`, `TooltipTitleProps`, `TooltipDescriptionProps`,
+`TooltipArrowProps`, and `TooltipShape` types.
+
+| Content prop | Values | Default |
+| --- | --- | --- |
+| `shape` | `rounded`, `pill` | `rounded` |
+| `sideOffset` | `number` | `8` |
+
+| Title/Description prop | Values | Default |
+| --- | --- | --- |
+| `asChild` | `boolean` | `false` |
+
 Root and Provider inherit Atom state/delay props. Content adds
-`shape?: "rounded" | "pill"` (`rounded`), defaults `sideOffset` to `8`, and
-excludes Atom `aria-label` spellings. Title and Description accept native
-attributes plus `asChild` or `render`.
+the shape recipe and excludes Atom `aria-label` spellings. Title and
+Description accept native attributes plus `asChild` or `render`.
 
 ## Visual recipes and states
 
@@ -49,7 +65,8 @@ delays, presence, placement, collision handling, and Arrow coordinates.
 
 ## Tokens and CSS hooks
 
-Stable classes/slots cover trigger, content, title, description, and arrow;
+Stable classes and overridable `data-slot` values cover trigger, content,
+title, description, and arrow;
 Content exposes `data-shape` plus Atom state/placement data. Public tokens are
 `--brick-tooltip-background`, `--brick-tooltip-foreground`,
 `--brick-tooltip-border-color`, `--brick-tooltip-radius`,

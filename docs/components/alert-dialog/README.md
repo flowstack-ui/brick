@@ -91,6 +91,28 @@ consumer class.
 
 ## API
 
+Public exports are the `AlertDialog` namespace; named `AlertDialogRoot`,
+`AlertDialogTrigger`, `AlertDialogPortal`, `AlertDialogOverlay`,
+`AlertDialogContent`, `AlertDialogHeader`, `AlertDialogTitle`,
+`AlertDialogDescription`, `AlertDialogBody`, `AlertDialogFooter`,
+`AlertDialogCancel`, and `AlertDialogAction` parts; and their corresponding
+prop types plus `AlertDialogSize`.
+
+```ts
+AlertDialogRootProps
+AlertDialogTriggerProps
+AlertDialogPortalProps
+AlertDialogOverlayProps
+AlertDialogContentProps
+AlertDialogHeaderProps
+AlertDialogTitleProps
+AlertDialogDescriptionProps
+AlertDialogBodyProps
+AlertDialogFooterProps
+AlertDialogCancelProps
+AlertDialogActionProps
+```
+
 ### Root
 
 Forwards Atom's `open`, `defaultOpen`, `onOpenChange`, `closeOnEscape`,
@@ -99,7 +121,11 @@ blocked and no `closeOnBackdropClick` prop is exposed. Root renders no DOM.
 
 ### Content
 
-`size` accepts `"sm"` or `"md"` and defaults to `"md"`. It changes only the
+| Prop | Values | Default |
+| --- | --- | --- |
+| `size` | `sm`, `md` | `md` |
+
+Size changes only the
 preferred maximum inline measure. Content also forwards supported native ARIA,
 `role`, `initialFocus`, and `finalFocus` properties.
 
@@ -164,6 +190,9 @@ Content exposes:
 - `--brick-alert-dialog-space`
 - `--brick-alert-dialog-radius`
 - `--brick-alert-dialog-shadow`
+
+All DOM-rendering parts expose overridable `data-slot`; Content also reflects
+`data-size`.
 
 Brick honors reduced motion and forced colors. Consumers must reverify layout
 and accessibility after arbitrary class, style, or token overrides.

@@ -45,8 +45,33 @@ Atom owns `Root`, `Trigger`, `Portal`, `Overlay`, `Content`, `Title`,
 
 ## API
 
-Content adds `placement?: "start" | "end" | "top" | "bottom"` (`end`) and
-`size?: "sm" | "md" | "lg" | "full"` (`md`). Root and all behavior parts
+Public exports are the `Drawer` namespace; named `DrawerRoot`,
+`DrawerTrigger`, `DrawerPortal`, `DrawerOverlay`, `DrawerContent`,
+`DrawerHeader`, `DrawerTitle`, `DrawerDescription`, `DrawerBody`,
+`DrawerFooter`, `DrawerClose`, and `DrawerBranch` parts; their corresponding
+prop types; and `DrawerPlacement` plus `DrawerSize`.
+
+```ts
+DrawerRootProps
+DrawerTriggerProps
+DrawerPortalProps
+DrawerOverlayProps
+DrawerContentProps
+DrawerHeaderProps
+DrawerTitleProps
+DrawerDescriptionProps
+DrawerBodyProps
+DrawerFooterProps
+DrawerCloseProps
+DrawerBranchProps
+```
+
+| Content prop | Values | Default |
+| --- | --- | --- |
+| `placement` | `start`, `end`, `top`, `bottom` | `end` |
+| `size` | `sm`, `md`, `lg`, `full` | `md` |
+
+Root and all behavior parts
 inherit Atom modal/drawer props. Header, Body, and Footer accept native div
 attributes and `data-slot`.
 
@@ -59,11 +84,15 @@ and placement state.
 
 ## Tokens and CSS hooks
 
-Stable classes/slots cover Trigger, Overlay, Content, Header, Title,
-Description, Body, Footer, Close, and Branch. Public tokens are
-`--brick-drawer-inline-size-sm|md|lg`, `--brick-drawer-block-size-sm|md|lg`,
-`--brick-drawer-radius`, `--brick-drawer-shadow`, `--brick-drawer-space`, and
-`--brick-drawer-safe-top|right|bottom|left`.
+Stable classes and overridable `data-slot` values cover Trigger, Overlay,
+Content, Header, Title, Description, Body, Footer, Close, and Branch. Content
+reflects `data-size`; Atom reflects placement. Public tokens are
+`--brick-drawer-inline-size-sm`, `--brick-drawer-inline-size-md`,
+`--brick-drawer-inline-size-lg`, `--brick-drawer-block-size-sm`,
+`--brick-drawer-block-size-md`, `--brick-drawer-block-size-lg`,
+`--brick-drawer-radius`, `--brick-drawer-shadow`, `--brick-drawer-space`,
+`--brick-drawer-safe-top`, `--brick-drawer-safe-right`,
+`--brick-drawer-safe-bottom`, and `--brick-drawer-safe-left`.
 
 ## Customization
 
