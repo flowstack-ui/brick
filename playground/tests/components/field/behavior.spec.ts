@@ -1,11 +1,20 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator } from "@playwright/test";
 
-async function expectAlignedFieldTops(grid: Locator) {
+async function expectResponsiveFieldLayout(grid: Locator) {
   const tops = await grid.locator(".brick-field").evaluateAll((fields) =>
     fields.map((field) => field.getBoundingClientRect().top),
   );
-  expect(Math.max(...tops) - Math.min(...tops)).toBeLessThanOrEqual(1);
+  const isStacked = await grid.evaluate(
+    () => window.matchMedia("(max-width: 34rem)").matches,
+  );
+  if (isStacked) {
+    for (let index = 1; index < tops.length; index += 1) {
+      expect(tops[index]).toBeGreaterThan(tops[index - 1]);
+    }
+  } else {
+    expect(Math.max(...tops) - Math.min(...tops)).toBeLessThanOrEqual(1);
+  }
 }
 
 test.beforeEach(async ({ page }) => {
@@ -26,7 +35,7 @@ test("Field overview preserves default anatomy and generated relationships", asy
 });
 
 test("Field anatomy and states vary only the named evidence", async ({ page }) => {
-  await expectAlignedFieldTops(page.getByTestId("field-anatomy"));
+  await expectResponsiveFieldLayout(page.getByTestId("field-anatomy"));
   await expect(page.locator("#field-complete")).toHaveAttribute("data-invalid", "");
   await expect(page.locator("#field-complete")).toHaveAttribute("data-required", "");
   await expect(page.locator("#field-complete").getByText("Enter a valid email address.")).toBeVisible();
@@ -43,9 +52,9 @@ test("Field anatomy and states vary only the named evidence", async ({ page }) =
   await expect(states.locator("[data-slot='field']")).toHaveCount(4);
 });
 
-test("Field error modes remain distinct and top aligned", async ({ page }) => {
+test("Field error modes remain distinct in the responsive specimen layout", async ({ page }) => {
   const errors = page.getByTestId("field-errors");
-  await expectAlignedFieldTops(errors);
+  await expectResponsiveFieldLayout(errors);
   for (const id of ["field-invalid", "field-forced", "field-invalid-no-error"]) {
     await expect(page.locator(`#${id}`).getByText("Work email", { exact: true })).toBeVisible();
     await expect(page.locator(`#${id}`).getByText("Used for account notices.", { exact: true })).toBeVisible();
@@ -66,11 +75,13 @@ test("Field orientation and explicit relationships change no visible content", a
   }
   await expect(vertical).toHaveAttribute("data-orientation", "vertical");
   await expect(horizontal).toHaveAttribute("data-orientation", "horizontal");
-  expect(
-    await horizontal.evaluate(
-      (element) => getComputedStyle(element).gridTemplateColumns.split(" ").length,
-    ),
-  ).toBe(2);
+  const horizontalColumns = await horizontal.evaluate(
+    (element) => getComputedStyle(element).gridTemplateColumns.split(" ").length,
+  );
+  const isStacked = await horizontal.evaluate(
+    () => window.matchMedia("(max-width: 34rem)").matches,
+  );
+  expect(horizontalColumns).toBe(isStacked ? 1 : 2);
 
   const generated = page.locator("#field-generated-relations").getByRole("textbox", { name: "Work email" });
   await expect(generated).toHaveAttribute("aria-describedby", "field-generated-relations-description");

@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import {
   AppBar,
   Button,
@@ -28,6 +28,7 @@ export function PlaygroundShell({
   scenarios: readonly ScenarioDefinition[];
 }) {
   const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
+  const mobileNavigationTriggerRef = useRef<HTMLElement>(null);
   const {
     appearance,
     direction,
@@ -54,6 +55,7 @@ export function PlaygroundShell({
               aria-label="Open component navigation"
               className="evidence-mobile-menu"
               onPress={() => setMobileNavigationOpen(true)}
+              ref={mobileNavigationTriggerRef}
               size="sm"
             >
               <MenuIcon />
@@ -70,6 +72,7 @@ export function PlaygroundShell({
           <Drawer.Overlay />
           <Drawer.Content
             className="evidence-mobile-drawer"
+            finalFocus={mobileNavigationTriggerRef}
             placement="start"
             size="sm"
           >

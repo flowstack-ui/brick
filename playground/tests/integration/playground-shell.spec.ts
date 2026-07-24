@@ -3,6 +3,7 @@ import { expect, test } from "@playwright/test";
 test("Button route exposes component and scenario navigation", async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/button");
 
   const componentNavigation = page.getByRole("navigation", {

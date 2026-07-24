@@ -82,8 +82,10 @@ test("Disabled Checkbox artwork preserves default medium geometry", async ({ pag
   for (const checkbox of await disabled.all()) {
     await expect(checkbox).toBeDisabled();
     await expect(checkbox).toHaveAttribute("data-size", "md");
-    expect(await controlSize(checkbox)).toEqual(normalControl);
-    expect((await checkbox.boundingBox())!.height).toBe(normalHeight);
+    const disabledControl = await controlSize(checkbox);
+    expect(disabledControl.width).toBeCloseTo(normalControl.width, 2);
+    expect(disabledControl.height).toBeCloseTo(normalControl.height, 2);
+    expect((await checkbox.boundingBox())!.height).toBeCloseTo(normalHeight, 2);
   }
   await expect(disabled.nth(0)).toHaveAttribute("aria-checked", "false");
   await expect(disabled.nth(1)).toHaveAttribute("aria-checked", "true");

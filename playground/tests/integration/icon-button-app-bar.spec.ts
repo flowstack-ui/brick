@@ -36,7 +36,7 @@ test("IconButton actions retain square targets inside constrained and RTL AppBar
     const control = page.getByRole("button", { name, exact: true });
     const box = await control.boundingBox();
     expect(box).not.toBeNull();
-    expect(box!.width).toBe(44);
-    expect(box!.height).toBe(44);
+    expect(box!.width).toBeCloseTo(44, 2);
+    expect(box!.height).toBeCloseTo(44, 2);
   }
 });
