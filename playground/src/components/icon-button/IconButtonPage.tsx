@@ -1,6 +1,7 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   IconButton,
+  Text,
   type IconButtonShape,
   type IconButtonSize,
   type IconButtonTone,
@@ -58,8 +59,8 @@ function EvidenceGroup({
   return (
     <section className="icon-button-evidence-group">
       <div className="icon-button-evidence-group__heading">
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <Text as="h3" variant="title-sm">{title}</Text>
+        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
       </div>
       {children}
     </section>
@@ -168,9 +169,9 @@ export function IconButtonPage() {
           >
             <SearchIcon />
           </IconButton>
-          <p aria-atomic="true" aria-live="polite">
+          <Text aria-atomic="true" aria-live="polite" role="status" variant="body-sm">
             Activated {pressCount} {pressCount === 1 ? "time" : "times"}
-          </p>
+          </Text>
         </div>
       </Scenario>
 
@@ -367,8 +368,8 @@ export function IconButtonPage() {
             <div className="icon-button-customization-list">
               <article className="icon-button-customization">
                 <div>
-                  <h4>Component CSS properties</h4>
-                  <p>Public IconButton tokens replace the complete solid recipe within this instance only.</p>
+                  <Text as="h4" variant="title-sm">Component CSS properties</Text>
+                  <Text as="p" tone="secondary" variant="body-sm">Public IconButton tokens replace the complete solid recipe within this instance only.</Text>
                   <pre aria-label="IconButton component token example" tabIndex={0}><code>{`style={{
   "--brick-icon-button-background": "#6b2f88",
   "--brick-icon-button-background-hover": "#7d3b9c",
@@ -390,8 +391,8 @@ export function IconButtonPage() {
               </article>
               <article className="icon-button-customization">
                 <div>
-                  <h4>Consumer hooks</h4>
-                  <p>className, style, and data-slot pass through for local targeting without changing the IconButton API.</p>
+                  <Text as="h4" variant="title-sm">Consumer hooks</Text>
+                  <Text as="p" tone="secondary" variant="body-sm">className, style, and data-slot pass through for local targeting without changing the IconButton API.</Text>
                   <pre aria-label="IconButton consumer hook example" tabIndex={0}><code>{`.icon-button-page .dashed-icon-action {
   --brick-icon-button-background: transparent;
   --brick-icon-button-background-hover: var(--brick-color-accent-soft);
@@ -434,7 +435,7 @@ export function IconButtonPage() {
           >
             <div className="icon-button-stress-panel">
               <div className="phone-frame">
-                <p>Dense application actions</p>
+                <Text as="p" variant="body-sm">Dense application actions</Text>
                 <div className="icon-button-row">
                   <IconButton aria-label="Open a very detailed workspace navigation menu">
                     <MenuIcon />
@@ -452,7 +453,7 @@ export function IconButtonPage() {
           >
             <div className="icon-button-stress-panel">
               <div className="phone-frame" dir="rtl">
-                <p>إجراءات مساحة العمل</p>
+                <Text as="p" variant="body-sm">إجراءات مساحة العمل</Text>
                 <div className="icon-button-row">
                   <IconButton aria-label="فتح القائمة">
                     <MenuIcon />

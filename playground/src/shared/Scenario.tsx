@@ -1,3 +1,4 @@
+import { Text } from "@flowstack-ui/brick";
 import type { ReactNode } from "react";
 
 export interface ScenarioDefinition {
@@ -34,11 +35,11 @@ export function Scenario({
       id={scenarioId}
     >
       <div className="scenario-heading">
-        <p className="scenario-number">
+        <Text className="scenario-number" variant="caption">
           Scenario {String(number).padStart(2, "0")}
-        </p>
-        <h2 id={headingId}>{title}</h2>
-        <p>{description}</p>
+        </Text>
+        <Text as="h2" id={headingId} variant="title-lg">{title}</Text>
+        <Text as="p" tone="secondary">{description}</Text>
       </div>
       {children}
     </section>

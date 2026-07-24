@@ -62,7 +62,7 @@ test("Popover exposes three bounded sizes, shared Arrow, and disabled state", as
   await page.getByRole("button", { name: "Inspect anatomy" }).click();
   const anatomy = page.getByRole("dialog", { name: "Custom workspace panel" });
   await expect(anatomy).toHaveAccessibleDescription(
-    "Explicit native ARIA supports native semantic text inside the visual Header.",
+    "Explicit ARIA supports authored semantic Text inside the visual Header.",
   );
   await anatomy.getByRole("button", { name: "Close anatomy" }).click();
 });
@@ -163,7 +163,9 @@ test("Popover stays open during outside touch scrolling and closes on an outside
 test("Popover stacks long Footer actions inside an extreme narrow viewport", async ({ page }) => {
   await page.setViewportSize({ width: 150, height: 200 });
   await page.goto("/popover");
-  await page.getByRole("button", { name: "Open long settings" }).focus();
+  const trigger = page.getByRole("button", { name: "Open long settings" });
+  await trigger.scrollIntoViewIfNeeded();
+  await trigger.focus();
   await page.keyboard.press("Enter");
 
   const popover = page.getByRole("dialog", {

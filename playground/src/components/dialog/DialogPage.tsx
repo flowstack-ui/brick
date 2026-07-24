@@ -9,6 +9,8 @@ import {
   Dialog,
   Field,
   Form,
+  Input,
+  Text,
   type DialogSize,
 } from "@flowstack-ui/brick";
 import {
@@ -39,8 +41,8 @@ function EvidenceGroup({
   return (
     <section className="dialog-evidence-group">
       <div className="dialog-evidence-group__heading">
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <Text as="h3" variant="title-sm">{title}</Text>
+        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
       </div>
       {children}
     </section>
@@ -185,8 +187,8 @@ function BranchDialog() {
                       aria-label="Registered portalled panel"
                       className="dialog-branch-panel"
                     >
-                      <strong>Registered branch</strong>
-                      <p>Focus remains owned by the active Dialog.</p>
+                      <Text weight="semibold">Registered branch</Text>
+                      <Text as="p" tone="secondary" variant="body-sm">Focus remains owned by the active Dialog.</Text>
                       <Button onPress={() => setBranchOpen(false)}>
                         Close portalled panel
                       </Button>
@@ -312,7 +314,7 @@ export function DialogPage() {
                   >
                     <Field.Root id="dialog-display-name">
                       <Field.Label>Display name</Field.Label>
-                      <input
+                      <Input
                         defaultValue="Ada Lovelace"
                         id="dialog-display-name-control"
                         name="displayName"
@@ -320,7 +322,7 @@ export function DialogPage() {
                     </Field.Root>
                     <Field.Root id="dialog-team-role">
                       <Field.Label>Team role</Field.Label>
-                      <input
+                      <Input
                         defaultValue="Product engineer"
                         id="dialog-team-role-control"
                         name="teamRole"
@@ -617,11 +619,11 @@ export function DialogPage() {
         <div className="dialog-customization-list">
           <article className="dialog-customization">
             <div>
-              <h4>Component CSS properties</h4>
-              <p>
+              <Text as="h4" variant="title-sm">Component CSS properties</Text>
+              <Text as="p" tone="secondary" variant="body-sm">
                 Public Dialog tokens change spacing, radius, and elevation
                 for this surface only.
-              </p>
+              </Text>
               <pre
                 aria-label="Dialog component token example"
                 tabIndex={0}
@@ -679,11 +681,11 @@ export function DialogPage() {
 
           <article className="dialog-customization">
             <div>
-              <h4>Consumer hooks</h4>
-              <p>
+              <Text as="h4" variant="title-sm">Consumer hooks</Text>
+              <Text as="p" tone="secondary" variant="body-sm">
                 className, style, and data-slot pass through for direct
                 local targeting without changing the Dialog API.
-              </p>
+              </Text>
               <pre
                 aria-label="Dialog consumer hook example"
                 tabIndex={0}
@@ -756,11 +758,11 @@ export function DialogPage() {
                 body={
                   <div className="dialog-long-copy">
                     {Array.from({ length: 12 }, (_, index) => (
-                      <p key={index}>
+                      <Text as="p" key={index}>
                         Section {index + 1}: realistic content remains
                         readable, wraps naturally, and stays inside the bounded
                         Body region.
-                      </p>
+                      </Text>
                     ))}
                   </div>
                 }

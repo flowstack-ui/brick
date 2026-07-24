@@ -1,3 +1,4 @@
+import { Text } from "@flowstack-ui/brick";
 import type { PlaygroundEntry } from "../app/component-registry.js";
 
 export function ComponentNavigation({
@@ -17,7 +18,7 @@ export function ComponentNavigation({
     <nav aria-label="Component navigation" className="evidence-navigation">
       {categories.map((category) => (
         <section className="evidence-navigation__group" key={category}>
-          <h2>{category}</h2>
+          <Text as="h2" variant="title-sm">{category}</Text>
           <ul>
             {entries
               .filter((entry) => entry.category === category)

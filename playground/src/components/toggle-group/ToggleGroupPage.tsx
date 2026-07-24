@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import {
+  Text,
   ToggleGroup,
   type ToggleShape,
   type ToggleSize,
@@ -17,7 +18,7 @@ function GridIcon() {
 }
 
 function EvidenceGroup({ children, description, title }: { children: ReactNode; description: string; title: string }) {
-  return <section className="toggle-group-evidence-group"><div className="toggle-group-evidence-group__heading"><h3>{title}</h3><p>{description}</p></div>{children}</section>;
+  return <section className="toggle-group-evidence-group"><div className="toggle-group-evidence-group__heading"><Text as="h3" variant="title-sm">{title}</Text><Text as="p" tone="secondary" variant="body-sm">{description}</Text></div>{children}</section>;
 }
 
 function Cell({ children, label }: { children: ReactNode; label: string }) {
@@ -149,7 +150,7 @@ export function ToggleGroupPage() {
             <div className="toggle-group-scoped-grid" data-testid="toggle-group-appearance"><div data-brick-appearance="light"><code>light</code><StandardGroup label="Light project view" /></div><div data-brick-appearance="dark"><code>dark</code><StandardGroup label="Dark project view" /></div></div>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <article className="toggle-group-customization"><div><h4>Group and shared Item CSS properties</h4><p>The Root gap and each Item’s radius, padding, and selected paint are customized visibly.</p><pre aria-label="ToggleGroup customization example" tabIndex={0}><code>{`.custom-toggle-group {
+            <article className="toggle-group-customization"><div><Text as="h4" variant="title-sm">Group and shared Item CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">The Root gap and each Item’s radius, padding, and selected paint are customized visibly.</Text><pre aria-label="ToggleGroup customization example" tabIndex={0}><code>{`.custom-toggle-group {
   --brick-toggle-group-gap: 1rem;
 }
 

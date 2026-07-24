@@ -6,20 +6,20 @@
     --brick-field-control-min-inline-size: 12rem;
     --brick-field-label-foreground: var(--brick-color-text-primary);
     --brick-field-label-foreground-disabled: var(--brick-color-text-secondary);
-    --brick-field-label-font-family: var(--brick-font-family-body);
-    --brick-field-label-font-size: var(--brick-font-size-md);
-    --brick-field-label-font-weight: var(--brick-font-weight-medium);
-    --brick-field-label-line-height: var(--brick-font-line-height-body);
+    --brick-field-label-font-family: var(--brick-typography-label-md-font-family);
+    --brick-field-label-font-size: var(--brick-typography-label-md-font-size);
+    --brick-field-label-font-weight: var(--brick-typography-label-md-font-weight);
+    --brick-field-label-line-height: var(--brick-typography-label-md-line-height);
     --brick-field-indicator-foreground: var(--brick-color-danger-text);
     --brick-field-indicator-gap: var(--brick-space-1);
     --brick-field-optional-foreground: var(--brick-color-text-secondary);
     --brick-field-description-foreground: var(--brick-color-text-secondary);
-    --brick-field-description-font-size: var(--brick-font-size-sm);
-    --brick-field-description-line-height: var(--brick-font-line-height-body);
+    --brick-field-description-font-size: var(--brick-typography-supporting-sm-font-size);
+    --brick-field-description-line-height: var(--brick-typography-supporting-sm-line-height);
     --brick-field-error-foreground: var(--brick-color-danger-text);
-    --brick-field-error-font-size: var(--brick-font-size-sm);
-    --brick-field-error-font-weight: var(--brick-font-weight-medium);
-    --brick-field-error-line-height: var(--brick-font-line-height-body);
+    --brick-field-error-font-size: var(--brick-typography-validation-sm-font-size);
+    --brick-field-error-font-weight: var(--brick-typography-validation-sm-font-weight);
+    --brick-field-error-line-height: var(--brick-typography-validation-sm-line-height);
 
     display: grid;
     min-inline-size: 0;
@@ -68,6 +68,7 @@
     font-family: var(--brick-field-label-font-family);
     font-size: var(--brick-field-label-font-size);
     font-weight: var(--brick-field-label-font-weight);
+    letter-spacing: var(--brick-typography-label-md-letter-spacing);
     line-height: var(--brick-field-label-line-height);
     overflow-wrap: anywhere;
   }
@@ -104,7 +105,10 @@
 
   .brick-field-description {
     color: var(--brick-field-description-foreground);
+    font-family: var(--brick-typography-supporting-sm-font-family);
     font-size: var(--brick-field-description-font-size);
+    font-weight: var(--brick-typography-supporting-sm-font-weight);
+    letter-spacing: var(--brick-typography-supporting-sm-letter-spacing);
     line-height: var(--brick-field-description-line-height);
   }
 
@@ -113,8 +117,10 @@
     border-inline-start: max(var(--brick-border-width), 0.125rem) solid
       var(--brick-field-error-foreground);
     color: var(--brick-field-error-foreground);
+    font-family: var(--brick-typography-validation-sm-font-family);
     font-size: var(--brick-field-error-font-size);
     font-weight: var(--brick-field-error-font-weight);
+    letter-spacing: var(--brick-typography-validation-sm-letter-spacing);
     line-height: var(--brick-field-error-line-height);
   }
 

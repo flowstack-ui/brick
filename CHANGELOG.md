@@ -26,6 +26,12 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   full-width or intrinsic layout, logical adornments, localized clear action,
   native text-like types, Field/Form composition, and public customization
   hooks.
+- `Text` with independent semantic hosts, eight visual type recipes, semantic
+  foregrounds, logical alignment, wrapping, truncation, clamping, and public
+  typography tokens.
+- Twenty-five shared semantic typography recipes for authored content,
+  component anatomy, field values, and controls, with complete light and dark
+  font-family, size, weight, line-height, and letter-spacing tuples.
 - `Card` with seven compound parts, three neutral surface variants, three
   sizes, controlled semantic containers and headings, and server-safe output.
 - `Badge` and `NotificationBadge` with passive inline recipes, deterministic
@@ -57,6 +63,13 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Fixed
 
+- Component typography now resolves through shared semantic recipes, with
+  automated drift verification across light and dark appearances.
+- Dialog, Alert Dialog, and Drawer titles now share one overlay-title tracking
+  value; Card and Popover title tracking follows their canonical surface and
+  compact-title recipes.
+- Muted text foregrounds retain readable contrast on supported light and dark
+  Brick surfaces.
 - Button full-width and intrinsic sizing now reflows without clipping at
   constrained widths or requiring the optional reset stylesheet.
 - Direct Button `href` remains the normal navigation path, while `asChild` is

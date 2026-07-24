@@ -16,6 +16,16 @@ test("renders and operates Brick through its public package", async ({ page }) =
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Build useful interfaces",
   );
+  const heroHeading = page.getByRole("heading", { level: 1 });
+  await expect(heroHeading).toHaveClass(/brick-text/);
+  await expect(heroHeading).toHaveAttribute("data-variant", "display");
+  await expect(heroHeading).toHaveAttribute("data-tone", "primary");
+  await expect(page.locator(".hero-copy")).toHaveAttribute("data-variant", "body-lg");
+  await expect(page.locator(".hero-copy")).toHaveAttribute("data-tone", "secondary");
+  await expect(page.locator(".brick-text.activity")).toHaveAttribute(
+    "data-tone",
+    "muted",
+  );
 
   const appBar = page.getByRole("banner", { name: "Primary" });
   await expect(appBar).toHaveClass(/brick-app-bar/);

@@ -102,6 +102,7 @@
     justify-content: center;
     background: var(--brick-avatar-background);
     color: var(--brick-avatar-foreground);
+    font-family: var(--brick-font-family-body);
     font-size: var(--brick-avatar-fallback-font-size);
     font-weight: var(--brick-font-weight-semibold);
     line-height: 1;

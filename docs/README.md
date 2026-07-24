@@ -39,6 +39,8 @@ This directory is the public documentation authority for
 
 ### Content and status
 
+- [Text](components/text/README.md) — semantic text with independent visual
+  typography
 - [Avatar](components/avatar/README.md) — identity image, fallback, and visual
   status
 - [Badge](components/badge/README.md) — passive inline labels

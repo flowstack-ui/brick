@@ -1,6 +1,7 @@
 import { type CSSProperties, type ReactNode } from "react";
 import {
   Badge,
+  Text,
   Button,
   type BadgeShape,
   type BadgeSize,
@@ -46,8 +47,8 @@ function EvidenceGroup({
   return (
     <section className="badge-evidence-group">
       <div className="badge-evidence-group__heading">
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <Text as="h3" variant="title-sm">{title}</Text>
+        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
       </div>
       {children}
     </section>
@@ -213,19 +214,19 @@ export function BadgePage() {
           >
             <div className="badge-specimen-grid badge-specimen-grid--three">
               <SpecimenCell label="heading">
-                <h3 className="badge-inline-context">
+                <Text as="h3" className="badge-inline-context" variant="title-sm">
                   Deployments <Badge>Healthy</Badge>
-                </h3>
+                </Text>
               </SpecimenCell>
               <SpecimenCell label="prose">
-                <p className="badge-inline-context">
+                <Text as="p" className="badge-inline-context">
                   Pending reviews <Badge>4</Badge>
-                </p>
+                </Text>
               </SpecimenCell>
               <SpecimenCell label="metadata">
-                <p className="badge-inline-context">
+                <Text as="p" className="badge-inline-context">
                   Environment <Badge>Staging</Badge>
-                </p>
+                </Text>
               </SpecimenCell>
             </div>
           </EvidenceGroup>
@@ -291,11 +292,11 @@ export function BadgePage() {
           >
             <article className="badge-customization">
               <div>
-                <h4>Component CSS properties</h4>
-                <p>
+                <Text as="h4" variant="title-sm">Component CSS properties</Text>
+                <Text as="p" tone="secondary" variant="body-sm">
                   Public Badge tokens replace the complete color recipe and
                   radius for this instance only.
-                </p>
+                </Text>
                 <pre
                   aria-label="Badge component token example"
                   tabIndex={0}
@@ -350,9 +351,9 @@ export function BadgePage() {
           >
             <div className="badge-stress-panel">
               <div className="badge-phone-frame" dir="rtl">
-                <p>
+                <Text as="p">
                   حالة الإصدار <Badge>قيد المراجعة</Badge>
-                </p>
+                </Text>
               </div>
             </div>
           </EvidenceGroup>

@@ -4,6 +4,7 @@ import {
   Button,
   Drawer,
   IconButton,
+  Text,
 } from "@flowstack-ui/brick";
 import {
   playgroundEntries,
@@ -112,9 +113,9 @@ export function PlaygroundShell({
           <div className="evidence-review-header">
             <div className="evidence-page-header">
               <div className="evidence-page-heading">
-                <p className="playground-kicker">@flowstack-ui/brick</p>
-                <h1>{pageTitle}</h1>
-                <p>{entry.description}</p>
+                <Text className="playground-kicker" variant="caption">@flowstack-ui/brick</Text>
+                <Text as="h1" variant="display">{pageTitle}</Text>
+                <Text as="p" tone="secondary">{entry.description}</Text>
               </div>
               <ReviewControls
                 appearance={appearance}
@@ -141,11 +142,11 @@ export function PlaygroundShell({
           <div data-playground-content="">{children}</div>
 
           <footer className="evidence-footer">
-            <p>
+            <Text as="p" tone="secondary" variant="body-sm">
               This route is deterministic evidence. Component behavior belongs
               to Brick and Atom; application workflow remains outside the
               package.
-            </p>
+            </Text>
             <Button href="#top" size="sm" tone="neutral" variant="ghost">
               Back to top
             </Button>

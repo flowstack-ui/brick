@@ -4,6 +4,11 @@ Dialog follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Title typography now uses the shared overlay-title recipe and its normalized
+  tracking.
+
 ### Added
 
 - Initial modal-only twelve-part `Dialog` compound namespace with Root, Trigger, Portal,

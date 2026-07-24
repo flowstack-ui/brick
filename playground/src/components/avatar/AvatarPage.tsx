@@ -2,6 +2,7 @@ import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   Avatar,
   Button,
+  Text,
   Fieldset,
   NotificationBadge,
   ToggleGroup,
@@ -46,8 +47,8 @@ function EvidenceGroup({
   return (
     <section className="avatar-evidence-group">
       <div className="avatar-evidence-group__heading">
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <Text as="h3" variant="title-sm">{title}</Text>
+        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
       </div>
       {children}
     </section>
@@ -225,7 +226,7 @@ export function AvatarPage() {
               src={interactiveSource}
             />
             <div>
-              <strong>Ada Lovelace</strong>
+              <Text weight="semibold">Ada Lovelace</Text>
               <span>Current source: {sourceMode}</span>
             </div>
           </div>
@@ -245,7 +246,7 @@ export function AvatarPage() {
               <SpecimenCell label="decorative beside text">
                 <div className="avatar-person-row">
                   <Avatar alt="" fallback="AL" />
-                  <strong>Ada Lovelace</strong>
+                  <Text weight="semibold">Ada Lovelace</Text>
                 </div>
               </SpecimenCell>
             </div>
@@ -262,7 +263,7 @@ export function AvatarPage() {
               >
                 Profile
               </Button>
-              <p aria-live="polite">{activation}</p>
+              <Text aria-live="polite" role="status" variant="body-sm">{activation}</Text>
             </div>
           </EvidenceGroup>
         </div>
@@ -355,11 +356,11 @@ export function AvatarPage() {
           >
             <article className="avatar-customization">
               <div>
-                <h4>Root and component CSS properties</h4>
-                <p>
+                <Text as="h4" variant="title-sm">Root and component CSS properties</Text>
+                <Text as="p" tone="secondary" variant="body-sm">
                   Root class, slot, native style, and public Avatar tokens
                   customize one rounded online identity.
-                </p>
+                </Text>
                 <pre aria-label="Avatar customization example" tabIndex={0}>
                   <code>{`<Avatar
   alt="Customized identity"
@@ -405,7 +406,7 @@ export function AvatarPage() {
               <div className="avatar-phone-frame">
                 <Avatar alt="" fallback="李" shape="rounded" status="offline" />
                 <div>
-                  <strong>李小龍</strong>
+                  <Text weight="semibold">李小龍</Text>
                   <span>
                     Offline · ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
                   </span>
@@ -421,7 +422,7 @@ export function AvatarPage() {
               <div className="avatar-phone-frame" dir="rtl">
                 <Avatar alt="" fallback="ن" status="away" />
                 <div>
-                  <strong>نور</strong>
+                  <Text weight="semibold">نور</Text>
                   <span>بعيد · حالة محلية طويلة لمساحة العمل</span>
                 </div>
               </div>

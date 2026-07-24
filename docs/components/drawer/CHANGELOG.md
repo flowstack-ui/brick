@@ -17,5 +17,7 @@ Drawer follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Title typography now uses the shared overlay-title recipe and its normalized
+  tracking.
 - Modal scroll locking no longer repositions the page or restores an obsolete
   scroll position during mobile browser toolbar changes.

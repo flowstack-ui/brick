@@ -13,6 +13,8 @@ Button follows the package version of `@flowstack-ui/brick`.
   `HTMLElement` ref, and mutually exclusive `asChild`/`render` composition.
 - Public Button tokens, stable root and content/icon classes, visual
   attributes, logical icon placement, and appearance/preference support.
+- Public family, weight, line-height, and letter-spacing variables backed by
+  the shared control typography recipes.
 
 ### Fixed
 

@@ -4,9 +4,11 @@
     --brick-input-padding-inline: var(--brick-space-3);
     --brick-input-gap: var(--brick-space-2);
     --brick-input-radius: var(--brick-radius-control);
-    --brick-input-font-family: var(--brick-font-family-body);
-    --brick-input-font-size: var(--brick-font-size-md);
-    --brick-input-line-height: var(--brick-font-line-height-body);
+    --brick-input-font-family: var(--brick-typography-field-value-md-font-family);
+    --brick-input-font-size: var(--brick-typography-field-value-md-font-size);
+    --brick-input-font-weight: var(--brick-typography-field-value-md-font-weight);
+    --brick-input-line-height: var(--brick-typography-field-value-md-line-height);
+    --brick-input-letter-spacing: var(--brick-typography-field-value-md-letter-spacing);
     --brick-input-background: var(--brick-color-surface-raised);
     --brick-input-foreground: var(--brick-color-text-primary);
     --brick-input-placeholder-foreground: var(--brick-color-text-muted);
@@ -85,7 +87,7 @@
     --brick-input-min-block-size: var(--brick-control-min-block-size-lg);
     --brick-input-padding-inline: var(--brick-space-4);
     --brick-input-gap: var(--brick-space-3);
-    --brick-input-font-size: 1.125rem;
+    --brick-input-font-size: var(--brick-typography-field-value-lg-font-size);
     --brick-input-adornment-size: 1.25rem;
     --brick-input-clear-target-size: 2.25rem;
     --brick-input-clear-icon-size: 1.125rem;
@@ -106,6 +108,8 @@
     color: inherit;
     font-family: var(--brick-input-font-family);
     font-size: var(--brick-input-font-size);
+    font-weight: var(--brick-input-font-weight);
+    letter-spacing: var(--brick-input-letter-spacing);
     line-height: var(--brick-input-line-height);
   }
 

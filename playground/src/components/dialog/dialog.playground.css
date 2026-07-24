@@ -108,23 +108,6 @@
   gap: var(--brick-space-2);
 }
 
-.dialog-profile-form input {
-  box-sizing: border-box;
-  inline-size: 100%;
-  min-block-size: 2.75rem;
-  padding-inline: var(--brick-space-3);
-  border: var(--brick-border-width) solid var(--brick-color-border-default);
-  border-radius: var(--brick-radius-control);
-  background: var(--brick-color-surface-base);
-  color: var(--brick-color-text-primary);
-  font: inherit;
-}
-
-.dialog-profile-form input:focus-visible {
-  outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
-  outline-offset: var(--brick-border-focus-offset);
-}
-
 .dialog-specimen-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);

@@ -2,4 +2,17 @@
 .popover-customization h3{margin:0}
 @container (min-width:48rem){.popover-scoped-grid{grid-template-columns:minmax(0,1fr)}}
 .popover-overview,.popover-specimen-cell,.popover-appearance-panel,.popover-stress-panel{background:var(--brick-color-surface-canvas)}
+
+/* Input owns its native control paint; this neutralizes the historical raw
+   input demo rule above while preserving the Field layout. */
+.popover-project-field .brick-input-control {
+  min-block-size: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
 .popover-persistent-preview{z-index:14}

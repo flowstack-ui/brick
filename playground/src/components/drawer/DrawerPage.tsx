@@ -10,6 +10,7 @@ import {
   Dialog,
   Drawer,
   Fieldset,
+  Text,
   type DrawerPlacement,
   type DrawerSize,
 } from "@flowstack-ui/brick";
@@ -42,8 +43,8 @@ function EvidenceGroup({
   return (
     <section className="drawer-evidence-group">
       <div className="drawer-evidence-group__heading">
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <Text as="h3" variant="title-sm">{title}</Text>
+        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
       </div>
       {children}
     </section>
@@ -191,8 +192,8 @@ function BranchDrawer() {
                       aria-label="Owned branch surface"
                       className="drawer-branch-panel"
                     >
-                      <strong>Registered branch</strong>
-                      <p>Focus remains owned by the active Drawer.</p>
+                      <Text weight="semibold">Registered branch</Text>
+                      <Text as="p" tone="secondary" variant="body-sm">Focus remains owned by the active Drawer.</Text>
                       <Button onPress={() => setBranchOpen(false)}>
                         Close branch surface
                       </Button>
@@ -642,11 +643,11 @@ export function DrawerPage() {
         <div className="drawer-customization-list">
           <article className="drawer-customization">
             <div>
-              <h4>Component CSS properties</h4>
-              <p>
+              <Text as="h4" variant="title-sm">Component CSS properties</Text>
+              <Text as="p" tone="secondary" variant="body-sm">
                 Public Drawer tokens change spacing, radius, and elevation for
                 this default end/medium surface only.
-              </p>
+              </Text>
               <pre
                 aria-label="Drawer component token example"
                 tabIndex={0}
@@ -704,11 +705,11 @@ export function DrawerPage() {
 
           <article className="drawer-customization">
             <div>
-              <h4>Consumer hooks</h4>
-              <p>
+              <Text as="h4" variant="title-sm">Consumer hooks</Text>
+              <Text as="p" tone="secondary" variant="body-sm">
                 Portal-safe class, style, and slot hooks customize a local
                 surface without changing Drawer behavior.
-              </p>
+              </Text>
               <pre
                 aria-label="Drawer consumer hook example"
                 tabIndex={0}
@@ -778,10 +779,10 @@ export function DrawerPage() {
                 body={
                   <div className="drawer-long-copy">
                     {Array.from({ length: 14 }, (_, index) => (
-                      <p key={index}>
+                      <Text as="p" key={index}>
                         Section {index + 1}: long filter guidance remains
                         readable inside the bounded Body region.
-                      </p>
+                      </Text>
                     ))}
                   </div>
                 }
@@ -801,11 +802,11 @@ export function DrawerPage() {
                 body={
                   <div className="drawer-long-copy">
                     {Array.from({ length: 12 }, (_, index) => (
-                      <p key={index}>
+                      <Text as="p" key={index}>
                         القسم {index + 1}: يبقى المحتوى الطويل داخل منطقة قابلة
                         للتمرير مع مرجع
                         ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.
-                      </p>
+                      </Text>
                     ))}
                   </div>
                 }

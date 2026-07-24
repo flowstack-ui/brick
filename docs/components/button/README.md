@@ -201,12 +201,17 @@ customization contracts.
 --brick-button-padding-inline
 --brick-button-gap
 --brick-button-radius
+--brick-button-font-family
 --brick-button-font-size
+--brick-button-font-weight
+--brick-button-line-height
+--brick-button-letter-spacing
 --brick-button-icon-size
 ```
 
 Internal tone-mapping and spinner variables used by the stylesheet are not
-public tokens.
+public tokens. The typography variables default to the matching
+`control-xs`–`control-xl` semantic recipes.
 
 ## Customization
 

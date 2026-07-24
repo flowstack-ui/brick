@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from "react";
-import { Button, Checkbox, Field, Form, type CheckboxSize } from "@flowstack-ui/brick";
+import { Button, Checkbox, Field, Form, Text, type CheckboxSize } from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -108,7 +108,7 @@ export function CheckboxPage() {
             <div className="forms-scoped-grid" data-testid="checkbox-appearance"><div data-brick-appearance="light"><code>light</code><Checkbox>Preview</Checkbox></div><div data-brick-appearance="dark"><code>dark</code><Checkbox>Preview</Checkbox></div></div>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <article className="forms-customization"><div><h4>Row and visual-control properties</h4><p>Slot, native style, and public Checkbox tokens visibly change the row and control.</p><pre aria-label="Checkbox customization example" tabIndex={0}><code>{`<Checkbox
+            <article className="forms-customization"><div><Text as="h4" variant="title-sm">Row and visual-control properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Checkbox tokens visibly change the row and control.</Text><pre aria-label="Checkbox customization example" tabIndex={0}><code>{`<Checkbox
   data-slot="custom-checkbox"
   defaultChecked
   style={{

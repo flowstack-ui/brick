@@ -4,20 +4,20 @@
     --brick-fieldset-control-gap: var(--brick-space-4);
     --brick-fieldset-legend-foreground: var(--brick-color-text-primary);
     --brick-fieldset-legend-foreground-disabled: var(--brick-color-text-secondary);
-    --brick-fieldset-legend-font-family: var(--brick-font-family-body);
-    --brick-fieldset-legend-font-size: var(--brick-font-size-md);
-    --brick-fieldset-legend-font-weight: var(--brick-font-weight-medium);
-    --brick-fieldset-legend-line-height: var(--brick-font-line-height-body);
+    --brick-fieldset-legend-font-family: var(--brick-typography-label-md-font-family);
+    --brick-fieldset-legend-font-size: var(--brick-typography-label-md-font-size);
+    --brick-fieldset-legend-font-weight: var(--brick-typography-label-md-font-weight);
+    --brick-fieldset-legend-line-height: var(--brick-typography-label-md-line-height);
     --brick-fieldset-indicator-foreground: var(--brick-color-danger-text);
     --brick-fieldset-indicator-gap: var(--brick-space-1);
     --brick-fieldset-optional-foreground: var(--brick-color-text-secondary);
     --brick-fieldset-description-foreground: var(--brick-color-text-secondary);
-    --brick-fieldset-description-font-size: var(--brick-font-size-sm);
-    --brick-fieldset-description-line-height: var(--brick-font-line-height-body);
+    --brick-fieldset-description-font-size: var(--brick-typography-supporting-sm-font-size);
+    --brick-fieldset-description-line-height: var(--brick-typography-supporting-sm-line-height);
     --brick-fieldset-error-foreground: var(--brick-color-danger-text);
-    --brick-fieldset-error-font-size: var(--brick-font-size-sm);
-    --brick-fieldset-error-font-weight: var(--brick-font-weight-medium);
-    --brick-fieldset-error-line-height: var(--brick-font-line-height-body);
+    --brick-fieldset-error-font-size: var(--brick-typography-validation-sm-font-size);
+    --brick-fieldset-error-font-weight: var(--brick-typography-validation-sm-font-weight);
+    --brick-fieldset-error-line-height: var(--brick-typography-validation-sm-line-height);
 
     display: block;
     min-inline-size: 0;
@@ -46,6 +46,7 @@
     font-family: var(--brick-fieldset-legend-font-family);
     font-size: var(--brick-fieldset-legend-font-size);
     font-weight: var(--brick-fieldset-legend-font-weight);
+    letter-spacing: var(--brick-typography-label-md-letter-spacing);
     line-height: var(--brick-fieldset-legend-line-height);
     overflow-wrap: anywhere;
   }
@@ -75,7 +76,10 @@
 
   .brick-fieldset-description {
     color: var(--brick-fieldset-description-foreground);
+    font-family: var(--brick-typography-supporting-sm-font-family);
     font-size: var(--brick-fieldset-description-font-size);
+    font-weight: var(--brick-typography-supporting-sm-font-weight);
+    letter-spacing: var(--brick-typography-supporting-sm-letter-spacing);
     line-height: var(--brick-fieldset-description-line-height);
   }
 
@@ -84,8 +88,10 @@
     padding-block-start: var(--brick-fieldset-control-gap);
     padding-inline-start: var(--brick-space-2);
     color: var(--brick-fieldset-error-foreground);
+    font-family: var(--brick-typography-validation-sm-font-family);
     font-size: var(--brick-fieldset-error-font-size);
     font-weight: var(--brick-fieldset-error-font-weight);
+    letter-spacing: var(--brick-typography-validation-sm-letter-spacing);
     line-height: var(--brick-fieldset-error-line-height);
   }
 

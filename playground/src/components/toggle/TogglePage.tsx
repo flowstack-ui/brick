@@ -1,5 +1,6 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  Text,
   Toggle,
   type ToggleShape,
   type ToggleSize,
@@ -44,8 +45,8 @@ function EvidenceGroup({ children, description, title }: {
   return (
     <section className="toggle-evidence-group">
       <div className="toggle-evidence-group__heading">
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <Text as="h3" variant="title-sm">{title}</Text>
+        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
       </div>
       {children}
     </section>
@@ -236,8 +237,8 @@ export function TogglePage() {
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
             <article className="toggle-customization">
               <div>
-                <h4>Root and component CSS properties</h4>
-                <p>Native style, slot, and public Toggle geometry tokens visibly customize the control itself.</p>
+                <Text as="h4" variant="title-sm">Root and component CSS properties</Text>
+                <Text as="p" tone="secondary" variant="body-sm">Native style, slot, and public Toggle geometry tokens visibly customize the control itself.</Text>
                 <pre aria-label="Toggle customization example" tabIndex={0}><code>{`<Toggle
   data-slot="custom-toggle"
   style={{

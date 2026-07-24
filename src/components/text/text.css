@@ -1,0 +1,190 @@
+@layer brick.components {
+  .brick-text {
+    --brick-text-font-family: var(--brick-typography-body-md-font-family);
+    --brick-text-font-size: var(--brick-typography-body-md-font-size);
+    --brick-text-font-weight: var(--brick-typography-body-md-font-weight);
+    --brick-text-line-height: var(--brick-typography-body-md-line-height);
+    --brick-text-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    --brick-text-foreground: var(--brick-color-text-primary);
+
+    margin: 0;
+    color: var(--brick-text-foreground);
+    font-family: var(--brick-text-font-family);
+    font-size: var(--brick-text-font-size);
+    font-weight: var(--brick-text-font-weight);
+    letter-spacing: var(--brick-text-letter-spacing);
+    line-height: var(--brick-text-line-height);
+    overflow-wrap: break-word;
+    text-align: start;
+    text-wrap: wrap;
+  }
+
+  .brick-text[data-variant="display"] {
+    --brick-text-font-family: var(--brick-typography-display-font-family);
+    --brick-text-font-size: var(--brick-typography-display-font-size);
+    --brick-text-font-weight: var(--brick-typography-display-font-weight);
+    --brick-text-line-height: var(--brick-typography-display-line-height);
+    --brick-text-letter-spacing: var(--brick-typography-display-letter-spacing);
+  }
+
+  .brick-text[data-variant="title-lg"] {
+    --brick-text-font-family: var(--brick-typography-title-lg-font-family);
+    --brick-text-font-size: var(--brick-typography-title-lg-font-size);
+    --brick-text-font-weight: var(--brick-typography-title-lg-font-weight);
+    --brick-text-line-height: var(--brick-typography-title-lg-line-height);
+    --brick-text-letter-spacing: var(--brick-typography-title-lg-letter-spacing);
+  }
+
+  .brick-text[data-variant="title-md"] {
+    --brick-text-font-family: var(--brick-typography-title-md-font-family);
+    --brick-text-font-size: var(--brick-typography-title-md-font-size);
+    --brick-text-font-weight: var(--brick-typography-title-md-font-weight);
+    --brick-text-line-height: var(--brick-typography-title-md-line-height);
+    --brick-text-letter-spacing: var(--brick-typography-title-md-letter-spacing);
+  }
+
+  .brick-text[data-variant="title-sm"] {
+    --brick-text-font-family: var(--brick-typography-title-sm-font-family);
+    --brick-text-font-size: var(--brick-typography-title-sm-font-size);
+    --brick-text-font-weight: var(--brick-typography-title-sm-font-weight);
+    --brick-text-line-height: var(--brick-typography-title-sm-line-height);
+    --brick-text-letter-spacing: var(--brick-typography-title-sm-letter-spacing);
+  }
+
+  .brick-text[data-variant="body-lg"] {
+    --brick-text-font-family: var(--brick-typography-body-lg-font-family);
+    --brick-text-font-size: var(--brick-typography-body-lg-font-size);
+    --brick-text-font-weight: var(--brick-typography-body-lg-font-weight);
+    --brick-text-line-height: var(--brick-typography-body-lg-line-height);
+    --brick-text-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+  }
+
+  .brick-text[data-variant="body-sm"] {
+    --brick-text-font-family: var(--brick-typography-body-sm-font-family);
+    --brick-text-font-size: var(--brick-typography-body-sm-font-size);
+    --brick-text-font-weight: var(--brick-typography-body-sm-font-weight);
+    --brick-text-line-height: var(--brick-typography-body-sm-line-height);
+    --brick-text-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+  }
+
+  .brick-text[data-variant="caption"] {
+    --brick-text-font-family: var(--brick-typography-caption-font-family);
+    --brick-text-font-size: var(--brick-typography-caption-font-size);
+    --brick-text-font-weight: var(--brick-typography-caption-font-weight);
+    --brick-text-line-height: var(--brick-typography-caption-line-height);
+    --brick-text-letter-spacing: var(--brick-typography-caption-letter-spacing);
+  }
+
+  .brick-text[data-tone="inherit"] {
+    --brick-text-foreground: currentColor;
+  }
+
+  .brick-text[data-tone="secondary"] {
+    --brick-text-foreground: var(--brick-color-text-secondary);
+  }
+
+  .brick-text[data-tone="muted"] {
+    --brick-text-foreground: var(--brick-color-text-muted);
+  }
+
+  .brick-text[data-tone="accent"] {
+    --brick-text-foreground: var(--brick-color-accent-text);
+  }
+
+  .brick-text[data-tone="info"] {
+    --brick-text-foreground: var(--brick-color-info-text);
+  }
+
+  .brick-text[data-tone="success"] {
+    --brick-text-foreground: var(--brick-color-success-text);
+  }
+
+  .brick-text[data-tone="warning"] {
+    --brick-text-foreground: var(--brick-color-warning-text);
+  }
+
+  .brick-text[data-tone="danger"] {
+    --brick-text-foreground: var(--brick-color-danger-text);
+  }
+
+  .brick-text[data-weight="inherit"] {
+    --brick-text-font-weight: inherit;
+  }
+
+  .brick-text[data-weight="regular"] {
+    --brick-text-font-weight: var(--brick-font-weight-regular);
+  }
+
+  .brick-text[data-weight="medium"] {
+    --brick-text-font-weight: var(--brick-font-weight-medium);
+  }
+
+  .brick-text[data-weight="semibold"] {
+    --brick-text-font-weight: var(--brick-font-weight-semibold);
+  }
+
+  .brick-text[data-align="start"] {
+    text-align: start;
+  }
+
+  .brick-text[data-align="center"] {
+    text-align: center;
+  }
+
+  .brick-text[data-align="end"] {
+    text-align: end;
+  }
+
+  .brick-text[data-wrap="nowrap"] {
+    text-wrap: nowrap;
+  }
+
+  .brick-text[data-wrap="balance"] {
+    text-wrap: balance;
+  }
+
+  .brick-text[data-wrap="pretty"] {
+    text-wrap: pretty;
+  }
+
+  .brick-text[data-truncate] {
+    display: block;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .brick-text[data-line-clamp] {
+    display: -webkit-box;
+    min-inline-size: 0;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+  }
+
+  .brick-text[data-line-clamp="2"] {
+    -webkit-line-clamp: 2;
+  }
+
+  .brick-text[data-line-clamp="3"] {
+    -webkit-line-clamp: 3;
+  }
+
+  .brick-text[data-line-clamp="4"] {
+    -webkit-line-clamp: 4;
+  }
+
+  .brick-text[data-line-clamp="5"] {
+    -webkit-line-clamp: 5;
+  }
+
+  .brick-text[data-line-clamp="6"] {
+    -webkit-line-clamp: 6;
+  }
+
+  @media (forced-colors: active) {
+    .brick-text:not([data-tone="inherit"]) {
+      --brick-text-foreground: CanvasText;
+    }
+  }
+}

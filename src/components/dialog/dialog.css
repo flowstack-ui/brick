@@ -83,17 +83,20 @@
 
   .brick-dialog-title {
     color: var(--brick-color-text-primary);
-    font-family: var(--brick-font-family-heading);
-    font-size: var(--brick-font-size-lg);
-    font-weight: var(--brick-font-weight-semibold);
-    letter-spacing: -0.02em;
-    line-height: var(--brick-font-line-height-tight);
+    font-family: var(--brick-typography-overlay-title-font-family);
+    font-size: var(--brick-typography-overlay-title-font-size);
+    font-weight: var(--brick-typography-overlay-title-font-weight);
+    letter-spacing: var(--brick-typography-overlay-title-letter-spacing);
+    line-height: var(--brick-typography-overlay-title-line-height);
   }
 
   .brick-dialog-description {
     color: var(--brick-color-text-secondary);
-    font-size: var(--brick-font-size-sm);
-    line-height: var(--brick-font-line-height-body);
+    font-family: var(--brick-typography-supporting-sm-font-family);
+    font-size: var(--brick-typography-supporting-sm-font-size);
+    font-weight: var(--brick-typography-supporting-sm-font-weight);
+    letter-spacing: var(--brick-typography-supporting-sm-letter-spacing);
+    line-height: var(--brick-typography-supporting-sm-line-height);
   }
 
   .brick-dialog-body {
@@ -105,7 +108,7 @@
     overflow: auto;
     overscroll-behavior: contain;
     color: var(--brick-color-text-primary);
-    line-height: var(--brick-font-line-height-body);
+    line-height: var(--brick-typography-body-md-line-height);
     scrollbar-gutter: stable;
   }
 

@@ -39,9 +39,11 @@
     background: transparent;
     color: var(--brick-checkbox-label-foreground);
     font: inherit;
-    font-family: var(--brick-font-family-body);
-    font-size: var(--brick-font-size-md);
-    line-height: var(--brick-font-line-height-body);
+    font-family: var(--brick-typography-body-md-font-family);
+    font-size: var(--brick-typography-body-md-font-size);
+    font-weight: var(--brick-typography-body-md-font-weight);
+    letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    line-height: var(--brick-typography-body-md-line-height);
     overflow-wrap: anywhere;
     text-align: start;
     text-decoration: none;

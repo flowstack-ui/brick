@@ -3,7 +3,9 @@ import {
   Button,
   Checkbox,
   Field,
+  Input,
   Popover,
+  Text,
   type PopoverSize,
 } from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
@@ -21,7 +23,7 @@ const customTokens = {
 } as CSSProperties;
 
 function EvidenceGroup({ children, description, title }: { children: ReactNode; description: string; title: string }) {
-  return <section className="popover-evidence-group"><div className="popover-evidence-group__heading"><h3>{title}</h3><p>{description}</p></div>{children}</section>;
+  return <section className="popover-evidence-group"><div className="popover-evidence-group__heading"><Text as="h3" variant="title-sm">{title}</Text><Text as="p" tone="secondary" variant="body-sm">{description}</Text></div>{children}</section>;
 }
 
 function Cell({ children, label }: { children: ReactNode; label: string }) {
@@ -35,7 +37,7 @@ function SettingsContent({ label }: { label: string }) {
     <Popover.Body>
       <Field.Root className="popover-project-field">
         <Field.Label>Project name</Field.Label>
-        <input defaultValue="Analytical Engine" />
+        <Input defaultValue="Analytical Engine" />
       </Field.Root>
       <Checkbox defaultChecked>Share activity updates</Checkbox>
     </Popover.Body>
@@ -84,7 +86,7 @@ export function PopoverPage() {
 
     <Scenario {...popoverScenarios[2]}><div className="popover-evidence-stack" data-testid="popover-anatomy">
       <EvidenceGroup description="Direct Title and Description let Atom generate server-stable dialog relationships." title="Direct semantic parts"><div className="popover-overview"><SettingsPopover label="Direct semantic settings" /></div></EvidenceGroup>
-      <EvidenceGroup description="Header is visual only, so native semantic text uses explicit IDs and matching native ARIA on Content." title="Authored Header semantics"><div className="popover-overview"><Popover.Root><Popover.Trigger asChild><Button tone="neutral" variant="outline">Inspect anatomy</Button></Popover.Trigger><Popover.Portal><Popover.Content aria-describedby="custom-popover-description" aria-labelledby="custom-popover-title"><Popover.Header><h3 data-slot="popover-title" id="custom-popover-title">Custom workspace panel</h3><p data-slot="popover-description" id="custom-popover-description">Explicit native ARIA supports native semantic text inside the visual Header.</p></Popover.Header><Popover.Body>Header, Body, and Footer remain presentational layout parts.</Popover.Body><Popover.Footer><Popover.Close asChild><Button>Close anatomy</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root></div></EvidenceGroup>
+      <EvidenceGroup description="Header is visual only, so authored semantic text uses explicit IDs and matching native ARIA on Content." title="Authored Header semantics"><div className="popover-overview"><Popover.Root><Popover.Trigger asChild><Button tone="neutral" variant="outline">Inspect anatomy</Button></Popover.Trigger><Popover.Portal><Popover.Content aria-describedby="custom-popover-description" aria-labelledby="custom-popover-title"><Popover.Header><Text as="h3" data-slot="popover-title" id="custom-popover-title" variant="title-sm">Custom workspace panel</Text><Text as="p" data-slot="popover-description" id="custom-popover-description" tone="secondary" variant="body-sm">Explicit ARIA supports authored semantic Text inside the visual Header.</Text></Popover.Header><Popover.Body>Header, Body, and Footer remain presentational layout parts.</Popover.Body><Popover.Footer><Popover.Close asChild><Button>Close anatomy</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root></div></EvidenceGroup>
     </div></Scenario>
 
     <Scenario {...popoverScenarios[3]}><div className="popover-evidence-stack" data-testid="popover-placement">
@@ -106,7 +108,7 @@ export function PopoverPage() {
 
     <Scenario {...popoverScenarios[6]}><div className="popover-scoped-grid" data-testid="popover-appearance"><ScopedPopover appearance="light" /><ScopedPopover appearance="dark" /></div></Scenario>
 
-    <Scenario {...popoverScenarios[7]}><article className="popover-customization"><div><h3>Content CSS properties</h3><p>Content class, slot, native style, and public surface tokens remain local.</p><pre aria-label="Popover customization example" tabIndex={0}><code>{`<Popover.Content
+    <Scenario {...popoverScenarios[7]}><article className="popover-customization"><div><Text as="h3" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Content class, slot, native style, and public surface tokens remain local.</Text><pre aria-label="Popover customization example" tabIndex={0}><code>{`<Popover.Content
   className="custom-popover"
   data-slot="custom-popover"
   style={{
@@ -122,7 +124,7 @@ export function PopoverPage() {
 </Popover.Content>`}</code></pre></div><div className="popover-customization__preview"><Popover.Root defaultOpen><Popover.Trigger asChild><Button tone="neutral" variant="outline">Custom settings</Button></Popover.Trigger><Popover.Portal><Popover.Content className="custom-popover popover-persistent-preview" data-slot="custom-popover" style={customTokens}><SettingsContent label="Customized settings" /></Popover.Content></Popover.Portal></Popover.Root></div></article></Scenario>
 
     <Scenario {...popoverScenarios[8]}><div className="popover-evidence-stack" data-testid="popover-stress">
-      <EvidenceGroup description="A long title, scrollable Body, and complete Footer remain reachable inside a 20rem frame." title="Constrained-width stress"><div className="popover-stress-panel"><div className="popover-phone-frame"><Popover.Root><Popover.Trigger asChild><Button tone="neutral" variant="outline">Open long settings</Button></Popover.Trigger><Popover.Portal><Popover.Content align="start" size="lg"><Popover.Title>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break</Popover.Title><Popover.Description>A deliberately long localized description remains readable and contained.</Popover.Description><Popover.Body><div className="popover-long-copy">{Array.from({ length: 8 }, (_, index) => <p key={index}>Compact setting {index + 1} remains reachable at high zoom.</p>)}</div></Popover.Body><Popover.Footer><Button tone="neutral" variant="outline">Reset all settings</Button><Popover.Close asChild><Button>Save workspace settings</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root></div></div></EvidenceGroup>
+      <EvidenceGroup description="A long title, scrollable Body, and complete Footer remain reachable inside a 20rem frame." title="Constrained-width stress"><div className="popover-stress-panel"><div className="popover-phone-frame"><Popover.Root><Popover.Trigger asChild><Button tone="neutral" variant="outline">Open long settings</Button></Popover.Trigger><Popover.Portal><Popover.Content align="start" size="lg"><Popover.Title>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break</Popover.Title><Popover.Description>A deliberately long localized description remains readable and contained.</Popover.Description><Popover.Body><div className="popover-long-copy">{Array.from({ length: 8 }, (_, index) => <Text as="p" key={index}>Compact setting {index + 1} remains reachable at high zoom.</Text>)}</div></Popover.Body><Popover.Footer><Button tone="neutral" variant="outline">Reset all settings</Button><Popover.Close asChild><Button>Save workspace settings</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root></div></div></EvidenceGroup>
       <EvidenceGroup description="Popover and its authored controls inherit genuine right-to-left direction through the portal." title="RTL inheritance"><div className="popover-stress-panel"><div className="popover-phone-frame" dir="rtl"><Popover.Root><Popover.Trigger asChild><Button tone="neutral" variant="outline">فتح إعدادات المشروع</Button></Popover.Trigger><Popover.Portal><Popover.Content align="end"><Popover.Title>إعدادات المشروع</Popover.Title><Popover.Description>غيّر الخيارات المختصرة بدون مغادرة مساحة العمل.</Popover.Description><Popover.Body><Checkbox defaultChecked>مشاركة تحديثات النشاط</Checkbox></Popover.Body><Popover.Footer><Popover.Close asChild><Button>تم</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root></div></div></EvidenceGroup>
     </div></Scenario>
   </div>;

@@ -3,6 +3,7 @@ import {
   Avatar,
   IconButton,
   NotificationBadge,
+  Text,
   type BadgeTone,
   type NotificationBadgeOverlap,
   type NotificationBadgePlacement,
@@ -73,8 +74,8 @@ function EvidenceGroup({
   return (
     <section className="notification-badge-evidence-group">
       <div className="notification-badge-evidence-group__heading">
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <Text as="h3" variant="title-sm">{title}</Text>
+        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
       </div>
       {children}
     </section>
@@ -304,10 +305,10 @@ export function NotificationBadgePage() {
           <NotificationBadge count={12}>
             <MailTarget label="Inbox, 12 unread messages" />
           </NotificationBadge>
-          <p>
+          <Text as="p" tone="secondary">
             The visual “12” is supplemental. The action’s accessible name owns
             the complete localized meaning.
-          </p>
+          </Text>
         </div>
       </Scenario>
 
@@ -341,11 +342,11 @@ export function NotificationBadgePage() {
           >
             <article className="notification-badge-customization">
               <div>
-                <h4>Wrapper and component CSS properties</h4>
-                <p>
+                <Text as="h4" variant="title-sm">Wrapper and component CSS properties</Text>
+                <Text as="p" tone="secondary" variant="body-sm">
                   Root class, slot, native style, and public indicator tokens
                   remain local to this composition.
-                </p>
+                </Text>
                 <pre
                   aria-label="NotificationBadge customization example"
                   tabIndex={0}

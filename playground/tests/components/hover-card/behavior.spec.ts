@@ -40,6 +40,7 @@ test("HoverCard remains open across the pointer bridge and contains no interacti
   test.skip(isMobile, "Pointer-bridge behavior requires a hover-capable project");
   await page.goto("/hover-card");
   const trigger = page.getByRole("link", { name: "Grace Hopper" });
+  await trigger.evaluate((element) => element.scrollIntoView({ block: "center" }));
   await trigger.hover();
   const content = page.locator("[data-slot='hover-card']").filter({ hasText: "compiler pioneer" });
   await expect(content).toBeVisible();

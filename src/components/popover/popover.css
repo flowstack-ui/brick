@@ -105,17 +105,20 @@
 
   .brick-popover :where([data-slot="popover-title"]) {
     color: var(--brick-popover-foreground);
-    font-family: var(--brick-font-family-heading);
-    font-size: var(--brick-font-size-md);
-    font-weight: var(--brick-font-weight-semibold);
-    letter-spacing: -0.015em;
-    line-height: var(--brick-font-line-height-tight);
+    font-family: var(--brick-typography-compact-title-lg-font-family);
+    font-size: var(--brick-typography-compact-title-lg-font-size);
+    font-weight: var(--brick-typography-compact-title-lg-font-weight);
+    letter-spacing: var(--brick-typography-compact-title-lg-letter-spacing);
+    line-height: var(--brick-typography-compact-title-lg-line-height);
   }
 
   .brick-popover :where([data-slot="popover-description"]) {
     color: var(--brick-popover-muted-foreground);
-    font-size: var(--brick-font-size-sm);
-    line-height: var(--brick-font-line-height-body);
+    font-family: var(--brick-typography-supporting-sm-font-family);
+    font-size: var(--brick-typography-supporting-sm-font-size);
+    font-weight: var(--brick-typography-supporting-sm-font-weight);
+    letter-spacing: var(--brick-typography-supporting-sm-letter-spacing);
+    line-height: var(--brick-typography-supporting-sm-line-height);
   }
 
   .brick-popover__body {
@@ -126,7 +129,7 @@
     overflow: auto;
     overscroll-behavior: contain;
     color: var(--brick-popover-foreground);
-    line-height: var(--brick-font-line-height-body);
+    line-height: var(--brick-typography-body-md-line-height);
     scrollbar-gutter: stable;
   }
 

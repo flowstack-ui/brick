@@ -38,7 +38,7 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, HoverCard, IconButton, Input, NotificationBadge, Popover, Toggle, ToggleGroup } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, HoverCard, IconButton, Input, NotificationBadge, Popover, Text, Toggle, ToggleGroup } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -54,6 +54,7 @@ import { Popover as SubpathPopover } from "@flowstack-ui/brick/popover";
 import { Checkbox as SubpathCheckbox } from "@flowstack-ui/brick/checkbox";
 import { CheckboxGroup as SubpathCheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 import { Input as SubpathInput } from "@flowstack-ui/brick/input";
+import { Text as SubpathText } from "@flowstack-ui/brick/text";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { readFile } from "node:fs/promises";
@@ -72,6 +73,7 @@ if (Popover !== SubpathPopover || Object.keys(SubpathPopover).length !== 12) thr
 if (Checkbox !== SubpathCheckbox) throw new Error("Checkbox subpath export mismatch");
 if (CheckboxGroup !== SubpathCheckboxGroup || Object.keys(SubpathCheckboxGroup).length !== 5) throw new Error("CheckboxGroup subpath smoke failed");
 if (Input !== SubpathInput) throw new Error("Input subpath export mismatch");
+if (Text !== SubpathText) throw new Error("Text subpath export mismatch");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
 const iconButtonMarkup = renderToString(React.createElement(IconButton, { "aria-label": "Search" }, React.createElement("svg")));
@@ -96,15 +98,17 @@ const checkboxGroupMarkup = renderToString(React.createElement(CheckboxGroup.Roo
 if (!checkboxGroupMarkup.includes("brick-checkbox-group") || !checkboxGroupMarkup.includes("brick-checkbox-group-item")) throw new Error("CheckboxGroup SSR smoke failed");
 const inputMarkup = renderToString(React.createElement(Input, { "aria-label": "Search", defaultValue: "Brick", clearable: true }));
 if (!inputMarkup.includes("brick-input") || !inputMarkup.includes('aria-label="Clear input"')) throw new Error("Input SSR smoke failed");
+const textMarkup = renderToString(React.createElement(Text, { as: "h2", variant: "title-sm" }, "Text consumer"));
+if (!textMarkup.includes("brick-text") || !textMarkup.includes('data-variant="title-sm"')) throw new Error("Text SSR smoke failed");
 if (!SubpathTooltip || Object.keys(SubpathTooltip).length !== 8) throw new Error("Tooltip subpath smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
-if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover") || !css.includes(".brick-checkbox") || !css.includes(".brick-checkbox-group") || !css.includes(".brick-input")) throw new Error("CSS export missing");
+if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover") || !css.includes(".brick-checkbox") || !css.includes(".brick-checkbox-group") || !css.includes(".brick-input") || !css.includes(".brick-text")) throw new Error("CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
 	`import { createElement } from "react";
-import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, HoverCard, IconButton, Input, NotificationBadge, Popover, Toggle, ToggleGroup, type AppBarRootProps, type AvatarProps, type BadgeProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type NotificationBadgeProps, type PopoverContentProps, type ToggleProps, type ToggleGroupRootProps } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, HoverCard, IconButton, Input, NotificationBadge, Popover, Text, Toggle, ToggleGroup, type AppBarRootProps, type AvatarProps, type BadgeProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type NotificationBadgeProps, type PopoverContentProps, type TextProps, type ToggleProps, type ToggleGroupRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -125,6 +129,7 @@ const popoverProps: PopoverContentProps = { "aria-label": "Settings", children: 
 const checkboxProps: CheckboxProps = { children: "Terms", defaultChecked: "indeterminate", size: "lg" };
 const checkboxGroupProps: CheckboxGroupRootProps = { "aria-label": "Channels", allValues: ["email"], children: createElement(CheckboxGroup.Item, { value: "email" }, "Email") };
 const inputProps: InputProps = { "aria-label": "Search", clearable: true, startAdornment: "Search" };
+const textProps: TextProps = { as: "h2", children: "Consumer", variant: "title-sm" };
 void AlertDialog;
 void SubpathAlertDialog;
 void Button;
@@ -160,6 +165,8 @@ void checkboxProps;
 void checkboxGroupProps;
 void Input;
 void inputProps;
+void Text;
+void textProps;
 `,
     );
     await writeFile(

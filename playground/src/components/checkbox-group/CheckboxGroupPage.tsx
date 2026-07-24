@@ -4,6 +4,7 @@ import {
   CheckboxGroup,
   Fieldset,
   Form,
+  Text,
   type CheckboxSize,
 } from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
@@ -215,7 +216,7 @@ export function CheckboxGroupPage() {
             <div className="forms-scoped-grid" data-testid="checkbox-group-appearance"><div data-brick-appearance="light"><code>light</code><CheckboxGroup.Root aria-label="Light delivery methods"><DefaultItems /></CheckboxGroup.Root></div><div data-brick-appearance="dark"><code>dark</code><CheckboxGroup.Root aria-label="Dark delivery methods"><DefaultItems /></CheckboxGroup.Root></div></div>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <article className="forms-customization"><div><h4>Group and item properties</h4><p>Public group gap and inherited Checkbox tokens visibly change this group.</p><pre aria-label="CheckboxGroup customization example" tabIndex={0}><code>{`<CheckboxGroup.Root
+            <article className="forms-customization"><div><Text as="h4" variant="title-sm">Group and item properties</Text><Text as="p" tone="secondary" variant="body-sm">Public group gap and inherited Checkbox tokens visibly change this group.</Text><pre aria-label="CheckboxGroup customization example" tabIndex={0}><code>{`<CheckboxGroup.Root
   defaultValue={["email"]}
   style={{
     "--brick-checkbox-group-gap": "1.25rem",

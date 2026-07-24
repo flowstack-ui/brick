@@ -3,6 +3,8 @@ import {
   Button,
   Field,
   Form,
+  Input,
+  Text,
   type ButtonShape,
   type ButtonSize,
   type ButtonTone,
@@ -48,8 +50,8 @@ function EvidenceGroup({
   return (
     <section className="button-evidence-group">
       <div className="button-evidence-group__heading">
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <Text as="h3" variant="title-sm">{title}</Text>
+        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
       </div>
       {children}
     </section>
@@ -333,7 +335,7 @@ export function ButtonPage() {
           >
             <Field.Root id="button-project">
               <Field.Label>Project name</Field.Label>
-              <input
+              <Input
                 defaultValue="Mobile storefront"
                 id="button-project-control"
                 name="project"
@@ -343,9 +345,9 @@ export function ButtonPage() {
             <Button tone="neutral" type="reset">
               Reset
             </Button>
-            <p aria-live="polite" className="button-form-status">
+            <Text aria-live="polite" className="button-form-status" role="status" variant="body-sm">
               {formStatus}
-            </p>
+            </Text>
           </Form>
         </EvidenceGroup>
       </Scenario>
@@ -374,11 +376,11 @@ export function ButtonPage() {
           <div className="button-customization-list">
             <article className="button-customization">
               <div>
-                <h4>Component CSS properties</h4>
-                <p>
+                <Text as="h4" variant="title-sm">Component CSS properties</Text>
+                <Text as="p" tone="secondary" variant="body-sm">
                   Public Button tokens replace the solid recipe colors within
                   this instance only.
-                </p>
+                </Text>
                 <pre
                   aria-label="Button component token example"
                   tabIndex={0}
@@ -403,11 +405,11 @@ export function ButtonPage() {
 
             <article className="button-customization">
               <div>
-                <h4>Consumer hooks</h4>
-                <p>
+                <Text as="h4" variant="title-sm">Consumer hooks</Text>
+                <Text as="p" tone="secondary" variant="body-sm">
                   className, style, and data-slot pass through for local
                   targeting without changing the Button API.
-                </p>
+                </Text>
                 <pre aria-label="Button consumer hook example" tabIndex={0}>
                   <code>{`.button-page .dashed-action {
   --brick-button-background: transparent;
@@ -449,7 +451,7 @@ export function ButtonPage() {
           >
             <div className="button-stress-panel">
               <div className="phone-frame">
-                <p>20rem constrained canvas</p>
+                <Text as="p" variant="body-sm">20rem constrained canvas</Text>
                 <Button fullWidth>
                   Continue with the carefully selected delivery preferences
                 </Button>
@@ -463,7 +465,7 @@ export function ButtonPage() {
           >
             <div className="button-stress-panel">
               <div className="phone-frame" dir="rtl">
-                <p>Genuine right-to-left content</p>
+                <Text as="p" variant="body-sm">Genuine right-to-left content</Text>
                 <Button
                   endIcon={<ArrowIcon />}
                 >

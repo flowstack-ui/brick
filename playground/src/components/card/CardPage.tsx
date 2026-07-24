@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   IconButton,
+  Text,
   type CardRootElement,
   type CardRootProps,
   type CardSize,
@@ -40,8 +41,8 @@ function EvidenceGroup({
   return (
     <section className="card-evidence-group">
       <div className="card-evidence-group__heading">
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <Text as="h3" variant="title-sm">{title}</Text>
+        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
       </div>
       {children}
     </section>
@@ -163,8 +164,8 @@ export function CardPage() {
               </Card.Action>
             </Card.Header>
             <Card.Content>
-              <p className="card-overview__metric">24.8%</p>
-              <p>Conversion improved across every mobile checkout step.</p>
+              <Text as="p" className="card-overview__metric" variant="title-lg">24.8%</Text>
+              <Text as="p" tone="secondary">Conversion improved across every mobile checkout step.</Text>
             </Card.Content>
             <Card.Footer>
               <Button>Open report</Button>
@@ -210,8 +211,8 @@ export function CardPage() {
           <SpecimenCell label="Content">
             <Card.Root data-testid="card-anatomy-content">
               <Card.Content>
-                <strong>Content only</strong>
-                <p>No empty header or footer is rendered.</p>
+                <Text weight="semibold">Content only</Text>
+                <Text as="p" tone="secondary" variant="body-sm">No empty header or footer is rendered.</Text>
               </Card.Content>
             </Card.Root>
           </SpecimenCell>
@@ -392,11 +393,11 @@ export function CardPage() {
           <div className="card-customization-list">
             <article className="card-customization">
               <div>
-                <h4>Component CSS properties</h4>
-                <p>
+                <Text as="h4" variant="title-sm">Component CSS properties</Text>
+                <Text as="p" tone="secondary" variant="body-sm">
                   Public Card tokens change spacing, radius, and the selected
                   elevated shadow for this instance only.
-                </p>
+                </Text>
                 <pre aria-label="Card component token example" tabIndex={0}>
                   <code>{`<Card.Root
   style={{
@@ -433,11 +434,11 @@ export function CardPage() {
 
             <article className="card-customization">
               <div>
-                <h4>Consumer hooks</h4>
-                <p>
+                <Text as="h4" variant="title-sm">Consumer hooks</Text>
+                <Text as="p" tone="secondary" variant="body-sm">
                   className, style, and data-slot pass through for direct local
                   targeting without changing the Card API.
-                </p>
+                </Text>
                 <pre aria-label="Card consumer hook example" tabIndex={0}>
                   <code>{`.card-page .dashed-card {
   border-style: dashed;

@@ -7,6 +7,7 @@ import {
   AlertDialog,
   Button,
   Dialog,
+  Text,
   type AlertDialogSize,
 } from "@flowstack-ui/brick";
 import {
@@ -38,8 +39,8 @@ function EvidenceGroup({
   return (
     <section className="alert-dialog-evidence-group">
       <div className="alert-dialog-evidence-group__heading">
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <Text as="h3" variant="title-sm">{title}</Text>
+        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
       </div>
       {children}
     </section>
@@ -286,7 +287,7 @@ export function AlertDialogPage() {
 
               <SpecimenCell label="Supplemental Body">
                 <StandardAlertDialog
-                  body={<strong>Project: Mobile checkout refresh</strong>}
+                  body={<Text weight="semibold">Project: Mobile checkout refresh</Text>}
                   contentTestId="alert-dialog-anatomy-body"
                   label="Inspect decision anatomy"
                 />
@@ -307,9 +308,9 @@ export function AlertDialogPage() {
                         <AlertDialog.Title>
                           Archive workspace?
                         </AlertDialog.Title>
-                        <p id="native-alert-message">
+                        <Text as="p" id="native-alert-message">
                           Archived workspaces become read-only for every member.
-                        </p>
+                        </Text>
                       </AlertDialog.Header>
                       <AlertDialog.Footer>
                         <AlertDialog.Cancel asChild>
@@ -627,11 +628,11 @@ export function AlertDialogPage() {
         <div className="alert-dialog-customization-list">
           <article className="alert-dialog-customization">
             <div>
-              <h4>Component CSS properties</h4>
-              <p>
+              <Text as="h4" variant="title-sm">Component CSS properties</Text>
+              <Text as="p" tone="secondary" variant="body-sm">
                 Public AlertDialog tokens change spacing, radius, and elevation
                 for this surface only.
-              </p>
+              </Text>
               <pre
                 aria-label="AlertDialog component token example"
                 tabIndex={0}
@@ -689,11 +690,11 @@ export function AlertDialogPage() {
 
           <article className="alert-dialog-customization">
             <div>
-              <h4>Consumer hooks and Button tone</h4>
-              <p>
+              <Text as="h4" variant="title-sm">Consumer hooks and Button tone</Text>
+              <Text as="p" tone="secondary" variant="body-sm">
                 Portal-safe class, style, and slot hooks customize the surface;
                 the composed Action Button owns danger presentation.
-              </p>
+              </Text>
               <pre
                 aria-label="AlertDialog consumer hook example"
                 tabIndex={0}
@@ -761,11 +762,11 @@ export function AlertDialogPage() {
             body={
               <div className="alert-dialog-long-copy">
                 {Array.from({ length: 12 }, (_, index) => (
-                  <p key={index}>
+                  <Text as="p" key={index}>
                     Consequence {index + 1}: supplemental detail remains
                     readable and contained without replacing the concise alert
                     message.
-                  </p>
+                  </Text>
                 ))}
               </div>
             }

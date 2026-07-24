@@ -56,6 +56,7 @@ await writeFile(
     '@import "../../src/components/checkbox/checkbox.css";',
     '@import "../../src/components/checkbox-group/checkbox-group.css";',
     '@import "../../src/components/input/input.css";',
+    '@import "../../src/components/text/text.css";',
   ].join("\n"),
 );
 

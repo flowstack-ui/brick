@@ -3,6 +3,7 @@ import {
   Button,
   IconButton,
   Tooltip,
+  Text,
 } from "@flowstack-ui/brick";
 import type { TooltipShape } from "@flowstack-ui/brick/tooltip";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
@@ -24,7 +25,7 @@ function SearchIcon() {
 }
 
 function EvidenceGroup({ children, description, title }: { children: ReactNode; description: string; title: string }) {
-  return <section className="tooltip-evidence-group"><div className="tooltip-evidence-group__heading"><h3>{title}</h3><p>{description}</p></div>{children}</section>;
+  return <section className="tooltip-evidence-group"><div className="tooltip-evidence-group__heading"><Text as="h3" variant="title-sm">{title}</Text><Text as="p" tone="secondary" variant="body-sm">{description}</Text></div>{children}</section>;
 }
 
 function Cell({ children, label }: { children: ReactNode; label: string }) {
@@ -76,7 +77,7 @@ export function TooltipPage() {
         <Scenario {...tooltipScenarios[0]}>
           <div className="tooltip-overview" data-testid="tooltip-overview">
             <Hint label="Search workspace" side="bottom" />
-            <p>Search remains independently named; Tooltip is supplemental.</p>
+            <Text as="p" tone="secondary" variant="body-sm">Search remains independently named; Tooltip is supplemental.</Text>
           </div>
         </Scenario>
 
@@ -130,7 +131,7 @@ export function TooltipPage() {
           <div className="tooltip-evidence-stack">
             <EvidenceGroup description="Focus or hover each trigger to inspect its same-document portal inside the local light or dark token scope." title="Scoped appearances"><div className="tooltip-scoped-grid" data-testid="tooltip-appearance"><ScopedTooltip appearance="light" /><ScopedTooltip appearance="dark" /></div></EvidenceGroup>
             <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-              <article className="tooltip-customization"><div><h4>Content CSS properties</h4><p>Focus or hover the trigger to inspect the customized Content class, slot, native style, and public Tooltip tokens.</p><pre aria-label="Tooltip customization example" tabIndex={0}><code>{`<Tooltip.Content
+              <article className="tooltip-customization"><div><Text as="h4" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Focus or hover the trigger to inspect the customized Content class, slot, native style, and public Tooltip tokens.</Text><pre aria-label="Tooltip customization example" tabIndex={0}><code>{`<Tooltip.Content
   className="custom-tooltip"
   data-slot="custom-tooltip"
   style={{

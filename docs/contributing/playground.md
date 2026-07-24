@@ -57,6 +57,17 @@ labels remain consistent without competing with the component under review.
 Headings, code output, and appearance identifiers retain their own semantics
 and must not be converted into specimen badges.
 
+Use Brick `Text` for playground-authored headings, paragraphs, supporting
+copy, status copy, and inline emphasis. Select the correct native host with
+`as`; visual hierarchy comes from `variant`. Use Brick `Input` for ordinary
+single-line entry. Do not wrap component-owned anatomy such as `Field.Label`,
+`Dialog.Title`, or Button content in `Text`.
+
+Raw text hosts remain valid only when the scenario is explicitly proving an
+exact `render`/`asChild` host or Text's preservation of nested native emphasis.
+Run `npm run verify:playground-primitives` to prevent authored playground copy
+or text entry from drifting back to raw elements.
+
 ## Specimen layout and state styling
 
 Comparison cells must align their specimens from the same logical starting

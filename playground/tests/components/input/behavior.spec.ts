@@ -136,8 +136,16 @@ test("Input state ownership and availability remain native", async ({ page }) =>
   const namedInputs = states.getByRole("textbox", { name: "Project name" });
   const uncontrolled = namedInputs.nth(0);
   const controlled = namedInputs.nth(1);
-  expect((await box(uncontrolled.locator(".."))).y).toBeCloseTo(
-    (await box(controlled.locator(".."))).y,
+  const uncontrolledRoot = await box(uncontrolled.locator(".."));
+  const controlledRoot = await box(controlled.locator(".."));
+  const uncontrolledCell = await box(
+    uncontrolled.locator("xpath=ancestor::*[contains(@class, 'forms-cell')][1]"),
+  );
+  const controlledCell = await box(
+    controlled.locator("xpath=ancestor::*[contains(@class, 'forms-cell')][1]"),
+  );
+  expect(uncontrolledRoot.y - uncontrolledCell.y).toBeCloseTo(
+    controlledRoot.y - controlledCell.y,
     0,
   );
   await uncontrolled.fill("Uncontrolled");

@@ -11,7 +11,11 @@
     --brick-button-padding-inline: 1rem;
     --brick-button-gap: 0.5rem;
     --brick-button-radius: var(--brick-radius-control);
-    --brick-button-font-size: 0.9375rem;
+    --brick-button-font-family: var(--brick-typography-control-md-font-family);
+    --brick-button-font-size: var(--brick-typography-control-md-font-size);
+    --brick-button-font-weight: var(--brick-typography-control-md-font-weight);
+    --brick-button-line-height: var(--brick-typography-control-md-line-height);
+    --brick-button-letter-spacing: var(--brick-typography-control-md-letter-spacing);
     --brick-button-icon-size: 1.125rem;
 
     position: relative;
@@ -30,10 +34,11 @@
     appearance: none;
     background: var(--brick-button-background);
     color: var(--brick-button-foreground);
-    font: inherit;
+    font-family: var(--brick-button-font-family);
     font-size: var(--brick-button-font-size);
-    font-weight: var(--brick-font-weight-medium);
-    line-height: var(--brick-font-line-height-tight);
+    font-weight: var(--brick-button-font-weight);
+    letter-spacing: var(--brick-button-letter-spacing);
+    line-height: var(--brick-button-line-height);
     text-align: center;
     text-decoration: none;
     overflow-wrap: anywhere;
@@ -139,7 +144,7 @@
     --brick-button-padding-block: 0.25rem;
     --brick-button-padding-inline: 0.625rem;
     --brick-button-gap: 0.375rem;
-    --brick-button-font-size: 0.75rem;
+    --brick-button-font-size: var(--brick-typography-control-xs-font-size);
     --brick-button-icon-size: 0.875rem;
   }
 
@@ -148,7 +153,7 @@
     --brick-button-padding-block: 0.375rem;
     --brick-button-padding-inline: 0.75rem;
     --brick-button-gap: 0.375rem;
-    --brick-button-font-size: var(--brick-font-size-sm);
+    --brick-button-font-size: var(--brick-typography-control-sm-font-size);
     --brick-button-icon-size: 1rem;
   }
 
@@ -157,7 +162,7 @@
     --brick-button-padding-block: 0.625rem;
     --brick-button-padding-inline: 1.25rem;
     --brick-button-gap: 0.625rem;
-    --brick-button-font-size: var(--brick-font-size-md);
+    --brick-button-font-size: var(--brick-typography-control-lg-font-size);
     --brick-button-icon-size: 1.25rem;
   }
 
@@ -166,7 +171,7 @@
     --brick-button-padding-block: 0.75rem;
     --brick-button-padding-inline: 1.5rem;
     --brick-button-gap: 0.75rem;
-    --brick-button-font-size: 1.125rem;
+    --brick-button-font-size: var(--brick-typography-control-xl-font-size);
     --brick-button-icon-size: 1.5rem;
   }
 

@@ -9,7 +9,7 @@
     );
     --brick-card-background: var(--brick-color-surface-raised);
     --brick-card-border-color: var(--brick-color-border-subtle);
-    --brick-card-title-size: 1.125rem;
+    --brick-card-title-size: var(--brick-typography-surface-title-md-font-size);
 
     display: flex;
     box-sizing: border-box;
@@ -47,12 +47,12 @@
 
   .brick-card[data-size="sm"] {
     --brick-card-space: var(--brick-space-3);
-    --brick-card-title-size: var(--brick-font-size-md);
+    --brick-card-title-size: var(--brick-typography-surface-title-sm-font-size);
   }
 
   .brick-card[data-size="lg"] {
     --brick-card-space: var(--brick-space-6);
-    --brick-card-title-size: var(--brick-font-size-lg);
+    --brick-card-title-size: var(--brick-typography-surface-title-lg-font-size);
   }
 
   .brick-card-header {
@@ -74,17 +74,20 @@
 
   .brick-card-title {
     color: var(--brick-color-text-primary);
-    font-family: var(--brick-font-family-heading);
+    font-family: var(--brick-typography-surface-title-md-font-family);
     font-size: var(--brick-card-title-size);
-    font-weight: var(--brick-font-weight-semibold);
-    letter-spacing: -0.015em;
-    line-height: var(--brick-font-line-height-tight);
+    font-weight: var(--brick-typography-surface-title-md-font-weight);
+    letter-spacing: var(--brick-typography-surface-title-md-letter-spacing);
+    line-height: var(--brick-typography-surface-title-md-line-height);
   }
 
   .brick-card-description {
     color: var(--brick-color-text-secondary);
-    font-size: var(--brick-font-size-sm);
-    line-height: var(--brick-font-line-height-body);
+    font-family: var(--brick-typography-supporting-sm-font-family);
+    font-size: var(--brick-typography-supporting-sm-font-size);
+    font-weight: var(--brick-typography-supporting-sm-font-weight);
+    letter-spacing: var(--brick-typography-supporting-sm-letter-spacing);
+    line-height: var(--brick-typography-supporting-sm-line-height);
   }
 
   .brick-card-action {
@@ -102,7 +105,7 @@
     padding-inline: var(--brick-card-space);
     padding-block-end: var(--brick-card-space);
     color: var(--brick-color-text-primary);
-    line-height: var(--brick-font-line-height-body);
+    line-height: var(--brick-typography-body-md-line-height);
   }
 
   .brick-card > .brick-card-content:first-child {

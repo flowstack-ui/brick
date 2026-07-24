@@ -17,3 +17,5 @@ Input follows the package version of `@flowstack-ui/brick`.
 - Stable wrapper/control/adornment/Clear classes and slots, public Input
   variables, dark appearance, forced colors, reduced motion, RTL, and narrow
   layout support.
+- Public font-weight and letter-spacing variables backed by the shared
+  field-value typography recipes.

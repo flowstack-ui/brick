@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { Button, Field, Fieldset, Form } from "@flowstack-ui/brick";
+import { Button, Field, Fieldset, Form, Text } from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -294,7 +294,7 @@ export function FormPage() {
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
             <article className="forms-customization">
-              <div><h4>Form rhythm properties</h4><p>Slot, native style, and public Form gap tokens visibly change this boundary only.</p><pre aria-label="Form customization example" tabIndex={0}><code>{`<Form
+              <div><Text as="h4" variant="title-sm">Form rhythm properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Form gap tokens visibly change this boundary only.</Text><pre aria-label="Form customization example" tabIndex={0}><code>{`<Form
   data-slot="custom-form"
   style={{
     "--brick-form-gap": "2rem",

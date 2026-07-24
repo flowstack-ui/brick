@@ -19,6 +19,7 @@ import { Fieldset } from "@flowstack-ui/brick/fieldset";
 import { Checkbox } from "@flowstack-ui/brick/checkbox";
 import { CheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 import { Input } from "@flowstack-ui/brick/input";
+import { Text } from "@flowstack-ui/brick/text";
 
 type Appearance = "light" | "dark";
 
@@ -127,15 +128,17 @@ export function App() {
       <div className="site-shell">
         <main>
         <section className="hero" aria-labelledby="hero-title">
-          <p className="eyebrow">Independent package integration</p>
-          <h1 id="hero-title">
+          <Text as="p" className="eyebrow" tone="accent" variant="caption" weight="semibold">
+            Independent package integration
+          </Text>
+          <Text as="h1" className="hero-title" id="hero-title" variant="display">
             Build useful interfaces
             <span>with clear boundaries.</span>
-          </h1>
-          <p className="hero-copy">
+          </Text>
+          <Text as="p" className="hero-copy" tone="secondary" variant="body-lg">
             This small application consumes Brick exactly through its public package
             exports. Application layout stays here; finished component styling stays in Brick.
-          </p>
+          </Text>
           <div className="hero-actions">
             <Dialog.Root>
               <Dialog.Trigger asChild>
@@ -176,11 +179,11 @@ export function App() {
               View workspace
             </Button>
           </div>
-          <p className="activity" aria-live="polite">
+          <Text as="p" className="activity" aria-live="polite" tone="muted" variant="body-sm">
             {publishCount === 0
               ? "Project has not been published."
               : `Published ${publishCount} ${publishCount === 1 ? "time" : "times"}.`}
-          </p>
+          </Text>
         </section>
 
         <section className="workspace" id="workspace" aria-labelledby="workspace-title">

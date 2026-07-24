@@ -40,7 +40,8 @@ test("IconButton preserves every supported link composition path", async ({
     await expect(link).toHaveAttribute("data-size", "md");
     await expect(link).toHaveAttribute("data-shape", "rounded");
     const box = await link.boundingBox();
-    expect(box).toMatchObject({ height: 44, width: 44 });
+    expect(box?.height).toBeCloseTo(44, 2);
+    expect(box?.width).toBeCloseTo(44, 2);
     expect(await link.locator("svg").boundingBox()).toMatchObject({
       height: 18,
       width: 18,

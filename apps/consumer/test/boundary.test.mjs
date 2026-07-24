@@ -34,6 +34,7 @@ test("the consumer uses public package exports without source aliases", async ()
   assert.match(source, /@flowstack-ui\/brick\/checkbox/);
   assert.match(source, /@flowstack-ui\/brick\/checkbox-group/);
   assert.match(source, /@flowstack-ui\/brick\/input/);
+  assert.match(source, /@flowstack-ui\/brick\/text/);
   assert.match(source, /@flowstack-ui\/brick\/styles\.css/);
   assert.match(source, /@flowstack-ui\/brick\/reset\.css/);
   assert.doesNotMatch(source, /\.\.\/\.\.\/(?:src|dist)/);

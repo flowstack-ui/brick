@@ -131,7 +131,7 @@ test("CheckboxGroup structured content and state scopes preserve default geometr
     await expect(item).toBeDisabled();
     await expect(item).toHaveAttribute("aria-checked", "false");
     expect(await controlSize(item)).toEqual(normalControl);
-    expect((await item.boundingBox())!.height).toBe(normalHeight);
+    expect((await item.boundingBox())!.height).toBeCloseTo(normalHeight, 2);
   }
 
   const invalidGroup = page.getByRole("group", {

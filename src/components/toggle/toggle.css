@@ -21,10 +21,11 @@
     appearance: none;
     background: var(--brick-color-surface-subtle);
     color: var(--brick-color-text-primary);
-    font: inherit;
-    font-size: 0.9375rem;
-    font-weight: var(--brick-font-weight-medium);
-    line-height: var(--brick-font-line-height-tight);
+    font-family: var(--brick-typography-control-md-font-family);
+    font-size: var(--brick-typography-control-md-font-size);
+    font-weight: var(--brick-typography-control-md-font-weight);
+    letter-spacing: var(--brick-typography-control-md-letter-spacing);
+    line-height: var(--brick-typography-control-md-line-height);
     overflow-wrap: anywhere;
     text-align: center;
     text-decoration: none;
@@ -118,7 +119,7 @@
     --brick-toggle-icon-size: 1rem;
 
     padding-block: 0.25rem;
-    font-size: var(--brick-font-size-sm);
+    font-size: var(--brick-typography-control-sm-font-size);
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-size="lg"] {
@@ -128,7 +129,7 @@
     --brick-toggle-icon-size: 1.25rem;
 
     padding-block: 0.5rem;
-    font-size: var(--brick-font-size-md);
+    font-size: var(--brick-typography-control-lg-font-size);
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-shape="pill"] {

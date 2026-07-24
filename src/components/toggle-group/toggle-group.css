@@ -41,7 +41,7 @@
     --brick-toggle-icon-size: 1rem;
 
     padding-block: 0.25rem;
-    font-size: var(--brick-font-size-sm);
+    font-size: var(--brick-typography-control-sm-font-size);
   }
 
   .brick-toggle-group[data-size="lg"] > .brick-toggle-group-item {
@@ -51,7 +51,7 @@
     --brick-toggle-icon-size: 1.25rem;
 
     padding-block: 0.5rem;
-    font-size: var(--brick-font-size-md);
+    font-size: var(--brick-typography-control-lg-font-size);
   }
 
   .brick-toggle-group[data-shape="pill"] > .brick-toggle-group-item {

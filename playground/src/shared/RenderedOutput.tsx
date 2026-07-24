@@ -4,6 +4,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { Text } from "@flowstack-ui/brick";
 import "./rendered-output.playground.css";
 
 function formatMarkup(markup: string) {
@@ -59,7 +60,7 @@ export function RenderedOutput({
         {children}
       </div>
       <div className="playground-output-evidence__output">
-        <p>{label}</p>
+        <Text as="p" variant="body-sm">{label}</Text>
         <pre aria-label={label} data-rendered-output tabIndex={0}>
           <code>{markup}</code>
         </pre>

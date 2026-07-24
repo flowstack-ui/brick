@@ -17,5 +17,7 @@ Card follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Title typography now uses the shared surface-title recipes and their
+  normalized tracking.
 - Elevated Cards use a subtle raised-surface difference so their hierarchy
   remains visible in dark appearance without depending on shadow alone.

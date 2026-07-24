@@ -22,8 +22,11 @@
     background: var(--brick-tooltip-background);
     box-shadow: var(--brick-tooltip-shadow);
     color: var(--brick-tooltip-foreground);
-    font-size: var(--brick-font-size-sm);
-    line-height: var(--brick-font-line-height-body);
+    font-family: var(--brick-typography-supporting-sm-font-family);
+    font-size: var(--brick-typography-supporting-sm-font-size);
+    font-weight: var(--brick-typography-supporting-sm-font-weight);
+    letter-spacing: var(--brick-typography-supporting-sm-letter-spacing);
+    line-height: var(--brick-typography-supporting-sm-line-height);
     opacity: 0;
     overflow-wrap: anywhere;
     pointer-events: auto;
@@ -97,16 +100,20 @@
 
   .brick-tooltip__title {
     color: inherit;
-    font-family: var(--brick-font-family-heading);
-    font-size: var(--brick-font-size-sm);
-    font-weight: var(--brick-font-weight-semibold);
-    line-height: var(--brick-font-line-height-tight);
+    font-family: var(--brick-typography-compact-title-font-family);
+    font-size: var(--brick-typography-compact-title-font-size);
+    font-weight: var(--brick-typography-compact-title-font-weight);
+    letter-spacing: var(--brick-typography-compact-title-letter-spacing);
+    line-height: var(--brick-typography-compact-title-line-height);
   }
 
   .brick-tooltip__description {
     color: color-mix(in srgb, currentColor, transparent 18%);
-    font-size: var(--brick-font-size-sm);
-    line-height: var(--brick-font-line-height-body);
+    font-family: var(--brick-typography-supporting-sm-font-family);
+    font-size: var(--brick-typography-supporting-sm-font-size);
+    font-weight: var(--brick-typography-supporting-sm-font-weight);
+    letter-spacing: var(--brick-typography-supporting-sm-letter-spacing);
+    line-height: var(--brick-typography-supporting-sm-line-height);
   }
 
   @media (prefers-reduced-motion: reduce) {

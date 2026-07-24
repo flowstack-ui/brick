@@ -30,6 +30,13 @@ export const componentEntries = [
   },
   {
     category: "Data display",
+    description: "Semantic text with finished visual typography.",
+    id: "text",
+    route: "/text",
+    title: "Text",
+  },
+  {
+    category: "Data display",
     description: "Static grouped content with finished surfaces.",
     id: "card",
     route: "/card",

@@ -40,15 +40,22 @@
     min-inline-size: 0;
     grid-column: 2;
     color: var(--brick-checkbox-label-foreground);
-    font-weight: var(--brick-font-weight-medium);
+    font-family: var(--brick-typography-label-md-font-family);
+    font-size: var(--brick-typography-label-md-font-size);
+    font-weight: var(--brick-typography-label-md-font-weight);
+    letter-spacing: var(--brick-typography-label-md-letter-spacing);
+    line-height: var(--brick-typography-label-md-line-height);
   }
 
   .brick-checkbox-group-item-description {
     min-inline-size: 0;
     grid-column: 2;
     color: var(--brick-checkbox-description-foreground);
-    font-size: var(--brick-font-size-sm);
-    line-height: var(--brick-font-line-height-body);
+    font-family: var(--brick-typography-supporting-sm-font-family);
+    font-size: var(--brick-typography-supporting-sm-font-size);
+    font-weight: var(--brick-typography-supporting-sm-font-weight);
+    letter-spacing: var(--brick-typography-supporting-sm-letter-spacing);
+    line-height: var(--brick-typography-supporting-sm-line-height);
   }
 
   .brick-checkbox-group-item-label + .brick-checkbox-group-item-description {
@@ -57,7 +64,11 @@
 
   .brick-checkbox-group-parent {
     margin-block-end: var(--brick-space-1);
-    font-weight: var(--brick-font-weight-semibold);
+    font-family: var(--brick-typography-label-strong-font-family);
+    font-size: var(--brick-typography-label-strong-font-size);
+    font-weight: var(--brick-typography-label-strong-font-weight);
+    letter-spacing: var(--brick-typography-label-strong-letter-spacing);
+    line-height: var(--brick-typography-label-strong-line-height);
   }
 
   .brick-checkbox-group[data-orientation="horizontal"]

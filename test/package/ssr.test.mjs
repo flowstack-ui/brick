@@ -16,6 +16,7 @@ import { Fieldset } from "../../dist/fieldset.js";
 import { Checkbox } from "../../dist/checkbox.js";
 import { CheckboxGroup } from "../../dist/checkbox-group.js";
 import { Input } from "../../dist/input.js";
+import { Text } from "../../dist/text.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
 
 test("Card renders on the server without browser state or a client boundary", () => {
@@ -235,6 +236,30 @@ test("Input renders styled native semantics and adornment order during SSR", () 
   assert.ok(markup.indexOf(">Start<") < markup.indexOf("<input"));
   assert.ok(markup.indexOf("<input") < markup.indexOf(">End<"));
   assert.ok(markup.indexOf(">End<") < markup.indexOf('aria-label="Clear input"'));
+});
+
+test("Text renders one deterministic semantic host during SSR", () => {
+  const markup = renderToString(
+    React.createElement(
+      Text,
+      {
+        as: "h2",
+        id: "server-heading",
+        tone: "secondary",
+        variant: "title-sm",
+      },
+      "Server heading",
+    ),
+  );
+
+  assert.match(markup, /^<h2/);
+  assert.match(markup, /class="brick-text"/);
+  assert.match(markup, /data-slot="text"/);
+  assert.match(markup, /data-tone="secondary"/);
+  assert.match(markup, /data-variant="title-sm"/);
+  assert.match(markup, /id="server-heading"/);
+  assert.match(markup, />Server heading<\/h2>$/);
+  assert.doesNotMatch(markup, /role=|aria-level|tabindex/i);
 });
 
 test("Checkbox family renders server-stable visual and semantic anatomy", () => {

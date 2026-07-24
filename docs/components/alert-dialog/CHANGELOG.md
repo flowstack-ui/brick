@@ -6,6 +6,8 @@ Alert Dialog follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Title typography now uses the shared overlay-title recipe and its normalized
+  tracking.
 - Increased the default medium surface from `28rem` to `30rem` so valid paired
   decision labels remain on one row when the viewport has sufficient space.
 - Added an extreme-reflow Content scrolling fallback so wrapped responses stay

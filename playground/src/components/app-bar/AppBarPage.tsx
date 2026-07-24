@@ -3,6 +3,7 @@ import {
   AppBar,
   Avatar,
   IconButton,
+  Text,
   type AppBarRootProps,
   type AppBarTone,
   type AppBarToolbarProps,
@@ -48,8 +49,8 @@ function EvidenceGroup({
   return (
     <section className="app-bar-evidence-group">
       <div className="app-bar-evidence-group__heading">
-        <h3>{title}</h3>
-        <p>{description}</p>
+        <Text as="h3" variant="title-sm">{title}</Text>
+        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
       </div>
       {children}
     </section>
@@ -84,7 +85,7 @@ function AppBarContents({
         <IconButton aria-label={`Open menu for ${label}`}>
           <MenuIcon />
         </IconButton>
-        <strong className="app-bar-example__brand">Brick</strong>
+        <Text className="app-bar-example__brand" tone="inherit" weight="semibold">Brick</Text>
       </AppBar.Start>
       <AppBar.Center>
         <nav aria-label={`${label} navigation`}>
@@ -368,11 +369,11 @@ export function AppBarPage() {
           <div className="app-bar-customization-list">
             <article className="app-bar-customization">
               <div>
-                <h4>Component CSS properties</h4>
-                <p>
+                <Text as="h4" variant="title-sm">Component CSS properties</Text>
+                <Text as="p" tone="secondary" variant="body-sm">
                   Public AppBar tokens replace the default surface recipe for
                   this instance only.
-                </p>
+                </Text>
                 <pre
                   aria-label="AppBar component token example"
                   tabIndex={0}
@@ -394,11 +395,11 @@ export function AppBarPage() {
 
             <article className="app-bar-customization">
               <div>
-                <h4>Consumer hooks</h4>
-                <p>
+                <Text as="h4" variant="title-sm">Consumer hooks</Text>
+                <Text as="p" tone="secondary" variant="body-sm">
                   className, style, and data-slot pass through for local
                   targeting without changing the AppBar API.
-                </p>
+                </Text>
                 <pre aria-label="AppBar consumer hook example" tabIndex={0}>
                   <code>{`.app-bar-page .dashed-app-bar {
   --brick-app-bar-background: var(--brick-color-accent-soft);
@@ -446,9 +447,9 @@ export function AppBarPage() {
                       <IconButton aria-label="Open constrained menu">
                         <MenuIcon />
                       </IconButton>
-                      <strong className="app-bar-stress-label">
+                      <Text className="app-bar-stress-label" tone="inherit" weight="semibold">
                         International product operations workspace
-                      </strong>
+                      </Text>
                     </AppBar.Start>
                     <AppBar.End>
                       <IconButton aria-label="Search constrained workspace">
@@ -473,9 +474,9 @@ export function AppBarPage() {
                       <IconButton aria-label="فتح القائمة">
                         <MenuIcon />
                       </IconButton>
-                      <strong className="app-bar-stress-label">
+                      <Text className="app-bar-stress-label" tone="inherit" weight="semibold">
                         مساحة العمل
-                      </strong>
+                      </Text>
                     </AppBar.Start>
                     <AppBar.Center>
                       <nav aria-label="التنقل في المشاريع">

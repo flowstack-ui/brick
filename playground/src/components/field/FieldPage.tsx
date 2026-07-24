@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { Field } from "@flowstack-ui/brick";
+import { Field, Text } from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -108,7 +108,7 @@ export function FieldPage() {
             <div className="forms-scoped-grid" data-testid="field-appearance"><div data-brick-appearance="light"><code>light</code><DefaultField id="field-light" /></div><div data-brick-appearance="dark"><code>dark</code><DefaultField id="field-dark" /></div></div>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <article className="forms-customization"><div><h4>Field anatomy properties</h4><p>Class, slot, native style, and public Field tokens visibly change this Field only.</p><pre aria-label="Field customization example" tabIndex={0}><code>{`<Field.Root
+            <article className="forms-customization"><div><Text as="h4" variant="title-sm">Field anatomy properties</Text><Text as="p" tone="secondary" variant="body-sm">Class, slot, native style, and public Field tokens visibly change this Field only.</Text><pre aria-label="Field customization example" tabIndex={0}><code>{`<Field.Root
   data-slot="custom-field"
   invalid
   style={{

@@ -13,6 +13,7 @@ test("Field Label and Fieldset Legend share question typography and initial rhyt
       gap: control.getBoundingClientRect().top - label.getBoundingClientRect().bottom,
       typography: {
         family: style.fontFamily,
+        letterSpacing: style.letterSpacing,
         lineHeight: style.lineHeight,
         size: style.fontSize,
         weight: style.fontWeight,
@@ -38,6 +39,7 @@ test("Field Label and Fieldset Legend share question typography and initial rhyt
         legend.getBoundingClientRect().bottom,
       typography: {
         family: style.fontFamily,
+        letterSpacing: style.letterSpacing,
         lineHeight: style.lineHeight,
         size: style.fontSize,
         weight: style.fontWeight,

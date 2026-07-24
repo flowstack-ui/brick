@@ -6,8 +6,8 @@ Brick provides finished, accessible React components with static CSS, semantic
 design tokens, light and dark appearances, and a documented customization
 contract. The initial catalog includes Button, Card, Dialog, AlertDialog,
 Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton,
-AppBar, Tooltip, HoverCard, Popover, Form, Field, Fieldset, Checkbox, and
-CheckboxGroup, and Input.
+AppBar, Tooltip, HoverCard, Popover, Form, Field, Fieldset, Checkbox,
+CheckboxGroup, Input, and Text.
 
 ## Boundary
 
@@ -23,7 +23,7 @@ CheckboxGroup, and Input.
 | --- | --- |
 | Actions and selection | [Button](docs/components/button/README.md), [Icon Button](docs/components/icon-button/README.md), [Toggle](docs/components/toggle/README.md), [Toggle Group](docs/components/toggle-group/README.md) |
 | Forms and choices | [Form](docs/components/form/README.md), [Field](docs/components/field/README.md), [Fieldset](docs/components/fieldset/README.md), [Input](docs/components/input/README.md), [Checkbox](docs/components/checkbox/README.md), [Checkbox Group](docs/components/checkbox-group/README.md) |
-| Content and status | [Avatar](docs/components/avatar/README.md), [Badge](docs/components/badge/README.md), [Notification Badge](docs/components/notification-badge/README.md), [Card](docs/components/card/README.md) |
+| Content and status | [Text](docs/components/text/README.md), [Avatar](docs/components/avatar/README.md), [Badge](docs/components/badge/README.md), [Notification Badge](docs/components/notification-badge/README.md), [Card](docs/components/card/README.md) |
 | Contextual overlays | [Tooltip](docs/components/tooltip/README.md), [Hover Card](docs/components/hover-card/README.md), [Popover](docs/components/popover/README.md) |
 | Modal surfaces | [Dialog](docs/components/dialog/README.md), [Alert Dialog](docs/components/alert-dialog/README.md), [Drawer](docs/components/drawer/README.md) |
 | Navigation and layout | [App Bar](docs/components/app-bar/README.md) |
@@ -54,9 +54,11 @@ import "@flowstack-ui/brick/styles.css";
 Use `@flowstack-ui/brick/tokens.css` when only the visual tokens are needed.
 
 ```tsx
-import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, Dialog, Drawer, Field, Fieldset, Form, HoverCard, IconButton, Input, NotificationBadge, Popover, Toggle, ToggleGroup } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, Dialog, Drawer, Field, Fieldset, Form, HoverCard, IconButton, Input, NotificationBadge, Popover, Text, Toggle, ToggleGroup } from "@flowstack-ui/brick";
 
 <Button>Save changes</Button>;
+
+<Text as="h2" variant="title-md">Account settings</Text>;
 
 <IconButton aria-label="Search" href="/search"><SearchIcon /></IconButton>;
 

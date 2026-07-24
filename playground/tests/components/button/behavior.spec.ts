@@ -130,6 +130,7 @@ test("Button native actions compose with Brick Form and Field", async ({
   });
   const field = form.locator(".brick-field");
   const input = form.getByRole("textbox", { name: "Project name" });
+  const inputRoot = field.locator(".brick-input");
 
   await expect(form).toHaveClass(/brick-form/);
   await expect(field).toHaveCount(1);
@@ -139,7 +140,7 @@ test("Button native actions compose with Brick Form and Field", async ({
   );
   const [labelBox, inputBox, labelPadding] = await Promise.all([
     field.locator("label").boundingBox(),
-    input.boundingBox(),
+    inputRoot.boundingBox(),
     field.locator("label").evaluate(
       (element) => getComputedStyle(element).paddingInlineStart,
     ),

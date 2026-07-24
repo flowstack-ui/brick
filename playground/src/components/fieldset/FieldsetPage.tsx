@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { CheckboxGroup, Field, Fieldset } from "@flowstack-ui/brick";
+import { CheckboxGroup, Field, Fieldset, Text } from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -102,7 +102,7 @@ export function FieldsetPage() {
             <div className="forms-scoped-grid" data-testid="fieldset-appearance"><div data-brick-appearance="light"><code>light</code><ChoiceGroup id="fieldset-light" /></div><div data-brick-appearance="dark"><code>dark</code><ChoiceGroup id="fieldset-dark" /></div></div>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <article className="forms-customization"><div><h4>Fieldset anatomy properties</h4><p>Slot, native style, and public Fieldset tokens visibly change this group only.</p><pre aria-label="Fieldset customization example" tabIndex={0}><code>{`<Fieldset.Root
+            <article className="forms-customization"><div><Text as="h4" variant="title-sm">Fieldset anatomy properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Fieldset tokens visibly change this group only.</Text><pre aria-label="Fieldset customization example" tabIndex={0}><code>{`<Fieldset.Root
   data-slot="custom-fieldset"
   invalid
   style={{

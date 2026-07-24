@@ -15,6 +15,8 @@ Popover follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Title typography now uses the shared compact-title recipe and its normalized
+  tracking.
 - Touch and pen scrolling no longer dismisses an open Popover, while genuine
   outside taps still close it.
 - Portalled content now preserves the trigger's logical text direction.

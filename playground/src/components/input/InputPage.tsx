@@ -4,6 +4,7 @@ import {
   Field,
   Form,
   Input,
+  Text,
   type InputShape,
   type InputSize,
   type InputVariant,
@@ -345,11 +346,11 @@ export function InputPage() {
           >
             <article className="forms-customization">
               <div>
-                <h4>Wrapper variables and native control style</h4>
-                <p>
+                <Text as="h4" variant="title-sm">Wrapper variables and native control style</Text>
+                <Text as="p" tone="secondary" variant="body-sm">
                   Public Input variables recolor and reshape the wrapper while
                   inputStyle changes native letter spacing.
-                </p>
+                </Text>
                 <pre aria-label="Input customization example" tabIndex={0}>
                   <code>{`<Input
   data-slot="custom-input"

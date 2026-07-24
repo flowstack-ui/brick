@@ -171,7 +171,9 @@ Public component tokens:
 - `--brick-input-radius`
 - `--brick-input-font-family`
 - `--brick-input-font-size`
+- `--brick-input-font-weight`
 - `--brick-input-line-height`
+- `--brick-input-letter-spacing`
 - `--brick-input-background`
 - `--brick-input-foreground`
 - `--brick-input-placeholder-foreground`
@@ -190,6 +192,9 @@ Public component tokens:
 - `--brick-input-clear-icon-size`
 - `--brick-input-clear-foreground`
 - `--brick-input-clear-hover-background`
+
+The typography variables default to `field-value-md`, or `field-value-lg` for
+large Input.
 
 ## Customization
 
