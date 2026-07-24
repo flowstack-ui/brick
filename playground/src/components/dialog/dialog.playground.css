@@ -1,5 +1,4 @@
 .dialog-page {
-  display: grid;
   gap: 2.5rem;
   min-inline-size: 0;
   padding-block: var(--brick-space-4) 6rem;
@@ -32,19 +31,16 @@
 }
 
 .dialog-evidence-stack {
-  display: grid;
   gap: 3rem;
 }
 
 .dialog-evidence-group {
   container-type: inline-size;
-  display: grid;
   gap: var(--brick-space-3);
   min-inline-size: 0;
 }
 
 .dialog-evidence-group__heading {
-  display: grid;
   gap: var(--brick-space-1);
 }
 
@@ -246,7 +242,6 @@
 }
 
 .dialog-long-copy {
-  display: grid;
   gap: var(--brick-space-4);
 }
 

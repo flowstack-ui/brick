@@ -1,5 +1,4 @@
 .forms-page {
-  display: grid;
   gap: 2.5rem;
   min-inline-size: 0;
   padding-block: var(--brick-space-4) 6rem;
@@ -33,7 +32,6 @@
 }
 
 .forms-evidence-stack {
-  display: grid;
   gap: 3rem;
 }
 
@@ -132,7 +130,6 @@
 }
 
 .forms-actions {
-  display: flex;
   flex-wrap: wrap;
   gap: var(--brick-space-2);
 }

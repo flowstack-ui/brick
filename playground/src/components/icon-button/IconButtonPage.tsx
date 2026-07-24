@@ -1,5 +1,7 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  HStack,
+  VStack,
   IconButton,
   Text,
   type IconButtonShape,
@@ -57,13 +59,13 @@ function EvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="icon-button-evidence-group">
-      <div className="icon-button-evidence-group__heading">
+    <VStack as="section" className="icon-button-evidence-group">
+      <VStack className="icon-button-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -156,7 +158,7 @@ export function IconButtonPage() {
   const [pressCount, setPressCount] = useState(0);
 
   return (
-    <div
+    <VStack
       className="icon-button-page"
       data-component-page="icon-button"
       data-testid="icon-button-workbench"
@@ -191,7 +193,7 @@ export function IconButtonPage() {
       </Scenario>
 
       <Scenario {...iconButtonScenarios[2]}>
-        <div className="icon-button-evidence-stack" data-testid="icon-button-tones">
+        <VStack className="icon-button-evidence-stack" data-testid="icon-button-tones">
           {variants.map((variant) => (
             <EvidenceGroup
               description={`All semantic tones using the ${variant} treatment.`}
@@ -213,7 +215,7 @@ export function IconButtonPage() {
               </div>
             </EvidenceGroup>
           ))}
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...iconButtonScenarios[3]}>
@@ -335,7 +337,7 @@ export function IconButtonPage() {
       </Scenario>
 
       <Scenario {...iconButtonScenarios[7]}>
-        <div className="icon-button-evidence-stack">
+        <VStack className="icon-button-evidence-stack">
           <EvidenceGroup
             description="Adjacent light and dark scopes preserve the selected recipe."
             title="Scoped appearances"
@@ -424,11 +426,11 @@ export function IconButtonPage() {
               </article>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...iconButtonScenarios[8]}>
-        <div className="icon-button-evidence-stack" data-testid="icon-button-stress">
+        <VStack className="icon-button-evidence-stack" data-testid="icon-button-stress">
           <EvidenceGroup
             description="Long accessible names remain semantic while two controls stay square inside a narrow frame."
             title="Constrained-width stress"
@@ -436,14 +438,14 @@ export function IconButtonPage() {
             <div className="icon-button-stress-panel">
               <div className="phone-frame">
                 <Text as="p" variant="body-sm">Dense application actions</Text>
-                <div className="icon-button-row">
+                <HStack className="icon-button-row" wrap>
                   <IconButton aria-label="Open a very detailed workspace navigation menu">
                     <MenuIcon />
                   </IconButton>
                   <IconButton aria-label="Search all localized workspace content">
                     <SearchIcon />
                   </IconButton>
-                </div>
+                </HStack>
               </div>
             </div>
           </EvidenceGroup>
@@ -454,19 +456,19 @@ export function IconButtonPage() {
             <div className="icon-button-stress-panel">
               <div className="phone-frame" dir="rtl">
                 <Text as="p" variant="body-sm">إجراءات مساحة العمل</Text>
-                <div className="icon-button-row">
+                <HStack className="icon-button-row" wrap>
                   <IconButton aria-label="فتح القائمة">
                     <MenuIcon />
                   </IconButton>
                   <IconButton aria-label="البحث">
                     <SearchIcon />
                   </IconButton>
-                </div>
+                </HStack>
               </div>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

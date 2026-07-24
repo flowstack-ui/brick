@@ -1,5 +1,7 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  HStack,
+  VStack,
   Avatar,
   Button,
   Text,
@@ -45,13 +47,13 @@ function EvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="avatar-evidence-group">
-      <div className="avatar-evidence-group__heading">
+    <VStack as="section" className="avatar-evidence-group">
+      <VStack className="avatar-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -154,7 +156,7 @@ export function AvatarPage() {
         : undefined;
 
   return (
-    <div
+    <VStack
       className="avatar-page"
       data-component-page="avatar"
       data-testid="avatar-workbench"
@@ -218,23 +220,23 @@ export function AvatarPage() {
               <ToggleGroup.Item value="missing">Missing</ToggleGroup.Item>
             </ToggleGroup.Root>
           </Fieldset.Root>
-          <div className="avatar-person-row">
+          <HStack className="avatar-person-row">
             <Avatar
               alt="Ada Lovelace"
               fallback="AL"
               fallbackDelayMs={150}
               src={interactiveSource}
             />
-            <div>
+            <VStack className="avatar-person-copy">
               <Text weight="semibold">Ada Lovelace</Text>
               <span>Current source: {sourceMode}</span>
-            </div>
-          </div>
+            </VStack>
+          </HStack>
         </div>
       </Scenario>
 
       <Scenario {...avatarScenarios[4]}>
-        <div className="avatar-evidence-stack" data-testid="avatar-contexts">
+        <VStack className="avatar-evidence-stack" data-testid="avatar-contexts">
           <EvidenceGroup
             description="These contexts differ only because the consumer’s accessibility requirement differs."
             title="Identity semantics"
@@ -244,10 +246,10 @@ export function AvatarPage() {
                 <Avatar alt="Grace Hopper" fallback="GH" />
               </SpecimenCell>
               <SpecimenCell label="decorative beside text">
-                <div className="avatar-person-row">
+                <HStack className="avatar-person-row">
                   <Avatar alt="" fallback="AL" />
                   <Text weight="semibold">Ada Lovelace</Text>
-                </div>
+                </HStack>
               </SpecimenCell>
             </div>
           </EvidenceGroup>
@@ -266,11 +268,11 @@ export function AvatarPage() {
               <Text aria-live="polite" role="status" variant="body-sm">{activation}</Text>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...avatarScenarios[5]}>
-        <div className="avatar-evidence-stack" data-testid="avatar-statuses">
+        <VStack className="avatar-evidence-stack" data-testid="avatar-statuses">
           <EvidenceGroup
             description="All four status values use the default medium circular frame and identical fallback content."
             title="Status values"
@@ -278,10 +280,10 @@ export function AvatarPage() {
             <div className="avatar-specimen-grid avatar-specimen-grid--four">
               {statuses.map((status) => (
                 <SpecimenCell key={status} label={status}>
-                  <div className="avatar-status-example">
+                  <HStack className="avatar-status-example">
                     <Avatar alt="" fallback="AL" status={status} />
                     <span>{statusLabels[status]}</span>
-                  </div>
+                  </HStack>
                 </SpecimenCell>
               ))}
             </div>
@@ -303,7 +305,7 @@ export function AvatarPage() {
               ))}
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...avatarScenarios[6]}>
@@ -312,26 +314,26 @@ export function AvatarPage() {
           data-testid="avatar-notifications"
         >
           <SpecimenCell label="count + status ring">
-            <div className="avatar-status-example">
+            <HStack className="avatar-status-example">
               <NotificationBadge count={3} overlap="circular">
                 <Avatar alt="" fallback="AL" status="online" />
               </NotificationBadge>
               <span>Online · 3 updates</span>
-            </div>
+            </HStack>
           </SpecimenCell>
           <SpecimenCell label="dot">
-            <div className="avatar-status-example">
+            <HStack className="avatar-status-example">
               <NotificationBadge dot overlap="circular" tone="success">
                 <Avatar alt="" fallback="GH" />
               </NotificationBadge>
               <span>Grace Hopper · Online</span>
-            </div>
+            </HStack>
           </SpecimenCell>
         </div>
       </Scenario>
 
       <Scenario {...avatarScenarios[7]}>
-        <div className="avatar-evidence-stack">
+        <VStack className="avatar-evidence-stack">
           <EvidenceGroup
             description="Adjacent light and dark scopes preserve Avatar’s default fallback recipe."
             title="Scoped appearances"
@@ -393,25 +395,25 @@ export function AvatarPage() {
               </div>
             </article>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...avatarScenarios[8]}>
-        <div className="avatar-evidence-stack" data-testid="avatar-stress">
+        <VStack className="avatar-evidence-stack" data-testid="avatar-stress">
           <EvidenceGroup
             description="A fixed Avatar remains square while long adjacent identity text reflows inside a 20rem frame."
             title="Constrained-width stress"
           >
             <div className="avatar-stress-panel">
-              <div className="avatar-phone-frame">
+              <HStack className="avatar-phone-frame">
                 <Avatar alt="" fallback="李" shape="rounded" status="offline" />
-                <div>
+                <VStack className="avatar-person-copy">
                   <Text weight="semibold">李小龍</Text>
                   <span>
                     Offline · ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
                   </span>
-                </div>
-              </div>
+                </VStack>
+              </HStack>
             </div>
           </EvidenceGroup>
           <EvidenceGroup
@@ -419,17 +421,17 @@ export function AvatarPage() {
             title="RTL inheritance"
           >
             <div className="avatar-stress-panel">
-              <div className="avatar-phone-frame" dir="rtl">
+              <HStack className="avatar-phone-frame" dir="rtl">
                 <Avatar alt="" fallback="ن" status="away" />
-                <div>
+                <VStack className="avatar-person-copy">
                   <Text weight="semibold">نور</Text>
                   <span>بعيد · حالة محلية طويلة لمساحة العمل</span>
-                </div>
-              </div>
+                </VStack>
+              </HStack>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

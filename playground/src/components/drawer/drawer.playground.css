@@ -1,5 +1,4 @@
 .drawer-page {
-  display: grid;
   gap: 2.5rem;
   min-inline-size: 0;
   padding-block: var(--brick-space-4) 6rem;
@@ -31,19 +30,16 @@
 }
 
 .drawer-evidence-stack {
-  display: grid;
   gap: 3rem;
 }
 
 .drawer-evidence-group {
   container-type: inline-size;
-  display: grid;
   gap: var(--brick-space-3);
   min-inline-size: 0;
 }
 
 .drawer-evidence-group__heading {
-  display: grid;
   gap: var(--brick-space-1);
 }
 
@@ -232,7 +228,6 @@
 }
 
 .drawer-long-copy {
-  display: grid;
   gap: var(--brick-space-4);
 }
 

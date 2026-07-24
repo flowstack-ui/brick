@@ -1,5 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import {
+  HStack,
+  VStack,
   AppBar,
   Avatar,
   IconButton,
@@ -47,13 +49,13 @@ function EvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="app-bar-evidence-group">
-      <div className="app-bar-evidence-group__heading">
+    <VStack as="section" className="app-bar-evidence-group">
+      <VStack className="app-bar-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -88,9 +90,9 @@ function AppBarContents({
         <Text className="app-bar-example__brand" tone="inherit" weight="semibold">Brick</Text>
       </AppBar.Start>
       <AppBar.Center>
-        <nav aria-label={`${label} navigation`}>
+        <HStack as="nav" aria-label={`${label} navigation`}>
           <a href="#app-bar-content">Projects</a>
-        </nav>
+        </HStack>
       </AppBar.Center>
       <AppBar.End>
         <IconButton aria-label={`Search ${label}`}>
@@ -189,7 +191,7 @@ export const appBarScenarios = [
 
 export function AppBarPage() {
   return (
-    <div
+    <VStack
       className="app-bar-page"
       data-component-page="app-bar"
       data-testid="app-bar-workbench"
@@ -218,7 +220,7 @@ export function AppBarPage() {
       </Scenario>
 
       <Scenario {...appBarScenarios[2]}>
-        <div className="app-bar-evidence-stack" data-testid="app-bar-tones">
+        <VStack className="app-bar-evidence-stack" data-testid="app-bar-tones">
           {variants.map((variant) => (
             <EvidenceGroup
               description={`Both supported tones using the ${variant} treatment.`}
@@ -238,7 +240,7 @@ export function AppBarPage() {
               </div>
             </EvidenceGroup>
           ))}
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...appBarScenarios[3]}>
@@ -434,7 +436,7 @@ export function AppBarPage() {
       </Scenario>
 
       <Scenario {...appBarScenarios[8]}>
-        <div className="app-bar-evidence-stack" data-testid="app-bar-stress">
+        <VStack className="app-bar-evidence-stack" data-testid="app-bar-stress">
           <EvidenceGroup
             description="A long application-owned workspace label truncates inside a 22rem frame while AppBar retains one row and its default surface recipe."
             title="Constrained-width stress"
@@ -479,9 +481,9 @@ export function AppBarPage() {
                       </Text>
                     </AppBar.Start>
                     <AppBar.Center>
-                      <nav aria-label="التنقل في المشاريع">
+                      <HStack as="nav" aria-label="التنقل في المشاريع">
                         <a href="#app-bar-content">المشاريع</a>
-                      </nav>
+                      </HStack>
                     </AppBar.Center>
                     <AppBar.End>
                       <IconButton aria-label="البحث">
@@ -493,8 +495,8 @@ export function AppBarPage() {
               </div>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

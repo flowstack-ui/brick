@@ -5,6 +5,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import {
+  VStack,
   Button,
   Dialog,
   Field,
@@ -39,13 +40,13 @@ function EvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="dialog-evidence-group">
-      <div className="dialog-evidence-group__heading">
+    <VStack as="section" className="dialog-evidence-group">
+      <VStack className="dialog-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -285,7 +286,7 @@ export function DialogPage() {
   const [eventLog, setEventLog] = useState("No dialog event yet");
 
   return (
-    <div
+    <VStack
       className="dialog-page"
       data-component-page="dialog"
       data-testid="dialog-workbench"
@@ -447,7 +448,7 @@ export function DialogPage() {
       </Scenario>
 
       <Scenario {...dialogScenarios[4]}>
-        <div className="dialog-evidence-stack">
+        <VStack className="dialog-evidence-stack">
           <EvidenceGroup
             description="Escape, the exact Overlay target, and explicit Close controls update the same public close-reason callback."
             title="Dismissal reasons"
@@ -542,7 +543,7 @@ export function DialogPage() {
               </SpecimenCell>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...dialogScenarios[5]}>
@@ -745,7 +746,7 @@ export function DialogPage() {
       </Scenario>
 
       <Scenario {...dialogScenarios[8]}>
-        <div className="dialog-evidence-stack" data-testid="dialog-stress">
+        <VStack className="dialog-evidence-stack" data-testid="dialog-stress">
           <EvidenceGroup
             description="Open this Dialog at a narrow or short viewport. Only Body scrolls; the default Header and Footer remain visible inside the bounded surface."
             title="Constrained viewport and long Body"
@@ -756,7 +757,7 @@ export function DialogPage() {
             >
               <StandardDialog
                 body={
-                  <div className="dialog-long-copy">
+                  <VStack className="dialog-long-copy">
                     {Array.from({ length: 12 }, (_, index) => (
                       <Text as="p" key={index}>
                         Section {index + 1}: realistic content remains
@@ -764,7 +765,7 @@ export function DialogPage() {
                         Body region.
                       </Text>
                     ))}
-                  </div>
+                  </VStack>
                 }
                 contentTestId="dialog-long-content-surface"
                 label="Open long mobile dialog"
@@ -788,8 +789,8 @@ export function DialogPage() {
               />
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

@@ -1,5 +1,7 @@
 import { useState, type CSSProperties } from "react";
 import {
+  HStack,
+  VStack,
   Button,
   Field,
   Form,
@@ -120,7 +122,7 @@ export function InputPage() {
   const [status, setStatus] = useState("No form event yet");
 
   return (
-    <div
+    <VStack
       className="forms-page input-page"
       data-component-page="input"
       data-testid="input-workbench"
@@ -197,7 +199,7 @@ export function InputPage() {
       </Scenario>
 
       <Scenario {...inputScenarios[5]}>
-        <div className="forms-evidence-stack" data-testid="input-states">
+        <VStack className="forms-evidence-stack" data-testid="input-states">
           <EvidenceGroup
             description="Uncontrolled and controlled examples begin with identical content; only state ownership changes."
             title="Value ownership"
@@ -251,11 +253,11 @@ export function InputPage() {
               </Cell>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...inputScenarios[6]}>
-        <div className="forms-evidence-stack" data-testid="input-form">
+        <VStack className="forms-evidence-stack" data-testid="input-form">
           <EvidenceGroup
             description="Submit empty to expose inline validation, enter an email, submit again, and reset to restore the default."
             title="Submitted email"
@@ -278,12 +280,12 @@ export function InputPage() {
                   <Field.Description>Use a valid work address.</Field.Description>
                   <Field.Error>Enter a valid email address.</Field.Error>
                 </Field.Root>
-                <div className="forms-actions">
+                <HStack className="forms-actions">
                   <Button type="submit">Save email</Button>
                   <Button tone="neutral" type="reset">
                     Reset
                   </Button>
-                </div>
+                </HStack>
                 <output className="forms-status">{status}</output>
               </Form>
             </div>
@@ -316,11 +318,11 @@ export function InputPage() {
               </Field.Root>
             </RenderedOutput>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...inputScenarios[7]}>
-        <div className="forms-evidence-stack">
+        <VStack className="forms-evidence-stack">
           <EvidenceGroup
             description="The same default Input and Field render inside adjacent local appearance scopes."
             title="Scoped appearances"
@@ -379,11 +381,11 @@ export function InputPage() {
               </div>
             </article>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...inputScenarios[8]}>
-        <div className="forms-evidence-stack" data-testid="input-stress">
+        <VStack className="forms-evidence-stack" data-testid="input-stress">
           <EvidenceGroup
             description="A long value remains editable inside a 20rem application-owned frame without widening the page."
             title="Constrained-width stress"
@@ -417,8 +419,8 @@ export function InputPage() {
               </div>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

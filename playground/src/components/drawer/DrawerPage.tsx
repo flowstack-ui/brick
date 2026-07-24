@@ -5,6 +5,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import {
+  VStack,
   Button,
   Checkbox,
   Dialog,
@@ -41,13 +42,13 @@ function EvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="drawer-evidence-group">
-      <div className="drawer-evidence-group__heading">
+    <VStack as="section" className="drawer-evidence-group">
+      <VStack className="drawer-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -289,7 +290,7 @@ export function DrawerPage() {
   const [eventLog, setEventLog] = useState("No drawer event yet");
 
   return (
-    <div
+    <VStack
       className="drawer-page"
       data-component-page="drawer"
       data-testid="drawer-workbench"
@@ -370,7 +371,7 @@ export function DrawerPage() {
       </Scenario>
 
       <Scenario {...drawerScenarios[3]}>
-        <div className="drawer-evidence-stack">
+        <VStack className="drawer-evidence-stack">
           <EvidenceGroup
             description="These compositions render only their authored regions while retaining an accessible name and visible Close path."
             title="Authored regions"
@@ -475,11 +476,11 @@ export function DrawerPage() {
               ))}
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...drawerScenarios[4]}>
-        <div className="drawer-evidence-stack">
+        <VStack className="drawer-evidence-stack">
           <EvidenceGroup
             description="Escape and exact Overlay activation update the same close-reason callback and restore focus to the Trigger."
             title="Default dismissal"
@@ -569,7 +570,7 @@ export function DrawerPage() {
               </SpecimenCell>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...drawerScenarios[5]}>
@@ -769,7 +770,7 @@ export function DrawerPage() {
       </Scenario>
 
       <Scenario {...drawerScenarios[8]}>
-        <div className="drawer-evidence-stack" data-testid="drawer-stress">
+        <VStack className="drawer-evidence-stack" data-testid="drawer-stress">
           <EvidenceGroup
             description="Open this default end/medium Drawer at a narrow or short viewport. Body scrolls independently while Header and Footer remain reachable."
             title="Constrained viewport and long Body"
@@ -777,14 +778,14 @@ export function DrawerPage() {
             <div className="drawer-stress-panel">
               <StandardDrawer
                 body={
-                  <div className="drawer-long-copy">
+                  <VStack className="drawer-long-copy">
                     {Array.from({ length: 14 }, (_, index) => (
                       <Text as="p" key={index}>
                         Section {index + 1}: long filter guidance remains
                         readable inside the bounded Body region.
                       </Text>
                     ))}
-                  </div>
+                  </VStack>
                 }
                 contentTestId="drawer-long-content-surface"
                 label="Open long drawer"
@@ -800,7 +801,7 @@ export function DrawerPage() {
             <div className="drawer-stress-panel" dir="rtl">
               <StandardDrawer
                 body={
-                  <div className="drawer-long-copy">
+                  <VStack className="drawer-long-copy">
                     {Array.from({ length: 12 }, (_, index) => (
                       <Text as="p" key={index}>
                         القسم {index + 1}: يبقى المحتوى الطويل داخل منطقة قابلة
@@ -808,7 +809,7 @@ export function DrawerPage() {
                         ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.
                       </Text>
                     ))}
-                  </div>
+                  </VStack>
                 }
                 contentTestId="drawer-rtl-content"
                 description="تظل المرشحات والإجراءات قابلة للوصول داخل السطح المنطقي."
@@ -819,8 +820,8 @@ export function DrawerPage() {
               />
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

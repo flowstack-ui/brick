@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import {
+  VStack,
   Button,
   Card,
   IconButton,
@@ -39,13 +40,13 @@ function EvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="card-evidence-group">
-      <div className="card-evidence-group__heading">
+    <VStack as="section" className="card-evidence-group">
+      <VStack className="card-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -144,7 +145,7 @@ export const cardScenarios = [
 
 export function CardPage() {
   return (
-    <div
+    <VStack
       className="card-page"
       data-component-page="card"
       data-testid="card-workbench"
@@ -250,7 +251,7 @@ export function CardPage() {
       </Scenario>
 
       <Scenario {...cardScenarios[4]}>
-        <div className="card-evidence-stack" data-testid="card-semantics">
+        <VStack className="card-evidence-stack" data-testid="card-semantics">
           <EvidenceGroup
             description="Each Root uses the same default recipe and content while only its native container element changes."
             title="Root elements"
@@ -303,7 +304,7 @@ export function CardPage() {
               ))}
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...cardScenarios[5]}>
@@ -478,7 +479,7 @@ export function CardPage() {
       </Scenario>
 
       <Scenario {...cardScenarios[7]}>
-        <div className="card-evidence-stack" data-testid="card-stress">
+        <VStack className="card-evidence-stack" data-testid="card-stress">
           <EvidenceGroup
             description="Long translated content and an unbroken reference wrap inside a 20rem application frame while the Footer remains reachable."
             title="Constrained-width stress"
@@ -542,8 +543,8 @@ export function CardPage() {
               </div>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

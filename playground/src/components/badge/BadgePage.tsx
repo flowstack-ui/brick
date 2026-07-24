@@ -1,5 +1,7 @@
 import { type CSSProperties, type ReactNode } from "react";
 import {
+  HStack,
+  VStack,
   Badge,
   Text,
   Button,
@@ -45,13 +47,13 @@ function EvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="badge-evidence-group">
-      <div className="badge-evidence-group__heading">
+    <VStack as="section" className="badge-evidence-group">
+      <VStack className="badge-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -134,7 +136,7 @@ export const badgeScenarios = [
 
 export function BadgePage() {
   return (
-    <div
+    <VStack
       className="badge-page"
       data-component-page="badge"
       data-testid="badge-workbench"
@@ -159,7 +161,7 @@ export function BadgePage() {
       </Scenario>
 
       <Scenario {...badgeScenarios[2]}>
-        <div className="badge-evidence-stack" data-testid="badge-tones">
+        <VStack className="badge-evidence-stack" data-testid="badge-tones">
           {variants.map((variant) => (
             <EvidenceGroup
               description={`All semantic tones using the ${variant} treatment.`}
@@ -177,7 +179,7 @@ export function BadgePage() {
               </div>
             </EvidenceGroup>
           ))}
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...badgeScenarios[3]}>
@@ -207,7 +209,7 @@ export function BadgePage() {
       </Scenario>
 
       <Scenario {...badgeScenarios[5]}>
-        <div className="badge-evidence-stack" data-testid="badge-composition">
+        <VStack className="badge-evidence-stack" data-testid="badge-composition">
           <EvidenceGroup
             description="Visible text supplies meaning in headings, prose, and metadata; tone only reinforces that authored copy."
             title="Semantic contexts"
@@ -263,11 +265,11 @@ export function BadgePage() {
               </SpecimenCell>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...badgeScenarios[6]}>
-        <div className="badge-evidence-stack">
+        <VStack className="badge-evidence-stack">
           <EvidenceGroup
             description="Adjacent light and dark scopes preserve Badge’s default recipe."
             title="Scoped appearances"
@@ -327,22 +329,22 @@ export function BadgePage() {
               </div>
             </article>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...badgeScenarios[7]}>
-        <div className="badge-evidence-stack" data-testid="badge-stress">
+        <VStack className="badge-evidence-stack" data-testid="badge-stress">
           <EvidenceGroup
             description="Both localized and unbroken content wrap inside a 20rem application-owned frame."
             title="Constrained-width stress"
           >
             <div className="badge-stress-panel">
-              <div className="badge-phone-frame">
+              <HStack className="badge-phone-frame" wrap>
                 <Badge>Awaiting detailed workspace verification</Badge>
                 <Badge>
                   ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
                 </Badge>
-              </div>
+              </HStack>
             </div>
           </EvidenceGroup>
           <EvidenceGroup
@@ -350,15 +352,15 @@ export function BadgePage() {
             title="RTL inheritance"
           >
             <div className="badge-stress-panel">
-              <div className="badge-phone-frame" dir="rtl">
+              <HStack className="badge-phone-frame" dir="rtl" wrap>
                 <Text as="p">
                   حالة الإصدار <Badge>قيد المراجعة</Badge>
                 </Text>
-              </div>
+              </HStack>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

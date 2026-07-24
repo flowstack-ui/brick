@@ -1,5 +1,14 @@
 import { useState, type CSSProperties } from "react";
-import { Button, Checkbox, Field, Form, Text, type CheckboxSize } from "@flowstack-ui/brick";
+import {
+  Button,
+  Checkbox,
+  Field,
+  Form,
+  HStack,
+  Text,
+  VStack,
+  type CheckboxSize,
+} from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -34,7 +43,7 @@ export function CheckboxPage() {
   const [status, setStatus] = useState("No form event yet");
 
   return (
-    <div className="forms-page" data-component-page="checkbox" data-testid="checkbox-workbench">
+    <VStack className="forms-page" data-component-page="checkbox" data-testid="checkbox-workbench">
       <Scenario {...checkboxScenarios[0]}>
         <div className="forms-overview" data-testid="checkbox-overview"><Checkbox>Ready to publish</Checkbox></div>
       </Scenario>
@@ -62,7 +71,7 @@ export function CheckboxPage() {
       </Scenario>
 
       <Scenario {...checkboxScenarios[4]}>
-        <div className="forms-evidence-stack" data-testid="checkbox-availability">
+        <VStack className="forms-evidence-stack" data-testid="checkbox-availability">
           <EvidenceGroup description="Only checked state changes. Every specimen remains disabled at the default medium size and retains the same complete row geometry." title="Disabled artwork">
             <div className="forms-grid forms-grid--three" data-testid="checkbox-disabled-artwork">
               <Cell label="unchecked"><Checkbox disabled>Preview</Checkbox></Cell>
@@ -77,33 +86,33 @@ export function CheckboxPage() {
               <Cell label="required"><Checkbox required>Preview</Checkbox></Cell>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...checkboxScenarios[5]}>
-        <div className="forms-evidence-stack" data-testid="checkbox-form">
+        <VStack className="forms-evidence-stack" data-testid="checkbox-form">
           <EvidenceGroup description="One required Checkbox composes with Field Error and native FormData without becoming a group." title="Submitted acknowledgement">
-            <div className="forms-overview"><Form aria-label="Release acknowledgement" id="checkbox-form-example" onReset={() => setStatus("Form reset")} onSubmit={(event) => { const data = new FormData(event.currentTarget); setStatus(`Submitted: ${String(data.get("acknowledgement") ?? "none")}`); }} preventDefaultOnSubmit><Field.Root id="checkbox-acknowledgement" required><Field.Label>Release acknowledgement</Field.Label><Checkbox name="acknowledgement" required value="accepted">I reviewed the release notes</Checkbox><Field.Description>This selection submits a native value.</Field.Description><Field.Error>Review is required.</Field.Error></Field.Root><div className="forms-actions"><Button type="submit">Save acknowledgement</Button><Button tone="neutral" type="reset">Reset</Button></div><output className="forms-status">{status}</output></Form></div>
+            <div className="forms-overview"><Form aria-label="Release acknowledgement" id="checkbox-form-example" onReset={() => setStatus("Form reset")} onSubmit={(event) => { const data = new FormData(event.currentTarget); setStatus(`Submitted: ${String(data.get("acknowledgement") ?? "none")}`); }} preventDefaultOnSubmit><Field.Root id="checkbox-acknowledgement" required><Field.Label>Release acknowledgement</Field.Label><Checkbox name="acknowledgement" required value="accepted">I reviewed the release notes</Checkbox><Field.Description>This selection submits a native value.</Field.Description><Field.Error>Review is required.</Field.Error></Field.Root><HStack className="forms-actions"><Button type="submit">Save acknowledgement</Button><Button tone="neutral" type="reset">Reset</Button></HStack><output className="forms-status">{status}</output></Form></div>
           </EvidenceGroup>
           <EvidenceGroup description="The semantic Checkbox may belong to a native Form elsewhere in the document." title="External form ownership">
             <div className="forms-overview"><Checkbox form="checkbox-form-example" name="external-consent" value="yes">Externally owned preference</Checkbox></div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...checkboxScenarios[6]}>
-        <div className="forms-evidence-stack" data-testid="checkbox-composition">
+        <VStack className="forms-evidence-stack" data-testid="checkbox-composition">
           <EvidenceGroup description="render supplies the button host while Checkbox preserves semantics, slots, the built-in visual subtree, content, and default state." title="render output">
             <RenderedOutput label="Rendered adapter HTML"><Checkbox data-testid="checkbox-render" render={<button data-adapter="rendered-checkbox" />}>Preview</Checkbox></RenderedOutput>
           </EvidenceGroup>
           <EvidenceGroup description="asChild merges Checkbox into a consumer button while preserving the same visible content, medium size, and unchecked state." title="asChild output">
             <RenderedOutput label="Composed adapter HTML"><Checkbox asChild data-testid="checkbox-as-child"><button data-adapter="composed-checkbox">Preview</button></Checkbox></RenderedOutput>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...checkboxScenarios[7]}>
-        <div className="forms-evidence-stack">
+        <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same default unchecked state composes inside adjacent local appearance scopes." title="Scoped appearances">
             <div className="forms-scoped-grid" data-testid="checkbox-appearance"><div data-brick-appearance="light"><code>light</code><Checkbox>Preview</Checkbox></div><div data-brick-appearance="dark"><code>dark</code><Checkbox>Preview</Checkbox></div></div>
           </EvidenceGroup>
@@ -122,19 +131,19 @@ export function CheckboxPage() {
   Customized selection
 </Checkbox>`}</code></pre></div><div className="forms-customization__preview"><Checkbox data-slot="custom-checkbox" defaultChecked style={customCheckboxTokens}>Customized selection</Checkbox></div></article>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...checkboxScenarios[8]}>
-        <div className="forms-evidence-stack" data-testid="checkbox-stress">
+        <VStack className="forms-evidence-stack" data-testid="checkbox-stress">
           <EvidenceGroup description="Long content and an unbroken segment wrap inside a 20rem application-owned frame." title="Constrained-width stress">
             <div className="forms-stress-panel"><div className="forms-phone-frame"><Checkbox defaultChecked>Extremely detailed localized publishing preference ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break</Checkbox></div></div>
           </EvidenceGroup>
           <EvidenceGroup description="Control, label, state, and logical invalid cue inherit genuine right-to-left direction." title="RTL inheritance">
             <div className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Checkbox defaultChecked invalid>تلقي تقارير النشر الأسبوعية وتحديثات الحساب</Checkbox></div></div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

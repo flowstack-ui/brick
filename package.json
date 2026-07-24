@@ -166,7 +166,8 @@
     "verify:consumer": "npm run build && node scripts/verify-app-consumer.mjs",
     "verify:typography": "node scripts/verify-typography.mjs",
     "verify:playground-primitives": "node scripts/verify-playground-primitives.mjs",
-    "check": "npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
+    "verify:playground-stack": "node scripts/verify-playground-stack.mjs",
+    "check": "npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
     "prepublishOnly": "npm run build"
   },
   "browserslist": [

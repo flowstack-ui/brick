@@ -1,5 +1,4 @@
 .notification-badge-page {
-  display: grid;
   gap: 2.5rem;
   min-inline-size: 0;
   padding-block: var(--brick-space-4) 6rem;
@@ -31,19 +30,16 @@
 }
 
 .notification-badge-evidence-stack {
-  display: grid;
   gap: 3rem;
 }
 
 .notification-badge-evidence-group {
   container-type: inline-size;
-  display: grid;
   gap: var(--brick-space-3);
   min-inline-size: 0;
 }
 
 .notification-badge-evidence-group__heading {
-  display: grid;
   gap: var(--brick-space-1);
 }
 
@@ -204,7 +200,6 @@
 }
 
 .notification-badge-phone-frame {
-  display: flex;
   inline-size: min(100%, 20rem);
   align-items: center;
   gap: var(--brick-space-4);

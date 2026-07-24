@@ -1,5 +1,6 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  VStack,
   Text,
   Toggle,
   type ToggleShape,
@@ -43,13 +44,13 @@ function EvidenceGroup({ children, description, title }: {
   title: string;
 }) {
   return (
-    <section className="toggle-evidence-group">
-      <div className="toggle-evidence-group__heading">
+    <VStack as="section" className="toggle-evidence-group">
+      <VStack className="toggle-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -137,7 +138,7 @@ export const toggleScenarios = [
 export function TogglePage() {
   const [controlled, setControlled] = useState(false);
   return (
-    <div className="toggle-page" data-component-page="toggle" data-testid="toggle-workbench">
+    <VStack className="toggle-page" data-component-page="toggle" data-testid="toggle-workbench">
       <Scenario {...toggleScenarios[0]}>
         <div className="toggle-overview" data-testid="toggle-overview">
           <Toggle>
@@ -157,7 +158,7 @@ export function TogglePage() {
       </Scenario>
 
       <Scenario {...toggleScenarios[2]}>
-        <div className="toggle-evidence-stack" data-testid="toggle-recipes">
+        <VStack className="toggle-evidence-stack" data-testid="toggle-recipes">
           {variants.map((variant) => (
             <EvidenceGroup
               description={`The ${variant} recipe in its two native pressed states.`}
@@ -170,7 +171,7 @@ export function TogglePage() {
               </div>
             </EvidenceGroup>
           ))}
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...toggleScenarios[3]}>
@@ -182,7 +183,7 @@ export function TogglePage() {
       </Scenario>
 
       <Scenario {...toggleScenarios[4]}>
-        <div className="toggle-evidence-stack" data-testid="toggle-shapes-icons">
+        <VStack className="toggle-evidence-stack" data-testid="toggle-shapes-icons">
           <EvidenceGroup description="Both shapes use identical default content and state." title="Shapes">
             <div className="toggle-specimen-grid toggle-specimen-grid--two">
               {shapes.map((shape) => (
@@ -199,11 +200,11 @@ export function TogglePage() {
               ))}
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...toggleScenarios[5]}>
-        <div className="toggle-evidence-stack" data-testid="toggle-composition">
+        <VStack className="toggle-evidence-stack" data-testid="toggle-composition">
           <EvidenceGroup description="State ownership changes without changing Toggle’s default recipe." title="State ownership">
             <div className="toggle-specimen-grid toggle-specimen-grid--two">
               <Cell label="uncontrolled"><Toggle defaultPressed>Preview</Toggle></Cell>
@@ -216,7 +217,7 @@ export function TogglePage() {
               <RenderedOutput label="Composed Toggle HTML"><Toggle asChild data-testid="toggle-as-child"><button type="button">Preview</button></Toggle></RenderedOutput>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...toggleScenarios[6]}>
@@ -227,7 +228,7 @@ export function TogglePage() {
       </Scenario>
 
       <Scenario {...toggleScenarios[7]}>
-        <div className="toggle-evidence-stack">
+        <VStack className="toggle-evidence-stack">
           <EvidenceGroup description="Adjacent light and dark scopes preserve the default recipe." title="Scoped appearances">
             <div className="toggle-scoped-grid" data-testid="toggle-appearance">
               <div data-brick-appearance="light"><code>light</code><Toggle>Preview</Toggle></div>
@@ -261,11 +262,11 @@ export function TogglePage() {
               </div>
             </article>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...toggleScenarios[8]}>
-        <div className="toggle-evidence-stack" data-testid="toggle-stress">
+        <VStack className="toggle-evidence-stack" data-testid="toggle-stress">
           <EvidenceGroup description="Long content wraps within a 20rem application-owned frame." title="Constrained-width stress">
             <div className="toggle-stress-panel"><div className="toggle-phone-frame">
               <Toggle>Awaiting detailed workspace verification</Toggle>
@@ -276,8 +277,8 @@ export function TogglePage() {
               <Toggle defaultPressed>إظهار المشاريع المكتملة</Toggle>
             </div></div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

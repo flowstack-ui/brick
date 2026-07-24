@@ -1,5 +1,6 @@
 import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
+  VStack,
   Badge,
   Button,
   Text,
@@ -62,13 +63,13 @@ function EvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="text-evidence-group">
-      <div className="text-evidence-group__heading">
+    <VStack as="section" className="text-evidence-group">
+      <VStack className="text-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -154,7 +155,7 @@ export function TextPage() {
   const [refHost, setRefHost] = useState("Not inspected");
 
   return (
-    <div className="text-page" data-component-page="text" data-testid="text-workbench">
+    <VStack className="text-page" data-component-page="text" data-testid="text-workbench">
       <Scenario {...textScenarios[0]}>
         <div className="text-overview" data-testid="text-overview">
           <Text>{comparisonCopy}</Text>
@@ -182,7 +183,7 @@ export function TextPage() {
       </Scenario>
 
       <Scenario {...textScenarios[3]}>
-        <div className="text-evidence-stack">
+        <VStack className="text-evidence-stack">
           <EvidenceGroup
             description="Only font weight changes across these otherwise identical default specimens."
             title="Weight overrides"
@@ -207,11 +208,11 @@ export function TextPage() {
               ))}
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...textScenarios[4]}>
-        <div className="text-evidence-stack" data-testid="text-semantics">
+        <VStack className="text-evidence-stack" data-testid="text-semantics">
           <div className="text-grid text-grid--four">
             {semanticHosts.map((as) => (
               <Cell key={as} label={as}>
@@ -229,11 +230,11 @@ export function TextPage() {
               </Text>
             </RenderedOutput>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...textScenarios[5]}>
-        <div className="text-evidence-stack" data-testid="text-overflow">
+        <VStack className="text-evidence-stack" data-testid="text-overflow">
           <EvidenceGroup
             description="At the same fixed measure, wrap leaves a one-word final line, balance redistributes every line, and pretty protects the final phrase. Pretty remains a progressive enhancement."
             title="Wrapping choices"
@@ -268,11 +269,11 @@ export function TextPage() {
               </Cell>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...textScenarios[6]}>
-        <div className="text-evidence-stack" data-testid="text-native">
+        <VStack className="text-evidence-stack" data-testid="text-native">
           <EvidenceGroup
             description="The rendered element exposes authored native attributes and semantic inline emphasis without extra wrappers."
             title="Native output"
@@ -307,11 +308,11 @@ export function TextPage() {
               </div>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...textScenarios[7]}>
-        <div className="text-evidence-stack">
+        <VStack className="text-evidence-stack">
           <EvidenceGroup
             description="Both scopes use the exact canonical Text defaults."
             title="Scoped appearances"
@@ -353,11 +354,11 @@ export function TextPage() {
               </div>
             </article>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...textScenarios[8]}>
-        <div className="text-evidence-stack" data-testid="text-stress">
+        <VStack className="text-evidence-stack" data-testid="text-stress">
           <EvidenceGroup
             description="Localized and unbroken copy wraps inside a 20rem application-owned frame without widening the page."
             title="Constrained localization"
@@ -384,8 +385,8 @@ export function TextPage() {
               </div>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

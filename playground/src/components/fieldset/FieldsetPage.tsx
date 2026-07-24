@@ -1,5 +1,11 @@
 import type { CSSProperties } from "react";
-import { CheckboxGroup, Field, Fieldset, Text } from "@flowstack-ui/brick";
+import {
+  CheckboxGroup,
+  Field,
+  Fieldset,
+  Text,
+  VStack,
+} from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -42,7 +48,7 @@ function ChoiceGroup({ id, label = "Notification methods" }: { id: string; label
 
 export function FieldsetPage() {
   return (
-    <div className="forms-page" data-component-page="fieldset" data-testid="fieldset-workbench">
+    <VStack className="forms-page" data-component-page="fieldset" data-testid="fieldset-workbench">
       <Scenario {...fieldsetScenarios[0]}>
         <div className="forms-overview" data-testid="fieldset-overview"><ChoiceGroup id="fieldset-overview-methods" /></div>
       </Scenario>
@@ -64,40 +70,40 @@ export function FieldsetPage() {
       </Scenario>
 
       <Scenario {...fieldsetScenarios[3]}>
-        <div className="forms-evidence-stack" data-testid="fieldset-descendants">
+        <VStack className="forms-evidence-stack" data-testid="fieldset-descendants">
           <EvidenceGroup description="Legend and messages describe the related multi-selection while CheckboxGroup owns values." title="CheckboxGroup">
             <div className="forms-overview"><ChoiceGroup id="fieldset-checkbox-group" label="Publishing channels" /></div>
           </EvidenceGroup>
           <EvidenceGroup description="Fieldset provides the related address group; each nested Field retains one control relationship." title="Nested Fields">
             <div className="forms-overview"><Fieldset.Root id="fieldset-address"><Fieldset.Legend>Address details</Fieldset.Legend><Field.Root id="fieldset-city"><Field.Label>City</Field.Label><Control /></Field.Root><Field.Root id="fieldset-postal"><Field.Label>Postal code</Field.Label><Control /></Field.Root></Fieldset.Root></div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...fieldsetScenarios[4]}>
-        <div className="forms-evidence-stack" data-testid="fieldset-relationships">
+        <VStack className="forms-evidence-stack" data-testid="fieldset-relationships">
           <EvidenceGroup description="Atom derives stable Legend, Description, and Error IDs from Root, connects the group, and exposes the matched invalid state." title="Generated group relationships">
             <RenderedOutput label="Generated Fieldset HTML"><Fieldset.Root id="notification-methods" invalid required><Fieldset.Legend>Notification methods</Fieldset.Legend><Fieldset.Description>Select the methods you check most often.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">Email</CheckboxGroup.Item><CheckboxGroup.Item value="push">Push notification</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>Select at least one method.</Fieldset.Error></Fieldset.Root></RenderedOutput>
           </EvidenceGroup>
           <EvidenceGroup description="forceMatch exposes an application-owned Error without marking the otherwise identical group invalid or adding a live role automatically." title="Forced application Error">
             <RenderedOutput label="Forced Error Fieldset HTML"><Fieldset.Root id="fieldset-forced"><Fieldset.Legend>Notification methods</Fieldset.Legend><Fieldset.Description>Select the methods you check most often.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">Email</CheckboxGroup.Item><CheckboxGroup.Item value="push">Push notification</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error forceMatch>Select at least one method.</Fieldset.Error></Fieldset.Root></RenderedOutput>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...fieldsetScenarios[5]}>
-        <div className="forms-evidence-stack" data-testid="fieldset-composition">
+        <VStack className="forms-evidence-stack" data-testid="fieldset-composition">
           <EvidenceGroup description="render supplies native fieldset, legend, and paragraph hosts while preserving Fieldset classes, slots, relationships, and content." title="render output">
             <RenderedOutput label="Rendered adapter HTML"><Fieldset.Root data-testid="fieldset-render" id="fieldset-rendered" render={<fieldset data-adapter="rendered-fieldset" />}><Fieldset.Legend render={<legend data-adapter="rendered-legend" />}>Notification methods</Fieldset.Legend><Fieldset.Description render={<p data-adapter="rendered-fieldset-description" />}>Select the methods you check most often.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">Email</CheckboxGroup.Item><CheckboxGroup.Item value="push">Push notification</CheckboxGroup.Item></CheckboxGroup.Root></Fieldset.Root></RenderedOutput>
           </EvidenceGroup>
           <EvidenceGroup description="asChild merges Fieldset behavior into consumer-owned native fieldset, legend, and paragraph elements with identical visible anatomy." title="asChild output">
             <RenderedOutput label="Composed adapter HTML"><Fieldset.Root asChild data-testid="fieldset-as-child" id="fieldset-composed"><fieldset data-adapter="composed-fieldset"><Fieldset.Legend asChild><legend data-adapter="composed-legend">Notification methods</legend></Fieldset.Legend><Fieldset.Description asChild><p data-adapter="composed-fieldset-description">Select the methods you check most often.</p></Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">Email</CheckboxGroup.Item><CheckboxGroup.Item value="push">Push notification</CheckboxGroup.Item></CheckboxGroup.Root></fieldset></Fieldset.Root></RenderedOutput>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...fieldsetScenarios[6]}>
-        <div className="forms-evidence-stack">
+        <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same plain native group composes inside adjacent local appearance scopes." title="Scoped appearances">
             <div className="forms-scoped-grid" data-testid="fieldset-appearance"><div data-brick-appearance="light"><code>light</code><ChoiceGroup id="fieldset-light" /></div><div data-brick-appearance="dark"><code>dark</code><ChoiceGroup id="fieldset-dark" /></div></div>
           </EvidenceGroup>
@@ -115,19 +121,19 @@ export function FieldsetPage() {
   ...
 </Fieldset.Root>`}</code></pre></div><div className="forms-customization__preview"><Fieldset.Root data-slot="custom-fieldset" id="fieldset-custom" invalid style={customFieldsetTokens}><Fieldset.Legend>Customized delivery group</Fieldset.Legend><Fieldset.Description>Local spacing and hierarchy.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="one">Option one</CheckboxGroup.Item><CheckboxGroup.Item value="two">Option two</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>Customized group error.</Fieldset.Error></Fieldset.Root></div></article>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...fieldsetScenarios[7]}>
-        <div className="forms-evidence-stack" data-testid="fieldset-stress">
+        <VStack className="forms-evidence-stack" data-testid="fieldset-stress">
           <EvidenceGroup description="Long group text and choices wrap inside a 20rem application-owned frame." title="Constrained-width stress">
             <div className="forms-stress-panel"><div className="forms-phone-frame"><Fieldset.Root id="fieldset-long" invalid required><Fieldset.Legend>Extremely detailed localized publishing and emergency-notification preferences</Fieldset.Legend><Fieldset.Description>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains contained.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="long">Detailed translated notification preference</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>The translated group error remains reachable.</Fieldset.Error></Fieldset.Root></div></div>
           </EvidenceGroup>
           <EvidenceGroup description="Legend, descriptions, choices, and logical Error cues inherit genuine right-to-left direction." title="RTL inheritance">
             <div className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Fieldset.Root id="fieldset-rtl" invalid required><Fieldset.Legend>طرق الاتصال المفضلة للحساب</Fieldset.Legend><Fieldset.Description>اختر طريقة واحدة على الأقل.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">البريد الإلكتروني</CheckboxGroup.Item><CheckboxGroup.Item value="phone">الهاتف</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>يرجى اختيار طريقة اتصال واحدة.</Fieldset.Error></Fieldset.Root></div></div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

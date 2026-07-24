@@ -1,5 +1,7 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  HStack,
+  VStack,
   Button,
   IconButton,
   Tooltip,
@@ -25,7 +27,7 @@ function SearchIcon() {
 }
 
 function EvidenceGroup({ children, description, title }: { children: ReactNode; description: string; title: string }) {
-  return <section className="tooltip-evidence-group"><div className="tooltip-evidence-group__heading"><Text as="h3" variant="title-sm">{title}</Text><Text as="p" tone="secondary" variant="body-sm">{description}</Text></div>{children}</section>;
+  return <VStack as="section" className="tooltip-evidence-group"><VStack className="tooltip-evidence-group__heading"><Text as="h3" variant="title-sm">{title}</Text><Text as="p" tone="secondary" variant="body-sm">{description}</Text></VStack>{children}</VStack>;
 }
 
 function Cell({ children, label }: { children: ReactNode; label: string }) {
@@ -73,7 +75,7 @@ export function TooltipPage() {
   const [controlledOpen, setControlledOpen] = useState(false);
   return (
     <Tooltip.Provider closeDelay={0} openDelay={0}>
-      <div className="tooltip-page" data-component-page="tooltip" data-testid="tooltip-workbench">
+      <VStack className="tooltip-page" data-component-page="tooltip" data-testid="tooltip-workbench">
         <Scenario {...tooltipScenarios[0]}>
           <div className="tooltip-overview" data-testid="tooltip-overview">
             <Hint label="Search workspace" side="bottom" />
@@ -112,7 +114,7 @@ export function TooltipPage() {
         <Scenario {...tooltipScenarios[5]}>
           <div className="tooltip-specimen-grid tooltip-specimen-grid--three" data-testid="tooltip-states">
             <Cell label="controlled">
-              <div className="tooltip-state-example"><Button onPress={() => setControlledOpen((open) => !open)} tone="neutral" variant="outline">Toggle controlled tooltip</Button><Tooltip.Root onOpenChange={setControlledOpen} open={controlledOpen}><Tooltip.Trigger asChild><IconButton aria-label="Controlled help" tone="neutral" variant="outline"><SearchIcon /></IconButton></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>Controlled state<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></div>
+              <HStack className="tooltip-state-example"><Button onPress={() => setControlledOpen((open) => !open)} tone="neutral" variant="outline">Toggle controlled tooltip</Button><Tooltip.Root onOpenChange={setControlledOpen} open={controlledOpen}><Tooltip.Trigger asChild><IconButton aria-label="Controlled help" tone="neutral" variant="outline"><SearchIcon /></IconButton></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>Controlled state<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></HStack>
             </Cell>
             <Cell label="defaultOpen"><Tooltip.Root defaultOpen><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">Default-open trigger</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content className="tooltip-default-open">Default-open state<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></Cell>
             <Cell label="disabled"><Tooltip.Root disabled><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">Disabled tooltip</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>Must not open</Tooltip.Content></Tooltip.Portal></Tooltip.Root></Cell>
@@ -128,7 +130,7 @@ export function TooltipPage() {
         </Scenario>
 
         <Scenario {...tooltipScenarios[7]}>
-          <div className="tooltip-evidence-stack">
+          <VStack className="tooltip-evidence-stack">
             <EvidenceGroup description="Focus or hover each trigger to inspect its same-document portal inside the local light or dark token scope." title="Scoped appearances"><div className="tooltip-scoped-grid" data-testid="tooltip-appearance"><ScopedTooltip appearance="light" /><ScopedTooltip appearance="dark" /></div></EvidenceGroup>
             <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
               <article className="tooltip-customization"><div><Text as="h4" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Focus or hover the trigger to inspect the customized Content class, slot, native style, and public Tooltip tokens.</Text><pre aria-label="Tooltip customization example" tabIndex={0}><code>{`<Tooltip.Content
@@ -146,16 +148,16 @@ export function TooltipPage() {
   <Tooltip.Arrow />
 </Tooltip.Content>`}</code></pre></div><div className="tooltip-customization__preview"><Tooltip.Provider closeDelay={0} openDelay={0}><Tooltip.Root><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">Custom trigger</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content className="custom-tooltip" data-slot="custom-tooltip" style={customTokens}>Customized tooltip<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></Tooltip.Provider></div></article>
             </EvidenceGroup>
-          </div>
+          </VStack>
         </Scenario>
 
         <Scenario {...tooltipScenarios[8]}>
-          <div className="tooltip-evidence-stack" data-testid="tooltip-stress">
+          <VStack className="tooltip-evidence-stack" data-testid="tooltip-stress">
             <EvidenceGroup description="Long accessible and visible content remains inside a 20rem application-owned frame." title="Constrained-width stress"><div className="tooltip-stress-panel"><div className="tooltip-phone-frame"><Hint label="Search projects, files, and localized workspace commands" side="bottom" /></div></div></EvidenceGroup>
             <EvidenceGroup description="Tooltip inherits genuine right-to-left content and remains within the dynamic viewport." title="RTL inheritance"><div className="tooltip-stress-panel"><div className="tooltip-phone-frame" dir="rtl"><Hint label="البحث في المشاريع والملفات" side="bottom" /></div></div></EvidenceGroup>
-          </div>
+          </VStack>
         </Scenario>
-      </div>
+      </VStack>
     </Tooltip.Provider>
   );
 }

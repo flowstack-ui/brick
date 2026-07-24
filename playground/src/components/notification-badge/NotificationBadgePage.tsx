@@ -1,5 +1,7 @@
 import { type CSSProperties, type ReactNode } from "react";
 import {
+  HStack,
+  VStack,
   Avatar,
   IconButton,
   NotificationBadge,
@@ -72,13 +74,13 @@ function EvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="notification-badge-evidence-group">
-      <div className="notification-badge-evidence-group__heading">
+    <VStack as="section" className="notification-badge-evidence-group">
+      <VStack className="notification-badge-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -179,7 +181,7 @@ export const notificationBadgeScenarios = [
 
 export function NotificationBadgePage() {
   return (
-    <div
+    <VStack
       className="notification-badge-page"
       data-component-page="notification-badge"
       data-testid="notification-badge-workbench"
@@ -313,7 +315,7 @@ export function NotificationBadgePage() {
       </Scenario>
 
       <Scenario {...notificationBadgeScenarios[7]}>
-        <div className="notification-badge-evidence-stack">
+        <VStack className="notification-badge-evidence-stack">
           <EvidenceGroup
             description="Adjacent light and dark scopes preserve the default count recipe."
             title="Scoped appearances"
@@ -380,11 +382,11 @@ export function NotificationBadgePage() {
               </div>
             </article>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...notificationBadgeScenarios[8]}>
-        <div
+        <VStack
           className="notification-badge-evidence-stack"
           data-testid="notification-badge-stress"
         >
@@ -393,12 +395,12 @@ export function NotificationBadgePage() {
             title="Constrained-width stress"
           >
             <div className="notification-badge-stress-panel">
-              <div className="notification-badge-phone-frame">
+              <HStack className="notification-badge-phone-frame">
                 <NotificationBadge count={125}>
                   <MailTarget label="International workspace inbox, more than 99 unread messages" />
                 </NotificationBadge>
                 <span>International workspace inbox</span>
-              </div>
+              </HStack>
             </div>
           </EvidenceGroup>
           <EvidenceGroup
@@ -406,16 +408,16 @@ export function NotificationBadgePage() {
             title="RTL inheritance"
           >
             <div className="notification-badge-stress-panel">
-              <div className="notification-badge-phone-frame" dir="rtl">
+              <HStack className="notification-badge-phone-frame" dir="rtl">
                 <NotificationBadge count={4}>
                   <MailTarget label="البريد الوارد، ٤ رسائل غير مقروءة" />
                 </NotificationBadge>
                 <span>البريد الوارد</span>
-              </div>
+              </HStack>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

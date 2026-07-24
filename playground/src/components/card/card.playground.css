@@ -1,5 +1,4 @@
 .card-page {
-  display: grid;
   gap: 2.5rem;
   min-inline-size: 0;
   padding-block: var(--brick-space-4) 6rem;
@@ -32,19 +31,16 @@
 }
 
 .card-evidence-stack {
-  display: grid;
   gap: 3rem;
 }
 
 .card-evidence-group {
   container-type: inline-size;
-  display: grid;
   gap: var(--brick-space-3);
   min-inline-size: 0;
 }
 
 .card-evidence-group__heading {
-  display: grid;
   gap: var(--brick-space-1);
 }
 

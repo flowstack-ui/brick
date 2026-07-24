@@ -1,5 +1,13 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { Button, Field, Fieldset, Form, Text } from "@flowstack-ui/brick";
+import {
+  Button,
+  Field,
+  Fieldset,
+  Form,
+  HStack,
+  Text,
+  VStack,
+} from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -78,7 +86,7 @@ export function FormPage() {
   }, []);
 
   return (
-    <div className="forms-page" data-component-page="form" data-testid="form-workbench">
+    <VStack className="forms-page" data-component-page="form" data-testid="form-workbench">
       <Scenario {...formScenarios[0]}>
         <div className="forms-overview" data-testid="form-overview">
           <Form
@@ -98,10 +106,10 @@ export function FormPage() {
               <Control name="email" onValueChange={setEmail} placeholder="name@example.com" value={email} />
               <Field.Description>Used for account notices.</Field.Description>
             </Field.Root>
-            <div className="forms-actions">
+            <HStack className="forms-actions">
               <Button type="submit">Create account</Button>
               <Button tone="neutral" type="reset">Reset</Button>
-            </div>
+            </HStack>
             <output aria-live="polite" className="forms-status">{status}</output>
           </Form>
         </div>
@@ -170,7 +178,7 @@ export function FormPage() {
                 <Field.Description>Enter a valid account address.</Field.Description>
                 <Field.Error>Enter a valid email address.</Field.Error>
               </Field.Root>
-              <div className="forms-actions"><Button type="submit">Submit profile</Button><Button tone="neutral" type="reset">Reset</Button></div>
+              <HStack className="forms-actions"><Button type="submit">Submit profile</Button><Button tone="neutral" type="reset">Reset</Button></HStack>
               <output className="forms-status">{inlineValidationStatus}</output>
             </Form>
           </Cell>
@@ -188,7 +196,7 @@ export function FormPage() {
                 <Field.Description>Enter a valid account address.</Field.Description>
                 <Field.Error>Enter a valid email address.</Field.Error>
               </Field.Root>
-              <div className="forms-actions"><Button type="submit">Submit profile</Button><Button tone="neutral" type="reset">Reset</Button></div>
+              <HStack className="forms-actions"><Button type="submit">Submit profile</Button><Button tone="neutral" type="reset">Reset</Button></HStack>
               <output className="forms-status">{nativeValidationStatus}</output>
             </Form>
           </Cell>
@@ -211,7 +219,7 @@ export function FormPage() {
               <Field.Description>Submit empty to inspect invalid, then enter a value and submit again.</Field.Description>
               <Field.Error>Enter a project name.</Field.Error>
             </Field.Root>
-            <div className="forms-actions"><Button type="submit">Submit project</Button><Button tone="neutral" type="reset">Reset</Button></div>
+            <HStack className="forms-actions"><Button type="submit">Submit project</Button><Button tone="neutral" type="reset">Reset</Button></HStack>
             <output aria-live="polite" className="forms-hook-readout">
               <span><code>data-submitting</code> {String(stateHooks.submitting)}</span>
               <span><code>data-submitted</code> {String(stateHooks.submitted)}</span>
@@ -222,7 +230,7 @@ export function FormPage() {
       </Scenario>
 
       <Scenario {...formScenarios[4]}>
-        <div className="forms-evidence-stack" data-testid="form-native-surface">
+        <VStack className="forms-evidence-stack" data-testid="form-native-surface">
           <EvidenceGroup description="The native form attributes forward unchanged. Submission targets the hidden result frame so the playground remains in place." title="Forwarded native attributes">
             <div className="forms-overview">
               <Form
@@ -238,7 +246,7 @@ export function FormPage() {
                 target="form-native-surface-target"
               >
                 <SimpleFields prefix="form-attributes" />
-                <div className="forms-actions"><Button type="submit">Submit native form</Button><Button tone="neutral" type="reset">Reset</Button></div>
+                <HStack className="forms-actions"><Button type="submit">Submit native form</Button><Button tone="neutral" type="reset">Reset</Button></HStack>
                 <output className="forms-status">{nativeSurfaceStatus}</output>
                 <dl className="forms-attribute-readout"><div><dt>method</dt><dd>post</dd></div><div><dt>encoding</dt><dd>urlencoded</dd></div><div><dt>target</dt><dd>result frame</dd></div><div><dt>validation</dt><dd>noValidate</dd></div></dl>
               </Form>
@@ -257,15 +265,15 @@ export function FormPage() {
                 >
                   <SimpleFields prefix="form-external" />
                 </Form>
-                <div className="forms-actions">
+                <HStack className="forms-actions">
                   <Button form="external-controls-form" type="submit">External submit</Button>
                   <Button form="external-controls-form" tone="neutral" type="reset">External reset</Button>
-                </div>
+                </HStack>
                 <output className="forms-status">{externalStatus}</output>
               </div>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...formScenarios[5]}>
@@ -285,7 +293,7 @@ export function FormPage() {
       </Scenario>
 
       <Scenario {...formScenarios[6]}>
-        <div className="forms-evidence-stack">
+        <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same default Form rhythm composes inside adjacent local appearance scopes." title="Scoped appearances">
             <div className="forms-scoped-grid" data-testid="form-appearance">
               <div data-brick-appearance="light"><code>light</code><Form aria-label="Light form"><SimpleFields prefix="form-light" /></Form></div>
@@ -306,19 +314,19 @@ export function FormPage() {
               <div className="forms-customization__preview"><Form aria-label="Customized form" data-slot="custom-form" style={customFormTokens}><SimpleFields prefix="form-custom" /></Form></div>
             </article>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...formScenarios[7]}>
-        <div className="forms-evidence-stack" data-testid="form-stress">
+        <VStack className="forms-evidence-stack" data-testid="form-stress">
           <EvidenceGroup description="The unboxed boundary and actions remain contained inside a 20rem application-owned frame." title="Constrained-width stress">
-            <div className="forms-stress-panel"><div className="forms-phone-frame"><Form aria-label="Long localized form"><Field.Root id="form-long-field"><Field.Label>Extremely detailed localized account recovery contact address</Field.Label><Control name="longValue" /><Field.Description>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains contained.</Field.Description></Field.Root><div className="forms-actions"><Button type="submit">Save detailed settings</Button><Button tone="neutral" type="reset">Reset</Button></div></Form></div></div>
+            <div className="forms-stress-panel"><div className="forms-phone-frame"><Form aria-label="Long localized form"><Field.Root id="form-long-field"><Field.Label>Extremely detailed localized account recovery contact address</Field.Label><Control name="longValue" /><Field.Description>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains contained.</Field.Description></Field.Root><HStack className="forms-actions"><Button type="submit">Save detailed settings</Button><Button tone="neutral" type="reset">Reset</Button></HStack></Form></div></div>
           </EvidenceGroup>
           <EvidenceGroup description="Form source order, controls, and logical layout inherit genuine right-to-left direction." title="RTL inheritance">
-            <div className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Form aria-label="إعدادات الحساب"><Field.Root id="form-rtl-name"><Field.Label>اسم مساحة العمل</Field.Label><Control name="workspace" /></Field.Root><div className="forms-actions"><Button type="submit">حفظ الإعدادات</Button><Button tone="neutral" type="reset">إعادة تعيين</Button></div></Form></div></div>
+            <div className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Form aria-label="إعدادات الحساب"><Field.Root id="form-rtl-name"><Field.Label>اسم مساحة العمل</Field.Label><Control name="workspace" /></Field.Root><HStack className="forms-actions"><Button type="submit">حفظ الإعدادات</Button><Button tone="neutral" type="reset">إعادة تعيين</Button></HStack></Form></div></div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

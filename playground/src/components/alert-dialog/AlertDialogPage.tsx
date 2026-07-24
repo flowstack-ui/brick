@@ -4,6 +4,7 @@ import {
   type ReactNode,
 } from "react";
 import {
+  VStack,
   AlertDialog,
   Button,
   Dialog,
@@ -37,13 +38,13 @@ function EvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="alert-dialog-evidence-group">
-      <div className="alert-dialog-evidence-group__heading">
+    <VStack as="section" className="alert-dialog-evidence-group">
+      <VStack className="alert-dialog-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -237,7 +238,7 @@ export function AlertDialogPage() {
   const [decisionLog, setDecisionLog] = useState("No decision yet");
 
   return (
-    <div
+    <VStack
       className="alert-dialog-page"
       data-component-page="alert-dialog"
       data-testid="alert-dialog-workbench"
@@ -272,7 +273,7 @@ export function AlertDialogPage() {
       </Scenario>
 
       <Scenario {...alertDialogScenarios[2]}>
-        <div className="alert-dialog-evidence-stack">
+        <VStack className="alert-dialog-evidence-stack">
           <EvidenceGroup
             description="These valid compositions differ only in the authored message/detail path. AlertDialog never generates missing regions or response copy."
             title="Authored regions"
@@ -399,11 +400,11 @@ export function AlertDialogPage() {
               ))}
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...alertDialogScenarios[3]}>
-        <div className="alert-dialog-evidence-stack">
+        <VStack className="alert-dialog-evidence-stack">
           <EvidenceGroup
             description="The callback distinguishes safe cancellation from affirmative action without AlertDialog inventing application behavior."
             title="Decision outcomes"
@@ -548,7 +549,7 @@ export function AlertDialogPage() {
               </SpecimenCell>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...alertDialogScenarios[4]}>
@@ -760,7 +761,7 @@ export function AlertDialogPage() {
         >
           <StandardAlertDialog
             body={
-              <div className="alert-dialog-long-copy">
+              <VStack className="alert-dialog-long-copy">
                 {Array.from({ length: 12 }, (_, index) => (
                   <Text as="p" key={index}>
                     Consequence {index + 1}: supplemental detail remains
@@ -768,7 +769,7 @@ export function AlertDialogPage() {
                     message.
                   </Text>
                 ))}
-              </div>
+              </VStack>
             }
             contentTestId="alert-dialog-long-content-surface"
             label="Open long decision"
@@ -793,6 +794,6 @@ export function AlertDialogPage() {
           />
         </div>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

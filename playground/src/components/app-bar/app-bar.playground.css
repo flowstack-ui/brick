@@ -1,5 +1,4 @@
 .app-bar-page {
-  display: grid;
   gap: 2.5rem;
   min-inline-size: 0;
   padding-block: var(--brick-space-4) 6rem;
@@ -32,19 +31,16 @@
 }
 
 .app-bar-evidence-stack {
-  display: grid;
   gap: 3rem;
 }
 
 .app-bar-evidence-group {
   container-type: inline-size;
-  display: grid;
   gap: var(--brick-space-3);
   min-inline-size: 0;
 }
 
 .app-bar-evidence-group__heading {
-  display: grid;
   gap: var(--brick-space-1);
 }
 
@@ -120,7 +116,6 @@
 }
 
 .app-bar-page .brick-app-bar-center nav {
-  display: flex;
   gap: var(--brick-space-4);
 }
 

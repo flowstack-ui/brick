@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import {
+  VStack,
   Text,
   ToggleGroup,
   type ToggleShape,
@@ -18,7 +19,7 @@ function GridIcon() {
 }
 
 function EvidenceGroup({ children, description, title }: { children: ReactNode; description: string; title: string }) {
-  return <section className="toggle-group-evidence-group"><div className="toggle-group-evidence-group__heading"><Text as="h3" variant="title-sm">{title}</Text><Text as="p" tone="secondary" variant="body-sm">{description}</Text></div>{children}</section>;
+  return <VStack as="section" className="toggle-group-evidence-group"><VStack className="toggle-group-evidence-group__heading"><Text as="h3" variant="title-sm">{title}</Text><Text as="p" tone="secondary" variant="body-sm">{description}</Text></VStack>{children}</VStack>;
 }
 
 function Cell({ children, label }: { children: ReactNode; label: string }) {
@@ -51,7 +52,7 @@ export function ToggleGroupPage() {
   const [view, setView] = useState("cards");
   const [filters, setFilters] = useState<string[]>(["active"]);
   return (
-    <div className="toggle-group-page" data-component-page="toggle-group" data-testid="toggle-group-workbench">
+    <VStack className="toggle-group-page" data-component-page="toggle-group" data-testid="toggle-group-workbench">
       <Scenario {...toggleGroupScenarios[0]}>
         <div className="toggle-group-overview" data-testid="toggle-group-overview"><StandardGroup /></div>
       </Scenario>
@@ -59,24 +60,24 @@ export function ToggleGroupPage() {
       <Scenario {...toggleGroupScenarios[1]}>
         <div className="toggle-group-specimen-grid toggle-group-specimen-grid--two" data-testid="toggle-group-selection">
           <Cell label="single">
-            <div className="toggle-group-readout">
+            <VStack className="toggle-group-readout">
               <ToggleGroup.Root ariaLabel="Controlled project view" onValueChange={setView} value={view}>
                 <ToggleGroup.Item value="cards">Cards</ToggleGroup.Item>
                 <ToggleGroup.Item value="list">List</ToggleGroup.Item>
                 <ToggleGroup.Item value="timeline">Timeline</ToggleGroup.Item>
               </ToggleGroup.Root>
               <span>Current view: {view || "none"}</span>
-            </div>
+            </VStack>
           </Cell>
           <Cell label="multiple">
-            <div className="toggle-group-readout">
+            <VStack className="toggle-group-readout">
               <ToggleGroup.Root ariaLabel="Project filters" onValueChange={setFilters} type="multiple" value={filters}>
                 <ToggleGroup.Item value="active">Active</ToggleGroup.Item>
                 <ToggleGroup.Item value="owned">Owned</ToggleGroup.Item>
                 <ToggleGroup.Item value="shared">Shared</ToggleGroup.Item>
               </ToggleGroup.Root>
               <span>Filters: {filters.length ? filters.join(", ") : "none"}</span>
-            </div>
+            </VStack>
           </Cell>
         </div>
       </Scenario>
@@ -94,7 +95,7 @@ export function ToggleGroupPage() {
       </Scenario>
 
       <Scenario {...toggleGroupScenarios[4]}>
-        <div className="toggle-group-evidence-stack" data-testid="toggle-group-shapes">
+        <VStack className="toggle-group-evidence-stack" data-testid="toggle-group-shapes">
           <EvidenceGroup description="Both groups keep the same values, default size, variant, and separated layout." title="Shapes">
             <div className="toggle-group-specimen-grid toggle-group-specimen-grid--two">
               {shapes.map((shape) => <Cell key={shape} label={shape}><StandardGroup label={`${shape} project view`} shape={shape} /></Cell>)}
@@ -108,11 +109,11 @@ export function ToggleGroupPage() {
               </ToggleGroup.Root>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...toggleGroupScenarios[5]}>
-        <div className="toggle-group-evidence-stack" data-testid="toggle-group-layout">
+        <VStack className="toggle-group-evidence-stack" data-testid="toggle-group-layout">
           <EvidenceGroup description="Only attachment changes; Items remain intrinsically sized." title="Attached">
             <div className="toggle-group-specimen-grid toggle-group-specimen-grid--two">
               <Cell label="separated"><StandardGroup label="Separated project view" /></Cell>
@@ -125,11 +126,11 @@ export function ToggleGroupPage() {
               <Cell label="fullWidth"><ToggleGroup.Root ariaLabel="Full-width project view" defaultValue="cards" fullWidth><ToggleGroup.Item value="cards">Cards</ToggleGroup.Item><ToggleGroup.Item value="list">List</ToggleGroup.Item><ToggleGroup.Item value="timeline">Timeline</ToggleGroup.Item></ToggleGroup.Root></Cell>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...toggleGroupScenarios[6]}>
-        <div className="toggle-group-evidence-stack" data-testid="toggle-group-interaction">
+        <VStack className="toggle-group-evidence-stack" data-testid="toggle-group-interaction">
           <EvidenceGroup description="Only arrow-key axis and visual flow change; selection mode and recipe remain default." title="Orientation">
             <div className="toggle-group-overview">
               <ToggleGroup.Root ariaLabel="Text alignment" defaultValue="start" orientation="vertical"><ToggleGroup.Item value="start">Start</ToggleGroup.Item><ToggleGroup.Item value="center">Center</ToggleGroup.Item><ToggleGroup.Item value="end">End</ToggleGroup.Item></ToggleGroup.Root>
@@ -141,11 +142,11 @@ export function ToggleGroupPage() {
               <Cell label="disabled Item"><ToggleGroup.Root ariaLabel="Availability" defaultValue="ready"><ToggleGroup.Item value="ready">Ready</ToggleGroup.Item><ToggleGroup.Item disabled value="archived">Archived</ToggleGroup.Item><ToggleGroup.Item value="draft">Draft</ToggleGroup.Item></ToggleGroup.Root></Cell>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...toggleGroupScenarios[7]}>
-        <div className="toggle-group-evidence-stack">
+        <VStack className="toggle-group-evidence-stack">
           <EvidenceGroup description="Adjacent light and dark scopes preserve the default group recipe." title="Scoped appearances">
             <div className="toggle-group-scoped-grid" data-testid="toggle-group-appearance"><div data-brick-appearance="light"><code>light</code><StandardGroup label="Light project view" /></div><div data-brick-appearance="dark"><code>dark</code><StandardGroup label="Dark project view" /></div></div>
           </EvidenceGroup>
@@ -177,19 +178,19 @@ export function ToggleGroupPage() {
   <ToggleGroup.Item value="list">List</ToggleGroup.Item>
 </ToggleGroup.Root>`}</code></pre></div><div className="toggle-group-customization__preview"><ToggleGroup.Root ariaLabel="Custom project view" className="custom-toggle-group" data-slot="custom-toggle-group" defaultValue="cards"><ToggleGroup.Item value="cards">Cards</ToggleGroup.Item><ToggleGroup.Item value="list">List</ToggleGroup.Item></ToggleGroup.Root></div></article>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...toggleGroupScenarios[8]}>
-        <div className="toggle-group-evidence-stack" data-testid="toggle-group-stress">
+        <VStack className="toggle-group-evidence-stack" data-testid="toggle-group-stress">
           <EvidenceGroup description="Separated Items wrap inside a 20rem frame without shrinking target geometry." title="Constrained-width stress">
             <div className="toggle-group-stress-panel"><div className="toggle-group-phone-frame"><ToggleGroup.Root ariaLabel="Localized filters" defaultValue={["long"]} type="multiple"><ToggleGroup.Item value="long">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</ToggleGroup.Item><ToggleGroup.Item value="ready">Ready</ToggleGroup.Item></ToggleGroup.Root></div></div>
           </EvidenceGroup>
           <EvidenceGroup description="Attached logical corners and horizontal arrow order mirror in a genuine right-to-left context." title="RTL inheritance">
             <div className="toggle-group-stress-panel"><div className="toggle-group-phone-frame" dir="rtl"><ToggleGroup.Root ariaLabel="طريقة عرض المشروع" attached defaultValue="cards"><ToggleGroup.Item value="cards">بطاقات</ToggleGroup.Item><ToggleGroup.Item value="list">قائمة</ToggleGroup.Item></ToggleGroup.Root></div></div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }

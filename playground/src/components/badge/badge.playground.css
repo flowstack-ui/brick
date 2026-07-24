@@ -1,5 +1,4 @@
 .badge-page {
-  display: grid;
   gap: 2.5rem;
   min-inline-size: 0;
   padding-block: var(--brick-space-4) 6rem;
@@ -31,19 +30,16 @@
 }
 
 .badge-evidence-stack {
-  display: grid;
   gap: 3rem;
 }
 
 .badge-evidence-group {
   container-type: inline-size;
-  display: grid;
   gap: var(--brick-space-3);
   min-inline-size: 0;
 }
 
 .badge-evidence-group__heading {
-  display: grid;
   gap: var(--brick-space-1);
 }
 
@@ -191,9 +187,7 @@
 }
 
 .badge-phone-frame {
-  display: flex;
   inline-size: min(100%, 20rem);
-  flex-wrap: wrap;
   align-items: center;
   gap: var(--brick-space-3);
 }

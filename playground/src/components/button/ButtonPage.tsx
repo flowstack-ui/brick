@@ -1,5 +1,6 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  VStack,
   Button,
   Field,
   Form,
@@ -48,13 +49,13 @@ function EvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="button-evidence-group">
-      <div className="button-evidence-group__heading">
+    <VStack as="section" className="button-evidence-group">
+      <VStack className="button-evidence-group__heading">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 
@@ -151,7 +152,7 @@ export function ButtonPage() {
   );
 
   return (
-    <div
+    <VStack
       className="button-page"
       data-component-page="button"
       data-testid="button-workbench"
@@ -184,7 +185,7 @@ export function ButtonPage() {
       </Scenario>
 
       <Scenario {...buttonScenarios[2]}>
-        <div className="button-evidence-stack" data-testid="button-tones">
+        <VStack className="button-evidence-stack" data-testid="button-tones">
           {variants.map((variant) => (
             <EvidenceGroup
               description={`All semantic tones using the ${variant} treatment.`}
@@ -202,7 +203,7 @@ export function ButtonPage() {
               </div>
             </EvidenceGroup>
           ))}
-        </div>
+        </VStack>
       </Scenario>
 
       <Scenario {...buttonScenarios[3]}>
@@ -444,7 +445,7 @@ export function ButtonPage() {
       </Scenario>
 
       <Scenario {...buttonScenarios[8]}>
-        <div className="button-evidence-stack" data-testid="button-stress">
+        <VStack className="button-evidence-stack" data-testid="button-stress">
           <EvidenceGroup
             description="A long localized label wraps inside a 20rem frame. The control may grow vertically but must not clip or overflow."
             title="Constrained-width stress"
@@ -474,8 +475,8 @@ export function ButtonPage() {
               </div>
             </div>
           </EvidenceGroup>
-        </div>
+        </VStack>
       </Scenario>
-    </div>
+    </VStack>
   );
 }
