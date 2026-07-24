@@ -1,0 +1,7 @@
+.text-constrained--wrapping {
+  inline-size: min(100%, 11.125rem);
+}
+
+.text-constrained--wrapping > .brick-text {
+  display: block;
+}

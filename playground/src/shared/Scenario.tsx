@@ -1,4 +1,4 @@
-import { Text } from "@flowstack-ui/brick";
+import { Text, VStack } from "@flowstack-ui/brick";
 import type { ReactNode } from "react";
 
 export interface ScenarioDefinition {
@@ -28,20 +28,22 @@ export function Scenario({
   const headingId = `${scenarioId}-title`;
 
   return (
-    <section
+    <VStack
+      as="section"
       aria-labelledby={headingId}
       className="scenario"
       data-scenario={id}
+      gap="4"
       id={scenarioId}
     >
-      <div className="scenario-heading">
+      <VStack className="scenario-heading" gap="1">
         <Text className="scenario-number" variant="caption">
           Scenario {String(number).padStart(2, "0")}
         </Text>
         <Text as="h2" id={headingId} variant="title-lg">{title}</Text>
         <Text as="p" tone="secondary">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }

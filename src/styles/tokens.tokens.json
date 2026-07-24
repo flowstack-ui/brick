@@ -121,6 +121,7 @@
     "dimension": {
       "$type": "dimension",
       "zero": { "$value": { "value": 0, "unit": "px" } },
+      "space0": { "$value": { "value": 0, "unit": "rem" } },
       "space1": { "$value": { "value": 0.25, "unit": "rem" } },
       "space2": { "$value": { "value": 0.5, "unit": "rem" } },
       "space3": { "$value": { "value": 0.75, "unit": "rem" } },
@@ -284,6 +285,7 @@
       },
       "space": {
         "$type": "dimension",
+        "0": { "$value": "{reference.dimension.space0}" },
         "1": { "$value": "{reference.dimension.space1}" },
         "2": { "$value": "{reference.dimension.space2}" },
         "3": { "$value": "{reference.dimension.space3}" },
@@ -488,7 +490,7 @@
         "scrim": { "$value": "{reference.dark.color.scrim}" },
         "shadow": { "$value": "{reference.dark.color.shadow}" }
       },
-      "space": { "$type": "dimension", "1": { "$value": "{reference.dimension.space1}" }, "2": { "$value": "{reference.dimension.space2}" }, "3": { "$value": "{reference.dimension.space3}" }, "4": { "$value": "{reference.dimension.space4}" }, "5": { "$value": "{reference.dimension.space5}" }, "6": { "$value": "{reference.dimension.space6}" }, "component-gap": { "$value": "{reference.dimension.space2}" }, "control-inline": { "$value": "{reference.dimension.space4}" }, "surface": { "$value": "{reference.dimension.space5}" } },
+      "space": { "$type": "dimension", "0": { "$value": "{reference.dimension.space0}" }, "1": { "$value": "{reference.dimension.space1}" }, "2": { "$value": "{reference.dimension.space2}" }, "3": { "$value": "{reference.dimension.space3}" }, "4": { "$value": "{reference.dimension.space4}" }, "5": { "$value": "{reference.dimension.space5}" }, "6": { "$value": "{reference.dimension.space6}" }, "component-gap": { "$value": "{reference.dimension.space2}" }, "control-inline": { "$value": "{reference.dimension.space4}" }, "surface": { "$value": "{reference.dimension.space5}" } },
       "radius": { "$type": "dimension", "subtle": { "$value": "{reference.dimension.radius1}" }, "control": { "$value": "{reference.dimension.radius2}" }, "surface": { "$value": "{reference.dimension.radius3}" }, "overlay": { "$value": "{reference.dimension.radius4}" }, "full": { "$value": "{reference.dimension.radiusFull}" } },
       "border": { "$type": "dimension", "width": { "$value": "{reference.dimension.border1}" }, "focus-width": { "$value": "{reference.dimension.border2}" }, "focus-offset": { "$value": "{reference.dimension.space1}" } },
       "control": { "$type": "dimension", "min-block-size-xs": { "$value": "{reference.dimension.controlXs}" }, "min-block-size-sm": { "$value": "{reference.dimension.controlSm}" }, "min-block-size-md": { "$value": "{reference.dimension.controlMd}" }, "min-block-size-lg": { "$value": "{reference.dimension.controlLg}" }, "min-block-size-xl": { "$value": "{reference.dimension.controlXl}" }, "target-min": { "$value": "{reference.dimension.target}" } },

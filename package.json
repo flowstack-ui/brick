@@ -115,6 +115,10 @@
       "types": "./dist/text.d.ts",
       "default": "./dist/text.js"
     },
+    "./stack": {
+      "types": "./dist/stack.d.ts",
+      "default": "./dist/stack.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"

@@ -36,6 +36,13 @@ export const componentEntries = [
     title: "Text",
   },
   {
+    category: "Layout",
+    description: "Tokenized one-dimensional rows and columns.",
+    id: "stack",
+    route: "/stack",
+    title: "Stack",
+  },
+  {
     category: "Data display",
     description: "Static grouped content with finished surfaces.",
     id: "card",

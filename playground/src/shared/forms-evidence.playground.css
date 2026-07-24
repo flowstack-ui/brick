@@ -39,13 +39,11 @@
 
 .forms-evidence-group {
   container-type: inline-size;
-  display: grid;
   gap: var(--brick-space-3);
   min-inline-size: 0;
 }
 
 .forms-evidence-group__heading {
-  display: grid;
   gap: var(--brick-space-1);
 }
 

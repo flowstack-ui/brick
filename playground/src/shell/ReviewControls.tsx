@@ -1,4 +1,4 @@
-import { Fieldset, ToggleGroup } from "@flowstack-ui/brick";
+import { Fieldset, HStack, ToggleGroup } from "@flowstack-ui/brick";
 import type { Appearance, Direction } from "../shared/appearance.js";
 
 export function ReviewControls({
@@ -13,7 +13,13 @@ export function ReviewControls({
   onDirectionChange: (direction: Direction) => void;
 }) {
   return (
-    <div aria-label="Review controls" className="review-controls">
+    <HStack
+      align="start"
+      aria-label="Review controls"
+      className="review-controls"
+      gap="3"
+      wrap
+    >
       <Fieldset.Root className="review-control-group">
         <Fieldset.Legend>Appearance</Fieldset.Legend>
         <ToggleGroup.Root
@@ -57,6 +63,6 @@ export function ReviewControls({
           </ToggleGroup.Item>
         </ToggleGroup.Root>
       </Fieldset.Root>
-    </div>
+    </HStack>
   );
 }

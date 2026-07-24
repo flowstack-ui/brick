@@ -20,6 +20,7 @@ import { Checkbox } from "@flowstack-ui/brick/checkbox";
 import { CheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 import { Input } from "@flowstack-ui/brick/input";
 import { Text } from "@flowstack-ui/brick/text";
+import { HStack, VStack } from "@flowstack-ui/brick/stack";
 
 type Appearance = "light" | "dark";
 
@@ -127,7 +128,7 @@ export function App() {
 
       <div className="site-shell">
         <main>
-        <section className="hero" aria-labelledby="hero-title">
+        <VStack as="section" className="hero" aria-labelledby="hero-title" gap="4">
           <Text as="p" className="eyebrow" tone="accent" variant="caption" weight="semibold">
             Independent package integration
           </Text>
@@ -139,7 +140,7 @@ export function App() {
             This small application consumes Brick exactly through its public package
             exports. Application layout stays here; finished component styling stays in Brick.
           </Text>
-          <div className="hero-actions">
+          <HStack className="hero-actions" gap="3" wrap>
             <Dialog.Root>
               <Dialog.Trigger asChild>
                 <Button className="primary-action" endIcon={<ArrowIcon />}>
@@ -178,13 +179,13 @@ export function App() {
             <Button href="#workspace" tone="neutral" variant="outline">
               View workspace
             </Button>
-          </div>
+          </HStack>
           <Text as="p" className="activity" aria-live="polite" tone="muted" variant="body-sm">
             {publishCount === 0
               ? "Project has not been published."
               : `Published ${publishCount} ${publishCount === 1 ? "time" : "times"}.`}
           </Text>
-        </section>
+        </VStack>
 
         <section className="workspace" id="workspace" aria-labelledby="workspace-title">
           <div className="section-heading">

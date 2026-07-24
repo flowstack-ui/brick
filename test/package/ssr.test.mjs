@@ -17,6 +17,7 @@ import { Checkbox } from "../../dist/checkbox.js";
 import { CheckboxGroup } from "../../dist/checkbox-group.js";
 import { Input } from "../../dist/input.js";
 import { Text } from "../../dist/text.js";
+import { HStack, Stack, VStack } from "../../dist/stack.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
 
 test("Card renders on the server without browser state or a client boundary", () => {
@@ -260,6 +261,27 @@ test("Text renders one deterministic semantic host during SSR", () => {
   assert.match(markup, /id="server-heading"/);
   assert.match(markup, />Server heading<\/h2>$/);
   assert.doesNotMatch(markup, /role=|aria-level|tabindex/i);
+});
+
+test("Stack family renders deterministic semantic layout without behavior", () => {
+  const markup = renderToString(
+    React.createElement(
+      Stack,
+      { as: "section", gap: "3", id: "server-stack" },
+      React.createElement(HStack, { gap: "2", wrap: true }, "Actions"),
+      React.createElement(VStack, { gap: "1" }, "Details"),
+    ),
+  );
+
+  assert.match(markup, /^<section/);
+  assert.match(markup, /class="brick-stack"/);
+  assert.match(markup, /data-direction="column"/);
+  assert.match(markup, /data-gap="3"/);
+  assert.match(markup, /id="server-stack"/);
+  assert.match(markup, /data-direction="row"/);
+  assert.match(markup, /data-align="center"/);
+  assert.match(markup, /data-wrap=""/);
+  assert.doesNotMatch(markup, /role=|tabindex|aria-orientation/i);
 });
 
 test("Checkbox family renders server-stable visual and semantic anatomy", () => {

@@ -17,6 +17,7 @@ export const componentIds = [
   "input",
   "notification-badge",
   "popover",
+  "stack",
   "text",
   "toggle",
   "toggle-group",

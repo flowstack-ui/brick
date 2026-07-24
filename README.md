@@ -7,7 +7,7 @@ design tokens, light and dark appearances, and a documented customization
 contract. The initial catalog includes Button, Card, Dialog, AlertDialog,
 Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton,
 AppBar, Tooltip, HoverCard, Popover, Form, Field, Fieldset, Checkbox,
-CheckboxGroup, Input, and Text.
+CheckboxGroup, Input, Text, Stack, HStack, and VStack.
 
 ## Boundary
 
@@ -26,7 +26,7 @@ CheckboxGroup, Input, and Text.
 | Content and status | [Text](docs/components/text/README.md), [Avatar](docs/components/avatar/README.md), [Badge](docs/components/badge/README.md), [Notification Badge](docs/components/notification-badge/README.md), [Card](docs/components/card/README.md) |
 | Contextual overlays | [Tooltip](docs/components/tooltip/README.md), [Hover Card](docs/components/hover-card/README.md), [Popover](docs/components/popover/README.md) |
 | Modal surfaces | [Dialog](docs/components/dialog/README.md), [Alert Dialog](docs/components/alert-dialog/README.md), [Drawer](docs/components/drawer/README.md) |
-| Navigation and layout | [App Bar](docs/components/app-bar/README.md) |
+| Navigation and layout | [App Bar](docs/components/app-bar/README.md), [Stack](docs/components/stack/README.md) |
 
 See the complete [documentation index](docs/README.md) for installation,
 appearance, testing, playground, manual-review, workbook, Consumer, and release
@@ -54,11 +54,19 @@ import "@flowstack-ui/brick/styles.css";
 Use `@flowstack-ui/brick/tokens.css` when only the visual tokens are needed.
 
 ```tsx
-import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, Dialog, Drawer, Field, Fieldset, Form, HoverCard, IconButton, Input, NotificationBadge, Popover, Text, Toggle, ToggleGroup } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, Dialog, Drawer, Field, Fieldset, Form, HoverCard, HStack, IconButton, Input, NotificationBadge, Popover, Stack, Text, Toggle, ToggleGroup, VStack } from "@flowstack-ui/brick";
 
 <Button>Save changes</Button>;
 
 <Text as="h2" variant="title-md">Account settings</Text>;
+
+<VStack gap="3">
+  <Text as="h2" variant="title-md">Account settings</Text>
+  <HStack gap="2" wrap>
+    <Button>Save</Button>
+    <Button tone="neutral" variant="outline">Cancel</Button>
+  </HStack>
+</VStack>;
 
 <IconButton aria-label="Search" href="/search"><SearchIcon /></IconButton>;
 

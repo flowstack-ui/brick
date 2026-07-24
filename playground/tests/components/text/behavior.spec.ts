@@ -109,10 +109,53 @@ test("Text semantic hosts retain identical visual recipes and actual output", as
   await expect(output).toContainText('id="text-output-heading"');
 });
 
-test("Text wrapping and overflow remain bounded and deliberate", async ({ page }) => {
+test("Text wrapping and overflow remain bounded and deliberate", async ({
+  browserName,
+  page,
+}) => {
   const evidence = page.getByTestId("text-overflow");
   await expect(evidence.locator("[data-wrap='nowrap']")).toHaveCSS("text-wrap", "nowrap");
   await expect(evidence.locator("[data-wrap='balance']")).toHaveCSS("text-wrap", "balance");
+  const supportsPretty = await page.evaluate(() => CSS.supports("text-wrap", "pretty"));
+  await expect(evidence.locator("[data-wrap='pretty']")).toHaveCSS(
+    "text-wrap",
+    supportsPretty ? "pretty" : "wrap",
+  );
+
+  const renderedLines = (locator: Locator) => locator.evaluate((element) => {
+    const text = element.firstChild;
+    if (!text) return [];
+    const range = document.createRange();
+    const lines: Array<{ text: string; y: number }> = [];
+    for (let index = 0; index < (text.textContent?.length ?? 0); index += 1) {
+      range.setStart(text, index);
+      range.setEnd(text, index + 1);
+      const y = Math.round(range.getBoundingClientRect().y);
+      let line = lines.find((entry) => entry.y === y);
+      if (!line) {
+        line = { text: "", y };
+        lines.push(line);
+      }
+      line.text += text.textContent?.[index] ?? "";
+    }
+    return lines.map((line) => line.text.trim());
+  });
+
+  if (browserName === "chromium") {
+    const wrapLines = await renderedLines(page.getByTestId("text-wrap-wrap"));
+    const balanceLines = await renderedLines(evidence.locator("[data-wrap='balance']"));
+    const prettyLines = await renderedLines(evidence.locator("[data-wrap='pretty']"));
+    expect(new Set(
+      [wrapLines, balanceLines, prettyLines].map((lines) => JSON.stringify(lines)),
+    ).size).toBe(3);
+    expect(wrapLines[wrapLines.length - 1]?.split(/\s+/)).toHaveLength(1);
+    expect(
+      balanceLines[balanceLines.length - 1]?.split(/\s+/).length,
+    ).toBeGreaterThan(1);
+    expect(
+      prettyLines[prettyLines.length - 1]?.split(/\s+/).length,
+    ).toBeGreaterThan(1);
+  }
 
   const natural = evidence.locator(".text-grid--three .brick-text").nth(0);
   const truncate = evidence.locator("[data-truncate]");

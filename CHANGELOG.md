@@ -29,6 +29,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 - `Text` with independent semantic hosts, eight visual type recipes, semantic
   foregrounds, logical alignment, wrapping, truncation, clamping, and public
   typography tokens.
+- `Stack`, `HStack`, and `VStack` from one implementation with semantic hosts,
+  tokenized gaps, alignment, distribution, wrapping, containment, and public
+  layout hooks.
 - Twenty-five shared semantic typography recipes for authored content,
   component anatomy, field values, and controls, with complete light and dark
   font-family, size, weight, line-height, and letter-spacing tuples.

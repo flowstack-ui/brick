@@ -4,7 +4,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { Text } from "@flowstack-ui/brick";
+import { Text, VStack } from "@flowstack-ui/brick";
 import "./rendered-output.playground.css";
 
 function formatMarkup(markup: string) {
@@ -59,12 +59,12 @@ export function RenderedOutput({
       <div className="playground-output-evidence__preview" ref={previewRef}>
         {children}
       </div>
-      <div className="playground-output-evidence__output">
+      <VStack className="playground-output-evidence__output" gap="3">
         <Text as="p" variant="body-sm">{label}</Text>
         <pre aria-label={label} data-rendered-output tabIndex={0}>
           <code>{markup}</code>
         </pre>
-      </div>
+      </VStack>
     </article>
   );
 }

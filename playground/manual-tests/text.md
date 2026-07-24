@@ -56,11 +56,12 @@ Setup: Continue through `06` and `07`.
 Action: Resize the window, compare wrap modes, confirm truncation/clamping,
 inspect the Arabic output, and activate **Inspect ref**.
 
-Expected: Natural, balance, and pretty copy remain contained; nowrap is
-deliberately one line inside its clipped specimen frame. Truncate shows a
-logical-end ellipsis and clamp stops at three lines. Native language,
-direction, ARIA, data, and strong emphasis match the output. Ref host reports
-`P`.
+Expected: In the equal-width wrapping row, natural wrap leaves `person.` alone;
+balance redistributes all lines and ends with `for every person.`; pretty keeps
+the more natural preceding line and ends with `every person.` in supporting
+browsers. Nowrap is deliberately one clipped line. Truncate shows a logical-end
+ellipsis and clamp stops at three lines. Native language, direction, ARIA,
+data, and strong emphasis match the output. Ref host reports `P`.
 
 Result:
 Notes or issue:

@@ -39,9 +39,7 @@
 }
 
 .playground-output-evidence__output {
-  display: grid;
   align-content: start;
-  gap: var(--brick-space-3);
 }
 
 .playground-output-evidence__output > p {

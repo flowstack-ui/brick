@@ -63,16 +63,6 @@
   background: var(--brick-color-surface-base);
 }
 
-.evidence-navigation {
-  display: grid;
-  gap: var(--brick-space-5);
-}
-
-.evidence-navigation__group {
-  display: grid;
-  gap: var(--brick-space-2);
-}
-
 .evidence-navigation__group h2 {
   margin: 0;
   color: var(--brick-color-text-secondary);
@@ -83,8 +73,8 @@
 }
 
 .evidence-navigation__group ul {
-  display: grid;
-  gap: 0.125rem;
+  --brick-stack-gap: 0.125rem;
+
   margin: 0;
   padding: 0;
   list-style: none;
@@ -141,11 +131,6 @@
   padding-block: var(--brick-space-5);
 }
 
-.evidence-page-heading {
-  display: grid;
-  gap: var(--brick-space-2);
-}
-
 .evidence-page-heading h1,
 .evidence-page-heading p {
   margin: 0;
@@ -164,13 +149,9 @@
 }
 
 .review-controls {
-  display: flex;
   inline-size: max-content;
   max-inline-size: 100%;
-  flex-wrap: wrap;
-  align-items: flex-start;
   justify-self: end;
-  gap: var(--brick-space-3);
 }
 
 .review-control-group {
@@ -215,10 +196,8 @@
 }
 
 .scenario-nav ol {
-  display: flex;
   inline-size: max-content;
   min-inline-size: 100%;
-  gap: var(--brick-space-1);
   margin: 0;
   padding: var(--brick-space-2) 0;
   list-style: none;
@@ -274,11 +253,8 @@
 }
 
 .evidence-footer {
-  display: flex;
   max-inline-size: 72rem;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--brick-space-4);
   margin: 4rem auto 0;
   padding-block: var(--brick-space-5);
   border-block-start: var(--brick-border-width) solid

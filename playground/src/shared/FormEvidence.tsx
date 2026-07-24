@@ -1,4 +1,4 @@
-import { Input, Text, type InputProps } from "@flowstack-ui/brick";
+import { Input, Text, VStack, type InputProps } from "@flowstack-ui/brick";
 import type { ReactNode } from "react";
 import { RenderedOutput } from "./RenderedOutput.js";
 import { SpecimenLabel } from "./SpecimenLabel.js";
@@ -13,13 +13,13 @@ export function FormEvidenceGroup({
   title: string;
 }) {
   return (
-    <section className="forms-evidence-group">
-      <div className="forms-evidence-group__heading">
+    <VStack as="section" className="forms-evidence-group" gap="3">
+      <VStack className="forms-evidence-group__heading" gap="1">
         <Text as="h3" variant="title-sm">{title}</Text>
         <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
-      </div>
+      </VStack>
       {children}
-    </section>
+    </VStack>
   );
 }
 

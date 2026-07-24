@@ -1,0 +1,72 @@
+import { createElement, createRef } from "react";
+import {
+  HStack,
+  Stack,
+  VStack,
+  type HStackProps,
+  type StackAlign,
+  type StackDirection,
+  type StackElement,
+  type StackGap,
+  type StackJustify,
+  type StackProps,
+  type VStackProps,
+} from "../../../src/stack.js";
+import { Stack as RootStack } from "../../../src/index.js";
+
+const ref = createRef<HTMLElement>();
+const elements: StackElement[] = [
+  "div", "span", "section", "article", "nav", "header", "footer",
+  "main", "aside", "ul", "ol", "li",
+];
+const directions: StackDirection[] = ["row", "column"];
+const gaps: StackGap[] = ["0", "1", "2", "3", "4", "5", "6"];
+const aligns: StackAlign[] = ["stretch", "start", "center", "end", "baseline"];
+const justifies: StackJustify[] = [
+  "start", "center", "end", "between", "around", "evenly",
+];
+const props: StackProps = {
+  "aria-label": "Actions",
+  as: "nav",
+  children: "Content",
+  className: "consumer-stack",
+  gap: "3",
+  onClick: () => undefined,
+  style: { minInlineSize: 0 },
+  wrap: true,
+};
+const horizontal: HStackProps = { children: "Actions", gap: "2" };
+const vertical: VStackProps = { children: "Fields", gap: "4" };
+
+createElement(Stack, { ...props, ref });
+createElement(RootStack, { ...props, ref });
+createElement(HStack, { ...horizontal, ref });
+createElement(VStack, { ...vertical, ref });
+createElement(Stack, {});
+
+// @ts-expect-error Stack hosts are deliberately closed.
+createElement(Stack, { as: "table" });
+// @ts-expect-error Arbitrary gap values are excluded.
+createElement(Stack, { gap: "8" });
+// @ts-expect-error Arbitrary numeric gaps are excluded.
+createElement(Stack, { gap: 2 });
+// @ts-expect-error Reverse direction is excluded.
+createElement(Stack, { direction: "row-reverse" });
+// @ts-expect-error Physical alignment is excluded.
+createElement(Stack, { align: "left" });
+// @ts-expect-error CSS spelling is mapped to the public vocabulary.
+createElement(Stack, { justify: "space-between" });
+// @ts-expect-error Wrapping is boolean only.
+createElement(Stack, { wrap: "reverse" });
+// @ts-expect-error HStack owns its direction.
+createElement(HStack, { direction: "column" });
+// @ts-expect-error VStack owns its direction.
+createElement(VStack, { direction: "row" });
+// @ts-expect-error No asChild composition API.
+createElement(Stack, { asChild: true });
+
+void elements;
+void directions;
+void gaps;
+void aligns;
+void justifies;

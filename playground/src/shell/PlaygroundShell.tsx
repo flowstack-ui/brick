@@ -4,7 +4,9 @@ import {
   Button,
   Drawer,
   IconButton,
+  HStack,
   Text,
+  VStack,
 } from "@flowstack-ui/brick";
 import {
   playgroundEntries,
@@ -78,12 +80,12 @@ export function PlaygroundShell({
             size="sm"
           >
             <Drawer.Header>
-              <div>
+              <VStack gap="1">
                 <Drawer.Title>Brick components</Drawer.Title>
                 <Drawer.Description>
                   Choose a component.
                 </Drawer.Description>
-              </div>
+              </VStack>
               <Drawer.Close asChild>
                 <IconButton aria-label="Close component navigation" size="sm">
                   <CloseIcon />
@@ -112,11 +114,11 @@ export function PlaygroundShell({
         <main className="evidence-main-column">
           <div className="evidence-review-header">
             <div className="evidence-page-header">
-              <div className="evidence-page-heading">
+              <VStack className="evidence-page-heading" gap="2">
                 <Text className="playground-kicker" variant="caption">@flowstack-ui/brick</Text>
                 <Text as="h1" variant="display">{pageTitle}</Text>
                 <Text as="p" tone="secondary">{entry.description}</Text>
-              </div>
+              </VStack>
               <ReviewControls
                 appearance={appearance}
                 direction={direction}
@@ -126,7 +128,7 @@ export function PlaygroundShell({
             </div>
 
             <nav aria-label={`${pageTitle} scenarios`} className="scenario-nav">
-              <ol>
+              <HStack as="ol" gap="1">
                 {scenarios.map((scenario) => (
                   <li key={scenario.id}>
                     <a href={`#${scenarioDomId(scenario.id)}`}>
@@ -135,13 +137,18 @@ export function PlaygroundShell({
                     </a>
                   </li>
                 ))}
-              </ol>
+              </HStack>
             </nav>
           </div>
 
           <div data-playground-content="">{children}</div>
 
-          <footer className="evidence-footer">
+          <HStack
+            as="footer"
+            className="evidence-footer"
+            gap="4"
+            justify="between"
+          >
             <Text as="p" tone="secondary" variant="body-sm">
               This route is deterministic evidence. Component behavior belongs
               to Brick and Atom; application workflow remains outside the
@@ -150,7 +157,7 @@ export function PlaygroundShell({
             <Button href="#top" size="sm" tone="neutral" variant="ghost">
               Back to top
             </Button>
-          </footer>
+          </HStack>
         </main>
       </div>
     </div>

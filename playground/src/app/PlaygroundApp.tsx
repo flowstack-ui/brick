@@ -62,6 +62,7 @@ import {
 } from "../components/popover/PopoverPage.js";
 import { InputPage, inputScenarios } from "../components/input/InputPage.js";
 import { TextPage, textScenarios } from "../components/text/TextPage.js";
+import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
 import { FormPage, formScenarios } from "../components/form/FormPage.js";
 import { FieldPage, fieldScenarios } from "../components/field/FieldPage.js";
 import {
@@ -211,6 +212,14 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={textScenarios}>
         <TextPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "stack") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={stackScenarios}>
+        <StackPage />
       </PlaygroundShell>
     );
   }

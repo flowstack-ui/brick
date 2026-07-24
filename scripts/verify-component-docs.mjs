@@ -67,6 +67,7 @@ const componentSymbols = {
   input: "Input",
   "notification-badge": "NotificationBadge",
   popover: "Popover",
+  stack: "Stack",
   text: "Text",
   toggle: "Toggle",
   "toggle-group": "ToggleGroup",

@@ -14,6 +14,7 @@ import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./text.playground.css";
+import "./text-wrap.playground.css";
 
 const variants: TextVariant[] = [
   "display",
@@ -42,7 +43,7 @@ const wraps: TextWrap[] = ["wrap", "nowrap", "balance", "pretty"];
 const semanticHosts: TextElement[] = ["span", "p", "div", "h2"];
 const comparisonCopy = "Build dependable interfaces.";
 const wrapCopy =
-  "A dependable interface keeps important content readable as its available space changes.";
+  "A dependable interface keeps important content readable for every person.";
 
 const customTextStyle = {
   "--brick-text-font-size": "1.375rem",
@@ -234,14 +235,16 @@ export function TextPage() {
       <Scenario {...textScenarios[5]}>
         <div className="text-evidence-stack" data-testid="text-overflow">
           <EvidenceGroup
-            description="Each equal-width frame changes only text-wrap; pretty remains a progressive enhancement."
+            description="At the same fixed measure, wrap leaves a one-word final line, balance redistributes every line, and pretty protects the final phrase. Pretty remains a progressive enhancement."
             title="Wrapping choices"
           >
-            <div className="text-grid text-grid--four">
+            <div className="text-grid text-grid--four" data-testid="text-wraps">
               {wraps.map((wrap) => (
                 <Cell key={wrap} label={wrap}>
-                  <div className="text-constrained">
-                    <Text wrap={wrap}>{wrapCopy}</Text>
+                  <div className="text-constrained text-constrained--wrapping">
+                    <Text data-testid={`text-wrap-${wrap}`} wrap={wrap}>
+                      {wrapCopy}
+                    </Text>
                   </div>
                 </Cell>
               ))}

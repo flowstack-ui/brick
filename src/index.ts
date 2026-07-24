@@ -186,3 +186,16 @@ export {
   type TextWeight,
   type TextWrap,
 } from "./components/text/index.js";
+export {
+  HStack,
+  Stack,
+  VStack,
+  type HStackProps,
+  type StackAlign,
+  type StackDirection,
+  type StackElement,
+  type StackGap,
+  type StackJustify,
+  type StackProps,
+  type VStackProps,
+} from "./components/stack/index.js";

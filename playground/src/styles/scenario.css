@@ -11,14 +11,7 @@ body {
 }
 
 .evidence-app .scenario {
-  display: grid;
   min-inline-size: 0;
-  gap: var(--brick-space-4);
-}
-
-.evidence-app .scenario-heading {
-  display: grid;
-  gap: var(--brick-space-1);
 }
 
 .evidence-app .scenario-heading h2,

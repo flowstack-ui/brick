@@ -1,0 +1,187 @@
+.stack-page {
+  min-inline-size: 0;
+  padding-block: var(--brick-space-4) 6rem;
+}
+
+.stack-page > .scenario:first-child {
+  padding-block-start: 0;
+}
+
+.stack-page .scenario {
+  container-type: inline-size;
+  gap: var(--brick-space-5);
+}
+
+.stack-page .scenario:target {
+  scroll-margin-block-start: var(--evidence-scenario-scroll-margin);
+}
+
+.stack-evidence-group {
+  container-type: inline-size;
+  min-inline-size: 0;
+}
+
+.stack-overview,
+.stack-grid,
+.stack-scoped-grid,
+.stack-stress-panel {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  overflow: hidden;
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-border-subtle);
+}
+
+.stack-overview,
+.stack-stress-panel {
+  display: grid;
+  min-block-size: 10rem;
+  place-items: center;
+  padding: var(--brick-space-6);
+  background: var(--brick-color-surface-raised);
+}
+
+.stack-grid,
+.stack-scoped-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--brick-border-width);
+}
+
+.stack-cell {
+  display: grid;
+  min-block-size: 10rem;
+  align-content: space-between;
+  gap: var(--brick-space-4);
+  padding: var(--brick-space-4);
+  background: var(--brick-color-surface-raised);
+}
+
+.stack-cell__preview {
+  display: grid;
+  min-inline-size: 0;
+  min-block-size: 6rem;
+  align-content: center;
+}
+
+.stack-demo-item {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  padding: var(--brick-space-2) var(--brick-space-3);
+  border: var(--brick-border-width) solid var(--brick-color-border-default);
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-subtle);
+  color: var(--brick-color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.stack-fixed-row {
+  inline-size: 100%;
+  min-block-size: 6rem;
+}
+
+.stack-constraint {
+  box-sizing: border-box;
+  inline-size: min(100%, 27rem);
+  padding: var(--brick-space-4);
+  overflow: auto;
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-raised);
+}
+
+.stack-constraint .brick-stack {
+  inline-size: max-content;
+  min-inline-size: 100%;
+}
+
+.stack-constraint [data-wrap] {
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.stack-scoped-grid > .brick-stack {
+  min-block-size: 12rem;
+  align-items: center;
+  justify-content: center;
+  padding: var(--brick-space-5);
+  background: var(--brick-color-surface-raised);
+  color: var(--brick-color-text-primary);
+}
+
+.stack-customization {
+  display: grid;
+  gap: var(--brick-space-5);
+  padding: var(--brick-space-5);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-raised);
+}
+
+.stack-customization pre {
+  max-inline-size: 100%;
+  margin: var(--brick-space-2) 0 0;
+  padding: var(--brick-space-3);
+  overflow-x: auto;
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-subtle);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+.stack-customization__preview {
+  display: grid;
+  min-block-size: 12rem;
+  place-items: center;
+  padding: var(--brick-space-4);
+  border: var(--brick-border-width) dashed var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-canvas);
+}
+
+.stack-stress-panel {
+  min-block-size: 14rem;
+}
+
+.stack-phone-frame {
+  inline-size: min(100%, 20rem);
+}
+
+@container (min-width: 34rem) {
+  .stack-grid--three,
+  .stack-grid--four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stack-scoped-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 48rem) {
+  .stack-grid--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stack-customization {
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+  }
+}
+
+@container (min-width: 68rem) {
+  .stack-grid--four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 28rem) {
+  .stack-overview,
+  .stack-cell,
+  .stack-scoped-grid > .brick-stack,
+  .stack-customization,
+  .stack-stress-panel {
+    padding: var(--brick-space-4);
+  }
+}

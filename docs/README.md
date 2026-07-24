@@ -67,6 +67,8 @@ This directory is the public documentation authority for
 
 - [App Bar](components/app-bar/README.md) — top surface and one-row alignment
   structure
+- [Stack](components/stack/README.md) — tokenized one-dimensional rows and
+  columns
 
 Every released component owns one folder containing its public `README.md` and
 `CHANGELOG.md`. Start new documentation from

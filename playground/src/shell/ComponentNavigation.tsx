@@ -1,4 +1,4 @@
-import { Text } from "@flowstack-ui/brick";
+import { Text, VStack } from "@flowstack-ui/brick";
 import type { PlaygroundEntry } from "../app/component-registry.js";
 
 export function ComponentNavigation({
@@ -15,11 +15,21 @@ export function ComponentNavigation({
   );
 
   return (
-    <nav aria-label="Component navigation" className="evidence-navigation">
+    <VStack
+      as="nav"
+      aria-label="Component navigation"
+      className="evidence-navigation"
+      gap="5"
+    >
       {categories.map((category) => (
-        <section className="evidence-navigation__group" key={category}>
+        <VStack
+          as="section"
+          className="evidence-navigation__group"
+          gap="2"
+          key={category}
+        >
           <Text as="h2" variant="title-sm">{category}</Text>
-          <ul>
+          <VStack as="ul" gap="0">
             {entries
               .filter((entry) => entry.category === category)
               .map((entry) => (
@@ -35,9 +45,9 @@ export function ComponentNavigation({
                   </a>
                 </li>
               ))}
-          </ul>
-        </section>
+          </VStack>
+        </VStack>
       ))}
-    </nav>
+    </VStack>
   );
 }
