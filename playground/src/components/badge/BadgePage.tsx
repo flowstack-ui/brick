@@ -1,5 +1,6 @@
 import { type CSSProperties, type ReactNode } from "react";
 import {
+  Grid,
   HStack,
   VStack,
   Badge,
@@ -16,6 +17,7 @@ import {
 } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./badge.playground.css";
 
 const variants: BadgeVariant[] = ["soft", "solid", "outline"];
@@ -65,10 +67,10 @@ function SpecimenCell({
   label: string;
 }) {
   return (
-    <div className="badge-specimen-cell">
+    <EvidenceSurface className="badge-specimen-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="badge-specimen-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -142,13 +144,13 @@ export function BadgePage() {
       data-testid="badge-workbench"
     >
       <Scenario {...badgeScenarios[0]}>
-        <div className="badge-overview" data-testid="badge-overview">
+        <EvidenceSurface className="badge-overview" data-testid="badge-overview" inset="lg">
           <Badge>Published</Badge>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...badgeScenarios[1]}>
-        <div
+        <Grid.Root columns={3}
           className="badge-specimen-grid badge-specimen-grid--three"
           data-testid="badge-variants"
         >
@@ -157,7 +159,7 @@ export function BadgePage() {
               <Badge variant={variant}>Status</Badge>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...badgeScenarios[2]}>
@@ -168,7 +170,7 @@ export function BadgePage() {
               key={variant}
               title={`${variant[0].toUpperCase()}${variant.slice(1)} tones`}
             >
-              <div className="badge-specimen-grid badge-specimen-grid--six">
+              <Grid.Root columns={6} className="badge-specimen-grid badge-specimen-grid--six">
                 {tones.map((tone) => (
                   <SpecimenCell key={tone} label={tone}>
                     <Badge tone={tone} variant={variant}>
@@ -176,14 +178,14 @@ export function BadgePage() {
                     </Badge>
                   </SpecimenCell>
                 ))}
-              </div>
+              </Grid.Root>
             </EvidenceGroup>
           ))}
         </VStack>
       </Scenario>
 
       <Scenario {...badgeScenarios[3]}>
-        <div
+        <Grid.Root columns={3}
           className="badge-specimen-grid badge-specimen-grid--three"
           data-testid="badge-sizes"
         >
@@ -192,11 +194,11 @@ export function BadgePage() {
               <Badge size={size}>Status</Badge>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...badgeScenarios[4]}>
-        <div
+        <Grid.Root columns={2}
           className="badge-specimen-grid badge-specimen-grid--two"
           data-testid="badge-shapes"
         >
@@ -205,7 +207,7 @@ export function BadgePage() {
               <Badge shape={shape}>Status</Badge>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...badgeScenarios[5]}>
@@ -214,7 +216,7 @@ export function BadgePage() {
             description="Visible text supplies meaning in headings, prose, and metadata; tone only reinforces that authored copy."
             title="Semantic contexts"
           >
-            <div className="badge-specimen-grid badge-specimen-grid--three">
+            <Grid.Root columns={3} className="badge-specimen-grid badge-specimen-grid--three">
               <SpecimenCell label="heading">
                 <Text as="h3" className="badge-inline-context" variant="title-sm">
                   Deployments <Badge>Healthy</Badge>
@@ -230,13 +232,13 @@ export function BadgePage() {
                   Environment <Badge>Staging</Badge>
                 </Text>
               </SpecimenCell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="Composition changes the authored root mechanism only; all examples retain Badge’s visual defaults."
             title="Native composition"
           >
-            <div className="playground-output-stack">
+            <Grid.Root className="playground-output-stack">
               <RenderedOutput label="Native Badge HTML">
                 <Badge title="Release status">Status</Badge>
               </RenderedOutput>
@@ -250,20 +252,20 @@ export function BadgePage() {
                   <span data-testid="badge-as-child">Status</span>
                 </Badge>
               </RenderedOutput>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="A passive label and an interactive command are different components even when both use compact geometry."
             title="Component routing"
           >
-            <div className="badge-specimen-grid badge-specimen-grid--two">
+            <Grid.Root columns={2} className="badge-specimen-grid badge-specimen-grid--two">
               <SpecimenCell label="Badge · passive">
                 <Badge>TypeScript</Badge>
               </SpecimenCell>
               <SpecimenCell label="Button · command">
                 <Button>Clear filters</Button>
               </SpecimenCell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -274,25 +276,25 @@ export function BadgePage() {
             description="Adjacent light and dark scopes preserve Badge’s default recipe."
             title="Scoped appearances"
           >
-            <div
+            <Grid.Root columns={2}
               className="badge-scoped-appearance-grid"
               data-testid="badge-appearance"
             >
-              <div data-brick-appearance="light">
+              <EvidenceSurface data-brick-appearance="light">
                 <code>light</code>
                 <Badge>Status</Badge>
-              </div>
-              <div data-brick-appearance="dark">
+              </EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark">
                 <code>dark</code>
                 <Badge>Status</Badge>
-              </div>
-            </div>
+              </EvidenceSurface>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="The code names the supported mechanism and exactly matches the rendered result."
             title="Consumer customization"
           >
-            <article className="badge-customization">
+            <EvidenceSurface as="article" className="badge-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
@@ -319,15 +321,15 @@ export function BadgePage() {
 </Badge>`}</code>
                 </pre>
               </div>
-              <div className="badge-customization__preview">
+              <EvidenceSurface className="badge-customization__preview">
                 <Badge
                   data-slot="custom-status"
                   style={tokenCustomization}
                 >
                   Status
                 </Badge>
-              </div>
-            </article>
+              </EvidenceSurface>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -338,26 +340,26 @@ export function BadgePage() {
             description="Both localized and unbroken content wrap inside a 20rem application-owned frame."
             title="Constrained-width stress"
           >
-            <div className="badge-stress-panel">
+            <EvidenceSurface className="badge-stress-panel">
               <HStack className="badge-phone-frame" wrap>
                 <Badge>Awaiting detailed workspace verification</Badge>
                 <Badge>
                   ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
                 </Badge>
               </HStack>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup
             description="Badge has no direction prop; it inherits genuine right-to-left reading order from its context."
             title="RTL inheritance"
           >
-            <div className="badge-stress-panel">
+            <EvidenceSurface className="badge-stress-panel">
               <HStack className="badge-phone-frame" dir="rtl" wrap>
                 <Text as="p">
                   حالة الإصدار <Badge>قيد المراجعة</Badge>
                 </Text>
               </HStack>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

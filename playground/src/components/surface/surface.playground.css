@@ -1,0 +1,119 @@
+.surface-page {
+  padding-block: var(--brick-space-6);
+}
+
+.surface-stage,
+.surface-cell,
+.surface-elevation-stage,
+.surface-customization,
+.surface-customization__preview {
+  min-inline-size: 0;
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-canvas);
+}
+
+.surface-stage,
+.surface-cell,
+.surface-elevation-stage,
+.surface-customization,
+.surface-customization__preview {
+  padding: var(--brick-space-4);
+}
+
+.surface-stage > .brick-surface,
+.surface-cell > .brick-surface,
+.surface-cell > .surface-phone-frame,
+.surface-customization__preview > .brick-surface {
+  inline-size: 100%;
+}
+
+.surface-content > * {
+  margin: 0;
+}
+
+.surface-grid {
+  min-inline-size: 0;
+}
+
+.surface-elevation-stage {
+  padding: var(--brick-space-6);
+  overflow: visible;
+}
+
+.surface-elevation-stage .surface-cell {
+  overflow: visible;
+}
+
+.surface-inset-marker {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-inline-size: 0;
+  padding: var(--brick-space-2);
+  border: 0.125rem dashed var(--brick-color-accent-border);
+  background: var(--brick-color-surface-raised);
+}
+
+.surface-host-list {
+  box-sizing: border-box;
+  inline-size: 100%;
+  margin: 0;
+  padding-inline-start: var(--brick-space-5);
+}
+
+.surface-host-list > .brick-surface {
+  inline-size: 100%;
+}
+
+.surface-appearance {
+  color: var(--brick-color-text-primary);
+}
+
+.surface-appearance > .brick-badge {
+  margin-block-end: var(--brick-space-3);
+}
+
+.surface-customization pre {
+  max-inline-size: 100%;
+  margin: var(--brick-space-2) 0 0;
+  padding: var(--brick-space-3);
+  overflow-x: auto;
+  border-radius: var(--brick-radius-control);
+  background: var(--brick-color-surface-subtle);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+.surface-customization__preview {
+  display: grid;
+  min-block-size: 12rem;
+  place-items: center;
+}
+
+.surface-phone-frame {
+  inline-size: min(100%, 20rem);
+}
+
+@media (max-width: 64rem) {
+  .brick-grid.surface-grid--four {
+    --brick-grid-columns: 2;
+  }
+}
+
+@media (max-width: 48rem) {
+  .brick-grid.surface-grid--two,
+  .brick-grid.surface-grid--three,
+  .brick-grid.surface-grid--four,
+  .brick-grid.surface-grid--stress,
+  .brick-grid.surface-customization {
+    --brick-grid-columns: 1;
+  }
+
+  .surface-stage,
+  .surface-cell,
+  .surface-elevation-stage,
+  .surface-customization,
+  .surface-customization__preview {
+    padding: var(--brick-space-3);
+  }
+}

@@ -57,6 +57,8 @@ body {
 }
 
 .playground-specimen-label {
+  inline-size: fit-content;
+  align-self: start;
   justify-self: start;
 }
 

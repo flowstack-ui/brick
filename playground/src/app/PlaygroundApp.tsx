@@ -11,6 +11,7 @@ import {
   AppBarPage,
   appBarScenarios,
 } from "../components/app-bar/AppBarPage.js";
+import { LinkPage, linkScenarios } from "../components/link/LinkPage.js";
 import {
   CardPage,
   cardScenarios,
@@ -63,12 +64,30 @@ import {
 import { InputPage, inputScenarios } from "../components/input/InputPage.js";
 import { TextPage, textScenarios } from "../components/text/TextPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
+import { GridPage, gridScenarios } from "../components/grid/GridPage.js";
+import {
+  ContainerPage,
+  containerScenarios,
+} from "../components/container/ContainerPage.js";
+import {
+  SurfacePage,
+  surfaceScenarios,
+} from "../components/surface/SurfacePage.js";
+import {
+  DividerPage,
+  dividerScenarios,
+} from "../components/divider/DividerPage.js";
+import {
+  ScrollAreaPage,
+  scrollAreaScenarios,
+} from "../components/scroll-area/ScrollAreaPage.js";
 import { FormPage, formScenarios } from "../components/form/FormPage.js";
 import { FieldPage, fieldScenarios } from "../components/field/FieldPage.js";
 import {
   FieldsetPage,
   fieldsetScenarios,
 } from "../components/fieldset/FieldsetPage.js";
+import "../styles/surface-adoption.css";
 import {
   CheckboxPage,
   checkboxScenarios,
@@ -92,6 +111,14 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={appBarScenarios}>
         <AppBarPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "link") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={linkScenarios}>
+        <LinkPage />
       </PlaygroundShell>
     );
   }
@@ -220,6 +247,46 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={stackScenarios}>
         <StackPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "grid") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={gridScenarios}>
+        <GridPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "container") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={containerScenarios}>
+        <ContainerPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "surface") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={surfaceScenarios}>
+        <SurfacePage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "divider") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={dividerScenarios}>
+        <DividerPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "scroll-area") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={scrollAreaScenarios}>
+        <ScrollAreaPage />
       </PlaygroundShell>
     );
   }

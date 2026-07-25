@@ -57,7 +57,13 @@ await writeFile(
     '@import "../../src/components/checkbox-group/checkbox-group.css";',
     '@import "../../src/components/input/input.css";',
     '@import "../../src/components/text/text.css";',
+    '@import "../../src/components/link/link.css";',
     '@import "../../src/components/stack/stack.css";',
+    '@import "../../src/components/grid/grid.css";',
+    '@import "../../src/components/container/container.css";',
+    '@import "../../src/components/surface/surface.css";',
+    '@import "../../src/components/divider/divider.css";',
+    '@import "../../src/components/scroll-area/scroll-area.css";',
   ].join("\n"),
 );
 

@@ -1,5 +1,6 @@
 import { type CSSProperties, type ReactNode } from "react";
 import {
+  Grid,
   HStack,
   VStack,
   Avatar,
@@ -16,6 +17,7 @@ import {
   type ScenarioDefinition,
 } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./notification-badge.playground.css";
 
 const tones: BadgeTone[] = [
@@ -92,12 +94,12 @@ function SpecimenCell({
   label: string;
 }) {
   return (
-    <div className="notification-badge-specimen-cell">
+    <EvidenceSurface className="notification-badge-specimen-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="notification-badge-specimen-cell__preview">
         {children}
       </div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -187,18 +189,19 @@ export function NotificationBadgePage() {
       data-testid="notification-badge-workbench"
     >
       <Scenario {...notificationBadgeScenarios[0]}>
-        <div
+        <EvidenceSurface
           className="notification-badge-overview"
           data-testid="notification-badge-overview"
+          inset="lg"
         >
           <NotificationBadge count={4}>
             <MailTarget />
           </NotificationBadge>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...notificationBadgeScenarios[1]}>
-        <div
+        <Grid.Root columns={6}
           className="notification-badge-specimen-grid notification-badge-specimen-grid--six"
           data-testid="notification-badge-tones"
         >
@@ -209,11 +212,11 @@ export function NotificationBadgePage() {
               </NotificationBadge>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...notificationBadgeScenarios[2]}>
-        <div
+        <Grid.Root columns={3}
           className="notification-badge-specimen-grid notification-badge-specimen-grid--three"
           data-testid="notification-badge-sizes"
         >
@@ -224,11 +227,11 @@ export function NotificationBadgePage() {
               </NotificationBadge>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...notificationBadgeScenarios[3]}>
-        <div
+        <Grid.Root columns={4}
           className="notification-badge-specimen-grid notification-badge-specimen-grid--four"
           data-testid="notification-badge-placements"
         >
@@ -239,11 +242,11 @@ export function NotificationBadgePage() {
               </NotificationBadge>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...notificationBadgeScenarios[4]}>
-        <div
+        <Grid.Root columns={2}
           className="notification-badge-specimen-grid notification-badge-specimen-grid--two"
           data-testid="notification-badge-overlaps"
         >
@@ -258,11 +261,11 @@ export function NotificationBadgePage() {
               </NotificationBadge>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...notificationBadgeScenarios[5]}>
-        <div
+        <Grid.Root columns={6}
           className="notification-badge-specimen-grid notification-badge-specimen-grid--six"
           data-testid="notification-badge-states"
         >
@@ -296,7 +299,7 @@ export function NotificationBadgePage() {
               <MailTarget />
             </NotificationBadge>
           </SpecimenCell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...notificationBadgeScenarios[6]}>
@@ -320,29 +323,29 @@ export function NotificationBadgePage() {
             description="Adjacent light and dark scopes preserve the default count recipe."
             title="Scoped appearances"
           >
-            <div
+            <Grid.Root columns={2}
               className="notification-badge-scoped-appearance-grid"
               data-testid="notification-badge-appearance"
             >
-              <div data-brick-appearance="light">
+              <EvidenceSurface data-brick-appearance="light">
                 <code>light</code>
                 <NotificationBadge count={4}>
                   <MailTarget />
                 </NotificationBadge>
-              </div>
-              <div data-brick-appearance="dark">
+              </EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark">
                 <code>dark</code>
                 <NotificationBadge count={4}>
                   <MailTarget />
                 </NotificationBadge>
-              </div>
-            </div>
+              </EvidenceSurface>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="The code names every supported hook and exactly matches the rendered result."
             title="Consumer customization"
           >
-            <article className="notification-badge-customization">
+            <EvidenceSurface as="article" className="notification-badge-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Wrapper and component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
@@ -370,7 +373,7 @@ export function NotificationBadgePage() {
 </NotificationBadge>`}</code>
                 </pre>
               </div>
-              <div className="notification-badge-customization__preview">
+              <EvidenceSurface className="notification-badge-customization__preview">
                 <NotificationBadge
                   className="custom-notification"
                   count={12}
@@ -379,8 +382,8 @@ export function NotificationBadgePage() {
                 >
                   <MailTarget label="Inbox, 12 unread messages" />
                 </NotificationBadge>
-              </div>
-            </article>
+              </EvidenceSurface>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -394,27 +397,27 @@ export function NotificationBadgePage() {
             description="The target remains usable inside a 20rem application-owned frame even with a long accessible name."
             title="Constrained-width stress"
           >
-            <div className="notification-badge-stress-panel">
+            <EvidenceSurface className="notification-badge-stress-panel">
               <HStack className="notification-badge-phone-frame">
                 <NotificationBadge count={125}>
                   <MailTarget label="International workspace inbox, more than 99 unread messages" />
                 </NotificationBadge>
                 <span>International workspace inbox</span>
               </HStack>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup
             description="Top-end resolves to the physical left in this genuine right-to-left context without changing source order."
             title="RTL inheritance"
           >
-            <div className="notification-badge-stress-panel">
+            <EvidenceSurface className="notification-badge-stress-panel">
               <HStack className="notification-badge-phone-frame" dir="rtl">
                 <NotificationBadge count={4}>
                   <MailTarget label="البريد الوارد، ٤ رسائل غير مقروءة" />
                 </NotificationBadge>
                 <span>البريد الوارد</span>
               </HStack>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

@@ -187,6 +187,14 @@ export {
   type TextWrap,
 } from "./components/text/index.js";
 export {
+  Link,
+  type LinkProps,
+  type LinkRenderProp,
+  type LinkSize,
+  type LinkTone,
+  type LinkVariant,
+} from "./components/link/index.js";
+export {
   HStack,
   Stack,
   VStack,
@@ -199,3 +207,61 @@ export {
   type StackProps,
   type VStackProps,
 } from "./components/stack/index.js";
+export {
+  Grid,
+  type GridAlign,
+  type GridColumnSpan,
+  type GridColumns,
+  type GridGap,
+  type GridItemElement,
+  type GridItemProps,
+  type GridJustify,
+  type GridLine,
+  type GridMinItemSize,
+  type GridRootElement,
+  type GridRootProps,
+  type GridSelfAlign,
+  type GridSelfJustify,
+  type GridSpan,
+} from "./components/grid/index.js";
+export {
+  Container,
+  type ContainerElement,
+  type ContainerGutter,
+  type ContainerMeasure,
+  type ContainerProps,
+} from "./components/container/index.js";
+export {
+  Surface,
+  type SurfaceElement,
+  type SurfaceElevation,
+  type SurfaceInset,
+  type SurfaceLevel,
+  type SurfaceProps,
+  type SurfaceRadius,
+} from "./components/surface/index.js";
+export {
+  Divider,
+  type DividerComposedProps,
+  type DividerElement,
+  type DividerInset,
+  type DividerLabelAlign,
+  type DividerLabelProps,
+  type DividerLineProps,
+  type DividerOrientation,
+  type DividerProps,
+  type DividerThickness,
+  type DividerVariant,
+} from "./components/divider/index.js";
+export {
+  ScrollArea,
+  ScrollAreaRoot,
+  ScrollAreaViewport,
+  type ScrollAreaOrientation,
+  type ScrollAreaRootElement,
+  type ScrollAreaRootProps,
+  type ScrollAreaScrollbarGutter,
+  type ScrollAreaScrollbarVisibility,
+  type ScrollAreaViewportElement,
+  type ScrollAreaViewportProps,
+} from "./components/scroll-area/index.js";

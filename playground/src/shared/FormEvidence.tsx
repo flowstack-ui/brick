@@ -2,6 +2,7 @@ import { Input, Text, VStack, type InputProps } from "@flowstack-ui/brick";
 import type { ReactNode } from "react";
 import { RenderedOutput } from "./RenderedOutput.js";
 import { SpecimenLabel } from "./SpecimenLabel.js";
+import { EvidenceSurface } from "./EvidenceSurface.js";
 
 export function FormEvidenceGroup({
   children,
@@ -31,10 +32,10 @@ export function FormEvidenceCell({
   label: string;
 }) {
   return (
-    <div className="forms-cell">
+    <EvidenceSurface className="forms-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="forms-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 

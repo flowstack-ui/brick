@@ -1,10 +1,13 @@
 import type { CSSProperties, ReactNode } from "react";
 import {
+  Grid,
   HStack,
   VStack,
   AppBar,
   Avatar,
   IconButton,
+  Link,
+  ScrollArea,
   Text,
   type AppBarRootProps,
   type AppBarTone,
@@ -17,6 +20,7 @@ import {
 } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import { MenuIcon, SearchIcon } from "../../shared/icons.js";
 import "./app-bar.playground.css";
 
@@ -67,10 +71,10 @@ function SpecimenCell({
   label: string;
 }) {
   return (
-    <div className="app-bar-specimen-cell">
+    <EvidenceSurface className="app-bar-specimen-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="app-bar-specimen-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -91,7 +95,7 @@ function AppBarContents({
       </AppBar.Start>
       <AppBar.Center>
         <HStack as="nav" aria-label={`${label} navigation`}>
-          <a href="#app-bar-content">Projects</a>
+          <Link href="#app-bar-content" tone="inherit" variant="plain">Projects</Link>
         </HStack>
       </AppBar.Center>
       <AppBar.End>
@@ -198,13 +202,13 @@ export function AppBarPage() {
       id="app-bar-content"
     >
       <Scenario {...appBarScenarios[0]}>
-        <div className="app-bar-overview" data-testid="app-bar-overview">
+        <EvidenceSurface className="app-bar-overview" data-testid="app-bar-overview" inset="lg">
           <AppBarExample label="Default AppBar" />
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...appBarScenarios[1]}>
-        <div
+        <Grid.Root columns={3}
           className="app-bar-specimen-grid app-bar-specimen-grid--three"
           data-testid="app-bar-variants"
         >
@@ -216,7 +220,7 @@ export function AppBarPage() {
               />
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...appBarScenarios[2]}>
@@ -227,7 +231,7 @@ export function AppBarPage() {
               key={variant}
               title={`${variant[0].toUpperCase()}${variant.slice(1)} tones`}
             >
-              <div className="app-bar-specimen-grid app-bar-specimen-grid--two">
+              <Grid.Root columns={2} className="app-bar-specimen-grid app-bar-specimen-grid--two">
                 {tones.map((tone) => (
                   <SpecimenCell key={tone} label={tone}>
                     <AppBarExample
@@ -237,14 +241,14 @@ export function AppBarPage() {
                     />
                   </SpecimenCell>
                 ))}
-              </div>
+              </Grid.Root>
             </EvidenceGroup>
           ))}
         </VStack>
       </Scenario>
 
       <Scenario {...appBarScenarios[3]}>
-        <div
+        <Grid.Root columns={2}
           className="app-bar-specimen-grid app-bar-specimen-grid--two"
           data-testid="app-bar-density"
         >
@@ -256,61 +260,63 @@ export function AppBarPage() {
               />
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...appBarScenarios[4]}>
-        <div
+        <Grid.Root columns={3}
           className="app-bar-specimen-grid app-bar-specimen-grid--three"
           data-testid="app-bar-options"
         >
           <SpecimenCell label="elevated">
-            <div className="app-bar-surface-stage app-bar-surface-stage--elevated">
+            <EvidenceSurface className="app-bar-surface-stage app-bar-surface-stage--elevated">
               <AppBarExample elevated label="Elevated AppBar" />
-            </div>
+            </EvidenceSurface>
           </SpecimenCell>
           <SpecimenCell label="blurred">
-            <div className="app-bar-surface-stage app-bar-surface-stage--blurred">
+            <EvidenceSurface className="app-bar-surface-stage app-bar-surface-stage--blurred">
               <div aria-hidden="true" className="app-bar-blur-backdrop">
                 <span />
                 <span />
                 <span />
               </div>
               <AppBarExample blurred label="Blurred AppBar" />
-            </div>
+            </EvidenceSurface>
           </SpecimenCell>
           <SpecimenCell label="bordered={false}">
             <AppBarExample bordered={false} label="Borderless AppBar" />
           </SpecimenCell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...appBarScenarios[5]}>
-        <div
+        <Grid.Root columns={2}
           className="app-bar-specimen-grid app-bar-specimen-grid--two"
           data-testid="app-bar-positions"
         >
           {positions.map((position) => (
             <SpecimenCell key={position} label={position}>
-              <div className="app-bar-position-stage">
-                <AppBarExample
-                  label={`${position} position AppBar`}
-                  position={position}
-                />
-                <div aria-hidden="true" className="app-bar-position-stage__content">
-                  <span />
-                  <span />
-                  <span />
-                  <span />
-                </div>
-              </div>
+              <ScrollArea.Root className="app-bar-position-stage" scrollbarVisibility="interaction">
+                <ScrollArea.Viewport>
+                  <AppBarExample
+                    label={`${position} position AppBar`}
+                    position={position}
+                  />
+                  <div aria-hidden="true" className="app-bar-position-stage__content">
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                </ScrollArea.Viewport>
+              </ScrollArea.Root>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...appBarScenarios[6]}>
-        <div
+        <Grid.Root
           className="playground-output-stack"
           data-testid="app-bar-composition"
         >
@@ -338,7 +344,7 @@ export function AppBarPage() {
               </header>
             </AppBar.Root>
           </RenderedOutput>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...appBarScenarios[7]}>
@@ -346,22 +352,22 @@ export function AppBarPage() {
           description="Adjacent local scopes prove that AppBar consumes the selected appearance without changing the document-wide review setting."
           title="Scoped appearances"
         >
-          <div className="app-bar-appearance-grid">
-            <div
+          <Grid.Root columns={2} className="app-bar-appearance-grid">
+            <EvidenceSurface
               className="app-bar-appearance-panel"
               data-brick-appearance="light"
             >
               <span>Light scope</span>
               <AppBarExample label="Light appearance AppBar" />
-            </div>
-            <div
+            </EvidenceSurface>
+            <EvidenceSurface
               className="app-bar-appearance-panel"
               data-brick-appearance="dark"
             >
               <span>Dark scope</span>
               <AppBarExample label="Dark appearance AppBar" />
-            </div>
-          </div>
+            </EvidenceSurface>
+          </Grid.Root>
         </EvidenceGroup>
 
         <EvidenceGroup
@@ -369,7 +375,7 @@ export function AppBarPage() {
           title="Consumer customization"
         >
           <div className="app-bar-customization-list">
-            <article className="app-bar-customization">
+            <EvidenceSurface as="article" className="app-bar-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
@@ -393,9 +399,9 @@ export function AppBarPage() {
                   style={tokenCustomization}
                 />
               </div>
-            </article>
+            </EvidenceSurface>
 
-            <article className="app-bar-customization">
+            <EvidenceSurface as="article" className="app-bar-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Consumer hooks</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
@@ -430,7 +436,7 @@ export function AppBarPage() {
                   <AppBarContents label="Customized AppBar" />
                 </AppBar.Root>
               </div>
-            </article>
+            </EvidenceSurface>
           </div>
         </EvidenceGroup>
       </Scenario>
@@ -441,7 +447,7 @@ export function AppBarPage() {
             description="A long application-owned workspace label truncates inside a 22rem frame while AppBar retains one row and its default surface recipe."
             title="Constrained-width stress"
           >
-            <div className="app-bar-stress-panel">
+            <EvidenceSurface className="app-bar-stress-panel">
               <div className="app-bar-phone-frame">
                 <AppBar.Root aria-label="Constrained AppBar">
                   <AppBar.Toolbar>
@@ -461,14 +467,14 @@ export function AppBarPage() {
                   </AppBar.Toolbar>
                 </AppBar.Root>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
 
           <EvidenceGroup
             description="AppBar inherits direction from genuine right-to-left content and places logical Start and End on the expected physical sides."
             title="RTL inheritance"
           >
-            <div className="app-bar-stress-panel">
+            <EvidenceSurface className="app-bar-stress-panel">
               <div className="app-bar-phone-frame" dir="rtl">
                 <AppBar.Root aria-label="شريط التطبيق">
                   <AppBar.Toolbar>
@@ -482,7 +488,7 @@ export function AppBarPage() {
                     </AppBar.Start>
                     <AppBar.Center>
                       <HStack as="nav" aria-label="التنقل في المشاريع">
-                        <a href="#app-bar-content">المشاريع</a>
+                        <Link href="#app-bar-content" tone="inherit" variant="plain">المشاريع</Link>
                       </HStack>
                     </AppBar.Center>
                     <AppBar.End>
@@ -493,7 +499,7 @@ export function AppBarPage() {
                   </AppBar.Toolbar>
                 </AppBar.Root>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

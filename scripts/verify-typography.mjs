@@ -75,6 +75,14 @@ const allowedGeometryDeclarations = new Map([
   ["fieldset/fieldset.css", ["font-weight: var(--brick-font-weight-regular);"]],
   ["icon-button/icon-button.css", ["line-height: 1;"]],
   ["input/input.css", ["line-height: 1;"]],
+  ["link/link.css", [
+    "--brick-link-font-family: inherit;",
+    "--brick-link-font-size: inherit;",
+    "--brick-link-font-weight: inherit;",
+    "--brick-link-line-height: inherit;",
+    "--brick-link-letter-spacing: inherit;",
+    "--brick-link-font-weight: var(--brick-font-weight-medium);",
+  ]],
   ["text/text.css", [
     "--brick-text-font-weight: inherit;",
     "--brick-text-font-weight: var(--brick-font-weight-regular);",
@@ -104,6 +112,7 @@ for (const directory of componentDirectories) {
         declaration.includes("var(--brick-fieldset-") ||
         declaration.includes("var(--brick-button-") ||
         declaration.includes("var(--brick-input-") ||
+        declaration.includes("var(--brick-link-") ||
         declaration.includes("var(--brick-badge-") ||
         declaration.includes("var(--brick-avatar-") ||
         declaration.includes("var(--brick-card-title-size)") ||

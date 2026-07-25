@@ -1,0 +1,50 @@
+@layer brick.components {
+  .brick-container {
+    --brick-container-measure-narrow: 42rem;
+    --brick-container-measure-medium: 64rem;
+    --brick-container-measure-wide: 72rem;
+    --brick-container-measure-max: 90rem;
+    --brick-container-measure-full: none;
+    --brick-container-gutter-none: 0rem;
+    --brick-container-gutter-sm: clamp(0.75rem, 2vw, 1rem);
+    --brick-container-gutter-md: clamp(1rem, 3vw, 2rem);
+    --brick-container-gutter-lg: clamp(1rem, 4vw, 4rem);
+    --brick-container-max-inline-size: var(--brick-container-measure-wide);
+    --brick-container-padding-inline: var(--brick-container-gutter-md);
+
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: var(--brick-container-max-inline-size);
+    min-inline-size: 0;
+    margin-inline: auto;
+    padding-inline: var(--brick-container-padding-inline);
+  }
+
+  .brick-container[data-measure="narrow"] {
+    --brick-container-max-inline-size: var(--brick-container-measure-narrow);
+  }
+
+  .brick-container[data-measure="medium"] {
+    --brick-container-max-inline-size: var(--brick-container-measure-medium);
+  }
+
+  .brick-container[data-measure="max"] {
+    --brick-container-max-inline-size: var(--brick-container-measure-max);
+  }
+
+  .brick-container[data-measure="full"] {
+    --brick-container-max-inline-size: var(--brick-container-measure-full);
+  }
+
+  .brick-container[data-gutter="none"] {
+    --brick-container-padding-inline: var(--brick-container-gutter-none);
+  }
+
+  .brick-container[data-gutter="sm"] {
+    --brick-container-padding-inline: var(--brick-container-gutter-sm);
+  }
+
+  .brick-container[data-gutter="lg"] {
+    --brick-container-padding-inline: var(--brick-container-gutter-lg);
+  }
+}

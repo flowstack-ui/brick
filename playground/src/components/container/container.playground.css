@@ -1,0 +1,61 @@
+.container-page {
+  padding-block: var(--brick-space-6);
+}
+
+.container-stage,
+.container-boundary,
+.container-composition,
+.container-parent,
+.container-theme,
+.container-narrow,
+.container-vertical {
+  min-inline-size: 0;
+  padding: var(--brick-space-3);
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-subtle);
+}
+
+.container-boundary {
+  overflow: auto;
+  background: var(--brick-color-surface-raised);
+}
+
+.container-page .brick-container {
+  border: 2px dashed var(--brick-color-accent-border);
+  border-radius: var(--brick-radius-surface);
+}
+
+.container-demo-content {
+  min-block-size: 3.5rem;
+  padding: var(--brick-space-3);
+  background: var(--brick-color-surface-raised);
+}
+
+.container-demo-content > * {
+  margin: 0;
+}
+
+.container-parent {
+  display: grid;
+  gap: var(--brick-space-4);
+}
+
+.container-theme {
+  color: var(--brick-color-text-primary);
+}
+
+.container-narrow {
+  inline-size: min(100%, 20rem);
+}
+
+.container-vertical {
+  block-size: 18rem;
+  writing-mode: vertical-rl;
+}
+
+@media (max-width: 48rem) {
+  .brick-grid.container-stress-grid {
+    --brick-grid-columns: 1;
+  }
+}

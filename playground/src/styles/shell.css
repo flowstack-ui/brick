@@ -56,11 +56,17 @@
   z-index: 5;
   inset-block-start: var(--evidence-app-bar-block-size);
   block-size: calc(100vh - var(--evidence-app-bar-block-size));
-  padding: var(--brick-space-5) var(--brick-space-4);
-  overflow-y: auto;
   border-inline-end: var(--brick-border-width) solid
     var(--brick-color-border-subtle);
   background: var(--brick-color-surface-base);
+}
+
+.evidence-sidebar-scroll {
+  block-size: 100%;
+}
+
+.evidence-sidebar-scroll > .brick-scroll-area-viewport {
+  padding: var(--brick-space-5) var(--brick-space-4);
 }
 
 .evidence-navigation__group h2 {
@@ -106,10 +112,7 @@
 
 .evidence-main-column {
   display: block;
-  inline-size: min(100%, 90rem);
-  max-inline-size: 90rem;
-  margin-inline: auto;
-  padding: 0 clamp(1.5rem, 4vw, 4rem) 4rem;
+  padding-block-end: 4rem;
 }
 
 .evidence-review-header {
@@ -126,8 +129,6 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
   gap: var(--brick-space-6);
-  max-inline-size: 72rem;
-  margin-inline: auto;
   padding-block: var(--brick-space-5);
 }
 
@@ -188,11 +189,12 @@
 
 .scenario-nav {
   container-type: inline-size;
-  max-inline-size: 72rem;
-  margin-inline: auto;
-  overflow-x: auto;
   border-block: var(--brick-border-width) solid
     var(--brick-color-border-subtle);
+}
+
+.scenario-nav-scroll {
+  inline-size: 100%;
 }
 
 .scenario-nav ol {
@@ -247,15 +249,8 @@
   }
 }
 
-.evidence-main-column [data-playground-content] > .button-page {
-  max-inline-size: 72rem;
-  margin-inline: auto;
-}
-
 .evidence-footer {
-  max-inline-size: 72rem;
-  align-items: center;
-  margin: 4rem auto 0;
+  margin-block-start: 4rem;
   padding-block: var(--brick-space-5);
   border-block-start: var(--brick-border-width) solid
     var(--brick-color-border-subtle);
@@ -266,6 +261,10 @@
 .evidence-footer p {
   max-inline-size: 68ch;
   margin: 0;
+}
+
+.evidence-footer > .brick-stack {
+  align-items: center;
 }
 
 .evidence-mobile-drawer .brick-drawer-header {
@@ -292,9 +291,6 @@
     display: none;
   }
 
-  .evidence-main-column {
-    padding-inline: var(--brick-space-6);
-  }
 }
 
 @media (max-width: 64rem), (max-height: 40rem) {
@@ -317,15 +313,11 @@
     align-items: start;
   }
 
-  .evidence-main-column {
-    padding-inline: var(--brick-space-4);
-  }
-
   .review-controls {
     justify-self: start;
   }
 
-  .evidence-footer {
+  .evidence-footer > .brick-stack {
     align-items: start;
     flex-direction: column;
   }

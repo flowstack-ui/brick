@@ -91,7 +91,6 @@
 }
 
 .alert-dialog-specimen-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
 }
@@ -125,7 +124,6 @@
 }
 
 .alert-dialog-scoped-appearance-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
 }

@@ -95,7 +95,6 @@
 }
 
 .button-specimen-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
   min-inline-size: 0;
@@ -153,7 +152,6 @@
 }
 
 .button-appearance-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
   overflow: hidden;

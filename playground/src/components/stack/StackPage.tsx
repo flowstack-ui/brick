@@ -1,8 +1,10 @@
 import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
+  Grid,
   Badge,
   Button,
   HStack,
+  ScrollArea,
   Stack,
   Text,
   VStack,
@@ -12,6 +14,7 @@ import {
   type StackJustify,
 } from "@flowstack-ui/brick";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./stack.playground.css";
@@ -55,10 +58,10 @@ function EvidenceGroup({
 
 function Cell({ children, label }: { children: ReactNode; label: string }) {
   return (
-    <div className="stack-cell">
+    <EvidenceSurface className="stack-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="stack-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -141,17 +144,17 @@ export function StackPage() {
       gap="6"
     >
       <Scenario {...stackScenarios[0]}>
-        <div className="stack-overview" data-testid="stack-overview">
+        <EvidenceSurface className="stack-overview" data-testid="stack-overview" inset="lg">
           <Stack data-testid="stack-default">
             <Item>First item</Item>
             <Item>Second item</Item>
             <Item>Third item</Item>
           </Stack>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...stackScenarios[1]}>
-        <div className="stack-grid stack-grid--three" data-testid="stack-family">
+        <Grid.Root columns={3} className="stack-grid stack-grid--three" data-testid="stack-family">
           <Cell label="Stack">
             <Stack gap="2"><Item>First</Item><Item>Second</Item></Stack>
           </Cell>
@@ -161,11 +164,11 @@ export function StackPage() {
           <Cell label="VStack">
             <VStack gap="2"><Item>First</Item><Item>Second</Item></VStack>
           </Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...stackScenarios[2]}>
-        <div className="stack-grid stack-grid--four" data-testid="stack-gaps">
+        <Grid.Root columns={4} className="stack-grid stack-grid--four" data-testid="stack-gaps">
           {gaps.map((gap) => (
             <Cell key={gap} label={gap}>
               <VStack data-gap-example={gap} gap={gap}>
@@ -173,11 +176,11 @@ export function StackPage() {
               </VStack>
             </Cell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...stackScenarios[3]}>
-        <div className="stack-grid stack-grid--three" data-testid="stack-alignments">
+        <Grid.Root columns={3} className="stack-grid stack-grid--three" data-testid="stack-alignments">
           {aligns.map((align) => (
             <Cell key={align} label={align}>
               <HStack
@@ -191,11 +194,11 @@ export function StackPage() {
               </HStack>
             </Cell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...stackScenarios[4]}>
-        <div className="stack-grid stack-grid--three" data-testid="stack-justifications">
+        <Grid.Root columns={3} className="stack-grid stack-grid--three" data-testid="stack-justifications">
           {justifies.map((justify) => (
             <Cell key={justify} label={justify}>
               <HStack
@@ -208,7 +211,7 @@ export function StackPage() {
               </HStack>
             </Cell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...stackScenarios[5]}>
@@ -217,13 +220,15 @@ export function StackPage() {
             description="The unwrapped row keeps one line and may overflow its deliberately narrow evidence frame."
             title="No wrapping"
           >
-            <div className="stack-constraint">
-              <HStack data-testid="stack-nowrap" gap="2">
-                <Button>Approve changes</Button>
-                <Button tone="neutral">Save draft</Button>
-                <Button variant="outline">Cancel review</Button>
-              </HStack>
-            </div>
+            <ScrollArea.Root className="stack-constraint" orientation="horizontal" scrollbarVisibility="interaction">
+              <ScrollArea.Viewport>
+                <HStack data-testid="stack-nowrap" gap="2">
+                  <Button>Approve changes</Button>
+                  <Button tone="neutral">Save draft</Button>
+                  <Button variant="outline">Cancel review</Button>
+                </HStack>
+              </ScrollArea.Viewport>
+            </ScrollArea.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="Only wrap changes; content, defaults, order, width, and gaps remain identical."
@@ -242,7 +247,7 @@ export function StackPage() {
 
       <Scenario {...stackScenarios[6]}>
         <VStack data-testid="stack-semantics" gap="6">
-          <div className="stack-grid stack-grid--four">
+          <Grid.Root columns={4} className="stack-grid stack-grid--four">
             {semanticHosts.map((as) => (
               <Cell key={as} label={as}>
                 <Stack
@@ -256,7 +261,7 @@ export function StackPage() {
                 </Stack>
               </Cell>
             ))}
-          </div>
+          </Grid.Root>
           <EvidenceGroup
             description="The live section keeps source order and exposes only authored native attributes plus Stack layout metadata."
             title="Rendered semantic output"
@@ -288,20 +293,20 @@ export function StackPage() {
             description="Both scopes use identical canonical Stack recipes."
             title="Scoped appearances"
           >
-            <div className="stack-scoped-grid" data-testid="stack-appearance">
-              <VStack data-brick-appearance="light" gap="2">
-                <Badge>light</Badge><Item>First</Item><Item>Second</Item>
-              </VStack>
-              <VStack data-brick-appearance="dark" gap="2">
-                <Badge>dark</Badge><Item>First</Item><Item>Second</Item>
-              </VStack>
-            </div>
+            <Grid.Root columns={2} className="stack-scoped-grid" data-testid="stack-appearance">
+              <EvidenceSurface data-brick-appearance="light">
+                <VStack gap="2"><Badge>light</Badge><Item>First</Item><Item>Second</Item></VStack>
+              </EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark">
+                <VStack gap="2"><Badge>dark</Badge><Item>First</Item><Item>Second</Item></VStack>
+              </EvidenceSurface>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="The shown public gap variable and native styles exactly match the live result."
             title="Consumer customization"
           >
-            <article className="stack-customization">
+            <EvidenceSurface as="article" className="stack-customization" inset="lg">
               <VStack gap="2">
                 <Text as="h4" variant="title-sm">Local Stack variables</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
@@ -321,12 +326,12 @@ export function StackPage() {
 </VStack>`}</code>
                 </pre>
               </VStack>
-              <div className="stack-customization__preview">
+              <EvidenceSurface className="stack-customization__preview">
                 <VStack gap="2" style={customStackStyle}>
                   <Item>First</Item><Item>Second</Item>
                 </VStack>
-              </div>
-            </article>
+              </EvidenceSurface>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -337,23 +342,23 @@ export function StackPage() {
             description="A narrow wrapping row preserves source order and contains long localized actions."
             title="Constrained localization"
           >
-            <div className="stack-stress-panel">
+            <EvidenceSurface className="stack-stress-panel">
               <HStack className="stack-phone-frame" gap="2" wrap>
                 <Button>Review internationalization changes</Button>
                 <Button tone="neutral">Donaudampfschifffahrtsgesellschaft</Button>
                 <Button variant="outline">保存して続行</Button>
               </HStack>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup
             description="RTL changes logical row placement while DOM, reading, and focus order remain First, Second, Third."
             title="RTL inheritance"
           >
-            <div className="stack-stress-panel">
+            <EvidenceSurface className="stack-stress-panel">
               <HStack className="stack-phone-frame" dir="rtl" gap="2" wrap>
                 <Item>الأول</Item><Item>الثاني</Item><Item>الثالث</Item>
               </HStack>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

@@ -65,10 +65,21 @@ This directory is the public documentation authority for
 
 ### Navigation and layout
 
+- [Link](components/link/README.md) — inline and standalone native navigation
 - [App Bar](components/app-bar/README.md) — top surface and one-row alignment
   structure
 - [Stack](components/stack/README.md) — tokenized one-dimensional rows and
   columns
+- [Grid](components/grid/README.md) — tokenized two-dimensional tracks and
+  item placement
+- [Container](components/container/README.md) — centered content measures and
+  logical page gutters
+- [Surface](components/surface/README.md) — semantic background layers,
+  boundaries, elevation, radius, and inset
+- [Divider](components/divider/README.md) — decorative or semantic structural
+  separation
+- [Scroll Area](components/scroll-area/README.md) — constrained native
+  scrolling, gutter, and visibility
 
 Every released component owns one folder containing its public `README.md` and
 `CHANGELOG.md`. Start new documentation from

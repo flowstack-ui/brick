@@ -84,7 +84,6 @@
 }
 
 .app-bar-specimen-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
 }
@@ -183,7 +182,6 @@
   position: relative;
   block-size: 11rem;
   min-inline-size: 0;
-  overflow: auto;
   border-radius: var(--brick-radius-control);
   background: var(--brick-color-surface-canvas);
   transform: translateZ(0);
@@ -203,7 +201,6 @@
 }
 
 .app-bar-appearance-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
 }

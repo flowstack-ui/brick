@@ -1,0 +1,80 @@
+.brick-surface[data-playground-evidence] {
+  padding: var(--brick-surface-padding);
+  border: var(--brick-surface-border-width) solid
+    var(--brick-surface-border-color);
+  border-radius: var(--brick-surface-radius);
+  background: var(--brick-surface-background);
+  box-shadow: var(--brick-surface-shadow);
+  color: var(--brick-surface-foreground);
+}
+
+:where(
+  .button-specimen-grid,
+  .button-appearance-grid,
+  .icon-button-specimen-grid,
+  .icon-button-appearance-grid,
+  .app-bar-specimen-grid,
+  .app-bar-appearance-grid,
+  .avatar-specimen-grid,
+  .avatar-scoped-appearance-grid,
+  .badge-specimen-grid,
+  .badge-scoped-appearance-grid,
+  .notification-badge-specimen-grid,
+  .notification-badge-scoped-appearance-grid,
+  .card-specimen-grid,
+  .card-scoped-appearance-grid,
+  .dialog-specimen-grid,
+  .dialog-scoped-appearance-grid,
+  .alert-dialog-specimen-grid,
+  .alert-dialog-scoped-appearance-grid,
+  .drawer-specimen-grid,
+  .drawer-scoped-appearance-grid,
+  .toggle-specimen-grid,
+  .toggle-scoped-grid,
+  .toggle-group-specimen-grid,
+  .toggle-group-scoped-grid,
+  .tooltip-specimen-grid,
+  .tooltip-scoped-grid,
+  .hover-card-specimen-grid,
+  .hover-card-scoped-grid,
+  .popover-specimen-grid,
+  .popover-scoped-grid,
+  .text-grid,
+  .text-scoped-grid,
+  .stack-grid,
+  .stack-scoped-grid,
+  .forms-grid,
+  .forms-scoped-grid
+) {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  gap: var(--brick-space-4);
+}
+
+:where(
+  .button-customization__preview,
+  .icon-button-customization__preview,
+  .app-bar-customization__preview,
+  .avatar-customization__preview,
+  .badge-customization__preview,
+  .notification-badge-customization__preview,
+  .card-customization__preview,
+  .dialog-customization__preview,
+  .alert-dialog-customization__preview,
+  .drawer-customization__preview,
+  .toggle-customization__preview,
+  .toggle-group-customization__preview,
+  .tooltip-customization__preview,
+  .hover-card-customization__preview,
+  .popover-customization__preview,
+  .text-customization__preview,
+  .stack-customization__preview,
+  .forms-customization__preview
+) {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}

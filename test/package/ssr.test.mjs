@@ -17,8 +17,31 @@ import { Checkbox } from "../../dist/checkbox.js";
 import { CheckboxGroup } from "../../dist/checkbox-group.js";
 import { Input } from "../../dist/input.js";
 import { Text } from "../../dist/text.js";
+import { Link } from "../../dist/link.js";
 import { HStack, Stack, VStack } from "../../dist/stack.js";
+import { Grid } from "../../dist/grid.js";
+import { Container } from "../../dist/container.js";
+import { Surface } from "../../dist/surface.js";
+import { Divider } from "../../dist/divider.js";
+import { ScrollArea } from "../../dist/scroll-area.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("Scroll Area renders deterministic native Root and Viewport anatomy", () => {
+  const markup = renderToString(
+    React.createElement(
+      ScrollArea.Root,
+      { orientation: "horizontal", scrollbarGutter: "stable", scrollbarVisibility: "interaction" },
+      React.createElement(ScrollArea.Viewport, { "aria-label": "Timeline", focusable: true }, "Activity"),
+    ),
+  );
+  assert.match(markup, /class="brick-scroll-area"/);
+  assert.match(markup, /data-orientation="horizontal"/);
+  assert.match(markup, /data-scrollbar-gutter="stable"/);
+  assert.match(markup, /data-scrollbar-visibility="interaction"/);
+  assert.match(markup, /class="brick-scroll-area-viewport"/);
+  assert.match(markup, /role="region"/);
+  assert.match(markup, /tabindex="0"/);
+});
 
 test("Card renders on the server without browser state or a client boundary", () => {
   const markup = renderToString(
@@ -263,6 +286,31 @@ test("Text renders one deterministic semantic host during SSR", () => {
   assert.doesNotMatch(markup, /role=|aria-level|tabindex/i);
 });
 
+test("Link renders deterministic native navigation without a client boundary", () => {
+  const markup = renderToString(
+    React.createElement(
+      Link,
+      {
+        "aria-current": "page",
+        href: "/guides",
+        tone: "neutral",
+      },
+      "Read the guides",
+    ),
+  );
+
+  assert.match(markup, /^<a/);
+  assert.match(markup, /class="brick-link"/);
+  assert.match(markup, /data-slot="link"/);
+  assert.match(markup, /data-variant="underline"/);
+  assert.match(markup, /data-tone="neutral"/);
+  assert.match(markup, /data-size="inherit"/);
+  assert.match(markup, /href="\/guides"/);
+  assert.match(markup, /aria-current="page"/);
+  assert.match(markup, /brick-link__content/);
+  assert.doesNotMatch(markup, /role=|tabindex|aria-disabled/i);
+});
+
 test("Stack family renders deterministic semantic layout without behavior", () => {
   const markup = renderToString(
     React.createElement(
@@ -282,6 +330,108 @@ test("Stack family renders deterministic semantic layout without behavior", () =
   assert.match(markup, /data-align="center"/);
   assert.match(markup, /data-wrap=""/);
   assert.doesNotMatch(markup, /role=|tabindex|aria-orientation/i);
+});
+
+test("Grid renders deterministic Root and optional Item layout without behavior", () => {
+  const markup = renderToString(
+    React.createElement(
+      Grid.Root,
+      { as: "section", columns: 3, gap: "3", id: "server-grid" },
+      React.createElement("article", null, "Ordinary"),
+      React.createElement(
+        Grid.Item,
+        { as: "article", columnSpan: 2 },
+        "Featured",
+      ),
+    ),
+  );
+
+  assert.match(markup, /^<section/);
+  assert.match(markup, /class="brick-grid"/);
+  assert.match(markup, /data-mode="explicit"/);
+  assert.match(markup, /data-columns="3"/);
+  assert.match(markup, /data-gap="3"/);
+  assert.match(markup, /class="brick-grid-item"/);
+  assert.match(markup, /data-column-span="2"/);
+  assert.match(markup, /id="server-grid"/);
+  assert.doesNotMatch(markup, /role=|tabindex/i);
+});
+
+test("Container renders one deterministic semantic host without behavior", () => {
+  const markup = renderToString(
+    React.createElement(
+      Container,
+      {
+        as: "main",
+        gutter: "lg",
+        id: "server-container",
+        measure: "max",
+      },
+      React.createElement("section", null, "Measured content"),
+    ),
+  );
+
+  assert.match(markup, /^<main/);
+  assert.match(markup, /class="brick-container"/);
+  assert.match(markup, /data-measure="max"/);
+  assert.match(markup, /data-gutter="lg"/);
+  assert.match(markup, /data-slot="container"/);
+  assert.match(markup, /id="server-container"/);
+  assert.doesNotMatch(markup, /role=|tabindex/i);
+});
+
+test("Surface renders one deterministic semantic host without behavior", () => {
+  const markup = renderToString(
+    React.createElement(
+      Surface,
+      {
+        as: "section",
+        bordered: true,
+        elevation: "medium",
+        id: "server-surface",
+        inset: "lg",
+        level: "raised",
+        radius: "subtle",
+      },
+      React.createElement("p", null, "Painted content"),
+    ),
+  );
+
+  assert.match(markup, /^<section/);
+  assert.match(markup, /class="brick-surface"/);
+  assert.match(markup, /data-bordered=""/);
+  assert.match(markup, /data-elevation="medium"/);
+  assert.match(markup, /data-inset="lg"/);
+  assert.match(markup, /data-level="raised"/);
+  assert.match(markup, /data-radius="subtle"/);
+  assert.match(markup, /data-slot="surface"/);
+  assert.match(markup, /id="server-surface"/);
+  assert.doesNotMatch(markup, /role=|tabindex/i);
+});
+
+test("Divider renders deterministic Atom-backed line and label anatomy", () => {
+  const line = renderToString(React.createElement(Divider, {
+    decorative: false,
+    orientation: "vertical",
+    stretch: true,
+    thickness: "regular",
+    variant: "dashed",
+  }));
+  assert.match(line, /^<hr/);
+  assert.match(line, /class="brick-divider"/);
+  assert.match(line, /role="separator"/);
+  assert.match(line, /aria-orientation="vertical"/);
+  assert.match(line, /data-thickness="regular"/);
+  assert.match(line, /data-variant="dashed"/);
+
+  const label = renderToString(
+    React.createElement(Divider, { labelAlign: "start" }, "or continue with"),
+  );
+  assert.match(label, /^<div/);
+  assert.match(label, /data-label-align="start"/);
+  assert.match(label, /data-slot="divider-line-start"/);
+  assert.match(label, /data-slot="divider-label">or continue with/);
+  assert.match(label, /data-slot="divider-line-end"/);
 });
 
 test("Checkbox family renders server-stable visual and semantic anatomy", () => {

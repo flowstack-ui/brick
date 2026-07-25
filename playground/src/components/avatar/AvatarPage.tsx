@@ -1,5 +1,6 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  Grid,
   HStack,
   VStack,
   Avatar,
@@ -17,6 +18,7 @@ import {
   type ScenarioDefinition,
 } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./avatar.playground.css";
 
 const sizes: AvatarSize[] = ["xs", "sm", "md", "lg", "xl"];
@@ -65,10 +67,10 @@ function SpecimenCell({
   label: string;
 }) {
   return (
-    <div className="avatar-specimen-cell">
+    <EvidenceSurface className="avatar-specimen-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="avatar-specimen-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -162,13 +164,13 @@ export function AvatarPage() {
       data-testid="avatar-workbench"
     >
       <Scenario {...avatarScenarios[0]}>
-        <div className="avatar-overview" data-testid="avatar-overview">
+        <EvidenceSurface className="avatar-overview" data-testid="avatar-overview" inset="lg">
           <Avatar alt="Ada Lovelace" fallback="AL" />
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...avatarScenarios[1]}>
-        <div
+        <Grid.Root columns={5}
           className="avatar-specimen-grid avatar-specimen-grid--five"
           data-testid="avatar-sizes"
         >
@@ -177,11 +179,11 @@ export function AvatarPage() {
               <Avatar alt="Ada Lovelace" fallback="AL" size={size} />
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...avatarScenarios[2]}>
-        <div
+        <Grid.Root columns={2}
           className="avatar-specimen-grid avatar-specimen-grid--two"
           data-testid="avatar-shapes"
         >
@@ -190,11 +192,11 @@ export function AvatarPage() {
               <Avatar alt="Ada Lovelace" fallback="AL" shape={shape} />
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...avatarScenarios[3]}>
-        <div className="avatar-image-state-panel" data-testid="avatar-states">
+        <EvidenceSurface className="avatar-image-state-panel" data-testid="avatar-states" inset="lg">
           <Fieldset.Root>
             <Fieldset.Legend>Avatar source</Fieldset.Legend>
             <Fieldset.Description>
@@ -232,7 +234,7 @@ export function AvatarPage() {
               <span>Current source: {sourceMode}</span>
             </VStack>
           </HStack>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...avatarScenarios[4]}>
@@ -241,7 +243,7 @@ export function AvatarPage() {
             description="These contexts differ only because the consumer’s accessibility requirement differs."
             title="Identity semantics"
           >
-            <div className="avatar-specimen-grid avatar-specimen-grid--two">
+            <Grid.Root columns={2} className="avatar-specimen-grid avatar-specimen-grid--two">
               <SpecimenCell label="informative">
                 <Avatar alt="Grace Hopper" fallback="GH" />
               </SpecimenCell>
@@ -251,13 +253,13 @@ export function AvatarPage() {
                   <Text weight="semibold">Ada Lovelace</Text>
                 </HStack>
               </SpecimenCell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="Avatar remains decorative and passive; Button owns the complete name, focus, and activation."
             title="Owning control"
           >
-            <div className="avatar-control-panel">
+            <EvidenceSurface className="avatar-control-panel" inset="lg">
               <Button
                 aria-label="Open Katherine Johnson profile"
                 onPress={() => setActivation("Katherine Johnson profile")}
@@ -266,7 +268,7 @@ export function AvatarPage() {
                 Profile
               </Button>
               <Text aria-live="polite" role="status" variant="body-sm">{activation}</Text>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -277,7 +279,7 @@ export function AvatarPage() {
             description="All four status values use the default medium circular frame and identical fallback content."
             title="Status values"
           >
-            <div className="avatar-specimen-grid avatar-specimen-grid--four">
+            <Grid.Root columns={4} className="avatar-specimen-grid avatar-specimen-grid--four">
               {statuses.map((status) => (
                 <SpecimenCell key={status} label={status}>
                   <HStack className="avatar-status-example">
@@ -286,13 +288,13 @@ export function AvatarPage() {
                   </HStack>
                 </SpecimenCell>
               ))}
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="Online is repeated across both supported shapes solely to verify that the ring inherits frame geometry."
             title="Shape-following geometry"
           >
-            <div className="avatar-specimen-grid avatar-specimen-grid--two">
+            <Grid.Root columns={2} className="avatar-specimen-grid avatar-specimen-grid--two">
               {shapes.map((shape) => (
                 <SpecimenCell key={shape} label={shape}>
                   <Avatar
@@ -303,13 +305,13 @@ export function AvatarPage() {
                   />
                 </SpecimenCell>
               ))}
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
 
       <Scenario {...avatarScenarios[6]}>
-        <div
+        <Grid.Root columns={2}
           className="avatar-specimen-grid avatar-specimen-grid--two"
           data-testid="avatar-notifications"
         >
@@ -329,7 +331,7 @@ export function AvatarPage() {
               <span>Grace Hopper · Online</span>
             </HStack>
           </SpecimenCell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...avatarScenarios[7]}>
@@ -338,25 +340,25 @@ export function AvatarPage() {
             description="Adjacent light and dark scopes preserve Avatar’s default fallback recipe."
             title="Scoped appearances"
           >
-            <div
+            <Grid.Root columns={2}
               className="avatar-scoped-appearance-grid"
               data-testid="avatar-appearance"
             >
-              <div data-brick-appearance="light">
+              <EvidenceSurface data-brick-appearance="light">
                 <code>light</code>
                 <Avatar alt="Ada Lovelace" fallback="AL" />
-              </div>
-              <div data-brick-appearance="dark">
+              </EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark">
                 <code>dark</code>
                 <Avatar alt="Ada Lovelace" fallback="AL" />
-              </div>
-            </div>
+              </EvidenceSurface>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="The code names every supported hook and exactly matches the rendered result."
             title="Consumer customization"
           >
-            <article className="avatar-customization">
+            <EvidenceSurface as="article" className="avatar-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Root and component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
@@ -382,7 +384,7 @@ export function AvatarPage() {
 />`}</code>
                 </pre>
               </div>
-              <div className="avatar-customization__preview">
+              <EvidenceSurface className="avatar-customization__preview">
                 <Avatar
                   alt="Customized identity"
                   className="custom-avatar"
@@ -392,8 +394,8 @@ export function AvatarPage() {
                   status="online"
                   style={customTokens}
                 />
-              </div>
-            </article>
+              </EvidenceSurface>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -404,7 +406,7 @@ export function AvatarPage() {
             description="A fixed Avatar remains square while long adjacent identity text reflows inside a 20rem frame."
             title="Constrained-width stress"
           >
-            <div className="avatar-stress-panel">
+            <EvidenceSurface className="avatar-stress-panel">
               <HStack className="avatar-phone-frame">
                 <Avatar alt="" fallback="李" shape="rounded" status="offline" />
                 <VStack className="avatar-person-copy">
@@ -414,13 +416,13 @@ export function AvatarPage() {
                   </span>
                 </VStack>
               </HStack>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup
             description="Avatar has no directional layout; genuine right-to-left adjacent content controls reading order."
             title="RTL inheritance"
           >
-            <div className="avatar-stress-panel">
+            <EvidenceSurface className="avatar-stress-panel">
               <HStack className="avatar-phone-frame" dir="rtl">
                 <Avatar alt="" fallback="ن" status="away" />
                 <VStack className="avatar-person-copy">
@@ -428,7 +430,7 @@ export function AvatarPage() {
                   <span>بعيد · حالة محلية طويلة لمساحة العمل</span>
                 </VStack>
               </HStack>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

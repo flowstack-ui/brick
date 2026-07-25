@@ -1,5 +1,6 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  Grid,
   HStack,
   VStack,
   Button,
@@ -11,6 +12,7 @@ import type { TooltipShape } from "@flowstack-ui/brick/tooltip";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./tooltip.playground.css";
 
 const sides = ["top", "right", "bottom", "left"] as const;
@@ -31,7 +33,7 @@ function EvidenceGroup({ children, description, title }: { children: ReactNode; 
 }
 
 function Cell({ children, label }: { children: ReactNode; label: string }) {
-  return <div className="tooltip-specimen-cell"><SpecimenLabel>{label}</SpecimenLabel><div className="tooltip-specimen-cell__preview">{children}</div></div>;
+  return <EvidenceSurface className="tooltip-specimen-cell"><SpecimenLabel>{label}</SpecimenLabel><div className="tooltip-specimen-cell__preview">{children}</div></EvidenceSurface>;
 }
 
 function Hint({ align = "center", arrow = true, label, shape, side = "top" }: {
@@ -50,12 +52,12 @@ function Hint({ align = "center", arrow = true, label, shape, side = "top" }: {
 }
 
 function ScopedTooltip({ appearance }: { appearance: "light" | "dark" }) {
-  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
   return (
-    <div className="tooltip-appearance-panel" data-brick-appearance={appearance} ref={setContainer}>
+    <EvidenceSurface className="tooltip-appearance-panel" data-brick-appearance={appearance} ref={setContainer}>
       <code>{appearance}</code>
       {container ? <Tooltip.Provider closeDelay={0} openDelay={0}><Tooltip.Root><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">{appearance} trigger</Button></Tooltip.Trigger><Tooltip.Portal container={container}><Tooltip.Content>{appearance} tooltip<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></Tooltip.Provider> : null}
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -77,63 +79,63 @@ export function TooltipPage() {
     <Tooltip.Provider closeDelay={0} openDelay={0}>
       <VStack className="tooltip-page" data-component-page="tooltip" data-testid="tooltip-workbench">
         <Scenario {...tooltipScenarios[0]}>
-          <div className="tooltip-overview" data-testid="tooltip-overview">
+          <EvidenceSurface className="tooltip-overview" data-testid="tooltip-overview" inset="lg">
             <Hint label="Search workspace" side="bottom" />
             <Text as="p" tone="secondary" variant="body-sm">Search remains independently named; Tooltip is supplemental.</Text>
-          </div>
+          </EvidenceSurface>
         </Scenario>
 
         <Scenario {...tooltipScenarios[1]}>
-          <div className="tooltip-specimen-grid tooltip-specimen-grid--three" data-testid="tooltip-recipes">
+          <Grid.Root columns={3} className="tooltip-specimen-grid tooltip-specimen-grid--three" data-testid="tooltip-recipes">
             <Cell label="plain + Arrow"><Hint label="Plain tooltip" /></Cell>
             <Cell label="plain · no Arrow"><Hint arrow={false} label="Plain without arrow" /></Cell>
             <Cell label="rich + Arrow">
               <Tooltip.Root variant="rich"><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">Project status</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content side="bottom"><Tooltip.Title>Ready for review</Tooltip.Title><Tooltip.Description>All required checks have passed.</Tooltip.Description><Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root>
             </Cell>
-          </div>
+          </Grid.Root>
         </Scenario>
 
         <Scenario {...tooltipScenarios[2]}>
-          <div className="tooltip-specimen-grid tooltip-specimen-grid--two" data-testid="tooltip-shapes">
+          <Grid.Root columns={2} className="tooltip-specimen-grid tooltip-specimen-grid--two" data-testid="tooltip-shapes">
             {shapes.map((shape) => <Cell key={shape} label={shape}><Hint label={`${shape[0].toUpperCase()}${shape.slice(1)} tooltip`} shape={shape} /></Cell>)}
-          </div>
+          </Grid.Root>
         </Scenario>
 
         <Scenario {...tooltipScenarios[3]}>
-          <div className="tooltip-specimen-grid tooltip-specimen-grid--four" data-testid="tooltip-placement">
+          <Grid.Root columns={4} className="tooltip-specimen-grid tooltip-specimen-grid--four" data-testid="tooltip-placement">
             {sides.map((side) => <Cell key={side} label={side}><Hint label={side === "top" ? "Above" : side === "right" ? "To the right" : side === "bottom" ? "Below" : "To the left"} side={side} /></Cell>)}
-          </div>
+          </Grid.Root>
         </Scenario>
 
         <Scenario {...tooltipScenarios[4]}>
-          <div className="tooltip-specimen-grid tooltip-specimen-grid--three" data-testid="tooltip-alignments">
+          <Grid.Root columns={3} className="tooltip-specimen-grid tooltip-specimen-grid--three" data-testid="tooltip-alignments">
             {aligns.map((align) => <Cell key={align} label={align}><Hint align={align} label={`${align} aligned tooltip`} side="bottom" /></Cell>)}
-          </div>
+          </Grid.Root>
         </Scenario>
 
         <Scenario {...tooltipScenarios[5]}>
-          <div className="tooltip-specimen-grid tooltip-specimen-grid--three" data-testid="tooltip-states">
+          <Grid.Root columns={3} className="tooltip-specimen-grid tooltip-specimen-grid--three" data-testid="tooltip-states">
             <Cell label="controlled">
               <HStack className="tooltip-state-example"><Button onPress={() => setControlledOpen((open) => !open)} tone="neutral" variant="outline">Toggle controlled tooltip</Button><Tooltip.Root onOpenChange={setControlledOpen} open={controlledOpen}><Tooltip.Trigger asChild><IconButton aria-label="Controlled help" tone="neutral" variant="outline"><SearchIcon /></IconButton></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>Controlled state<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></HStack>
             </Cell>
             <Cell label="defaultOpen"><Tooltip.Root defaultOpen><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">Default-open trigger</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content className="tooltip-default-open">Default-open state<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></Cell>
             <Cell label="disabled"><Tooltip.Root disabled><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">Disabled tooltip</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>Must not open</Tooltip.Content></Tooltip.Portal></Tooltip.Root></Cell>
-          </div>
+          </Grid.Root>
         </Scenario>
 
         <Scenario {...tooltipScenarios[6]}>
-          <div className="playground-output-stack" data-testid="tooltip-composition">
+          <Grid.Root className="playground-output-stack" data-testid="tooltip-composition">
             <RenderedOutput label="asChild Tooltip Trigger HTML"><Tooltip.Root><Tooltip.Trigger asChild data-testid="tooltip-as-child"><Button tone="neutral" variant="outline">As-child trigger</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>As-child composition</Tooltip.Content></Tooltip.Portal></Tooltip.Root></RenderedOutput>
             <RenderedOutput label="render Tooltip Trigger HTML"><Tooltip.Root><Tooltip.Trigger data-testid="tooltip-render" render={<button type="button" />}>Render trigger</Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>Render composition</Tooltip.Content></Tooltip.Portal></Tooltip.Root></RenderedOutput>
             <RenderedOutput label="Native Tooltip Trigger HTML"><Tooltip.Root><Tooltip.Trigger data-testid="tooltip-native">Native trigger</Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>Advanced native span</Tooltip.Content></Tooltip.Portal></Tooltip.Root></RenderedOutput>
-          </div>
+          </Grid.Root>
         </Scenario>
 
         <Scenario {...tooltipScenarios[7]}>
           <VStack className="tooltip-evidence-stack">
-            <EvidenceGroup description="Focus or hover each trigger to inspect its same-document portal inside the local light or dark token scope." title="Scoped appearances"><div className="tooltip-scoped-grid" data-testid="tooltip-appearance"><ScopedTooltip appearance="light" /><ScopedTooltip appearance="dark" /></div></EvidenceGroup>
+            <EvidenceGroup description="Focus or hover each trigger to inspect its same-document portal inside the local light or dark token scope." title="Scoped appearances"><Grid.Root columns={2} className="tooltip-scoped-grid" data-testid="tooltip-appearance"><ScopedTooltip appearance="light" /><ScopedTooltip appearance="dark" /></Grid.Root></EvidenceGroup>
             <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-              <article className="tooltip-customization"><div><Text as="h4" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Focus or hover the trigger to inspect the customized Content class, slot, native style, and public Tooltip tokens.</Text><pre aria-label="Tooltip customization example" tabIndex={0}><code>{`<Tooltip.Content
+              <EvidenceSurface as="article" className="tooltip-customization" inset="lg"><div><Text as="h4" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Focus or hover the trigger to inspect the customized Content class, slot, native style, and public Tooltip tokens.</Text><pre aria-label="Tooltip customization example" tabIndex={0}><code>{`<Tooltip.Content
   className="custom-tooltip"
   data-slot="custom-tooltip"
   style={{
@@ -146,15 +148,15 @@ export function TooltipPage() {
 >
   Customized tooltip
   <Tooltip.Arrow />
-</Tooltip.Content>`}</code></pre></div><div className="tooltip-customization__preview"><Tooltip.Provider closeDelay={0} openDelay={0}><Tooltip.Root><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">Custom trigger</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content className="custom-tooltip" data-slot="custom-tooltip" style={customTokens}>Customized tooltip<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></Tooltip.Provider></div></article>
+</Tooltip.Content>`}</code></pre></div><EvidenceSurface className="tooltip-customization__preview"><Tooltip.Provider closeDelay={0} openDelay={0}><Tooltip.Root><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">Custom trigger</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content className="custom-tooltip" data-slot="custom-tooltip" style={customTokens}>Customized tooltip<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></Tooltip.Provider></EvidenceSurface></EvidenceSurface>
             </EvidenceGroup>
           </VStack>
         </Scenario>
 
         <Scenario {...tooltipScenarios[8]}>
           <VStack className="tooltip-evidence-stack" data-testid="tooltip-stress">
-            <EvidenceGroup description="Long accessible and visible content remains inside a 20rem application-owned frame." title="Constrained-width stress"><div className="tooltip-stress-panel"><div className="tooltip-phone-frame"><Hint label="Search projects, files, and localized workspace commands" side="bottom" /></div></div></EvidenceGroup>
-            <EvidenceGroup description="Tooltip inherits genuine right-to-left content and remains within the dynamic viewport." title="RTL inheritance"><div className="tooltip-stress-panel"><div className="tooltip-phone-frame" dir="rtl"><Hint label="البحث في المشاريع والملفات" side="bottom" /></div></div></EvidenceGroup>
+            <EvidenceGroup description="Long accessible and visible content remains inside a 20rem application-owned frame." title="Constrained-width stress"><EvidenceSurface className="tooltip-stress-panel"><div className="tooltip-phone-frame"><Hint label="Search projects, files, and localized workspace commands" side="bottom" /></div></EvidenceSurface></EvidenceGroup>
+            <EvidenceGroup description="Tooltip inherits genuine right-to-left content and remains within the dynamic viewport." title="RTL inheritance"><EvidenceSurface className="tooltip-stress-panel"><div className="tooltip-phone-frame" dir="rtl"><Hint label="البحث في المشاريع والملفات" side="bottom" /></div></EvidenceSurface></EvidenceGroup>
           </VStack>
         </Scenario>
       </VStack>

@@ -1,5 +1,6 @@
 import { useState, type CSSProperties } from "react";
 import {
+  Grid,
   HStack,
   VStack,
   Button,
@@ -17,6 +18,7 @@ import {
   FormEvidenceGroup as EvidenceGroup,
   FormRenderedOutput as RenderedOutput,
 } from "../../shared/FormEvidence.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import { SearchIcon } from "../../shared/icons.js";
 import "../../shared/forms-evidence.playground.css";
 import "./input.playground.css";
@@ -128,15 +130,15 @@ export function InputPage() {
       data-testid="input-workbench"
     >
       <Scenario {...inputScenarios[0]}>
-        <div className="forms-overview" data-testid="input-overview">
+        <EvidenceSurface className="forms-overview" data-testid="input-overview" inset="lg">
           <PreviewField id="input-overview-field">
             <Input name="overview" />
           </PreviewField>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...inputScenarios[1]}>
-        <div className="forms-grid forms-grid--three" data-testid="input-variants">
+        <Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="input-variants">
           {variants.map((variant) => (
             <Cell key={variant} label={variant}>
               <PreviewField id={`input-variant-${variant}`}>
@@ -144,11 +146,11 @@ export function InputPage() {
               </PreviewField>
             </Cell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...inputScenarios[2]}>
-        <div className="forms-grid forms-grid--three" data-testid="input-sizes">
+        <Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="input-sizes">
           {sizes.map((size) => (
             <Cell key={size} label={size}>
               <PreviewField id={`input-size-${size}`}>
@@ -156,11 +158,11 @@ export function InputPage() {
               </PreviewField>
             </Cell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...inputScenarios[3]}>
-        <div className="forms-grid forms-grid--three" data-testid="input-shapes">
+        <Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="input-shapes">
           {shapes.map((shape) => (
             <Cell key={shape} label={shape}>
               <PreviewField id={`input-shape-${shape}`}>
@@ -168,11 +170,11 @@ export function InputPage() {
               </PreviewField>
             </Cell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...inputScenarios[4]}>
-        <div className="forms-grid forms-grid--three forms-grid--preview-start" data-testid="input-adornments">
+        <Grid.Root columns={3} className="forms-grid forms-grid--three forms-grid--preview-start" data-testid="input-adornments">
           <Cell label="start adornment">
             <PreviewField id="input-start-adornment">
               <Input
@@ -195,7 +197,7 @@ export function InputPage() {
               />
             </PreviewField>
           </Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...inputScenarios[5]}>
@@ -204,7 +206,7 @@ export function InputPage() {
             description="Uncontrolled and controlled examples begin with identical content; only state ownership changes."
             title="Value ownership"
           >
-            <div className="forms-grid forms-grid--two forms-grid--preview-start">
+            <Grid.Root columns={2} className="forms-grid forms-grid--two forms-grid--preview-start">
               <Cell label="uncontrolled">
                 <PreviewField id="input-uncontrolled">
                   <Input defaultValue="Brick workspace" />
@@ -221,13 +223,13 @@ export function InputPage() {
                   <output>Value: {controlledValue}</output>
                 </div>
               </Cell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="Only the named availability or validity state changes; content and default geometry remain identical."
             title="Availability and validity"
           >
-            <div className="forms-grid forms-grid--four forms-grid--preview-start">
+            <Grid.Root columns={4} className="forms-grid forms-grid--four forms-grid--preview-start">
               <Cell label="disabled">
                 <PreviewField id="input-disabled">
                   <Input defaultValue="Brick workspace" disabled />
@@ -251,7 +253,7 @@ export function InputPage() {
                   <Field.Error>Project name is invalid.</Field.Error>
                 </Field.Root>
               </Cell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -262,7 +264,7 @@ export function InputPage() {
             description="Submit empty to expose inline validation, enter an email, submit again, and reset to restore the default."
             title="Submitted email"
           >
-            <div className="forms-overview">
+            <EvidenceSurface className="forms-overview" inset="lg">
               <Form
                 aria-label="Input account form"
                 id="input-form-example"
@@ -288,13 +290,13 @@ export function InputPage() {
                 </HStack>
                 <output className="forms-status">{status}</output>
               </Form>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup
             description="The Input is outside the form visually but participates through its native form attribute."
             title="External form ownership"
           >
-            <div className="forms-overview">
+            <EvidenceSurface className="forms-overview" inset="lg">
               <Field.Root id="input-external">
                 <Field.Label>External project</Field.Label>
                 <Input
@@ -303,7 +305,7 @@ export function InputPage() {
                   name="project"
                 />
               </Field.Root>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup
             description="The live specimen and captured HTML expose the generated label, description, error, native input, slots, and ARIA relationships."
@@ -327,26 +329,26 @@ export function InputPage() {
             description="The same default Input and Field render inside adjacent local appearance scopes."
             title="Scoped appearances"
           >
-            <div className="forms-scoped-grid" data-testid="input-appearance">
-              <div data-brick-appearance="light">
+            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="input-appearance">
+              <EvidenceSurface data-brick-appearance="light">
                 <code>light</code>
                 <PreviewField id="input-light">
                   <Input defaultValue="Brick workspace" />
                 </PreviewField>
-              </div>
-              <div data-brick-appearance="dark">
+              </EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark">
                 <code>dark</code>
                 <PreviewField id="input-dark">
                   <Input defaultValue="Brick workspace" />
                 </PreviewField>
-              </div>
-            </div>
+              </EvidenceSurface>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="The code names supported wrapper variables and native-input hooks and exactly matches the live result."
             title="Consumer customization"
           >
-            <article className="forms-customization">
+            <EvidenceSurface as="article" className="forms-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Wrapper variables and native control style</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
@@ -368,7 +370,7 @@ export function InputPage() {
 />`}</code>
                 </pre>
               </div>
-              <div className="forms-customization__preview">
+              <EvidenceSurface className="forms-customization__preview">
                 <Field.Root id="input-custom">
                   <Field.Label>Customized input</Field.Label>
                   <Input
@@ -378,8 +380,8 @@ export function InputPage() {
                     style={customInputTokens}
                   />
                 </Field.Root>
-              </div>
-            </article>
+              </EvidenceSurface>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -390,20 +392,20 @@ export function InputPage() {
             description="A long value remains editable inside a 20rem application-owned frame without widening the page."
             title="Constrained-width stress"
           >
-            <div className="forms-stress-panel">
+            <EvidenceSurface className="forms-stress-panel">
               <div className="forms-phone-frame">
                 <Field.Root id="input-long">
                   <Field.Label>Localized account recovery address</Field.Label>
                   <Input defaultValue="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break@example.com" type="email" />
                 </Field.Root>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup
             description="Logical start/end content and the clear action inherit genuine right-to-left direction in their own specimen."
             title="RTL inheritance"
           >
-            <div className="forms-stress-panel">
+            <EvidenceSurface className="forms-stress-panel">
               <div className="forms-phone-frame" dir="rtl">
                 <Field.Root id="input-rtl">
                   <Field.Label>البحث في الحساب</Field.Label>
@@ -417,7 +419,7 @@ export function InputPage() {
                   />
                 </Field.Root>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

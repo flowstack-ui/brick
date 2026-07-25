@@ -1,5 +1,6 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  Grid,
   VStack,
   Text,
   Toggle,
@@ -10,6 +11,7 @@ import {
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./toggle.playground.css";
 
 const variants: ToggleVariant[] = ["solid", "soft", "outline", "ghost"];
@@ -56,10 +58,10 @@ function EvidenceGroup({ children, description, title }: {
 
 function Cell({ children, label }: { children: ReactNode; label: string }) {
   return (
-    <div className="toggle-specimen-cell">
+    <EvidenceSurface className="toggle-specimen-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="toggle-specimen-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -140,21 +142,21 @@ export function TogglePage() {
   return (
     <VStack className="toggle-page" data-component-page="toggle" data-testid="toggle-workbench">
       <Scenario {...toggleScenarios[0]}>
-        <div className="toggle-overview" data-testid="toggle-overview">
+        <EvidenceSurface className="toggle-overview" data-testid="toggle-overview" inset="lg">
           <Toggle>
             <StarIcon /> Favorite
           </Toggle>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...toggleScenarios[1]}>
-        <div className="toggle-specimen-grid toggle-specimen-grid--four" data-testid="toggle-variants">
+        <Grid.Root columns={4} className="toggle-specimen-grid toggle-specimen-grid--four" data-testid="toggle-variants">
           {variants.map((variant) => (
             <Cell key={variant} label={variant}>
               <Toggle variant={variant}>Preview</Toggle>
             </Cell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...toggleScenarios[2]}>
@@ -165,40 +167,40 @@ export function TogglePage() {
               key={variant}
               title={`${variant[0].toUpperCase()}${variant.slice(1)} states`}
             >
-              <div className="toggle-specimen-grid toggle-specimen-grid--two">
+              <Grid.Root columns={2} className="toggle-specimen-grid toggle-specimen-grid--two">
                 <Cell label="unpressed"><Toggle variant={variant}>Preview</Toggle></Cell>
                 <Cell label="pressed"><Toggle defaultPressed variant={variant}>Preview</Toggle></Cell>
-              </div>
+              </Grid.Root>
             </EvidenceGroup>
           ))}
         </VStack>
       </Scenario>
 
       <Scenario {...toggleScenarios[3]}>
-        <div className="toggle-specimen-grid toggle-specimen-grid--three" data-testid="toggle-sizes">
+        <Grid.Root columns={3} className="toggle-specimen-grid toggle-specimen-grid--three" data-testid="toggle-sizes">
           {sizes.map((size) => (
             <Cell key={size} label={size}><Toggle size={size}>Preview</Toggle></Cell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...toggleScenarios[4]}>
         <VStack className="toggle-evidence-stack" data-testid="toggle-shapes-icons">
           <EvidenceGroup description="Both shapes use identical default content and state." title="Shapes">
-            <div className="toggle-specimen-grid toggle-specimen-grid--two">
+            <Grid.Root columns={2} className="toggle-specimen-grid toggle-specimen-grid--two">
               {shapes.map((shape) => (
                 <Cell key={shape} label={shape}><Toggle shape={shape}>Preview</Toggle></Cell>
               ))}
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="Square geometry removes text padding; the authored name remains mandatory." title="Icon-only">
-            <div className="toggle-specimen-grid toggle-specimen-grid--three">
+            <Grid.Root columns={3} className="toggle-specimen-grid toggle-specimen-grid--three">
               {sizes.map((size) => (
                 <Cell key={size} label={size}>
                   <Toggle ariaLabel={`Pin project ${size}`} iconOnly size={size}><StarIcon /></Toggle>
                 </Cell>
               ))}
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -206,37 +208,37 @@ export function TogglePage() {
       <Scenario {...toggleScenarios[5]}>
         <VStack className="toggle-evidence-stack" data-testid="toggle-composition">
           <EvidenceGroup description="State ownership changes without changing Toggle’s default recipe." title="State ownership">
-            <div className="toggle-specimen-grid toggle-specimen-grid--two">
+            <Grid.Root columns={2} className="toggle-specimen-grid toggle-specimen-grid--two">
               <Cell label="uncontrolled"><Toggle defaultPressed>Preview</Toggle></Cell>
               <Cell label="controlled"><Toggle onPressedChange={setControlled} pressed={controlled}>Preview</Toggle></Cell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The live result and actual host markup expose the element, slot, pressed state, and adapter path together." title="Host composition output">
-            <div className="playground-output-stack">
+            <Grid.Root className="playground-output-stack">
               <RenderedOutput label="Rendered Toggle HTML"><Toggle data-testid="toggle-render" render={<button type="button" />}>Preview</Toggle></RenderedOutput>
               <RenderedOutput label="Composed Toggle HTML"><Toggle asChild data-testid="toggle-as-child"><button type="button">Preview</button></Toggle></RenderedOutput>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
 
       <Scenario {...toggleScenarios[6]}>
-        <div className="toggle-specimen-grid toggle-specimen-grid--two" data-testid="toggle-disabled">
+        <Grid.Root columns={2} className="toggle-specimen-grid toggle-specimen-grid--two" data-testid="toggle-disabled">
           <Cell label="disabled · unpressed"><Toggle disabled>Preview</Toggle></Cell>
           <Cell label="disabled · pressed"><Toggle defaultPressed disabled>Preview</Toggle></Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...toggleScenarios[7]}>
         <VStack className="toggle-evidence-stack">
           <EvidenceGroup description="Adjacent light and dark scopes preserve the default recipe." title="Scoped appearances">
-            <div className="toggle-scoped-grid" data-testid="toggle-appearance">
-              <div data-brick-appearance="light"><code>light</code><Toggle>Preview</Toggle></div>
-              <div data-brick-appearance="dark"><code>dark</code><Toggle>Preview</Toggle></div>
-            </div>
+            <Grid.Root columns={2} className="toggle-scoped-grid" data-testid="toggle-appearance">
+              <EvidenceSurface data-brick-appearance="light"><code>light</code><Toggle>Preview</Toggle></EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark"><code>dark</code><Toggle>Preview</Toggle></EvidenceSurface>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <article className="toggle-customization">
+            <EvidenceSurface as="article" className="toggle-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Root and component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">Native style, slot, and public Toggle geometry tokens visibly customize the control itself.</Text>
@@ -255,12 +257,12 @@ export function TogglePage() {
   <StarIcon /> Favorite
 </Toggle>`}</code></pre>
               </div>
-              <div className="toggle-customization__preview">
+              <EvidenceSurface className="toggle-customization__preview">
                 <Toggle data-slot="custom-toggle" style={customTokens}>
                   <StarIcon /> Favorite
                 </Toggle>
-              </div>
-            </article>
+              </EvidenceSurface>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -268,14 +270,14 @@ export function TogglePage() {
       <Scenario {...toggleScenarios[8]}>
         <VStack className="toggle-evidence-stack" data-testid="toggle-stress">
           <EvidenceGroup description="Long content wraps within a 20rem application-owned frame." title="Constrained-width stress">
-            <div className="toggle-stress-panel"><div className="toggle-phone-frame">
+            <EvidenceSurface className="toggle-stress-panel"><div className="toggle-phone-frame">
               <Toggle>Awaiting detailed workspace verification</Toggle>
-            </div></div>
+            </div></EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="Toggle inherits direction from genuine right-to-left content." title="RTL inheritance">
-            <div className="toggle-stress-panel"><div className="toggle-phone-frame" dir="rtl">
+            <EvidenceSurface className="toggle-stress-panel"><div className="toggle-phone-frame" dir="rtl">
               <Toggle defaultPressed>إظهار المشاريع المكتملة</Toggle>
-            </div></div>
+            </div></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

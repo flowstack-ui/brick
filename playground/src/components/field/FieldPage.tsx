@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import {
+  Grid,
   Field,
   Text,
   VStack,
@@ -11,6 +12,7 @@ import {
   FormEvidenceGroup as EvidenceGroup,
   FormRenderedOutput as RenderedOutput,
 } from "../../shared/FormEvidence.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "../../shared/forms-evidence.playground.css";
 
 const customFieldTokens = {
@@ -46,40 +48,40 @@ export function FieldPage() {
   return (
     <VStack className="forms-page" data-component-page="field" data-testid="field-workbench">
       <Scenario {...fieldScenarios[0]}>
-        <div className="forms-overview" data-testid="field-overview"><DefaultField id="field-overview-email" /></div>
+        <EvidenceSurface className="forms-overview" data-testid="field-overview" inset="lg"><DefaultField id="field-overview-email" /></EvidenceSurface>
       </Scenario>
 
       <Scenario {...fieldScenarios[1]}>
-        <div className="forms-grid forms-grid--two forms-grid--preview-start" data-testid="field-anatomy">
+        <Grid.Root columns={2} className="forms-grid forms-grid--two forms-grid--preview-start" data-testid="field-anatomy">
           <Cell label="complete matched anatomy"><Field.Root id="field-complete" invalid required><Field.Label>Work email</Field.Label><Control name="email" /><Field.Description>Used for account notices.</Field.Description><Field.Error>Enter a valid email address.</Field.Error></Field.Root></Cell>
           <Cell label="optional indicator fallback"><Field.Root id="field-optional-anatomy"><Field.Label>Work email <Field.RequiredIndicator fallback="(optional)" /></Field.Label><Control name="email" /><Field.Description>Used for account notices.</Field.Description></Field.Root></Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...fieldScenarios[2]}>
-        <div className="forms-grid forms-grid--four" data-testid="field-states">
+        <Grid.Root columns={4} className="forms-grid forms-grid--four" data-testid="field-states">
           <Cell label="required"><Field.Root id="field-required" required><Field.Label>Work email</Field.Label><Control /><Field.Description>Used for account notices.</Field.Description></Field.Root></Cell>
           <Cell label="optional"><Field.Root id="field-optional"><Field.Label>Work email <Field.RequiredIndicator fallback="(optional)" /></Field.Label><Control /><Field.Description>Used for account notices.</Field.Description></Field.Root></Cell>
           <Cell label="disabled"><Field.Root disabled id="field-disabled"><Field.Label>Work email</Field.Label><Control /><Field.Description>Used for account notices.</Field.Description></Field.Root></Cell>
           <Cell label="readOnly"><Field.Root id="field-readonly" readOnly><Field.Label>Work email</Field.Label><Control defaultValue="name@example.com" /><Field.Description>Used for account notices.</Field.Description></Field.Root></Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...fieldScenarios[3]}>
-        <div className="forms-grid forms-grid--three forms-grid--preview-start" data-testid="field-errors">
+        <Grid.Root columns={3} className="forms-grid forms-grid--three forms-grid--preview-start" data-testid="field-errors">
           <Cell label="invalid + matched Error"><Field.Root id="field-invalid" invalid><Field.Label>Work email</Field.Label><Control /><Field.Description>Used for account notices.</Field.Description><Field.Error>Enter a valid email address.</Field.Error></Field.Root></Cell>
           <Cell label="forced application Error"><Field.Root id="field-forced"><Field.Label>Work email</Field.Label><Control /><Field.Description>Used for account notices.</Field.Description><Field.Error forceMatch>Enter a valid email address.</Field.Error></Field.Root></Cell>
           <Cell label="invalid · no Error"><Field.Root id="field-invalid-no-error" invalid><Field.Label>Work email</Field.Label><Control /><Field.Description>Used for account notices.</Field.Description></Field.Root></Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...fieldScenarios[4]}>
         <VStack className="forms-evidence-stack" data-testid="field-orientation">
           <EvidenceGroup description="Default source order and one layout track." title="Vertical">
-            <div className="forms-overview"><DefaultField id="field-vertical" /></div>
+            <EvidenceSurface className="forms-overview" inset="lg"><DefaultField id="field-vertical" /></EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="Only orientation changes; Description and Error align with the control track while space permits." title="Horizontal">
-            <div className="forms-overview"><DefaultField id="field-horizontal" orientation="horizontal" /></div>
+            <EvidenceSurface className="forms-overview" inset="lg"><DefaultField id="field-horizontal" orientation="horizontal" /></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -109,10 +111,10 @@ export function FieldPage() {
       <Scenario {...fieldScenarios[7]}>
         <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same default Field anatomy composes inside adjacent local appearance scopes." title="Scoped appearances">
-            <div className="forms-scoped-grid" data-testid="field-appearance"><div data-brick-appearance="light"><code>light</code><DefaultField id="field-light" /></div><div data-brick-appearance="dark"><code>dark</code><DefaultField id="field-dark" /></div></div>
+            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="field-appearance"><EvidenceSurface data-brick-appearance="light"><code>light</code><DefaultField id="field-light" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><code>dark</code><DefaultField id="field-dark" /></EvidenceSurface></Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <article className="forms-customization"><div><Text as="h4" variant="title-sm">Field anatomy properties</Text><Text as="p" tone="secondary" variant="body-sm">Class, slot, native style, and public Field tokens visibly change this Field only.</Text><pre aria-label="Field customization example" tabIndex={0}><code>{`<Field.Root
+            <EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Field anatomy properties</Text><Text as="p" tone="secondary" variant="body-sm">Class, slot, native style, and public Field tokens visibly change this Field only.</Text><pre aria-label="Field customization example" tabIndex={0}><code>{`<Field.Root
   data-slot="custom-field"
   invalid
   style={{
@@ -123,7 +125,7 @@ export function FieldPage() {
   }}
 >
   ...
-</Field.Root>`}</code></pre></div><div className="forms-customization__preview"><Field.Root data-slot="custom-field" id="field-custom" invalid style={customFieldTokens}><Field.Label>Customized account field</Field.Label><Control /><Field.Description>Local spacing and hierarchy.</Field.Description><Field.Error>Customized error treatment.</Field.Error></Field.Root></div></article>
+</Field.Root>`}</code></pre></div><EvidenceSurface className="forms-customization__preview"><Field.Root data-slot="custom-field" id="field-custom" invalid style={customFieldTokens}><Field.Label>Customized account field</Field.Label><Control /><Field.Description>Local spacing and hierarchy.</Field.Description><Field.Error>Customized error treatment.</Field.Error></Field.Root></EvidenceSurface></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -131,10 +133,10 @@ export function FieldPage() {
       <Scenario {...fieldScenarios[8]}>
         <VStack className="forms-evidence-stack" data-testid="field-stress">
           <EvidenceGroup description="A long horizontal Field returns to one column and wraps inside a 20rem frame." title="Constrained-width stress">
-            <div className="forms-stress-panel"><div className="forms-phone-frame"><Field.Root id="field-long" invalid orientation="horizontal" required><Field.Label>Extremely detailed localized account recovery and emergency contact address</Field.Label><Control /><Field.Description>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains contained.</Field.Description><Field.Error>The translated error remains fully reachable.</Field.Error></Field.Root></div></div>
+            <EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame"><Field.Root id="field-long" invalid orientation="horizontal" required><Field.Label>Extremely detailed localized account recovery and emergency contact address</Field.Label><Control /><Field.Description>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains contained.</Field.Description><Field.Error>The translated error remains fully reachable.</Field.Error></Field.Root></div></EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="Label, control, messages, and logical invalid treatment inherit genuine right-to-left direction." title="RTL inheritance">
-            <div className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Field.Root id="field-rtl" invalid required><Field.Label>عنوان البريد الإلكتروني للحساب</Field.Label><Control /><Field.Description>يستخدم هذا العنوان لإشعارات الحساب.</Field.Description><Field.Error>يرجى إدخال عنوان صالح.</Field.Error></Field.Root></div></div>
+            <EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Field.Root id="field-rtl" invalid required><Field.Label>عنوان البريد الإلكتروني للحساب</Field.Label><Control /><Field.Description>يستخدم هذا العنوان لإشعارات الحساب.</Field.Description><Field.Error>يرجى إدخال عنوان صالح.</Field.Error></Field.Root></div></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

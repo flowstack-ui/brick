@@ -1,4 +1,4 @@
-import { Text, VStack } from "@flowstack-ui/brick";
+import { Link, Text, VStack } from "@flowstack-ui/brick";
 import type { PlaygroundEntry } from "../app/component-registry.js";
 
 export function ComponentNavigation({
@@ -34,15 +34,17 @@ export function ComponentNavigation({
               .filter((entry) => entry.category === category)
               .map((entry) => (
                 <li key={entry.id}>
-                  <a
+                  <Link
                     aria-current={
                       currentRoute === entry.route ? "page" : undefined
                     }
                     href={entry.route}
                     onClick={onNavigate}
+                    tone="inherit"
+                    variant="plain"
                   >
                     <span>{entry.title}</span>
-                  </a>
+                  </Link>
                 </li>
               ))}
           </VStack>

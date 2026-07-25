@@ -1,0 +1,86 @@
+@layer brick.components {
+  .brick-surface {
+    --brick-surface-background: var(--brick-color-surface-base);
+    --brick-surface-foreground: var(--brick-color-text-primary);
+    --brick-surface-border-color: var(--brick-color-border-subtle);
+    --brick-surface-border-width: 0rem;
+    --brick-surface-elevation-none: none;
+    --brick-surface-elevation-low: 0 0.25rem 0.75rem
+      color-mix(in srgb, var(--brick-color-shadow), transparent 58%);
+    --brick-surface-elevation-medium: 0 0.75rem 2rem
+      color-mix(in srgb, var(--brick-color-shadow), transparent 38%);
+    --brick-surface-elevation-high: 0 1.5rem 4.5rem
+      color-mix(in srgb, var(--brick-color-shadow), transparent 18%);
+    --brick-surface-shadow: var(--brick-surface-elevation-none);
+    --brick-surface-radius: var(--brick-radius-surface);
+    --brick-surface-padding: var(--brick-space-0);
+
+    box-sizing: border-box;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    padding: var(--brick-surface-padding);
+    border: var(--brick-surface-border-width) solid
+      var(--brick-surface-border-color);
+    border-radius: var(--brick-surface-radius);
+    background: var(--brick-surface-background);
+    box-shadow: var(--brick-surface-shadow);
+    color: var(--brick-surface-foreground);
+  }
+
+  .brick-surface[data-level="canvas"] {
+    --brick-surface-background: var(--brick-color-surface-canvas);
+  }
+
+  .brick-surface[data-level="subtle"] {
+    --brick-surface-background: var(--brick-color-surface-subtle);
+  }
+
+  .brick-surface[data-level="raised"] {
+    --brick-surface-background: var(--brick-color-surface-raised);
+  }
+
+  .brick-surface[data-bordered] {
+    --brick-surface-border-width: var(--brick-border-width);
+  }
+
+  .brick-surface[data-elevation="low"] {
+    --brick-surface-shadow: var(--brick-surface-elevation-low);
+  }
+
+  .brick-surface[data-elevation="medium"] {
+    --brick-surface-shadow: var(--brick-surface-elevation-medium);
+  }
+
+  .brick-surface[data-elevation="high"] {
+    --brick-surface-shadow: var(--brick-surface-elevation-high);
+  }
+
+  .brick-surface[data-radius="none"] {
+    --brick-surface-radius: 0rem;
+  }
+
+  .brick-surface[data-radius="subtle"] {
+    --brick-surface-radius: var(--brick-radius-subtle);
+  }
+
+  .brick-surface[data-inset="sm"] {
+    --brick-surface-padding: var(--brick-space-3);
+  }
+
+  .brick-surface[data-inset="md"] {
+    --brick-surface-padding: var(--brick-space-5);
+  }
+
+  .brick-surface[data-inset="lg"] {
+    --brick-surface-padding: var(--brick-space-6);
+  }
+
+  @media (forced-colors: active) {
+    .brick-surface[data-bordered],
+    .brick-surface:not([data-elevation="none"]) {
+      --brick-surface-border-width: var(--brick-border-width);
+      --brick-surface-border-color: CanvasText;
+      --brick-surface-shadow: none;
+    }
+  }
+}

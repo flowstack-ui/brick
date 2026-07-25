@@ -32,6 +32,8 @@ test("renders and operates Brick through its public package", async ({ page }) =
   await expect(appBar).toHaveAttribute("data-position", "sticky");
   await expect(appBar.locator("[data-slot='appbar-toolbar']")).toHaveAttribute("data-density", "compact");
   await expect(page.getByRole("link", { name: "Jump to workspace" })).toHaveClass(/brick-icon-button/);
+  await expect(page.getByRole("link", { name: "View workspace" })).toHaveClass(/brick-link/);
+  await expect(page.getByRole("link", { name: "View workspace" })).toHaveAttribute("data-size", "md");
 
   const publishTrigger = page.getByRole("button", { name: "Publish project" });
   await publishTrigger.click();
@@ -54,6 +56,16 @@ test("renders and operates Brick through its public package", async ({ page }) =
   await appearanceToggle.click();
   await expect(page.locator("html")).toHaveAttribute("data-brick-appearance", "light");
   await expect(appearanceToggle).toHaveAttribute("aria-pressed", "false");
+});
+
+test("composes Scroll Area as a constrained native activity region", async ({ page }) => {
+  const viewport = page.getByRole("region", { name: "Recent workspace activity" });
+  await expect(viewport).toHaveClass(/brick-scroll-area-viewport/);
+  await expect(viewport).toHaveAttribute("tabindex", "0");
+  await expect(viewport).toHaveCSS("overflow-y", "auto");
+  expect(await viewport.evaluate((node) => node.scrollHeight > node.clientHeight)).toBe(true);
+  await viewport.evaluate((node) => { node.scrollTop = 100; });
+  expect(await viewport.evaluate((node) => node.scrollTop)).toBeGreaterThan(0);
 });
 
 test("composes Dialog as a focused consumer publishing flow", async ({ page }) => {
@@ -196,6 +208,20 @@ test("keeps AlertDialog open on its scrim and supports safe Escape dismissal", a
 });
 
 test("composes Card through its public package without inventing interaction", async ({ page }) => {
+  const workspaceSurface = page.getByRole("region", { name: "Launch workspace" });
+  await expect(workspaceSurface).toHaveClass(/brick-surface/);
+  await expect(workspaceSurface).toHaveAttribute("data-level", "subtle");
+  await expect(workspaceSurface).toHaveAttribute("data-bordered", "");
+  await expect(workspaceSurface).toHaveAttribute("data-inset", "lg");
+
+  const workspace = page.locator(".workspace-grid");
+  await expect(workspace).toHaveClass(/brick-grid/);
+  await expect(workspace).toHaveAttribute("data-columns", "3");
+  await expect(workspace).toHaveAttribute("data-gap", "4");
+  const featured = workspace.locator(".workspace-featured");
+  await expect(featured).toHaveClass(/brick-grid-item/);
+  await expect(featured).toHaveAttribute("data-column-span", "2");
+
   const project = page.getByRole("article", { name: "Mobile checkout refresh" });
   await expect(project).toHaveAttribute("data-slot", "card");
   await expect(project).toHaveAttribute("data-variant", "elevated");
@@ -209,6 +235,14 @@ test("composes Card through its public package without inventing interaction", a
   const invite = page.getByRole("region", { name: "Invite a teammate" });
   await expect(invite).toHaveAttribute("data-size", "lg");
   await expect(invite.getByLabel("Work email")).toBeVisible();
+});
+
+test("composes Divider through its public subpath as a semantic workspace break", async ({ page }) => {
+  const divider = page.getByRole("separator", { name: "Workspace projects" });
+  await expect(divider).toHaveJSProperty("tagName", "HR");
+  await expect(divider).toHaveClass(/brick-divider/);
+  await expect(divider).toHaveAttribute("data-orientation", "horizontal");
+  await expect(divider).toHaveAttribute("data-variant", "solid");
 });
 
 test("composes the complete public Form, Field, and Fieldset foundation", async ({ page }) => {
@@ -331,7 +365,17 @@ test("composes Toggle and ToggleGroup as application-owned persistent views", as
   await expect(cards).toHaveAttribute("aria-pressed", "true");
   await list.click();
   await expect(list).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator(".workspace-grid")).toHaveAttribute("data-view", "list");
+  const workspace = page.locator(".workspace-grid");
+  await expect(workspace).toHaveAttribute("data-view", "list");
+  expect(
+    await workspace.evaluate(
+      (element) => getComputedStyle(element).gridTemplateColumns.split(" ").length,
+    ),
+  ).toBe(1);
+  await expect(workspace.locator(".workspace-featured")).toHaveCSS(
+    "grid-column-end",
+    "-1",
+  );
 });
 
 test("has no automatically detectable accessibility violations", async ({ page }) => {
@@ -398,6 +442,9 @@ test("contains the layout at the project viewport", async ({ page }) => {
 
 test("keeps the page stable while Dialog and Drawer own scroll lock", async ({ page }) => {
   const shell = page.locator(".site-shell");
+  await expect(shell).toHaveClass(/brick-container/);
+  await expect(shell).toHaveAttribute("data-measure", "wide");
+  await expect(shell).toHaveAttribute("data-gutter", "md");
   const before = await shell.boundingBox();
   expect(before).not.toBeNull();
   const paddingBefore = await page.evaluate(() => document.body.style.paddingRight);

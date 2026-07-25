@@ -1,0 +1,43 @@
+@layer brick.components {
+  .brick-scroll-area {
+    --brick-scroll-area-scrollbar-thumb: var(--brick-color-border-strong);
+    --brick-scroll-area-scrollbar-track: transparent;
+
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+
+  .brick-scroll-area-viewport {
+    box-sizing: border-box;
+    inline-size: 100%;
+    block-size: 100%;
+    min-inline-size: 0;
+    min-block-size: 0;
+    scrollbar-color: var(--brick-scroll-area-scrollbar-thumb) var(--brick-scroll-area-scrollbar-track);
+    scrollbar-width: auto;
+  }
+
+  .brick-scroll-area-viewport[data-orientation="vertical"] { overflow-x: hidden; overflow-y: auto; }
+  .brick-scroll-area-viewport[data-orientation="horizontal"] { overflow-x: auto; overflow-y: hidden; }
+  .brick-scroll-area-viewport[data-orientation="both"] { overflow: auto; }
+
+  .brick-scroll-area[data-scrollbar-gutter="stable"] > .brick-scroll-area-viewport { scrollbar-gutter: stable; }
+  .brick-scroll-area[data-scrollbar-visibility="always"] > .brick-scroll-area-viewport[data-orientation="vertical"] { overflow-y: scroll; }
+  .brick-scroll-area[data-scrollbar-visibility="always"] > .brick-scroll-area-viewport[data-orientation="horizontal"] { overflow-x: scroll; }
+  .brick-scroll-area[data-scrollbar-visibility="always"] > .brick-scroll-area-viewport[data-orientation="both"] { overflow: scroll; }
+  .brick-scroll-area[data-scrollbar-visibility="interaction"] > .brick-scroll-area-viewport { scrollbar-color: transparent transparent; }
+  .brick-scroll-area[data-scrollbar-visibility="interaction"]:is(:hover, :focus-within) > .brick-scroll-area-viewport {
+    scrollbar-color: var(--brick-scroll-area-scrollbar-thumb) var(--brick-scroll-area-scrollbar-track);
+  }
+
+  .brick-scroll-area-viewport:focus-visible {
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: calc(-1 * var(--brick-border-focus-width));
+  }
+
+  @media (forced-colors: active) {
+    .brick-scroll-area-viewport,
+    .brick-scroll-area[data-scrollbar-visibility="interaction"] > .brick-scroll-area-viewport { scrollbar-color: auto; }
+    .brick-scroll-area-viewport:focus-visible { outline-color: Highlight; }
+  }
+}

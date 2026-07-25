@@ -106,7 +106,6 @@
 }
 
 .card-specimen-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
 }
@@ -174,7 +173,6 @@
 }
 
 .card-scoped-appearance-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
 }

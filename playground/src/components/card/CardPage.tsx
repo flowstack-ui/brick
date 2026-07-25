@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import {
+  Grid,
   VStack,
   Button,
   Card,
@@ -16,6 +17,7 @@ import {
   type ScenarioDefinition,
 } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import { MenuIcon } from "../../shared/icons.js";
 import "./card.playground.css";
 
@@ -58,10 +60,10 @@ function SpecimenCell({
   label: string;
 }) {
   return (
-    <div className="card-specimen-cell">
+    <EvidenceSurface className="card-specimen-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="card-specimen-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -151,7 +153,7 @@ export function CardPage() {
       data-testid="card-workbench"
     >
       <Scenario {...cardScenarios[0]}>
-        <div className="card-overview" data-testid="card-overview">
+        <EvidenceSurface className="card-overview" data-testid="card-overview" inset="lg">
           <Card.Root>
             <Card.Header>
               <Card.Title>Quarterly report</Card.Title>
@@ -175,11 +177,11 @@ export function CardPage() {
               </Button>
             </Card.Footer>
           </Card.Root>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...cardScenarios[1]}>
-        <div
+        <Grid.Root columns={3}
           className="card-specimen-grid card-specimen-grid--three"
           data-testid="card-variants"
         >
@@ -188,11 +190,11 @@ export function CardPage() {
               <RecipeCard variant={variant} />
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...cardScenarios[2]}>
-        <div
+        <Grid.Root columns={3}
           className="card-specimen-grid card-specimen-grid--three card-specimen-grid--natural"
           data-testid="card-sizes"
         >
@@ -201,11 +203,11 @@ export function CardPage() {
               <RecipeCard size={size} />
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...cardScenarios[3]}>
-        <div
+        <Grid.Root columns={4}
           className="card-specimen-grid card-specimen-grid--four"
           data-testid="card-anatomy"
         >
@@ -247,7 +249,7 @@ export function CardPage() {
               </Card.Header>
             </Card.Root>
           </SpecimenCell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...cardScenarios[4]}>
@@ -256,7 +258,7 @@ export function CardPage() {
             description="Each Root uses the same default recipe and content while only its native container element changes."
             title="Root elements"
           >
-            <div className="card-specimen-grid card-specimen-grid--four">
+            <Grid.Root columns={4} className="card-specimen-grid card-specimen-grid--four">
               {rootElements.map((element) => {
                 const card = (
                   <Card.Root
@@ -280,14 +282,14 @@ export function CardPage() {
                   </SpecimenCell>
                 );
               })}
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
 
           <EvidenceGroup
             description="Visual treatment remains Card-owned while the page selects the correct native heading level."
             title="Title levels"
           >
-            <div className="card-specimen-grid card-specimen-grid--six">
+            <Grid.Root columns={6} className="card-specimen-grid card-specimen-grid--six">
               {titleElements.map((element) => (
                 <SpecimenCell key={element} label={element}>
                   <Card.Root>
@@ -302,13 +304,13 @@ export function CardPage() {
                   </Card.Root>
                 </SpecimenCell>
               ))}
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
 
       <Scenario {...cardScenarios[5]}>
-        <div
+        <Grid.Root columns={3}
           className="card-specimen-grid card-specimen-grid--three"
           data-testid="card-composition"
         >
@@ -364,7 +366,7 @@ export function CardPage() {
               </Card.Root>
             </a>
           </SpecimenCell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...cardScenarios[6]}>
@@ -372,19 +374,19 @@ export function CardPage() {
           description="Adjacent local scopes prove that Card consumes appearance without changing the document-wide review setting."
           title="Scoped appearances"
         >
-          <div
+          <Grid.Root columns={2}
             className="card-scoped-appearance-grid"
             data-testid="card-appearance"
           >
-            <div className="card-appearance-panel" data-brick-appearance="light">
+            <EvidenceSurface className="card-appearance-panel" data-brick-appearance="light">
               <span>Light scope</span>
               <RecipeCard />
-            </div>
-            <div className="card-appearance-panel" data-brick-appearance="dark">
+            </EvidenceSurface>
+            <EvidenceSurface className="card-appearance-panel" data-brick-appearance="dark">
               <span>Dark scope</span>
               <RecipeCard />
-            </div>
-          </div>
+            </EvidenceSurface>
+          </Grid.Root>
         </EvidenceGroup>
 
         <EvidenceGroup
@@ -392,7 +394,7 @@ export function CardPage() {
           title="Consumer customization"
         >
           <div className="card-customization-list">
-            <article className="card-customization">
+            <EvidenceSurface as="article" className="card-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
@@ -431,9 +433,9 @@ export function CardPage() {
                   <Card.Content>Customized surface content.</Card.Content>
                 </Card.Root>
               </div>
-            </article>
+            </EvidenceSurface>
 
-            <article className="card-customization">
+            <EvidenceSurface as="article" className="card-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Consumer hooks</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
@@ -473,7 +475,7 @@ export function CardPage() {
                   <Card.Content>Customized surface content.</Card.Content>
                 </Card.Root>
               </div>
-            </article>
+            </EvidenceSurface>
           </div>
         </EvidenceGroup>
       </Scenario>
@@ -484,7 +486,7 @@ export function CardPage() {
             description="Long translated content and an unbroken reference wrap inside a 20rem application frame while the Footer remains reachable."
             title="Constrained-width stress"
           >
-            <div className="card-stress-panel">
+            <EvidenceSurface className="card-stress-panel">
               <div className="card-phone-frame">
                 <Card.Root data-testid="card-stress-constrained">
                   <Card.Header>
@@ -512,14 +514,14 @@ export function CardPage() {
                   </Card.Footer>
                 </Card.Root>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
 
           <EvidenceGroup
             description="Card inherits genuine right-to-left direction, mirrors logical spacing and Action placement, and preserves meaningful source order."
             title="RTL inheritance"
           >
-            <div className="card-stress-panel">
+            <EvidenceSurface className="card-stress-panel">
               <div className="card-phone-frame" dir="rtl">
                 <Card.Root data-testid="card-stress-rtl">
                   <Card.Header>
@@ -541,7 +543,7 @@ export function CardPage() {
                   </Card.Footer>
                 </Card.Root>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

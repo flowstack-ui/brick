@@ -20,7 +20,13 @@ import { Checkbox } from "@flowstack-ui/brick/checkbox";
 import { CheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 import { Input } from "@flowstack-ui/brick/input";
 import { Text } from "@flowstack-ui/brick/text";
+import { Link } from "@flowstack-ui/brick/link";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
+import { Grid } from "@flowstack-ui/brick/grid";
+import { Container } from "@flowstack-ui/brick/container";
+import { Surface } from "@flowstack-ui/brick/surface";
+import { Divider } from "@flowstack-ui/brick/divider";
+import { ScrollArea } from "@flowstack-ui/brick/scroll-area";
 
 type Appearance = "light" | "dark";
 
@@ -89,16 +95,16 @@ export function App() {
       <AppBar.Root aria-label="Primary" blurred className="site-header" position="sticky">
         <AppBar.Toolbar className="site-header-toolbar" density="compact">
           <AppBar.Start>
-            <a className="brand" href="#top" aria-label="Brick Consumer home">
+            <Link className="brand" href="#top" aria-label="Brick Consumer home" tone="inherit" variant="plain">
               <span className="brand-mark" aria-hidden="true">B</span>
               <span>Brick Consumer</span>
-            </a>
+            </Link>
           </AppBar.Start>
 
           <AppBar.Center>
             <nav className="site-nav" aria-label="Page sections">
-              <a href="#workspace">Workspace</a>
-              <a href="#invite">Invite</a>
+              <Link href="#workspace" tone="inherit" variant="plain">Workspace</Link>
+              <Link href="#invite" tone="inherit" variant="plain">Invite</Link>
             </nav>
           </AppBar.Center>
 
@@ -126,7 +132,7 @@ export function App() {
         </AppBar.Toolbar>
       </AppBar.Root>
 
-      <div className="site-shell">
+      <Container className="site-shell" measure="wide">
         <main>
         <VStack as="section" className="hero" aria-labelledby="hero-title" gap="4">
           <Text as="p" className="eyebrow" tone="accent" variant="caption" weight="semibold">
@@ -176,9 +182,9 @@ export function App() {
                 </Dialog.Content>
               </Dialog.Portal>
             </Dialog.Root>
-            <Button href="#workspace" tone="neutral" variant="outline">
+            <Link endIcon={<ArrowIcon />} href="#workspace" size="md">
               View workspace
-            </Button>
+            </Link>
           </HStack>
           <Text as="p" className="activity" aria-live="polite" tone="muted" variant="body-sm">
             {publishCount === 0
@@ -187,7 +193,35 @@ export function App() {
           </Text>
         </VStack>
 
-        <section className="workspace" id="workspace" aria-labelledby="workspace-title">
+        <Surface as="section" bordered inset="lg" aria-labelledby="activity-title">
+          <VStack gap="4">
+            <VStack gap="1">
+              <Text as="h2" id="activity-title" variant="title-lg">Recent activity</Text>
+              <Text tone="secondary">Latest changes across the workspace.</Text>
+            </VStack>
+            <ScrollArea.Root className="recent-activity-scroll" scrollbarGutter="stable" scrollbarVisibility="interaction">
+              <ScrollArea.Viewport aria-label="Recent workspace activity" focusable>
+                <VStack as="ol" className="recent-activity-list" gap="2">
+                  {Array.from({ length: 12 }, (_, index) => (
+                    <Surface as="li" inset="sm" key={index} level="subtle">
+                      <Text>Project update {index + 1} is ready for review.</Text>
+                    </Surface>
+                  ))}
+                </VStack>
+              </ScrollArea.Viewport>
+            </ScrollArea.Root>
+          </VStack>
+        </Surface>
+
+        <Surface
+          as="section"
+          bordered
+          className="workspace"
+          id="workspace"
+          inset="lg"
+          level="subtle"
+          aria-labelledby="workspace-title"
+        >
           <div className="section-heading">
             <div>
               <p className="eyebrow">Today</p>
@@ -298,10 +332,18 @@ export function App() {
             </div>
           </div>
 
+          <Divider decorative={false} aria-label="Workspace projects" />
           <p className="activity filter-status" aria-live="polite">{filterStatus}</p>
 
-          <div className="workspace-grid" data-compact={compactWorkspace ? "true" : undefined} data-view={workspaceView}>
-            <Card.Root
+          <Grid.Root
+            className="workspace-grid"
+            columns={3}
+            data-compact={compactWorkspace ? "true" : undefined}
+            data-view={workspaceView}
+            gap="4"
+          >
+            <Grid.Item className="workspace-featured" columnSpan={2}>
+              <Card.Root
               aria-labelledby="project-title"
               as="article"
               className="project-panel"
@@ -328,7 +370,7 @@ export function App() {
                     <span>
                       <HoverCard.Root>
                         <HoverCard.Trigger asChild>
-                          <a className="collaborator-link" href="#ada-profile">Ada Lovelace</a>
+                          <Link className="collaborator-link" href="#ada-profile">Ada Lovelace</Link>
                         </HoverCard.Trigger>
                         <HoverCard.Portal>
                           <HoverCard.Content className="collaborator-preview" size="md">
@@ -407,7 +449,8 @@ export function App() {
                   </AlertDialog.Portal>
                 </AlertDialog.Root>
               </Card.Footer>
-            </Card.Root>
+              </Card.Root>
+            </Grid.Item>
 
             <Card.Root
               aria-labelledby="checklist-title"
@@ -430,8 +473,8 @@ export function App() {
                 <Button fullWidth tone="success" variant="soft">Review checklist</Button>
               </Card.Footer>
             </Card.Root>
-          </div>
-        </section>
+          </Grid.Root>
+        </Surface>
 
         <Card.Root
           aria-labelledby="invite-title"
@@ -547,7 +590,7 @@ export function App() {
             Back to top
           </Button>
         </footer>
-      </div>
+      </Container>
     </div>
     </Tooltip.Provider>
   );

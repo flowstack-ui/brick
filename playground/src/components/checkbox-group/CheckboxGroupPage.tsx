@@ -1,5 +1,6 @@
 import { useState, type CSSProperties } from "react";
 import {
+  Grid,
   HStack,
   VStack,
   Button,
@@ -15,6 +16,7 @@ import {
   FormEvidenceGroup as EvidenceGroup,
   FormRenderedOutput as RenderedOutput,
 } from "../../shared/FormEvidence.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "../../shared/forms-evidence.playground.css";
 
 const values = ["email", "push"];
@@ -55,15 +57,15 @@ export function CheckboxGroupPage() {
   return (
     <VStack className="forms-page" data-component-page="checkbox-group" data-testid="checkbox-group-workbench">
       <Scenario {...checkboxGroupScenarios[0]}>
-        <div className="forms-overview" data-testid="checkbox-group-overview">
+        <EvidenceSurface className="forms-overview" data-testid="checkbox-group-overview" inset="lg">
           <CheckboxGroup.Root aria-label="Delivery methods" name="delivery-methods">
             <DefaultItems />
           </CheckboxGroup.Root>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...checkboxGroupScenarios[1]}>
-        <div className="forms-grid forms-grid--two" data-testid="checkbox-group-ownership">
+        <Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="checkbox-group-ownership">
           <Cell label="uncontrolled">
             <CheckboxGroup.Root aria-label="Uncontrolled delivery methods" defaultValue={["email"]}>
               <DefaultItems />
@@ -74,11 +76,11 @@ export function CheckboxGroupPage() {
               <DefaultItems />
             </CheckboxGroup.Root>
           </Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...checkboxGroupScenarios[2]}>
-        <div className="forms-grid forms-grid--three" data-testid="checkbox-group-parent">
+        <Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="checkbox-group-parent">
           <Cell label="unchecked">
             <CheckboxGroup.Root allValues={values} aria-label="Unchecked aggregate">
               <CheckboxGroup.Parent>All delivery methods</CheckboxGroup.Parent>
@@ -97,11 +99,11 @@ export function CheckboxGroupPage() {
               <DefaultItems />
             </CheckboxGroup.Root>
           </Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...checkboxGroupScenarios[3]}>
-        <div className="forms-grid forms-grid--three" data-testid="checkbox-group-sizes">
+        <Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="checkbox-group-sizes">
           {sizes.map((size) => (
             <Cell key={size} label={size}>
               <CheckboxGroup.Root aria-label={`${size} delivery methods`} defaultValue={["email"]} size={size}>
@@ -109,11 +111,11 @@ export function CheckboxGroupPage() {
               </CheckboxGroup.Root>
             </Cell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...checkboxGroupScenarios[4]}>
-        <div className="forms-grid forms-grid--two" data-testid="checkbox-group-orientation">
+        <Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="checkbox-group-orientation">
           <Cell label="vertical">
             <CheckboxGroup.Root aria-label="Vertical delivery methods" defaultValue={["email"]}>
               <DefaultItems />
@@ -124,13 +126,13 @@ export function CheckboxGroupPage() {
               <DefaultItems />
             </CheckboxGroup.Root>
           </Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...checkboxGroupScenarios[5]}>
         <VStack className="forms-evidence-stack" data-testid="checkbox-group-content">
           <EvidenceGroup description="Label and description parts preserve one interactive item and automatically contribute its accessible name and description." title="Structured item content">
-            <div className="forms-overview">
+            <EvidenceSurface className="forms-overview" inset="lg">
               <CheckboxGroup.Root aria-label="Detailed delivery methods">
                 <CheckboxGroup.Item value="email">
                   <CheckboxGroup.ItemLabel>Email report</CheckboxGroup.ItemLabel>
@@ -138,14 +140,14 @@ export function CheckboxGroupPage() {
                 </CheckboxGroup.Item>
                 <CheckboxGroup.Item value="push">Push notification</CheckboxGroup.Item>
               </CheckboxGroup.Root>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="Only the named availability or validity scope changes. Every group remains an unchecked, medium, vertical collection with identical content." title="Group and item states">
-            <div className="forms-grid forms-grid--three forms-grid--preview-start" data-testid="checkbox-group-states">
+            <Grid.Root columns={3} className="forms-grid forms-grid--three forms-grid--preview-start" data-testid="checkbox-group-states">
               <Cell label="disabled group"><CheckboxGroup.Root aria-label="Disabled delivery methods" disabled><DefaultItems /></CheckboxGroup.Root></Cell>
               <Cell label="invalid group"><CheckboxGroup.Root aria-label="Invalid delivery methods" invalid><DefaultItems /></CheckboxGroup.Root></Cell>
               <Cell label="invalid item"><CheckboxGroup.Root aria-label="Individual delivery validation"><CheckboxGroup.Item invalid value="email">Email reports</CheckboxGroup.Item><CheckboxGroup.Item value="push">Push notifications</CheckboxGroup.Item></CheckboxGroup.Root></Cell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -153,7 +155,7 @@ export function CheckboxGroupPage() {
       <Scenario {...checkboxGroupScenarios[6]}>
         <VStack className="forms-evidence-stack" data-testid="checkbox-group-form">
           <EvidenceGroup description="One shared legend names the repeated native values. Submit, validation correction, and reset remain native form behavior." title="Fieldset composition">
-            <div className="forms-overview">
+            <EvidenceSurface className="forms-overview" inset="lg">
               <Form aria-label="Publishing preferences" id="checkbox-group-form-example" onReset={() => setStatus("Form reset")} onSubmit={(event) => { const data = new FormData(event.currentTarget); setStatus(`Submitted: ${data.getAll("delivery").join(", ") || "none"}`); }} preventDefaultOnSubmit>
                 <Fieldset.Root id="delivery-methods-fieldset" required>
                   <Fieldset.Legend>Delivery methods</Fieldset.Legend>
@@ -167,14 +169,14 @@ export function CheckboxGroupPage() {
                 <HStack className="forms-actions"><Button type="submit">Save preferences</Button><Button tone="neutral" type="reset">Reset</Button></HStack>
                 <output className="forms-status">{status}</output>
               </Form>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="The group may remain elsewhere in the document while its repeated native values belong to the named form." title="External form ownership">
-            <div className="forms-overview">
+            <EvidenceSurface className="forms-overview" inset="lg">
               <CheckboxGroup.Root aria-label="Externally owned delivery methods" form="checkbox-group-form-example" name="external-delivery">
                 <DefaultItems />
               </CheckboxGroup.Root>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -215,10 +217,10 @@ export function CheckboxGroupPage() {
       <Scenario {...checkboxGroupScenarios[8]}>
         <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same default unchecked vertical group composes inside adjacent local appearance scopes." title="Scoped appearances">
-            <div className="forms-scoped-grid" data-testid="checkbox-group-appearance"><div data-brick-appearance="light"><code>light</code><CheckboxGroup.Root aria-label="Light delivery methods"><DefaultItems /></CheckboxGroup.Root></div><div data-brick-appearance="dark"><code>dark</code><CheckboxGroup.Root aria-label="Dark delivery methods"><DefaultItems /></CheckboxGroup.Root></div></div>
+            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="checkbox-group-appearance"><EvidenceSurface data-brick-appearance="light"><code>light</code><CheckboxGroup.Root aria-label="Light delivery methods"><DefaultItems /></CheckboxGroup.Root></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><code>dark</code><CheckboxGroup.Root aria-label="Dark delivery methods"><DefaultItems /></CheckboxGroup.Root></EvidenceSurface></Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <article className="forms-customization"><div><Text as="h4" variant="title-sm">Group and item properties</Text><Text as="p" tone="secondary" variant="body-sm">Public group gap and inherited Checkbox tokens visibly change this group.</Text><pre aria-label="CheckboxGroup customization example" tabIndex={0}><code>{`<CheckboxGroup.Root
+            <EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Group and item properties</Text><Text as="p" tone="secondary" variant="body-sm">Public group gap and inherited Checkbox tokens visibly change this group.</Text><pre aria-label="CheckboxGroup customization example" tabIndex={0}><code>{`<CheckboxGroup.Root
   defaultValue={["email"]}
   style={{
     "--brick-checkbox-group-gap": "1.25rem",
@@ -226,7 +228,7 @@ export function CheckboxGroupPage() {
     "--brick-checkbox-gap": "1rem",
     "--brick-checkbox-radius": "0.5rem",
   }}
->`}</code></pre></div><div className="forms-customization__preview"><CheckboxGroup.Root aria-label="Customized delivery methods" defaultValue={["email"]} style={customGroupTokens}><DefaultItems /></CheckboxGroup.Root></div></article>
+>`}</code></pre></div><EvidenceSurface className="forms-customization__preview"><CheckboxGroup.Root aria-label="Customized delivery methods" defaultValue={["email"]} style={customGroupTokens}><DefaultItems /></CheckboxGroup.Root></EvidenceSurface></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -234,10 +236,10 @@ export function CheckboxGroupPage() {
       <Scenario {...checkboxGroupScenarios[9]}>
         <VStack className="forms-evidence-stack" data-testid="checkbox-group-stress">
           <EvidenceGroup description="Long structured content and an unbroken segment wrap inside a 20rem application-owned frame." title="Constrained-width stress">
-            <div className="forms-stress-panel"><div className="forms-phone-frame"><CheckboxGroup.Root allValues={["long"]} aria-label="Localized publishing choices"><CheckboxGroup.Parent>Select every translated preference</CheckboxGroup.Parent><CheckboxGroup.Item value="long"><CheckboxGroup.ItemLabel>Extremely detailed localized publishing and emergency-notification preference</CheckboxGroup.ItemLabel><CheckboxGroup.ItemDescription>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains contained.</CheckboxGroup.ItemDescription></CheckboxGroup.Item></CheckboxGroup.Root></div></div>
+            <EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame"><CheckboxGroup.Root allValues={["long"]} aria-label="Localized publishing choices"><CheckboxGroup.Parent>Select every translated preference</CheckboxGroup.Parent><CheckboxGroup.Item value="long"><CheckboxGroup.ItemLabel>Extremely detailed localized publishing and emergency-notification preference</CheckboxGroup.ItemLabel><CheckboxGroup.ItemDescription>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains contained.</CheckboxGroup.ItemDescription></CheckboxGroup.Item></CheckboxGroup.Root></div></EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="Group, parent, items, descriptions, state, and logical invalid cue inherit genuine right-to-left direction." title="RTL inheritance">
-            <div className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><CheckboxGroup.Root allValues={values} aria-label="طرق الإشعار" defaultValue={["email"]} invalid><CheckboxGroup.Parent>اختيار جميع طرق الإشعار</CheckboxGroup.Parent><CheckboxGroup.Item value="email"><CheckboxGroup.ItemLabel>البريد الإلكتروني</CheckboxGroup.ItemLabel><CheckboxGroup.ItemDescription>تقارير النشر الأسبوعية وتحديثات الحساب.</CheckboxGroup.ItemDescription></CheckboxGroup.Item><CheckboxGroup.Item value="push">الهاتف</CheckboxGroup.Item></CheckboxGroup.Root></div></div>
+            <EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><CheckboxGroup.Root allValues={values} aria-label="طرق الإشعار" defaultValue={["email"]} invalid><CheckboxGroup.Parent>اختيار جميع طرق الإشعار</CheckboxGroup.Parent><CheckboxGroup.Item value="email"><CheckboxGroup.ItemLabel>البريد الإلكتروني</CheckboxGroup.ItemLabel><CheckboxGroup.ItemDescription>تقارير النشر الأسبوعية وتحديثات الحساب.</CheckboxGroup.ItemDescription></CheckboxGroup.Item><CheckboxGroup.Item value="push">الهاتف</CheckboxGroup.Item></CheckboxGroup.Root></div></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

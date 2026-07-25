@@ -1,5 +1,6 @@
 import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
+  Grid,
   VStack,
   Badge,
   Button,
@@ -12,6 +13,7 @@ import {
   type TextWrap,
 } from "@flowstack-ui/brick";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./text.playground.css";
@@ -75,10 +77,10 @@ function EvidenceGroup({
 
 function Cell({ children, label }: { children: ReactNode; label: string }) {
   return (
-    <div className="text-cell">
+    <EvidenceSurface className="text-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="text-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -157,29 +159,29 @@ export function TextPage() {
   return (
     <VStack className="text-page" data-component-page="text" data-testid="text-workbench">
       <Scenario {...textScenarios[0]}>
-        <div className="text-overview" data-testid="text-overview">
+        <EvidenceSurface className="text-overview" data-testid="text-overview" inset="lg">
           <Text>{comparisonCopy}</Text>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...textScenarios[1]}>
-        <div className="text-grid text-grid--four" data-testid="text-variants">
+        <Grid.Root columns={4} className="text-grid text-grid--four" data-testid="text-variants">
           {variants.map((variant) => (
             <Cell key={variant} label={variant}>
               <Text variant={variant}>{comparisonCopy}</Text>
             </Cell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...textScenarios[2]}>
-        <div className="text-grid text-grid--three" data-testid="text-tones">
+        <Grid.Root columns={3} className="text-grid text-grid--three" data-testid="text-tones">
           {tones.map((tone) => (
             <Cell key={tone} label={tone}>
               <Text tone={tone}>{comparisonCopy}</Text>
             </Cell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...textScenarios[3]}>
@@ -188,38 +190,38 @@ export function TextPage() {
             description="Only font weight changes across these otherwise identical default specimens."
             title="Weight overrides"
           >
-            <div className="text-grid text-grid--four" data-testid="text-weights">
+            <Grid.Root columns={4} className="text-grid text-grid--four" data-testid="text-weights">
               {weights.map((weight) => (
                 <Cell key={weight} label={weight}>
                   <Text weight={weight}>{comparisonCopy}</Text>
                 </Cell>
               ))}
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="Start and end are logical values and reverse with inherited direction; center remains centered."
             title="Logical alignment"
           >
-            <div className="text-grid text-grid--three" data-testid="text-alignments">
+            <Grid.Root columns={3} className="text-grid text-grid--three" data-testid="text-alignments">
               {aligns.map((align) => (
                 <Cell key={align} label={align}>
                   <Text align={align}>{comparisonCopy}</Text>
                 </Cell>
               ))}
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
 
       <Scenario {...textScenarios[4]}>
         <VStack className="text-evidence-stack" data-testid="text-semantics">
-          <div className="text-grid text-grid--four">
+          <Grid.Root columns={4} className="text-grid text-grid--four">
             {semanticHosts.map((as) => (
               <Cell key={as} label={as}>
                 <Text as={as}>{comparisonCopy}</Text>
               </Cell>
             ))}
-          </div>
+          </Grid.Root>
           <EvidenceGroup
             description="The live heading uses body-md, proving that semantic level and visual recipe are independent."
             title="Rendered semantic output"
@@ -239,7 +241,7 @@ export function TextPage() {
             description="At the same fixed measure, wrap leaves a one-word final line, balance redistributes every line, and pretty protects the final phrase. Pretty remains a progressive enhancement."
             title="Wrapping choices"
           >
-            <div className="text-grid text-grid--four" data-testid="text-wraps">
+            <Grid.Root columns={4} className="text-grid text-grid--four" data-testid="text-wraps">
               {wraps.map((wrap) => (
                 <Cell key={wrap} label={wrap}>
                   <div className="text-constrained text-constrained--wrapping">
@@ -249,13 +251,13 @@ export function TextPage() {
                   </div>
                 </Cell>
               ))}
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="The complete text is identical; only the explicit overflow treatment changes."
             title="Content clipping"
           >
-            <div className="text-grid text-grid--three">
+            <Grid.Root columns={3} className="text-grid text-grid--three">
               <Cell label="natural">
                 <div className="text-constrained"><Text>{wrapCopy}</Text></div>
               </Cell>
@@ -267,7 +269,7 @@ export function TextPage() {
                   <Text lineClamp={3}>{wrapCopy}</Text>
                 </div>
               </Cell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -295,7 +297,7 @@ export function TextPage() {
             description="The forwarded ref targets the selected native host."
             title="Ref target"
           >
-            <div className="text-overview">
+            <EvidenceSurface className="text-overview" inset="lg">
               <div className="text-ref-example">
                 <Text as="p" ref={nativeRef}>Inspectable paragraph</Text>
                 <Button
@@ -306,7 +308,7 @@ export function TextPage() {
                 </Button>
                 <output>Ref host: {refHost}</output>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -317,22 +319,22 @@ export function TextPage() {
             description="Both scopes use the exact canonical Text defaults."
             title="Scoped appearances"
           >
-            <div className="text-scoped-grid" data-testid="text-appearance">
-              <div data-brick-appearance="light">
+            <Grid.Root columns={2} className="text-scoped-grid" data-testid="text-appearance">
+              <EvidenceSurface data-brick-appearance="light">
                 <Badge>light</Badge>
                 <Text>{comparisonCopy}</Text>
-              </div>
-              <div data-brick-appearance="dark">
+              </EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark">
                 <Badge>dark</Badge>
                 <Text>{comparisonCopy}</Text>
-              </div>
-            </div>
+              </EvidenceSurface>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="The shown public variables exactly match the customized live result."
             title="Consumer customization"
           >
-            <article className="text-customization">
+            <EvidenceSurface as="article" className="text-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Local Text variables</Text>
                 <Text as="p" tone="secondary" variant="body-sm">Size, weight, tracking, and foreground change on this instance only.</Text>
@@ -349,10 +351,10 @@ export function TextPage() {
 </Text>`}</code>
                 </pre>
               </div>
-              <div className="text-customization__preview">
+              <EvidenceSurface className="text-customization__preview">
                 <Text style={customTextStyle}>Customized project summary</Text>
-              </div>
-            </article>
+              </EvidenceSurface>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -363,7 +365,7 @@ export function TextPage() {
             description="Localized and unbroken copy wraps inside a 20rem application-owned frame without widening the page."
             title="Constrained localization"
           >
-            <div className="text-stress-panel">
+            <EvidenceSurface className="text-stress-panel">
               <div className="text-phone-frame">
                 <Text as="h2" variant="title-sm">International project summary</Text>
                 <Text as="p">
@@ -372,18 +374,18 @@ export function TextPage() {
                 </Text>
                 <Text as="p" lang="ja">信頼できるインターフェースは、利用可能な幅が変化しても読みやすさを保ちます。</Text>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup
             description="Genuine RTL content keeps the same recipes while start and end follow the inherited writing direction."
             title="RTL inheritance"
           >
-            <div className="text-stress-panel">
+            <EvidenceSurface className="text-stress-panel">
               <div className="text-phone-frame" dir="rtl">
                 <Text align="start" as="h2" variant="title-sm">ملخص المشروع</Text>
                 <Text align="end" as="p">واجهة موثوقة تحافظ على وضوح المحتوى في المساحات الضيقة.</Text>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

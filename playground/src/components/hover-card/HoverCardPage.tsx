@@ -1,16 +1,19 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  Grid,
   HStack,
   VStack,
   Avatar,
   Badge,
   HoverCard,
+  Link,
   Text,
   type HoverCardSize,
 } from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./hover-card.playground.css";
 
 const sizes: HoverCardSize[] = ["sm", "md", "lg"];
@@ -27,7 +30,7 @@ function EvidenceGroup({ children, description, title }: { children: ReactNode; 
 }
 
 function Cell({ children, label }: { children: ReactNode; label: string }) {
-  return <div className="hover-card-specimen-cell"><SpecimenLabel>{label}</SpecimenLabel><div className="hover-card-specimen-cell__preview">{children}</div></div>;
+  return <EvidenceSurface className="hover-card-specimen-cell" level="canvas"><SpecimenLabel>{label}</SpecimenLabel><div className="hover-card-specimen-cell__preview">{children}</div></EvidenceSurface>;
 }
 
 function Profile({ person = "Ada Lovelace" }: { person?: string }) {
@@ -45,12 +48,12 @@ function Preview({ align = "center", arrow = true, children = <Profile />, disab
   size?: HoverCardSize;
 }) {
   const resource = label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  return <HoverCard.Root closeDelay={0} disabled={disabled} openDelay={0}><HoverCard.Trigger asChild><a href={`/hover-card/destination?resource=${resource}`}>{label}</a></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content align={align} data-testid={`hover-card-content-${resource}`} side={side} size={size}>{children}{arrow ? <HoverCard.Arrow /> : null}</HoverCard.Content></HoverCard.Portal></HoverCard.Root>;
+  return <HoverCard.Root closeDelay={0} disabled={disabled} openDelay={0}><HoverCard.Trigger asChild><Link href={`/hover-card/destination?resource=${resource}`}>{label}</Link></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content align={align} data-testid={`hover-card-content-${resource}`} side={side} size={size}>{children}{arrow ? <HoverCard.Arrow /> : null}</HoverCard.Content></HoverCard.Portal></HoverCard.Root>;
 }
 
 function ScopedPreview({ appearance }: { appearance: "light" | "dark" }) {
-  const [container, setContainer] = useState<HTMLDivElement | null>(null);
-  return <div className="hover-card-appearance-panel" data-brick-appearance={appearance} ref={setContainer}><code>{appearance}</code>{container ? <HoverCard.Root openDelay={0}><HoverCard.Trigger asChild><a href={`/hover-card/destination?resource=${appearance}-profile`}>{appearance} profile</a></HoverCard.Trigger><HoverCard.Portal container={container}><HoverCard.Content><Profile /><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root> : null}</div>;
+  const [container, setContainer] = useState<HTMLElement | null>(null);
+  return <EvidenceSurface className="hover-card-appearance-panel" data-brick-appearance={appearance} level="canvas" ref={setContainer}><code>{appearance}</code>{container ? <HoverCard.Root openDelay={0}><HoverCard.Trigger asChild><Link href={`/hover-card/destination?resource=${appearance}-profile`}>{appearance} profile</Link></HoverCard.Trigger><HoverCard.Portal container={container}><HoverCard.Content><Profile /><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root> : null}</EvidenceSurface>;
 }
 
 export const hoverCardScenarios = [
@@ -67,28 +70,28 @@ export const hoverCardScenarios = [
 export function HoverCardPage() {
   const [controlledOpen, setControlledOpen] = useState(false);
   return <VStack className="hover-card-page" data-component-page="hover-card" data-testid="hover-card-workbench">
-    <Scenario {...hoverCardScenarios[0]}><div className="hover-card-overview" data-testid="hover-card-overview"><Preview label="Ada Lovelace" /><Text as="p" tone="secondary">Ada’s complete profile remains available at the destination.</Text></div></Scenario>
+    <Scenario {...hoverCardScenarios[0]}><EvidenceSurface className="hover-card-overview" data-testid="hover-card-overview" inset="lg" level="canvas"><Preview label="Ada Lovelace" /><Text as="p" tone="secondary">Ada’s complete profile remains available at the destination.</Text></EvidenceSurface></Scenario>
 
-    <Scenario {...hoverCardScenarios[1]}><div className="hover-card-specimen-grid hover-card-specimen-grid--three" data-testid="hover-card-sizes">{sizes.map((size) => <Cell key={size} label={size}><Preview label={`${size} preview`} size={size}><div className="hover-card-document"><Badge>{size}</Badge><Text weight="semibold">Analytical Engine notes</Text><Text as="p" tone="secondary" variant="body-sm">A concise document preview with a stable destination.</Text></div></Preview></Cell>)}</div></Scenario>
+    <Scenario {...hoverCardScenarios[1]}><Grid.Root columns={3} className="hover-card-specimen-grid hover-card-specimen-grid--three" data-testid="hover-card-sizes">{sizes.map((size) => <Cell key={size} label={size}><Preview label={`${size} preview`} size={size}><div className="hover-card-document"><Badge>{size}</Badge><Text weight="semibold">Analytical Engine notes</Text><Text as="p" tone="secondary" variant="body-sm">A concise document preview with a stable destination.</Text></div></Preview></Cell>)}</Grid.Root></Scenario>
 
-    <Scenario {...hoverCardScenarios[2]}><div className="hover-card-specimen-grid hover-card-specimen-grid--four" data-testid="hover-card-placement">{sides.map((side) => <Cell key={side} label={side}><Preview arrow={side !== "left"} label={side === "top" ? "Top" : side === "right" ? "Right" : side === "bottom" ? "Bottom" : "Left, no arrow"} side={side} /></Cell>)}</div></Scenario>
+    <Scenario {...hoverCardScenarios[2]}><Grid.Root columns={4} className="hover-card-specimen-grid hover-card-specimen-grid--four" data-testid="hover-card-placement">{sides.map((side) => <Cell key={side} label={side}><Preview arrow={side !== "left"} label={side === "top" ? "Top" : side === "right" ? "Right" : side === "bottom" ? "Bottom" : "Left, no arrow"} side={side} /></Cell>)}</Grid.Root></Scenario>
 
-    <Scenario {...hoverCardScenarios[3]}><div className="hover-card-specimen-grid hover-card-specimen-grid--three" data-testid="hover-card-alignments">{aligns.map((align) => <Cell key={align} label={align}><Preview align={align} label={`${align} preview`} /></Cell>)}</div></Scenario>
+    <Scenario {...hoverCardScenarios[3]}><Grid.Root columns={3} className="hover-card-specimen-grid hover-card-specimen-grid--three" data-testid="hover-card-alignments">{aligns.map((align) => <Cell key={align} label={align}><Preview align={align} label={`${align} preview`} /></Cell>)}</Grid.Root></Scenario>
 
-    <Scenario {...hoverCardScenarios[4]}><div className="hover-card-specimen-grid hover-card-specimen-grid--three" data-testid="hover-card-state">
-      <Cell label="controlled"><HoverCard.Root onOpenChange={setControlledOpen} open={controlledOpen} openDelay={0}><HoverCard.Trigger asChild><a href="/hover-card/destination?resource=controlled-preview">Controlled preview</a></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content><Text weight="semibold">Controlled resource</Text><Text as="p" tone="secondary" variant="body-sm">State is owned by the application.</Text><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></Cell>
-      <Cell label="default timing"><HoverCard.Root><HoverCard.Trigger asChild><a href="/hover-card/destination?resource=default-delay">Default delay preview</a></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content><Text weight="semibold">Default timing</Text><Text as="p" tone="secondary" variant="body-sm">700 ms open and 300 ms close.</Text><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></Cell>
+    <Scenario {...hoverCardScenarios[4]}><Grid.Root columns={3} className="hover-card-specimen-grid hover-card-specimen-grid--three" data-testid="hover-card-state">
+      <Cell label="controlled"><HoverCard.Root onOpenChange={setControlledOpen} open={controlledOpen} openDelay={0}><HoverCard.Trigger asChild><Link href="/hover-card/destination?resource=controlled-preview">Controlled preview</Link></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content><Text weight="semibold">Controlled resource</Text><Text as="p" tone="secondary" variant="body-sm">State is owned by the application.</Text><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></Cell>
+      <Cell label="default timing"><HoverCard.Root><HoverCard.Trigger asChild><Link href="/hover-card/destination?resource=default-delay">Default delay preview</Link></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content><Text weight="semibold">Default timing</Text><Text as="p" tone="secondary" variant="body-sm">700 ms open and 300 ms close.</Text><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></Cell>
       <Cell label="disabled"><Preview disabled label="Disabled preview"><Text as="p" tone="secondary" variant="body-sm">This preview must not open.</Text></Preview></Cell>
-    </div></Scenario>
+    </Grid.Root></Scenario>
 
     <Scenario {...hoverCardScenarios[5]}><VStack className="hover-card-evidence-stack" data-testid="hover-card-composition">
-      <EvidenceGroup description="Both previews remain passive summaries whose full content exists at their genuine destinations." title="Preview content"><div className="hover-card-specimen-grid hover-card-specimen-grid--two"><Cell label="profile"><Preview label="Grace Hopper"><Profile person="Grace Hopper" /></Preview></Cell><Cell label="document"><Preview label="Compiler project notes" size="lg"><div className="hover-card-document"><Badge>Document</Badge><Text weight="semibold">Compiler project notes</Text><Text as="p" tone="secondary" variant="body-sm">Updated July 18 · 12 minute read · Engineering workspace.</Text></div></Preview></Cell></div></EvidenceGroup>
-      <EvidenceGroup description="Trigger composition changes only the authored link mechanism; each live result is paired with its actual link output." title="Trigger composition"><div className="playground-output-stack"><RenderedOutput label="asChild Hover Card Trigger HTML"><Preview label="As-child resource" /></RenderedOutput><RenderedOutput label="render Hover Card Trigger HTML"><HoverCard.Root openDelay={0}><HoverCard.Trigger data-testid="hover-card-render" render={<a href="/hover-card/destination?resource=render-resource" />}>Render resource</HoverCard.Trigger><HoverCard.Portal><HoverCard.Content><Profile /><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></RenderedOutput></div></EvidenceGroup>
+      <EvidenceGroup description="Both previews remain passive summaries whose full content exists at their genuine destinations." title="Preview content"><Grid.Root columns={2} className="hover-card-specimen-grid hover-card-specimen-grid--two"><Cell label="profile"><Preview label="Grace Hopper"><Profile person="Grace Hopper" /></Preview></Cell><Cell label="document"><Preview label="Compiler project notes" size="lg"><div className="hover-card-document"><Badge>Document</Badge><Text weight="semibold">Compiler project notes</Text><Text as="p" tone="secondary" variant="body-sm">Updated July 18 · 12 minute read · Engineering workspace.</Text></div></Preview></Cell></Grid.Root></EvidenceGroup>
+      <EvidenceGroup description="Trigger composition changes only the authored link mechanism; each live result is paired with its actual link output." title="Trigger composition"><Grid.Root className="playground-output-stack"><RenderedOutput label="asChild Hover Card Trigger HTML"><Preview label="As-child resource" /></RenderedOutput><RenderedOutput label="render Hover Card Trigger HTML"><HoverCard.Root openDelay={0}><HoverCard.Trigger data-testid="hover-card-render" render={<a href="/hover-card/destination?resource=render-resource" />}>Render resource</HoverCard.Trigger><HoverCard.Portal><HoverCard.Content><Profile /><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></RenderedOutput></Grid.Root></EvidenceGroup>
     </VStack></Scenario>
 
     <Scenario {...hoverCardScenarios[6]}><VStack className="hover-card-evidence-stack">
-      <EvidenceGroup description="Focus or hover each genuine link to inspect its same-document portal inside the local light or dark token scope." title="Scoped appearances"><div className="hover-card-scoped-grid" data-testid="hover-card-appearance"><ScopedPreview appearance="light" /><ScopedPreview appearance="dark" /></div></EvidenceGroup>
-      <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization"><article className="hover-card-customization"><div><Text as="h4" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Focus or hover the genuine link to inspect the customized Content class, slot, native style, and public surface tokens.</Text><pre aria-label="HoverCard customization example" tabIndex={0}><code>{`<HoverCard.Content
+      <EvidenceGroup description="Focus or hover each genuine link to inspect its same-document portal inside the local light or dark token scope." title="Scoped appearances"><Grid.Root columns={2} className="hover-card-scoped-grid" data-testid="hover-card-appearance"><ScopedPreview appearance="light" /><ScopedPreview appearance="dark" /></Grid.Root></EvidenceGroup>
+      <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization"><EvidenceSurface as="article" className="hover-card-customization" inset="lg"><div><Text as="h4" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Focus or hover the genuine link to inspect the customized Content class, slot, native style, and public surface tokens.</Text><pre aria-label="HoverCard customization example" tabIndex={0}><code>{`<HoverCard.Content
   className="custom-hover-card"
   data-slot="custom-hover-card"
   style={{
@@ -101,12 +104,12 @@ export function HoverCardPage() {
 >
   <Profile />
   <HoverCard.Arrow />
-</HoverCard.Content>`}</code></pre></div><div className="hover-card-customization__preview"><HoverCard.Root openDelay={0}><HoverCard.Trigger asChild><a href="/hover-card/destination?resource=custom-profile">Custom profile</a></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content className="custom-hover-card" data-slot="custom-hover-card" style={customTokens}><Profile /><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></div></article></EvidenceGroup>
+</HoverCard.Content>`}</code></pre></div><EvidenceSurface className="hover-card-customization__preview" level="canvas"><HoverCard.Root openDelay={0}><HoverCard.Trigger asChild><Link href="/hover-card/destination?resource=custom-profile">Custom profile</Link></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content className="custom-hover-card" data-slot="custom-hover-card" style={customTokens}><Profile /><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></EvidenceSurface></EvidenceSurface></EvidenceGroup>
     </VStack></Scenario>
 
     <Scenario {...hoverCardScenarios[7]}><VStack className="hover-card-evidence-stack" data-testid="hover-card-stress">
-      <EvidenceGroup description="Long localized content wraps within a 20rem frame and collision handling keeps the preview in the viewport." title="Constrained-width stress"><div className="hover-card-stress-panel"><div className="hover-card-phone-frame"><Preview align="start" label="Very long localized document preview" size="lg"><div className="hover-card-document"><Text weight="semibold">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break</Text><Text as="p" tone="secondary" variant="body-sm">A deliberately long localized description that remains within the dynamic viewport.</Text></div></Preview></div></div></EvidenceGroup>
-      <EvidenceGroup description="Logical alignment and authored content inherit genuine right-to-left direction." title="RTL inheritance"><div className="hover-card-stress-panel"><div className="hover-card-phone-frame" dir="rtl"><Preview align="end" label="ملف آدا لوفلايس"><HStack className="hover-card-profile"><Avatar alt="" fallback="آل" /><div><Text weight="semibold">آدا لوفلايس</Text><Text as="p" tone="secondary" variant="body-sm">عالمة رياضيات وكاتبة في الحوسبة المبكرة.</Text></div></HStack></Preview></div></div></EvidenceGroup>
+      <EvidenceGroup description="Long localized content wraps within a 20rem frame and collision handling keeps the preview in the viewport." title="Constrained-width stress"><EvidenceSurface className="hover-card-stress-panel" level="canvas"><div className="hover-card-phone-frame"><Preview align="start" label="Very long localized document preview" size="lg"><div className="hover-card-document"><Text weight="semibold">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break</Text><Text as="p" tone="secondary" variant="body-sm">A deliberately long localized description that remains within the dynamic viewport.</Text></div></Preview></div></EvidenceSurface></EvidenceGroup>
+      <EvidenceGroup description="Logical alignment and authored content inherit genuine right-to-left direction." title="RTL inheritance"><EvidenceSurface className="hover-card-stress-panel" level="canvas"><div className="hover-card-phone-frame" dir="rtl"><Preview align="end" label="ملف آدا لوفلايس"><HStack className="hover-card-profile"><Avatar alt="" fallback="آل" /><div><Text weight="semibold">آدا لوفلايس</Text><Text as="p" tone="secondary" variant="body-sm">عالمة رياضيات وكاتبة في الحوسبة المبكرة.</Text></div></HStack></Preview></div></EvidenceSurface></EvidenceGroup>
     </VStack></Scenario>
   </VStack>;
 }

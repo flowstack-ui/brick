@@ -2,9 +2,12 @@ import { useRef, useState, type ReactNode } from "react";
 import {
   AppBar,
   Button,
+  Container,
   Drawer,
   IconButton,
   HStack,
+  Link,
+  ScrollArea,
   Text,
   VStack,
 } from "@flowstack-ui/brick";
@@ -49,9 +52,9 @@ export function PlaygroundShell({
       >
         <AppBar.Toolbar density="compact">
           <AppBar.Start>
-            <a className="evidence-brand" href="/button">
+            <Link className="evidence-brand" href="/button" tone="inherit" variant="plain">
               Brick playground
-            </a>
+            </Link>
           </AppBar.Start>
           <AppBar.End>
             <IconButton
@@ -105,15 +108,31 @@ export function PlaygroundShell({
 
       <div className="evidence-layout">
         <aside className="evidence-sidebar">
-          <ComponentNavigation
-            currentRoute={entry.route}
-            entries={playgroundEntries}
-          />
+          <ScrollArea.Root
+            className="evidence-sidebar-scroll"
+            scrollbarVisibility="interaction"
+          >
+            <ScrollArea.Viewport>
+              <ComponentNavigation
+                currentRoute={entry.route}
+                entries={playgroundEntries}
+              />
+            </ScrollArea.Viewport>
+          </ScrollArea.Root>
         </aside>
 
-        <main className="evidence-main-column">
+        <Container
+          as="main"
+          className="evidence-main-column"
+          gutter="lg"
+          measure="max"
+        >
           <div className="evidence-review-header">
-            <div className="evidence-page-header">
+            <Container
+              className="evidence-page-header"
+              gutter="none"
+              measure="wide"
+            >
               <VStack className="evidence-page-heading" gap="2">
                 <Text className="playground-kicker" variant="caption">@flowstack-ui/brick</Text>
                 <Text as="h1" variant="display">{pageTitle}</Text>
@@ -125,40 +144,64 @@ export function PlaygroundShell({
                 onAppearanceChange={setAppearance}
                 onDirectionChange={setDirection}
               />
-            </div>
+            </Container>
 
-            <nav aria-label={`${pageTitle} scenarios`} className="scenario-nav">
-              <HStack as="ol" gap="1">
-                {scenarios.map((scenario) => (
-                  <li key={scenario.id}>
-                    <a href={`#${scenarioDomId(scenario.id)}`}>
-                      <span>{String(scenario.number).padStart(2, "0")}</span>
-                      {scenario.navigationTitle ?? scenario.title}
-                    </a>
-                  </li>
-                ))}
-              </HStack>
-            </nav>
+            <Container
+              aria-label={`${pageTitle} scenarios`}
+              as="nav"
+              className="scenario-nav"
+              gutter="none"
+              measure="wide"
+            >
+              <ScrollArea.Root
+                className="scenario-nav-scroll"
+                orientation="horizontal"
+                scrollbarVisibility="interaction"
+              >
+                <ScrollArea.Viewport>
+                  <HStack as="ol" gap="1">
+                    {scenarios.map((scenario) => (
+                      <li key={scenario.id}>
+                        <Link asChild tone="inherit" variant="plain">
+                          <a href={`#${scenarioDomId(scenario.id)}`}>
+                            <span>{String(scenario.number).padStart(2, "0")}</span>
+                            {scenario.navigationTitle ?? scenario.title}
+                          </a>
+                        </Link>
+                      </li>
+                    ))}
+                  </HStack>
+                </ScrollArea.Viewport>
+              </ScrollArea.Root>
+            </Container>
           </div>
 
-          <div data-playground-content="">{children}</div>
+          <Container
+            data-playground-content=""
+            gutter="none"
+            measure="wide"
+          >
+            {children}
+          </Container>
 
-          <HStack
+          <Container
             as="footer"
             className="evidence-footer"
-            gap="4"
-            justify="between"
+            gutter="none"
+            measure="wide"
           >
-            <Text as="p" tone="secondary" variant="body-sm">
-              This route is deterministic evidence. Component behavior belongs
-              to Brick and Atom; application workflow remains outside the
-              package.
-            </Text>
-            <Button href="#top" size="sm" tone="neutral" variant="ghost">
-              Back to top
-            </Button>
-          </HStack>
-        </main>
+            <HStack gap="4" justify="between">
+              <Text as="p" tone="secondary" variant="body-sm">
+                This route is deterministic evidence. Component behavior belongs
+                to Brick and Atom; application workflow remains outside the
+                package.
+              </Text>
+              <Button href="#top" size="sm" tone="neutral" variant="ghost">
+                Back to top
+              </Button>
+            </HStack>
+          </Container>
+        </Container>
       </div>
     </div>
   );

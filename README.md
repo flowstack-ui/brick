@@ -7,7 +7,8 @@ design tokens, light and dark appearances, and a documented customization
 contract. The initial catalog includes Button, Card, Dialog, AlertDialog,
 Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton,
 AppBar, Tooltip, HoverCard, Popover, Form, Field, Fieldset, Checkbox,
-CheckboxGroup, Input, Text, Stack, HStack, and VStack.
+CheckboxGroup, Input, Text, Link, Stack, HStack, VStack, Grid, Container, Surface,
+Divider, and Scroll Area.
 
 ## Boundary
 
@@ -23,10 +24,10 @@ CheckboxGroup, Input, Text, Stack, HStack, and VStack.
 | --- | --- |
 | Actions and selection | [Button](docs/components/button/README.md), [Icon Button](docs/components/icon-button/README.md), [Toggle](docs/components/toggle/README.md), [Toggle Group](docs/components/toggle-group/README.md) |
 | Forms and choices | [Form](docs/components/form/README.md), [Field](docs/components/field/README.md), [Fieldset](docs/components/fieldset/README.md), [Input](docs/components/input/README.md), [Checkbox](docs/components/checkbox/README.md), [Checkbox Group](docs/components/checkbox-group/README.md) |
-| Content and status | [Text](docs/components/text/README.md), [Avatar](docs/components/avatar/README.md), [Badge](docs/components/badge/README.md), [Notification Badge](docs/components/notification-badge/README.md), [Card](docs/components/card/README.md) |
+| Content and status | [Text](docs/components/text/README.md), [Avatar](docs/components/avatar/README.md), [Badge](docs/components/badge/README.md), [Notification Badge](docs/components/notification-badge/README.md), [Card](docs/components/card/README.md), [Divider](docs/components/divider/README.md) |
 | Contextual overlays | [Tooltip](docs/components/tooltip/README.md), [Hover Card](docs/components/hover-card/README.md), [Popover](docs/components/popover/README.md) |
 | Modal surfaces | [Dialog](docs/components/dialog/README.md), [Alert Dialog](docs/components/alert-dialog/README.md), [Drawer](docs/components/drawer/README.md) |
-| Navigation and layout | [App Bar](docs/components/app-bar/README.md), [Stack](docs/components/stack/README.md) |
+| Navigation and layout | [Link](docs/components/link/README.md), [App Bar](docs/components/app-bar/README.md), [Stack](docs/components/stack/README.md), [Grid](docs/components/grid/README.md), [Container](docs/components/container/README.md), [Surface](docs/components/surface/README.md), [Scroll Area](docs/components/scroll-area/README.md) |
 
 See the complete [documentation index](docs/README.md) for installation,
 appearance, testing, playground, manual-review, workbook, Consumer, and release
@@ -54,11 +55,13 @@ import "@flowstack-ui/brick/styles.css";
 Use `@flowstack-ui/brick/tokens.css` when only the visual tokens are needed.
 
 ```tsx
-import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, Dialog, Drawer, Field, Fieldset, Form, HoverCard, HStack, IconButton, Input, NotificationBadge, Popover, Stack, Text, Toggle, ToggleGroup, VStack } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, Button, Card, Checkbox, CheckboxGroup, Dialog, Divider, Drawer, Field, Fieldset, Form, Grid, HoverCard, HStack, IconButton, Input, Link, NotificationBadge, Popover, ScrollArea, Stack, Surface, Text, Toggle, ToggleGroup, VStack } from "@flowstack-ui/brick";
 
 <Button>Save changes</Button>;
 
 <Text as="h2" variant="title-md">Account settings</Text>;
+
+<Link href="/guides">Read the component guides</Link>;
 
 <VStack gap="3">
   <Text as="h2" variant="title-md">Account settings</Text>

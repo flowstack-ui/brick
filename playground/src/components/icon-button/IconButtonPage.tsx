@@ -1,5 +1,6 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  Grid,
   HStack,
   VStack,
   IconButton,
@@ -15,6 +16,7 @@ import {
 } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import {
   ArrowIcon,
   MenuIcon,
@@ -77,10 +79,10 @@ function SpecimenCell({
   label: string;
 }) {
   return (
-    <div className="icon-button-specimen-cell">
+    <EvidenceSurface className="icon-button-specimen-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="icon-button-specimen-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -164,7 +166,7 @@ export function IconButtonPage() {
       data-testid="icon-button-workbench"
     >
       <Scenario {...iconButtonScenarios[0]}>
-        <div className="icon-button-hero" data-testid="icon-button-overview">
+        <EvidenceSurface className="icon-button-hero" data-testid="icon-button-overview" inset="lg">
           <IconButton
             aria-label="Search workspace"
             onPress={() => setPressCount((count) => count + 1)}
@@ -174,11 +176,11 @@ export function IconButtonPage() {
           <Text aria-atomic="true" aria-live="polite" role="status" variant="body-sm">
             Activated {pressCount} {pressCount === 1 ? "time" : "times"}
           </Text>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...iconButtonScenarios[1]}>
-        <div className="icon-button-specimen-grid" data-testid="icon-button-variants">
+        <Grid.Root className="icon-button-specimen-grid" data-testid="icon-button-variants">
           {variants.map((variant) => (
             <SpecimenCell key={variant} label={variant}>
               <IconButton
@@ -189,7 +191,7 @@ export function IconButtonPage() {
               </IconButton>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...iconButtonScenarios[2]}>
@@ -200,7 +202,7 @@ export function IconButtonPage() {
               key={variant}
               title={`${variant[0].toUpperCase()}${variant.slice(1)} tones`}
             >
-              <div className="icon-button-specimen-grid icon-button-specimen-grid--six">
+              <Grid.Root columns={6} className="icon-button-specimen-grid icon-button-specimen-grid--six">
                 {tones.map((tone) => (
                   <SpecimenCell key={tone} label={tone}>
                     <IconButton
@@ -212,14 +214,14 @@ export function IconButtonPage() {
                     </IconButton>
                   </SpecimenCell>
                 ))}
-              </div>
+              </Grid.Root>
             </EvidenceGroup>
           ))}
         </VStack>
       </Scenario>
 
       <Scenario {...iconButtonScenarios[3]}>
-        <div
+        <Grid.Root columns={5}
           className="icon-button-row icon-button-specimen-grid icon-button-specimen-grid--five"
           data-testid="icon-button-sizes"
         >
@@ -233,11 +235,11 @@ export function IconButtonPage() {
               </IconButton>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...iconButtonScenarios[4]}>
-        <div
+        <Grid.Root columns={2}
           className="icon-button-row icon-button-specimen-grid icon-button-specimen-grid--two"
           data-testid="icon-button-shapes"
         >
@@ -251,11 +253,11 @@ export function IconButtonPage() {
               </IconButton>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...iconButtonScenarios[5]}>
-        <div
+        <Grid.Root
           className="playground-output-stack"
           data-testid="icon-button-composition"
         >
@@ -288,11 +290,11 @@ export function IconButtonPage() {
               </a>
             </IconButton>
           </RenderedOutput>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...iconButtonScenarios[6]}>
-        <div
+        <Grid.Root columns={5}
           className="icon-button-specimen-grid icon-button-specimen-grid--five"
           data-testid="icon-button-states"
         >
@@ -333,7 +335,7 @@ export function IconButtonPage() {
               <SearchIcon />
             </IconButton>
           </SpecimenCell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...iconButtonScenarios[7]}>
@@ -342,8 +344,8 @@ export function IconButtonPage() {
             description="Adjacent light and dark scopes preserve the selected recipe."
             title="Scoped appearances"
           >
-            <div className="icon-button-appearance-grid">
-              <div data-brick-appearance="light">
+            <Grid.Root columns={2} className="icon-button-appearance-grid">
+              <EvidenceSurface data-brick-appearance="light">
                 <code>light</code>
                 <IconButton
                   aria-label="Search"
@@ -351,8 +353,8 @@ export function IconButtonPage() {
                 >
                   <SearchIcon />
                 </IconButton>
-              </div>
-              <div data-brick-appearance="dark">
+              </EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark">
                 <code>dark</code>
                 <IconButton
                   aria-label="Search"
@@ -360,15 +362,15 @@ export function IconButtonPage() {
                 >
                   <SearchIcon />
                 </IconButton>
-              </div>
-            </div>
+              </EvidenceSurface>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup
             description="Each row names the supported mechanism, shows minimal code, and renders the result."
             title="Consumer customization"
           >
             <div className="icon-button-customization-list">
-              <article className="icon-button-customization">
+              <EvidenceSurface as="article" className="icon-button-customization" inset="lg">
                 <div>
                   <Text as="h4" variant="title-sm">Component CSS properties</Text>
                   <Text as="p" tone="secondary" variant="body-sm">Public IconButton tokens replace the complete solid recipe within this instance only.</Text>
@@ -390,8 +392,8 @@ export function IconButtonPage() {
                     <SearchIcon />
                   </IconButton>
                 </div>
-              </article>
-              <article className="icon-button-customization">
+              </EvidenceSurface>
+              <EvidenceSurface as="article" className="icon-button-customization" inset="lg">
                 <div>
                   <Text as="h4" variant="title-sm">Consumer hooks</Text>
                   <Text as="p" tone="secondary" variant="body-sm">className, style, and data-slot pass through for local targeting without changing the IconButton API.</Text>
@@ -423,7 +425,7 @@ export function IconButtonPage() {
                     <SearchIcon />
                   </IconButton>
                 </div>
-              </article>
+              </EvidenceSurface>
             </div>
           </EvidenceGroup>
         </VStack>
@@ -435,7 +437,7 @@ export function IconButtonPage() {
             description="Long accessible names remain semantic while two controls stay square inside a narrow frame."
             title="Constrained-width stress"
           >
-            <div className="icon-button-stress-panel">
+            <EvidenceSurface className="icon-button-stress-panel">
               <div className="phone-frame">
                 <Text as="p" variant="body-sm">Dense application actions</Text>
                 <HStack className="icon-button-row" wrap>
@@ -447,13 +449,13 @@ export function IconButtonPage() {
                   </IconButton>
                 </HStack>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup
             description="IconButton inherits direction from genuine right-to-left content without a component-specific RTL prop."
             title="RTL inheritance"
           >
-            <div className="icon-button-stress-panel">
+            <EvidenceSurface className="icon-button-stress-panel">
               <div className="phone-frame" dir="rtl">
                 <Text as="p" variant="body-sm">إجراءات مساحة العمل</Text>
                 <HStack className="icon-button-row" wrap>
@@ -465,7 +467,7 @@ export function IconButtonPage() {
                   </IconButton>
                 </HStack>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

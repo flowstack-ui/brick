@@ -6,6 +6,26 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added `Link` for underlined or plain native navigation with focused tones,
+  inherited or explicit body typography, optional decorative icons, native
+  anchor props, current state, and router composition through Atom Link.
+
+- `ScrollArea` with Atom-backed Root/Viewport anatomy, native axis control,
+  stable gutter, auto/always/interaction visibility, and semantic scrollbar
+  customization.
+
+- `Divider` with Atom-backed decorative and semantic output, horizontal and
+  vertical orientation, solid/dashed/dotted lines, three thicknesses, logical
+  inset, horizontal labels, vertical stretch, and public customization hooks.
+- `Surface` with four semantic background levels, independent border,
+  elevation, radius, and inset recipes, controlled semantic hosts,
+  forced-colors boundaries, and public customization variables.
+- `Container` with centered fluid content boundaries, five closed maximum
+  measures, four logical gutter recipes, semantic hosts, and public geometry
+  customization variables.
+- `Grid` with exact and intrinsic equal tracks plus optional item spans,
+  line placement, full-width placement, and self-alignment.
+
 - Package root and component subpath exports, static `styles.css`, public
   `tokens.css`, and optional `reset.css` entrypoints.
 - `Button` with four variants, six semantic tones, five sizes, three shapes,

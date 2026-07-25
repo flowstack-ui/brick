@@ -1,0 +1,127 @@
+@layer brick.components {
+  .brick-link {
+    --brick-link-foreground: var(--brick-color-accent-text);
+    --brick-link-foreground-hover: var(--brick-color-accent-solid-hover);
+    --brick-link-foreground-active: var(--brick-color-accent-solid-pressed);
+    --brick-link-focus-ring: var(--brick-color-focus-ring);
+    --brick-link-decoration-color: currentColor;
+    --brick-link-decoration-thickness: 0.08em;
+    --brick-link-decoration-offset: 0.16em;
+    --brick-link-gap: 0.375em;
+    --brick-link-icon-size: 1em;
+    --brick-link-font-family: inherit;
+    --brick-link-font-size: inherit;
+    --brick-link-font-weight: inherit;
+    --brick-link-line-height: inherit;
+    --brick-link-letter-spacing: inherit;
+
+    display: inline-flex;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    align-items: baseline;
+    gap: var(--brick-link-gap);
+    color: var(--brick-link-foreground);
+    font-family: var(--brick-link-font-family);
+    font-size: var(--brick-link-font-size);
+    font-weight: var(--brick-link-font-weight);
+    letter-spacing: var(--brick-link-letter-spacing);
+    line-height: var(--brick-link-line-height);
+    overflow-wrap: anywhere;
+    text-decoration-color: var(--brick-link-decoration-color);
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--brick-link-decoration-thickness);
+    text-underline-offset: var(--brick-link-decoration-offset);
+    vertical-align: baseline;
+  }
+
+  .brick-link:hover {
+    color: var(--brick-link-foreground-hover);
+  }
+
+  .brick-link:active {
+    color: var(--brick-link-foreground-active);
+  }
+
+  .brick-link:focus-visible {
+    border-radius: var(--brick-radius-subtle);
+    outline: var(--brick-border-focus-width) solid var(--brick-link-focus-ring);
+    outline-offset: var(--brick-border-focus-offset);
+  }
+
+  .brick-link[data-variant="plain"] {
+    text-decoration-line: none;
+  }
+
+  .brick-link[data-variant="plain"]:is(:hover, :focus-visible, :active) {
+    text-decoration-line: underline;
+  }
+
+  .brick-link[data-tone="neutral"] {
+    --brick-link-foreground: var(--brick-color-text-primary);
+    --brick-link-foreground-hover: var(--brick-color-text-secondary);
+    --brick-link-foreground-active: var(--brick-color-text-primary);
+  }
+
+  .brick-link[data-tone="inherit"] {
+    --brick-link-foreground: currentColor;
+    --brick-link-foreground-hover: currentColor;
+    --brick-link-foreground-active: currentColor;
+  }
+
+  .brick-link[data-size="sm"] {
+    --brick-link-font-family: var(--brick-typography-body-sm-font-family);
+    --brick-link-font-size: var(--brick-typography-body-sm-font-size);
+    --brick-link-font-weight: var(--brick-typography-body-sm-font-weight);
+    --brick-link-line-height: var(--brick-typography-body-sm-line-height);
+    --brick-link-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+  }
+
+  .brick-link[data-size="md"] {
+    --brick-link-font-family: var(--brick-typography-body-md-font-family);
+    --brick-link-font-size: var(--brick-typography-body-md-font-size);
+    --brick-link-font-weight: var(--brick-typography-body-md-font-weight);
+    --brick-link-line-height: var(--brick-typography-body-md-line-height);
+    --brick-link-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+  }
+
+  .brick-link[data-size="lg"] {
+    --brick-link-font-family: var(--brick-typography-body-lg-font-family);
+    --brick-link-font-size: var(--brick-typography-body-lg-font-size);
+    --brick-link-font-weight: var(--brick-typography-body-lg-font-weight);
+    --brick-link-line-height: var(--brick-typography-body-lg-line-height);
+    --brick-link-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+  }
+
+  .brick-link[aria-current]:not([aria-current="false"]) {
+    --brick-link-font-weight: var(--brick-font-weight-medium);
+  }
+
+  .brick-link__content {
+    min-inline-size: 0;
+  }
+
+  .brick-link__icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--brick-link-icon-size);
+    block-size: var(--brick-link-icon-size);
+  }
+
+  .brick-link__icon > :where(svg, img) {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  @media (forced-colors: active) {
+    .brick-link {
+      --brick-link-foreground: LinkText;
+      --brick-link-foreground-hover: LinkText;
+      --brick-link-foreground-active: LinkText;
+      --brick-link-focus-ring: Highlight;
+      forced-color-adjust: auto;
+    }
+  }
+}

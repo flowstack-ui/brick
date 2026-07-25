@@ -1,4 +1,4 @@
-import { Button, Text } from "@flowstack-ui/brick";
+import { Link, Text } from "@flowstack-ui/brick";
 import "./hover-card-destination.playground.css";
 
 export function HoverCardDestinationPage() {
@@ -16,9 +16,7 @@ export function HoverCardDestinationPage() {
         This focused route confirms that touch and activation preserve the
         trigger link&apos;s native navigation.
       </Text>
-      <Button asChild>
-        <a href="/hover-card">Return to Hover Card</a>
-      </Button>
+      <Link href="/hover-card">Return to Hover Card</Link>
     </main>
   );
 }

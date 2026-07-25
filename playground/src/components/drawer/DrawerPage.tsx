@@ -5,6 +5,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import {
+  Grid,
   VStack,
   Button,
   Checkbox,
@@ -20,6 +21,7 @@ import {
   type ScenarioDefinition,
 } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./drawer.playground.css";
 
 const placements: DrawerPlacement[] = ["start", "end", "top", "bottom"];
@@ -60,10 +62,10 @@ function SpecimenCell({
   label: string;
 }) {
   return (
-    <div className="drawer-specimen-cell">
+    <EvidenceSurface className="drawer-specimen-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="drawer-specimen-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -125,11 +127,11 @@ function ScopedDrawer({
 }: {
   appearance: "light" | "dark";
 }) {
-  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
   const label = `${appearance === "light" ? "Light" : "Dark"} scoped Drawer`;
 
   return (
-    <div
+    <EvidenceSurface
       className="drawer-appearance-panel"
       data-brick-appearance={appearance}
       ref={setContainer}
@@ -161,7 +163,7 @@ function ScopedDrawer({
           </Drawer.Portal>
         </Drawer.Root>
       ) : null}
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -296,7 +298,7 @@ export function DrawerPage() {
       data-testid="drawer-workbench"
     >
       <Scenario {...drawerScenarios[0]}>
-        <div className="drawer-overview" data-testid="drawer-overview">
+        <EvidenceSurface className="drawer-overview" data-testid="drawer-overview" inset="lg">
           <Drawer.Root>
             <Drawer.Trigger asChild>
               <Button>Filter projects</Button>
@@ -333,11 +335,11 @@ export function DrawerPage() {
               </Drawer.Content>
             </Drawer.Portal>
           </Drawer.Root>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...drawerScenarios[1]}>
-        <div
+        <Grid.Root columns={4}
           className="drawer-specimen-grid drawer-specimen-grid--four"
           data-testid="drawer-placements"
         >
@@ -350,11 +352,11 @@ export function DrawerPage() {
               />
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...drawerScenarios[2]}>
-        <div
+        <Grid.Root columns={4}
           className="drawer-specimen-grid drawer-specimen-grid--four"
           data-testid="drawer-sizes"
         >
@@ -367,7 +369,7 @@ export function DrawerPage() {
               />
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...drawerScenarios[3]}>
@@ -376,7 +378,7 @@ export function DrawerPage() {
             description="These compositions render only their authored regions while retaining an accessible name and visible Close path."
             title="Authored regions"
           >
-            <div
+            <Grid.Root columns={3}
               className="drawer-specimen-grid drawer-specimen-grid--three"
               data-testid="drawer-anatomy"
             >
@@ -434,14 +436,14 @@ export function DrawerPage() {
                   label="Inspect drawer anatomy"
                 />
               </SpecimenCell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
 
           <EvidenceGroup
             description="Only the native Title heading element changes; every Drawer retains the default end placement, medium size, and identical content."
             title="Title levels"
           >
-            <div
+            <Grid.Root columns={6}
               className="drawer-specimen-grid drawer-specimen-grid--six"
               data-testid="drawer-semantics"
             >
@@ -474,7 +476,7 @@ export function DrawerPage() {
                   </Drawer.Root>
                 </SpecimenCell>
               ))}
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -529,7 +531,7 @@ export function DrawerPage() {
             description="These separate Roots isolate unavailable opening from a workflow that disables both Escape and backdrop dismissal."
             title="Disabled policies"
           >
-            <div className="drawer-specimen-grid drawer-specimen-grid--two">
+            <Grid.Root columns={2} className="drawer-specimen-grid drawer-specimen-grid--two">
               <SpecimenCell label="disabled Root">
                 <Drawer.Root disabled>
                   <Drawer.Trigger asChild>
@@ -568,13 +570,13 @@ export function DrawerPage() {
                   </Drawer.Portal>
                 </Drawer.Root>
               </SpecimenCell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
 
       <Scenario {...drawerScenarios[5]}>
-        <div
+        <Grid.Root columns={2}
           className="drawer-specimen-grid drawer-specimen-grid--two"
           data-testid="drawer-composition"
         >
@@ -627,22 +629,22 @@ export function DrawerPage() {
           <SpecimenCell label="registered portal branch">
             <BranchDrawer />
           </SpecimenCell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...drawerScenarios[6]}>
-        <div
+        <Grid.Root columns={2}
           className="drawer-scoped-appearance-grid"
           data-testid="drawer-appearance"
         >
           <ScopedDrawer appearance="light" />
           <ScopedDrawer appearance="dark" />
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...drawerScenarios[7]}>
         <div className="drawer-customization-list">
-          <article className="drawer-customization">
+          <EvidenceSurface as="article" className="drawer-customization" inset="lg">
             <div>
               <Text as="h4" variant="title-sm">Component CSS properties</Text>
               <Text as="p" tone="secondary" variant="body-sm">
@@ -702,9 +704,9 @@ export function DrawerPage() {
                 </Drawer.Portal>
               </Drawer.Root>
             </div>
-          </article>
+          </EvidenceSurface>
 
-          <article className="drawer-customization">
+          <EvidenceSurface as="article" className="drawer-customization" inset="lg">
             <div>
               <Text as="h4" variant="title-sm">Consumer hooks</Text>
               <Text as="p" tone="secondary" variant="body-sm">
@@ -765,7 +767,7 @@ export function DrawerPage() {
                 </Drawer.Portal>
               </Drawer.Root>
             </div>
-          </article>
+          </EvidenceSurface>
         </div>
       </Scenario>
 
@@ -775,7 +777,7 @@ export function DrawerPage() {
             description="Open this default end/medium Drawer at a narrow or short viewport. Body scrolls independently while Header and Footer remain reachable."
             title="Constrained viewport and long Body"
           >
-            <div className="drawer-stress-panel">
+            <EvidenceSurface className="drawer-stress-panel">
               <StandardDrawer
                 body={
                   <VStack className="drawer-long-copy">
@@ -791,14 +793,14 @@ export function DrawerPage() {
                 label="Open long drawer"
                 title="Detailed project filters"
               />
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
 
           <EvidenceGroup
             description="This separate specimen uses genuine Arabic copy and logical start placement. In RTL, start resolves to the physical right edge."
             title="RTL logical placement"
           >
-            <div className="drawer-stress-panel" dir="rtl">
+            <EvidenceSurface className="drawer-stress-panel" dir="rtl">
               <StandardDrawer
                 body={
                   <VStack className="drawer-long-copy">
@@ -818,7 +820,7 @@ export function DrawerPage() {
                 placement="start"
                 title="فتح مرشحات مساحة العمل المفصلة"
               />
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

@@ -1,5 +1,6 @@
 import { useState, type CSSProperties } from "react";
 import {
+  Grid,
   Button,
   Checkbox,
   Field,
@@ -15,6 +16,7 @@ import {
   FormEvidenceGroup as EvidenceGroup,
   FormRenderedOutput as RenderedOutput,
 } from "../../shared/FormEvidence.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "../../shared/forms-evidence.playground.css";
 
 const sizes: CheckboxSize[] = ["sm", "md", "lg"];
@@ -45,46 +47,46 @@ export function CheckboxPage() {
   return (
     <VStack className="forms-page" data-component-page="checkbox" data-testid="checkbox-workbench">
       <Scenario {...checkboxScenarios[0]}>
-        <div className="forms-overview" data-testid="checkbox-overview"><Checkbox>Ready to publish</Checkbox></div>
+        <EvidenceSurface className="forms-overview" data-testid="checkbox-overview" inset="lg"><Checkbox>Ready to publish</Checkbox></EvidenceSurface>
       </Scenario>
 
       <Scenario {...checkboxScenarios[1]}>
-        <div className="forms-grid forms-grid--three" data-testid="checkbox-states">
+        <Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="checkbox-states">
           <Cell label="unchecked"><Checkbox>Preview</Checkbox></Cell>
           <Cell label="checked"><Checkbox defaultChecked>Preview</Checkbox></Cell>
           <Cell label="indeterminate"><Checkbox defaultChecked="indeterminate">Preview</Checkbox></Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...checkboxScenarios[2]}>
-        <div className="forms-grid forms-grid--three" data-testid="checkbox-sizes">
+        <Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="checkbox-sizes">
           {sizes.map((size) => <Cell key={size} label={size}><Checkbox size={size}>Preview</Checkbox></Cell>)}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...checkboxScenarios[3]}>
-        <div className="forms-grid forms-grid--three" data-testid="checkbox-ownership">
+        <Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="checkbox-ownership">
           <Cell label="uncontrolled"><Checkbox defaultChecked>Preview</Checkbox></Cell>
           <Cell label="controlled"><Checkbox checked={controlled} onCheckedChange={setControlled}>Preview</Checkbox></Cell>
           <Cell label="readOnly"><Checkbox defaultChecked readOnly>Preview</Checkbox></Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...checkboxScenarios[4]}>
         <VStack className="forms-evidence-stack" data-testid="checkbox-availability">
           <EvidenceGroup description="Only checked state changes. Every specimen remains disabled at the default medium size and retains the same complete row geometry." title="Disabled artwork">
-            <div className="forms-grid forms-grid--three" data-testid="checkbox-disabled-artwork">
+            <Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="checkbox-disabled-artwork">
               <Cell label="unchecked"><Checkbox disabled>Preview</Checkbox></Cell>
               <Cell label="checked"><Checkbox defaultChecked disabled>Preview</Checkbox></Cell>
               <Cell label="indeterminate"><Checkbox defaultChecked="indeterminate" disabled>Preview</Checkbox></Cell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="Only the named state changes; content, unchecked state, and medium geometry remain identical." title="Read-only and validity">
-            <div className="forms-grid forms-grid--three" data-testid="checkbox-validity">
+            <Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="checkbox-validity">
               <Cell label="readOnly"><Checkbox readOnly>Preview</Checkbox></Cell>
               <Cell label="invalid"><Checkbox invalid>Preview</Checkbox></Cell>
               <Cell label="required"><Checkbox required>Preview</Checkbox></Cell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -92,10 +94,10 @@ export function CheckboxPage() {
       <Scenario {...checkboxScenarios[5]}>
         <VStack className="forms-evidence-stack" data-testid="checkbox-form">
           <EvidenceGroup description="One required Checkbox composes with Field Error and native FormData without becoming a group." title="Submitted acknowledgement">
-            <div className="forms-overview"><Form aria-label="Release acknowledgement" id="checkbox-form-example" onReset={() => setStatus("Form reset")} onSubmit={(event) => { const data = new FormData(event.currentTarget); setStatus(`Submitted: ${String(data.get("acknowledgement") ?? "none")}`); }} preventDefaultOnSubmit><Field.Root id="checkbox-acknowledgement" required><Field.Label>Release acknowledgement</Field.Label><Checkbox name="acknowledgement" required value="accepted">I reviewed the release notes</Checkbox><Field.Description>This selection submits a native value.</Field.Description><Field.Error>Review is required.</Field.Error></Field.Root><HStack className="forms-actions"><Button type="submit">Save acknowledgement</Button><Button tone="neutral" type="reset">Reset</Button></HStack><output className="forms-status">{status}</output></Form></div>
+            <EvidenceSurface className="forms-overview" inset="lg"><Form aria-label="Release acknowledgement" id="checkbox-form-example" onReset={() => setStatus("Form reset")} onSubmit={(event) => { const data = new FormData(event.currentTarget); setStatus(`Submitted: ${String(data.get("acknowledgement") ?? "none")}`); }} preventDefaultOnSubmit><Field.Root id="checkbox-acknowledgement" required><Field.Label>Release acknowledgement</Field.Label><Checkbox name="acknowledgement" required value="accepted">I reviewed the release notes</Checkbox><Field.Description>This selection submits a native value.</Field.Description><Field.Error>Review is required.</Field.Error></Field.Root><HStack className="forms-actions"><Button type="submit">Save acknowledgement</Button><Button tone="neutral" type="reset">Reset</Button></HStack><output className="forms-status">{status}</output></Form></EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="The semantic Checkbox may belong to a native Form elsewhere in the document." title="External form ownership">
-            <div className="forms-overview"><Checkbox form="checkbox-form-example" name="external-consent" value="yes">Externally owned preference</Checkbox></div>
+            <EvidenceSurface className="forms-overview" inset="lg"><Checkbox form="checkbox-form-example" name="external-consent" value="yes">Externally owned preference</Checkbox></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -114,10 +116,10 @@ export function CheckboxPage() {
       <Scenario {...checkboxScenarios[7]}>
         <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same default unchecked state composes inside adjacent local appearance scopes." title="Scoped appearances">
-            <div className="forms-scoped-grid" data-testid="checkbox-appearance"><div data-brick-appearance="light"><code>light</code><Checkbox>Preview</Checkbox></div><div data-brick-appearance="dark"><code>dark</code><Checkbox>Preview</Checkbox></div></div>
+            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="checkbox-appearance"><EvidenceSurface data-brick-appearance="light"><code>light</code><Checkbox>Preview</Checkbox></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><code>dark</code><Checkbox>Preview</Checkbox></EvidenceSurface></Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <article className="forms-customization"><div><Text as="h4" variant="title-sm">Row and visual-control properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Checkbox tokens visibly change the row and control.</Text><pre aria-label="Checkbox customization example" tabIndex={0}><code>{`<Checkbox
+            <EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Row and visual-control properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Checkbox tokens visibly change the row and control.</Text><pre aria-label="Checkbox customization example" tabIndex={0}><code>{`<Checkbox
   data-slot="custom-checkbox"
   defaultChecked
   style={{
@@ -129,7 +131,7 @@ export function CheckboxPage() {
   }}
 >
   Customized selection
-</Checkbox>`}</code></pre></div><div className="forms-customization__preview"><Checkbox data-slot="custom-checkbox" defaultChecked style={customCheckboxTokens}>Customized selection</Checkbox></div></article>
+</Checkbox>`}</code></pre></div><EvidenceSurface className="forms-customization__preview"><Checkbox data-slot="custom-checkbox" defaultChecked style={customCheckboxTokens}>Customized selection</Checkbox></EvidenceSurface></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -137,10 +139,10 @@ export function CheckboxPage() {
       <Scenario {...checkboxScenarios[8]}>
         <VStack className="forms-evidence-stack" data-testid="checkbox-stress">
           <EvidenceGroup description="Long content and an unbroken segment wrap inside a 20rem application-owned frame." title="Constrained-width stress">
-            <div className="forms-stress-panel"><div className="forms-phone-frame"><Checkbox defaultChecked>Extremely detailed localized publishing preference ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break</Checkbox></div></div>
+            <EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame"><Checkbox defaultChecked>Extremely detailed localized publishing preference ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break</Checkbox></div></EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="Control, label, state, and logical invalid cue inherit genuine right-to-left direction." title="RTL inheritance">
-            <div className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Checkbox defaultChecked invalid>تلقي تقارير النشر الأسبوعية وتحديثات الحساب</Checkbox></div></div>
+            <EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Checkbox defaultChecked invalid>تلقي تقارير النشر الأسبوعية وتحديثات الحساب</Checkbox></div></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

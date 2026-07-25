@@ -91,7 +91,6 @@
 }
 
 .drawer-specimen-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
 }
@@ -151,7 +150,6 @@
 }
 
 .drawer-scoped-appearance-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
 }

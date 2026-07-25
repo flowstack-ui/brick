@@ -1,16 +1,15 @@
 .playground-output-stack {
-  display: grid;
   gap: var(--brick-space-5);
   min-inline-size: 0;
 }
 
 .playground-output-evidence {
-  display: grid;
+  min-inline-size: 0;
+}
+
+.playground-output-evidence__layout {
   min-inline-size: 0;
   gap: var(--brick-border-width);
-  overflow: hidden;
-  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
-  border-radius: var(--brick-radius-surface);
   background: var(--brick-color-border-subtle);
 }
 
@@ -64,7 +63,7 @@
 }
 
 @media (min-width: 48rem) {
-  .playground-output-evidence {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .playground-output-evidence__layout {
+    --brick-grid-columns: 2;
   }
 }

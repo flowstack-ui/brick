@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
+  Grid,
   Button,
   Field,
   Fieldset,
@@ -14,6 +15,7 @@ import {
   FormEvidenceControl as Control,
   FormEvidenceGroup as EvidenceGroup,
 } from "../../shared/FormEvidence.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import "../../shared/forms-evidence.playground.css";
 
@@ -88,7 +90,7 @@ export function FormPage() {
   return (
     <VStack className="forms-page" data-component-page="form" data-testid="form-workbench">
       <Scenario {...formScenarios[0]}>
-        <div className="forms-overview" data-testid="form-overview">
+        <EvidenceSurface className="forms-overview" data-testid="form-overview" inset="lg">
           <Form
             aria-label="Create account"
             onReset={() => {
@@ -112,11 +114,11 @@ export function FormPage() {
             </HStack>
             <output aria-live="polite" className="forms-status">{status}</output>
           </Form>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...formScenarios[1]}>
-        <div className="forms-grid forms-grid--three" data-testid="form-models">
+        <Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="form-models">
           <Cell label="native URL">
             <Form
               action="?submission-model=native"
@@ -160,11 +162,11 @@ export function FormPage() {
               <output className="forms-status">{callbackModelStatus}</output>
             </Form>
           </Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...formScenarios[2]}>
-        <div className="forms-grid forms-grid--two" data-testid="form-validation">
+        <Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="form-validation">
           <Cell label="inline validation">
             <Form
               aria-label="Inline validation"
@@ -200,11 +202,11 @@ export function FormPage() {
               <output className="forms-status">{nativeValidationStatus}</output>
             </Form>
           </Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...formScenarios[3]}>
-        <div className="forms-overview" data-testid="form-states">
+        <EvidenceSurface className="forms-overview" data-testid="form-states" inset="lg">
           <Form
             aria-label="Submission state"
             onSubmit={async () => {
@@ -226,13 +228,13 @@ export function FormPage() {
               <span><code>data-invalid</code> {String(stateHooks.invalid)}</span>
             </output>
           </Form>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...formScenarios[4]}>
         <VStack className="forms-evidence-stack" data-testid="form-native-surface">
           <EvidenceGroup description="The native form attributes forward unchanged. Submission targets the hidden result frame so the playground remains in place." title="Forwarded native attributes">
-            <div className="forms-overview">
+            <EvidenceSurface className="forms-overview" inset="lg">
               <Form
                 acceptCharset="UTF-8"
                 action="?native-surface=attributes"
@@ -251,10 +253,10 @@ export function FormPage() {
                 <dl className="forms-attribute-readout"><div><dt>method</dt><dd>post</dd></div><div><dt>encoding</dt><dd>urlencoded</dd></div><div><dt>target</dt><dd>result frame</dd></div><div><dt>validation</dt><dd>noValidate</dd></div></dl>
               </Form>
               <iframe hidden name="form-native-surface-target" title="Native attribute submission result" />
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="The Form contains only fields. Native form attributes connect the separately spaced submit and reset actions to that Form." title="External control ownership">
-            <div className="forms-overview">
+            <EvidenceSurface className="forms-overview" inset="lg">
               <div className="forms-external-evidence">
                 <Form
                   aria-label="External controls"
@@ -271,13 +273,13 @@ export function FormPage() {
                 </HStack>
                 <output className="forms-status">{externalStatus}</output>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
 
       <Scenario {...formScenarios[5]}>
-        <div className="playground-output-stack" data-testid="form-composition">
+        <Grid.Root className="playground-output-stack" data-testid="form-composition">
           <RenderedOutput label="Rendered Form HTML">
             <Form aria-label="Rendered form" data-testid="form-render" preventDefaultOnSubmit render={<form data-adapter="rendered-form" />}>
               <SimpleFields prefix="form-rendered" />
@@ -289,19 +291,19 @@ export function FormPage() {
               <form data-adapter="composed-form"><SimpleFields prefix="form-composed" /><Button type="submit">Submit composed Form</Button></form>
             </Form>
           </RenderedOutput>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...formScenarios[6]}>
         <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same default Form rhythm composes inside adjacent local appearance scopes." title="Scoped appearances">
-            <div className="forms-scoped-grid" data-testid="form-appearance">
-              <div data-brick-appearance="light"><code>light</code><Form aria-label="Light form"><SimpleFields prefix="form-light" /></Form></div>
-              <div data-brick-appearance="dark"><code>dark</code><Form aria-label="Dark form"><SimpleFields prefix="form-dark" /></Form></div>
-            </div>
+            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="form-appearance">
+              <EvidenceSurface data-brick-appearance="light"><code>light</code><Form aria-label="Light form"><SimpleFields prefix="form-light" /></Form></EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark"><code>dark</code><Form aria-label="Dark form"><SimpleFields prefix="form-dark" /></Form></EvidenceSurface>
+            </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <article className="forms-customization">
+            <EvidenceSurface as="article" className="forms-customization" inset="lg">
               <div><Text as="h4" variant="title-sm">Form rhythm properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Form gap tokens visibly change this boundary only.</Text><pre aria-label="Form customization example" tabIndex={0}><code>{`<Form
   data-slot="custom-form"
   style={{
@@ -311,8 +313,8 @@ export function FormPage() {
 >
   ...
 </Form>`}</code></pre></div>
-              <div className="forms-customization__preview"><Form aria-label="Customized form" data-slot="custom-form" style={customFormTokens}><SimpleFields prefix="form-custom" /></Form></div>
-            </article>
+              <EvidenceSurface className="forms-customization__preview"><Form aria-label="Customized form" data-slot="custom-form" style={customFormTokens}><SimpleFields prefix="form-custom" /></Form></EvidenceSurface>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -320,10 +322,10 @@ export function FormPage() {
       <Scenario {...formScenarios[7]}>
         <VStack className="forms-evidence-stack" data-testid="form-stress">
           <EvidenceGroup description="The unboxed boundary and actions remain contained inside a 20rem application-owned frame." title="Constrained-width stress">
-            <div className="forms-stress-panel"><div className="forms-phone-frame"><Form aria-label="Long localized form"><Field.Root id="form-long-field"><Field.Label>Extremely detailed localized account recovery contact address</Field.Label><Control name="longValue" /><Field.Description>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains contained.</Field.Description></Field.Root><HStack className="forms-actions"><Button type="submit">Save detailed settings</Button><Button tone="neutral" type="reset">Reset</Button></HStack></Form></div></div>
+            <EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame"><Form aria-label="Long localized form"><Field.Root id="form-long-field"><Field.Label>Extremely detailed localized account recovery contact address</Field.Label><Control name="longValue" /><Field.Description>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains contained.</Field.Description></Field.Root><HStack className="forms-actions"><Button type="submit">Save detailed settings</Button><Button tone="neutral" type="reset">Reset</Button></HStack></Form></div></EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="Form source order, controls, and logical layout inherit genuine right-to-left direction." title="RTL inheritance">
-            <div className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Form aria-label="إعدادات الحساب"><Field.Root id="form-rtl-name"><Field.Label>اسم مساحة العمل</Field.Label><Control name="workspace" /></Field.Root><HStack className="forms-actions"><Button type="submit">حفظ الإعدادات</Button><Button tone="neutral" type="reset">إعادة تعيين</Button></HStack></Form></div></div>
+            <EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Form aria-label="إعدادات الحساب"><Field.Root id="form-rtl-name"><Field.Label>اسم مساحة العمل</Field.Label><Control name="workspace" /></Field.Root><HStack className="forms-actions"><Button type="submit">حفظ الإعدادات</Button><Button tone="neutral" type="reset">إعادة تعيين</Button></HStack></Form></div></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

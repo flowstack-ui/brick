@@ -5,6 +5,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import {
+  Grid,
   VStack,
   Button,
   Dialog,
@@ -19,6 +20,7 @@ import {
   type ScenarioDefinition,
 } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./dialog.playground.css";
 
 const sizes: DialogSize[] = ["sm", "md", "lg"];
@@ -58,10 +60,10 @@ function SpecimenCell({
   label: string;
 }) {
   return (
-    <div className="dialog-specimen-cell">
+    <EvidenceSurface className="dialog-specimen-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="dialog-specimen-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -120,11 +122,11 @@ function ScopedDialog({
 }: {
   appearance: "light" | "dark";
 }) {
-  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
   const label = `${appearance === "light" ? "Light" : "Dark"} scoped dialog`;
 
   return (
-    <div
+    <EvidenceSurface
       className="dialog-appearance-panel"
       data-brick-appearance={appearance}
       ref={setContainer}
@@ -156,7 +158,7 @@ function ScopedDialog({
           </Dialog.Portal>
         </Dialog.Root>
       ) : null}
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -292,7 +294,7 @@ export function DialogPage() {
       data-testid="dialog-workbench"
     >
       <Scenario {...dialogScenarios[0]}>
-        <div className="dialog-overview" data-testid="dialog-overview">
+        <EvidenceSurface className="dialog-overview" data-testid="dialog-overview" inset="lg">
           <Dialog.Root>
             <Dialog.Trigger asChild>
               <Button>Edit profile</Button>
@@ -344,11 +346,11 @@ export function DialogPage() {
               </Dialog.Content>
             </Dialog.Portal>
           </Dialog.Root>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...dialogScenarios[1]}>
-        <div
+        <Grid.Root columns={3}
           className="dialog-specimen-grid dialog-specimen-grid--three"
           data-testid="dialog-sizes"
         >
@@ -361,11 +363,11 @@ export function DialogPage() {
               />
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...dialogScenarios[2]}>
-        <div
+        <Grid.Root columns={3}
           className="dialog-specimen-grid dialog-specimen-grid--three"
           data-testid="dialog-anatomy"
         >
@@ -410,11 +412,11 @@ export function DialogPage() {
               label="Inspect dialog anatomy"
             />
           </SpecimenCell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...dialogScenarios[3]}>
-        <div
+        <Grid.Root columns={6}
           className="dialog-specimen-grid dialog-specimen-grid--six"
           data-testid="dialog-semantics"
         >
@@ -444,7 +446,7 @@ export function DialogPage() {
               </Dialog.Root>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...dialogScenarios[4]}>
@@ -453,7 +455,7 @@ export function DialogPage() {
             description="Escape, the exact Overlay target, and explicit Close controls update the same public close-reason callback."
             title="Dismissal reasons"
           >
-            <div className="dialog-action-panel">
+            <EvidenceSurface className="dialog-action-panel" inset="lg">
               <Dialog.Root
                 onOpenChange={(open, reason) =>
                   setEventLog(
@@ -492,14 +494,14 @@ export function DialogPage() {
               <output aria-live="polite" className="dialog-event-log">
                 {eventLog}
               </output>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
 
           <EvidenceGroup
             description="These are separate Root policies: disabled prevents opening, while Overlay disabled preserves the active Dialog until an explicit Close."
             title="Unavailable and persistent states"
           >
-            <div className="dialog-specimen-grid dialog-specimen-grid--two">
+            <Grid.Root columns={2} className="dialog-specimen-grid dialog-specimen-grid--two">
               <SpecimenCell label="disabled Root">
                 <Dialog.Root disabled>
                   <Dialog.Trigger asChild>
@@ -541,13 +543,13 @@ export function DialogPage() {
                   </Dialog.Portal>
                 </Dialog.Root>
               </SpecimenCell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
 
       <Scenario {...dialogScenarios[5]}>
-        <div
+        <Grid.Root columns={2}
           className="dialog-specimen-grid dialog-specimen-grid--two"
           data-testid="dialog-composition"
         >
@@ -603,22 +605,22 @@ export function DialogPage() {
           <SpecimenCell label="registered portal branch">
             <BranchDialog />
           </SpecimenCell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...dialogScenarios[6]}>
-        <div
+        <Grid.Root columns={2}
           className="dialog-scoped-appearance-grid"
           data-testid="dialog-appearance"
         >
           <ScopedDialog appearance="light" />
           <ScopedDialog appearance="dark" />
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...dialogScenarios[7]}>
         <div className="dialog-customization-list">
-          <article className="dialog-customization">
+          <EvidenceSurface as="article" className="dialog-customization" inset="lg">
             <div>
               <Text as="h4" variant="title-sm">Component CSS properties</Text>
               <Text as="p" tone="secondary" variant="body-sm">
@@ -678,9 +680,9 @@ export function DialogPage() {
                 </Dialog.Portal>
               </Dialog.Root>
             </div>
-          </article>
+          </EvidenceSurface>
 
-          <article className="dialog-customization">
+          <EvidenceSurface as="article" className="dialog-customization" inset="lg">
             <div>
               <Text as="h4" variant="title-sm">Consumer hooks</Text>
               <Text as="p" tone="secondary" variant="body-sm">
@@ -741,7 +743,7 @@ export function DialogPage() {
                 </Dialog.Portal>
               </Dialog.Root>
             </div>
-          </article>
+          </EvidenceSurface>
         </div>
       </Scenario>
 
@@ -751,7 +753,7 @@ export function DialogPage() {
             description="Open this Dialog at a narrow or short viewport. Only Body scrolls; the default Header and Footer remain visible inside the bounded surface."
             title="Constrained viewport and long Body"
           >
-            <div
+            <EvidenceSurface
               className="dialog-stress-panel"
               data-testid="dialog-long-content"
             >
@@ -771,14 +773,14 @@ export function DialogPage() {
                 label="Open long mobile dialog"
                 title="Long content task"
               />
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
 
           <EvidenceGroup
             description="This separate specimen uses genuine Arabic copy and explicit RTL direction. Logical alignment changes without changing source or focus order."
             title="RTL inheritance"
           >
-            <div className="dialog-stress-panel" dir="rtl">
+            <EvidenceSurface className="dialog-stress-panel" dir="rtl">
               <StandardDialog
                 body="مرجع طويل غير منقطع: ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 contentTestId="dialog-rtl-content"
@@ -787,7 +789,7 @@ export function DialogPage() {
                 label="فتح إعدادات مساحة العمل المفصلة"
                 title="فتح إعدادات مساحة العمل المفصلة"
               />
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

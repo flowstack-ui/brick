@@ -98,7 +98,6 @@
 }
 
 .notification-badge-specimen-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
 }
@@ -133,7 +132,6 @@
 }
 
 .notification-badge-scoped-appearance-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
 }

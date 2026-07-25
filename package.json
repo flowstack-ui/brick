@@ -115,9 +115,33 @@
       "types": "./dist/text.d.ts",
       "default": "./dist/text.js"
     },
+    "./link": {
+      "types": "./dist/link.d.ts",
+      "default": "./dist/link.js"
+    },
     "./stack": {
       "types": "./dist/stack.d.ts",
       "default": "./dist/stack.js"
+    },
+    "./grid": {
+      "types": "./dist/grid.d.ts",
+      "default": "./dist/grid.js"
+    },
+    "./container": {
+      "types": "./dist/container.d.ts",
+      "default": "./dist/container.js"
+    },
+    "./surface": {
+      "types": "./dist/surface.d.ts",
+      "default": "./dist/surface.js"
+    },
+    "./divider": {
+      "types": "./dist/divider.d.ts",
+      "default": "./dist/divider.js"
+    },
+    "./scroll-area": {
+      "types": "./dist/scroll-area.d.ts",
+      "default": "./dist/scroll-area.js"
     },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
@@ -167,7 +191,12 @@
     "verify:typography": "node scripts/verify-typography.mjs",
     "verify:playground-primitives": "node scripts/verify-playground-primitives.mjs",
     "verify:playground-stack": "node scripts/verify-playground-stack.mjs",
-    "check": "npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
+    "verify:playground-grid": "node scripts/verify-playground-grid.mjs",
+    "verify:playground-container": "node scripts/verify-playground-container.mjs",
+    "verify:playground-surface": "node scripts/verify-playground-surface.mjs",
+    "verify:playground-divider": "node scripts/verify-playground-divider.mjs",
+    "verify:playground-scroll-area": "node scripts/verify-playground-scroll-area.mjs",
+    "check": "npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
     "prepublishOnly": "npm run build"
   },
   "browserslist": [
@@ -182,7 +211,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.6.17"
+    "@flowstack-ui/atom": "0.7.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

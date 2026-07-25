@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import {
+  Grid,
   CheckboxGroup,
   Field,
   Fieldset,
@@ -13,6 +14,7 @@ import {
   FormEvidenceGroup as EvidenceGroup,
   FormRenderedOutput as RenderedOutput,
 } from "../../shared/FormEvidence.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "../../shared/forms-evidence.playground.css";
 
 const customFieldsetTokens = {
@@ -50,32 +52,32 @@ export function FieldsetPage() {
   return (
     <VStack className="forms-page" data-component-page="fieldset" data-testid="fieldset-workbench">
       <Scenario {...fieldsetScenarios[0]}>
-        <div className="forms-overview" data-testid="fieldset-overview"><ChoiceGroup id="fieldset-overview-methods" /></div>
+        <EvidenceSurface className="forms-overview" data-testid="fieldset-overview" inset="lg"><ChoiceGroup id="fieldset-overview-methods" /></EvidenceSurface>
       </Scenario>
 
       <Scenario {...fieldsetScenarios[1]}>
-        <div className="forms-grid forms-grid--two forms-grid--preview-start" data-testid="fieldset-anatomy">
+        <Grid.Root columns={2} className="forms-grid forms-grid--two forms-grid--preview-start" data-testid="fieldset-anatomy">
           <Cell label="complete matched anatomy"><Fieldset.Root id="fieldset-complete" invalid required><Fieldset.Legend>Notification methods</Fieldset.Legend><Fieldset.Description>Select the methods you check most often.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">Email</CheckboxGroup.Item><CheckboxGroup.Item value="push">Push notification</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>Select at least one method.</Fieldset.Error></Fieldset.Root></Cell>
           <Cell label="optional indicator fallback"><Fieldset.Root id="fieldset-optional"><Fieldset.Legend optionalIndicator=" (optional)">Notification methods</Fieldset.Legend><Fieldset.Description>Select the methods you check most often.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">Email</CheckboxGroup.Item><CheckboxGroup.Item value="push">Push notification</CheckboxGroup.Item></CheckboxGroup.Root></Fieldset.Root></Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...fieldsetScenarios[2]}>
-        <div className="forms-grid forms-grid--four forms-grid--preview-start" data-testid="fieldset-states">
+        <Grid.Root columns={4} className="forms-grid forms-grid--four forms-grid--preview-start" data-testid="fieldset-states">
           <Cell label="required"><Fieldset.Root id="fieldset-required" required><Fieldset.Legend>Delivery methods</Fieldset.Legend><Fieldset.Description>Choose preferred methods.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">Email</CheckboxGroup.Item></CheckboxGroup.Root></Fieldset.Root></Cell>
           <Cell label="optional"><Fieldset.Root id="fieldset-optional-state"><Fieldset.Legend optionalIndicator=" (optional)">Delivery methods</Fieldset.Legend><Fieldset.Description>Choose preferred methods.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">Email</CheckboxGroup.Item></CheckboxGroup.Root></Fieldset.Root></Cell>
           <Cell label="disabled"><Fieldset.Root disabled id="fieldset-disabled"><Fieldset.Legend>Delivery methods</Fieldset.Legend><Fieldset.Description>Choose preferred methods.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">Email</CheckboxGroup.Item></CheckboxGroup.Root></Fieldset.Root></Cell>
           <Cell label="invalid"><Fieldset.Root id="fieldset-invalid" invalid><Fieldset.Legend>Delivery methods</Fieldset.Legend><Fieldset.Description>Choose preferred methods.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">Email</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>Select an option.</Fieldset.Error></Fieldset.Root></Cell>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...fieldsetScenarios[3]}>
         <VStack className="forms-evidence-stack" data-testid="fieldset-descendants">
           <EvidenceGroup description="Legend and messages describe the related multi-selection while CheckboxGroup owns values." title="CheckboxGroup">
-            <div className="forms-overview"><ChoiceGroup id="fieldset-checkbox-group" label="Publishing channels" /></div>
+            <EvidenceSurface className="forms-overview" inset="lg"><ChoiceGroup id="fieldset-checkbox-group" label="Publishing channels" /></EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="Fieldset provides the related address group; each nested Field retains one control relationship." title="Nested Fields">
-            <div className="forms-overview"><Fieldset.Root id="fieldset-address"><Fieldset.Legend>Address details</Fieldset.Legend><Field.Root id="fieldset-city"><Field.Label>City</Field.Label><Control /></Field.Root><Field.Root id="fieldset-postal"><Field.Label>Postal code</Field.Label><Control /></Field.Root></Fieldset.Root></div>
+            <EvidenceSurface className="forms-overview" inset="lg"><Fieldset.Root id="fieldset-address"><Fieldset.Legend>Address details</Fieldset.Legend><Field.Root id="fieldset-city"><Field.Label>City</Field.Label><Control /></Field.Root><Field.Root id="fieldset-postal"><Field.Label>Postal code</Field.Label><Control /></Field.Root></Fieldset.Root></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -105,10 +107,10 @@ export function FieldsetPage() {
       <Scenario {...fieldsetScenarios[6]}>
         <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same plain native group composes inside adjacent local appearance scopes." title="Scoped appearances">
-            <div className="forms-scoped-grid" data-testid="fieldset-appearance"><div data-brick-appearance="light"><code>light</code><ChoiceGroup id="fieldset-light" /></div><div data-brick-appearance="dark"><code>dark</code><ChoiceGroup id="fieldset-dark" /></div></div>
+            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="fieldset-appearance"><EvidenceSurface data-brick-appearance="light"><code>light</code><ChoiceGroup id="fieldset-light" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><code>dark</code><ChoiceGroup id="fieldset-dark" /></EvidenceSurface></Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <article className="forms-customization"><div><Text as="h4" variant="title-sm">Fieldset anatomy properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Fieldset tokens visibly change this group only.</Text><pre aria-label="Fieldset customization example" tabIndex={0}><code>{`<Fieldset.Root
+            <EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Fieldset anatomy properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Fieldset tokens visibly change this group only.</Text><pre aria-label="Fieldset customization example" tabIndex={0}><code>{`<Fieldset.Root
   data-slot="custom-fieldset"
   invalid
   style={{
@@ -119,7 +121,7 @@ export function FieldsetPage() {
   }}
 >
   ...
-</Fieldset.Root>`}</code></pre></div><div className="forms-customization__preview"><Fieldset.Root data-slot="custom-fieldset" id="fieldset-custom" invalid style={customFieldsetTokens}><Fieldset.Legend>Customized delivery group</Fieldset.Legend><Fieldset.Description>Local spacing and hierarchy.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="one">Option one</CheckboxGroup.Item><CheckboxGroup.Item value="two">Option two</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>Customized group error.</Fieldset.Error></Fieldset.Root></div></article>
+</Fieldset.Root>`}</code></pre></div><EvidenceSurface className="forms-customization__preview"><Fieldset.Root data-slot="custom-fieldset" id="fieldset-custom" invalid style={customFieldsetTokens}><Fieldset.Legend>Customized delivery group</Fieldset.Legend><Fieldset.Description>Local spacing and hierarchy.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="one">Option one</CheckboxGroup.Item><CheckboxGroup.Item value="two">Option two</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>Customized group error.</Fieldset.Error></Fieldset.Root></EvidenceSurface></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -127,10 +129,10 @@ export function FieldsetPage() {
       <Scenario {...fieldsetScenarios[7]}>
         <VStack className="forms-evidence-stack" data-testid="fieldset-stress">
           <EvidenceGroup description="Long group text and choices wrap inside a 20rem application-owned frame." title="Constrained-width stress">
-            <div className="forms-stress-panel"><div className="forms-phone-frame"><Fieldset.Root id="fieldset-long" invalid required><Fieldset.Legend>Extremely detailed localized publishing and emergency-notification preferences</Fieldset.Legend><Fieldset.Description>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains contained.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="long">Detailed translated notification preference</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>The translated group error remains reachable.</Fieldset.Error></Fieldset.Root></div></div>
+            <EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame"><Fieldset.Root id="fieldset-long" invalid required><Fieldset.Legend>Extremely detailed localized publishing and emergency-notification preferences</Fieldset.Legend><Fieldset.Description>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break remains contained.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="long">Detailed translated notification preference</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>The translated group error remains reachable.</Fieldset.Error></Fieldset.Root></div></EvidenceSurface>
           </EvidenceGroup>
           <EvidenceGroup description="Legend, descriptions, choices, and logical Error cues inherit genuine right-to-left direction." title="RTL inheritance">
-            <div className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Fieldset.Root id="fieldset-rtl" invalid required><Fieldset.Legend>طرق الاتصال المفضلة للحساب</Fieldset.Legend><Fieldset.Description>اختر طريقة واحدة على الأقل.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">البريد الإلكتروني</CheckboxGroup.Item><CheckboxGroup.Item value="phone">الهاتف</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>يرجى اختيار طريقة اتصال واحدة.</Fieldset.Error></Fieldset.Root></div></div>
+            <EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Fieldset.Root id="fieldset-rtl" invalid required><Fieldset.Legend>طرق الاتصال المفضلة للحساب</Fieldset.Legend><Fieldset.Description>اختر طريقة واحدة على الأقل.</Fieldset.Description><CheckboxGroup.Root><CheckboxGroup.Item value="email">البريد الإلكتروني</CheckboxGroup.Item><CheckboxGroup.Item value="phone">الهاتف</CheckboxGroup.Item></CheckboxGroup.Root><Fieldset.Error>يرجى اختيار طريقة اتصال واحدة.</Fieldset.Error></Fieldset.Root></div></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

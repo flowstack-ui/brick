@@ -45,7 +45,6 @@
 
 .stack-grid,
 .stack-scoped-grid {
-  display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--brick-border-width);
 }
@@ -86,7 +85,6 @@
   box-sizing: border-box;
   inline-size: min(100%, 27rem);
   padding: var(--brick-space-4);
-  overflow: auto;
   border: var(--brick-border-width) solid var(--brick-color-border-subtle);
   border-radius: var(--brick-radius-surface);
   background: var(--brick-color-surface-raised);

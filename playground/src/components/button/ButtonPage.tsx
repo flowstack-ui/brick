@@ -1,5 +1,6 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  Grid,
   VStack,
   Button,
   Field,
@@ -17,6 +18,7 @@ import {
 } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import { ArrowIcon } from "../../shared/icons.js";
 import "./button.playground.css";
 
@@ -67,10 +69,10 @@ function SpecimenCell({
   label: string;
 }) {
   return (
-    <div className="button-specimen-cell">
+    <EvidenceSurface className="button-specimen-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="button-specimen-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -158,9 +160,10 @@ export function ButtonPage() {
       data-testid="button-workbench"
     >
       <Scenario {...buttonScenarios[0]}>
-        <div
+        <EvidenceSurface
           className="button-overview"
           data-testid="button-overview"
+          inset="lg"
         >
           <Button onPress={() => setPressCount((value) => value + 1)}>
             Publish project
@@ -168,11 +171,11 @@ export function ButtonPage() {
           <span aria-atomic="true" className="press-status" role="status">
             Pressed {pressCount} {pressCount === 1 ? "time" : "times"}
           </span>
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...buttonScenarios[1]}>
-        <div
+        <Grid.Root columns={4}
           className="button-specimen-grid button-specimen-grid--four"
           data-testid="button-variants"
         >
@@ -181,7 +184,7 @@ export function ButtonPage() {
               <Button variant={variant}>Action</Button>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...buttonScenarios[2]}>
@@ -192,7 +195,7 @@ export function ButtonPage() {
               key={variant}
               title={`${variant[0].toUpperCase()}${variant.slice(1)} tones`}
             >
-              <div className="button-specimen-grid button-specimen-grid--six">
+              <Grid.Root columns={6} className="button-specimen-grid button-specimen-grid--six">
                 {tones.map((tone) => (
                   <SpecimenCell key={tone} label={tone}>
                     <Button tone={tone} variant={variant}>
@@ -200,14 +203,14 @@ export function ButtonPage() {
                     </Button>
                   </SpecimenCell>
                 ))}
-              </div>
+              </Grid.Root>
             </EvidenceGroup>
           ))}
         </VStack>
       </Scenario>
 
       <Scenario {...buttonScenarios[3]}>
-        <div
+        <Grid.Root columns={5}
           className="button-specimen-grid button-specimen-grid--five"
           data-testid="button-sizes"
         >
@@ -216,7 +219,7 @@ export function ButtonPage() {
               <Button size={size}>Action</Button>
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...buttonScenarios[4]}>
@@ -224,7 +227,7 @@ export function ButtonPage() {
           description="Shape changes corner geometry without changing the Button’s size, tone, or semantic role."
           title="Shape recipes"
         >
-          <div
+          <Grid.Root columns={3}
             className="button-specimen-grid button-specimen-grid--three"
             data-testid="button-shapes"
           >
@@ -233,7 +236,7 @@ export function ButtonPage() {
                 <Button shape={shape}>Action</Button>
               </SpecimenCell>
             ))}
-          </div>
+          </Grid.Root>
         </EvidenceGroup>
 
         <EvidenceGroup
@@ -249,7 +252,7 @@ export function ButtonPage() {
       </Scenario>
 
       <Scenario {...buttonScenarios[5]}>
-        <div
+        <Grid.Root
           className="playground-output-stack"
           data-testid="button-composition"
           id="composition"
@@ -280,7 +283,7 @@ export function ButtonPage() {
               Action
             </Button>
           </RenderedOutput>
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...buttonScenarios[6]}>
@@ -288,7 +291,7 @@ export function ButtonPage() {
           description="Optional content and unavailable states retain intrinsic Button dimensions and expose the expected accessible state."
           title="Content and state specimens"
         >
-          <div
+          <Grid.Root columns={4}
             className="button-specimen-grid button-specimen-grid--four"
             data-testid="button-states"
           >
@@ -315,7 +318,7 @@ export function ButtonPage() {
                 Action
               </Button>
             </SpecimenCell>
-          </div>
+          </Grid.Root>
         </EvidenceGroup>
 
         <EvidenceGroup
@@ -358,16 +361,16 @@ export function ButtonPage() {
           description="These adjacent scopes prove that appearance can be overridden locally without changing the document-wide review setting."
           title="Scoped appearances"
         >
-          <div className="button-appearance-grid">
-            <div className="button-appearance-panel" data-brick-appearance="light">
+          <Grid.Root columns={2} className="button-appearance-grid">
+            <EvidenceSurface className="button-appearance-panel" data-brick-appearance="light">
               <span>Light scope</span>
               <Button>Action</Button>
-            </div>
-            <div className="button-appearance-panel" data-brick-appearance="dark">
+            </EvidenceSurface>
+            <EvidenceSurface className="button-appearance-panel" data-brick-appearance="dark">
               <span>Dark scope</span>
               <Button>Action</Button>
-            </div>
-          </div>
+            </EvidenceSurface>
+          </Grid.Root>
         </EvidenceGroup>
 
         <EvidenceGroup
@@ -375,7 +378,7 @@ export function ButtonPage() {
           title="Consumer customization"
         >
           <div className="button-customization-list">
-            <article className="button-customization">
+            <EvidenceSurface as="article" className="button-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
@@ -402,9 +405,9 @@ export function ButtonPage() {
                   Action
                 </Button>
               </div>
-            </article>
+            </EvidenceSurface>
 
-            <article className="button-customization">
+            <EvidenceSurface as="article" className="button-customization" inset="lg">
               <div>
                 <Text as="h4" variant="title-sm">Consumer hooks</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
@@ -439,7 +442,7 @@ export function ButtonPage() {
                   Action
                 </Button>
               </div>
-            </article>
+            </EvidenceSurface>
           </div>
         </EvidenceGroup>
       </Scenario>
@@ -450,21 +453,21 @@ export function ButtonPage() {
             description="A long localized label wraps inside a 20rem frame. The control may grow vertically but must not clip or overflow."
             title="Constrained-width stress"
           >
-            <div className="button-stress-panel">
+            <EvidenceSurface className="button-stress-panel">
               <div className="phone-frame">
                 <Text as="p" variant="body-sm">20rem constrained canvas</Text>
                 <Button fullWidth>
                   Continue with the carefully selected delivery preferences
                 </Button>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
 
           <EvidenceGroup
             description="Button has no RTL mode or prop. It inherits direction from the surrounding context, including logical content and icon placement."
             title="RTL inheritance"
           >
-            <div className="button-stress-panel">
+            <EvidenceSurface className="button-stress-panel">
               <div className="phone-frame" dir="rtl">
                 <Text as="p" variant="body-sm">Genuine right-to-left content</Text>
                 <Button
@@ -473,7 +476,7 @@ export function ButtonPage() {
                   متابعة إعداد مساحة العمل
                 </Button>
               </div>
-            </div>
+            </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

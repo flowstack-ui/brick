@@ -4,6 +4,7 @@ import {
   type ReactNode,
 } from "react";
 import {
+  Grid,
   VStack,
   AlertDialog,
   Button,
@@ -16,6 +17,7 @@ import {
   type ScenarioDefinition,
 } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./alert-dialog.playground.css";
 
 const sizes: AlertDialogSize[] = ["sm", "md"];
@@ -56,10 +58,10 @@ function SpecimenCell({
   label: string;
 }) {
   return (
-    <div className="alert-dialog-specimen-cell">
+    <EvidenceSurface className="alert-dialog-specimen-cell">
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="alert-dialog-specimen-cell__preview">{children}</div>
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -120,11 +122,11 @@ function ScopedAlertDialog({
 }: {
   appearance: "light" | "dark";
 }) {
-  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
   const label = `${appearance === "light" ? "Light" : "Dark"} decision`;
 
   return (
-    <div
+    <EvidenceSurface
       className="alert-dialog-appearance-panel"
       data-brick-appearance={appearance}
       ref={setContainer}
@@ -158,7 +160,7 @@ function ScopedAlertDialog({
           </AlertDialog.Portal>
         </AlertDialog.Root>
       ) : null}
-    </div>
+    </EvidenceSurface>
   );
 }
 
@@ -244,19 +246,20 @@ export function AlertDialogPage() {
       data-testid="alert-dialog-workbench"
     >
       <Scenario {...alertDialogScenarios[0]}>
-        <div
+        <EvidenceSurface
           className="alert-dialog-overview"
           data-testid="alert-dialog-overview"
+          inset="lg"
         >
           <StandardAlertDialog
             contentTestId="alert-dialog-overview-content"
             label="Delete project?"
           />
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...alertDialogScenarios[1]}>
-        <div
+        <Grid.Root columns={2}
           className="alert-dialog-specimen-grid alert-dialog-specimen-grid--two"
           data-testid="alert-dialog-sizes"
         >
@@ -269,7 +272,7 @@ export function AlertDialogPage() {
               />
             </SpecimenCell>
           ))}
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...alertDialogScenarios[2]}>
@@ -278,7 +281,7 @@ export function AlertDialogPage() {
             description="These valid compositions differ only in the authored message/detail path. AlertDialog never generates missing regions or response copy."
             title="Authored regions"
           >
-            <div
+            <Grid.Root columns={4}
               className="alert-dialog-specimen-grid alert-dialog-specimen-grid--four"
               data-testid="alert-dialog-anatomy"
             >
@@ -353,14 +356,14 @@ export function AlertDialogPage() {
                   </AlertDialog.Portal>
                 </AlertDialog.Root>
               </SpecimenCell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
 
           <EvidenceGroup
             description="Only the native Title heading element changes; every decision retains the default medium size and identical message."
             title="Title levels"
           >
-            <div
+            <Grid.Root columns={6}
               className="alert-dialog-specimen-grid alert-dialog-specimen-grid--six"
               data-testid="alert-dialog-semantics"
             >
@@ -398,7 +401,7 @@ export function AlertDialogPage() {
                   </AlertDialog.Root>
                 </SpecimenCell>
               ))}
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -468,7 +471,7 @@ export function AlertDialogPage() {
             description="Each cell isolates one public policy: explicit response, unavailable opening, or application-controlled pending work."
             title="Policy states"
           >
-            <div className="alert-dialog-specimen-grid alert-dialog-specimen-grid--three">
+            <Grid.Root columns={3} className="alert-dialog-specimen-grid alert-dialog-specimen-grid--three">
               <SpecimenCell label="Escape disabled">
                 <AlertDialog.Root closeOnEscape={false}>
                   <AlertDialog.Trigger asChild>
@@ -547,7 +550,7 @@ export function AlertDialogPage() {
                   </AlertDialog.Portal>
                 </AlertDialog.Root>
               </SpecimenCell>
-            </div>
+            </Grid.Root>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -616,18 +619,18 @@ export function AlertDialogPage() {
       </Scenario>
 
       <Scenario {...alertDialogScenarios[5]}>
-        <div
+        <Grid.Root columns={2}
           className="alert-dialog-scoped-appearance-grid"
           data-testid="alert-dialog-appearance"
         >
           <ScopedAlertDialog appearance="light" />
           <ScopedAlertDialog appearance="dark" />
-        </div>
+        </Grid.Root>
       </Scenario>
 
       <Scenario {...alertDialogScenarios[6]}>
         <div className="alert-dialog-customization-list">
-          <article className="alert-dialog-customization">
+          <EvidenceSurface as="article" className="alert-dialog-customization" inset="lg">
             <div>
               <Text as="h4" variant="title-sm">Component CSS properties</Text>
               <Text as="p" tone="secondary" variant="body-sm">
@@ -687,9 +690,9 @@ export function AlertDialogPage() {
                 </AlertDialog.Portal>
               </AlertDialog.Root>
             </div>
-          </article>
+          </EvidenceSurface>
 
-          <article className="alert-dialog-customization">
+          <EvidenceSurface as="article" className="alert-dialog-customization" inset="lg">
             <div>
               <Text as="h4" variant="title-sm">Consumer hooks and Button tone</Text>
               <Text as="p" tone="secondary" variant="body-sm">
@@ -750,12 +753,12 @@ export function AlertDialogPage() {
                 </AlertDialog.Portal>
               </AlertDialog.Root>
             </div>
-          </article>
+          </EvidenceSurface>
         </div>
       </Scenario>
 
       <Scenario {...alertDialogScenarios[7]}>
-        <div
+        <EvidenceSurface
           className="alert-dialog-stress-panel"
           data-testid="alert-dialog-long-content"
         >
@@ -775,11 +778,11 @@ export function AlertDialogPage() {
             label="Open long decision"
             title="Delete archived project?"
           />
-        </div>
+        </EvidenceSurface>
       </Scenario>
 
       <Scenario {...alertDialogScenarios[8]}>
-        <div
+        <EvidenceSurface
           className="alert-dialog-stress-panel"
           data-testid="alert-dialog-stress"
           dir="rtl"
@@ -792,7 +795,7 @@ export function AlertDialogPage() {
             label="حذف مشروع مساحة العمل بالتأكيد؟"
             title="حذف مشروع مساحة العمل بالتأكيد؟"
           />
-        </div>
+        </EvidenceSurface>
       </Scenario>
     </VStack>
   );
