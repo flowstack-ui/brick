@@ -66,6 +66,7 @@ await writeFile(
     '@import "../../src/components/scroll-area/scroll-area.css";',
     '@import "../../src/components/code/code.css";',
     '@import "../../src/components/code-block/code-block.css";',
+    '@import "../../src/components/nav-list/nav-list.css";',
   ].join("\n"),
 );
 

@@ -69,6 +69,8 @@ This directory is the public documentation authority for
 ### Navigation and layout
 
 - [Link](components/link/README.md) — inline and standalone native navigation
+- [Nav List](components/nav-list/README.md) — grouped native destination lists
+  with current and collapsible states
 - [App Bar](components/app-bar/README.md) — top surface and one-row alignment
   structure
 - [Stack](components/stack/README.md) — tokenized one-dimensional rows and

@@ -29,6 +29,7 @@ import { Divider } from "@flowstack-ui/brick/divider";
 import { ScrollArea } from "@flowstack-ui/brick/scroll-area";
 import { Code } from "@flowstack-ui/brick/code";
 import { CodeBlock } from "@flowstack-ui/brick/code-block";
+import { NavList } from "@flowstack-ui/brick/nav-list";
 
 type Appearance = "light" | "dark";
 
@@ -135,6 +136,13 @@ export function App() {
       </AppBar.Root>
 
       <Container className="site-shell" measure="wide">
+        <NavList.Root aria-label="Workspace sections" orientation="horizontal" size="sm">
+          <NavList.List>
+            <NavList.Item><NavList.Link active href="#top">Overview</NavList.Link></NavList.Item>
+            <NavList.Item><NavList.Link href="#workspace">Projects</NavList.Link></NavList.Item>
+            <NavList.Item><NavList.Link href="#publishing-preferences">Publishing</NavList.Link></NavList.Item>
+          </NavList.List>
+        </NavList.Root>
         <main>
         <VStack as="section" className="hero" aria-labelledby="hero-title" gap="4">
           <Text as="p" className="eyebrow" tone="accent" variant="caption" weight="semibold">

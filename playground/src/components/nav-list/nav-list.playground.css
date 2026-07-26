@@ -1,0 +1,28 @@
+.nav-list-page {
+  gap: 0;
+}
+
+.nav-list-grid {
+  gap: var(--brick-space-4);
+}
+
+.nav-list-cell {
+  display: flex;
+  min-block-size: 100%;
+  flex-direction: column;
+  gap: var(--brick-space-3);
+}
+
+.nav-list-cell > .brick-nav-list {
+  flex: 1;
+}
+
+.nav-list-customization {
+  max-inline-size: 44rem;
+}
+
+@media (max-width: 48rem) {
+  .nav-list-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

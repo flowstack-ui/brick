@@ -1,4 +1,4 @@
-import { Link, Text, VStack } from "@flowstack-ui/brick";
+import { NavList } from "@flowstack-ui/brick";
 import type { PlaygroundEntry } from "../app/component-registry.js";
 
 export function ComponentNavigation({
@@ -15,41 +15,36 @@ export function ComponentNavigation({
   );
 
   return (
-    <VStack
-      as="nav"
+    <NavList.Root
       aria-label="Component navigation"
       className="evidence-navigation"
-      gap="5"
+      size="sm"
     >
       {categories.map((category) => (
-        <VStack
-          as="section"
+        <NavList.Section
           className="evidence-navigation__group"
-          gap="2"
           key={category}
         >
-          <Text as="h2" variant="title-sm">{category}</Text>
-          <VStack as="ul" gap="0">
+          <NavList.SectionLabel>{category}</NavList.SectionLabel>
+          <NavList.SectionContent>
+          <NavList.List>
             {entries
               .filter((entry) => entry.category === category)
               .map((entry) => (
-                <li key={entry.id}>
-                  <Link
-                    aria-current={
-                      currentRoute === entry.route ? "page" : undefined
-                    }
+                <NavList.Item key={entry.id}>
+                  <NavList.Link
+                    active={currentRoute === entry.route}
                     href={entry.route}
                     onClick={onNavigate}
-                    tone="inherit"
-                    variant="plain"
                   >
-                    <span>{entry.title}</span>
-                  </Link>
-                </li>
+                    {entry.title}
+                  </NavList.Link>
+                </NavList.Item>
               ))}
-          </VStack>
-        </VStack>
+          </NavList.List>
+          </NavList.SectionContent>
+        </NavList.Section>
       ))}
-    </VStack>
+    </NavList.Root>
   );
 }

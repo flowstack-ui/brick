@@ -252,6 +252,14 @@ test("composes Divider through its public subpath as a semantic workspace break"
   await expect(divider).toHaveAttribute("data-variant", "solid");
 });
 
+test("composes Nav List through its public subpath for workspace sections", async ({ page }) => {
+  const navigation = page.getByRole("navigation", { name: "Workspace sections" });
+  await expect(navigation).toHaveClass(/brick-nav-list/);
+  await expect(navigation).toHaveAttribute("data-orientation", "horizontal");
+  await expect(navigation.getByRole("link", { name: "Overview" })).toHaveAttribute("aria-current", "page");
+  await expect(navigation.getByRole("listitem")).toHaveCount(3);
+});
+
 test("composes the complete public Form, Field, and Fieldset foundation", async ({ page }) => {
   const form = page.getByRole("form", { name: "Invite teammate" });
   const field = form.locator("#invite-email-field");

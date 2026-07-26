@@ -24,9 +24,32 @@ import { Container } from "../../dist/container.js";
 import { Surface } from "../../dist/surface.js";
 import { Divider } from "../../dist/divider.js";
 import { ScrollArea } from "../../dist/scroll-area.js";
+import { NavList } from "../../dist/nav-list.js";
 import { Code } from "../../dist/code.js";
 import { CodeBlock } from "../../dist/code-block.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("Nav List renders deterministic navigation anatomy", () => {
+  const markup = renderToString(
+    React.createElement(
+      NavList.Root,
+      { "aria-label": "Workspace", variant: "outline" },
+      React.createElement(
+        NavList.List,
+        null,
+        React.createElement(
+          NavList.Item,
+          null,
+          React.createElement(NavList.Link, { active: true, href: "/overview" }, "Overview"),
+        ),
+      ),
+    ),
+  );
+  assert.match(markup, /^<nav/);
+  assert.match(markup, /class="brick-nav-list"/);
+  assert.match(markup, /data-variant="outline"/);
+  assert.match(markup, /aria-current="page"/);
+});
 
 test("Scroll Area renders deterministic native Root and Viewport anatomy", () => {
   const markup = renderToString(

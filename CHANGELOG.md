@@ -6,6 +6,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- `NavList` for native grouped destination lists with three current-state
+  recipes, two tones, three sizes, supporting link anatomy, and Atom-backed
+  disclosure, current, disabled, and composition behavior.
 - `Code` for native inline technical literals with subtle or plain recipes,
   inherited typography, and public customization hooks.
 - `CodeBlock` for structured multi-line source with native overflow, explicit

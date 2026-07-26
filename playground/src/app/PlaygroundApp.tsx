@@ -12,6 +12,7 @@ import {
   appBarScenarios,
 } from "../components/app-bar/AppBarPage.js";
 import { LinkPage, linkScenarios } from "../components/link/LinkPage.js";
+import { NavListPage, navListScenarios } from "../components/nav-list/NavListPage.js";
 import {
   CardPage,
   cardScenarios,
@@ -122,6 +123,14 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={linkScenarios}>
         <LinkPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "nav-list") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={navListScenarios}>
+        <NavListPage />
       </PlaygroundShell>
     );
   }

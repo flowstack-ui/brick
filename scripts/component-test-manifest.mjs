@@ -9,6 +9,7 @@ export const componentIds = [
   "checkbox-group",
   "code",
   "code-block",
+  "nav-list",
   "dialog",
   "drawer",
   "divider",

@@ -120,6 +120,7 @@ for (const directory of componentDirectories) {
         declaration.includes("var(--brick-code-") ||
         declaration.includes("var(--brick-badge-") ||
         declaration.includes("var(--brick-avatar-") ||
+        declaration.includes("var(--brick-nav-list-") ||
         declaration.includes("var(--brick-card-title-size)") ||
         allowed.has(declaration)
       ) {

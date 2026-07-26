@@ -1230,6 +1230,25 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-scrollbar-gutter", "data-scrollbar-visibility"],
     publicTokens: ["--brick-scroll-area-scrollbar-thumb", "--brick-scroll-area-scrollbar-track"],
   },
+  "nav-list": {
+    source: "src/components/nav-list/NavList.tsx",
+    exportSource: "src/components/nav-list/index.ts",
+    css: "src/components/nav-list/nav-list.css",
+    exports: ["NavList"],
+    unions: {
+      NavListVariant: ["soft", "solid", "outline"],
+      NavListTone: ["accent", "neutral"],
+      NavListSize: ["sm", "md", "lg"],
+    },
+    defaults: { orientation: "vertical", variant: "soft", tone: "accent", size: "md" },
+    dataAttributes: ["data-size", "data-tone", "data-variant"],
+    publicTokens: [
+      "--brick-nav-list-gap", "--brick-nav-list-section-gap",
+      "--brick-nav-list-content-inset", "--brick-nav-list-row-min-block-size",
+      "--brick-nav-list-row-radius", "--brick-nav-list-current-border",
+      "--brick-nav-list-focus-ring",
+    ],
+  },
   surface: {
     source: "src/components/surface/Surface.tsx",
     exportSource: "src/components/surface/index.ts",

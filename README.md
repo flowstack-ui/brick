@@ -8,7 +8,7 @@ contract. The initial catalog includes Button, Card, Dialog, AlertDialog,
 Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton,
 AppBar, Tooltip, HoverCard, Popover, Form, Field, Fieldset, Checkbox,
 CheckboxGroup, Input, Text, Code, CodeBlock, Link, Stack, HStack, VStack, Grid,
-Container, Surface, Divider, and Scroll Area.
+Container, Surface, Divider, Scroll Area, and NavList.
 
 ## Boundary
 
@@ -27,7 +27,7 @@ Container, Surface, Divider, and Scroll Area.
 | Content and status | [Text](docs/components/text/README.md), [Code](docs/components/code/README.md), [Code Block](docs/components/code-block/README.md), [Avatar](docs/components/avatar/README.md), [Badge](docs/components/badge/README.md), [Notification Badge](docs/components/notification-badge/README.md), [Card](docs/components/card/README.md), [Divider](docs/components/divider/README.md) |
 | Contextual overlays | [Tooltip](docs/components/tooltip/README.md), [Hover Card](docs/components/hover-card/README.md), [Popover](docs/components/popover/README.md) |
 | Modal surfaces | [Dialog](docs/components/dialog/README.md), [Alert Dialog](docs/components/alert-dialog/README.md), [Drawer](docs/components/drawer/README.md) |
-| Navigation and layout | [Link](docs/components/link/README.md), [App Bar](docs/components/app-bar/README.md), [Stack](docs/components/stack/README.md), [Grid](docs/components/grid/README.md), [Container](docs/components/container/README.md), [Surface](docs/components/surface/README.md), [Scroll Area](docs/components/scroll-area/README.md) |
+| Navigation and layout | [Link](docs/components/link/README.md), [Nav List](docs/components/nav-list/README.md), [App Bar](docs/components/app-bar/README.md), [Stack](docs/components/stack/README.md), [Grid](docs/components/grid/README.md), [Container](docs/components/container/README.md), [Surface](docs/components/surface/README.md), [Scroll Area](docs/components/scroll-area/README.md) |
 
 See the complete [documentation index](docs/README.md) for installation,
 appearance, testing, playground, manual-review, workbook, Consumer, and release

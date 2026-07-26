@@ -36,6 +36,13 @@ export const componentEntries = [
     title: "Link",
   },
   {
+    category: "Navigation",
+    description: "Finished destination lists, sections, and disclosure.",
+    id: "nav-list",
+    route: "/nav-list",
+    title: "Nav List",
+  },
+  {
     category: "Data display",
     description: "Semantic text with finished visual typography.",
     id: "text",
