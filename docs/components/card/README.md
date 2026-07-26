@@ -224,8 +224,8 @@ relationship.
 ## Composition, native props, and refs
 
 Card is Brick-native and deliberately does not expose `asChild` or `render`.
-Root's restricted `as` prop covers its useful document semantics. Native media,
-AspectRatio, and future Image components may be composed as children; Card
+Root's restricted `as` prop covers its useful document semantics. Brick Image
+and other authored media may be composed as children; Card
 does not own their loading, alternative text, crop, or aspect ratio.
 
 ### Whole-card actions

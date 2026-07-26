@@ -1,0 +1,29 @@
+.image-page { inline-size: 100%; }
+.image-overview { max-inline-size: 48rem; }
+.image-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); }
+.image-grid { align-items: start; }
+.image-grid .brick-image { min-inline-size: 0; }
+.image-grid--radii .brick-image { min-block-size: 8rem; }
+.image-action { inline-size: 100%; block-size: auto; padding: 0; overflow: hidden; }
+.image-action .brick-image { inline-size: 100%; }
+.image-customization { align-items: center; }
+.image-narrow { inline-size: min(100%, 11rem); }
+
+@media (max-width: 52rem) {
+  .image-grid--three,
+  .image-grid--fits,
+  .image-grid--positions,
+  .image-grid--radii,
+  .image-customization { --brick-grid-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 36rem) {
+  .image-grid,
+  .image-grid--three,
+  .image-grid--fits,
+  .image-grid--positions,
+  .image-grid--radii,
+  .image-grid--two,
+  .image-grid--stress,
+  .image-customization { --brick-grid-columns: minmax(0, 1fr); }
+}

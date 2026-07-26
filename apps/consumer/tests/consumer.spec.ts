@@ -12,6 +12,14 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
+test("composes Image through its public subpath inside project Card", async ({ page }) => {
+  const image = page.getByRole("img", { name: "Mobile checkout workspace preview" });
+  await expect(image).toBeVisible();
+  await expect(image).toHaveAttribute("width", "1200");
+  await expect(image).toHaveAttribute("height", "675");
+  await expect(image.locator("xpath=..")).toHaveAttribute("data-frame", "subtle");
+});
+
 test("composes Icon through its public subpath in a named control", async ({ page }) => {
   const control = page.getByRole("link", { name: "Jump to workspace" });
   const icon = control.locator(".brick-icon");

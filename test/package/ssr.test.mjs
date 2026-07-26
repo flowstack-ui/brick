@@ -29,6 +29,7 @@ import { Sidebar } from "../../dist/sidebar.js";
 import { Code } from "../../dist/code.js";
 import { CodeBlock } from "../../dist/code-block.js";
 import { Icon } from "../../dist/icon.js";
+import { Image } from "../../dist/image.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
 
 test("Sidebar renders deterministic app-shell anatomy", () => {
@@ -537,4 +538,18 @@ test("Icon renders deterministic decorative and informative SVG presentation", (
   assert.match(informative, /role="img"/);
   assert.match(informative, /aria-label="Status"/);
   assert.doesNotMatch(informative, /aria-hidden/);
+});
+
+test("Image renders deterministic idle and loading fallback anatomy on the server", () => {
+  const idle = renderToString(React.createElement(Image.Root, null,
+    React.createElement(Image.Content, { alt: "Workspace" }),
+    React.createElement(Image.Fallback, null, "Unavailable")));
+  assert.match(idle, /class="brick-image"/);
+  assert.match(idle, /data-state="idle"/);
+  assert.match(idle, /data-fit="cover"/);
+  assert.match(idle, /data-position="center"/);
+  assert.match(idle, /data-radius="none"/);
+  assert.match(idle, /data-frame="none"/);
+  assert.match(idle, /brick-image__fallback/);
+  assert.doesNotMatch(idle, /<img/);
 });

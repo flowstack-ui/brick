@@ -145,18 +145,13 @@
 }
 
 .card-media-example {
-  display: grid;
-  min-block-size: 10rem;
-  place-items: center;
   background:
     radial-gradient(circle, var(--brick-color-accent-soft), transparent 64%),
     var(--brick-color-surface-subtle);
 }
 
-.card-media-example img {
-  inline-size: 6rem;
-  block-size: 6rem;
-  object-fit: contain;
+.card-media-example .brick-image__content {
+  padding: var(--brick-space-5);
 }
 
 .card-single-action-link {

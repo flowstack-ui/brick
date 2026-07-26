@@ -70,6 +70,8 @@ This directory is the public documentation authority for
 
 - [Icon](components/icon/README.md) — SVG sizing, semantic color, direction,
   and decorative or informative accessibility
+- [Image](components/image/README.md) — responsive media, authored fallback,
+  fit, focal position, ratio, and finished framing
 
 ### Navigation and layout
 

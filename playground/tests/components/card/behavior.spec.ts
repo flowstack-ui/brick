@@ -178,7 +178,7 @@ test("Card exposes every restricted Root and Title element", async ({ page }) =>
   }
 });
 
-test("Card composes native media, explicit controls, and an application link", async ({
+test("Card composes Brick Image, explicit controls, and an application link", async ({
   page,
 }) => {
   await page.goto("/card");
@@ -193,7 +193,11 @@ test("Card composes native media, explicit controls, and an application link", a
     "src",
     "/assets/icon-button/brick-image.png",
   );
-  expect((await image.boundingBox())!.width).toBe(96);
+  const imageRoot = image.locator("xpath=..");
+  await expect(imageRoot).toHaveClass(/brick-image/);
+  await expect(imageRoot).toHaveAttribute("data-fit", "contain");
+  await expect(imageRoot).toHaveAttribute("data-frame", "subtle");
+  await expect(imageRoot).toHaveAttribute("data-ratio", "");
 
   const options = controlsCard.getByRole("button", {
     name: "Workspace options",

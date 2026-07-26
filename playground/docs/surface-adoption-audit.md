@@ -52,6 +52,7 @@ different owner.
 | Button | `.button-overview`, specimen-grid shell/cells, appearance grid/panels, customization shell/preview, stress panel, width/form demo outer panels | Button recipes; full-width and native-form geometry; code block |
 | Icon Button | `.icon-button-hero`, specimen-grid shell/cells, appearance grid, customization shell/preview, stress panel | Icon Button recipes; image/SVG diagnostic sizing; code block |
 | Icon | overview, specimen cells, appearance scopes, customization shell/preview, and stress evidence | Icon recipe and SVG-source geometry; rendered-output fixture; code block |
+| Image | overview, specimen cells, appearance scopes, and customization shell | Image frame/fallback paint, fit/focal geometry, exact output, and media constraints |
 | App Bar | overview, specimen-grid shell/cells, appearance panels, customization shell/preview, stress panel, generic surface stage | App Bar roots; position containing block; position markers; phone frame; code block |
 | Text | overview, grid shell/cells, appearance scopes, customization shell/preview, stress panel | typography constraint/overflow evidence; native ref target; code block |
 | Stack | overview, grid shell/cells, appearance scopes, customization shell/preview, stress panel | demo items, wrapping/containment constraints, Stack geometry; code block |

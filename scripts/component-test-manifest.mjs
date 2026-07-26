@@ -23,6 +23,7 @@ export const componentIds = [
   "surface",
   "hover-card",
   "icon",
+  "image",
   "icon-button",
   "input",
   "link",

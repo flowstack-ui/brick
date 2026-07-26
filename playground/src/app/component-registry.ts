@@ -65,6 +65,13 @@ export const componentEntries = [
   },
   {
     category: "Data display",
+    description: "Responsive media with authored fallback and finished framing.",
+    id: "image",
+    route: "/image",
+    title: "Image",
+  },
+  {
+    category: "Data display",
     description: "Inline technical literals with native code semantics.",
     id: "code",
     route: "/code",

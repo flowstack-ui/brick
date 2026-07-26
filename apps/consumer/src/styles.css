@@ -313,6 +313,11 @@
     block-size: 100%;
   }
 
+  .project-image {
+    margin: var(--brick-space-4);
+    inline-size: calc(100% - (2 * var(--brick-space-4)));
+  }
+
   .project-stats {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -6,6 +6,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- `Image` for authored responsive media with Atom-backed loaded/fallback state,
+  five fit and logical-position recipes, five radii, subtle framing, explicit
+  aspect ratio, native image attributes, and public customization hooks.
 - `Icon` for consumer-supplied SVGs with decorative and informative modes,
   six closed sizes, semantic currentColor tones, and opt-in RTL mirroring.
 - `Sidebar` for Atom-backed expanded, rail, and offcanvas app-shell state with

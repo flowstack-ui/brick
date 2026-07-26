@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   IconButton,
+  Image,
   Text,
   type CardRootElement,
   type CardRootProps,
@@ -315,18 +316,18 @@ export function CardPage() {
           className="card-specimen-grid card-specimen-grid--three"
           data-testid="card-composition"
         >
-          <SpecimenCell label="native image">
+          <SpecimenCell label="Image composition">
             <Card.Root data-testid="card-composition-image">
-              <div className="card-media-example">
-                <img
+              <Image.Root className="card-media-example" fit="contain" frame="subtle" ratio={16 / 9} src="/assets/icon-button/brick-image.png">
+                <Image.Content
                   alt="Three colorful Brick blocks"
-                  src="/assets/icon-button/brick-image.png"
                 />
-              </div>
+                <Image.Fallback>Brick preview unavailable</Image.Fallback>
+              </Image.Root>
               <Card.Header>
                 <Card.Title>Brick workspace</Card.Title>
                 <Card.Description>
-                  Native media remains ordinary authored content.
+                  Finished media composes through Brick Image.
                 </Card.Description>
               </Card.Header>
             </Card.Root>

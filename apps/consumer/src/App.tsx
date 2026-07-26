@@ -9,6 +9,7 @@ import { Dialog } from "@flowstack-ui/brick/dialog";
 import { Drawer } from "@flowstack-ui/brick/drawer";
 import { IconButton } from "@flowstack-ui/brick/icon-button";
 import { Icon } from "@flowstack-ui/brick/icon";
+import { Image } from "@flowstack-ui/brick/image";
 import { Toggle } from "@flowstack-ui/brick/toggle";
 import { ToggleGroup } from "@flowstack-ui/brick/toggle-group";
 import { Tooltip } from "@flowstack-ui/brick/tooltip";
@@ -393,6 +394,10 @@ export function App() {
               size="lg"
               variant="elevated"
             >
+              <Image.Root className="project-image" frame="subtle" radius="md" ratio={16 / 9} src="/workspace-image.svg">
+                <Image.Content alt="Mobile checkout workspace preview" height={675} loading="lazy" width={1200} />
+                <Image.Fallback>Workspace preview unavailable</Image.Fallback>
+              </Image.Root>
               <Card.Header>
                 <Card.Title as="h3" id="project-title">Mobile checkout refresh</Card.Title>
                 <Card.Description>
