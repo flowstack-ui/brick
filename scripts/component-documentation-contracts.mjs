@@ -518,6 +518,24 @@ export const componentDocumentationContracts = {
       "--brick-hover-card-max-inline-size-lg",
     ],
   },
+  icon: {
+    source: "src/components/icon/Icon.tsx",
+    exportSource: "src/components/icon/index.ts",
+    css: "src/components/icon/icon.css",
+    exports: ["Icon", "IconProps", "IconSize", "IconTone"],
+    unions: {
+      IconSize: ["2xs", "xs", "sm", "md", "lg", "xl"],
+      IconTone: ["inherit", "primary", "secondary", "muted", "accent", "info", "success", "warning", "danger"],
+    },
+    defaults: { size: "md", tone: "inherit", directional: false, asChild: false },
+    dataAttributes: ["data-directional", "data-size", "data-slot", "data-tone"],
+    publicTokens: [
+      "--brick-icon-size-2xs", "--brick-icon-size-xs", "--brick-icon-size-sm",
+      "--brick-icon-size-md", "--brick-icon-size-lg", "--brick-icon-size-xl",
+      "--brick-icon-size", "--brick-icon-color", "--brick-icon-vertical-align",
+      "--brick-icon-direction-scale",
+    ],
+  },
   "checkbox-group": {
     source: "src/components/checkbox-group/CheckboxGroup.tsx",
     exportSource: "src/components/checkbox-group/index.ts",

@@ -15,6 +15,12 @@ export {
   type IconButtonVariant,
 } from "./components/icon-button/index.js";
 export {
+  Icon,
+  type IconProps,
+  type IconSize,
+  type IconTone,
+} from "./components/icon/index.js";
+export {
   AppBar,
   AppBarCenter,
   AppBarEnd,

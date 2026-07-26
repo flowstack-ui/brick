@@ -65,6 +65,7 @@ import {
 } from "../components/popover/PopoverPage.js";
 import { InputPage, inputScenarios } from "../components/input/InputPage.js";
 import { TextPage, textScenarios } from "../components/text/TextPage.js";
+import { IconPage, iconScenarios } from "../components/icon/IconPage.js";
 import { CodePage, codeScenarios } from "../components/code/CodePage.js";
 import { CodeBlockPage, codeBlockScenarios } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
@@ -258,6 +259,10 @@ export function PlaygroundApp() {
         <TextPage />
       </PlaygroundShell>
     );
+  }
+
+  if (entry.id === "icon") {
+    return <PlaygroundShell entry={entry} scenarios={iconScenarios}><IconPage /></PlaygroundShell>;
   }
 
   if (entry.id === "code") {

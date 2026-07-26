@@ -58,6 +58,13 @@ export const componentEntries = [
   },
   {
     category: "Data display",
+    description: "Sized, semantic, accessible SVG presentation.",
+    id: "icon",
+    route: "/icon",
+    title: "Icon",
+  },
+  {
+    category: "Data display",
     description: "Inline technical literals with native code semantics.",
     id: "code",
     route: "/code",

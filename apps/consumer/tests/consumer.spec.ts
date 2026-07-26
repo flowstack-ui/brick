@@ -12,6 +12,15 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
+test("composes Icon through its public subpath in a named control", async ({ page }) => {
+  const control = page.getByRole("link", { name: "Jump to workspace" });
+  const icon = control.locator(".brick-icon");
+  await expect(icon).toHaveAttribute("aria-hidden", "true");
+  await expect(icon).toHaveAttribute("data-size", "xs");
+  await expect(icon.locator("svg")).toHaveCount(1);
+  await expect(page.getByRole("img", { name: "Publication pending" })).toHaveAttribute("data-tone", "muted");
+});
+
 test("composes Code and Code Block through their public subpaths", async ({ page }) => {
   await expect(page.locator("code.brick-code", { hasText: "npm install" }).first()).toBeVisible();
   const block = page.locator("[data-slot='code-block']");

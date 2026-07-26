@@ -39,6 +39,10 @@
       "types": "./dist/icon-button.d.ts",
       "default": "./dist/icon-button.js"
     },
+    "./icon": {
+      "types": "./dist/icon.d.ts",
+      "default": "./dist/icon.js"
+    },
     "./app-bar": {
       "types": "./dist/app-bar.d.ts",
       "default": "./dist/app-bar.js"
@@ -215,7 +219,8 @@
     "verify:playground-code": "node scripts/verify-playground-code.mjs",
     "verify:playground-nav-list": "node scripts/verify-playground-nav-list.mjs",
     "verify:playground-sidebar": "node scripts/verify-playground-sidebar.mjs",
-    "check": "npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run verify:playground-code && npm run verify:playground-nav-list && npm run verify:playground-sidebar && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
+    "verify:playground-icon": "node scripts/verify-playground-icon.mjs",
+    "check": "npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run verify:playground-code && npm run verify:playground-nav-list && npm run verify:playground-sidebar && npm run verify:playground-icon && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
     "prepublishOnly": "npm run build"
   },
   "browserslist": [

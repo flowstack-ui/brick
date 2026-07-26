@@ -72,6 +72,7 @@ const componentSymbols = {
   container: "Container",
   surface: "Surface",
   "hover-card": "HoverCard",
+  icon: "Icon",
   "icon-button": "IconButton",
   input: "Input",
   link: "Link",

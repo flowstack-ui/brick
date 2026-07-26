@@ -1,0 +1,10 @@
+.icon-page { inline-size: 100%; }
+.icon-grid { gap: var(--brick-space-4); }
+.icon-cell { min-inline-size: 0; }
+.icon-cell__preview { display: flex; align-items: center; gap: var(--brick-space-3); min-block-size: 4rem; margin-block-start: var(--brick-space-3); }
+.icon-hero { display: grid; min-block-size: 8rem; place-items: center; }
+.icon-grid--sizes .icon-cell__preview { justify-content: center; }
+.icon-customization { gap: var(--brick-space-5); align-items: center; }
+.icon-customization__preview { display: grid; min-block-size: 10rem; place-items: center; }
+.icon-narrow-frame { display: grid; inline-size: 3.25rem; min-block-size: 4rem; place-items: center; outline: 1px dashed var(--brick-color-border); }
+@media (max-width: 48rem) { .icon-grid, .icon-grid--sizes, .icon-customization { grid-template-columns: minmax(0, 1fr); } }

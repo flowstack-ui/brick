@@ -28,6 +28,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/icon-button.d.ts",
       default: "./dist/icon-button.js",
     },
+    "./icon": {
+      types: "./dist/icon.d.ts",
+      default: "./dist/icon.js",
+    },
     "./app-bar": {
       types: "./dist/app-bar.d.ts",
       default: "./dist/app-bar.js",
@@ -159,6 +163,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const brick = await import(new URL("../../dist/index.js", import.meta.url));
   const button = await import(new URL("../../dist/button.js", import.meta.url));
   const iconButton = await import(new URL("../../dist/icon-button.js", import.meta.url));
+  const icon = await import(new URL("../../dist/icon.js", import.meta.url));
   const appBar = await import(new URL("../../dist/app-bar.js", import.meta.url));
   const card = await import(new URL("../../dist/card.js", import.meta.url));
   const dialog = await import(new URL("../../dist/dialog.js", import.meta.url));
@@ -189,9 +194,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const sidebar = await import(new URL("../../dist/sidebar.js", import.meta.url));
   const code = await import(new URL("../../dist/code.js", import.meta.url));
   const codeBlock = await import(new URL("../../dist/code-block.js", import.meta.url));
-  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Button", "Card", "Checkbox", "CheckboxGroup", "Code", "CodeBlock", "CodeBlockActions", "CodeBlockContent", "CodeBlockCopyIndicator", "CodeBlockCopyStatus", "CodeBlockCopyTrigger", "CodeBlockHeader", "CodeBlockLanguage", "CodeBlockRoot", "CodeBlockTitle", "Container", "Dialog", "Divider", "Drawer", "Field", "Fieldset", "Form", "Grid", "HStack", "HoverCard", "IconButton", "Input", "Link", "NavList", "NavListItem", "NavListLink", "NavListList", "NavListRoot", "NavListSection", "NavListSectionContent", "NavListSectionLabel", "NavListSectionTrigger", "NotificationBadge", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverBody", "PopoverClose", "PopoverContent", "PopoverDescription", "PopoverFooter", "PopoverHeader", "PopoverPortal", "PopoverRoot", "PopoverTitle", "PopoverTrigger", "ScrollArea", "ScrollAreaRoot", "ScrollAreaViewport", "Sidebar", "SidebarContent", "SidebarFooter", "SidebarHeader", "SidebarMain", "SidebarPanel", "SidebarRoot", "SidebarTrigger", "Stack", "Surface", "Text", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot", "Tooltip", "VStack"]);
+  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Button", "Card", "Checkbox", "CheckboxGroup", "Code", "CodeBlock", "CodeBlockActions", "CodeBlockContent", "CodeBlockCopyIndicator", "CodeBlockCopyStatus", "CodeBlockCopyTrigger", "CodeBlockHeader", "CodeBlockLanguage", "CodeBlockRoot", "CodeBlockTitle", "Container", "Dialog", "Divider", "Drawer", "Field", "Fieldset", "Form", "Grid", "HStack", "HoverCard", "Icon", "IconButton", "Input", "Link", "NavList", "NavListItem", "NavListLink", "NavListList", "NavListRoot", "NavListSection", "NavListSectionContent", "NavListSectionLabel", "NavListSectionTrigger", "NotificationBadge", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverBody", "PopoverClose", "PopoverContent", "PopoverDescription", "PopoverFooter", "PopoverHeader", "PopoverPortal", "PopoverRoot", "PopoverTitle", "PopoverTrigger", "ScrollArea", "ScrollAreaRoot", "ScrollAreaViewport", "Sidebar", "SidebarContent", "SidebarFooter", "SidebarHeader", "SidebarMain", "SidebarPanel", "SidebarRoot", "SidebarTrigger", "Stack", "Surface", "Text", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot", "Tooltip", "VStack"]);
   assert.equal(button.Button, brick.Button);
   assert.equal(iconButton.IconButton, brick.IconButton);
+  assert.equal(icon.Icon, brick.Icon);
   assert.equal(appBar.AppBar, brick.AppBar);
   assert.equal(appBar.AppBarRoot, brick.AppBar.Root);
   assert.equal(appBar.AppBarToolbar, brick.AppBar.Toolbar);
@@ -266,6 +272,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /brick\.foundations/);
   assert.match(styles, /\.brick-button/);
   assert.match(styles, /\.brick-icon-button/);
+  assert.match(styles, /\.brick-icon/);
   assert.match(styles, /\.brick-app-bar/);
   assert.match(styles, /\.brick-card/);
   assert.match(styles, /\.brick-dialog-content/);
@@ -302,6 +309,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /box-sizing:\s*border-box/);
   assert.match(styles, /--brick-button-background/);
   assert.match(styles, /--brick-icon-button-size/);
+  assert.match(styles, /--brick-icon-size/);
   assert.match(styles, /--brick-app-bar-background/);
   assert.match(styles, /prefers-reduced-transparency/);
   assert.match(styles, /--brick-card-space/);

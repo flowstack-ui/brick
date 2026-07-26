@@ -8,6 +8,7 @@ import { Card } from "@flowstack-ui/brick/card";
 import { Dialog } from "@flowstack-ui/brick/dialog";
 import { Drawer } from "@flowstack-ui/brick/drawer";
 import { IconButton } from "@flowstack-ui/brick/icon-button";
+import { Icon } from "@flowstack-ui/brick/icon";
 import { Toggle } from "@flowstack-ui/brick/toggle";
 import { ToggleGroup } from "@flowstack-ui/brick/toggle-group";
 import { Tooltip } from "@flowstack-ui/brick/tooltip";
@@ -113,7 +114,7 @@ export function App() {
           </AppBar.Center>
 
           <AppBar.End>
-            <Tooltip.Root><Tooltip.Trigger asChild><IconButton aria-label="Jump to workspace" href="#workspace" size="sm"><ArrowIcon /></IconButton></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>Jump to workspace<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root>
+            <Tooltip.Root><Tooltip.Trigger asChild><IconButton aria-label="Jump to workspace" href="#workspace" size="sm"><Icon size="xs"><ArrowIcon /></Icon></IconButton></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content>Jump to workspace<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root>
             <Popover.Root>
               <Popover.Trigger asChild><IconButton aria-label="Workspace settings" size="sm" tone="neutral" variant="ghost"><SettingsIcon /></IconButton></Popover.Trigger>
               <Popover.Portal>
@@ -206,11 +207,14 @@ export function App() {
               View workspace
             </Link>
           </HStack>
-          <Text as="p" className="activity" aria-live="polite" tone="muted" variant="body-sm">
-            {publishCount === 0
-              ? "Project has not been published."
-              : `Published ${publishCount} ${publishCount === 1 ? "time" : "times"}.`}
-          </Text>
+          <HStack gap="2">
+            <Icon label={publishCount === 0 ? "Publication pending" : "Published"} size="xs" tone={publishCount === 0 ? "muted" : "success"}><SparkIcon /></Icon>
+            <Text as="p" className="activity" aria-live="polite" tone="muted" variant="body-sm">
+              {publishCount === 0
+                ? "Project has not been published."
+                : `Published ${publishCount} ${publishCount === 1 ? "time" : "times"}.`}
+            </Text>
+          </HStack>
         </VStack>
 
         <Surface as="section" bordered inset="lg" aria-labelledby="activity-title">

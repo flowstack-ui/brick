@@ -66,6 +66,11 @@ This directory is the public documentation authority for
   explicit outcomes
 - [Drawer](components/drawer/README.md) — logical-edge modal surface
 
+### Content primitives
+
+- [Icon](components/icon/README.md) — SVG sizing, semantic color, direction,
+  and decorative or informative accessibility
+
 ### Navigation and layout
 
 - [Link](components/link/README.md) — inline and standalone native navigation

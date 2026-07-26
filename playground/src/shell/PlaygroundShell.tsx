@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   Drawer,
+  Icon,
   IconButton,
   HStack,
   Link,
@@ -65,7 +66,7 @@ export function PlaygroundShell({
               ref={mobileNavigationTriggerRef}
               size="sm"
             >
-              <MenuIcon />
+              <Icon size="xs"><MenuIcon /></Icon>
             </IconButton>
           </AppBar.End>
         </AppBar.Toolbar>
@@ -92,7 +93,7 @@ export function PlaygroundShell({
               </VStack>
               <Drawer.Close asChild>
                 <IconButton aria-label="Close component navigation" size="sm">
-                  <CloseIcon />
+                  <Icon size="xs"><CloseIcon /></Icon>
                 </IconButton>
               </Drawer.Close>
             </Drawer.Header>

@@ -6,6 +6,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- `Icon` for consumer-supplied SVGs with decorative and informative modes,
+  six closed sizes, semantic currentColor tones, and opt-in RTL mirroring.
 - `Sidebar` for Atom-backed expanded, rail, and offcanvas app-shell state with
   docked/floating surfaces, closed widths, static/sticky positioning, and an
   application-owned mobile Drawer boundary.

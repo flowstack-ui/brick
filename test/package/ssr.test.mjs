@@ -28,6 +28,7 @@ import { NavList } from "../../dist/nav-list.js";
 import { Sidebar } from "../../dist/sidebar.js";
 import { Code } from "../../dist/code.js";
 import { CodeBlock } from "../../dist/code-block.js";
+import { Icon } from "../../dist/icon.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
 
 test("Sidebar renders deterministic app-shell anatomy", () => {
@@ -523,4 +524,17 @@ test("Checkbox family renders server-stable visual and semantic anatomy", () => 
   assert.match(groupMarkup, /class="brick-checkbox-group-item"/);
   assert.match(groupMarkup, new RegExp(`id="${labelledBy}"[^>]*>Email`));
   assert.match(groupMarkup, new RegExp(`id="${describedBy}"[^>]*>Weekly summary`));
+});
+
+test("Icon renders deterministic decorative and informative SVG presentation", () => {
+  const graphic = React.createElement("svg", { viewBox: "0 0 16 16" }, React.createElement("circle", { cx: 8, cy: 8, r: 4 }));
+  const decorative = renderToString(React.createElement(Icon, null, graphic));
+  assert.match(decorative, /^<span/);
+  assert.match(decorative, /aria-hidden="true"/);
+  assert.match(decorative, /data-size="md"/);
+  assert.match(decorative, /data-tone="inherit"/);
+  const informative = renderToString(React.createElement(Icon, { label: "Status", tone: "success" }, graphic));
+  assert.match(informative, /role="img"/);
+  assert.match(informative, /aria-label="Status"/);
+  assert.doesNotMatch(informative, /aria-hidden/);
 });
