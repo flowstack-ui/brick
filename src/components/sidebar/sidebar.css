@@ -1,0 +1,107 @@
+@layer brick.components {
+  .brick-sidebar {
+    --brick-sidebar-expanded-width-sm: 14rem;
+    --brick-sidebar-expanded-width-md: 17rem;
+    --brick-sidebar-expanded-width-lg: 20rem;
+    --brick-sidebar-rail-width-sm: 3.25rem;
+    --brick-sidebar-rail-width-md: 3.75rem;
+    --brick-sidebar-rail-width-lg: 4.25rem;
+    --brick-sidebar-panel-width: var(--brick-sidebar-expanded-width-md);
+    --brick-sidebar-panel-background: var(--brick-color-surface-base);
+    --brick-sidebar-panel-border: var(--brick-color-border-subtle);
+    --brick-sidebar-panel-radius: 0;
+    --brick-sidebar-panel-gap: 0px;
+    --brick-sidebar-region-padding-inline: var(--brick-space-4);
+    --brick-sidebar-region-padding-block: var(--brick-space-4);
+    --brick-sidebar-content-gap: var(--brick-space-3);
+    --brick-sidebar-sticky-offset: 0px;
+    --brick-sidebar-available-block-size: calc(100dvh - var(--brick-sidebar-sticky-offset));
+    --brick-sidebar-transition-duration: 180ms;
+    --brick-sidebar-transition-easing: ease;
+
+    display: grid;
+    min-inline-size: 0;
+    grid-template-columns: minmax(0, var(--brick-sidebar-panel-width)) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--brick-sidebar-panel-gap);
+  }
+
+  .brick-sidebar[data-size="sm"] { --brick-sidebar-panel-width: var(--brick-sidebar-expanded-width-sm); }
+  .brick-sidebar[data-size="lg"] { --brick-sidebar-panel-width: var(--brick-sidebar-expanded-width-lg); }
+  .brick-sidebar[data-state="rail"] { --brick-sidebar-panel-width: var(--brick-sidebar-rail-width-md); }
+  .brick-sidebar[data-state="rail"][data-size="sm"] { --brick-sidebar-panel-width: var(--brick-sidebar-rail-width-sm); }
+  .brick-sidebar[data-state="rail"][data-size="lg"] { --brick-sidebar-panel-width: var(--brick-sidebar-rail-width-lg); }
+  .brick-sidebar[data-state="offcanvas"] { --brick-sidebar-panel-width: 0px; --brick-sidebar-panel-gap: 0px; }
+
+  .brick-sidebar[data-side="right"] { grid-template-columns: minmax(0, 1fr) minmax(0, var(--brick-sidebar-panel-width)); }
+  .brick-sidebar[data-side="right"] > .brick-sidebar__panel { grid-column: 2; }
+  .brick-sidebar[data-side="right"] > .brick-sidebar__main { grid-column: 1; grid-row: 1; }
+
+  .brick-sidebar[data-variant="floating"] {
+    --brick-sidebar-panel-background: var(--brick-color-surface-raised);
+    --brick-sidebar-panel-radius: var(--brick-radius-surface);
+    --brick-sidebar-panel-gap: var(--brick-space-3);
+    padding: var(--brick-space-3);
+  }
+
+  .brick-sidebar__panel {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    overflow: clip;
+    min-inline-size: 0;
+    inline-size: var(--brick-sidebar-panel-width);
+    max-inline-size: 100%;
+    align-self: stretch;
+    flex-direction: column;
+    border-inline-end: var(--brick-border-width) solid var(--brick-sidebar-panel-border);
+    border-radius: var(--brick-sidebar-panel-radius);
+    background: var(--brick-sidebar-panel-background);
+    color: var(--brick-color-text-primary);
+  }
+
+  .brick-sidebar[data-side="right"] > .brick-sidebar__panel {
+    border-inline-start: var(--brick-border-width) solid var(--brick-sidebar-panel-border);
+    border-inline-end: 0;
+  }
+  .brick-sidebar[data-variant="floating"] > .brick-sidebar__panel { border: var(--brick-border-width) solid var(--brick-sidebar-panel-border); box-shadow: var(--brick-shadow-raised); }
+  .brick-sidebar[data-position="sticky"] > .brick-sidebar__panel { position: sticky; inset-block-start: var(--brick-sidebar-sticky-offset); block-size: var(--brick-sidebar-available-block-size); min-block-size: 0; }
+  .brick-sidebar[data-state="offcanvas"] > .brick-sidebar__panel { visibility: hidden; inline-size: 0; block-size: 0; min-block-size: 0; align-self: start; border: 0; translate: -100% 0; }
+  .brick-sidebar[data-state="offcanvas"][data-side="right"] > .brick-sidebar__panel { translate: 100% 0; }
+
+  .brick-sidebar__header,
+  .brick-sidebar__footer { display: flex; flex: 0 0 auto; align-items: center; gap: var(--brick-sidebar-content-gap); padding: var(--brick-sidebar-region-padding-block) var(--brick-sidebar-region-padding-inline); }
+  .brick-sidebar__header { border-block-end: var(--brick-border-width) solid var(--brick-sidebar-panel-border); }
+  .brick-sidebar__footer { border-block-start: var(--brick-border-width) solid var(--brick-sidebar-panel-border); }
+  .brick-sidebar__content { display: flex; min-block-size: 0; min-inline-size: 0; flex: 1 1 auto; flex-direction: column; gap: var(--brick-sidebar-content-gap); padding: var(--brick-sidebar-region-padding-block) var(--brick-sidebar-region-padding-inline); }
+  .brick-sidebar__main { min-inline-size: 0; }
+
+  .brick-sidebar__trigger {
+    box-sizing: border-box;
+    display: inline-flex;
+    min-inline-size: var(--brick-control-min-block-size-sm);
+    min-block-size: var(--brick-control-min-block-size-sm);
+    align-items: center;
+    justify-content: center;
+    padding: var(--brick-space-2);
+    border: var(--brick-border-width) solid transparent;
+    border-radius: var(--brick-radius-control);
+    background: transparent;
+    color: var(--brick-color-text-primary);
+    cursor: pointer;
+  }
+  .brick-sidebar__trigger:hover:not(:disabled) { background: var(--brick-color-surface-subtle); }
+  .brick-sidebar__trigger:focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring); outline-offset: var(--brick-border-focus-offset); }
+  .brick-sidebar__trigger:disabled { color: var(--brick-color-text-muted); cursor: not-allowed; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .brick-sidebar { transition: grid-template-columns var(--brick-sidebar-transition-duration) var(--brick-sidebar-transition-easing), gap var(--brick-sidebar-transition-duration) var(--brick-sidebar-transition-easing); }
+    .brick-sidebar__panel { transition: inline-size var(--brick-sidebar-transition-duration) var(--brick-sidebar-transition-easing), translate var(--brick-sidebar-transition-duration) var(--brick-sidebar-transition-easing); }
+  }
+
+  @media (forced-colors: active) {
+    .brick-sidebar { --brick-sidebar-panel-background: Canvas; --brick-sidebar-panel-border: CanvasText; }
+    .brick-sidebar__trigger { border-color: ButtonBorder; color: ButtonText; }
+    .brick-sidebar__trigger:focus-visible { outline-color: Highlight; }
+  }
+}

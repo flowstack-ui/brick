@@ -13,6 +13,7 @@ import {
 } from "../components/app-bar/AppBarPage.js";
 import { LinkPage, linkScenarios } from "../components/link/LinkPage.js";
 import { NavListPage, navListScenarios } from "../components/nav-list/NavListPage.js";
+import { SidebarPage, sidebarScenarios } from "../components/sidebar/SidebarPage.js";
 import {
   CardPage,
   cardScenarios,
@@ -133,6 +134,10 @@ export function PlaygroundApp() {
         <NavListPage />
       </PlaygroundShell>
     );
+  }
+
+  if (entry.id === "sidebar") {
+    return <PlaygroundShell entry={entry} scenarios={sidebarScenarios}><SidebarPage /></PlaygroundShell>;
   }
 
   if (entry.id === "icon-button") {

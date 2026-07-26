@@ -25,9 +25,21 @@ import { Surface } from "../../dist/surface.js";
 import { Divider } from "../../dist/divider.js";
 import { ScrollArea } from "../../dist/scroll-area.js";
 import { NavList } from "../../dist/nav-list.js";
+import { Sidebar } from "../../dist/sidebar.js";
 import { Code } from "../../dist/code.js";
 import { CodeBlock } from "../../dist/code-block.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("Sidebar renders deterministic app-shell anatomy", () => {
+  const markup = renderToString(React.createElement(Sidebar.Root, { defaultState: "rail", collapsedState: "rail", side: "right", variant: "floating" }, React.createElement(Sidebar.Panel, { "aria-label": "Workspace" }, React.createElement(Sidebar.Content, null, "Navigation")), React.createElement(Sidebar.Main, null, "Main")));
+  assert.match(markup, /^<div/);
+  assert.match(markup, /class="brick-sidebar"/);
+  assert.match(markup, /data-state="rail"/);
+  assert.match(markup, /data-side="right"/);
+  assert.match(markup, /data-variant="floating"/);
+  assert.match(markup, /class="brick-sidebar__content"/);
+  assert.match(markup, /<main/);
+});
 
 test("Nav List renders deterministic navigation anatomy", () => {
   const markup = renderToString(

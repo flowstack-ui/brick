@@ -10,6 +10,7 @@ export const componentIds = [
   "code",
   "code-block",
   "nav-list",
+  "sidebar",
   "dialog",
   "drawer",
   "divider",

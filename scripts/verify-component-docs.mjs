@@ -60,6 +60,7 @@ const componentSymbols = {
   code: "Code",
   "code-block": "CodeBlock",
   "nav-list": "NavList",
+  sidebar: "Sidebar",
   dialog: "Dialog",
   drawer: "Drawer",
   divider: "Divider",

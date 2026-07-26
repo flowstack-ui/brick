@@ -8,6 +8,7 @@ import {
   HStack,
   Link,
   ScrollArea,
+  Sidebar,
   Text,
   VStack,
 } from "@flowstack-ui/brick";
@@ -106,27 +107,30 @@ export function PlaygroundShell({
         </Drawer.Portal>
       </Drawer.Root>
 
-      <div className="evidence-layout">
-        <aside className="evidence-sidebar">
-          <ScrollArea.Root
-            className="evidence-sidebar-scroll"
-            scrollbarVisibility="interaction"
-          >
-            <ScrollArea.Viewport>
-              <ComponentNavigation
-                currentRoute={entry.route}
-                entries={playgroundEntries}
-              />
-            </ScrollArea.Viewport>
-          </ScrollArea.Root>
-        </aside>
+      <Sidebar.Root className="evidence-layout" position="sticky">
+        <Sidebar.Panel aria-label="Component index" className="evidence-sidebar">
+          <Sidebar.Content>
+            <ScrollArea.Root
+              className="evidence-sidebar-scroll"
+              scrollbarVisibility="interaction"
+            >
+              <ScrollArea.Viewport>
+                <ComponentNavigation
+                  currentRoute={entry.route}
+                  entries={playgroundEntries}
+                />
+              </ScrollArea.Viewport>
+            </ScrollArea.Root>
+          </Sidebar.Content>
+        </Sidebar.Panel>
 
-        <Container
-          as="main"
-          className="evidence-main-column"
-          gutter="lg"
-          measure="max"
-        >
+        <Sidebar.Main asChild>
+          <Container
+            as="main"
+            className="evidence-main-column"
+            gutter="lg"
+            measure="max"
+          >
           <div className="evidence-review-header">
             <Container
               className="evidence-page-header"
@@ -201,8 +205,9 @@ export function PlaygroundShell({
               </Button>
             </HStack>
           </Container>
-        </Container>
-      </div>
+          </Container>
+        </Sidebar.Main>
+      </Sidebar.Root>
     </div>
   );
 }

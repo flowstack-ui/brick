@@ -1,0 +1,8 @@
+.sidebar-page { gap: 0; }
+.sidebar-grid { gap: var(--brick-space-4); }
+.sidebar-cell { display: flex; flex-direction: column; gap: var(--brick-space-3); overflow: hidden; }
+.sidebar-main-demo { min-block-size: 9rem; padding: var(--brick-space-4); background: var(--brick-color-surface-canvas); }
+.sidebar-region-scroll { block-size: 10rem; }
+.sidebar-sticky-stage { overflow: auto; block-size: 18rem; }
+.sidebar-sticky-stage .brick-sidebar { --brick-sidebar-available-block-size: 14rem; }
+@media (max-width: 48rem) { .sidebar-grid { grid-template-columns: minmax(0, 1fr); } }

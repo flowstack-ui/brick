@@ -1249,6 +1249,28 @@ export const componentDocumentationContracts = {
       "--brick-nav-list-focus-ring",
     ],
   },
+  sidebar: {
+    source: "src/components/sidebar/Sidebar.tsx",
+    exportSource: "src/components/sidebar/index.ts",
+    css: "src/components/sidebar/sidebar.css",
+    exports: ["Sidebar"],
+    unions: {
+      SidebarVariant: ["docked", "floating"],
+      SidebarSize: ["sm", "md", "lg"],
+      SidebarPosition: ["static", "sticky"],
+    },
+    defaults: { variant: "docked", size: "md", position: "static" },
+    dataAttributes: ["data-position", "data-size", "data-variant"],
+    publicTokens: [
+      "--brick-sidebar-expanded-width-sm", "--brick-sidebar-expanded-width-md",
+      "--brick-sidebar-expanded-width-lg", "--brick-sidebar-rail-width-sm",
+      "--brick-sidebar-rail-width-md", "--brick-sidebar-rail-width-lg",
+      "--brick-sidebar-panel-width", "--brick-sidebar-panel-background",
+      "--brick-sidebar-panel-border", "--brick-sidebar-panel-radius",
+      "--brick-sidebar-panel-gap", "--brick-sidebar-sticky-offset",
+      "--brick-sidebar-available-block-size", "--brick-sidebar-transition-duration",
+    ],
+  },
   surface: {
     source: "src/components/surface/Surface.tsx",
     exportSource: "src/components/surface/index.ts",

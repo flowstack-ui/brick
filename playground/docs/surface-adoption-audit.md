@@ -63,6 +63,7 @@ different owner.
 | Code Block | generic outer evidence cells and appearance stages | Code Block recipes, technical surface paint, overflow, selection, and source anatomy |
 | Link | overview, specimen-grid cells, appearance scopes, customization shell/preview, stress panel | Link recipes, inline wrapping, composition output, and code block |
 | Nav List | overview, specimen cells, appearance scopes, customization shell, and stress panel | Nav List rows, current-state recipes, disclosure anatomy, and composition output |
+| Sidebar | route evidence stages and customization shell | Sidebar Panel paint, state geometry, and desktop shell ownership |
 | Card | overview stage, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Card roots and their variant backgrounds; code block |
 | Dialog | overview/action/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Dialog and overlay roots; static branch reconstruction; portal/positioning stages; code block |
 | Alert Dialog | overview/action/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Alert Dialog and overlay roots; decision/action evidence; portal stages; code block |

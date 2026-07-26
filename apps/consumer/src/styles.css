@@ -144,6 +144,10 @@
     margin: 1.5rem 0 0;
   }
 
+  .consumer-sidebar-proof {
+    --brick-sidebar-expanded-width-sm: min(14rem, 45%);
+  }
+
   .hero-actions {
     display: flex;
     flex-wrap: wrap;

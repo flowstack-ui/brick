@@ -43,6 +43,13 @@ export const componentEntries = [
     title: "Nav List",
   },
   {
+    category: "Layout",
+    description: "Persistent complementary panel and coordinated main content.",
+    id: "sidebar",
+    route: "/sidebar",
+    title: "Sidebar",
+  },
+  {
     category: "Data display",
     description: "Semantic text with finished visual typography.",
     id: "text",

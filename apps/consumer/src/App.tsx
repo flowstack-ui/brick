@@ -30,6 +30,7 @@ import { ScrollArea } from "@flowstack-ui/brick/scroll-area";
 import { Code } from "@flowstack-ui/brick/code";
 import { CodeBlock } from "@flowstack-ui/brick/code-block";
 import { NavList } from "@flowstack-ui/brick/nav-list";
+import { Sidebar } from "@flowstack-ui/brick/sidebar";
 
 type Appearance = "light" | "dark";
 
@@ -144,6 +145,15 @@ export function App() {
           </NavList.List>
         </NavList.Root>
         <main>
+        <Sidebar.Root className="consumer-sidebar-proof" collapsedState="rail" size="sm">
+          <Sidebar.Panel aria-label="Project settings sidebar">
+            <Sidebar.Header><Text weight="semibold">Project settings</Text></Sidebar.Header>
+            <Sidebar.Content>
+              <NavList.Root aria-label="Project settings navigation" size="sm"><NavList.List><NavList.Item><NavList.Link active href="#workspace">Workspace</NavList.Link></NavList.Item><NavList.Item><NavList.Link href="#publishing-preferences">Publishing</NavList.Link></NavList.Item></NavList.List></NavList.Root>
+            </Sidebar.Content>
+          </Sidebar.Panel>
+          <Sidebar.Main asChild><Surface as="section" inset="md" level="subtle"><HStack gap="3" wrap><Sidebar.Trigger aria-label="Toggle project settings sidebar">☰</Sidebar.Trigger><Text>Persistent project tools composed from the packed public artifact.</Text></HStack></Surface></Sidebar.Main>
+        </Sidebar.Root>
         <VStack as="section" className="hero" aria-labelledby="hero-title" gap="4">
           <Text as="p" className="eyebrow" tone="accent" variant="caption" weight="semibold">
             Independent package integration

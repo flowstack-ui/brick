@@ -6,6 +6,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- `Sidebar` for Atom-backed expanded, rail, and offcanvas app-shell state with
+  docked/floating surfaces, closed widths, static/sticky positioning, and an
+  application-owned mobile Drawer boundary.
 - `NavList` for native grouped destination lists with three current-state
   recipes, two tones, three sizes, supporting link anatomy, and Atom-backed
   disclosure, current, disabled, and composition behavior.

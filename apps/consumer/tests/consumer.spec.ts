@@ -260,6 +260,18 @@ test("composes Nav List through its public subpath for workspace sections", asyn
   await expect(navigation.getByRole("listitem")).toHaveCount(3);
 });
 
+test("composes Sidebar through its public subpath with Nav List and external Trigger", async ({ page }) => {
+  const panel = page.getByRole("complementary", { name: "Project settings sidebar" });
+  const root = panel.locator("..");
+  await expect(root).toHaveClass(/brick-sidebar/);
+  await expect(panel).toHaveClass(/brick-sidebar__panel/);
+  const trigger = page.getByRole("button", { name: "Toggle project settings sidebar" });
+  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  await trigger.click();
+  await expect(root).toHaveAttribute("data-state", "rail");
+  await expect(panel.getByRole("navigation", { name: "Project settings navigation" })).toBeVisible();
+});
+
 test("composes the complete public Form, Field, and Fieldset foundation", async ({ page }) => {
   const form = page.getByRole("form", { name: "Invite teammate" });
   const field = form.locator("#invite-email-field");
