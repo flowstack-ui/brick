@@ -1,3 +1,4 @@
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
   Button,
@@ -352,8 +353,7 @@ export function GridPage() {
               <Text as="p" tone="secondary" variant="body-sm">
                 Row gap, column gap, border, and padding change on this instance.
               </Text>
-              <pre aria-label="Grid customization example" tabIndex={0}>
-                <code>{`<Grid.Root
+              <PlaygroundCodeBlock aria-label="Grid customization example" tabIndex={0}>{`<Grid.Root
   columns={2}
   gap="2"
   style={{
@@ -362,8 +362,7 @@ export function GridPage() {
     border: "2px dashed var(--brick-color-accent-border)",
     padding: "var(--brick-space-4)",
   }}
->`}</code>
-              </pre>
+>`}</PlaygroundCodeBlock>
             </VStack>
             <Grid.Root columns={2} gap="2" style={customGridStyle}>
               <IdenticalTiles />

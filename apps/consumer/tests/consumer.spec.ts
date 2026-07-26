@@ -12,6 +12,13 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
+test("composes Code and Code Block through their public subpaths", async ({ page }) => {
+  await expect(page.locator("code.brick-code", { hasText: "npm install" }).first()).toBeVisible();
+  const block = page.locator("[data-slot='code-block']");
+  await expect(block.locator("pre > code")).toHaveText("npm install @flowstack-ui/brick");
+  await expect(block.locator("[data-slot='code-block-content']")).toHaveAttribute("aria-label", "Brick install command");
+});
+
 test("renders and operates Brick through its public package", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Build useful interfaces",

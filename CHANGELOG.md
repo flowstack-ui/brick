@@ -6,6 +6,11 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- `Code` for native inline technical literals with subtle or plain recipes,
+  inherited typography, and public customization hooks.
+- `CodeBlock` for structured multi-line source with native overflow, explicit
+  language metadata, optional header anatomy, and Atom-backed copy feedback.
+
 - Added `Link` for underlined or plain native navigation with focused tones,
   inherited or explicit body typography, optional decorative icons, native
   anchor props, current state, and router composition through Atom Link.

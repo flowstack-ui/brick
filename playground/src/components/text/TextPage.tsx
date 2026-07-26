@@ -1,3 +1,4 @@
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
@@ -338,8 +339,7 @@ export function TextPage() {
               <div>
                 <Text as="h4" variant="title-sm">Local Text variables</Text>
                 <Text as="p" tone="secondary" variant="body-sm">Size, weight, tracking, and foreground change on this instance only.</Text>
-                <pre aria-label="Text customization example" tabIndex={0}>
-                  <code>{`<Text
+                <PlaygroundCodeBlock aria-label="Text customization example" tabIndex={0}>{`<Text
   style={{
     "--brick-text-font-size": "1.375rem",
     "--brick-text-font-weight": "600",
@@ -348,8 +348,7 @@ export function TextPage() {
   }}
 >
   Customized project summary
-</Text>`}</code>
-                </pre>
+</Text>`}</PlaygroundCodeBlock>
               </div>
               <EvidenceSurface className="text-customization__preview">
                 <Text style={customTextStyle}>Customized project summary</Text>

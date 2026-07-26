@@ -1,3 +1,5 @@
+import { Code } from "@flowstack-ui/brick/code";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
@@ -328,13 +330,13 @@ export function NotificationBadgePage() {
               data-testid="notification-badge-appearance"
             >
               <EvidenceSurface data-brick-appearance="light">
-                <code>light</code>
+                <Code>light</Code>
                 <NotificationBadge count={4}>
                   <MailTarget />
                 </NotificationBadge>
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
-                <code>dark</code>
+                <Code>dark</Code>
                 <NotificationBadge count={4}>
                   <MailTarget />
                 </NotificationBadge>
@@ -352,11 +354,10 @@ export function NotificationBadgePage() {
                   Root class, slot, native style, and public indicator tokens
                   remain local to this composition.
                 </Text>
-                <pre
+                <PlaygroundCodeBlock
                   aria-label="NotificationBadge customization example"
                   tabIndex={0}
-                >
-                  <code>{`<NotificationBadge
+                >{`<NotificationBadge
   className="custom-notification"
   count={12}
   data-slot="custom-notification"
@@ -370,8 +371,7 @@ export function NotificationBadgePage() {
   <IconButton aria-label="Inbox, 12 unread messages">
     <MailIcon />
   </IconButton>
-</NotificationBadge>`}</code>
-                </pre>
+</NotificationBadge>`}</PlaygroundCodeBlock>
               </div>
               <EvidenceSurface className="notification-badge-customization__preview">
                 <NotificationBadge

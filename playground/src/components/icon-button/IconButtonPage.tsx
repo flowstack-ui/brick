@@ -1,3 +1,5 @@
+import { Code } from "@flowstack-ui/brick/code";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
@@ -346,7 +348,7 @@ export function IconButtonPage() {
           >
             <Grid.Root columns={2} className="icon-button-appearance-grid">
               <EvidenceSurface data-brick-appearance="light">
-                <code>light</code>
+                <Code>light</Code>
                 <IconButton
                   aria-label="Search"
                   data-testid="icon-button-appearance-light"
@@ -355,7 +357,7 @@ export function IconButtonPage() {
                 </IconButton>
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
-                <code>dark</code>
+                <Code>dark</Code>
                 <IconButton
                   aria-label="Search"
                   data-testid="icon-button-appearance-dark"
@@ -374,13 +376,13 @@ export function IconButtonPage() {
                 <div>
                   <Text as="h4" variant="title-sm">Component CSS properties</Text>
                   <Text as="p" tone="secondary" variant="body-sm">Public IconButton tokens replace the complete solid recipe within this instance only.</Text>
-                  <pre aria-label="IconButton component token example" tabIndex={0}><code>{`style={{
+                  <PlaygroundCodeBlock aria-label="IconButton component token example" tabIndex={0}>{`style={{
   "--brick-icon-button-background": "#6b2f88",
   "--brick-icon-button-background-hover": "#7d3b9c",
   "--brick-icon-button-background-pressed": "#58266f",
   "--brick-icon-button-border-color": "#6b2f88",
   "--brick-icon-button-foreground": "#ffffff"
-}}`}</code></pre>
+}}`}</PlaygroundCodeBlock>
                 </div>
                 <div className="icon-button-customization__preview">
                   <IconButton
@@ -397,7 +399,7 @@ export function IconButtonPage() {
                 <div>
                   <Text as="h4" variant="title-sm">Consumer hooks</Text>
                   <Text as="p" tone="secondary" variant="body-sm">className, style, and data-slot pass through for local targeting without changing the IconButton API.</Text>
-                  <pre aria-label="IconButton consumer hook example" tabIndex={0}><code>{`.icon-button-page .dashed-icon-action {
+                  <PlaygroundCodeBlock aria-label="IconButton consumer hook example" tabIndex={0}>{`.icon-button-page .dashed-icon-action {
   --brick-icon-button-background: transparent;
   --brick-icon-button-background-hover: var(--brick-color-accent-soft);
   --brick-icon-button-background-pressed: var(--brick-color-accent-soft-pressed);
@@ -413,7 +415,7 @@ export function IconButtonPage() {
   style={{ borderWidth: "0.125rem" }}
 >
   <SearchIcon />
-</IconButton>`}</code></pre>
+</IconButton>`}</PlaygroundCodeBlock>
                 </div>
                 <div className="icon-button-customization__preview">
                   <IconButton

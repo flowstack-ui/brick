@@ -63,6 +63,8 @@ import {
 } from "../components/popover/PopoverPage.js";
 import { InputPage, inputScenarios } from "../components/input/InputPage.js";
 import { TextPage, textScenarios } from "../components/text/TextPage.js";
+import { CodePage, codeScenarios } from "../components/code/CodePage.js";
+import { CodeBlockPage, codeBlockScenarios } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
 import { GridPage, gridScenarios } from "../components/grid/GridPage.js";
 import {
@@ -88,6 +90,7 @@ import {
   fieldsetScenarios,
 } from "../components/fieldset/FieldsetPage.js";
 import "../styles/surface-adoption.css";
+import "../styles/code-adoption.css";
 import {
   CheckboxPage,
   checkboxScenarios,
@@ -241,6 +244,14 @@ export function PlaygroundApp() {
         <TextPage />
       </PlaygroundShell>
     );
+  }
+
+  if (entry.id === "code") {
+    return <PlaygroundShell entry={entry} scenarios={codeScenarios}><CodePage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "code-block") {
+    return <PlaygroundShell entry={entry} scenarios={codeBlockScenarios}><CodeBlockPage /></PlaygroundShell>;
   }
 
   if (entry.id === "stack") {

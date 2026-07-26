@@ -64,6 +64,8 @@ await writeFile(
     '@import "../../src/components/surface/surface.css";',
     '@import "../../src/components/divider/divider.css";',
     '@import "../../src/components/scroll-area/scroll-area.css";',
+    '@import "../../src/components/code/code.css";',
+    '@import "../../src/components/code-block/code-block.css";',
   ].join("\n"),
 );
 

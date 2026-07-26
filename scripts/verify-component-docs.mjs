@@ -57,6 +57,8 @@ const componentSymbols = {
   card: "Card",
   checkbox: "Checkbox",
   "checkbox-group": "CheckboxGroup",
+  code: "Code",
+  "code-block": "CodeBlock",
   dialog: "Dialog",
   drawer: "Drawer",
   divider: "Divider",

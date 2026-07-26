@@ -7,8 +7,8 @@ design tokens, light and dark appearances, and a documented customization
 contract. The initial catalog includes Button, Card, Dialog, AlertDialog,
 Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton,
 AppBar, Tooltip, HoverCard, Popover, Form, Field, Fieldset, Checkbox,
-CheckboxGroup, Input, Text, Link, Stack, HStack, VStack, Grid, Container, Surface,
-Divider, and Scroll Area.
+CheckboxGroup, Input, Text, Code, CodeBlock, Link, Stack, HStack, VStack, Grid,
+Container, Surface, Divider, and Scroll Area.
 
 ## Boundary
 
@@ -24,7 +24,7 @@ Divider, and Scroll Area.
 | --- | --- |
 | Actions and selection | [Button](docs/components/button/README.md), [Icon Button](docs/components/icon-button/README.md), [Toggle](docs/components/toggle/README.md), [Toggle Group](docs/components/toggle-group/README.md) |
 | Forms and choices | [Form](docs/components/form/README.md), [Field](docs/components/field/README.md), [Fieldset](docs/components/fieldset/README.md), [Input](docs/components/input/README.md), [Checkbox](docs/components/checkbox/README.md), [Checkbox Group](docs/components/checkbox-group/README.md) |
-| Content and status | [Text](docs/components/text/README.md), [Avatar](docs/components/avatar/README.md), [Badge](docs/components/badge/README.md), [Notification Badge](docs/components/notification-badge/README.md), [Card](docs/components/card/README.md), [Divider](docs/components/divider/README.md) |
+| Content and status | [Text](docs/components/text/README.md), [Code](docs/components/code/README.md), [Code Block](docs/components/code-block/README.md), [Avatar](docs/components/avatar/README.md), [Badge](docs/components/badge/README.md), [Notification Badge](docs/components/notification-badge/README.md), [Card](docs/components/card/README.md), [Divider](docs/components/divider/README.md) |
 | Contextual overlays | [Tooltip](docs/components/tooltip/README.md), [Hover Card](docs/components/hover-card/README.md), [Popover](docs/components/popover/README.md) |
 | Modal surfaces | [Dialog](docs/components/dialog/README.md), [Alert Dialog](docs/components/alert-dialog/README.md), [Drawer](docs/components/drawer/README.md) |
 | Navigation and layout | [Link](docs/components/link/README.md), [App Bar](docs/components/app-bar/README.md), [Stack](docs/components/stack/README.md), [Grid](docs/components/grid/README.md), [Container](docs/components/container/README.md), [Surface](docs/components/surface/README.md), [Scroll Area](docs/components/scroll-area/README.md) |

@@ -1,3 +1,4 @@
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import {
   useState,
   type CSSProperties,
@@ -637,11 +638,10 @@ export function AlertDialogPage() {
                 Public AlertDialog tokens change spacing, radius, and elevation
                 for this surface only.
               </Text>
-              <pre
+              <PlaygroundCodeBlock
                 aria-label="AlertDialog component token example"
                 tabIndex={0}
-              >
-                <code>{`<AlertDialog.Content
+              >{`<AlertDialog.Content
   style={{
     "--brick-alert-dialog-radius": "0.25rem",
     "--brick-alert-dialog-space": "2rem",
@@ -656,8 +656,7 @@ export function AlertDialogPage() {
     <AlertDialog.Cancel asChild><Button>Cancel</Button></AlertDialog.Cancel>
     <AlertDialog.Action asChild><Button tone="danger">Remove</Button></AlertDialog.Action>
   </AlertDialog.Footer>
-</AlertDialog.Content>`}</code>
-              </pre>
+</AlertDialog.Content>`}</PlaygroundCodeBlock>
             </div>
             <div className="alert-dialog-customization__preview">
               <AlertDialog.Root>
@@ -699,11 +698,10 @@ export function AlertDialogPage() {
                 Portal-safe class, style, and slot hooks customize the surface;
                 the composed Action Button owns danger presentation.
               </Text>
-              <pre
+              <PlaygroundCodeBlock
                 aria-label="AlertDialog consumer hook example"
                 tabIndex={0}
-              >
-                <code>{`.brick-alert-dialog-content.dashed-alert-dialog {
+              >{`.brick-alert-dialog-content.dashed-alert-dialog {
   border-style: dashed;
 }
 
@@ -720,8 +718,7 @@ export function AlertDialogPage() {
     <AlertDialog.Cancel asChild><Button>Cancel</Button></AlertDialog.Cancel>
     <AlertDialog.Action asChild><Button tone="danger">Remove</Button></AlertDialog.Action>
   </AlertDialog.Footer>
-</AlertDialog.Content>`}</code>
-              </pre>
+</AlertDialog.Content>`}</PlaygroundCodeBlock>
             </div>
             <div className="alert-dialog-customization__preview">
               <AlertDialog.Root>

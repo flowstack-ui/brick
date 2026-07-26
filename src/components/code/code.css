@@ -1,0 +1,56 @@
+@layer brick.components {
+  .brick-code {
+    --brick-code-foreground: var(--brick-color-text-primary);
+    --brick-code-background: var(--brick-color-surface-subtle);
+    --brick-code-border-color: var(--brick-color-border-subtle);
+    --brick-code-border-width: var(--brick-border-width);
+    --brick-code-radius: var(--brick-radius-subtle);
+    --brick-code-padding-block: 0.0625em;
+    --brick-code-padding-inline: 0.3em;
+    --brick-code-font-family: var(--brick-typography-code-inline-font-family);
+    --brick-code-font-size: var(--brick-typography-code-inline-font-size);
+    --brick-code-font-weight: var(--brick-typography-code-inline-font-weight);
+    --brick-code-line-height: var(--brick-typography-code-inline-line-height);
+    --brick-code-letter-spacing: var(--brick-typography-code-inline-letter-spacing);
+
+    box-decoration-break: clone;
+    padding: var(--brick-code-padding-block) var(--brick-code-padding-inline);
+    border: var(--brick-code-border-width) solid var(--brick-code-border-color);
+    border-radius: var(--brick-code-radius);
+    background: var(--brick-code-background);
+    color: var(--brick-code-foreground);
+    font-family: var(--brick-code-font-family);
+    font-size: var(--brick-code-font-size);
+    font-weight: var(--brick-code-font-weight);
+    letter-spacing: var(--brick-code-letter-spacing);
+    line-height: var(--brick-code-line-height);
+    overflow-wrap: anywhere;
+    white-space: normal;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .brick-code[data-variant="plain"] {
+    --brick-code-background: transparent;
+    --brick-code-border-width: 0rem;
+    --brick-code-padding-block: 0em;
+    --brick-code-padding-inline: 0em;
+  }
+
+  .brick-code[data-tone="inherit"] { --brick-code-foreground: currentColor; }
+  .brick-code[data-size="sm"] {
+    --brick-code-font-size: var(--brick-typography-body-sm-font-size);
+    --brick-code-line-height: var(--brick-typography-body-sm-line-height);
+  }
+  .brick-code[data-size="md"] {
+    --brick-code-font-size: var(--brick-typography-body-md-font-size);
+    --brick-code-line-height: var(--brick-typography-body-md-line-height);
+  }
+
+  @media (forced-colors: active) {
+    .brick-code {
+      --brick-code-foreground: CanvasText;
+      --brick-code-background: Canvas;
+      --brick-code-border-color: CanvasText;
+    }
+  }
+}

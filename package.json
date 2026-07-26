@@ -143,6 +143,14 @@
       "types": "./dist/scroll-area.d.ts",
       "default": "./dist/scroll-area.js"
     },
+    "./code": {
+      "types": "./dist/code.d.ts",
+      "default": "./dist/code.js"
+    },
+    "./code-block": {
+      "types": "./dist/code-block.d.ts",
+      "default": "./dist/code-block.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"
@@ -196,7 +204,8 @@
     "verify:playground-surface": "node scripts/verify-playground-surface.mjs",
     "verify:playground-divider": "node scripts/verify-playground-divider.mjs",
     "verify:playground-scroll-area": "node scripts/verify-playground-scroll-area.mjs",
-    "check": "npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
+    "verify:playground-code": "node scripts/verify-playground-code.mjs",
+    "check": "npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run verify:playground-code && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
     "prepublishOnly": "npm run build"
   },
   "browserslist": [
@@ -211,7 +220,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.7.0"
+    "@flowstack-ui/atom": "0.8.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

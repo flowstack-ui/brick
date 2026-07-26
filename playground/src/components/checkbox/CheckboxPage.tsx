@@ -1,3 +1,5 @@
+import { Code } from "@flowstack-ui/brick/code";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties } from "react";
 import {
   Grid,
@@ -116,10 +118,10 @@ export function CheckboxPage() {
       <Scenario {...checkboxScenarios[7]}>
         <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same default unchecked state composes inside adjacent local appearance scopes." title="Scoped appearances">
-            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="checkbox-appearance"><EvidenceSurface data-brick-appearance="light"><code>light</code><Checkbox>Preview</Checkbox></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><code>dark</code><Checkbox>Preview</Checkbox></EvidenceSurface></Grid.Root>
+            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="checkbox-appearance"><EvidenceSurface data-brick-appearance="light"><Code>light</Code><Checkbox>Preview</Checkbox></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><Checkbox>Preview</Checkbox></EvidenceSurface></Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Row and visual-control properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Checkbox tokens visibly change the row and control.</Text><pre aria-label="Checkbox customization example" tabIndex={0}><code>{`<Checkbox
+            <EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Row and visual-control properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Checkbox tokens visibly change the row and control.</Text><PlaygroundCodeBlock aria-label="Checkbox customization example" tabIndex={0}>{`<Checkbox
   data-slot="custom-checkbox"
   defaultChecked
   style={{
@@ -131,7 +133,7 @@ export function CheckboxPage() {
   }}
 >
   Customized selection
-</Checkbox>`}</code></pre></div><EvidenceSurface className="forms-customization__preview"><Checkbox data-slot="custom-checkbox" defaultChecked style={customCheckboxTokens}>Customized selection</Checkbox></EvidenceSurface></EvidenceSurface>
+</Checkbox>`}</PlaygroundCodeBlock></div><EvidenceSurface className="forms-customization__preview"><Checkbox data-slot="custom-checkbox" defaultChecked style={customCheckboxTokens}>Customized selection</Checkbox></EvidenceSurface></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

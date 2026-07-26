@@ -1,3 +1,5 @@
+import { Code } from "@flowstack-ui/brick/code";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import type { CSSProperties } from "react";
 import {
   Grid,
@@ -111,10 +113,10 @@ export function FieldPage() {
       <Scenario {...fieldScenarios[7]}>
         <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same default Field anatomy composes inside adjacent local appearance scopes." title="Scoped appearances">
-            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="field-appearance"><EvidenceSurface data-brick-appearance="light"><code>light</code><DefaultField id="field-light" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><code>dark</code><DefaultField id="field-dark" /></EvidenceSurface></Grid.Root>
+            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="field-appearance"><EvidenceSurface data-brick-appearance="light"><Code>light</Code><DefaultField id="field-light" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><DefaultField id="field-dark" /></EvidenceSurface></Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Field anatomy properties</Text><Text as="p" tone="secondary" variant="body-sm">Class, slot, native style, and public Field tokens visibly change this Field only.</Text><pre aria-label="Field customization example" tabIndex={0}><code>{`<Field.Root
+            <EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Field anatomy properties</Text><Text as="p" tone="secondary" variant="body-sm">Class, slot, native style, and public Field tokens visibly change this Field only.</Text><PlaygroundCodeBlock aria-label="Field customization example" tabIndex={0}>{`<Field.Root
   data-slot="custom-field"
   invalid
   style={{
@@ -125,7 +127,7 @@ export function FieldPage() {
   }}
 >
   ...
-</Field.Root>`}</code></pre></div><EvidenceSurface className="forms-customization__preview"><Field.Root data-slot="custom-field" id="field-custom" invalid style={customFieldTokens}><Field.Label>Customized account field</Field.Label><Control /><Field.Description>Local spacing and hierarchy.</Field.Description><Field.Error>Customized error treatment.</Field.Error></Field.Root></EvidenceSurface></EvidenceSurface>
+</Field.Root>`}</PlaygroundCodeBlock></div><EvidenceSurface className="forms-customization__preview"><Field.Root data-slot="custom-field" id="field-custom" invalid style={customFieldTokens}><Field.Label>Customized account field</Field.Label><Control /><Field.Description>Local spacing and hierarchy.</Field.Description><Field.Error>Customized error treatment.</Field.Error></Field.Root></EvidenceSurface></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

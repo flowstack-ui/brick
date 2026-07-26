@@ -1,0 +1,1 @@
+.code-page,.code-cell{min-inline-size:0}.code-grid{align-items:stretch}.code-cell{display:grid;align-content:start;gap:var(--brick-space-3)}.code-cell__preview{min-inline-size:0}.code-narrow{max-inline-size:12rem}.consumer-code{cursor:pointer}@media(max-width:44rem){.code-grid{grid-template-columns:1fr!important}}

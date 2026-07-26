@@ -1,3 +1,5 @@
+import { Code } from "@flowstack-ui/brick/code";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
@@ -233,8 +235,8 @@ export function TogglePage() {
         <VStack className="toggle-evidence-stack">
           <EvidenceGroup description="Adjacent light and dark scopes preserve the default recipe." title="Scoped appearances">
             <Grid.Root columns={2} className="toggle-scoped-grid" data-testid="toggle-appearance">
-              <EvidenceSurface data-brick-appearance="light"><code>light</code><Toggle>Preview</Toggle></EvidenceSurface>
-              <EvidenceSurface data-brick-appearance="dark"><code>dark</code><Toggle>Preview</Toggle></EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="light"><Code>light</Code><Toggle>Preview</Toggle></EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><Toggle>Preview</Toggle></EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
@@ -242,7 +244,7 @@ export function TogglePage() {
               <div>
                 <Text as="h4" variant="title-sm">Root and component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">Native style, slot, and public Toggle geometry tokens visibly customize the control itself.</Text>
-                <pre aria-label="Toggle customization example" tabIndex={0}><code>{`<Toggle
+                <PlaygroundCodeBlock aria-label="Toggle customization example" tabIndex={0}>{`<Toggle
   data-slot="custom-toggle"
   style={{
     "--brick-toggle-gap": "1rem",
@@ -255,7 +257,7 @@ export function TogglePage() {
   }}
 >
   <StarIcon /> Favorite
-</Toggle>`}</code></pre>
+</Toggle>`}</PlaygroundCodeBlock>
               </div>
               <EvidenceSurface className="toggle-customization__preview">
                 <Toggle data-slot="custom-toggle" style={customTokens}>

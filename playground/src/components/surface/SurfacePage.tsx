@@ -1,3 +1,4 @@
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
   Badge,
@@ -309,7 +310,7 @@ export function SurfacePage() {
               <Text tone="secondary" variant="body-sm">
                 The code changes only background, border color, and radius.
               </Text>
-              <pre tabIndex={0}><code>{`<Surface
+              <PlaygroundCodeBlock tabIndex={0}>{`<Surface
   bordered
   inset="md"
   style={{
@@ -321,7 +322,7 @@ export function SurfacePage() {
   }}
 >
   Customized surface
-</Surface>`}</code></pre>
+</Surface>`}</PlaygroundCodeBlock>
             </VStack>
             <div className="surface-customization__preview">
               <Surface bordered inset="md" style={customStyle}>

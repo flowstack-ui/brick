@@ -1,3 +1,4 @@
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import {
   useState,
   type CSSProperties,
@@ -627,11 +628,10 @@ export function DialogPage() {
                 Public Dialog tokens change spacing, radius, and elevation
                 for this surface only.
               </Text>
-              <pre
+              <PlaygroundCodeBlock
                 aria-label="Dialog component token example"
                 tabIndex={0}
-              >
-                <code>{`<Dialog.Content
+              >{`<Dialog.Content
   style={{
     "--brick-dialog-radius": "0.25rem",
     "--brick-dialog-space": "2rem",
@@ -646,8 +646,7 @@ export function DialogPage() {
   <Dialog.Footer>
     <Dialog.Close asChild><Button>Close</Button></Dialog.Close>
   </Dialog.Footer>
-</Dialog.Content>`}</code>
-              </pre>
+</Dialog.Content>`}</PlaygroundCodeBlock>
             </div>
             <div className="dialog-customization__preview">
               <Dialog.Root>
@@ -689,11 +688,10 @@ export function DialogPage() {
                 className, style, and data-slot pass through for direct
                 local targeting without changing the Dialog API.
               </Text>
-              <pre
+              <PlaygroundCodeBlock
                 aria-label="Dialog consumer hook example"
                 tabIndex={0}
-              >
-                <code>{`.brick-dialog-content.dashed-dialog {
+              >{`.brick-dialog-content.dashed-dialog {
   border-style: dashed;
 }
 
@@ -710,8 +708,7 @@ export function DialogPage() {
   <Dialog.Footer>
     <Dialog.Close asChild><Button>Close</Button></Dialog.Close>
   </Dialog.Footer>
-</Dialog.Content>`}</code>
-              </pre>
+</Dialog.Content>`}</PlaygroundCodeBlock>
             </div>
             <div className="dialog-customization__preview">
               <Dialog.Root>

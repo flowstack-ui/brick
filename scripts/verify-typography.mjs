@@ -16,6 +16,9 @@ const recipes = [
   "body-md",
   "body-sm",
   "caption",
+  "code-inline",
+  "code-block-sm",
+  "code-block-md",
   "label-md",
   "label-strong",
   "supporting-sm",
@@ -89,6 +92,7 @@ const allowedGeometryDeclarations = new Map([
     "--brick-text-font-weight: var(--brick-font-weight-medium);",
     "--brick-text-font-weight: var(--brick-font-weight-semibold);",
   ]],
+  ["code-block/code-block.css", ["letter-spacing: inherit;"]],
 ]);
 
 const componentDirectories = await readdir(componentRoot, { withFileTypes: true });
@@ -113,6 +117,7 @@ for (const directory of componentDirectories) {
         declaration.includes("var(--brick-button-") ||
         declaration.includes("var(--brick-input-") ||
         declaration.includes("var(--brick-link-") ||
+        declaration.includes("var(--brick-code-") ||
         declaration.includes("var(--brick-badge-") ||
         declaration.includes("var(--brick-avatar-") ||
         declaration.includes("var(--brick-card-title-size)") ||

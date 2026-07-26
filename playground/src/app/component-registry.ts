@@ -43,6 +43,20 @@ export const componentEntries = [
     title: "Text",
   },
   {
+    category: "Data display",
+    description: "Inline technical literals with native code semantics.",
+    id: "code",
+    route: "/code",
+    title: "Code",
+  },
+  {
+    category: "Data display",
+    description: "Structured source, overflow, language, and copy.",
+    id: "code-block",
+    route: "/code-block",
+    title: "Code Block",
+  },
+  {
     category: "Layout",
     description: "Tokenized one-dimensional rows and columns.",
     id: "stack",

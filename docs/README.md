@@ -41,6 +41,9 @@ This directory is the public documentation authority for
 
 - [Text](components/text/README.md) — semantic text with independent visual
   typography
+- [Code](components/code/README.md) — short inline technical literals
+- [Code Block](components/code-block/README.md) — structured multi-line source,
+  overflow, language metadata, and copy feedback
 - [Avatar](components/avatar/README.md) — identity image, fallback, and visual
   status
 - [Badge](components/badge/README.md) — passive inline labels

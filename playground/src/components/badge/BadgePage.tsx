@@ -1,3 +1,5 @@
+import { Code } from "@flowstack-ui/brick/code";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
@@ -281,11 +283,11 @@ export function BadgePage() {
               data-testid="badge-appearance"
             >
               <EvidenceSurface data-brick-appearance="light">
-                <code>light</code>
+                <Code>light</Code>
                 <Badge>Status</Badge>
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
-                <code>dark</code>
+                <Code>dark</Code>
                 <Badge>Status</Badge>
               </EvidenceSurface>
             </Grid.Root>
@@ -301,11 +303,10 @@ export function BadgePage() {
                   Public Badge tokens replace the complete color recipe and
                   radius for this instance only.
                 </Text>
-                <pre
+                <PlaygroundCodeBlock
                   aria-label="Badge component token example"
                   tabIndex={0}
-                >
-                  <code>{`<Badge
+                >{`<Badge
   data-slot="custom-status"
   style={{
     "--brick-badge-background":
@@ -318,8 +319,7 @@ export function BadgePage() {
   }}
 >
   Status
-</Badge>`}</code>
-                </pre>
+</Badge>`}</PlaygroundCodeBlock>
               </div>
               <EvidenceSurface className="badge-customization__preview">
                 <Badge

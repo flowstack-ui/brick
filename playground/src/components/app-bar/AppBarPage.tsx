@@ -1,3 +1,4 @@
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import type { CSSProperties, ReactNode } from "react";
 import {
   Grid,
@@ -382,16 +383,14 @@ export function AppBarPage() {
                   Public AppBar tokens replace the default surface recipe for
                   this instance only.
                 </Text>
-                <pre
+                <PlaygroundCodeBlock
                   aria-label="AppBar component token example"
                   tabIndex={0}
-                >
-                  <code>{`style={{
+                >{`style={{
   "--brick-app-bar-background": "#124e78",
   "--brick-app-bar-foreground": "#ffffff",
   "--brick-app-bar-border-color": "#0d3b5c"
-}}`}</code>
-                </pre>
+}}`}</PlaygroundCodeBlock>
               </div>
               <div className="app-bar-customization__preview">
                 <AppBarExample
@@ -408,8 +407,7 @@ export function AppBarPage() {
                   className, style, and data-slot pass through for local
                   targeting without changing the AppBar API.
                 </Text>
-                <pre aria-label="AppBar consumer hook example" tabIndex={0}>
-                  <code>{`.app-bar-page .dashed-app-bar {
+                <PlaygroundCodeBlock aria-label="AppBar consumer hook example" tabIndex={0}>{`.app-bar-page .dashed-app-bar {
   --brick-app-bar-background: var(--brick-color-accent-soft);
   --brick-app-bar-border-color: var(--brick-color-accent-border);
   --brick-app-bar-foreground: var(--brick-color-accent-text);
@@ -423,8 +421,7 @@ export function AppBarPage() {
   style={{ borderBlockEndWidth: "0.125rem" }}
 >
   ...
-</AppBar.Root>`}</code>
-                </pre>
+</AppBar.Root>`}</PlaygroundCodeBlock>
               </div>
               <div className="app-bar-customization__preview">
                 <AppBar.Root

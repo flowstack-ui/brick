@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.7.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.8.0");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -132,6 +132,14 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/scroll-area.d.ts",
       default: "./dist/scroll-area.js",
     },
+    "./code": {
+      types: "./dist/code.d.ts",
+      default: "./dist/code.js",
+    },
+    "./code-block": {
+      types: "./dist/code-block.d.ts",
+      default: "./dist/code-block.js",
+    },
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css",
@@ -169,7 +177,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const surface = await import(new URL("../../dist/surface.js", import.meta.url));
   const divider = await import(new URL("../../dist/divider.js", import.meta.url));
   const scrollArea = await import(new URL("../../dist/scroll-area.js", import.meta.url));
-  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Button", "Card", "Checkbox", "CheckboxGroup", "Container", "Dialog", "Divider", "Drawer", "Field", "Fieldset", "Form", "Grid", "HStack", "HoverCard", "IconButton", "Input", "Link", "NotificationBadge", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverBody", "PopoverClose", "PopoverContent", "PopoverDescription", "PopoverFooter", "PopoverHeader", "PopoverPortal", "PopoverRoot", "PopoverTitle", "PopoverTrigger", "ScrollArea", "ScrollAreaRoot", "ScrollAreaViewport", "Stack", "Surface", "Text", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot", "Tooltip", "VStack"]);
+  const code = await import(new URL("../../dist/code.js", import.meta.url));
+  const codeBlock = await import(new URL("../../dist/code-block.js", import.meta.url));
+  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Button", "Card", "Checkbox", "CheckboxGroup", "Code", "CodeBlock", "CodeBlockActions", "CodeBlockContent", "CodeBlockCopyIndicator", "CodeBlockCopyStatus", "CodeBlockCopyTrigger", "CodeBlockHeader", "CodeBlockLanguage", "CodeBlockRoot", "CodeBlockTitle", "Container", "Dialog", "Divider", "Drawer", "Field", "Fieldset", "Form", "Grid", "HStack", "HoverCard", "IconButton", "Input", "Link", "NotificationBadge", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverBody", "PopoverClose", "PopoverContent", "PopoverDescription", "PopoverFooter", "PopoverHeader", "PopoverPortal", "PopoverRoot", "PopoverTitle", "PopoverTrigger", "ScrollArea", "ScrollAreaRoot", "ScrollAreaViewport", "Stack", "Surface", "Text", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot", "Tooltip", "VStack"]);
   assert.equal(button.Button, brick.Button);
   assert.equal(iconButton.IconButton, brick.IconButton);
   assert.equal(appBar.AppBar, brick.AppBar);
@@ -224,6 +234,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(scrollArea.ScrollArea, brick.ScrollArea);
   assert.equal(scrollArea.ScrollAreaRoot, brick.ScrollArea.Root);
   assert.equal(scrollArea.ScrollAreaViewport, brick.ScrollArea.Viewport);
+  assert.equal(code.Code, brick.Code);
+  assert.equal(codeBlock.CodeBlock, brick.CodeBlock);
+  assert.equal(codeBlock.CodeBlockRoot, brick.CodeBlock.Root);
+  assert.equal(codeBlock.CodeBlockContent, brick.CodeBlock.Content);
 });
 
 test("published CSS entrypoints are complete browser CSS", async () => {
@@ -266,6 +280,8 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-surface/);
   assert.match(styles, /\.brick-divider/);
   assert.match(styles, /\.brick-scroll-area/);
+  assert.match(styles, /\.brick-code/);
+  assert.match(styles, /\.brick-code-block/);
   assert.match(styles, /box-sizing:\s*border-box/);
   assert.match(styles, /--brick-button-background/);
   assert.match(styles, /--brick-icon-button-size/);
@@ -295,6 +311,8 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-surface-background/);
   assert.match(styles, /--brick-divider-color/);
   assert.match(styles, /--brick-scroll-area-scrollbar-thumb/);
+  assert.match(styles, /--brick-code-font-family/);
+  assert.match(styles, /--brick-code-block-background/);
   assert.match(styles, /--brick-control-min-block-size-xl/);
   assert.match(tokens, /data-brick-appearance/);
   assert.match(reset, /brick\.reset/);

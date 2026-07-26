@@ -24,6 +24,8 @@ import { Container } from "../../dist/container.js";
 import { Surface } from "../../dist/surface.js";
 import { Divider } from "../../dist/divider.js";
 import { ScrollArea } from "../../dist/scroll-area.js";
+import { Code } from "../../dist/code.js";
+import { CodeBlock } from "../../dist/code-block.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
 
 test("Scroll Area renders deterministic native Root and Viewport anatomy", () => {
@@ -41,6 +43,25 @@ test("Scroll Area renders deterministic native Root and Viewport anatomy", () =>
   assert.match(markup, /class="brick-scroll-area-viewport"/);
   assert.match(markup, /role="region"/);
   assert.match(markup, /tabindex="0"/);
+});
+
+test("Code and Code Block render deterministic technical content", () => {
+  const inline = renderToString(React.createElement(Code, null, "aria-label"));
+  assert.match(inline, /^<code/);
+  assert.match(inline, /class="brick-code"/);
+  assert.match(inline, /data-variant="subtle"/);
+
+  const block = renderToString(
+    React.createElement(
+      CodeBlock.Root,
+      { value: "const value = 1", language: "js" },
+      React.createElement(CodeBlock.Content, { "aria-label": "JavaScript source" }),
+    ),
+  );
+  assert.match(block, /class="brick-code-block"/);
+  assert.match(block, /data-language="js"/);
+  assert.match(block, /<pre[^>]*><code/);
+  assert.match(block, /const value = 1/);
 });
 
 test("Card renders on the server without browser state or a client boundary", () => {

@@ -4,7 +4,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { Grid, Surface, Text, VStack } from "@flowstack-ui/brick";
+import { CodeBlock, Grid, Surface, Text, VStack } from "@flowstack-ui/brick";
 import "./rendered-output.playground.css";
 
 function formatMarkup(markup: string) {
@@ -62,9 +62,9 @@ export function RenderedOutput({
         </div>
         <VStack className="playground-output-evidence__output" gap="3">
           <Text as="p" variant="body-sm">{label}</Text>
-          <pre aria-label={label} data-rendered-output tabIndex={0}>
-            <code>{markup}</code>
-          </pre>
+          <CodeBlock.Root value={markup} variant="bordered">
+            <CodeBlock.Content aria-label={label} data-rendered-output />
+          </CodeBlock.Root>
         </VStack>
       </Grid.Root>
     </Surface>

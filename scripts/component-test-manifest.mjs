@@ -7,6 +7,8 @@ export const componentIds = [
   "card",
   "checkbox",
   "checkbox-group",
+  "code",
+  "code-block",
   "dialog",
   "drawer",
   "divider",

@@ -1,0 +1,13 @@
+/* Code Block owns the source host after legacy route-level pre styling. */
+.brick-code-block .brick-code-block-pre {
+  max-inline-size: none;
+  max-block-size: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  font-size: inherit;
+  line-height: inherit;
+  overflow-wrap: normal;
+}

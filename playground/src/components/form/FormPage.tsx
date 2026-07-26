@@ -1,3 +1,5 @@
+import { Code } from "@flowstack-ui/brick/code";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
   Grid,
@@ -223,9 +225,9 @@ export function FormPage() {
             </Field.Root>
             <HStack className="forms-actions"><Button type="submit">Submit project</Button><Button tone="neutral" type="reset">Reset</Button></HStack>
             <output aria-live="polite" className="forms-hook-readout">
-              <span><code>data-submitting</code> {String(stateHooks.submitting)}</span>
-              <span><code>data-submitted</code> {String(stateHooks.submitted)}</span>
-              <span><code>data-invalid</code> {String(stateHooks.invalid)}</span>
+              <span><Code>data-submitting</Code> {String(stateHooks.submitting)}</span>
+              <span><Code>data-submitted</Code> {String(stateHooks.submitted)}</span>
+              <span><Code>data-invalid</Code> {String(stateHooks.invalid)}</span>
             </output>
           </Form>
         </EvidenceSurface>
@@ -298,13 +300,13 @@ export function FormPage() {
         <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same default Form rhythm composes inside adjacent local appearance scopes." title="Scoped appearances">
             <Grid.Root columns={2} className="forms-scoped-grid" data-testid="form-appearance">
-              <EvidenceSurface data-brick-appearance="light"><code>light</code><Form aria-label="Light form"><SimpleFields prefix="form-light" /></Form></EvidenceSurface>
-              <EvidenceSurface data-brick-appearance="dark"><code>dark</code><Form aria-label="Dark form"><SimpleFields prefix="form-dark" /></Form></EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="light"><Code>light</Code><Form aria-label="Light form"><SimpleFields prefix="form-light" /></Form></EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><Form aria-label="Dark form"><SimpleFields prefix="form-dark" /></Form></EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
             <EvidenceSurface as="article" className="forms-customization" inset="lg">
-              <div><Text as="h4" variant="title-sm">Form rhythm properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Form gap tokens visibly change this boundary only.</Text><pre aria-label="Form customization example" tabIndex={0}><code>{`<Form
+              <div><Text as="h4" variant="title-sm">Form rhythm properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Form gap tokens visibly change this boundary only.</Text><PlaygroundCodeBlock aria-label="Form customization example" tabIndex={0}>{`<Form
   data-slot="custom-form"
   style={{
     "--brick-form-gap": "2rem",
@@ -312,7 +314,7 @@ export function FormPage() {
   }}
 >
   ...
-</Form>`}</code></pre></div>
+</Form>`}</PlaygroundCodeBlock></div>
               <EvidenceSurface className="forms-customization__preview"><Form aria-label="Customized form" data-slot="custom-form" style={customFormTokens}><SimpleFields prefix="form-custom" /></Form></EvidenceSurface>
             </EvidenceSurface>
           </EvidenceGroup>

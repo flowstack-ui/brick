@@ -1,3 +1,4 @@
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import type { CSSProperties, ReactNode } from "react";
 import {
   Grid,
@@ -401,8 +402,7 @@ export function CardPage() {
                   Public Card tokens change spacing, radius, and the selected
                   elevated shadow for this instance only.
                 </Text>
-                <pre aria-label="Card component token example" tabIndex={0}>
-                  <code>{`<Card.Root
+                <PlaygroundCodeBlock aria-label="Card component token example" tabIndex={0}>{`<Card.Root
   style={{
     "--brick-card-radius": "0.25rem",
     "--brick-card-shadow": "0 1rem 3rem rgb(53 46 91 / 25%)",
@@ -415,8 +415,7 @@ export function CardPage() {
     <Card.Description>Local Card token overrides.</Card.Description>
   </Card.Header>
   <Card.Content>Customized surface content.</Card.Content>
-</Card.Root>`}</code>
-                </pre>
+</Card.Root>`}</PlaygroundCodeBlock>
               </div>
               <div className="card-customization__preview">
                 <Card.Root
@@ -442,8 +441,7 @@ export function CardPage() {
                   className, style, and data-slot pass through for direct local
                   targeting without changing the Card API.
                 </Text>
-                <pre aria-label="Card consumer hook example" tabIndex={0}>
-                  <code>{`.card-page .dashed-card {
+                <PlaygroundCodeBlock aria-label="Card consumer hook example" tabIndex={0}>{`.card-page .dashed-card {
   border-style: dashed;
 }
 
@@ -457,8 +455,7 @@ export function CardPage() {
     <Card.Description>Class, style, and slot overrides.</Card.Description>
   </Card.Header>
   <Card.Content>Customized surface content.</Card.Content>
-</Card.Root>`}</code>
-                </pre>
+</Card.Root>`}</PlaygroundCodeBlock>
               </div>
               <div className="card-customization__preview">
                 <Card.Root

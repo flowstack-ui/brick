@@ -1,3 +1,4 @@
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
@@ -312,8 +313,7 @@ export function StackPage() {
                 <Text as="p" tone="secondary" variant="body-sm">
                   Gap, border, and padding change on this instance only.
                 </Text>
-                <pre aria-label="Stack customization example" tabIndex={0}>
-                  <code>{`<VStack
+                <PlaygroundCodeBlock aria-label="Stack customization example" tabIndex={0}>{`<VStack
   gap="2"
   style={{
     "--brick-stack-gap": "1.5rem",
@@ -323,8 +323,7 @@ export function StackPage() {
 >
   <Item>First</Item>
   <Item>Second</Item>
-</VStack>`}</code>
-                </pre>
+</VStack>`}</PlaygroundCodeBlock>
               </VStack>
               <EvidenceSurface className="stack-customization__preview">
                 <VStack gap="2" style={customStackStyle}>

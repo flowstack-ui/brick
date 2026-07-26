@@ -27,6 +27,8 @@ import { Container } from "@flowstack-ui/brick/container";
 import { Surface } from "@flowstack-ui/brick/surface";
 import { Divider } from "@flowstack-ui/brick/divider";
 import { ScrollArea } from "@flowstack-ui/brick/scroll-area";
+import { Code } from "@flowstack-ui/brick/code";
+import { CodeBlock } from "@flowstack-ui/brick/code-block";
 
 type Appearance = "light" | "dark";
 
@@ -210,6 +212,25 @@ export function App() {
                 </VStack>
               </ScrollArea.Viewport>
             </ScrollArea.Root>
+          </VStack>
+        </Surface>
+
+        <Surface as="section" bordered inset="lg" aria-labelledby="install-title">
+          <VStack gap="3">
+            <Text as="h2" id="install-title" variant="title-lg">Install the workspace package</Text>
+            <Text tone="secondary">Run <Code>npm install</Code> from your application.</Text>
+            <CodeBlock.Root language="sh" value="npm install @flowstack-ui/brick">
+              <CodeBlock.Header>
+                <CodeBlock.Title>Install command</CodeBlock.Title>
+                <CodeBlock.Language />
+                <CodeBlock.Actions><CodeBlock.CopyTrigger>Copy</CodeBlock.CopyTrigger></CodeBlock.Actions>
+              </CodeBlock.Header>
+              <CodeBlock.Content aria-label="Brick install command" />
+              <CodeBlock.CopyStatus>
+                <CodeBlock.CopyIndicator when="copied">Copied command</CodeBlock.CopyIndicator>
+                <CodeBlock.CopyIndicator when="error">Copy failed</CodeBlock.CopyIndicator>
+              </CodeBlock.CopyStatus>
+            </CodeBlock.Root>
           </VStack>
         </Surface>
 

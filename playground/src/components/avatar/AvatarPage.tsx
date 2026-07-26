@@ -1,3 +1,5 @@
+import { Code } from "@flowstack-ui/brick/code";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
@@ -345,11 +347,11 @@ export function AvatarPage() {
               data-testid="avatar-appearance"
             >
               <EvidenceSurface data-brick-appearance="light">
-                <code>light</code>
+                <Code>light</Code>
                 <Avatar alt="Ada Lovelace" fallback="AL" />
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
-                <code>dark</code>
+                <Code>dark</Code>
                 <Avatar alt="Ada Lovelace" fallback="AL" />
               </EvidenceSurface>
             </Grid.Root>
@@ -365,8 +367,7 @@ export function AvatarPage() {
                   Root class, slot, native style, and public Avatar tokens
                   customize one rounded online identity.
                 </Text>
-                <pre aria-label="Avatar customization example" tabIndex={0}>
-                  <code>{`<Avatar
+                <PlaygroundCodeBlock aria-label="Avatar customization example" tabIndex={0}>{`<Avatar
   alt="Customized identity"
   className="custom-avatar"
   data-slot="workspace-avatar"
@@ -381,8 +382,7 @@ export function AvatarPage() {
     "--brick-avatar-radius": "0.25rem",
     "--brick-avatar-status-ring-width": "0.2rem",
   }}
-/>`}</code>
-                </pre>
+/>`}</PlaygroundCodeBlock>
               </div>
               <EvidenceSurface className="avatar-customization__preview">
                 <Avatar

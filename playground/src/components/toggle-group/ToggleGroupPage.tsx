@@ -1,3 +1,5 @@
+import { Code } from "@flowstack-ui/brick/code";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type ReactNode } from "react";
 import {
   Grid,
@@ -150,10 +152,10 @@ export function ToggleGroupPage() {
       <Scenario {...toggleGroupScenarios[7]}>
         <VStack className="toggle-group-evidence-stack">
           <EvidenceGroup description="Adjacent light and dark scopes preserve the default group recipe." title="Scoped appearances">
-            <Grid.Root columns={2} className="toggle-group-scoped-grid" data-testid="toggle-group-appearance"><EvidenceSurface data-brick-appearance="light"><code>light</code><StandardGroup label="Light project view" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><code>dark</code><StandardGroup label="Dark project view" /></EvidenceSurface></Grid.Root>
+            <Grid.Root columns={2} className="toggle-group-scoped-grid" data-testid="toggle-group-appearance"><EvidenceSurface data-brick-appearance="light"><Code>light</Code><StandardGroup label="Light project view" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><StandardGroup label="Dark project view" /></EvidenceSurface></Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <EvidenceSurface as="article" className="toggle-group-customization" inset="lg"><div><Text as="h4" variant="title-sm">Group and shared Item CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">The Root gap and each Item’s radius, padding, and selected paint are customized visibly.</Text><pre aria-label="ToggleGroup customization example" tabIndex={0}><code>{`.custom-toggle-group {
+            <EvidenceSurface as="article" className="toggle-group-customization" inset="lg"><div><Text as="h4" variant="title-sm">Group and shared Item CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">The Root gap and each Item’s radius, padding, and selected paint are customized visibly.</Text><PlaygroundCodeBlock aria-label="ToggleGroup customization example" tabIndex={0}>{`.custom-toggle-group {
   --brick-toggle-group-gap: 1rem;
 }
 
@@ -178,7 +180,7 @@ export function ToggleGroupPage() {
 >
   <ToggleGroup.Item value="cards">Cards</ToggleGroup.Item>
   <ToggleGroup.Item value="list">List</ToggleGroup.Item>
-</ToggleGroup.Root>`}</code></pre></div><EvidenceSurface className="toggle-group-customization__preview"><ToggleGroup.Root ariaLabel="Custom project view" className="custom-toggle-group" data-slot="custom-toggle-group" defaultValue="cards"><ToggleGroup.Item value="cards">Cards</ToggleGroup.Item><ToggleGroup.Item value="list">List</ToggleGroup.Item></ToggleGroup.Root></EvidenceSurface></EvidenceSurface>
+</ToggleGroup.Root>`}</PlaygroundCodeBlock></div><EvidenceSurface className="toggle-group-customization__preview"><ToggleGroup.Root ariaLabel="Custom project view" className="custom-toggle-group" data-slot="custom-toggle-group" defaultValue="cards"><ToggleGroup.Item value="cards">Cards</ToggleGroup.Item><ToggleGroup.Item value="list">List</ToggleGroup.Item></ToggleGroup.Root></EvidenceSurface></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>

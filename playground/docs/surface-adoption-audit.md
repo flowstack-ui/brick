@@ -21,7 +21,7 @@ Retain local CSS when it:
 - simulates a device or constrained viewport;
 - is part of playground navigation state;
 - is native/output evidence that must not gain an extra wrapper; or
-- belongs to a planned component such as Code Block, Divider, Sidebar, or
+- belongs to a specialized component such as Code Block, Divider, Sidebar, or
   Nav List.
 
 ## Implemented repeated migration set
@@ -59,6 +59,8 @@ different owner.
 | Surface | none of the recipe specimens; they intentionally isolate Surface against raw contrasting stages | all Surface recipe stages, inset marker, nesting and elevation contrast; code block |
 | Divider | overview, appearance, customization, and generic specimen cells | Divider line recipes, measured inset/axis stages, and forced-color evidence |
 | Scroll Area | generic specimen cells, appearance scopes, and customization shell | Scroll Area viewport boundaries, axis constraints, native scrollbar paint, and code sample |
+| Code | generic overview/cell/appearance/customization stages | Code recipes, inline wrapping, native output, and technical literal paint |
+| Code Block | generic outer evidence cells and appearance stages | Code Block recipes, technical surface paint, overflow, selection, and source anatomy |
 | Link | overview, specimen-grid cells, appearance scopes, customization shell/preview, stress panel | Link recipes, inline wrapping, composition output, and code block |
 | Card | overview stage, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Card roots and their variant backgrounds; code block |
 | Dialog | overview/action/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Dialog and overlay roots; static branch reconstruction; portal/positioning stages; code block |
@@ -91,8 +93,8 @@ different owner.
 
 - `RenderedOutput` preview cannot gain an inner Surface wrapper because its
   first child is the exact DOM node captured as rendered HTML.
-- `RenderedOutput` code output and every route `pre` remain code-specific
-  scrolling/contrast pending Code Block.
+- `RenderedOutput` and route source specimens now compose Code Block; their
+  technical surface paint, overflow, and source semantics remain Code Block-owned.
 - `.evidence-review-header`, sidebar, navigation links, and scenario
   navigation are application shell or future Sidebar/Nav List ownership.
 - scenario target borders are navigation state.
@@ -109,8 +111,8 @@ playground pass:
    neutralizing override. Remove the stale rule and keep Brick Input as owner.
 2. Raw reference/demo controls should use Brick Button or Icon Button unless
    the route explicitly proves native output.
-3. Repeated code-block paint should move to Code Block when that component is
-   available; do not disguise it as Surface.
+3. Repeated technical source displays use Code Block and are not disguised as
+   Surface.
 4. Repeated separator backgrounds between Grid cells may later use Divider,
    but Surface should own the outer boundary now.
 

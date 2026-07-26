@@ -1,3 +1,5 @@
+import { Code } from "@flowstack-ui/brick/code";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
@@ -53,7 +55,7 @@ function Preview({ align = "center", arrow = true, children = <Profile />, disab
 
 function ScopedPreview({ appearance }: { appearance: "light" | "dark" }) {
   const [container, setContainer] = useState<HTMLElement | null>(null);
-  return <EvidenceSurface className="hover-card-appearance-panel" data-brick-appearance={appearance} level="canvas" ref={setContainer}><code>{appearance}</code>{container ? <HoverCard.Root openDelay={0}><HoverCard.Trigger asChild><Link href={`/hover-card/destination?resource=${appearance}-profile`}>{appearance} profile</Link></HoverCard.Trigger><HoverCard.Portal container={container}><HoverCard.Content><Profile /><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root> : null}</EvidenceSurface>;
+  return <EvidenceSurface className="hover-card-appearance-panel" data-brick-appearance={appearance} level="canvas" ref={setContainer}><Code>{appearance}</Code>{container ? <HoverCard.Root openDelay={0}><HoverCard.Trigger asChild><Link href={`/hover-card/destination?resource=${appearance}-profile`}>{appearance} profile</Link></HoverCard.Trigger><HoverCard.Portal container={container}><HoverCard.Content><Profile /><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root> : null}</EvidenceSurface>;
 }
 
 export const hoverCardScenarios = [
@@ -91,7 +93,7 @@ export function HoverCardPage() {
 
     <Scenario {...hoverCardScenarios[6]}><VStack className="hover-card-evidence-stack">
       <EvidenceGroup description="Focus or hover each genuine link to inspect its same-document portal inside the local light or dark token scope." title="Scoped appearances"><Grid.Root columns={2} className="hover-card-scoped-grid" data-testid="hover-card-appearance"><ScopedPreview appearance="light" /><ScopedPreview appearance="dark" /></Grid.Root></EvidenceGroup>
-      <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization"><EvidenceSurface as="article" className="hover-card-customization" inset="lg"><div><Text as="h4" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Focus or hover the genuine link to inspect the customized Content class, slot, native style, and public surface tokens.</Text><pre aria-label="HoverCard customization example" tabIndex={0}><code>{`<HoverCard.Content
+      <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization"><EvidenceSurface as="article" className="hover-card-customization" inset="lg"><div><Text as="h4" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Focus or hover the genuine link to inspect the customized Content class, slot, native style, and public surface tokens.</Text><PlaygroundCodeBlock aria-label="HoverCard customization example" tabIndex={0}>{`<HoverCard.Content
   className="custom-hover-card"
   data-slot="custom-hover-card"
   style={{
@@ -104,7 +106,7 @@ export function HoverCardPage() {
 >
   <Profile />
   <HoverCard.Arrow />
-</HoverCard.Content>`}</code></pre></div><EvidenceSurface className="hover-card-customization__preview" level="canvas"><HoverCard.Root openDelay={0}><HoverCard.Trigger asChild><Link href="/hover-card/destination?resource=custom-profile">Custom profile</Link></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content className="custom-hover-card" data-slot="custom-hover-card" style={customTokens}><Profile /><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></EvidenceSurface></EvidenceSurface></EvidenceGroup>
+</HoverCard.Content>`}</PlaygroundCodeBlock></div><EvidenceSurface className="hover-card-customization__preview" level="canvas"><HoverCard.Root openDelay={0}><HoverCard.Trigger asChild><Link href="/hover-card/destination?resource=custom-profile">Custom profile</Link></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content className="custom-hover-card" data-slot="custom-hover-card" style={customTokens}><Profile /><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></EvidenceSurface></EvidenceSurface></EvidenceGroup>
     </VStack></Scenario>
 
     <Scenario {...hoverCardScenarios[7]}><VStack className="hover-card-evidence-stack" data-testid="hover-card-stress">

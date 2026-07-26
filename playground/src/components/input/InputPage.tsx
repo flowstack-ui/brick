@@ -1,3 +1,5 @@
+import { Code } from "@flowstack-ui/brick/code";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties } from "react";
 import {
   Grid,
@@ -331,13 +333,13 @@ export function InputPage() {
           >
             <Grid.Root columns={2} className="forms-scoped-grid" data-testid="input-appearance">
               <EvidenceSurface data-brick-appearance="light">
-                <code>light</code>
+                <Code>light</Code>
                 <PreviewField id="input-light">
                   <Input defaultValue="Brick workspace" />
                 </PreviewField>
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
-                <code>dark</code>
+                <Code>dark</Code>
                 <PreviewField id="input-dark">
                   <Input defaultValue="Brick workspace" />
                 </PreviewField>
@@ -355,8 +357,7 @@ export function InputPage() {
                   Public Input variables recolor and reshape the wrapper while
                   inputStyle changes native letter spacing.
                 </Text>
-                <pre aria-label="Input customization example" tabIndex={0}>
-                  <code>{`<Input
+                <PlaygroundCodeBlock aria-label="Input customization example" tabIndex={0}>{`<Input
   data-slot="custom-input"
   defaultValue="Customized input"
   inputStyle={{ letterSpacing: "0.08em" }}
@@ -367,8 +368,7 @@ export function InputPage() {
     "--brick-input-foreground": "#0d3b2a",
     "--brick-input-radius": "0.75rem",
   }}
-/>`}</code>
-                </pre>
+/>`}</PlaygroundCodeBlock>
               </div>
               <EvidenceSurface className="forms-customization__preview">
                 <Field.Root id="input-custom">

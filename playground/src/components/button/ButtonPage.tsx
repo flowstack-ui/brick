@@ -1,3 +1,4 @@
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
@@ -385,17 +386,15 @@ export function ButtonPage() {
                   Public Button tokens replace the solid recipe colors within
                   this instance only.
                 </Text>
-                <pre
+                <PlaygroundCodeBlock
                   aria-label="Button component token example"
                   tabIndex={0}
-                >
-                  <code>{`style={{
+                >{`style={{
   "--brick-button-background": "#6b2f88",
   "--brick-button-background-hover": "#7d3b9c",
   "--brick-button-background-pressed": "#58266f",
   "--brick-button-foreground": "#ffffff"
-}}`}</code>
-                </pre>
+}}`}</PlaygroundCodeBlock>
               </div>
               <div className="button-customization__preview">
                 <Button
@@ -414,8 +413,7 @@ export function ButtonPage() {
                   className, style, and data-slot pass through for local
                   targeting without changing the Button API.
                 </Text>
-                <pre aria-label="Button consumer hook example" tabIndex={0}>
-                  <code>{`.button-page .dashed-action {
+                <PlaygroundCodeBlock aria-label="Button consumer hook example" tabIndex={0}>{`.button-page .dashed-action {
   --brick-button-background: transparent;
   --brick-button-background-hover: var(--brick-color-accent-soft);
   --brick-button-background-pressed: var(--brick-color-accent-soft-pressed);
@@ -430,8 +428,7 @@ export function ButtonPage() {
   data-slot="custom-action"
 >
   Action
-</Button>`}</code>
-                </pre>
+</Button>`}</PlaygroundCodeBlock>
               </div>
               <div className="button-customization__preview">
                 <Button

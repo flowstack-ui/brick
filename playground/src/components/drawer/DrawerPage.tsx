@@ -1,3 +1,4 @@
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import {
   useState,
   type CSSProperties,
@@ -651,11 +652,10 @@ export function DrawerPage() {
                 Public Drawer tokens change spacing, radius, and elevation for
                 this default end/medium surface only.
               </Text>
-              <pre
+              <PlaygroundCodeBlock
                 aria-label="Drawer component token example"
                 tabIndex={0}
-              >
-                <code>{`<Drawer.Content
+              >{`<Drawer.Content
   style={{
     "--brick-drawer-radius": "0.25rem",
     "--brick-drawer-space": "2rem",
@@ -670,8 +670,7 @@ export function DrawerPage() {
   <Drawer.Footer>
     <Drawer.Close asChild><Button>Close</Button></Drawer.Close>
   </Drawer.Footer>
-</Drawer.Content>`}</code>
-              </pre>
+</Drawer.Content>`}</PlaygroundCodeBlock>
             </div>
             <div className="drawer-customization__preview">
               <Drawer.Root>
@@ -713,11 +712,10 @@ export function DrawerPage() {
                 Portal-safe class, style, and slot hooks customize a local
                 surface without changing Drawer behavior.
               </Text>
-              <pre
+              <PlaygroundCodeBlock
                 aria-label="Drawer consumer hook example"
                 tabIndex={0}
-              >
-                <code>{`.brick-drawer-content.dashed-drawer {
+              >{`.brick-drawer-content.dashed-drawer {
   border-style: dashed;
 }
 
@@ -734,8 +732,7 @@ export function DrawerPage() {
   <Drawer.Footer>
     <Drawer.Close asChild><Button>Close</Button></Drawer.Close>
   </Drawer.Footer>
-</Drawer.Content>`}</code>
-              </pre>
+</Drawer.Content>`}</PlaygroundCodeBlock>
             </div>
             <div className="drawer-customization__preview">
               <Drawer.Root>

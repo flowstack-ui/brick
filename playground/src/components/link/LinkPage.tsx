@@ -1,3 +1,4 @@
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { type CSSProperties, type ReactNode } from "react";
 import {
   Container,
@@ -125,7 +126,7 @@ export function LinkPage() {
             <VStack gap="2">
               <Text as="h3" variant="title-sm">Link CSS properties</Text>
               <Text tone="secondary" variant="body-sm">Success foreground, thicker decoration, and a larger underline offset use documented variables.</Text>
-              <pre tabIndex={0}><code>--brick-link-foreground; --brick-link-decoration-thickness; --brick-link-decoration-offset</code></pre>
+              <PlaygroundCodeBlock tabIndex={0}>--brick-link-foreground; --brick-link-decoration-thickness; --brick-link-decoration-offset</PlaygroundCodeBlock>
             </VStack>
             <Surface bordered inset="md"><Link href="#link-destination" style={customStyle}>Read customized guidance</Link></Surface>
           </EvidenceSurface>
