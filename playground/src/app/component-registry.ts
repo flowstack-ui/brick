@@ -72,6 +72,13 @@ export const componentEntries = [
   },
   {
     category: "Data display",
+    description: "Native ordered and unordered content with structured rows.",
+    id: "list",
+    route: "/list",
+    title: "List",
+  },
+  {
+    category: "Data display",
     description: "Inline technical literals with native code semantics.",
     id: "code",
     route: "/code",

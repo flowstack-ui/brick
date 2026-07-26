@@ -6,6 +6,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- `List` with Atom-backed native ordered and unordered semantics, three surface
+  variants, three sizes, two densities, closed marker recipes, seven compound
+  parts, nesting, composition, and public customization hooks.
+
 - `Image` for authored responsive media with Atom-backed loaded/fallback state,
   five fit and logical-position recipes, five radii, subtle framing, explicit
   aspect ratio, native image attributes, and public customization hooks.

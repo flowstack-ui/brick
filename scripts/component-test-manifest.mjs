@@ -27,6 +27,7 @@ export const componentIds = [
   "icon-button",
   "input",
   "link",
+  "list",
   "notification-badge",
   "popover",
   "stack",

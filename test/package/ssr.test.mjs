@@ -18,6 +18,7 @@ import { CheckboxGroup } from "../../dist/checkbox-group.js";
 import { Input } from "../../dist/input.js";
 import { Text } from "../../dist/text.js";
 import { Link } from "../../dist/link.js";
+import { List } from "../../dist/list.js";
 import { HStack, Stack, VStack } from "../../dist/stack.js";
 import { Grid } from "../../dist/grid.js";
 import { Container } from "../../dist/container.js";
@@ -552,4 +553,22 @@ test("Image renders deterministic idle and loading fallback anatomy on the serve
   assert.match(idle, /data-frame="none"/);
   assert.match(idle, /brick-image__fallback/);
   assert.doesNotMatch(idle, /<img/);
+});
+
+test("List renders deterministic ordered and structured native anatomy", () => {
+  const markup = renderToString(React.createElement(List.Root, { ordered: true, reversed: true, start: 4, variant: "bordered" },
+    React.createElement(List.Item, { value: 7 },
+      React.createElement(List.Leading, null, "✓"),
+      React.createElement(List.Content, null,
+        React.createElement(List.Title, null, "Package build"),
+        React.createElement(List.Description, null, "Verified")),
+      React.createElement(List.Trailing, null, "Ready"))));
+  assert.match(markup, /^<ol/);
+  assert.match(markup, /start="4"/);
+  assert.match(markup, /reversed=""/);
+  assert.match(markup, /data-variant="bordered"/);
+  assert.match(markup, /value="7"/);
+  assert.match(markup, /brick-list__leading/);
+  assert.match(markup, /brick-list__description/);
+  assert.match(markup, /brick-list__trailing/);
 });

@@ -77,6 +77,7 @@ const componentSymbols = {
   "icon-button": "IconButton",
   input: "Input",
   link: "Link",
+  list: "List",
   "notification-badge": "NotificationBadge",
   popover: "Popover",
   stack: "Stack",

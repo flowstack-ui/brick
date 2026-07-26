@@ -7,6 +7,7 @@ import {
   Card,
   IconButton,
   Image,
+  List,
   Text,
   type CardRootElement,
   type CardRootProps,
@@ -277,7 +278,9 @@ export function CardPage() {
                 return (
                   <SpecimenCell key={element} label={element}>
                     {element === "li" ? (
-                      <ul className="card-list-reset">{card}</ul>
+                      <List.Root className="card-list-reset" marker="none">
+                        <List.Item asChild>{card}</List.Item>
+                      </List.Root>
                     ) : (
                       card
                     )}

@@ -50,6 +50,8 @@ This directory is the public documentation authority for
 - [Notification Badge](components/notification-badge/README.md) — attached
   visual count or dot
 - [Card](components/card/README.md) — static compound surface for one subject
+- [List](components/list/README.md) — native ordered and unordered content
+  collections with optional structured anatomy
 
 ### Contextual overlays
 

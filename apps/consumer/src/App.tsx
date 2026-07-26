@@ -23,6 +23,7 @@ import { CheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 import { Input } from "@flowstack-ui/brick/input";
 import { Text } from "@flowstack-ui/brick/text";
 import { Link } from "@flowstack-ui/brick/link";
+import { List } from "@flowstack-ui/brick/list";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
 import { Grid } from "@flowstack-ui/brick/grid";
 import { Container } from "@flowstack-ui/brick/container";
@@ -511,11 +512,11 @@ export function App() {
                 <Card.Description>Release health</Card.Description>
               </Card.Header>
               <Card.Content>
-                <ul>
-                  <li><span aria-hidden="true">✓</span> Mobile layout checked</li>
-                  <li><span aria-hidden="true">✓</span> Keyboard path checked</li>
-                  <li><span aria-hidden="true">✓</span> Package build checked</li>
-                </ul>
+                <List.Root marker="none">
+                  <List.Item><List.Leading aria-hidden="true">✓</List.Leading><List.Content>Mobile layout checked</List.Content></List.Item>
+                  <List.Item><List.Leading aria-hidden="true">✓</List.Leading><List.Content>Keyboard path checked</List.Content></List.Item>
+                  <List.Item><List.Leading aria-hidden="true">✓</List.Leading><List.Content>Package build checked</List.Content></List.Item>
+                </List.Root>
               </Card.Content>
               <Card.Footer>
                 <Button fullWidth tone="success" variant="soft">Review checklist</Button>

@@ -6,6 +6,7 @@ import {
   Container,
   Grid,
   HStack,
+  List,
   Surface,
   Text,
   VStack,
@@ -257,11 +258,13 @@ export function SurfacePage() {
               </Cell>
             ))}
             <Cell label="li">
-              <ul className="surface-host-list">
-                <Surface as="li" bordered inset="sm">
-                  <Text variant="body-sm">li host</Text>
-                </Surface>
-              </ul>
+              <List.Root className="surface-host-list" marker="none">
+                <List.Item asChild>
+                  <Surface as="li" bordered inset="sm">
+                    <Text variant="body-sm">li host</Text>
+                  </Surface>
+                </List.Item>
+              </List.Root>
             </Cell>
           </Grid.Root>
           <Button onPress={() => setHost(semanticRef.current?.tagName ?? "Missing")} size="sm">

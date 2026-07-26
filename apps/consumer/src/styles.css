@@ -396,22 +396,13 @@
     font-weight: var(--brick-font-weight-semibold);
   }
 
-  .checklist ul {
-    display: grid;
-    gap: 0.8rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .checklist .brick-list {
+    --brick-list-row-padding-inline: 0;
+
     color: var(--brick-color-text-secondary);
   }
 
-  .checklist li {
-    display: flex;
-    gap: 0.65rem;
-    align-items: start;
-  }
-
-  .checklist li span {
+  .checklist .brick-list__leading {
     color: var(--brick-color-success-text);
     font-weight: var(--brick-font-weight-semibold);
   }

@@ -1,0 +1,27 @@
+.list-page { inline-size: 100%; }
+.list-overview { max-inline-size: 42rem; }
+.list-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); align-self: stretch; }
+.list-grid { align-items: stretch; }
+.list-grid > * { min-inline-size: 0; }
+.list-output-grid { align-items: start; }
+.list-customization { align-items: center; }
+.list-narrow { inline-size: min(100%, 14rem); }
+
+@media (max-width: 64rem) {
+  .list-grid--markers { --brick-grid-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 52rem) {
+  .list-grid--three,
+  .list-grid--markers { --brick-grid-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 36rem) {
+  .list-grid,
+  .list-grid--two,
+  .list-grid--three,
+  .list-grid--markers,
+  .list-grid--stress,
+  .list-output-grid,
+  .list-customization { --brick-grid-columns: minmax(0, 1fr); }
+}

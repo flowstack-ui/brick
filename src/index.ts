@@ -211,6 +211,20 @@ export {
   type LinkVariant,
 } from "./components/link/index.js";
 export {
+  List,
+  type ListContentProps,
+  type ListDensity,
+  type ListDescriptionProps,
+  type ListItemProps,
+  type ListLeadingProps,
+  type ListMarker,
+  type ListRootProps,
+  type ListSize,
+  type ListTitleProps,
+  type ListTrailingProps,
+  type ListVariant,
+} from "./components/list/index.js";
+export {
   HStack,
   Stack,
   VStack,
