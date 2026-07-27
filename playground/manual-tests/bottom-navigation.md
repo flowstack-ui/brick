@@ -26,7 +26,7 @@ Review 06–07. Activate links and controlled Search; try Disabled Inbox; inspec
 
 ## 4 — Appearance, effects, customization, and stress
 
-Review 08–09 in light/dark, RTL, narrow mobile, 200% and 400% zoom, reduced motion/transparency, and forced colors. Expected: elevation and blur do not change geometry; amber preview exactly matches its code; long labels remain contained; Arabic order follows RTL; only the shell-owned example omits safe-area data; there is no horizontal page overflow or clipped focus.
+Review 08–09 in light/dark, RTL, narrow mobile, 200% and 400% zoom, reduced motion/transparency, and forced colors. Resize and scroll the phone viewport while watching several bars. Expected: elevation and blur do not change geometry; amber preview exactly matches its code; every bar of the same size keeps one stable height and its Icon/Label columns do not move while browser chrome opens or closes; small positioned examples show their complete label line; long labels truncate visually but retain their full accessible names; Arabic order follows RTL; only the shell-owned example omits safe-area data; there is no horizontal page overflow or clipped focus.
 
 ## 5 — Assistive technology
 

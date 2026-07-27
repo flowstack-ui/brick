@@ -53,6 +53,11 @@ test("selection targets, label policies, content, and controlled state remain di
   await expect(countBars.nth(1).getByRole("link")).toHaveCount(4);
   await expect(countBars.nth(2).getByRole("link")).toHaveCount(5);
   await expect(content.locator(".brick-notification-badge__indicator")).toHaveText("4");
+  const notificationItem = countBars.nth(2).getByRole("link", { name: "Inbox" });
+  await expect(notificationItem.locator(":scope > .brick-bottom-navigation__icon"))
+    .toHaveCount(1);
+  await expect(notificationItem.locator(".brick-notification-badge"))
+    .toHaveCSS("width", "24px");
 
   const behavior = page.getByTestId("bottom-navigation-behavior");
   await behavior.getByRole("button", { name: "Search" }).click();
@@ -61,6 +66,36 @@ test("selection targets, label policies, content, and controlled state remain di
   const composed = behavior.locator('[data-router-link="docs"]');
   await expect(composed).toHaveAttribute("href", "#bottom-navigation-docs");
   await expect(composed).toHaveClass(/brick-bottom-navigation__item/);
+});
+
+test("each size keeps a stable height across widths and label policies", async ({ page }) => {
+  for (const width of [1280, 760, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+
+    const policyBars = page
+      .getByTestId("bottom-navigation-labels-content")
+      .locator(".bottom-navigation-group")
+      .first()
+      .locator(".brick-bottom-navigation");
+    const policyHeights = await policyBars.evaluateAll((nodes) =>
+      nodes.map((node) => node.getBoundingClientRect().height),
+    );
+    expect(new Set(policyHeights)).toEqual(new Set([80]));
+
+    const longLabelBar = page
+      .getByRole("navigation", { name: "Project destinations" });
+    await expect(longLabelBar).toHaveCSS("height", "80px");
+    await expect(longLabelBar.getByRole("button", { name: "Workspace settings" }))
+      .toBeVisible();
+  }
+
+  const sizeBars = page
+    .getByTestId("bottom-navigation-size-position")
+    .locator(".bottom-navigation-group")
+    .first()
+    .locator(".brick-bottom-navigation");
+  expect(await sizeBars.evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().height)))
+    .toEqual([64, 80, 100]);
 });
 
 test("effects, neutral palette, safe area, mobile, RTL, and accessibility hold", async ({ page }) => {

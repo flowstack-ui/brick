@@ -1,0 +1,5 @@
+.progress-circle-page .forms-cell__preview { inline-size: 100%; justify-content: center; }
+.progress-circle-grid--five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.progress-circle-phone { inline-size: min(100%, 12rem); }
+@media (max-width: 58rem) { .progress-circle-grid--five { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 34rem) { .progress-circle-grid--five { grid-template-columns: 1fr; } }

@@ -4,10 +4,36 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Added `Accordion` with single and multiple selection, two-axis layout and
+  motion, locked-open semantics, optional landmarks, direction-aware keyboard
+  navigation, responsive overflow, and public customization hooks.
+- Added horizontal measured-width behavior to `Collapsible` and pinned Atom
+  0.14.0 for the shared disclosure orientation contract.
+
+- Added `Collapsible` with Atom-backed disclosure semantics, five-part anatomy,
+  three neutral surfaces, three coordinated sizes, live measured-height motion,
+  and RTL/reduced-motion treatment.
+
 - `RadioGroup` with Atom-backed single-selection, read-only, form, validation,
   orientation, RTL, three sizes, and a complete circular visual.
 
+### Fixed
+
+- Removed unsupported `aria-orientation` from `Progress`; visual orientation
+  remains available through `data-orientation` without invalid progressbar ARIA.
+
+- Kept each Bottom Navigation size at a stable base height across responsive
+  widths, label policies, and mobile browser-chrome changes; small labels no
+  longer clip, and Notification Badge composition remains centered on its
+  glyph.
+
 ### Added
+
+- Added `Progress` with Atom-backed determinate, indeterminate, buffered,
+  horizontal, and vertical linear progress plus complete recipes and value
+  composition.
+- Added `ProgressCircle` with Atom-backed determinate and indeterminate rings,
+  complete sizing, thickness, cap, tone, and value composition.
 
 - Added `BottomNavigation` with Atom-backed destination and controlled-view
   models, complete surface/layout/selection recipes, three accessible label

@@ -24,7 +24,13 @@ test("gutter and visibility remain explicit without removing scrolling", async (
   const interaction = root.locator(".brick-scroll-area-viewport");
   const rest = await interaction.evaluate((node) => getComputedStyle(node).scrollbarColor);
   await root.hover();
-  expect(await interaction.evaluate((node) => getComputedStyle(node).scrollbarColor)).not.toBe(rest);
+  const hovered = await interaction.evaluate((node) => getComputedStyle(node).scrollbarColor);
+  const supportsScrollbarColor = await page.evaluate(() => CSS.supports("scrollbar-color", "auto"));
+  if (supportsScrollbarColor) expect(hovered).not.toBe(rest);
+  else {
+    await expect(root).toHaveAttribute("data-scrollbar-visibility", "interaction");
+    await expect(interaction).toHaveCSS("overflow-y", "auto");
+  }
 });
 
 test("composition, refs, reflow, and accessibility remain sound", async ({ page }) => {

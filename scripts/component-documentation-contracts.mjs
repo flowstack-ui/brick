@@ -839,6 +839,36 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-animation", "data-lines", "data-loading", "data-slot", "data-variant"],
     publicTokens: ["--brick-skeleton-background", "--brick-skeleton-highlight", "--brick-skeleton-width", "--brick-skeleton-height", "--brick-skeleton-radius"],
   },
+  progress: {
+    source: "src/components/progress/Progress.tsx",
+    exportSource: "src/components/progress/index.ts",
+    css: "src/components/progress/progress.css",
+    exports: ["Progress", "ProgressBuffer", "ProgressBufferProps", "ProgressIndicator", "ProgressIndicatorProps", "ProgressLabel", "ProgressLabelProps", "ProgressOrientation", "ProgressRoot", "ProgressRootProps", "ProgressShape", "ProgressSize", "ProgressTone", "ProgressTrack", "ProgressTrackProps", "ProgressValue", "ProgressValueDetails", "ProgressValueProps"],
+    unions: {
+      ProgressOrientation: ["horizontal", "vertical"],
+      ProgressSize: ["xs", "sm", "md", "lg", "xl"],
+      ProgressShape: ["square", "rounded", "pill"],
+      ProgressTone: ["neutral", "accent", "info", "success", "warning", "danger"],
+    },
+    defaults: { orientation: "horizontal", size: "md", shape: "rounded", tone: "accent" },
+    dataAttributes: ["data-orientation", "data-shape", "data-size", "data-tone"],
+    publicTokens: ["--brick-progress-track-background", "--brick-progress-buffer-background", "--brick-progress-indicator-background", "--brick-progress-label-foreground", "--brick-progress-value-foreground", "--brick-progress-thickness", "--brick-progress-length", "--brick-progress-radius"],
+  },
+  "progress-circle": {
+    source: "src/components/progress-circle/ProgressCircle.tsx",
+    exportSource: "src/components/progress-circle/index.ts",
+    css: "src/components/progress-circle/progress-circle.css",
+    exports: ["ProgressCircle", "ProgressCircleCap", "ProgressCircleCircle", "ProgressCircleCircleProps", "ProgressCircleIndicator", "ProgressCircleIndicatorProps", "ProgressCircleLabel", "ProgressCircleLabelProps", "ProgressCircleRoot", "ProgressCircleRootProps", "ProgressCircleSize", "ProgressCircleThickness", "ProgressCircleTone", "ProgressCircleTrack", "ProgressCircleTrackProps", "ProgressCircleValue", "ProgressCircleValueDetails", "ProgressCircleValueProps"],
+    unions: {
+      ProgressCircleSize: ["xs", "sm", "md", "lg", "xl"],
+      ProgressCircleThickness: ["thin", "regular", "thick"],
+      ProgressCircleCap: ["round", "butt"],
+      ProgressCircleTone: ["neutral", "accent", "info", "success", "warning", "danger"],
+    },
+    defaults: { size: "md", thickness: "regular", cap: "round", tone: "accent" },
+    dataAttributes: ["data-cap", "data-size", "data-thickness", "data-tone"],
+    publicTokens: ["--brick-progress-circle-track", "--brick-progress-circle-indicator", "--brick-progress-circle-label-foreground", "--brick-progress-circle-value-foreground", "--brick-progress-circle-size", "--brick-progress-circle-stroke"],
+  },
   button: {
     source: "src/components/button/Button.tsx",
     exportSource: "src/components/button/index.ts",
@@ -1851,6 +1881,22 @@ componentDocumentationContracts["visually-hidden"] = {
     { path: "node_modules/@flowstack-ui/atom/dist/_internal/primitives/visually-hidden/VisuallyHiddenRoot.js", claims: ['position: "absolute"', 'clipPath: "inset(50%)"'] },
   ],
   publicTokens: [],
+};
+
+componentDocumentationContracts.collapsible = {
+  source: "src/components/collapsible/Collapsible.tsx", exportSource: "src/components/collapsible/index.ts", css: "src/components/collapsible/collapsible.css",
+  exports: ["Collapsible","CollapsibleRoot","CollapsibleTrigger","CollapsibleIndicator","CollapsibleContent","CollapsibleContentInner","CollapsibleRootProps","CollapsibleTriggerProps","CollapsibleIndicatorProps","CollapsibleContentProps","CollapsibleContentInnerProps","CollapsibleVariant","CollapsibleSize"],
+  unions: { CollapsibleVariant: ["plain", "soft", "outline"], CollapsibleSize: ["sm", "md", "lg"] }, defaults: { variant: "plain", size: "md" },
+  dataAttributes: ["data-size", "data-slot", "data-variant"],
+  publicTokens: ["--brick-collapsible-background","--brick-collapsible-border-color","--brick-collapsible-trigger-background","--brick-collapsible-trigger-hover-background","--brick-collapsible-trigger-open-background","--brick-collapsible-foreground","--brick-collapsible-content-foreground","--brick-collapsible-focus-ring","--brick-collapsible-radius","--brick-collapsible-trigger-height","--brick-collapsible-trigger-padding-inline","--brick-collapsible-trigger-gap","--brick-collapsible-content-padding-block","--brick-collapsible-content-padding-inline","--brick-collapsible-indicator-size"],
+};
+
+componentDocumentationContracts.accordion = {
+  source: "src/components/accordion/Accordion.tsx", exportSource: "src/components/accordion/index.ts", css: "src/components/accordion/accordion.css",
+  exports: ["Accordion","AccordionRoot","AccordionItem","AccordionHeader","AccordionTrigger","AccordionIndicator","AccordionContent","AccordionContentInner","AccordionRootProps","AccordionItemProps","AccordionHeaderProps","AccordionTriggerProps","AccordionIndicatorProps","AccordionContentProps","AccordionContentInnerProps","AccordionVariant","AccordionSize"],
+  unions: { AccordionVariant: ["plain", "soft", "outline"], AccordionSize: ["sm", "md", "lg"] }, defaults: { variant: "plain", size: "md" },
+  dataAttributes: ["data-size", "data-slot", "data-variant"],
+  publicTokens: ["--brick-accordion-background","--brick-accordion-border-color","--brick-accordion-divider-color","--brick-accordion-trigger-background","--brick-accordion-trigger-hover-background","--brick-accordion-trigger-open-background","--brick-accordion-foreground","--brick-accordion-content-foreground","--brick-accordion-focus-ring","--brick-accordion-radius","--brick-accordion-trigger-height","--brick-accordion-trigger-padding-inline","--brick-accordion-content-padding-block","--brick-accordion-content-padding-inline","--brick-accordion-indicator-size"],
 };
 
 componentDocumentationContracts["multi-select"] = {

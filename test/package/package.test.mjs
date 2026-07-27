@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.13.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.14.0");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -148,6 +148,22 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/skeleton.d.ts",
       default: "./dist/skeleton.js",
     },
+    "./progress": {
+      types: "./dist/progress.d.ts",
+      default: "./dist/progress.js",
+    },
+    "./progress-circle": {
+      types: "./dist/progress-circle.d.ts",
+      default: "./dist/progress-circle.js",
+    },
+    "./collapsible": {
+      types: "./dist/collapsible.d.ts",
+      default: "./dist/collapsible.js",
+    },
+    "./accordion": {
+      types: "./dist/accordion.d.ts",
+      default: "./dist/accordion.js",
+    },
     "./input": {
       types: "./dist/input.d.ts",
       default: "./dist/input.js",
@@ -251,6 +267,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const breadcrumb = await import(new URL("../../dist/breadcrumb.js", import.meta.url));
   const tabs = await import(new URL("../../dist/tabs.js", import.meta.url));
   const skeleton = await import(new URL("../../dist/skeleton.js", import.meta.url));
+  const progress = await import(new URL("../../dist/progress.js", import.meta.url));
+  const progressCircle = await import(new URL("../../dist/progress-circle.js", import.meta.url));
   const input = await import(new URL("../../dist/input.js", import.meta.url));
   const textarea = await import(new URL("../../dist/textarea.js", import.meta.url));
   const text = await import(new URL("../../dist/text.js", import.meta.url));
@@ -274,9 +292,19 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const navigationMenu = await import(new URL("../../dist/navigation-menu.js", import.meta.url));
   const bottomNavigation = await import(new URL("../../dist/bottom-navigation.js", import.meta.url));
   const visuallyHidden = await import(new URL("../../dist/visually-hidden.js", import.meta.url));
+  const collapsible = await import(new URL("../../dist/collapsible.js", import.meta.url));
+  const accordion = await import(new URL("../../dist/accordion.js", import.meta.url));
   assert.deepEqual(
     Object.keys(brick),
     [
+      "Accordion",
+      "AccordionContent",
+      "AccordionContentInner",
+      "AccordionHeader",
+      "AccordionIndicator",
+      "AccordionItem",
+      "AccordionRoot",
+      "AccordionTrigger",
       "AlertDialog",
       "AppBar",
       "AppBarCenter",
@@ -314,6 +342,12 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "CodeBlockLanguage",
       "CodeBlockRoot",
       "CodeBlockTitle",
+      "Collapsible",
+      "CollapsibleContent",
+      "CollapsibleContentInner",
+      "CollapsibleIndicator",
+      "CollapsibleRoot",
+      "CollapsibleTrigger",
       "Container",
       "ContextMenu",
       "ContextMenuArrow",
@@ -445,6 +479,20 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "PopoverRoot",
       "PopoverTitle",
       "PopoverTrigger",
+      "Progress",
+      "ProgressBuffer",
+      "ProgressCircle",
+      "ProgressCircleCircle",
+      "ProgressCircleIndicator",
+      "ProgressCircleLabel",
+      "ProgressCircleRoot",
+      "ProgressCircleTrack",
+      "ProgressCircleValue",
+      "ProgressIndicator",
+      "ProgressLabel",
+      "ProgressRoot",
+      "ProgressTrack",
+      "ProgressValue",
       "RadioGroup",
       "RadioGroupItem",
       "RadioGroupRoot",
@@ -566,6 +614,20 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(tabs.TabsContent, brick.Tabs.Content);
   assert.equal(tabs.TabsIndicator, brick.Tabs.Indicator);
   assert.equal(skeleton.Skeleton, brick.Skeleton);
+  assert.equal(progress.Progress, brick.Progress);
+  assert.equal(progress.ProgressRoot, brick.Progress.Root);
+  assert.equal(progress.ProgressLabel, brick.Progress.Label);
+  assert.equal(progress.ProgressValue, brick.Progress.Value);
+  assert.equal(progress.ProgressTrack, brick.Progress.Track);
+  assert.equal(progress.ProgressBuffer, brick.Progress.Buffer);
+  assert.equal(progress.ProgressIndicator, brick.Progress.Indicator);
+  assert.equal(progressCircle.ProgressCircle, brick.ProgressCircle);
+  assert.equal(progressCircle.ProgressCircleRoot, brick.ProgressCircle.Root);
+  assert.equal(progressCircle.ProgressCircleCircle, brick.ProgressCircle.Circle);
+  assert.equal(progressCircle.ProgressCircleTrack, brick.ProgressCircle.Track);
+  assert.equal(progressCircle.ProgressCircleIndicator, brick.ProgressCircle.Indicator);
+  assert.equal(progressCircle.ProgressCircleLabel, brick.ProgressCircle.Label);
+  assert.equal(progressCircle.ProgressCircleValue, brick.ProgressCircle.Value);
   assert.equal(dropdownMenu.DropdownMenu, brick.DropdownMenu);
   assert.equal(contextMenu.ContextMenu, brick.ContextMenu);
   assert.equal(menubar.Menubar, brick.Menubar);
@@ -577,6 +639,20 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(bottomNavigation.BottomNavigationLabel, brick.BottomNavigation.Label);
   assert.equal(visuallyHidden.VisuallyHidden, brick.VisuallyHidden);
   assert.equal(visuallyHidden.VisuallyHiddenRoot, brick.VisuallyHidden.Root);
+  assert.equal(collapsible.Collapsible, brick.Collapsible);
+  assert.equal(collapsible.CollapsibleRoot, brick.Collapsible.Root);
+  assert.equal(collapsible.CollapsibleTrigger, brick.Collapsible.Trigger);
+  assert.equal(collapsible.CollapsibleIndicator, brick.Collapsible.Indicator);
+  assert.equal(collapsible.CollapsibleContent, brick.Collapsible.Content);
+  assert.equal(collapsible.CollapsibleContentInner, brick.Collapsible.ContentInner);
+  assert.equal(accordion.Accordion, brick.Accordion);
+  assert.equal(accordion.AccordionRoot, brick.Accordion.Root);
+  assert.equal(accordion.AccordionItem, brick.Accordion.Item);
+  assert.equal(accordion.AccordionHeader, brick.Accordion.Header);
+  assert.equal(accordion.AccordionTrigger, brick.Accordion.Trigger);
+  assert.equal(accordion.AccordionIndicator, brick.Accordion.Indicator);
+  assert.equal(accordion.AccordionContent, brick.Accordion.Content);
+  assert.equal(accordion.AccordionContentInner, brick.Accordion.ContentInner);
   assert.equal(input.Input, brick.Input);
   assert.equal(textarea.Textarea, brick.Textarea);
   assert.equal(textarea.TextareaRoot, brick.Textarea.Root);
@@ -640,6 +716,8 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-tooltip/);
   assert.match(styles, /\.brick-hover-card/);
   assert.match(styles, /\.brick-popover/);
+  assert.match(styles, /\.brick-collapsible/);
+  assert.match(styles, /\.brick-accordion/);
   assert.match(styles, /\.brick-form/);
   assert.match(styles, /\.brick-field/);
   assert.match(styles, /\.brick-fieldset/);
@@ -681,6 +759,8 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-tooltip-background/);
   assert.match(styles, /--brick-hover-card-background/);
   assert.match(styles, /--brick-popover-background/);
+  assert.match(styles, /--brick-collapsible-background/);
+  assert.match(styles, /--brick-accordion-background/);
   assert.match(styles, /--brick-form-gap/);
   assert.match(styles, /--brick-field-label-foreground/);
   assert.match(styles, /--brick-fieldset-legend-foreground/);

@@ -1,0 +1,15 @@
+export {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleContentInner,
+  CollapsibleIndicator,
+  CollapsibleRoot,
+  CollapsibleTrigger,
+  type CollapsibleContentInnerProps,
+  type CollapsibleContentProps,
+  type CollapsibleIndicatorProps,
+  type CollapsibleRootProps,
+  type CollapsibleSize,
+  type CollapsibleTriggerProps,
+  type CollapsibleVariant,
+} from "./Collapsible.js";

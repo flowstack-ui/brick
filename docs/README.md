@@ -57,10 +57,18 @@ This directory is the public documentation authority for
 - [Notification Badge](components/notification-badge/README.md) — attached
   visual count or dot
 - [Card](components/card/README.md) — static compound surface for one subject
+- [Collapsible](components/collapsible/README.md) — one independent in-flow
+  disclosure with finished surfaces and motion
+- [Accordion](components/accordion/README.md) — coordinated disclosures with
+  single or multiple selection and two-axis layout
 - [List](components/list/README.md) — native ordered and unordered content
   collections with optional structured anatomy
 - [Skeleton](components/skeleton/README.md) — motion-safe loading placeholders
   with content-preserving geometry
+- [Progress](components/progress/README.md) — linear determinate,
+  indeterminate, and buffered task progress
+- [Progress Circle](components/progress-circle/README.md) — compact circular
+  determinate and indeterminate task progress
 
 ### Contextual overlays
 

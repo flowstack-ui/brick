@@ -126,6 +126,8 @@ for (const directory of componentDirectories) {
         declaration.includes("var(--brick-link-") ||
         declaration.includes("var(--brick-breadcrumb-") ||
         declaration.includes("var(--brick-bottom-navigation-") ||
+        declaration.includes("var(--brick-collapsible-") ||
+        declaration.includes("var(--brick-accordion-") ||
         declaration.includes("var(--brick-tabs-") ||
         declaration.includes("var(--brick-code-") ||
         declaration.includes("var(--brick-badge-") ||
