@@ -1,0 +1,8 @@
+.visually-hidden-page { inline-size: 100%; }
+.visually-hidden-grid { gap: var(--brick-space-4); }
+.visually-hidden-cell { min-inline-size: 0; }
+.visually-hidden-cell__preview { display: flex; align-items: center; min-block-size: 4rem; margin-block-start: var(--brick-space-3); }
+.visually-hidden-hero { display: grid; min-block-size: 8rem; place-items: center; }
+.visually-hidden-output-host { display: inline-flex; align-items: center; }
+.visually-hidden-narrow { display: flex; inline-size: 4rem; justify-content: center; margin-block-start: var(--brick-space-3); outline: 1px dashed var(--brick-color-border); }
+@media (max-width: 48rem) { .visually-hidden-grid { grid-template-columns: minmax(0, 1fr); } }

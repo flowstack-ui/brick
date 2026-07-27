@@ -69,6 +69,12 @@ This directory is the public documentation authority for
 - [Hover Card](components/hover-card/README.md) — nonessential destination
   preview
 - [Popover](components/popover/README.md) — click-open interactive panel
+- [Dropdown Menu](components/dropdown-menu/README.md) — button-triggered
+  commands, choices, and nested actions
+- [Context Menu](components/context-menu/README.md) — contextual commands for a
+  pointer or touch region
+- [Menubar](components/menubar/README.md) — persistent desktop-style command
+  categories
 
 ### Modal surfaces
 
@@ -79,6 +85,8 @@ This directory is the public documentation authority for
 
 ### Content primitives
 
+- [Visually Hidden](components/visually-hidden/README.md) — behavior-preserving
+  assistive text for visually redundant labels and context
 - [Icon](components/icon/README.md) — SVG sizing, semantic color, direction,
   and decorative or informative accessibility
 - [Image](components/image/README.md) — responsive media, authored fallback,
@@ -90,6 +98,10 @@ This directory is the public documentation authority for
   and ancestor navigation
 - [Tabs](components/tabs/README.md) — related peer panels with complete keyboard
   navigation
+- [Navigation Menu](components/navigation-menu/README.md) — destination
+  navigation with optional rich link panels
+- [Bottom Navigation](components/bottom-navigation/README.md) — compact,
+  persistent top-level destinations for narrow application layouts
 - [Link](components/link/README.md) — inline and standalone native navigation
 - [Nav List](components/nav-list/README.md) — grouped native destination lists
   with current and collapsible states

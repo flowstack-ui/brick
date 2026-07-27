@@ -58,6 +58,10 @@ for (const appearance of ["light", "dark"]) {
 }
 
 const allowedGeometryDeclarations = new Map([
+  ["_action-menu/action-menu.css", [
+    "font-size: var(--brick-action-menu-font-size);",
+    "line-height: var(--brick-action-menu-line-height);",
+  ]],
   ["avatar/avatar.css", [
     "--brick-avatar-fallback-font-size: 0.875rem;",
     "--brick-avatar-fallback-font-size: 0.625rem;",
@@ -121,6 +125,7 @@ for (const directory of componentDirectories) {
         declaration.includes("var(--brick-multi-select-") ||
         declaration.includes("var(--brick-link-") ||
         declaration.includes("var(--brick-breadcrumb-") ||
+        declaration.includes("var(--brick-bottom-navigation-") ||
         declaration.includes("var(--brick-tabs-") ||
         declaration.includes("var(--brick-code-") ||
         declaration.includes("var(--brick-badge-") ||

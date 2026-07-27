@@ -1,0 +1,26 @@
+import AxeBuilder from "@axe-core/playwright";
+import { expect, test } from "@playwright/test";
+
+test.beforeEach(async ({ page }) => { await page.goto("/menubar"); });
+
+test("defaults, adjacent navigation, orientation, sizes, states, and composition work", async ({ page }) => {
+  const root = page.getByTestId("menubar-overview").getByRole("menubar", { name: "Editor commands" });
+  await expect(root).toHaveAttribute("data-size", "md");
+  await expect(root.getByRole("menuitem", { name: "File" })).toHaveAttribute("aria-expanded", "true");
+  await root.getByRole("menuitem", { name: "File" }).focus(); await root.getByRole("menuitem", { name: "File" }).press("ArrowRight");
+  await expect(root.getByRole("menuitem", { name: "Edit" })).toHaveAttribute("aria-expanded", "true");
+  for (const size of ["sm", "md", "lg"]) await expect(page.getByTestId("menubar-density").locator(`.brick-menubar[data-size='${size}']`)).toHaveCount(1);
+  const vertical = page.getByTestId("menubar-orientation").getByRole("menubar", { name: "Editor commands" }).nth(1);
+  await vertical.getByRole("menuitem", { name: "File" }).focus(); await vertical.getByRole("menuitem", { name: "File" }).press("ArrowDown");
+  await expect(vertical.getByRole("menuitem", { name: "Edit" })).toBeFocused();
+  await expect(page.getByRole("menubar", { name: "Unavailable editor commands" }).getByRole("menuitem", { name: "File" })).toHaveAttribute("aria-disabled", "true");
+  await expect(page.locator("[data-adapter='editor-menubar']")).toHaveAttribute("role", "menubar");
+});
+
+test("RTL, narrow overflow, and accessibility work", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  const rtl = page.getByRole("menubar", { name: "أوامر المحرر" });
+  const file = rtl.getByRole("menuitem", { name: "ملف" }); await file.focus(); await file.press("ArrowLeft");
+  await expect(rtl.getByRole("menuitem", { name: "تحرير" })).toBeFocused();
+  expect((await new AxeBuilder({ page }).include('[data-testid="menubar-overview"]').analyze()).violations).toEqual([]);
+});

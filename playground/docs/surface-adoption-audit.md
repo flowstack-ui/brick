@@ -93,6 +93,12 @@ different owner.
 | Select | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Select trigger/content/item recipes, portal positioning, option scrolling, native form evidence, and composition output; code block |
 | Multi Select | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Multi Select trigger/content/item recipes, portal positioning, multiple-option scrolling, repeated-value native form evidence, and composition output; code block |
 | Textarea | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Textarea control recipes, native resize geometry, auto-resize measurement, form output, and rendered relationship evidence; code block |
+| Dropdown Menu | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Dropdown Menu trigger and popup recipes, portal positioning, nested command surfaces, and exact composition output |
+| Context Menu | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Context Menu target geometry, pointer positioning, popup and submenu recipes, and exact composition output |
+| Menubar | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Menubar root, trigger, popup and submenu recipes, explicit overflow geometry, and exact composition output |
+| Navigation Menu | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Navigation Menu controls, active indicator, measured Viewport, rich Content, mobile replacement, and exact composition output |
+| Bottom Navigation | overview, comparison cells, appearance scopes, customization shell, and stress panels | Bottom Navigation surface, item states, active icon indicator, safe-area geometry, Notification Badge composition, and exact output |
+| Visually Hidden | overview, comparison cells, appearance scopes, and stress panels | Atom-owned inline hiding behavior, native-host composition, and exact rendered output |
 
 ## Shared and shell audit
 

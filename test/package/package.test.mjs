@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.12.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.13.0");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -119,6 +119,30 @@ test("package metadata defines the public Brick boundary", async () => {
     "./tabs": {
       types: "./dist/tabs.d.ts",
       default: "./dist/tabs.js",
+    },
+    "./dropdown-menu": {
+      types: "./dist/dropdown-menu.d.ts",
+      default: "./dist/dropdown-menu.js",
+    },
+    "./context-menu": {
+      types: "./dist/context-menu.d.ts",
+      default: "./dist/context-menu.js",
+    },
+    "./menubar": {
+      types: "./dist/menubar.d.ts",
+      default: "./dist/menubar.js",
+    },
+    "./navigation-menu": {
+      types: "./dist/navigation-menu.d.ts",
+      default: "./dist/navigation-menu.js",
+    },
+    "./bottom-navigation": {
+      types: "./dist/bottom-navigation.d.ts",
+      default: "./dist/bottom-navigation.js",
+    },
+    "./visually-hidden": {
+      types: "./dist/visually-hidden.d.ts",
+      default: "./dist/visually-hidden.js",
     },
     "./skeleton": {
       types: "./dist/skeleton.d.ts",
@@ -244,7 +268,241 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const sidebar = await import(new URL("../../dist/sidebar.js", import.meta.url));
   const code = await import(new URL("../../dist/code.js", import.meta.url));
   const codeBlock = await import(new URL("../../dist/code-block.js", import.meta.url));
-  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Breadcrumb", "BreadcrumbEllipsis", "BreadcrumbItem", "BreadcrumbLink", "BreadcrumbList", "BreadcrumbPage", "BreadcrumbRoot", "BreadcrumbSeparator", "Button", "Card", "Checkbox", "CheckboxGroup", "Code", "CodeBlock", "CodeBlockActions", "CodeBlockContent", "CodeBlockCopyIndicator", "CodeBlockCopyStatus", "CodeBlockCopyTrigger", "CodeBlockHeader", "CodeBlockLanguage", "CodeBlockRoot", "CodeBlockTitle", "Container", "Dialog", "Divider", "Drawer", "Field", "Fieldset", "Form", "Grid", "HStack", "HoverCard", "Icon", "IconButton", "Image", "Input", "Link", "List", "MultiSelect", "MultiSelectArrow", "MultiSelectContent", "MultiSelectGroup", "MultiSelectIcon", "MultiSelectItem", "MultiSelectItemIndicator", "MultiSelectItemText", "MultiSelectLabel", "MultiSelectListbox", "MultiSelectPortal", "MultiSelectRoot", "MultiSelectScrollDownButton", "MultiSelectScrollUpButton", "MultiSelectSeparator", "MultiSelectTrigger", "MultiSelectValue", "MultiSelectViewport", "NavList", "NavListItem", "NavListLink", "NavListList", "NavListRoot", "NavListSection", "NavListSectionContent", "NavListSectionLabel", "NavListSectionTrigger", "NotificationBadge", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverBody", "PopoverClose", "PopoverContent", "PopoverDescription", "PopoverFooter", "PopoverHeader", "PopoverPortal", "PopoverRoot", "PopoverTitle", "PopoverTrigger", "RadioGroup", "RadioGroupItem", "RadioGroupRoot", "ScrollArea", "ScrollAreaRoot", "ScrollAreaViewport", "Select", "SelectArrow", "SelectContent", "SelectGroup", "SelectIcon", "SelectItem", "SelectItemIndicator", "SelectItemText", "SelectLabel", "SelectListbox", "SelectPortal", "SelectRoot", "SelectScrollDownButton", "SelectScrollUpButton", "SelectSeparator", "SelectTrigger", "SelectValue", "SelectViewport", "Sidebar", "SidebarContent", "SidebarFooter", "SidebarHeader", "SidebarMain", "SidebarPanel", "SidebarRoot", "SidebarTrigger", "Skeleton", "Stack", "Surface", "Switch", "SwitchRoot", "SwitchThumb", "Tabs", "TabsContent", "TabsIndicator", "TabsList", "TabsRoot", "TabsTrigger", "Text", "Textarea", "TextareaCount", "TextareaRoot", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot", "Tooltip", "VStack"]);
+  const dropdownMenu = await import(new URL("../../dist/dropdown-menu.js", import.meta.url));
+  const contextMenu = await import(new URL("../../dist/context-menu.js", import.meta.url));
+  const menubar = await import(new URL("../../dist/menubar.js", import.meta.url));
+  const navigationMenu = await import(new URL("../../dist/navigation-menu.js", import.meta.url));
+  const bottomNavigation = await import(new URL("../../dist/bottom-navigation.js", import.meta.url));
+  const visuallyHidden = await import(new URL("../../dist/visually-hidden.js", import.meta.url));
+  assert.deepEqual(
+    Object.keys(brick),
+    [
+      "AlertDialog",
+      "AppBar",
+      "AppBarCenter",
+      "AppBarEnd",
+      "AppBarRoot",
+      "AppBarStart",
+      "AppBarToolbar",
+      "Avatar",
+      "Badge",
+      "BottomNavigation",
+      "BottomNavigationIcon",
+      "BottomNavigationItem",
+      "BottomNavigationLabel",
+      "BottomNavigationRoot",
+      "Breadcrumb",
+      "BreadcrumbEllipsis",
+      "BreadcrumbItem",
+      "BreadcrumbLink",
+      "BreadcrumbList",
+      "BreadcrumbPage",
+      "BreadcrumbRoot",
+      "BreadcrumbSeparator",
+      "Button",
+      "Card",
+      "Checkbox",
+      "CheckboxGroup",
+      "Code",
+      "CodeBlock",
+      "CodeBlockActions",
+      "CodeBlockContent",
+      "CodeBlockCopyIndicator",
+      "CodeBlockCopyStatus",
+      "CodeBlockCopyTrigger",
+      "CodeBlockHeader",
+      "CodeBlockLanguage",
+      "CodeBlockRoot",
+      "CodeBlockTitle",
+      "Container",
+      "ContextMenu",
+      "ContextMenuArrow",
+      "ContextMenuCheckboxItem",
+      "ContextMenuContent",
+      "ContextMenuDescription",
+      "ContextMenuGroup",
+      "ContextMenuItem",
+      "ContextMenuItemIndicator",
+      "ContextMenuItemLabel",
+      "ContextMenuLabel",
+      "ContextMenuLeading",
+      "ContextMenuPortal",
+      "ContextMenuRadioGroup",
+      "ContextMenuRadioItem",
+      "ContextMenuRoot",
+      "ContextMenuSeparator",
+      "ContextMenuShortcut",
+      "ContextMenuSub",
+      "ContextMenuSubContent",
+      "ContextMenuSubTrigger",
+      "ContextMenuTrigger",
+      "Dialog",
+      "Divider",
+      "Drawer",
+      "DropdownMenu",
+      "DropdownMenuArrow",
+      "DropdownMenuCheckboxItem",
+      "DropdownMenuContent",
+      "DropdownMenuDescription",
+      "DropdownMenuGroup",
+      "DropdownMenuItem",
+      "DropdownMenuItemIndicator",
+      "DropdownMenuItemLabel",
+      "DropdownMenuLabel",
+      "DropdownMenuLeading",
+      "DropdownMenuPortal",
+      "DropdownMenuRadioGroup",
+      "DropdownMenuRadioItem",
+      "DropdownMenuRoot",
+      "DropdownMenuSeparator",
+      "DropdownMenuShortcut",
+      "DropdownMenuSub",
+      "DropdownMenuSubContent",
+      "DropdownMenuSubTrigger",
+      "DropdownMenuTrigger",
+      "Field",
+      "Fieldset",
+      "Form",
+      "Grid",
+      "HStack",
+      "HoverCard",
+      "Icon",
+      "IconButton",
+      "Image",
+      "Input",
+      "Link",
+      "List",
+      "Menubar",
+      "MenubarArrow",
+      "MenubarCheckboxItem",
+      "MenubarContent",
+      "MenubarDescription",
+      "MenubarGroup",
+      "MenubarItem",
+      "MenubarItemIndicator",
+      "MenubarItemLabel",
+      "MenubarLabel",
+      "MenubarLeading",
+      "MenubarMenu",
+      "MenubarPortal",
+      "MenubarRadioGroup",
+      "MenubarRadioItem",
+      "MenubarRoot",
+      "MenubarSeparator",
+      "MenubarShortcut",
+      "MenubarSub",
+      "MenubarSubContent",
+      "MenubarSubTrigger",
+      "MenubarTrigger",
+      "MultiSelect",
+      "MultiSelectArrow",
+      "MultiSelectContent",
+      "MultiSelectGroup",
+      "MultiSelectIcon",
+      "MultiSelectItem",
+      "MultiSelectItemIndicator",
+      "MultiSelectItemText",
+      "MultiSelectLabel",
+      "MultiSelectListbox",
+      "MultiSelectPortal",
+      "MultiSelectRoot",
+      "MultiSelectScrollDownButton",
+      "MultiSelectScrollUpButton",
+      "MultiSelectSeparator",
+      "MultiSelectTrigger",
+      "MultiSelectValue",
+      "MultiSelectViewport",
+      "NavList",
+      "NavListItem",
+      "NavListLink",
+      "NavListList",
+      "NavListRoot",
+      "NavListSection",
+      "NavListSectionContent",
+      "NavListSectionLabel",
+      "NavListSectionTrigger",
+      "NavigationMenu",
+      "NavigationMenuContent",
+      "NavigationMenuIndicator",
+      "NavigationMenuItem",
+      "NavigationMenuLink",
+      "NavigationMenuList",
+      "NavigationMenuRoot",
+      "NavigationMenuSub",
+      "NavigationMenuTrigger",
+      "NavigationMenuViewport",
+      "NotificationBadge",
+      "Popover",
+      "PopoverAnchor",
+      "PopoverArrow",
+      "PopoverBody",
+      "PopoverClose",
+      "PopoverContent",
+      "PopoverDescription",
+      "PopoverFooter",
+      "PopoverHeader",
+      "PopoverPortal",
+      "PopoverRoot",
+      "PopoverTitle",
+      "PopoverTrigger",
+      "RadioGroup",
+      "RadioGroupItem",
+      "RadioGroupRoot",
+      "ScrollArea",
+      "ScrollAreaRoot",
+      "ScrollAreaViewport",
+      "Select",
+      "SelectArrow",
+      "SelectContent",
+      "SelectGroup",
+      "SelectIcon",
+      "SelectItem",
+      "SelectItemIndicator",
+      "SelectItemText",
+      "SelectLabel",
+      "SelectListbox",
+      "SelectPortal",
+      "SelectRoot",
+      "SelectScrollDownButton",
+      "SelectScrollUpButton",
+      "SelectSeparator",
+      "SelectTrigger",
+      "SelectValue",
+      "SelectViewport",
+      "Sidebar",
+      "SidebarContent",
+      "SidebarFooter",
+      "SidebarHeader",
+      "SidebarMain",
+      "SidebarPanel",
+      "SidebarRoot",
+      "SidebarTrigger",
+      "Skeleton",
+      "Stack",
+      "Surface",
+      "Switch",
+      "SwitchRoot",
+      "SwitchThumb",
+      "Tabs",
+      "TabsContent",
+      "TabsIndicator",
+      "TabsList",
+      "TabsRoot",
+      "TabsTrigger",
+      "Text",
+      "Textarea",
+      "TextareaCount",
+      "TextareaRoot",
+      "Toggle",
+      "ToggleGroup",
+      "ToggleGroupItem",
+      "ToggleGroupRoot",
+      "Tooltip",
+      "VStack",
+      "VisuallyHidden",
+      "VisuallyHiddenRoot"
+    ],
+  );
   assert.equal(button.Button, brick.Button);
   assert.equal(iconButton.IconButton, brick.IconButton);
   assert.equal(icon.Icon, brick.Icon);
@@ -308,6 +566,17 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(tabs.TabsContent, brick.Tabs.Content);
   assert.equal(tabs.TabsIndicator, brick.Tabs.Indicator);
   assert.equal(skeleton.Skeleton, brick.Skeleton);
+  assert.equal(dropdownMenu.DropdownMenu, brick.DropdownMenu);
+  assert.equal(contextMenu.ContextMenu, brick.ContextMenu);
+  assert.equal(menubar.Menubar, brick.Menubar);
+  assert.equal(navigationMenu.NavigationMenu, brick.NavigationMenu);
+  assert.equal(bottomNavigation.BottomNavigation, brick.BottomNavigation);
+  assert.equal(bottomNavigation.BottomNavigationRoot, brick.BottomNavigation.Root);
+  assert.equal(bottomNavigation.BottomNavigationItem, brick.BottomNavigation.Item);
+  assert.equal(bottomNavigation.BottomNavigationIcon, brick.BottomNavigation.Icon);
+  assert.equal(bottomNavigation.BottomNavigationLabel, brick.BottomNavigation.Label);
+  assert.equal(visuallyHidden.VisuallyHidden, brick.VisuallyHidden);
+  assert.equal(visuallyHidden.VisuallyHiddenRoot, brick.VisuallyHidden.Root);
   assert.equal(input.Input, brick.Input);
   assert.equal(textarea.Textarea, brick.Textarea);
   assert.equal(textarea.TextareaRoot, brick.Textarea.Root);
@@ -383,6 +652,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-text/);
   assert.match(styles, /\.brick-link/);
   assert.match(styles, /\.brick-breadcrumb/);
+  assert.match(styles, /\.brick-bottom-navigation/);
   assert.match(styles, /\.brick-list/);
   assert.match(styles, /\.brick-stack/);
   assert.match(styles, /\.brick-grid/);
@@ -421,6 +691,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-text-font-size/);
   assert.match(styles, /--brick-link-foreground/);
   assert.match(styles, /--brick-breadcrumb-foreground/);
+  assert.match(styles, /--brick-bottom-navigation-selection-background/);
   assert.match(styles, /--brick-list-marker-style/);
   assert.match(styles, /--brick-stack-gap/);
   assert.match(styles, /--brick-grid-columns/);

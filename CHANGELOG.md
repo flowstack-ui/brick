@@ -9,6 +9,21 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added `BottomNavigation` with Atom-backed destination and controlled-view
+  models, complete surface/layout/selection recipes, three accessible label
+  policies, safe-area handling, positioning, composition, elevation, and blur.
+- Added `VisuallyHidden` as the stable Brick wrapper over Atom's authoritative
+  assistive-text behavior.
+
+- Added `DropdownMenu` with a button trigger, three sizes, structured command
+  rows, choices, danger emphasis, nested menus, and Atom-owned interaction.
+- Added `ContextMenu` with a paintless context region, three popup sizes,
+  structured command rows, choices, nested menus, and touch support through
+  Atom.
+- Added `Menubar` with a persistent command rail, three sizes, adjacent-menu
+  keyboard behavior, complete popup anatomy, and composition.
+- Added `NavigationMenu` with native destination semantics, three sizes, rich
+  measured panels, active indicators, orientation, and RTL behavior.
 - Added `Tabs` with Atom-backed five-part semantics, four variants, three
   sizes, fitted and orientation-aware layout, and complete panel behavior.
 - Added `Skeleton` with four shapes, pulse/wave/static presentation,

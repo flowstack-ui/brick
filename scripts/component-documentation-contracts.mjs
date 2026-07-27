@@ -1769,6 +1769,90 @@ export const componentDocumentationContracts = {
   },
 };
 
+componentDocumentationContracts["dropdown-menu"] = {
+  source: "src/components/dropdown-menu/DropdownMenu.tsx",
+  exportSource: "src/components/dropdown-menu/index.ts",
+  css: "src/components/dropdown-menu/dropdown-menu.css",
+  exports: ["DropdownMenu","DropdownMenuRoot","DropdownMenuTrigger","DropdownMenuPortal","DropdownMenuContent","DropdownMenuArrow","DropdownMenuGroup","DropdownMenuLabel","DropdownMenuItem","DropdownMenuCheckboxItem","DropdownMenuRadioGroup","DropdownMenuRadioItem","DropdownMenuItemIndicator","DropdownMenuLeading","DropdownMenuItemLabel","DropdownMenuDescription","DropdownMenuShortcut","DropdownMenuSeparator","DropdownMenuSub","DropdownMenuSubTrigger","DropdownMenuSubContent","DropdownMenuRootProps","DropdownMenuTriggerProps","DropdownMenuPortalProps","DropdownMenuContentProps","DropdownMenuArrowProps","DropdownMenuGroupProps","DropdownMenuLabelProps","DropdownMenuItemProps","DropdownMenuCheckboxItemProps","DropdownMenuRadioGroupProps","DropdownMenuRadioItemProps","DropdownMenuItemIndicatorProps","DropdownMenuLeadingProps","DropdownMenuItemLabelProps","DropdownMenuDescriptionProps","DropdownMenuShortcutProps","DropdownMenuSeparatorProps","DropdownMenuSubProps","DropdownMenuSubTriggerProps","DropdownMenuSubContentProps","DropdownMenuSize","DropdownMenuItemTone"],
+  unions: { DropdownMenuSize: ["sm", "md", "lg"], DropdownMenuItemTone: ["neutral", "danger"] },
+  defaults: { size: "md" },
+  dataAttributes: ["data-size"],
+  publicTokens: ["--brick-dropdown-menu-content-background","--brick-dropdown-menu-content-foreground","--brick-dropdown-menu-content-border","--brick-dropdown-menu-content-radius","--brick-dropdown-menu-content-shadow","--brick-dropdown-menu-content-padding","--brick-dropdown-menu-content-max-block-size","--brick-dropdown-menu-row-min-block-size","--brick-dropdown-menu-row-padding-inline","--brick-dropdown-menu-row-gap","--brick-dropdown-menu-row-radius","--brick-dropdown-menu-row-foreground","--brick-dropdown-menu-row-highlighted-background","--brick-dropdown-menu-row-highlighted-foreground","--brick-dropdown-menu-description-foreground","--brick-dropdown-menu-shortcut-foreground","--brick-dropdown-menu-label-foreground","--brick-dropdown-menu-disabled-foreground","--brick-dropdown-menu-danger-foreground","--brick-dropdown-menu-danger-background","--brick-dropdown-menu-separator-color","--brick-dropdown-menu-indicator-size","--brick-dropdown-menu-focus-ring","--brick-dropdown-menu-motion-duration"],
+};
+
+componentDocumentationContracts["context-menu"] = {
+  source: "src/components/context-menu/ContextMenu.tsx",
+  exportSource: "src/components/context-menu/index.ts",
+  css: "src/components/context-menu/context-menu.css",
+  exports: ["ContextMenu","ContextMenuRoot","ContextMenuTrigger","ContextMenuPortal","ContextMenuContent","ContextMenuArrow","ContextMenuGroup","ContextMenuLabel","ContextMenuItem","ContextMenuCheckboxItem","ContextMenuRadioGroup","ContextMenuRadioItem","ContextMenuItemIndicator","ContextMenuLeading","ContextMenuItemLabel","ContextMenuDescription","ContextMenuShortcut","ContextMenuSeparator","ContextMenuSub","ContextMenuSubTrigger","ContextMenuSubContent","ContextMenuRootProps","ContextMenuTriggerProps","ContextMenuPortalProps","ContextMenuContentProps","ContextMenuArrowProps","ContextMenuGroupProps","ContextMenuLabelProps","ContextMenuItemProps","ContextMenuCheckboxItemProps","ContextMenuRadioGroupProps","ContextMenuRadioItemProps","ContextMenuItemIndicatorProps","ContextMenuLeadingProps","ContextMenuItemLabelProps","ContextMenuDescriptionProps","ContextMenuShortcutProps","ContextMenuSeparatorProps","ContextMenuSubProps","ContextMenuSubTriggerProps","ContextMenuSubContentProps","ContextMenuSize","ContextMenuItemTone"],
+  unions: { ContextMenuSize: ["sm", "md", "lg"], ContextMenuItemTone: ["neutral", "danger"] },
+  defaults: { size: "md" },
+  dataAttributes: ["data-size"],
+  publicTokens: ["--brick-context-menu-content-background","--brick-context-menu-content-foreground","--brick-context-menu-content-border","--brick-context-menu-content-radius","--brick-context-menu-content-shadow","--brick-context-menu-content-padding","--brick-context-menu-content-max-block-size","--brick-context-menu-row-min-block-size","--brick-context-menu-row-padding-inline","--brick-context-menu-row-gap","--brick-context-menu-row-radius","--brick-context-menu-row-foreground","--brick-context-menu-row-highlighted-background","--brick-context-menu-row-highlighted-foreground","--brick-context-menu-description-foreground","--brick-context-menu-shortcut-foreground","--brick-context-menu-label-foreground","--brick-context-menu-disabled-foreground","--brick-context-menu-danger-foreground","--brick-context-menu-danger-background","--brick-context-menu-separator-color","--brick-context-menu-indicator-size","--brick-context-menu-focus-ring","--brick-context-menu-motion-duration"],
+};
+
+componentDocumentationContracts["menubar"] = {
+  source: "src/components/menubar/Menubar.tsx",
+  exportSource: "src/components/menubar/index.ts",
+  css: "src/components/menubar/menubar.css",
+  exports: ["Menubar","MenubarRoot","MenubarMenu","MenubarTrigger","MenubarPortal","MenubarContent","MenubarArrow","MenubarGroup","MenubarLabel","MenubarItem","MenubarCheckboxItem","MenubarRadioGroup","MenubarRadioItem","MenubarItemIndicator","MenubarLeading","MenubarItemLabel","MenubarDescription","MenubarShortcut","MenubarSeparator","MenubarSub","MenubarSubTrigger","MenubarSubContent","MenubarRootProps","MenubarMenuProps","MenubarTriggerProps","MenubarPortalProps","MenubarContentProps","MenubarArrowProps","MenubarGroupProps","MenubarLabelProps","MenubarItemProps","MenubarCheckboxItemProps","MenubarRadioGroupProps","MenubarRadioItemProps","MenubarItemIndicatorProps","MenubarLeadingProps","MenubarItemLabelProps","MenubarDescriptionProps","MenubarShortcutProps","MenubarSeparatorProps","MenubarSubProps","MenubarSubTriggerProps","MenubarSubContentProps","MenubarSize","MenubarItemTone"],
+  unions: { MenubarSize: ["sm", "md", "lg"], MenubarItemTone: ["neutral", "danger"] },
+  defaults: { size: "md" },
+  dataAttributes: ["data-size"],
+  publicTokens: ["--brick-menubar-background","--brick-menubar-border","--brick-menubar-radius","--brick-menubar-padding","--brick-menubar-gap","--brick-menubar-trigger-min-block-size","--brick-menubar-trigger-padding-inline","--brick-menubar-trigger-radius","--brick-menubar-trigger-foreground","--brick-menubar-trigger-interaction-background","--brick-menubar-trigger-open-background","--brick-menubar-trigger-open-foreground","--brick-menubar-trigger-focus-ring"],
+};
+
+componentDocumentationContracts["navigation-menu"] = {
+  source: "src/components/navigation-menu/NavigationMenu.tsx",
+  exportSource: "src/components/navigation-menu/index.ts",
+  css: "src/components/navigation-menu/navigation-menu.css",
+  exports: ["NavigationMenu","NavigationMenuRoot","NavigationMenuSub","NavigationMenuList","NavigationMenuItem","NavigationMenuTrigger","NavigationMenuContent","NavigationMenuLink","NavigationMenuIndicator","NavigationMenuViewport","NavigationMenuRootProps","NavigationMenuSubProps","NavigationMenuListProps","NavigationMenuItemProps","NavigationMenuTriggerProps","NavigationMenuContentProps","NavigationMenuLinkProps","NavigationMenuIndicatorProps","NavigationMenuViewportProps","NavigationMenuSize"],
+  unions: { NavigationMenuSize: ["sm", "md", "lg"] },
+  defaults: { size: "md" },
+  dataAttributes: ["data-size"],
+  publicTokens: ["--brick-navigation-menu-gap","--brick-navigation-menu-control-min-block-size","--brick-navigation-menu-control-padding-inline","--brick-navigation-menu-control-radius","--brick-navigation-menu-control-foreground","--brick-navigation-menu-control-hover-background","--brick-navigation-menu-control-open-background","--brick-navigation-menu-control-open-foreground","--brick-navigation-menu-control-current-foreground","--brick-navigation-menu-focus-ring","--brick-navigation-menu-chevron-size","--brick-navigation-menu-chevron-gap","--brick-navigation-menu-indicator-size","--brick-navigation-menu-indicator-color","--brick-navigation-menu-viewport-background","--brick-navigation-menu-viewport-foreground","--brick-navigation-menu-viewport-border","--brick-navigation-menu-viewport-radius","--brick-navigation-menu-viewport-shadow","--brick-navigation-menu-viewport-padding","--brick-navigation-menu-viewport-max-inline-size","--brick-navigation-menu-motion-duration"],
+};
+
+componentDocumentationContracts["bottom-navigation"] = {
+  source: "src/components/bottom-navigation/BottomNavigation.tsx",
+  exportSource: "src/components/bottom-navigation/index.ts",
+  css: "src/components/bottom-navigation/bottom-navigation.css",
+  exports: ["BottomNavigation","BottomNavigationRoot","BottomNavigationItem","BottomNavigationIcon","BottomNavigationLabel","BottomNavigationRootProps","BottomNavigationItemProps","BottomNavigationIconProps","BottomNavigationLabelProps","BottomNavigationVariant","BottomNavigationTone","BottomNavigationLayout","BottomNavigationArrangement","BottomNavigationSize","BottomNavigationPosition","BottomNavigationLabelVisibility"],
+  unions: {
+    BottomNavigationVariant: ["solid", "soft", "outline", "ghost"],
+    BottomNavigationTone: ["accent", "neutral"],
+    BottomNavigationLayout: ["full", "floating"],
+    BottomNavigationArrangement: ["equal", "centered"],
+    BottomNavigationSize: ["sm", "md", "lg"],
+  },
+  documentedValues: {
+    position: ["static", "sticky", "absolute", "fixed"],
+    labelVisibility: ["always", "active", "hidden"],
+    selection: ["indicator", "item"],
+    selectionShape: ["circle", "square", "rounded", "pill"],
+  },
+  defaults: { arrangement: "equal", blurred: false, elevated: false, layout: "full", safeArea: true, selection: "indicator", selectionShape: "pill", size: "md", tone: "accent", variant: "outline" },
+  dataAttributes: ["data-arrangement","data-blurred","data-elevated","data-layout","data-safe-area","data-selection","data-selection-shape","data-size","data-tone","data-variant"],
+  dependencyClaims: [
+    { path: "node_modules/@flowstack-ui/atom/dist/_internal/primitives/bottom-navigation/BottomNavigationRoot.js", claims: ['position = "static"', '"data-label-visibility": labelVisibility', '"data-position": position'] },
+  ],
+  publicTokens: ["--brick-bottom-navigation-background","--brick-bottom-navigation-foreground","--brick-bottom-navigation-border-color","--brick-bottom-navigation-shadow","--brick-bottom-navigation-gap","--brick-bottom-navigation-outer-gutter","--brick-bottom-navigation-padding-inline","--brick-bottom-navigation-padding-block","--brick-bottom-navigation-item-min-inline-size","--brick-bottom-navigation-item-max-inline-size","--brick-bottom-navigation-item-min-block-size","--brick-bottom-navigation-item-radius","--brick-bottom-navigation-item-foreground","--brick-bottom-navigation-item-foreground-hover","--brick-bottom-navigation-item-foreground-active","--brick-bottom-navigation-item-foreground-disabled","--brick-bottom-navigation-item-background-hover","--brick-bottom-navigation-item-background-pressed","--brick-bottom-navigation-selection-background","--brick-bottom-navigation-selection-border","--brick-bottom-navigation-focus-ring","--brick-bottom-navigation-icon-size","--brick-bottom-navigation-icon-indicator-inline-size","--brick-bottom-navigation-icon-indicator-block-size","--brick-bottom-navigation-label-gap","--brick-bottom-navigation-label-font-family","--brick-bottom-navigation-label-font-size","--brick-bottom-navigation-label-font-weight","--brick-bottom-navigation-label-font-weight-active","--brick-bottom-navigation-label-line-height","--brick-bottom-navigation-label-letter-spacing","--brick-bottom-navigation-blurred-background","--brick-bottom-navigation-reduced-transparency-background","--brick-bottom-navigation-z-index","--brick-bottom-navigation-resolved-block-size"],
+};
+
+componentDocumentationContracts["visually-hidden"] = {
+  source: "src/components/visually-hidden/VisuallyHidden.tsx",
+  exportSource: "src/components/visually-hidden/index.ts",
+  css: "src/components/visually-hidden/visually-hidden.css",
+  exports: ["VisuallyHidden", "VisuallyHiddenRoot", "VisuallyHiddenRootProps"],
+  unions: {},
+  defaults: {},
+  dataAttributes: ["data-slot"],
+  dependencyClaims: [
+    { path: "node_modules/@flowstack-ui/atom/dist/_internal/primitives/visually-hidden/VisuallyHiddenRoot.js", claims: ['position: "absolute"', 'clipPath: "inset(50%)"'] },
+  ],
+  publicTokens: [],
+};
+
 componentDocumentationContracts["multi-select"] = {
   ...componentDocumentationContracts.select,
   source: "src/components/multi-select/MultiSelect.tsx",

@@ -38,7 +38,7 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Container, Grid, HoverCard, IconButton, Input, Link, NotificationBadge, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -65,6 +65,12 @@ import { Surface as SubpathSurface } from "@flowstack-ui/brick/surface";
 import { Breadcrumb as SubpathBreadcrumb } from "@flowstack-ui/brick/breadcrumb";
 import { Tabs as SubpathTabs } from "@flowstack-ui/brick/tabs";
 import { Skeleton as SubpathSkeleton } from "@flowstack-ui/brick/skeleton";
+import { DropdownMenu as SubpathDropdownMenu } from "@flowstack-ui/brick/dropdown-menu";
+import { ContextMenu as SubpathContextMenu } from "@flowstack-ui/brick/context-menu";
+import { Menubar as SubpathMenubar } from "@flowstack-ui/brick/menubar";
+import { NavigationMenu as SubpathNavigationMenu } from "@flowstack-ui/brick/navigation-menu";
+import { BottomNavigation as SubpathBottomNavigation } from "@flowstack-ui/brick/bottom-navigation";
+import { VisuallyHidden as SubpathVisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { readFile } from "node:fs/promises";
@@ -94,6 +100,12 @@ if (Surface !== SubpathSurface) throw new Error("Surface subpath export mismatch
 if (Breadcrumb !== SubpathBreadcrumb || Object.keys(SubpathBreadcrumb).length !== 7) throw new Error("Breadcrumb subpath smoke failed");
 if (Tabs !== SubpathTabs || Object.keys(SubpathTabs).length !== 5) throw new Error("Tabs subpath smoke failed");
 if (Skeleton !== SubpathSkeleton) throw new Error("Skeleton subpath export mismatch");
+if (DropdownMenu !== SubpathDropdownMenu || Object.keys(SubpathDropdownMenu).length !== 20) throw new Error("Dropdown Menu subpath smoke failed");
+if (ContextMenu !== SubpathContextMenu || Object.keys(SubpathContextMenu).length !== 20) throw new Error("Context Menu subpath smoke failed");
+if (Menubar !== SubpathMenubar || Object.keys(SubpathMenubar).length !== 21) throw new Error("Menubar subpath smoke failed");
+if (NavigationMenu !== SubpathNavigationMenu || Object.keys(SubpathNavigationMenu).length !== 9) throw new Error("Navigation Menu subpath smoke failed");
+if (BottomNavigation !== SubpathBottomNavigation || Object.keys(SubpathBottomNavigation).length !== 4) throw new Error("Bottom Navigation subpath smoke failed");
+if (VisuallyHidden !== SubpathVisuallyHidden || Object.keys(SubpathVisuallyHidden).length !== 1) throw new Error("Visually Hidden subpath smoke failed");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
 const iconButtonMarkup = renderToString(React.createElement(IconButton, { "aria-label": "Search" }, React.createElement("svg")));
@@ -140,6 +152,18 @@ const tabsMarkup = renderToString(React.createElement(Tabs.Root, { defaultValue:
 if (!tabsMarkup.includes("brick-tabs") || !tabsMarkup.includes('role="tablist"') || !tabsMarkup.includes('aria-selected="true"')) throw new Error("Tabs SSR smoke failed");
 const skeletonMarkup = renderToString(React.createElement(Skeleton, { animation: "wave", lines: 3 }));
 if (!skeletonMarkup.includes("brick-skeleton") || !skeletonMarkup.includes('data-lines="3"') || !skeletonMarkup.includes('aria-hidden="true"')) throw new Error("Skeleton SSR smoke failed");
+const dropdownMarkup = renderToString(React.createElement(DropdownMenu.Root, null, React.createElement(DropdownMenu.Trigger, null, "Actions")));
+if (!dropdownMarkup.includes("brick-dropdown-menu__trigger") || !dropdownMarkup.includes('aria-haspopup="menu"')) throw new Error("Dropdown Menu SSR smoke failed");
+const contextMarkup = renderToString(React.createElement(ContextMenu.Root, null, React.createElement(ContextMenu.Trigger, null, "Region")));
+if (!contextMarkup.includes("brick-context-menu__trigger") || !contextMarkup.includes("Region")) throw new Error("Context Menu SSR smoke failed");
+const menubarMarkup = renderToString(React.createElement(Menubar.Root, { "aria-label": "Commands" }, React.createElement(Menubar.Menu, { value: "file" }, React.createElement(Menubar.Trigger, null, "File"))));
+if (!menubarMarkup.includes("brick-menubar") || !menubarMarkup.includes('role="menubar"')) throw new Error("Menubar SSR smoke failed");
+const navigationMarkup = renderToString(React.createElement(NavigationMenu.Root, { "aria-label": "Primary" }, React.createElement(NavigationMenu.List, null, React.createElement(NavigationMenu.Item, { value: "docs" }, React.createElement(NavigationMenu.Link, { href: "/docs" }, "Docs")))));
+if (!navigationMarkup.includes("brick-navigation-menu") || !navigationMarkup.includes('href="/docs"')) throw new Error("Navigation Menu SSR smoke failed");
+const bottomNavigationMarkup = renderToString(React.createElement(BottomNavigation.Root, { ariaLabel: "Primary", defaultValue: "home" }, React.createElement(BottomNavigation.Item, { href: "/home", value: "home" }, React.createElement(BottomNavigation.Icon, null, "H"), React.createElement(BottomNavigation.Label, null, "Home"))));
+if (!bottomNavigationMarkup.includes("brick-bottom-navigation") || !bottomNavigationMarkup.includes('aria-current="page"') || !bottomNavigationMarkup.includes('data-safe-area=""')) throw new Error("Bottom Navigation SSR smoke failed");
+const visuallyHiddenMarkup = renderToString(React.createElement(VisuallyHidden.Root, null, "Search"));
+if (!visuallyHiddenMarkup.includes("brick-visually-hidden") || !visuallyHiddenMarkup.includes('data-slot="visually-hidden"') || !visuallyHiddenMarkup.includes('position:absolute')) throw new Error("Visually Hidden SSR smoke failed");
 if (!SubpathTooltip || Object.keys(SubpathTooltip).length !== 8) throw new Error("Tooltip subpath smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
 if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover") || !css.includes(".brick-checkbox") || !css.includes(".brick-checkbox-group") || !css.includes(".brick-radio-group") || !css.includes(".brick-input") || !css.includes(".brick-textarea") || !css.includes(".brick-link") || !css.includes(".brick-text") || !css.includes(".brick-grid") || !css.includes(".brick-container") || !css.includes(".brick-surface")) throw new Error("CSS export missing");
@@ -147,12 +171,17 @@ if (!css.includes(".brick-switch") || !css.includes("--brick-switch-track-inline
 if (!css.includes(".brick-breadcrumb") || !css.includes("--brick-breadcrumb-foreground")) throw new Error("Breadcrumb CSS export missing");
 if (!css.includes(".brick-tabs") || !css.includes("--brick-tabs-indicator-color")) throw new Error("Tabs CSS export missing");
 if (!css.includes(".brick-skeleton") || !css.includes("--brick-skeleton-background")) throw new Error("Skeleton CSS export missing");
+if (!css.includes(".brick-dropdown-menu__content") || !css.includes("--brick-dropdown-menu-content-background")) throw new Error("Dropdown Menu CSS export missing");
+if (!css.includes(".brick-context-menu__content") || !css.includes("--brick-context-menu-content-background")) throw new Error("Context Menu CSS export missing");
+if (!css.includes(".brick-menubar") || !css.includes("--brick-menubar-background")) throw new Error("Menubar CSS export missing");
+if (!css.includes(".brick-navigation-menu") || !css.includes("--brick-navigation-menu-viewport-background")) throw new Error("Navigation Menu CSS export missing");
+if (!css.includes(".brick-bottom-navigation") || !css.includes("--brick-bottom-navigation-selection-background")) throw new Error("Bottom Navigation CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
 	`import { createElement } from "react";
-import { AlertDialog, AppBar, Avatar, Badge, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Container, Grid, HoverCard, IconButton, Input, Link, NotificationBadge, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, type AppBarRootProps, type AvatarProps, type BadgeProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ContainerProps, type GridRootProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type NotificationBadgeProps, type PopoverContentProps, type RadioGroupRootProps, type SkeletonProps, type SurfaceProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type PopoverContentProps, type RadioGroupRootProps, type SkeletonProps, type SurfaceProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -167,6 +196,7 @@ import { Switch as SubpathSwitch } from "@flowstack-ui/brick/switch";
 import { Breadcrumb as SubpathBreadcrumb } from "@flowstack-ui/brick/breadcrumb";
 import { Tabs as SubpathTabs } from "@flowstack-ui/brick/tabs";
 import { Skeleton as SubpathSkeleton } from "@flowstack-ui/brick/skeleton";
+import { VisuallyHidden as SubpathVisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
 const props: ButtonProps = { children: "Consumer" };
 const iconButtonProps: IconButtonProps = { "aria-label": "Search", children: createElement("svg"), href: "/search" };
 const appBarProps: AppBarRootProps = { children: createElement(AppBar.Toolbar, null, "Workspace"), position: "sticky" };
@@ -193,6 +223,12 @@ const surfaceProps: SurfaceProps = { as: "section", bordered: true, children: "P
 const breadcrumbProps: BreadcrumbRootProps = { ariaLabel: "Current path", children: createElement(Breadcrumb.List, null), size: "md", variant: "underline" };
 const tabsProps: TabsRootProps = { defaultValue: "one", size: "md", variant: "soft", children: createElement(Tabs.List, { ariaLabel: "Sections" }) };
 const skeletonProps: SkeletonProps = { animation: "wave", lines: 3, variant: "text" };
+const dropdownProps: DropdownMenuRootProps = { children: createElement(DropdownMenu.Trigger, null, "Actions"), size: "md" };
+const contextProps: ContextMenuRootProps = { children: createElement(ContextMenu.Trigger, null, "Region"), size: "md" };
+const menubarProps: MenubarRootProps = { "aria-label": "Commands", children: createElement(Menubar.Menu, { children: createElement(Menubar.Trigger, null, "File"), value: "file" }), size: "md" };
+const navigationProps: NavigationMenuRootProps = { "aria-label": "Primary", children: createElement(NavigationMenu.List), size: "md" };
+const bottomNavigationProps: BottomNavigationRootProps = { ariaLabel: "Primary", children: createElement(BottomNavigation.Item, { value: "home" }, "Home"), safeArea: true };
+const visuallyHiddenProps: VisuallyHiddenRootProps = { children: "Search" };
 void AlertDialog;
 void SubpathAlertDialog;
 void Grid;
@@ -212,6 +248,10 @@ void tabsProps;
 void Skeleton;
 void SubpathSkeleton;
 void skeletonProps;
+void DropdownMenu; void dropdownProps;
+void ContextMenu; void contextProps;
+void Menubar; void menubarProps;
+void NavigationMenu; void navigationProps; void BottomNavigation; void bottomNavigationProps; void VisuallyHidden; void SubpathVisuallyHidden; void visuallyHiddenProps;
 void Button;
 void SubpathButton;
 void IconButton;

@@ -1,0 +1,60 @@
+@layer brick.components {
+  :where(.brick-dropdown-menu__content, .brick-dropdown-menu__sub-content) {
+    --brick-dropdown-menu-content-background: var(--brick-color-surface-overlay);
+    --brick-dropdown-menu-content-foreground: var(--brick-color-text-primary);
+    --brick-dropdown-menu-content-border: var(--brick-color-border-subtle);
+    --brick-dropdown-menu-content-radius: var(--brick-radius-overlay);
+    --brick-dropdown-menu-content-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 48%);
+    --brick-dropdown-menu-content-padding: var(--brick-space-1);
+    --brick-dropdown-menu-content-max-block-size: 20rem;
+    --brick-dropdown-menu-row-min-block-size: 2.5rem;
+    --brick-dropdown-menu-row-padding-inline: var(--brick-space-3);
+    --brick-dropdown-menu-row-gap: var(--brick-space-2);
+    --brick-dropdown-menu-row-radius: var(--brick-radius-control);
+    --brick-dropdown-menu-row-foreground: var(--brick-color-text-primary);
+    --brick-dropdown-menu-row-highlighted-background: var(--brick-color-accent-soft);
+    --brick-dropdown-menu-row-highlighted-foreground: var(--brick-color-accent-text);
+    --brick-dropdown-menu-description-foreground: var(--brick-color-text-secondary);
+    --brick-dropdown-menu-shortcut-foreground: var(--brick-color-text-muted);
+    --brick-dropdown-menu-label-foreground: var(--brick-color-text-secondary);
+    --brick-dropdown-menu-disabled-foreground: var(--brick-color-text-muted);
+    --brick-dropdown-menu-danger-foreground: var(--brick-color-danger-text);
+    --brick-dropdown-menu-danger-background: var(--brick-color-danger-soft);
+    --brick-dropdown-menu-separator-color: var(--brick-color-border-subtle);
+    --brick-dropdown-menu-indicator-size: 1rem;
+    --brick-dropdown-menu-focus-ring: var(--brick-color-focus-ring);
+    --brick-dropdown-menu-motion-duration: var(--brick-motion-duration-fast);
+
+    --brick-action-menu-content-background: var(--brick-dropdown-menu-content-background);
+    --brick-action-menu-content-foreground: var(--brick-dropdown-menu-content-foreground);
+    --brick-action-menu-content-border: var(--brick-dropdown-menu-content-border);
+    --brick-action-menu-content-radius: var(--brick-dropdown-menu-content-radius);
+    --brick-action-menu-content-shadow: var(--brick-dropdown-menu-content-shadow);
+    --brick-action-menu-content-padding: var(--brick-dropdown-menu-content-padding);
+    --brick-action-menu-content-max-block-size: var(--brick-dropdown-menu-content-max-block-size);
+    --brick-action-menu-content-z-index: var(--brick-layer-overlay);
+    --brick-action-menu-row-min-block-size: var(--brick-dropdown-menu-row-min-block-size);
+    --brick-action-menu-row-padding-inline: var(--brick-dropdown-menu-row-padding-inline);
+    --brick-action-menu-row-gap: var(--brick-dropdown-menu-row-gap);
+    --brick-action-menu-row-radius: var(--brick-dropdown-menu-row-radius);
+    --brick-action-menu-row-foreground: var(--brick-dropdown-menu-row-foreground);
+    --brick-action-menu-row-highlighted-background: var(--brick-dropdown-menu-row-highlighted-background);
+    --brick-action-menu-row-highlighted-foreground: var(--brick-dropdown-menu-row-highlighted-foreground);
+    --brick-action-menu-description-foreground: var(--brick-dropdown-menu-description-foreground);
+    --brick-action-menu-shortcut-foreground: var(--brick-dropdown-menu-shortcut-foreground);
+    --brick-action-menu-label-foreground: var(--brick-dropdown-menu-label-foreground);
+    --brick-action-menu-disabled-foreground: var(--brick-dropdown-menu-disabled-foreground);
+    --brick-action-menu-danger-foreground: var(--brick-dropdown-menu-danger-foreground);
+    --brick-action-menu-danger-background: var(--brick-dropdown-menu-danger-background);
+    --brick-action-menu-separator-color: var(--brick-dropdown-menu-separator-color);
+    --brick-action-menu-indicator-size: var(--brick-dropdown-menu-indicator-size);
+    --brick-action-menu-focus-ring: var(--brick-dropdown-menu-focus-ring);
+    --brick-action-menu-motion-duration: var(--brick-dropdown-menu-motion-duration);
+    --brick-action-menu-font-size: var(--brick-typography-control-md-font-size);
+    --brick-action-menu-line-height: var(--brick-typography-control-md-line-height);
+  }
+
+  .brick-dropdown-menu__trigger {
+    touch-action: manipulation;
+  }
+}

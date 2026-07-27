@@ -511,3 +511,6 @@
     }
   }
 }
+.consumer-bottom-navigation-proof {
+  inline-size: min(100%, 24rem);
+}

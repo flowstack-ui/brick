@@ -1,0 +1,58 @@
+@layer brick.components {
+  :where(.brick-context-menu__content, .brick-context-menu__sub-content) {
+    --brick-context-menu-content-background: var(--brick-color-surface-overlay);
+    --brick-context-menu-content-foreground: var(--brick-color-text-primary);
+    --brick-context-menu-content-border: var(--brick-color-border-subtle);
+    --brick-context-menu-content-radius: var(--brick-radius-overlay);
+    --brick-context-menu-content-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 48%);
+    --brick-context-menu-content-padding: var(--brick-space-1);
+    --brick-context-menu-content-max-block-size: 20rem;
+    --brick-context-menu-row-min-block-size: 2.5rem;
+    --brick-context-menu-row-padding-inline: var(--brick-space-3);
+    --brick-context-menu-row-gap: var(--brick-space-2);
+    --brick-context-menu-row-radius: var(--brick-radius-control);
+    --brick-context-menu-row-foreground: var(--brick-color-text-primary);
+    --brick-context-menu-row-highlighted-background: var(--brick-color-accent-soft);
+    --brick-context-menu-row-highlighted-foreground: var(--brick-color-accent-text);
+    --brick-context-menu-description-foreground: var(--brick-color-text-secondary);
+    --brick-context-menu-shortcut-foreground: var(--brick-color-text-muted);
+    --brick-context-menu-label-foreground: var(--brick-color-text-secondary);
+    --brick-context-menu-disabled-foreground: var(--brick-color-text-muted);
+    --brick-context-menu-danger-foreground: var(--brick-color-danger-text);
+    --brick-context-menu-danger-background: var(--brick-color-danger-soft);
+    --brick-context-menu-separator-color: var(--brick-color-border-subtle);
+    --brick-context-menu-indicator-size: 1rem;
+    --brick-context-menu-focus-ring: var(--brick-color-focus-ring);
+    --brick-context-menu-motion-duration: var(--brick-motion-duration-fast);
+
+    --brick-action-menu-content-background: var(--brick-context-menu-content-background);
+    --brick-action-menu-content-foreground: var(--brick-context-menu-content-foreground);
+    --brick-action-menu-content-border: var(--brick-context-menu-content-border);
+    --brick-action-menu-content-radius: var(--brick-context-menu-content-radius);
+    --brick-action-menu-content-shadow: var(--brick-context-menu-content-shadow);
+    --brick-action-menu-content-padding: var(--brick-context-menu-content-padding);
+    --brick-action-menu-content-max-block-size: var(--brick-context-menu-content-max-block-size);
+    --brick-action-menu-content-z-index: var(--brick-layer-overlay);
+    --brick-action-menu-row-min-block-size: var(--brick-context-menu-row-min-block-size);
+    --brick-action-menu-row-padding-inline: var(--brick-context-menu-row-padding-inline);
+    --brick-action-menu-row-gap: var(--brick-context-menu-row-gap);
+    --brick-action-menu-row-radius: var(--brick-context-menu-row-radius);
+    --brick-action-menu-row-foreground: var(--brick-context-menu-row-foreground);
+    --brick-action-menu-row-highlighted-background: var(--brick-context-menu-row-highlighted-background);
+    --brick-action-menu-row-highlighted-foreground: var(--brick-context-menu-row-highlighted-foreground);
+    --brick-action-menu-description-foreground: var(--brick-context-menu-description-foreground);
+    --brick-action-menu-shortcut-foreground: var(--brick-context-menu-shortcut-foreground);
+    --brick-action-menu-label-foreground: var(--brick-context-menu-label-foreground);
+    --brick-action-menu-disabled-foreground: var(--brick-context-menu-disabled-foreground);
+    --brick-action-menu-danger-foreground: var(--brick-context-menu-danger-foreground);
+    --brick-action-menu-danger-background: var(--brick-context-menu-danger-background);
+    --brick-action-menu-separator-color: var(--brick-context-menu-separator-color);
+    --brick-action-menu-indicator-size: var(--brick-context-menu-indicator-size);
+    --brick-action-menu-focus-ring: var(--brick-context-menu-focus-ring);
+    --brick-action-menu-motion-duration: var(--brick-context-menu-motion-duration);
+    --brick-action-menu-font-size: var(--brick-typography-control-md-font-size);
+    --brick-action-menu-line-height: var(--brick-typography-control-md-line-height);
+  }
+
+  .brick-context-menu__trigger { touch-action: manipulation; }
+}

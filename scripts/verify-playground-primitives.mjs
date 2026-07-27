@@ -9,6 +9,7 @@ const allowedRawHosts = new Map([
   ["components/field/FieldPage.tsx", [/<p data-adapter=/]],
   ["components/fieldset/FieldsetPage.tsx", [/<p data-adapter=/]],
   ["components/text/TextPage.tsx", [/^<strong>$/]],
+  ["components/visually-hidden/VisuallyHiddenPage.tsx", [/<strong \{\.\.\.props\} data-adapter=/]],
 ]);
 
 async function collect(directory) {

@@ -131,6 +131,30 @@
       "types": "./dist/tabs.d.ts",
       "default": "./dist/tabs.js"
     },
+    "./dropdown-menu": {
+      "types": "./dist/dropdown-menu.d.ts",
+      "default": "./dist/dropdown-menu.js"
+    },
+    "./context-menu": {
+      "types": "./dist/context-menu.d.ts",
+      "default": "./dist/context-menu.js"
+    },
+    "./menubar": {
+      "types": "./dist/menubar.d.ts",
+      "default": "./dist/menubar.js"
+    },
+    "./navigation-menu": {
+      "types": "./dist/navigation-menu.d.ts",
+      "default": "./dist/navigation-menu.js"
+    },
+    "./bottom-navigation": {
+      "types": "./dist/bottom-navigation.d.ts",
+      "default": "./dist/bottom-navigation.js"
+    },
+    "./visually-hidden": {
+      "types": "./dist/visually-hidden.d.ts",
+      "default": "./dist/visually-hidden.js"
+    },
     "./skeleton": {
       "types": "./dist/skeleton.d.ts",
       "default": "./dist/skeleton.js"
@@ -278,7 +302,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.12.0"
+    "@flowstack-ui/atom": "0.13.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

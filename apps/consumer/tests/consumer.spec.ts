@@ -12,6 +12,28 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
+test("composes the complete menu family through public subpaths", async ({ page }) => {
+  const navigation = page.getByRole("navigation", { name: "Workspace destinations", exact: true });
+  await expect(navigation).toHaveClass(/brick-navigation-menu/);
+  const projectsTrigger = navigation.getByRole("button", { name: "Projects" });
+  await expect(projectsTrigger).toHaveAttribute("aria-expanded", "true");
+  await projectsTrigger.click();
+  await expect(projectsTrigger).toHaveAttribute("aria-expanded", "false");
+
+  const menubar = page.getByRole("menubar", { name: "Workspace commands" });
+  await menubar.getByRole("menuitem", { name: "File" }).click();
+  await expect(page.getByRole("menu", { name: "File commands" })).toBeVisible();
+  await page.keyboard.press("Escape");
+
+  await page.getByRole("button", { name: "Project actions" }).click();
+  await expect(page.getByRole("menu", { name: "Project actions" }).getByRole("menuitem")).toHaveCount(2);
+  await page.keyboard.press("Escape");
+
+  const report = page.getByRole("article", { name: "Quarterly report" });
+  await report.click({ button: "right" });
+  await expect(page.getByRole("menu", { name: "Quarterly report actions" })).toBeVisible();
+});
+
 test("composes Tabs and Skeleton through public subpaths", async ({ page }) => {
   const list = page.getByRole("tablist", { name: "Workspace preview sections" });
   await expect(list).toHaveClass(/brick-tabs-list/);
@@ -630,4 +652,22 @@ test("keeps the mobile header and Card content intentionally contained", async (
   expect(collaboratorsBox!.x).toBeGreaterThanOrEqual(cardBox!.x);
   expect(collaboratorsBox!.x + collaboratorsBox!.width).toBeLessThanOrEqual(cardBox!.x + cardBox!.width);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+});
+
+test("consumes Bottom Navigation through the packed public subpath", async ({ page }) => {
+  const navigation = page.getByRole("navigation", { name: "Compact workspace destinations" });
+  await expect(navigation).toHaveClass(/consumer-bottom-navigation-proof/);
+  await expect(navigation).toHaveAttribute("data-safe-area", "");
+  await expect(navigation.getByRole("button")).toHaveCount(3);
+  await navigation.getByRole("button", { name: "Inbox" }).click();
+  await expect(navigation.getByRole("button", { name: "Inbox" })).toHaveAttribute("data-state", "active");
+  await expect(navigation.locator(".brick-notification-badge__indicator")).toHaveText("3");
+});
+
+test("consumes Visually Hidden through the packed public subpath", async ({ page }) => {
+  const backToTop = page.getByRole("link", { name: "Back to top of Brick Consumer" });
+  await expect(backToTop).toBeVisible();
+  const hidden = backToTop.locator(".brick-visually-hidden");
+  await expect(hidden).toHaveAttribute("data-slot", "visually-hidden");
+  await expect(hidden).toHaveCSS("position", "absolute");
 });

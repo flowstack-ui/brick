@@ -15,12 +15,13 @@ async function collect(directory, extension) {
 }
 
 const expectedRouteIds = [
-  "alert-dialog", "app-bar", "avatar", "badge", "breadcrumb", "button", "card",
+  "alert-dialog", "app-bar", "avatar", "badge", "bottom-navigation", "breadcrumb", "button", "card",
   "checkbox", "checkbox-group", "code", "code-block", "container",
-  "dialog", "divider", "drawer", "field", "fieldset", "form", "grid",
+  "context-menu", "dialog", "divider", "drawer", "dropdown-menu", "field", "fieldset", "form", "grid",
   "hover-card", "icon", "icon-button", "image", "input", "textarea", "link", "list", "multi-select",
-  "nav-list", "notification-badge", "popover", "radio-group", "scroll-area", "select", "sidebar",
+  "menubar", "nav-list", "navigation-menu", "notification-badge", "popover", "radio-group", "scroll-area", "select", "sidebar",
   "skeleton", "stack", "surface", "switch", "tabs", "text", "toggle", "toggle-group", "tooltip",
+  "visually-hidden",
 ];
 
 const [registry, packageJson, tsxPaths] = await Promise.all([

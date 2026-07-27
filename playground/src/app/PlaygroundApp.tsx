@@ -114,6 +114,12 @@ import {
 import { SwitchPage, switchScenarios } from "../components/switch/SwitchPage.js";
 import { BreadcrumbPage, breadcrumbScenarios } from "../components/breadcrumb/BreadcrumbPage.js";
 import { TabsPage, tabsScenarios } from "../components/tabs/TabsPage.js";
+import { DropdownMenuPage, dropdownMenuScenarios } from "../components/dropdown-menu/DropdownMenuPage.js";
+import { ContextMenuPage, contextMenuScenarios } from "../components/context-menu/ContextMenuPage.js";
+import { MenubarPage, menubarScenarios } from "../components/menubar/MenubarPage.js";
+import { NavigationMenuPage, navigationMenuScenarios } from "../components/navigation-menu/NavigationMenuPage.js";
+import { BottomNavigationPage, bottomNavigationScenarios } from "../components/bottom-navigation/BottomNavigationPage.js";
+import { VisuallyHiddenPage, visuallyHiddenScenarios } from "../components/visually-hidden/VisuallyHiddenPage.js";
 import { SkeletonPage, skeletonScenarios } from "../components/skeleton/SkeletonPage.js";
 import { PlaygroundShell } from "../shell/PlaygroundShell.js";
 
@@ -125,6 +131,10 @@ export function PlaygroundApp() {
   }
 
   const entry = resolvePlaygroundEntry(path === "/" ? "/button" : path);
+
+  if (entry.id === "visually-hidden") {
+    return <PlaygroundShell entry={entry} scenarios={visuallyHiddenScenarios}><VisuallyHiddenPage /></PlaygroundShell>;
+  }
 
   if (entry.id === "app-bar") {
     return (
@@ -432,6 +442,26 @@ export function PlaygroundApp() {
 
   if (entry.id === "tabs") {
     return <PlaygroundShell entry={entry} scenarios={tabsScenarios}><TabsPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "dropdown-menu") {
+    return <PlaygroundShell entry={entry} scenarios={dropdownMenuScenarios}><DropdownMenuPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "context-menu") {
+    return <PlaygroundShell entry={entry} scenarios={contextMenuScenarios}><ContextMenuPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "menubar") {
+    return <PlaygroundShell entry={entry} scenarios={menubarScenarios}><MenubarPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "navigation-menu") {
+    return <PlaygroundShell entry={entry} scenarios={navigationMenuScenarios}><NavigationMenuPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "bottom-navigation") {
+    return <PlaygroundShell entry={entry} scenarios={bottomNavigationScenarios}><BottomNavigationPage /></PlaygroundShell>;
   }
 
   if (entry.id === "skeleton") {

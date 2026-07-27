@@ -42,6 +42,12 @@ import { Sidebar } from "@flowstack-ui/brick/sidebar";
 import { Breadcrumb } from "@flowstack-ui/brick/breadcrumb";
 import { Tabs } from "@flowstack-ui/brick/tabs";
 import { Skeleton } from "@flowstack-ui/brick/skeleton";
+import { DropdownMenu } from "@flowstack-ui/brick/dropdown-menu";
+import { ContextMenu } from "@flowstack-ui/brick/context-menu";
+import { Menubar } from "@flowstack-ui/brick/menubar";
+import { NavigationMenu } from "@flowstack-ui/brick/navigation-menu";
+import { BottomNavigation } from "@flowstack-ui/brick/bottom-navigation";
+import { VisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
 
 type Appearance = "light" | "dark";
 
@@ -93,6 +99,7 @@ export function App() {
   const [planStatus, setPlanStatus] = useState("No billing plan submitted.");
   const [skillsStatus, setSkillsStatus] = useState("No team skills submitted.");
   const [channelStatus, setChannelStatus] = useState("No delivery channel submitted.");
+  const [compactDestination, setCompactDestination] = useState("home");
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -784,12 +791,83 @@ export function App() {
             </Tabs.Root>
           </VStack>
         </Surface>
+        <Surface as="section" bordered inset="lg" aria-labelledby="menu-family-title">
+          <VStack gap="4">
+            <Text as="h2" id="menu-family-title" variant="title-lg">Workspace menus</Text>
+            <NavigationMenu.Root aria-label="Workspace destinations" defaultValue="projects">
+              <NavigationMenu.List>
+                <NavigationMenu.Item value="projects">
+                  <NavigationMenu.Trigger>Projects</NavigationMenu.Trigger>
+                  <NavigationMenu.Content>
+                    <NavigationMenu.Link href="#workspace">Active workspace</NavigationMenu.Link>
+                    <NavigationMenu.Link href="#recent-activity">Recent activity</NavigationMenu.Link>
+                  </NavigationMenu.Content>
+                </NavigationMenu.Item>
+                <NavigationMenu.Item value="settings"><NavigationMenu.Link href="#publishing-preferences">Settings</NavigationMenu.Link></NavigationMenu.Item>
+                <NavigationMenu.Indicator />
+              </NavigationMenu.List>
+              <NavigationMenu.Viewport />
+            </NavigationMenu.Root>
+            <Menubar.Root aria-label="Workspace commands">
+              <Menubar.Menu value="file">
+                <Menubar.Trigger>File</Menubar.Trigger>
+                <Menubar.Content ariaLabel="File commands">
+                  <Menubar.Item value="new"><Menubar.ItemLabel>New workspace</Menubar.ItemLabel></Menubar.Item>
+                  <Menubar.Item value="archive"><Menubar.ItemLabel>Archive workspace</Menubar.ItemLabel></Menubar.Item>
+                </Menubar.Content>
+              </Menubar.Menu>
+              <Menubar.Menu value="view">
+                <Menubar.Trigger>View</Menubar.Trigger>
+                <Menubar.Content ariaLabel="View commands"><Menubar.Item value="activity">Recent activity</Menubar.Item></Menubar.Content>
+              </Menubar.Menu>
+            </Menubar.Root>
+            <HStack gap="3" wrap>
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild><Button tone="neutral" variant="outline">Project actions</Button></DropdownMenu.Trigger>
+                <DropdownMenu.Content ariaLabel="Project actions">
+                  <DropdownMenu.Item value="duplicate">Duplicate project</DropdownMenu.Item>
+                  <DropdownMenu.Item tone="danger" value="delete">Delete project</DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
+              <ContextMenu.Root>
+                <ContextMenu.Trigger asChild>
+                  <Surface as="article" bordered inset="sm" tabIndex={0} aria-label="Quarterly report">Quarterly report · right-click</Surface>
+                </ContextMenu.Trigger>
+                <ContextMenu.Content ariaLabel="Quarterly report actions">
+                  <ContextMenu.Item value="open">Open report</ContextMenu.Item>
+                  <ContextMenu.Item value="duplicate">Duplicate report</ContextMenu.Item>
+                </ContextMenu.Content>
+              </ContextMenu.Root>
+            </HStack>
+            <BottomNavigation.Root
+              ariaLabel="Compact workspace destinations"
+              className="consumer-bottom-navigation-proof"
+              onChange={setCompactDestination}
+              value={compactDestination}
+            >
+              <BottomNavigation.Item value="home">
+                <BottomNavigation.Icon><Icon size="md"><SparkIcon /></Icon></BottomNavigation.Icon>
+                <BottomNavigation.Label>Home</BottomNavigation.Label>
+              </BottomNavigation.Item>
+              <BottomNavigation.Item value="inbox">
+                <NotificationBadge count={3}>
+                  <BottomNavigation.Icon><Icon size="md"><ArrowIcon /></Icon></BottomNavigation.Icon>
+                </NotificationBadge>
+                <BottomNavigation.Label>Inbox</BottomNavigation.Label>
+              </BottomNavigation.Item>
+              <BottomNavigation.Item value="settings">
+                <BottomNavigation.Icon><Icon size="md"><SettingsIcon /></Icon></BottomNavigation.Icon>
+                <BottomNavigation.Label>Settings</BottomNavigation.Label>
+              </BottomNavigation.Item>
+            </BottomNavigation.Root>
+          </VStack>
+        </Surface>
         </main>
 
         <footer>
           <p>Public Brick imports. Application-owned composition. No private compatibility layer.</p>
           <Button href="#top" size="sm" tone="neutral" variant="ghost">
-            Back to top
+            Back to top<VisuallyHidden.Root> of Brick Consumer</VisuallyHidden.Root>
           </Button>
         </footer>
       </Container>

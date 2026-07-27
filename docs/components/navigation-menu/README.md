@@ -1,0 +1,89 @@
+# Navigation Menu
+
+Navigation Menu provides site destinations with optional rich link panels through Atom-owned semantics and behavior.
+
+## When and where to use
+
+Use it for primary destination links when some categories reveal rich groups of additional destinations.
+
+## When not to use
+
+Do not use it for application commands, form choices, small action lists, or content tabs.
+
+## Installation and imports
+
+```tsx
+import { NavigationMenu } from "@flowstack-ui/brick/navigation-menu";
+import "@flowstack-ui/brick/styles.css";
+```
+
+## Quick start
+
+```tsx
+<NavigationMenu.Root>
+  <NavigationMenu.List>
+    <NavigationMenu.Item>
+      <NavigationMenu.Link href="/docs">Docs</NavigationMenu.Link>
+    </NavigationMenu.Item>
+  </NavigationMenu.List>
+  <NavigationMenu.Viewport />
+</NavigationMenu.Root>
+```
+
+## Anatomy and DOM ownership
+
+Root renders navigation, List a native list, Item a list item, Link a native destination, Trigger a disclosure control, Content a rich destination panel, Indicator the active trigger marker, Viewport the measured panel surface, and Sub a nested navigation root.
+
+## API
+
+Public exports are `NavigationMenu`, `NavigationMenuRoot`, `NavigationMenuSub`, `NavigationMenuList`, `NavigationMenuItem`, `NavigationMenuTrigger`, `NavigationMenuContent`, `NavigationMenuLink`, `NavigationMenuIndicator`, `NavigationMenuViewport`, `NavigationMenuRootProps`, `NavigationMenuSubProps`, `NavigationMenuListProps`, `NavigationMenuItemProps`, `NavigationMenuTriggerProps`, `NavigationMenuContentProps`, `NavigationMenuLinkProps`, `NavigationMenuIndicatorProps`, `NavigationMenuViewportProps`, `NavigationMenuSize`.
+
+| Prop | Values | Default |
+| --- | --- | --- |
+| `size` | `sm`, `md`, `lg` | `md` |
+
+Action-like rows accept `tone="neutral"` or `tone="danger"` when exposed; neutral is the default. Behavioral props come from the matching Atom parts.
+
+## Visual recipes and states
+
+Controls are paintless until hover, focus, open, or active. The measured overlay follows trigger content, Indicator tracks the active trigger, and sizes change only control geometry.
+
+## Tokens and CSS hooks
+
+Public variables use the `--brick-navigation-menu-*` namespace for gaps, control geometry and states, focus, chevron, indicator, viewport surface and sizing, and motion.
+
+Documented tokens are `--brick-navigation-menu-gap`, `--brick-navigation-menu-control-min-block-size`, `--brick-navigation-menu-control-padding-inline`, `--brick-navigation-menu-control-radius`, `--brick-navigation-menu-control-foreground`, `--brick-navigation-menu-control-hover-background`, `--brick-navigation-menu-control-open-background`, `--brick-navigation-menu-control-open-foreground`, `--brick-navigation-menu-control-current-foreground`, `--brick-navigation-menu-focus-ring`, `--brick-navigation-menu-chevron-size`, `--brick-navigation-menu-chevron-gap`, `--brick-navigation-menu-indicator-size`, `--brick-navigation-menu-indicator-color`, `--brick-navigation-menu-viewport-background`, `--brick-navigation-menu-viewport-foreground`, `--brick-navigation-menu-viewport-border`, `--brick-navigation-menu-viewport-radius`, `--brick-navigation-menu-viewport-shadow`, `--brick-navigation-menu-viewport-padding`, `--brick-navigation-menu-viewport-max-inline-size`, `--brick-navigation-menu-motion-duration`.
+
+Stable output includes `data-size`, component `data-slot` hooks, and Atom state attributes.
+
+## Customization
+
+Set documented variables on Root or Content as applicable. Use `className` and `style` for local layout without replacing semantic state, focus, or positioning attributes.
+
+## Responsive behavior
+
+Popup geometry stays collision-aware and constrained to available space. Narrow layouts preserve usable targets, logical alignment, zoom, and writing direction; applications decide whether the pattern belongs in their mobile information architecture.
+
+## Accessibility
+
+Name icon-only triggers and label every command or destination clearly. Preserve Atom roles, keyboard behavior, focus return, disabled and selection states, dismissal, and forced-colors affordances.
+
+## Composition, native props, and refs
+
+Every part preserves its Atom native attributes, refs, custom slots, handlers, and supported `render` or `asChild` composition. Link remains an anchor unless composed with a router adapter.
+
+## Examples
+
+See the [component playground](../../../playground/src/components/navigation-menu/) for defaults, sizes, anatomy, state, composition, customization, responsive, RTL, and preference evidence.
+
+## Evidence
+
+- [Unit tests](../../../test/components/navigation-menu/)
+- [Type tests](../../../test/types/components/navigation-menu.test.ts)
+- [Browser behavior](../../../playground/tests/components/navigation-menu/behavior.spec.ts)
+- [Visual evidence](../../../playground/tests/components/navigation-menu/visual.spec.ts)
+- [Manual protocol](../../../playground/manual-tests/navigation-menu.md)
+
+## Changelog
+
+See [Navigation Menu changelog](CHANGELOG.md).
