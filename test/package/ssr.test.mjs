@@ -15,7 +15,13 @@ import { Field } from "../../dist/field.js";
 import { Fieldset } from "../../dist/fieldset.js";
 import { Checkbox } from "../../dist/checkbox.js";
 import { CheckboxGroup } from "../../dist/checkbox-group.js";
+import { RadioGroup } from "../../dist/radio-group.js";
+import { Switch } from "../../dist/switch.js";
+import { Breadcrumb } from "../../dist/breadcrumb.js";
+import { Tabs } from "../../dist/tabs.js";
+import { Skeleton } from "../../dist/skeleton.js";
 import { Input } from "../../dist/input.js";
+import { Textarea } from "../../dist/textarea.js";
 import { Text } from "../../dist/text.js";
 import { Link } from "../../dist/link.js";
 import { List } from "../../dist/list.js";
@@ -319,6 +325,91 @@ test("Input renders styled native semantics and adornment order during SSR", () 
   assert.ok(markup.indexOf(">Start<") < markup.indexOf("<input"));
   assert.ok(markup.indexOf("<input") < markup.indexOf(">End<"));
   assert.ok(markup.indexOf(">End<") < markup.indexOf('aria-label="Clear input"'));
+});
+
+test("Textarea renders styled native semantics and Count during SSR", () => {
+  const markup = renderToString(
+    React.createElement(
+      Textarea.Root,
+      {
+        "aria-label": "Project summary",
+        defaultValue: "Brick notes",
+        maxLength: 80,
+      },
+      React.createElement(Textarea.Count),
+    ),
+  );
+
+  assert.match(markup, /^<span/);
+  assert.match(markup, /class="brick-textarea"/);
+  assert.match(markup, /data-variant="outline"/);
+  assert.match(markup, /data-size="md"/);
+  assert.match(markup, /data-shape="rounded"/);
+  assert.match(markup, /data-resize="vertical"/);
+  assert.match(markup, /<textarea[^>]*aria-label="Project summary"/);
+  assert.match(markup, /data-slot="textarea-control"/);
+  assert.match(markup, />Brick notes<\/textarea>/);
+  assert.match(markup, /data-slot="textarea-count"/);
+  assert.match(markup, />11\/80<\/span>/);
+});
+
+test("Radio Group renders complete styled radio semantics during SSR", () => {
+  const markup = renderToString(React.createElement(RadioGroup.Root, { "aria-label": "Channel", defaultValue: "email", readOnly: true }, React.createElement(RadioGroup.Item, { value: "email" }, "Email"), React.createElement(RadioGroup.Item, { value: "sms" }, "SMS")));
+  assert.match(markup, /class="brick-radio-group"/);
+  assert.match(markup, /role="radiogroup"/);
+  assert.match(markup, /aria-readonly="true"/);
+  assert.match(markup, /data-size="md"/);
+  assert.match(markup, /class="brick-radio-group-item"/);
+  assert.match(markup, /data-slot="radio-group-control"/);
+  assert.match(markup, /data-slot="radio-group-dot"/);
+  assert.match(markup, /data-slot="radio-group-label"/);
+});
+
+test("Switch renders complete styled binary semantics during SSR", () => {
+  const markup = renderToString(React.createElement(Switch.Root, { "aria-label": "Reports", defaultChecked: true, readOnly: true, size: "lg" }, React.createElement(Switch.Thumb)));
+  assert.match(markup, /class="brick-switch"/);
+  assert.match(markup, /role="switch"/);
+  assert.match(markup, /aria-checked="true"/);
+  assert.match(markup, /aria-readonly="true"/);
+  assert.match(markup, /data-size="lg"/);
+  assert.match(markup, /class="brick-switch-thumb"/);
+  assert.match(markup, /aria-hidden="true"/);
+});
+
+test("Breadcrumb renders complete styled hierarchy semantics during SSR", () => {
+  const markup = renderToString(
+    React.createElement(
+      Breadcrumb.Root,
+      { ariaLabel: "Project path", size: "lg", variant: "underline" },
+      React.createElement(
+        Breadcrumb.List,
+        null,
+        React.createElement(Breadcrumb.Item, null, React.createElement(Breadcrumb.Link, { href: "/" }, "Home")),
+        React.createElement(Breadcrumb.Separator, null),
+        React.createElement(Breadcrumb.Item, null, React.createElement(Breadcrumb.Page, null, "Report")),
+      ),
+    ),
+  );
+  assert.match(markup, /^<nav/);
+  assert.match(markup, /aria-label="Project path"/);
+  assert.match(markup, /class="brick-breadcrumb"/);
+  assert.match(markup, /data-size="lg"/);
+  assert.match(markup, /data-variant="underline"/);
+  assert.match(markup, /<ol[^>]*class="brick-breadcrumb-list"/);
+  assert.match(markup, /<a[^>]*class="brick-breadcrumb-link"[^>]*href="\/"/);
+  assert.match(markup, /role="presentation"/);
+  assert.match(markup, /aria-hidden="true"/);
+  assert.match(markup, /aria-current="page"/);
+});
+
+test("Tabs renders complete selected relationships during SSR", () => {
+  const markup = renderToString(React.createElement(Tabs.Root, { defaultValue: "one", size: "lg", variant: "soft", fullWidth: true }, React.createElement(Tabs.List, { ariaLabel: "Sections" }, React.createElement(Tabs.Trigger, { value: "one" }, "One"), React.createElement(Tabs.Trigger, { value: "two" }, "Two")), React.createElement(Tabs.Content, { value: "one" }, "Panel one"), React.createElement(Tabs.Content, { value: "two" }, "Panel two")));
+  assert.match(markup, /class="brick-tabs"/); assert.match(markup, /data-size="lg"/); assert.match(markup, /data-variant="soft"/); assert.match(markup, /data-full-width=""/); assert.match(markup, /role="tablist"/); assert.match(markup, /aria-selected="true"/); assert.match(markup, /role="tabpanel"/);
+});
+
+test("Skeleton renders deterministic loading geometry during SSR", () => {
+  const markup = renderToString(React.createElement(Skeleton, { animation: "wave", lines: 3, variant: "text", width: "12rem" }));
+  assert.match(markup, /^<span/); assert.match(markup, /class="brick-skeleton"/); assert.match(markup, /data-animation="wave"/); assert.match(markup, /data-lines="3"/); assert.match(markup, /aria-hidden="true"/); assert.match(markup, /--brick-skeleton-width:12rem/);
 });
 
 test("Text renders one deterministic semantic host during SSR", () => {

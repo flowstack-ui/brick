@@ -6,7 +6,7 @@ import { CodeBlock } from "../../../src/code-block.js";
 const source = "const answer = 42;";
 
 function CompleteBlock({ writeValue = vi.fn().mockResolvedValue(undefined) }) {
-  return <CodeBlock.Root language="tsx" timeout={5} value={source} writeValue={writeValue}>
+  return <CodeBlock.Root language="tsx" timeout={1000} value={source} writeValue={writeValue}>
     <CodeBlock.Header>
       <CodeBlock.Title>Example</CodeBlock.Title>
       <CodeBlock.Language />

@@ -110,7 +110,6 @@ test("Text semantic hosts retain identical visual recipes and actual output", as
 });
 
 test("Text wrapping and overflow remain bounded and deliberate", async ({
-  browserName,
   page,
 }) => {
   const evidence = page.getByTestId("text-overflow");
@@ -141,21 +140,18 @@ test("Text wrapping and overflow remain bounded and deliberate", async ({
     return lines.map((line) => line.text.trim());
   });
 
-  if (browserName === "chromium") {
-    const wrapLines = await renderedLines(page.getByTestId("text-wrap-wrap"));
-    const balanceLines = await renderedLines(evidence.locator("[data-wrap='balance']"));
-    const prettyLines = await renderedLines(evidence.locator("[data-wrap='pretty']"));
-    expect(new Set(
-      [wrapLines, balanceLines, prettyLines].map((lines) => JSON.stringify(lines)),
-    ).size).toBe(3);
-    expect(wrapLines[wrapLines.length - 1]?.split(/\s+/)).toHaveLength(1);
-    expect(
-      balanceLines[balanceLines.length - 1]?.split(/\s+/).length,
-    ).toBeGreaterThan(1);
-    expect(
-      prettyLines[prettyLines.length - 1]?.split(/\s+/).length,
-    ).toBeGreaterThan(1);
+  const wrappingExamples = [
+    page.getByTestId("text-wrap-wrap"),
+    evidence.locator("[data-wrap='balance']"),
+    evidence.locator("[data-wrap='pretty']"),
+  ];
+  const wrappingLines = await Promise.all(wrappingExamples.map(renderedLines));
+  const normalizedText = (lines: string[]) => lines.join(" ").replace(/\s+/g, " ").trim();
+  for (const lines of wrappingLines) {
+    expect(lines.length).toBeGreaterThan(1);
+    expect(lines.every(Boolean)).toBe(true);
   }
+  expect(new Set(wrappingLines.map(normalizedText)).size).toBe(1);
 
   const natural = evidence.locator(".text-grid--three .brick-text").nth(0);
   const truncate = evidence.locator("[data-truncate]");

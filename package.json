@@ -115,9 +115,41 @@
       "types": "./dist/checkbox-group.d.ts",
       "default": "./dist/checkbox-group.js"
     },
+    "./radio-group": {
+      "types": "./dist/radio-group.d.ts",
+      "default": "./dist/radio-group.js"
+    },
+    "./switch": {
+      "types": "./dist/switch.d.ts",
+      "default": "./dist/switch.js"
+    },
+    "./breadcrumb": {
+      "types": "./dist/breadcrumb.d.ts",
+      "default": "./dist/breadcrumb.js"
+    },
+    "./tabs": {
+      "types": "./dist/tabs.d.ts",
+      "default": "./dist/tabs.js"
+    },
+    "./skeleton": {
+      "types": "./dist/skeleton.d.ts",
+      "default": "./dist/skeleton.js"
+    },
     "./input": {
       "types": "./dist/input.d.ts",
       "default": "./dist/input.js"
+    },
+    "./textarea": {
+      "types": "./dist/textarea.d.ts",
+      "default": "./dist/textarea.js"
+    },
+    "./select": {
+      "types": "./dist/select.d.ts",
+      "default": "./dist/select.js"
+    },
+    "./multi-select": {
+      "types": "./dist/multi-select.d.ts",
+      "default": "./dist/multi-select.js"
     },
     "./text": {
       "types": "./dist/text.d.ts",
@@ -230,7 +262,8 @@
     "verify:playground-icon": "node scripts/verify-playground-icon.mjs",
     "verify:playground-image": "node scripts/verify-playground-image.mjs",
     "verify:playground-list": "node scripts/verify-playground-list.mjs",
-    "check": "npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run verify:playground-code && npm run verify:playground-nav-list && npm run verify:playground-sidebar && npm run verify:playground-icon && npm run verify:playground-image && npm run verify:playground-list && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
+    "verify:playground-composition": "node scripts/verify-playground-composition.mjs",
+    "check": "npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run verify:playground-code && npm run verify:playground-nav-list && npm run verify:playground-sidebar && npm run verify:playground-icon && npm run verify:playground-image && npm run verify:playground-list && npm run verify:playground-composition && npm run typecheck && npm test && npm run build:playground && npm run build:consumer && npm run pack:check && npm run verify:consumers",
     "prepublishOnly": "npm run build"
   },
   "browserslist": [
@@ -245,7 +278,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.9.1"
+    "@flowstack-ui/atom": "0.12.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

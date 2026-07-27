@@ -12,6 +12,26 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
+test("composes Tabs and Skeleton through public subpaths", async ({ page }) => {
+  const list = page.getByRole("tablist", { name: "Workspace preview sections" });
+  await expect(list).toHaveClass(/brick-tabs-list/);
+  await list.getByRole("tab", { name: "Loading" }).click();
+  await expect(page.getByRole("tabpanel")).toContainText("");
+  const skeleton = page.getByRole("tabpanel").locator(".brick-skeleton");
+  await expect(skeleton).toHaveAttribute("data-animation", "wave");
+  await expect(skeleton.locator(".brick-skeleton-line")).toHaveCount(3);
+});
+
+test("composes Breadcrumb through its public subpath as the current workspace path", async ({ page }) => {
+  const breadcrumb = page.getByRole("navigation", { name: "Current workspace path" });
+  await expect(breadcrumb).toHaveClass(/brick-breadcrumb/);
+  await expect(breadcrumb.getByRole("listitem")).toHaveCount(3);
+  await expect(breadcrumb.getByRole("link", { name: "Home" })).toHaveAttribute("href", "#top");
+  await expect(breadcrumb.getByText("Mobile checkout refresh", { exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(breadcrumb.locator("[data-slot='breadcrumb-separator']")).toHaveCount(2);
+  await expect(breadcrumb.locator("[data-slot='breadcrumb-separator']").first()).toHaveAttribute("aria-hidden", "true");
+});
+
 test("composes Image through its public subpath inside project Card", async ({ page }) => {
   const image = page.getByRole("img", { name: "Mobile checkout workspace preview" });
   await expect(image).toBeVisible();
@@ -34,6 +54,37 @@ test("composes Code and Code Block through their public subpaths", async ({ page
   const block = page.locator("[data-slot='code-block']");
   await expect(block.locator("pre > code")).toHaveText("npm install @flowstack-ui/brick");
   await expect(block.locator("[data-slot='code-block-content']")).toHaveAttribute("aria-label", "Brick install command");
+});
+
+test("composes Select through its public subpath with native form behavior", async ({ page }) => {
+  const form = page.getByRole("form", { name: "Billing plan chooser" });
+  const trigger = form.getByRole("combobox", { name: "Billing plan" });
+  await expect(trigger).toHaveClass(/brick-select-trigger/);
+  await expect(trigger).toContainText("Team");
+  await trigger.click();
+  await page.getByRole("option", { name: "Starter" }).click();
+  await form.getByRole("button", { name: "Save plan" }).click();
+  await expect(form.getByTestId("consumer-plan-status")).toHaveText("Billing plan submitted: starter.");
+  await form.getByRole("button", { name: "Reset plan" }).click();
+  await expect(trigger).toContainText("Team");
+  await expect(form.getByTestId("consumer-plan-status")).toHaveText("Billing plan reset to Team.");
+});
+
+test("composes Multi Select through its public subpath with repeated-value form behavior", async ({ page }) => {
+  const form = page.getByRole("form", { name: "Team skills chooser" });
+  const trigger = form.getByRole("button", { name: "Team skills" });
+  await expect(trigger).toHaveClass(/brick-multi-select-trigger/);
+  await expect(trigger).toContainText("Design (+1 more)");
+  await trigger.click();
+  await page.getByRole("option", { name: "Writing" }).click();
+  await expect(page.getByRole("listbox", { name: "Team skills" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await form.getByRole("button", { name: "Save skills" }).click();
+  await expect(form.getByTestId("consumer-skills-status")).toHaveText(
+    "Team skills submitted: design, engineering, writing.",
+  );
+  await form.getByRole("button", { name: "Reset skills" }).click();
+  await expect(trigger).toContainText("Design (+1 more)");
 });
 
 test("renders and operates Brick through its public package", async ({ page }) => {
@@ -156,7 +207,10 @@ test("composes Popover as a compact AppBar settings panel", async ({ page }) => 
   await expect(popover).toHaveAccessibleDescription(
     "Change compact display options for this workspace.",
   );
-  await page.getByLabel("Compact project spacing").check();
+  const compact = page.getByRole("switch", { name: "Compact project spacing" });
+  await expect(compact).toHaveClass(/brick-switch/);
+  await expect(compact).toHaveAttribute("data-size", "md");
+  await compact.click();
   await expect(page.locator(".workspace-grid")).toHaveAttribute("data-compact", "true");
   await popover.getByRole("button", { name: "Done" }).click();
   await expect(popover).toBeHidden();
@@ -294,10 +348,14 @@ test("composes the complete public Form, Field, and Fieldset foundation", async 
   const field = form.locator("#invite-email-field");
   const fieldset = form.locator("#invite-role");
   const email = form.getByLabel("Work email");
+  const note = form.getByLabel("Invitation note");
 
   await expect(form).toHaveClass(/brick-form/);
   await expect(field).toHaveClass(/brick-field/);
   await expect(email.locator("..")).toHaveClass(/brick-input/);
+  await expect(note.locator("..")).toHaveClass(/brick-textarea/);
+  await note.fill("Please review the launch workspace before Friday.");
+  await expect(note.locator("..").locator("[data-slot='textarea-count']")).toHaveText("49/160");
   await email.fill("draft@example.com");
   await form.getByRole("button", { name: "Clear input" }).click();
   await expect(email).toHaveValue("");
@@ -319,6 +377,7 @@ test("composes the complete public Form, Field, and Fieldset foundation", async 
 
   await form.getByRole("button", { name: "Reset" }).click();
   await expect(email).toHaveValue("");
+  await expect(note).toHaveValue("");
   await expect(field).not.toHaveAttribute("data-invalid");
   await expect(page.getByText("Invitation form reset.")).toBeVisible();
 });
@@ -351,6 +410,22 @@ test("composes Checkbox and CheckboxGroup as a complete publishing-preferences w
   await expect(email).toHaveAttribute("aria-checked", "false");
   await expect(push).toHaveAttribute("aria-checked", "false");
   await expect(page.getByText("Publishing preferences reset.")).toBeVisible();
+});
+
+test("composes RadioGroup as a native single-selection workflow", async ({ page }) => {
+  const form = page.getByRole("form", { name: "Delivery channel chooser" });
+  const group = form.getByRole("radiogroup", { name: "Delivery channel" });
+  const email = group.getByRole("radio", { name: "Email reports" });
+  const push = group.getByRole("radio", { name: "Push notifications" });
+  await expect(group).toHaveClass(/brick-radio-group/);
+  await expect(group).toHaveAttribute("data-size", "md");
+  await expect(email).toBeChecked();
+  await push.click();
+  await form.getByRole("button", { name: "Save delivery channel" }).click();
+  await expect(page.getByTestId("consumer-channel-status")).toHaveText("Delivery channel submitted: push.");
+  await form.getByRole("button", { name: "Reset channel" }).click();
+  await expect(email).toBeChecked();
+  await expect(page.getByTestId("consumer-channel-status")).toHaveText("Delivery channel reset to Email reports.");
 });
 
 test("composes Badge and NotificationBadge through their public subpath", async ({ page }) => {
@@ -534,8 +609,15 @@ test("keeps the mobile header and Card content intentionally contained", async (
   expect(headerBox).not.toBeNull();
   expect(brandBox).not.toBeNull();
   expect(appearanceBox).not.toBeNull();
-  expect(Math.abs(brandBox!.y - appearanceBox!.y)).toBeLessThan(8);
+  const brandCenter = brandBox!.y + brandBox!.height / 2;
+  const appearanceCenter = appearanceBox!.y + appearanceBox!.height / 2;
+  expect(Math.abs(brandCenter - appearanceCenter)).toBeLessThanOrEqual(1);
+  expect(brandBox!.x).toBeGreaterThanOrEqual(headerBox!.x);
+  expect(brandBox!.y).toBeGreaterThanOrEqual(headerBox!.y);
+  expect(brandBox!.y + brandBox!.height).toBeLessThanOrEqual(headerBox!.y + headerBox!.height);
   expect(appearanceBox!.x + appearanceBox!.width).toBeLessThanOrEqual(headerBox!.x + headerBox!.width);
+  expect(appearanceBox!.y).toBeGreaterThanOrEqual(headerBox!.y);
+  expect(appearanceBox!.y + appearanceBox!.height).toBeLessThanOrEqual(headerBox!.y + headerBox!.height);
 
   const collaborators = page.locator(".project-collaborators");
   const card = page.getByRole("article", { name: "Mobile checkout refresh" });

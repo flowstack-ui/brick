@@ -32,6 +32,13 @@ This directory is the public documentation authority for
   relationships
 - [Fieldset](components/fieldset/README.md) — native related-control grouping
 - [Input](components/input/README.md) — finished native single-line text entry
+- [Textarea](components/textarea/README.md) — finished native multi-line text
+- [Radio Group](components/radio-group/README.md) — finished visible single-selection choices
+- [Switch](components/switch/README.md) — immediate binary settings
+  entry with manual or bounded automatic sizing and optional character count
+- [Select](components/select/README.md) — finished single-value select-only choice
+- [Multi Select](components/multi-select/README.md) — finished multiple-value
+  choice control with repeated-value native form participation
 - [Checkbox](components/checkbox/README.md) — independent checked or mixed
   selection
 - [Checkbox Group](components/checkbox-group/README.md) — related selections
@@ -52,6 +59,8 @@ This directory is the public documentation authority for
 - [Card](components/card/README.md) — static compound surface for one subject
 - [List](components/list/README.md) — native ordered and unordered content
   collections with optional structured anatomy
+- [Skeleton](components/skeleton/README.md) — motion-safe loading placeholders
+  with content-preserving geometry
 
 ### Contextual overlays
 
@@ -77,6 +86,10 @@ This directory is the public documentation authority for
 
 ### Navigation and layout
 
+- [Breadcrumb](components/breadcrumb/README.md) — hierarchical page location
+  and ancestor navigation
+- [Tabs](components/tabs/README.md) — related peer panels with complete keyboard
+  navigation
 - [Link](components/link/README.md) — inline and standalone native navigation
 - [Nav List](components/nav-list/README.md) — grouped native destination lists
   with current and collapsible states

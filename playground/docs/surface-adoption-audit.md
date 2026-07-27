@@ -67,7 +67,10 @@ different owner.
 | Link | overview, specimen-grid cells, appearance scopes, customization shell/preview, stress panel | Link recipes, inline wrapping, composition output, and code block |
 | Nav List | overview, specimen cells, appearance scopes, customization shell, and stress panel | Nav List rows, current-state recipes, disclosure anatomy, and composition output |
 | Sidebar | route evidence stages and customization shell | Sidebar Panel paint, state geometry, and desktop shell ownership |
+| Breadcrumb | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, and stress panel | Breadcrumb trail recipes, wrapping, separators, current-page semantics, collapse composition, and exact output |
+| Tabs | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Tabs list/trigger/content/indicator recipes, semantic orientation, overflow, and exact composition output |
 | Card | overview stage, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Card roots and their variant backgrounds; code block |
+| Skeleton | overview, comparison cells, appearance scopes, customization shell, and stress panels | Skeleton shape, motion, dimensions, line geometry, and loading-content paint |
 | Dialog | overview/action/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Dialog and overlay roots; static branch reconstruction; portal/positioning stages; code block |
 | Alert Dialog | overview/action/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Alert Dialog and overlay roots; decision/action evidence; portal stages; code block |
 | Drawer | overview/action/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Drawer and overlay roots; static branch reconstruction; edge/positioning stages; code block |
@@ -85,6 +88,11 @@ different owner.
 | Fieldset | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | legend/control relationships, disabled/validation anatomy and attribute readouts; code block |
 | Checkbox | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | Checkbox control/state paint and native form evidence; code block |
 | Checkbox Group | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | group aggregation, parent state, Fieldset relationships and attribute readouts; code block |
+| Radio Group | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | radio control/state paint, roving-focus evidence, Fieldset relationships, native form output, and composition output; code block |
+| Switch | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | Switch track/thumb/state paint, Field relationships, native form output, and composition output; code block |
+| Select | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Select trigger/content/item recipes, portal positioning, option scrolling, native form evidence, and composition output; code block |
+| Multi Select | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Multi Select trigger/content/item recipes, portal positioning, multiple-option scrolling, repeated-value native form evidence, and composition output; code block |
+| Textarea | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Textarea control recipes, native resize geometry, auto-resize measurement, form output, and rendered relationship evidence; code block |
 
 ## Shared and shell audit
 

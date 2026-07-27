@@ -37,6 +37,20 @@ export const componentEntries = [
   },
   {
     category: "Navigation",
+    description: "Hierarchical page location and ancestor navigation.",
+    id: "breadcrumb",
+    route: "/breadcrumb",
+    title: "Breadcrumb",
+  },
+  {
+    category: "Navigation",
+    description: "Related peer panels with complete keyboard navigation.",
+    id: "tabs",
+    route: "/tabs",
+    title: "Tabs",
+  },
+  {
+    category: "Navigation",
     description: "Finished destination lists, sections, and disclosure.",
     id: "nav-list",
     route: "/nav-list",
@@ -141,6 +155,13 @@ export const componentEntries = [
     title: "Card",
   },
   {
+    category: "Feedback",
+    description: "Motion-safe placeholders that preserve loading layout.",
+    id: "skeleton",
+    route: "/skeleton",
+    title: "Skeleton",
+  },
+  {
     category: "Overlays",
     description: "Focused modal tasks and decisions.",
     id: "dialog",
@@ -226,6 +247,27 @@ export const componentEntries = [
   },
   {
     category: "Forms",
+    description: "Finished native multi-line text entry.",
+    id: "textarea",
+    route: "/textarea",
+    title: "Textarea",
+  },
+  {
+    category: "Forms",
+    description: "Finished single-value select-only choice control.",
+    id: "select",
+    route: "/select",
+    title: "Select",
+  },
+  {
+    category: "Forms",
+    description: "Compact selection of several predefined values.",
+    id: "multi-select",
+    route: "/multi-select",
+    title: "Multi Select",
+  },
+  {
+    category: "Forms",
     description: "Styled native form submission boundary.",
     id: "form",
     route: "/form",
@@ -258,6 +300,20 @@ export const componentEntries = [
     id: "checkbox-group",
     route: "/checkbox-group",
     title: "Checkbox Group",
+  },
+  {
+    category: "Forms",
+    description: "Finished single-selection choice groups.",
+    id: "radio-group",
+    route: "/radio-group",
+    title: "Radio Group",
+  },
+  {
+    category: "Forms",
+    description: "Immediate binary settings.",
+    id: "switch",
+    route: "/switch",
+    title: "Switch",
   },
 ] as const satisfies readonly PlaygroundEntry[];
 

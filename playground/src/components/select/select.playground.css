@@ -1,0 +1,10 @@
+.select-page [data-playground-evidence],
+.select-page .select-tile { overflow: visible; }
+.select-tile { display: flex; min-inline-size: 0; flex-direction: column; align-items: stretch; gap: var(--brick-space-3); }
+.select-tile > .brick-field,
+.select-page [data-testid="select-overview"] > .brick-field,
+.select-page [data-testid="select-options"] > .brick-field { inline-size: 100%; }
+.select-narrow { inline-size: min(100%, 17rem); }
+.select-page [data-testid="select-options"] { min-block-size: 31rem; }
+.select-page [data-appearance] { padding: var(--brick-space-3); border-radius: var(--brick-radius-control); background: var(--brick-color-surface-base); color: var(--brick-color-text-primary); }
+@media (max-width: 44rem) { .select-page .forms-grid { grid-template-columns: minmax(0, 1fr); } }

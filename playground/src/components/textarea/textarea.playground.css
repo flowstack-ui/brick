@@ -1,0 +1,14 @@
+.textarea-page .forms-cell__preview > .brick-field,
+.textarea-page .forms-customization__preview > .brick-field {
+  inline-size: 100%;
+}
+
+.textarea-controlled-example {
+  inline-size: 100%;
+}
+
+.textarea-controlled-example output {
+  color: var(--brick-color-text-secondary);
+  font-size: var(--brick-font-size-sm);
+  overflow-wrap: anywhere;
+}

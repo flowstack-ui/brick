@@ -116,7 +116,12 @@ for (const directory of componentDirectories) {
         declaration.includes("var(--brick-fieldset-") ||
         declaration.includes("var(--brick-button-") ||
         declaration.includes("var(--brick-input-") ||
+        declaration.includes("var(--brick-textarea-") ||
+        declaration.includes("var(--brick-select-") ||
+        declaration.includes("var(--brick-multi-select-") ||
         declaration.includes("var(--brick-link-") ||
+        declaration.includes("var(--brick-breadcrumb-") ||
+        declaration.includes("var(--brick-tabs-") ||
         declaration.includes("var(--brick-code-") ||
         declaration.includes("var(--brick-badge-") ||
         declaration.includes("var(--brick-avatar-") ||

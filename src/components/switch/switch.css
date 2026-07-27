@@ -1,0 +1,139 @@
+@layer brick.components {
+  .brick-switch {
+    --brick-switch-target-size: var(--brick-control-target-min);
+    --brick-switch-track-inline-size: 2.5rem;
+    --brick-switch-track-block-size: 1.5rem;
+    --brick-switch-thumb-size: 1.125rem;
+    --brick-switch-track-inset: 0.1875rem;
+    --brick-switch-track-background: var(--brick-color-surface-subtle);
+    --brick-switch-track-border: var(--brick-color-border-strong);
+    --brick-switch-thumb-background: var(--brick-color-surface-raised);
+    --brick-switch-thumb-border: var(--brick-color-border-default);
+    --brick-switch-checked-background: var(--brick-color-accent-solid);
+    --brick-switch-checked-border: var(--brick-color-accent-solid);
+    --brick-switch-checked-thumb: var(--brick-color-accent-on-solid);
+    --brick-switch-hover-background: var(--brick-color-surface-base);
+    --brick-switch-pressed-background: var(--brick-color-accent-soft-pressed);
+    --brick-switch-focus-ring: var(--brick-color-focus-ring);
+    --brick-switch-invalid-border: var(--brick-color-danger-text);
+    --brick-switch-readonly-background: var(--brick-color-surface-subtle);
+
+    position: relative;
+    display: inline-grid;
+    box-sizing: border-box;
+    inline-size: max(var(--brick-switch-target-size), var(--brick-switch-track-inline-size));
+    min-inline-size: var(--brick-switch-target-size);
+    min-block-size: var(--brick-switch-target-size);
+    place-items: center;
+    flex: 0 0 auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--brick-radius-full);
+    appearance: none;
+    background: transparent;
+    color: inherit;
+    vertical-align: middle;
+    user-select: none;
+  }
+
+  .brick-switch::before {
+    position: absolute;
+    box-sizing: border-box;
+    inline-size: var(--brick-switch-track-inline-size);
+    block-size: var(--brick-switch-track-block-size);
+    border: var(--brick-border-width) solid var(--brick-switch-track-border);
+    border-radius: var(--brick-radius-full);
+    background: var(--brick-switch-track-background);
+    content: "";
+    transition:
+      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
+      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+  }
+
+  .brick-switch:not([data-disabled], [data-readonly]) { cursor: pointer; }
+  .brick-switch[data-readonly] { cursor: default; }
+
+  .brick-switch:is(:focus-visible, [data-focus-visible]) {
+    outline: var(--brick-border-focus-width) solid var(--brick-switch-focus-ring);
+    outline-offset: var(--brick-border-focus-offset);
+  }
+
+  .brick-switch-thumb {
+    position: absolute;
+    inset-inline-start: calc((100% - var(--brick-switch-track-inline-size)) / 2 + var(--brick-switch-track-inset));
+    display: block;
+    box-sizing: border-box;
+    inline-size: var(--brick-switch-thumb-size);
+    block-size: var(--brick-switch-thumb-size);
+    border: var(--brick-border-width) solid var(--brick-switch-thumb-border);
+    border-radius: var(--brick-radius-full);
+    background: var(--brick-switch-thumb-background);
+    box-shadow: var(--brick-shadow-sm);
+    transform: translateX(0);
+    transition:
+      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
+      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
+      transform var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+  }
+
+  .brick-switch[data-state="checked"]::before {
+    border-color: var(--brick-switch-checked-border);
+    background: var(--brick-switch-checked-background);
+  }
+
+  .brick-switch[data-state="checked"] .brick-switch-thumb {
+    border-color: var(--brick-switch-checked-thumb);
+    background: var(--brick-switch-checked-thumb);
+    transform: translateX(calc(var(--brick-switch-track-inline-size) - var(--brick-switch-thumb-size) - 2 * var(--brick-switch-track-inset)));
+  }
+
+  [dir="rtl"] .brick-switch[data-state="checked"] .brick-switch-thumb {
+    transform: translateX(calc(-1 * (var(--brick-switch-track-inline-size) - var(--brick-switch-thumb-size) - 2 * var(--brick-switch-track-inset))));
+  }
+
+  .brick-switch[data-invalid]::before { border-color: var(--brick-switch-invalid-border); }
+  .brick-switch[data-readonly]::before { background: var(--brick-switch-readonly-background); }
+  .brick-switch[data-disabled] { cursor: not-allowed; opacity: 0.65; }
+
+  .brick-switch[data-size="sm"] {
+    --brick-switch-track-inline-size: 2rem;
+    --brick-switch-track-block-size: 1.25rem;
+    --brick-switch-thumb-size: 0.875rem;
+  }
+
+  .brick-switch[data-size="lg"] {
+    --brick-switch-track-inline-size: 3rem;
+    --brick-switch-track-block-size: 1.75rem;
+    --brick-switch-thumb-size: 1.375rem;
+  }
+
+  .brick-switch:not([data-disabled], [data-readonly]):active::before {
+    background: var(--brick-switch-pressed-background);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .brick-switch:not([data-disabled], [data-readonly], [data-state="checked"]):hover::before {
+      background: var(--brick-switch-hover-background);
+    }
+    .brick-switch:not([data-disabled], [data-readonly])[data-state="checked"]:hover::before {
+      background: var(--brick-color-accent-solid-hover);
+      border-color: var(--brick-color-accent-solid-hover);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.brick-switch::before, .brick-switch-thumb) { transition-duration: 0ms; }
+  }
+
+  @media (forced-colors: active) {
+    .brick-switch { forced-color-adjust: none; }
+    .brick-switch::before { border-color: ButtonText; background: Canvas; }
+    .brick-switch-thumb { border-color: ButtonText; background: ButtonText; box-shadow: none; }
+    .brick-switch[data-state="checked"]::before { border-color: Highlight; background: Highlight; }
+    .brick-switch[data-state="checked"] .brick-switch-thumb { border-color: HighlightText; background: HighlightText; }
+    .brick-switch[data-invalid]::before { border-color: Mark; }
+    .brick-switch[data-disabled] { opacity: 1; }
+    .brick-switch[data-disabled]::before,
+    .brick-switch[data-disabled] .brick-switch-thumb { border-color: GrayText; }
+  }
+}

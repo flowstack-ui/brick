@@ -1,0 +1,2 @@
+.switch-setting { min-inline-size: 0; align-items: center; }
+.switch-setting > .brick-text { min-inline-size: 0; overflow-wrap: anywhere; }
