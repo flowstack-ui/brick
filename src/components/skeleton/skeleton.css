@@ -1,0 +1,35 @@
+@layer brick.components {
+  .brick-skeleton {
+    --brick-skeleton-background: var(--brick-color-surface-subtle);
+    --brick-skeleton-highlight: var(--brick-color-surface-raised);
+    --brick-skeleton-width: 100%;
+    --brick-skeleton-height: 1em;
+    --brick-skeleton-radius: var(--brick-radius-subtle);
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    inline-size: var(--brick-skeleton-width);
+    block-size: var(--brick-skeleton-height);
+    max-inline-size: 100%;
+    border-radius: var(--brick-skeleton-radius);
+    vertical-align: middle;
+  }
+  .brick-skeleton[data-loading] { overflow: hidden; background: var(--brick-skeleton-background); }
+  .brick-skeleton[data-variant="circular"] { --brick-skeleton-width: 2.5rem; --brick-skeleton-height: 2.5rem; --brick-skeleton-radius: 9999px; aspect-ratio: 1; }
+  .brick-skeleton[data-variant="rectangular"] { --brick-skeleton-height: 4rem; --brick-skeleton-radius: 0; }
+  .brick-skeleton[data-variant="rounded"] { --brick-skeleton-height: 4rem; --brick-skeleton-radius: var(--brick-radius-surface); }
+  .brick-skeleton[data-has-children] { inline-size: fit-content; block-size: fit-content; }
+  .brick-skeleton-content { display: inherit; visibility: visible; }
+  .brick-skeleton[data-loading] > .brick-skeleton-content { visibility: hidden; }
+  .brick-skeleton[data-lines] { display: flex; block-size: auto; flex-direction: column; gap: var(--brick-space-2); background: transparent; overflow: visible; }
+  .brick-skeleton-line { display: block; inline-size: 100%; block-size: var(--brick-skeleton-height); border-radius: var(--brick-skeleton-radius); background: var(--brick-skeleton-background); overflow: hidden; }
+  .brick-skeleton-line:last-child { inline-size: 72%; }
+  .brick-skeleton[data-animation="pulse"][data-loading], .brick-skeleton[data-animation="pulse"][data-loading] .brick-skeleton-line { animation: brick-skeleton-pulse 1.8s ease-in-out infinite; }
+  .brick-skeleton[data-animation="wave"][data-loading]::after, .brick-skeleton[data-animation="wave"][data-loading] .brick-skeleton-line::after { content: ""; position: absolute; inset: 0; translate: -100% 0; background: linear-gradient(90deg, transparent, var(--brick-skeleton-highlight), transparent); animation: brick-skeleton-wave 1.8s ease-in-out infinite; }
+  .brick-skeleton[data-animation="wave"][data-lines]::after { content: none; }
+  .brick-skeleton-line { position: relative; }
+  @keyframes brick-skeleton-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.52; } }
+  @keyframes brick-skeleton-wave { to { translate: 100% 0; } }
+  @media (prefers-reduced-motion: reduce) { .brick-skeleton, .brick-skeleton::after, .brick-skeleton-line, .brick-skeleton-line::after { animation: none !important; } }
+  @media (forced-colors: active) { .brick-skeleton[data-loading], .brick-skeleton-line { border: 1px solid CanvasText; background: Canvas; forced-color-adjust: auto; } }
+}

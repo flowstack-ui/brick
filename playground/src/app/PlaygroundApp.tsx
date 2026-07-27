@@ -64,6 +64,9 @@ import {
   popoverScenarios,
 } from "../components/popover/PopoverPage.js";
 import { InputPage, inputScenarios } from "../components/input/InputPage.js";
+import { TextareaPage, textareaScenarios } from "../components/textarea/TextareaPage.js";
+import { SelectPage, selectScenarios } from "../components/select/SelectPage.js";
+import { MultiSelectPage, multiSelectScenarios } from "../components/multi-select/MultiSelectPage.js";
 import { TextPage, textScenarios } from "../components/text/TextPage.js";
 import { IconPage, iconScenarios } from "../components/icon/IconPage.js";
 import { ImagePage, imageScenarios } from "../components/image/ImagePage.js";
@@ -104,6 +107,14 @@ import {
   CheckboxGroupPage,
   checkboxGroupScenarios,
 } from "../components/checkbox-group/CheckboxGroupPage.js";
+import {
+  RadioGroupPage,
+  radioGroupScenarios,
+} from "../components/radio-group/RadioGroupPage.js";
+import { SwitchPage, switchScenarios } from "../components/switch/SwitchPage.js";
+import { BreadcrumbPage, breadcrumbScenarios } from "../components/breadcrumb/BreadcrumbPage.js";
+import { TabsPage, tabsScenarios } from "../components/tabs/TabsPage.js";
+import { SkeletonPage, skeletonScenarios } from "../components/skeleton/SkeletonPage.js";
 import { PlaygroundShell } from "../shell/PlaygroundShell.js";
 
 export function PlaygroundApp() {
@@ -339,6 +350,30 @@ export function PlaygroundApp() {
     );
   }
 
+  if (entry.id === "textarea") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={textareaScenarios}>
+        <TextareaPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "select") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={selectScenarios}>
+        <SelectPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "multi-select") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={multiSelectScenarios}>
+        <MultiSelectPage />
+      </PlaygroundShell>
+    );
+  }
+
   if (entry.id === "field") {
     return (
       <PlaygroundShell entry={entry} scenarios={fieldScenarios}>
@@ -369,6 +404,38 @@ export function PlaygroundApp() {
         <CheckboxGroupPage />
       </PlaygroundShell>
     );
+  }
+
+  if (entry.id === "radio-group") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={radioGroupScenarios}>
+        <RadioGroupPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "switch") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={switchScenarios}>
+        <SwitchPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "breadcrumb") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={breadcrumbScenarios}>
+        <BreadcrumbPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "tabs") {
+    return <PlaygroundShell entry={entry} scenarios={tabsScenarios}><TabsPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "skeleton") {
+    return <PlaygroundShell entry={entry} scenarios={skeletonScenarios}><SkeletonPage /></PlaygroundShell>;
   }
 
   return (

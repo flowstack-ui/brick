@@ -1,0 +1,4 @@
+.tabs-page .brick-tabs { inline-size: 100%; }
+.tabs-page .forms-cell { min-inline-size: 0; }
+.tabs-page .forms-cell > .brick-tabs { align-self: stretch; }
+.tabs-phone { inline-size: min(100%, 20rem); min-inline-size: 0; }

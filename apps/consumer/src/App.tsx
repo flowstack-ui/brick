@@ -20,7 +20,12 @@ import { Field } from "@flowstack-ui/brick/field";
 import { Fieldset } from "@flowstack-ui/brick/fieldset";
 import { Checkbox } from "@flowstack-ui/brick/checkbox";
 import { CheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
+import { RadioGroup } from "@flowstack-ui/brick/radio-group";
+import { Switch } from "@flowstack-ui/brick/switch";
 import { Input } from "@flowstack-ui/brick/input";
+import { Textarea } from "@flowstack-ui/brick/textarea";
+import { Select } from "@flowstack-ui/brick/select";
+import { MultiSelect } from "@flowstack-ui/brick/multi-select";
 import { Text } from "@flowstack-ui/brick/text";
 import { Link } from "@flowstack-ui/brick/link";
 import { List } from "@flowstack-ui/brick/list";
@@ -34,6 +39,9 @@ import { Code } from "@flowstack-ui/brick/code";
 import { CodeBlock } from "@flowstack-ui/brick/code-block";
 import { NavList } from "@flowstack-ui/brick/nav-list";
 import { Sidebar } from "@flowstack-ui/brick/sidebar";
+import { Breadcrumb } from "@flowstack-ui/brick/breadcrumb";
+import { Tabs } from "@flowstack-ui/brick/tabs";
+import { Skeleton } from "@flowstack-ui/brick/skeleton";
 
 type Appearance = "light" | "dark";
 
@@ -82,6 +90,9 @@ export function App() {
   const [workspaceView, setWorkspaceView] = useState("cards");
   const [compactWorkspace, setCompactWorkspace] = useState(false);
   const [preferenceStatus, setPreferenceStatus] = useState("Publishing preferences have not been saved.");
+  const [planStatus, setPlanStatus] = useState("No billing plan submitted.");
+  const [skillsStatus, setSkillsStatus] = useState("No team skills submitted.");
+  const [channelStatus, setChannelStatus] = useState("No delivery channel submitted.");
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -124,10 +135,12 @@ export function App() {
                   <Popover.Title>Workspace settings</Popover.Title>
                   <Popover.Description>Change compact display options for this workspace.</Popover.Description>
                   <Popover.Body>
-                    <label className="workspace-setting">
-                      <input checked={compactWorkspace} onChange={(event) => setCompactWorkspace(event.currentTarget.checked)} type="checkbox" />
-                      Compact project spacing
-                    </label>
+                    <HStack className="workspace-setting" gap="2">
+                      <Switch.Root aria-label="Compact project spacing" checked={compactWorkspace} onCheckedChange={setCompactWorkspace}>
+                        <Switch.Thumb />
+                      </Switch.Root>
+                      <Text>Compact project spacing</Text>
+                    </HStack>
                   </Popover.Body>
                   <Popover.Footer><Popover.Close asChild><Button size="sm">Done</Button></Popover.Close></Popover.Footer>
                   <Popover.Arrow />
@@ -147,6 +160,15 @@ export function App() {
             <NavList.Item><NavList.Link href="#publishing-preferences">Publishing</NavList.Link></NavList.Item>
           </NavList.List>
         </NavList.Root>
+        <Breadcrumb.Root ariaLabel="Current workspace path">
+          <Breadcrumb.List>
+            <Breadcrumb.Item><Breadcrumb.Link href="#top">Home</Breadcrumb.Link></Breadcrumb.Item>
+            <Breadcrumb.Separator />
+            <Breadcrumb.Item><Breadcrumb.Link href="#workspace">Projects</Breadcrumb.Link></Breadcrumb.Item>
+            <Breadcrumb.Separator />
+            <Breadcrumb.Item><Breadcrumb.Page>Mobile checkout refresh</Breadcrumb.Page></Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
         <main>
         <Sidebar.Root className="consumer-sidebar-proof" collapsedState="rail" size="sm">
           <Sidebar.Panel aria-label="Project settings sidebar">
@@ -256,6 +278,115 @@ export function App() {
               </CodeBlock.CopyStatus>
             </CodeBlock.Root>
           </VStack>
+        </Surface>
+
+        <Surface as="section" bordered inset="lg" aria-labelledby="plan-title">
+          <Form
+            aria-label="Billing plan chooser"
+            onReset={() => setPlanStatus("Billing plan reset to Team.")}
+            onSubmit={(event) => {
+              event.preventDefault();
+              const plan = String(new FormData(event.currentTarget).get("billingPlan") ?? "");
+              setPlanStatus(`Billing plan submitted: ${plan}.`);
+            }}
+          >
+            <VStack gap="3">
+              <VStack gap="1">
+                <Text as="h2" id="plan-title" variant="title-lg">Choose a billing plan</Text>
+                <Text tone="secondary">One realistic packed-package Select with native submission and reset.</Text>
+              </VStack>
+              <Field.Root id="consumer-billing-plan" required>
+                <Field.Label>Billing plan</Field.Label>
+                <Select.Root defaultValue="team" name="billingPlan" required>
+                  <Select.Trigger><Select.Value placeholder="Choose a plan" /><Select.Icon /></Select.Trigger>
+                  <Select.Content>
+                    <Select.ScrollUpButton />
+                    <Select.Viewport>
+                      <Select.Group>
+                        <Select.Label>Available plans</Select.Label>
+                        <Select.Item value="starter"><Select.ItemText>Starter</Select.ItemText><Select.ItemIndicator /></Select.Item>
+                        <Select.Item value="team"><Select.ItemText>Team</Select.ItemText><Select.ItemIndicator /></Select.Item>
+                        <Select.Item value="enterprise" disabled><Select.ItemText>Enterprise — contact sales</Select.ItemText><Select.ItemIndicator /></Select.Item>
+                      </Select.Group>
+                    </Select.Viewport>
+                    <Select.ScrollDownButton />
+                    <Select.Arrow />
+                  </Select.Content>
+                </Select.Root>
+                <Field.Description>Select one available workspace plan.</Field.Description>
+                <Field.Error>Choose a billing plan.</Field.Error>
+              </Field.Root>
+              <HStack gap="2"><Button type="submit">Save plan</Button><Button tone="neutral" type="reset" variant="outline">Reset plan</Button></HStack>
+              <Text aria-live="polite" data-testid="consumer-plan-status" tone="secondary">{planStatus}</Text>
+            </VStack>
+          </Form>
+        </Surface>
+
+        <Surface as="section" bordered inset="lg" aria-labelledby="skills-title">
+          <Form
+            aria-label="Team skills chooser"
+            onReset={() => setSkillsStatus("Team skills reset to Design and Engineering.")}
+            onSubmit={(event) => {
+              event.preventDefault();
+              const skills = new FormData(event.currentTarget).getAll("skills").map(String);
+              setSkillsStatus(`Team skills submitted: ${skills.join(", ")}.`);
+            }}
+          >
+            <VStack gap="3">
+              <VStack gap="1">
+                <Text as="h2" id="skills-title" variant="title-lg">Choose team skills</Text>
+                <Text tone="secondary">One realistic packed-package Multi Select with repeated-value submission and reset.</Text>
+              </VStack>
+              <Field.Root id="consumer-team-skills" required>
+                <Field.Label>Team skills</Field.Label>
+                <MultiSelect.Root defaultValue={["design", "engineering"]} name="skills" required>
+                  <MultiSelect.Trigger><MultiSelect.Value placeholder="Choose skills" /><MultiSelect.Icon /></MultiSelect.Trigger>
+                  <MultiSelect.Content>
+                    <MultiSelect.Viewport>
+                      <MultiSelect.Group>
+                        <MultiSelect.Label>Disciplines</MultiSelect.Label>
+                        <MultiSelect.Item value="design"><MultiSelect.ItemText>Design</MultiSelect.ItemText><MultiSelect.ItemIndicator /></MultiSelect.Item>
+                        <MultiSelect.Item value="engineering"><MultiSelect.ItemText>Engineering</MultiSelect.ItemText><MultiSelect.ItemIndicator /></MultiSelect.Item>
+                        <MultiSelect.Item value="research" disabled><MultiSelect.ItemText>Research</MultiSelect.ItemText><MultiSelect.ItemIndicator /></MultiSelect.Item>
+                        <MultiSelect.Item value="writing"><MultiSelect.ItemText>Writing</MultiSelect.ItemText><MultiSelect.ItemIndicator /></MultiSelect.Item>
+                      </MultiSelect.Group>
+                    </MultiSelect.Viewport>
+                    <MultiSelect.Arrow />
+                  </MultiSelect.Content>
+                </MultiSelect.Root>
+                <Field.Description>Choose every discipline that applies.</Field.Description>
+                <Field.Error>Choose at least one team skill.</Field.Error>
+              </Field.Root>
+              <HStack gap="2"><Button type="submit">Save skills</Button><Button tone="neutral" type="reset" variant="outline">Reset skills</Button></HStack>
+              <Text aria-live="polite" data-testid="consumer-skills-status" tone="secondary">{skillsStatus}</Text>
+            </VStack>
+          </Form>
+        </Surface>
+
+        <Surface as="section" bordered inset="lg" aria-labelledby="channel-title">
+          <Form
+            aria-label="Delivery channel chooser"
+            onReset={() => setChannelStatus("Delivery channel reset to Email reports.")}
+            onSubmit={(event) => {
+              event.preventDefault();
+              setChannelStatus(`Delivery channel submitted: ${new FormData(event.currentTarget).get("delivery-channel")}.`);
+            }}
+          >
+            <VStack gap="3">
+              <Fieldset.Root id="consumer-delivery-channel" required>
+                <Fieldset.Legend><Text as="span" id="channel-title" variant="title-lg">Delivery channel</Text></Fieldset.Legend>
+                <Fieldset.Description>Choose exactly one destination for publishing reports.</Fieldset.Description>
+                <RadioGroup.Root defaultValue="email" name="delivery-channel">
+                  <RadioGroup.Item value="email">Email reports</RadioGroup.Item>
+                  <RadioGroup.Item value="push">Push notifications</RadioGroup.Item>
+                  <RadioGroup.Item disabled value="sms">Text messages unavailable</RadioGroup.Item>
+                </RadioGroup.Root>
+                <Fieldset.Error>Choose one delivery channel.</Fieldset.Error>
+              </Fieldset.Root>
+              <HStack gap="2"><Button type="submit">Save delivery channel</Button><Button tone="neutral" type="reset" variant="outline">Reset channel</Button></HStack>
+              <Text aria-live="polite" data-testid="consumer-channel-status" tone="secondary">{channelStatus}</Text>
+            </VStack>
+          </Form>
         </Surface>
 
         <Surface
@@ -568,6 +699,15 @@ export function App() {
                 </Field.Description>
                 <Field.Error>Enter a valid work email address.</Field.Error>
               </Field.Root>
+              <Field.Root id="invite-note-field">
+                <Field.Label>Invitation note</Field.Label>
+                <Textarea.Root maxLength={160} name="note">
+                  <Textarea.Count />
+                </Textarea.Root>
+                <Field.Description>
+                  Add optional context for the teammate receiving the invitation.
+                </Field.Description>
+              </Field.Root>
               <Fieldset.Root id="invite-role" required>
                 <Fieldset.Legend>Workspace role</Fieldset.Legend>
                 <Fieldset.Description>
@@ -631,6 +771,19 @@ export function App() {
             </Form>
           </Card.Content>
         </Card.Root>
+        <Surface as="section" bordered inset="lg" aria-labelledby="component-preview-title">
+          <VStack gap="4">
+            <Text as="h2" id="component-preview-title" variant="title-lg">Workspace preview</Text>
+            <Tabs.Root defaultValue="summary" variant="soft">
+              <Tabs.List ariaLabel="Workspace preview sections">
+                <Tabs.Trigger value="summary">Summary</Tabs.Trigger>
+                <Tabs.Trigger value="loading">Loading</Tabs.Trigger>
+              </Tabs.List>
+              <Tabs.Content value="summary"><Text>Current workspace information is ready.</Text></Tabs.Content>
+              <Tabs.Content value="loading"><Skeleton animation="wave" lines={3} /></Tabs.Content>
+            </Tabs.Root>
+          </VStack>
+        </Surface>
         </main>
 
         <footer>

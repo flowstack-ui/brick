@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.9.1");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.11.1");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -104,9 +104,33 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/checkbox-group.d.ts",
       default: "./dist/checkbox-group.js",
     },
+    "./radio-group": {
+      types: "./dist/radio-group.d.ts",
+      default: "./dist/radio-group.js",
+    },
+    "./switch": {
+      types: "./dist/switch.d.ts",
+      default: "./dist/switch.js",
+    },
+    "./breadcrumb": {
+      types: "./dist/breadcrumb.d.ts",
+      default: "./dist/breadcrumb.js",
+    },
+    "./tabs": {
+      types: "./dist/tabs.d.ts",
+      default: "./dist/tabs.js",
+    },
+    "./skeleton": {
+      types: "./dist/skeleton.d.ts",
+      default: "./dist/skeleton.js",
+    },
     "./input": {
       types: "./dist/input.d.ts",
       default: "./dist/input.js",
+    },
+    "./textarea": {
+      types: "./dist/textarea.d.ts",
+      default: "./dist/textarea.js",
     },
     "./text": {
       types: "./dist/text.d.ts",
@@ -143,6 +167,14 @@ test("package metadata defines the public Brick boundary", async () => {
     "./scroll-area": {
       types: "./dist/scroll-area.d.ts",
       default: "./dist/scroll-area.js",
+    },
+    "./select": {
+      types: "./dist/select.d.ts",
+      default: "./dist/select.js",
+    },
+    "./multi-select": {
+      types: "./dist/multi-select.d.ts",
+      default: "./dist/multi-select.js",
     },
     "./nav-list": {
       types: "./dist/nav-list.d.ts",
@@ -190,7 +222,13 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const fieldset = await import(new URL("../../dist/fieldset.js", import.meta.url));
   const checkbox = await import(new URL("../../dist/checkbox.js", import.meta.url));
   const checkboxGroup = await import(new URL("../../dist/checkbox-group.js", import.meta.url));
+  const radioGroup = await import(new URL("../../dist/radio-group.js", import.meta.url));
+  const switchModule = await import(new URL("../../dist/switch.js", import.meta.url));
+  const breadcrumb = await import(new URL("../../dist/breadcrumb.js", import.meta.url));
+  const tabs = await import(new URL("../../dist/tabs.js", import.meta.url));
+  const skeleton = await import(new URL("../../dist/skeleton.js", import.meta.url));
   const input = await import(new URL("../../dist/input.js", import.meta.url));
+  const textarea = await import(new URL("../../dist/textarea.js", import.meta.url));
   const text = await import(new URL("../../dist/text.js", import.meta.url));
   const link = await import(new URL("../../dist/link.js", import.meta.url));
   const list = await import(new URL("../../dist/list.js", import.meta.url));
@@ -200,11 +238,13 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const surface = await import(new URL("../../dist/surface.js", import.meta.url));
   const divider = await import(new URL("../../dist/divider.js", import.meta.url));
   const scrollArea = await import(new URL("../../dist/scroll-area.js", import.meta.url));
+  const select = await import(new URL("../../dist/select.js", import.meta.url));
+  const multiSelect = await import(new URL("../../dist/multi-select.js", import.meta.url));
   const navList = await import(new URL("../../dist/nav-list.js", import.meta.url));
   const sidebar = await import(new URL("../../dist/sidebar.js", import.meta.url));
   const code = await import(new URL("../../dist/code.js", import.meta.url));
   const codeBlock = await import(new URL("../../dist/code-block.js", import.meta.url));
-  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Button", "Card", "Checkbox", "CheckboxGroup", "Code", "CodeBlock", "CodeBlockActions", "CodeBlockContent", "CodeBlockCopyIndicator", "CodeBlockCopyStatus", "CodeBlockCopyTrigger", "CodeBlockHeader", "CodeBlockLanguage", "CodeBlockRoot", "CodeBlockTitle", "Container", "Dialog", "Divider", "Drawer", "Field", "Fieldset", "Form", "Grid", "HStack", "HoverCard", "Icon", "IconButton", "Image", "Input", "Link", "List", "NavList", "NavListItem", "NavListLink", "NavListList", "NavListRoot", "NavListSection", "NavListSectionContent", "NavListSectionLabel", "NavListSectionTrigger", "NotificationBadge", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverBody", "PopoverClose", "PopoverContent", "PopoverDescription", "PopoverFooter", "PopoverHeader", "PopoverPortal", "PopoverRoot", "PopoverTitle", "PopoverTrigger", "ScrollArea", "ScrollAreaRoot", "ScrollAreaViewport", "Sidebar", "SidebarContent", "SidebarFooter", "SidebarHeader", "SidebarMain", "SidebarPanel", "SidebarRoot", "SidebarTrigger", "Stack", "Surface", "Text", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot", "Tooltip", "VStack"]);
+  assert.deepEqual(Object.keys(brick), ["AlertDialog", "AppBar", "AppBarCenter", "AppBarEnd", "AppBarRoot", "AppBarStart", "AppBarToolbar", "Avatar", "Badge", "Breadcrumb", "BreadcrumbEllipsis", "BreadcrumbItem", "BreadcrumbLink", "BreadcrumbList", "BreadcrumbPage", "BreadcrumbRoot", "BreadcrumbSeparator", "Button", "Card", "Checkbox", "CheckboxGroup", "Code", "CodeBlock", "CodeBlockActions", "CodeBlockContent", "CodeBlockCopyIndicator", "CodeBlockCopyStatus", "CodeBlockCopyTrigger", "CodeBlockHeader", "CodeBlockLanguage", "CodeBlockRoot", "CodeBlockTitle", "Container", "Dialog", "Divider", "Drawer", "Field", "Fieldset", "Form", "Grid", "HStack", "HoverCard", "Icon", "IconButton", "Image", "Input", "Link", "List", "MultiSelect", "MultiSelectArrow", "MultiSelectContent", "MultiSelectGroup", "MultiSelectIcon", "MultiSelectItem", "MultiSelectItemIndicator", "MultiSelectItemText", "MultiSelectLabel", "MultiSelectListbox", "MultiSelectPortal", "MultiSelectRoot", "MultiSelectScrollDownButton", "MultiSelectScrollUpButton", "MultiSelectSeparator", "MultiSelectTrigger", "MultiSelectValue", "MultiSelectViewport", "NavList", "NavListItem", "NavListLink", "NavListList", "NavListRoot", "NavListSection", "NavListSectionContent", "NavListSectionLabel", "NavListSectionTrigger", "NotificationBadge", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverBody", "PopoverClose", "PopoverContent", "PopoverDescription", "PopoverFooter", "PopoverHeader", "PopoverPortal", "PopoverRoot", "PopoverTitle", "PopoverTrigger", "RadioGroup", "RadioGroupItem", "RadioGroupRoot", "ScrollArea", "ScrollAreaRoot", "ScrollAreaViewport", "Select", "SelectArrow", "SelectContent", "SelectGroup", "SelectIcon", "SelectItem", "SelectItemIndicator", "SelectItemText", "SelectLabel", "SelectListbox", "SelectPortal", "SelectRoot", "SelectScrollDownButton", "SelectScrollUpButton", "SelectSeparator", "SelectTrigger", "SelectValue", "SelectViewport", "Sidebar", "SidebarContent", "SidebarFooter", "SidebarHeader", "SidebarMain", "SidebarPanel", "SidebarRoot", "SidebarTrigger", "Skeleton", "Stack", "Surface", "Switch", "SwitchRoot", "SwitchThumb", "Tabs", "TabsContent", "TabsIndicator", "TabsList", "TabsRoot", "TabsTrigger", "Text", "Textarea", "TextareaCount", "TextareaRoot", "Toggle", "ToggleGroup", "ToggleGroupItem", "ToggleGroupRoot", "Tooltip", "VStack"]);
   assert.equal(button.Button, brick.Button);
   assert.equal(iconButton.IconButton, brick.IconButton);
   assert.equal(icon.Icon, brick.Icon);
@@ -247,7 +287,31 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(checkboxGroup.CheckboxGroupItemLabel, brick.CheckboxGroup.ItemLabel);
   assert.equal(checkboxGroup.CheckboxGroupItemDescription, brick.CheckboxGroup.ItemDescription);
   assert.equal(checkboxGroup.CheckboxGroupParent, brick.CheckboxGroup.Parent);
+  assert.equal(radioGroup.RadioGroup, brick.RadioGroup);
+  assert.equal(radioGroup.RadioGroupRoot, brick.RadioGroup.Root);
+  assert.equal(radioGroup.RadioGroupItem, brick.RadioGroup.Item);
+  assert.equal(switchModule.Switch, brick.Switch);
+  assert.equal(switchModule.SwitchRoot, brick.Switch.Root);
+  assert.equal(switchModule.SwitchThumb, brick.Switch.Thumb);
+  assert.equal(breadcrumb.Breadcrumb, brick.Breadcrumb);
+  assert.equal(breadcrumb.BreadcrumbRoot, brick.Breadcrumb.Root);
+  assert.equal(breadcrumb.BreadcrumbList, brick.Breadcrumb.List);
+  assert.equal(breadcrumb.BreadcrumbItem, brick.Breadcrumb.Item);
+  assert.equal(breadcrumb.BreadcrumbLink, brick.Breadcrumb.Link);
+  assert.equal(breadcrumb.BreadcrumbPage, brick.Breadcrumb.Page);
+  assert.equal(breadcrumb.BreadcrumbSeparator, brick.Breadcrumb.Separator);
+  assert.equal(breadcrumb.BreadcrumbEllipsis, brick.Breadcrumb.Ellipsis);
+  assert.equal(tabs.Tabs, brick.Tabs);
+  assert.equal(tabs.TabsRoot, brick.Tabs.Root);
+  assert.equal(tabs.TabsList, brick.Tabs.List);
+  assert.equal(tabs.TabsTrigger, brick.Tabs.Trigger);
+  assert.equal(tabs.TabsContent, brick.Tabs.Content);
+  assert.equal(tabs.TabsIndicator, brick.Tabs.Indicator);
+  assert.equal(skeleton.Skeleton, brick.Skeleton);
   assert.equal(input.Input, brick.Input);
+  assert.equal(textarea.Textarea, brick.Textarea);
+  assert.equal(textarea.TextareaRoot, brick.Textarea.Root);
+  assert.equal(textarea.TextareaCount, brick.Textarea.Count);
   assert.equal(text.Text, brick.Text);
   assert.equal(link.Link, brick.Link);
   assert.equal(stack.Stack, brick.Stack);
@@ -262,6 +326,14 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(scrollArea.ScrollArea, brick.ScrollArea);
   assert.equal(scrollArea.ScrollAreaRoot, brick.ScrollArea.Root);
   assert.equal(scrollArea.ScrollAreaViewport, brick.ScrollArea.Viewport);
+  assert.equal(select.Select, brick.Select);
+  assert.equal(select.SelectRoot, brick.Select.Root);
+  assert.equal(select.SelectContent, brick.Select.Content);
+  assert.equal(select.SelectItem, brick.Select.Item);
+  assert.equal(multiSelect.MultiSelect, brick.MultiSelect);
+  assert.equal(multiSelect.MultiSelectRoot, brick.MultiSelect.Root);
+  assert.equal(multiSelect.MultiSelectContent, brick.MultiSelect.Content);
+  assert.equal(multiSelect.MultiSelectItem, brick.MultiSelect.Item);
   assert.equal(navList.NavList, brick.NavList);
   assert.equal(navList.NavListRoot, brick.NavList.Root);
   assert.equal(navList.NavListLink, brick.NavList.Link);
@@ -307,8 +379,10 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-checkbox-group\[data-invalid\]/);
   assert.match(styles, /\.brick-checkbox-group:not\(\[data-invalid\]\)/);
   assert.match(styles, /\.brick-input/);
+  assert.match(styles, /\.brick-textarea/);
   assert.match(styles, /\.brick-text/);
   assert.match(styles, /\.brick-link/);
+  assert.match(styles, /\.brick-breadcrumb/);
   assert.match(styles, /\.brick-list/);
   assert.match(styles, /\.brick-stack/);
   assert.match(styles, /\.brick-grid/);
@@ -343,8 +417,10 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-checkbox-control-size/);
   assert.match(styles, /--brick-checkbox-group-gap/);
   assert.match(styles, /--brick-input-min-block-size/);
+  assert.match(styles, /--brick-textarea-padding-inline/);
   assert.match(styles, /--brick-text-font-size/);
   assert.match(styles, /--brick-link-foreground/);
+  assert.match(styles, /--brick-breadcrumb-foreground/);
   assert.match(styles, /--brick-list-marker-style/);
   assert.match(styles, /--brick-stack-gap/);
   assert.match(styles, /--brick-grid-columns/);

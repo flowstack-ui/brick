@@ -1,0 +1,17 @@
+# MultiSelect changelog
+
+MultiSelect follows the package version of `@flowstack-ui/brick`.
+
+## Unreleased
+
+### Added
+
+- Initial compound MultiSelect API built on Atom MultiSelect 0.10.1 with complete styled
+  anatomy, repeated-value native forms, Field relationships, controlled/uncontrolled value arrays
+  and open state, groups, disabled options, scrolling, portal positioning, and
+  collision-aware Arrow.
+- Input-aligned outline, soft, and underline variants; small, medium, and large
+  sizes; sharp, rounded, and pill shapes; and full/intrinsic width.
+- Replaceable default Icon, indicator, scroll, and Arrow artwork; stable
+  classes, slots, public variables, dark appearance, forced colors, reduced
+  motion, RTL, narrow layout, and zoom support.

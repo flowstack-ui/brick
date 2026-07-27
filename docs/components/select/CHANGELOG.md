@@ -1,0 +1,17 @@
+# Select changelog
+
+Select follows the package version of `@flowstack-ui/brick`.
+
+## Unreleased
+
+### Added
+
+- Initial compound Select API built on Atom Select 0.9.3 with complete styled
+  anatomy, native forms, Field relationships, controlled/uncontrolled value
+  and open state, groups, disabled options, scrolling, portal positioning, and
+  collision-aware Arrow.
+- Input-aligned outline, soft, and underline variants; small, medium, and large
+  sizes; sharp, rounded, and pill shapes; and full/intrinsic width.
+- Replaceable default Icon, indicator, scroll, and Arrow artwork; stable
+  classes, slots, public variables, dark appearance, forced colors, reduced
+  motion, RTL, narrow layout, and zoom support.

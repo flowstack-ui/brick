@@ -1,0 +1,4 @@
+.skeleton-page .forms-cell { min-inline-size: 0; }
+.skeleton-page .brick-skeleton { align-self: start; }
+.skeleton-page .brick-skeleton[data-variant="text"] { align-self: stretch; }
+.skeleton-phone { inline-size: min(100%, 20rem); }

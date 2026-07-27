@@ -4,7 +4,34 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- `RadioGroup` with Atom-backed single-selection, read-only, form, validation,
+  orientation, RTL, three sizes, and a complete circular visual.
+
 ### Added
+
+- Added `Tabs` with Atom-backed five-part semantics, four variants, three
+  sizes, fitted and orientation-aware layout, and complete panel behavior.
+- Added `Skeleton` with four shapes, pulse/wave/static presentation,
+  content-preserving loading, multi-line text, and accessible motion handling.
+
+- Added `Breadcrumb` with Atom-backed seven-part hierarchy semantics, three
+  sizes, plain and underline link recipes, custom separators, manual Ellipsis
+  composition, responsive wrapping, and stable customization hooks.
+
+- Added `Switch` with Atom-backed binary setting behavior, three sizes,
+  canonical track/thumb styling, complete form and Field states, RTL,
+  preference modes, composition, and stable CSS hooks.
+
+- `Textarea` with `Root` and `Count` parts, native Atom-backed multi-line value,
+  Field, form, validation, reset, character-count, manual resize, and bounded
+  auto-resize behavior plus Brick recipes, sizing, geometry, and public tokens.
+- `MultiSelect` with Atom-backed value arrays, persistent multiple selection,
+  complete compound anatomy, and repeated-value native form participation.
+
+- `Select` with Atom-backed single-value selection, complete compound anatomy,
+  three Input-aligned variants and sizes, three applicable shapes, native form
+  participation, groups, scrolling, portal positioning, replaceable artwork,
+  and collision-aware Arrow.
 
 - `List` with Atom-backed native ordered and unordered semantics, three surface
   variants, three sizes, two densities, closed marker recipes, seven compound
