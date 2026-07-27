@@ -609,8 +609,15 @@ test("keeps the mobile header and Card content intentionally contained", async (
   expect(headerBox).not.toBeNull();
   expect(brandBox).not.toBeNull();
   expect(appearanceBox).not.toBeNull();
-  expect(Math.abs(brandBox!.y - appearanceBox!.y)).toBeLessThan(8);
+  const brandCenter = brandBox!.y + brandBox!.height / 2;
+  const appearanceCenter = appearanceBox!.y + appearanceBox!.height / 2;
+  expect(Math.abs(brandCenter - appearanceCenter)).toBeLessThanOrEqual(1);
+  expect(brandBox!.x).toBeGreaterThanOrEqual(headerBox!.x);
+  expect(brandBox!.y).toBeGreaterThanOrEqual(headerBox!.y);
+  expect(brandBox!.y + brandBox!.height).toBeLessThanOrEqual(headerBox!.y + headerBox!.height);
   expect(appearanceBox!.x + appearanceBox!.width).toBeLessThanOrEqual(headerBox!.x + headerBox!.width);
+  expect(appearanceBox!.y).toBeGreaterThanOrEqual(headerBox!.y);
+  expect(appearanceBox!.y + appearanceBox!.height).toBeLessThanOrEqual(headerBox!.y + headerBox!.height);
 
   const collaborators = page.locator(".project-collaborators");
   const card = page.getByRole("article", { name: "Mobile checkout refresh" });
