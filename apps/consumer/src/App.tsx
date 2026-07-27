@@ -42,6 +42,10 @@ import { Sidebar } from "@flowstack-ui/brick/sidebar";
 import { Breadcrumb } from "@flowstack-ui/brick/breadcrumb";
 import { Tabs } from "@flowstack-ui/brick/tabs";
 import { Skeleton } from "@flowstack-ui/brick/skeleton";
+import { Progress } from "@flowstack-ui/brick/progress";
+import { ProgressCircle } from "@flowstack-ui/brick/progress-circle";
+import { Collapsible } from "@flowstack-ui/brick/collapsible";
+import { Accordion } from "@flowstack-ui/brick/accordion";
 import { DropdownMenu } from "@flowstack-ui/brick/dropdown-menu";
 import { ContextMenu } from "@flowstack-ui/brick/context-menu";
 import { Menubar } from "@flowstack-ui/brick/menubar";
@@ -791,6 +795,48 @@ export function App() {
             </Tabs.Root>
           </VStack>
         </Surface>
+        <Surface as="section" bordered inset="lg" aria-labelledby="progress-proof-title">
+          <VStack gap="4">
+            <Text as="h2" id="progress-proof-title" variant="title-lg">Publishing progress</Text>
+            <Grid.Root minItemSize="lg" gap="5">
+              <Progress.Root value={68} bufferValue={84}>
+                <Progress.Label>Upload release assets</Progress.Label>
+                <Progress.Value />
+                <Progress.Track><Progress.Buffer /><Progress.Indicator /></Progress.Track>
+              </Progress.Root>
+              <HStack gap="5" wrap>
+                <ProgressCircle.Root value={3} max={5} tone="success">
+                  <ProgressCircle.Circle><ProgressCircle.Track /><ProgressCircle.Indicator /></ProgressCircle.Circle>
+                  <ProgressCircle.Value>{({ value, max }) => `${value}/${max}`}</ProgressCircle.Value>
+                  <ProgressCircle.Label>Verification steps</ProgressCircle.Label>
+                </ProgressCircle.Root>
+                <ProgressCircle.Root aria-label="Preparing package" value={null}>
+                  <ProgressCircle.Circle><ProgressCircle.Track /><ProgressCircle.Indicator /></ProgressCircle.Circle>
+                </ProgressCircle.Root>
+              </HStack>
+            </Grid.Root>
+          </VStack>
+        </Surface>
+        <Surface as="section" bordered inset="lg" aria-labelledby="collapsible-proof-title">
+          <VStack gap="3">
+            <Text as="h2" id="collapsible-proof-title" variant="title-lg">Advanced workspace details</Text>
+            <Collapsible.Root variant="outline">
+              <Collapsible.Trigger>Release notifications<Collapsible.Indicator /></Collapsible.Trigger>
+              <Collapsible.Content>
+                <Collapsible.ContentInner><Text tone="secondary">Weekly release summaries are sent every Friday.</Text></Collapsible.ContentInner>
+              </Collapsible.Content>
+            </Collapsible.Root>
+          </VStack>
+        </Surface>
+        <Surface as="section" bordered inset="lg" aria-labelledby="accordion-proof-title">
+          <VStack gap="3">
+            <Text as="h2" id="accordion-proof-title" variant="title-lg">Workspace preferences</Text>
+            <Accordion.Root variant="outline" collapsible={false} defaultValue="account">
+              <Accordion.Item value="account"><Accordion.Header><Accordion.Trigger>Account settings<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner><Text tone="secondary">Update your profile and sign-in preferences.</Text></Accordion.ContentInner></Accordion.Content></Accordion.Item>
+              <Accordion.Item value="billing"><Accordion.Header><Accordion.Trigger>Billing details<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner><Text tone="secondary">Review invoices and payment methods.</Text></Accordion.ContentInner></Accordion.Content></Accordion.Item>
+            </Accordion.Root>
+          </VStack>
+        </Surface>
         <Surface as="section" bordered inset="lg" aria-labelledby="menu-family-title">
           <VStack gap="4">
             <Text as="h2" id="menu-family-title" variant="title-lg">Workspace menus</Text>
@@ -850,9 +896,11 @@ export function App() {
                 <BottomNavigation.Label>Home</BottomNavigation.Label>
               </BottomNavigation.Item>
               <BottomNavigation.Item value="inbox">
-                <NotificationBadge count={3}>
-                  <BottomNavigation.Icon><Icon size="md"><ArrowIcon /></Icon></BottomNavigation.Icon>
-                </NotificationBadge>
+                <BottomNavigation.Icon>
+                  <NotificationBadge count={3} overlap="circular">
+                    <Icon size="md"><ArrowIcon /></Icon>
+                  </NotificationBadge>
+                </BottomNavigation.Icon>
                 <BottomNavigation.Label>Inbox</BottomNavigation.Label>
               </BottomNavigation.Item>
               <BottomNavigation.Item value="settings">

@@ -15,11 +15,11 @@ async function collect(directory, extension) {
 }
 
 const expectedRouteIds = [
-  "alert-dialog", "app-bar", "avatar", "badge", "bottom-navigation", "breadcrumb", "button", "card",
-  "checkbox", "checkbox-group", "code", "code-block", "container",
+  "accordion", "alert-dialog", "app-bar", "avatar", "badge", "bottom-navigation", "breadcrumb", "button", "card",
+  "checkbox", "checkbox-group", "code", "code-block", "collapsible", "container",
   "context-menu", "dialog", "divider", "drawer", "dropdown-menu", "field", "fieldset", "form", "grid",
   "hover-card", "icon", "icon-button", "image", "input", "textarea", "link", "list", "multi-select",
-  "menubar", "nav-list", "navigation-menu", "notification-badge", "popover", "radio-group", "scroll-area", "select", "sidebar",
+  "menubar", "nav-list", "navigation-menu", "notification-badge", "popover", "progress", "progress-circle", "radio-group", "scroll-area", "select", "sidebar",
   "skeleton", "stack", "surface", "switch", "tabs", "text", "toggle", "toggle-group", "tooltip",
   "visually-hidden",
 ];

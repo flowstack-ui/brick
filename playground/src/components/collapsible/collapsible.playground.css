@@ -1,0 +1,5 @@
+.collapsible-page .forms-cell { min-inline-size: 0; }
+.collapsible-page .brick-collapsible { max-inline-size: min(100%, 32rem); }
+.collapsible-page .forms-cell__preview > .brick-stack { inline-size: min(100%, 32rem); }
+.collapsible-plus { font-size: 1.25em; line-height: 1; }
+.collapsible-phone { inline-size: min(100%, 18rem); }

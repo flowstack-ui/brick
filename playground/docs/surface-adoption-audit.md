@@ -99,6 +99,10 @@ different owner.
 | Navigation Menu | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Navigation Menu controls, active indicator, measured Viewport, rich Content, mobile replacement, and exact composition output |
 | Bottom Navigation | overview, comparison cells, appearance scopes, customization shell, and stress panels | Bottom Navigation surface, item states, active icon indicator, safe-area geometry, Notification Badge composition, and exact output |
 | Visually Hidden | overview, comparison cells, appearance scopes, and stress panels | Atom-owned inline hiding behavior, native-host composition, and exact rendered output |
+| Progress | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Progress track, buffer, indicator, orientation geometry, and exact rendered output |
+| Progress Circle | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Progress Circle SVG track/indicator, ring geometry, centered value, and exact rendered output |
+| Collapsible | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Collapsible trigger/content recipes, measured orientation geometry, disclosure state, and exact rendered output |
+| Accordion | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Accordion item/trigger/content recipes, measured orientation geometry, disclosure relationships, and exact rendered output |
 
 ## Shared and shell audit
 

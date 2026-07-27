@@ -159,6 +159,22 @@
       "types": "./dist/skeleton.d.ts",
       "default": "./dist/skeleton.js"
     },
+    "./progress": {
+      "types": "./dist/progress.d.ts",
+      "default": "./dist/progress.js"
+    },
+    "./progress-circle": {
+      "types": "./dist/progress-circle.d.ts",
+      "default": "./dist/progress-circle.js"
+    },
+    "./collapsible": {
+      "types": "./dist/collapsible.d.ts",
+      "default": "./dist/collapsible.js"
+    },
+    "./accordion": {
+      "types": "./dist/accordion.d.ts",
+      "default": "./dist/accordion.js"
+    },
     "./input": {
       "types": "./dist/input.d.ts",
       "default": "./dist/input.js"
@@ -302,7 +318,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.13.0"
+    "@flowstack-ui/atom": "0.14.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

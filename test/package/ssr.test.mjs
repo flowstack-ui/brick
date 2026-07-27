@@ -20,6 +20,10 @@ import { Switch } from "../../dist/switch.js";
 import { Breadcrumb } from "../../dist/breadcrumb.js";
 import { Tabs } from "../../dist/tabs.js";
 import { Skeleton } from "../../dist/skeleton.js";
+import { Progress } from "../../dist/progress.js";
+import { ProgressCircle } from "../../dist/progress-circle.js";
+import { Collapsible } from "../../dist/collapsible.js";
+import { Accordion } from "../../dist/accordion.js";
 import { Input } from "../../dist/input.js";
 import { Textarea } from "../../dist/textarea.js";
 import { Text } from "../../dist/text.js";
@@ -38,6 +42,89 @@ import { CodeBlock } from "../../dist/code-block.js";
 import { Icon } from "../../dist/icon.js";
 import { Image } from "../../dist/image.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("Collapsible renders deterministic linked disclosure anatomy", () => {
+  const markup = renderToString(
+    React.createElement(
+      Collapsible.Root,
+      { defaultOpen: true, size: "lg", variant: "outline" },
+      React.createElement(Collapsible.Trigger, null, "Advanced settings", React.createElement(Collapsible.Indicator)),
+      React.createElement(Collapsible.Content, null, React.createElement(Collapsible.ContentInner, null, "Settings content")),
+    ),
+  );
+  assert.match(markup, /class="brick-collapsible"/);
+  assert.match(markup, /data-size="lg"/);
+  assert.match(markup, /data-variant="outline"/);
+  assert.match(markup, /aria-expanded="true"/);
+  assert.match(markup, /aria-controls="[^"]+-content"/);
+  assert.match(markup, /role="region"/);
+  assert.match(markup, /aria-labelledby="[^"]+-trigger"/);
+  assert.match(markup, /class="brick-collapsible-content-inner"/);
+});
+
+test("Accordion renders deterministic linked disclosure-group anatomy", () => {
+  const markup = renderToString(
+    React.createElement(Accordion.Root, { defaultValue: "account", orientation: "horizontal", size: "lg", variant: "outline" },
+      React.createElement(Accordion.Item, { value: "account" },
+        React.createElement(Accordion.Header, { as: "h3" }, React.createElement(Accordion.Trigger, null, "Account", React.createElement(Accordion.Indicator))),
+        React.createElement(Accordion.Content, null, React.createElement(Accordion.ContentInner, null, "Account settings")),
+      ),
+    ),
+  );
+  assert.match(markup, /class="brick-accordion"/);
+  assert.match(markup, /data-orientation="horizontal"/);
+  assert.match(markup, /data-size="lg"/);
+  assert.match(markup, /data-variant="outline"/);
+  assert.match(markup, /aria-expanded="true"/);
+  assert.match(markup, /role="region"/);
+  assert.match(markup, /class="brick-accordion-content-inner"/);
+});
+
+test("Progress families render deterministic accessible server anatomy", () => {
+  const linear = renderToString(
+    React.createElement(
+      Progress.Root,
+      { value: 40, bufferValue: 70, orientation: "vertical", size: "lg", shape: "pill", tone: "info" },
+      React.createElement(Progress.Label, null, "Upload files"),
+      React.createElement(Progress.Value, null),
+      React.createElement(
+        Progress.Track,
+        null,
+        React.createElement(Progress.Buffer, null),
+        React.createElement(Progress.Indicator, null),
+      ),
+    ),
+  );
+  assert.match(linear, /role="progressbar"/);
+  assert.match(linear, /aria-valuenow="40"/);
+  assert.doesNotMatch(linear, /aria-orientation=/);
+  assert.match(linear, /data-orientation="vertical"/);
+  assert.match(linear, /class="brick-progress"/);
+  assert.match(linear, /data-size="lg"/);
+  assert.match(linear, /--brick-progress-buffer-percent:70/);
+  assert.match(linear, /--brick-progress-percent:40/);
+
+  const circular = renderToString(
+    React.createElement(
+      ProgressCircle.Root,
+      { value: 75, size: "xl", thickness: "thick", cap: "butt", tone: "success" },
+      React.createElement(
+        ProgressCircle.Circle,
+        null,
+        React.createElement(ProgressCircle.Track, null),
+        React.createElement(ProgressCircle.Indicator, null),
+      ),
+      React.createElement(ProgressCircle.Value, null),
+      React.createElement(ProgressCircle.Label, null, "Export report"),
+    ),
+  );
+  assert.match(circular, /class="brick-progress-circle"/);
+  assert.match(circular, /aria-valuenow="75"/);
+  assert.match(circular, /viewBox="0 0 100 100"/);
+  assert.match(circular, /stroke-dasharray="282\.743/);
+  assert.match(circular, /data-percent="75"/);
+  assert.match(circular, />75%<\/span>/);
+});
 
 test("Sidebar renders deterministic app-shell anatomy", () => {
   const markup = renderToString(React.createElement(Sidebar.Root, { defaultState: "rail", collapsedState: "rail", side: "right", variant: "floating" }, React.createElement(Sidebar.Panel, { "aria-label": "Workspace" }, React.createElement(Sidebar.Content, null, "Navigation")), React.createElement(Sidebar.Main, null, "Main")));

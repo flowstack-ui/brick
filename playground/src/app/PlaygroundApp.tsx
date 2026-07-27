@@ -121,6 +121,10 @@ import { NavigationMenuPage, navigationMenuScenarios } from "../components/navig
 import { BottomNavigationPage, bottomNavigationScenarios } from "../components/bottom-navigation/BottomNavigationPage.js";
 import { VisuallyHiddenPage, visuallyHiddenScenarios } from "../components/visually-hidden/VisuallyHiddenPage.js";
 import { SkeletonPage, skeletonScenarios } from "../components/skeleton/SkeletonPage.js";
+import { ProgressPage, progressScenarios } from "../components/progress/ProgressPage.js";
+import { ProgressCirclePage, progressCircleScenarios } from "../components/progress-circle/ProgressCirclePage.js";
+import { CollapsiblePage, collapsibleScenarios } from "../components/collapsible/CollapsiblePage.js";
+import { AccordionPage, accordionScenarios } from "../components/accordion/AccordionPage.js";
 import { PlaygroundShell } from "../shell/PlaygroundShell.js";
 
 export function PlaygroundApp() {
@@ -466,6 +470,22 @@ export function PlaygroundApp() {
 
   if (entry.id === "skeleton") {
     return <PlaygroundShell entry={entry} scenarios={skeletonScenarios}><SkeletonPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "progress") {
+    return <PlaygroundShell entry={entry} scenarios={progressScenarios}><ProgressPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "progress-circle") {
+    return <PlaygroundShell entry={entry} scenarios={progressCircleScenarios}><ProgressCirclePage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "collapsible") {
+    return <PlaygroundShell entry={entry} scenarios={collapsibleScenarios}><CollapsiblePage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "accordion") {
+    return <PlaygroundShell entry={entry} scenarios={accordionScenarios}><AccordionPage /></PlaygroundShell>;
   }
 
   return (

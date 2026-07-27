@@ -1,0 +1,165 @@
+@layer brick.components {
+  .brick-collapsible {
+    --brick-collapsible-background: transparent;
+    --brick-collapsible-border-color: transparent;
+    --brick-collapsible-trigger-background: transparent;
+    --brick-collapsible-trigger-hover-background: var(--brick-color-surface-subtle);
+    --brick-collapsible-trigger-open-background: var(--brick-color-surface-subtle);
+    --brick-collapsible-foreground: var(--brick-color-text-primary);
+    --brick-collapsible-content-foreground: var(--brick-color-text-secondary);
+    --brick-collapsible-focus-ring: var(--brick-color-focus-ring);
+    --brick-collapsible-radius: var(--brick-radius-control);
+    --brick-collapsible-trigger-height: 2.75rem;
+    --brick-collapsible-trigger-padding-inline: var(--brick-space-3);
+    --brick-collapsible-trigger-gap: var(--brick-space-2);
+    --brick-collapsible-content-padding-block: var(--brick-space-3);
+    --brick-collapsible-content-padding-inline: var(--brick-space-3);
+    --brick-collapsible-indicator-size: 1rem;
+    --brick-collapsible-font-family: var(--brick-typography-control-md-font-family);
+    --brick-collapsible-font-size: var(--brick-typography-control-md-font-size);
+    --brick-collapsible-font-weight: var(--brick-typography-control-md-font-weight);
+    --brick-collapsible-line-height: var(--brick-typography-control-md-line-height);
+
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-inline-size: 0;
+    overflow: clip;
+    border: var(--brick-border-width) solid var(--brick-collapsible-border-color);
+    border-radius: var(--brick-collapsible-radius);
+    background: var(--brick-collapsible-background);
+  }
+
+  .brick-collapsible[data-variant="soft"] {
+    --brick-collapsible-background: var(--brick-color-surface-subtle);
+    --brick-collapsible-trigger-hover-background: var(--brick-color-surface-raised);
+    --brick-collapsible-trigger-open-background: var(--brick-color-surface-raised);
+  }
+
+  .brick-collapsible[data-variant="outline"] {
+    --brick-collapsible-border-color: var(--brick-color-border-default);
+  }
+
+  .brick-collapsible[data-size="sm"] {
+    --brick-collapsible-trigger-height: 2.25rem;
+    --brick-collapsible-trigger-padding-inline: var(--brick-space-2);
+    --brick-collapsible-content-padding-block: var(--brick-space-2);
+    --brick-collapsible-content-padding-inline: var(--brick-space-2);
+    --brick-collapsible-indicator-size: 0.875rem;
+    --brick-collapsible-font-family: var(--brick-typography-control-sm-font-family);
+    --brick-collapsible-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-collapsible-font-weight: var(--brick-typography-control-sm-font-weight);
+    --brick-collapsible-line-height: var(--brick-typography-control-sm-line-height);
+  }
+
+  .brick-collapsible[data-size="lg"] {
+    --brick-collapsible-trigger-height: 3.25rem;
+    --brick-collapsible-trigger-padding-inline: var(--brick-space-4);
+    --brick-collapsible-content-padding-block: var(--brick-space-4);
+    --brick-collapsible-content-padding-inline: var(--brick-space-4);
+    --brick-collapsible-indicator-size: 1.125rem;
+    --brick-collapsible-font-family: var(--brick-typography-control-lg-font-family);
+    --brick-collapsible-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-collapsible-font-weight: var(--brick-typography-control-lg-font-weight);
+    --brick-collapsible-line-height: var(--brick-typography-control-lg-line-height);
+  }
+
+  .brick-collapsible[data-orientation="horizontal"] {
+    display: flex;
+    inline-size: max-content;
+    max-inline-size: 100%;
+    align-items: stretch;
+    overflow-x: auto;
+    overflow-y: clip;
+  }
+
+  .brick-collapsible[data-orientation="horizontal"] .brick-collapsible-trigger {
+    inline-size: auto;
+    flex: 0 0 auto;
+  }
+
+  .brick-collapsible-trigger {
+    display: flex;
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-inline-size: 0;
+    min-block-size: var(--brick-collapsible-trigger-height);
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--brick-collapsible-trigger-gap);
+    padding-block: var(--brick-space-2);
+    padding-inline: var(--brick-collapsible-trigger-padding-inline);
+    border: 0;
+    border-radius: calc(var(--brick-collapsible-radius) - var(--brick-border-width));
+    background: var(--brick-collapsible-trigger-background);
+    color: var(--brick-collapsible-foreground);
+    font-family: var(--brick-collapsible-font-family);
+    font-size: var(--brick-collapsible-font-size);
+    font-weight: var(--brick-collapsible-font-weight);
+    line-height: var(--brick-collapsible-line-height);
+    text-align: start;
+    white-space: normal;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .brick-collapsible-trigger:hover:not(:disabled, [data-disabled]) { background: var(--brick-collapsible-trigger-hover-background); }
+  .brick-collapsible-trigger[data-state="open"] { background: var(--brick-collapsible-trigger-open-background); }
+  .brick-collapsible-trigger:focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-collapsible-focus-ring); outline-offset: var(--brick-border-focus-offset); }
+  .brick-collapsible-trigger:is(:disabled, [data-disabled]) { opacity: 0.55; cursor: not-allowed; }
+
+  .brick-collapsible-indicator {
+    display: inline-flex;
+    inline-size: var(--brick-collapsible-indicator-size);
+    block-size: var(--brick-collapsible-indicator-size);
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    margin-inline-start: auto;
+    color: currentColor;
+    transform: rotate(0deg);
+    transform-origin: center;
+    transition: transform var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+  }
+  .brick-collapsible-indicator > svg { display: block; inline-size: 100%; block-size: 100%; }
+  .brick-collapsible-trigger[data-state="open"] .brick-collapsible-indicator { transform: rotate(90deg); }
+  [dir="rtl"] .brick-collapsible-trigger[data-state="closed"] .brick-collapsible-indicator { transform: scaleX(-1); }
+  [dir="rtl"] .brick-collapsible-trigger[data-state="open"] .brick-collapsible-indicator { transform: rotate(90deg); }
+
+  .brick-collapsible-content {
+    box-sizing: border-box;
+    min-inline-size: 0;
+    overflow: hidden;
+    color: var(--brick-collapsible-content-foreground);
+  }
+  .brick-collapsible-content[data-state="open"] { animation: brick-collapsible-open var(--brick-motion-duration-fast) var(--brick-motion-easing-decelerate); }
+  .brick-collapsible-content[data-state="closed"] { animation: brick-collapsible-close var(--brick-motion-duration-fast) var(--brick-motion-easing-accelerate); }
+  .brick-collapsible-content-inner { box-sizing: border-box; min-inline-size: 0; padding-block: var(--brick-collapsible-content-padding-block); padding-inline: var(--brick-collapsible-content-padding-inline); }
+
+  .brick-collapsible[data-orientation="horizontal"] .brick-collapsible-content {
+    flex: 0 0 auto;
+    min-block-size: var(--brick-collapsible-trigger-height);
+  }
+  .brick-collapsible[data-orientation="horizontal"] .brick-collapsible-content[data-state="open"] { animation-name: brick-collapsible-open-horizontal; }
+  .brick-collapsible[data-orientation="horizontal"] .brick-collapsible-content[data-state="closed"] { animation-name: brick-collapsible-close-horizontal; }
+  .brick-collapsible[data-orientation="horizontal"] .brick-collapsible-content-inner {
+    inline-size: var(--content-width);
+    min-block-size: var(--brick-collapsible-trigger-height);
+  }
+
+  @keyframes brick-collapsible-open { from { block-size: 0; } to { block-size: var(--content-height); } }
+  @keyframes brick-collapsible-close { from { block-size: var(--content-height); } to { block-size: 0; } }
+  @keyframes brick-collapsible-open-horizontal { from { inline-size: 0; } to { inline-size: var(--content-width); } }
+  @keyframes brick-collapsible-close-horizontal { from { inline-size: var(--content-width); } to { inline-size: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brick-collapsible-indicator { transition: none; }
+    .brick-collapsible-content { animation: none !important; }
+  }
+
+  @media (forced-colors: active) {
+    .brick-collapsible { --brick-collapsible-border-color: CanvasText; forced-color-adjust: auto; }
+    .brick-collapsible[data-variant="plain"], .brick-collapsible[data-variant="soft"] { --brick-collapsible-border-color: transparent; }
+    .brick-collapsible-trigger { color: ButtonText; }
+    .brick-collapsible-trigger:focus-visible { outline-color: Highlight; }
+  }
+}

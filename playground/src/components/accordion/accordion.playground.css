@@ -1,0 +1,4 @@
+.accordion-page .forms-cell { min-inline-size: 0; }
+.accordion-page .brick-accordion { max-inline-size: min(100%, 36rem); }
+.accordion-page .forms-cell__preview > .brick-stack { inline-size: min(100%, 36rem); }
+.accordion-phone { inline-size: min(100%, 18rem); }

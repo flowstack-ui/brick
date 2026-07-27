@@ -79,13 +79,13 @@ Public variables are `--brick-bottom-navigation-background`, `--brick-bottom-nav
 
 ## Customization
 
-Set documented variables on Root for local customization. Keep every coordinated value together and verify contrast in both appearances. Compose NotificationBadge around Icon when a destination needs a count; Bottom Navigation does not duplicate badge behavior.
+Set documented variables on Root for local customization. Keep every coordinated value together and verify contrast in both appearances. Compose NotificationBadge inside `BottomNavigation.Icon` around the Brick Icon child when a destination needs a count; Bottom Navigation does not duplicate badge behavior.
 
 ## Responsive behavior
 
-Full layout fills its containing width. Floating layout remains centered, capped to the available width, and keeps an outer gutter. Equal arrangement divides available space; centered arrangement keeps closed target widths. Labels wrap rather than truncate.
+Full layout fills its containing width. Floating layout remains centered, capped to the available width, and keeps an outer gutter. Equal arrangement divides available space; centered arrangement keeps closed target widths. Each size keeps a stable base height across widths and label policies. Visible labels remain one line and truncate visually when necessary while their complete authored text remains the accessible name.
 
-Static remains in flow; sticky remains in flow at the logical bottom; absolute and fixed overlay their containing block or viewport. The application must reserve content space for overlays using the resolved block-size variable. Safe-area padding is internal for full bars; positioned floating bars use the bottom inset as an outer offset.
+Static remains in flow and does not consume viewport safe area. Sticky remains in flow at the logical bottom; absolute and fixed overlay their containing block or viewport. The application must reserve content space for overlays using the resolved block-size variable. Full positioned bars use only the stable `safe-area-max-inset-*` values so mobile browser chrome cannot move their contents while scrolling; positioned floating bars use the maximum bottom inset as an outer offset. Browsers without maximum-inset support resolve this automatic reserve to zero, so an application targeting those browsers should supply its known inset through its own shell spacing.
 
 ## Accessibility
 
@@ -93,7 +93,7 @@ Give Root a concise unique `ariaLabel` when multiple navigation landmarks exist.
 
 ## Composition, native props, and refs
 
-Root and Item preserve Atom native props, handlers, refs, custom slots, and `render`/`asChild`. Icon and Label preserve span props, refs, classes, styles, and composition. Router adapters belong on Item. Bottom Navigation does not own route matching, page padding, keyboard avoidance, scroll-driven hiding, or responsive replacement with Sidebar.
+Root and Item preserve Atom native props, handlers, refs, custom slots, and `render`/`asChild`. Icon and Label preserve span props, refs, classes, styles, and composition. Place NotificationBadge inside `BottomNavigation.Icon` around its Brick Icon child so the badge anchors to the glyph instead of the wider selection slot. Router adapters belong on Item. Bottom Navigation does not own route matching, page padding, keyboard avoidance, scroll-driven hiding, or responsive replacement with Sidebar.
 
 ## Examples
 

@@ -12,6 +12,15 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
+test("composes Collapsible through its public subpath", async ({ page }) => {
+  const trigger = page.getByRole("button", { name: "Release notifications" });
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await trigger.click();
+  const region = page.getByRole("region", { name: "Release notifications" });
+  await expect(region).toContainText("Weekly release summaries");
+  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+});
+
 test("composes the complete menu family through public subpaths", async ({ page }) => {
   const navigation = page.getByRole("navigation", { name: "Workspace destinations", exact: true });
   await expect(navigation).toHaveClass(/brick-navigation-menu/);
@@ -153,6 +162,17 @@ test("renders and operates Brick through its public package", async ({ page }) =
   await appearanceToggle.click();
   await expect(page.locator("html")).toHaveAttribute("data-brick-appearance", "light");
   await expect(appearanceToggle).toHaveAttribute("aria-pressed", "false");
+});
+
+test("composes Accordion as a linked consumer disclosure group", async ({ page }) => {
+  const account = page.getByRole("button", { name: "Account settings" });
+  await expect(account).toHaveAttribute("aria-expanded", "true");
+  await expect(account).toHaveAttribute("aria-disabled", "true");
+  const billing = page.getByRole("button", { name: "Billing details" });
+  await billing.click();
+  await expect(account).toHaveAttribute("aria-expanded", "false");
+  await expect(billing).toHaveAttribute("aria-expanded", "true");
+  await expect(page.getByRole("region", { name: "Billing details" })).toContainText("Review invoices");
 });
 
 test("composes Scroll Area as a constrained native activity region", async ({ page }) => {

@@ -1,0 +1,8 @@
+.progress-page .brick-progress { inline-size: 100%; }
+.progress-page .brick-progress[data-orientation="vertical"] { inline-size: fit-content; }
+.progress-page .forms-cell__preview { inline-size: 100%; }
+.progress-grid--five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.progress-output-grid { gap: var(--brick-space-4); }
+.progress-phone { inline-size: min(100%, 18rem); }
+@media (max-width: 58rem) { .progress-grid--five { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 34rem) { .progress-grid--five, .progress-output-grid { grid-template-columns: 1fr; } }
