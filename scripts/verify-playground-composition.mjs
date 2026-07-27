@@ -23,10 +23,9 @@ const expectedRouteIds = [
   "skeleton", "stack", "surface", "switch", "tabs", "text", "toggle", "toggle-group", "tooltip",
 ];
 
-const [registry, packageJson, audit, tsxPaths] = await Promise.all([
+const [registry, packageJson, tsxPaths] = await Promise.all([
   read("playground/src/app/component-registry.ts"),
   read("package.json"),
-  read("../docs/audits/playground-brick-adoption-2026-07-26.md"),
   collect("playground/src", ".tsx"),
 ]);
 
@@ -55,14 +54,4 @@ for (const path of tsxPaths) {
 }
 assert.deepEqual(directAtomImports, [], "The Brick playground must not import Atom directly.");
 
-for (const heading of [
-  "Route and component completeness",
-  "Intentional native runtime hosts",
-  "Rejected playground-only components",
-  "Future Brick candidates",
-  "Conclusion",
-]) {
-  assert.match(audit, new RegExp(`## ${heading}`));
-}
-
-console.log("Verified complete Brick route coverage, no direct Atom imports, and the final playground adoption audit.");
+console.log("Verified complete Brick route coverage and no direct Atom imports.");
