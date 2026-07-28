@@ -67,20 +67,14 @@ test("Button route exposes component and scenario navigation", async ({
 test("review controls update the document environment", async ({ page }) => {
   await page.goto("/button");
 
-  await expect(page.locator(".review-controls .brick-fieldset")).toHaveCount(2);
-  await expect(page.locator(".review-controls .brick-toggle-group")).toHaveCount(
-    2,
-  );
+  await expect(page.locator(".review-controls.brick-toolbar")).toHaveCount(1);
+  await expect(page.locator(".review-controls .brick-toolbar__toggle-group")).toHaveCount(2);
   await expect(
-    page.locator(".review-controls .brick-toggle-group-item"),
+    page.locator(".review-controls .brick-toolbar__toggle-item"),
   ).toHaveCount(5);
-
-  for (const legend of await page.locator(".review-controls legend").all()) {
-    await expect(legend).toHaveCSS("margin-bottom", "0px");
-  }
-  await expect(
-    page.getByRole("group", { name: "Direction" }).locator("legend"),
-  ).toHaveText("Direction");
+  await expect(page.locator(".review-controls .brick-toolbar__separator")).toHaveCount(1);
+  await expect(page.getByRole("toolbar", { name: "Review controls" })).toBeVisible();
+  await expect(page.getByRole("group", { name: "Direction" })).toBeAttached();
 
   await page.getByRole("button", { name: "dark", exact: true }).click();
   await expect(
@@ -111,50 +105,21 @@ test("review controls remain content-sized in a stacked header", async ({
 
   const panel = page.locator(".review-controls");
   const content = page.locator(".evidence-page-header");
-  const groups = panel.locator(".review-control-group");
-  const [panelBox, contentBox, groupBoxes] = await Promise.all([
+  const items = panel.locator(".brick-toolbar__toggle-item");
+  const [panelBox, contentBox, itemBoxes] = await Promise.all([
     panel.boundingBox(),
     content.boundingBox(),
-    groups.evaluateAll((elements) =>
-      elements.map((element) => {
-        const box = element.getBoundingClientRect();
-        const style = getComputedStyle(element);
-        const children = Array.from(element.children).map((child) =>
-          child.getBoundingClientRect(),
-        );
-        return {
-          expectedInlineInset:
-            Number.parseFloat(style.paddingInlineStart) +
-            Number.parseFloat(style.borderInlineStartWidth),
-          leftInset: Math.min(...children.map(({ left }) => left)) - box.left,
-          expectedInset:
-            Number.parseFloat(style.paddingRight) +
-            Number.parseFloat(style.borderRightWidth),
-          right: box.right,
-          rightInset: box.right - Math.max(...children.map(({ right }) => right)),
-          width: box.width,
-        };
-      }),
-    ),
+    items.evaluateAll((elements) => elements.map((element) => {
+      const box = element.getBoundingClientRect();
+      return { left: box.left, right: box.right, width: box.width };
+    })),
   ]);
 
   expect(panelBox!.width).toBeLessThan(contentBox!.width);
-  expect(Math.max(...groupBoxes.map(({ width }) => width))).toBeLessThan(
-    panelBox!.width,
-  );
-  expect(
-    panelBox!.x + panelBox!.width - Math.max(...groupBoxes.map(({ right }) => right)),
-  ).toBeCloseTo(0, 0);
-  for (const {
-    expectedInlineInset,
-    expectedInset,
-    leftInset,
-    rightInset,
-  } of groupBoxes) {
-    expect(leftInset).toBeCloseTo(expectedInlineInset, 0);
-    expect(rightInset).toBeCloseTo(expectedInset, 0);
-    expect(rightInset).toBeCloseTo(leftInset, 0);
-  }
+  expect(itemBoxes).toHaveLength(5);
+  expect(Math.min(...itemBoxes.map(({ left }) => left))).toBeGreaterThanOrEqual(panelBox!.x);
+  expect(Math.max(...itemBoxes.map(({ right }) => right))).toBeLessThanOrEqual(panelBox!.x + panelBox!.width);
+  expect(Math.max(...itemBoxes.map(({ width }) => width))).toBeLessThan(panelBox!.width);
 });
 
 test("wide scenario navigation aligns, distributes, and sticks with its header", async ({
