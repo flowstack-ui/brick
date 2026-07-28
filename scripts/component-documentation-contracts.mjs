@@ -2056,3 +2056,12 @@ componentDocumentationContracts["multi-select"] = {
     token.replace("--brick-select-", "--brick-multi-select-"),
   ),
 };
+
+componentDocumentationContracts.combobox = {
+  source: "src/components/combobox/Combobox.tsx", exportSource: "src/components/combobox/Combobox.tsx", css: "src/components/combobox/combobox.css",
+  exports: ["Combobox","ComboboxRoot","ComboboxLabel","ComboboxControl","ComboboxInput","ComboboxClear","ComboboxIndicator","ComboboxPortal","ComboboxContent","ComboboxListbox","ComboboxGroup","ComboboxItem","ComboboxEmpty","ComboboxLoading","ComboboxRootProps","ComboboxLabelProps","ComboboxControlProps","ComboboxInputProps","ComboboxClearProps","ComboboxIndicatorProps","ComboboxPortalProps","ComboboxContentProps","ComboboxListboxProps","ComboboxGroupProps","ComboboxItemProps","ComboboxEmptyProps","ComboboxLoadingProps","ComboboxVariant","ComboboxSize","ComboboxShape"],
+  unions: { ComboboxVariant: ["outline","soft","underline"], ComboboxSize: ["sm","md","lg"], ComboboxShape: ["sharp","rounded","pill"] },
+  defaults: { fullWidth: true, shape: "rounded", size: "md", variant: "outline" },
+  dataAttributes: ["data-full-width","data-shape","data-size","data-slot","data-variant"],
+  publicTokens: ["--brick-combobox-min-block-size","--brick-combobox-padding-inline","--brick-combobox-radius","--brick-combobox-background","--brick-combobox-border","--brick-combobox-foreground","--brick-combobox-placeholder","--brick-combobox-focus","--brick-combobox-invalid","--brick-combobox-popup-radius"],
+};

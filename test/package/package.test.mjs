@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.18.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.18.1");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -248,6 +248,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/select.d.ts",
       default: "./dist/select.js",
     },
+    "./combobox": {
+      types: "./dist/combobox.d.ts",
+      default: "./dist/combobox.js",
+    },
     "./multi-select": {
       types: "./dist/multi-select.d.ts",
       default: "./dist/multi-select.js",
@@ -326,6 +330,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const divider = await import(new URL("../../dist/divider.js", import.meta.url));
   const scrollArea = await import(new URL("../../dist/scroll-area.js", import.meta.url));
   const select = await import(new URL("../../dist/select.js", import.meta.url));
+  const combobox = await import(new URL("../../dist/combobox.js", import.meta.url));
   const multiSelect = await import(new URL("../../dist/multi-select.js", import.meta.url));
   const navList = await import(new URL("../../dist/nav-list.js", import.meta.url));
   const sidebar = await import(new URL("../../dist/sidebar.js", import.meta.url));
@@ -399,6 +404,20 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "CollapsibleIndicator",
       "CollapsibleRoot",
       "CollapsibleTrigger",
+      "Combobox",
+      "ComboboxClear",
+      "ComboboxContent",
+      "ComboboxControl",
+      "ComboboxEmpty",
+      "ComboboxGroup",
+      "ComboboxIndicator",
+      "ComboboxInput",
+      "ComboboxItem",
+      "ComboboxLabel",
+      "ComboboxListbox",
+      "ComboboxLoading",
+      "ComboboxPortal",
+      "ComboboxRoot",
       "Container",
       "ContextMenu",
       "ContextMenuArrow",
@@ -825,6 +844,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(select.SelectRoot, brick.Select.Root);
   assert.equal(select.SelectContent, brick.Select.Content);
   assert.equal(select.SelectItem, brick.Select.Item);
+  assert.equal(combobox.Combobox, brick.Combobox);
+  assert.equal(combobox.ComboboxRoot, brick.Combobox.Root);
+  assert.equal(combobox.ComboboxContent, brick.Combobox.Content);
+  assert.equal(combobox.ComboboxItem, brick.Combobox.Item);
   assert.equal(multiSelect.MultiSelect, brick.MultiSelect);
   assert.equal(multiSelect.MultiSelectRoot, brick.MultiSelect.Root);
   assert.equal(multiSelect.MultiSelectContent, brick.MultiSelect.Content);

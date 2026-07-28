@@ -41,6 +41,7 @@ test("the consumer uses public package exports without source aliases", async ()
   assert.match(source, /@flowstack-ui\/brick\/input/);
   assert.match(source, /@flowstack-ui\/brick\/textarea/);
   assert.match(source, /@flowstack-ui\/brick\/select/);
+  assert.match(source, /@flowstack-ui\/brick\/combobox/);
   assert.match(source, /@flowstack-ui\/brick\/multi-select/);
   assert.match(source, /@flowstack-ui\/brick\/text/);
   assert.match(source, /@flowstack-ui\/brick\/link/);

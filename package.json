@@ -203,6 +203,10 @@
       "types": "./dist/multi-select.d.ts",
       "default": "./dist/multi-select.js"
     },
+    "./combobox": {
+      "types": "./dist/combobox.d.ts",
+      "default": "./dist/combobox.js"
+    },
     "./text": {
       "types": "./dist/text.d.ts",
       "default": "./dist/text.js"
@@ -354,7 +358,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.18.0"
+    "@flowstack-ui/atom": "0.18.1"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

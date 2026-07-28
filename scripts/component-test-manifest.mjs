@@ -24,6 +24,7 @@ export const componentIds = [
   "progress-circle",
   "toast",
   "collapsible",
+  "combobox",
   "accordion",
   "code",
   "code-block",

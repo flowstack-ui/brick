@@ -394,6 +394,13 @@ export const componentEntries = [
   },
   {
     category: "Forms",
+    description: "Searchable single-value choice with optional free text.",
+    id: "combobox",
+    route: "/combobox",
+    title: "Combobox",
+  },
+  {
+    category: "Forms",
     description: "Compact selection of several predefined values.",
     id: "multi-select",
     route: "/multi-select",

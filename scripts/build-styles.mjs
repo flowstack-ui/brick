@@ -80,6 +80,7 @@ await writeFile(
     '@import "../../src/components/textarea/textarea.css";',
     '@import "../../src/components/select/select.css";',
     '@import "../../src/components/multi-select/multi-select.css";',
+    '@import "../../src/components/combobox/combobox.css";',
     '@import "../../src/components/text/text.css";',
     '@import "../../src/components/link/link.css";',
     '@import "../../src/components/list/list.css";',

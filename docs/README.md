@@ -52,6 +52,7 @@ This directory is the public documentation authority for
 - [Switch](components/switch/README.md) — immediate binary settings
   entry with manual or bounded automatic sizing and optional character count
 - [Select](components/select/README.md) — finished single-value select-only choice
+- [Combobox](components/combobox/README.md) — searchable single-value choice with optional free text
 - [Multi Select](components/multi-select/README.md) — finished multiple-value
   choice control with repeated-value native form participation
 - [Checkbox](components/checkbox/README.md) — independent checked or mixed
