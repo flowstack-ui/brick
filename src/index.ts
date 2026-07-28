@@ -264,6 +264,7 @@ export {
 } from "./components/skeleton/index.js";
 export * from "./components/progress/index.js";
 export * from "./components/progress-circle/index.js";
+export * from "./components/toast/index.js";
 export * from "./components/collapsible/index.js";
 export * from "./components/accordion/index.js";
 export {

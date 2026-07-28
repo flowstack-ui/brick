@@ -52,6 +52,7 @@ import { Menubar } from "@flowstack-ui/brick/menubar";
 import { NavigationMenu } from "@flowstack-ui/brick/navigation-menu";
 import { BottomNavigation } from "@flowstack-ui/brick/bottom-navigation";
 import { VisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
+import { Toaster, toast } from "@flowstack-ui/brick/toast";
 
 type Appearance = "light" | "dark";
 
@@ -120,6 +121,7 @@ export function App() {
 
   return (
     <Tooltip.Provider>
+    <Toaster />
     <div id="top">
       <AppBar.Root aria-label="Primary" blurred className="site-header" position="sticky">
         <AppBar.Toolbar className="site-header-toolbar" density="compact">
@@ -230,7 +232,7 @@ export function App() {
                       <Button tone="neutral" variant="outline">Cancel</Button>
                     </Dialog.Close>
                     <Dialog.Close asChild>
-                      <Button onPress={() => setPublishCount((count) => count + 1)}>
+                      <Button onPress={() => { setPublishCount((count) => count + 1); toast.success("Project published", { description: "The release is available to workspace reviewers." }); }}>
                         Publish now
                       </Button>
                     </Dialog.Close>

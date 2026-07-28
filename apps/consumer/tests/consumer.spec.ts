@@ -151,6 +151,7 @@ test("renders and operates Brick through its public package", async ({ page }) =
   );
   await page.getByRole("button", { name: "Publish now" }).click();
   await expect(page.getByText("Published 1 time.")).toBeVisible();
+  await expect(page.getByRole("region", { name: "Notifications (F8)" }).getByText("Project published")).toBeVisible();
   await expect(dialog).toBeHidden();
   await expect(publishTrigger).toBeFocused();
 

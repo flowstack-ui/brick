@@ -22,6 +22,7 @@ import { Tabs } from "../../dist/tabs.js";
 import { Skeleton } from "../../dist/skeleton.js";
 import { Progress } from "../../dist/progress.js";
 import { ProgressCircle } from "../../dist/progress-circle.js";
+import { Toast, Toaster } from "../../dist/toast.js";
 import { Collapsible } from "../../dist/collapsible.js";
 import { Accordion } from "../../dist/accordion.js";
 import { Input } from "../../dist/input.js";
@@ -124,6 +125,26 @@ test("Progress families render deterministic accessible server anatomy", () => {
   assert.match(circular, /stroke-dasharray="282\.743/);
   assert.match(circular, /data-percent="75"/);
   assert.match(circular, />75%<\/span>/);
+});
+
+test("Toast imports server-safely and declarative parts render deterministic anatomy", () => {
+  assert.equal(renderToString(React.createElement(Toaster)), "");
+  const markup = renderToString(
+    React.createElement(Toast.Root, { forceMount: true, type: "success", closeButton: true },
+      React.createElement(Toast.Icon, { type: "success" }),
+      React.createElement(Toast.Content, null,
+        React.createElement(Toast.Title, null, "Workspace saved"),
+        React.createElement(Toast.Description, null, "Available in history"),
+      ),
+      React.createElement(Toast.Close),
+    ),
+  );
+  assert.match(markup, /class="brick-toast"/);
+  assert.match(markup, /data-type="success"/);
+  assert.match(markup, /data-slot="toast-icon"/);
+  assert.match(markup, /Workspace saved/);
+  assert.match(markup, /Dismiss notification/);
+  assert.doesNotMatch(markup, /aria-live=/);
 });
 
 test("Sidebar renders deterministic app-shell anatomy", () => {

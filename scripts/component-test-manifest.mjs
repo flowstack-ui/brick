@@ -20,6 +20,7 @@ export const componentIds = [
   "skeleton",
   "progress",
   "progress-circle",
+  "toast",
   "collapsible",
   "accordion",
   "code",

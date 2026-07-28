@@ -69,6 +69,8 @@ This directory is the public documentation authority for
   indeterminate, and buffered task progress
 - [Progress Circle](components/progress-circle/README.md) — compact circular
   determinate and indeterminate task progress
+- [Toast](components/toast/README.md) — temporary non-blocking application
+  outcomes and process updates
 
 ### Contextual overlays
 

@@ -70,6 +70,7 @@ const componentSymbols = {
   skeleton: "Skeleton",
   progress: "Progress",
   "progress-circle": "ProgressCircle",
+  toast: "Toast",
   collapsible: "Collapsible",
   accordion: "Accordion",
   code: "Code",

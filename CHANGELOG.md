@@ -4,6 +4,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Added
+
+- Added `Toast` with an imperative helper, public compound parts, six semantic types and logical positions, responsive/full widths, separated/overlap stacking, optional swipe, and complete accessible interaction.
+
 - Added `Accordion` with single and multiple selection, two-axis layout and
   motion, locked-open semantics, optional landmarks, direction-aware keyboard
   navigation, responsive overflow, and public customization hooks.

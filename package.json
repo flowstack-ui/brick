@@ -167,6 +167,10 @@
       "types": "./dist/progress-circle.d.ts",
       "default": "./dist/progress-circle.js"
     },
+    "./toast": {
+      "types": "./dist/toast.d.ts",
+      "default": "./dist/toast.js"
+    },
     "./collapsible": {
       "types": "./dist/collapsible.d.ts",
       "default": "./dist/collapsible.js"
@@ -318,7 +322,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.14.0"
+    "@flowstack-ui/atom": "0.15.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

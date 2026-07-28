@@ -218,6 +218,13 @@ export const componentEntries = [
     title: "Progress Circle",
   },
   {
+    category: "Feedback",
+    description: "Temporary non-blocking application outcomes and process updates.",
+    id: "toast",
+    route: "/toast",
+    title: "Toast",
+  },
+  {
     category: "Data display",
     description: "One independent in-flow disclosure with finished motion and surfaces.",
     id: "collapsible",
