@@ -97,6 +97,7 @@ const componentSymbols = {
   "multi-select": "MultiSelect",
   link: "Link",
   list: "List",
+  table: "Table",
   "notification-badge": "NotificationBadge",
   popover: "Popover",
   stack: "Stack",

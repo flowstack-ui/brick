@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type CSSProperties, type FormEvent } from "react";
 import { AlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { AppBar } from "@flowstack-ui/brick/app-bar";
 import { Avatar } from "@flowstack-ui/brick/avatar";
@@ -29,6 +29,7 @@ import { MultiSelect } from "@flowstack-ui/brick/multi-select";
 import { Text } from "@flowstack-ui/brick/text";
 import { Link } from "@flowstack-ui/brick/link";
 import { List } from "@flowstack-ui/brick/list";
+import { Table } from "@flowstack-ui/brick/table";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
 import { Grid } from "@flowstack-ui/brick/grid";
 import { Container } from "@flowstack-ui/brick/container";
@@ -105,6 +106,7 @@ export function App() {
   const [skillsStatus, setSkillsStatus] = useState("No team skills submitted.");
   const [channelStatus, setChannelStatus] = useState("No delivery channel submitted.");
   const [compactDestination, setCompactDestination] = useState("home");
+  const [tableSort, setTableSort] = useState<"ascending" | "descending">("descending");
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -668,6 +670,25 @@ export function App() {
             </Card.Root>
           </Grid.Root>
         </Surface>
+
+        <Card.Root as="section" variant="outline">
+          <Card.Header>
+            <Card.Title as="h2">Release report</Card.Title>
+            <Card.Description>Static Table composed from the packed public subpath.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <Table.Container>
+              <Table.Root striped style={{ "--brick-table-min-inline-size": "38rem" } as CSSProperties}>
+                <Table.Caption>Current package verification results</Table.Caption>
+                <Table.Header><Table.Row><Table.Head>Package</Table.Head><Table.Head>Status</Table.Head><Table.Head sortDirection={tableSort}><Button size="xs" variant="ghost" onClick={() => setTableSort((value) => value === "ascending" ? "descending" : "ascending")}>Checks<Table.SortIndicator /></Button></Table.Head><Table.Head numeric>Coverage</Table.Head><Table.Head>Guide</Table.Head></Table.Row></Table.Header>
+                <Table.Body>
+                  {[{ name: "Atom", status: "Released", checks: 128, coverage: "99.4%" }, { name: "Brick", status: "Review", checks: 86, coverage: "96.8%" }].sort((a, b) => tableSort === "ascending" ? a.checks - b.checks : b.checks - a.checks).map((row) => <Table.Row key={row.name}><Table.Head scope="row">{row.name}</Table.Head><Table.Cell><Badge tone={row.status === "Released" ? "success" : "warning"}>{row.status}</Badge></Table.Cell><Table.Cell numeric>{row.checks}</Table.Cell><Table.Cell numeric>{row.coverage}</Table.Cell><Table.Cell><Link href="#top">Open {row.name} guide</Link></Table.Cell></Table.Row>)}
+                </Table.Body>
+                <Table.Footer><Table.Row><Table.Head scope="row" colSpan={2}>Total checks</Table.Head><Table.Cell numeric>214</Table.Cell><Table.Cell colSpan={2}>Packed artifact</Table.Cell></Table.Row></Table.Footer>
+              </Table.Root>
+            </Table.Container>
+          </Card.Content>
+        </Card.Root>
 
         <Card.Root
           aria-labelledby="invite-title"

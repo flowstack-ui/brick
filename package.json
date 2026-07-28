@@ -207,6 +207,10 @@
       "types": "./dist/list.d.ts",
       "default": "./dist/list.js"
     },
+    "./table": {
+      "types": "./dist/table.d.ts",
+      "default": "./dist/table.js"
+    },
     "./stack": {
       "types": "./dist/stack.d.ts",
       "default": "./dist/stack.js"

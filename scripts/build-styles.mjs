@@ -81,6 +81,7 @@ await writeFile(
     '@import "../../src/components/text/text.css";',
     '@import "../../src/components/link/link.css";',
     '@import "../../src/components/list/list.css";',
+    '@import "../../src/components/table/table.css";',
     '@import "../../src/components/stack/stack.css";',
     '@import "../../src/components/grid/grid.css";',
     '@import "../../src/components/container/container.css";',

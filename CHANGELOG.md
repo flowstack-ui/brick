@@ -6,6 +6,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added `Table` with native compound semantics, static visual recipes,
+  logical/numeric alignment, explicit responsive containment, sticky headers,
+  and application-controlled sorting composition.
+
 - Added `Toast` with an imperative helper, public compound parts, six semantic types and logical positions, responsive/full widths, separated/overlap stacking, optional swipe, and complete accessible interaction.
 
 - Added `Accordion` with single and multiple selection, two-axis layout and

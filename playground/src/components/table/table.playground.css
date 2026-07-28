@@ -1,0 +1,9 @@
+.table-page { inline-size: 100%; }
+.table-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); }
+.table-grid > * { min-inline-size: 0; }
+.table-sticky { max-block-size: 7rem; overflow-y: auto; }
+.table-narrow { inline-size: min(100%, 20rem); }
+.table-page .brick-button { gap: var(--brick-space-1); }
+.table-status-cell { white-space: nowrap; }
+@media (max-width: 64rem) { .table-grid { --brick-grid-columns: minmax(0, 1fr); } }
+@media (max-width: 36rem) { .table-grid, .table-grid--two { --brick-grid-columns: minmax(0, 1fr); } }

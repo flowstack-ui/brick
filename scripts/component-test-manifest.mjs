@@ -47,6 +47,7 @@ export const componentIds = [
   "textarea",
   "link",
   "list",
+  "table",
   "notification-badge",
   "popover",
   "stack",

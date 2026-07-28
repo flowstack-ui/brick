@@ -188,6 +188,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/list.d.ts",
       default: "./dist/list.js",
     },
+    "./table": {
+      types: "./dist/table.d.ts",
+      default: "./dist/table.js",
+    },
     "./stack": {
       types: "./dist/stack.d.ts",
       default: "./dist/stack.js",
@@ -279,6 +283,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const text = await import(new URL("../../dist/text.js", import.meta.url));
   const link = await import(new URL("../../dist/link.js", import.meta.url));
   const list = await import(new URL("../../dist/list.js", import.meta.url));
+  const table = await import(new URL("../../dist/table.js", import.meta.url));
   const stack = await import(new URL("../../dist/stack.js", import.meta.url));
   const grid = await import(new URL("../../dist/grid.js", import.meta.url));
   const container = await import(new URL("../../dist/container.js", import.meta.url));
@@ -536,6 +541,17 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Switch",
       "SwitchRoot",
       "SwitchThumb",
+      "Table",
+      "TableBody",
+      "TableCaption",
+      "TableCell",
+      "TableContainer",
+      "TableFooter",
+      "TableHead",
+      "TableHeader",
+      "TableRoot",
+      "TableRow",
+      "TableSortIndicator",
       "Tabs",
       "TabsContent",
       "TabsIndicator",
@@ -573,6 +589,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(icon.Icon, brick.Icon);
   assert.equal(image.Image, brick.Image);
   assert.equal(list.List, brick.List);
+  assert.equal(table.Table, brick.Table);
+  assert.equal(table.TableRoot, brick.Table.Root);
+  assert.equal(table.TableCell, brick.Table.Cell);
   assert.equal(appBar.AppBar, brick.AppBar);
   assert.equal(appBar.AppBarRoot, brick.AppBar.Root);
   assert.equal(appBar.AppBarToolbar, brick.AppBar.Toolbar);

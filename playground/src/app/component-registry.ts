@@ -135,6 +135,13 @@ export const componentEntries = [
   },
   {
     category: "Data display",
+    description: "Native static tabular data with responsive containment.",
+    id: "table",
+    route: "/table",
+    title: "Table",
+  },
+  {
+    category: "Data display",
     description: "Inline technical literals with native code semantics.",
     id: "code",
     route: "/code",

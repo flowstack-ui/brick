@@ -1335,6 +1335,16 @@ export const componentDocumentationContracts = {
       "--brick-list-description-line-height",
     ],
   },
+  table: {
+    source: "src/components/table/Table.tsx",
+    exportSource: "src/components/table/index.ts",
+    css: "src/components/table/table.css",
+    exports: ["Table", "TableBody", "TableBodyProps", "TableCaption", "TableCaptionProps", "TableCaptionSide", "TableCell", "TableCellAlign", "TableCellProps", "TableContainer", "TableContainerProps", "TableDensity", "TableFooter", "TableFooterProps", "TableHead", "TableHeadProps", "TableHeader", "TableHeaderProps", "TableRoot", "TableRootProps", "TableRow", "TableRowProps", "TableSize", "TableSortIndicator", "TableSortIndicatorProps", "TableVariant"],
+    unions: { TableVariant: ["line", "outline"], TableSize: ["sm", "md", "lg"], TableDensity: ["compact", "comfortable"], TableCaptionSide: ["top", "bottom"], TableCellAlign: ["start", "center", "end"] },
+    defaults: { variant: "line", size: "md", density: "comfortable", side: "top" },
+    dataAttributes: ["data-align", "data-density", "data-numeric", "data-side", "data-size", "data-slot", "data-sticky-header", "data-striped", "data-variant"],
+    publicTokens: ["--brick-table-inline-size", "--brick-table-min-inline-size", "--brick-table-border-color", "--brick-table-border-width", "--brick-table-radius", "--brick-table-header-background", "--brick-table-header-foreground", "--brick-table-body-background", "--brick-table-row-stripe-background", "--brick-table-footer-background", "--brick-table-footer-foreground", "--brick-table-cell-foreground", "--brick-table-cell-padding-inline", "--brick-table-cell-padding-block", "--brick-table-row-min-block-size", "--brick-table-caption-foreground", "--brick-table-caption-gap", "--brick-table-sticky-offset", "--brick-table-sticky-z-index", "--brick-table-sort-indicator-size", "--brick-table-sort-indicator-color"],
+  },
   text: {
     source: "src/components/text/Text.tsx",
     exportSource: "src/components/text/index.ts",

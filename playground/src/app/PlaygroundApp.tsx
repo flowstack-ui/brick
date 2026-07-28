@@ -71,6 +71,7 @@ import { TextPage, textScenarios } from "../components/text/TextPage.js";
 import { IconPage, iconScenarios } from "../components/icon/IconPage.js";
 import { ImagePage, imageScenarios } from "../components/image/ImagePage.js";
 import { ListPage, listScenarios } from "../components/list/ListPage.js";
+import { TablePage, tableScenarios } from "../components/table/TablePage.js";
 import { CodePage, codeScenarios } from "../components/code/CodePage.js";
 import { CodeBlockPage, codeBlockScenarios } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
@@ -299,6 +300,10 @@ export function PlaygroundApp() {
 
   if (entry.id === "list") {
     return <PlaygroundShell entry={entry} scenarios={listScenarios}><ListPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "table") {
+    return <PlaygroundShell entry={entry} scenarios={tableScenarios}><TablePage /></PlaygroundShell>;
   }
 
   if (entry.id === "code") {

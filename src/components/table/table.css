@@ -1,0 +1,87 @@
+@layer brick.components {
+  .brick-table-container {
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+
+  .brick-table {
+    --brick-table-inline-size: 100%;
+    --brick-table-min-inline-size: 0;
+    --brick-table-border-color: var(--brick-color-border-subtle);
+    --brick-table-border-width: var(--brick-border-width);
+    --brick-table-radius: var(--brick-radius-surface);
+    --brick-table-header-background: var(--brick-color-surface-subtle);
+    --brick-table-header-foreground: var(--brick-color-text-primary);
+    --brick-table-body-background: var(--brick-color-surface);
+    --brick-table-row-stripe-background: var(--brick-color-surface-subtle);
+    --brick-table-footer-background: var(--brick-color-surface-subtle);
+    --brick-table-footer-foreground: var(--brick-color-text-primary);
+    --brick-table-cell-foreground: var(--brick-color-text-primary);
+    --brick-table-cell-padding-inline: var(--brick-space-4);
+    --brick-table-cell-padding-block: var(--brick-space-3);
+    --brick-table-row-min-block-size: 3rem;
+    --brick-table-caption-foreground: var(--brick-color-text-secondary);
+    --brick-table-caption-gap: var(--brick-space-3);
+    --brick-table-sticky-offset: 0px;
+    --brick-table-sticky-z-index: 1;
+    --brick-table-sort-indicator-size: 1rem;
+    --brick-table-sort-indicator-color: var(--brick-color-text-secondary);
+    inline-size: var(--brick-table-inline-size);
+    min-inline-size: var(--brick-table-min-inline-size);
+    border-collapse: separate;
+    border-spacing: 0;
+    color: var(--brick-table-cell-foreground);
+    font-family: var(--brick-typography-body-md-font-family);
+    font-size: var(--brick-typography-body-md-font-size);
+    line-height: var(--brick-typography-body-md-line-height);
+  }
+
+  .brick-table[data-size="sm"] { font-size: var(--brick-typography-body-sm-font-size); line-height: var(--brick-typography-body-sm-line-height); --brick-table-row-min-block-size: 2.5rem; }
+  .brick-table[data-size="lg"] { font-size: var(--brick-typography-body-lg-font-size); line-height: var(--brick-typography-body-lg-line-height); --brick-table-row-min-block-size: 3.5rem; }
+  .brick-table[data-density="compact"] { --brick-table-cell-padding-block: var(--brick-space-1); }
+
+  .brick-table__caption { color: var(--brick-table-caption-foreground); text-align: start; }
+  .brick-table__caption[data-side="top"] { caption-side: top; padding-block-end: var(--brick-table-caption-gap); }
+  .brick-table__caption[data-side="bottom"] { caption-side: bottom; padding-block-start: var(--brick-table-caption-gap); }
+
+  .brick-table__head,
+  .brick-table__cell {
+    box-sizing: border-box;
+    min-block-size: var(--brick-table-row-min-block-size);
+    padding-block: var(--brick-table-cell-padding-block);
+    padding-inline: var(--brick-table-cell-padding-inline);
+    border-block-end: var(--brick-table-border-width) solid var(--brick-table-border-color);
+    text-align: start;
+    vertical-align: middle;
+    overflow-wrap: break-word;
+  }
+  .brick-table__head { color: var(--brick-table-header-foreground); background: var(--brick-table-header-background); font-weight: var(--brick-typography-heading-sm-font-weight); white-space: nowrap; }
+  .brick-table__cell { background: var(--brick-table-body-background); }
+  .brick-table__head[data-align="center"], .brick-table__cell[data-align="center"] { text-align: center; }
+  .brick-table__head[data-align="end"], .brick-table__cell[data-align="end"] { text-align: end; }
+  .brick-table__head[data-numeric], .brick-table__cell[data-numeric] { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .brick-table__footer .brick-table__head,
+  .brick-table__footer .brick-table__cell { color: var(--brick-table-footer-foreground); background: var(--brick-table-footer-background); font-weight: var(--brick-typography-heading-sm-font-weight); }
+  .brick-table[data-striped] .brick-table__body .brick-table__row:nth-child(even) .brick-table__cell,
+  .brick-table[data-striped] .brick-table__body .brick-table__row:nth-child(even) .brick-table__head { background: var(--brick-table-row-stripe-background); }
+
+  .brick-table[data-variant="outline"] { border: var(--brick-table-border-width) solid var(--brick-table-border-color); border-radius: var(--brick-table-radius); }
+  .brick-table[data-variant="outline"] :where(.brick-table__head, .brick-table__cell) + :where(.brick-table__head, .brick-table__cell) { border-inline-start: var(--brick-table-border-width) solid var(--brick-table-border-color); }
+  .brick-table[data-variant="outline"] .brick-table__footer .brick-table__row:last-child :where(.brick-table__head, .brick-table__cell),
+  .brick-table[data-variant="outline"] .brick-table__body:last-child .brick-table__row:last-child :where(.brick-table__head, .brick-table__cell) { border-block-end: 0; }
+
+  .brick-table[data-sticky-header] .brick-table__header .brick-table__head { position: sticky; inset-block-start: var(--brick-table-sticky-offset); z-index: var(--brick-table-sticky-z-index); }
+
+  .brick-table__sort-indicator { display: inline-flex; inline-size: var(--brick-table-sort-indicator-size); block-size: var(--brick-table-sort-indicator-size); flex: none; color: var(--brick-table-sort-indicator-color); }
+  .brick-table__sort-indicator svg { inline-size: 100%; block-size: 100%; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+  .brick-table__head[data-sort="ascending"] .brick-table__sort-indicator path { d: path("m4 10 4-4 4 4"); }
+  .brick-table__head[data-sort="descending"] .brick-table__sort-indicator path { d: path("m4 6 4 4 4-4"); }
+
+  @media (forced-colors: active) {
+    .brick-table { --brick-table-border-color: CanvasText; --brick-table-header-background: Canvas; --brick-table-body-background: Canvas; --brick-table-row-stripe-background: Canvas; --brick-table-footer-background: Canvas; --brick-table-sort-indicator-color: CanvasText; }
+  }
+}

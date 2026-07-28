@@ -63,6 +63,8 @@ This directory is the public documentation authority for
   single or multiple selection and two-axis layout
 - [List](components/list/README.md) — native ordered and unordered content
   collections with optional structured anatomy
+- [Table](components/table/README.md) — native static tabular data with
+  responsive containment and sorting composition
 - [Skeleton](components/skeleton/README.md) — motion-safe loading placeholders
   with content-preserving geometry
 - [Progress](components/progress/README.md) — linear determinate,
