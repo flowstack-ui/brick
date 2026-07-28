@@ -112,6 +112,7 @@ uploadArchive().then(
 - [Browser test](../../../playground/tests/components/toast/behavior.spec.ts)
 - [Visual test](../../../playground/tests/components/toast/visual.spec.ts)
 - [Manual protocol](../../../playground/manual-tests/toast.md)
+- [Coverage workbook](../../../playground/component-coverage.xlsx)
 - [Packed Consumer](../../../apps/consumer/src/App.tsx)
 
 ## Changelog
