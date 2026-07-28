@@ -32,6 +32,7 @@ import { Link } from "../../dist/link.js";
 import { List } from "../../dist/list.js";
 import { Table } from "../../dist/table.js";
 import { DataGrid } from "../../dist/data-grid.js";
+import { Tree } from "../../dist/tree.js";
 import { Pagination } from "../../dist/pagination.js";
 import { HStack, Stack, VStack } from "../../dist/stack.js";
 import { Grid } from "../../dist/grid.js";
@@ -73,6 +74,16 @@ test("Data Grid renders deterministic navigable tabular anatomy during SSR", () 
   assert.match(markup, /aria-rowcount="2"/);
   assert.match(markup, /aria-sort="ascending"/);
   assert.match(markup, /role="gridcell"/);
+});
+
+test("Tree renders deterministic hierarchical anatomy during SSR", () => {
+  const markup = renderToString(React.createElement(Tree.Root, { "aria-label": "Repository", defaultExpandedValue: ["src"], variant: "outline" }, React.createElement(Tree.Item, { value: "src" }, React.createElement(Tree.ItemContent, null, React.createElement(Tree.Indicator), React.createElement(Tree.ItemText, null, "src")), React.createElement(Tree.Group, null, React.createElement(Tree.Item, { value: "index" }, React.createElement(Tree.ItemContent, null, React.createElement(Tree.Indicator), React.createElement(Tree.ItemText, null, "index.ts")))))));
+  assert.match(markup, /role="tree"/);
+  assert.match(markup, /aria-orientation="vertical"/);
+  assert.match(markup, /class="brick-tree"/);
+  assert.match(markup, /brick-tree__item-content/);
+  assert.match(markup, /brick-tree__indicator/);
+  assert.match(markup, /role="group"/);
 });
 
 test("Collapsible renders deterministic linked disclosure anatomy", () => {

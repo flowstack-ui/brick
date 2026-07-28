@@ -31,6 +31,7 @@ import { Link } from "@flowstack-ui/brick/link";
 import { List } from "@flowstack-ui/brick/list";
 import { Table } from "@flowstack-ui/brick/table";
 import { DataGrid } from "@flowstack-ui/brick/data-grid";
+import { Tree } from "@flowstack-ui/brick/tree";
 import { Toolbar } from "@flowstack-ui/brick/toolbar";
 import { Pagination } from "@flowstack-ui/brick/pagination";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
@@ -723,6 +724,22 @@ export function App() {
               </DataGrid.Root>
             </DataGrid.Container>
             <Pagination.Root aria-label="Verification queue pages" page={1} totalPages={3} size="sm"><Pagination.List><Pagination.Previous /><Pagination.Items /><Pagination.Next /></Pagination.List></Pagination.Root>
+          </Card.Content>
+        </Card.Root>
+
+        <Card.Root as="section" variant="outline">
+          <Card.Header>
+            <Card.Title as="h2">Release files</Card.Title>
+            <Card.Description>Hierarchical selection composed from the packed Tree subpath.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <Tree.Root aria-label="Release files" defaultExpandedValue={["packages"]} defaultValue="brick" showGuide variant="outline">
+              <Tree.Item value="packages"><Tree.ItemContent><Tree.Indicator /><Tree.ItemText>packages</Tree.ItemText><Badge size="sm" tone="neutral" variant="soft">2</Badge></Tree.ItemContent><Tree.Group>
+                <Tree.Item value="atom"><Tree.ItemContent><Tree.Indicator /><Tree.ItemText>atom</Tree.ItemText></Tree.ItemContent></Tree.Item>
+                <Tree.Item value="brick"><Tree.ItemContent><Tree.Indicator /><Tree.ItemText>brick</Tree.ItemText><Badge size="sm" tone="success">ready</Badge></Tree.ItemContent></Tree.Item>
+              </Tree.Group></Tree.Item>
+              <Tree.Item value="readme"><Tree.ItemContent><Tree.Indicator /><Tree.ItemText>README.md</Tree.ItemText></Tree.ItemContent></Tree.Item>
+            </Tree.Root>
           </Card.Content>
         </Card.Root>
 

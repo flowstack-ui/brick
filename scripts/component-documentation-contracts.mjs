@@ -1355,6 +1355,16 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-align", "data-density", "data-numeric", "data-side", "data-size", "data-slot", "data-variant"],
     publicTokens: ["--brick-data-grid-inline-size", "--brick-data-grid-min-inline-size", "--brick-data-grid-border-color", "--brick-data-grid-border-width", "--brick-data-grid-radius", "--brick-data-grid-header-background", "--brick-data-grid-header-foreground", "--brick-data-grid-body-background", "--brick-data-grid-footer-background", "--brick-data-grid-cell-foreground", "--brick-data-grid-cell-padding-inline", "--brick-data-grid-cell-padding-block", "--brick-data-grid-row-min-block-size", "--brick-data-grid-caption-foreground", "--brick-data-grid-caption-gap", "--brick-data-grid-active-color", "--brick-data-grid-active-width", "--brick-data-grid-selected-background", "--brick-data-grid-selected-foreground", "--brick-data-grid-hover-background", "--brick-data-grid-disabled-opacity", "--brick-data-grid-sort-indicator-size", "--brick-data-grid-sort-indicator-color"],
   },
+  tree: {
+    source: "src/components/tree/Tree.tsx",
+    exportSource: "src/components/tree/index.ts",
+    css: "src/components/tree/tree.css",
+    exports: ["Tree", "TreeGroup", "TreeGroupProps", "TreeIndicator", "TreeIndicatorProps", "TreeItem", "TreeItemContent", "TreeItemContentProps", "TreeItemProps", "TreeItemText", "TreeItemTextProps", "TreeRoot", "TreeRootProps", "TreeSize", "TreeVariant"],
+    unions: { TreeVariant: ["plain", "soft", "outline"], TreeSize: ["sm", "md"] },
+    defaults: { variant: "plain", size: "md", showGuide: false },
+    dataAttributes: ["data-guide", "data-size", "data-slot", "data-variant"],
+    publicTokens: ["--brick-tree-background", "--brick-tree-border-color", "--brick-tree-border-width", "--brick-tree-radius", "--brick-tree-padding", "--brick-tree-row-min-block-size", "--brick-tree-row-radius", "--brick-tree-row-gap", "--brick-tree-row-padding-block", "--brick-tree-row-padding-inline", "--brick-tree-depth-indent", "--brick-tree-guide-color", "--brick-tree-guide-offset", "--brick-tree-foreground", "--brick-tree-indicator-color", "--brick-tree-hover-background", "--brick-tree-active-background", "--brick-tree-selected-background", "--brick-tree-selected-foreground", "--brick-tree-disabled-opacity", "--brick-tree-focus-ring", "--brick-tree-focus-ring-width", "--brick-tree-motion-duration", "--brick-tree-motion-easing"],
+  },
   text: {
     source: "src/components/text/Text.tsx",
     exportSource: "src/components/text/index.ts",

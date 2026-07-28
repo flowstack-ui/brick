@@ -20,7 +20,7 @@ const expectedRouteIds = [
   "context-menu", "data-grid", "dialog", "divider", "drawer", "dropdown-menu", "field", "fieldset", "form", "grid",
   "hover-card", "icon", "icon-button", "image", "input", "textarea", "link", "list", "multi-select",
   "menubar", "nav-list", "navigation-menu", "notification-badge", "popover", "progress", "progress-circle", "radio-group", "scroll-area", "select", "sidebar",
-  "pagination", "skeleton", "stack", "surface", "switch", "table", "tabs", "text", "toast", "toggle", "toggle-group", "toolbar", "tooltip",
+  "pagination", "skeleton", "stack", "surface", "switch", "table", "tabs", "text", "toast", "toggle", "toggle-group", "toolbar", "tooltip", "tree",
   "visually-hidden",
 ];
 

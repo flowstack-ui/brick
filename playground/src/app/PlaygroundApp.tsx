@@ -73,6 +73,7 @@ import { ImagePage, imageScenarios } from "../components/image/ImagePage.js";
 import { ListPage, listScenarios } from "../components/list/ListPage.js";
 import { TablePage, tableScenarios } from "../components/table/TablePage.js";
 import { DataGridPage, dataGridScenarios } from "../components/data-grid/DataGridPage.js";
+import { TreePage, treeScenarios } from "../components/tree/TreePage.js";
 import { ToolbarPage, toolbarScenarios } from "../components/toolbar/ToolbarPage.js";
 import { PaginationPage, paginationScenarios } from "../components/pagination/PaginationPage.js";
 import { CodePage, codeScenarios } from "../components/code/CodePage.js";
@@ -310,6 +311,9 @@ export function PlaygroundApp() {
   }
   if (entry.id === "data-grid") {
     return <PlaygroundShell entry={entry} scenarios={dataGridScenarios}><DataGridPage /></PlaygroundShell>;
+  }
+  if (entry.id === "tree") {
+    return <PlaygroundShell entry={entry} scenarios={treeScenarios}><TreePage /></PlaygroundShell>;
   }
   if (entry.id === "toolbar") {
     return <PlaygroundShell entry={entry} scenarios={toolbarScenarios}><ToolbarPage /></PlaygroundShell>;
