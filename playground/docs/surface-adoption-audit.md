@@ -65,6 +65,7 @@ different owner.
 | Code Block | generic outer evidence cells and appearance stages | Code Block recipes, technical surface paint, overflow, selection, and source anatomy |
 | List | overview, specimen cells, appearance scopes, customization shell, and stress panel | List markers, dividers, borders, anatomy, nesting, and exact output |
 | Table | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Table boundaries, section paint, sticky/overflow geometry, and rendered native output |
+| Data Grid | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Data Grid boundaries, active/selection state paint, cell navigation geometry, and explicit overflow containment |
 | Toolbar | overview, comparison cells, and appearance scopes | Toolbar surfaces, control states, separators, orientation, and overflow geometry |
 | Pagination | overview, comparison cells, appearance scopes, customization shell, and stress panels | Pagination root/control recipes, current and disabled state paint, and inline overflow geometry |
 | Link | overview, specimen-grid cells, appearance scopes, customization shell/preview, stress panel | Link recipes, inline wrapping, composition output, and code block |
