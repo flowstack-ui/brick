@@ -1,9 +1,10 @@
 .table-page { inline-size: 100%; }
 .table-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); }
 .table-grid > * { min-inline-size: 0; }
-.table-sticky { max-block-size: 15rem; overflow-y: auto; }
+.table-sticky { max-block-size: 12rem; overflow-y: auto; }
 .table-page .brick-button { gap: var(--brick-space-1); }
 .table-page .table-sort-button {
+  --brick-button-gap: var(--brick-space-3);
   --brick-button-min-block-size: auto;
   --brick-button-padding-block: 0;
   --brick-button-padding-inline: 0;
@@ -17,8 +18,11 @@
   --brick-button-background-pressed: transparent;
   --brick-button-border-color: transparent;
   --brick-button-foreground: inherit;
+  gap: var(--brick-space-3);
   border-radius: var(--brick-radius-control);
 }
+.table-page .table-sort-button .brick-button__icon { align-self: center; }
+.table-appearance-surface { display: flex; flex-direction: column; gap: var(--brick-space-3); }
 .table-customization > * { min-inline-size: 0; }
 .table-status-cell { white-space: nowrap; }
 @media (max-width: 64rem) { .table-grid { --brick-grid-columns: minmax(0, 1fr); } }

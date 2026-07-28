@@ -31,6 +31,10 @@ test("Table recipes, numeric alignment, and sorting remain independent", async (
   await expect(button).toBeFocused();
   const headerText = page.locator("#scenario-table-sorting thead th").first();
   await expect(button).toHaveCSS("font-size", await headerText.evaluate((node) => getComputedStyle(node).fontSize));
+  const buttonBox = await button.boundingBox();
+  const indicatorBox = await button.locator(".brick-table__sort-indicator").boundingBox();
+  expect(Math.abs(indicatorBox!.y + indicatorBox!.height / 2 - (buttonBox!.y + buttonBox!.height / 2))).toBeLessThanOrEqual(1);
+  await expect(button).toHaveCSS("column-gap", "12px");
   await expect(page.locator("#scenario-table-alignment .table-cell")).toHaveCount(4);
   await expect(page.locator("#scenario-table-alignment .brick-table[data-variant='outline']")).toHaveCount(4);
 });
@@ -39,6 +43,7 @@ test("Table sticky and explicit overflow geometry stay contained", async ({ page
   const sticky = page.locator("#scenario-table-sticky .table-sticky");
   const head = sticky.locator("thead th").first();
   const containerBox = await sticky.boundingBox();
+  expect(await sticky.evaluate((node) => node.scrollHeight > node.clientHeight)).toBe(true);
   await sticky.evaluate((node) => { node.scrollTop = 100; });
   const after = await head.boundingBox();
   expect(Math.abs(after!.y - containerBox!.y)).toBeLessThan(2);
@@ -51,6 +56,12 @@ test("Table sticky and explicit overflow geometry stay contained", async ({ page
   await expect(page.locator("#scenario-table-sticky .table-cell")).toHaveCount(3);
   await expect(page.locator("#scenario-table-appearance [data-brick-appearance='light'] .brick-table .brick-badge")).toHaveCount(3);
   await expect(page.locator("#scenario-table-appearance [data-brick-appearance='dark'] .brick-table .brick-badge")).toHaveCount(3);
+  const lightLabel = await page.locator("#scenario-table-appearance [data-brick-appearance='light'] > .brick-badge").boundingBox();
+  const lightCaption = await page.locator("#scenario-table-appearance [data-brick-appearance='light'] caption").boundingBox();
+  expect(lightCaption!.y - (lightLabel!.y + lightLabel!.height)).toBeGreaterThanOrEqual(8);
+  const customFooterCells = page.locator("#scenario-table-appearance .table-customization tfoot tr").locator("th, td");
+  await expect(customFooterCells.first()).not.toHaveCSS("border-bottom-left-radius", "0px");
+  await expect(customFooterCells.last()).not.toHaveCSS("border-bottom-right-radius", "0px");
 });
 
 test("Table has no composite behavior and passes accessibility checks", async ({ page }) => {
