@@ -48,6 +48,7 @@ export const componentIds = [
   "link",
   "list",
   "table",
+  "data-grid",
   "toolbar",
   "pagination",
   "notification-badge",

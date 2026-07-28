@@ -1345,6 +1345,16 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-align", "data-density", "data-numeric", "data-side", "data-size", "data-slot", "data-sticky-header", "data-striped", "data-variant"],
     publicTokens: ["--brick-table-inline-size", "--brick-table-min-inline-size", "--brick-table-border-color", "--brick-table-border-width", "--brick-table-radius", "--brick-table-header-background", "--brick-table-header-foreground", "--brick-table-body-background", "--brick-table-row-stripe-background", "--brick-table-footer-background", "--brick-table-footer-foreground", "--brick-table-cell-foreground", "--brick-table-cell-padding-inline", "--brick-table-cell-padding-block", "--brick-table-row-min-block-size", "--brick-table-caption-foreground", "--brick-table-caption-gap", "--brick-table-sticky-offset", "--brick-table-sticky-z-index", "--brick-table-sort-indicator-size", "--brick-table-sort-indicator-color"],
   },
+  "data-grid": {
+    source: "src/components/data-grid/DataGrid.tsx",
+    exportSource: "src/components/data-grid/index.ts",
+    css: "src/components/data-grid/data-grid.css",
+    exports: ["DataGrid", "DataGridBody", "DataGridBodyProps", "DataGridCaption", "DataGridCaptionProps", "DataGridCaptionSide", "DataGridCell", "DataGridCellAlign", "DataGridCellProps", "DataGridColumnHeader", "DataGridColumnHeaderProps", "DataGridContainer", "DataGridContainerProps", "DataGridDensity", "DataGridFooter", "DataGridFooterProps", "DataGridHeader", "DataGridHeaderProps", "DataGridRoot", "DataGridRootProps", "DataGridRow", "DataGridRowProps", "DataGridSize", "DataGridSortIndicator", "DataGridSortIndicatorProps", "DataGridVariant"],
+    unions: { DataGridVariant: ["line", "outline"], DataGridSize: ["sm", "md", "lg"], DataGridDensity: ["compact", "comfortable", "spacious"], DataGridCaptionSide: ["top", "bottom"], DataGridCellAlign: ["start", "center", "end"] },
+    defaults: { variant: "line", size: "md", density: "comfortable", side: "bottom" },
+    dataAttributes: ["data-align", "data-density", "data-numeric", "data-side", "data-size", "data-slot", "data-variant"],
+    publicTokens: ["--brick-data-grid-inline-size", "--brick-data-grid-min-inline-size", "--brick-data-grid-border-color", "--brick-data-grid-border-width", "--brick-data-grid-radius", "--brick-data-grid-header-background", "--brick-data-grid-header-foreground", "--brick-data-grid-body-background", "--brick-data-grid-footer-background", "--brick-data-grid-cell-foreground", "--brick-data-grid-cell-padding-inline", "--brick-data-grid-cell-padding-block", "--brick-data-grid-row-min-block-size", "--brick-data-grid-caption-foreground", "--brick-data-grid-caption-gap", "--brick-data-grid-active-color", "--brick-data-grid-active-width", "--brick-data-grid-selected-background", "--brick-data-grid-selected-foreground", "--brick-data-grid-hover-background", "--brick-data-grid-disabled-opacity", "--brick-data-grid-sort-indicator-size", "--brick-data-grid-sort-indicator-color"],
+  },
   text: {
     source: "src/components/text/Text.tsx",
     exportSource: "src/components/text/index.ts",

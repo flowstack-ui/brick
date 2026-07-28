@@ -30,6 +30,7 @@ import { Text } from "@flowstack-ui/brick/text";
 import { Link } from "@flowstack-ui/brick/link";
 import { List } from "@flowstack-ui/brick/list";
 import { Table } from "@flowstack-ui/brick/table";
+import { DataGrid } from "@flowstack-ui/brick/data-grid";
 import { Toolbar } from "@flowstack-ui/brick/toolbar";
 import { Pagination } from "@flowstack-ui/brick/pagination";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
@@ -110,6 +111,8 @@ export function App() {
   const [compactDestination, setCompactDestination] = useState("home");
   const [tableSort, setTableSort] = useState<"ascending" | "descending">("descending");
   const [reportPage, setReportPage] = useState(1);
+  const [gridSort, setGridSort] = useState<"ascending" | "descending">("ascending");
+  const [gridSelection, setGridSelection] = useState<string[]>(["atom"]);
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -702,6 +705,24 @@ export function App() {
             <Pagination.Root aria-label="Release report pages" onPageChange={setReportPage} page={reportPage} totalPages={5} variant="outline">
               <Pagination.List><Pagination.Previous /><Pagination.Items /><Pagination.Next /></Pagination.List>
             </Pagination.Root>
+          </Card.Content>
+        </Card.Root>
+
+        <Card.Root as="section" variant="outline">
+          <Card.Header>
+            <Card.Title as="h2">Verification queue</Card.Title>
+            <Card.Description>Navigable, selectable Data Grid with application-owned controls.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <Toolbar.Root ariaLabel="Verification queue tools" size="sm" variant="outline"><Toolbar.Button>Refresh queue</Toolbar.Button><Toolbar.Separator orientation="vertical" /><Toolbar.Button disabled={gridSelection.length === 0}>Review selected ({gridSelection.length})</Toolbar.Button></Toolbar.Root>
+            <DataGrid.Container>
+              <DataGrid.Root aria-label="Package verification queue" columnCount={3} rowCount={4} selectionMode="multiple" value={gridSelection} onValueChange={value => setGridSelection(Array.isArray(value) ? value : value ? [value] : [])} selectOnRowClick style={{ "--brick-data-grid-min-inline-size": "34rem" } as CSSProperties} variant="outline">
+                <DataGrid.Caption>Use arrow keys to navigate and Space to select a package.</DataGrid.Caption>
+                <DataGrid.Header><DataGrid.Row rowIndex={1}><DataGrid.ColumnHeader columnIndex={1}>Package</DataGrid.ColumnHeader><DataGrid.ColumnHeader columnIndex={2}>Status</DataGrid.ColumnHeader><DataGrid.ColumnHeader columnIndex={3} numeric onAction={() => setGridSort(value => value === "ascending" ? "descending" : "ascending")} sortDirection={gridSort}>Checks<DataGrid.SortIndicator /></DataGrid.ColumnHeader></DataGrid.Row></DataGrid.Header>
+                <DataGrid.Body>{[{ id: "atom", name: "Atom", status: "Released", checks: 492 }, { id: "brick", name: "Brick", status: "Review", checks: 238 }, { id: "consumer", name: "Consumer", status: "Ready", checks: 24 }].sort((a, b) => gridSort === "ascending" ? a.checks - b.checks : b.checks - a.checks).map((row, index) => <DataGrid.Row key={row.id} rowIndex={index + 2} selectable value={row.id}><DataGrid.Cell columnIndex={1}>{row.name}</DataGrid.Cell><DataGrid.Cell columnIndex={2}><Badge tone={row.status === "Review" ? "warning" : "success"}>{row.status}</Badge></DataGrid.Cell><DataGrid.Cell columnIndex={3} numeric>{row.checks}</DataGrid.Cell></DataGrid.Row>)}</DataGrid.Body>
+              </DataGrid.Root>
+            </DataGrid.Container>
+            <Pagination.Root aria-label="Verification queue pages" page={1} totalPages={3} size="sm"><Pagination.List><Pagination.Previous /><Pagination.Items /><Pagination.Next /></Pagination.List></Pagination.Root>
           </Card.Content>
         </Card.Root>
 

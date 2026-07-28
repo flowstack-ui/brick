@@ -560,5 +560,33 @@ export {
   type TableSortIndicatorProps,
   type TableVariant,
 } from "./components/table/index.js";
+export {
+  DataGrid,
+  DataGridBody,
+  DataGridCaption,
+  DataGridCell,
+  DataGridColumnHeader,
+  DataGridContainer,
+  DataGridFooter,
+  DataGridHeader,
+  DataGridRoot,
+  DataGridRow,
+  DataGridSortIndicator,
+  type DataGridBodyProps,
+  type DataGridCaptionProps,
+  type DataGridCaptionSide,
+  type DataGridCellAlign,
+  type DataGridCellProps,
+  type DataGridColumnHeaderProps,
+  type DataGridContainerProps,
+  type DataGridDensity,
+  type DataGridFooterProps,
+  type DataGridHeaderProps,
+  type DataGridRootProps,
+  type DataGridRowProps,
+  type DataGridSize,
+  type DataGridSortIndicatorProps,
+  type DataGridVariant,
+} from "./components/data-grid/index.js";
 export { Toolbar, ToolbarButton, ToolbarLink, ToolbarRoot, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem, type ToolbarButtonProps, type ToolbarLinkProps, type ToolbarRootProps, type ToolbarSeparatorProps, type ToolbarSize, type ToolbarToggleGroupProps, type ToolbarToggleItemProps, type ToolbarVariant } from "./components/toolbar/index.js";
 export * from "./components/pagination/index.js";

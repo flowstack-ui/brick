@@ -31,6 +31,7 @@ import { Text } from "../../dist/text.js";
 import { Link } from "../../dist/link.js";
 import { List } from "../../dist/list.js";
 import { Table } from "../../dist/table.js";
+import { DataGrid } from "../../dist/data-grid.js";
 import { Pagination } from "../../dist/pagination.js";
 import { HStack, Stack, VStack } from "../../dist/stack.js";
 import { Grid } from "../../dist/grid.js";
@@ -63,6 +64,15 @@ test("Table renders deterministic native static anatomy during SSR", () => {
   assert.match(markup, /scope="row"/);
   assert.match(markup, /data-numeric=""/);
   assert.doesNotMatch(markup, /role="grid"/);
+});
+
+test("Data Grid renders deterministic navigable tabular anatomy during SSR", () => {
+  const markup = renderToString(React.createElement(DataGrid.Root, { "aria-label": "Results", columnCount: 1, rowCount: 2 }, React.createElement(DataGrid.Header, null, React.createElement(DataGrid.Row, { rowIndex: 1 }, React.createElement(DataGrid.ColumnHeader, { columnIndex: 1, sortDirection: "ascending" }, "Project"))), React.createElement(DataGrid.Body, null, React.createElement(DataGrid.Row, { rowIndex: 2, value: "atom" }, React.createElement(DataGrid.Cell, { columnIndex: 1 }, "Atom")))));
+  assert.match(markup, /role="grid"/);
+  assert.match(markup, /aria-colcount="1"/);
+  assert.match(markup, /aria-rowcount="2"/);
+  assert.match(markup, /aria-sort="ascending"/);
+  assert.match(markup, /role="gridcell"/);
 });
 
 test("Collapsible renders deterministic linked disclosure anatomy", () => {

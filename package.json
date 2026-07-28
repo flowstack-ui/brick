@@ -211,6 +211,10 @@
       "types": "./dist/table.d.ts",
       "default": "./dist/table.js"
     },
+    "./data-grid": {
+      "types": "./dist/data-grid.d.ts",
+      "default": "./dist/data-grid.js"
+    },
     "./toolbar": {
       "types": "./dist/toolbar.d.ts",
       "default": "./dist/toolbar.js"
@@ -334,7 +338,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.16.0"
+    "@flowstack-ui/atom": "0.17.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

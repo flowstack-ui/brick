@@ -28,6 +28,11 @@ This directory is the public documentation authority for
 - [Pagination](components/pagination/README.md) — generated numbered-page
   navigation for bounded result sets
 
+### Data display
+
+- [Data Grid](components/data-grid/README.md) — navigable tabular data with
+  selection and controlled sortable headers
+
 ### Forms and choices
 
 - [Form](components/form/README.md) — native submission boundary and form

@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.16.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.17.0");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -192,6 +192,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/table.d.ts",
       default: "./dist/table.js",
     },
+    "./data-grid": {
+      types: "./dist/data-grid.d.ts",
+      default: "./dist/data-grid.js",
+    },
     "./toolbar": {
       types: "./dist/toolbar.d.ts",
       default: "./dist/toolbar.js",
@@ -292,6 +296,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const link = await import(new URL("../../dist/link.js", import.meta.url));
   const list = await import(new URL("../../dist/list.js", import.meta.url));
   const table = await import(new URL("../../dist/table.js", import.meta.url));
+  const dataGrid = await import(new URL("../../dist/data-grid.js", import.meta.url));
   const toolbar = await import(new URL("../../dist/toolbar.js", import.meta.url));
   const pagination = await import(new URL("../../dist/pagination.js", import.meta.url));
   const stack = await import(new URL("../../dist/stack.js", import.meta.url));
@@ -390,6 +395,17 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ContextMenuSubContent",
       "ContextMenuSubTrigger",
       "ContextMenuTrigger",
+      "DataGrid",
+      "DataGridBody",
+      "DataGridCaption",
+      "DataGridCell",
+      "DataGridColumnHeader",
+      "DataGridContainer",
+      "DataGridFooter",
+      "DataGridHeader",
+      "DataGridRoot",
+      "DataGridRow",
+      "DataGridSortIndicator",
       "Dialog",
       "Divider",
       "Drawer",
@@ -617,6 +633,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(table.Table, brick.Table);
   assert.equal(table.TableRoot, brick.Table.Root);
   assert.equal(table.TableCell, brick.Table.Cell);
+  assert.equal(dataGrid.DataGrid, brick.DataGrid);
+  assert.equal(dataGrid.DataGridRoot, brick.DataGrid.Root);
+  assert.equal(dataGrid.DataGridColumnHeader, brick.DataGrid.ColumnHeader);
   assert.equal(toolbar.Toolbar, brick.Toolbar);
   assert.equal(toolbar.ToolbarRoot, brick.Toolbar.Root);
   assert.equal(toolbar.ToolbarToggleItem, brick.Toolbar.ToggleItem);

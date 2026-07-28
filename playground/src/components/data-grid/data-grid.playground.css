@@ -1,0 +1,4 @@
+.data-grid-page { inline-size: 100%; }
+.data-grid-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); }
+.data-grid-specimens > * { min-inline-size: 0; }
+@media (max-width: 64rem) { .data-grid-specimens { --brick-grid-columns: minmax(0, 1fr); } }

@@ -98,6 +98,7 @@ const componentSymbols = {
   link: "Link",
   list: "List",
   table: "Table",
+  "data-grid": "Data Grid",
   toolbar: "Toolbar",
   pagination: "Pagination",
   "notification-badge": "NotificationBadge",

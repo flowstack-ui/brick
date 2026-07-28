@@ -141,6 +141,13 @@ export const componentEntries = [
     title: "Table",
   },
   {
+    category: "Data display",
+    description: "Navigable tabular data with row selection and sortable headers.",
+    id: "data-grid",
+    route: "/data-grid",
+    title: "Data Grid",
+  },
+  {
     category: "Actions",
     description: "Related commands with one keyboard entry point.",
     id: "toolbar",

@@ -6,6 +6,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added the Atom-backed `Data Grid` family for navigable tabular data, row
+  selection, controlled sortable-header activation, and responsive containment.
+
 - Added `Pagination` with an Atom-generated numbered range, localized labels,
   explicit seven-part composition, three variants and sizes, logical controls,
   and no-wrap inline overflow.
