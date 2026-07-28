@@ -138,7 +138,10 @@ test("centers title-only content and icons within the toast row", async ({ page 
   );
 
   await page.getByRole("button", { name: "Show custom icon" }).click();
-  const customToast = viewport.locator(".brick-toast[data-state='visible']");
+  const customToast = viewport
+    .locator(".brick-toast[data-state='visible']")
+    .filter({ hasText: "Custom icon" });
+  await expect(customToast).toHaveCount(1);
   await expect(customToast.getByText("Custom icon", { exact: true })).toBeVisible();
   const iconBox = await customToast.locator(".brick-toast__icon").boundingBox();
   const contentBox = await customToast.locator(".brick-toast__content").boundingBox();
