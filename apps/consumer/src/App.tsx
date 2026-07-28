@@ -31,6 +31,7 @@ import { Link } from "@flowstack-ui/brick/link";
 import { List } from "@flowstack-ui/brick/list";
 import { Table } from "@flowstack-ui/brick/table";
 import { DataGrid } from "@flowstack-ui/brick/data-grid";
+import { TreeGrid } from "@flowstack-ui/brick/tree-grid";
 import { Tree } from "@flowstack-ui/brick/tree";
 import { Toolbar } from "@flowstack-ui/brick/toolbar";
 import { Pagination } from "@flowstack-ui/brick/pagination";
@@ -114,6 +115,9 @@ export function App() {
   const [reportPage, setReportPage] = useState(1);
   const [gridSort, setGridSort] = useState<"ascending" | "descending">("ascending");
   const [gridSelection, setGridSelection] = useState<string[]>(["atom"]);
+  const [treeGridSort, setTreeGridSort] = useState<"ascending" | "descending">("ascending");
+  const [treeGridExpanded, setTreeGridExpanded] = useState(["packages"]);
+  const [treeGridSelection, setTreeGridSelection] = useState<string | null>("brick");
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -706,6 +710,30 @@ export function App() {
             <Pagination.Root aria-label="Release report pages" onPageChange={setReportPage} page={reportPage} totalPages={5} variant="outline">
               <Pagination.List><Pagination.Previous /><Pagination.Items /><Pagination.Next /></Pagination.List>
             </Pagination.Root>
+          </Card.Content>
+        </Card.Root>
+
+        <Card.Root as="section" variant="outline">
+          <Card.Header>
+            <Card.Title as="h2">Release file matrix</Card.Title>
+            <Card.Description>Hierarchical package records composed from the packed Tree Grid subpath.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <VStack gap="3">
+              <Toolbar.Root ariaLabel="Release file filters" size="sm" variant="outline"><Toolbar.Button>All files</Toolbar.Button><Toolbar.Separator orientation="vertical" /><Toolbar.Button>Changed only</Toolbar.Button></Toolbar.Root>
+              <TreeGrid.Container>
+                <TreeGrid.Root aria-label="Release package files" columnCount={3} expandedValue={treeGridExpanded} onExpandedValueChange={setTreeGridExpanded} onValueChange={value => setTreeGridSelection(typeof value === "string" ? value : null)} rowCount={5} selectionMode="single" selectOnRowClick style={{ "--brick-tree-grid-min-inline-size": "40rem" } as CSSProperties} value={treeGridSelection} variant="outline">
+                  <TreeGrid.Caption>Package files and packed sizes</TreeGrid.Caption>
+                  <TreeGrid.Header><TreeGrid.Row rowIndex={1} selectable={false} value="header"><TreeGrid.ColumnHeader columnIndex={1} onAction={() => setTreeGridSort(value => value === "ascending" ? "descending" : "ascending")} sortDirection={treeGridSort}>Name<TreeGrid.SortIndicator /></TreeGrid.ColumnHeader><TreeGrid.ColumnHeader columnIndex={2}>Status</TreeGrid.ColumnHeader><TreeGrid.ColumnHeader columnIndex={3} numeric>Bytes</TreeGrid.ColumnHeader></TreeGrid.Row></TreeGrid.Header>
+                  <TreeGrid.Body>
+                    <TreeGrid.Row expandable level={1} rowIndex={2} selectable value="packages"><TreeGrid.RowHeader columnIndex={1}><TreeGrid.Indicator />packages</TreeGrid.RowHeader><TreeGrid.Cell columnIndex={2}><Badge size="sm" tone="neutral" variant="soft">2 files</Badge></TreeGrid.Cell><TreeGrid.Cell columnIndex={3} numeric>—</TreeGrid.Cell></TreeGrid.Row>
+                    {(treeGridSort === "ascending" ? [{ id: "atom", bytes: 528899, status: "published" }, { id: "brick", bytes: 412480, status: "ready" }] : [{ id: "brick", bytes: 412480, status: "ready" }, { id: "atom", bytes: 528899, status: "published" }]).map((row, index) => <TreeGrid.Row key={row.id} level={2} parentValue="packages" rowIndex={index + 3} selectable value={row.id}><TreeGrid.RowHeader columnIndex={1}><TreeGrid.Indicator />{row.id}.tgz</TreeGrid.RowHeader><TreeGrid.Cell columnIndex={2}><Badge size="sm" tone="success">{row.status}</Badge></TreeGrid.Cell><TreeGrid.Cell columnIndex={3} numeric>{row.bytes.toLocaleString("en-US")}</TreeGrid.Cell></TreeGrid.Row>)}
+                    <TreeGrid.Row level={1} rowIndex={5} selectable value="readme"><TreeGrid.RowHeader columnIndex={1}><TreeGrid.Indicator />README.md</TreeGrid.RowHeader><TreeGrid.Cell columnIndex={2}><Badge size="sm" tone="neutral" variant="soft">docs</Badge></TreeGrid.Cell><TreeGrid.Cell columnIndex={3} numeric>2,874</TreeGrid.Cell></TreeGrid.Row>
+                  </TreeGrid.Body>
+                </TreeGrid.Root>
+              </TreeGrid.Container>
+              <Surface inset="md" level="subtle"><Text as="h3" variant="title-sm">Selected release record</Text><Text tone="secondary" variant="body-sm">{treeGridSelection ? `${treeGridSelection} is ready for package review.` : "Select a release file."}</Text></Surface>
+            </VStack>
           </Card.Content>
         </Card.Root>
 

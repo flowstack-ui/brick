@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.17.1");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.18.0");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -196,6 +196,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/data-grid.d.ts",
       default: "./dist/data-grid.js",
     },
+    "./tree-grid": {
+      types: "./dist/tree-grid.d.ts",
+      default: "./dist/tree-grid.js",
+    },
     "./tree": {
       types: "./dist/tree.d.ts",
       default: "./dist/tree.js",
@@ -301,6 +305,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const list = await import(new URL("../../dist/list.js", import.meta.url));
   const table = await import(new URL("../../dist/table.js", import.meta.url));
   const dataGrid = await import(new URL("../../dist/data-grid.js", import.meta.url));
+  const treeGrid = await import(new URL("../../dist/tree-grid.js", import.meta.url));
   const tree = await import(new URL("../../dist/tree.js", import.meta.url));
   const toolbar = await import(new URL("../../dist/toolbar.js", import.meta.url));
   const pagination = await import(new URL("../../dist/pagination.js", import.meta.url));
@@ -625,6 +630,19 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ToolbarToggleItem",
       "Tooltip",
       "Tree",
+      "TreeGrid",
+      "TreeGridBody",
+      "TreeGridCaption",
+      "TreeGridCell",
+      "TreeGridColumnHeader",
+      "TreeGridContainer",
+      "TreeGridFooter",
+      "TreeGridHeader",
+      "TreeGridIndicator",
+      "TreeGridRoot",
+      "TreeGridRow",
+      "TreeGridRowHeader",
+      "TreeGridSortIndicator",
       "TreeGroup",
       "TreeIndicator",
       "TreeItem",
@@ -648,6 +666,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(dataGrid.DataGrid, brick.DataGrid);
   assert.equal(dataGrid.DataGridRoot, brick.DataGrid.Root);
   assert.equal(dataGrid.DataGridColumnHeader, brick.DataGrid.ColumnHeader);
+  assert.equal(treeGrid.TreeGrid, brick.TreeGrid);
+  assert.equal(treeGrid.TreeGridRoot, brick.TreeGrid.Root);
+  assert.equal(treeGrid.TreeGridRowHeader, brick.TreeGrid.RowHeader);
+  assert.equal(treeGrid.TreeGridIndicator, brick.TreeGrid.Indicator);
   assert.equal(tree.Tree, brick.Tree);
   assert.equal(tree.TreeRoot, brick.Tree.Root);
   assert.equal(tree.TreeIndicator, brick.Tree.Indicator);

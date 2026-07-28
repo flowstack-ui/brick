@@ -149,6 +149,13 @@ export const componentEntries = [
   },
   {
     category: "Data display",
+    description: "Navigable hierarchical rows with independently focusable cells.",
+    id: "tree-grid",
+    route: "/tree-grid",
+    title: "Tree Grid",
+  },
+  {
+    category: "Data display",
     description: "A finished one-dimensional hierarchical selection widget.",
     id: "tree",
     route: "/tree",
