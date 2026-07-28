@@ -12,6 +12,10 @@ test("defaults and grid anatomy are deterministic", async ({ page }) => {
   await expect(root).toHaveAttribute("aria-colcount", "3");
   await expect(root.locator("tbody tr")).toHaveCount(3);
   await expect(root.locator("caption")).toHaveCSS("caption-side", "bottom");
+  await expect(root.locator("tbody tr").first()).toHaveAttribute("aria-selected", "true");
+  await root.locator("tbody tr").nth(1).click();
+  await expect(root.locator("tbody tr").nth(1)).toHaveAttribute("aria-selected", "true");
+  await expect(root.locator("tbody tr").first()).toHaveAttribute("aria-selected", "false");
 });
 
 test("navigation, selection, sorting, and containment remain Atom-owned", async ({ page }) => {

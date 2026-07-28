@@ -37,7 +37,7 @@ export function DataGridPage() {
   const sizes: DataGridSize[] = ["sm", "md", "lg"];
   const densities: DataGridDensity[] = ["compact", "comfortable", "spacious"];
   return <VStack className="data-grid-page" data-component-page="data-grid" gap="6">
-    <Scenario {...dataGridScenarios[0]}><EvidenceSurface><ProjectGrid selectionMode="single" defaultValue="atom" /></EvidenceSurface></Scenario>
+    <Scenario {...dataGridScenarios[0]}><EvidenceSurface><ProjectGrid selectionMode="single" defaultValue="atom" selectOnRowClick /></EvidenceSurface></Scenario>
     <Scenario {...dataGridScenarios[1]}><VStack gap="4"><Cell label="complete anatomy"><ProjectGrid /></Cell><RenderedOutput label="Rendered Data Grid HTML"><ProjectGrid /></RenderedOutput></VStack></Scenario>
     <Scenario {...dataGridScenarios[2]}><Grid.Root className="data-grid-specimens" columns={2} gap="4">{variants.map(variant => <Cell key={variant} label={variant}><ProjectGrid variant={variant} /></Cell>)}</Grid.Root></Scenario>
     <Scenario {...dataGridScenarios[3]}><VStack gap="4"><Grid.Root className="data-grid-specimens" columns={3} gap="4">{sizes.map(size => <Cell key={size} label={size}><ProjectGrid size={size} /></Cell>)}</Grid.Root><Grid.Root className="data-grid-specimens" columns={3} gap="4">{densities.map(density => <Cell key={density} label={density}><ProjectGrid density={density} /></Cell>)}</Grid.Root></VStack></Scenario>
