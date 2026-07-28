@@ -73,6 +73,7 @@ import { ImagePage, imageScenarios } from "../components/image/ImagePage.js";
 import { ListPage, listScenarios } from "../components/list/ListPage.js";
 import { TablePage, tableScenarios } from "../components/table/TablePage.js";
 import { ToolbarPage, toolbarScenarios } from "../components/toolbar/ToolbarPage.js";
+import { PaginationPage, paginationScenarios } from "../components/pagination/PaginationPage.js";
 import { CodePage, codeScenarios } from "../components/code/CodePage.js";
 import { CodeBlockPage, codeBlockScenarios } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
@@ -308,6 +309,9 @@ export function PlaygroundApp() {
   }
   if (entry.id === "toolbar") {
     return <PlaygroundShell entry={entry} scenarios={toolbarScenarios}><ToolbarPage /></PlaygroundShell>;
+  }
+  if (entry.id === "pagination") {
+    return <PlaygroundShell entry={entry} scenarios={paginationScenarios}><PaginationPage /></PlaygroundShell>;
   }
 
   if (entry.id === "code") {

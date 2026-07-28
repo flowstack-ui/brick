@@ -8,7 +8,7 @@ contract. The initial catalog includes Button, Card, Dialog, AlertDialog,
 Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton,
 AppBar, Tooltip, HoverCard, Popover, DropdownMenu, ContextMenu, Menubar, Form, Field, Fieldset, Checkbox,
 CheckboxGroup, RadioGroup, Switch, Breadcrumb, Tabs, Collapsible, Accordion, Input, Textarea, Select, Text, Icon, Image, Skeleton, Progress, ProgressCircle, Code, CodeBlock, Link, Stack, HStack, VStack, Grid,
-Container, Surface, Divider, Scroll Area, List, Table, Toolbar, Toast, NavList, NavigationMenu,
+Container, Surface, Divider, Scroll Area, List, Table, Toolbar, Pagination, Toast, NavList, NavigationMenu,
 BottomNavigation, and VisuallyHidden.
 
 ## Boundary
@@ -24,6 +24,7 @@ BottomNavigation, and VisuallyHidden.
 | Family | Components |
 | --- | --- |
 | Actions and selection | [Button](docs/components/button/README.md), [Icon Button](docs/components/icon-button/README.md), [Toggle](docs/components/toggle/README.md), [Toggle Group](docs/components/toggle-group/README.md), [Toolbar](docs/components/toolbar/README.md) |
+| Navigation | [Pagination](docs/components/pagination/README.md) |
 | Forms and choices | [Form](docs/components/form/README.md), [Field](docs/components/field/README.md), [Fieldset](docs/components/fieldset/README.md), [Input](docs/components/input/README.md), [Textarea](docs/components/textarea/README.md), [Select](docs/components/select/README.md), [Multi Select](docs/components/multi-select/README.md), [Checkbox](docs/components/checkbox/README.md), [Checkbox Group](docs/components/checkbox-group/README.md), [Radio Group](docs/components/radio-group/README.md), [Switch](docs/components/switch/README.md) |
 | Content and status | [Text](docs/components/text/README.md), [Icon](docs/components/icon/README.md), [Image](docs/components/image/README.md), [Visually Hidden](docs/components/visually-hidden/README.md), [Skeleton](docs/components/skeleton/README.md), [Progress](docs/components/progress/README.md), [Progress Circle](docs/components/progress-circle/README.md), [Toast](docs/components/toast/README.md), [Collapsible](docs/components/collapsible/README.md), [Accordion](docs/components/accordion/README.md), [Code](docs/components/code/README.md), [Code Block](docs/components/code-block/README.md), [Avatar](docs/components/avatar/README.md), [Badge](docs/components/badge/README.md), [Notification Badge](docs/components/notification-badge/README.md), [Card](docs/components/card/README.md), [List](docs/components/list/README.md), [Table](docs/components/table/README.md), [Divider](docs/components/divider/README.md) |
 | Contextual overlays | [Tooltip](docs/components/tooltip/README.md), [Hover Card](docs/components/hover-card/README.md), [Popover](docs/components/popover/README.md), [Dropdown Menu](docs/components/dropdown-menu/README.md), [Context Menu](docs/components/context-menu/README.md), [Menubar](docs/components/menubar/README.md) |

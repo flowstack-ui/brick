@@ -6,6 +6,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added `Pagination` with an Atom-generated numbered range, localized labels,
+  explicit seven-part composition, three variants and sizes, logical controls,
+  and no-wrap inline overflow.
+
 - Added `Toolbar` with compound commands, links, separators, toggle groups,
   three surfaces and sizes, orientation-aware navigation, and no-wrap overflow.
 

@@ -1940,6 +1940,17 @@ componentDocumentationContracts.accordion = {
   publicTokens: ["--brick-accordion-background","--brick-accordion-border-color","--brick-accordion-divider-color","--brick-accordion-trigger-background","--brick-accordion-trigger-hover-background","--brick-accordion-trigger-open-background","--brick-accordion-foreground","--brick-accordion-content-foreground","--brick-accordion-focus-ring","--brick-accordion-radius","--brick-accordion-trigger-height","--brick-accordion-trigger-padding-inline","--brick-accordion-content-padding-block","--brick-accordion-content-padding-inline","--brick-accordion-indicator-size"],
 };
 
+componentDocumentationContracts.pagination = {
+  source: "src/components/pagination/Pagination.tsx",
+  exportSource: "src/components/pagination/index.ts",
+  css: "src/components/pagination/pagination.css",
+  exports: ["Pagination","PaginationRoot","PaginationList","PaginationPrevious","PaginationItems","PaginationItem","PaginationEllipsis","PaginationNext","PaginationRootProps","PaginationListProps","PaginationPreviousProps","PaginationItemsProps","PaginationItemProps","PaginationEllipsisProps","PaginationNextProps","PaginationVariant","PaginationSize"],
+  unions: { PaginationVariant: ["plain", "soft", "outline"], PaginationSize: ["sm", "md", "lg"] },
+  defaults: { variant: "plain", size: "md" },
+  dataAttributes: ["data-size", "data-slot", "data-variant"],
+  publicTokens: ["--brick-pagination-root-background","--brick-pagination-root-border-color","--brick-pagination-root-radius","--brick-pagination-root-padding","--brick-pagination-list-gap","--brick-pagination-list-overflow-padding","--brick-pagination-control-min-size","--brick-pagination-control-inline-padding","--brick-pagination-control-radius","--brick-pagination-control-foreground","--brick-pagination-control-background","--brick-pagination-control-border-color","--brick-pagination-control-hover-background","--brick-pagination-control-pressed-background","--brick-pagination-current-background","--brick-pagination-current-foreground","--brick-pagination-current-border-color","--brick-pagination-disabled-foreground","--brick-pagination-focus-ring","--brick-pagination-ellipsis-foreground","--brick-pagination-icon-size","--brick-pagination-transition-duration","--brick-pagination-font-family","--brick-pagination-font-size","--brick-pagination-font-weight","--brick-pagination-line-height","--brick-pagination-letter-spacing"],
+};
+
 componentDocumentationContracts["multi-select"] = {
   ...componentDocumentationContracts.select,
   source: "src/components/multi-select/MultiSelect.tsx",

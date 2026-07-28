@@ -148,6 +148,13 @@ export const componentEntries = [
     title: "Toolbar",
   },
   {
+    category: "Navigation",
+    description: "Bounded numbered-page navigation with generated ranges.",
+    id: "pagination",
+    route: "/pagination",
+    title: "Pagination",
+  },
+  {
     category: "Data display",
     description: "Inline technical literals with native code semantics.",
     id: "code",

@@ -1,0 +1,4 @@
+import { expect, installVisualDefaults, test } from "../../visual-harness.js";
+installVisualDefaults("/pagination");
+test("Pagination overview and recipes", async ({ page }) => { await page.setViewportSize({ width: 1120, height: 1100 }); await expect(page.locator("#scenario-pagination-overview")).toHaveScreenshot("overview-light.png"); await expect(page.locator("#scenario-pagination-variants")).toHaveScreenshot("variants-light.png"); await expect(page.locator("#scenario-pagination-sizes")).toHaveScreenshot("sizes-light.png"); });
+test("Pagination appearance and stress", async ({ page }) => { await page.setViewportSize({ width: 1120, height: 1400 }); await expect(page.locator("#scenario-pagination-appearance")).toHaveScreenshot("appearance-light.png"); await expect(page.locator("#scenario-pagination-stress")).toHaveScreenshot("stress-light.png"); });

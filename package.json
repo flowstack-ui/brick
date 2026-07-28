@@ -215,6 +215,10 @@
       "types": "./dist/toolbar.d.ts",
       "default": "./dist/toolbar.js"
     },
+    "./pagination": {
+      "types": "./dist/pagination.d.ts",
+      "default": "./dist/pagination.js"
+    },
     "./stack": {
       "types": "./dist/stack.d.ts",
       "default": "./dist/stack.js"
@@ -330,7 +334,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.15.0"
+    "@flowstack-ui/atom": "0.16.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

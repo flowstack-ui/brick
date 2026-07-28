@@ -25,6 +25,8 @@ This directory is the public documentation authority for
   multiple pressed commands
 - [Toolbar](components/toolbar/README.md) — related commands with one keyboard
   entry point
+- [Pagination](components/pagination/README.md) — generated numbered-page
+  navigation for bounded result sets
 
 ### Forms and choices
 

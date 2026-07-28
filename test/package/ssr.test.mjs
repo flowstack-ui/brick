@@ -31,6 +31,7 @@ import { Text } from "../../dist/text.js";
 import { Link } from "../../dist/link.js";
 import { List } from "../../dist/list.js";
 import { Table } from "../../dist/table.js";
+import { Pagination } from "../../dist/pagination.js";
 import { HStack, Stack, VStack } from "../../dist/stack.js";
 import { Grid } from "../../dist/grid.js";
 import { Container } from "../../dist/container.js";
@@ -44,6 +45,16 @@ import { CodeBlock } from "../../dist/code-block.js";
 import { Icon } from "../../dist/icon.js";
 import { Image } from "../../dist/image.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("Pagination renders deterministic generated native anatomy during SSR", () => {
+  const markup = renderToString(React.createElement(Pagination.Root, { "aria-label": "Result pages", defaultPage: 4, totalPages: 8, variant: "outline" }, React.createElement(Pagination.List, null, React.createElement(Pagination.Previous), React.createElement(Pagination.Items), React.createElement(Pagination.Next))));
+  assert.match(markup, /<nav/);
+  assert.match(markup, /class="brick-pagination"/);
+  assert.match(markup, /data-variant="outline"/);
+  assert.match(markup, /<ol[^>]*brick-pagination__list/);
+  assert.match(markup, /aria-current="page"/);
+  assert.match(markup, /brick-pagination__ellipsis/);
+});
 
 test("Table renders deterministic native static anatomy during SSR", () => {
   const markup = renderToString(React.createElement(Table.Root, { striped: true }, React.createElement(Table.Caption, null, "Results"), React.createElement(Table.Body, null, React.createElement(Table.Row, null, React.createElement(Table.Head, { scope: "row" }, "Atom"), React.createElement(Table.Cell, { numeric: true }, "42")))));

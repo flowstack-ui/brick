@@ -31,6 +31,7 @@ import { Link } from "@flowstack-ui/brick/link";
 import { List } from "@flowstack-ui/brick/list";
 import { Table } from "@flowstack-ui/brick/table";
 import { Toolbar } from "@flowstack-ui/brick/toolbar";
+import { Pagination } from "@flowstack-ui/brick/pagination";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
 import { Grid } from "@flowstack-ui/brick/grid";
 import { Container } from "@flowstack-ui/brick/container";
@@ -108,6 +109,7 @@ export function App() {
   const [channelStatus, setChannelStatus] = useState("No delivery channel submitted.");
   const [compactDestination, setCompactDestination] = useState("home");
   const [tableSort, setTableSort] = useState<"ascending" | "descending">("descending");
+  const [reportPage, setReportPage] = useState(1);
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -697,6 +699,9 @@ export function App() {
                 <Table.Footer><Table.Row><Table.Head scope="row" colSpan={2}>Total checks</Table.Head><Table.Cell numeric>214</Table.Cell><Table.Cell colSpan={2}>Packed artifact</Table.Cell></Table.Row></Table.Footer>
               </Table.Root>
             </Table.Container>
+            <Pagination.Root aria-label="Release report pages" onPageChange={setReportPage} page={reportPage} totalPages={5} variant="outline">
+              <Pagination.List><Pagination.Previous /><Pagination.Items /><Pagination.Next /></Pagination.List>
+            </Pagination.Root>
           </Card.Content>
         </Card.Root>
 

@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.15.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.16.0");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -196,6 +196,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/toolbar.d.ts",
       default: "./dist/toolbar.js",
     },
+    "./pagination": {
+      types: "./dist/pagination.d.ts",
+      default: "./dist/pagination.js",
+    },
     "./stack": {
       types: "./dist/stack.d.ts",
       default: "./dist/stack.js",
@@ -289,6 +293,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const list = await import(new URL("../../dist/list.js", import.meta.url));
   const table = await import(new URL("../../dist/table.js", import.meta.url));
   const toolbar = await import(new URL("../../dist/toolbar.js", import.meta.url));
+  const pagination = await import(new URL("../../dist/pagination.js", import.meta.url));
   const stack = await import(new URL("../../dist/stack.js", import.meta.url));
   const grid = await import(new URL("../../dist/grid.js", import.meta.url));
   const container = await import(new URL("../../dist/container.js", import.meta.url));
@@ -481,6 +486,14 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "NavigationMenuTrigger",
       "NavigationMenuViewport",
       "NotificationBadge",
+      "Pagination",
+      "PaginationEllipsis",
+      "PaginationItem",
+      "PaginationItems",
+      "PaginationList",
+      "PaginationNext",
+      "PaginationPrevious",
+      "PaginationRoot",
       "Popover",
       "PopoverAnchor",
       "PopoverArrow",
@@ -607,6 +620,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(toolbar.Toolbar, brick.Toolbar);
   assert.equal(toolbar.ToolbarRoot, brick.Toolbar.Root);
   assert.equal(toolbar.ToolbarToggleItem, brick.Toolbar.ToggleItem);
+  assert.equal(pagination.Pagination, brick.Pagination);
+  assert.equal(pagination.PaginationRoot, brick.Pagination.Root);
+  assert.equal(pagination.PaginationItems, brick.Pagination.Items);
   assert.equal(appBar.AppBar, brick.AppBar);
   assert.equal(appBar.AppBarRoot, brick.AppBar.Root);
   assert.equal(appBar.AppBarToolbar, brick.AppBar.Toolbar);
@@ -786,6 +802,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-text/);
   assert.match(styles, /\.brick-link/);
   assert.match(styles, /\.brick-breadcrumb/);
+  assert.match(styles, /\.brick-pagination/);
   assert.match(styles, /\.brick-bottom-navigation/);
   assert.match(styles, /\.brick-list/);
   assert.match(styles, /\.brick-stack/);
@@ -827,6 +844,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-text-font-size/);
   assert.match(styles, /--brick-link-foreground/);
   assert.match(styles, /--brick-breadcrumb-foreground/);
+  assert.match(styles, /--brick-pagination-current-background/);
   assert.match(styles, /--brick-bottom-navigation-selection-background/);
   assert.match(styles, /--brick-list-marker-style/);
   assert.match(styles, /--brick-stack-gap/);
