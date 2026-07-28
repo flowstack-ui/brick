@@ -32,6 +32,7 @@ import { Link } from "../../dist/link.js";
 import { List } from "../../dist/list.js";
 import { Table } from "../../dist/table.js";
 import { DataGrid } from "../../dist/data-grid.js";
+import { TreeGrid } from "../../dist/tree-grid.js";
 import { Tree } from "../../dist/tree.js";
 import { Pagination } from "../../dist/pagination.js";
 import { HStack, Stack, VStack } from "../../dist/stack.js";
@@ -74,6 +75,18 @@ test("Data Grid renders deterministic navigable tabular anatomy during SSR", () 
   assert.match(markup, /aria-rowcount="2"/);
   assert.match(markup, /aria-sort="ascending"/);
   assert.match(markup, /role="gridcell"/);
+});
+
+test("Tree Grid renders deterministic hierarchical tabular anatomy during SSR", () => {
+  const markup = renderToString(React.createElement(TreeGrid.Root, { "aria-label": "Release files", columnCount: 2, rowCount: 2, defaultExpandedValue: ["src"], variant: "outline" }, React.createElement(TreeGrid.Header, null, React.createElement(TreeGrid.Row, { rowIndex: 1, value: "header", selectable: false }, React.createElement(TreeGrid.ColumnHeader, { columnIndex: 1, sortDirection: "ascending" }, "Name", React.createElement(TreeGrid.SortIndicator)), React.createElement(TreeGrid.ColumnHeader, { columnIndex: 2 }, "Type"))), React.createElement(TreeGrid.Body, null, React.createElement(TreeGrid.Row, { rowIndex: 2, value: "src", level: 1, expandable: true }, React.createElement(TreeGrid.RowHeader, { columnIndex: 1 }, React.createElement(TreeGrid.Indicator), "src"), React.createElement(TreeGrid.Cell, { columnIndex: 2 }, "Folder")))));
+  assert.match(markup, /role="treegrid"/);
+  assert.match(markup, /aria-colcount="2"/);
+  assert.match(markup, /aria-rowcount="2"/);
+  assert.match(markup, /aria-level="1"/);
+  assert.match(markup, /aria-expanded="true"/);
+  assert.match(markup, /role="rowheader"/);
+  assert.match(markup, /aria-sort="ascending"/);
+  assert.match(markup, /brick-tree-grid__indicator/);
 });
 
 test("Tree renders deterministic hierarchical anatomy during SSR", () => {

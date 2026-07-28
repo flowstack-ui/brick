@@ -66,6 +66,7 @@ different owner.
 | List | overview, specimen cells, appearance scopes, customization shell, and stress panel | List markers, dividers, borders, anatomy, nesting, and exact output |
 | Table | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Table boundaries, section paint, sticky/overflow geometry, and rendered native output |
 | Data Grid | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Data Grid boundaries, active/selection state paint, cell navigation geometry, and explicit overflow containment |
+| Tree Grid | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Tree Grid boundaries, hierarchy and active/selection state paint, cell geometry, rounded clipping, and explicit overflow containment |
 | Tree | overview, comparison cells, appearance scopes, customization shell, and stress panels | Tree root/row boundaries, hierarchy guides, state paint, indentation, and focus geometry |
 | Toolbar | overview, comparison cells, and appearance scopes | Toolbar surfaces, control states, separators, orientation, and overflow geometry |
 | Pagination | overview, comparison cells, appearance scopes, customization shell, and stress panels | Pagination root/control recipes, current and disabled state paint, and inline overflow geometry |

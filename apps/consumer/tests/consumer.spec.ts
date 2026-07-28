@@ -192,6 +192,19 @@ test("composes Accordion as a linked consumer disclosure group", async ({ page }
   await expect(page.getByRole("region", { name: "Billing details" })).toContainText("Review invoices");
 });
 
+test("composes Tree Grid as a controlled release-file workflow", async ({ page }) => {
+  const treegrid = page.getByRole("treegrid", { name: "Release package files" });
+  await expect(treegrid).toHaveAttribute("data-variant", "outline");
+  await expect(treegrid.getByRole("row", { name: /packages/ })).toHaveAttribute("aria-expanded", "true");
+  const sortable = treegrid.getByRole("columnheader", { name: /Name/ });
+  await expect(sortable).toHaveAttribute("aria-sort", "ascending");
+  await sortable.click();
+  await expect(sortable).toHaveAttribute("aria-sort", "descending");
+  await treegrid.getByRole("row", { name: /atom\.tgz/ }).click();
+  await expect(treegrid.getByRole("row", { name: /atom\.tgz/ })).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByText("atom is ready for package review.")).toBeVisible();
+});
+
 test("composes Scroll Area as a constrained native activity region", async ({ page }) => {
   const viewport = page.getByRole("region", { name: "Recent workspace activity" });
   await expect(viewport).toHaveClass(/brick-scroll-area-viewport/);

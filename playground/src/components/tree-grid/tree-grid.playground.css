@@ -1,0 +1,6 @@
+.tree-grid-page { inline-size: 100%; }
+.tree-grid-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); }
+.tree-grid-specimens > *, .tree-grid-customization > * { min-inline-size: 0; }
+.tree-grid-specimens > [data-playground-evidence] { display: flex; flex-direction: column; gap: var(--brick-space-3); }
+.tree-grid-constrained { inline-size: 20rem; max-inline-size: 100%; }
+@media (max-width: 64rem) { .tree-grid-specimens, .tree-grid-customization { --brick-grid-columns: minmax(0, 1fr); } }

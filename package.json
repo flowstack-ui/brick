@@ -215,6 +215,10 @@
       "types": "./dist/data-grid.d.ts",
       "default": "./dist/data-grid.js"
     },
+    "./tree-grid": {
+      "types": "./dist/tree-grid.d.ts",
+      "default": "./dist/tree-grid.js"
+    },
     "./tree": {
       "types": "./dist/tree.d.ts",
       "default": "./dist/tree.js"
@@ -342,7 +346,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.17.1"
+    "@flowstack-ui/atom": "0.18.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

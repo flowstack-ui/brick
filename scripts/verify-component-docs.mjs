@@ -99,6 +99,7 @@ const componentSymbols = {
   list: "List",
   table: "Table",
   "data-grid": "Data Grid",
+  "tree-grid": "Tree Grid",
   tree: "Tree",
   toolbar: "Toolbar",
   pagination: "Pagination",
