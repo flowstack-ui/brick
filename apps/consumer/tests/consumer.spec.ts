@@ -87,6 +87,18 @@ test("composes Image through its public subpath inside project Card", async ({ p
   await expect(image.locator("xpath=..")).toHaveAttribute("data-frame", "subtle");
 });
 
+test("composes Aspect Ratio through its public subpath inside project Card", async ({ page }) => {
+  const frame = page.getByLabel("Release preview frame");
+  await expect(frame).toHaveClass(/brick-aspect-ratio/);
+  await expect(frame).toHaveAttribute("data-variant", "outline");
+  await expect(frame).toHaveAttribute("data-radius", "md");
+  await expect(frame).toHaveAttribute("data-overflow", "hidden");
+  const box = await frame.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.width / box!.height).toBeCloseTo(21 / 9, 1);
+  await expect(frame.getByText("Responsive release preview")).toBeVisible();
+});
+
 test("composes Icon through its public subpath in a named control", async ({ page }) => {
   const control = page.getByRole("link", { name: "Jump to workspace" });
   const icon = control.locator(".brick-icon");

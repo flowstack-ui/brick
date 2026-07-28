@@ -200,6 +200,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/tree-grid.d.ts",
       default: "./dist/tree-grid.js",
     },
+    "./aspect-ratio": {
+      types: "./dist/aspect-ratio.d.ts",
+      default: "./dist/aspect-ratio.js",
+    },
     "./tree": {
       types: "./dist/tree.d.ts",
       default: "./dist/tree.js",
@@ -306,6 +310,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const table = await import(new URL("../../dist/table.js", import.meta.url));
   const dataGrid = await import(new URL("../../dist/data-grid.js", import.meta.url));
   const treeGrid = await import(new URL("../../dist/tree-grid.js", import.meta.url));
+  const aspectRatio = await import(new URL("../../dist/aspect-ratio.js", import.meta.url));
   const tree = await import(new URL("../../dist/tree.js", import.meta.url));
   const toolbar = await import(new URL("../../dist/toolbar.js", import.meta.url));
   const pagination = await import(new URL("../../dist/pagination.js", import.meta.url));
@@ -347,6 +352,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "AppBarRoot",
       "AppBarStart",
       "AppBarToolbar",
+      "AspectRatio",
+      "AspectRatioRoot",
       "Avatar",
       "Badge",
       "BottomNavigation",
@@ -659,6 +666,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(iconButton.IconButton, brick.IconButton);
   assert.equal(icon.Icon, brick.Icon);
   assert.equal(image.Image, brick.Image);
+  assert.equal(aspectRatio.AspectRatio, brick.AspectRatio);
+  assert.equal(aspectRatio.AspectRatioRoot, brick.AspectRatio.Root);
   assert.equal(list.List, brick.List);
   assert.equal(table.Table, brick.Table);
   assert.equal(table.TableRoot, brick.Table.Root);

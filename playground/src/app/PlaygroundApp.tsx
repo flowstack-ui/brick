@@ -74,6 +74,7 @@ import { ListPage, listScenarios } from "../components/list/ListPage.js";
 import { TablePage, tableScenarios } from "../components/table/TablePage.js";
 import { DataGridPage, dataGridScenarios } from "../components/data-grid/DataGridPage.js";
 import { TreeGridPage, treeGridScenarios } from "../components/tree-grid/TreeGridPage.js";
+import { AspectRatioPage, aspectRatioScenarios } from "../components/aspect-ratio/AspectRatioPage.js";
 import { TreePage, treeScenarios } from "../components/tree/TreePage.js";
 import { ToolbarPage, toolbarScenarios } from "../components/toolbar/ToolbarPage.js";
 import { PaginationPage, paginationScenarios } from "../components/pagination/PaginationPage.js";
@@ -315,6 +316,9 @@ export function PlaygroundApp() {
   }
   if (entry.id === "tree-grid") {
     return <PlaygroundShell entry={entry} scenarios={treeGridScenarios}><TreeGridPage /></PlaygroundShell>;
+  }
+  if (entry.id === "aspect-ratio") {
+    return <PlaygroundShell entry={entry} scenarios={aspectRatioScenarios}><AspectRatioPage /></PlaygroundShell>;
   }
   if (entry.id === "tree") {
     return <PlaygroundShell entry={entry} scenarios={treeScenarios}><TreePage /></PlaygroundShell>;

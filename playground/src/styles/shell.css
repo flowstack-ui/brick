@@ -167,16 +167,6 @@
   font-size: 0.6875rem;
 }
 
-@container (min-width: 60rem) {
-  .scenario-nav ol {
-    inline-size: 100%;
-  }
-
-  .scenario-nav li {
-    flex: 1 1 0;
-  }
-}
-
 .evidence-footer {
   margin-block-start: 4rem;
   padding-block: var(--brick-space-5);

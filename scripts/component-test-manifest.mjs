@@ -1,5 +1,6 @@
 export const componentIds = [
   "alert-dialog",
+  "aspect-ratio",
   "app-bar",
   "avatar",
   "badge",

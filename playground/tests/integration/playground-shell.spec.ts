@@ -122,14 +122,14 @@ test("review controls remain content-sized in a stacked header", async ({
   expect(Math.max(...itemBoxes.map(({ width }) => width))).toBeLessThan(panelBox!.width);
 });
 
-test("wide scenario navigation aligns, distributes, and sticks with its header", async ({
+test("wide scenario navigation aligns, scrolls without overlap, and sticks with its header", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/button");
+  await page.goto("/aspect-ratio");
 
   const navigation = page.getByRole("navigation", {
-    name: "Button scenarios",
+    name: "Aspect Ratio scenarios",
   });
   const content = page.locator("[data-playground-content]");
   const [navigationBox, contentBox] = await Promise.all([
@@ -139,14 +139,24 @@ test("wide scenario navigation aligns, distributes, and sticks with its header",
   expect(navigationBox?.x).toBe(contentBox?.x);
   expect(navigationBox?.width).toBe(contentBox?.width);
 
-  const widths = await navigation.locator("li").evaluateAll((items) =>
-    items.map((item) => Math.round(item.getBoundingClientRect().width)),
+  const itemRects = await navigation.locator("li").evaluateAll((items) =>
+    items.map((item) => {
+      const rect = item.getBoundingClientRect();
+      return { left: rect.left, right: rect.right };
+    }),
   );
-  expect(Math.max(...widths) - Math.min(...widths)).toBeLessThanOrEqual(1);
+  expect(itemRects.every((rect, index) =>
+    index === itemRects.length - 1 || rect.right <= itemRects[index + 1]!.left + 0.5,
+  )).toBe(true);
   const overflowingLinks = await navigation.locator("a").evaluateAll((links) =>
     links.filter((link) => link.scrollWidth > link.clientWidth).length,
   );
   expect(overflowingLinks).toBe(0);
+  const scrollGeometry = await navigation.locator(".scenario-nav-scroll").evaluate((root) => ({
+    clientWidth: root.clientWidth,
+    scrollWidth: root.scrollWidth,
+  }));
+  expect(scrollGeometry.scrollWidth).toBeGreaterThanOrEqual(scrollGeometry.clientWidth);
 
   const appBar = page.getByRole("banner", { name: "Brick playground" });
   const kicker = page.getByText("@flowstack-ui/brick", { exact: true });

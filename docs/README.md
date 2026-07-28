@@ -30,6 +30,8 @@ This directory is the public documentation authority for
 
 ### Data display
 
+- [Aspect Ratio](components/aspect-ratio/README.md) — stable layout geometry
+  and optional framing for authored content
 - [Data Grid](components/data-grid/README.md) — navigable tabular data with
   selection and controlled sortable headers
 - [Tree Grid](components/tree-grid/README.md) — navigable hierarchical rows
