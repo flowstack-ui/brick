@@ -1,9 +1,26 @@
 .table-page { inline-size: 100%; }
 .table-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); }
 .table-grid > * { min-inline-size: 0; }
-.table-sticky { max-block-size: 7rem; overflow-y: auto; }
-.table-narrow { inline-size: min(100%, 20rem); }
+.table-sticky { max-block-size: 15rem; overflow-y: auto; }
 .table-page .brick-button { gap: var(--brick-space-1); }
+.table-page .table-sort-button {
+  --brick-button-min-block-size: auto;
+  --brick-button-padding-block: 0;
+  --brick-button-padding-inline: 0;
+  --brick-button-font-family: inherit;
+  --brick-button-font-size: inherit;
+  --brick-button-font-weight: inherit;
+  --brick-button-line-height: inherit;
+  --brick-button-letter-spacing: inherit;
+  --brick-button-background: transparent;
+  --brick-button-background-hover: transparent;
+  --brick-button-background-pressed: transparent;
+  --brick-button-border-color: transparent;
+  --brick-button-foreground: inherit;
+  border-radius: var(--brick-radius-control);
+}
+.table-customization > * { min-inline-size: 0; }
 .table-status-cell { white-space: nowrap; }
 @media (max-width: 64rem) { .table-grid { --brick-grid-columns: minmax(0, 1fr); } }
-@media (max-width: 36rem) { .table-grid, .table-grid--two { --brick-grid-columns: minmax(0, 1fr); } }
+@media (max-width: 64rem) { .table-customization { --brick-grid-columns: minmax(0, 1fr); } }
+@media (max-width: 36rem) { .table-grid, .table-grid--two, .table-customization { --brick-grid-columns: minmax(0, 1fr); } }

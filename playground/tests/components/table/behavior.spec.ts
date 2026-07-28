@@ -12,6 +12,7 @@ test("Table defaults and native anatomy are deterministic", async ({ page }) => 
   await expect(root.locator("thead th")).toHaveCount(4);
   await expect(root.locator("tbody tr")).toHaveCount(3);
   await expect(root.locator("tbody th").first()).toHaveAttribute("scope", "row");
+  expect(await root.locator("tfoot tr").first().locator("th, td").evaluateAll((cells) => cells.reduce((total, cell) => total + (cell as HTMLTableCellElement).colSpan, 0))).toBe(4);
 });
 
 test("Table recipes, numeric alignment, and sorting remain independent", async ({ page }) => {
@@ -28,6 +29,10 @@ test("Table recipes, numeric alignment, and sorting remain independent", async (
   await button.click();
   await expect(head).toHaveAttribute("aria-sort", "descending");
   await expect(button).toBeFocused();
+  const headerText = page.locator("#scenario-table-sorting thead th").first();
+  await expect(button).toHaveCSS("font-size", await headerText.evaluate((node) => getComputedStyle(node).fontSize));
+  await expect(page.locator("#scenario-table-alignment .table-cell")).toHaveCount(4);
+  await expect(page.locator("#scenario-table-alignment .brick-table[data-variant='outline']")).toHaveCount(4);
 });
 
 test("Table sticky and explicit overflow geometry stay contained", async ({ page }) => {
@@ -38,11 +43,14 @@ test("Table sticky and explicit overflow geometry stay contained", async ({ page
   const after = await head.boundingBox();
   expect(Math.abs(after!.y - containerBox!.y)).toBeLessThan(2);
   await page.setViewportSize({ width: 390, height: 844 });
-  const container = page.locator("#scenario-table-stress .brick-table-container");
+  const container = page.locator("#scenario-table-stress .brick-table-container").first();
   expect(await container.evaluate((node) => node.scrollWidth > node.clientWidth)).toBe(true);
   const overflowBox = await container.boundingBox();
   expect(overflowBox!.x).toBeGreaterThanOrEqual(0);
   expect(overflowBox!.x + overflowBox!.width).toBeLessThanOrEqual(390);
+  await expect(page.locator("#scenario-table-sticky .table-cell")).toHaveCount(3);
+  await expect(page.locator("#scenario-table-appearance [data-brick-appearance='light'] .brick-table .brick-badge")).toHaveCount(3);
+  await expect(page.locator("#scenario-table-appearance [data-brick-appearance='dark'] .brick-table .brick-badge")).toHaveCount(3);
 });
 
 test("Table has no composite behavior and passes accessibility checks", async ({ page }) => {

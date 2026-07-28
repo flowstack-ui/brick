@@ -16,7 +16,7 @@
 Scenario order: `01 Overview`, `02 Anatomy and semantics`, `03 Variants and
 stripe`, `04 Sizes and density`, `05 Alignment and numeric data`, `06 Sorting
 composition`, `07 Caption, footer, and sticky header`, `08 Appearance and
-customization`, `09 Responsive and boundary`.
+customization`, `09 Responsive, RTL, and boundary`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
