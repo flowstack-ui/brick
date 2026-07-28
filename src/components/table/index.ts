@@ -1,0 +1,2 @@
+export { Table, TableBody, TableCaption, TableCell, TableContainer, TableFooter, TableHead, TableHeader, TableRoot, TableRow, TableSortIndicator } from "./Table.js";
+export type { TableBodyProps, TableCaptionProps, TableCaptionSide, TableCellAlign, TableCellProps, TableContainerProps, TableDensity, TableFooterProps, TableHeadProps, TableHeaderProps, TableRootProps, TableRowProps, TableSize, TableSortIndicatorProps, TableVariant } from "./Table.js";

@@ -71,6 +71,10 @@ import { TextPage, textScenarios } from "../components/text/TextPage.js";
 import { IconPage, iconScenarios } from "../components/icon/IconPage.js";
 import { ImagePage, imageScenarios } from "../components/image/ImagePage.js";
 import { ListPage, listScenarios } from "../components/list/ListPage.js";
+import { TablePage, tableScenarios } from "../components/table/TablePage.js";
+import { DataGridPage, dataGridScenarios } from "../components/data-grid/DataGridPage.js";
+import { ToolbarPage, toolbarScenarios } from "../components/toolbar/ToolbarPage.js";
+import { PaginationPage, paginationScenarios } from "../components/pagination/PaginationPage.js";
 import { CodePage, codeScenarios } from "../components/code/CodePage.js";
 import { CodeBlockPage, codeBlockScenarios } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
@@ -123,6 +127,7 @@ import { VisuallyHiddenPage, visuallyHiddenScenarios } from "../components/visua
 import { SkeletonPage, skeletonScenarios } from "../components/skeleton/SkeletonPage.js";
 import { ProgressPage, progressScenarios } from "../components/progress/ProgressPage.js";
 import { ProgressCirclePage, progressCircleScenarios } from "../components/progress-circle/ProgressCirclePage.js";
+import { ToastPage, toastScenarios } from "../components/toast/ToastPage.js";
 import { CollapsiblePage, collapsibleScenarios } from "../components/collapsible/CollapsiblePage.js";
 import { AccordionPage, accordionScenarios } from "../components/accordion/AccordionPage.js";
 import { PlaygroundShell } from "../shell/PlaygroundShell.js";
@@ -298,6 +303,19 @@ export function PlaygroundApp() {
 
   if (entry.id === "list") {
     return <PlaygroundShell entry={entry} scenarios={listScenarios}><ListPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "table") {
+    return <PlaygroundShell entry={entry} scenarios={tableScenarios}><TablePage /></PlaygroundShell>;
+  }
+  if (entry.id === "data-grid") {
+    return <PlaygroundShell entry={entry} scenarios={dataGridScenarios}><DataGridPage /></PlaygroundShell>;
+  }
+  if (entry.id === "toolbar") {
+    return <PlaygroundShell entry={entry} scenarios={toolbarScenarios}><ToolbarPage /></PlaygroundShell>;
+  }
+  if (entry.id === "pagination") {
+    return <PlaygroundShell entry={entry} scenarios={paginationScenarios}><PaginationPage /></PlaygroundShell>;
   }
 
   if (entry.id === "code") {
@@ -478,6 +496,10 @@ export function PlaygroundApp() {
 
   if (entry.id === "progress-circle") {
     return <PlaygroundShell entry={entry} scenarios={progressCircleScenarios}><ProgressCirclePage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "toast") {
+    return <PlaygroundShell entry={entry} scenarios={toastScenarios}><ToastPage /></PlaygroundShell>;
   }
 
   if (entry.id === "collapsible") {

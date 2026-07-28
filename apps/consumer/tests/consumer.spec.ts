@@ -21,6 +21,22 @@ test("composes Collapsible through its public subpath", async ({ page }) => {
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
 });
 
+test("composes Toolbar through its public subpath", async ({ page }) => {
+  const toolbar = page.getByRole("toolbar", { name: "Document view tools" });
+  await expect(toolbar).toHaveAttribute("data-variant", "outline");
+  await toolbar.getByRole("button", { name: "Refresh" }).focus();
+  await page.keyboard.press("End");
+  await expect(toolbar.getByRole("link", { name: "Publishing help" })).toBeFocused();
+});
+
+test("composes Pagination through its public subpath", async ({ page }) => {
+  const pagination = page.getByRole("navigation", { name: "Release report pages" });
+  await expect(pagination).toHaveAttribute("data-variant", "outline");
+  await expect(pagination.getByRole("button", { name: "Page 1, current page" })).toHaveAttribute("aria-current", "page");
+  await pagination.getByRole("button", { name: "Next page" }).click();
+  await expect(pagination.getByRole("button", { name: "Page 2, current page" })).toBeVisible();
+});
+
 test("composes the complete menu family through public subpaths", async ({ page }) => {
   const navigation = page.getByRole("navigation", { name: "Workspace destinations", exact: true });
   await expect(navigation).toHaveClass(/brick-navigation-menu/);
@@ -151,6 +167,7 @@ test("renders and operates Brick through its public package", async ({ page }) =
   );
   await page.getByRole("button", { name: "Publish now" }).click();
   await expect(page.getByText("Published 1 time.")).toBeVisible();
+  await expect(page.getByRole("region", { name: "Notifications (F8)" }).getByText("Project published")).toBeVisible();
   await expect(dialog).toBeHidden();
   await expect(publishTrigger).toBeFocused();
 

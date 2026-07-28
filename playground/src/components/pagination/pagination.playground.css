@@ -1,0 +1,9 @@
+.pagination-grid { align-items: stretch; }
+.pagination-grid--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.pagination-grid > *, .pagination-customization > * { min-inline-size: 0; }
+.pagination-cell { display: flex; min-inline-size: 0; flex-direction: column; align-items: flex-start; gap: var(--brick-space-3); }
+.pagination-cell__preview { display: flex; min-block-size: 5rem; min-inline-size: 0; inline-size: 100%; align-items: center; }
+.pagination-customization__preview { display: flex; min-inline-size: 0; align-items: center; justify-content: center; }
+.pagination-narrow { max-inline-size: 18rem; }
+.pagination-rtl { display: flex; justify-content: flex-start; }
+@media (max-width: 760px) { .pagination-grid, .pagination-grid--two, .pagination-customization { --brick-grid-columns: minmax(0, 1fr); grid-template-columns: 1fr; } }

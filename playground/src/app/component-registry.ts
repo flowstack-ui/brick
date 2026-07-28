@@ -135,6 +135,34 @@ export const componentEntries = [
   },
   {
     category: "Data display",
+    description: "Native static tabular data with responsive containment.",
+    id: "table",
+    route: "/table",
+    title: "Table",
+  },
+  {
+    category: "Data display",
+    description: "Navigable tabular data with row selection and sortable headers.",
+    id: "data-grid",
+    route: "/data-grid",
+    title: "Data Grid",
+  },
+  {
+    category: "Actions",
+    description: "Related commands with one keyboard entry point.",
+    id: "toolbar",
+    route: "/toolbar",
+    title: "Toolbar",
+  },
+  {
+    category: "Navigation",
+    description: "Bounded numbered-page navigation with generated ranges.",
+    id: "pagination",
+    route: "/pagination",
+    title: "Pagination",
+  },
+  {
+    category: "Data display",
     description: "Inline technical literals with native code semantics.",
     id: "code",
     route: "/code",
@@ -216,6 +244,13 @@ export const componentEntries = [
     id: "progress-circle",
     route: "/progress-circle",
     title: "Progress Circle",
+  },
+  {
+    category: "Feedback",
+    description: "Temporary non-blocking application outcomes and process updates.",
+    id: "toast",
+    route: "/toast",
+    title: "Toast",
   },
   {
     category: "Data display",

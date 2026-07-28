@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.14.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.17.0");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -156,6 +156,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/progress-circle.d.ts",
       default: "./dist/progress-circle.js",
     },
+    "./toast": {
+      types: "./dist/toast.d.ts",
+      default: "./dist/toast.js",
+    },
     "./collapsible": {
       types: "./dist/collapsible.d.ts",
       default: "./dist/collapsible.js",
@@ -183,6 +187,22 @@ test("package metadata defines the public Brick boundary", async () => {
     "./list": {
       types: "./dist/list.d.ts",
       default: "./dist/list.js",
+    },
+    "./table": {
+      types: "./dist/table.d.ts",
+      default: "./dist/table.js",
+    },
+    "./data-grid": {
+      types: "./dist/data-grid.d.ts",
+      default: "./dist/data-grid.js",
+    },
+    "./toolbar": {
+      types: "./dist/toolbar.d.ts",
+      default: "./dist/toolbar.js",
+    },
+    "./pagination": {
+      types: "./dist/pagination.d.ts",
+      default: "./dist/pagination.js",
     },
     "./stack": {
       types: "./dist/stack.d.ts",
@@ -269,11 +289,16 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const skeleton = await import(new URL("../../dist/skeleton.js", import.meta.url));
   const progress = await import(new URL("../../dist/progress.js", import.meta.url));
   const progressCircle = await import(new URL("../../dist/progress-circle.js", import.meta.url));
+  const toastModule = await import(new URL("../../dist/toast.js", import.meta.url));
   const input = await import(new URL("../../dist/input.js", import.meta.url));
   const textarea = await import(new URL("../../dist/textarea.js", import.meta.url));
   const text = await import(new URL("../../dist/text.js", import.meta.url));
   const link = await import(new URL("../../dist/link.js", import.meta.url));
   const list = await import(new URL("../../dist/list.js", import.meta.url));
+  const table = await import(new URL("../../dist/table.js", import.meta.url));
+  const dataGrid = await import(new URL("../../dist/data-grid.js", import.meta.url));
+  const toolbar = await import(new URL("../../dist/toolbar.js", import.meta.url));
+  const pagination = await import(new URL("../../dist/pagination.js", import.meta.url));
   const stack = await import(new URL("../../dist/stack.js", import.meta.url));
   const grid = await import(new URL("../../dist/grid.js", import.meta.url));
   const container = await import(new URL("../../dist/container.js", import.meta.url));
@@ -370,6 +395,17 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ContextMenuSubContent",
       "ContextMenuSubTrigger",
       "ContextMenuTrigger",
+      "DataGrid",
+      "DataGridBody",
+      "DataGridCaption",
+      "DataGridCell",
+      "DataGridColumnHeader",
+      "DataGridContainer",
+      "DataGridFooter",
+      "DataGridHeader",
+      "DataGridRoot",
+      "DataGridRow",
+      "DataGridSortIndicator",
       "Dialog",
       "Divider",
       "Drawer",
@@ -466,6 +502,14 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "NavigationMenuTrigger",
       "NavigationMenuViewport",
       "NotificationBadge",
+      "Pagination",
+      "PaginationEllipsis",
+      "PaginationItem",
+      "PaginationItems",
+      "PaginationList",
+      "PaginationNext",
+      "PaginationPrevious",
+      "PaginationRoot",
       "Popover",
       "PopoverAnchor",
       "PopoverArrow",
@@ -531,6 +575,17 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Switch",
       "SwitchRoot",
       "SwitchThumb",
+      "Table",
+      "TableBody",
+      "TableCaption",
+      "TableCell",
+      "TableContainer",
+      "TableFooter",
+      "TableHead",
+      "TableHeader",
+      "TableRoot",
+      "TableRow",
+      "TableSortIndicator",
       "Tabs",
       "TabsContent",
       "TabsIndicator",
@@ -541,14 +596,33 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Textarea",
       "TextareaCount",
       "TextareaRoot",
+      "Toast",
+      "ToastAction",
+      "ToastActions",
+      "ToastClose",
+      "ToastContent",
+      "ToastDescription",
+      "ToastIcon",
+      "ToastRoot",
+      "ToastTitle",
+      "ToastViewport",
+      "Toaster",
       "Toggle",
       "ToggleGroup",
       "ToggleGroupItem",
       "ToggleGroupRoot",
+      "Toolbar",
+      "ToolbarButton",
+      "ToolbarLink",
+      "ToolbarRoot",
+      "ToolbarSeparator",
+      "ToolbarToggleGroup",
+      "ToolbarToggleItem",
       "Tooltip",
       "VStack",
       "VisuallyHidden",
-      "VisuallyHiddenRoot"
+      "VisuallyHiddenRoot",
+      "toast"
     ],
   );
   assert.equal(button.Button, brick.Button);
@@ -556,6 +630,18 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(icon.Icon, brick.Icon);
   assert.equal(image.Image, brick.Image);
   assert.equal(list.List, brick.List);
+  assert.equal(table.Table, brick.Table);
+  assert.equal(table.TableRoot, brick.Table.Root);
+  assert.equal(table.TableCell, brick.Table.Cell);
+  assert.equal(dataGrid.DataGrid, brick.DataGrid);
+  assert.equal(dataGrid.DataGridRoot, brick.DataGrid.Root);
+  assert.equal(dataGrid.DataGridColumnHeader, brick.DataGrid.ColumnHeader);
+  assert.equal(toolbar.Toolbar, brick.Toolbar);
+  assert.equal(toolbar.ToolbarRoot, brick.Toolbar.Root);
+  assert.equal(toolbar.ToolbarToggleItem, brick.Toolbar.ToggleItem);
+  assert.equal(pagination.Pagination, brick.Pagination);
+  assert.equal(pagination.PaginationRoot, brick.Pagination.Root);
+  assert.equal(pagination.PaginationItems, brick.Pagination.Items);
   assert.equal(appBar.AppBar, brick.AppBar);
   assert.equal(appBar.AppBarRoot, brick.AppBar.Root);
   assert.equal(appBar.AppBarToolbar, brick.AppBar.Toolbar);
@@ -628,6 +714,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(progressCircle.ProgressCircleIndicator, brick.ProgressCircle.Indicator);
   assert.equal(progressCircle.ProgressCircleLabel, brick.ProgressCircle.Label);
   assert.equal(progressCircle.ProgressCircleValue, brick.ProgressCircle.Value);
+  assert.equal(toastModule.Toast, brick.Toast);
+  assert.equal(toastModule.Toaster, brick.Toaster);
+  assert.equal(toastModule.toast, brick.toast);
+  assert.equal(toastModule.ToastRoot, brick.Toast.Root);
+  assert.equal(toastModule.ToastViewport, brick.Toast.Viewport);
   assert.equal(dropdownMenu.DropdownMenu, brick.DropdownMenu);
   assert.equal(contextMenu.ContextMenu, brick.ContextMenu);
   assert.equal(menubar.Menubar, brick.Menubar);
@@ -730,6 +821,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-text/);
   assert.match(styles, /\.brick-link/);
   assert.match(styles, /\.brick-breadcrumb/);
+  assert.match(styles, /\.brick-pagination/);
   assert.match(styles, /\.brick-bottom-navigation/);
   assert.match(styles, /\.brick-list/);
   assert.match(styles, /\.brick-stack/);
@@ -771,6 +863,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-text-font-size/);
   assert.match(styles, /--brick-link-foreground/);
   assert.match(styles, /--brick-breadcrumb-foreground/);
+  assert.match(styles, /--brick-pagination-current-background/);
   assert.match(styles, /--brick-bottom-navigation-selection-background/);
   assert.match(styles, /--brick-list-marker-style/);
   assert.match(styles, /--brick-stack-gap/);

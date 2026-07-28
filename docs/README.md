@@ -23,6 +23,15 @@ This directory is the public documentation authority for
 - [Toggle](components/toggle/README.md) — one persistent pressed command
 - [Toggle Group](components/toggle-group/README.md) — related single or
   multiple pressed commands
+- [Toolbar](components/toolbar/README.md) — related commands with one keyboard
+  entry point
+- [Pagination](components/pagination/README.md) — generated numbered-page
+  navigation for bounded result sets
+
+### Data display
+
+- [Data Grid](components/data-grid/README.md) — navigable tabular data with
+  selection and controlled sortable headers
 
 ### Forms and choices
 
@@ -63,12 +72,16 @@ This directory is the public documentation authority for
   single or multiple selection and two-axis layout
 - [List](components/list/README.md) — native ordered and unordered content
   collections with optional structured anatomy
+- [Table](components/table/README.md) — native static tabular data with
+  responsive containment and sorting composition
 - [Skeleton](components/skeleton/README.md) — motion-safe loading placeholders
   with content-preserving geometry
 - [Progress](components/progress/README.md) — linear determinate,
   indeterminate, and buffered task progress
 - [Progress Circle](components/progress-circle/README.md) — compact circular
   determinate and indeterminate task progress
+- [Toast](components/toast/README.md) — temporary non-blocking application
+  outcomes and process updates
 
 ### Contextual overlays
 

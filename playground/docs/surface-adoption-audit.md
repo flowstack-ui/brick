@@ -64,6 +64,10 @@ different owner.
 | Code | generic overview/cell/appearance/customization stages | Code recipes, inline wrapping, native output, and technical literal paint |
 | Code Block | generic outer evidence cells and appearance stages | Code Block recipes, technical surface paint, overflow, selection, and source anatomy |
 | List | overview, specimen cells, appearance scopes, customization shell, and stress panel | List markers, dividers, borders, anatomy, nesting, and exact output |
+| Table | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Table boundaries, section paint, sticky/overflow geometry, and rendered native output |
+| Data Grid | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Data Grid boundaries, active/selection state paint, cell navigation geometry, and explicit overflow containment |
+| Toolbar | overview, comparison cells, and appearance scopes | Toolbar surfaces, control states, separators, orientation, and overflow geometry |
+| Pagination | overview, comparison cells, appearance scopes, customization shell, and stress panels | Pagination root/control recipes, current and disabled state paint, and inline overflow geometry |
 | Link | overview, specimen-grid cells, appearance scopes, customization shell/preview, stress panel | Link recipes, inline wrapping, composition output, and code block |
 | Nav List | overview, specimen cells, appearance scopes, customization shell, and stress panel | Nav List rows, current-state recipes, disclosure anatomy, and composition output |
 | Sidebar | route evidence stages and customization shell | Sidebar Panel paint, state geometry, and desktop shell ownership |
@@ -101,6 +105,7 @@ different owner.
 | Visually Hidden | overview, comparison cells, appearance scopes, and stress panels | Atom-owned inline hiding behavior, native-host composition, and exact rendered output |
 | Progress | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Progress track, buffer, indicator, orientation geometry, and exact rendered output |
 | Progress Circle | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Progress Circle SVG track/indicator, ring geometry, centered value, and exact rendered output |
+| Toast | generic overview, queue, position, keyboard, and appearance stages | Toast card/viewport recipes, fixed placement, overlap, and narrow-screen diagnostic frame |
 | Collapsible | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Collapsible trigger/content recipes, measured orientation geometry, disclosure state, and exact rendered output |
 | Accordion | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Accordion item/trigger/content recipes, measured orientation geometry, disclosure relationships, and exact rendered output |
 

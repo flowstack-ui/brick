@@ -869,6 +869,37 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-cap", "data-size", "data-thickness", "data-tone"],
     publicTokens: ["--brick-progress-circle-track", "--brick-progress-circle-indicator", "--brick-progress-circle-label-foreground", "--brick-progress-circle-value-foreground", "--brick-progress-circle-size", "--brick-progress-circle-stroke"],
   },
+  toast: {
+    source: "src/components/toast/Toast.tsx",
+    exportSource: "src/components/toast/index.ts",
+    css: "src/components/toast/toast.css",
+    exports: [
+      "Toast", "Toaster", "toast", "ToastRoot", "ToastIcon", "ToastContent",
+      "ToastTitle", "ToastDescription", "ToastActions", "ToastAction", "ToastClose",
+      "ToastViewport", "ToastApi", "ToastOptions", "ToasterProps", "ToastRenderState",
+      "ToastType", "ToastPosition", "ToastWidth", "ToastStacking", "ToastSwipeDirection",
+    ],
+    unions: {
+      ToastType: ["default", "success", "error", "warning", "info", "loading"],
+      ToastPosition: ["top-start", "top-center", "top-end", "bottom-start", "bottom-center", "bottom-end"],
+      ToastWidth: ["responsive", "compact", "full"],
+      ToastStacking: ["separated", "overlap"],
+    },
+    documentedValues: { swipeDirection: ["left", "right", "up", "down"] },
+    defaults: {},
+    dataAttributes: ["data-width", "data-stacking"],
+    publicTokens: [
+      "--brick-toast-viewport-z-index", "--brick-toast-viewport-gap",
+      "--brick-toast-offset-block-start", "--brick-toast-offset-block-end",
+      "--brick-toast-offset-inline-start", "--brick-toast-offset-inline-end",
+      "--brick-toast-inline-size", "--brick-toast-background", "--brick-toast-foreground",
+      "--brick-toast-description-foreground", "--brick-toast-border-color",
+      "--brick-toast-accent-color", "--brick-toast-radius", "--brick-toast-shadow",
+      "--brick-toast-padding", "--brick-toast-content-gap", "--brick-toast-action-gap",
+      "--brick-toast-motion-duration", "--brick-toast-motion-easing",
+    ],
+    documentationClaims: ["`bottom-end`", "`3`", "`F8`", "exactly one persistent announcement path", "`data-position`", "`data-type`", "`data-state`", "`data-index`", "`data-swipe`", "`data-swipe-direction`"],
+  },
   button: {
     source: "src/components/button/Button.tsx",
     exportSource: "src/components/button/index.ts",
@@ -1303,6 +1334,26 @@ export const componentDocumentationContracts = {
       "--brick-list-description-font-size",
       "--brick-list-description-line-height",
     ],
+  },
+  table: {
+    source: "src/components/table/Table.tsx",
+    exportSource: "src/components/table/index.ts",
+    css: "src/components/table/table.css",
+    exports: ["Table", "TableBody", "TableBodyProps", "TableCaption", "TableCaptionProps", "TableCaptionSide", "TableCell", "TableCellAlign", "TableCellProps", "TableContainer", "TableContainerProps", "TableDensity", "TableFooter", "TableFooterProps", "TableHead", "TableHeadProps", "TableHeader", "TableHeaderProps", "TableRoot", "TableRootProps", "TableRow", "TableRowProps", "TableSize", "TableSortIndicator", "TableSortIndicatorProps", "TableVariant"],
+    unions: { TableVariant: ["line", "outline"], TableSize: ["sm", "md", "lg"], TableDensity: ["compact", "comfortable"], TableCaptionSide: ["top", "bottom"], TableCellAlign: ["start", "center", "end"] },
+    defaults: { variant: "line", size: "md", density: "comfortable", side: "top" },
+    dataAttributes: ["data-align", "data-density", "data-numeric", "data-side", "data-size", "data-slot", "data-sticky-header", "data-striped", "data-variant"],
+    publicTokens: ["--brick-table-inline-size", "--brick-table-min-inline-size", "--brick-table-border-color", "--brick-table-border-width", "--brick-table-radius", "--brick-table-header-background", "--brick-table-header-foreground", "--brick-table-body-background", "--brick-table-row-stripe-background", "--brick-table-footer-background", "--brick-table-footer-foreground", "--brick-table-cell-foreground", "--brick-table-cell-padding-inline", "--brick-table-cell-padding-block", "--brick-table-row-min-block-size", "--brick-table-caption-foreground", "--brick-table-caption-gap", "--brick-table-sticky-offset", "--brick-table-sticky-z-index", "--brick-table-sort-indicator-size", "--brick-table-sort-indicator-color"],
+  },
+  "data-grid": {
+    source: "src/components/data-grid/DataGrid.tsx",
+    exportSource: "src/components/data-grid/index.ts",
+    css: "src/components/data-grid/data-grid.css",
+    exports: ["DataGrid", "DataGridBody", "DataGridBodyProps", "DataGridCaption", "DataGridCaptionProps", "DataGridCaptionSide", "DataGridCell", "DataGridCellAlign", "DataGridCellProps", "DataGridColumnHeader", "DataGridColumnHeaderProps", "DataGridContainer", "DataGridContainerProps", "DataGridDensity", "DataGridFooter", "DataGridFooterProps", "DataGridHeader", "DataGridHeaderProps", "DataGridRoot", "DataGridRootProps", "DataGridRow", "DataGridRowProps", "DataGridSize", "DataGridSortIndicator", "DataGridSortIndicatorProps", "DataGridVariant"],
+    unions: { DataGridVariant: ["line", "outline"], DataGridSize: ["sm", "md", "lg"], DataGridDensity: ["compact", "comfortable", "spacious"], DataGridCaptionSide: ["top", "bottom"], DataGridCellAlign: ["start", "center", "end"] },
+    defaults: { variant: "line", size: "md", density: "comfortable", side: "bottom" },
+    dataAttributes: ["data-align", "data-density", "data-numeric", "data-side", "data-size", "data-slot", "data-variant"],
+    publicTokens: ["--brick-data-grid-inline-size", "--brick-data-grid-min-inline-size", "--brick-data-grid-border-color", "--brick-data-grid-border-width", "--brick-data-grid-radius", "--brick-data-grid-header-background", "--brick-data-grid-header-foreground", "--brick-data-grid-body-background", "--brick-data-grid-footer-background", "--brick-data-grid-cell-foreground", "--brick-data-grid-cell-padding-inline", "--brick-data-grid-cell-padding-block", "--brick-data-grid-row-min-block-size", "--brick-data-grid-caption-foreground", "--brick-data-grid-caption-gap", "--brick-data-grid-active-color", "--brick-data-grid-active-width", "--brick-data-grid-selected-background", "--brick-data-grid-selected-foreground", "--brick-data-grid-hover-background", "--brick-data-grid-disabled-opacity", "--brick-data-grid-sort-indicator-size", "--brick-data-grid-sort-indicator-color"],
   },
   text: {
     source: "src/components/text/Text.tsx",
@@ -1897,6 +1948,17 @@ componentDocumentationContracts.accordion = {
   unions: { AccordionVariant: ["plain", "soft", "outline"], AccordionSize: ["sm", "md", "lg"] }, defaults: { variant: "plain", size: "md" },
   dataAttributes: ["data-size", "data-slot", "data-variant"],
   publicTokens: ["--brick-accordion-background","--brick-accordion-border-color","--brick-accordion-divider-color","--brick-accordion-trigger-background","--brick-accordion-trigger-hover-background","--brick-accordion-trigger-open-background","--brick-accordion-foreground","--brick-accordion-content-foreground","--brick-accordion-focus-ring","--brick-accordion-radius","--brick-accordion-trigger-height","--brick-accordion-trigger-padding-inline","--brick-accordion-content-padding-block","--brick-accordion-content-padding-inline","--brick-accordion-indicator-size"],
+};
+
+componentDocumentationContracts.pagination = {
+  source: "src/components/pagination/Pagination.tsx",
+  exportSource: "src/components/pagination/index.ts",
+  css: "src/components/pagination/pagination.css",
+  exports: ["Pagination","PaginationRoot","PaginationList","PaginationPrevious","PaginationItems","PaginationItem","PaginationEllipsis","PaginationNext","PaginationRootProps","PaginationListProps","PaginationPreviousProps","PaginationItemsProps","PaginationItemProps","PaginationEllipsisProps","PaginationNextProps","PaginationVariant","PaginationSize"],
+  unions: { PaginationVariant: ["plain", "soft", "outline"], PaginationSize: ["sm", "md", "lg"] },
+  defaults: { variant: "plain", size: "md" },
+  dataAttributes: ["data-size", "data-slot", "data-variant"],
+  publicTokens: ["--brick-pagination-root-background","--brick-pagination-root-border-color","--brick-pagination-root-radius","--brick-pagination-root-padding","--brick-pagination-list-gap","--brick-pagination-list-overflow-padding","--brick-pagination-control-min-size","--brick-pagination-control-inline-padding","--brick-pagination-control-radius","--brick-pagination-control-foreground","--brick-pagination-control-background","--brick-pagination-control-border-color","--brick-pagination-control-hover-background","--brick-pagination-control-pressed-background","--brick-pagination-current-background","--brick-pagination-current-foreground","--brick-pagination-current-border-color","--brick-pagination-disabled-foreground","--brick-pagination-focus-ring","--brick-pagination-ellipsis-foreground","--brick-pagination-icon-size","--brick-pagination-transition-duration","--brick-pagination-font-family","--brick-pagination-font-size","--brick-pagination-font-weight","--brick-pagination-line-height","--brick-pagination-letter-spacing"],
 };
 
 componentDocumentationContracts["multi-select"] = {

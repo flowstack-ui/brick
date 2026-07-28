@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type CSSProperties, type FormEvent } from "react";
 import { AlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { AppBar } from "@flowstack-ui/brick/app-bar";
 import { Avatar } from "@flowstack-ui/brick/avatar";
@@ -29,6 +29,10 @@ import { MultiSelect } from "@flowstack-ui/brick/multi-select";
 import { Text } from "@flowstack-ui/brick/text";
 import { Link } from "@flowstack-ui/brick/link";
 import { List } from "@flowstack-ui/brick/list";
+import { Table } from "@flowstack-ui/brick/table";
+import { DataGrid } from "@flowstack-ui/brick/data-grid";
+import { Toolbar } from "@flowstack-ui/brick/toolbar";
+import { Pagination } from "@flowstack-ui/brick/pagination";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
 import { Grid } from "@flowstack-ui/brick/grid";
 import { Container } from "@flowstack-ui/brick/container";
@@ -52,6 +56,7 @@ import { Menubar } from "@flowstack-ui/brick/menubar";
 import { NavigationMenu } from "@flowstack-ui/brick/navigation-menu";
 import { BottomNavigation } from "@flowstack-ui/brick/bottom-navigation";
 import { VisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
+import { Toaster, toast } from "@flowstack-ui/brick/toast";
 
 type Appearance = "light" | "dark";
 
@@ -104,6 +109,10 @@ export function App() {
   const [skillsStatus, setSkillsStatus] = useState("No team skills submitted.");
   const [channelStatus, setChannelStatus] = useState("No delivery channel submitted.");
   const [compactDestination, setCompactDestination] = useState("home");
+  const [tableSort, setTableSort] = useState<"ascending" | "descending">("descending");
+  const [reportPage, setReportPage] = useState(1);
+  const [gridSort, setGridSort] = useState<"ascending" | "descending">("ascending");
+  const [gridSelection, setGridSelection] = useState<string[]>(["atom"]);
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -120,6 +129,7 @@ export function App() {
 
   return (
     <Tooltip.Provider>
+    <Toaster />
     <div id="top">
       <AppBar.Root aria-label="Primary" blurred className="site-header" position="sticky">
         <AppBar.Toolbar className="site-header-toolbar" density="compact">
@@ -202,6 +212,15 @@ export function App() {
             This small application consumes Brick exactly through its public package
             exports. Application layout stays here; finished component styling stays in Brick.
           </Text>
+          <Toolbar.Root ariaLabel="Document view tools" size="sm" variant="outline">
+            <Toolbar.Button>Refresh</Toolbar.Button>
+            <Toolbar.Separator orientation="vertical" />
+            <Toolbar.ToggleGroup ariaLabel="Document view" defaultValue="preview">
+              <Toolbar.ToggleItem value="preview">Preview</Toolbar.ToggleItem>
+              <Toolbar.ToggleItem value="outline">Outline</Toolbar.ToggleItem>
+            </Toolbar.ToggleGroup>
+            <Toolbar.Link href="#publishing-preferences">Publishing help</Toolbar.Link>
+          </Toolbar.Root>
           <HStack className="hero-actions" gap="3" wrap>
             <Dialog.Root>
               <Dialog.Trigger asChild>
@@ -230,7 +249,7 @@ export function App() {
                       <Button tone="neutral" variant="outline">Cancel</Button>
                     </Dialog.Close>
                     <Dialog.Close asChild>
-                      <Button onPress={() => setPublishCount((count) => count + 1)}>
+                      <Button onPress={() => { setPublishCount((count) => count + 1); toast.success("Project published", { description: "The release is available to workspace reviewers." }); }}>
                         Publish now
                       </Button>
                     </Dialog.Close>
@@ -666,6 +685,46 @@ export function App() {
             </Card.Root>
           </Grid.Root>
         </Surface>
+
+        <Card.Root as="section" variant="outline">
+          <Card.Header>
+            <Card.Title as="h2">Release report</Card.Title>
+            <Card.Description>Static Table composed from the packed public subpath.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <Table.Container>
+              <Table.Root striped style={{ "--brick-table-min-inline-size": "38rem" } as CSSProperties}>
+                <Table.Caption>Current package verification results</Table.Caption>
+                <Table.Header><Table.Row><Table.Head>Package</Table.Head><Table.Head>Status</Table.Head><Table.Head sortDirection={tableSort}><Button size="xs" variant="ghost" onClick={() => setTableSort((value) => value === "ascending" ? "descending" : "ascending")}>Checks<Table.SortIndicator /></Button></Table.Head><Table.Head numeric>Coverage</Table.Head><Table.Head>Guide</Table.Head></Table.Row></Table.Header>
+                <Table.Body>
+                  {[{ name: "Atom", status: "Released", checks: 128, coverage: "99.4%" }, { name: "Brick", status: "Review", checks: 86, coverage: "96.8%" }].sort((a, b) => tableSort === "ascending" ? a.checks - b.checks : b.checks - a.checks).map((row) => <Table.Row key={row.name}><Table.Head scope="row">{row.name}</Table.Head><Table.Cell><Badge tone={row.status === "Released" ? "success" : "warning"}>{row.status}</Badge></Table.Cell><Table.Cell numeric>{row.checks}</Table.Cell><Table.Cell numeric>{row.coverage}</Table.Cell><Table.Cell><Link href="#top">Open {row.name} guide</Link></Table.Cell></Table.Row>)}
+                </Table.Body>
+                <Table.Footer><Table.Row><Table.Head scope="row" colSpan={2}>Total checks</Table.Head><Table.Cell numeric>214</Table.Cell><Table.Cell colSpan={2}>Packed artifact</Table.Cell></Table.Row></Table.Footer>
+              </Table.Root>
+            </Table.Container>
+            <Pagination.Root aria-label="Release report pages" onPageChange={setReportPage} page={reportPage} totalPages={5} variant="outline">
+              <Pagination.List><Pagination.Previous /><Pagination.Items /><Pagination.Next /></Pagination.List>
+            </Pagination.Root>
+          </Card.Content>
+        </Card.Root>
+
+        <Card.Root as="section" variant="outline">
+          <Card.Header>
+            <Card.Title as="h2">Verification queue</Card.Title>
+            <Card.Description>Navigable, selectable Data Grid with application-owned controls.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <Toolbar.Root ariaLabel="Verification queue tools" size="sm" variant="outline"><Toolbar.Button>Refresh queue</Toolbar.Button><Toolbar.Separator orientation="vertical" /><Toolbar.Button disabled={gridSelection.length === 0}>Review selected ({gridSelection.length})</Toolbar.Button></Toolbar.Root>
+            <DataGrid.Container>
+              <DataGrid.Root aria-label="Package verification queue" columnCount={3} rowCount={4} selectionMode="multiple" value={gridSelection} onValueChange={value => setGridSelection(Array.isArray(value) ? value : value ? [value] : [])} selectOnRowClick style={{ "--brick-data-grid-min-inline-size": "34rem" } as CSSProperties} variant="outline">
+                <DataGrid.Caption>Use arrow keys to navigate and Space to select a package.</DataGrid.Caption>
+                <DataGrid.Header><DataGrid.Row rowIndex={1}><DataGrid.ColumnHeader columnIndex={1}>Package</DataGrid.ColumnHeader><DataGrid.ColumnHeader columnIndex={2}>Status</DataGrid.ColumnHeader><DataGrid.ColumnHeader columnIndex={3} numeric onAction={() => setGridSort(value => value === "ascending" ? "descending" : "ascending")} sortDirection={gridSort}>Checks<DataGrid.SortIndicator /></DataGrid.ColumnHeader></DataGrid.Row></DataGrid.Header>
+                <DataGrid.Body>{[{ id: "atom", name: "Atom", status: "Released", checks: 492 }, { id: "brick", name: "Brick", status: "Review", checks: 238 }, { id: "consumer", name: "Consumer", status: "Ready", checks: 24 }].sort((a, b) => gridSort === "ascending" ? a.checks - b.checks : b.checks - a.checks).map((row, index) => <DataGrid.Row key={row.id} rowIndex={index + 2} selectable value={row.id}><DataGrid.Cell columnIndex={1}>{row.name}</DataGrid.Cell><DataGrid.Cell columnIndex={2}><Badge tone={row.status === "Review" ? "warning" : "success"}>{row.status}</Badge></DataGrid.Cell><DataGrid.Cell columnIndex={3} numeric>{row.checks}</DataGrid.Cell></DataGrid.Row>)}</DataGrid.Body>
+              </DataGrid.Root>
+            </DataGrid.Container>
+            <Pagination.Root aria-label="Verification queue pages" page={1} totalPages={3} size="sm"><Pagination.List><Pagination.Previous /><Pagination.Items /><Pagination.Next /></Pagination.List></Pagination.Root>
+          </Card.Content>
+        </Card.Root>
 
         <Card.Root
           aria-labelledby="invite-title"

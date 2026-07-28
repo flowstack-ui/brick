@@ -4,6 +4,24 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Added
+
+- Added the Atom-backed `Data Grid` family for navigable tabular data, row
+  selection, controlled sortable-header activation, and responsive containment.
+
+- Added `Pagination` with an Atom-generated numbered range, localized labels,
+  explicit seven-part composition, three variants and sizes, logical controls,
+  and no-wrap inline overflow.
+
+- Added `Toolbar` with compound commands, links, separators, toggle groups,
+  three surfaces and sizes, orientation-aware navigation, and no-wrap overflow.
+
+- Added `Table` with native compound semantics, static visual recipes,
+  logical/numeric alignment, explicit responsive containment, sticky headers,
+  and application-controlled sorting composition.
+
+- Added `Toast` with an imperative helper, public compound parts, six semantic types and logical positions, responsive/full widths, separated/overlap stacking, optional swipe, and complete accessible interaction.
+
 - Added `Accordion` with single and multiple selection, two-axis layout and
   motion, locked-open semantics, optional landmarks, direction-aware keyboard
   navigation, responsive overflow, and public customization hooks.
@@ -18,6 +36,12 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   orientation, RTL, three sizes, and a complete circular visual.
 
 ### Fixed
+
+- Rounded Table outline footer paint into its logical bottom corners.
+
+- Corrected Toast short-content alignment, omitted the empty default icon
+  gutter, kept close controls inside logical edges, mirrored portalled logical
+  positions in RTL, and stabilized non-clipping overlap expansion.
 
 - Removed unsupported `aria-orientation` from `Progress`; visual orientation
   remains available through `data-orientation` without invalid progressbar ARIA.

@@ -167,6 +167,10 @@
       "types": "./dist/progress-circle.d.ts",
       "default": "./dist/progress-circle.js"
     },
+    "./toast": {
+      "types": "./dist/toast.d.ts",
+      "default": "./dist/toast.js"
+    },
     "./collapsible": {
       "types": "./dist/collapsible.d.ts",
       "default": "./dist/collapsible.js"
@@ -202,6 +206,22 @@
     "./list": {
       "types": "./dist/list.d.ts",
       "default": "./dist/list.js"
+    },
+    "./table": {
+      "types": "./dist/table.d.ts",
+      "default": "./dist/table.js"
+    },
+    "./data-grid": {
+      "types": "./dist/data-grid.d.ts",
+      "default": "./dist/data-grid.js"
+    },
+    "./toolbar": {
+      "types": "./dist/toolbar.d.ts",
+      "default": "./dist/toolbar.js"
+    },
+    "./pagination": {
+      "types": "./dist/pagination.d.ts",
+      "default": "./dist/pagination.js"
     },
     "./stack": {
       "types": "./dist/stack.d.ts",
@@ -318,7 +338,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.14.0"
+    "@flowstack-ui/atom": "0.17.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

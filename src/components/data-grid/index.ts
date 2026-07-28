@@ -1,0 +1,2 @@
+export { DataGrid, DataGridBody, DataGridCaption, DataGridCell, DataGridColumnHeader, DataGridContainer, DataGridFooter, DataGridHeader, DataGridRoot, DataGridRow, DataGridSortIndicator } from "./DataGrid.js";
+export type { DataGridBodyProps, DataGridCaptionProps, DataGridCaptionSide, DataGridCellAlign, DataGridCellProps, DataGridColumnHeaderProps, DataGridContainerProps, DataGridDensity, DataGridFooterProps, DataGridHeaderProps, DataGridRootProps, DataGridRowProps, DataGridSize, DataGridSortIndicatorProps, DataGridVariant } from "./DataGrid.js";

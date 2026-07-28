@@ -22,6 +22,7 @@ import { Tabs } from "../../dist/tabs.js";
 import { Skeleton } from "../../dist/skeleton.js";
 import { Progress } from "../../dist/progress.js";
 import { ProgressCircle } from "../../dist/progress-circle.js";
+import { Toast, Toaster } from "../../dist/toast.js";
 import { Collapsible } from "../../dist/collapsible.js";
 import { Accordion } from "../../dist/accordion.js";
 import { Input } from "../../dist/input.js";
@@ -29,6 +30,9 @@ import { Textarea } from "../../dist/textarea.js";
 import { Text } from "../../dist/text.js";
 import { Link } from "../../dist/link.js";
 import { List } from "../../dist/list.js";
+import { Table } from "../../dist/table.js";
+import { DataGrid } from "../../dist/data-grid.js";
+import { Pagination } from "../../dist/pagination.js";
 import { HStack, Stack, VStack } from "../../dist/stack.js";
 import { Grid } from "../../dist/grid.js";
 import { Container } from "../../dist/container.js";
@@ -42,6 +46,34 @@ import { CodeBlock } from "../../dist/code-block.js";
 import { Icon } from "../../dist/icon.js";
 import { Image } from "../../dist/image.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("Pagination renders deterministic generated native anatomy during SSR", () => {
+  const markup = renderToString(React.createElement(Pagination.Root, { "aria-label": "Result pages", defaultPage: 4, totalPages: 8, variant: "outline" }, React.createElement(Pagination.List, null, React.createElement(Pagination.Previous), React.createElement(Pagination.Items), React.createElement(Pagination.Next))));
+  assert.match(markup, /<nav/);
+  assert.match(markup, /class="brick-pagination"/);
+  assert.match(markup, /data-variant="outline"/);
+  assert.match(markup, /<ol[^>]*brick-pagination__list/);
+  assert.match(markup, /aria-current="page"/);
+  assert.match(markup, /brick-pagination__ellipsis/);
+});
+
+test("Table renders deterministic native static anatomy during SSR", () => {
+  const markup = renderToString(React.createElement(Table.Root, { striped: true }, React.createElement(Table.Caption, null, "Results"), React.createElement(Table.Body, null, React.createElement(Table.Row, null, React.createElement(Table.Head, { scope: "row" }, "Atom"), React.createElement(Table.Cell, { numeric: true }, "42")))));
+  assert.match(markup, /<table/);
+  assert.match(markup, /<caption/);
+  assert.match(markup, /scope="row"/);
+  assert.match(markup, /data-numeric=""/);
+  assert.doesNotMatch(markup, /role="grid"/);
+});
+
+test("Data Grid renders deterministic navigable tabular anatomy during SSR", () => {
+  const markup = renderToString(React.createElement(DataGrid.Root, { "aria-label": "Results", columnCount: 1, rowCount: 2 }, React.createElement(DataGrid.Header, null, React.createElement(DataGrid.Row, { rowIndex: 1 }, React.createElement(DataGrid.ColumnHeader, { columnIndex: 1, sortDirection: "ascending" }, "Project"))), React.createElement(DataGrid.Body, null, React.createElement(DataGrid.Row, { rowIndex: 2, value: "atom" }, React.createElement(DataGrid.Cell, { columnIndex: 1 }, "Atom")))));
+  assert.match(markup, /role="grid"/);
+  assert.match(markup, /aria-colcount="1"/);
+  assert.match(markup, /aria-rowcount="2"/);
+  assert.match(markup, /aria-sort="ascending"/);
+  assert.match(markup, /role="gridcell"/);
+});
 
 test("Collapsible renders deterministic linked disclosure anatomy", () => {
   const markup = renderToString(
@@ -124,6 +156,26 @@ test("Progress families render deterministic accessible server anatomy", () => {
   assert.match(circular, /stroke-dasharray="282\.743/);
   assert.match(circular, /data-percent="75"/);
   assert.match(circular, />75%<\/span>/);
+});
+
+test("Toast imports server-safely and declarative parts render deterministic anatomy", () => {
+  assert.equal(renderToString(React.createElement(Toaster)), "");
+  const markup = renderToString(
+    React.createElement(Toast.Root, { forceMount: true, type: "success", closeButton: true },
+      React.createElement(Toast.Icon, { type: "success" }),
+      React.createElement(Toast.Content, null,
+        React.createElement(Toast.Title, null, "Workspace saved"),
+        React.createElement(Toast.Description, null, "Available in history"),
+      ),
+      React.createElement(Toast.Close),
+    ),
+  );
+  assert.match(markup, /class="brick-toast"/);
+  assert.match(markup, /data-type="success"/);
+  assert.match(markup, /data-slot="toast-icon"/);
+  assert.match(markup, /Workspace saved/);
+  assert.match(markup, /Dismiss notification/);
+  assert.doesNotMatch(markup, /aria-live=/);
 });
 
 test("Sidebar renders deterministic app-shell anatomy", () => {
