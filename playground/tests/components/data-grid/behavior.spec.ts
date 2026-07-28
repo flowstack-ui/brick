@@ -40,6 +40,9 @@ test("navigation, selection, sorting, and containment remain Atom-owned", async 
 test("Data Grid passes accessibility checks", async ({ page }) => {
   await expect(page.locator("#scenario-data-grid-appearance [data-playground-specimen-label]" )).toHaveText(["light", "dark", "customized"]);
   await expect(page.locator("#scenario-data-grid-appearance h3")).toHaveText("Data Grid CSS properties");
+  const customFooterCells = page.locator("#scenario-data-grid-appearance .data-grid-customization tfoot tr").locator("th, td");
+  await expect(customFooterCells.first()).not.toHaveCSS("border-bottom-left-radius", "0px");
+  await expect(customFooterCells.last()).not.toHaveCSS("border-bottom-right-radius", "0px");
   const rtl = page.locator("#scenario-data-grid-stress [dir=rtl] .brick-data-grid");
   await expect(rtl).toHaveAttribute("dir", "rtl");
   await expect(rtl.locator("caption")).toHaveText("نتائج التحقق من الحزم");
