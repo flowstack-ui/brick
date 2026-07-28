@@ -1,0 +1,151 @@
+@layer brick.components {
+  .brick-chip {
+    --brick-chip-background: var(--brick-color-surface-subtle);
+    --brick-chip-foreground: var(--brick-color-text-primary);
+    --brick-chip-border-color: transparent;
+    --brick-chip-radius: var(--brick-radius-full);
+    --brick-chip-min-block-size: 2rem;
+    --brick-chip-padding-inline-start: 0.625rem;
+    --brick-chip-padding-inline-end: 0.25rem;
+    --brick-chip-gap: 0.375rem;
+    --brick-chip-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-chip-leading-size: 1.25rem;
+    --brick-chip-remove-size: 1.5rem;
+    --brick-chip-remove-foreground: var(--brick-color-text-secondary);
+    --brick-chip-remove-background: transparent;
+    --brick-chip-remove-hover-background: var(--brick-color-surface-raised);
+    --brick-chip-remove-active-background: var(--brick-color-surface-muted);
+
+    display: inline-flex;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    min-block-size: var(--brick-chip-min-block-size);
+    max-inline-size: 100%;
+    align-items: center;
+    gap: var(--brick-chip-gap);
+    padding-block: 0;
+    padding-inline: var(--brick-chip-padding-inline-start) var(--brick-chip-padding-inline-end);
+    border: var(--brick-border-width) solid var(--brick-chip-border-color);
+    border-radius: var(--brick-chip-radius);
+    background: var(--brick-chip-background);
+    color: var(--brick-chip-foreground);
+    font-family: var(--brick-typography-control-sm-font-family);
+    font-size: var(--brick-chip-font-size);
+    font-weight: var(--brick-typography-control-sm-font-weight);
+    letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+    line-height: var(--brick-typography-control-sm-line-height);
+    vertical-align: middle;
+  }
+
+  .brick-chip:not(:has(.brick-chip__remove-trigger)) {
+    padding-inline-end: var(--brick-chip-padding-inline-start);
+  }
+
+  .brick-chip[data-tone="accent"] {
+    --brick-chip-background: var(--brick-color-accent-soft);
+    --brick-chip-foreground: var(--brick-color-accent-on-soft);
+    --brick-chip-border-color: var(--brick-color-accent-border);
+    --brick-chip-remove-foreground: var(--brick-color-accent-text);
+    --brick-chip-remove-hover-background: var(--brick-color-accent-subtle);
+    --brick-chip-remove-active-background: var(--brick-color-accent-soft);
+  }
+
+  .brick-chip[data-variant="outline"] {
+    --brick-chip-background: transparent;
+    --brick-chip-border-color: var(--brick-color-border-strong);
+  }
+
+  .brick-chip[data-shape="rounded"] {
+    --brick-chip-radius: var(--brick-radius-control);
+  }
+
+  .brick-chip[data-size="sm"] {
+    --brick-chip-min-block-size: 1.75rem;
+    --brick-chip-padding-inline-start: 0.5rem;
+    --brick-chip-gap: 0.25rem;
+    --brick-chip-font-size: var(--brick-typography-control-xs-font-size);
+    --brick-chip-leading-size: 1rem;
+    --brick-chip-remove-size: 1.5rem;
+  }
+
+  .brick-chip[data-size="lg"] {
+    --brick-chip-min-block-size: 2.25rem;
+    --brick-chip-padding-inline-start: 0.75rem;
+    --brick-chip-padding-inline-end: 0.375rem;
+    --brick-chip-gap: 0.5rem;
+    --brick-chip-font-size: var(--brick-typography-control-md-font-size);
+    --brick-chip-leading-size: 1.5rem;
+    --brick-chip-remove-size: 1.75rem;
+  }
+
+  .brick-chip__label {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .brick-chip > :where(svg, img, .brick-avatar, .brick-icon):not(.brick-chip__remove-trigger) {
+    inline-size: var(--brick-chip-leading-size);
+    block-size: var(--brick-chip-leading-size);
+    flex: none;
+  }
+
+  .brick-chip__remove-trigger {
+    display: inline-grid;
+    box-sizing: border-box;
+    flex: none;
+    inline-size: var(--brick-chip-remove-size);
+    block-size: var(--brick-chip-remove-size);
+    min-inline-size: 1.5rem;
+    min-block-size: 1.5rem;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: var(--brick-radius-full);
+    appearance: none;
+    background: var(--brick-chip-remove-background);
+    color: var(--brick-chip-remove-foreground);
+    cursor: pointer;
+  }
+
+  .brick-chip__remove-trigger > svg {
+    inline-size: 0.875rem;
+    block-size: 0.875rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 1.75;
+  }
+
+  .brick-chip__remove-trigger:focus-visible {
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: calc(-1 * var(--brick-border-focus-width));
+  }
+
+  .brick-chip__remove-trigger[data-disabled] {
+    color: var(--brick-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .brick-chip__remove-trigger:not([data-disabled]):hover {
+      background: var(--brick-chip-remove-hover-background);
+    }
+  }
+
+  .brick-chip__remove-trigger:not([data-disabled]):active {
+    background: var(--brick-chip-remove-active-background);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brick-chip__remove-trigger { transition: none; }
+  }
+
+  @media (forced-colors: active) {
+    .brick-chip { border-color: CanvasText; }
+    .brick-chip__remove-trigger { color: ButtonText; }
+    .brick-chip__remove-trigger:focus-visible { outline-color: Highlight; }
+    .brick-chip__remove-trigger[data-disabled] { color: GrayText; }
+  }
+}

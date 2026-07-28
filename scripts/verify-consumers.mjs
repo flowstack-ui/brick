@@ -38,13 +38,14 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
 import { AppBar as SubpathAppBar } from "@flowstack-ui/brick/app-bar";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
 import { Badge as SubpathBadge, NotificationBadge as SubpathNotificationBadge } from "@flowstack-ui/brick/badge";
+import { Chip as SubpathChip } from "@flowstack-ui/brick/chip";
 import { Avatar as SubpathAvatar } from "@flowstack-ui/brick/avatar";
 import { Toggle as SubpathToggle } from "@flowstack-ui/brick/toggle";
 import { ToggleGroup as SubpathToggleGroup } from "@flowstack-ui/brick/toggle-group";
@@ -81,6 +82,7 @@ if (AppBar !== SubpathAppBar) throw new Error("AppBar subpath export mismatch");
 if (Card !== SubpathCard) throw new Error("Card subpath export mismatch");
 if (AlertDialog !== SubpathAlertDialog) throw new Error("AlertDialog subpath export mismatch");
 if (Badge !== SubpathBadge || NotificationBadge !== SubpathNotificationBadge) throw new Error("Badge subpath export mismatch");
+if (Chip !== SubpathChip || Object.keys(SubpathChip).length !== 3) throw new Error("Chip subpath smoke failed");
 if (Avatar !== SubpathAvatar) throw new Error("Avatar subpath export mismatch");
 if (Toggle !== SubpathToggle) throw new Error("Toggle subpath export mismatch");
 if (ToggleGroup !== SubpathToggleGroup) throw new Error("ToggleGroup subpath export mismatch");
@@ -116,6 +118,8 @@ const cardMarkup = renderToString(React.createElement(Card.Root, { as: "article"
 if (!cardMarkup.includes("brick-card") || !cardMarkup.includes("Card consumer")) throw new Error("Card SSR smoke failed");
 const badgeMarkup = renderToString(React.createElement(Badge, { tone: "success" }, "Published"));
 if (!badgeMarkup.includes("brick-badge") || !badgeMarkup.includes("Published")) throw new Error("Badge SSR smoke failed");
+const chipMarkup = renderToString(React.createElement(Chip.Root, null, React.createElement(Chip.Label, null, "Riley Chen"), React.createElement(Chip.RemoveTrigger, { ariaLabel: "Remove Riley Chen" })));
+if (!chipMarkup.includes("brick-chip") || !chipMarkup.includes('aria-label="Remove Riley Chen"')) throw new Error("Chip SSR smoke failed");
 const notificationMarkup = renderToString(React.createElement(NotificationBadge, { count: 4 }, React.createElement("button", { "aria-label": "Inbox, 4 unread messages" }, "Inbox")));
 if (!notificationMarkup.includes("brick-notification-badge") || !notificationMarkup.includes('aria-hidden="true"')) throw new Error("NotificationBadge SSR smoke failed");
 const avatarMarkup = renderToString(React.createElement(Avatar, { alt: "Ada Lovelace", fallback: "AL", shape: "rounded", status: "online" }));
@@ -166,7 +170,7 @@ const visuallyHiddenMarkup = renderToString(React.createElement(VisuallyHidden.R
 if (!visuallyHiddenMarkup.includes("brick-visually-hidden") || !visuallyHiddenMarkup.includes('data-slot="visually-hidden"') || !visuallyHiddenMarkup.includes('position:absolute')) throw new Error("Visually Hidden SSR smoke failed");
 if (!SubpathTooltip || Object.keys(SubpathTooltip).length !== 8) throw new Error("Tooltip subpath smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
-if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover") || !css.includes(".brick-checkbox") || !css.includes(".brick-checkbox-group") || !css.includes(".brick-radio-group") || !css.includes(".brick-input") || !css.includes(".brick-textarea") || !css.includes(".brick-link") || !css.includes(".brick-text") || !css.includes(".brick-grid") || !css.includes(".brick-container") || !css.includes(".brick-surface")) throw new Error("CSS export missing");
+if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-chip") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover") || !css.includes(".brick-checkbox") || !css.includes(".brick-checkbox-group") || !css.includes(".brick-radio-group") || !css.includes(".brick-input") || !css.includes(".brick-textarea") || !css.includes(".brick-link") || !css.includes(".brick-text") || !css.includes(".brick-grid") || !css.includes(".brick-container") || !css.includes(".brick-surface")) throw new Error("CSS export missing");
 if (!css.includes(".brick-switch") || !css.includes("--brick-switch-track-inline-size")) throw new Error("Switch CSS export missing");
 if (!css.includes(".brick-breadcrumb") || !css.includes("--brick-breadcrumb-foreground")) throw new Error("Breadcrumb CSS export missing");
 if (!css.includes(".brick-tabs") || !css.includes("--brick-tabs-indicator-color")) throw new Error("Tabs CSS export missing");
@@ -181,7 +185,7 @@ if (!css.includes(".brick-bottom-navigation") || !css.includes("--brick-bottom-n
     await writeFile(
       join(consumer, "verify.ts"),
 	`import { createElement } from "react";
-import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type PopoverContentProps, type RadioGroupRootProps, type SkeletonProps, type SurfaceProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type PopoverContentProps, type RadioGroupRootProps, type SkeletonProps, type SurfaceProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -189,6 +193,7 @@ import { AppBar as SubpathAppBar } from "@flowstack-ui/brick/app-bar";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
 import { Container as SubpathContainer } from "@flowstack-ui/brick/container";
 import { Surface as SubpathSurface } from "@flowstack-ui/brick/surface";
+import { Chip as SubpathChip } from "@flowstack-ui/brick/chip";
 import { Link as SubpathLink } from "@flowstack-ui/brick/link";
 import { Textarea as SubpathTextarea } from "@flowstack-ui/brick/textarea";
 import { RadioGroup as SubpathRadioGroup } from "@flowstack-ui/brick/radio-group";
@@ -220,6 +225,7 @@ const textProps: TextProps = { as: "h2", children: "Consumer", variant: "title-s
 const gridProps: GridRootProps = { columns: 2, gap: "2", children: createElement(Grid.Item, { columnSpan: "full" }, "Summary") };
 const containerProps: ContainerProps = { as: "main", children: "Measured", gutter: "lg", measure: "max" };
 const surfaceProps: SurfaceProps = { as: "section", bordered: true, children: "Painted", inset: "md", level: "subtle" };
+const chipProps: ChipRootProps = { children: createElement(Chip.Label, null, "Riley Chen"), tone: "accent", variant: "outline" };
 const breadcrumbProps: BreadcrumbRootProps = { ariaLabel: "Current path", children: createElement(Breadcrumb.List, null), size: "md", variant: "underline" };
 const tabsProps: TabsRootProps = { defaultValue: "one", size: "md", variant: "soft", children: createElement(Tabs.List, { ariaLabel: "Sections" }) };
 const skeletonProps: SkeletonProps = { animation: "wave", lines: 3, variant: "text" };
@@ -239,6 +245,9 @@ void containerProps;
 void Surface;
 void SubpathSurface;
 void surfaceProps;
+void Chip;
+void SubpathChip;
+void chipProps;
 void Breadcrumb;
 void SubpathBreadcrumb;
 void breadcrumbProps;

@@ -3,6 +3,7 @@ import { AlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { AppBar } from "@flowstack-ui/brick/app-bar";
 import { Avatar } from "@flowstack-ui/brick/avatar";
 import { Badge, NotificationBadge } from "@flowstack-ui/brick/badge";
+import { Chip } from "@flowstack-ui/brick/chip";
 import { Button } from "@flowstack-ui/brick/button";
 import { Card } from "@flowstack-ui/brick/card";
 import { Dialog } from "@flowstack-ui/brick/dialog";
@@ -119,6 +120,7 @@ export function App() {
   const [treeGridSort, setTreeGridSort] = useState<"ascending" | "descending">("ascending");
   const [treeGridExpanded, setTreeGridExpanded] = useState(["packages"]);
   const [treeGridSelection, setTreeGridSelection] = useState<string | null>("brick");
+  const [reviewers, setReviewers] = useState(["Riley Chen", "Morgan Lee"]);
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -276,6 +278,29 @@ export function App() {
             </Text>
           </HStack>
         </VStack>
+
+        <Surface as="section" bordered inset="lg" aria-labelledby="reviewers-title">
+          <VStack gap="3">
+            <VStack gap="1">
+              <Text as="h2" id="reviewers-title" variant="title-lg">Release reviewers</Text>
+              <Text tone="secondary">Authored values compose through the packed Chip subpath; this application owns their removal.</Text>
+            </VStack>
+            <HStack aria-label="Assigned release reviewers" gap="2" wrap>
+              {reviewers.map((reviewer) => (
+                <Chip.Root key={reviewer} tone="accent">
+                  <Chip.Label>{reviewer}</Chip.Label>
+                  <Chip.RemoveTrigger
+                    ariaLabel={`Remove ${reviewer}`}
+                    onPress={() => setReviewers((current) => current.filter((value) => value !== reviewer))}
+                  />
+                </Chip.Root>
+              ))}
+            </HStack>
+            <Text aria-live="polite" data-testid="consumer-reviewer-status" tone="secondary" variant="body-sm">
+              {reviewers.length === 0 ? "No reviewers assigned." : `${reviewers.length} ${reviewers.length === 1 ? "reviewer" : "reviewers"} assigned.`}
+            </Text>
+          </VStack>
+        </Surface>
 
         <Surface as="section" bordered inset="lg" aria-labelledby="activity-title">
           <VStack gap="4">

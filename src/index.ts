@@ -89,6 +89,19 @@ export {
   type NotificationBadgeSize,
 } from "./components/badge/index.js";
 export {
+  Chip,
+  ChipLabel,
+  ChipRemoveTrigger,
+  ChipRoot,
+  type ChipLabelProps,
+  type ChipRemoveTriggerProps,
+  type ChipRootProps,
+  type ChipShape,
+  type ChipSize,
+  type ChipTone,
+  type ChipVariant,
+} from "./components/chip/index.js";
+export {
   Avatar,
   type AvatarProps,
   type AvatarShape,

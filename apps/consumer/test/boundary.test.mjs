@@ -24,6 +24,7 @@ test("the consumer uses public package exports without source aliases", async ()
   assert.match(source, /@flowstack-ui\/brick\/alert-dialog/);
   assert.match(source, /@flowstack-ui\/brick\/drawer/);
   assert.match(source, /@flowstack-ui\/brick\/badge/);
+  assert.match(source, /@flowstack-ui\/brick\/chip/);
   assert.match(source, /@flowstack-ui\/brick\/avatar/);
   assert.match(source, /@flowstack-ui\/brick\/toggle/);
   assert.match(source, /@flowstack-ui\/brick\/toggle-group/);

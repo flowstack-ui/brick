@@ -56,6 +56,7 @@ const componentSymbols = {
   badge: "Badge",
   button: "Button",
   card: "Card",
+  chip: "Chip",
   checkbox: "Checkbox",
   "checkbox-group": "CheckboxGroup",
   "radio-group": "RadioGroup",

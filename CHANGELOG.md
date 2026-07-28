@@ -6,6 +6,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added `Chip` with compound value-token anatomy, optional explicitly named
+  removal, two variants and tones, three sizes, two shapes, authored leading
+  content, responsive containment, and public CSS customization hooks.
+
 - Added `AspectRatio` with numeric layout geometry, restrained framing recipes,
   native composition, and public CSS customization hooks.
 

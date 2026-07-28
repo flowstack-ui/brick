@@ -60,6 +60,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/badge.d.ts",
       default: "./dist/badge.js",
     },
+    "./chip": {
+      types: "./dist/chip.d.ts",
+      default: "./dist/chip.js",
+    },
     "./avatar": {
       types: "./dist/avatar.d.ts",
       default: "./dist/avatar.js",
@@ -283,6 +287,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const alertDialog = await import(new URL("../../dist/alert-dialog.js", import.meta.url));
   const drawer = await import(new URL("../../dist/drawer.js", import.meta.url));
   const badge = await import(new URL("../../dist/badge.js", import.meta.url));
+  const chip = await import(new URL("../../dist/chip.js", import.meta.url));
   const avatar = await import(new URL("../../dist/avatar.js", import.meta.url));
   const toggle = await import(new URL("../../dist/toggle.js", import.meta.url));
   const toggleGroup = await import(new URL("../../dist/toggle-group.js", import.meta.url));
@@ -373,6 +378,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Card",
       "Checkbox",
       "CheckboxGroup",
+      "Chip",
+      "ChipLabel",
+      "ChipRemoveTrigger",
+      "ChipRoot",
       "Code",
       "CodeBlock",
       "CodeBlockActions",
@@ -700,6 +709,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(drawer.DrawerContent, brick.Drawer.Content);
   assert.equal(badge.Badge, brick.Badge);
   assert.equal(badge.NotificationBadge, brick.NotificationBadge);
+  assert.equal(chip.Chip, brick.Chip);
+  assert.equal(chip.ChipRoot, brick.Chip.Root);
+  assert.equal(chip.ChipLabel, brick.Chip.Label);
+  assert.equal(chip.ChipRemoveTrigger, brick.Chip.RemoveTrigger);
   assert.equal(avatar.Avatar, brick.Avatar);
   assert.equal(toggle.Toggle, brick.Toggle);
   assert.equal(toggleGroup.ToggleGroup, brick.ToggleGroup);
