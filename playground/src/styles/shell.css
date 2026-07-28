@@ -111,6 +111,10 @@
   justify-self: end;
 }
 
+.review-controls > .brick-toolbar__separator {
+  margin-inline: var(--brick-space-2);
+}
+
 .scenario-nav {
   container-type: inline-size;
   border-block: var(--brick-border-width) solid
