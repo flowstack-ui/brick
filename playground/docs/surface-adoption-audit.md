@@ -70,6 +70,7 @@ different owner.
 | Tree Grid | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Tree Grid boundaries, hierarchy and active/selection state paint, cell geometry, rounded clipping, and explicit overflow containment |
 | Tree | overview, comparison cells, appearance scopes, customization shell, and stress panels | Tree root/row boundaries, hierarchy guides, state paint, indentation, and focus geometry |
 | Toolbar | overview, comparison cells, and appearance scopes | Toolbar surfaces, control states, separators, orientation, and overflow geometry |
+| Chip | overview, comparison cells, appearance scopes, and customization shell | Chip recipes, authored value content, removal state, containment, and boundary examples |
 | Pagination | overview, comparison cells, appearance scopes, customization shell, and stress panels | Pagination root/control recipes, current and disabled state paint, and inline overflow geometry |
 | Link | overview, specimen-grid cells, appearance scopes, customization shell/preview, stress panel | Link recipes, inline wrapping, composition output, and code block |
 | Nav List | overview, specimen cells, appearance scopes, customization shell, and stress panel | Nav List rows, current-state recipes, disclosure anatomy, and composition output |

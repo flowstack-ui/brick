@@ -114,6 +114,13 @@ export const componentEntries = [
   },
   {
     category: "Data display",
+    description: "Compact authored values with an optional explicit remove action.",
+    id: "chip",
+    route: "/chip",
+    title: "Chip",
+  },
+  {
+    category: "Data display",
     description: "Sized, semantic, accessible SVG presentation.",
     id: "icon",
     route: "/icon",

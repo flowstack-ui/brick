@@ -29,6 +29,16 @@ test("composes Toolbar through its public subpath", async ({ page }) => {
   await expect(toolbar.getByRole("link", { name: "Publishing help" })).toBeFocused();
 });
 
+test("composes Chip through its public subpath with application-owned removal", async ({ page }) => {
+  const group = page.getByLabel("Assigned release reviewers");
+  const riley = group.getByText("Riley Chen", { exact: true }).locator("xpath=..");
+  await expect(riley).toHaveClass(/brick-chip/);
+  await expect(riley).not.toHaveAttribute("role");
+  await group.getByRole("button", { name: "Remove Riley Chen" }).click();
+  await expect(group.getByText("Riley Chen", { exact: true })).toHaveCount(0);
+  await expect(page.getByTestId("consumer-reviewer-status")).toHaveText("1 reviewer assigned.");
+});
+
 test("composes Pagination through its public subpath", async ({ page }) => {
   const pagination = page.getByRole("navigation", { name: "Release report pages" });
   await expect(pagination).toHaveAttribute("data-variant", "outline");

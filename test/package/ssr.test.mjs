@@ -4,6 +4,7 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import { Card } from "../../dist/card.js";
 import { Badge, NotificationBadge } from "../../dist/badge.js";
+import { Chip } from "../../dist/chip.js";
 import { Avatar } from "../../dist/avatar.js";
 import { Toggle } from "../../dist/toggle.js";
 import { ToggleGroup } from "../../dist/toggle-group.js";
@@ -325,6 +326,23 @@ test("Badge family renders server-safe markup without behavior", () => {
   assert.match(notificationMarkup, /aria-label="Inbox, 4 unread messages"/);
   assert.match(notificationMarkup, /aria-hidden="true"/);
   assert.match(notificationMarkup, />4<\/span>/);
+});
+
+test("Chip renders deterministic passive value and remove-button anatomy", () => {
+  const markup = renderToString(
+    React.createElement(
+      Chip.Root,
+      { tone: "accent", variant: "outline" },
+      React.createElement(Chip.Label, null, "Riley Chen"),
+      React.createElement(Chip.RemoveTrigger, { ariaLabel: "Remove Riley Chen" }),
+    ),
+  );
+  assert.match(markup, /^<span/);
+  assert.match(markup, /class="brick-chip"/);
+  assert.match(markup, /data-tone="accent"/);
+  assert.match(markup, /class="brick-chip__label"/);
+  assert.match(markup, /<button[^>]*aria-label="Remove Riley Chen"/);
+  assert.doesNotMatch(markup, /role=|aria-live|aria-pressed|tabindex/i);
 });
 
 test("Avatar emits deterministic fallback and status metadata during SSR", () => {

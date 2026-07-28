@@ -68,6 +68,7 @@ import { TextareaPage, textareaScenarios } from "../components/textarea/Textarea
 import { SelectPage, selectScenarios } from "../components/select/SelectPage.js";
 import { MultiSelectPage, multiSelectScenarios } from "../components/multi-select/MultiSelectPage.js";
 import { TextPage, textScenarios } from "../components/text/TextPage.js";
+import { ChipPage, chipScenarios } from "../components/chip/ChipPage.js";
 import { IconPage, iconScenarios } from "../components/icon/IconPage.js";
 import { ImagePage, imageScenarios } from "../components/image/ImagePage.js";
 import { ListPage, listScenarios } from "../components/list/ListPage.js";
@@ -294,6 +295,10 @@ export function PlaygroundApp() {
         <TextPage />
       </PlaygroundShell>
     );
+  }
+
+  if (entry.id === "chip") {
+    return <PlaygroundShell entry={entry} scenarios={chipScenarios}><ChipPage /></PlaygroundShell>;
   }
 
   if (entry.id === "icon") {

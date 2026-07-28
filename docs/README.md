@@ -69,6 +69,8 @@ This directory is the public documentation authority for
 - [Avatar](components/avatar/README.md) — identity image, fallback, and visual
   status
 - [Badge](components/badge/README.md) — passive inline labels
+- [Chip](components/chip/README.md) — compact authored values with optional
+  explicit removal
 - [Notification Badge](components/notification-badge/README.md) — attached
   visual count or dot
 - [Card](components/card/README.md) — static compound surface for one subject

@@ -75,6 +75,10 @@
       "types": "./dist/badge.d.ts",
       "default": "./dist/badge.js"
     },
+    "./chip": {
+      "types": "./dist/chip.d.ts",
+      "default": "./dist/chip.js"
+    },
     "./avatar": {
       "types": "./dist/avatar.d.ts",
       "default": "./dist/avatar.js"

@@ -6,6 +6,7 @@ export const componentIds = [
   "badge",
   "button",
   "card",
+  "chip",
   "checkbox",
   "checkbox-group",
   "radio-group",
