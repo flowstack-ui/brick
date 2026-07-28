@@ -8,6 +8,13 @@ export interface PlaygroundEntry {
 
 export const componentEntries = [
   {
+    category: "Layout",
+    description: "Stable ratio geometry and restrained framing for authored content.",
+    id: "aspect-ratio",
+    route: "/aspect-ratio",
+    title: "Aspect Ratio",
+  },
+  {
     category: "Actions",
     description: "Finished actions with native Button semantics.",
     id: "button",

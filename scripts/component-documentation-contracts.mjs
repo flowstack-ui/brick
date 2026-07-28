@@ -1,4 +1,14 @@
 export const componentDocumentationContracts = {
+  "aspect-ratio": {
+    source: "src/components/aspect-ratio/AspectRatio.tsx",
+    exportSource: "src/components/aspect-ratio/index.ts",
+    css: "src/components/aspect-ratio/aspect-ratio.css",
+    exports: ["AspectRatio", "AspectRatioOverflow", "AspectRatioRadius", "AspectRatioRoot", "AspectRatioRootProps", "AspectRatioVariant"],
+    unions: { AspectRatioVariant: ["plain", "subtle", "outline"], AspectRatioRadius: ["none", "sm", "md", "lg", "full"], AspectRatioOverflow: ["visible", "hidden"] },
+    defaults: { variant: "plain", radius: "none", overflow: "hidden" },
+    dataAttributes: ["data-overflow", "data-radius", "data-slot", "data-variant"],
+    publicTokens: ["--brick-aspect-ratio-background", "--brick-aspect-ratio-border-color", "--brick-aspect-ratio-border-width", "--brick-aspect-ratio-radius", "--brick-aspect-ratio-overflow"],
+  },
   "alert-dialog": {
     source: "src/components/alert-dialog/AlertDialog.tsx",
     exportSource: "src/components/alert-dialog/index.ts",

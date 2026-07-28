@@ -6,6 +6,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added `AspectRatio` with numeric layout geometry, restrained framing recipes,
+  native composition, and public CSS customization hooks.
+
 - Added the twelve-part Atom-backed `Tree Grid` family with hierarchy,
   cell navigation, expansion and selection, controlled sortable headers,
   responsive containment, logical RTL, and complete visual recipes.

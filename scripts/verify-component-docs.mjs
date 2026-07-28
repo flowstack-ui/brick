@@ -51,6 +51,7 @@ const componentSubpaths = {
 const componentSymbols = {
   "alert-dialog": "AlertDialog",
   "app-bar": "AppBar",
+  "aspect-ratio": "AspectRatio",
   avatar: "Avatar",
   badge: "Badge",
   button: "Button",

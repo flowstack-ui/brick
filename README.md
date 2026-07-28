@@ -25,7 +25,7 @@ BottomNavigation, and VisuallyHidden.
 | --- | --- |
 | Actions and selection | [Button](docs/components/button/README.md), [Icon Button](docs/components/icon-button/README.md), [Toggle](docs/components/toggle/README.md), [Toggle Group](docs/components/toggle-group/README.md), [Toolbar](docs/components/toolbar/README.md) |
 | Navigation | [Pagination](docs/components/pagination/README.md) |
-| Data display | [Data Grid](docs/components/data-grid/README.md) |
+| Data display | [Aspect Ratio](docs/components/aspect-ratio/README.md), [Data Grid](docs/components/data-grid/README.md) |
 | Data display | [Tree Grid](docs/components/tree-grid/README.md) |
 | Data display | [Tree](docs/components/tree/README.md) |
 | Forms and choices | [Form](docs/components/form/README.md), [Field](docs/components/field/README.md), [Fieldset](docs/components/fieldset/README.md), [Input](docs/components/input/README.md), [Textarea](docs/components/textarea/README.md), [Select](docs/components/select/README.md), [Multi Select](docs/components/multi-select/README.md), [Checkbox](docs/components/checkbox/README.md), [Checkbox Group](docs/components/checkbox-group/README.md), [Radio Group](docs/components/radio-group/README.md), [Switch](docs/components/switch/README.md) |

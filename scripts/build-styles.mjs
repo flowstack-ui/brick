@@ -39,6 +39,7 @@ await writeFile(
     '@import "../../src/components/icon-button/icon-button.css";',
     '@import "../../src/components/icon/icon.css";',
     '@import "../../src/components/image/image.css";',
+    '@import "../../src/components/aspect-ratio/aspect-ratio.css";',
     '@import "../../src/components/app-bar/app-bar.css";',
     '@import "../../src/components/card/card.css";',
     '@import "../../src/components/dialog/dialog.css";',

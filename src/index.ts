@@ -31,6 +31,14 @@ export {
   type ImageRootProps,
 } from "./components/image/index.js";
 export {
+  AspectRatio,
+  AspectRatioRoot,
+  type AspectRatioOverflow,
+  type AspectRatioRadius,
+  type AspectRatioRootProps,
+  type AspectRatioVariant,
+} from "./components/aspect-ratio/index.js";
+export {
   AppBar,
   AppBarCenter,
   AppBarEnd,

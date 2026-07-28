@@ -47,7 +47,20 @@ import { Code } from "../../dist/code.js";
 import { CodeBlock } from "../../dist/code-block.js";
 import { Icon } from "../../dist/icon.js";
 import { Image } from "../../dist/image.js";
+import { AspectRatio } from "../../dist/aspect-ratio.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("Aspect Ratio renders deterministic layout-only anatomy during SSR", () => {
+  const markup = renderToString(React.createElement(AspectRatio.Root, { ratio: 4 / 3, variant: "outline", radius: "lg" }, React.createElement("iframe", { title: "Product tour" })));
+  assert.match(markup, /class="brick-aspect-ratio"/);
+  assert.match(markup, /data-slot="aspect-ratio"/);
+  assert.match(markup, /data-variant="outline"/);
+  assert.match(markup, /data-radius="lg"/);
+  assert.match(markup, /data-overflow="hidden"/);
+  assert.match(markup, /aspect-ratio:1.3333333333333333/);
+  assert.match(markup, /<iframe title="Product tour"/);
+  assert.doesNotMatch(markup, /role=/);
+});
 
 test("Pagination renders deterministic generated native anatomy during SSR", () => {
   const markup = renderToString(React.createElement(Pagination.Root, { "aria-label": "Result pages", defaultPage: 4, totalPages: 8, variant: "outline" }, React.createElement(Pagination.List, null, React.createElement(Pagination.Previous), React.createElement(Pagination.Items), React.createElement(Pagination.Next))));

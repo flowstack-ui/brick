@@ -1,0 +1,58 @@
+@layer brick.components {
+  .brick-aspect-ratio {
+    --brick-aspect-ratio-background: transparent;
+    --brick-aspect-ratio-border-color: transparent;
+    --brick-aspect-ratio-border-width: 0rem;
+    --brick-aspect-ratio-radius: 0rem;
+    --brick-aspect-ratio-overflow: hidden;
+
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow: var(--brick-aspect-ratio-overflow);
+    border: var(--brick-aspect-ratio-border-width) solid
+      var(--brick-aspect-ratio-border-color);
+    border-radius: var(--brick-aspect-ratio-radius);
+    background: var(--brick-aspect-ratio-background);
+  }
+
+  .brick-aspect-ratio[data-variant="subtle"] {
+    --brick-aspect-ratio-background: var(--brick-color-surface-subtle);
+  }
+
+  .brick-aspect-ratio[data-variant="outline"] {
+    --brick-aspect-ratio-background: var(--brick-color-surface-base);
+    --brick-aspect-ratio-border-color: var(--brick-color-border-subtle);
+    --brick-aspect-ratio-border-width: var(--brick-border-width);
+  }
+
+  .brick-aspect-ratio[data-radius="sm"] {
+    --brick-aspect-ratio-radius: var(--brick-radius-subtle);
+  }
+
+  .brick-aspect-ratio[data-radius="md"] {
+    --brick-aspect-ratio-radius: var(--brick-radius-control);
+  }
+
+  .brick-aspect-ratio[data-radius="lg"] {
+    --brick-aspect-ratio-radius: var(--brick-radius-surface);
+  }
+
+  .brick-aspect-ratio[data-radius="full"] {
+    --brick-aspect-ratio-radius: var(--brick-radius-full);
+  }
+
+  .brick-aspect-ratio[data-overflow="visible"] {
+    --brick-aspect-ratio-overflow: visible;
+  }
+
+  @media (forced-colors: active) {
+    .brick-aspect-ratio[data-variant="outline"] {
+      --brick-aspect-ratio-background: Canvas;
+      --brick-aspect-ratio-border-color: CanvasText;
+    }
+  }
+}

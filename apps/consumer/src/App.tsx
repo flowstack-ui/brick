@@ -10,6 +10,7 @@ import { Drawer } from "@flowstack-ui/brick/drawer";
 import { IconButton } from "@flowstack-ui/brick/icon-button";
 import { Icon } from "@flowstack-ui/brick/icon";
 import { Image } from "@flowstack-ui/brick/image";
+import { AspectRatio } from "@flowstack-ui/brick/aspect-ratio";
 import { Toggle } from "@flowstack-ui/brick/toggle";
 import { ToggleGroup } from "@flowstack-ui/brick/toggle-group";
 import { Tooltip } from "@flowstack-ui/brick/tooltip";
@@ -565,6 +566,15 @@ export function App() {
                 <Image.Content alt="Mobile checkout workspace preview" height={675} loading="lazy" width={1200} />
                 <Image.Fallback>Workspace preview unavailable</Image.Fallback>
               </Image.Root>
+              <AspectRatio.Root aria-label="Release preview frame" ratio={21 / 9} radius="md" variant="outline">
+                <div style={{ alignItems: "center", blockSize: "100%", display: "flex", justifyContent: "center", padding: "1rem" }}>
+                  <VStack gap="1">
+                    <Badge size="sm" tone="success">Ready</Badge>
+                    <Text as="span" variant="title-sm">Responsive release preview</Text>
+                    <Text tone="secondary" variant="body-sm">21:9 geometry from the public packed subpath</Text>
+                  </VStack>
+                </div>
+              </AspectRatio.Root>
               <Card.Header>
                 <Card.Title as="h3" id="project-title">Mobile checkout refresh</Card.Title>
                 <Card.Description>
