@@ -64,6 +64,19 @@ describe("Toast", () => {
     expect(screen.queryByRole("button", { name: "Dismiss notification" })).not.toBeInTheDocument();
   });
 
+  it("omits the icon slot for default content and forwards viewport direction", async () => {
+    render(<Toaster dir="rtl" portalDisabled position="bottom-start" />);
+    await act(async () => {
+      toast("Title only", { duration: Infinity });
+    });
+
+    const viewport = screen.getByRole("region");
+    const item = viewport.querySelector(".brick-toast");
+    expect(viewport).toHaveAttribute("dir", "rtl");
+    expect(item?.querySelector("[data-slot='toast-icon']")).not.toBeInTheDocument();
+    expect(item?.firstElementChild).toHaveAttribute("data-slot", "toast-content");
+  });
+
   it("runs one action and dismisses, updates stable IDs, and restores focus after F8 Escape", async () => {
     vi.useFakeTimers();
     const action = vi.fn();

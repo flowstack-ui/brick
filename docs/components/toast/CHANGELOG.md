@@ -9,3 +9,7 @@ Toast follows the package version of `@flowstack-ui/brick`.
 - Added imperative `toast` helpers, `Toaster`, and styled `Toast.*` compound parts.
 - Added six types, six logical positions, responsive/compact/full widths, separated/overlap stacking, optional directional swipe, queue and promise workflows.
 - Added exactly-once Atom announcements, F8 region access, focus-safe timers, focused Escape dismissal, responsive safe-area layout, forced colors, and reduced motion support.
+
+### Fixed
+
+- Centered short content and icons, removed the empty default icon gutter, kept close controls inside logical edges, mirrored portalled positions in RTL, and replaced unstable percentage-based overlap spacing with a compact non-clipping stack.

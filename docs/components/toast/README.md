@@ -66,13 +66,13 @@ Named part exports are `ToastRoot`, `ToastIcon`, `ToastContent`, `ToastTitle`, `
 
 ## Visual recipes and states
 
-Toast has one raised card recipe. Six types alter only the accent/glyph and announcement priority, not geometry. Responsive width is near-full on narrow screens and compact on larger screens; `full` fills the safe available viewport width. Overlap layers inactive cards and expands on pointer or keyboard entry. Entering, exiting, optional swipe, dark, forced-colors, and reduced-motion states are driven by stable data attributes and media preferences.
+Toast has one raised card recipe. Six types alter only the accent/glyph and announcement priority, not geometry. Default toasts without an authored icon omit the icon slot and its gutter; title-only and single-line description-only cards use compact content-driven height. Responsive width is near-full on narrow screens and compact on larger screens; `full` fills the safe available viewport width. Overlap layers inactive cards and expands on pointer or keyboard entry. Entering, exiting, optional swipe, dark, forced-colors, and reduced-motion states are driven by stable data attributes and media preferences.
 
 ## Tokens and CSS hooks
 
 Stable classes are `.brick-toast-viewport`, `.brick-toast`, and `__icon`, `__content`, `__title`, `__description`, `__actions`, `__action`, and `__close`. Stable slots use the corresponding `toast-*` names. Public attributes include viewport `data-position`, `data-width`, `data-stacking`, `data-expanded`; card `data-type`, `data-state`, `data-index`, `data-swipe`, and `data-swipe-direction`.
 
-Public component variables are `--brick-toast-viewport-z-index`, `--brick-toast-viewport-gap`, `--brick-toast-offset-block-start`, `--brick-toast-offset-block-end`, `--brick-toast-offset-inline-start`, `--brick-toast-offset-inline-end`, `--brick-toast-inline-size`, `--brick-toast-background`, `--brick-toast-foreground`, `--brick-toast-description-foreground`, `--brick-toast-border-color`, `--brick-toast-accent-color`, `--brick-toast-radius`, `--brick-toast-shadow`, `--brick-toast-padding`, `--brick-toast-content-gap`, `--brick-toast-action-gap`, `--brick-toast-motion-duration`, and `--brick-toast-motion-easing`.
+Public component variables are `--brick-toast-viewport-z-index`, `--brick-toast-viewport-gap`, `--brick-toast-overlap-step`, `--brick-toast-offset-block-start`, `--brick-toast-offset-block-end`, `--brick-toast-offset-inline-start`, `--brick-toast-offset-inline-end`, `--brick-toast-inline-size`, `--brick-toast-background`, `--brick-toast-foreground`, `--brick-toast-description-foreground`, `--brick-toast-border-color`, `--brick-toast-accent-color`, `--brick-toast-radius`, `--brick-toast-shadow`, `--brick-toast-padding`, `--brick-toast-content-gap`, `--brick-toast-action-gap`, `--brick-toast-motion-duration`, and `--brick-toast-motion-easing`.
 
 ## Customization
 

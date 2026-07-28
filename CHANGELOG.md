@@ -23,6 +23,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Fixed
 
+- Corrected Toast short-content alignment, omitted the empty default icon
+  gutter, kept close controls inside logical edges, mirrored portalled logical
+  positions in RTL, and stabilized non-clipping overlap expansion.
+
 - Removed unsupported `aria-orientation` from `Progress`; visual orientation
   remains available through `data-orientation` without invalid progressbar ARIA.
 

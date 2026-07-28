@@ -300,9 +300,12 @@ export interface ToasterProps extends Omit<
 
 function DefaultToast({ closeLabel, state }: { closeLabel: string; state: ToastRenderState }) {
   const { toast: item, index, expanded } = state;
+  const hasIcon = item.icon != null || item.type !== "default";
   return (
     <ToastRoot key={item.id} toast={item as AtomToastData} index={index} expanded={expanded}>
-      <ToastIcon type={item.type}>{item.icon ?? <StatusGlyph type={item.type} />}</ToastIcon>
+      {hasIcon ? (
+        <ToastIcon type={item.type}>{item.icon ?? <StatusGlyph type={item.type} />}</ToastIcon>
+      ) : null}
       <ToastContent>
         <ToastTitle />
         <ToastDescription />

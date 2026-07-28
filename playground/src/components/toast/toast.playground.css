@@ -1,8 +1,46 @@
-.toast-page { min-inline-size: 0; }
-.toast-grid { gap: var(--brick-space-4); align-items: start; }
-.toast-grid .brick-toast, .toast-specimen { position: relative; }
-.toast-controls { display: flex; gap: var(--brick-space-2); align-items: center; margin-block-end: var(--brick-space-4); }
-.toast-controls--wrap { flex-wrap: wrap; }
-.toast-custom-icon { font-size: 1rem; }
-.toast-phone { inline-size: min(100%, 20rem); padding: var(--brick-space-2); border: 1px dashed var(--brick-color-border-default); }
-@media (max-width: 42rem) { .toast-grid { grid-template-columns: minmax(0, 1fr) !important; } .toast-controls { align-items: stretch; flex-direction: column; } }
+.toast-page {
+  min-inline-size: 0;
+}
+
+.toast-grid {
+  align-items: stretch;
+  gap: var(--brick-space-4);
+}
+
+.toast-example {
+  block-size: 100%;
+  min-inline-size: 0;
+}
+
+.toast-example > .brick-stack {
+  block-size: 100%;
+}
+
+.toast-example .brick-badge {
+  align-self: flex-start;
+}
+
+.toast-example__trigger {
+  align-self: flex-start;
+  margin-block-start: auto;
+}
+
+.toast-custom-icon {
+  font-size: 1rem;
+}
+
+@media (max-width: 56rem) {
+  .toast-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 42rem) {
+  .toast-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .toast-example__trigger {
+    align-self: stretch;
+  }
+}
