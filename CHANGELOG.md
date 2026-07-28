@@ -6,6 +6,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added `Toolbar` with compound commands, links, separators, toggle groups,
+  three surfaces and sizes, orientation-aware navigation, and no-wrap overflow.
+
 - Added `Table` with native compound semantics, static visual recipes,
   logical/numeric alignment, explicit responsive containment, sticky headers,
   and application-controlled sorting composition.

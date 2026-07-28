@@ -1,68 +1,26 @@
-import { Fieldset, HStack, ToggleGroup } from "@flowstack-ui/brick";
+import { Toolbar } from "@flowstack-ui/brick";
 import type { Appearance, Direction } from "../shared/appearance.js";
 
-export function ReviewControls({
-  appearance,
-  direction,
-  onAppearanceChange,
-  onDirectionChange,
-}: {
+export function ReviewControls({ appearance, direction, onAppearanceChange, onDirectionChange }: {
   appearance: Appearance;
   direction: Direction;
   onAppearanceChange: (appearance: Appearance) => void;
   onDirectionChange: (direction: Direction) => void;
 }) {
   return (
-    <HStack
-      align="start"
-      aria-label="Review controls"
-      className="review-controls"
-      gap="3"
-      wrap
-    >
-      <Fieldset.Root className="review-control-group">
-        <Fieldset.Legend>Appearance</Fieldset.Legend>
-        <ToggleGroup.Root
-          attached
-          onValueChange={(value) => {
-            if (value === "system" || value === "light" || value === "dark") {
-              onAppearanceChange(value);
-            }
-          }}
-          size="sm"
-          type="single"
-          value={appearance}
-          variant="outline"
-        >
-          {(["system", "light", "dark"] as const).map((value) => (
-            <ToggleGroup.Item key={value} value={value}>
-              {value}
-            </ToggleGroup.Item>
-          ))}
-        </ToggleGroup.Root>
-      </Fieldset.Root>
-      <Fieldset.Root className="review-control-group">
-        <Fieldset.Legend>Direction</Fieldset.Legend>
-        <ToggleGroup.Root
-          attached
-          onValueChange={(value) => {
-            if (value === "ltr" || value === "rtl") {
-              onDirectionChange(value);
-            }
-          }}
-          size="sm"
-          type="single"
-          value={direction}
-          variant="outline"
-        >
-          <ToggleGroup.Item value="ltr">
-            LTR
-          </ToggleGroup.Item>
-          <ToggleGroup.Item value="rtl">
-            RTL
-          </ToggleGroup.Item>
-        </ToggleGroup.Root>
-      </Fieldset.Root>
-    </HStack>
+    <Toolbar.Root ariaLabel="Review controls" className="review-controls" size="sm" variant="plain">
+      <Toolbar.ToggleGroup ariaLabel="Appearance" onValueChange={(value) => {
+        if (value === "system" || value === "light" || value === "dark") onAppearanceChange(value);
+      }} type="single" value={appearance}>
+        {(["system", "light", "dark"] as const).map((value) => <Toolbar.ToggleItem key={value} value={value}>{value}</Toolbar.ToggleItem>)}
+      </Toolbar.ToggleGroup>
+      <Toolbar.Separator orientation="vertical" />
+      <Toolbar.ToggleGroup ariaLabel="Direction" onValueChange={(value) => {
+        if (value === "ltr" || value === "rtl") onDirectionChange(value);
+      }} type="single" value={direction}>
+        <Toolbar.ToggleItem value="ltr">LTR</Toolbar.ToggleItem>
+        <Toolbar.ToggleItem value="rtl">RTL</Toolbar.ToggleItem>
+      </Toolbar.ToggleGroup>
+    </Toolbar.Root>
   );
 }

@@ -1,0 +1,4 @@
+.toolbar-page { min-inline-size: 0; padding-block-end: 6rem; }
+.toolbar-page .brick-surface { min-inline-size: 0; gap: var(--brick-space-3); }
+.toolbar-narrow { inline-size: 20rem; max-inline-size: 100%; overflow: hidden; }
+.toolbar-narrow .brick-toolbar { inline-size: 100%; }

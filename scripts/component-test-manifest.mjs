@@ -48,6 +48,7 @@ export const componentIds = [
   "link",
   "list",
   "table",
+  "toolbar",
   "notification-badge",
   "popover",
   "stack",

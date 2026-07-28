@@ -192,6 +192,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/table.d.ts",
       default: "./dist/table.js",
     },
+    "./toolbar": {
+      types: "./dist/toolbar.d.ts",
+      default: "./dist/toolbar.js",
+    },
     "./stack": {
       types: "./dist/stack.d.ts",
       default: "./dist/stack.js",
@@ -284,6 +288,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const link = await import(new URL("../../dist/link.js", import.meta.url));
   const list = await import(new URL("../../dist/list.js", import.meta.url));
   const table = await import(new URL("../../dist/table.js", import.meta.url));
+  const toolbar = await import(new URL("../../dist/toolbar.js", import.meta.url));
   const stack = await import(new URL("../../dist/stack.js", import.meta.url));
   const grid = await import(new URL("../../dist/grid.js", import.meta.url));
   const container = await import(new URL("../../dist/container.js", import.meta.url));
@@ -577,6 +582,13 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ToggleGroup",
       "ToggleGroupItem",
       "ToggleGroupRoot",
+      "Toolbar",
+      "ToolbarButton",
+      "ToolbarLink",
+      "ToolbarRoot",
+      "ToolbarSeparator",
+      "ToolbarToggleGroup",
+      "ToolbarToggleItem",
       "Tooltip",
       "VStack",
       "VisuallyHidden",
@@ -592,6 +604,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(table.Table, brick.Table);
   assert.equal(table.TableRoot, brick.Table.Root);
   assert.equal(table.TableCell, brick.Table.Cell);
+  assert.equal(toolbar.Toolbar, brick.Toolbar);
+  assert.equal(toolbar.ToolbarRoot, brick.Toolbar.Root);
+  assert.equal(toolbar.ToolbarToggleItem, brick.Toolbar.ToggleItem);
   assert.equal(appBar.AppBar, brick.AppBar);
   assert.equal(appBar.AppBarRoot, brick.AppBar.Root);
   assert.equal(appBar.AppBarToolbar, brick.AppBar.Toolbar);

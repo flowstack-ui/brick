@@ -141,6 +141,13 @@ export const componentEntries = [
     title: "Table",
   },
   {
+    category: "Actions",
+    description: "Related commands with one keyboard entry point.",
+    id: "toolbar",
+    route: "/toolbar",
+    title: "Toolbar",
+  },
+  {
     category: "Data display",
     description: "Inline technical literals with native code semantics.",
     id: "code",

@@ -98,6 +98,7 @@ const componentSymbols = {
   link: "Link",
   list: "List",
   table: "Table",
+  toolbar: "Toolbar",
   "notification-badge": "NotificationBadge",
   popover: "Popover",
   stack: "Stack",

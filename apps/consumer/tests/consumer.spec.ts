@@ -21,6 +21,14 @@ test("composes Collapsible through its public subpath", async ({ page }) => {
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
 });
 
+test("composes Toolbar through its public subpath", async ({ page }) => {
+  const toolbar = page.getByRole("toolbar", { name: "Document view tools" });
+  await expect(toolbar).toHaveAttribute("data-variant", "outline");
+  await toolbar.getByRole("button", { name: "Refresh" }).focus();
+  await page.keyboard.press("End");
+  await expect(toolbar.getByRole("link", { name: "Publishing help" })).toBeFocused();
+});
+
 test("composes the complete menu family through public subpaths", async ({ page }) => {
   const navigation = page.getByRole("navigation", { name: "Workspace destinations", exact: true });
   await expect(navigation).toHaveClass(/brick-navigation-menu/);

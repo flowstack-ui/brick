@@ -211,6 +211,10 @@
       "types": "./dist/table.d.ts",
       "default": "./dist/table.js"
     },
+    "./toolbar": {
+      "types": "./dist/toolbar.d.ts",
+      "default": "./dist/toolbar.js"
+    },
     "./stack": {
       "types": "./dist/stack.d.ts",
       "default": "./dist/stack.js"

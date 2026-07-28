@@ -111,38 +111,6 @@
   justify-self: end;
 }
 
-.review-control-group {
-  --brick-fieldset-gap: 0;
-
-  display: inline-grid;
-  flex: 0 0 max-content;
-  grid-template-columns: max-content;
-  inline-size: max-content;
-  max-inline-size: 100%;
-  padding-block: var(--brick-space-3);
-  padding-inline: var(--brick-space-2);
-  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
-  border-radius: var(--brick-radius-surface);
-  background: color-mix(
-    in srgb,
-    var(--brick-color-surface-raised) 92%,
-    transparent
-  );
-}
-
-.review-control-group .brick-toggle-group {
-  inline-size: max-content;
-  max-inline-size: 100%;
-}
-
-.review-control-group .brick-fieldset-legend {
-  float: none;
-  inline-size: auto;
-  max-inline-size: none;
-  color: var(--brick-color-text-secondary);
-  font-size: 0.6875rem;
-}
-
 .scenario-nav {
   container-type: inline-size;
   border-block: var(--brick-border-width) solid

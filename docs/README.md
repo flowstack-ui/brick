@@ -23,6 +23,8 @@ This directory is the public documentation authority for
 - [Toggle](components/toggle/README.md) — one persistent pressed command
 - [Toggle Group](components/toggle-group/README.md) — related single or
   multiple pressed commands
+- [Toolbar](components/toolbar/README.md) — related commands with one keyboard
+  entry point
 
 ### Forms and choices
 

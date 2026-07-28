@@ -30,6 +30,7 @@ import { Text } from "@flowstack-ui/brick/text";
 import { Link } from "@flowstack-ui/brick/link";
 import { List } from "@flowstack-ui/brick/list";
 import { Table } from "@flowstack-ui/brick/table";
+import { Toolbar } from "@flowstack-ui/brick/toolbar";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
 import { Grid } from "@flowstack-ui/brick/grid";
 import { Container } from "@flowstack-ui/brick/container";
@@ -206,6 +207,15 @@ export function App() {
             This small application consumes Brick exactly through its public package
             exports. Application layout stays here; finished component styling stays in Brick.
           </Text>
+          <Toolbar.Root ariaLabel="Document view tools" size="sm" variant="outline">
+            <Toolbar.Button>Refresh</Toolbar.Button>
+            <Toolbar.Separator orientation="vertical" />
+            <Toolbar.ToggleGroup ariaLabel="Document view" defaultValue="preview">
+              <Toolbar.ToggleItem value="preview">Preview</Toolbar.ToggleItem>
+              <Toolbar.ToggleItem value="outline">Outline</Toolbar.ToggleItem>
+            </Toolbar.ToggleGroup>
+            <Toolbar.Link href="#publishing-preferences">Publishing help</Toolbar.Link>
+          </Toolbar.Root>
           <HStack className="hero-actions" gap="3" wrap>
             <Dialog.Root>
               <Dialog.Trigger asChild>
