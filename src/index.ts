@@ -588,5 +588,22 @@ export {
   type DataGridSortIndicatorProps,
   type DataGridVariant,
 } from "./components/data-grid/index.js";
+export {
+  Tree,
+  TreeGroup,
+  TreeIndicator,
+  TreeItem,
+  TreeItemContent,
+  TreeItemText,
+  TreeRoot,
+  type TreeGroupProps,
+  type TreeIndicatorProps,
+  type TreeItemContentProps,
+  type TreeItemProps,
+  type TreeItemTextProps,
+  type TreeRootProps,
+  type TreeSize,
+  type TreeVariant,
+} from "./components/tree/index.js";
 export { Toolbar, ToolbarButton, ToolbarLink, ToolbarRoot, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem, type ToolbarButtonProps, type ToolbarLinkProps, type ToolbarRootProps, type ToolbarSeparatorProps, type ToolbarSize, type ToolbarToggleGroupProps, type ToolbarToggleItemProps, type ToolbarVariant } from "./components/toolbar/index.js";
 export * from "./components/pagination/index.js";

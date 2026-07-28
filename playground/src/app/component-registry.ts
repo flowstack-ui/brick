@@ -148,6 +148,13 @@ export const componentEntries = [
     title: "Data Grid",
   },
   {
+    category: "Data display",
+    description: "A finished one-dimensional hierarchical selection widget.",
+    id: "tree",
+    route: "/tree",
+    title: "Tree",
+  },
+  {
     category: "Actions",
     description: "Related commands with one keyboard entry point.",
     id: "toolbar",

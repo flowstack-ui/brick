@@ -32,6 +32,8 @@ This directory is the public documentation authority for
 
 - [Data Grid](components/data-grid/README.md) — navigable tabular data with
   selection and controlled sortable headers
+- [Tree](components/tree/README.md) — one-dimensional hierarchical selection
+  with finished rows, indicators, and optional guides
 
 ### Forms and choices
 

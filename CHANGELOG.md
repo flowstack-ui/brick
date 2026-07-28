@@ -6,6 +6,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added the Atom-backed six-part `Tree` family with vertical hierarchy,
+  selection and expansion paint, three variants, two sizes, optional guides,
+  logical RTL, and accessible preference handling.
+
 - Added the Atom-backed `Data Grid` family for navigable tabular data, row
   selection, controlled sortable-header activation, and responsive containment.
 
