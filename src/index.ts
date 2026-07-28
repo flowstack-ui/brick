@@ -348,6 +348,7 @@ export {
   type SelectViewportProps,
 } from "./components/select/index.js";
 export * from "./components/multi-select/index.js";
+export * from "./components/combobox/index.js";
 export {
   Text,
   type TextAlign,

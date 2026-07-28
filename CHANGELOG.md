@@ -105,6 +105,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 - `Textarea` with `Root` and `Count` parts, native Atom-backed multi-line value,
   Field, form, validation, reset, character-count, manual resize, and bounded
   auto-resize behavior plus Brick recipes, sizing, geometry, and public tokens.
+- `Combobox` with Atom-backed filtering, single selection, optional free text,
+  portal positioning, collision handling, and touch-safe dismissal.
 - `MultiSelect` with Atom-backed value arrays, persistent multiple selection,
   complete compound anatomy, and repeated-value native form participation.
 

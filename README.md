@@ -21,6 +21,8 @@ BottomNavigation, and VisuallyHidden.
 
 ## Component guides
 
+- [Combobox](docs/components/combobox/README.md)
+
 | Family | Components |
 | --- | --- |
 | Actions and selection | [Button](docs/components/button/README.md), [Icon Button](docs/components/icon-button/README.md), [Toggle](docs/components/toggle/README.md), [Toggle Group](docs/components/toggle-group/README.md), [Toolbar](docs/components/toolbar/README.md) |

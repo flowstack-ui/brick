@@ -96,6 +96,7 @@ const componentSymbols = {
   input: "Input",
   textarea: "Textarea",
   select: "Select",
+  combobox: "Combobox",
   "multi-select": "MultiSelect",
   link: "Link",
   list: "List",

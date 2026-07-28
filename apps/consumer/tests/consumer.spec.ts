@@ -139,6 +139,15 @@ test("composes Select through its public subpath with native form behavior", asy
   await expect(form.getByTestId("consumer-plan-status")).toHaveText("Billing plan reset to Team.");
 });
 
+test("composes Combobox through its public subpath with filtering and selection", async ({ page }) => {
+  const input = page.getByRole("combobox", { name: "Release city" });
+  await expect(input).toHaveClass(/brick-combobox-input/);
+  await input.fill("lis");
+  await expect(page.getByRole("option", { name: "Lisbon" })).toBeVisible();
+  await page.getByRole("option", { name: "Lisbon" }).click();
+  await expect(input).toHaveValue("Lisbon");
+});
+
 test("composes Multi Select through its public subpath with repeated-value form behavior", async ({ page }) => {
   const form = page.getByRole("form", { name: "Team skills chooser" });
   const trigger = form.getByRole("button", { name: "Team skills" });

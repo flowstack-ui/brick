@@ -27,6 +27,7 @@ import { Switch } from "@flowstack-ui/brick/switch";
 import { Input } from "@flowstack-ui/brick/input";
 import { Textarea } from "@flowstack-ui/brick/textarea";
 import { Select } from "@flowstack-ui/brick/select";
+import { Combobox } from "@flowstack-ui/brick/combobox";
 import { MultiSelect } from "@flowstack-ui/brick/multi-select";
 import { Text } from "@flowstack-ui/brick/text";
 import { Link } from "@flowstack-ui/brick/link";
@@ -381,6 +382,17 @@ export function App() {
               <Text aria-live="polite" data-testid="consumer-plan-status" tone="secondary">{planStatus}</Text>
             </VStack>
           </Form>
+        </Surface>
+
+        <Surface as="section" bordered inset="lg" aria-labelledby="city-title">
+          <VStack gap="3">
+            <VStack gap="1"><Text as="h2" id="city-title" variant="title-lg">Find a release city</Text><Text tone="secondary">A searchable choice composed through the packed Combobox subpath.</Text></VStack>
+            <Combobox.Root defaultValue="chicago" options={[{ value: "boston", label: "Boston" }, { value: "chicago", label: "Chicago" }, { value: "lisbon", label: "Lisbon" }]}>
+              <Combobox.Label>Release city</Combobox.Label>
+              <Combobox.Control><Combobox.Input placeholder="Search cities" /><Combobox.Clear aria-label="Clear release city" /><Combobox.Indicator /></Combobox.Control>
+              <Combobox.Portal><Combobox.Content><Combobox.Listbox><Combobox.Item label="Boston" value="boston">Boston</Combobox.Item><Combobox.Item label="Chicago" value="chicago">Chicago</Combobox.Item><Combobox.Item label="Lisbon" value="lisbon">Lisbon</Combobox.Item><Combobox.Empty>No matching cities</Combobox.Empty></Combobox.Listbox></Combobox.Content></Combobox.Portal>
+            </Combobox.Root>
+          </VStack>
         </Surface>
 
         <Surface as="section" bordered inset="lg" aria-labelledby="skills-title">

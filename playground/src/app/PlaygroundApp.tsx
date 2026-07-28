@@ -66,6 +66,7 @@ import {
 import { InputPage, inputScenarios } from "../components/input/InputPage.js";
 import { TextareaPage, textareaScenarios } from "../components/textarea/TextareaPage.js";
 import { SelectPage, selectScenarios } from "../components/select/SelectPage.js";
+import { ComboboxPage, comboboxScenarios } from "../components/combobox/ComboboxPage.js";
 import { MultiSelectPage, multiSelectScenarios } from "../components/multi-select/MultiSelectPage.js";
 import { TextPage, textScenarios } from "../components/text/TextPage.js";
 import { ChipPage, chipScenarios } from "../components/chip/ChipPage.js";
@@ -413,6 +414,10 @@ export function PlaygroundApp() {
         <SelectPage />
       </PlaygroundShell>
     );
+  }
+
+  if (entry.id === "combobox") {
+    return <PlaygroundShell entry={entry} scenarios={comboboxScenarios}><ComboboxPage /></PlaygroundShell>;
   }
 
   if (entry.id === "multi-select") {
