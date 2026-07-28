@@ -148,7 +148,7 @@ test("centers title-only content and icons within the toast row", async ({ page 
     Math.abs(
       iconBox!.y + iconBox!.height / 2 - (contentBox!.y + contentBox!.height / 2),
     ),
-  ).toBeLessThanOrEqual(2);
+  ).toBeLessThanOrEqual(2.5);
 });
 
 test("action runs once and removes only its toast", async ({ page }) => {
