@@ -11,6 +11,19 @@ test("Combobox defaults, filtering, selection, clearing, and keyboard remain int
   await expect(input).toHaveValue("Lisbon"); await overview.getByRole("button", { name: "Clear city" }).click(); await expect(input).toHaveValue("");
 });
 
+test("chevron toggles and popup matches the complete control width", async ({ page }) => {
+  const overview = page.locator('[data-scenario="combobox.overview"]');
+  const control = overview.locator(".brick-combobox-control");
+  await overview.getByRole("button", { name: "Toggle City options" }).click();
+  const content = page.locator(".brick-combobox-content:visible");
+  await expect(content).toBeVisible();
+  const controlBox = await control.boundingBox();
+  const contentBox = await content.boundingBox();
+  expect(controlBox).not.toBeNull();
+  expect(contentBox).not.toBeNull();
+  expect(contentBox!.width).toBeGreaterThanOrEqual(controlBox!.width - 1);
+});
+
 test("recipes and RTL retain closed visual contracts", async ({ page }) => {
   const controls = page.locator('[data-scenario="combobox.recipes"] .brick-combobox-control'); await expect(controls).toHaveCount(3);
   for (let i=0;i<3;i+=1) await expect(controls.nth(i)).toHaveAttribute("data-variant", ["outline","soft","underline"][i]);

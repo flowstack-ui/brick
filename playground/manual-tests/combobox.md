@@ -23,19 +23,19 @@ Result:
 
 ## Step 2: Filtering, keyboard, and focus
 
-Type to filter; use Arrow keys, Home, End, Enter, Escape, and Tab. Expect enabled-option navigation, one selected value, safe dismissal, visible focus, and no focus trap.
+Type to filter; confirm non-matches disappear; use Arrow keys, Home, End, Enter, Escape, and Tab. Click the chevron and expect it to toggle the popup. Expect enabled-option navigation, one selected value, safe dismissal, visible focus, and no focus trap.
 
 Result:
 
 ## Step 3: Pointer, touch, and positioning
 
-Select and clear by pointer. On real touch hardware, open near the viewport edge and with the keyboard visible; scroll the page and list, confirm collision flipping keeps all options reachable, a drag does not dismiss, and an outside tap dismisses only after release.
+Select and clear by pointer. Confirm the popup is at least as wide as the whole visible control. On real touch hardware, open near the viewport edge and with the keyboard visible; scroll the page and list, confirm collision flipping keeps all options reachable, a drag does not dismiss, and an outside tap dismisses only after release.
 
 Result:
 
 ## Step 4: Semantics and assistive technology
 
-With VoiceOver, confirm label, combobox expanded state, active option, selected option, disabled/read-only state, empty/loading messages, and decorative artwork are announced appropriately.
+With VoiceOver, confirm Field label/error relationships, combobox expanded state, active option, selected option, disabled/read-only/invalid state, empty/loading messages, named disclosure button, and decorative artwork are announced appropriately.
 
 Result:
 
