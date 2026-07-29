@@ -1,39 +1,91 @@
 # Rating
 
-Rating is Brick's styled rating input, backed by Atom 0.19.4. It exposes one accessible slider rather than five radio buttons, supports fractional precision, and works alone or as the sole control in `Field`. It does not require `Fieldset`.
+Rating is Brick's styled small-scale score input, backed by Atom 0.19.6. It exposes one accessible slider with decorative repeated artwork and works alone or as the sole control in `Field`; it does not require `Fieldset`.
+
+## When and where to use
+
+Use Rating when a person chooses a score on a short ordered scale, such as one to five stars. Fractional steps are appropriate when the product genuinely accepts them.
+
+## When not to use
+
+Use Slider for a general numeric setting, Radio Group when choices have distinct meanings, and a read-only display for an aggregate score.
+
+## Installation and imports
 
 ```tsx
-import { Field, Rating } from "@flowstack-ui/brick";
+import { Rating } from "@flowstack-ui/brick/rating";
+import { Field } from "@flowstack-ui/brick/field";
+import "@flowstack-ui/brick/styles.css";
+```
 
+## Quick start
+
+```tsx
 <Field.Root>
   <Field.Label>Product rating</Field.Label>
-  <Rating.Root defaultValue={3.5} step={0.5} name="rating">
-    {[1, 2, 3, 4, 5].map((value) => <Rating.Item key={value} value={value} />)}
+  <Rating.Root defaultValue={3} name="rating">
+    {[1, 2, 3, 4, 5].map(value => <Rating.Item key={value} value={value} />)}
   </Rating.Root>
+  <Field.Error>Choose a rating.</Field.Error>
 </Field.Root>
 ```
 
-## Anatomy and API
+## Anatomy and DOM ownership
 
-`Rating` exposes `Root` and `Item`. Root accepts Atom's controlled/uncontrolled value, range, precision, direction, form and validation props plus Brick's `size="sm|md|lg"`, `tone="accent|neutral"`, and `variant="solid|outline"`. Item requires its endpoint `value` and accepts optional decorative artwork; Brick renders that artwork in empty and proportionally clipped fill layers.
+`Rating` exposes `Root` and `Item`. Root forwards `HTMLDivElement` and is the single focusable slider. Item forwards `HTMLSpanElement`, requires an endpoint `value`, and stays decorative. Brick renders default or authored artwork in empty and proportionally clipped fill layers.
 
-Root forwards `HTMLDivElement`; Item forwards `HTMLSpanElement`. Stable classes are `.brick-rating`, `.brick-rating__item`, and artwork-layer classes. Default slots are `rating` and `rating-item`.
+## API
 
-## Behavior, forms, and accessibility
+| Prop | Values | Default |
+| --- | --- | --- |
+| `size` | `sm`, `md`, `lg` | `md` |
+| `tone` | `accent`, `neutral` | `accent` |
+| `variant` | `solid`, `outline` | `solid` |
+| `allowClear` | boolean | `false` |
 
-Atom owns click/drag/touch and direction-aware keyboard interaction, fractional values, controlled state, Field state inheritance, hidden form value, form reset, and ARIA. Root is one focusable `slider` with numeric value and localized value text; items and artwork are decorative. Disabled Rating leaves tab order. Read-only Rating remains focusable for value discovery but cannot change.
+Root forwards Atom's controlled and uncontrolled value, `min`, `max`, `step`, `largeStep`, direction, form, validation, and value-label APIs. Item accepts optional decorative artwork. Named exports are `Rating`, `RatingRoot`, and `RatingItem` with `RatingRootProps`, `RatingItemProps`, `RatingSize`, `RatingTone`, and `RatingVariant` types.
 
-Use one `Field` for label, description, and error. Standalone Rating may use an explicit accessible name and state props. A named Rating submits one hidden scalar value.
+## Visual recipes and states
 
-## Styling and resilience
+Recipes change paint and artwork geometry only. Atom state attributes drive disabled, read-only, invalid, required, value, and direction presentation. Repeated activation keeps the selected value stable by default; enable `allowClear` only when the product intentionally supports clearing to the minimum.
 
-Customize `--brick-rating-item-size`, `--brick-rating-gap`, `--brick-rating-empty-color`, and `--brick-rating-fill-color`. Brick preserves 44px item targets, proportional RTL clipping, forced-color boundaries, reduced motion, zoom, coarse pointer input, and narrow containment.
+## Tokens and CSS hooks
+
+Stable classes are `.brick-rating`, `.brick-rating__item`, `.brick-rating__artwork`, and `.brick-rating__star`. Public variables are `--brick-rating-item-size`, `--brick-rating-gap`, `--brick-rating-empty-color`, and `--brick-rating-fill-color`. Root and Item expose stable `rating` and `rating-item` slots.
+
+## Customization
+
+Prefer recipes, then scope public variables: `<Rating.Root style={{ "--brick-rating-fill-color": "rebeccapurple" }} />`. Item children replace the default star artwork and remain decorative.
+
+## Responsive behavior
+
+Brick preserves 44px item targets, narrow containment, proportional RTL clipping, forced colors, reduced motion, zoom, and coarse-pointer input. A drag can cross gaps and the complete item scale while vertical page scrolling remains available.
+
+## Accessibility
+
+Atom owns the slider role, current/range/value text, keyboard and pointer input, fractional selection, direction, validation, Field relationships, submission, reset, and cancellation. Items and artwork stay hidden from assistive technology. Disabled Rating leaves tab order; read-only Rating remains focusable. True pointer cancellation rolls back, while capture loss finalizes the live value.
+
+## Composition, native props, and refs
+
+Root and Item preserve native props, ARIA, events, `className`, `style`, data attributes, slots, and exact refs. Use one Field for label, description, and error, or give standalone Root an accessible name. A named Rating submits one scalar value.
+
+## Examples
+
+```tsx
+<Rating.Root aria-label="Service rating" defaultValue={3.5} step={0.5} allowClear>
+  {[1, 2, 3, 4, 5].map(value => <Rating.Item key={value} value={value} />)}
+</Rating.Root>
+```
 
 ## Evidence
 
-- [Playground](../../../playground/src/components/rating/)
+- [Playground source](../../../playground/src/components/rating/)
 - [Unit tests](../../../test/components/rating/)
 - [Type tests](../../../test/types/components/rating.test.ts)
-- [Browser tests](../../../playground/tests/components/rating/behavior.spec.ts)
-- [Visual tests](../../../playground/tests/components/rating/visual.spec.ts)
+- [Browser behavior](../../../playground/tests/components/rating/behavior.spec.ts)
+- [Visual owner](../../../playground/tests/components/rating/visual.spec.ts)
 - [Manual protocol](../../../playground/manual-tests/rating.md)
+
+## Changelog
+
+See [`CHANGELOG.md`](CHANGELOG.md).

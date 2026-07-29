@@ -60,6 +60,7 @@ const componentSymbols = {
   checkbox: "Checkbox",
   "checkbox-group": "CheckboxGroup",
   "radio-group": "RadioGroup",
+  rating: "Rating",
   slider: "Slider",
   switch: "Switch",
   breadcrumb: "Breadcrumb",

@@ -1,6 +1,6 @@
 # Slider
 
-Slider is Brick's styled numeric single-value and range input, backed by Atom 0.19.4. It works alone or as the sole control in `Field`; it is not a grouped choice collection and does not require `Fieldset`.
+Slider is Brick's styled numeric single-value and range input, backed by Atom 0.19.6. It works alone or as the sole control in `Field`; it is not a grouped choice collection and does not require `Fieldset`.
 
 ## When and where to use
 
