@@ -37,3 +37,4 @@ Notes or issue:
 Overall result:
 Follow-up issues:
 Workbook updated:
+Yes — the recalculated File Upload sheet records 27 of 28 requirements resolved; this human protocol is the sole open row.
