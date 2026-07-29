@@ -61,6 +61,39 @@ test("losing pointer capture finalizes the dragged value instead of restoring it
   await page.waitForTimeout(100);
   await expect(thumb).toHaveAttribute("aria-valuenow","70");
 });
+test("native touch taps remain committed",async({page},testInfo)=>{
+  test.skip(!testInfo.project.name.startsWith("mobile-"),"requires a touch-enabled project");
+  const overview=page.getByTestId("slider-overview");
+  const thumb=overview.getByRole("slider",{name:"Volume"});
+  const track=overview.locator(".brick-slider__track");
+  const box=await track.boundingBox();
+  for(const percent of [0.2,0.8,0.35,0.65]){
+    await page.touchscreen.tap(box!.x+box!.width*percent,box!.y+box!.height/2);
+    await expect(thumb).toHaveAttribute("aria-valuenow",String(Math.round(percent*100)));
+    await page.waitForTimeout(100);
+    await expect(thumb).toHaveAttribute("aria-valuenow",String(Math.round(percent*100)));
+  }
+});
+test("native horizontal touch drags remain committed",async({page},testInfo)=>{
+  test.skip(testInfo.project.name!=="mobile-chromium","requires Chromium touch input");
+  const overview=page.getByTestId("slider-overview");
+  const thumb=overview.getByRole("slider",{name:"Volume"});
+  const track=overview.locator(".brick-slider__track");
+  const box=await track.boundingBox();
+  const startX=box!.x+box!.width*0.4;
+  const endX=box!.x+box!.width*0.7;
+  const y=box!.y+box!.height/2;
+  const session=await page.context().newCDPSession(page);
+  await session.send("Input.dispatchTouchEvent",{type:"touchStart",touchPoints:[{x:startX,y,id:1,radiusX:4,radiusY:4,force:1}]});
+  for(let index=1;index<=6;index++){
+    const x=startX+(endX-startX)*(index/6);
+    await session.send("Input.dispatchTouchEvent",{type:"touchMove",touchPoints:[{x,y,id:1,radiusX:4,radiusY:4,force:1}]});
+  }
+  await session.send("Input.dispatchTouchEvent",{type:"touchEnd",touchPoints:[]});
+  await expect(thumb).toHaveAttribute("aria-valuenow","70");
+  await page.waitForTimeout(150);
+  await expect(thumb).toHaveAttribute("aria-valuenow","70");
+});
 test("markers stay contained and their track positions remain selectable",async({page})=>{
   const root=page.getByTestId("slider-content").locator(".brick-slider").first();
   await root.evaluate(element=>element.scrollIntoView({block:"center"}));
