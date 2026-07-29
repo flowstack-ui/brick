@@ -20,7 +20,12 @@ issue for each failure.
 
 ## Steps
 
-1. Review 01–06 with click, drag, touch, arrows, Home, and End. Confirm one focus stop, correct full/partial/empty fill, RTL direction, custom artwork, and 44px item targets.
+1. Review 01–06 with repeated selected-star clicks, cross-item drags, touch,
+   arrows, Home, and End. Confirm default selection remains stable, the
+   `allowClear` example clears only when explicitly enabled, capture loss keeps
+   the live value, fractional and RTL input remain precise, one focus stop is
+   exposed, custom artwork remains decorative, and every item target is at
+   least 44px.
 2. Review 04 and 07 inside and outside Field. Confirm one label, focusable read-only state, coherent invalid/disabled/required paint, one named hidden value, submit, and reset.
 3. Review 08–09 in light/dark, phone width, 200%/400%, RTL, reduced motion, and forced colors. Confirm compact badges, separate padded examples, exact customization, containment, and recognizable state.
 4. With assistive technology, confirm one named slider announces numeric and human-readable value text; every artwork layer remains silent.
