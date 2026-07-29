@@ -58,6 +58,7 @@ import { Progress } from "@flowstack-ui/brick/progress";
 import { ProgressCircle } from "@flowstack-ui/brick/progress-circle";
 import { Slider } from "@flowstack-ui/brick/slider";
 import { Rating } from "@flowstack-ui/brick/rating";
+import { FileUpload } from "@flowstack-ui/brick/file-upload";
 import { Collapsible } from "@flowstack-ui/brick/collapsible";
 import { Accordion } from "@flowstack-ui/brick/accordion";
 import { DropdownMenu } from "@flowstack-ui/brick/dropdown-menu";
@@ -127,6 +128,7 @@ export function App() {
   const [treeGridExpanded, setTreeGridExpanded] = useState(["packages"]);
   const [treeGridSelection, setTreeGridSelection] = useState<string | null>("brick");
   const [reviewers, setReviewers] = useState(["Riley Chen", "Morgan Lee"]);
+  const [attachmentStatus, setAttachmentStatus] = useState("No release files selected.");
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -305,6 +307,45 @@ export function App() {
             <Text aria-live="polite" data-testid="consumer-reviewer-status" tone="secondary" variant="body-sm">
               {reviewers.length === 0 ? "No reviewers assigned." : `${reviewers.length} ${reviewers.length === 1 ? "reviewer" : "reviewers"} assigned.`}
             </Text>
+          </VStack>
+        </Surface>
+
+        <Surface as="section" bordered inset="lg" aria-labelledby="release-files-title">
+          <VStack gap="3">
+            <VStack gap="1">
+              <Text as="h2" id="release-files-title" variant="title-lg">Release attachments</Text>
+              <Text tone="secondary">Add local supporting files for review; this Consumer intentionally performs no network upload.</Text>
+            </VStack>
+            <Field.Root id="consumer-release-files">
+              <Field.Label>Supporting files</Field.Label>
+              <FileUpload.Root
+                accept="image/*,.pdf"
+                maxFiles={3}
+                maxSize={5_000_000}
+                multiple
+                name="release-files"
+                onFilesChange={(files) => setAttachmentStatus(files.length ? `${files.length} ${files.length === 1 ? "file" : "files"} ready for review.` : "No release files selected.")}
+                onRejectedFilesChange={(files) => files.length && setAttachmentStatus(`${files[0].file.name} was not accepted.`)}
+              >
+                <FileUpload.HiddenInput />
+                <FileUpload.Dropzone>
+                  <Text as="p" variant="title-sm">Drop release files here</Text>
+                  <Text as="p" tone="secondary" variant="body-sm">PDF or image, up to 5 MB.</Text>
+                  <FileUpload.Trigger>Select files</FileUpload.Trigger>
+                </FileUpload.Dropzone>
+                <FileUpload.ItemGroup>
+                  {(file, index) => (
+                    <FileUpload.Item file={file} index={index} key={`${file.name}-${index}`}>
+                      <FileUpload.ItemName />
+                      <FileUpload.ItemSize />
+                      <FileUpload.ItemDeleteTrigger />
+                    </FileUpload.Item>
+                  )}
+                </FileUpload.ItemGroup>
+              </FileUpload.Root>
+              <Field.Description>Files stay local in this verification workflow.</Field.Description>
+            </Field.Root>
+            <Text aria-live="polite" data-testid="consumer-file-upload-status" tone="secondary" variant="body-sm">{attachmentStatus}</Text>
           </VStack>
         </Surface>
 

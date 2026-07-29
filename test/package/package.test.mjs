@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.19.6");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.19.7");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -167,6 +167,10 @@ test("package metadata defines the public Brick boundary", async () => {
     "./rating": {
       types: "./dist/rating.d.ts",
       default: "./dist/rating.js",
+    },
+    "./file-upload": {
+      types: "./dist/file-upload.d.ts",
+      default: "./dist/file-upload.js",
     },
     "./toast": {
       types: "./dist/toast.d.ts",
@@ -332,6 +336,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const progressCircle = await import(new URL("../../dist/progress-circle.js", import.meta.url));
   const slider = await import(new URL("../../dist/slider.js", import.meta.url));
   const rating = await import(new URL("../../dist/rating.js", import.meta.url));
+  const fileUpload = await import(new URL("../../dist/file-upload.js", import.meta.url));
   const toastModule = await import(new URL("../../dist/toast.js", import.meta.url));
   const input = await import(new URL("../../dist/input.js", import.meta.url));
   const textarea = await import(new URL("../../dist/textarea.js", import.meta.url));
@@ -503,6 +508,16 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "DropdownMenuTrigger",
       "Field",
       "Fieldset",
+      "FileUpload",
+      "FileUploadDropzone",
+      "FileUploadHiddenInput",
+      "FileUploadItem",
+      "FileUploadItemDeleteTrigger",
+      "FileUploadItemGroup",
+      "FileUploadItemName",
+      "FileUploadItemSize",
+      "FileUploadRoot",
+      "FileUploadTrigger",
       "Form",
       "Grid",
       "HStack",
@@ -859,6 +874,16 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(rating.Rating, brick.Rating);
   assert.equal(rating.RatingRoot, brick.Rating.Root);
   assert.equal(rating.RatingItem, brick.Rating.Item);
+  assert.equal(fileUpload.FileUpload, brick.FileUpload);
+  assert.equal(fileUpload.FileUploadRoot, brick.FileUpload.Root);
+  assert.equal(fileUpload.FileUploadHiddenInput, brick.FileUpload.HiddenInput);
+  assert.equal(fileUpload.FileUploadTrigger, brick.FileUpload.Trigger);
+  assert.equal(fileUpload.FileUploadDropzone, brick.FileUpload.Dropzone);
+  assert.equal(fileUpload.FileUploadItemGroup, brick.FileUpload.ItemGroup);
+  assert.equal(fileUpload.FileUploadItem, brick.FileUpload.Item);
+  assert.equal(fileUpload.FileUploadItemName, brick.FileUpload.ItemName);
+  assert.equal(fileUpload.FileUploadItemSize, brick.FileUpload.ItemSize);
+  assert.equal(fileUpload.FileUploadItemDeleteTrigger, brick.FileUpload.ItemDeleteTrigger);
   assert.equal(toastModule.Toast, brick.Toast);
   assert.equal(toastModule.Toaster, brick.Toaster);
   assert.equal(toastModule.toast, brick.toast);

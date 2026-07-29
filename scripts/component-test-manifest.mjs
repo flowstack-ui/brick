@@ -11,6 +11,7 @@ export const componentIds = [
   "checkbox-group",
   "radio-group",
   "rating",
+  "file-upload",
   "slider",
   "switch",
   "breadcrumb",
