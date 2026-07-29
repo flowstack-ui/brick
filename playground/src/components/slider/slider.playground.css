@@ -2,4 +2,5 @@
 .slider-page .forms-cell__preview { inline-size: 100%; }
 .slider-page .brick-slider[data-orientation="vertical"] { inline-size: var(--brick-control-target-min); margin-inline: auto; }
 .slider-phone { inline-size: min(100%, 15rem); }
+.slider-rtl { inline-size: 100%; }
 .slider-page [data-testid="slider-appearance"] { scroll-margin-block-start: 10rem; }

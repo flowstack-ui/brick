@@ -18,7 +18,9 @@ import { Field, Slider } from "@flowstack-ui/brick";
 
 ## Anatomy and API
 
-`Slider` exposes `Root`, `Track`, `Range`, `Thumb`, `Marker`, and `ValueLabel`. Root accepts Atom's controlled/uncontrolled values, `min`, `max`, `step`, `largeStep`, `orientation`, `dir`, form props, validation props, and Brick's closed `size="sm|md|lg"` and `variant="solid|soft"` recipes. Range values author one indexed Thumb per value. `Marker` requires a numeric `value`; `ValueLabel` must be inside Thumb and may render `{ index, percent, value }`.
+`Slider` exposes `Root`, `Track`, `Range`, `Thumb`, `Marker`, and `ValueLabel`. Root accepts Atom's controlled/uncontrolled values, `min`, `max`, `step`, `largeStep`, `orientation`, `dir`, form props, validation props, and Brick's closed `size="sm|md|lg"` and `variant="solid|soft"` recipes. Range values author one indexed Thumb per value. `Marker` requires a numeric `value` and belongs inside Track; it is decorative, while a pointer press at its position passes through to the interactive Track. `ValueLabel` is optional, must be inside Thumb, and may render `{ index, percent, value }`.
+
+Slider does not show a numeric value by default. Add `ValueLabel` only when a persistent value beside the thumb is useful. Brick reserves vertical space for an authored horizontal ValueLabel. For dense ranges, long formatted values, or nearby Field text, prefer an external application-owned output so two persistent labels cannot collide.
 
 Root forwards `HTMLDivElement`; Track forwards `HTMLDivElement`; Range, Thumb, Marker, and ValueLabel forward `HTMLSpanElement`. Stable classes match `.brick-slider` and each `__part`; stable slots match `slider` and each `slider-*` part.
 
