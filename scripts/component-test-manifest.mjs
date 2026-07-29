@@ -10,6 +10,7 @@ export const componentIds = [
   "checkbox",
   "checkbox-group",
   "radio-group",
+  "slider",
   "switch",
   "breadcrumb",
   "tabs",
