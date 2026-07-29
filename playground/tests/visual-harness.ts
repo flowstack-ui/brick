@@ -38,6 +38,9 @@ export async function expectEvidenceScreenshot(
   locator: Locator,
   name: string,
 ) {
+  await page.addStyleTag({
+    content: ".evidence-review-header { position: static !important; }",
+  });
   const originalViewport = page.viewportSize() ?? { width: 1120, height: 900 };
   const initialBox = await locator.boundingBox();
   if (!initialBox) {
