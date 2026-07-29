@@ -175,6 +175,14 @@
       "types": "./dist/progress-circle.d.ts",
       "default": "./dist/progress-circle.js"
     },
+    "./slider": {
+      "types": "./dist/slider.d.ts",
+      "default": "./dist/slider.js"
+    },
+    "./rating": {
+      "types": "./dist/rating.d.ts",
+      "default": "./dist/rating.js"
+    },
     "./toast": {
       "types": "./dist/toast.d.ts",
       "default": "./dist/toast.js"
@@ -370,7 +378,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.19.2"
+    "@flowstack-ui/atom": "0.19.3"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

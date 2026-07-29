@@ -1,0 +1,36 @@
+import type { CSSProperties, ComponentProps } from "react";
+import { Badge, Code, Field, Grid, Slider, VStack } from "@flowstack-ui/brick";
+import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
+import { FormEvidenceCell as Cell, FormEvidenceGroup as EvidenceGroup } from "../../shared/FormEvidence.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
+import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import "../../shared/forms-evidence.playground.css";
+import "./slider.playground.css";
+
+const customStyle = { "--brick-slider-range-background": "#7c3aed", "--brick-slider-thumb-border": "#7c3aed", "--brick-slider-track-background": "#ede9fe" } as CSSProperties;
+const customCode = "--brick-slider-range-background: #7c3aed;\n--brick-slider-thumb-border: #7c3aed;\n--brick-slider-track-background: #ede9fe;";
+function Example({ label = "Volume", ...props }: { label?: string } & ComponentProps<typeof Slider.Root>) { return <Field.Root className="slider-field"><Field.Label>{label}</Field.Label><Slider.Root defaultValue={[40]} {...props}><Slider.Track><Slider.Range /><Slider.Thumb><Slider.ValueLabel /></Slider.Thumb></Slider.Track></Slider.Root></Field.Root>; }
+function RatingMarks() { return <Slider.Root aria-label="Satisfaction" defaultValue={[3]} min={1} max={5} step={1}>{[1,2,3,4,5].map((v) => <Slider.Marker key={v} value={v}>{v}</Slider.Marker>)}<Slider.Track><Slider.Range /><Slider.Thumb><Slider.ValueLabel /></Slider.Thumb></Slider.Track></Slider.Root>; }
+export const sliderScenarios = [
+  { id:"slider.overview",number:1,title:"Overview",description:"A labelled single-value Slider with its default medium solid recipe and visible value." },
+  { id:"slider.values",number:2,title:"Values and ranges",navigationTitle:"Values",description:"Single and two-thumb values use the same track anatomy and effective dependent bounds." },
+  { id:"slider.recipes",number:3,title:"Sizes and variants",navigationTitle:"Recipes",description:"Three sizes and two variants change presentation while preserving a 44px target." },
+  { id:"slider.states",number:4,title:"Field and control states",navigationTitle:"States",description:"Standalone and Field-provided invalid, disabled, read-only, and required state remain coherent." },
+  { id:"slider.orientation",number:5,title:"Orientation and direction",navigationTitle:"Direction",description:"Horizontal and vertical geometry follow their axis; RTL reverses the horizontal inline direction." },
+  { id:"slider.content",number:6,title:"Markers and formatting",navigationTitle:"Content",description:"Decorative markers and value-label render functions add visible context without changing slider semantics." },
+  { id:"slider.form",number:7,title:"Form and rendered output",navigationTitle:"Form",description:"A named Slider submits hidden values, resets, and exposes its generated Field relationships." },
+  { id:"slider.appearance",number:8,title:"Appearance and customization",navigationTitle:"Theme",description:"Light and dark previews use compact badges; the custom specimen matches the shown properties." },
+  { id:"slider.stress",number:9,title:"Responsive and accessibility",navigationTitle:"Stress",description:"Narrow layouts, long labels, RTL, zoom, reduced motion, forced colors, touch, and keyboard input remain usable." },
+] as const satisfies readonly ScenarioDefinition[];
+export function SliderPage(){ return <VStack className="forms-page slider-page" data-component-page="slider">
+  <Scenario {...sliderScenarios[0]}><EvidenceSurface inset="lg" data-testid="slider-overview"><Example /></EvidenceSurface></Scenario>
+  <Scenario {...sliderScenarios[1]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="slider-values"><Cell label="single"><Example /></Cell><Cell label="range"><Slider.Root aria-label="Price range" defaultValue={[25,75]}><Slider.Track><Slider.Range/><Slider.Thumb index={0}><Slider.ValueLabel/></Slider.Thumb><Slider.Thumb index={1}><Slider.ValueLabel/></Slider.Thumb></Slider.Track></Slider.Root></Cell></Grid.Root></Scenario>
+  <Scenario {...sliderScenarios[2]}><Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="slider-recipes">{(["sm","md","lg"] as const).map(size=><Cell key={size} label={size}><Example size={size}/></Cell>)}<Cell label="solid"><Example variant="solid"/></Cell><Cell label="soft"><Example variant="soft"/></Cell></Grid.Root></Scenario>
+  <Scenario {...sliderScenarios[3]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="slider-states"><Cell label="invalid"><Example invalid/></Cell><Cell label="disabled"><Example disabled/></Cell><Cell label="read only"><Example readOnly/></Cell><Cell label="required"><Example required/></Cell></Grid.Root></Scenario>
+  <Scenario {...sliderScenarios[4]}><Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="slider-direction"><Cell label="LTR"><Example/></Cell><Cell label="RTL"><div dir="rtl"><Example dir="rtl" label="مستوى الصوت"/></div></Cell><Cell label="vertical"><Example orientation="vertical"/></Cell></Grid.Root></Scenario>
+  <Scenario {...sliderScenarios[5]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="slider-content"><Cell label="markers"><RatingMarks/></Cell><Cell label="formatted"><Slider.Root aria-label="Temperature" defaultValue={[22]}><Slider.Track><Slider.Range/><Slider.Thumb><Slider.ValueLabel>{({value})=>`${value}°C`}</Slider.ValueLabel></Slider.Thumb></Slider.Track></Slider.Root></Cell></Grid.Root></Scenario>
+  <Scenario {...sliderScenarios[6]}><RenderedOutput label="Named Slider HTML"><Example name="volume"/></RenderedOutput></Scenario>
+  <Scenario {...sliderScenarios[7]}><VStack className="forms-evidence-stack"><EvidenceGroup title="Scoped appearances" description="The same default recipe follows semantic tokens."><Grid.Root columns={2} className="forms-scoped-grid" data-testid="slider-appearance"><EvidenceSurface data-brick-appearance="light"><Badge size="sm">light</Badge><Example/></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><Badge size="sm">dark</Badge><Example/></EvidenceSurface></Grid.Root></EvidenceGroup><EvidenceGroup title="Consumer customization" description="The violet range, thumb, and track come from the exact properties shown."><EvidenceSurface className="forms-customization" data-testid="slider-customization" inset="lg"><Badge size="sm">custom</Badge><PlaygroundCodeBlock aria-label="Slider customization code">{customCode}</PlaygroundCodeBlock><Example style={customStyle}/></EvidenceSurface></EvidenceGroup></VStack></Scenario>
+  <Scenario {...sliderScenarios[8]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="slider-stress"><Cell label="narrow"><div className="slider-phone"><Example label="A long localized media playback volume label"/></div></Cell><Cell label="RTL range"><div dir="rtl"><Slider.Root aria-label="نطاق السعر" defaultValue={[20,70]} dir="rtl"><Slider.Track><Slider.Range/><Slider.Thumb index={0}/><Slider.Thumb index={1}/></Slider.Track></Slider.Root></div></Cell></Grid.Root></Scenario>
+</VStack> }

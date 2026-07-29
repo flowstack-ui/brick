@@ -1,0 +1,4 @@
+.rating-page .forms-cell__preview { inline-size: 100%; }
+.rating-page .brick-rating { max-inline-size: 100%; }
+.rating-phone { inline-size: min(100%, 15rem); }
+.rating-page [data-testid="rating-appearance"] { scroll-margin-block-start: 10rem; }

@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.19.2");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.19.3");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -159,6 +159,14 @@ test("package metadata defines the public Brick boundary", async () => {
     "./progress-circle": {
       types: "./dist/progress-circle.d.ts",
       default: "./dist/progress-circle.js",
+    },
+    "./slider": {
+      types: "./dist/slider.d.ts",
+      default: "./dist/slider.js",
+    },
+    "./rating": {
+      types: "./dist/rating.d.ts",
+      default: "./dist/rating.js",
     },
     "./toast": {
       types: "./dist/toast.d.ts",
@@ -322,6 +330,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const skeleton = await import(new URL("../../dist/skeleton.js", import.meta.url));
   const progress = await import(new URL("../../dist/progress.js", import.meta.url));
   const progressCircle = await import(new URL("../../dist/progress-circle.js", import.meta.url));
+  const slider = await import(new URL("../../dist/slider.js", import.meta.url));
+  const rating = await import(new URL("../../dist/rating.js", import.meta.url));
   const toastModule = await import(new URL("../../dist/toast.js", import.meta.url));
   const input = await import(new URL("../../dist/input.js", import.meta.url));
   const textarea = await import(new URL("../../dist/textarea.js", import.meta.url));
@@ -616,6 +626,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "RadioGroup",
       "RadioGroupItem",
       "RadioGroupRoot",
+      "Rating",
+      "RatingItem",
+      "RatingRoot",
       "ScrollArea",
       "ScrollAreaRoot",
       "ScrollAreaViewport",
@@ -646,6 +659,13 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "SidebarRoot",
       "SidebarTrigger",
       "Skeleton",
+      "Slider",
+      "SliderMarker",
+      "SliderRange",
+      "SliderRoot",
+      "SliderThumb",
+      "SliderTrack",
+      "SliderValueLabel",
       "Stack",
       "Surface",
       "Switch",
@@ -829,6 +849,16 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(progressCircle.ProgressCircleIndicator, brick.ProgressCircle.Indicator);
   assert.equal(progressCircle.ProgressCircleLabel, brick.ProgressCircle.Label);
   assert.equal(progressCircle.ProgressCircleValue, brick.ProgressCircle.Value);
+  assert.equal(slider.Slider, brick.Slider);
+  assert.equal(slider.SliderRoot, brick.Slider.Root);
+  assert.equal(slider.SliderTrack, brick.Slider.Track);
+  assert.equal(slider.SliderRange, brick.Slider.Range);
+  assert.equal(slider.SliderThumb, brick.Slider.Thumb);
+  assert.equal(slider.SliderMarker, brick.Slider.Marker);
+  assert.equal(slider.SliderValueLabel, brick.Slider.ValueLabel);
+  assert.equal(rating.Rating, brick.Rating);
+  assert.equal(rating.RatingRoot, brick.Rating.Root);
+  assert.equal(rating.RatingItem, brick.Rating.Item);
   assert.equal(toastModule.Toast, brick.Toast);
   assert.equal(toastModule.Toaster, brick.Toaster);
   assert.equal(toastModule.toast, brick.toast);

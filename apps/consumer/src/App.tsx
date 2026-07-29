@@ -56,6 +56,8 @@ import { Tabs } from "@flowstack-ui/brick/tabs";
 import { Skeleton } from "@flowstack-ui/brick/skeleton";
 import { Progress } from "@flowstack-ui/brick/progress";
 import { ProgressCircle } from "@flowstack-ui/brick/progress-circle";
+import { Slider } from "@flowstack-ui/brick/slider";
+import { Rating } from "@flowstack-ui/brick/rating";
 import { Collapsible } from "@flowstack-ui/brick/collapsible";
 import { Accordion } from "@flowstack-ui/brick/accordion";
 import { DropdownMenu } from "@flowstack-ui/brick/dropdown-menu";
@@ -970,6 +972,20 @@ export function App() {
                 </CheckboxGroup.Root>
                 <Fieldset.Error>Choose at least one delivery channel.</Fieldset.Error>
               </Fieldset.Root>
+              <Field.Root>
+                <Field.Label>Release confidence</Field.Label>
+                <Field.Description>Choose the confidence threshold used for the release summary.</Field.Description>
+                <Slider.Root defaultValue={[75]} name="release-confidence">
+                  <Slider.Track><Slider.Range /><Slider.Thumb><Slider.ValueLabel>{({ value }) => `${value}%`}</Slider.ValueLabel></Slider.Thumb></Slider.Track>
+                </Slider.Root>
+              </Field.Root>
+              <Field.Root>
+                <Field.Label>Publishing workflow rating</Field.Label>
+                <Field.Description>Rate the current workflow before saving.</Field.Description>
+                <Rating.Root defaultValue={4} name="workflow-rating">
+                  {[1, 2, 3, 4, 5].map((value) => <Rating.Item key={value} value={value} />)}
+                </Rating.Root>
+              </Field.Root>
               <div className="publishing-preferences-actions">
                 <Button type="submit">Save publishing preferences</Button>
                 <Button tone="neutral" type="reset" variant="outline">Reset preferences</Button>

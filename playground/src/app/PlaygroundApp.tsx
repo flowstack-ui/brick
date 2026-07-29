@@ -135,6 +135,8 @@ import { VisuallyHiddenPage, visuallyHiddenScenarios } from "../components/visua
 import { SkeletonPage, skeletonScenarios } from "../components/skeleton/SkeletonPage.js";
 import { ProgressPage, progressScenarios } from "../components/progress/ProgressPage.js";
 import { ProgressCirclePage, progressCircleScenarios } from "../components/progress-circle/ProgressCirclePage.js";
+import { SliderPage, sliderScenarios } from "../components/slider/SliderPage.js";
+import { RatingPage, ratingScenarios } from "../components/rating/RatingPage.js";
 import { ToastPage, toastScenarios } from "../components/toast/ToastPage.js";
 import { CollapsiblePage, collapsibleScenarios } from "../components/collapsible/CollapsiblePage.js";
 import { AccordionPage, accordionScenarios } from "../components/accordion/AccordionPage.js";
@@ -533,6 +535,14 @@ export function PlaygroundApp() {
 
   if (entry.id === "progress-circle") {
     return <PlaygroundShell entry={entry} scenarios={progressCircleScenarios}><ProgressCirclePage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "slider") {
+    return <PlaygroundShell entry={entry} scenarios={sliderScenarios}><SliderPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "rating") {
+    return <PlaygroundShell entry={entry} scenarios={ratingScenarios}><RatingPage /></PlaygroundShell>;
   }
 
   if (entry.id === "toast") {
