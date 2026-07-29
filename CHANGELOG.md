@@ -4,6 +4,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Fixed Slider marker containment, optional value-label spacing, RTL range
+  geometry, and cross-axis pointer behavior.
+
 - Added Atom-backed Slider and Rating components with separate public APIs,
   Field/form integration, directional input, closed visual recipes, and
   accessible single-value, range, and fractional-rating behavior.

@@ -32,6 +32,14 @@ describe("Slider", () => {
     expect(screen.getByText("$20")).toBeVisible();
   });
 
+  it("identifies logical endpoint markers for contained alignment", () => {
+    render(<Slider.Root aria-label="Scale" defaultValue={[50]}><Slider.Track><Slider.Marker value={0}>0</Slider.Marker><Slider.Marker value={50}>50</Slider.Marker><Slider.Marker value={100}>100</Slider.Marker><Slider.Range /><Slider.Thumb /></Slider.Track></Slider.Root>);
+    const markers = document.querySelectorAll(".brick-slider__marker");
+    expect(markers[0]).toHaveAttribute("data-edge", "start");
+    expect(markers[1]).not.toHaveAttribute("data-edge");
+    expect(markers[2]).toHaveAttribute("data-edge", "end");
+  });
+
   it("inherits Field state and participates in form submission and reset", () => {
     const onChange = vi.fn();
     render(<form onChange={onChange}><Field.Root invalid disabled><Field.Label>Brightness</Field.Label><Example name="brightness" /></Field.Root><button type="reset">Reset</button></form>);
