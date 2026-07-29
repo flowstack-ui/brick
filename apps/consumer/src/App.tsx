@@ -25,6 +25,9 @@ import { CheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 import { RadioGroup } from "@flowstack-ui/brick/radio-group";
 import { Switch } from "@flowstack-ui/brick/switch";
 import { Input } from "@flowstack-ui/brick/input";
+import { NumberInput } from "@flowstack-ui/brick/number-input";
+import { OTPField } from "@flowstack-ui/brick/otp-field";
+import { PasswordToggleField } from "@flowstack-ui/brick/password-toggle-field";
 import { Textarea } from "@flowstack-ui/brick/textarea";
 import { Select } from "@flowstack-ui/brick/select";
 import { Combobox } from "@flowstack-ui/brick/combobox";
@@ -392,6 +395,44 @@ export function App() {
               <Combobox.Control><Combobox.Input placeholder="Search cities" /><Combobox.Clear aria-label="Clear release city" /><Combobox.Trigger aria-label="Toggle release city options" /></Combobox.Control>
               <Combobox.Portal><Combobox.Content><Combobox.Listbox><Combobox.Item label="Boston" value="boston">Boston</Combobox.Item><Combobox.Item label="Chicago" value="chicago">Chicago</Combobox.Item><Combobox.Item label="Lisbon" value="lisbon">Lisbon</Combobox.Item><Combobox.Empty>No matching cities</Combobox.Empty></Combobox.Listbox></Combobox.Content></Combobox.Portal>
             </Combobox.Root>
+          </VStack>
+        </Surface>
+
+        <Surface as="section" bordered inset="lg" aria-labelledby="account-security-title">
+          <VStack gap="3">
+            <VStack gap="1">
+              <Text as="h2" id="account-security-title" variant="title-lg">Account security details</Text>
+              <Text tone="secondary">Specialized fields composed with the same Field relationships and validation state as the rest of the form.</Text>
+            </VStack>
+            <Field.Root id="consumer-seat-count" required>
+              <Field.Label>Seat count</Field.Label>
+              <NumberInput.Root defaultValue={4} max={12} min={1} name="seatCount" required>
+                <NumberInput.Input />
+                <NumberInput.Increment aria-label="Increase seat count" />
+                <NumberInput.Decrement aria-label="Decrease seat count" />
+              </NumberInput.Root>
+              <Field.Description>Choose between 1 and 12 seats.</Field.Description>
+              <Field.Error>Enter a valid seat count.</Field.Error>
+            </Field.Root>
+            <Field.Root id="consumer-verification-code" required>
+              <Field.Label>Verification code</Field.Label>
+              <OTPField.Root length={6} name="verificationCode" required>
+                <OTPField.Group>
+                  {Array.from({ length: 6 }, (_, index) => <OTPField.Input index={index} key={index} />)}
+                </OTPField.Group>
+              </OTPField.Root>
+              <Field.Description>Enter the six-digit code.</Field.Description>
+              <Field.Error>Enter all six digits.</Field.Error>
+            </Field.Root>
+            <Field.Root id="consumer-account-password" required>
+              <Field.Label>Account password</Field.Label>
+              <PasswordToggleField.Root required>
+                <PasswordToggleField.Input name="accountPassword" />
+                <PasswordToggleField.Toggle />
+              </PasswordToggleField.Root>
+              <Field.Description>Use the toggle to review the password.</Field.Description>
+              <Field.Error>Enter an account password.</Field.Error>
+            </Field.Root>
           </VStack>
         </Surface>
 

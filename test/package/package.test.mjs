@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.19.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.19.2");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -176,6 +176,18 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/input.d.ts",
       default: "./dist/input.js",
     },
+    "./number-input": {
+      types: "./dist/number-input.d.ts",
+      default: "./dist/number-input.js",
+    },
+    "./otp-field": {
+      types: "./dist/otp-field.d.ts",
+      default: "./dist/otp-field.js",
+    },
+    "./password-toggle-field": {
+      types: "./dist/password-toggle-field.d.ts",
+      default: "./dist/password-toggle-field.js",
+    },
     "./textarea": {
       types: "./dist/textarea.d.ts",
       default: "./dist/textarea.js",
@@ -323,6 +335,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const tree = await import(new URL("../../dist/tree.js", import.meta.url));
   const toolbar = await import(new URL("../../dist/toolbar.js", import.meta.url));
   const pagination = await import(new URL("../../dist/pagination.js", import.meta.url));
+  const numberInput = await import(new URL("../../dist/number-input.js", import.meta.url));
+  const otpField = await import(new URL("../../dist/otp-field.js", import.meta.url));
+  const passwordToggleField = await import(new URL("../../dist/password-toggle-field.js", import.meta.url));
   const stack = await import(new URL("../../dist/stack.js", import.meta.url));
   const grid = await import(new URL("../../dist/grid.js", import.meta.url));
   const container = await import(new URL("../../dist/container.js", import.meta.url));
@@ -548,6 +563,16 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "NavigationMenuTrigger",
       "NavigationMenuViewport",
       "NotificationBadge",
+      "NumberInput",
+      "NumberInputDecrement",
+      "NumberInputIncrement",
+      "NumberInputInput",
+      "NumberInputRoot",
+      "OTPField",
+      "OTPFieldGroup",
+      "OTPFieldInput",
+      "OTPFieldRoot",
+      "OTPFieldSeparator",
       "Pagination",
       "PaginationEllipsis",
       "PaginationItem",
@@ -556,6 +581,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "PaginationNext",
       "PaginationPrevious",
       "PaginationRoot",
+      "PasswordToggleField",
+      "PasswordToggleFieldIcon",
+      "PasswordToggleFieldInput",
+      "PasswordToggleFieldRoot",
+      "PasswordToggleFieldToggle",
       "Popover",
       "PopoverAnchor",
       "PopoverArrow",
@@ -717,6 +747,12 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(pagination.Pagination, brick.Pagination);
   assert.equal(pagination.PaginationRoot, brick.Pagination.Root);
   assert.equal(pagination.PaginationItems, brick.Pagination.Items);
+  assert.equal(numberInput.NumberInput, brick.NumberInput);
+  assert.equal(numberInput.NumberInputInput, brick.NumberInput.Input);
+  assert.equal(otpField.OTPField, brick.OTPField);
+  assert.equal(otpField.OTPFieldInput, brick.OTPField.Input);
+  assert.equal(passwordToggleField.PasswordToggleField, brick.PasswordToggleField);
+  assert.equal(passwordToggleField.PasswordToggleFieldToggle, brick.PasswordToggleField.Toggle);
   assert.equal(appBar.AppBar, brick.AppBar);
   assert.equal(appBar.AppBarRoot, brick.AppBar.Root);
   assert.equal(appBar.AppBarToolbar, brick.AppBar.Toolbar);

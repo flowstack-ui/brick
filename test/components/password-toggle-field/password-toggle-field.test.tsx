@@ -1,0 +1,11 @@
+import "@testing-library/jest-dom/vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it } from "vitest";
+import { Field } from "../../../src/field.js";
+import { PasswordToggleField } from "../../../src/password-toggle-field.js";
+describe("Password Toggle Field",()=>{
+ it("toggles visibility with state-aware localized labels",async()=>{const user=userEvent.setup();render(<PasswordToggleField.Root hideLabel="Hide secret" showLabel="Show secret"><PasswordToggleField.Input aria-label="Password"/><PasswordToggleField.Toggle/></PasswordToggleField.Root>);const input=screen.getByLabelText("Password");expect(input).toHaveAttribute("type","password");await user.click(screen.getByRole("button",{name:"Show secret"}));expect(input).toHaveAttribute("type","text");expect(screen.getByRole("button",{name:"Hide secret"})).toBeVisible();});
+ it("inherits Field state and relationships",()=>{render(<Field.Root id="password" invalid required><Field.Label>Password</Field.Label><PasswordToggleField.Root><PasswordToggleField.Input/><PasswordToggleField.Toggle/></PasswordToggleField.Root><Field.Error>Password is required.</Field.Error></Field.Root>);const input=screen.getByLabelText(/Password/);expect(input).toHaveAttribute("id","password-control");expect(input).toHaveAttribute("required");expect(input).toHaveAttribute("aria-invalid","true");expect(input).toHaveAttribute("aria-describedby","password-error");});
+ it("restores hidden visibility on form reset",async()=>{const user=userEvent.setup();render(<form><PasswordToggleField.Root><PasswordToggleField.Input aria-label="Password"/><PasswordToggleField.Toggle/></PasswordToggleField.Root><button type="reset">Reset</button></form>);const input=screen.getByLabelText("Password");await user.click(screen.getByRole("button",{name:"Show password"}));expect(input).toHaveAttribute("type","text");await user.click(screen.getByRole("button",{name:"Reset"}));expect(input).toHaveAttribute("type","password");});
+});

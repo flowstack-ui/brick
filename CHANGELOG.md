@@ -6,6 +6,11 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added the Atom-backed `NumberInput`, `OTPField`, and `PasswordToggleField`
+  family with independent compound anatomy, complete visual recipes, natural
+  Field/Fieldset/Form composition, localization, responsive RTL, preference
+  modes, and public customization hooks.
+
 - Added `Chip` with compound value-token anatomy, optional explicitly named
   removal, two variants and tones, three sizes, two shapes, authored leading
   content, responsive containment, and public CSS customization hooks.

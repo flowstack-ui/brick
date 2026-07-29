@@ -64,6 +64,9 @@ import {
   popoverScenarios,
 } from "../components/popover/PopoverPage.js";
 import { InputPage, inputScenarios } from "../components/input/InputPage.js";
+import { NumberInputPage, numberInputScenarios } from "../components/number-input/NumberInputPage.js";
+import { OTPFieldPage, otpFieldScenarios } from "../components/otp-field/OTPFieldPage.js";
+import { PasswordToggleFieldPage, passwordToggleFieldScenarios } from "../components/password-toggle-field/PasswordToggleFieldPage.js";
 import { TextareaPage, textareaScenarios } from "../components/textarea/TextareaPage.js";
 import { SelectPage, selectScenarios } from "../components/select/SelectPage.js";
 import { ComboboxPage, comboboxScenarios } from "../components/combobox/ComboboxPage.js";
@@ -398,6 +401,18 @@ export function PlaygroundApp() {
         <InputPage />
       </PlaygroundShell>
     );
+  }
+
+  if (entry.id === "number-input") {
+    return <PlaygroundShell entry={entry} scenarios={numberInputScenarios}><NumberInputPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "otp-field") {
+    return <PlaygroundShell entry={entry} scenarios={otpFieldScenarios}><OTPFieldPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "password-toggle-field") {
+    return <PlaygroundShell entry={entry} scenarios={passwordToggleFieldScenarios}><PasswordToggleFieldPage /></PlaygroundShell>;
   }
 
   if (entry.id === "textarea") {

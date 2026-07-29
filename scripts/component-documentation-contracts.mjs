@@ -2065,3 +2065,36 @@ componentDocumentationContracts.combobox = {
   dataAttributes: ["data-full-width","data-shape","data-size","data-slot","data-variant"],
   publicTokens: ["--brick-combobox-min-block-size","--brick-combobox-padding-inline","--brick-combobox-radius","--brick-combobox-background","--brick-combobox-border","--brick-combobox-foreground","--brick-combobox-placeholder","--brick-combobox-focus","--brick-combobox-invalid","--brick-combobox-popup-radius"],
 };
+
+componentDocumentationContracts["number-input"] = {
+  source: "src/components/number-input/NumberInput.tsx",
+  exportSource: "src/components/number-input/index.ts",
+  css: "src/components/number-input/number-input.css",
+  exports: ["NumberInput", "NumberInputRoot", "NumberInputInput", "NumberInputIncrement", "NumberInputDecrement", "NumberInputRootProps", "NumberInputInputProps", "NumberInputIncrementProps", "NumberInputDecrementProps", "NumberInputVariant", "NumberInputSize", "NumberInputShape"],
+  unions: { NumberInputVariant: ["outline", "soft", "underline"], NumberInputSize: ["sm", "md", "lg"], NumberInputShape: ["sharp", "rounded", "pill"] },
+  defaults: { fullWidth: true, shape: "rounded", size: "md", variant: "outline" },
+  dataAttributes: ["data-full-width", "data-shape", "data-size", "data-slot", "data-variant"],
+  publicTokens: ["--brick-number-input-background", "--brick-number-input-border", "--brick-number-input-height", "--brick-number-input-radius"],
+};
+
+componentDocumentationContracts["otp-field"] = {
+  source: "src/components/otp-field/OTPField.tsx",
+  exportSource: "src/components/otp-field/index.ts",
+  css: "src/components/otp-field/otp-field.css",
+  exports: ["OTPField", "OTPFieldRoot", "OTPFieldGroup", "OTPFieldInput", "OTPFieldSeparator", "OTPFieldRootProps", "OTPFieldGroupProps", "OTPFieldInputProps", "OTPFieldSeparatorProps", "OTPFieldVariant", "OTPFieldSize", "OTPFieldShape", "OTPFieldLayout"],
+  unions: { OTPFieldVariant: ["outline", "soft", "underline"], OTPFieldSize: ["sm", "md", "lg"], OTPFieldShape: ["sharp", "rounded"], OTPFieldLayout: ["separated", "attached"] },
+  defaults: { layout: "separated", shape: "rounded", size: "md", variant: "outline" },
+  dataAttributes: ["data-layout", "data-shape", "data-size", "data-slot", "data-variant"],
+  publicTokens: ["--brick-otp-radius", "--brick-otp-size"],
+};
+
+componentDocumentationContracts["password-toggle-field"] = {
+  source: "src/components/password-toggle-field/PasswordToggleField.tsx",
+  exportSource: "src/components/password-toggle-field/index.ts",
+  css: "src/components/password-toggle-field/password-toggle-field.css",
+  exports: ["PasswordToggleField", "PasswordToggleFieldRoot", "PasswordToggleFieldInput", "PasswordToggleFieldToggle", "PasswordToggleFieldIcon", "PasswordToggleFieldRootProps", "PasswordToggleFieldInputProps", "PasswordToggleFieldToggleProps", "PasswordToggleFieldIconProps", "PasswordToggleFieldVariant", "PasswordToggleFieldSize", "PasswordToggleFieldShape"],
+  unions: { PasswordToggleFieldVariant: ["outline", "soft", "underline"], PasswordToggleFieldSize: ["sm", "md", "lg"], PasswordToggleFieldShape: ["sharp", "rounded", "pill"] },
+  defaults: { fullWidth: true, shape: "rounded", size: "md", variant: "outline" },
+  dataAttributes: ["data-full-width", "data-shape", "data-size", "data-slot", "data-variant"],
+  publicTokens: ["--brick-password-height", "--brick-password-radius"],
+};

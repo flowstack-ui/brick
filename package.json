@@ -191,6 +191,18 @@
       "types": "./dist/input.d.ts",
       "default": "./dist/input.js"
     },
+    "./number-input": {
+      "types": "./dist/number-input.d.ts",
+      "default": "./dist/number-input.js"
+    },
+    "./otp-field": {
+      "types": "./dist/otp-field.d.ts",
+      "default": "./dist/otp-field.js"
+    },
+    "./password-toggle-field": {
+      "types": "./dist/password-toggle-field.d.ts",
+      "default": "./dist/password-toggle-field.js"
+    },
     "./textarea": {
       "types": "./dist/textarea.d.ts",
       "default": "./dist/textarea.js"
@@ -358,7 +370,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.19.0"
+    "@flowstack-ui/atom": "0.19.2"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

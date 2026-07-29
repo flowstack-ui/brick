@@ -380,6 +380,27 @@ export const componentEntries = [
   },
   {
     category: "Forms",
+    description: "Numeric entry with bounded stepping and native form participation.",
+    id: "number-input",
+    route: "/number-input",
+    title: "Number Input",
+  },
+  {
+    category: "Forms",
+    description: "Segmented one-time-code entry with paste and completion behavior.",
+    id: "otp-field",
+    route: "/otp-field",
+    title: "OTP Field",
+  },
+  {
+    category: "Forms",
+    description: "Password entry with an explicitly named visibility action.",
+    id: "password-toggle-field",
+    route: "/password-toggle-field",
+    title: "Password Toggle Field",
+  },
+  {
+    category: "Forms",
     description: "Finished native multi-line text entry.",
     id: "textarea",
     route: "/textarea",
