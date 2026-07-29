@@ -418,7 +418,11 @@ export function App() {
               <Field.Label>Verification code</Field.Label>
               <OTPField.Root length={6} name="verificationCode" required>
                 <OTPField.Group>
-                  {Array.from({ length: 6 }, (_, index) => <OTPField.Input index={index} key={index} />)}
+                  {Array.from({ length: 3 }, (_, index) => <OTPField.Input index={index} key={index} />)}
+                </OTPField.Group>
+                <OTPField.Separator />
+                <OTPField.Group>
+                  {Array.from({ length: 3 }, (_, index) => <OTPField.Input index={index + 3} key={index + 3} />)}
                 </OTPField.Group>
               </OTPField.Root>
               <Field.Description>Enter the six-digit code.</Field.Description>
