@@ -1,0 +1,9 @@
+.visibility-page { min-inline-size: 0; padding-block: var(--brick-space-4) 6rem; }
+.visibility-stage, .visibility-card { min-inline-size: 0; }
+.visibility-stage { display: grid; align-content: start; gap: var(--brick-space-3); }
+.visibility-badge { inline-size: fit-content; }
+.visibility-card > [data-playground-specimen-label] { margin-block-end: var(--brick-space-3); }
+.visibility-stage { min-block-size: 9rem; }
+.visibility-pair { min-block-size: 3rem; align-items: center; }
+.visibility-stress { min-inline-size: 0; }
+@media (max-width: 28rem) { .visibility-stage, .visibility-card { padding: var(--brick-space-4); } }

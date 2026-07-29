@@ -157,6 +157,10 @@ This directory is the public documentation authority for
   item placement
 - [Container](components/container/README.md) — centered content measures and
   logical page gutters
+- [Show](components/show/README.md) — CSS-only content shown from a fixed
+  viewport breakpoint
+- [Hide](components/hide/README.md) — CSS-only content hidden from a fixed
+  viewport breakpoint
 - [Surface](components/surface/README.md) — semantic background layers,
   boundaries, elevation, radius, and inset
 - [Divider](components/divider/README.md) — decorative or semantic structural

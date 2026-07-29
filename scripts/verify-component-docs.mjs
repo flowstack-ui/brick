@@ -73,6 +73,8 @@ const componentSymbols = {
   "bottom-navigation": "BottomNavigation",
   "visually-hidden": "VisuallyHidden",
   "skip-link": "SkipLink",
+  show: "Show",
+  hide: "Hide",
   skeleton: "Skeleton",
   progress: "Progress",
   "progress-circle": "ProgressCircle",

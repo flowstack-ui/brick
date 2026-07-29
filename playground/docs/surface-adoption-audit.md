@@ -112,6 +112,8 @@ different owner.
 | Bottom Navigation | overview, comparison cells, appearance scopes, customization shell, and stress panels | Bottom Navigation surface, item states, active icon indicator, safe-area geometry, Notification Badge composition, and exact output |
 | Visually Hidden | overview, comparison cells, appearance scopes, and stress panels | Atom-owned inline hiding behavior, native-host composition, and exact rendered output |
 | Skip Link | overview, comparison cells, appearance scopes, customization shell, and stress panels | Skip Link focus overlay, target semantics, sticky-layer geometry, and exact rendered output |
+| Show | overview, breakpoint cells, semantic-host evidence, composition stage, mounted-state stage, and stress cards | Show responsive display behavior and authored descendant display values |
+| Hide | overview, breakpoint cells, semantic-host evidence, composition stage, mounted-state stage, and stress cards | Hide responsive display behavior and authored descendant display values |
 | Progress | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Progress track, buffer, indicator, orientation geometry, and exact rendered output |
 | Progress Circle | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Progress Circle SVG track/indicator, ring geometry, centered value, and exact rendered output |
 | Slider | overview, comparison cells, appearance scopes, customization shell, and stress panels | Slider track/range/thumb/marker/value-label paint, axis geometry, and exact rendered output |

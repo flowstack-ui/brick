@@ -9,6 +9,20 @@ export interface PlaygroundEntry {
 export const componentEntries = [
   {
     category: "Layout",
+    description: "CSS-only content shown from a fixed viewport breakpoint.",
+    id: "show",
+    route: "/show",
+    title: "Show",
+  },
+  {
+    category: "Layout",
+    description: "CSS-only content hidden from a fixed viewport breakpoint.",
+    id: "hide",
+    route: "/hide",
+    title: "Hide",
+  },
+  {
+    category: "Layout",
     description: "Stable ratio geometry and restrained framing for authored content.",
     id: "aspect-ratio",
     route: "/aspect-ratio",

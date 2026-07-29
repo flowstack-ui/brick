@@ -167,6 +167,14 @@
       "types": "./dist/skip-link.d.ts",
       "default": "./dist/skip-link.js"
     },
+    "./show": {
+      "types": "./dist/show.d.ts",
+      "default": "./dist/show.js"
+    },
+    "./hide": {
+      "types": "./dist/hide.d.ts",
+      "default": "./dist/hide.js"
+    },
     "./skeleton": {
       "types": "./dist/skeleton.d.ts",
       "default": "./dist/skeleton.js"
