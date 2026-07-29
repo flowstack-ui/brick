@@ -1743,6 +1743,32 @@ export const componentDocumentationContracts = {
       "--brick-container-padding-inline",
     ],
   },
+  show: {
+    source: "src/components/show/Show.tsx",
+    exportSource: "src/components/show/index.ts",
+    css: "src/components/show/show.css",
+    exports: ["Show", "ShowBreakpoint", "ShowElement", "ShowProps"],
+    unions: {
+      ShowBreakpoint: ["sm", "md", "lg", "xl"],
+      ShowElement: ["div", "span", "section", "article", "nav", "header", "footer", "main", "aside", "ul", "ol", "li"],
+    },
+    defaults: { as: "div", slot: "show" },
+    dataAttributes: ["data-from", "data-slot"],
+    publicTokens: [],
+  },
+  hide: {
+    source: "src/components/hide/Hide.tsx",
+    exportSource: "src/components/hide/index.ts",
+    css: "src/components/hide/hide.css",
+    exports: ["Hide", "HideBreakpoint", "HideElement", "HideProps"],
+    unions: {
+      HideBreakpoint: ["sm", "md", "lg", "xl"],
+      HideElement: ["div", "span", "section", "article", "nav", "header", "footer", "main", "aside", "ul", "ol", "li"],
+    },
+    defaults: { as: "div", slot: "hide" },
+    dataAttributes: ["data-from", "data-slot"],
+    publicTokens: [],
+  },
   divider: {
     source: "src/components/divider/Divider.tsx",
     exportSource: "src/components/divider/index.ts",

@@ -152,6 +152,14 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/skip-link.d.ts",
       default: "./dist/skip-link.js",
     },
+    "./show": {
+      types: "./dist/show.d.ts",
+      default: "./dist/show.js",
+    },
+    "./hide": {
+      types: "./dist/hide.d.ts",
+      default: "./dist/hide.js",
+    },
     "./skeleton": {
       types: "./dist/skeleton.d.ts",
       default: "./dist/skeleton.js",
@@ -377,6 +385,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const bottomNavigation = await import(new URL("../../dist/bottom-navigation.js", import.meta.url));
   const visuallyHidden = await import(new URL("../../dist/visually-hidden.js", import.meta.url));
   const skipLink = await import(new URL("../../dist/skip-link.js", import.meta.url));
+  const show = await import(new URL("../../dist/show.js", import.meta.url));
+  const hide = await import(new URL("../../dist/hide.js", import.meta.url));
   const collapsible = await import(new URL("../../dist/collapsible.js", import.meta.url));
   const accordion = await import(new URL("../../dist/accordion.js", import.meta.url));
   assert.deepEqual(
@@ -526,6 +536,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Form",
       "Grid",
       "HStack",
+      "Hide",
       "HoverCard",
       "Icon",
       "IconButton",
@@ -670,6 +681,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "SelectTrigger",
       "SelectValue",
       "SelectViewport",
+      "Show",
       "Sidebar",
       "SidebarContent",
       "SidebarFooter",
@@ -911,6 +923,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(skipLink.SkipLink, brick.SkipLink);
   assert.equal(skipLink.SkipLinkRoot, brick.SkipLink.Root);
   assert.equal(skipLink.SkipLinkTarget, brick.SkipLink.Target);
+  assert.equal(show.Show, brick.Show);
+  assert.equal(hide.Hide, brick.Hide);
   assert.equal(collapsible.Collapsible, brick.Collapsible);
   assert.equal(collapsible.CollapsibleRoot, brick.Collapsible.Root);
   assert.equal(collapsible.CollapsibleTrigger, brick.Collapsible.Trigger);
@@ -1013,6 +1027,8 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-stack/);
   assert.match(styles, /\.brick-grid/);
   assert.match(styles, /\.brick-container/);
+  assert.match(styles, /\.brick-show/);
+  assert.match(styles, /\.brick-hide/);
   assert.match(styles, /\.brick-surface/);
   assert.match(styles, /\.brick-divider/);
   assert.match(styles, /\.brick-scroll-area/);

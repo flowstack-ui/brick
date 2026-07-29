@@ -51,7 +51,21 @@ import { CodeBlock } from "../../dist/code-block.js";
 import { Icon } from "../../dist/icon.js";
 import { Image } from "../../dist/image.js";
 import { AspectRatio } from "../../dist/aspect-ratio.js";
+import { Show } from "../../dist/show.js";
+import { Hide } from "../../dist/hide.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("Show and Hide render deterministic always-mounted responsive hosts", () => {
+  const markup = renderToString(React.createElement(React.Fragment, null,
+    React.createElement(Show, { as: "section", from: "md" }, "Desktop"),
+    React.createElement(Hide, { as: "aside", from: "md" }, "Compact"),
+  ));
+  assert.match(markup, /<section[^>]*class="brick-show"[^>]*data-from="md"[^>]*data-slot="show"/);
+  assert.match(markup, />Desktop<\/section>/);
+  assert.match(markup, /<aside[^>]*class="brick-hide"[^>]*data-from="md"[^>]*data-slot="hide"/);
+  assert.match(markup, />Compact<\/aside>/);
+  assert.doesNotMatch(markup, /aria-hidden|hidden=""/);
+});
 
 test("Skip Link renders deterministic paired bypass anatomy during SSR", () => {
   const markup = renderToString(

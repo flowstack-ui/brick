@@ -4,6 +4,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Added
+
+- Added independent `Show` and `Hide` responsive visibility components with fixed CSS breakpoints and always-mounted React content.
+
 - Fixed `Rating` pointer stability across repeated selection, capture loss,
   fractional segments, and continuous cross-item dragging; clearing is now an
   explicit opt-in behavior.
@@ -17,8 +21,6 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 - Added Atom-backed Slider and Rating components with separate public APIs,
   Field/form integration, directional input, closed visual recipes, and
   accessible single-value, range, and fractional-rating behavior.
-
-### Added
 
 - Added `SkipLink` with a visible-on-focus bypass link, paired primary-content
   target, logical viewport placement, and public customization variables.

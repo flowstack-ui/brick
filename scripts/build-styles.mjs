@@ -100,6 +100,8 @@ await writeFile(
     '@import "../../src/components/stack/stack.css";',
     '@import "../../src/components/grid/grid.css";',
     '@import "../../src/components/container/container.css";',
+    '@import "../../src/components/show/show.css";',
+    '@import "../../src/components/hide/hide.css";',
     '@import "../../src/components/surface/surface.css";',
     '@import "../../src/components/divider/divider.css";',
     '@import "../../src/components/scroll-area/scroll-area.css";',

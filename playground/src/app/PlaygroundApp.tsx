@@ -142,6 +142,8 @@ import { FileUploadPage, fileUploadScenarios } from "../components/file-upload/F
 import { ToastPage, toastScenarios } from "../components/toast/ToastPage.js";
 import { CollapsiblePage, collapsibleScenarios } from "../components/collapsible/CollapsiblePage.js";
 import { AccordionPage, accordionScenarios } from "../components/accordion/AccordionPage.js";
+import { ShowPage, showScenarios } from "../components/show/ShowPage.js";
+import { HidePage, hideScenarios } from "../components/hide/HidePage.js";
 import { PlaygroundShell } from "../shell/PlaygroundShell.js";
 
 export function PlaygroundApp() {
@@ -156,6 +158,9 @@ export function PlaygroundApp() {
   }
 
   const entry = resolvePlaygroundEntry(path === "/" ? "/button" : path);
+
+  if (entry.id === "show") return <PlaygroundShell entry={entry} scenarios={showScenarios}><ShowPage /></PlaygroundShell>;
+  if (entry.id === "hide") return <PlaygroundShell entry={entry} scenarios={hideScenarios}><HidePage /></PlaygroundShell>;
 
   if (entry.id === "visually-hidden") {
     return <PlaygroundShell entry={entry} scenarios={visuallyHiddenScenarios}><VisuallyHiddenPage /></PlaygroundShell>;

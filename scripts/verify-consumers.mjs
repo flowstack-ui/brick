@@ -38,7 +38,7 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -75,6 +75,8 @@ import { Menubar as SubpathMenubar } from "@flowstack-ui/brick/menubar";
 import { NavigationMenu as SubpathNavigationMenu } from "@flowstack-ui/brick/navigation-menu";
 import { BottomNavigation as SubpathBottomNavigation } from "@flowstack-ui/brick/bottom-navigation";
 import { VisuallyHidden as SubpathVisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
+import { Show as SubpathShow } from "@flowstack-ui/brick/show";
+import { Hide as SubpathHide } from "@flowstack-ui/brick/hide";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { readFile } from "node:fs/promises";
@@ -114,6 +116,7 @@ if (Menubar !== SubpathMenubar || Object.keys(SubpathMenubar).length !== 21) thr
 if (NavigationMenu !== SubpathNavigationMenu || Object.keys(SubpathNavigationMenu).length !== 9) throw new Error("Navigation Menu subpath smoke failed");
 if (BottomNavigation !== SubpathBottomNavigation || Object.keys(SubpathBottomNavigation).length !== 4) throw new Error("Bottom Navigation subpath smoke failed");
 if (VisuallyHidden !== SubpathVisuallyHidden || Object.keys(SubpathVisuallyHidden).length !== 1) throw new Error("Visually Hidden subpath smoke failed");
+if (Show !== SubpathShow || Hide !== SubpathHide) throw new Error("Responsive visibility subpath export mismatch");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
 const iconButtonMarkup = renderToString(React.createElement(IconButton, { "aria-label": "Search" }, React.createElement("svg")));
@@ -180,6 +183,9 @@ const bottomNavigationMarkup = renderToString(React.createElement(BottomNavigati
 if (!bottomNavigationMarkup.includes("brick-bottom-navigation") || !bottomNavigationMarkup.includes('aria-current="page"') || !bottomNavigationMarkup.includes('data-safe-area=""')) throw new Error("Bottom Navigation SSR smoke failed");
 const visuallyHiddenMarkup = renderToString(React.createElement(VisuallyHidden.Root, null, "Search"));
 if (!visuallyHiddenMarkup.includes("brick-visually-hidden") || !visuallyHiddenMarkup.includes('data-slot="visually-hidden"') || !visuallyHiddenMarkup.includes('position:absolute')) throw new Error("Visually Hidden SSR smoke failed");
+const showMarkup = renderToString(React.createElement(Show, { as: "aside", from: "md" }, "Wide guidance"));
+const hideMarkup = renderToString(React.createElement(Hide, { as: "aside", from: "md" }, "Compact guidance"));
+if (!showMarkup.includes("brick-show") || !showMarkup.includes('data-from="md"') || !hideMarkup.includes("brick-hide") || !hideMarkup.includes('data-from="md"')) throw new Error("Responsive visibility SSR smoke failed");
 if (!SubpathTooltip || Object.keys(SubpathTooltip).length !== 8) throw new Error("Tooltip subpath smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
 if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-chip") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover") || !css.includes(".brick-checkbox") || !css.includes(".brick-checkbox-group") || !css.includes(".brick-radio-group") || !css.includes(".brick-input") || !css.includes(".brick-textarea") || !css.includes(".brick-link") || !css.includes(".brick-text") || !css.includes(".brick-grid") || !css.includes(".brick-container") || !css.includes(".brick-surface")) throw new Error("CSS export missing");
@@ -195,12 +201,13 @@ if (!css.includes(".brick-bottom-navigation") || !css.includes("--brick-bottom-n
 if (!css.includes(".brick-number-input") || !css.includes("--brick-number-input-height")) throw new Error("Number Input CSS export missing");
 if (!css.includes(".brick-otp-field") || !css.includes("--brick-otp-size")) throw new Error("OTP Field CSS export missing");
 if (!css.includes(".brick-password-toggle-field") || !css.includes("--brick-password-height")) throw new Error("Password Toggle Field CSS export missing");
+if (!css.includes(".brick-show") || !css.includes(".brick-hide") || !css.includes("@media (width<48rem)") || !css.includes("@media (width>=48rem)")) throw new Error("Responsive visibility CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
 	`import { createElement } from "react";
-import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type OTPFieldRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type RadioGroupRootProps, type SkeletonProps, type SurfaceProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HideProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type OTPFieldRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type RadioGroupRootProps, type ShowProps, type SkeletonProps, type SurfaceProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -220,6 +227,8 @@ import { VisuallyHidden as SubpathVisuallyHidden } from "@flowstack-ui/brick/vis
 import { NumberInput as SubpathNumberInput } from "@flowstack-ui/brick/number-input";
 import { OTPField as SubpathOTPField } from "@flowstack-ui/brick/otp-field";
 import { PasswordToggleField as SubpathPasswordToggleField } from "@flowstack-ui/brick/password-toggle-field";
+import { Show as SubpathShow } from "@flowstack-ui/brick/show";
+import { Hide as SubpathHide } from "@flowstack-ui/brick/hide";
 const props: ButtonProps = { children: "Consumer" };
 const iconButtonProps: IconButtonProps = { "aria-label": "Search", children: createElement("svg"), href: "/search" };
 const appBarProps: AppBarRootProps = { children: createElement(AppBar.Toolbar, null, "Workspace"), position: "sticky" };
@@ -256,6 +265,8 @@ const menubarProps: MenubarRootProps = { "aria-label": "Commands", children: cre
 const navigationProps: NavigationMenuRootProps = { "aria-label": "Primary", children: createElement(NavigationMenu.List), size: "md" };
 const bottomNavigationProps: BottomNavigationRootProps = { ariaLabel: "Primary", children: createElement(BottomNavigation.Item, { value: "home" }, "Home"), safeArea: true };
 const visuallyHiddenProps: VisuallyHiddenRootProps = { children: "Search" };
+const showProps: ShowProps = { as: "aside", children: "Wide", from: "md" };
+const hideProps: HideProps = { as: "aside", children: "Compact", from: "md" };
 void AlertDialog;
 void SubpathAlertDialog;
 void Grid;
@@ -282,6 +293,7 @@ void DropdownMenu; void dropdownProps;
 void ContextMenu; void contextProps;
 void Menubar; void menubarProps;
 void NavigationMenu; void navigationProps; void BottomNavigation; void bottomNavigationProps; void VisuallyHidden; void SubpathVisuallyHidden; void visuallyHiddenProps;
+void Show; void SubpathShow; void showProps; void Hide; void SubpathHide; void hideProps;
 void Button;
 void SubpathButton;
 void IconButton;

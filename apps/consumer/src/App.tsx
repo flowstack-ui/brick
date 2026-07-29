@@ -68,6 +68,8 @@ import { NavigationMenu } from "@flowstack-ui/brick/navigation-menu";
 import { BottomNavigation } from "@flowstack-ui/brick/bottom-navigation";
 import { VisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
 import { SkipLink } from "@flowstack-ui/brick/skip-link";
+import { Show } from "@flowstack-ui/brick/show";
+import { Hide } from "@flowstack-ui/brick/hide";
 import { Toaster, toast } from "@flowstack-ui/brick/toast";
 
 type Appearance = "light" | "dark";
@@ -1095,6 +1097,12 @@ export function App() {
         <Surface as="section" bordered inset="lg" aria-labelledby="menu-family-title">
           <VStack gap="4">
             <Text as="h2" id="menu-family-title" variant="title-lg">Workspace menus</Text>
+            <Show as="aside" from="md" aria-label="Wide workspace guidance">
+              <Text tone="secondary">Use the complete navigation menu on wider workspaces.</Text>
+            </Show>
+            <Hide as="aside" from="md" aria-label="Compact workspace guidance">
+              <Text tone="secondary">Use the compact destinations on narrow workspaces.</Text>
+            </Hide>
             <NavigationMenu.Root aria-label="Workspace destinations" defaultValue="projects">
               <NavigationMenu.List>
                 <NavigationMenu.Item value="projects">

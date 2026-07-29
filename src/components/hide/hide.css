@@ -1,0 +1,6 @@
+@layer brick.components {
+  @media (width >= 30rem) { .brick-hide[data-from="sm"] { display: none !important; } }
+  @media (width >= 48rem) { .brick-hide[data-from="md"] { display: none !important; } }
+  @media (width >= 64rem) { .brick-hide[data-from="lg"] { display: none !important; } }
+  @media (width >= 80rem) { .brick-hide[data-from="xl"] { display: none !important; } }
+}

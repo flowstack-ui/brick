@@ -23,6 +23,8 @@ export const componentIds = [
   "bottom-navigation",
   "visually-hidden",
   "skip-link",
+  "show",
+  "hide",
   "skeleton",
   "progress",
   "progress-circle",
