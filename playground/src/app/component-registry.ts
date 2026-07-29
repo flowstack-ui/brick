@@ -134,6 +134,13 @@ export const componentEntries = [
     title: "Visually Hidden",
   },
   {
+    category: "Accessibility",
+    description: "Visible-on-focus bypass navigation with a paired content target.",
+    id: "skip-link",
+    route: "/skip-link",
+    title: "Skip Link",
+  },
+  {
     category: "Data display",
     description: "Responsive media with authored fallback and finished framing.",
     id: "image",

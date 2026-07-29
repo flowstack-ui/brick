@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, useState, type ReactElement, type ReactNode } from "react";
 import {
   AppBar,
   Button,
@@ -10,6 +10,7 @@ import {
   Link,
   ScrollArea,
   Sidebar,
+  SkipLink,
   Text,
   VStack,
 } from "@flowstack-ui/brick";
@@ -26,14 +27,34 @@ import { CloseIcon, MenuIcon } from "../shared/icons.js";
 import { ComponentNavigation } from "./ComponentNavigation.js";
 import { ReviewControls } from "./ReviewControls.js";
 
+interface PlaygroundSkipLink {
+  href: `#${string}`;
+  label: string;
+  targetId: string;
+}
+
+function OptionalSkipTarget({
+  children,
+  config,
+}: {
+  children: ReactElement;
+  config?: PlaygroundSkipLink;
+}) {
+  return config ? (
+    <SkipLink.Target asChild id={config.targetId}>{children}</SkipLink.Target>
+  ) : children;
+}
+
 export function PlaygroundShell({
   children,
   entry,
   scenarios,
+  skipLink,
 }: {
   children: ReactNode;
   entry: PlaygroundEntry;
   scenarios: readonly ScenarioDefinition[];
+  skipLink?: PlaygroundSkipLink;
 }) {
   const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
   const mobileNavigationTriggerRef = useRef<HTMLElement>(null);
@@ -47,6 +68,7 @@ export function PlaygroundShell({
 
   return (
     <div className="evidence-app" data-playground-shell="" id="top">
+      {skipLink ? <SkipLink.Root href={skipLink.href}>{skipLink.label}</SkipLink.Root> : null}
       <AppBar.Root
         aria-label="Brick playground"
         className="evidence-app-bar"
@@ -126,6 +148,7 @@ export function PlaygroundShell({
         </Sidebar.Panel>
 
         <Sidebar.Main asChild>
+          <OptionalSkipTarget config={skipLink}>
           <Container
             as="main"
             className="evidence-main-column"
@@ -207,6 +230,7 @@ export function PlaygroundShell({
             </HStack>
           </Container>
           </Container>
+          </OptionalSkipTarget>
         </Sidebar.Main>
       </Sidebar.Root>
     </div>

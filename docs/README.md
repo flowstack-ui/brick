@@ -28,6 +28,11 @@ This directory is the public documentation authority for
 - [Pagination](components/pagination/README.md) — generated numbered-page
   navigation for bounded result sets
 
+### Accessibility
+
+- [Skip Link](components/skip-link/README.md) — visible-on-focus bypass
+  navigation with a paired primary-content target
+
 ### Data display
 
 - [Aspect Ratio](components/aspect-ratio/README.md) — stable layout geometry

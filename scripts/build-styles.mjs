@@ -70,6 +70,7 @@ await writeFile(
     '@import "../../src/components/navigation-menu/navigation-menu.css";',
     '@import "../../src/components/bottom-navigation/bottom-navigation.css";',
     '@import "../../src/components/visually-hidden/visually-hidden.css";',
+    '@import "../../src/components/skip-link/skip-link.css";',
     '@import "../../src/components/skeleton/skeleton.css";',
     '@import "../../src/components/progress/progress.css";',
     '@import "../../src/components/progress-circle/progress-circle.css";',

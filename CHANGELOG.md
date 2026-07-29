@@ -20,6 +20,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added `SkipLink` with a visible-on-focus bypass link, paired primary-content
+  target, logical viewport placement, and public customization variables.
+
 - Added the Atom-backed `NumberInput`, `OTPField`, and `PasswordToggleField`
   family with independent compound anatomy, complete visual recipes, natural
   Field/Fieldset/Form composition, localization, responsive RTL, preference

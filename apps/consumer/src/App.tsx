@@ -66,6 +66,7 @@ import { Menubar } from "@flowstack-ui/brick/menubar";
 import { NavigationMenu } from "@flowstack-ui/brick/navigation-menu";
 import { BottomNavigation } from "@flowstack-ui/brick/bottom-navigation";
 import { VisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
+import { SkipLink } from "@flowstack-ui/brick/skip-link";
 import { Toaster, toast } from "@flowstack-ui/brick/toast";
 
 type Appearance = "light" | "dark";
@@ -143,6 +144,7 @@ export function App() {
 
   return (
     <Tooltip.Provider>
+    <SkipLink.Root>Skip to workspace content</SkipLink.Root>
     <Toaster />
     <div id="top">
       <AppBar.Root aria-label="Primary" blurred className="site-header" position="sticky">
@@ -204,7 +206,7 @@ export function App() {
             <Breadcrumb.Item><Breadcrumb.Page>Mobile checkout refresh</Breadcrumb.Page></Breadcrumb.Item>
           </Breadcrumb.List>
         </Breadcrumb.Root>
-        <main>
+        <SkipLink.Target>
         <Sidebar.Root className="consumer-sidebar-proof" collapsedState="rail" size="sm">
           <Sidebar.Panel aria-label="Project settings sidebar">
             <Sidebar.Header><Text weight="semibold">Project settings</Text></Sidebar.Header>
@@ -1122,7 +1124,7 @@ export function App() {
             </BottomNavigation.Root>
           </VStack>
         </Surface>
-        </main>
+        </SkipLink.Target>
 
         <footer>
           <p>Public Brick imports. Application-owned composition. No private compatibility layer.</p>
