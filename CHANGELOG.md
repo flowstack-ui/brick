@@ -4,6 +4,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Fixed `Rating` pointer stability across repeated selection, capture loss,
+  fractional segments, and continuous cross-item dragging; clearing is now an
+  explicit opt-in behavior.
+
 - Fixed `Slider` so capture loss commits the current click or
   drag value while true pointer cancellation remains reversible.
 
