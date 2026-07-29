@@ -61,6 +61,7 @@ const componentSymbols = {
   "checkbox-group": "CheckboxGroup",
   "radio-group": "RadioGroup",
   rating: "Rating",
+  "file-upload": "FileUpload",
   slider: "Slider",
   switch: "Switch",
   breadcrumb: "Breadcrumb",

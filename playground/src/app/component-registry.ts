@@ -295,6 +295,13 @@ export const componentEntries = [
     title: "Rating",
   },
   {
+    category: "Forms",
+    description: "File picker and drop target with validation and removable selected-file items.",
+    id: "file-upload",
+    route: "/file-upload",
+    title: "File Upload",
+  },
+  {
     category: "Feedback",
     description: "Temporary non-blocking application outcomes and process updates.",
     id: "toast",

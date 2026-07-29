@@ -187,6 +187,10 @@
       "types": "./dist/rating.d.ts",
       "default": "./dist/rating.js"
     },
+    "./file-upload": {
+      "types": "./dist/file-upload.d.ts",
+      "default": "./dist/file-upload.js"
+    },
     "./toast": {
       "types": "./dist/toast.d.ts",
       "default": "./dist/toast.js"
@@ -382,7 +386,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.19.6"
+    "@flowstack-ui/atom": "0.19.7"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

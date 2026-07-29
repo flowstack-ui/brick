@@ -63,6 +63,8 @@ This directory is the public documentation authority for
 - [Combobox](components/combobox/README.md) — searchable single-value choice with optional free text
 - [Multi Select](components/multi-select/README.md) — finished multiple-value
   choice control with repeated-value native form participation
+- [File Upload](components/file-upload/README.md) — file picker and drop target
+  with validation and removable selected-file items
 - [Checkbox](components/checkbox/README.md) — independent checked or mixed
   selection
 - [Checkbox Group](components/checkbox-group/README.md) — related selections

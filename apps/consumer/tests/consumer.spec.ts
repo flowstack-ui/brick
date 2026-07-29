@@ -52,6 +52,18 @@ test("composes Chip through its public subpath with application-owned removal", 
   await expect(page.getByTestId("consumer-reviewer-status")).toHaveText("1 reviewer assigned.");
 });
 
+test("composes File Upload through its public subpath without network transfer", async ({ page }) => {
+  const section = page.getByRole("region", { name: "Release attachments" });
+  const input = section.locator('input[type="file"]');
+  await expect(section.getByRole("button", { name: "Supporting files Select files" })).toBeVisible();
+  await input.setInputFiles({ name: "release-notes.pdf", mimeType: "application/pdf", buffer: Buffer.from("release") });
+  await expect(section.getByText("release-notes.pdf")).toBeVisible();
+  await expect(section.getByTestId("consumer-file-upload-status")).toHaveText("1 file ready for review.");
+  await section.getByRole("button", { name: "Remove release-notes.pdf" }).click();
+  await expect(section.getByText("release-notes.pdf")).toHaveCount(0);
+  await expect(section.getByTestId("consumer-file-upload-status")).toHaveText("No release files selected.");
+});
+
 test("composes Pagination through its public subpath", async ({ page }) => {
   const pagination = page.getByRole("navigation", { name: "Release report pages" });
   await expect(pagination).toHaveAttribute("data-variant", "outline");

@@ -138,6 +138,7 @@ import { ProgressPage, progressScenarios } from "../components/progress/Progress
 import { ProgressCirclePage, progressCircleScenarios } from "../components/progress-circle/ProgressCirclePage.js";
 import { SliderPage, sliderScenarios } from "../components/slider/SliderPage.js";
 import { RatingPage, ratingScenarios } from "../components/rating/RatingPage.js";
+import { FileUploadPage, fileUploadScenarios } from "../components/file-upload/FileUploadPage.js";
 import { ToastPage, toastScenarios } from "../components/toast/ToastPage.js";
 import { CollapsiblePage, collapsibleScenarios } from "../components/collapsible/CollapsiblePage.js";
 import { AccordionPage, accordionScenarios } from "../components/accordion/AccordionPage.js";
@@ -552,6 +553,10 @@ export function PlaygroundApp() {
 
   if (entry.id === "rating") {
     return <PlaygroundShell entry={entry} scenarios={ratingScenarios}><RatingPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "file-upload") {
+    return <PlaygroundShell entry={entry} scenarios={fileUploadScenarios}><FileUploadPage /></PlaygroundShell>;
   }
 
   if (entry.id === "toast") {
