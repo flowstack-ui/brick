@@ -1,0 +1,18 @@
+export {
+  Slider,
+  SliderMarker,
+  SliderRange,
+  SliderRoot,
+  SliderThumb,
+  SliderTrack,
+  SliderValueLabel,
+  type SliderMarkerProps,
+  type SliderRangeProps,
+  type SliderRootProps,
+  type SliderSize,
+  type SliderThumbProps,
+  type SliderTrackProps,
+  type SliderValueLabelDetails,
+  type SliderValueLabelProps,
+  type SliderVariant,
+} from "./Slider.js";

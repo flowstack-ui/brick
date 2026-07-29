@@ -113,6 +113,8 @@ different owner.
 | Visually Hidden | overview, comparison cells, appearance scopes, and stress panels | Atom-owned inline hiding behavior, native-host composition, and exact rendered output |
 | Progress | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Progress track, buffer, indicator, orientation geometry, and exact rendered output |
 | Progress Circle | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Progress Circle SVG track/indicator, ring geometry, centered value, and exact rendered output |
+| Slider | overview, comparison cells, appearance scopes, customization shell, and stress panels | Slider track/range/thumb/marker/value-label paint, axis geometry, and exact rendered output |
+| Rating | overview, comparison cells, appearance scopes, customization shell, and stress panels | Rating item/artwork paint, proportional fill, pointer-target geometry, and exact rendered output |
 | Toast | generic overview, queue, position, keyboard, and appearance stages | Toast card/viewport recipes, fixed placement, overlap, and narrow-screen diagnostic frame |
 | Collapsible | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Collapsible trigger/content recipes, measured orientation geometry, disclosure state, and exact rendered output |
 | Accordion | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Accordion item/trigger/content recipes, measured orientation geometry, disclosure relationships, and exact rendered output |

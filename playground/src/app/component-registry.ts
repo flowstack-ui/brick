@@ -274,6 +274,20 @@ export const componentEntries = [
     title: "Progress Circle",
   },
   {
+    category: "Forms",
+    description: "Single-value and range input with markers, formatting, and directional geometry.",
+    id: "slider",
+    route: "/slider",
+    title: "Slider",
+  },
+  {
+    category: "Forms",
+    description: "Single-slider rating input with proportional decorative artwork.",
+    id: "rating",
+    route: "/rating",
+    title: "Rating",
+  },
+  {
     category: "Feedback",
     description: "Temporary non-blocking application outcomes and process updates.",
     id: "toast",

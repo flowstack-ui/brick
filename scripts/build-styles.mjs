@@ -73,6 +73,8 @@ await writeFile(
     '@import "../../src/components/skeleton/skeleton.css";',
     '@import "../../src/components/progress/progress.css";',
     '@import "../../src/components/progress-circle/progress-circle.css";',
+    '@import "../../src/components/slider/slider.css";',
+    '@import "../../src/components/rating/rating.css";',
     '@import "../../src/components/toast/toast.css";',
     '@import "../../src/components/collapsible/collapsible.css";',
     '@import "../../src/components/accordion/accordion.css";',
