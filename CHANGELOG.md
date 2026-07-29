@@ -20,6 +20,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added the nine-part Atom-backed `FileUpload` with picker and dropzone input,
+  accepted-file items and removal, native Field/form integration, complete
+  visual recipes, responsive RTL, preference support, and public CSS hooks.
+
 - Added the Atom-backed `NumberInput`, `OTPField`, and `PasswordToggleField`
   family with independent compound anatomy, complete visual recipes, natural
   Field/Fieldset/Form composition, localization, responsive RTL, preference

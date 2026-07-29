@@ -1,0 +1,12 @@
+.file-upload-page .brick-field,
+.file-upload-page .brick-file-upload,
+.file-upload-page .forms-cell__preview { inline-size: 100%; }
+.file-upload-page .forms-cell { align-content: start; }
+.file-upload-page .forms-status { overflow-wrap: anywhere; }
+.file-upload-page [data-testid="file-upload-appearance"] { scroll-margin-block-start: 10rem; }
+.file-upload-page .forms-customization > div:first-child > .brick-badge { inline-size: fit-content; justify-self: start; }
+@media (max-width: 45rem) {
+  .file-upload-page .brick-file-upload__item { grid-template-columns: minmax(0, 1fr) auto; }
+  .file-upload-page .brick-file-upload__item-size { grid-column: 1; grid-row: 2; }
+  .file-upload-page .brick-file-upload__delete { grid-column: 2; grid-row: 1 / span 2; }
+}

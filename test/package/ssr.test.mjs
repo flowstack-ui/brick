@@ -27,6 +27,7 @@ import { Toast, Toaster } from "../../dist/toast.js";
 import { Collapsible } from "../../dist/collapsible.js";
 import { Accordion } from "../../dist/accordion.js";
 import { Input } from "../../dist/input.js";
+import { FileUpload } from "../../dist/file-upload.js";
 import { Textarea } from "../../dist/textarea.js";
 import { Text } from "../../dist/text.js";
 import { Link } from "../../dist/link.js";
@@ -50,6 +51,23 @@ import { Icon } from "../../dist/icon.js";
 import { Image } from "../../dist/image.js";
 import { AspectRatio } from "../../dist/aspect-ratio.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("File Upload renders deterministic empty picker and dropzone anatomy during SSR", () => {
+  const markup = renderToString(React.createElement(FileUpload.Root, { accept: "image/*", multiple: true, name: "attachments", variant: "soft" },
+    React.createElement(FileUpload.HiddenInput),
+    React.createElement(FileUpload.Dropzone, null, React.createElement(FileUpload.Trigger)),
+    React.createElement(FileUpload.ItemGroup)));
+  assert.match(markup, /class="brick-file-upload"/);
+  assert.match(markup, /data-state="empty"/);
+  assert.match(markup, /data-variant="soft"/);
+  assert.match(markup, /type="file"/);
+  assert.match(markup, /accept="image\/\*"/);
+  assert.match(markup, /multiple=""/);
+  assert.match(markup, /name="attachments"/);
+  assert.match(markup, /class="brick-file-upload__dropzone"/);
+  assert.match(markup, />Choose files<\/button>/);
+  assert.match(markup, /data-count="0"/);
+});
 
 test("Aspect Ratio renders deterministic layout-only anatomy during SSR", () => {
   const markup = renderToString(React.createElement(AspectRatio.Root, { ratio: 4 / 3, variant: "outline", radius: "lg" }, React.createElement("iframe", { title: "Product tour" })));
