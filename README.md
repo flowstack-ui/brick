@@ -9,7 +9,7 @@ Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton,
 AppBar, Tooltip, HoverCard, Popover, DropdownMenu, ContextMenu, Menubar, Form, Field, Fieldset, Checkbox,
 CheckboxGroup, RadioGroup, Switch, Breadcrumb, Tabs, Collapsible, Accordion, Input, Textarea, Select, Slider, Rating, FileUpload, Text, Icon, Image, Skeleton, Progress, ProgressCircle, Code, CodeBlock, Link, Stack, HStack, VStack, Grid,
 Container, Surface, Divider, Scroll Area, List, Table, Toolbar, Pagination, Toast, NavList, NavigationMenu,
-BottomNavigation, and VisuallyHidden.
+BottomNavigation, SkipLink, and VisuallyHidden.
 
 ## Boundary
 
@@ -26,7 +26,7 @@ BottomNavigation, and VisuallyHidden.
 | Family | Components |
 | --- | --- |
 | Actions and selection | [Button](docs/components/button/README.md), [Icon Button](docs/components/icon-button/README.md), [Toggle](docs/components/toggle/README.md), [Toggle Group](docs/components/toggle-group/README.md), [Toolbar](docs/components/toolbar/README.md) |
-| Navigation | [Pagination](docs/components/pagination/README.md) |
+| Navigation | [Pagination](docs/components/pagination/README.md), [Skip Link](docs/components/skip-link/README.md) |
 | Data display | [Aspect Ratio](docs/components/aspect-ratio/README.md), [Data Grid](docs/components/data-grid/README.md) |
 | Data display | [Tree Grid](docs/components/tree-grid/README.md) |
 | Data display | [Tree](docs/components/tree/README.md) |

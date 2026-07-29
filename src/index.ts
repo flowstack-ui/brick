@@ -667,3 +667,4 @@ export {
 } from "./components/tree/index.js";
 export { Toolbar, ToolbarButton, ToolbarLink, ToolbarRoot, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem, type ToolbarButtonProps, type ToolbarLinkProps, type ToolbarRootProps, type ToolbarSeparatorProps, type ToolbarSize, type ToolbarToggleGroupProps, type ToolbarToggleItemProps, type ToolbarVariant } from "./components/toolbar/index.js";
 export * from "./components/pagination/index.js";
+export * from "./components/skip-link/index.js";

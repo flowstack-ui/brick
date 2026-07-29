@@ -12,6 +12,23 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
+test("composes Skip Link before repeated application chrome", async ({ page }) => {
+  const root = page.getByRole("link", { name: "Skip to workspace content" });
+  const target = page.getByRole("main");
+  await page.keyboard.press("Tab");
+  await expect(root).toBeFocused();
+  await expect(root).toHaveClass(/brick-skip-link/);
+  await page.keyboard.press("Enter");
+  await expect(target).toBeFocused();
+  await expect(target).toHaveClass(/brick-skip-link__target/);
+  await page.keyboard.press("Tab");
+  await expect(
+    target
+      .getByRole("navigation", { name: "Project settings navigation" })
+      .getByRole("link", { name: "Workspace" }),
+  ).toBeFocused();
+});
+
 test("composes Collapsible through its public subpath", async ({ page }) => {
   const trigger = page.getByRole("button", { name: "Release notifications" });
   await expect(trigger).toHaveAttribute("aria-expanded", "false");

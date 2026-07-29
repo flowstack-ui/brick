@@ -22,6 +22,7 @@ export const componentIds = [
   "navigation-menu",
   "bottom-navigation",
   "visually-hidden",
+  "skip-link",
   "skeleton",
   "progress",
   "progress-circle",

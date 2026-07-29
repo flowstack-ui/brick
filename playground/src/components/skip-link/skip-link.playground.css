@@ -1,0 +1,19 @@
+.skip-link-page { inline-size: 100%; }
+.skip-link-overview > * { max-inline-size: 44rem; }
+.skip-link-grid { align-items: stretch; }
+.skip-link-cell { min-inline-size: 0; }
+.skip-link-cell__preview { display: flex; min-block-size: 11rem; flex-direction: column; align-items: flex-start; justify-content: center; gap: 1rem; }
+.skip-link-target-card { display: flex; inline-size: 100%; flex-direction: column; gap: 0.75rem; padding: 1rem; border: var(--brick-border-width) solid var(--brick-color-border-subtle); border-radius: var(--brick-radius-control); background: var(--brick-color-surface-subtle); }
+.skip-link-target-card:focus { outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring); outline-offset: var(--brick-border-focus-offset); }
+.skip-link-shell-stage { overflow: clip; block-size: 26rem; }
+.skip-link-shell-stage__bar { position: sticky; z-index: calc(var(--brick-layer-overlay) - 10); inset-block-start: 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem; border-block-end: var(--brick-border-width) solid var(--brick-color-border-subtle); background: var(--brick-color-surface-raised); box-shadow: 0 0.4rem 1rem color-mix(in srgb, var(--brick-color-shadow), transparent 65%); }
+.skip-link-shell-stage__content { padding: 5rem 1.25rem 1.25rem; }
+.skip-link-customization { display: grid; grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.75fr); align-items: center; gap: 1.5rem; }
+.skip-link-stress-panel { min-inline-size: 0; }
+.skip-link-phone { display: flex; inline-size: min(100%, 16rem); min-block-size: 12rem; flex-direction: column; align-items: flex-start; justify-content: center; gap: 1rem; }
+.skip-link-fixture { min-block-size: 140vh; padding: 1rem; background: var(--brick-color-surface-base); color: var(--brick-color-text-primary); }
+.skip-link-fixture header { position: sticky; inset-block-start: 0; padding: 1rem; background: var(--brick-color-surface-raised); }
+.skip-link-fixture nav { display: flex; gap: 1rem; }
+.skip-link-fixture__spacer { block-size: 110vh; }
+.skip-link-fixture main { padding: 2rem; }
+@media (max-width: 44rem) { .skip-link-customization { grid-template-columns: minmax(0, 1fr); } }

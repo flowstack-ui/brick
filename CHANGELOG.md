@@ -20,6 +20,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added `SkipLink` with a visible-on-focus bypass link, paired primary-content
+  target, logical viewport placement, and public customization variables.
+
 - Added the nine-part Atom-backed `FileUpload` with picker and dropzone input,
   accepted-file items and removal, native Field/form integration, complete
   visual recipes, responsive RTL, preference support, and public CSS hooks.

@@ -28,6 +28,7 @@ import { Collapsible } from "../../dist/collapsible.js";
 import { Accordion } from "../../dist/accordion.js";
 import { Input } from "../../dist/input.js";
 import { FileUpload } from "../../dist/file-upload.js";
+import { SkipLink } from "../../dist/skip-link.js";
 import { Textarea } from "../../dist/textarea.js";
 import { Text } from "../../dist/text.js";
 import { Link } from "../../dist/link.js";
@@ -51,6 +52,24 @@ import { Icon } from "../../dist/icon.js";
 import { Image } from "../../dist/image.js";
 import { AspectRatio } from "../../dist/aspect-ratio.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("Skip Link renders deterministic paired bypass anatomy during SSR", () => {
+  const markup = renderToString(
+    React.createElement(
+      React.Fragment,
+      null,
+      React.createElement(SkipLink.Root, { href: "#workspace-main" }, "Skip workspace navigation"),
+      React.createElement(SkipLink.Target, { id: "workspace-main" }, "Primary workspace content"),
+    ),
+  );
+  assert.match(markup, /<a[^>]*href="#workspace-main"/);
+  assert.match(markup, /class="brick-skip-link"/);
+  assert.match(markup, /data-slot="skip-link"/);
+  assert.match(markup, /id="workspace-main"/);
+  assert.match(markup, /tabindex="-1"/);
+  assert.match(markup, /class="brick-skip-link__target"/);
+  assert.match(markup, /data-slot="skip-link-target"/);
+});
 
 test("File Upload renders deterministic empty picker and dropzone anatomy during SSR", () => {
   const markup = renderToString(React.createElement(FileUpload.Root, { accept: "image/*", multiple: true, name: "attachments", variant: "soft" },

@@ -132,6 +132,7 @@ import { MenubarPage, menubarScenarios } from "../components/menubar/MenubarPage
 import { NavigationMenuPage, navigationMenuScenarios } from "../components/navigation-menu/NavigationMenuPage.js";
 import { BottomNavigationPage, bottomNavigationScenarios } from "../components/bottom-navigation/BottomNavigationPage.js";
 import { VisuallyHiddenPage, visuallyHiddenScenarios } from "../components/visually-hidden/VisuallyHiddenPage.js";
+import { SkipLinkFixturePage, SkipLinkPage, skipLinkScenarios } from "../components/skip-link/SkipLinkPage.js";
 import { SkeletonPage, skeletonScenarios } from "../components/skeleton/SkeletonPage.js";
 import { ProgressPage, progressScenarios } from "../components/progress/ProgressPage.js";
 import { ProgressCirclePage, progressCircleScenarios } from "../components/progress-circle/ProgressCirclePage.js";
@@ -146,6 +147,10 @@ import { PlaygroundShell } from "../shell/PlaygroundShell.js";
 export function PlaygroundApp() {
   const path = window.location.pathname;
 
+  if (path === "/skip-link/fixture") {
+    return <SkipLinkFixturePage />;
+  }
+
   if (path === "/hover-card/destination") {
     return <HoverCardDestinationPage />;
   }
@@ -154,6 +159,10 @@ export function PlaygroundApp() {
 
   if (entry.id === "visually-hidden") {
     return <PlaygroundShell entry={entry} scenarios={visuallyHiddenScenarios}><VisuallyHiddenPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "skip-link") {
+    return <PlaygroundShell entry={entry} scenarios={skipLinkScenarios} skipLink={{ href: "#skip-link-playground-main", label: "Skip Brick playground navigation", targetId: "skip-link-playground-main" }}><SkipLinkPage /></PlaygroundShell>;
   }
 
   if (entry.id === "app-bar") {

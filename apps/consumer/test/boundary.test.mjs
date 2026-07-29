@@ -61,6 +61,7 @@ test("the consumer uses public package exports without source aliases", async ()
   assert.match(source, /@flowstack-ui\/brick\/navigation-menu/);
   assert.match(source, /@flowstack-ui\/brick\/bottom-navigation/);
   assert.match(source, /@flowstack-ui\/brick\/visually-hidden/);
+  assert.match(source, /@flowstack-ui\/brick\/skip-link/);
   assert.match(source, /@flowstack-ui\/brick\/toast/);
   assert.match(source, /@flowstack-ui\/brick\/toolbar/);
   assert.match(source, /@flowstack-ui\/brick\/pagination/);

@@ -148,6 +148,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/visually-hidden.d.ts",
       default: "./dist/visually-hidden.js",
     },
+    "./skip-link": {
+      types: "./dist/skip-link.d.ts",
+      default: "./dist/skip-link.js",
+    },
     "./skeleton": {
       types: "./dist/skeleton.d.ts",
       default: "./dist/skeleton.js",
@@ -372,6 +376,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const navigationMenu = await import(new URL("../../dist/navigation-menu.js", import.meta.url));
   const bottomNavigation = await import(new URL("../../dist/bottom-navigation.js", import.meta.url));
   const visuallyHidden = await import(new URL("../../dist/visually-hidden.js", import.meta.url));
+  const skipLink = await import(new URL("../../dist/skip-link.js", import.meta.url));
   const collapsible = await import(new URL("../../dist/collapsible.js", import.meta.url));
   const accordion = await import(new URL("../../dist/accordion.js", import.meta.url));
   assert.deepEqual(
@@ -674,6 +679,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "SidebarRoot",
       "SidebarTrigger",
       "Skeleton",
+      "SkipLink",
+      "SkipLinkRoot",
+      "SkipLinkTarget",
       "Slider",
       "SliderMarker",
       "SliderRange",
@@ -900,6 +908,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(bottomNavigation.BottomNavigationLabel, brick.BottomNavigation.Label);
   assert.equal(visuallyHidden.VisuallyHidden, brick.VisuallyHidden);
   assert.equal(visuallyHidden.VisuallyHiddenRoot, brick.VisuallyHidden.Root);
+  assert.equal(skipLink.SkipLink, brick.SkipLink);
+  assert.equal(skipLink.SkipLinkRoot, brick.SkipLink.Root);
+  assert.equal(skipLink.SkipLinkTarget, brick.SkipLink.Target);
   assert.equal(collapsible.Collapsible, brick.Collapsible);
   assert.equal(collapsible.CollapsibleRoot, brick.Collapsible.Root);
   assert.equal(collapsible.CollapsibleTrigger, brick.Collapsible.Trigger);
