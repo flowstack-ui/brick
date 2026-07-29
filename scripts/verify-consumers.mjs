@@ -38,7 +38,7 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -57,6 +57,9 @@ import { CheckboxGroup as SubpathCheckboxGroup } from "@flowstack-ui/brick/check
 import { RadioGroup as SubpathRadioGroup } from "@flowstack-ui/brick/radio-group";
 import { Switch as SubpathSwitch } from "@flowstack-ui/brick/switch";
 import { Input as SubpathInput } from "@flowstack-ui/brick/input";
+import { NumberInput as SubpathNumberInput } from "@flowstack-ui/brick/number-input";
+import { OTPField as SubpathOTPField } from "@flowstack-ui/brick/otp-field";
+import { PasswordToggleField as SubpathPasswordToggleField } from "@flowstack-ui/brick/password-toggle-field";
 import { Textarea as SubpathTextarea } from "@flowstack-ui/brick/textarea";
 import { Link as SubpathLink } from "@flowstack-ui/brick/link";
 import { Text as SubpathText } from "@flowstack-ui/brick/text";
@@ -93,6 +96,9 @@ if (CheckboxGroup !== SubpathCheckboxGroup || Object.keys(SubpathCheckboxGroup).
 if (RadioGroup !== SubpathRadioGroup || Object.keys(SubpathRadioGroup).length !== 2) throw new Error("RadioGroup subpath smoke failed");
 if (Switch !== SubpathSwitch || Object.keys(SubpathSwitch).length !== 2) throw new Error("Switch subpath smoke failed");
 if (Input !== SubpathInput) throw new Error("Input subpath export mismatch");
+if (NumberInput !== SubpathNumberInput || Object.keys(SubpathNumberInput).length !== 4) throw new Error("Number Input subpath smoke failed");
+if (OTPField !== SubpathOTPField || Object.keys(SubpathOTPField).length !== 4) throw new Error("OTP Field subpath smoke failed");
+if (PasswordToggleField !== SubpathPasswordToggleField || Object.keys(SubpathPasswordToggleField).length !== 4) throw new Error("Password Toggle Field subpath smoke failed");
 if (Textarea !== SubpathTextarea || Object.keys(SubpathTextarea).length !== 2) throw new Error("Textarea subpath export mismatch");
 if (Link !== SubpathLink) throw new Error("Link subpath export mismatch");
 if (Text !== SubpathText) throw new Error("Text subpath export mismatch");
@@ -138,6 +144,12 @@ const switchMarkup = renderToString(React.createElement(Switch.Root, { "aria-lab
 if (!switchMarkup.includes("brick-switch") || !switchMarkup.includes("brick-switch-thumb") || !switchMarkup.includes('aria-checked="true"')) throw new Error("Switch SSR smoke failed");
 const inputMarkup = renderToString(React.createElement(Input, { "aria-label": "Search", defaultValue: "Brick", clearable: true }));
 if (!inputMarkup.includes("brick-input") || !inputMarkup.includes('aria-label="Clear input"')) throw new Error("Input SSR smoke failed");
+const numberInputMarkup = renderToString(React.createElement(NumberInput.Root, { "aria-label": "Quantity", defaultValue: 3 }, React.createElement(NumberInput.Input), React.createElement(NumberInput.Increment, { "aria-label": "Increase" }), React.createElement(NumberInput.Decrement, { "aria-label": "Decrease" })));
+if (!numberInputMarkup.includes("brick-number-input") || !numberInputMarkup.includes('role="spinbutton"')) throw new Error("Number Input SSR smoke failed");
+const otpMarkup = renderToString(React.createElement(OTPField.Root, { "aria-label": "Code", length: 2 }, React.createElement(OTPField.Group, null, React.createElement(OTPField.Input, { index: 0 }), React.createElement(OTPField.Input, { index: 1 }))));
+if (!otpMarkup.includes("brick-otp-field") || !otpMarkup.includes('aria-label="Digit 1 of 2"')) throw new Error("OTP Field SSR smoke failed");
+const passwordMarkup = renderToString(React.createElement(PasswordToggleField.Root, null, React.createElement(PasswordToggleField.Input, { "aria-label": "Password" }), React.createElement(PasswordToggleField.Toggle)));
+if (!passwordMarkup.includes("brick-password-toggle-field") || !passwordMarkup.includes('aria-label="Show password"')) throw new Error("Password Toggle Field SSR smoke failed");
 const textareaMarkup = renderToString(React.createElement(Textarea.Root, { "aria-label": "Notes", defaultValue: "Brick", maxLength: 20 }, React.createElement(Textarea.Count)));
 if (!textareaMarkup.includes("brick-textarea") || !textareaMarkup.includes("5/20")) throw new Error("Textarea SSR smoke failed");
 const linkMarkup = renderToString(React.createElement(Link, { href: "/guides", endIcon: React.createElement("svg") }, "Read guides"));
@@ -180,12 +192,15 @@ if (!css.includes(".brick-context-menu__content") || !css.includes("--brick-cont
 if (!css.includes(".brick-menubar") || !css.includes("--brick-menubar-background")) throw new Error("Menubar CSS export missing");
 if (!css.includes(".brick-navigation-menu") || !css.includes("--brick-navigation-menu-viewport-background")) throw new Error("Navigation Menu CSS export missing");
 if (!css.includes(".brick-bottom-navigation") || !css.includes("--brick-bottom-navigation-selection-background")) throw new Error("Bottom Navigation CSS export missing");
+if (!css.includes(".brick-number-input") || !css.includes("--brick-number-input-height")) throw new Error("Number Input CSS export missing");
+if (!css.includes(".brick-otp-field") || !css.includes("--brick-otp-size")) throw new Error("OTP Field CSS export missing");
+if (!css.includes(".brick-password-toggle-field") || !css.includes("--brick-password-height")) throw new Error("Password Toggle Field CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
 	`import { createElement } from "react";
-import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type PopoverContentProps, type RadioGroupRootProps, type SkeletonProps, type SurfaceProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type OTPFieldRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type RadioGroupRootProps, type SkeletonProps, type SurfaceProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -202,6 +217,9 @@ import { Breadcrumb as SubpathBreadcrumb } from "@flowstack-ui/brick/breadcrumb"
 import { Tabs as SubpathTabs } from "@flowstack-ui/brick/tabs";
 import { Skeleton as SubpathSkeleton } from "@flowstack-ui/brick/skeleton";
 import { VisuallyHidden as SubpathVisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
+import { NumberInput as SubpathNumberInput } from "@flowstack-ui/brick/number-input";
+import { OTPField as SubpathOTPField } from "@flowstack-ui/brick/otp-field";
+import { PasswordToggleField as SubpathPasswordToggleField } from "@flowstack-ui/brick/password-toggle-field";
 const props: ButtonProps = { children: "Consumer" };
 const iconButtonProps: IconButtonProps = { "aria-label": "Search", children: createElement("svg"), href: "/search" };
 const appBarProps: AppBarRootProps = { children: createElement(AppBar.Toolbar, null, "Workspace"), position: "sticky" };
@@ -219,6 +237,9 @@ const checkboxGroupProps: CheckboxGroupRootProps = { "aria-label": "Channels", a
 const radioGroupProps: RadioGroupRootProps = { "aria-label": "Channel", defaultValue: "email", readOnly: true, children: createElement(RadioGroup.Item, { value: "email", children: "Email" }) };
 const switchProps: SwitchRootProps = { "aria-label": "Reports", defaultChecked: true, children: createElement(Switch.Thumb) };
 const inputProps: InputProps = { "aria-label": "Search", clearable: true, startAdornment: "Search" };
+const numberInputProps: NumberInputRootProps = { "aria-label": "Quantity", children: createElement(NumberInput.Input), defaultValue: 3 };
+const otpProps: OTPFieldRootProps = { "aria-label": "Code", children: createElement(OTPField.Input), length: 4 };
+const passwordProps: PasswordToggleFieldRootProps = { children: createElement(PasswordToggleField.Input), showLabel: "Reveal password" };
 const textareaProps: TextareaRootProps = { "aria-label": "Notes", autoResize: true, maxRows: 8 };
 const linkProps: LinkProps = { children: "Read guides", href: "/guides", tone: "neutral" };
 const textProps: TextProps = { as: "h2", children: "Consumer", variant: "title-sm" };
@@ -300,6 +321,9 @@ void SubpathSwitch;
 void switchProps;
 void Input;
 void inputProps;
+void NumberInput; void SubpathNumberInput; void numberInputProps;
+void OTPField; void SubpathOTPField; void otpProps;
+void PasswordToggleField; void SubpathPasswordToggleField; void passwordProps;
 void Textarea;
 void SubpathTextarea;
 void textareaProps;

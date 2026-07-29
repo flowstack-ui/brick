@@ -1,0 +1,1 @@
+export { NumberInput, NumberInputDecrement, NumberInputIncrement, NumberInputInput, NumberInputRoot, type NumberInputDecrementProps, type NumberInputIncrementProps, type NumberInputInputProps, type NumberInputRootProps, type NumberInputShape, type NumberInputSize, type NumberInputVariant } from "./NumberInput.js";

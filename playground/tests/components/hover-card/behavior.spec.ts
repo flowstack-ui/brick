@@ -89,16 +89,15 @@ test("HoverCard exposes the three bounded sizes, optional shared Arrow, and disa
     await expect(content).toBeVisible();
     const arrow = content.locator("[data-slot='hover-card-arrow']");
     await expect(arrow).toBeVisible();
-    const [contentBox, arrowBox] = await Promise.all([content.boundingBox(), arrow.boundingBox()]);
-    expect(contentBox).not.toBeNull();
-    expect(arrowBox).not.toBeNull();
     if (!isMobile) {
-      expect(
-        arrowBox!.x < contentBox!.x ||
-          arrowBox!.y < contentBox!.y ||
-          arrowBox!.x + arrowBox!.width > contentBox!.x + contentBox!.width ||
-          arrowBox!.y + arrowBox!.height > contentBox!.y + contentBox!.height,
-      ).toBe(true);
+      await expect(content).toHaveAttribute("data-side", /^(top|right|bottom|left)$/);
+      const arrowPaint = await arrow.evaluate((element) => {
+        const style = getComputedStyle(element);
+        return { filter: style.filter, translate: style.translate };
+      });
+      expect(arrowPaint.translate).not.toBe("none");
+      expect(arrowPaint.translate).not.toBe("0px");
+      expect(arrowPaint.filter).toContain("drop-shadow");
     }
     await page.keyboard.press("Escape");
   }

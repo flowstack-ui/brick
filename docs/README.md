@@ -47,6 +47,9 @@ This directory is the public documentation authority for
   relationships
 - [Fieldset](components/fieldset/README.md) — native related-control grouping
 - [Input](components/input/README.md) — finished native single-line text entry
+- [Number Input](components/number-input/README.md) — numeric entry with bounded stepping
+- [OTP Field](components/otp-field/README.md) — segmented one-time-code entry
+- [Password Toggle Field](components/password-toggle-field/README.md) — password entry with visibility control
 - [Textarea](components/textarea/README.md) — finished native multi-line text
 - [Radio Group](components/radio-group/README.md) — finished visible single-selection choices
 - [Switch](components/switch/README.md) — immediate binary settings

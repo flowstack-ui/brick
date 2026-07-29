@@ -148,6 +148,25 @@ test("composes Combobox through its public subpath with filtering and selection"
   await expect(input).toHaveValue("Lisbon");
 });
 
+test("composes specialized fields through their public subpaths and Field", async ({ page }) => {
+  const seats = page.getByRole("spinbutton", { name: "Seat count" });
+  await expect(seats).toHaveValue("4");
+  await page.getByRole("button", { name: "Increase seat count" }).click();
+  await expect(seats).toHaveValue("5");
+  await expect(seats).toHaveAttribute("aria-describedby", /consumer-seat-count-description/);
+
+  const code = page.getByRole("group", { name: "Verification code" });
+  await expect(code.locator("input")).toHaveCount(6);
+  await code.locator("input").first().pressSequentially("123456");
+  await expect(code.locator("input").last()).toHaveValue("6");
+
+  const password = page.getByLabel("Account password");
+  await password.fill("correct horse");
+  await expect(password).toHaveAttribute("type", "password");
+  await page.getByRole("button", { name: "Show password" }).click();
+  await expect(password).toHaveAttribute("type", "text");
+});
+
 test("composes Multi Select through its public subpath with repeated-value form behavior", async ({ page }) => {
   const form = page.getByRole("form", { name: "Team skills chooser" });
   const trigger = form.getByRole("button", { name: "Team skills" });

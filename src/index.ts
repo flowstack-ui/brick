@@ -296,6 +296,9 @@ export {
   type InputType,
   type InputVariant,
 } from "./components/input/index.js";
+export * from "./components/number-input/index.js";
+export * from "./components/otp-field/index.js";
+export * from "./components/password-toggle-field/index.js";
 export {
   Textarea,
   TextareaCount,
