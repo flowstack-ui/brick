@@ -1,16 +1,17 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("released Atom behavior provides first focus, target focus, scroll, and continuation", async ({ page }) => {
+test("released Atom behavior provides first focus, target focus, scroll, and continuation", async ({ browserName, page }) => {
   await page.goto("/skip-link/fixture");
   const root = page.getByRole("link", { name: "Skip fixture navigation" });
   const target = page.getByRole("main");
+  const forwardTab = browserName === "webkit" && process.platform === "darwin" ? "Alt+Tab" : "Tab";
 
   const hiddenBox = await root.boundingBox();
   expect(hiddenBox).not.toBeNull();
   expect(hiddenBox!.y + hiddenBox!.height).toBeLessThanOrEqual(0);
 
-  await page.keyboard.press("Tab");
+  await page.keyboard.press(forwardTab);
   await expect(root).toBeFocused();
   await expect(root).toBeVisible();
   const focusedBox = await root.boundingBox();
@@ -21,7 +22,7 @@ test("released Atom behavior provides first focus, target focus, scroll, and con
   await page.keyboard.press("Enter");
   await expect(target).toBeFocused();
   expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
-  await page.keyboard.press("Tab");
+  await page.keyboard.press(forwardTab);
   await expect(page.getByRole("link", { name: "First main-content link" })).toBeFocused();
 });
 

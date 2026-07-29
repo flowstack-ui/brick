@@ -22,7 +22,11 @@ test("composes Skip Link before repeated application chrome", async ({ page }) =
   await expect(target).toBeFocused();
   await expect(target).toHaveClass(/brick-skip-link__target/);
   await page.keyboard.press("Tab");
-  await expect(target.getByRole("button", { name: "Toggle project settings sidebar" })).toBeFocused();
+  await expect(
+    target
+      .getByRole("navigation", { name: "Project settings navigation" })
+      .getByRole("link", { name: "Workspace" }),
+  ).toBeFocused();
 });
 
 test("composes Collapsible through its public subpath", async ({ page }) => {

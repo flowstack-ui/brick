@@ -106,5 +106,5 @@ export function SkipLinkPage() {
 }
 
 export function SkipLinkFixturePage() {
-  return <div className="skip-link-fixture" data-testid="skip-link-fixture"><SkipLink.Root href="#fixture-main">Skip fixture navigation</SkipLink.Root><header><nav aria-label="Fixture navigation"><a href="#one">One</a><a href="#two">Two</a><a href="#three">Three</a></nav></header><div className="skip-link-fixture__spacer" aria-hidden="true" /><SkipLink.Target id="fixture-main"><h1>Fixture main content</h1><a href="#fixture-next">First main-content link</a><p id="fixture-next">Focus continues in primary content.</p></SkipLink.Target></div>;
+  return <div className="skip-link-fixture" data-testid="skip-link-fixture"><SkipLink.Root href="#fixture-main">Skip fixture navigation</SkipLink.Root><header><nav aria-label="Fixture navigation"><a href="#one">One</a><a href="#two">Two</a><a href="#three">Three</a></nav></header><div className="skip-link-fixture__spacer" aria-hidden="true" /><SkipLink.Target id="fixture-main"><Text as="h1" variant="title-md">Fixture main content</Text><a href="#fixture-next">First main-content link</a><Text as="p" id="fixture-next">Focus continues in primary content.</Text></SkipLink.Target></div>;
 }

@@ -31,11 +31,11 @@
     background: var(--brick-skip-link-background);
     box-shadow: var(--brick-skip-link-shadow);
     color: var(--brick-skip-link-foreground);
-    font-family: var(--brick-typography-body-sm-font-family);
-    font-size: var(--brick-typography-body-sm-font-size);
-    font-weight: var(--brick-font-weight-medium);
-    letter-spacing: var(--brick-typography-body-sm-letter-spacing);
-    line-height: var(--brick-typography-body-sm-line-height);
+    font-family: var(--brick-typography-control-sm-font-family);
+    font-size: var(--brick-typography-control-sm-font-size);
+    font-weight: var(--brick-typography-control-sm-font-weight);
+    letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+    line-height: var(--brick-typography-control-sm-line-height);
     overflow-wrap: anywhere;
     text-align: start;
     text-decoration: none;

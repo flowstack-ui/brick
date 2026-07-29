@@ -111,6 +111,7 @@ different owner.
 | Navigation Menu | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Navigation Menu controls, active indicator, measured Viewport, rich Content, mobile replacement, and exact composition output |
 | Bottom Navigation | overview, comparison cells, appearance scopes, customization shell, and stress panels | Bottom Navigation surface, item states, active icon indicator, safe-area geometry, Notification Badge composition, and exact output |
 | Visually Hidden | overview, comparison cells, appearance scopes, and stress panels | Atom-owned inline hiding behavior, native-host composition, and exact rendered output |
+| Skip Link | overview, comparison cells, appearance scopes, customization shell, and stress panels | Skip Link focus overlay, target semantics, sticky-layer geometry, and exact rendered output |
 | Progress | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Progress track, buffer, indicator, orientation geometry, and exact rendered output |
 | Progress Circle | overview, comparison cells, appearance scopes, customization shell/preview, and stress panels | Progress Circle SVG track/indicator, ring geometry, centered value, and exact rendered output |
 | Slider | overview, comparison cells, appearance scopes, customization shell, and stress panels | Slider track/range/thumb/marker/value-label paint, axis geometry, and exact rendered output |
