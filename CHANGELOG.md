@@ -4,6 +4,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Fixed `Slider` so capture loss commits the current click or
+  drag value while true pointer cancellation remains reversible.
+
 - Fixed Slider marker containment, optional value-label spacing, RTL range
   geometry, and cross-axis pointer behavior.
 

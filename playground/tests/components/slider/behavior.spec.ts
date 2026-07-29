@@ -45,6 +45,22 @@ test("track clicks and thumb drags commit without reverting in every geometry",a
   await expect(rtlThumb).toHaveAttribute("aria-valuenow","90");
   expect((await rtlRoot.locator(".brick-slider__range").boundingBox())!.width).toBeGreaterThan(0);
 });
+test("losing pointer capture finalizes the dragged value instead of restoring its start",async({page})=>{
+  const overview=page.getByTestId("slider-overview");
+  const thumb=overview.getByRole("slider",{name:"Volume"});
+  const track=overview.locator(".brick-slider__track");
+  const trackBox=await track.boundingBox();
+  const thumbBox=await thumb.boundingBox();
+  await page.mouse.move(thumbBox!.x+thumbBox!.width/2,thumbBox!.y+thumbBox!.height/2);
+  await page.mouse.down();
+  await page.mouse.move(trackBox!.x+trackBox!.width*0.7,trackBox!.y+trackBox!.height/2,{steps:5});
+  await expect(thumb).toHaveAttribute("aria-valuenow","70");
+  await thumb.dispatchEvent("lostpointercapture",{pointerId:1,pointerType:"mouse",isPrimary:true});
+  await page.mouse.up();
+  await expect(thumb).toHaveAttribute("aria-valuenow","70");
+  await page.waitForTimeout(100);
+  await expect(thumb).toHaveAttribute("aria-valuenow","70");
+});
 test("markers stay contained and their track positions remain selectable",async({page})=>{
   const root=page.getByTestId("slider-content").locator(".brick-slider").first();
   await root.evaluate(element=>element.scrollIntoView({block:"center"}));

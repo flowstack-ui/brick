@@ -1,6 +1,6 @@
 # Rating
 
-Rating is Brick's styled rating input, backed by Atom 0.19.3. It exposes one accessible slider rather than five radio buttons, supports fractional precision, and works alone or as the sole control in `Field`. It does not require `Fieldset`.
+Rating is Brick's styled rating input, backed by Atom 0.19.4. It exposes one accessible slider rather than five radio buttons, supports fractional precision, and works alone or as the sole control in `Field`. It does not require `Fieldset`.
 
 ```tsx
 import { Field, Rating } from "@flowstack-ui/brick";
