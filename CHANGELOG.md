@@ -96,6 +96,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Fixed
 
+- Updated the exact Atom runtime dependency to `0.20.2` so opening Combobox
+  options from its chevron lets mobile browsers reveal the focused input above
+  the virtual keyboard.
+
 - Updated the exact Atom runtime dependency to published `0.20.1`, inheriting
   stable Menu sizing variables and corrected modal Popover isolation, and
   pinned the patched Brace Expansion transitive used by development coverage.

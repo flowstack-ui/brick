@@ -16,6 +16,12 @@ test("Dialog exposes its default modal anatomy, relationships, and focus lifecyc
 }) => {
   await page.goto("/dialog");
 
+  const appBar = page.locator(".evidence-app-bar");
+  const sidebar = page.locator(".evidence-sidebar");
+  const shellVisibility = {
+    appBar: await appBar.isVisible(),
+    sidebar: await sidebar.isVisible(),
+  };
   const trigger = page.getByRole("button", { name: "Edit profile" });
   await trigger.click();
   const dialog = page.getByTestId("dialog-overview-content");
@@ -30,7 +36,14 @@ test("Dialog exposes its default modal anatomy, relationships, and focus lifecyc
   await expect(dialog.locator("[data-slot='dialog-header']")).toHaveCount(1);
   await expect(dialog.locator("[data-slot='dialog-body']")).toHaveCount(1);
   await expect(dialog.locator("[data-slot='dialog-footer']")).toHaveCount(1);
-  await expect(page.locator(".brick-dialog-overlay")).toBeVisible();
+  const overlay = page.locator(".brick-dialog-overlay");
+  await expect(overlay).toBeVisible();
+  await expect(dialog).toHaveCSS("opacity", "1");
+  expect(
+    await overlay.evaluate((element) => getComputedStyle(element).backgroundColor),
+  ).toMatch(/^rgba\(.+,\s*0\.\d+\)$/);
+  expect(await appBar.isVisible()).toBe(shellVisibility.appBar);
+  expect(await sidebar.isVisible()).toBe(shellVisibility.sidebar);
   await expect(dialog.getByLabel("Display name")).toHaveValue("Ada Lovelace");
   await expect(dialog.getByLabel("Team role")).toHaveValue("Product engineer");
   expect(await dialog.evaluate((element) => element.contains(document.activeElement))).toBe(

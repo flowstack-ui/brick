@@ -35,3 +35,41 @@ test("popup positions, flips when constrained, and route has no axe violations",
   const content = page.locator(".brick-combobox-content:visible"); await expect(content).toHaveAttribute("data-positioned", "");
   const results = await new AxeBuilder({ page }).disableRules(["region"]).analyze(); expect(results.violations).toEqual([]);
 });
+
+test("portalled options remain below sticky playground navigation while scrolling", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const overview = page.locator('[data-scenario="combobox.overview"]');
+  await overview.getByRole("button", { name: "Toggle City options" }).click();
+  const popup = page.locator(".brick-combobox-content:visible");
+  const header = page.locator(".evidence-review-header");
+
+  await page.evaluate(() => window.scrollBy(0, 300));
+  await expect(popup).toBeVisible();
+
+  const paintOrder = await page.evaluate(() => {
+    const popupElement = document.querySelector<HTMLElement>(".brick-combobox-content");
+    const headerElement = document.querySelector<HTMLElement>(".evidence-review-header");
+    if (!popupElement || !headerElement) return null;
+    const popupRect = popupElement.getBoundingClientRect();
+    const headerRect = headerElement.getBoundingClientRect();
+    const intersection = {
+      left: Math.max(popupRect.left, headerRect.left),
+      right: Math.min(popupRect.right, headerRect.right),
+      top: Math.max(popupRect.top, headerRect.top),
+      bottom: Math.min(popupRect.bottom, headerRect.bottom),
+    };
+    const x = (intersection.left + intersection.right) / 2;
+    const y = (intersection.top + intersection.bottom) / 2;
+    return {
+      headerContainsTopElement: headerElement.contains(document.elementFromPoint(x, y)),
+      headerZIndex: Number(getComputedStyle(headerElement).zIndex),
+      intersects: intersection.right > intersection.left && intersection.bottom > intersection.top,
+      popupZIndex: Number(getComputedStyle(popupElement).zIndex),
+    };
+  });
+
+  expect(paintOrder).not.toBeNull();
+  expect(paintOrder!.intersects).toBe(true);
+  expect(paintOrder!.popupZIndex).toBeLessThan(paintOrder!.headerZIndex);
+  expect(paintOrder!.headerContainsTopElement).toBe(true);
+});

@@ -91,10 +91,19 @@ test("Popover respects explicit dismissal policy and nested top-layer order", as
 
 test("Popover modal mode traps focus and closes through its visible action", async ({ page }) => {
   await page.goto("/popover");
+  const appBar = page.locator(".evidence-app-bar");
+  const sidebar = page.locator(".evidence-sidebar");
+  const shellVisibility = {
+    appBar: await appBar.isVisible(),
+    sidebar: await sidebar.isVisible(),
+  };
   const trigger = page.getByRole("button", { name: "Open modal settings" });
   await trigger.click();
   const popover = page.getByRole("dialog", { name: "Open modal settings" });
   await expect(popover).toHaveAttribute("aria-modal", "true");
+  await expect(popover).toHaveCSS("opacity", "1");
+  expect(await appBar.isVisible()).toBe(shellVisibility.appBar);
+  expect(await sidebar.isVisible()).toBe(shellVisibility.sidebar);
   for (let index = 0; index < 6; index += 1) {
     await page.keyboard.press("Tab");
     expect(await popover.evaluate((element) => element.contains(document.activeElement))).toBe(true);

@@ -14,5 +14,7 @@ Combobox follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Opening the option list from Trigger now allows mobile browsers to scroll the
+  focused input into view above the virtual keyboard.
 - Authored options now visibly filter while typing and `defaultValue` displays
   its option label without a separate `defaultInputValue`.

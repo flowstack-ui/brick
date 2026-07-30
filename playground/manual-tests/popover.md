@@ -54,7 +54,8 @@ then use separate Anchor and nested Popover examples.
 
 Expected: Disabled never opens. Modal traps focus; non-modal does not invent a
 trap. Outside touch scrolling does not dismiss accidentally, outside tap follows
-policy, and the nested top layer owns focus/Escape until it closes.
+policy, and the nested top layer owns focus/Escape until it closes. In modal
+mode, the app bar and sidebar remain recognizable beneath the settled layer.
 
 Result:
 Notes or issue:

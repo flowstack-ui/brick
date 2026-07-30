@@ -41,3 +41,18 @@ test("keyboard, RTL, mobile geometry, and accessibility work", async ({ page }) 
   await page.keyboard.press("Escape");
   expect((await new AxeBuilder({ page }).include('[data-testid="dropdown-menu-overview"]').analyze()).violations).toEqual([]);
 });
+
+test("portalled menus use the playground layer below sticky review chrome", async ({ page }) => {
+  const trigger = page
+    .getByTestId("dropdown-menu-overview")
+    .getByRole("button", { name: "Project actions" });
+  await trigger.click();
+  const menu = page.getByRole("menu", { name: "Project actions" }).first();
+  const header = page.locator(".evidence-review-header");
+
+  const [menuZIndex, headerZIndex] = await Promise.all([
+    menu.evaluate((element) => Number(getComputedStyle(element).zIndex)),
+    header.evaluate((element) => Number(getComputedStyle(element).zIndex)),
+  ]);
+  expect(menuZIndex).toBeLessThan(headerZIndex);
+});
