@@ -27,7 +27,8 @@ Shift+Tab through it, close with its visible action, reopen, then press Escape.
 
 Expected: The modal is named and described, focus enters a safe control, stays
 inside, closes once, and returns to the trigger. Background content cannot be
-operated while open.
+operated while open. After the entrance settles, the app bar and sidebar remain
+recognizable beneath the translucent scrim rather than disappearing.
 
 Result:
 Notes or issue:

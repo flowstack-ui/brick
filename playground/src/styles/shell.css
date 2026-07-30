@@ -6,6 +6,10 @@
   min-inline-size: 0;
 }
 
+:root {
+  --evidence-floating-layer-z-index: 14;
+}
+
 .evidence-app {
   --evidence-app-bar-block-size: 3.0625rem;
   --evidence-scenario-scroll-margin: 22rem;
@@ -13,6 +17,26 @@
   min-block-size: 100vh;
   background: var(--brick-color-surface-canvas);
   color: var(--brick-color-text-primary);
+}
+
+/* Portalled component examples belong below the playground's sticky review
+   chrome. Modal surfaces, Toasts, and Skip Links retain their component-owned
+   application layers. */
+:where(
+  .brick-combobox-content,
+  .brick-select-content,
+  .brick-multi-select-content,
+  .brick-dropdown-menu__content,
+  .brick-dropdown-menu__sub-content,
+  .brick-context-menu__content,
+  .brick-context-menu__sub-content,
+  .brick-menubar__content,
+  .brick-menubar__sub-content,
+  .brick-popover:not([aria-modal="true"]),
+  .brick-tooltip,
+  .brick-navigation-menu__viewport
+) {
+  z-index: var(--evidence-floating-layer-z-index);
 }
 
 .evidence-app-bar {

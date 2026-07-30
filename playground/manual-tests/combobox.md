@@ -23,13 +23,13 @@ Result:
 
 ## Step 2: Filtering, keyboard, and focus
 
-Type to filter; confirm non-matches disappear; use Arrow keys, Home, End, Enter, Escape, and Tab. Click the chevron and expect it to toggle the popup. Expect enabled-option navigation, one selected value, safe dismissal, visible focus, and no focus trap.
+Type to filter; confirm non-matches disappear; use Arrow keys, Home, End, Enter, Escape, and Tab. Click the chevron and expect it to toggle the popup. On a phone with the virtual keyboard open, expect this path to focus and reveal the input just as tapping the input does. Expect enabled-option navigation, one selected value, safe dismissal, visible focus, and no focus trap.
 
 Result:
 
 ## Step 3: Pointer, touch, and positioning
 
-Select and clear by pointer. Confirm the popup is at least as wide as the whole visible control. On real touch hardware, open near the viewport edge and with the keyboard visible; scroll the page and list, confirm collision flipping keeps all options reachable, a drag does not dismiss, and an outside tap dismisses only after release.
+Select and clear by pointer. Confirm the popup is at least as wide as the whole visible control. On real touch hardware, open near the viewport edge and with the keyboard visible; scroll the page and list, confirm collision flipping keeps all options reachable, the popup does not paint over the sticky playground navigation, a drag does not dismiss, and an outside tap dismisses only after release.
 
 Result:
 
