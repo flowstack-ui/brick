@@ -19,6 +19,9 @@ test("Image appearance, fallback, mobile, and forced colors", async ({ page }) =
   await expect(page.getByTestId("image-state")).toHaveAttribute("data-state", "error");
   await expect(page.locator("#scenario-image-states")).toHaveScreenshot("fallback-dark.png");
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator("#scenario-image-stress img").evaluateAll(async (images) => {
+    await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
+  });
   await expect(page.locator("#scenario-image-stress")).toHaveScreenshot("stress-mobile.png");
   await page.setViewportSize({ width: 1120, height: 900 });
   await useForcedColors(page);

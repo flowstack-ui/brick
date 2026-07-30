@@ -33,7 +33,22 @@ test("manual activation, composition, overflow, and RTL work", async ({ page }) 
   await page.setViewportSize({ width: 390, height: 844 });
   const constrained = page.getByRole("tablist", { name: "Constrained sections" });
   expect(await constrained.evaluate((node) => node.scrollWidth > node.clientWidth)).toBe(true);
+  const constrainedBox = await constrained.boundingBox();
+  const initiallyVisibleTabs = constrained.getByRole("tab");
+  for (const index of [0, 1, 2]) {
+    const tabBox = await initiallyVisibleTabs.nth(index).boundingBox();
+    expect(tabBox!.x).toBeGreaterThanOrEqual(constrainedBox!.x);
+    expect(tabBox!.x + tabBox!.width).toBeLessThanOrEqual(constrainedBox!.x + constrainedBox!.width);
+  }
   const rtl = page.getByRole("tablist", { name: "أقسام الحساب" });
+  expect(await rtl.evaluate((node) => node.scrollWidth > node.clientWidth)).toBe(true);
+  await expect(rtl.getByRole("tab")).toHaveCount(5);
+  const rtlBox = await rtl.boundingBox();
+  for (const index of [0, 1, 2]) {
+    const tabBox = await rtl.getByRole("tab").nth(index).boundingBox();
+    expect(tabBox!.x).toBeGreaterThanOrEqual(rtlBox!.x);
+    expect(tabBox!.x + tabBox!.width).toBeLessThanOrEqual(rtlBox!.x + rtlBox!.width);
+  }
   const rtlFirst = rtl.getByRole("tab").first();
   await rtlFirst.focus();
   await rtlFirst.press("ArrowLeft");

@@ -1,4 +1,4 @@
-import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
+import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
 installVisualDefaults("/data-grid");
 
@@ -13,11 +13,11 @@ test("Data Grid defaults, recipes, sizing, selection, and sorting", async ({ pag
 
 test("Data Grid appearance, RTL, responsive overflow, and forced colors", async ({ page }) => {
   await setAppearance(page, "dark");
-  await expect(page.locator("#scenario-data-grid-appearance")).toHaveScreenshot("appearance-dark.png");
+  await expectEvidenceScreenshot(page, page.locator("#scenario-data-grid-appearance"), "appearance-dark.png");
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.locator("#scenario-data-grid-stress .data-grid-cell").first()).toHaveScreenshot("responsive-mobile.png");
   await expect(page.locator("#scenario-data-grid-stress .data-grid-cell").last()).toHaveScreenshot("rtl-mobile.png");
   await page.setViewportSize({ width: 1120, height: 900 });
   await useForcedColors(page);
-  await expect(page.locator("#scenario-data-grid-appearance")).toHaveScreenshot("appearance-forced-colors.png");
+  await expectEvidenceScreenshot(page, page.locator("#scenario-data-grid-appearance"), "appearance-forced-colors.png");
 });

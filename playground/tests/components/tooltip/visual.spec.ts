@@ -4,6 +4,7 @@ installVisualDefaults("/tooltip");
 
 test("Tooltip default surface and recipes", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.getByTestId("tooltip-composition"), "composition-output-light.png");
+  await page.evaluate(() => window.scrollTo(0, 0));
   const trigger = page.getByRole("button", { name: "Search workspace" });
   await trigger.focus();
   await expect(page.locator("[data-slot='tooltip']").filter({ hasText: "Search workspace" })).toHaveAttribute("data-positioned", "");
