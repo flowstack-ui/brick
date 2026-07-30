@@ -6,6 +6,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added the Atom-backed `SwipeableItem` three-part reveal layer with plain and
+  outline recipes, logical start/end action panels, rounded containment,
+  required localized labels, and a documented visible non-drag action path.
+
 - Added the two-part Atom-backed `Feed` for dynamic rich article streams with
   article keyboard navigation, three visual variants, two densities, visible
   focus positioning, responsive RTL, and public customization hooks.

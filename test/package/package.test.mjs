@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.19.8");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.19.9");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -188,6 +188,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/feed.d.ts",
       default: "./dist/feed.js",
     },
+    "./swipeable-item": {
+      types: "./dist/swipeable-item.d.ts",
+      default: "./dist/swipeable-item.js",
+    },
     "./toast": {
       types: "./dist/toast.d.ts",
       default: "./dist/toast.js",
@@ -354,6 +358,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const rating = await import(new URL("../../dist/rating.js", import.meta.url));
   const fileUpload = await import(new URL("../../dist/file-upload.js", import.meta.url));
   const feed = await import(new URL("../../dist/feed.js", import.meta.url));
+  const swipeableItem = await import(new URL("../../dist/swipeable-item.js", import.meta.url));
   const toastModule = await import(new URL("../../dist/toast.js", import.meta.url));
   const input = await import(new URL("../../dist/input.js", import.meta.url));
   const textarea = await import(new URL("../../dist/textarea.js", import.meta.url));
@@ -709,6 +714,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "SliderValueLabel",
       "Stack",
       "Surface",
+      "SwipeableItem",
+      "SwipeableItemActions",
+      "SwipeableItemContent",
+      "SwipeableItemRoot",
       "Switch",
       "SwitchRoot",
       "SwitchThumb",
@@ -805,6 +814,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(feed.Feed, brick.Feed);
   assert.equal(feed.Feed.Root.displayName, "Feed.Root");
   assert.equal(feed.Feed.Item.displayName, "Feed.Item");
+  assert.equal(swipeableItem.SwipeableItem, brick.SwipeableItem);
+  assert.equal(swipeableItem.SwipeableItem.Root.displayName, "SwipeableItem.Root");
+  assert.equal(swipeableItem.SwipeableItem.Content.displayName, "SwipeableItem.Content");
+  assert.equal(swipeableItem.SwipeableItem.Actions.displayName, "SwipeableItem.Actions");
   assert.equal(toolbar.Toolbar, brick.Toolbar);
   assert.equal(toolbar.ToolbarRoot, brick.Toolbar.Root);
   assert.equal(toolbar.ToolbarToggleItem, brick.Toolbar.ToggleItem);
@@ -1034,6 +1047,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-list/);
   assert.match(styles, /\.brick-tree/);
   assert.match(styles, /\.brick-feed/);
+  assert.match(styles, /\.brick-swipeable-item/);
   assert.match(styles, /\.brick-stack/);
   assert.match(styles, /\.brick-grid/);
   assert.match(styles, /\.brick-container/);
@@ -1080,6 +1094,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-list-marker-style/);
   assert.match(styles, /--brick-tree-row-min-block-size/);
   assert.match(styles, /--brick-feed-item-padding-block/);
+  assert.match(styles, /--brick-swipeable-item-action-min-size/);
   assert.match(styles, /--brick-stack-gap/);
   assert.match(styles, /--brick-grid-columns/);
   assert.match(styles, /--brick-container-max-inline-size/);

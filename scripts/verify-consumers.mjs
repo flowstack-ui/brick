@@ -38,7 +38,7 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -77,6 +77,7 @@ import { BottomNavigation as SubpathBottomNavigation } from "@flowstack-ui/brick
 import { VisuallyHidden as SubpathVisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
 import { Show as SubpathShow } from "@flowstack-ui/brick/show";
 import { Hide as SubpathHide } from "@flowstack-ui/brick/hide";
+import { SwipeableItem as SubpathSwipeableItem } from "@flowstack-ui/brick/swipeable-item";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { readFile } from "node:fs/promises";
@@ -117,6 +118,7 @@ if (NavigationMenu !== SubpathNavigationMenu || Object.keys(SubpathNavigationMen
 if (BottomNavigation !== SubpathBottomNavigation || Object.keys(SubpathBottomNavigation).length !== 4) throw new Error("Bottom Navigation subpath smoke failed");
 if (VisuallyHidden !== SubpathVisuallyHidden || Object.keys(SubpathVisuallyHidden).length !== 1) throw new Error("Visually Hidden subpath smoke failed");
 if (Show !== SubpathShow || Hide !== SubpathHide) throw new Error("Responsive visibility subpath export mismatch");
+if (SwipeableItem !== SubpathSwipeableItem || Object.keys(SubpathSwipeableItem).length !== 3) throw new Error("Swipeable Item subpath smoke failed");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
 const iconButtonMarkup = renderToString(React.createElement(IconButton, { "aria-label": "Search" }, React.createElement("svg")));
@@ -186,6 +188,8 @@ if (!visuallyHiddenMarkup.includes("brick-visually-hidden") || !visuallyHiddenMa
 const showMarkup = renderToString(React.createElement(Show, { as: "aside", from: "md" }, "Wide guidance"));
 const hideMarkup = renderToString(React.createElement(Hide, { as: "aside", from: "md" }, "Compact guidance"));
 if (!showMarkup.includes("brick-show") || !showMarkup.includes('data-from="md"') || !hideMarkup.includes("brick-hide") || !hideMarkup.includes('data-from="md"')) throw new Error("Responsive visibility SSR smoke failed");
+const swipeableMarkup = renderToString(React.createElement(SwipeableItem.Root, null, React.createElement(SwipeableItem.Content, null, "Message"), React.createElement(SwipeableItem.Actions, { "aria-label": "Message actions", side: "end" }, React.createElement("button", null, "Delete"))));
+if (!swipeableMarkup.includes("brick-swipeable-item") || !swipeableMarkup.includes('aria-label="Message actions"')) throw new Error("Swipeable Item SSR smoke failed");
 if (!SubpathTooltip || Object.keys(SubpathTooltip).length !== 8) throw new Error("Tooltip subpath smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
 if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-chip") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover") || !css.includes(".brick-checkbox") || !css.includes(".brick-checkbox-group") || !css.includes(".brick-radio-group") || !css.includes(".brick-input") || !css.includes(".brick-textarea") || !css.includes(".brick-link") || !css.includes(".brick-text") || !css.includes(".brick-grid") || !css.includes(".brick-container") || !css.includes(".brick-surface")) throw new Error("CSS export missing");
@@ -202,12 +206,13 @@ if (!css.includes(".brick-number-input") || !css.includes("--brick-number-input-
 if (!css.includes(".brick-otp-field") || !css.includes("--brick-otp-size")) throw new Error("OTP Field CSS export missing");
 if (!css.includes(".brick-password-toggle-field") || !css.includes("--brick-password-height")) throw new Error("Password Toggle Field CSS export missing");
 if (!css.includes(".brick-show") || !css.includes(".brick-hide") || !css.includes("@media (width<48rem)") || !css.includes("@media (width>=48rem)")) throw new Error("Responsive visibility CSS export missing");
+if (!css.includes(".brick-swipeable-item") || !css.includes("--brick-swipeable-item-background")) throw new Error("Swipeable Item CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
 	`import { createElement } from "react";
-import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HideProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type OTPFieldRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type RadioGroupRootProps, type ShowProps, type SkeletonProps, type SurfaceProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HideProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type OTPFieldRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type RadioGroupRootProps, type ShowProps, type SkeletonProps, type SurfaceProps, type SwipeableItemRootProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -229,6 +234,7 @@ import { OTPField as SubpathOTPField } from "@flowstack-ui/brick/otp-field";
 import { PasswordToggleField as SubpathPasswordToggleField } from "@flowstack-ui/brick/password-toggle-field";
 import { Show as SubpathShow } from "@flowstack-ui/brick/show";
 import { Hide as SubpathHide } from "@flowstack-ui/brick/hide";
+import { SwipeableItem as SubpathSwipeableItem } from "@flowstack-ui/brick/swipeable-item";
 const props: ButtonProps = { children: "Consumer" };
 const iconButtonProps: IconButtonProps = { "aria-label": "Search", children: createElement("svg"), href: "/search" };
 const appBarProps: AppBarRootProps = { children: createElement(AppBar.Toolbar, null, "Workspace"), position: "sticky" };
@@ -267,6 +273,7 @@ const bottomNavigationProps: BottomNavigationRootProps = { ariaLabel: "Primary",
 const visuallyHiddenProps: VisuallyHiddenRootProps = { children: "Search" };
 const showProps: ShowProps = { as: "aside", children: "Wide", from: "md" };
 const hideProps: HideProps = { as: "aside", children: "Compact", from: "md" };
+const swipeableProps: SwipeableItemRootProps = { children: createElement(SwipeableItem.Content, null, "Message"), variant: "outline" };
 void AlertDialog;
 void SubpathAlertDialog;
 void Grid;
@@ -294,6 +301,7 @@ void ContextMenu; void contextProps;
 void Menubar; void menubarProps;
 void NavigationMenu; void navigationProps; void BottomNavigation; void bottomNavigationProps; void VisuallyHidden; void SubpathVisuallyHidden; void visuallyHiddenProps;
 void Show; void SubpathShow; void showProps; void Hide; void SubpathHide; void hideProps;
+void SwipeableItem; void SubpathSwipeableItem; void swipeableProps;
 void Button;
 void SubpathButton;
 void IconButton;

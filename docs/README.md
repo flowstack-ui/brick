@@ -45,6 +45,8 @@ This directory is the public documentation authority for
   with finished rows, indicators, and optional guides
 - [Feed](components/feed/README.md) — dynamic rich article streams with
   article-by-article keyboard navigation
+- [Swipeable Item](components/swipeable-item/README.md) — item-level quick
+  actions with logical reveal panels and a required visible alternative
 
 ### Forms and choices
 

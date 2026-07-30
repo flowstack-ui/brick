@@ -203,6 +203,10 @@
       "types": "./dist/feed.d.ts",
       "default": "./dist/feed.js"
     },
+    "./swipeable-item": {
+      "types": "./dist/swipeable-item.d.ts",
+      "default": "./dist/swipeable-item.js"
+    },
     "./toast": {
       "types": "./dist/toast.d.ts",
       "default": "./dist/toast.js"
@@ -398,7 +402,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.19.8"
+    "@flowstack-ui/atom": "0.19.9"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

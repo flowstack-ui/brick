@@ -63,6 +63,7 @@ const componentSymbols = {
   rating: "Rating",
   "file-upload": "FileUpload",
   feed: "Feed",
+  "swipeable-item": "SwipeableItem",
   slider: "Slider",
   switch: "Switch",
   breadcrumb: "Breadcrumb",
