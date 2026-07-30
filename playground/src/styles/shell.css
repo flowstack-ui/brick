@@ -34,7 +34,6 @@
   .brick-menubar__sub-content,
   .brick-popover:not([aria-modal="true"]),
   .brick-tooltip,
-  .brick-hover-card,
   .brick-navigation-menu__viewport
 ) {
   z-index: var(--evidence-floating-layer-z-index);
