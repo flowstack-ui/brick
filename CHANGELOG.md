@@ -6,6 +6,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added the two-part Atom-backed `Feed` for dynamic rich article streams with
+  article keyboard navigation, three visual variants, two densities, visible
+  focus positioning, responsive RTL, and public customization hooks.
+
 - Added independent `Show` and `Hide` responsive visibility components with fixed CSS breakpoints and always-mounted React content.
 
 - Fixed `Rating` pointer stability across repeated selection, capture loss,

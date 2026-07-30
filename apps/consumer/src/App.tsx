@@ -39,6 +39,7 @@ import { Table } from "@flowstack-ui/brick/table";
 import { DataGrid } from "@flowstack-ui/brick/data-grid";
 import { TreeGrid } from "@flowstack-ui/brick/tree-grid";
 import { Tree } from "@flowstack-ui/brick/tree";
+import { Feed } from "@flowstack-ui/brick/feed";
 import { Toolbar } from "@flowstack-ui/brick/toolbar";
 import { Pagination } from "@flowstack-ui/brick/pagination";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
@@ -132,6 +133,11 @@ export function App() {
   const [treeGridSelection, setTreeGridSelection] = useState<string | null>("brick");
   const [reviewers, setReviewers] = useState(["Riley Chen", "Morgan Lee"]);
   const [attachmentStatus, setAttachmentStatus] = useState("No release files selected.");
+  const [activityUpdates, setActivityUpdates] = useState([
+    { id: "publish", title: "Atom package published", summary: "Version 0.19.8 is available from npm.", status: "Published" },
+    { id: "review", title: "Brick review ready", summary: "The Feed component is ready for consumer verification.", status: "Review" },
+    { id: "docs", title: "Usage guide updated", summary: "Dynamic updates and keyboard movement are documented.", status: "Docs" },
+  ]);
 
   useEffect(() => {
     document.documentElement.dataset.brickAppearance = appearance;
@@ -907,6 +913,24 @@ export function App() {
               </Tree.Group></Tree.Item>
               <Tree.Item value="readme"><Tree.ItemContent><Tree.Indicator /><Tree.ItemText>README.md</Tree.ItemText></Tree.ItemContent></Tree.Item>
             </Tree.Root>
+          </Card.Content>
+        </Card.Root>
+
+        <Card.Root as="section" variant="outline">
+          <Card.Header>
+            <Card.Title as="h2">Release activity</Card.Title>
+            <Card.Description>Dynamic rich articles composed from the packed Feed subpath.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <VStack gap="3">
+              <Feed.Root aria-label="Release activity updates" setSize={activityUpdates.length} variant="outline">
+                {activityUpdates.map((update, index) => <Feed.Item aria-describedby={`consumer-feed-${update.id}-summary`} aria-labelledby={`consumer-feed-${update.id}-title`} index={index} key={update.id}><VStack gap="2"><HStack gap="2" wrap><Badge size="sm" tone={update.status === "Published" ? "success" : "neutral"}>{update.status}</Badge><Text as="h3" id={`consumer-feed-${update.id}-title`} variant="title-sm">{update.title}</Text></HStack><Text as="p" id={`consumer-feed-${update.id}-summary`} tone="secondary" variant="body-sm">{update.summary}</Text><Button size="sm" variant="ghost">Open {update.title}</Button></VStack></Feed.Item>)}
+              </Feed.Root>
+              <HStack gap="3" wrap>
+                <Button disabled={activityUpdates.some(update => update.id === "research")} onClick={() => setActivityUpdates(current => [...current, { id: "research", title: "Feed contract approved", summary: "Research established the two-part article-stream boundary.", status: "Approved" }])} size="sm" variant="outline">Load older activity</Button>
+                <Text aria-live="polite" as="p" tone="secondary" variant="body-sm">{activityUpdates.length} activity updates</Text>
+              </HStack>
+            </VStack>
           </Card.Content>
         </Card.Root>
 

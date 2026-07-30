@@ -37,6 +37,7 @@ import { Table } from "../../dist/table.js";
 import { DataGrid } from "../../dist/data-grid.js";
 import { TreeGrid } from "../../dist/tree-grid.js";
 import { Tree } from "../../dist/tree.js";
+import { Feed } from "../../dist/feed.js";
 import { Pagination } from "../../dist/pagination.js";
 import { HStack, Stack, VStack } from "../../dist/stack.js";
 import { Grid } from "../../dist/grid.js";
@@ -162,6 +163,27 @@ test("Tree renders deterministic hierarchical anatomy during SSR", () => {
   assert.match(markup, /brick-tree__item-content/);
   assert.match(markup, /brick-tree__indicator/);
   assert.match(markup, /role="group"/);
+});
+
+test("Feed renders deterministic direct article anatomy during SSR", () => {
+  const markup = renderToString(
+    React.createElement(
+      Feed.Root,
+      { "aria-label": "Activity", busy: true, density: "compact", setSize: 2, variant: "outline" },
+      React.createElement(Feed.Item, { "aria-label": "Published", index: 0 }, "Release published"),
+      React.createElement(Feed.Item, { "aria-label": "Review", index: 1 }, "Review requested"),
+    ),
+  );
+  assert.match(markup, /role="feed"/);
+  assert.match(markup, /aria-label="Activity"/);
+  assert.match(markup, /aria-busy="true"/);
+  assert.match(markup, /class="brick-feed"/);
+  assert.match(markup, /data-density="compact"/);
+  assert.match(markup, /data-variant="outline"/);
+  assert.match(markup, /<article[^>]*role="article"[^>]*tabindex="0"/);
+  assert.match(markup, /aria-posinset="1"/);
+  assert.match(markup, /aria-setsize="2"/);
+  assert.match(markup, /class="brick-feed__item"/);
 });
 
 test("Collapsible renders deterministic linked disclosure anatomy", () => {
