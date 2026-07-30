@@ -395,6 +395,7 @@
     "not IE 11"
   ],
   "overrides": {
+    "brace-expansion": "5.0.9",
     "glob": "13.0.6"
   },
   "peerDependencies": {
@@ -402,7 +403,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.19.9"
+    "@flowstack-ui/atom": "0.20.1"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
