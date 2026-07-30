@@ -1502,6 +1502,16 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-density", "data-slot", "data-variant"],
     publicTokens: ["--brick-feed-gap", "--brick-feed-item-padding-block", "--brick-feed-item-padding-inline", "--brick-feed-background", "--brick-feed-foreground", "--brick-feed-border-color", "--brick-feed-border-width", "--brick-feed-radius", "--brick-feed-divider-color", "--brick-feed-focus-color", "--brick-feed-focus-width", "--brick-feed-focus-offset", "--brick-feed-transition-duration"],
   },
+  "swipeable-item": {
+    source: "src/components/swipeable-item/SwipeableItem.tsx",
+    exportSource: "src/components/swipeable-item/index.ts",
+    css: "src/components/swipeable-item/swipeable-item.css",
+    exports: ["SwipeableItem", "SwipeableItemActions", "SwipeableItemActionsProps", "SwipeableItemContent", "SwipeableItemContentProps", "SwipeableItemRoot", "SwipeableItemRootProps", "SwipeableItemVariant"],
+    unions: { SwipeableItemVariant: ["plain", "outline"] },
+    defaults: { variant: "plain" },
+    dataAttributes: ["data-slot", "data-variant"],
+    publicTokens: ["--brick-swipeable-item-background", "--brick-swipeable-item-foreground", "--brick-swipeable-item-action-background", "--brick-swipeable-item-action-foreground", "--brick-swipeable-item-border-color", "--brick-swipeable-item-border-width", "--brick-swipeable-item-radius", "--brick-swipeable-item-focus-color", "--brick-swipeable-item-focus-width", "--brick-swipeable-item-focus-offset", "--brick-swipeable-item-action-gap", "--brick-swipeable-item-action-padding-inline", "--brick-swipeable-item-action-min-size", "--brick-swipeable-item-transition-duration"],
+  },
   text: {
     source: "src/components/text/Text.tsx",
     exportSource: "src/components/text/index.ts",

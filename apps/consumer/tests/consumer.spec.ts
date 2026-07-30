@@ -300,6 +300,21 @@ test("composes Feed as an application-owned dynamic activity stream", async ({ p
   await expect(feed.getByRole("article").nth(1)).toBeFocused();
 });
 
+test("composes Swipeable Item with a visible non-drag command path", async ({ page }) => {
+  const item = page.getByTestId("consumer-swipeable-item");
+  const content = item.locator(".brick-swipeable-item__content");
+  await expect(item).toHaveAttribute("data-variant", "outline");
+  await expect(content).toHaveCSS("touch-action", "pan-y");
+  await content.focus();
+  await content.press("ArrowLeft");
+  await expect(item).toHaveAttribute("data-side", "end");
+  await item.getByRole("button", { name: "Delete" }).click();
+  await expect(page.getByText("Message deleted from swipe actions.")).toBeVisible();
+  await item.getByRole("button", { name: "More message actions" }).click();
+  await page.getByRole("menuitem", { name: "Archive message" }).click();
+  await expect(page.getByText("Message archived from menu.")).toBeVisible();
+});
+
 test("composes Scroll Area as a constrained native activity region", async ({ page }) => {
   const viewport = page.getByRole("region", { name: "Recent workspace activity" });
   await expect(viewport).toHaveClass(/brick-scroll-area-viewport/);

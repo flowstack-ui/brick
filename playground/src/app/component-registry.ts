@@ -205,6 +205,13 @@ export const componentEntries = [
   },
   {
     category: "Actions",
+    description: "Item-level quick actions revealed by swipe with a visible alternative.",
+    id: "swipeable-item",
+    route: "/swipeable-item",
+    title: "Swipeable Item",
+  },
+  {
+    category: "Actions",
     description: "Related commands with one keyboard entry point.",
     id: "toolbar",
     route: "/toolbar",

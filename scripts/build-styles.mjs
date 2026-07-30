@@ -96,6 +96,7 @@ await writeFile(
     '@import "../../src/components/tree-grid/tree-grid.css";',
     '@import "../../src/components/tree/tree.css";',
     '@import "../../src/components/feed/feed.css";',
+    '@import "../../src/components/swipeable-item/swipeable-item.css";',
     '@import "../../src/components/toolbar/toolbar.css";',
     '@import "../../src/components/pagination/pagination.css";',
     '@import "../../src/components/stack/stack.css";',

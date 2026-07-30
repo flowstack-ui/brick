@@ -40,6 +40,7 @@ import { DataGrid } from "@flowstack-ui/brick/data-grid";
 import { TreeGrid } from "@flowstack-ui/brick/tree-grid";
 import { Tree } from "@flowstack-ui/brick/tree";
 import { Feed } from "@flowstack-ui/brick/feed";
+import { SwipeableItem } from "@flowstack-ui/brick/swipeable-item";
 import { Toolbar } from "@flowstack-ui/brick/toolbar";
 import { Pagination } from "@flowstack-ui/brick/pagination";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
@@ -133,6 +134,7 @@ export function App() {
   const [treeGridSelection, setTreeGridSelection] = useState<string | null>("brick");
   const [reviewers, setReviewers] = useState(["Riley Chen", "Morgan Lee"]);
   const [attachmentStatus, setAttachmentStatus] = useState("No release files selected.");
+  const [swipeableStatus, setSwipeableStatus] = useState("No message action selected.");
   const [activityUpdates, setActivityUpdates] = useState([
     { id: "publish", title: "Atom package published", summary: "Version 0.19.8 is available from npm.", status: "Published" },
     { id: "review", title: "Brick review ready", summary: "The Feed component is ready for consumer verification.", status: "Review" },
@@ -930,6 +932,23 @@ export function App() {
                 <Button disabled={activityUpdates.some(update => update.id === "research")} onClick={() => setActivityUpdates(current => [...current, { id: "research", title: "Feed contract approved", summary: "Research established the two-part article-stream boundary.", status: "Approved" }])} size="sm" variant="outline">Load older activity</Button>
                 <Text aria-live="polite" as="p" tone="secondary" variant="body-sm">{activityUpdates.length} activity updates</Text>
               </HStack>
+            </VStack>
+          </Card.Content>
+        </Card.Root>
+
+        <Card.Root as="section" variant="outline">
+          <Card.Header>
+            <Card.Title as="h2">Message quick actions</Card.Title>
+            <Card.Description>Swipe enhancement composed from the packed Swipeable Item subpath with a visible menu alternative.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <VStack gap="3">
+              <SwipeableItem.Root data-testid="consumer-swipeable-item" variant="outline">
+                <SwipeableItem.Actions aria-label="Archive message actions" side="start"><Button onClick={() => setSwipeableStatus("Message archived from swipe actions.")} size="sm" variant="ghost">Archive</Button></SwipeableItem.Actions>
+                <SwipeableItem.Content className="consumer-swipeable-content"><VStack gap="1"><Text as="h3" variant="title-sm">Design review requested</Text><Text as="p" tone="secondary" variant="body-sm">Morgan requested feedback on the responsive interaction.</Text></VStack><DropdownMenu.Root><DropdownMenu.Trigger asChild><Button size="sm" variant="ghost">More message actions</Button></DropdownMenu.Trigger><DropdownMenu.Portal><DropdownMenu.Content ariaLabel="Message actions"><DropdownMenu.Item onSelect={() => setSwipeableStatus("Message archived from menu.")} value="archive"><DropdownMenu.ItemLabel>Archive message</DropdownMenu.ItemLabel></DropdownMenu.Item><DropdownMenu.Item onSelect={() => setSwipeableStatus("Message deleted from menu.")} tone="danger" value="delete"><DropdownMenu.ItemLabel>Delete message</DropdownMenu.ItemLabel></DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Portal></DropdownMenu.Root></SwipeableItem.Content>
+                <SwipeableItem.Actions aria-label="Delete message actions" side="end"><Button onClick={() => setSwipeableStatus("Message deleted from swipe actions.")} size="sm" tone="danger" variant="ghost">Delete</Button></SwipeableItem.Actions>
+              </SwipeableItem.Root>
+              <Text aria-live="polite" as="p" tone="secondary" variant="body-sm">{swipeableStatus}</Text>
             </VStack>
           </Card.Content>
         </Card.Root>

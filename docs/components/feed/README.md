@@ -153,8 +153,8 @@ not a whole-row action.
 Fetching, insertion/removal, status and error UI, pagination, and scroll
 anchoring are application-owned. Compose Scroll Area outside Root only when a
 bounded viewport is required. With virtualization, focused Items must remain
-mounted and Root must retain direct article children. A future Swipeable Item
-nests inside `Feed.Item`; it does not replace the article.
+mounted and Root must retain direct article children. Swipeable Item may nest
+inside `Feed.Item`; it does not replace the article.
 
 ## Examples
 

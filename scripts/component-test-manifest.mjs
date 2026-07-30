@@ -13,6 +13,7 @@ export const componentIds = [
   "rating",
   "file-upload",
   "feed",
+  "swipeable-item",
   "slider",
   "switch",
   "breadcrumb",

@@ -38,6 +38,7 @@ import { DataGrid } from "../../dist/data-grid.js";
 import { TreeGrid } from "../../dist/tree-grid.js";
 import { Tree } from "../../dist/tree.js";
 import { Feed } from "../../dist/feed.js";
+import { SwipeableItem } from "../../dist/swipeable-item.js";
 import { Pagination } from "../../dist/pagination.js";
 import { HStack, Stack, VStack } from "../../dist/stack.js";
 import { Grid } from "../../dist/grid.js";
@@ -184,6 +185,29 @@ test("Feed renders deterministic direct article anatomy during SSR", () => {
   assert.match(markup, /aria-posinset="1"/);
   assert.match(markup, /aria-setsize="2"/);
   assert.match(markup, /class="brick-feed__item"/);
+});
+
+test("Swipeable Item renders deterministic reveal anatomy during SSR", () => {
+  const markup = renderToString(
+    React.createElement(
+      SwipeableItem.Root,
+      { defaultOpenSide: "end", variant: "outline" },
+      React.createElement(SwipeableItem.Content, null, "Quarterly report"),
+      React.createElement(
+        SwipeableItem.Actions,
+        { "aria-label": "Report actions", side: "end" },
+        React.createElement("button", { type: "button" }, "Delete"),
+      ),
+    ),
+  );
+  assert.match(markup, /class="brick-swipeable-item"/);
+  assert.match(markup, /data-variant="outline"/);
+  assert.match(markup, /data-state="open"/);
+  assert.match(markup, /class="brick-swipeable-item__content"/);
+  assert.match(markup, /touch-action:pan-y/);
+  assert.match(markup, /class="brick-swipeable-item__actions"/);
+  assert.match(markup, /role="group"/);
+  assert.match(markup, /aria-label="Report actions"/);
 });
 
 test("Collapsible renders deterministic linked disclosure anatomy", () => {

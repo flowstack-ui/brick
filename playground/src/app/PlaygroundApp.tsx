@@ -82,6 +82,7 @@ import { TreeGridPage, treeGridScenarios } from "../components/tree-grid/TreeGri
 import { AspectRatioPage, aspectRatioScenarios } from "../components/aspect-ratio/AspectRatioPage.js";
 import { TreePage, treeScenarios } from "../components/tree/TreePage.js";
 import { FeedPage, feedScenarios } from "../components/feed/FeedPage.js";
+import { SwipeableItemPage, swipeableItemScenarios } from "../components/swipeable-item/SwipeableItemPage.js";
 import { ToolbarPage, toolbarScenarios } from "../components/toolbar/ToolbarPage.js";
 import { PaginationPage, paginationScenarios } from "../components/pagination/PaginationPage.js";
 import { CodePage, codeScenarios } from "../components/code/CodePage.js";
@@ -352,6 +353,9 @@ export function PlaygroundApp() {
   }
   if (entry.id === "feed") {
     return <PlaygroundShell entry={entry} scenarios={feedScenarios}><FeedPage /></PlaygroundShell>;
+  }
+  if (entry.id === "swipeable-item") {
+    return <PlaygroundShell entry={entry} scenarios={swipeableItemScenarios}><SwipeableItemPage /></PlaygroundShell>;
   }
   if (entry.id === "toolbar") {
     return <PlaygroundShell entry={entry} scenarios={toolbarScenarios}><ToolbarPage /></PlaygroundShell>;
