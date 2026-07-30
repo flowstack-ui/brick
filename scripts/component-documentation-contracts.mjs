@@ -2117,6 +2117,106 @@ componentDocumentationContracts["visually-hidden"] = {
   publicTokens: [],
 };
 
+componentDocumentationContracts.rating = {
+  source: "src/components/rating/Rating.tsx",
+  exportSource: "src/components/rating/index.ts",
+  css: "src/components/rating/rating.css",
+  exports: [
+    "Rating", "RatingItem", "RatingItemProps", "RatingRoot",
+    "RatingRootProps", "RatingSize", "RatingTone", "RatingVariant",
+  ],
+  unions: {
+    RatingSize: ["sm", "md", "lg"],
+    RatingTone: ["accent", "neutral"],
+    RatingVariant: ["solid", "outline"],
+  },
+  defaults: { size: "md", tone: "accent", variant: "solid" },
+  dataAttributes: ["data-size", "data-slot", "data-tone", "data-variant"],
+  publicTokens: [
+    "--brick-rating-item-size", "--brick-rating-gap",
+    "--brick-rating-empty-color", "--brick-rating-fill-color",
+  ],
+};
+
+componentDocumentationContracts.slider = {
+  source: "src/components/slider/Slider.tsx",
+  exportSource: "src/components/slider/index.ts",
+  css: "src/components/slider/slider.css",
+  exports: [
+    "Slider", "SliderMarker", "SliderMarkerProps", "SliderRange",
+    "SliderRangeProps", "SliderRoot", "SliderRootProps", "SliderSize",
+    "SliderThumb", "SliderThumbProps", "SliderTrack", "SliderTrackProps",
+    "SliderValueLabel", "SliderValueLabelDetails", "SliderValueLabelProps",
+    "SliderVariant",
+  ],
+  unions: {
+    SliderSize: ["sm", "md", "lg"],
+    SliderVariant: ["solid", "soft"],
+  },
+  defaults: { size: "md", variant: "solid" },
+  dataAttributes: [
+    "data-edge", "data-orientation", "data-size", "data-slot", "data-value",
+    "data-variant",
+  ],
+  publicTokens: [
+    "--brick-slider-track-background", "--brick-slider-track-border",
+    "--brick-slider-track-size", "--brick-slider-track-length",
+    "--brick-slider-range-background", "--brick-slider-thumb-background",
+    "--brick-slider-thumb-border", "--brick-slider-thumb-shadow",
+    "--brick-slider-thumb-size", "--brick-slider-marker-color",
+    "--brick-slider-value-label-background",
+    "--brick-slider-value-label-foreground",
+  ],
+};
+
+componentDocumentationContracts["skip-link"] = {
+  source: "src/components/skip-link/SkipLink.tsx",
+  exportSource: "src/components/skip-link/index.ts",
+  css: "src/components/skip-link/skip-link.css",
+  exports: [
+    "SkipLink", "SkipLinkRoot", "SkipLinkRootProps", "SkipLinkTarget",
+    "SkipLinkTargetProps",
+  ],
+  unions: {},
+  defaults: {},
+  dataAttributes: ["data-slot"],
+  publicTokens: [
+    "--brick-skip-link-background", "--brick-skip-link-foreground",
+    "--brick-skip-link-border-color", "--brick-skip-link-border-width",
+    "--brick-skip-link-radius", "--brick-skip-link-shadow",
+    "--brick-skip-link-focus-ring", "--brick-skip-link-inset-block",
+    "--brick-skip-link-inset-inline", "--brick-skip-link-max-inline-size",
+    "--brick-skip-link-z-index",
+  ],
+};
+
+componentDocumentationContracts.toolbar = {
+  source: "src/components/toolbar/Toolbar.tsx",
+  exportSource: "src/components/toolbar/index.ts",
+  css: "src/components/toolbar/toolbar.css",
+  exports: [
+    "Toolbar", "ToolbarButton", "ToolbarButtonProps", "ToolbarLink",
+    "ToolbarLinkProps", "ToolbarRoot", "ToolbarRootProps", "ToolbarSeparator",
+    "ToolbarSeparatorProps", "ToolbarSize", "ToolbarToggleGroup",
+    "ToolbarToggleGroupProps", "ToolbarToggleItem", "ToolbarToggleItemProps",
+    "ToolbarVariant",
+  ],
+  unions: {
+    ToolbarSize: ["sm", "md", "lg"],
+    ToolbarVariant: ["plain", "soft", "outline"],
+  },
+  defaults: { size: "md", variant: "soft" },
+  dataAttributes: ["data-size", "data-variant"],
+  publicTokens: [
+    "--brick-toolbar-surface", "--brick-toolbar-border-color",
+    "--brick-toolbar-radius", "--brick-toolbar-padding", "--brick-toolbar-gap",
+    "--brick-toolbar-item-size", "--brick-toolbar-item-padding-inline",
+    "--brick-toolbar-item-radius", "--brick-toolbar-item-background",
+    "--brick-toolbar-item-selected-background",
+    "--brick-toolbar-separator-color",
+  ],
+};
+
 componentDocumentationContracts.collapsible = {
   source: "src/components/collapsible/Collapsible.tsx", exportSource: "src/components/collapsible/index.ts", css: "src/components/collapsible/collapsible.css",
   exports: ["Collapsible","CollapsibleRoot","CollapsibleTrigger","CollapsibleIndicator","CollapsibleContent","CollapsibleContentInner","CollapsibleRootProps","CollapsibleTriggerProps","CollapsibleIndicatorProps","CollapsibleContentProps","CollapsibleContentInnerProps","CollapsibleVariant","CollapsibleSize"],
