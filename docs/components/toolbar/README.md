@@ -26,7 +26,18 @@ Import `Toolbar` from `@flowstack-ui/brick` or `@flowstack-ui/brick/toolbar`, an
 
 ## API
 
-Root adds `variant` (`plain | soft | outline`, default `soft`) and `size` (`sm | md | lg`, default `md`). It inherits Atom `orientation`, `dir`, `loop`, and `ariaLabel`. The other five parts preserve their Atom props, including controlled/uncontrolled single or multiple toggle values.
+| Prop | Values | Default |
+| --- | --- | --- |
+| `variant` | `plain`, `soft`, `outline` | `soft` |
+| `size` | `sm`, `md`, `lg` | `md` |
+
+Root inherits Atom `orientation`, `dir`, `loop`, and `ariaLabel`. The other
+five parts preserve their Atom props, including controlled/uncontrolled single
+or multiple toggle values. Named exports are `Toolbar`, `ToolbarRoot`,
+`ToolbarButton`, `ToolbarLink`, `ToolbarSeparator`, `ToolbarToggleGroup`, and
+`ToolbarToggleItem`. Public types are `ToolbarRootProps`, `ToolbarButtonProps`,
+`ToolbarLinkProps`, `ToolbarSeparatorProps`, `ToolbarToggleGroupProps`,
+`ToolbarToggleItemProps`, `ToolbarSize`, and `ToolbarVariant`.
 
 ## Visual recipes and states
 
@@ -34,7 +45,15 @@ Variants change the root surface; sizes coordinate target and typography geometr
 
 ## Tokens and CSS hooks
 
-Stable classes are `.brick-toolbar`, `.brick-toolbar__button`, `.brick-toolbar__link`, `.brick-toolbar__separator`, `.brick-toolbar__toggle-group`, and `.brick-toolbar__toggle-item`. Root exposes `data-variant`, `data-size`, and Atom orientation; toggle items expose Atom pressed state. Component variables use the `--brick-toolbar-` prefix.
+Stable classes are `.brick-toolbar`, `.brick-toolbar__button`, `.brick-toolbar__link`, `.brick-toolbar__separator`, `.brick-toolbar__toggle-group`, and `.brick-toolbar__toggle-item`. Root exposes `data-variant`, `data-size`, and Atom orientation; toggle items expose Atom pressed state.
+
+Public variables are `--brick-toolbar-surface`,
+`--brick-toolbar-border-color`, `--brick-toolbar-radius`,
+`--brick-toolbar-padding`, `--brick-toolbar-gap`,
+`--brick-toolbar-item-size`, `--brick-toolbar-item-padding-inline`,
+`--brick-toolbar-item-radius`, `--brick-toolbar-item-background`,
+`--brick-toolbar-item-selected-background`, and
+`--brick-toolbar-separator-color`.
 
 ## Customization
 

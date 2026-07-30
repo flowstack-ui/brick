@@ -42,7 +42,13 @@ import "@flowstack-ui/brick/styles.css";
 | `size` | `sm`, `md`, `lg` | `md` |
 | `variant` | `solid`, `soft` | `solid` |
 
-Root forwards Atom's controlled and uncontrolled values, `min`, `max`, `step`, `largeStep`, `orientation`, `dir`, form, and validation props. Marker requires numeric `value`; ValueLabel may render its `index`, `percent`, and `value`. Named exports are `Slider`, `SliderRoot`, `SliderTrack`, `SliderRange`, `SliderThumb`, `SliderMarker`, and `SliderValueLabel` with corresponding prop types.
+Root forwards Atom's controlled and uncontrolled values, `min`, `max`, `step`, `largeStep`, `orientation`, `dir`, form, and validation props. Marker requires numeric `value`; ValueLabel may render its `index`, `percent`, and `value`.
+
+Named exports are `Slider`, `SliderRoot`, `SliderTrack`, `SliderRange`,
+`SliderThumb`, `SliderMarker`, and `SliderValueLabel`. Public types are
+`SliderRootProps`, `SliderTrackProps`, `SliderRangeProps`, `SliderThumbProps`,
+`SliderMarkerProps`, `SliderValueLabelProps`, `SliderValueLabelDetails`,
+`SliderSize`, and `SliderVariant`.
 
 ## Visual recipes and states
 
@@ -50,7 +56,15 @@ Recipes change paint and geometry only. Atom state attributes drive disabled, re
 
 ## Tokens and CSS hooks
 
-Stable classes are `.brick-slider` and its `__track`, `__range`, `__thumb`, `__marker`, and `__value-label` parts. Public variables include `--brick-slider-track-background`, `--brick-slider-track-border`, `--brick-slider-range-background`, `--brick-slider-thumb-background`, `--brick-slider-thumb-border`, `--brick-slider-thumb-size`, and `--brick-slider-marker-color`.
+Stable classes are `.brick-slider` and its `__track`, `__range`, `__thumb`, `__marker`, and `__value-label` parts. Root exposes `data-size`, `data-variant`, and `data-slot`; Marker exposes `data-edge`, `data-orientation`, `data-value`, and `data-slot`.
+
+Public variables are `--brick-slider-track-background`,
+`--brick-slider-track-border`, `--brick-slider-track-size`,
+`--brick-slider-track-length`, `--brick-slider-range-background`,
+`--brick-slider-thumb-background`, `--brick-slider-thumb-border`,
+`--brick-slider-thumb-shadow`, `--brick-slider-thumb-size`,
+`--brick-slider-marker-color`, `--brick-slider-value-label-background`, and
+`--brick-slider-value-label-foreground`.
 
 ## Customization
 

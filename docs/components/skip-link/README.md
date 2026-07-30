@@ -38,6 +38,9 @@ import { SkipLink } from "@flowstack-ui/brick";
 import { SkipLink } from "@flowstack-ui/brick/skip-link";
 ```
 
+The focused subpath also exports `SkipLinkRoot`, `SkipLinkTarget`,
+`SkipLinkRootProps`, and `SkipLinkTargetProps` for direct named composition.
+
 ## Quick start
 
 ```tsx
@@ -126,6 +129,9 @@ Stable classes:
 
 - `.brick-skip-link`
 - `.brick-skip-link__target`
+
+Both parts expose a stable `data-slot`: `skip-link` on Root and
+`skip-link-target` on Target. An authored `data-slot` overrides the default.
 
 Public Root variables:
 

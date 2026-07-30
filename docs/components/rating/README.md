@@ -51,7 +51,7 @@ Recipes change paint and artwork geometry only. Atom state attributes drive disa
 
 ## Tokens and CSS hooks
 
-Stable classes are `.brick-rating`, `.brick-rating__item`, `.brick-rating__artwork`, and `.brick-rating__star`. Public variables are `--brick-rating-item-size`, `--brick-rating-gap`, `--brick-rating-empty-color`, and `--brick-rating-fill-color`. Root and Item expose stable `rating` and `rating-item` slots.
+Stable classes are `.brick-rating`, `.brick-rating__item`, `.brick-rating__artwork`, and `.brick-rating__star`. Public variables are `--brick-rating-item-size`, `--brick-rating-gap`, `--brick-rating-empty-color`, and `--brick-rating-fill-color`. Root exposes `data-size`, `data-tone`, `data-variant`, and the stable `data-slot` value `rating`; Item uses `rating-item`.
 
 ## Customization
 
