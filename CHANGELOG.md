@@ -88,6 +88,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Fixed
 
+- Updated the exact Atom runtime dependency to published `0.20.1`, inheriting
+  stable Menu sizing variables and corrected modal Popover isolation, and
+  pinned the patched Brace Expansion transitive used by development coverage.
+
 - Rounded Table outline footer paint into its logical bottom corners.
 
 - Corrected Toast short-content alignment, omitted the empty default icon

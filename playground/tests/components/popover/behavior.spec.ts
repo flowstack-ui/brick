@@ -52,7 +52,9 @@ test("Popover exposes three bounded sizes, shared Arrow, and disabled state", as
   await page.goto("/popover");
   for (const size of ["sm", "md", "lg"] as const) {
     await page.getByRole("button", { name: `Open ${size} settings` }).click();
-    const popover = page.locator(`[data-slot='popover'][data-size='${size}']`);
+    const popover = page.locator(
+      `[data-slot='popover'][data-size='${size}'][data-state='open']`,
+    );
     await expect(popover).toBeVisible();
     await expect(popover.locator("[data-slot='popover-arrow']")).toBeVisible();
     await popover.getByRole("button", { name: "Done" }).click();
@@ -156,6 +158,11 @@ test("Popover stays open during outside touch scrolling and closes on an outside
     pointerId: 8,
     clientX: 11,
     clientY: 11,
+  });
+  await page.dispatchEvent("body", "click", {
+    clientX: 11,
+    clientY: 11,
+    detail: 1,
   });
   await expect(popover).toBeHidden();
 });
