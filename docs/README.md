@@ -43,6 +43,8 @@ This directory is the public documentation authority for
   with expansion, selection, and independently active cells
 - [Tree](components/tree/README.md) — one-dimensional hierarchical selection
   with finished rows, indicators, and optional guides
+- [Feed](components/feed/README.md) — dynamic rich article streams with
+  article-by-article keyboard navigation
 
 ### Forms and choices
 

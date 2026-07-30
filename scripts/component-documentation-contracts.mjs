@@ -1492,6 +1492,16 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-guide", "data-size", "data-slot", "data-variant"],
     publicTokens: ["--brick-tree-background", "--brick-tree-border-color", "--brick-tree-border-width", "--brick-tree-radius", "--brick-tree-padding", "--brick-tree-row-min-block-size", "--brick-tree-row-radius", "--brick-tree-row-gap", "--brick-tree-row-padding-block", "--brick-tree-row-padding-inline", "--brick-tree-depth-indent", "--brick-tree-guide-color", "--brick-tree-guide-offset", "--brick-tree-foreground", "--brick-tree-indicator-color", "--brick-tree-hover-background", "--brick-tree-active-background", "--brick-tree-selected-background", "--brick-tree-selected-foreground", "--brick-tree-disabled-opacity", "--brick-tree-focus-ring", "--brick-tree-focus-ring-width", "--brick-tree-motion-duration", "--brick-tree-motion-easing"],
   },
+  feed: {
+    source: "src/components/feed/Feed.tsx",
+    exportSource: "src/components/feed/index.ts",
+    css: "src/components/feed/feed.css",
+    exports: ["Feed", "FeedDensity", "FeedItemProps", "FeedRootProps", "FeedVariant"],
+    unions: { FeedVariant: ["plain", "divided", "outline"], FeedDensity: ["compact", "comfortable"] },
+    defaults: { variant: "divided", density: "comfortable" },
+    dataAttributes: ["data-density", "data-slot", "data-variant"],
+    publicTokens: ["--brick-feed-gap", "--brick-feed-item-padding-block", "--brick-feed-item-padding-inline", "--brick-feed-background", "--brick-feed-foreground", "--brick-feed-border-color", "--brick-feed-border-width", "--brick-feed-radius", "--brick-feed-divider-color", "--brick-feed-focus-color", "--brick-feed-focus-width", "--brick-feed-focus-offset", "--brick-feed-transition-duration"],
+  },
   text: {
     source: "src/components/text/Text.tsx",
     exportSource: "src/components/text/index.ts",

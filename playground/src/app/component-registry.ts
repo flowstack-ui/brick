@@ -197,6 +197,13 @@ export const componentEntries = [
     title: "Tree",
   },
   {
+    category: "Data display",
+    description: "Dynamic rich article streams with article-by-article keyboard navigation.",
+    id: "feed",
+    route: "/feed",
+    title: "Feed",
+  },
+  {
     category: "Actions",
     description: "Related commands with one keyboard entry point.",
     id: "toolbar",
@@ -524,7 +531,7 @@ export const playgroundEntries: readonly PlaygroundEntry[] = componentEntries;
 
 export function resolvePlaygroundEntry(path: string): PlaygroundEntry {
   return (
-    componentEntries.find((entry) => entry.route === path) ??
+    componentEntries.find((entry) => entry.route === (path === "/components/feed" ? "/feed" : path)) ??
     componentEntries[0]
   );
 }

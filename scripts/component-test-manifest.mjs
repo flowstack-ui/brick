@@ -12,6 +12,7 @@ export const componentIds = [
   "radio-group",
   "rating",
   "file-upload",
+  "feed",
   "slider",
   "switch",
   "breadcrumb",

@@ -284,6 +284,22 @@ test("composes Tree Grid as a controlled release-file workflow", async ({ page }
   await expect(page.getByText("atom is ready for package review.")).toBeVisible();
 });
 
+test("composes Feed as an application-owned dynamic activity stream", async ({ page }) => {
+  const feed = page.getByRole("feed", { name: "Release activity updates" });
+  await expect(feed).toHaveAttribute("data-variant", "outline");
+  await expect(feed.getByRole("article")).toHaveCount(3);
+  await expect(feed.getByRole("article").first()).toHaveAttribute("aria-posinset", "1");
+  await expect(feed.getByRole("article").first()).toHaveAttribute("aria-setsize", "3");
+  await page.getByRole("button", { name: "Load older activity" }).click();
+  await expect(feed.getByRole("article")).toHaveCount(4);
+  await expect(feed.getByRole("article").last()).toContainText("Feed contract approved");
+  await expect(feed.getByRole("article").last()).toHaveAttribute("aria-setsize", "4");
+  await expect(page.getByText("4 activity updates")).toBeVisible();
+  await feed.getByRole("article").first().focus();
+  await feed.getByRole("article").first().press("PageDown");
+  await expect(feed.getByRole("article").nth(1)).toBeFocused();
+});
+
 test("composes Scroll Area as a constrained native activity region", async ({ page }) => {
   const viewport = page.getByRole("region", { name: "Recent workspace activity" });
   await expect(viewport).toHaveClass(/brick-scroll-area-viewport/);

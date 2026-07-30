@@ -62,6 +62,7 @@ const componentSymbols = {
   "radio-group": "RadioGroup",
   rating: "Rating",
   "file-upload": "FileUpload",
+  feed: "Feed",
   slider: "Slider",
   switch: "Switch",
   breadcrumb: "Breadcrumb",
