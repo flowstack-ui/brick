@@ -11,6 +11,22 @@ Run the complete package-local verification:
 npm run check
 ```
 
+Verification has three explicit tiers:
+
+- focused iteration: `npm run test:component:unit -- button`,
+  `npm run test:component:types -- button`,
+  `npm run test:component:browser -- button`, and
+  `npm run test:component:visual -- button` as the affected risk requires;
+- repository candidate: `npm run check:repository` (also available as
+  `npm run check`), which builds the package once and reuses that output across
+  type, Node, playground, Consumer, package, and clean-consumer gates;
+- release candidate: `npm run check:release`, which adds the complete browser
+  matrix, packed application Consumer, and CSS-size report.
+
+Do not rerun the repository or release tier after every focused edit. Escalate
+when the affected component is stable or when a shared boundary requires
+broader evidence.
+
 Focused commands:
 
 ```bash
@@ -21,6 +37,7 @@ npm run test:component -- button
 npm run test:component:unit -- button
 npm run test:component:types -- button
 npm run test:component:browser -- button
+npm run test:component:visual -- button
 npm run test:integration
 npm run typecheck
 npm run test:node

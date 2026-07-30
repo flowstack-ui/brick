@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => { await page.goto("/toast"); });
 test("creates the finished card with one live announcement path and default policy", async ({ page }) => {
   const trigger = page.getByRole("button", { name: "Create success toast" });
   await trigger.focus();
-  await trigger.click();
+  await trigger.press("Enter");
   await expect(trigger).toBeFocused();
   const viewport = page.getByRole("region", { name: "Notifications (F8)" });
   await expect(viewport).toHaveAttribute("data-position", "bottom-end");
@@ -26,7 +26,7 @@ test("creates the finished card with one live announcement path and default poli
 test("supports F8, action/close focus, Escape dismissal, and focus restoration", async ({ page }) => {
   const trigger = page.getByRole("button", { name: "Create keyboard fixture" });
   await trigger.focus();
-  await trigger.click();
+  await trigger.press("Enter");
   const viewport = page.getByRole("region", { name: "Notifications (F8)" });
   await expect(viewport).toBeVisible();
   await page.keyboard.press("F8");
@@ -58,11 +58,13 @@ test("queue, overlap, logical positions, mobile containment, and accessibility a
   ).toBeLessThanOrEqual(16);
   const collapsedViewportBox = await viewport.boundingBox();
   expect(collapsedViewportBox).not.toBeNull();
+  const pageSize = page.viewportSize();
+  expect(pageSize).not.toBeNull();
   collapsedBoxes.forEach((box) => {
     expect(box.left).toBeGreaterThanOrEqual(0);
-    expect(box.right).toBeLessThanOrEqual(1280);
+    expect(box.right).toBeLessThanOrEqual(pageSize!.width);
     expect(box.top).toBeGreaterThanOrEqual(0);
-    expect(box.bottom).toBeLessThanOrEqual(720);
+    expect(box.bottom).toBeLessThanOrEqual(pageSize!.height);
   });
   await viewport.hover();
   await expect(viewport).toHaveAttribute("data-expanded", "");

@@ -1,12 +1,12 @@
 import { spawnSync } from "node:child_process";
 import { componentIds, componentTestPaths } from "./component-test-manifest.mjs";
 
-const modes = new Set(["all", "unit", "types", "browser"]);
+const modes = new Set(["all", "unit", "types", "browser", "visual"]);
 const [mode = "all", componentId] = process.argv.slice(2);
 
 if (!modes.has(mode) || !componentId || !componentIds.includes(componentId)) {
   console.error(
-    `Usage: node scripts/test-component.mjs <all|unit|types|browser> <component>\n\n` +
+    `Usage: node scripts/test-component.mjs <all|unit|types|browser|visual> <component>\n\n` +
       `Components: ${componentIds.join(", ")}`,
   );
   process.exit(1);
@@ -50,6 +50,12 @@ function runBrowser() {
   run("npm", ["exec", "--", "playwright", "test", paths.browser, "--project=chromium"]);
 }
 
+function runVisual() {
+  run("npm", ["run", "build:playground"]);
+  run("npm", ["exec", "--", "playwright", "test", paths.visual, "--project=chromium"]);
+}
+
 if (mode === "all" || mode === "unit") runUnit();
 if (mode === "all" || mode === "types") runTypes();
 if (mode === "all" || mode === "browser") runBrowser();
+if (mode === "visual") runVisual();

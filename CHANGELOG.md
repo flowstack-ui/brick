@@ -4,6 +4,14 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Changed
+
+- Added explicit focused, repository, and release verification tiers; focused
+  visual selection; single-build repository orchestration; and progress output
+  for clean React consumer checks without changing component runtime behavior.
+  Cross-browser Table and Toast evidence now uses keyboard activation for
+  focus assertions and each Playwright project's actual viewport bounds.
+
 ### Added
 
 - Added the Atom-backed `SwipeableItem` three-part reveal layer with plain and

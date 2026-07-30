@@ -25,6 +25,7 @@ function run(command, args, cwd) {
 }
 
 try {
+  console.log("Packing Brick once for clean React consumer verification...");
   run("npm", ["pack", "--pack-destination", temp], packageRoot);
   const tarball = join(temp, "flowstack-ui-brick-0.1.0.tgz");
 
@@ -372,6 +373,7 @@ void textProps;
       ),
     );
 
+    console.log(`Installing the packed artifact in the React ${reactMajor} consumer...`);
     run(
       "npm",
       [
@@ -388,7 +390,9 @@ void textProps;
       ],
       consumer,
     );
+    console.log(`Running the React ${reactMajor} runtime export and SSR smoke...`);
     run("node", ["verify.mjs"], consumer);
+    console.log(`Type-checking the React ${reactMajor} public API consumer...`);
     run("npx", ["tsc", "-p", "tsconfig.json"], consumer);
     const installed = JSON.parse(await readFile(join(consumer, "package.json"), "utf8"));
     if (installed.dependencies.react !== reactVersion) {

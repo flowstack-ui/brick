@@ -26,7 +26,7 @@ test("Table recipes, numeric alignment, and sorting remain independent", async (
   const button = page.locator("#scenario-table-sorting button");
   const head = page.locator("#scenario-table-sorting [aria-sort]");
   await expect(head).toHaveAttribute("aria-sort", "ascending");
-  await button.click();
+  await button.press("Enter");
   await expect(head).toHaveAttribute("aria-sort", "descending");
   await expect(button).toBeFocused();
   const headerText = page.locator("#scenario-table-sorting thead th").first();
