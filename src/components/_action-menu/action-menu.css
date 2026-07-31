@@ -21,13 +21,56 @@
     box-shadow: var(--brick-action-menu-content-shadow);
     color: var(--brick-action-menu-content-foreground);
     opacity: 0;
-    scale: 0.98;
+    translate: 0 0;
     scrollbar-width: thin;
-    transform-origin: var(--atom-menu-transform-origin, center);
     transition:
       opacity var(--brick-action-menu-motion-duration) var(--brick-motion-easing-enter),
-      scale var(--brick-action-menu-motion-duration) var(--brick-motion-easing-enter);
+      translate var(--brick-action-menu-motion-duration) var(--brick-motion-easing-enter);
     z-index: var(--brick-action-menu-content-z-index);
+  }
+
+  :where(
+    .brick-dropdown-menu__content,
+    .brick-dropdown-menu__sub-content,
+    .brick-context-menu__content,
+    .brick-context-menu__sub-content,
+    .brick-menubar__content,
+    .brick-menubar__sub-content
+  )[data-side="top"] {
+    translate: 0 var(--brick-space-1);
+  }
+
+  :where(
+    .brick-dropdown-menu__content,
+    .brick-dropdown-menu__sub-content,
+    .brick-context-menu__content,
+    .brick-context-menu__sub-content,
+    .brick-menubar__content,
+    .brick-menubar__sub-content
+  )[data-side="right"] {
+    translate: calc(var(--brick-space-1) * -1) 0;
+  }
+
+  :where(
+    .brick-dropdown-menu__content,
+    .brick-dropdown-menu__sub-content,
+    .brick-context-menu__content,
+    .brick-context-menu__sub-content,
+    .brick-menubar__content,
+    .brick-menubar__sub-content
+  )[data-side="bottom"] {
+    translate: 0 calc(var(--brick-space-1) * -1);
+  }
+
+  :where(
+    .brick-dropdown-menu__content,
+    .brick-dropdown-menu__sub-content,
+    .brick-context-menu__content,
+    .brick-context-menu__sub-content,
+    .brick-menubar__content,
+    .brick-menubar__sub-content
+  )[data-side="left"] {
+    translate: var(--brick-space-1) 0;
   }
 
   :where(
@@ -39,7 +82,7 @@
     .brick-menubar__sub-content
   )[data-positioned] {
     opacity: 1;
-    scale: 1;
+    translate: 0 0;
   }
 
   :where(
@@ -308,17 +351,21 @@
     grid-column: 3;
     inline-size: 0.5em;
     block-size: 0.5em;
-    border-inline-end: 0.125rem solid currentColor;
-    border-block-end: 0.125rem solid currentColor;
+    border-right: 0.125rem solid currentColor;
+    border-bottom: 0.125rem solid currentColor;
     color: var(--brick-action-menu-shortcut-foreground);
+    direction: ltr;
     transform: rotate(-45deg);
   }
 
   :where(
-    .brick-dropdown-menu__sub-trigger,
-    .brick-context-menu__sub-trigger,
-    .brick-menubar__sub-trigger
-  ):dir(rtl)::after {
+    [dir="rtl"] .brick-dropdown-menu__sub-trigger,
+    [dir="rtl"] .brick-context-menu__sub-trigger,
+    [dir="rtl"] .brick-menubar__sub-trigger,
+    .brick-dropdown-menu__sub-trigger[dir="rtl"],
+    .brick-context-menu__sub-trigger[dir="rtl"],
+    .brick-menubar__sub-trigger[dir="rtl"]
+  )::after {
     transform: rotate(135deg);
   }
 

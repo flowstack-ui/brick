@@ -53,6 +53,11 @@ The trigger receives no Brick surface. The overlay uses compact collision-aware 
 
 Public variables use the `--brick-context-menu-*` namespace for content surface, row geometry, supporting text, disabled and danger states, separators, indicators, focus, and motion.
 
+Popup entry motion travels from the actual Atom `data-side`: bottom moves
+downward, top upward, right rightward, and left leftward. This includes a top
+or bottom side selected when a submenu cannot fit inline. Entry uses opacity
+and single-axis translation without scale motion.
+
 Documented tokens are `--brick-context-menu-content-background`, `--brick-context-menu-content-foreground`, `--brick-context-menu-content-border`, `--brick-context-menu-content-radius`, `--brick-context-menu-content-shadow`, `--brick-context-menu-content-padding`, `--brick-context-menu-content-max-block-size`, `--brick-context-menu-row-min-block-size`, `--brick-context-menu-row-padding-inline`, `--brick-context-menu-row-gap`, `--brick-context-menu-row-radius`, `--brick-context-menu-row-foreground`, `--brick-context-menu-row-highlighted-background`, `--brick-context-menu-row-highlighted-foreground`, `--brick-context-menu-description-foreground`, `--brick-context-menu-shortcut-foreground`, `--brick-context-menu-label-foreground`, `--brick-context-menu-disabled-foreground`, `--brick-context-menu-danger-foreground`, `--brick-context-menu-danger-background`, `--brick-context-menu-separator-color`, `--brick-context-menu-indicator-size`, `--brick-context-menu-focus-ring`, `--brick-context-menu-motion-duration`.
 
 Stable output includes `data-size`, component `data-slot` hooks, and Atom state attributes.

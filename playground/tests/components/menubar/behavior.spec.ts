@@ -22,5 +22,23 @@ test("RTL, narrow overflow, and accessibility work", async ({ page }) => {
   const rtl = page.getByRole("menubar", { name: "أوامر المحرر" });
   const file = rtl.getByRole("menuitem", { name: "ملف" }); await file.focus(); await file.press("ArrowLeft");
   await expect(rtl.getByRole("menuitem", { name: "تحرير" })).toBeFocused();
+  await file.click();
+  await expect(page.getByRole("menu", { name: "ملف" })).toHaveCSS("direction", "rtl");
+  await page.keyboard.press("Escape");
+
+  await page.addStyleTag({
+    content: `
+      .brick-menubar__content { width: 18.75rem; }
+      .brick-menubar__sub-content { width: 13.75rem; }
+    `,
+  });
+  const insert = page.getByRole("menubar", { name: "Insert commands" });
+  await insert.getByRole("menuitem", { name: "Insert" }).click();
+  await page.getByRole("menuitem", { name: "Media" }).click();
+  const subMenu = page.locator(".brick-menubar__sub-content[data-state='open']");
+  const subMenuBox = await subMenu.boundingBox();
+  expect(subMenuBox).not.toBeNull();
+  expect(subMenuBox!.x).toBeGreaterThanOrEqual(0);
+  expect(subMenuBox!.x + subMenuBox!.width).toBeLessThanOrEqual(390);
   expect((await new AxeBuilder({ page }).include('[data-testid="menubar-overview"]').analyze()).violations).toEqual([]);
 });

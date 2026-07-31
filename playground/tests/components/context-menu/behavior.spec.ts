@@ -29,6 +29,14 @@ test("RTL, mobile collision, visible alternative, and accessibility work", async
   const rtlTarget = page.getByRole("article", { name: "تقرير المشروع" }); await rtlTarget.click({ button: "right" });
   const rtl = page.getByRole("menu", { name: "إجراءات التقرير" });
   const box = await rtl.boundingBox(); expect(box!.x).toBeGreaterThanOrEqual(0); expect(box!.x + box!.width).toBeLessThanOrEqual(390);
+  await expect(rtl).toHaveCSS("direction", "rtl");
+  await rtl.getByRole("menuitem", { name: "نقل إلى مجلد" }).click();
+  const rtlSubMenu = page.locator(".brick-context-menu__sub-content[data-state='open']");
+  await expect(rtlSubMenu).toHaveCSS("direction", "rtl");
+  const subMenuBox = await rtlSubMenu.boundingBox();
+  expect(subMenuBox).not.toBeNull();
+  expect(subMenuBox!.x).toBeGreaterThanOrEqual(0);
+  expect(subMenuBox!.x + subMenuBox!.width).toBeLessThanOrEqual(390);
   await page.keyboard.press("Escape");
   expect((await new AxeBuilder({ page }).include('[data-testid="context-menu-overview"]').analyze()).violations).toEqual([]);
 });

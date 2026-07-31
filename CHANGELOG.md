@@ -6,10 +6,17 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Changed
 
-- Upgraded the exact Atom dependency to `0.20.4`; modal Dialog, Alert Dialog,
+- Upgraded the exact Atom dependency to `0.20.6`; modal Dialog, Alert Dialog,
   Drawer, Popover, Dropdown Menu, and Context Menu preserve sticky application
   chrome while background scrolling remains locked, and Select preserves
-  logical RTL placement and option direction across its portal.
+  logical RTL placement and option direction across its portal. Dropdown Menu,
+  Context Menu, and Menubar now also preserve inherited direction through
+  portalled menus and keep submenus inside the viewport when neither inline
+  side has enough space; their RTL submenu chevrons point toward the logical
+  opening direction instead of rotating downward, and popup entry motion
+  travels on one axis from the actual collision-resolved side without scaling
+  diagonally. Newly positioned parent menus no longer hover-open a submenu
+  beneath a stationary mouse pointer.
 - Added explicit focused, repository, and release verification tiers; focused
   visual selection; single-build repository orchestration; and progress output
   for clean React consumer checks without changing component runtime behavior.

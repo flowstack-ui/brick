@@ -25,7 +25,16 @@ test("defaults, size, selection, state, submenu, and composition remain complete
   await page.getByRole("button", { name: "Move project" }).click();
   const subTrigger = page.getByRole("menuitem", { name: "Another workspace" });
   await subTrigger.focus(); await subTrigger.press("ArrowRight");
-  await expect(page.locator(".brick-dropdown-menu__sub-content[data-state='open']")).toBeVisible();
+  const inlineSubMenu = page.locator(".brick-dropdown-menu__sub-content[data-state='open']");
+  await expect(inlineSubMenu).toBeVisible();
+  await expect(inlineSubMenu).toHaveAttribute("data-side", "right");
+  const inlineMotion = await inlineSubMenu.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      transitionProperty: style.transitionProperty,
+    };
+  });
+  expect(inlineMotion.transitionProperty).toContain("translate");
   await expect(page.locator("[data-adapter='project-actions']")).toHaveAttribute("aria-haspopup", "menu");
 });
 
@@ -38,6 +47,40 @@ test("keyboard, RTL, mobile geometry, and accessibility work", async ({ page }) 
   await page.getByRole("button", { name: "إجراءات المشروع" }).click();
   const rtl = page.getByRole("menu", { name: "إجراءات المشروع" });
   const box = await rtl.boundingBox(); expect(box!.x).toBeGreaterThanOrEqual(0); expect(box!.x + box!.width).toBeLessThanOrEqual(390);
+  await expect(rtl).toHaveCSS("direction", "rtl");
+  const rtlSubTrigger = rtl.getByRole("menuitem", { name: "نقل إلى مساحة عمل" });
+  const rtlChevron = await rtlSubTrigger.evaluate((element) => {
+    const style = getComputedStyle(element, "::after");
+    return {
+      borderLeftWidth: style.borderLeftWidth,
+      borderRightWidth: style.borderRightWidth,
+      direction: style.direction,
+      transform: style.transform,
+    };
+  });
+  expect(rtlChevron.borderLeftWidth).toBe("0px");
+  expect(rtlChevron.borderRightWidth).toBe("2px");
+  expect(rtlChevron.direction).toBe("ltr");
+  expect(rtlChevron.transform).toBe("matrix(-0.707107, 0.707107, -0.707107, -0.707107, 0, 0)");
+  await page.waitForTimeout(150);
+  await expect(page.locator(".brick-dropdown-menu__sub-content[data-state='open']")).toHaveCount(0);
+  await rtlSubTrigger.click();
+  const rtlSubMenu = page.locator(".brick-dropdown-menu__sub-content[data-state='open']");
+  await expect(rtlSubMenu).toHaveAttribute("data-side", /^(top|bottom)$/);
+  const subMenuBox = await rtlSubMenu.boundingBox();
+  expect(subMenuBox).not.toBeNull();
+  expect(subMenuBox!.x).toBeGreaterThanOrEqual(0);
+  expect(subMenuBox!.x + subMenuBox!.width).toBeLessThanOrEqual(390);
+  const submenuMotion = await rtlSubMenu.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return {
+      side: element.getAttribute("data-side"),
+      transitionProperty: style.transitionProperty,
+    };
+  });
+  expect(submenuMotion.transitionProperty).not.toContain("scale");
+  expect(submenuMotion.transitionProperty).toContain("translate");
+  expect(submenuMotion.side).toMatch(/^(top|bottom)$/);
   await page.keyboard.press("Escape");
   expect((await new AxeBuilder({ page }).include('[data-testid="dropdown-menu-overview"]').analyze()).violations).toEqual([]);
 });

@@ -53,6 +53,11 @@ The overlay uses a raised surface, compact rows, accent highlighting, visible di
 
 Public variables use the `--brick-dropdown-menu-*` namespace for content surface, row geometry, supporting text, disabled and danger states, separators, indicators, focus, and motion.
 
+Popup entry motion travels from the actual Atom `data-side`: bottom moves
+downward, top upward, right rightward, and left leftward. This includes a top
+or bottom side selected when a submenu cannot fit inline. Entry uses opacity
+and single-axis translation without scale motion.
+
 Documented tokens are `--brick-dropdown-menu-content-background`, `--brick-dropdown-menu-content-foreground`, `--brick-dropdown-menu-content-border`, `--brick-dropdown-menu-content-radius`, `--brick-dropdown-menu-content-shadow`, `--brick-dropdown-menu-content-padding`, `--brick-dropdown-menu-content-max-block-size`, `--brick-dropdown-menu-row-min-block-size`, `--brick-dropdown-menu-row-padding-inline`, `--brick-dropdown-menu-row-gap`, `--brick-dropdown-menu-row-radius`, `--brick-dropdown-menu-row-foreground`, `--brick-dropdown-menu-row-highlighted-background`, `--brick-dropdown-menu-row-highlighted-foreground`, `--brick-dropdown-menu-description-foreground`, `--brick-dropdown-menu-shortcut-foreground`, `--brick-dropdown-menu-label-foreground`, `--brick-dropdown-menu-disabled-foreground`, `--brick-dropdown-menu-danger-foreground`, `--brick-dropdown-menu-danger-background`, `--brick-dropdown-menu-separator-color`, `--brick-dropdown-menu-indicator-size`, `--brick-dropdown-menu-focus-ring`, `--brick-dropdown-menu-motion-duration`.
 
 Stable output includes `data-size`, component `data-slot` hooks, and Atom state attributes.
