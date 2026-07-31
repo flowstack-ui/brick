@@ -12,3 +12,6 @@ Collapsible follows the package version of `@flowstack-ui/brick`.
 - Added horizontal orientation with measured-width motion, stable inner
   geometry, contained inline overflow, RTL evidence, and exact Atom 0.14.0
   orientation propagation.
+- Upgraded to Atom `0.20.9`, corrected disclosure motion to the shipped enter
+  and exit easing tokens, suppressed page-load motion for initially open
+  content, and retained closing keyframes until exit presence completes.

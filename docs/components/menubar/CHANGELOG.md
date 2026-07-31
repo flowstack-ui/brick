@@ -6,6 +6,8 @@ Menubar follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Switching between open top-level menus now hides the previous popup
+  immediately instead of retaining it for the generic popup exit transition.
 - Default `md` bar triggers and popup rows now use Brick's shared 44px
   comfortable target; explicit `sm` and `lg` densities remain 32px and 48px.
 - Inherited Atom `0.20.6` portal direction, submenu collision handling, and

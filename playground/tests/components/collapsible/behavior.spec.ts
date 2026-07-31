@@ -14,11 +14,16 @@ test("defaults and recipe comparisons preserve controlled differences", async ({
 });
 
 test("activation, relationships, disabled, and mounted lifecycle remain correct", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  const initiallyOpen = page.getByTestId("collapsible-states").locator(".brick-collapsible-content[data-initial-open]").first();
+  await expect(initiallyOpen).toHaveCSS("animation-name", "none");
   const root = page.getByTestId("collapsible-overview").locator(".brick-collapsible");
   const trigger = root.getByRole("button", { name: "Notification details" });
   await trigger.press("Enter");
   const region = root.getByRole("region");
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  await expect(region).toHaveCSS("animation-fill-mode", "both");
+  expect(await region.evaluate((element) => element.style.getPropertyValue("--content-height"))).toMatch(/^\d+(?:\.\d+)?px$/);
   expect(await trigger.getAttribute("aria-controls")).toBe(await region.getAttribute("id"));
   expect(await region.getAttribute("aria-labelledby")).toBe(await trigger.getAttribute("id"));
   await trigger.press("Space");

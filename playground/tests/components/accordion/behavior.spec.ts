@@ -13,6 +13,35 @@ test("defaults, recipes, and selection models preserve controlled differences", 
   await expect(page.getByTestId("accordion-selection").locator(".brick-accordion-content[data-state='open']")).toHaveCount(4);
 });
 
+test("specimens stay top-aligned while content opens and composition is not duplicated", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  const sizes = page.getByTestId("accordion-sizes").locator(".brick-accordion");
+  const initiallyOpen = page.getByTestId("accordion-states").locator(".brick-accordion-content[data-initial-open]").first();
+  await expect(initiallyOpen).toHaveCSS("animation-name", "none");
+  const sizeTops = await sizes.evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect().top));
+  expect(Math.max(...sizeTops) - Math.min(...sizeTops)).toBeLessThan(1);
+
+  const controlled = page.getByTestId("accordion-selection").locator(".forms-cell").filter({ hasText: "controlled" });
+  const controlledRoot = controlled.locator(".brick-accordion");
+  const topBefore = await controlledRoot.evaluate((element) => element.getBoundingClientRect().top + window.scrollY);
+  const transition = await controlledRoot.getByRole("button", { name: "Account settings" }).evaluate(async (trigger) => {
+    trigger.click();
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    const content = trigger.closest(".brick-accordion-item")?.querySelector<HTMLElement>(".brick-accordion-content");
+    return {
+      fillMode: content ? getComputedStyle(content).animationFillMode : "",
+      measuredHeight: content?.style.getPropertyValue("--content-height") ?? "",
+    };
+  });
+  expect(transition.fillMode).toBe("both");
+  expect(transition.measuredHeight).toMatch(/^\d+(?:\.\d+)?px$/);
+  await expect(controlledRoot.locator(".brick-accordion-content[data-state='open']")).toHaveCount(1);
+  const topAfter = await controlledRoot.evaluate((element) => element.getBoundingClientRect().top + window.scrollY);
+  expect(Math.abs(topAfter - topBefore)).toBeLessThan(1);
+
+  await expect(page.getByTestId("accordion-composition").locator(".brick-accordion")).toHaveCount(1);
+});
+
 test("activation, locked-open, disabled, mounted, and landmark lifecycle remain correct", async ({ page }) => {
   const root = page.getByTestId("accordion-overview").locator(".brick-accordion");
   const trigger = root.getByRole("button", { name: "Account settings" });
@@ -36,10 +65,25 @@ test("vertical and direction-aware horizontal keyboard navigation are stable", a
   await vertical.first().press("ArrowDown");
   await expect(vertical.nth(1)).toBeFocused();
   const horizontal = orientation.locator(".brick-accordion[data-orientation='horizontal']").getByRole("button");
+  const horizontalRoot = orientation.locator(".brick-accordion[data-orientation='horizontal']");
+  const horizontalContent = horizontalRoot.locator(".brick-accordion-content[data-state='open']");
+  await expect(horizontal.first()).toHaveCSS("writing-mode", "vertical-rl");
+  await expect(horizontalContent).toHaveCSS("writing-mode", "horizontal-tb");
+  const ltrTriggerBox = (await horizontal.first().boundingBox())!;
+  const ltrContentBox = (await horizontalContent.boundingBox())!;
+  expect(ltrContentBox.x).toBeGreaterThanOrEqual(ltrTriggerBox.x + ltrTriggerBox.width - 1);
   await horizontal.first().focus();
   await horizontal.first().press("ArrowRight");
   await expect(horizontal.nth(1)).toBeFocused();
+  await horizontal.nth(1).click();
+  const openedInner = horizontalRoot.locator(".brick-accordion-content[data-state='open'] .brick-accordion-content-inner");
+  await expect.poll(() => openedInner.evaluate((element) => element.getBoundingClientRect().width)).toBeGreaterThan(100);
+  await expect(openedInner).toHaveCSS("writing-mode", "horizontal-tb");
   const rtl = page.getByTestId("accordion-stress").locator("[dir='rtl'] .brick-accordion").getByRole("button");
+  const rtlRoot = page.getByTestId("accordion-stress").locator("[dir='rtl'] .brick-accordion");
+  const rtlTriggerBox = (await rtl.first().boundingBox())!;
+  const rtlContentBox = (await rtlRoot.locator(".brick-accordion-content[data-state='open']").boundingBox())!;
+  expect(rtlContentBox.x + rtlContentBox.width).toBeLessThanOrEqual(rtlTriggerBox.x + 1);
   await rtl.first().focus();
   await rtl.first().press("ArrowLeft");
   await expect(rtl.nth(1)).toBeFocused();

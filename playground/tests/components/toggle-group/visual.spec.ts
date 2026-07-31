@@ -5,6 +5,11 @@ installVisualDefaults("/toggle-group");
 test("Toggle Group selection and recipes", async ({ page }) => {
   await expect(page.getByTestId("toggle-group-selection")).toHaveScreenshot("selection-light.png");
   await expect(page.getByTestId("toggle-group-variants")).toHaveScreenshot("variants-light.png");
+  await expect(page.getByTestId("toggle-group-sizes")).toHaveScreenshot("sizes-light.png");
+  await expect(page.getByTestId("toggle-group-shapes")).toHaveScreenshot("shapes-light.png");
+  await expect(page.getByTestId("toggle-group-layout")).toHaveScreenshot("layout-light.png");
+  await expect(page.getByTestId("toggle-group-interaction")).toHaveScreenshot("interaction-light.png");
+  await expect(page.locator("#scenario-toggle-group-appearance")).toHaveScreenshot("appearance-customization-light.png");
   await setAppearance(page, "dark");
   await expect(page.getByTestId("toggle-group-overview")).toHaveScreenshot("overview-dark.png");
 });

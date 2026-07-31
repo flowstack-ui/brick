@@ -46,6 +46,7 @@ test("visible alternatives, state recipes, control, customization, and RTL remai
   await overview.getByRole("button", { name: "More actions" }).click();
   await page.getByRole("menuitem", { name: "Archive" }).click();
   await expect(overview.getByText("Archived from menu")).toBeVisible();
+  await expect(page.getByRole("menu", { name: "Message actions" })).toBeHidden();
 
   const states = page.locator("#scenario-swipeable-item-states .brick-swipeable-item");
   await expect(states.nth(0)).toHaveAttribute("data-disabled", "");
@@ -58,6 +59,8 @@ test("visible alternatives, state recipes, control, customization, and RTL remai
 
   const customized = page.locator("#scenario-swipeable-item-customized .brick-swipeable-item");
   expect(await customized.evaluate(node => getComputedStyle(node).getPropertyValue("--brick-swipeable-item-radius").trim())).toBe("1.25rem");
+  const customizedBadge = page.locator("#scenario-swipeable-item-customized .brick-badge");
+  expect((await customizedBadge.boundingBox())!.width).toBeLessThan(120);
   const rtl = page.locator("#scenario-swipeable-item-stress [dir=rtl] .brick-swipeable-item");
   await expect(rtl).toHaveAttribute("dir", "rtl");
   await rtl.locator(".brick-swipeable-item__content").focus();

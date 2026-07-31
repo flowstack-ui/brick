@@ -1,0 +1,60 @@
+.menubar-page .menu-grid,
+.menubar-page .menu-scoped-grid {
+  gap: var(--brick-space-4);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.menubar-appearance-panel {
+  display: grid;
+  min-block-size: 13rem;
+  align-content: start;
+  gap: var(--brick-space-4);
+  overflow: visible;
+  background: var(--brick-color-surface-raised);
+  color: var(--brick-color-text-primary);
+}
+
+.menubar-appearance-panel > .brick-badge,
+.menubar-customization .brick-badge {
+  inline-size: fit-content;
+  justify-self: start;
+}
+
+.menubar-appearance-preview,
+.menubar-customization__preview {
+  display: flex;
+  min-block-size: 8rem;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.menubar-customization-surface {
+  overflow: hidden;
+}
+
+.menubar-customization {
+  align-items: stretch;
+  gap: var(--brick-border-width);
+  background: var(--brick-color-border-subtle);
+}
+
+.menubar-customization > * {
+  min-inline-size: 0;
+  padding: var(--brick-space-5);
+  background: var(--brick-color-surface-raised);
+}
+
+.menubar-customization__preview {
+  min-block-size: 13rem;
+}
+
+@media (max-width: 47.5rem) {
+  .menubar-page .menu-grid,
+  .menubar-page .menu-scoped-grid,
+  .menubar-customization {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}

@@ -7,8 +7,18 @@ test("defaults, adjacent navigation, orientation, sizes, states, and composition
   const root = page.getByTestId("menubar-overview").getByRole("menubar", { name: "Editor commands" });
   await expect(root).toHaveAttribute("data-size", "md");
   await expect(root.getByRole("menuitem", { name: "File" })).toHaveCSS("min-height", "44px");
-  await expect(root.getByRole("menuitem", { name: "File" })).toHaveAttribute("aria-expanded", "true");
-  await root.getByRole("menuitem", { name: "File" }).focus(); await root.getByRole("menuitem", { name: "File" }).press("ArrowRight");
+  const fileTrigger = root.getByRole("menuitem", { name: "File" });
+  const editTrigger = root.getByRole("menuitem", { name: "Edit" });
+  await expect(fileTrigger).toHaveAttribute("aria-expanded", "false");
+  await fileTrigger.click();
+  const fileMenuId = await fileTrigger.getAttribute("aria-controls");
+  expect(fileMenuId).not.toBeNull();
+  const fileMenu = page.locator(`[id="${fileMenuId}"]`);
+  await expect(fileMenu).toBeVisible();
+  await editTrigger.hover();
+  await expect(fileTrigger).toHaveAttribute("aria-expanded", "false");
+  await expect(fileMenu).toBeHidden();
+  await fileTrigger.focus(); await fileTrigger.press("ArrowRight");
   await expect(root.getByRole("menuitem", { name: "Edit" })).toHaveAttribute("aria-expanded", "true");
   for (const [index, size] of ["sm", "md", "lg"].entries()) {
     const sizedRoot = page.getByTestId("menubar-density").locator(`.brick-menubar[data-size='${size}']`);

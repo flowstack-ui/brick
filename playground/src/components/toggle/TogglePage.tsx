@@ -1,7 +1,7 @@
-import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  Badge,
   Grid,
   VStack,
   Text,
@@ -235,13 +235,15 @@ export function TogglePage() {
         <VStack className="toggle-evidence-stack">
           <EvidenceGroup description="Adjacent light and dark scopes preserve the default recipe." title="Scoped appearances">
             <Grid.Root columns={2} className="toggle-scoped-grid" data-testid="toggle-appearance">
-              <EvidenceSurface data-brick-appearance="light"><Code>light</Code><Toggle>Preview</Toggle></EvidenceSurface>
-              <EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><Toggle>Preview</Toggle></EvidenceSurface>
+              <EvidenceSurface className="toggle-appearance-panel" data-brick-appearance="light"><Badge size="sm" tone="neutral" variant="soft">Light</Badge><div className="toggle-appearance-preview"><Toggle>Preview</Toggle></div></EvidenceSurface>
+              <EvidenceSurface className="toggle-appearance-panel" data-brick-appearance="dark"><Badge size="sm" tone="neutral" variant="soft">Dark</Badge><div className="toggle-appearance-preview"><Toggle>Preview</Toggle></div></EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <EvidenceSurface as="article" className="toggle-customization" inset="lg">
-              <div>
+            <EvidenceSurface as="article" className="playground-customization-evidence" inset="none">
+              <Grid.Root className="toggle-customization playground-customization-layout" columns={2} gap="0">
+              <VStack gap="2">
+                <Badge size="sm" tone="neutral" variant="soft">Customized</Badge>
                 <Text as="h4" variant="title-sm">Root and component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">Native style, slot, and public Toggle geometry tokens visibly customize the control itself.</Text>
                 <PlaygroundCodeBlock aria-label="Toggle customization example" tabIndex={0}>{`<Toggle
@@ -258,12 +260,13 @@ export function TogglePage() {
 >
   <StarIcon /> Favorite
 </Toggle>`}</PlaygroundCodeBlock>
-              </div>
-              <EvidenceSurface className="toggle-customization__preview">
+              </VStack>
+              <div className="toggle-customization__preview playground-customization-preview">
                 <Toggle data-slot="custom-toggle" style={customTokens}>
                   <StarIcon /> Favorite
                 </Toggle>
-              </EvidenceSurface>
+              </div>
+              </Grid.Root>
             </EvidenceSurface>
           </EvidenceGroup>
         </VStack>
