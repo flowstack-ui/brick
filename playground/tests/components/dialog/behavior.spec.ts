@@ -1,5 +1,20 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
+
+async function readShellViewportOffsets(page: Page) {
+  return page.evaluate(() => {
+    const readOffset = (selector: string) => {
+      const element = document.querySelector<HTMLElement>(selector);
+      if (!element || getComputedStyle(element).display === "none") return null;
+      return element.getBoundingClientRect().y;
+    };
+    return {
+      appBar: readOffset(".evidence-app-bar"),
+      reviewHeader: readOffset(".evidence-review-header"),
+      sidebar: readOffset(".evidence-sidebar"),
+    };
+  });
+}
 
 async function expectDialogDefaults(
   dialog: Locator,
@@ -18,12 +33,15 @@ test("Dialog exposes its default modal anatomy, relationships, and focus lifecyc
 
   const appBar = page.locator(".evidence-app-bar");
   const sidebar = page.locator(".evidence-sidebar");
-  const shellVisibility = {
-    appBar: await appBar.isVisible(),
-    sidebar: await sidebar.isVisible(),
-  };
   const trigger = page.getByRole("button", { name: "Edit profile" });
-  await trigger.click();
+  await page.evaluate(() => window.scrollTo(0, 400));
+  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+  const shellOffsets = await readShellViewportOffsets(page);
+  if (shellOffsets.appBar === 0) {
+    expect(shellOffsets.sidebar).not.toBeNull();
+    expect(shellOffsets.reviewHeader).not.toBeNull();
+  }
+  await trigger.evaluate((element) => (element as HTMLElement).click());
   const dialog = page.getByTestId("dialog-overview-content");
   await expectDialogDefaults(dialog);
   await expect(dialog).toHaveAccessibleName("Edit profile");
@@ -42,8 +60,11 @@ test("Dialog exposes its default modal anatomy, relationships, and focus lifecyc
   expect(
     await overlay.evaluate((element) => getComputedStyle(element).backgroundColor),
   ).toMatch(/^rgba\(.+,\s*0\.\d+\)$/);
-  expect(await appBar.isVisible()).toBe(shellVisibility.appBar);
-  expect(await sidebar.isVisible()).toBe(shellVisibility.sidebar);
+  await expect.poll(() => readShellViewportOffsets(page)).toEqual(shellOffsets);
+  await expect.poll(() => page.evaluate(() => document.documentElement.style.overflow)).toBe("hidden");
+  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).not.toBe("hidden");
+  if (shellOffsets.appBar === 0) await expect(appBar).toBeVisible();
+  if (shellOffsets.sidebar !== null) await expect(sidebar).toBeVisible();
   await expect(dialog.getByLabel("Display name")).toHaveValue("Ada Lovelace");
   await expect(dialog.getByLabel("Team role")).toHaveValue("Product engineer");
   expect(await dialog.evaluate((element) => element.contains(document.activeElement))).toBe(
@@ -55,6 +76,7 @@ test("Dialog exposes its default modal anatomy, relationships, and focus lifecyc
   await expect(dialog).toBeHidden();
   await expect(trigger).toBeFocused();
   await expect(page.locator("#root")).not.toHaveAttribute("inert", "");
+  await expect.poll(() => readShellViewportOffsets(page)).toEqual(shellOffsets);
 });
 
 test("Dialog sizes change only preferred measure and coordinated inset", async ({
@@ -150,7 +172,8 @@ test("Dialog preserves dismissal reasons and unavailable policies", async ({
   await eventTrigger.click();
   const eventDialog = page.getByRole("dialog", { name: "Dismissal evidence" });
   await expectDialogDefaults(eventDialog);
-  await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
+  await expect(page.locator("html")).toHaveCSS("overflow", "hidden");
+  await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
   await page.keyboard.press("Tab");
   expect(
     await eventDialog.evaluate((element) =>
@@ -161,6 +184,7 @@ test("Dialog preserves dismissal reasons and unavailable policies", async ({
   await expect(eventDialog).toBeHidden();
   await expect(eventTrigger).toBeFocused();
   await expect(page.getByText("Closed: escapeKeyDown")).toBeVisible();
+  await expect(page.locator("html")).not.toHaveCSS("overflow", "hidden");
   await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
 
   const disabled = page.getByRole("button", { name: "Unavailable dialog" });

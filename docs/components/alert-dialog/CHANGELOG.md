@@ -6,6 +6,9 @@ Alert Dialog follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Inherited Atom's document-only scroll lock so sticky application chrome
+  remains anchored while Alert Dialog is open at a nonzero page offset.
+
 - Title typography now uses the shared overlay-title recipe and its normalized
   tracking.
 - Increased the default medium surface from `28rem` to `30rem` so valid paired

@@ -4,6 +4,11 @@ Popover follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Modal Popover now inherits Atom's document-only scroll lock so sticky
+  application chrome remains anchored at nonzero page offsets.
+
 ### Added
 
 - Initial twelve-part Popover compound API with Trigger, Anchor, Portal,

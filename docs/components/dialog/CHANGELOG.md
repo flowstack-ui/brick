@@ -6,6 +6,9 @@ Dialog follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Inherited Atom's document-only scroll lock so sticky application chrome
+  remains anchored while Dialog is open at a nonzero page offset.
+
 - Title typography now uses the shared overlay-title recipe and its normalized
   tracking.
 
