@@ -56,3 +56,44 @@ test("portalled menus use the playground layer below sticky review chrome", asyn
   ]);
   expect(menuZIndex).toBeLessThan(headerZIndex);
 });
+
+test("playground evidence uses separate cards, compact appearance badges, and responsive output", async ({ page }) => {
+  const density = page.getByTestId("dropdown-menu-density");
+  await expect(density).toHaveCSS("border-top-width", "0px");
+  expect(Number.parseFloat(await density.evaluate((element) => getComputedStyle(element).columnGap))).toBeGreaterThan(1);
+  const densityCards = density.locator(".menu-cell");
+  await expect(densityCards).toHaveCount(3);
+  await expect(densityCards.first()).not.toHaveCSS("border-top-width", "0px");
+
+  if ((await page.viewportSize())!.width > 760) {
+    const heights = await densityCards.evaluateAll((nodes) =>
+      nodes.map((node) => node.getBoundingClientRect().height),
+    );
+    expect(heights[0]).toBeCloseTo(heights[1], 1);
+    expect(heights[1]).toBeCloseTo(heights[2], 1);
+  }
+
+  const appearance = page.getByTestId("dropdown-menu-appearance");
+  for (const label of ["Light", "Dark", "Customized"]) {
+    const badge = appearance.getByText(label, { exact: true });
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveAttribute("data-size", "sm");
+  }
+  const lightPanel = appearance.locator("[data-brick-appearance='light']");
+  const [badgeBox, triggerBox] = await Promise.all([
+    lightPanel.getByText("Light", { exact: true }).boundingBox(),
+    lightPanel.getByRole("button", { name: "Light project actions" }).boundingBox(),
+  ]);
+  expect(badgeBox!.y + badgeBox!.height).toBeLessThan(triggerBox!.y);
+
+  const output = page.getByTestId("dropdown-menu-composition").locator(".playground-output-evidence");
+  const renderedMarkup = await output.locator("[data-rendered-output]").textContent();
+  expect(renderedMarkup).toContain('data-adapter="project-actions"');
+  expect(renderedMarkup).toContain('aria-haspopup="menu"');
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await output.locator("[data-rendered-output]").textContent()).toBe(renderedMarkup);
+  await expect(output.locator(".playground-output-evidence__layout")).toHaveCSS(
+    "grid-template-columns",
+    /^\d+(?:\.\d+)?px$/,
+  );
+});

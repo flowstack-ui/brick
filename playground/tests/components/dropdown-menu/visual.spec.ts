@@ -12,6 +12,9 @@ test("dropdown-menu defaults and complete recipes", async ({ page }) => {
   await expect(page.getByTestId("dropdown-menu-states")).toHaveScreenshot("states-light.png");
   await expect(page.getByTestId("dropdown-menu-submenus")).toHaveScreenshot("submenus-light.png");
   await setAppearance(page, "dark");
+  await page.addStyleTag({
+    content: ".evidence-review-header, .scenario-nav { display: none !important; }",
+  });
   await expect(page.getByTestId("dropdown-menu-appearance")).toHaveScreenshot("appearance-dark.png");
 });
 

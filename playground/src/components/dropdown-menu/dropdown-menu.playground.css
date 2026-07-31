@@ -1,0 +1,49 @@
+.dropdown-menu-page .menu-grid,
+.dropdown-menu-page .menu-scoped-grid {
+  gap: var(--brick-space-4);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.dropdown-menu-appearance-panel {
+  display: grid;
+  min-block-size: 13rem;
+  align-content: start;
+  gap: var(--brick-space-4);
+  overflow: visible;
+  background: var(--brick-color-surface-raised);
+  color: var(--brick-color-text-primary);
+}
+
+.dropdown-menu-appearance-panel > .brick-badge,
+.dropdown-menu-customization .brick-badge {
+  inline-size: fit-content;
+  justify-self: start;
+}
+
+.dropdown-menu-appearance-preview,
+.dropdown-menu-customization__preview {
+  display: flex;
+  min-block-size: 8rem;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.dropdown-menu-customization {
+  align-items: start;
+}
+
+.dropdown-menu-customization__preview {
+  min-block-size: 13rem;
+  border: var(--brick-border-width) dashed var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+}
+
+@media (max-width: 47.5rem) {
+  .dropdown-menu-page .menu-grid,
+  .dropdown-menu-customization {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
