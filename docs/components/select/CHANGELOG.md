@@ -4,6 +4,11 @@ Select follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Inherited Atom 0.20.4 direction resolution so portalled option content and
+  logical `start` placement follow an RTL trigger.
+
 ### Added
 
 - Initial compound Select API built on Atom Select 0.9.3 with complete styled
