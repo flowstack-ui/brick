@@ -11,3 +11,8 @@
   line-height: inherit;
   overflow-wrap: normal;
 }
+
+.brick-code-block .playground-code-block-content[data-orientation="horizontal"] {
+  max-block-size: 18rem;
+  overflow-y: auto;
+}

@@ -16,6 +16,7 @@ function plainText(children: ReactNode): string {
 /** Playground-only shorthand for a source specimen without optional chrome. */
 export function PlaygroundCodeBlock({
   children,
+  className,
   focusable,
   tabIndex: _legacyTabIndex,
   ...contentProps
@@ -27,6 +28,7 @@ export function PlaygroundCodeBlock({
       <CodeBlock.Content
         aria-label={contentProps["aria-labelledby"] ? undefined : contentProps["aria-label"] ?? generatedLabel}
         {...contentProps}
+        className={className ? `playground-code-block-content ${className}` : "playground-code-block-content"}
         focusable={focusable ?? true}
       >
         {children}
