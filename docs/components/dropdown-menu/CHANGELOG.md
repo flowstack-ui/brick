@@ -6,6 +6,8 @@ Dropdown Menu follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Default `md` command rows now use Brick's shared 44px comfortable target;
+  explicit `sm` and `lg` densities remain 32px and 48px.
 - Inherited Atom's document-only scroll lock so sticky application chrome
   remains anchored while a modal Dropdown Menu is open.
 - Inherited Atom `0.20.6` portal direction, submenu collision handling, and

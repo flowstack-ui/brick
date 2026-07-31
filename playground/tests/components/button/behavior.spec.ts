@@ -297,6 +297,20 @@ test("Button evidence uses complete tone groups and balanced variant rows", asyn
   const cells = page.getByTestId("button-variants").locator(
     ".button-specimen-cell",
   );
+  const variantGridStyle = await page.getByTestId("button-variants").evaluate((element) => ({
+    borderWidth: getComputedStyle(element).borderWidth,
+    gap: parseFloat(getComputedStyle(element).gap),
+  }));
+  expect(variantGridStyle.borderWidth).toBe("0px");
+  expect(variantGridStyle.gap).toBeGreaterThanOrEqual(16);
+
+  const appearanceGridStyle = await page.locator(".button-appearance-grid").evaluate((element) => ({
+    borderWidth: getComputedStyle(element).borderWidth,
+    gap: parseFloat(getComputedStyle(element).gap),
+  }));
+  expect(appearanceGridStyle.borderWidth).toBe("0px");
+  expect(appearanceGridStyle.gap).toBeGreaterThanOrEqual(16);
+
   const positions = await cells.evaluateAll((elements) =>
     elements.map((element) => {
       const box = element.getBoundingClientRect();

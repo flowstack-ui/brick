@@ -47,7 +47,7 @@ Action-like rows accept the `neutral` or `danger` tone when exposed; `neutral` i
 
 ## Visual recipes and states
 
-The trigger receives no Brick surface. The overlay uses compact collision-aware rows with accent highlighting and visible disabled, danger, and selection states.
+The trigger receives no Brick surface. The overlay uses collision-aware 32/44/48px `sm`/`md`/`lg` minimum rows with accent highlighting and visible disabled, danger, and selection states.
 
 ## Tokens and CSS hooks
 
@@ -69,6 +69,12 @@ Set documented variables on Root or Content as applicable. Use `className` and `
 ## Responsive behavior
 
 Popup geometry stays collision-aware and constrained to available space. Narrow layouts preserve usable targets, logical alignment, zoom, and writing direction; applications decide whether the pattern belongs in their mobile information architecture.
+
+Repeated secondary clicks inside the same Trigger keep the custom menu open and
+move it to the latest invocation point. Invoking another Context Menu target
+closes the previous root and opens the new target without exposing the browser
+menu. With a submenu open, activation inside its ancestor menu closes only the
+submenu; activation outside every menu surface closes the complete menu tree.
 
 ## Accessibility
 

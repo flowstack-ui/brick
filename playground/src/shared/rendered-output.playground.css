@@ -5,6 +5,7 @@
 
 .playground-output-evidence {
   min-inline-size: 0;
+  overflow: clip;
 }
 
 .playground-output-evidence__layout {
@@ -23,6 +24,24 @@
 .playground-output-evidence__preview {
   display: grid;
   min-block-size: 10rem;
+  place-items: center;
+}
+
+.playground-output-evidence__preview--labeled {
+  grid-template-rows: auto 1fr;
+  place-items: initial;
+  gap: var(--brick-space-4);
+}
+
+.playground-output-evidence__preview--labeled
+  > .playground-specimen-label {
+  inline-size: fit-content;
+  justify-self: start;
+}
+
+.playground-output-evidence__subject {
+  display: grid;
+  min-block-size: 0;
   place-items: center;
 }
 
@@ -50,16 +69,19 @@
 
 .playground-output-evidence__output pre {
   max-inline-size: 100%;
-  max-block-size: 14rem;
   margin: 0;
   padding: var(--brick-space-3);
-  overflow: auto;
   border-radius: var(--brick-radius-control);
   background: var(--brick-color-surface-subtle);
   font-size: 0.75rem;
   line-height: 1.55;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
+}
+
+.playground-output-evidence__output .brick-code-block-content[data-rendered-output] {
+  max-block-size: 14rem;
+  overflow: auto;
 }
 
 @media (min-width: 48rem) {

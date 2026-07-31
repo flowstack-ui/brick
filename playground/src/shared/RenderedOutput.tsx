@@ -5,6 +5,7 @@ import {
   type ReactNode,
 } from "react";
 import { CodeBlock, Grid, Surface, Text, VStack } from "@flowstack-ui/brick";
+import { SpecimenLabel } from "./SpecimenLabel.js";
 import "./rendered-output.playground.css";
 
 function formatMarkup(markup: string) {
@@ -16,9 +17,11 @@ function formatMarkup(markup: string) {
 export function RenderedOutput({
   children,
   label = "Rendered HTML",
+  previewLabel,
 }: {
   children: ReactNode;
   label?: string;
+  previewLabel?: string;
 }) {
   const previewRef = useRef<HTMLDivElement>(null);
   const [markup, setMarkup] = useState("");
@@ -57,9 +60,18 @@ export function RenderedOutput({
   return (
     <Surface as="article" bordered className="playground-output-evidence">
       <Grid.Root className="playground-output-evidence__layout">
-        <div className="playground-output-evidence__preview" ref={previewRef}>
-          {children}
-        </div>
+        {previewLabel ? (
+          <div className="playground-output-evidence__preview playground-output-evidence__preview--labeled">
+            <SpecimenLabel>{previewLabel}</SpecimenLabel>
+            <div className="playground-output-evidence__subject" ref={previewRef}>
+              {children}
+            </div>
+          </div>
+        ) : (
+          <div className="playground-output-evidence__preview" ref={previewRef}>
+            {children}
+          </div>
+        )}
         <VStack className="playground-output-evidence__output" gap="3">
           <Text as="p" variant="body-sm">{label}</Text>
           <CodeBlock.Root value={markup} variant="bordered">

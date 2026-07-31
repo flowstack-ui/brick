@@ -45,6 +45,7 @@ describe("Select", () => {
   it("styles every authored anatomy part and preserves replaceable artwork", () => {
     render(<Example defaultOpen />);
     expect(screen.getByRole("listbox")).toHaveClass("brick-select-content");
+    expect(screen.getByRole("listbox")).toHaveAttribute("data-size", "md");
     expect(document.querySelector(".brick-select-viewport")).toBeInTheDocument();
     expect(document.querySelector(".brick-select-group")).toBeInTheDocument();
     expect(document.querySelector(".brick-select-label")).toBeInTheDocument();

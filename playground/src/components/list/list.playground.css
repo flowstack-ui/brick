@@ -3,7 +3,8 @@
 .list-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); align-self: stretch; }
 .list-grid { align-items: stretch; }
 .list-grid > * { min-inline-size: 0; }
-.list-output-grid { align-items: start; }
+.list-output-grid { align-items: stretch; }
+.list-output-grid > * { block-size: 100%; }
 .list-customization { align-items: center; }
 .list-narrow { inline-size: min(100%, 14rem); }
 

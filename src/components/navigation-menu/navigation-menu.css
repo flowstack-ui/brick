@@ -2,7 +2,7 @@
   .brick-navigation-menu,
   .brick-navigation-menu__sub {
     --brick-navigation-menu-gap: var(--brick-space-1);
-    --brick-navigation-menu-control-min-block-size: 2.5rem;
+    --brick-navigation-menu-control-min-block-size: var(--brick-control-target-min);
     --brick-navigation-menu-control-padding-inline: var(--brick-space-3);
     --brick-navigation-menu-control-radius: var(--brick-radius-control);
     --brick-navigation-menu-control-foreground: currentColor;

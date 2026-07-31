@@ -1,7 +1,7 @@
 .aspect-ratio-page { inline-size: 100%; }
 .aspect-ratio-overview { max-inline-size: 42rem; }
-.aspect-ratio-grid { align-items: start; }
-.aspect-ratio-cell { min-inline-size: 0; }
+.aspect-ratio-grid { align-items: stretch; }
+.aspect-ratio-cell { min-inline-size: 0; block-size: 100%; }
 .aspect-ratio-frame { color: var(--brick-color-text-primary); }
 .aspect-ratio-content { display: grid; block-size: 100%; box-sizing: border-box; place-content: center; gap: var(--brick-space-2); padding: var(--brick-space-4); text-align: center; }
 .aspect-ratio-media { display: block; inline-size: 100%; block-size: 100%; border: 0; object-fit: cover; }

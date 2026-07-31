@@ -61,13 +61,17 @@ prop types are `ComboboxRootProps`, `ComboboxLabelProps`,
 
 ## Visual recipes and states
 
-Recipes change paint and geometry only. Atom attributes drive open, highlighted, selected, disabled, read-only, empty, and loading presentation. Content is viewport-bounded; options reserve a selected-indicator column.
+Recipes change paint and geometry only. Controls and option rows use matching
+36/44/52px `sm`/`md`/`lg` minimums. Atom attributes drive open, highlighted,
+selected, disabled, read-only, empty, and loading presentation. Content is
+viewport-bounded; options reserve a selected-indicator column.
 
 ## Tokens and CSS hooks
 
 Public variables are `--brick-combobox-min-block-size`, `--brick-combobox-padding-inline`, `--brick-combobox-radius`, `--brick-combobox-background`, `--brick-combobox-border`, `--brick-combobox-foreground`, `--brick-combobox-placeholder`, `--brick-combobox-focus`, `--brick-combobox-invalid`, and `--brick-combobox-popup-radius`. Stable `.brick-combobox-*` classes and `data-slot` hooks cover DOM parts.
 
-Control exposes `data-full-width`, `data-shape`, `data-size`, and `data-variant` alongside the overridable `data-slot`.
+Control exposes `data-full-width`, `data-shape`, `data-size`, and `data-variant`.
+Content exposes the inherited `data-size`; both retain overridable `data-slot`.
 
 ## Customization
 

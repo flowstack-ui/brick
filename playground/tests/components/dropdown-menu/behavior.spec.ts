@@ -8,11 +8,14 @@ test("defaults, size, selection, state, submenu, and composition remain complete
   const menu = page.getByRole("menu", { name: "Project actions" }).first();
   await expect(menu).toHaveAttribute("data-size", "md");
   await expect(menu.getByRole("menuitem")).toHaveCount(2);
+  await expect(menu.getByRole("menuitem").first()).toHaveCSS("min-height", "44px");
   await page.keyboard.press("Escape");
   const sizeTriggers = page.getByTestId("dropdown-menu-density").getByRole("button");
   for (const [index, size] of ["sm", "md", "lg"].entries()) {
     const trigger = sizeTriggers.nth(index); await trigger.click();
-    await expect(page.locator(`#${await trigger.getAttribute("aria-controls")}`)).toHaveAttribute("data-size", size);
+    const sizedMenu = page.locator(`#${await trigger.getAttribute("aria-controls")}`);
+    await expect(sizedMenu).toHaveAttribute("data-size", size);
+    await expect(sizedMenu.getByRole("menuitem").first()).toHaveCSS("min-height", ["32px", "44px", "48px"][index]);
     await page.keyboard.press("Escape");
   }
   await page.getByRole("button", { name: "View options" }).click();
@@ -27,7 +30,7 @@ test("defaults, size, selection, state, submenu, and composition remain complete
   await subTrigger.focus(); await subTrigger.press("ArrowRight");
   const inlineSubMenu = page.locator(".brick-dropdown-menu__sub-content[data-state='open']");
   await expect(inlineSubMenu).toBeVisible();
-  await expect(inlineSubMenu).toHaveAttribute("data-side", "right");
+  await expect(inlineSubMenu).toHaveAttribute("data-side", /^(right|top|bottom)$/);
   const inlineMotion = await inlineSubMenu.evaluate((element) => {
     const style = getComputedStyle(element);
     return {

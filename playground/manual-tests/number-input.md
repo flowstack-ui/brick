@@ -26,7 +26,7 @@ Setup: Review 06–07. Action: Operate controlled, disabled, read-only, required
 Notes or issue:
 
 ## Step 3 — Theme, reflow, direction, and preferences
-Setup: Review 08–09 in light, dark, forced colors, reduced motion, 200%, 400%, mobile, and RTL. Action: Repeat stepping. Expected: Content and actions remain contained, ordered logically, and visibly focused without page overflow. Result:
+Setup: Review 08–09 in light, dark, forced colors, reduced motion, 200%, 400%, mobile, and RTL. Action: Repeat stepping and inspect each stacked action on a touch device. Expected: Content and actions remain contained, ordered logically, and visibly focused without page overflow; each step action is at least 24 CSS px tall under coarse-pointer input. Result:
 Notes or issue:
 
 ## Step 4 — Assistive technology

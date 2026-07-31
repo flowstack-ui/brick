@@ -227,10 +227,47 @@ test("mobile component navigation opens, closes, and restores focus", async ({
 
   const drawer = page.getByRole("dialog", { name: "Brick components" });
   await expect(drawer).toBeVisible();
+  await expect(drawer).toHaveAttribute("data-size", "full");
+  await expect(drawer).toHaveCSS("width", "390px");
+  await expect(drawer.locator(".brick-nav-list__link").first()).toHaveCSS(
+    "font-size",
+    "14px",
+  );
+  await expect(drawer.locator(".brick-nav-list__link").first()).toHaveCSS(
+    "min-height",
+    "44px",
+  );
   await page.getByRole("button", {
     name: "Close component navigation",
   }).click();
   await expect(drawer).toBeHidden();
   await expect(trigger).toBeFocused();
   await expect(page.locator("html")).toHaveJSProperty("scrollWidth", 390);
+});
+
+test("component navigation uses responsive visibility and alphabetical ordering", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/button");
+
+  const compactNavigation = page.locator('[data-slot="hide"]');
+  const desktopNavigation = page.locator(".evidence-sidebar");
+  await expect(compactNavigation).toBeVisible();
+  await expect(desktopNavigation).toBeHidden();
+
+  await page.getByRole("button", { name: "Open component navigation" }).click();
+  const drawer = page.getByRole("dialog", { name: "Brick components" });
+  const sectionLabels = await drawer.locator(".brick-nav-list__section-label").allTextContents();
+  expect(sectionLabels).toEqual([...sectionLabels].sort((left, right) => left.localeCompare(right)));
+  for (const section of await drawer.locator(".brick-nav-list__section").all()) {
+    const labels = await section.locator(".brick-nav-list__link").allTextContents();
+    expect(labels).toEqual([...labels].sort((left, right) => left.localeCompare(right)));
+  }
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await expect(drawer).toBeHidden();
+  await expect(compactNavigation).toBeHidden();
+  await expect(desktopNavigation).toBeVisible();
+  await expect(page.locator('button[aria-label="Open component navigation"]')).not.toBeFocused();
 });

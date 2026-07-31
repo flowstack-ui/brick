@@ -179,7 +179,8 @@ export const SelectPortal = AtomSelect.Portal;
 
 export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
   function SelectContent({ className, "data-slot": dataSlot, ...props }, ref) {
-    return <AtomSelect.Content {...props} className={mergeClassName("brick-select-content", className)} data-slot={slotOrDefault(dataSlot, "select-listbox")} ref={ref} />;
+    const visual = useContext(SelectVisualContext);
+    return <AtomSelect.Content {...props} className={mergeClassName("brick-select-content", className)} data-size={visual.size} data-slot={slotOrDefault(dataSlot, "select-listbox")} ref={ref} />;
   },
 );
 

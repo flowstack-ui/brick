@@ -77,7 +77,7 @@
     --brick-multi-select-content-max-block-size: min(20rem, var(--available-height, 20rem));
     --brick-multi-select-content-padding: var(--brick-space-1);
     --brick-multi-select-content-z-index: 70;
-    --brick-multi-select-item-min-block-size: 2.5rem;
+    --brick-multi-select-item-min-block-size: var(--brick-control-min-block-size-md);
     --brick-multi-select-item-padding-inline: var(--brick-space-3);
     --brick-multi-select-item-gap: var(--brick-space-2);
     --brick-multi-select-item-highlighted-background: var(--brick-color-accent-soft);
@@ -101,6 +101,9 @@
     color: var(--brick-multi-select-content-foreground);
     z-index: var(--brick-multi-select-content-z-index);
   }
+
+  .brick-multi-select-content[data-size="sm"] { --brick-multi-select-item-min-block-size: var(--brick-control-min-block-size-sm); }
+  .brick-multi-select-content[data-size="lg"] { --brick-multi-select-item-min-block-size: var(--brick-control-min-block-size-lg); }
 
   .brick-multi-select-viewport { box-sizing: border-box; max-block-size: inherit; overflow-y: auto; padding: var(--brick-multi-select-content-padding); overscroll-behavior: contain; scrollbar-width: thin; }
   .brick-multi-select-group + .brick-multi-select-group { margin-block-start: var(--brick-space-1); }

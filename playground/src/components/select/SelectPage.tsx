@@ -159,10 +159,10 @@ export function SelectPage() {
             <EvidenceSurface className="select-appearance-surface" data-brick-appearance="light"><Badge size="sm">Light</Badge><PlanSelect id="select-light" /></EvidenceSurface>
             <EvidenceSurface className="select-appearance-surface" data-brick-appearance="dark"><Badge size="sm">Dark</Badge><PlanSelect id="select-dark" /></EvidenceSurface>
           </Grid.Root>
-          <EvidenceSurface>
-            <Grid.Root align="start" columns={2} gap="5" className="select-customization">
+          <EvidenceSurface className="playground-customization-evidence" inset="none">
+            <Grid.Root columns={2} gap="0" className="select-customization playground-customization-layout">
               <VStack gap="2">
-                <Badge size="sm" style={{ alignSelf: "flex-start", inlineSize: "fit-content" }} tone="accent">Customized</Badge>
+                <Badge size="sm" style={{ alignSelf: "flex-start", inlineSize: "fit-content" }}>Customized</Badge>
                 <Text as="h3" variant="title-sm">Select CSS properties</Text>
                 <Text tone="secondary" variant="body-sm">The accent trigger, popup, and highlighted option use only the documented properties below.</Text>
                 <PlaygroundCodeBlock>{`--brick-select-trigger-background: #eefbf5;
@@ -172,7 +172,7 @@ export function SelectPage() {
 --brick-select-content-background: #f4fff9;
 --brick-select-item-highlighted-background: #d7f7e5;`}</PlaygroundCodeBlock>
               </VStack>
-              <PlanSelect id="select-custom" contentStyle={customTokens} triggerStyle={customTokens} />
+              <div className="playground-customization-preview"><PlanSelect id="select-custom" contentStyle={customTokens} triggerStyle={customTokens} /></div>
             </Grid.Root>
           </EvidenceSurface>
         </VStack>

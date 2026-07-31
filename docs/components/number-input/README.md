@@ -57,7 +57,7 @@ Public root variables are `--brick-number-input-height`, `--brick-number-input-r
 Prefer recipe props, then semantic tokens, then component variables. Classes and styles on Root scope a single instance; action children replace the default artwork.
 
 ## Responsive behavior
-The grid uses logical sizing, a shrinkable input column, and a fixed action column. Full width remains contained at narrow widths and the action column moves to the logical end in RTL.
+The grid uses logical sizing, a shrinkable input column, and a fixed action column. Full width remains contained at narrow widths and the action column moves to the logical end in RTL. On coarse-pointer devices, `sm` and `md` become tall enough to keep each stacked step action at least 24 CSS px; this applies to touch screens at any viewport width.
 
 ## Accessibility
 Provide a visible Field label or an explicit accessible name. The input exposes spinbutton semantics, values, bounds, and Field relationships. Increment and Decrement require accessible names because their artwork is decorative. Atom owns keyboard stepping, focus retention, boundary availability, validation, and form reset.

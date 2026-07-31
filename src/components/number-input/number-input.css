@@ -15,5 +15,8 @@
   .brick-number-input:has(.brick-number-input-control[data-disabled]) { background:var(--brick-color-surface-subtle); color:var(--brick-color-text-secondary); opacity:.72; }
   .brick-number-input-step:disabled { cursor:not-allowed; opacity:.5; }
   @media (hover:hover) and (pointer:fine) { .brick-number-input-step:not(:disabled):hover { background:var(--brick-color-accent-soft); color:var(--brick-color-text-primary); } }
+  @media (pointer:coarse) {
+    .brick-number-input:is([data-size="sm"], [data-size="md"]) { --brick-number-input-height:3.125rem; }
+  }
   @media (forced-colors:active) { .brick-number-input { border-color:ButtonText; background:Canvas; color:CanvasText; } .brick-number-input:focus-within { border-color:Highlight; box-shadow:0 0 0 var(--brick-border-focus-width) Highlight; } }
 }

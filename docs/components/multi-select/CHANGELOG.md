@@ -4,6 +4,11 @@ MultiSelect follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Popup options now inherit Root size and match the trigger's 36/44/52px
+  `sm`/`md`/`lg` minimum target instead of using a fixed 40px row.
+
 ### Added
 
 - Initial compound MultiSelect API built on Atom MultiSelect 0.10.1 with complete styled

@@ -6,10 +6,16 @@ test.beforeEach(async ({ page }) => { await page.goto("/menubar"); });
 test("defaults, adjacent navigation, orientation, sizes, states, and composition work", async ({ page }) => {
   const root = page.getByTestId("menubar-overview").getByRole("menubar", { name: "Editor commands" });
   await expect(root).toHaveAttribute("data-size", "md");
+  await expect(root.getByRole("menuitem", { name: "File" })).toHaveCSS("min-height", "44px");
   await expect(root.getByRole("menuitem", { name: "File" })).toHaveAttribute("aria-expanded", "true");
   await root.getByRole("menuitem", { name: "File" }).focus(); await root.getByRole("menuitem", { name: "File" }).press("ArrowRight");
   await expect(root.getByRole("menuitem", { name: "Edit" })).toHaveAttribute("aria-expanded", "true");
-  for (const size of ["sm", "md", "lg"]) await expect(page.getByTestId("menubar-density").locator(`.brick-menubar[data-size='${size}']`)).toHaveCount(1);
+  for (const [index, size] of ["sm", "md", "lg"].entries()) {
+    const sizedRoot = page.getByTestId("menubar-density").locator(`.brick-menubar[data-size='${size}']`);
+    await expect(sizedRoot).toHaveCount(1);
+    await expect(sizedRoot.getByRole("menuitem").first()).toHaveCSS("min-height", ["32px", "44px", "48px"][index]);
+  }
+  await expect(page.getByRole("menu").first().getByRole("menuitem").first()).toHaveCSS("min-height", "44px");
   const vertical = page.getByTestId("menubar-orientation").getByRole("menubar", { name: "Editor commands" }).nth(1);
   await vertical.getByRole("menuitem", { name: "File" }).focus(); await vertical.getByRole("menuitem", { name: "File" }).press("ArrowDown");
   await expect(vertical.getByRole("menuitem", { name: "Edit" })).toBeFocused();

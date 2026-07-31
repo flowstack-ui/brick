@@ -7,6 +7,7 @@ test("Icon Button recipes", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.getByTestId("icon-button-composition"), "composition-output-light.png");
   await setAppearance(page, "dark");
   await expect(page.getByTestId("icon-button-tones")).toHaveScreenshot("tones-dark.png");
+  await expect(page.locator("#scenario-icon-button-appearance")).toHaveScreenshot("appearance-dark.png");
 });
 
 test("Icon Button constrained and preference evidence", async ({ page }) => {

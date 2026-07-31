@@ -46,7 +46,10 @@ Action-like rows accept `tone="neutral"` or `tone="danger"` when exposed; neutra
 
 ## Visual recipes and states
 
-Controls are paintless until hover, focus, open, or active. The measured overlay follows trigger content, Indicator tracks the active trigger, and sizes change only control geometry.
+Controls are paintless until hover, focus, open, or active. Links and triggers
+use 32/44/48px `sm`/`md`/`lg` minimums. The measured overlay follows trigger
+content, Indicator tracks the active trigger, and sizes change only control
+geometry.
 
 ## Tokens and CSS hooks
 

@@ -78,6 +78,7 @@ describe("MultiSelect", () => {
 
   it("styles every authored anatomy part and preserves replaceable artwork", () => {
     render(<Example defaultOpen />);
+    expect(screen.getByRole("listbox")).toHaveAttribute("data-size", "md");
     expect(screen.getByRole("listbox")).toHaveClass("brick-multi-select-content");
     expect(screen.getByRole("listbox")).toHaveAttribute("aria-multiselectable", "true");
     expect(document.querySelector(".brick-multi-select-viewport")).toBeInTheDocument();

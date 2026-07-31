@@ -12,6 +12,9 @@ test("Select overview preserves canonical defaults and selection", async ({ page
   await expect(trigger).toHaveAttribute("data-full-width", "");
   await expect(trigger).toContainText("Team");
   await trigger.click();
+  const listbox = page.locator(`#${await trigger.getAttribute("aria-controls")}`);
+  await expect(listbox).toHaveAttribute("data-size", "md");
+  await expect(page.getByRole("option", { name: "Starter" })).toHaveCSS("min-height", "44px");
   await page.getByRole("option", { name: "Starter" }).click();
   await expect(trigger).toContainText("Starter");
   await expect(trigger).toBeFocused();
@@ -28,6 +31,13 @@ test("recipe comparisons change only their named dimension", async ({ page }) =>
   const sizes = page.getByTestId("select-sizes").getByRole("combobox");
   const heights = await sizes.evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().height));
   expect(heights[0]).toBeLessThan(heights[1]); expect(heights[1]).toBeLessThan(heights[2]);
+  for (const [index, size] of ["sm", "md", "lg"].entries()) {
+    const sizeTrigger = sizes.nth(index); await sizeTrigger.click();
+    const sizeListbox = page.locator(`#${await sizeTrigger.getAttribute("aria-controls")}`);
+    await expect(sizeListbox).toHaveAttribute("data-size", size);
+    await expect(sizeListbox.getByRole("option").first()).toHaveCSS("min-height", ["36px", "44px", "52px"][index]);
+    await page.keyboard.press("Escape");
+  }
   const shapes = page.getByTestId("select-shapes").getByRole("combobox");
   for (let index = 0; index < 3; index += 1) await expect(shapes.nth(index)).toHaveAttribute("data-shape", ["sharp", "rounded", "pill"][index]);
 });

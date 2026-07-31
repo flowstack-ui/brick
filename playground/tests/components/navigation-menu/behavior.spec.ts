@@ -6,9 +6,14 @@ test.beforeEach(async ({ page }) => { await page.goto("/navigation-menu"); });
 test("defaults, links, disclosure, sizes, orientation, state, and composition work", async ({ page }) => {
   const root = page.getByTestId("navigation-menu-overview").getByRole("navigation", { name: "Primary navigation" });
   await expect(root).toHaveAttribute("data-size", "md");
+  await expect(root.getByRole("button", { name: "Products" })).toHaveCSS("min-height", "44px");
   await expect(root.getByRole("button", { name: "Products" })).toHaveAttribute("aria-expanded", "true");
   await expect(root.getByRole("link", { name: "Pricing" })).toHaveAttribute("data-active", "");
-  for (const size of ["sm", "md", "lg"]) await expect(page.getByTestId("navigation-menu-size").locator(`.brick-navigation-menu[data-size='${size}']`)).toHaveCount(1);
+  for (const [index, size] of ["sm", "md", "lg"].entries()) {
+    const sizedRoot = page.getByTestId("navigation-menu-size").locator(`.brick-navigation-menu[data-size='${size}']`);
+    await expect(sizedRoot).toHaveCount(1);
+    await expect(sizedRoot.getByRole("button").first()).toHaveCSS("min-height", ["32px", "44px", "48px"][index]);
+  }
   const direct = page.getByRole("navigation", { name: "Direct destinations" });
   await expect(direct.getByRole("link", { name: "Overview" })).toHaveAttribute("href", "/overview");
   const disabled = page.getByRole("navigation", { name: "Unavailable destination" }).getByRole("button", { name: "Products" });

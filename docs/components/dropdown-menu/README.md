@@ -47,7 +47,7 @@ Action-like rows accept the `neutral` or `danger` tone when exposed; `neutral` i
 
 ## Visual recipes and states
 
-The overlay uses a raised surface, compact rows, accent highlighting, visible disabled and danger states, selection indicators, and collision-aware nested content.
+The overlay uses a raised surface, 32/44/48px `sm`/`md`/`lg` minimum rows, accent highlighting, visible disabled and danger states, selection indicators, and collision-aware nested content.
 
 ## Tokens and CSS hooks
 

@@ -15,6 +15,8 @@ test("Multi Select overview preserves defaults and toggles without closing", asy
   const listbox = page.locator(`#${await trigger.getAttribute("aria-controls")}`);
   await expect(listbox).toHaveAttribute("role", "listbox");
   await expect(listbox).toHaveAttribute("aria-multiselectable", "true");
+  await expect(listbox).toHaveAttribute("data-size", "md");
+  await expect(page.getByRole("option", { name: "Writing" })).toHaveCSS("min-height", "44px");
   await page.getByRole("option", { name: "Writing" }).click();
   await expect(listbox).toBeVisible();
   await expect(trigger).toContainText("Design (+2 more)");
@@ -32,6 +34,13 @@ test("recipe comparisons change only their named dimension", async ({ page }) =>
   const heights = await sizes.evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().height));
   expect(heights[0]).toBeLessThan(heights[1]);
   expect(heights[1]).toBeLessThan(heights[2]);
+  for (const [index, size] of ["sm", "md", "lg"].entries()) {
+    const sizeTrigger = sizes.nth(index); await sizeTrigger.click();
+    const sizeListbox = page.locator(`#${await sizeTrigger.getAttribute("aria-controls")}`);
+    await expect(sizeListbox).toHaveAttribute("data-size", size);
+    await expect(sizeListbox.getByRole("option").first()).toHaveCSS("min-height", ["36px", "44px", "52px"][index]);
+    await page.keyboard.press("Escape");
+  }
   const shapes = page.getByTestId("multi-select-shapes").getByRole("button");
   for (let index = 0; index < 3; index += 1) {
     await expect(shapes.nth(index)).toHaveAttribute("data-shape", ["sharp", "rounded", "pill"][index]);

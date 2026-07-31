@@ -55,6 +55,23 @@ test("IconButton preserves every supported link composition path", async ({
     .locator("[data-rendered-output]");
   await expect(output).toHaveCount(3);
   await expect(output.first()).toContainText('aria-label="Documentation"');
+  const composition = page.getByTestId("icon-button-composition");
+  const compositionLabels = composition.locator(".playground-specimen-label");
+  await expect(compositionLabels).toHaveText([
+    "Direct href",
+    "render anchor",
+    "asChild anchor",
+  ]);
+  for (const label of await compositionLabels.all()) {
+    const preview = label.locator("..");
+    const [labelBox, previewBox, subjectBox] = await Promise.all([
+      label.boundingBox(),
+      preview.boundingBox(),
+      preview.locator(".playground-output-evidence__subject").boundingBox(),
+    ]);
+    expect(labelBox!.width).toBeLessThan(previewBox!.width / 2);
+    expect(subjectBox!.y).toBeGreaterThanOrEqual(labelBox!.y + labelBox!.height);
+  }
   await composed.click();
   await expect(page).toHaveURL(/#scenario-icon-button-states$/);
   await expect(page.locator("#scenario-icon-button-states")).toBeInViewport();
@@ -219,6 +236,39 @@ test("IconButton exposes appearance and supported customization hooks", async ({
   page,
 }) => {
   await page.goto("/icon-button");
+
+  const specimenGrid = page.getByTestId("icon-button-variants");
+  const specimenGridStyle = await specimenGrid.evaluate((element) => ({
+    borderWidth: getComputedStyle(element).borderWidth,
+    gap: parseFloat(getComputedStyle(element).gap),
+  }));
+  expect(specimenGridStyle.borderWidth).toBe("0px");
+  expect(specimenGridStyle.gap).toBeGreaterThanOrEqual(16);
+
+  const appearanceGrid = page.getByTestId("icon-button-appearance");
+  const appearanceGridStyle = await appearanceGrid.evaluate((element) => ({
+    borderWidth: getComputedStyle(element).borderWidth,
+    gap: parseFloat(getComputedStyle(element).gap),
+  }));
+  expect(appearanceGridStyle.borderWidth).toBe("0px");
+  expect(appearanceGridStyle.gap).toBeGreaterThanOrEqual(16);
+  const appearancePanels = appearanceGrid.locator(".icon-button-appearance-panel");
+  await expect(appearancePanels).toHaveCount(2);
+  for (const panel of await appearancePanels.all()) {
+    const layout = await panel.evaluate((element) => {
+      const label = element.querySelector<HTMLElement>(".playground-specimen-label")!;
+      const preview = element.querySelector<HTMLElement>(".icon-button-appearance-panel__preview")!;
+      return {
+        gap: parseFloat(getComputedStyle(element).gap),
+        labelWidth: label.getBoundingClientRect().width,
+        panelWidth: element.getBoundingClientRect().width,
+        separated: preview.getBoundingClientRect().top > label.getBoundingClientRect().bottom,
+      };
+    });
+    expect(layout.gap).toBeGreaterThanOrEqual(16);
+    expect(layout.labelWidth).toBeLessThan(layout.panelWidth / 2);
+    expect(layout.separated).toBe(true);
+  }
 
   const customized = page.getByTestId("icon-button-token-customization");
   await expect(customized).toHaveCSS("background-color", "rgb(107, 47, 136)");

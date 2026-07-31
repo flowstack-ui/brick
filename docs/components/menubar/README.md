@@ -46,7 +46,9 @@ Action-like rows accept the `neutral` or `danger` tone when exposed; `neutral` i
 
 ## Visual recipes and states
 
-The persistent root has a subtle bounded rail. Open triggers use accent-soft state; popup rows retain visible focus, disabled, danger, and selected states.
+The persistent root has a subtle bounded rail. Its triggers and popup rows use
+32/44/48px `sm`/`md`/`lg` minimums. Open triggers use accent-soft state; popup
+rows retain visible focus, disabled, danger, and selected states.
 
 ## Tokens and CSS hooks
 

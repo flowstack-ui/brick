@@ -179,7 +179,8 @@ export const MultiSelectPortal = AtomMultiSelect.Portal;
 
 export const MultiSelectContent = forwardRef<HTMLDivElement, MultiSelectContentProps>(
   function MultiSelectContent({ className, "data-slot": dataSlot, ...props }, ref) {
-    return <AtomMultiSelect.Content {...props} className={mergeClassName("brick-multi-select-content", className)} data-slot={slotOrDefault(dataSlot, "multi-select-listbox")} ref={ref} />;
+    const visual = useContext(MultiSelectVisualContext);
+    return <AtomMultiSelect.Content {...props} className={mergeClassName("brick-multi-select-content", className)} data-size={visual.size} data-slot={slotOrDefault(dataSlot, "multi-select-listbox")} ref={ref} />;
   },
 );
 

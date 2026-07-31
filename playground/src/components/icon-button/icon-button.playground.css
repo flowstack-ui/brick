@@ -53,12 +53,12 @@
 
 .icon-button-specimen-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--brick-border-width);
+  gap: var(--brick-space-4);
   min-inline-size: 0;
-  overflow: hidden;
-  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
-  border-radius: var(--brick-radius-surface);
-  background: var(--brick-color-border-subtle);
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .icon-button-specimen-grid--six,
@@ -111,25 +111,31 @@
 
 .icon-button-appearance-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--brick-border-width);
-  overflow: hidden;
-  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
-  border-radius: var(--brick-radius-surface);
-  background: var(--brick-color-border-subtle);
+  gap: var(--brick-space-4);
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
-.icon-button-appearance-grid > div {
+.icon-button-appearance-panel {
   display: grid;
   min-block-size: 9rem;
-  place-content: center;
-  justify-items: center;
-  gap: var(--brick-space-3);
+  align-content: start;
+  gap: var(--brick-space-4);
   background: var(--brick-color-surface-raised);
   color: var(--brick-color-text-primary);
 }
 
-.icon-button-appearance-grid code {
-  color: var(--brick-color-text-secondary);
+.icon-button-appearance-panel > .playground-specimen-label {
+  inline-size: fit-content;
+  justify-self: start;
+}
+
+.icon-button-appearance-panel__preview {
+  display: grid;
+  min-block-size: 5rem;
+  place-items: center;
 }
 
 .icon-button-customization {

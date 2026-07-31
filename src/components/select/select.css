@@ -77,7 +77,7 @@
     --brick-select-content-max-block-size: min(20rem, var(--available-height, 20rem));
     --brick-select-content-padding: var(--brick-space-1);
     --brick-select-content-z-index: 70;
-    --brick-select-item-min-block-size: 2.5rem;
+    --brick-select-item-min-block-size: var(--brick-control-min-block-size-md);
     --brick-select-item-padding-inline: var(--brick-space-3);
     --brick-select-item-gap: var(--brick-space-2);
     --brick-select-item-highlighted-background: var(--brick-color-accent-soft);
@@ -101,6 +101,9 @@
     color: var(--brick-select-content-foreground);
     z-index: var(--brick-select-content-z-index);
   }
+
+  .brick-select-content[data-size="sm"] { --brick-select-item-min-block-size: var(--brick-control-min-block-size-sm); }
+  .brick-select-content[data-size="lg"] { --brick-select-item-min-block-size: var(--brick-control-min-block-size-lg); }
 
   .brick-select-viewport { box-sizing: border-box; max-block-size: inherit; overflow-y: auto; padding: var(--brick-select-content-padding); overscroll-behavior: contain; scrollbar-width: thin; }
   .brick-select-group + .brick-select-group { margin-block-start: var(--brick-space-1); }

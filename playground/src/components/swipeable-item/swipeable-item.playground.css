@@ -2,7 +2,7 @@
 .swipeable-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); }
 .swipeable-grid > * { min-inline-size: 0; }
 .swipeable-message { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--brick-space-3); padding: var(--brick-space-4); }
-.swipeable-customization { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: start; gap: var(--brick-space-5); }
+.swipeable-customization { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: stretch; gap: var(--brick-space-5); }
 .swipeable-customization .brick-swipeable-item { margin-block-start: var(--brick-space-2); }
 .swipeable-phone { inline-size: 20rem; max-inline-size: 100%; }
 .swipeable-cell > .brick-swipeable-item, [data-brick-appearance] > .brick-swipeable-item { margin-block-start: var(--brick-space-3); }

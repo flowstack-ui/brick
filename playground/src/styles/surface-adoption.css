@@ -8,6 +8,37 @@
   color: var(--brick-surface-foreground);
 }
 
+/* Shared code-and-preview evidence uses one clipped surface and a true divider. */
+.playground-customization-evidence {
+  min-inline-size: 0;
+  overflow: clip;
+}
+
+.playground-customization-layout {
+  min-inline-size: 0;
+  align-items: stretch;
+  gap: var(--brick-border-width) !important;
+  background: var(--brick-color-border-subtle);
+}
+
+.playground-customization-layout > * {
+  min-inline-size: 0;
+  block-size: 100%;
+  padding: var(--brick-space-5);
+  background: var(--brick-color-surface-raised);
+}
+
+.playground-customization-preview {
+  display: grid;
+  align-content: center;
+}
+
+@media (max-width: 28rem) {
+  .playground-customization-layout > * {
+    padding: var(--brick-space-4);
+  }
+}
+
 :where(
   .button-specimen-grid,
   .button-appearance-grid,

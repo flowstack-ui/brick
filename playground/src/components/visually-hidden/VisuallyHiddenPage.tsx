@@ -4,7 +4,6 @@ import {
   Grid,
   HStack,
   Icon,
-  Surface,
   Text,
   VisuallyHidden,
   VStack,
@@ -44,6 +43,6 @@ export function VisuallyHiddenPage() {
     <Scenario {...visuallyHiddenScenarios[2]}><RenderedOutput label="Visually Hidden HTML"><span className="visually-hidden-output-host"><Icon><SearchGraphic /></Icon><VisuallyHidden.Root>Search projects</VisuallyHidden.Root></span></RenderedOutput></Scenario>
     <Scenario {...visuallyHiddenScenarios[3]}><VStack gap="4"><Grid.Root columns={2} className="visually-hidden-grid"><Cell label="render host"><VisuallyHidden.Root render={(props) => <strong {...props} data-adapter="render" />}>Urgent context</VisuallyHidden.Root></Cell><Cell label="asChild host"><VisuallyHidden.Root asChild><em data-adapter="as-child">Emphasized context</em></VisuallyHidden.Root></Cell></Grid.Root><RenderedOutput label="Composed Visually Hidden HTML"><VisuallyHidden.Root asChild><em data-adapter="as-child">Composed context</em></VisuallyHidden.Root></RenderedOutput></VStack></Scenario>
     <Scenario {...visuallyHiddenScenarios[4]}><EvidenceSurface><HStack gap="4" wrap><VisuallyHidden.Root className="consumer-hidden" data-purpose="context" data-slot="private-context" ref={(node) => { if (node && host === "not inspected") setHost(node.tagName); }}>Native context</VisuallyHidden.Root><Button onClick={() => setHost(document.querySelector("[data-purpose=context]")?.tagName ?? "missing")} tone="neutral" variant="outline">Inspect ref host</Button><Text data-testid="visually-hidden-ref-result">Ref host: {host}</Text></HStack></EvidenceSurface></Scenario>
-    <Scenario {...visuallyHiddenScenarios[5]}><Grid.Root columns={2} className="visually-hidden-grid"><Surface bordered data-brick-appearance="dark" inset="md"><SpecimenLabel>dark appearance</SpecimenLabel><NamedAction label="Open the shared workspace search with a deliberately long accessible name" /></Surface><Surface bordered dir="rtl" inset="md"><SpecimenLabel>RTL narrow frame</SpecimenLabel><div className="visually-hidden-narrow"><NamedAction label="البحث في المشاريع المشتركة" /></div></Surface></Grid.Root></Scenario>
+    <Scenario {...visuallyHiddenScenarios[5]}><Grid.Root columns={2} className="visually-hidden-grid" data-testid="visually-hidden-stress-grid"><EvidenceSurface className="visually-hidden-stress-panel" data-brick-appearance="dark"><SpecimenLabel>dark appearance</SpecimenLabel><NamedAction label="Open the shared workspace search with a deliberately long accessible name" /></EvidenceSurface><EvidenceSurface className="visually-hidden-stress-panel" dir="rtl"><SpecimenLabel>RTL narrow frame</SpecimenLabel><div className="visually-hidden-narrow"><NamedAction label="البحث في المشاريع المشتركة" /></div></EvidenceSurface></Grid.Root></Scenario>
   </VStack>;
 }

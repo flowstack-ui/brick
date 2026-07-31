@@ -30,3 +30,31 @@ test("RTL, narrow layout, and accessibility remain correct", async ({ page }) =>
   await expect(page.getByRole("button", { name: "البحث في المشاريع المشتركة" })).toBeVisible();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 });
+
+test("scenario rhythm and stress cards keep labels separate from content", async ({ page }) => {
+  const scenarios = await page.locator(".visually-hidden-page > .scenario").evaluateAll((nodes) => nodes.slice(0, 3).map((node) => {
+    const box = node.getBoundingClientRect();
+    return { bottom: box.bottom, top: box.top };
+  }));
+  expect(scenarios[1]!.top - scenarios[0]!.bottom).toBeGreaterThanOrEqual(32);
+  expect(scenarios[2]!.top - scenarios[1]!.bottom).toBeGreaterThanOrEqual(32);
+
+  const grid = page.getByTestId("visually-hidden-stress-grid");
+  expect(parseFloat(await grid.evaluate((node) => getComputedStyle(node).gap))).toBeGreaterThanOrEqual(16);
+  const panels = grid.locator(".visually-hidden-stress-panel");
+  await expect(panels).toHaveCount(2);
+  for (const panel of await panels.all()) {
+    const layout = await panel.evaluate((node) => {
+      const label = node.querySelector<HTMLElement>(".playground-specimen-label")!.getBoundingClientRect();
+      const content = node.children[1]!.getBoundingClientRect();
+      return {
+        display: getComputedStyle(node).display,
+        gap: parseFloat(getComputedStyle(node).gap),
+        separated: content.top > label.bottom,
+      };
+    });
+    expect(layout.display).toBe("grid");
+    expect(layout.gap).toBeGreaterThanOrEqual(16);
+    expect(layout.separated).toBe(true);
+  }
+});

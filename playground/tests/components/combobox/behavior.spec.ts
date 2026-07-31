@@ -7,7 +7,9 @@ test("Combobox defaults, filtering, selection, clearing, and keyboard remain int
   const overview = page.locator('[data-scenario="combobox.overview"]'); const input = overview.getByRole("combobox", { name: "City" });
   await expect(overview.locator(".brick-combobox-control")).toHaveAttribute("data-variant", "outline");
   await input.fill("lis");
-  await expect(page.getByRole("option", { name: "Lisbon" })).toBeVisible(); await input.press("ArrowDown"); await input.press("Enter");
+  const content = page.locator(".brick-combobox-content:visible");
+  await expect(content).toHaveAttribute("data-size", "md");
+  await expect(page.getByRole("option", { name: "Lisbon" })).toHaveCSS("min-height", "44px"); await input.press("ArrowDown"); await input.press("Enter");
   await expect(input).toHaveValue("Lisbon"); await overview.getByRole("button", { name: "Clear city" }).click(); await expect(input).toHaveValue("");
 });
 
@@ -28,6 +30,52 @@ test("recipes and RTL retain closed visual contracts", async ({ page }) => {
   const controls = page.locator('[data-scenario="combobox.recipes"] .brick-combobox-control'); await expect(controls).toHaveCount(3);
   for (let i=0;i<3;i+=1) await expect(controls.nth(i)).toHaveAttribute("data-variant", ["outline","soft","underline"][i]);
   await expect(page.locator('[data-scenario="combobox.stress"]').getByRole("combobox", { name: "المدينة" })).toBeVisible();
+});
+
+test("playground evidence is concise, aligned, and clearly separated", async ({ page }) => {
+  const anatomy = page.locator('[data-scenario="combobox.anatomy"]');
+  await expect(anatomy.getByRole("combobox")).toHaveCount(1);
+  await expect(anatomy.locator(".playground-output-evidence")).toHaveCSS("overflow", "hidden");
+  const codeBlock = anatomy.locator("[data-rendered-output]");
+  expect(await codeBlock.evaluate((element) => element.clientHeight)).toBeLessThanOrEqual(160);
+  expect(await codeBlock.evaluate((element) => element.scrollHeight)).toBeGreaterThan(await codeBlock.evaluate((element) => element.clientHeight));
+
+  if ((await page.viewportSize())!.width > 760) {
+    for (const scenario of ["combobox.behavior", "combobox.states"]) {
+      const cells = page.locator(`[data-scenario="${scenario}"] .combobox-cell`);
+      const heights = await cells.evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().height));
+      for (let index = 0; index < heights.length; index += 2) expect(heights[index]).toBeCloseTo(heights[index + 1], 1);
+    }
+  }
+
+  const appearance = page.locator('[data-scenario="combobox.appearance"]');
+  for (const surface of await appearance.locator(".combobox-appearance-surface").all()) {
+    const badgeBox = await surface.locator(".brick-badge").boundingBox();
+    const fieldBox = await surface.locator(".brick-field").boundingBox();
+    expect(badgeBox).not.toBeNull();
+    expect(fieldBox).not.toBeNull();
+    expect(fieldBox!.y - badgeBox!.y - badgeBox!.height).toBeGreaterThanOrEqual(8);
+  }
+  await expect(appearance.getByText("Customized", { exact: true })).not.toHaveAttribute("data-tone", "accent");
+
+  const customization = appearance.locator(".combobox-customization");
+  await expect(customization).toHaveCSS("gap", "1px");
+  await expect(customization.locator(":scope > *")).toHaveCount(2);
+  const stress = page.locator('[data-scenario="combobox.stress"] .combobox-grid');
+  await expect(stress).toHaveCSS("gap", "16px");
+  await expect(stress.locator(".combobox-cell")).toHaveCount(2);
+});
+
+test("option rows inherit small, medium, and large control density", async ({ page }) => {
+  const sizing = page.locator('[data-scenario="combobox.sizing"] .combobox-grid').first();
+  const triggers = sizing.getByRole("button", { name: "Toggle City options" });
+  for (const [index, size] of ["sm", "md", "lg"].entries()) {
+    await triggers.nth(index).click();
+    const content = page.locator(".brick-combobox-content:visible");
+    await expect(content).toHaveAttribute("data-size", size);
+    await expect(content.getByRole("option").first()).toHaveCSS("min-height", ["36px", "44px", "52px"][index]);
+    await page.keyboard.press("Escape");
+  }
 });
 
 test("popup positions, flips when constrained, and route has no axe violations", async ({ page }) => {

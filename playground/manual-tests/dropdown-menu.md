@@ -20,7 +20,8 @@ Use `pass`, `fail`, `blocked`, or `not applicable`; leave results blank until te
 
 Open `/dropdown-menu` and review scenarios 01–03 top to bottom. Operate each example.
 Expected: the default is medium; only the named size or anatomy changes; text,
-icons, shortcuts, focus, and popup geometry remain aligned.
+icons, shortcuts, focus, and popup geometry remain aligned. Confirm `sm`, `md`,
+and `lg` command rows have 32px, 44px, and 48px minimum heights.
 
 ## Step 2 — State and behavior
 
