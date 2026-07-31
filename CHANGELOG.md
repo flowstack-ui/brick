@@ -6,6 +6,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Changed
 
+- Upgraded the exact Atom dependency to `0.20.3`; modal Dialog, Alert Dialog,
+  Drawer, Popover, Dropdown Menu, and Context Menu now preserve sticky
+  application chrome while background scrolling remains locked.
+
 - Added explicit focused, repository, and release verification tiers; focused
   visual selection; single-build repository orchestration; and progress output
   for clean React consumer checks without changing component runtime behavior.

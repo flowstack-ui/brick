@@ -1,5 +1,20 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
+
+async function readShellViewportOffsets(page: Page) {
+  return page.evaluate(() => {
+    const readOffset = (selector: string) => {
+      const element = document.querySelector<HTMLElement>(selector);
+      if (!element || getComputedStyle(element).display === "none") return null;
+      return element.getBoundingClientRect().y;
+    };
+    return {
+      appBar: readOffset(".evidence-app-bar"),
+      reviewHeader: readOffset(".evidence-review-header"),
+      sidebar: readOffset(".evidence-sidebar"),
+    };
+  });
+}
 
 test("persistent Popover previews stay below the sticky header", async ({ page }) => {
   await page.goto("/popover");
@@ -93,23 +108,30 @@ test("Popover modal mode traps focus and closes through its visible action", asy
   await page.goto("/popover");
   const appBar = page.locator(".evidence-app-bar");
   const sidebar = page.locator(".evidence-sidebar");
-  const shellVisibility = {
-    appBar: await appBar.isVisible(),
-    sidebar: await sidebar.isVisible(),
-  };
   const trigger = page.getByRole("button", { name: "Open modal settings" });
-  await trigger.click();
+  await trigger.scrollIntoViewIfNeeded();
+  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+  const shellOffsets = await readShellViewportOffsets(page);
+  if (shellOffsets.appBar === 0) {
+    expect(shellOffsets.sidebar).not.toBeNull();
+    expect(shellOffsets.reviewHeader).not.toBeNull();
+  }
+  await trigger.evaluate((element) => (element as HTMLElement).click());
   const popover = page.getByRole("dialog", { name: "Open modal settings" });
   await expect(popover).toHaveAttribute("aria-modal", "true");
   await expect(popover).toHaveCSS("opacity", "1");
-  expect(await appBar.isVisible()).toBe(shellVisibility.appBar);
-  expect(await sidebar.isVisible()).toBe(shellVisibility.sidebar);
+  await expect.poll(() => readShellViewportOffsets(page)).toEqual(shellOffsets);
+  await expect.poll(() => page.evaluate(() => document.documentElement.style.overflow)).toBe("hidden");
+  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).not.toBe("hidden");
+  if (shellOffsets.appBar === 0) await expect(appBar).toBeVisible();
+  if (shellOffsets.sidebar !== null) await expect(sidebar).toBeVisible();
   for (let index = 0; index < 6; index += 1) {
     await page.keyboard.press("Tab");
     expect(await popover.evaluate((element) => element.contains(document.activeElement))).toBe(true);
   }
   await popover.getByRole("button", { name: "Done" }).click();
   await expect(trigger).toBeFocused();
+  await expect.poll(() => readShellViewportOffsets(page)).toEqual(shellOffsets);
 });
 
 test("Popover remains contained at 256 px, supports RTL, and passes focused axe", async ({ page }) => {

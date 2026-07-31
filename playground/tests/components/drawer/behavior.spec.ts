@@ -153,7 +153,8 @@ test("Drawer preserves default and disabled dismissal policies", async ({
   const trigger = page.getByRole("button", { name: "Open event drawer" });
   await trigger.click();
   let drawer = page.getByRole("dialog", { name: "Dismissal evidence" });
-  await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
+  await expect(page.locator("html")).toHaveCSS("overflow", "hidden");
+  await expect(page.locator("body")).not.toHaveCSS("overflow", "hidden");
   await page.keyboard.press("Escape");
   await expect(drawer).toBeHidden();
   await expect(page.getByText("Closed: escapeKeyDown")).toBeVisible();

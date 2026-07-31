@@ -4,6 +4,11 @@ Drawer follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Inherited Atom's document-only scroll lock so sticky application chrome
+  remains anchored while Drawer is open at a nonzero page offset.
+
 ### Added
 
 - Initial modal-only twelve-part Drawer namespace with Root, Trigger, Portal,
