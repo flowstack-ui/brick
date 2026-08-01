@@ -14,7 +14,7 @@ test("Skip Link focused default and sticky overlay", async ({ page }) => {
   await expect(page.locator("#scenario-skip-link-native")).toHaveScreenshot("native-layout-light.png");
   await expect(page.locator("#scenario-skip-link-composition")).toHaveScreenshot("composition-layout-light.png");
   await expect(page.locator("#scenario-skip-link-stress")).toHaveScreenshot("stress-layout-light.png");
-  await hiddenSkipLinks.evaluate((node) => node.remove());
+  await hiddenSkipLinks.evaluate((node) => node.parentNode?.removeChild(node));
   const overview = page.getByRole("link", { name: "Skip repeated workspace navigation" });
   await overview.focus();
   await expect(overview).toHaveScreenshot("overview-focus-light.png");
@@ -41,7 +41,7 @@ test("Skip Link dark, customized, mobile RTL, and forced-colors focus", async ({
   await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
   const hiddenSkipLinks = await page.addStyleTag({ content: ".brick-skip-link { display: none !important; }" });
   await expect(page.locator("#scenario-skip-link-appearance")).toHaveScreenshot("appearance-mobile.png");
-  await hiddenSkipLinks.evaluate((node) => node.remove());
+  await hiddenSkipLinks.evaluate((node) => node.parentNode?.removeChild(node));
   const rtl = page.getByRole("link", { name: "تخطى أدوات التنقل وانتقل إلى المحتوى الرئيسي" });
   await rtl.focus();
   await expect(page).toHaveScreenshot("stress-focus-mobile.png");

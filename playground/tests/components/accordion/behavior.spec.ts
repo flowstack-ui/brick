@@ -25,7 +25,7 @@ test("specimens stay top-aligned while content opens and composition is not dupl
   const controlledRoot = controlled.locator(".brick-accordion");
   const topBefore = await controlledRoot.evaluate((element) => element.getBoundingClientRect().top + window.scrollY);
   const transition = await controlledRoot.getByRole("button", { name: "Account settings" }).evaluate(async (trigger) => {
-    trigger.click();
+    (trigger as HTMLElement).click();
     await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
     const content = trigger.closest(".brick-accordion-item")?.querySelector<HTMLElement>(".brick-accordion-content");
     return {
