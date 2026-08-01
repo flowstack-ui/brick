@@ -16,3 +16,5 @@ Icon Button follows the package version of `@flowstack-ui/brick`.
   direction.
 - Kept direct SVG and image children at the configured icon size when
   `asChild` composition removes the decorative wrapper.
+- Loading presentation now uses the shared private action-spinner recipe and
+  retains a visible system-color spinner in forced-color environments.

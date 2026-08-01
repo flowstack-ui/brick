@@ -355,6 +355,42 @@ test("Button preserves native keyboard activation and visible focus", async ({ p
   await expect(page).toHaveURL(/#scenario-button-states$/);
 });
 
+test("Button keeps disabled loading presentation centered and unavailable", async ({
+  page,
+}) => {
+  await page.goto("/button");
+
+  const unavailableLoading = page.getByTestId("button-disabled-loading");
+  await expect(unavailableLoading).toBeDisabled();
+  await expect(unavailableLoading).toHaveAttribute("aria-busy", "true");
+
+  const geometry = await unavailableLoading.evaluate((element) => {
+    const root = element.getBoundingClientRect();
+    const style = getComputedStyle(element);
+    const spinner = getComputedStyle(element, "::after");
+    const matrix = new DOMMatrixReadOnly(spinner.transform);
+    const spinnerWidth = Number.parseFloat(spinner.width);
+    return {
+      rootX: root.left + root.width / 2,
+      rootY: root.top + root.height / 2,
+      spinnerX:
+        root.left +
+        Number.parseFloat(style.borderLeftWidth) +
+        Number.parseFloat(spinner.left) +
+        matrix.e +
+        spinnerWidth / 2,
+      spinnerY:
+        root.top +
+        Number.parseFloat(style.borderTopWidth) +
+        Number.parseFloat(spinner.top) +
+        matrix.f +
+        Number.parseFloat(spinner.height) / 2,
+    };
+  });
+  expect(geometry.spinnerX).toBeCloseTo(geometry.rootX, 0);
+  expect(geometry.spinnerY).toBeCloseTo(geometry.rootY, 0);
+});
+
 test("Button reflows in a constrained mobile viewport", async ({ page }) => {
   await page.setViewportSize({ width: 256, height: 800 });
   await page.goto("/button");

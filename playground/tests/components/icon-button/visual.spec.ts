@@ -4,6 +4,7 @@ installVisualDefaults("/icon-button");
 
 test("Icon Button recipes", async ({ page }) => {
   await expect(page.getByTestId("icon-button-variants")).toHaveScreenshot("variants-light.png");
+  await expect(page.getByTestId("icon-button-states")).toHaveScreenshot("states-light.png");
   await expectEvidenceScreenshot(page, page.getByTestId("icon-button-composition"), "composition-output-light.png");
   await setAppearance(page, "dark");
   await expect(page.getByTestId("icon-button-tones")).toHaveScreenshot("tones-dark.png");

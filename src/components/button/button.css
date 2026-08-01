@@ -17,6 +17,11 @@
     --brick-button-line-height: var(--brick-typography-control-md-line-height);
     --brick-button-letter-spacing: var(--brick-typography-control-md-letter-spacing);
     --brick-button-icon-size: 1.125rem;
+    --brick-action-spinner-size: 1em;
+    --brick-action-spinner-color: var(
+      --brick-button-spinner-color,
+      var(--brick-button-foreground)
+    );
 
     position: relative;
     display: inline-flex;
@@ -91,24 +96,6 @@
 
   .brick-button[data-disabled][data-loading] {
     --brick-button-spinner-color: var(--brick-color-text-secondary);
-  }
-
-  .brick-button[data-loading]::after {
-    position: absolute;
-    inset-block-start: 50%;
-    inset-inline-start: 50%;
-    inline-size: 1em;
-    block-size: 1em;
-    border: 0.125rem solid transparent;
-    border-block-start-color: var(--brick-button-spinner-color, var(--brick-button-foreground));
-    border-inline-end-color: var(--brick-button-spinner-color, var(--brick-button-foreground));
-    border-radius: var(--brick-radius-full);
-    content: "";
-    animation: brick-button-spin 700ms linear infinite;
-  }
-
-  :where([dir="rtl"]) .brick-button[data-loading]::after {
-    animation-name: brick-button-spin-rtl;
   }
 
   .brick-button__content {
@@ -301,10 +288,6 @@
     .brick-button {
       transition-duration: 0ms;
     }
-
-    .brick-button[data-loading]::after {
-      animation-duration: 1400ms;
-    }
   }
 
   @media (forced-colors: active) {
@@ -322,31 +305,6 @@
       border-color: GrayText;
       color: GrayText;
       opacity: 1;
-    }
-
-    .brick-button[data-loading]::after {
-      border-block-start-color: ButtonText;
-      border-inline-end-color: ButtonText;
-    }
-  }
-
-  @keyframes brick-button-spin {
-    from {
-      transform: translate(-50%, -50%) rotate(0deg);
-    }
-
-    to {
-      transform: translate(-50%, -50%) rotate(360deg);
-    }
-  }
-
-  @keyframes brick-button-spin-rtl {
-    from {
-      transform: translate(50%, -50%) rotate(0deg);
-    }
-
-    to {
-      transform: translate(50%, -50%) rotate(360deg);
     }
   }
 }

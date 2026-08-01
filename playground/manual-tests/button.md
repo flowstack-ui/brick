@@ -82,13 +82,15 @@ Notes or issue:
 
 Setup: Open `07 States`.
 
-Action: Inspect start icon, end icon, disabled, and loading specimens. Focus
-the loading Button and attempt activation.
+Action: Inspect start icon, end icon, disabled, loading, and
+disabled-plus-loading specimens. Focus the loading Button and attempt
+activation.
 
 Expected: Icons are decorative unless their surrounding content supplies the
 meaning. Disabled cannot activate and preserves the default medium geometry.
 Loading remains focusable, preserves its accessible name and dimensions, blocks
-repeat activation, and shows one centered spinner.
+repeat activation, and shows one centered spinner. Combined disabled and
+loading presentation remains visibly unavailable without shifting geometry.
 
 Result:
 Notes or issue:

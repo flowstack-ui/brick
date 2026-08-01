@@ -20,3 +20,6 @@ Button follows the package version of `@flowstack-ui/brick`.
 
 - Full-width and intrinsically sized Buttons now use border-box sizing and can
   shrink and wrap without clipping at extreme zoom or constrained widths.
+- Loading presentation now uses the shared private action-spinner recipe while
+  preserving Button-specific sizing, colors, disabled treatment, and RTL and
+  preference behavior.

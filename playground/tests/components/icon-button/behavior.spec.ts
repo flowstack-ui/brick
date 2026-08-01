@@ -225,7 +225,7 @@ test("IconButton keeps one decorative icon and complete names across states", as
     };
   });
   expect(rtlSpinner).toEqual({
-    animationName: "brick-button-spin-rtl",
+    animationName: "brick-action-spinner-spin-rtl",
     insetBlockStart: "21px",
     insetInlineStart: "21px",
   });
@@ -357,6 +357,13 @@ test("IconButton honors reduced motion and forced-color boundaries", async ({
       (element) => getComputedStyle(element, "::after").animationDuration,
     ),
   ).toBe("1.4s");
+  const spinnerColors = await loading.evaluate((element) => {
+    const style = getComputedStyle(element, "::after");
+    return [style.borderTopColor, style.borderRightColor];
+  });
+  expect(
+    spinnerColors.every((color) => color !== "rgba(0, 0, 0, 0)"),
+  ).toBe(true);
 
   const outline = page.getByRole("button", { name: "outline menu" });
   expect(

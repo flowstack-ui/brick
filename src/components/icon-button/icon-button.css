@@ -9,6 +9,8 @@
     --brick-icon-button-border-color: transparent;
     --brick-icon-button-foreground: var(--brick-icon-button-tone-text);
     --brick-icon-button-spinner-color: var(--brick-icon-button-foreground);
+    --brick-action-spinner-size: var(--brick-icon-button-icon-size);
+    --brick-action-spinner-color: var(--brick-icon-button-spinner-color);
 
     position: relative;
     display: inline-flex;
@@ -216,24 +218,6 @@
     opacity: 0;
   }
 
-  .brick-icon-button[data-loading]::after {
-    position: absolute;
-    inset-block-start: 50%;
-    inset-inline-start: 50%;
-    inline-size: var(--brick-icon-button-icon-size);
-    block-size: var(--brick-icon-button-icon-size);
-    border: 0.125rem solid transparent;
-    border-block-start-color: var(--brick-icon-button-spinner-color);
-    border-inline-end-color: var(--brick-icon-button-spinner-color);
-    border-radius: var(--brick-radius-full);
-    content: "";
-    animation: brick-button-spin 700ms linear infinite;
-  }
-
-  :where([dir="rtl"]) .brick-icon-button[data-loading]::after {
-    animation-name: brick-button-spin-rtl;
-  }
-
   @media (hover: hover) and (pointer: fine) {
     .brick-icon-button:not([data-disabled], [data-loading]):hover {
       border-color: var(--brick-icon-button-border-color);
@@ -244,10 +228,6 @@
   @media (prefers-reduced-motion: reduce) {
     .brick-icon-button {
       transition-duration: 0ms;
-    }
-
-    .brick-icon-button[data-loading]::after {
-      animation-duration: 1400ms;
     }
   }
 
