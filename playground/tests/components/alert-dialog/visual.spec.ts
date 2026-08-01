@@ -1,4 +1,4 @@
-import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
+import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
 installVisualDefaults("/alert-dialog");
 
@@ -6,6 +6,7 @@ test("Alert Dialog default and anatomy surfaces", async ({ page }) => {
   await page.getByRole("button", { name: "Delete project?" }).click();
   await expect(page).toHaveScreenshot("overview-light.png");
   await page.getByRole("button", { name: "Keep project" }).click();
+  await expectEvidenceScreenshot(page, page.getByTestId("alert-dialog-appearance"), "appearance-light.png");
   await setAppearance(page, "dark");
   await page.getByRole("button", { name: "Inspect decision anatomy" }).click();
   await expect(page).toHaveScreenshot("anatomy-dark.png");

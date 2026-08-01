@@ -6,6 +6,7 @@ const sizes: NavigationMenuSize[] = ["sm", "md", "lg"];
 const props: NavigationMenuRootProps = { children: null, size: "md", orientation: "horizontal" };
 createElement(NavigationMenu.Root, { ...props, ref });
 createElement(NavigationMenu.Link, { children: "Pricing", href: "/pricing", active: true });
+createElement(NavigationMenu.IndicatorArrow, { className: "custom-arrow" });
 createElement(RootNavigationMenu.Root, props);
 // @ts-expect-error closed size
 createElement(NavigationMenu.Root, { size: "xl" });

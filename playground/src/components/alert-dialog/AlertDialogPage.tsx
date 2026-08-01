@@ -132,7 +132,7 @@ function ScopedAlertDialog({
       data-brick-appearance={appearance}
       ref={setContainer}
     >
-      <span>{appearance === "light" ? "Light" : "Dark"} scope</span>
+      <SpecimenLabel>{appearance === "light" ? "Light" : "Dark"}</SpecimenLabel>
       {container ? (
         <AlertDialog.Root>
           <AlertDialog.Trigger asChild>
@@ -633,6 +633,7 @@ export function AlertDialogPage() {
         <div className="alert-dialog-customization-list">
           <EvidenceSurface as="article" className="alert-dialog-customization" inset="lg">
             <div>
+              <SpecimenLabel>Token override</SpecimenLabel>
               <Text as="h4" variant="title-sm">Component CSS properties</Text>
               <Text as="p" tone="secondary" variant="body-sm">
                 Public AlertDialog tokens change spacing, radius, and elevation
@@ -693,6 +694,7 @@ export function AlertDialogPage() {
 
           <EvidenceSurface as="article" className="alert-dialog-customization" inset="lg">
             <div>
+              <SpecimenLabel>Consumer hooks</SpecimenLabel>
               <Text as="h4" variant="title-sm">Consumer hooks and Button tone</Text>
               <Text as="p" tone="secondary" variant="body-sm">
                 Portal-safe class, style, and slot hooks customize the surface;

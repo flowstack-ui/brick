@@ -6,6 +6,12 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Changed
 
+- Refined Navigation Menu with compact disclosure chevrons, a one-pixel current
+  underline, and a surface-matched Indicator arrow instead of the previous
+  thick open-trigger bar; added the public decorative `IndicatorArrow` part.
+  Its Viewport now uses the restrained control radius by default while retaining
+  the public radius variable for intentional local customization.
+
 - Upgraded the exact Atom dependency to `0.20.6`; modal Dialog, Alert Dialog,
   Drawer, Popover, Dropdown Menu, and Context Menu preserve sticky application
   chrome while background scrolling remains locked, and Select preserves
@@ -106,6 +112,12 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   orientation, RTL, three sizes, and a complete circular visual.
 
 ### Fixed
+
+- Kept vertical Navigation Menu Viewports aligned with Atom's measured active
+  trigger so the Indicator arrow does not detach on later items.
+
+- Corrected Icon's direct-SVG `asChild` sizing so the composed root keeps the
+  selected square size instead of expanding to its surrounding container.
 
 - Updated the exact Atom runtime dependency to `0.20.2` so opening Combobox
   options from its chevron lets mobile browsers reveal the focused input above

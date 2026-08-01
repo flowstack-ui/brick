@@ -1,6 +1,7 @@
 import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Button, Code, Grid, HStack, Text, VStack, type CodeSize, type CodeTone, type CodeVariant } from "@flowstack-ui/brick";
 import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
@@ -37,7 +38,12 @@ export function CodePage() {
     <Scenario {...codeScenarios[3]}><Grid.Root className="code-grid" columns={3} data-testid="code-sizes">{sizes.map((size) => <Cell key={size} label={size}><Code size={size}>{sample}</Code></Cell>)}</Grid.Root></Scenario>
     <Scenario {...codeScenarios[4]}><Grid.Root className="code-grid" columns={2} data-testid="code-context"><Cell label="body-md context"><Text as="p">Set <Code>data-state</Code> on the rendered host.</Text></Cell><Cell label="long token"><Text as="p"><Code>--brick-code-extremely-long-custom-property-name-that-must-wrap-safely</Code></Text></Cell></Grid.Root></Scenario>
     <Scenario {...codeScenarios[5]}><VStack gap="4" data-testid="code-native"><RenderedOutput label="Code HTML"><Code aria-label="CSS property" className="consumer-code" data-owner="playground" id="code-native-property" ref={ref} slot="property"><span>--brick-space-4</span></Code></RenderedOutput><HStack gap="3"><Button onClick={() => setHost(ref.current?.tagName ?? "missing")} tone="neutral" variant="outline">Inspect ref</Button><Text>Ref host: {host}</Text></HStack></VStack></Scenario>
-    <Scenario {...codeScenarios[6]}><VStack gap="4"><Grid.Root className="code-grid" columns={2} data-testid="code-appearance"><EvidenceSurface data-brick-appearance="light"><Code>{sample}</Code></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><Code>{sample}</Code></EvidenceSurface></Grid.Root><Cell label="custom CSS properties"><Code style={custom}>custom-token</Code></Cell></VStack></Scenario>
+    <Scenario {...codeScenarios[6]}><VStack gap="4"><Grid.Root className="code-grid" columns={2} data-testid="code-appearance"><EvidenceSurface className="code-cell" data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><div className="code-cell__preview"><Code>{sample}</Code></div></EvidenceSurface><EvidenceSurface className="code-cell" data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><div className="code-cell__preview"><Code>{sample}</Code></div></EvidenceSurface></Grid.Root><EvidenceSurface className="playground-customization-evidence" inset="none"><Grid.Root className="playground-customization-layout" columns={2} gap="0"><VStack gap="2"><SpecimenLabel>Customized</SpecimenLabel><Text as="h3" variant="title-sm">Code CSS properties</Text><Text tone="secondary" variant="body-sm">The preview uses the exact background, border, foreground, and radius properties shown here.</Text><PlaygroundCodeBlock aria-label="Code customization example">{`.custom-code {
+  --brick-code-background: #e8def8;
+  --brick-code-border-color: #6750a4;
+  --brick-code-foreground: #3f1d78;
+  --brick-code-radius: 0.5rem;
+}`}</PlaygroundCodeBlock></VStack><div className="playground-customization-preview"><Code style={custom}>custom-token</Code></div></Grid.Root></EvidenceSurface></VStack></Scenario>
     <Scenario {...codeScenarios[7]}><Grid.Root className="code-grid" columns={2} data-testid="code-stress"><Cell label="narrow long token"><div className="code-narrow"><Code>package/really-long-generated-module-name/without-breakpoints.ts</Code></div></Cell><Cell label="RTL prose"><Text as="p" dir="rtl" lang="ar">استخدم <Code dir="ltr">aria-describedby</Code> لربط الوصف.</Text></Cell></Grid.Root></Scenario>
   </VStack>;
 }

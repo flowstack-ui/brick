@@ -7,9 +7,10 @@
 .aspect-ratio-media { display: block; inline-size: 100%; block-size: 100%; border: 0; object-fit: cover; }
 .aspect-ratio-photo { inline-size: 100%; block-size: 100%; background: linear-gradient(135deg, var(--brick-color-accent-subtle), var(--brick-color-surface-subtle)); }
 .aspect-ratio-overflow-marker::after { content: ""; position: absolute; inset: -0.5rem; border: 0.25rem solid var(--brick-color-accent-border); border-radius: inherit; pointer-events: none; }
-.aspect-ratio-appearance, .aspect-ratio-customization { display: grid; gap: var(--brick-space-3); min-inline-size: 0; }
-.aspect-ratio-appearance > .brick-badge, .aspect-ratio-customization > .brick-badge { justify-self: start; }
-.aspect-ratio-customization .aspect-ratio-frame { max-inline-size: 32rem; }
+.aspect-ratio-appearance { display: grid; gap: var(--brick-space-3); min-inline-size: 0; }
+.playground-customization-preview .aspect-ratio-frame { inline-size: min(100%, 32rem); }
 .aspect-ratio-composed { max-inline-size: 10rem; background: var(--brick-color-surface-subtle); }
+.aspect-ratio-rendered-article { inline-size: min(100%, 12rem); place-content: center; background: var(--brick-color-surface-subtle); }
+.aspect-ratio-invalid { inline-size: min(100%, 10rem); background: var(--brick-color-surface-subtle); }
 .aspect-ratio-stress .brick-aspect-ratio { max-inline-size: 18rem; }
 @media (max-width: 48rem) { .aspect-ratio-grid, .aspect-ratio-grid--ratios, .aspect-ratio-grid--radii { grid-template-columns: 1fr; } }

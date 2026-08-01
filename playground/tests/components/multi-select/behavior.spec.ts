@@ -67,6 +67,8 @@ test("keyboard keeps focus and selection distinct and skips disabled items", asy
 
 test("groups, viewport, indicator alignment, and Arrow stay integrated", async ({ page }) => {
   const options = page.getByTestId("multi-select-options");
+  await options.evaluate((element) => element.scrollIntoView({ block: "center" }));
+  await options.getByRole("button", { name: "Team skills" }).click();
   const listbox = options.getByRole("listbox");
   await expect(listbox.locator(".brick-multi-select-viewport")).toBeVisible();
   await expect(listbox.getByText("Disciplines", { exact: true })).toBeVisible();

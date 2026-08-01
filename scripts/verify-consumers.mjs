@@ -115,7 +115,7 @@ if (Skeleton !== SubpathSkeleton) throw new Error("Skeleton subpath export misma
 if (DropdownMenu !== SubpathDropdownMenu || Object.keys(SubpathDropdownMenu).length !== 20) throw new Error("Dropdown Menu subpath smoke failed");
 if (ContextMenu !== SubpathContextMenu || Object.keys(SubpathContextMenu).length !== 20) throw new Error("Context Menu subpath smoke failed");
 if (Menubar !== SubpathMenubar || Object.keys(SubpathMenubar).length !== 21) throw new Error("Menubar subpath smoke failed");
-if (NavigationMenu !== SubpathNavigationMenu || Object.keys(SubpathNavigationMenu).length !== 9) throw new Error("Navigation Menu subpath smoke failed");
+if (NavigationMenu !== SubpathNavigationMenu || Object.keys(SubpathNavigationMenu).length !== 10) throw new Error("Navigation Menu subpath smoke failed");
 if (BottomNavigation !== SubpathBottomNavigation || Object.keys(SubpathBottomNavigation).length !== 4) throw new Error("Bottom Navigation subpath smoke failed");
 if (VisuallyHidden !== SubpathVisuallyHidden || Object.keys(SubpathVisuallyHidden).length !== 1) throw new Error("Visually Hidden subpath smoke failed");
 if (Show !== SubpathShow || Hide !== SubpathHide) throw new Error("Responsive visibility subpath export mismatch");

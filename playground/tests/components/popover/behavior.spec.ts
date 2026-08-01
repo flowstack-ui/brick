@@ -16,10 +16,10 @@ async function readShellViewportOffsets(page: Page) {
   });
 }
 
-test("persistent Popover previews stay below the sticky header", async ({ page }) => {
+test("the persistent customization preview stays below the sticky header", async ({ page }) => {
   await page.goto("/popover");
   const previews = page.locator(".popover-persistent-preview");
-  await expect(previews).toHaveCount(3);
+  await expect(previews).toHaveCount(1);
   const headerLayer = await page
     .locator(".evidence-review-header")
     .evaluate((element) => Number(getComputedStyle(element).zIndex));

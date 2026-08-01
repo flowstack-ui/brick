@@ -137,7 +137,7 @@ function ScopedDrawer({
       data-brick-appearance={appearance}
       ref={setContainer}
     >
-      <span>{appearance === "light" ? "Light" : "Dark"} scope</span>
+      <SpecimenLabel>{appearance === "light" ? "Light" : "Dark"}</SpecimenLabel>
       {container ? (
         <Drawer.Root>
           <Drawer.Trigger asChild>
@@ -647,6 +647,7 @@ export function DrawerPage() {
         <div className="drawer-customization-list">
           <EvidenceSurface as="article" className="drawer-customization" inset="lg">
             <div>
+              <SpecimenLabel>Token override</SpecimenLabel>
               <Text as="h4" variant="title-sm">Component CSS properties</Text>
               <Text as="p" tone="secondary" variant="body-sm">
                 Public Drawer tokens change spacing, radius, and elevation for
@@ -707,6 +708,7 @@ export function DrawerPage() {
 
           <EvidenceSurface as="article" className="drawer-customization" inset="lg">
             <div>
+              <SpecimenLabel>Consumer hooks</SpecimenLabel>
               <Text as="h4" variant="title-sm">Consumer hooks</Text>
               <Text as="p" tone="secondary" variant="body-sm">
                 Portal-safe class, style, and slot hooks customize a local

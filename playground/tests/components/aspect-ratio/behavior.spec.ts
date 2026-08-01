@@ -45,11 +45,11 @@ test("child semantics, composition, customization, and ref remain exact", async 
   await expect(page.getByLabel("Composed square")).toHaveJSProperty("tagName", "SECTION");
   const invalid = await box(page.getByTestId("aspect-ratio-invalid"));
   expect(invalid.width / invalid.height).toBeCloseTo(16 / 9, 1);
-  await expect(page.getByTestId("aspect-ratio-appearance").locator(".brick-badge")).toHaveText(["light", "dark", "customized"]);
+  await expect(page.getByTestId("aspect-ratio-appearance").locator(".brick-badge")).toHaveText(["Light", "Dark", "Customized"]);
   const badgeWidths = await page.getByTestId("aspect-ratio-appearance").locator(".brick-badge").evaluateAll(elements => elements.map(element => element.getBoundingClientRect().width));
   expect(badgeWidths.every(width => width < 8 * 16)).toBe(true);
   await expect(page.getByTestId("aspect-ratio-appearance").getByRole("heading", { name: "Aspect Ratio CSS properties" })).toBeVisible();
-  const custom = page.getByTestId("aspect-ratio-appearance").locator(".aspect-ratio-customization .brick-aspect-ratio");
+  const custom = page.getByTestId("aspect-ratio-appearance").locator(".playground-customization-preview .brick-aspect-ratio");
   await expect(custom).toHaveCSS("border-radius", "16px");
   expect((await box(custom)).width).toBeLessThanOrEqual(32 * 16);
 });

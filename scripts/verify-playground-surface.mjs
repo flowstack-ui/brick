@@ -71,9 +71,46 @@ for (const { path, source } of playgroundTsx) {
   );
   assert.doesNotMatch(
     source,
-    /<Code>(?:light|dark)<\/Code>|<Badge\b[^>]*>(?:light|dark|Light|Dark|custom|customized|Customized)<\/Badge>/,
+    /<Code>(?:light|dark)<\/Code>|<Badge\b[^>]*>\s*(?:light|dark|Light|Dark|custom|customized|Customized)\s*<\/Badge>/,
     `${path} bypasses the shared SpecimenLabel contract`,
   );
+  assert.doesNotMatch(
+    source,
+    /className="forms-customization"[^>]*>\s*<SpecimenLabel>/,
+    `${path} places a third direct child in the two-column customization layout`,
+  );
+}
+
+const customizationContracts = new Map([
+  ["playground/src/components/aspect-ratio/AspectRatioPage.tsx", "shared"],
+  ["playground/src/components/bottom-navigation/BottomNavigationPage.tsx", "shared"],
+  ["playground/src/components/context-menu/ContextMenuPage.tsx", "shared"],
+  ["playground/src/components/divider/DividerPage.tsx", "shared"],
+  ["playground/src/components/navigation-menu/NavigationMenuPage.tsx", "shared"],
+  ["playground/src/components/rating/RatingPage.tsx", "shared"],
+  ["playground/src/components/slider/SliderPage.tsx", "shared"],
+  ["playground/src/components/surface/SurfacePage.tsx", "shared"],
+  ["playground/src/components/toast/ToastPage.tsx", "shared"],
+  ["playground/src/components/hover-card/HoverCardPage.tsx", "legacy"],
+  ["playground/src/components/popover/PopoverPage.tsx", "legacy"],
+  ["playground/src/components/tooltip/TooltipPage.tsx", "legacy"],
+]);
+
+for (const [path, contract] of customizationContracts) {
+  const source = playgroundTsx.find((entry) => entry.path === path)?.source ?? "";
+  assert.match(source, /<SpecimenLabel>Customized<\/SpecimenLabel>/, `${path} omits its customization label`);
+  if (contract === "shared") {
+    assert.match(source, /className="playground-customization-evidence"/);
+    assert.match(source, /className="playground-customization-layout"/);
+    assert.match(source, /className="[^"]*playground-customization-preview[^"]*"/);
+  } else {
+    assert.match(source, /className="(?:hover-card|popover|tooltip)-customization" inset="none"/);
+    assert.doesNotMatch(
+      source,
+      /<EvidenceSurface className="(?:hover-card|popover|tooltip)-customization__preview"/,
+      `${path} retains a nested evidence surface around its customization preview`,
+    );
+  }
 }
 const evidenceSurface = await read("playground/src/shared/EvidenceSurface.tsx");
 assert.match(evidenceSurface, /<Surface/);

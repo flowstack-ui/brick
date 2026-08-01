@@ -336,6 +336,7 @@ export function TextPage() {
           >
             <EvidenceSurface as="article" className="text-customization" inset="lg">
               <div>
+                <SpecimenLabel>Customized</SpecimenLabel>
                 <Text as="h4" variant="title-sm">Local Text variables</Text>
                 <Text as="p" tone="secondary" variant="body-sm">Size, weight, tracking, and foreground change on this instance only.</Text>
                 <PlaygroundCodeBlock aria-label="Text customization example" tabIndex={0}>{`<Text

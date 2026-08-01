@@ -607,6 +607,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "NavigationMenu",
       "NavigationMenuContent",
       "NavigationMenuIndicator",
+      "NavigationMenuIndicatorArrow",
       "NavigationMenuItem",
       "NavigationMenuLink",
       "NavigationMenuList",

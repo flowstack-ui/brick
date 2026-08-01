@@ -137,7 +137,7 @@ export function TooltipPage() {
           <VStack className="tooltip-evidence-stack">
             <EvidenceGroup description="Focus or hover each trigger to inspect its same-document portal inside the local light or dark token scope." title="Scoped appearances"><Grid.Root columns={2} className="tooltip-scoped-grid" data-testid="tooltip-appearance"><ScopedTooltip appearance="light" /><ScopedTooltip appearance="dark" /></Grid.Root></EvidenceGroup>
             <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-              <EvidenceSurface as="article" className="tooltip-customization" inset="lg"><div><Text as="h4" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Focus or hover the trigger to inspect the customized Content class, slot, native style, and public Tooltip tokens.</Text><PlaygroundCodeBlock aria-label="Tooltip customization example" tabIndex={0}>{`<Tooltip.Content
+              <EvidenceSurface as="article" className="tooltip-customization" inset="none"><div><SpecimenLabel>Customized</SpecimenLabel><Text as="h4" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Focus or hover the trigger to inspect the customized Content class, slot, native style, and public Tooltip tokens.</Text><PlaygroundCodeBlock aria-label="Tooltip customization example" tabIndex={0}>{`<Tooltip.Content
   className="custom-tooltip"
   data-slot="custom-tooltip"
   style={{
@@ -150,7 +150,7 @@ export function TooltipPage() {
 >
   Customized tooltip
   <Tooltip.Arrow />
-</Tooltip.Content>`}</PlaygroundCodeBlock></div><EvidenceSurface className="tooltip-customization__preview"><Tooltip.Provider closeDelay={0} openDelay={0}><Tooltip.Root><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">Custom trigger</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content className="custom-tooltip" data-slot="custom-tooltip" style={customTokens}>Customized tooltip<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></Tooltip.Provider></EvidenceSurface></EvidenceSurface>
+</Tooltip.Content>`}</PlaygroundCodeBlock></div><div className="tooltip-customization__preview"><Tooltip.Provider closeDelay={0} openDelay={0}><Tooltip.Root><Tooltip.Trigger asChild><Button tone="neutral" variant="outline">Custom trigger</Button></Tooltip.Trigger><Tooltip.Portal><Tooltip.Content className="custom-tooltip" data-slot="custom-tooltip" style={customTokens}>Customized tooltip<Tooltip.Arrow /></Tooltip.Content></Tooltip.Portal></Tooltip.Root></Tooltip.Provider></div></EvidenceSurface>
             </EvidenceGroup>
           </VStack>
         </Scenario>

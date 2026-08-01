@@ -23,11 +23,14 @@
     transform: scaleX(var(--brick-icon-direction-scale));
   }
 
-  .brick-icon > svg,
-  svg.brick-icon {
+  .brick-icon > svg {
     display: block;
     inline-size: 100%;
     block-size: 100%;
+  }
+
+  svg.brick-icon {
+    display: block;
   }
 
   .brick-icon[data-size="2xs"] { --brick-icon-size: var(--brick-icon-size-2xs); }

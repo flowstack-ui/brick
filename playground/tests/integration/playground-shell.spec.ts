@@ -271,3 +271,34 @@ test("component navigation uses responsive visibility and alphabetical ordering"
   await expect(desktopNavigation).toBeVisible();
   await expect(page.locator('button[aria-label="Open component navigation"]')).not.toBeFocused();
 });
+
+test("component navigation keeps the shell and sidebar mounted while starting the page at the top", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/button");
+
+  const sidebarViewport = page.locator(
+    ".evidence-sidebar-scroll > .brick-scroll-area-viewport",
+  );
+  await sidebarViewport.evaluate((viewport) => { viewport.scrollTop = 480; });
+  await page.evaluate(() => {
+    window.scrollTo(0, 700);
+    (window as typeof window & { playgroundShellMarker?: string }).playgroundShellMarker = "preserved";
+  });
+  const sidebarScrollTop = await sidebarViewport.evaluate((viewport) => viewport.scrollTop);
+  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+
+  await page
+    .getByRole("navigation", { name: "Component navigation" })
+    .getByRole("link", { exact: true, name: "Icon" })
+    .evaluate((link) => (link as HTMLAnchorElement).click());
+
+  await expect(page).toHaveURL(/\/icon$/);
+  await expect(page.getByRole("heading", { level: 1, name: "Icon" })).toBeVisible();
+  await expect.poll(() => sidebarViewport.evaluate((viewport) => viewport.scrollTop)).toBe(sidebarScrollTop);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+  expect(await page.evaluate(() =>
+    (window as typeof window & { playgroundShellMarker?: string }).playgroundShellMarker,
+  )).toBe("preserved");
+});

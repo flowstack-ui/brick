@@ -1,0 +1,18 @@
+[data-testid="navigation-menu-appearance"] {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+[data-testid="navigation-menu-appearance"] > .menu-scoped-panel {
+  display: grid;
+  min-block-size: 20rem;
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  align-content: stretch;
+  justify-content: stretch;
+}
+
+[data-testid="navigation-menu-appearance"] > .menu-scoped-panel > .brick-navigation-menu {
+  align-self: start;
+  justify-self: center;
+  margin-block-start: var(--brick-space-5);
+}

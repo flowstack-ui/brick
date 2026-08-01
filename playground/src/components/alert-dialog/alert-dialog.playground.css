@@ -140,6 +140,16 @@
   color: var(--brick-color-text-primary);
 }
 
+.alert-dialog-appearance-panel {
+  grid-template-rows: auto 1fr;
+  place-items: center;
+  align-content: stretch;
+}
+
+.alert-dialog-appearance-panel > .playground-specimen-label {
+  justify-self: start;
+}
+
 .alert-dialog-appearance-panel > span {
   color: var(--brick-color-text-secondary);
   font-size: var(--brick-font-size-sm);

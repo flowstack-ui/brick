@@ -1,4 +1,4 @@
-import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
+import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
 installVisualDefaults("/drawer");
 
@@ -6,6 +6,7 @@ test("Drawer default and anatomy surfaces", async ({ page }) => {
   await page.getByRole("button", { name: "Filter projects" }).click();
   await expect(page).toHaveScreenshot("end-md-light.png");
   await page.getByRole("button", { name: "Cancel" }).click();
+  await expectEvidenceScreenshot(page, page.getByTestId("drawer-appearance"), "appearance-light.png");
   await setAppearance(page, "dark");
   await page.getByRole("button", { name: "Inspect drawer anatomy" }).click();
   await expect(page).toHaveScreenshot("anatomy-lg-dark.png");

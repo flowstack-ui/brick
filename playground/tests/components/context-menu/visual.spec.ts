@@ -13,6 +13,10 @@ test("context-menu defaults and complete recipes", async ({ page }) => {
   await expect(page.getByTestId("context-menu-states")).toHaveScreenshot("states-light.png");
   await setAppearance(page, "dark");
   await expect(page.getByTestId("context-menu-appearance")).toHaveScreenshot("appearance-dark.png");
+  await setAppearance(page, "light");
+  const customization = page.locator(".playground-customization-evidence");
+  await customization.evaluate((element) => element.scrollIntoView({ block: "center" }));
+  await expect(customization).toHaveScreenshot("customization-light.png");
 });
 
 test("context-menu responsive and forced colors", async ({ page }) => {

@@ -1,4 +1,3 @@
-import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
@@ -67,7 +66,7 @@ function SettingsPopover({ label, modal = false, side = "bottom", size, align = 
 function ScopedPopover({ appearance }: { appearance: "light" | "dark" }) {
   const [container, setContainer] = useState<HTMLElement | null>(null);
   const label = `${appearance} scoped settings`;
-  return <EvidenceSurface className="popover-appearance-panel" data-brick-appearance={appearance} level="canvas" ref={setContainer}><Code>{appearance}</Code>{container ? <Popover.Root defaultOpen><Popover.Trigger asChild><Button tone="neutral" variant="outline">{label}</Button></Popover.Trigger><Popover.Portal container={container}><Popover.Content className="popover-persistent-preview"><Popover.Title>{label}</Popover.Title><Popover.Description>This portal remains inside its local appearance scope.</Popover.Description><Popover.Footer><Popover.Close asChild><Button>Close</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root> : null}</EvidenceSurface>;
+  return <EvidenceSurface className="popover-appearance-panel" data-brick-appearance={appearance} level="canvas" ref={setContainer}><SpecimenLabel>{appearance === "light" ? "Light" : "Dark"}</SpecimenLabel>{container ? <Popover.Root><Popover.Trigger asChild><Button tone="neutral" variant="outline">{label}</Button></Popover.Trigger><Popover.Portal container={container}><Popover.Content className="popover-persistent-preview"><Popover.Title>{label}</Popover.Title><Popover.Description>This portal remains inside its local appearance scope.</Popover.Description><Popover.Footer><Popover.Close asChild><Button>Close</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root> : null}</EvidenceSurface>;
 }
 
 export const popoverScenarios = [
@@ -113,7 +112,7 @@ export function PopoverPage() {
 
     <Scenario {...popoverScenarios[6]}><Grid.Root columns={2} className="popover-scoped-grid" data-testid="popover-appearance"><ScopedPopover appearance="light" /><ScopedPopover appearance="dark" /></Grid.Root></Scenario>
 
-    <Scenario {...popoverScenarios[7]}><EvidenceSurface as="article" className="popover-customization" inset="lg"><div><Text as="h3" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Content class, slot, native style, and public surface tokens remain local.</Text><PlaygroundCodeBlock aria-label="Popover customization example" tabIndex={0}>{`<Popover.Content
+    <Scenario {...popoverScenarios[7]}><EvidenceSurface as="article" className="popover-customization" inset="none"><div><SpecimenLabel>Customized</SpecimenLabel><Text as="h3" variant="title-sm">Content CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Content class, slot, native style, and public surface tokens remain local.</Text><PlaygroundCodeBlock aria-label="Popover customization example" tabIndex={0}>{`<Popover.Content
   className="custom-popover"
   data-slot="custom-popover"
   style={{
@@ -126,7 +125,7 @@ export function PopoverPage() {
   }}
 >
   <SettingsContent label="Customized settings" />
-</Popover.Content>`}</PlaygroundCodeBlock></div><EvidenceSurface className="popover-customization__preview" level="canvas"><Popover.Root defaultOpen><Popover.Trigger asChild><Button tone="neutral" variant="outline">Custom settings</Button></Popover.Trigger><Popover.Portal><Popover.Content className="custom-popover popover-persistent-preview" data-slot="custom-popover" style={customTokens}><SettingsContent label="Customized settings" /></Popover.Content></Popover.Portal></Popover.Root></EvidenceSurface></EvidenceSurface></Scenario>
+</Popover.Content>`}</PlaygroundCodeBlock></div><div className="popover-customization__preview"><Popover.Root defaultOpen><Popover.Trigger asChild><Button tone="neutral" variant="outline">Custom settings</Button></Popover.Trigger><Popover.Portal><Popover.Content className="custom-popover popover-persistent-preview" data-slot="custom-popover" style={customTokens}><SettingsContent label="Customized settings" /></Popover.Content></Popover.Portal></Popover.Root></div></EvidenceSurface></Scenario>
 
     <Scenario {...popoverScenarios[8]}><VStack className="popover-evidence-stack" data-testid="popover-stress">
       <EvidenceGroup description="A long title, scrollable Body, and complete Footer remain reachable inside a 20rem frame." title="Constrained-width stress"><EvidenceSurface className="popover-stress-panel" level="canvas"><div className="popover-phone-frame"><Popover.Root><Popover.Trigger asChild><Button tone="neutral" variant="outline">Open long settings</Button></Popover.Trigger><Popover.Portal><Popover.Content align="start" size="lg"><Popover.Title>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break</Popover.Title><Popover.Description>A deliberately long localized description remains readable and contained.</Popover.Description><Popover.Body><VStack className="popover-long-copy">{Array.from({ length: 8 }, (_, index) => <Text as="p" key={index}>Compact setting {index + 1} remains reachable at high zoom.</Text>)}</VStack></Popover.Body><Popover.Footer><Button tone="neutral" variant="outline">Reset all settings</Button><Popover.Close asChild><Button>Save workspace settings</Button></Popover.Close></Popover.Footer><Popover.Arrow /></Popover.Content></Popover.Portal></Popover.Root></div></EvidenceSurface></EvidenceGroup>

@@ -1,7 +1,6 @@
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
-  Badge,
   Button,
   Container,
   Grid,
@@ -17,6 +16,7 @@ import {
   type SurfaceRadius,
 } from "@flowstack-ui/brick";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./surface.playground.css";
@@ -70,7 +70,7 @@ function AppearanceLadder({ appearance }: { appearance: "light" | "dark" }) {
       inset="md"
       level="canvas"
     >
-      <Badge>{appearance}</Badge>
+      <SpecimenLabel>{appearance === "light" ? "Light" : "Dark"}</SpecimenLabel>
       <Grid.Root columns={2} gap="3">
         {levels.map((level) => (
           <Surface
@@ -302,13 +302,14 @@ export function SurfacePage() {
             <AppearanceLadder appearance="light" />
             <AppearanceLadder appearance="dark" />
           </Grid.Root>
-          <Grid.Root
-            className="surface-customization"
-            columns={2}
+          <EvidenceSurface
+            className="playground-customization-evidence"
             data-testid="surface-customization"
-            gap="5"
+            inset="none"
           >
+            <Grid.Root className="playground-customization-layout" columns={2} gap="0">
             <VStack gap="2">
+              <SpecimenLabel>Customized</SpecimenLabel>
               <Text as="h3" variant="title-sm">Surface CSS properties</Text>
               <Text tone="secondary" variant="body-sm">
                 The code changes only background, border color, and radius.
@@ -327,12 +328,13 @@ export function SurfacePage() {
   Customized surface
 </Surface>`}</PlaygroundCodeBlock>
             </VStack>
-            <div className="surface-customization__preview">
+            <div className="playground-customization-preview surface-customization__preview">
               <Surface bordered inset="md" style={customStyle}>
                 <Content>Customized surface</Content>
               </Surface>
             </div>
-          </Grid.Root>
+            </Grid.Root>
+          </EvidenceSurface>
         </VStack>
       </Scenario>
 

@@ -18,7 +18,26 @@ test("Icon sizes, tones, SVG sources, composition, and direction are observable"
   await expect(sizes).toHaveCount(6);
   expect(await sizes.evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).width))).toEqual(["12px", "16px", "20px", "24px", "32px", "40px"]);
   await expect(page.locator("#scenario-icon-tones .brick-icon")).toHaveCount(9);
-  await expect(page.locator("svg.brick-icon[data-source=composed]")).toHaveCount(1);
+  await expect(page.getByTestId("icon-inline-source").locator("path")).toHaveCount(2);
+  await expect(page.getByTestId("icon-inline-source").locator("path").nth(1)).toHaveAttribute(
+    "d",
+    "m14 7 5 5-5 5",
+  );
+  const composedSource = page.locator("svg.brick-icon[data-source=composed]");
+  await expect(composedSource).toHaveCount(1);
+  await expect(composedSource).toHaveCSS("width", "24px");
+  await expect(composedSource).toHaveCSS("height", "24px");
+  const renderedComposition = page.getByTestId("icon-rendered-composed");
+  await expect(renderedComposition).toHaveCSS("width", "24px");
+  await expect(renderedComposition).toHaveCSS("height", "24px");
+  await expect(renderedComposition.locator("circle")).toHaveAttribute("fill", "none");
+  await expect(renderedComposition.locator("circle")).toHaveAttribute("stroke", "currentColor");
+  await expect(renderedComposition.locator("path")).toHaveAttribute("stroke", "currentColor");
+  await expect(
+    page.locator("#scenario-icon-composition .playground-output-evidence__preview .playground-specimen-label", {
+      hasText: "SVG asChild",
+    }),
+  ).toBeVisible();
   const rtlDirectional = page.locator("#scenario-icon-direction [dir=rtl] [data-directional]");
   await expect(rtlDirectional).toHaveCSS("transform", "matrix(-1, 0, 0, 1, 0, 0)");
   await expect(page.locator("#scenario-icon-direction [dir=rtl] .brick-icon:not([data-directional])")).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 0)");

@@ -8,6 +8,7 @@ export {
   NavigationMenuContent,
   NavigationMenuLink,
   NavigationMenuIndicator,
+  NavigationMenuIndicatorArrow,
   NavigationMenuViewport,
   type NavigationMenuRootProps,
   type NavigationMenuSubProps,
@@ -17,6 +18,7 @@ export {
   type NavigationMenuContentProps,
   type NavigationMenuLinkProps,
   type NavigationMenuIndicatorProps,
+  type NavigationMenuIndicatorArrowProps,
   type NavigationMenuViewportProps,
   type NavigationMenuSize,
 } from "./NavigationMenu.js";

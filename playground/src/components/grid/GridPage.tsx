@@ -339,16 +339,13 @@ export function GridPage() {
 
       <Scenario {...gridScenarios[8]}>
         <VStack gap="6">
-          <Grid.Root columns={2} data-testid="grid-appearance" gap="0">
-            <Grid.Root data-brick-appearance="light" gap="2" minItemSize="xs">
-              <Tile>Light one</Tile><Tile>Light two</Tile>
-            </Grid.Root>
-            <Grid.Root data-brick-appearance="dark" gap="2" minItemSize="xs">
-              <Tile>Dark one</Tile><Tile>Dark two</Tile>
-            </Grid.Root>
+          <Grid.Root columns={2} data-testid="grid-appearance" gap="4">
+            <EvidenceSurface className="grid-appearance-cell" data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><Grid.Root gap="2" minItemSize="xs"><Tile>Light one</Tile><Tile>Light two</Tile></Grid.Root></EvidenceSurface>
+            <EvidenceSurface className="grid-appearance-cell" data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><Grid.Root gap="2" minItemSize="xs"><Tile>Dark one</Tile><Tile>Dark two</Tile></Grid.Root></EvidenceSurface>
           </Grid.Root>
-          <EvidenceSurface as="article" className="grid-customization" inset="lg">
+          <EvidenceSurface as="article" className="playground-customization-evidence" inset="none"><Grid.Root className="playground-customization-layout" columns={2} gap="0">
             <VStack gap="2">
+              <SpecimenLabel>Customized</SpecimenLabel>
               <Text as="h3" variant="title-sm">Local Grid variables</Text>
               <Text as="p" tone="secondary" variant="body-sm">
                 Row gap, column gap, border, and padding change on this instance.
@@ -364,26 +361,26 @@ export function GridPage() {
   }}
 >`}</PlaygroundCodeBlock>
             </VStack>
-            <Grid.Root columns={2} gap="2" style={customGridStyle}>
+            <Grid.Root className="playground-customization-preview" columns={2} gap="2" style={customGridStyle}>
               <IdenticalTiles />
             </Grid.Root>
-          </EvidenceSurface>
+          </Grid.Root></EvidenceSurface>
         </VStack>
       </Scenario>
 
       <Scenario {...gridScenarios[9]}>
-        <VStack data-testid="grid-stress" gap="5">
-          <Grid.Root className="grid-narrow" gap="2" minItemSize="xs">
+        <VStack data-testid="grid-stress" gap="6">
+          <EvidenceGroup title="Responsive boundaries" description="Intrinsic tracks reflow long localized actions without widening the constrained application-owned frame."><Grid.Root className="grid-narrow" gap="2" minItemSize="xs">
             <Button>Review localization</Button>
             <Button tone="neutral">Donaudampfschifffahrtsgesellschaft</Button>
             <Button variant="outline">保存して続行</Button>
             <Grid.Item columnSpan="full"><Tile>Full intrinsic summary</Tile></Grid.Item>
-          </Grid.Root>
-          <Grid.Root className="grid-narrow" columns={3} dir="rtl" gap="2">
+          </Grid.Root></EvidenceGroup>
+          <EvidenceGroup title="RTL inheritance" description="Explicit columns preserve source order while alignment and inline flow follow the inherited right-to-left direction."><Grid.Root className="grid-narrow" columns={3} dir="rtl" gap="2">
             <Button>الأول</Button>
             <Button tone="neutral">الثاني</Button>
             <Button variant="outline">الثالث</Button>
-          </Grid.Root>
+          </Grid.Root></EvidenceGroup>
         </VStack>
       </Scenario>
     </VStack>

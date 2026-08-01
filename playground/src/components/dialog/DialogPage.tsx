@@ -132,7 +132,7 @@ function ScopedDialog({
       data-brick-appearance={appearance}
       ref={setContainer}
     >
-      <span>{appearance === "light" ? "Light" : "Dark"} scope</span>
+      <SpecimenLabel>{appearance === "light" ? "Light" : "Dark"}</SpecimenLabel>
       {container ? (
         <Dialog.Root>
           <Dialog.Trigger asChild>
@@ -623,6 +623,7 @@ export function DialogPage() {
         <div className="dialog-customization-list">
           <EvidenceSurface as="article" className="dialog-customization" inset="lg">
             <div>
+              <SpecimenLabel>Token override</SpecimenLabel>
               <Text as="h4" variant="title-sm">Component CSS properties</Text>
               <Text as="p" tone="secondary" variant="body-sm">
                 Public Dialog tokens change spacing, radius, and elevation
@@ -683,6 +684,7 @@ export function DialogPage() {
 
           <EvidenceSurface as="article" className="dialog-customization" inset="lg">
             <div>
+              <SpecimenLabel>Consumer hooks</SpecimenLabel>
               <Text as="h4" variant="title-sm">Consumer hooks</Text>
               <Text as="p" tone="secondary" variant="body-sm">
                 className, style, and data-slot pass through for direct

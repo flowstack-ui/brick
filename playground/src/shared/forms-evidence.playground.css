@@ -197,13 +197,19 @@
 
 .forms-scoped-grid > div {
   display: grid;
+  grid-template-rows: auto 1fr;
   min-block-size: 12rem;
   place-items: center;
-  align-content: center;
+  align-content: stretch;
   gap: var(--brick-space-4);
   padding: var(--brick-space-5);
   background: var(--brick-color-surface-raised);
   color: var(--brick-color-text-primary);
+}
+
+.forms-scoped-grid > div > .playground-specimen-label {
+  justify-self: start;
+  align-self: start;
 }
 
 .forms-scoped-grid > div > :where(.brick-form, .brick-field, .brick-fieldset, .brick-checkbox-group) {

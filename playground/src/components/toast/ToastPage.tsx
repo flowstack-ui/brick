@@ -1,6 +1,5 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import {
-  Badge,
   Button,
   Grid,
   Text,
@@ -13,7 +12,9 @@ import {
   type ToastWidth,
 } from "@flowstack-ui/brick";
 import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
+import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./toast.playground.css";
 
 const types: ToastType[] = [
@@ -39,14 +40,9 @@ const customViewportStyle = {
   "--brick-toast-accent": "#b45309",
 } as CSSProperties;
 
-const typeTone = {
-  default: "neutral",
-  success: "success",
-  error: "danger",
-  warning: "warning",
-  info: "info",
-  loading: "accent",
-} as const;
+const customCode = `--brick-toast-background: #fffbeb;
+--brick-toast-border-color: #d97706;
+--brick-toast-accent: #b45309;`;
 
 export const toastScenarios = [
   {
@@ -122,26 +118,24 @@ export const toastScenarios = [
 ] as const satisfies readonly ScenarioDefinition[];
 
 type ExampleProps = {
+  appearance?: "light" | "dark";
   badge: string;
   buttonLabel: string;
   children: ReactNode;
   onPress: () => void;
-  tone?: "neutral" | "accent" | "info" | "success" | "warning" | "danger";
 };
 
 function Example({
+  appearance,
   badge,
   buttonLabel,
   children,
   onPress,
-  tone = "neutral",
 }: ExampleProps) {
   return (
-    <EvidenceSurface className="toast-example" inset="md">
+    <EvidenceSurface className="toast-example" data-brick-appearance={appearance} inset="md">
       <VStack gap="3">
-        <Badge size="sm" tone={tone}>
-          {badge}
-        </Badge>
+        <SpecimenLabel>{badge}</SpecimenLabel>
         <Text as="p" tone="secondary" variant="body-sm">
           {children}
         </Text>
@@ -259,7 +253,6 @@ export function ToastPage() {
             badge="success + action"
             buttonLabel="Create success toast"
             onPress={createOverview}
-            tone="success"
           >
             Creates one ordinary success toast with durable supporting copy, one optional action,
             and the default close control.
@@ -282,7 +275,6 @@ export function ToastPage() {
               buttonLabel={`Show ${type} toast`}
               key={type}
               onPress={() => showType(type)}
-              tone={typeTone[type]}
             >
               Creates only the {type} type while message, description, width, position, and
               stacking stay controlled.
@@ -303,7 +295,6 @@ export function ToastPage() {
                 }),
               )
             }
-            tone="info"
           >
             The default content stack includes both authored hierarchy levels.
           </Example>
@@ -336,7 +327,6 @@ export function ToastPage() {
                 }),
               )
             }
-            tone="info"
           >
             Replaces only the decorative glyph without changing content or behavior.
           </Example>
@@ -351,7 +341,6 @@ export function ToastPage() {
                 }),
               )
             }
-            tone="warning"
           >
             Adds one safe-to-ignore action and keeps the close control independently available.
           </Example>
@@ -367,7 +356,6 @@ export function ToastPage() {
                 }),
               )
             }
-            tone="accent"
           >
             Demonstrates an explicit persistent duration and per-toast close override.
           </Example>
@@ -380,7 +368,6 @@ export function ToastPage() {
             badge="separated"
             buttonLabel="Create four queued toasts"
             onPress={() => createQueue("separated")}
-            tone="info"
           >
             Shows three variable-height cards without collision and queues the fourth.
           </Example>
@@ -388,7 +375,6 @@ export function ToastPage() {
             badge="overlap"
             buttonLabel="Create overlap queue"
             onPress={() => createQueue("overlap")}
-            tone="accent"
           >
             Layers the same queue and expands it only when the region is engaged.
           </Example>
@@ -411,7 +397,6 @@ export function ToastPage() {
                   { position: nextPosition },
                 )
               }
-              tone="info"
             >
               Creates one toast at the {nextPosition} viewport anchor.
             </Example>
@@ -438,7 +423,6 @@ export function ToastPage() {
                 );
               })
             }
-            tone="accent"
           >
             Updates one loading record in place instead of creating a second toast.
           </Example>
@@ -446,7 +430,6 @@ export function ToastPage() {
             badge="promise success"
             buttonLabel="Run successful promise"
             onPress={() => runPromise("success")}
-            tone="success"
           >
             Moves from loading to the resolved success message after the promise settles.
           </Example>
@@ -454,7 +437,6 @@ export function ToastPage() {
             badge="promise error"
             buttonLabel="Run failing promise"
             onPress={() => runPromise("error")}
-            tone="danger"
           >
             Moves from loading to an assertive error message without an unhandled rejection.
           </Example>
@@ -462,7 +444,8 @@ export function ToastPage() {
       </Scenario>
 
       <Scenario {...toastScenarios[6]}>
-        <Grid.Root columns={3} className="toast-grid" data-testid="toast-customization">
+        <VStack gap="5" data-testid="toast-customization">
+        <Grid.Root columns={3} className="toast-grid" data-testid="toast-widths">
           {(["responsive", "compact", "full"] as const).map((nextWidth) => (
             <Example
               badge={`${nextWidth} width`}
@@ -477,12 +460,14 @@ export function ToastPage() {
                   { width: nextWidth },
                 )
               }
-              tone="success"
             >
               Uses the {nextWidth} Toaster width while content and position remain controlled.
             </Example>
           ))}
+        </Grid.Root>
+        <Grid.Root columns={2} className="toast-grid" data-testid="toast-appearance">
           <Example
+            appearance="light"
             badge="light appearance"
             buttonLabel="Show light appearance"
             onPress={() =>
@@ -495,6 +480,7 @@ export function ToastPage() {
             Applies the light semantic scope directly to the portalled viewport.
           </Example>
           <Example
+            appearance="dark"
             badge="dark appearance"
             buttonLabel="Show dark appearance"
             onPress={() =>
@@ -503,27 +489,27 @@ export function ToastPage() {
                 { appearance: "dark" },
               )
             }
-            tone="accent"
           >
             Applies the dark semantic scope without requiring a static toast specimen.
           </Example>
-          <Example
-            badge="CSS variables"
-            buttonLabel="Show customized toast"
-            onPress={() =>
-              show(
-                () =>
-                  toast.warning("Customized toast", {
-                    description: "Amber paint comes from documented Toast variables.",
-                  }),
-                { custom: true },
-              )
-            }
-            tone="warning"
-          >
-            Changes only documented viewport variables while Atom retains all behavior.
-          </Example>
         </Grid.Root>
+        <EvidenceSurface className="playground-customization-evidence" data-testid="toast-css-customization" inset="none">
+          <Grid.Root className="playground-customization-layout" columns={2} gap="0">
+            <VStack gap="2">
+              <SpecimenLabel>Customized</SpecimenLabel>
+              <Text as="h3" variant="title-sm">Toast CSS properties</Text>
+              <Text as="p" tone="secondary" variant="body-sm">The amber surface, border, and accent use the exact documented viewport properties shown below.</Text>
+              <PlaygroundCodeBlock aria-label="Toast customization code">{customCode}</PlaygroundCodeBlock>
+            </VStack>
+            <div className="playground-customization-preview">
+              <VStack gap="3">
+                <Text as="p" tone="secondary" variant="body-sm">The live customized result opens in the portalled Toast viewport.</Text>
+                <Button onPress={() => show(() => toast.warning("Customized toast", { description: "Amber paint comes from documented Toast variables." }), { custom: true })}>Show customized toast</Button>
+              </VStack>
+            </div>
+          </Grid.Root>
+        </EvidenceSurface>
+        </VStack>
       </Scenario>
 
       <Scenario {...toastScenarios[7]}>
@@ -540,7 +526,6 @@ export function ToastPage() {
                 }),
               )
             }
-            tone="warning"
           >
             Press F8 after creation, Tab through action and close, then Escape to dismiss and
             restore trigger focus.
@@ -555,7 +540,6 @@ export function ToastPage() {
                 }),
               )
             }
-            tone="danger"
           >
             Creates exactly one assertive announcement without making the visible card a second
             live region.
@@ -579,7 +563,6 @@ export function ToastPage() {
                 { dir: "rtl", position: "bottom-start" },
               )
             }
-            tone="danger"
           >
             Exercises logical RTL placement and mobile containment with genuine long Arabic content.
           </Example>
@@ -594,7 +577,6 @@ export function ToastPage() {
                 }),
               )
             }
-            tone="info"
           >
             Verifies variable height, wrapping, and narrow responsive width.
           </Example>
@@ -608,7 +590,6 @@ export function ToastPage() {
                 }),
               )
             }
-            tone="accent"
           >
             Keeps loading visible for reduced-motion and forced-color inspection.
           </Example>

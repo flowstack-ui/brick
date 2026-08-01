@@ -158,7 +158,7 @@ test("semantic output, native attributes, ref, and customization are real", asyn
   await page.getByRole("button", { name: "Inspect ref" }).click();
   await expect(semantics.getByText("Ref host: SECTION")).toBeVisible();
 
-  const custom = page.locator(".grid-customization > .brick-grid");
+  const custom = page.locator(".grid-page .playground-customization-preview.brick-grid");
   await expect(custom).toHaveCSS("column-gap", "32px");
   await expect(custom).toHaveCSS("row-gap", "8px");
   await expect(custom).toHaveCSS("border-top-width", "2px");

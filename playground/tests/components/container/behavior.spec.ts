@@ -105,7 +105,7 @@ test("gutters are border-box contained and customization is exact", async ({
     expect(padding[1]).toBeCloseTo(value, 3);
   }
   const custom = page.getByTestId("container-customization")
-    .locator(".container-boundary").last().locator(".brick-container");
+    .locator(".playground-customization-preview > .brick-container");
   await expect(custom).toHaveCSS("max-width", "768px");
   await expect(custom).toHaveCSS("padding-left", "40px");
 });

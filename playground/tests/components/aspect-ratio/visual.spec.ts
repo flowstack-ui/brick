@@ -8,6 +8,7 @@ test("Aspect Ratio defaults, ratios, framing, and composition", async ({ page })
   await expectEvidenceScreenshot(page, page.getByTestId("aspect-ratio-variants"), "variants-light.png");
   await expectEvidenceScreenshot(page, page.getByTestId("aspect-ratio-radii"), "radii-light.png");
   await expectEvidenceScreenshot(page, page.getByTestId("aspect-ratio-content"), "content-light.png");
+  await expectEvidenceScreenshot(page, page.locator("#scenario-aspect-ratio-native"), "composition-light.png");
 });
 
 test("Aspect Ratio appearance, responsive, RTL, and forced colors", async ({ page }) => {

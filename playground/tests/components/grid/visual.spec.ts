@@ -34,6 +34,8 @@ test("Grid appearance, narrow RTL, and forced colors", async ({ page }) => {
   await expect(page.getByTestId("grid-appearance")).toHaveScreenshot(
     "appearance-dark.png",
   );
+  await removeStickyCaptureOverlap(page);
+  await expectEvidenceScreenshot(page, page.locator("#scenario-grid-appearance"), "theme-dark.png");
   await page.setViewportSize({ width: 390, height: 844 });
   await expectEvidenceScreenshot(page, page.getByTestId("grid-stress"), "stress-mobile.png");
   await page.setViewportSize({ width: 1120, height: 900 });

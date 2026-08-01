@@ -53,7 +53,6 @@
 
 .bottom-navigation-phone { inline-size: min(100%, 24rem); min-inline-size: 0; }
 .bottom-navigation-narrow { inline-size: min(100%, 17rem); min-inline-size: 0; }
-.bottom-navigation-customization { display: grid; gap: var(--brick-space-5); align-items: end; }
 .bottom-navigation-underlay {
   inline-size: 100%;
   padding-block-start: var(--brick-space-5);
@@ -95,7 +94,6 @@
 @container (min-width: 58rem) {
   .bottom-navigation-grid--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .bottom-navigation-grid--four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .bottom-navigation-customization { grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr); }
 }
 
 @container (min-width: 76rem) {
