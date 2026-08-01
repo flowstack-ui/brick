@@ -12,7 +12,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   Its Viewport now uses the restrained control radius by default while retaining
   the public radius variable for intentional local customization.
 
-- Upgraded the exact Atom dependency to `0.20.6`; modal Dialog, Alert Dialog,
+- Upgraded the exact Atom dependency to `0.20.11`; Navigation Menu Viewport now
+  exposes Root-relative active-trigger geometry through authored positioning
+  wrappers, and moving then clicking between open triggers no longer closes the
+  destination through an engine-dependent hover-click race. Modal Dialog, Alert Dialog,
   Drawer, Popover, Dropdown Menu, and Context Menu preserve sticky application
   chrome while background scrolling remains locked, and Select preserves
   logical RTL placement and option direction across its portal. Dropdown Menu,
