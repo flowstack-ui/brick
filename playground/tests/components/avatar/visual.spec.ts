@@ -1,4 +1,4 @@
-import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
+import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
 installVisualDefaults("/avatar");
 
@@ -6,6 +6,8 @@ test("Avatar geometry and status", async ({ page }) => {
   await expect(page.getByTestId("avatar-sizes")).toHaveScreenshot("sizes-light.png");
   await expect(page.getByTestId("avatar-shapes")).toHaveScreenshot("shapes-light.png");
   await expect(page.getByTestId("avatar-statuses")).toHaveScreenshot("statuses-light.png");
+  await expect(page.getByTestId("avatar-appearance")).toHaveScreenshot("appearance-light.png");
+  await expectEvidenceScreenshot(page, page.locator(".avatar-customization"), "customization-light.png");
   await setAppearance(page, "dark");
   await expect(page.getByTestId("avatar-overview")).toHaveScreenshot("overview-dark.png");
 });
