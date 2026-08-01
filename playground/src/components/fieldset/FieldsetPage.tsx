@@ -1,4 +1,3 @@
-import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import type { CSSProperties } from "react";
 import {
@@ -9,6 +8,7 @@ import {
   Text,
   VStack,
 } from "@flowstack-ui/brick";
+import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -109,7 +109,7 @@ export function FieldsetPage() {
       <Scenario {...fieldsetScenarios[6]}>
         <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same plain native group composes inside adjacent local appearance scopes." title="Scoped appearances">
-            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="fieldset-appearance"><EvidenceSurface data-brick-appearance="light"><Code>light</Code><ChoiceGroup id="fieldset-light" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><ChoiceGroup id="fieldset-dark" /></EvidenceSurface></Grid.Root>
+            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="fieldset-appearance"><EvidenceSurface data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><ChoiceGroup id="fieldset-light" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><ChoiceGroup id="fieldset-dark" /></EvidenceSurface></Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
             <EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Fieldset anatomy properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Fieldset tokens visibly change this group only.</Text><PlaygroundCodeBlock aria-label="Fieldset customization example" tabIndex={0}>{`<Fieldset.Root

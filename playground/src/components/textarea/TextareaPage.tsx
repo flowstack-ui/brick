@@ -12,8 +12,8 @@ import {
   type TextareaSize,
   type TextareaVariant,
 } from "@flowstack-ui/brick";
-import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
+import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -144,8 +144,8 @@ export function TextareaPage() {
         <VStack className="forms-evidence-stack">
           <EvidenceGroup title="Scoped appearances" description="The same default Textarea and Field render inside adjacent local appearance scopes.">
             <Grid.Root columns={2} className="forms-scoped-grid" data-testid="textarea-appearance">
-              <EvidenceSurface data-brick-appearance="light"><Code>light</Code><PreviewField id="textarea-light"><Textarea.Root defaultValue={sample} /></PreviewField></EvidenceSurface>
-              <EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><PreviewField id="textarea-dark"><Textarea.Root defaultValue={sample} /></PreviewField></EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><PreviewField id="textarea-light"><Textarea.Root defaultValue={sample} /></PreviewField></EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><PreviewField id="textarea-dark"><Textarea.Root defaultValue={sample} /></PreviewField></EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup title="Consumer customization" description="The code names supported wrapper variables and native-control styling and exactly matches the live result.">

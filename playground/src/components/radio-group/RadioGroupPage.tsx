@@ -1,7 +1,6 @@
 import { useState, type CSSProperties } from "react";
 import {
   Button,
-  Code,
   Fieldset,
   Form,
   Grid,
@@ -18,6 +17,7 @@ import {
   FormRenderedOutput as RenderedOutput,
 } from "../../shared/FormEvidence.js";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
+import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import "../../shared/forms-evidence.playground.css";
 
@@ -113,7 +113,7 @@ export function RadioGroupPage() {
 
       <Scenario {...radioGroupScenarios[8]}>
         <VStack className="forms-evidence-stack">
-          <EvidenceGroup description="The same medium vertical selected group composes inside adjacent local appearance scopes." title="Scoped appearances"><Grid.Root columns={2} className="forms-scoped-grid" data-testid="radio-group-appearance"><EvidenceSurface data-brick-appearance="light"><Code>light</Code><RadioGroup.Root aria-label="Light delivery channel" defaultValue="email"><DefaultItems /></RadioGroup.Root></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><RadioGroup.Root aria-label="Dark delivery channel" defaultValue="email"><DefaultItems /></RadioGroup.Root></EvidenceSurface></Grid.Root></EvidenceGroup>
+          <EvidenceGroup description="The same medium vertical selected group composes inside adjacent local appearance scopes." title="Scoped appearances"><Grid.Root columns={2} className="forms-scoped-grid" data-testid="radio-group-appearance"><EvidenceSurface data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><RadioGroup.Root aria-label="Light delivery channel" defaultValue="email"><DefaultItems /></RadioGroup.Root></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><RadioGroup.Root aria-label="Dark delivery channel" defaultValue="email"><DefaultItems /></RadioGroup.Root></EvidenceSurface></Grid.Root></EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the larger green control rendered beside it." title="Consumer customization"><EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Group and control properties</Text><Text as="p" tone="secondary" variant="body-sm">Public variables adjust spacing and selected-control paint without replacing behavior.</Text><PlaygroundCodeBlock aria-label="RadioGroup customization example" tabIndex={0}>{`<RadioGroup.Root
   defaultValue="email"
   style={{

@@ -1,4 +1,3 @@
-import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { type CSSProperties, type ReactNode } from "react";
 import {
@@ -330,13 +329,13 @@ export function NotificationBadgePage() {
               data-testid="notification-badge-appearance"
             >
               <EvidenceSurface data-brick-appearance="light">
-                <Code>light</Code>
+                <SpecimenLabel>Light</SpecimenLabel>
                 <NotificationBadge count={4}>
                   <MailTarget />
                 </NotificationBadge>
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
-                <Code>dark</Code>
+                <SpecimenLabel>Dark</SpecimenLabel>
                 <NotificationBadge count={4}>
                   <MailTarget />
                 </NotificationBadge>

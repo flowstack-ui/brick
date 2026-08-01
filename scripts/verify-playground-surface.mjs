@@ -69,6 +69,11 @@ for (const { path, source } of playgroundTsx) {
     /<div\b[^>]*data-brick-appearance/,
     `${path} retains a raw appearance surface`,
   );
+  assert.doesNotMatch(
+    source,
+    /<Code>(?:light|dark)<\/Code>|<Badge\b[^>]*>(?:light|dark|Light|Dark|custom|customized|Customized)<\/Badge>/,
+    `${path} bypasses the shared SpecimenLabel contract`,
+  );
 }
 const evidenceSurface = await read("playground/src/shared/EvidenceSurface.tsx");
 assert.match(evidenceSurface, /<Surface/);

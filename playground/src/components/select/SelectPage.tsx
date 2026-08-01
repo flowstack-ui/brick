@@ -1,6 +1,5 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
-  Badge,
   Button,
   Field,
   Form,
@@ -156,13 +155,13 @@ export function SelectPage() {
       <Scenario {...selectScenarios[7]}>
         <VStack gap="5" data-testid="select-appearance">
           <Grid.Root columns={2} gap="4" className="select-grid">
-            <EvidenceSurface className="select-appearance-surface" data-brick-appearance="light"><Badge size="sm">Light</Badge><PlanSelect id="select-light" /></EvidenceSurface>
-            <EvidenceSurface className="select-appearance-surface" data-brick-appearance="dark"><Badge size="sm">Dark</Badge><PlanSelect id="select-dark" /></EvidenceSurface>
+            <EvidenceSurface className="select-appearance-surface" data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><PlanSelect id="select-light" /></EvidenceSurface>
+            <EvidenceSurface className="select-appearance-surface" data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><PlanSelect id="select-dark" /></EvidenceSurface>
           </Grid.Root>
           <EvidenceSurface className="playground-customization-evidence" inset="none">
             <Grid.Root columns={2} gap="0" className="select-customization playground-customization-layout">
               <VStack gap="2">
-                <Badge size="sm" style={{ alignSelf: "flex-start", inlineSize: "fit-content" }}>Customized</Badge>
+                <SpecimenLabel>Customized</SpecimenLabel>
                 <Text as="h3" variant="title-sm">Select CSS properties</Text>
                 <Text tone="secondary" variant="body-sm">The accent trigger, popup, and highlighted option use only the documented properties below.</Text>
                 <PlaygroundCodeBlock>{`--brick-select-trigger-background: #eefbf5;

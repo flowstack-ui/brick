@@ -39,7 +39,7 @@
   }
 }
 
-:where(
+[data-component-page] :is(
   .button-specimen-grid,
   .button-appearance-grid,
   .icon-button-specimen-grid,
@@ -74,6 +74,10 @@
   .text-scoped-grid,
   .stack-grid,
   .stack-scoped-grid,
+  .bottom-navigation-grid,
+  .bottom-navigation-scoped-grid,
+  .menu-grid,
+  .menu-scoped-grid,
   .forms-grid,
   .forms-scoped-grid
 ) {
@@ -84,7 +88,7 @@
   gap: var(--brick-space-4);
 }
 
-:where(
+[data-component-page] :is(
   .button-customization__preview,
   .icon-button-customization__preview,
   .app-bar-customization__preview,

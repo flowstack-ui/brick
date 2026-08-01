@@ -99,13 +99,13 @@ export function SkipLinkPage() {
         <EvidenceGroup title="Scoped appearances" description="Compact badges identify the same Skip Link defaults in separate light and dark scopes.">
           <Grid.Root columns={2} className="skip-link-grid" data-testid="skip-link-appearance">
             <EvidenceSurface className="skip-link-appearance-surface" data-brick-appearance="light">
-              <Badge size="sm">Light</Badge>
+              <SpecimenLabel>Light</SpecimenLabel>
               <SkipLink.Root href="#appearance-light-target">Skip light navigation</SkipLink.Root>
               <Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#appearance-light-target"]')?.focus()} size="sm" variant="outline">Focus light link</Button>
               <Target id="appearance-light-target" />
             </EvidenceSurface>
             <EvidenceSurface className="skip-link-appearance-surface" data-brick-appearance="dark">
-              <Badge size="sm">Dark</Badge>
+              <SpecimenLabel>Dark</SpecimenLabel>
               <SkipLink.Root href="#appearance-dark-target">Skip dark navigation</SkipLink.Root>
               <Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#appearance-dark-target"]')?.focus()} size="sm" variant="outline">Focus dark link</Button>
               <Target id="appearance-dark-target" />
@@ -116,7 +116,7 @@ export function SkipLinkPage() {
           <EvidenceSurface as="article" className="skip-link-customization playground-customization-evidence" data-testid="skip-link-customization" inset="none">
             <Grid.Root className="skip-link-customization__layout playground-customization-layout" columns={2} gap="0">
               <VStack gap="2">
-                <Badge size="sm">Customized</Badge>
+                <SpecimenLabel>Customized</SpecimenLabel>
                 <Text as="h4" variant="title-sm">Violet bypass surface</Text>
                 <Text as="p" tone="secondary" variant="body-sm">The link keeps the same focus and target behavior while consumer variables alter only its paint.</Text>
                 <PlaygroundCodeBlock>{`--brick-skip-link-background: #2e1065;\n--brick-skip-link-foreground: #ffffff;\n--brick-skip-link-border-color: #c4b5fd;\n--brick-skip-link-radius: 999px;`}</PlaygroundCodeBlock>

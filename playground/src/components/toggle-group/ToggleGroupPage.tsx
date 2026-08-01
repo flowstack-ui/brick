@@ -1,7 +1,6 @@
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type ReactNode } from "react";
 import {
-  Badge,
   Grid,
   VStack,
   Text,
@@ -152,10 +151,10 @@ export function ToggleGroupPage() {
       <Scenario {...toggleGroupScenarios[7]}>
         <VStack className="toggle-group-evidence-stack">
           <EvidenceGroup description="Adjacent light and dark scopes preserve the default group recipe." title="Scoped appearances">
-            <Grid.Root columns={2} className="toggle-group-scoped-grid" data-testid="toggle-group-appearance"><EvidenceSurface className="toggle-group-appearance-panel" data-brick-appearance="light"><Badge size="sm" tone="neutral" variant="soft">Light</Badge><div className="toggle-group-appearance-preview"><StandardGroup label="Light project view" /></div></EvidenceSurface><EvidenceSurface className="toggle-group-appearance-panel" data-brick-appearance="dark"><Badge size="sm" tone="neutral" variant="soft">Dark</Badge><div className="toggle-group-appearance-preview"><StandardGroup label="Dark project view" /></div></EvidenceSurface></Grid.Root>
+            <Grid.Root columns={2} className="toggle-group-scoped-grid" data-testid="toggle-group-appearance"><EvidenceSurface className="toggle-group-appearance-panel" data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><div className="toggle-group-appearance-preview"><StandardGroup label="Light project view" /></div></EvidenceSurface><EvidenceSurface className="toggle-group-appearance-panel" data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><div className="toggle-group-appearance-preview"><StandardGroup label="Dark project view" /></div></EvidenceSurface></Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
-            <EvidenceSurface as="article" className="playground-customization-evidence" inset="none"><Grid.Root className="toggle-group-customization playground-customization-layout" columns={2} gap="0"><VStack gap="2"><Badge size="sm" tone="neutral" variant="soft">Customized</Badge><Text as="h4" variant="title-sm">Group and shared Item CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">The Root gap and each Item’s radius, padding, and selected paint are customized visibly.</Text><PlaygroundCodeBlock aria-label="ToggleGroup customization example" tabIndex={0}>{`.custom-toggle-group {
+            <EvidenceSurface as="article" className="playground-customization-evidence" inset="none"><Grid.Root className="toggle-group-customization playground-customization-layout" columns={2} gap="0"><VStack gap="2"><SpecimenLabel>Customized</SpecimenLabel><Text as="h4" variant="title-sm">Group and shared Item CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">The Root gap and each Item’s radius, padding, and selected paint are customized visibly.</Text><PlaygroundCodeBlock aria-label="ToggleGroup customization example" tabIndex={0}>{`.custom-toggle-group {
   --brick-toggle-group-gap: 1rem;
 }
 

@@ -2,7 +2,6 @@ import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
-  Badge,
   Button,
   HStack,
   ScrollArea,
@@ -296,10 +295,10 @@ export function StackPage() {
           >
             <Grid.Root columns={2} className="stack-scoped-grid" data-testid="stack-appearance">
               <EvidenceSurface data-brick-appearance="light">
-                <VStack gap="2"><Badge>light</Badge><Item>First</Item><Item>Second</Item></VStack>
+                <VStack gap="2"><SpecimenLabel>Light</SpecimenLabel><Item>First</Item><Item>Second</Item></VStack>
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
-                <VStack gap="2"><Badge>dark</Badge><Item>First</Item><Item>Second</Item></VStack>
+                <VStack gap="2"><SpecimenLabel>Dark</SpecimenLabel><Item>First</Item><Item>Second</Item></VStack>
               </EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>

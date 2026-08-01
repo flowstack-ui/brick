@@ -1,4 +1,3 @@
-import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties } from "react";
 import {
@@ -14,6 +13,7 @@ import {
   type InputSize,
   type InputVariant,
 } from "@flowstack-ui/brick";
+import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -333,13 +333,13 @@ export function InputPage() {
           >
             <Grid.Root columns={2} className="forms-scoped-grid" data-testid="input-appearance">
               <EvidenceSurface data-brick-appearance="light">
-                <Code>light</Code>
+                <SpecimenLabel>Light</SpecimenLabel>
                 <PreviewField id="input-light">
                   <Input defaultValue="Brick workspace" />
                 </PreviewField>
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
-                <Code>dark</Code>
+                <SpecimenLabel>Dark</SpecimenLabel>
                 <PreviewField id="input-dark">
                   <Input defaultValue="Brick workspace" />
                 </PreviewField>
