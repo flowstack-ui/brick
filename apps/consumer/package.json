@@ -10,7 +10,7 @@
     "build": "npm run typecheck && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test:boundary": "node --test test/*.test.mjs",
-    "test:processes": "node ../../scripts/check-test-ports.mjs",
+    "test:processes": "node scripts/check-test-port.mjs",
     "test:browser": "npm run build && npm run test:browser:built",
     "test:browser:built": "npm run test:processes && playwright test",
     "test": "npm run test:boundary && npm run test:browser",

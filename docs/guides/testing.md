@@ -23,6 +23,12 @@ Verification has three explicit tiers:
 - release candidate: `npm run check:release`, which adds the complete browser
   matrix, packed application Consumer, and CSS-size report.
 
+The local release runner keeps one worker per project and restarts WebKit in
+bounded shards so a long qualification run cannot accumulate one browser
+process indefinitely. Pass one or more project names directly to
+`scripts/run-release-browser-tests.mjs` when reproducing a release-profile
+failure. Main-branch and publication jobs use the same bounded project runner.
+
 Do not rerun the repository or release tier after every focused edit. Escalate
 when the affected component is stable or when a shared boundary requires
 broader evidence.

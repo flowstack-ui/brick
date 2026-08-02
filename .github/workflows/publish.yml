@@ -109,7 +109,7 @@ jobs:
           name: brick-release-playground
           path: playground/dist
       - run: npx playwright install --with-deps ${{ matrix.engine }}
-      - run: npm run test:browser:project:built -- ${{ matrix.project }}
+      - run: npm run test:browser:release:project:built -- ${{ matrix.project }}
 
   package-consumers:
     needs: repository

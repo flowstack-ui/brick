@@ -371,6 +371,7 @@
     "test:browser:project:built": "npm run test:processes && node scripts/run-browser-project.mjs",
     "test:browser:release": "npm run build:playground && npm run test:browser:release:built",
     "test:browser:release:built": "npm run test:processes && node scripts/run-release-browser-tests.mjs",
+    "test:browser:release:project:built": "npm run test:processes && node scripts/run-release-browser-tests.mjs",
     "test:consumer": "npm run build && npm test -w apps/consumer",
     "test:visual": "npm run build:playground && npm run test:processes && playwright test playground/tests/components/*/visual.spec.ts --project=chromium",
     "test:visual:update": "npm run build:playground && npm run test:processes && playwright test playground/tests/components/*/visual.spec.ts --project=chromium --update-snapshots",

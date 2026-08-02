@@ -83,5 +83,6 @@ test("the consumer declares the standalone Brick package and a lean toolchain", 
   assert.match(packageJson.dependencies["@flowstack-ui/brick"], /^file:/);
   assert.equal(packageJson.dependencies.next, undefined);
   assert.equal(packageJson.devDependencies.tailwindcss, undefined);
+  assert.equal(packageJson.scripts["test:processes"], "node scripts/check-test-port.mjs");
   assert.ok(appDirectory.endsWith("/consumer/"));
 });

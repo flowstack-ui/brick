@@ -4,6 +4,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.1.0 - 2026-08-02
+
 ### Changed
 
 - Refined Navigation Menu with compact disclosure chevrons, a one-pixel current
@@ -31,9 +33,11 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   for clean React consumer checks without changing component runtime behavior.
   Cross-browser Table and Toast evidence now uses keyboard activation for
   focus assertions and each Playwright project's actual viewport bounds. The
-  release browser projects now run sequentially with one worker each, and the
-  npm release pipeline verifies package contents, React 18/19 consumers, and
-  the application Consumer against the exact archive it publishes.
+  release browser projects now run sequentially with one worker each, WebKit
+  profiles restart across bounded shards to avoid long-lived engine
+  degradation, and the npm release pipeline verifies package contents, React
+  18/19 consumers, and the application Consumer against the exact archive it
+  publishes.
 - Added repository-owned readiness metadata, strict stale-port diagnostics,
   non-reusing Playwright previews, a conservative Chromium pull-request gate,
   parallel five-profile `main` CI, nightly remote qualification, and
