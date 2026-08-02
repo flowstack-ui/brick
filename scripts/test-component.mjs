@@ -47,11 +47,13 @@ function runTypes() {
 
 function runBrowser() {
   run("npm", ["run", "build:playground"]);
+  run("npm", ["run", "test:processes"]);
   run("npm", ["exec", "--", "playwright", "test", paths.browser, "--project=chromium"]);
 }
 
 function runVisual() {
   run("npm", ["run", "build:playground"]);
+  run("npm", ["run", "test:processes"]);
   run("npm", ["exec", "--", "playwright", "test", paths.visual, "--project=chromium"]);
 }
 

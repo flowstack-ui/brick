@@ -30,7 +30,14 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   visual selection; single-build repository orchestration; and progress output
   for clean React consumer checks without changing component runtime behavior.
   Cross-browser Table and Toast evidence now uses keyboard activation for
-  focus assertions and each Playwright project's actual viewport bounds.
+  focus assertions and each Playwright project's actual viewport bounds. The
+  release browser projects now run sequentially with one worker each, and the
+  npm release pipeline verifies package contents, React 18/19 consumers, and
+  the application Consumer against the exact archive it publishes.
+- Added repository-owned readiness metadata, strict stale-port diagnostics,
+  non-reusing Playwright previews, a conservative Chromium pull-request gate,
+  parallel five-profile `main` CI, nightly remote qualification, and
+  distributed exact-archive publication gates.
 
 ### Added
 
@@ -115,6 +122,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   orientation, RTL, three sizes, and a complete circular visual.
 
 ### Fixed
+
+- Darkened the danger solid interaction palette in light and dark appearances
+  so Button, Icon Button, Badge, and composed destructive actions retain WCAG
+  AA contrast through default, hover, and pressed states.
 
 - Kept vertical Navigation Menu Viewports aligned with Atom's measured active
   trigger so the Indicator arrow does not detach on later items.

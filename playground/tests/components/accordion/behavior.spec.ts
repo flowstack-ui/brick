@@ -18,8 +18,11 @@ test("specimens stay top-aligned while content opens and composition is not dupl
   const sizes = page.getByTestId("accordion-sizes").locator(".brick-accordion");
   const initiallyOpen = page.getByTestId("accordion-states").locator(".brick-accordion-content[data-initial-open]").first();
   await expect(initiallyOpen).toHaveCSS("animation-name", "none");
-  const sizeTops = await sizes.evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect().top));
-  expect(Math.max(...sizeTops) - Math.min(...sizeTops)).toBeLessThan(1);
+  const sizeOffsets = await sizes.evaluateAll((elements) => elements.map((element) => {
+    const cell = element.closest(".forms-cell");
+    return element.getBoundingClientRect().top - (cell?.getBoundingClientRect().top ?? 0);
+  }));
+  expect(Math.max(...sizeOffsets) - Math.min(...sizeOffsets)).toBeLessThan(1);
 
   const controlled = page.getByTestId("accordion-selection").locator(".forms-cell").filter({ hasText: "controlled" });
   const controlledRoot = controlled.locator(".brick-accordion");

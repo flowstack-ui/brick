@@ -8,6 +8,14 @@ const sourceConsumer = join(packageRoot, "apps", "consumer");
 const temp = await mkdtemp(join(tmpdir(), "brick-app-consumer-"));
 const consumer = join(temp, "consumer");
 const cache = join(temp, "npm-cache");
+const tarballArgument = process.argv.indexOf("--tarball");
+const suppliedTarball = tarballArgument === -1
+  ? undefined
+  : process.argv[tarballArgument + 1];
+
+if (tarballArgument !== -1 && !suppliedTarball) {
+  throw new Error("--tarball requires an archive path");
+}
 
 function run(command, args, cwd) {
   const result = spawnSync(command, args, {
@@ -26,13 +34,18 @@ function run(command, args, cwd) {
 }
 
 try {
-  const packOutput = run(
-    "npm",
-    ["pack", "--json", "--pack-destination", temp],
-    packageRoot,
-  );
-  const [{ filename }] = JSON.parse(packOutput);
-  const tarball = join(temp, basename(filename));
+  let tarball;
+  if (suppliedTarball) {
+    tarball = resolve(suppliedTarball);
+  } else {
+    const packOutput = run(
+      "npm",
+      ["pack", "--json", "--pack-destination", temp],
+      packageRoot,
+    );
+    const [{ filename }] = JSON.parse(packOutput);
+    tarball = join(temp, basename(filename));
+  }
 
   await cp(sourceConsumer, consumer, {
     recursive: true,

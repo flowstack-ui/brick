@@ -35,7 +35,7 @@ test("recipes and RTL retain closed visual contracts", async ({ page }) => {
 test("playground evidence is concise, aligned, and clearly separated", async ({ page }) => {
   const anatomy = page.locator('[data-scenario="combobox.anatomy"]');
   await expect(anatomy.getByRole("combobox")).toHaveCount(1);
-  await expect(anatomy.locator(".playground-output-evidence")).toHaveCSS("overflow", "hidden");
+  await expect(anatomy.locator(".playground-output-evidence")).toHaveCSS("overflow", "clip");
   const codeBlock = anatomy.locator("[data-rendered-output]");
   expect(await codeBlock.evaluate((element) => element.clientHeight)).toBeLessThanOrEqual(160);
   expect(await codeBlock.evaluate((element) => element.scrollHeight)).toBeGreaterThan(await codeBlock.evaluate((element) => element.clientHeight));

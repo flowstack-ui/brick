@@ -29,3 +29,18 @@ Do not release a component with shared primary evidence, an unrun required
 manual protocol, an unresolved workbook row, stale documentation, or a
 Consumer/package-boundary failure. Record genuine environment blockers and
 leave the release gate open.
+
+## npm publication
+
+Tags matching the exact package version run the protected `npm` environment in
+`.github/workflows/publish.yml`. The workflow verifies the release commit is on
+`main`, runs the repository gate, distributes the five browser profiles across
+clean jobs, creates one archive, verifies that same archive through package,
+React 18/19, and application Consumer checks, and publishes only that archive
+with provenance.
+
+For the first publication, place a short-lived granular npm token in the
+protected environment as `NPM_TOKEN`. After the package exists, configure npm
+trusted publishing for `flowstack-ui/brick`, `.github/workflows/publish.yml`,
+and the `npm` environment, then remove the bootstrap token. Later releases use
+the workflow's OIDC identity and do not require a long-lived npm secret.
