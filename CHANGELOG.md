@@ -4,17 +4,44 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.1.0 - 2026-08-02
+
 ### Changed
 
-- Upgraded the exact Atom dependency to `0.20.4`; modal Dialog, Alert Dialog,
+- Refined Navigation Menu with compact disclosure chevrons, a one-pixel current
+  underline, and a surface-matched Indicator arrow instead of the previous
+  thick open-trigger bar; added the public decorative `IndicatorArrow` part.
+  Its Viewport now uses the restrained control radius by default while retaining
+  the public radius variable for intentional local customization.
+
+- Upgraded the exact Atom dependency to `0.20.11`; Navigation Menu Viewport now
+  exposes Root-relative active-trigger geometry through authored positioning
+  wrappers, and moving then clicking between open triggers no longer closes the
+  destination through an engine-dependent hover-click race. Modal Dialog, Alert Dialog,
   Drawer, Popover, Dropdown Menu, and Context Menu preserve sticky application
   chrome while background scrolling remains locked, and Select preserves
-  logical RTL placement and option direction across its portal.
+  logical RTL placement and option direction across its portal. Dropdown Menu,
+  Context Menu, and Menubar now also preserve inherited direction through
+  portalled menus and keep submenus inside the viewport when neither inline
+  side has enough space; their RTL submenu chevrons point toward the logical
+  opening direction instead of rotating downward, and popup entry motion
+  travels on one axis from the actual collision-resolved side without scaling
+  diagonally. Newly positioned parent menus no longer hover-open a submenu
+  beneath a stationary mouse pointer.
 - Added explicit focused, repository, and release verification tiers; focused
   visual selection; single-build repository orchestration; and progress output
   for clean React consumer checks without changing component runtime behavior.
   Cross-browser Table and Toast evidence now uses keyboard activation for
-  focus assertions and each Playwright project's actual viewport bounds.
+  focus assertions and each Playwright project's actual viewport bounds. The
+  release browser projects now run sequentially with one worker each, WebKit
+  profiles restart across bounded shards to avoid long-lived engine
+  degradation, and the npm release pipeline verifies package contents, React
+  18/19 consumers, and the application Consumer against the exact archive it
+  publishes.
+- Added repository-owned readiness metadata, strict stale-port diagnostics,
+  non-reusing Playwright previews, a conservative Chromium pull-request gate,
+  parallel five-profile `main` CI, nightly remote qualification, and
+  distributed exact-archive publication gates.
 
 ### Added
 
@@ -99,6 +126,16 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   orientation, RTL, three sizes, and a complete circular visual.
 
 ### Fixed
+
+- Darkened the danger solid interaction palette in light and dark appearances
+  so Button, Icon Button, Badge, and composed destructive actions retain WCAG
+  AA contrast through default, hover, and pressed states.
+
+- Kept vertical Navigation Menu Viewports aligned with Atom's measured active
+  trigger so the Indicator arrow does not detach on later items.
+
+- Corrected Icon's direct-SVG `asChild` sizing so the composed root keeps the
+  selected square size instead of expanding to its surrounding container.
 
 - Updated the exact Atom runtime dependency to `0.20.2` so opening Combobox
   options from its chevron lets mobile browsers reveal the focused input above

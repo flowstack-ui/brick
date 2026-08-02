@@ -25,7 +25,9 @@ short and record an issue link for any failure.
    unless the scenario names the changed dimension.
 3. Expect equal peer starts/heights, contained icons and indicators, readable
    descriptions, and no clipped focus ring, popup, Arrow, or scroll control.
-4. In scenarios 02–04, confirm only variant, size, shape, or width changes.
+4. In scenarios 02–04, confirm only variant, size, shape, or width changes and
+   that `sm`, `md`, and `lg` trigger and option rows match at 36px, 44px, and
+   52px minimum heights.
 5. In scenario 05, confirm groups, labels, separator, disabled option, Viewport,
    scroll controls, and Arrow are visually distinct and aligned.
 

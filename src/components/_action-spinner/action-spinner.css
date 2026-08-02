@@ -1,0 +1,53 @@
+@layer brick.components {
+  :where(.brick-button, .brick-icon-button)[data-loading]::after {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    inline-size: var(--brick-action-spinner-size);
+    block-size: var(--brick-action-spinner-size);
+    border: 0.125rem solid transparent;
+    border-block-start-color: var(--brick-action-spinner-color);
+    border-inline-end-color: var(--brick-action-spinner-color);
+    border-radius: var(--brick-radius-full);
+    content: "";
+    animation: brick-action-spinner-spin 700ms linear infinite;
+  }
+
+  :where([dir="rtl"])
+    :where(.brick-button, .brick-icon-button)[data-loading]::after {
+    animation-name: brick-action-spinner-spin-rtl;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.brick-button, .brick-icon-button)[data-loading]::after {
+      animation-duration: 1400ms;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.brick-button, .brick-icon-button)[data-loading]::after {
+      border-block-start-color: ButtonText;
+      border-inline-end-color: ButtonText;
+    }
+  }
+
+  @keyframes brick-action-spinner-spin {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  @keyframes brick-action-spinner-spin-rtl {
+    from {
+      transform: translate(50%, -50%) rotate(0deg);
+    }
+
+    to {
+      transform: translate(50%, -50%) rotate(360deg);
+    }
+  }
+}

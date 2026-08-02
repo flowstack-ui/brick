@@ -5,6 +5,7 @@
 .multi-select-page [data-testid="multi-select-overview"] > .brick-field,
 .multi-select-page [data-testid="multi-select-options"] > .brick-field { inline-size: 100%; }
 .multi-select-narrow { inline-size: min(100%, 17rem); }
-.multi-select-page [data-testid="multi-select-options"] { min-block-size: 31rem; }
-.multi-select-page [data-appearance] { padding: var(--brick-space-3); border-radius: var(--brick-radius-control); background: var(--brick-color-surface-base); color: var(--brick-color-text-primary); }
+.multi-select-page [data-testid="multi-select-options"] { min-block-size: 12rem; }
+.multi-select-page .forms-scoped-grid > .brick-surface { place-items: start; align-content: start; }
+.multi-select-page .forms-customization__preview > .brick-field { inline-size: min(100%, 30rem); }
 @media (max-width: 44rem) { .multi-select-page .forms-grid { grid-template-columns: minmax(0, 1fr); } }

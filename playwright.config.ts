@@ -31,6 +31,6 @@ export default defineConfig({
   webServer: {
     command: "npm run preview:playground -- --host 127.0.0.1",
     port: 4010,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
   },
 });

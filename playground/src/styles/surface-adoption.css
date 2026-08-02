@@ -8,7 +8,112 @@
   color: var(--brick-surface-foreground);
 }
 
-:where(
+/* Shared code-and-preview evidence uses one clipped surface and a true divider. */
+.playground-customization-evidence {
+  min-inline-size: 0;
+  overflow: clip;
+}
+
+.brick-surface[data-playground-evidence].playground-customization-evidence {
+  padding: 0;
+  background: var(--brick-color-border-subtle);
+}
+
+.playground-customization-layout {
+  min-inline-size: 0;
+  align-items: stretch;
+  gap: var(--brick-border-width) !important;
+  background: var(--brick-color-border-subtle);
+}
+
+.playground-customization-layout > * {
+  min-inline-size: 0;
+  block-size: 100%;
+  padding: var(--brick-space-5);
+  background: var(--brick-color-surface-raised);
+}
+
+.playground-customization-preview {
+  display: grid;
+  align-content: center;
+  border: 0;
+  border-radius: 0;
+}
+
+/* Legacy route layouts retain their component-specific geometry while using
+   the same single-surface divider contract as new customization evidence. */
+.brick-surface[data-playground-evidence]:is(
+  .hover-card-customization,
+  .popover-customization,
+  .tooltip-customization,
+  .badge-customization,
+  .card-customization,
+  .notification-badge-customization,
+  .text-customization,
+  .dialog-customization,
+  .alert-dialog-customization,
+  .drawer-customization
+) {
+  gap: var(--brick-border-width);
+  padding: 0;
+  overflow: clip;
+  background: var(--brick-color-border-subtle);
+}
+
+.brick-surface[data-playground-evidence]:is(
+  .hover-card-customization,
+  .popover-customization,
+  .tooltip-customization,
+  .badge-customization,
+  .card-customization,
+  .notification-badge-customization,
+  .text-customization,
+  .dialog-customization,
+  .alert-dialog-customization,
+  .drawer-customization
+) > * {
+  min-inline-size: 0;
+  block-size: 100%;
+  padding: var(--brick-space-5);
+  border: 0;
+  border-radius: 0;
+  background: var(--brick-color-surface-raised);
+}
+
+.brick-surface[data-playground-evidence] :is(
+  .hover-card-customization__preview,
+  .popover-customization__preview,
+  .tooltip-customization__preview,
+  .badge-customization__preview,
+  .card-customization__preview
+) {
+  border: 0;
+  border-radius: 0;
+  background: var(--brick-color-surface-raised);
+}
+
+@media (max-width: 28rem) {
+  .playground-customization-layout > * {
+    padding: var(--brick-space-4);
+  }
+
+  .brick-surface[data-playground-evidence]:is(
+    .hover-card-customization,
+    .popover-customization,
+    .tooltip-customization,
+    .badge-customization,
+    .card-customization,
+    .notification-badge-customization,
+    .text-customization,
+    .dialog-customization,
+    .alert-dialog-customization,
+    .drawer-customization
+  ) > * {
+    padding: var(--brick-space-4);
+  }
+}
+
+[data-component-page] :is(
   .button-specimen-grid,
   .button-appearance-grid,
   .icon-button-specimen-grid,
@@ -43,6 +148,10 @@
   .text-scoped-grid,
   .stack-grid,
   .stack-scoped-grid,
+  .bottom-navigation-grid,
+  .bottom-navigation-scoped-grid,
+  .menu-grid,
+  .menu-scoped-grid,
   .forms-grid,
   .forms-scoped-grid
 ) {
@@ -53,7 +162,7 @@
   gap: var(--brick-space-4);
 }
 
-:where(
+[data-component-page] :is(
   .button-customization__preview,
   .icon-button-customization__preview,
   .app-bar-customization__preview,
@@ -77,4 +186,27 @@
   border: 0;
   border-radius: 0;
   background: transparent;
+}
+
+/* Labels identify the specimen; the rendered result begins below them at the
+   logical start instead of floating in the middle of an oversized cell. */
+[data-component-page="divider"] .divider-cell {
+  display: grid;
+  align-content: start;
+  gap: var(--brick-space-4);
+}
+
+[data-component-page="text"] .text-cell {
+  align-content: start;
+}
+
+[data-component-page="text"] .text-cell__preview {
+  align-content: start;
+  align-items: start;
+}
+
+[data-component-page="text"] .text-scoped-grid > .brick-surface {
+  grid-template-rows: auto 1fr;
+  place-items: start;
+  align-content: stretch;
 }

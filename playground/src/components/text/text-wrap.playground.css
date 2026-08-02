@@ -1,3 +1,8 @@
+.text-constrained {
+  min-inline-size: 0;
+  overflow: clip;
+}
+
 .text-constrained--wrapping {
   inline-size: min(100%, 11.125rem);
 }

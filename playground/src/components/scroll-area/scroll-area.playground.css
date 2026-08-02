@@ -1,13 +1,12 @@
 .scroll-area-page { padding-block: var(--brick-space-4) 6rem; }
 .scroll-area-grid { gap: var(--brick-space-4); grid-template-columns: minmax(0, 1fr); }
-.scroll-area-cell { min-inline-size: 0; }
+.scroll-area-cell { display: grid; min-inline-size: 0; align-content: start; gap: var(--brick-space-4); }
 .scroll-area-demo { inline-size: 100%; block-size: 13rem; min-inline-size: 0; border: var(--brick-border-width) solid var(--brick-color-border-subtle); border-radius: var(--brick-radius-surface); background: var(--brick-color-surface-base); }
 .scroll-area-demo[data-orientation="horizontal"] { block-size: 9rem; }
 .scroll-area-items { padding: var(--brick-space-3); }
 .scroll-area-items--horizontal { display: grid; grid-template-columns: repeat(12, 7rem); inline-size: 96rem; min-inline-size: 96rem; }
 .scroll-area-items--both { display: grid; grid-template-columns: repeat(6, 7rem); inline-size: 48rem; min-inline-size: 48rem; }
 .scroll-area-items--both > * { min-block-size: 4rem; }
-.scroll-area-customization { display: grid; gap: var(--brick-space-5); }
 .scroll-area-customization pre { max-inline-size: 100%; margin: 0; padding: var(--brick-space-3); overflow: auto; border-radius: var(--brick-radius-control); background: var(--brick-color-surface-subtle); }
 .scroll-area-customization .scroll-area-demo { --brick-scroll-area-scrollbar-thumb: var(--brick-color-accent-solid); --brick-scroll-area-scrollbar-track: var(--brick-color-accent-soft); }
 .scroll-area-phone { inline-size: min(100%, 20rem); }
@@ -16,4 +15,4 @@
 .scroll-area-vertical-writing .scroll-area-demo { inline-size: 100%; block-size: 100%; }
 .scroll-area-vertical-writing .brick-text { padding: var(--brick-space-4); }
 @container (min-width: 42rem) { .scroll-area-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@container (min-width: 64rem) { .scroll-area-grid:has(> :nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); } .scroll-area-customization { grid-template-columns: minmax(0, 1.1fr) minmax(16rem, .9fr); } }
+@container (min-width: 64rem) { .scroll-area-grid:has(> :nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

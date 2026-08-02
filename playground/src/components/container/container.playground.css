@@ -45,6 +45,18 @@
   color: var(--brick-color-text-primary);
 }
 
+.container-appearance {
+  display: grid;
+  align-content: start;
+  gap: var(--brick-space-4);
+  min-inline-size: 0;
+}
+
+.container-appearance > .brick-container,
+.playground-customization-preview > .brick-container {
+  inline-size: 100%;
+}
+
 .container-narrow {
   inline-size: min(100%, 20rem);
 }

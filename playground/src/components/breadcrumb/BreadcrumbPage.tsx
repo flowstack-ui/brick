@@ -1,7 +1,6 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   Breadcrumb,
-  Code,
   Grid,
   Icon,
   Text,
@@ -9,6 +8,7 @@ import {
   type BreadcrumbSize,
   type BreadcrumbVariant,
 } from "@flowstack-ui/brick";
+import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -136,7 +136,7 @@ export function BreadcrumbPage() {
 
       <Scenario {...breadcrumbScenarios[7]}>
         <VStack className="forms-evidence-stack">
-          <EvidenceGroup description="The same default medium plain trail composes inside adjacent local appearance scopes." title="Scoped appearances"><Grid.Root columns={2} className="forms-scoped-grid" data-testid="breadcrumb-appearance"><EvidenceSurface data-brick-appearance="light"><Code>light</Code><Trail ariaLabel="Light appearance path" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><Trail ariaLabel="Dark appearance path" /></EvidenceSurface></Grid.Root></EvidenceGroup>
+          <EvidenceGroup description="The same default medium plain trail composes inside adjacent local appearance scopes." title="Scoped appearances"><Grid.Root columns={2} className="forms-scoped-grid" data-testid="breadcrumb-appearance"><EvidenceSurface data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><Trail ariaLabel="Light appearance path" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><Trail ariaLabel="Dark appearance path" /></EvidenceSurface></Grid.Root></EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the purple ancestors, green current page, wider spacing, and thicker underline." title="Consumer customization"><EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Hierarchy properties</Text><Text as="p" tone="secondary" variant="body-sm">Public variables customize paint, rhythm, and decoration without replacing hierarchy semantics.</Text><PlaygroundCodeBlock aria-label="Breadcrumb customization example" tabIndex={0}>{`<Breadcrumb.Root\n  variant="underline"\n  style={{\n    "--brick-breadcrumb-foreground": "#6b2f88",\n    "--brick-breadcrumb-current-foreground": "#18794e",\n    "--brick-breadcrumb-list-gap": "0.75rem",\n    "--brick-breadcrumb-decoration-thickness": "0.16em",\n  }}\n>`}</PlaygroundCodeBlock></div><EvidenceSurface className="forms-customization__preview"><div><Breadcrumb.Root ariaLabel="Customized path" style={customTokens} variant="underline"><Breadcrumb.List><Breadcrumb.Item><Breadcrumb.Link href="#custom-home">Home</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Link href="#custom-projects">Projects</Breadcrumb.Link></Breadcrumb.Item><Breadcrumb.Separator /><Breadcrumb.Item><Breadcrumb.Page>Quarterly report</Breadcrumb.Page></Breadcrumb.Item></Breadcrumb.List></Breadcrumb.Root></div></EvidenceSurface></EvidenceSurface></EvidenceGroup>
         </VStack>
       </Scenario>

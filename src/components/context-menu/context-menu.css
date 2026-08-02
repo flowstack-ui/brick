@@ -7,7 +7,7 @@
     --brick-context-menu-content-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 48%);
     --brick-context-menu-content-padding: var(--brick-space-1);
     --brick-context-menu-content-max-block-size: 20rem;
-    --brick-context-menu-row-min-block-size: 2.5rem;
+    --brick-context-menu-row-min-block-size: var(--brick-control-target-min);
     --brick-context-menu-row-padding-inline: var(--brick-space-3);
     --brick-context-menu-row-gap: var(--brick-space-2);
     --brick-context-menu-row-radius: var(--brick-radius-control);

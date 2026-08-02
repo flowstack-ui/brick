@@ -1,4 +1,3 @@
-import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties } from "react";
 import {
@@ -12,6 +11,7 @@ import {
   VStack,
   type CheckboxSize,
 } from "@flowstack-ui/brick";
+import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -118,7 +118,7 @@ export function CheckboxPage() {
       <Scenario {...checkboxScenarios[7]}>
         <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same default unchecked state composes inside adjacent local appearance scopes." title="Scoped appearances">
-            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="checkbox-appearance"><EvidenceSurface data-brick-appearance="light"><Code>light</Code><Checkbox>Preview</Checkbox></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><Checkbox>Preview</Checkbox></EvidenceSurface></Grid.Root>
+            <Grid.Root columns={2} className="forms-scoped-grid" data-testid="checkbox-appearance"><EvidenceSurface data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><Checkbox>Preview</Checkbox></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><Checkbox>Preview</Checkbox></EvidenceSurface></Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">
             <EvidenceSurface as="article" className="forms-customization" inset="lg"><div><Text as="h4" variant="title-sm">Row and visual-control properties</Text><Text as="p" tone="secondary" variant="body-sm">Slot, native style, and public Checkbox tokens visibly change the row and control.</Text><PlaygroundCodeBlock aria-label="Checkbox customization example" tabIndex={0}>{`<Checkbox

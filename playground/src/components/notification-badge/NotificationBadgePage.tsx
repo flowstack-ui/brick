@@ -1,4 +1,3 @@
-import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { type CSSProperties, type ReactNode } from "react";
 import {
@@ -329,17 +328,17 @@ export function NotificationBadgePage() {
               className="notification-badge-scoped-appearance-grid"
               data-testid="notification-badge-appearance"
             >
-              <EvidenceSurface data-brick-appearance="light">
-                <Code>light</Code>
-                <NotificationBadge count={4}>
+              <EvidenceSurface className="notification-badge-appearance-panel" data-brick-appearance="light">
+                <SpecimenLabel>Light</SpecimenLabel>
+                <div className="notification-badge-appearance-preview"><NotificationBadge count={4}>
                   <MailTarget />
-                </NotificationBadge>
+                </NotificationBadge></div>
               </EvidenceSurface>
-              <EvidenceSurface data-brick-appearance="dark">
-                <Code>dark</Code>
-                <NotificationBadge count={4}>
+              <EvidenceSurface className="notification-badge-appearance-panel" data-brick-appearance="dark">
+                <SpecimenLabel>Dark</SpecimenLabel>
+                <div className="notification-badge-appearance-preview"><NotificationBadge count={4}>
                   <MailTarget />
-                </NotificationBadge>
+                </NotificationBadge></div>
               </EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>
@@ -349,6 +348,7 @@ export function NotificationBadgePage() {
           >
             <EvidenceSurface as="article" className="notification-badge-customization" inset="lg">
               <div>
+                <SpecimenLabel>Customized</SpecimenLabel>
                 <Text as="h4" variant="title-sm">Wrapper and component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
                   Root class, slot, native style, and public indicator tokens
@@ -397,8 +397,8 @@ export function NotificationBadgePage() {
             description="The target remains usable inside a 20rem application-owned frame even with a long accessible name."
             title="Constrained-width stress"
           >
-            <EvidenceSurface className="notification-badge-stress-panel">
-              <HStack className="notification-badge-phone-frame">
+            <EvidenceSurface className="notification-badge-stress-panel notification-badge-labeled-panel">
+              <SpecimenLabel>Constrained</SpecimenLabel><HStack className="notification-badge-phone-frame">
                 <NotificationBadge count={125}>
                   <MailTarget label="International workspace inbox, more than 99 unread messages" />
                 </NotificationBadge>
@@ -410,8 +410,8 @@ export function NotificationBadgePage() {
             description="Top-end resolves to the physical left in this genuine right-to-left context without changing source order."
             title="RTL inheritance"
           >
-            <EvidenceSurface className="notification-badge-stress-panel">
-              <HStack className="notification-badge-phone-frame" dir="rtl">
+            <EvidenceSurface className="notification-badge-stress-panel notification-badge-labeled-panel">
+              <SpecimenLabel>RTL</SpecimenLabel><HStack className="notification-badge-phone-frame" dir="rtl">
                 <NotificationBadge count={4}>
                   <MailTarget label="البريد الوارد، ٤ رسائل غير مقروءة" />
                 </NotificationBadge>

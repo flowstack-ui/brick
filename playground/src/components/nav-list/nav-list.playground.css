@@ -17,10 +17,6 @@
   flex: 1;
 }
 
-.nav-list-customization {
-  max-inline-size: 44rem;
-}
-
 @media (max-width: 48rem) {
   .nav-list-grid {
     grid-template-columns: minmax(0, 1fr);

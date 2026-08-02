@@ -12,9 +12,8 @@
 .grid-frame,
 .grid-cell,
 .grid-placement,
-.grid-customization,
 .grid-narrow,
-[data-testid="grid-appearance"] > .brick-grid {
+.grid-appearance-cell {
   box-sizing: border-box;
   min-inline-size: 0;
   border: var(--brick-border-width) solid var(--brick-color-border-subtle);
@@ -59,31 +58,18 @@
   padding: var(--brick-space-5);
 }
 
-[data-testid="grid-appearance"] {
-  overflow: hidden;
-  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
-  border-radius: var(--brick-radius-surface);
-}
-
-[data-testid="grid-appearance"] > .brick-grid {
-  min-block-size: 12rem;
-  align-content: center;
-  padding: var(--brick-space-5);
-  border: 0;
-  border-radius: 0;
-}
-
-.grid-customization {
+.grid-appearance-cell {
   display: grid;
-  gap: var(--brick-space-5);
-  padding: var(--brick-space-5);
+  min-block-size: 12rem;
+  align-content: start;
+  gap: var(--brick-space-4);
 }
 
-.grid-customization pre {
+.grid-page .playground-customization-layout pre {
   max-inline-size: 100%;
   margin: var(--brick-space-2) 0 0;
   padding: var(--brick-space-3);
-  overflow-x: auto;
+  overflow: visible;
   border-radius: var(--brick-radius-control);
   background: var(--brick-color-surface-subtle);
   font-size: 0.75rem;
@@ -95,18 +81,11 @@
   padding: var(--brick-space-4);
 }
 
-@container (min-width: 48rem) {
-  .grid-customization {
-    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
-  }
-}
-
 @media (max-width: 28rem) {
   .grid-frame,
   .grid-cell,
   .grid-placement,
-  .grid-customization,
-  [data-testid="grid-appearance"] > .brick-grid {
+  .grid-appearance-cell {
     padding: var(--brick-space-4);
   }
 

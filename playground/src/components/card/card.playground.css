@@ -174,6 +174,7 @@
 
 .card-appearance-panel {
   display: grid;
+  grid-template-rows: auto 1fr;
   align-content: start;
   gap: var(--brick-space-5);
   min-inline-size: 0;
@@ -182,9 +183,14 @@
   color: var(--brick-color-text-primary);
 }
 
-.card-appearance-panel > span {
-  color: var(--brick-color-text-secondary);
-  font-size: var(--brick-font-size-sm);
+.card-appearance-preview {
+  display: grid;
+  inline-size: 100%;
+  align-items: start;
+}
+
+.card-appearance-preview > .brick-card {
+  inline-size: 100%;
 }
 
 .card-customization-list {
@@ -194,11 +200,17 @@
 
 .card-customization {
   display: grid;
-  gap: var(--brick-space-5);
+  gap: var(--brick-border-width);
   min-inline-size: 0;
-  padding: var(--brick-space-5);
+  padding: 0;
+  overflow: clip;
   border: var(--brick-border-width) solid var(--brick-color-border-subtle);
   border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-border-subtle);
+}
+
+.card-customization > * {
+  padding: var(--brick-space-5);
   background: var(--brick-color-surface-raised);
 }
 
@@ -297,7 +309,6 @@
   .card-overview,
   .card-specimen-cell,
   .card-appearance-panel,
-  .card-customization,
   .card-stress-panel {
     padding: var(--brick-space-4);
   }

@@ -1,6 +1,6 @@
 .select-page [data-playground-evidence],
 .select-page .select-tile { overflow: visible; }
-.select-customization { align-items: start; }
+.select-customization { align-items: stretch; }
 .select-tile {
   display: flex;
   min-inline-size: 0;

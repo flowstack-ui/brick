@@ -7,6 +7,8 @@ test("Icon defaults, sizes, tones, and sources", async ({ page }) => {
   await expect(page.locator("#scenario-icon-sizes")).toHaveScreenshot("sizes-light.png");
   await expect(page.locator("#scenario-icon-tones")).toHaveScreenshot("tones-light.png");
   await expect(page.locator("#scenario-icon-sources")).toHaveScreenshot("sources-light.png");
+  await expect(page.locator("#scenario-icon-composition .icon-grid")).toHaveScreenshot("composition-grid-light.png");
+  await expect(page.locator("#scenario-icon-composition .playground-output-evidence")).toHaveScreenshot("composition-output-light.png");
 });
 
 test("Icon appearance, RTL, mobile, and forced colors", async ({ page }) => {

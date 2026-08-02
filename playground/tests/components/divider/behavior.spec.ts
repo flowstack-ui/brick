@@ -33,7 +33,7 @@ test("composition, customization, RTL, reflow, and accessibility remain sound", 
   await expect(page.getByTestId("divider-semantics").locator("[data-rendered-output]")).toContainText("Composed section boundary");
   await page.getByRole("button", { name: "Inspect ref" }).click();
   await expect(page.getByText("Ref host: HR")).toBeVisible();
-  const custom = page.getByTestId("divider-appearance").locator(".divider-customization .brick-divider");
+  const custom = page.getByTestId("divider-appearance").locator(".playground-customization-preview .brick-divider");
   expect(await custom.evaluate((element) => getComputedStyle(element).borderTopColor)).not.toBe("rgba(0, 0, 0, 0)");
   await page.setViewportSize({ width: 390, height: 844 });
   const stress = page.getByTestId("divider-stress");

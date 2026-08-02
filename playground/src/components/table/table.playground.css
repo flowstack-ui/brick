@@ -1,5 +1,5 @@
 .table-page { inline-size: 100%; }
-.table-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); }
+.table-cell { display: flex; min-inline-size: 0; max-inline-size: 100%; flex-direction: column; gap: var(--brick-space-4); overflow: hidden; }
 .table-grid > * { min-inline-size: 0; }
 .table-sticky { max-block-size: 12rem; overflow-y: auto; }
 .table-page .brick-button { gap: var(--brick-space-1); }
@@ -22,7 +22,7 @@
   border-radius: var(--brick-radius-control);
 }
 .table-page .table-sort-button .brick-button__icon { align-self: center; }
-.table-appearance-surface { display: flex; flex-direction: column; gap: var(--brick-space-3); }
+.table-appearance-surface { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-4); overflow: hidden; }
 .table-customization > * { min-inline-size: 0; }
 .table-status-cell { white-space: nowrap; }
 @media (max-width: 64rem) { .table-grid { --brick-grid-columns: minmax(0, 1fr); } }

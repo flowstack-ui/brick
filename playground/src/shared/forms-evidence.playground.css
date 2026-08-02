@@ -197,25 +197,38 @@
 
 .forms-scoped-grid > div {
   display: grid;
+  grid-template-rows: auto 1fr;
   min-block-size: 12rem;
   place-items: center;
-  align-content: center;
+  align-content: stretch;
   gap: var(--brick-space-4);
   padding: var(--brick-space-5);
   background: var(--brick-color-surface-raised);
   color: var(--brick-color-text-primary);
 }
 
+.forms-scoped-grid > div > .playground-specimen-label {
+  justify-self: start;
+  align-self: start;
+}
+
 .forms-scoped-grid > div > :where(.brick-form, .brick-field, .brick-fieldset, .brick-checkbox-group) {
   inline-size: min(100%, 30rem);
 }
 
-.forms-customization {
+.brick-surface[data-playground-evidence].forms-customization {
   display: grid;
-  gap: var(--brick-space-5);
-  padding: var(--brick-space-5);
+  gap: var(--brick-border-width);
+  padding: 0;
+  overflow: clip;
   border: var(--brick-border-width) solid var(--brick-color-border-subtle);
   border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-border-subtle);
+}
+
+.forms-customization > * {
+  min-inline-size: 0;
+  padding: var(--brick-space-5);
   background: var(--brick-color-surface-raised);
 }
 
@@ -237,14 +250,14 @@
   line-height: 1.55;
 }
 
-.forms-customization__preview {
+.brick-surface[data-playground-evidence].forms-customization__preview {
   display: grid;
   min-block-size: 12rem;
   place-items: center;
-  padding: var(--brick-space-4);
-  border: var(--brick-border-width) dashed var(--brick-color-border-subtle);
-  border-radius: var(--brick-radius-surface);
-  background: var(--brick-color-surface-canvas);
+  padding: var(--brick-space-5);
+  border: 0;
+  border-radius: 0;
+  background: var(--brick-color-surface-raised);
 }
 
 .forms-customization__preview > :where(.brick-form, .brick-field, .brick-fieldset, .brick-checkbox-group) {
@@ -299,7 +312,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .forms-customization {
+  .brick-surface[data-playground-evidence].forms-customization {
     grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
   }
 
@@ -323,6 +336,14 @@
   .forms-scoped-grid > div,
   .forms-customization,
   .forms-stress-panel {
+    padding: var(--brick-space-4);
+  }
+
+  .forms-customization {
+    padding: 0;
+  }
+
+  .forms-customization > * {
     padding: var(--brick-space-4);
   }
 }

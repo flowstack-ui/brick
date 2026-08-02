@@ -1,4 +1,4 @@
-import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
+import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 installVisualDefaults("/progress-circle");
 test("Progress Circle defaults, recipes, geometry, and content", async ({ page }) => {
   await expect(page.getByTestId("progress-circle-overview")).toHaveScreenshot("overview-light.png");
@@ -9,6 +9,7 @@ test("Progress Circle defaults, recipes, geometry, and content", async ({ page }
   await expect(page.getByTestId("progress-circle-content")).toHaveScreenshot("content-light.png");
   await setAppearance(page, "dark");
   await expect(page.getByTestId("progress-circle-appearance")).toHaveScreenshot("appearance-dark.png");
+  await expectEvidenceScreenshot(page, page.getByTestId("progress-circle-customization"), "customization-dark.png");
 });
 test("Progress Circle mobile and forced colors", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });

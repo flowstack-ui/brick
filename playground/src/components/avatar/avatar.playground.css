@@ -166,21 +166,34 @@
 .avatar-scoped-appearance-grid > div {
   display: grid;
   min-block-size: 9rem;
-  place-items: center;
-  align-content: center;
+  grid-template-rows: auto 1fr;
+  align-content: stretch;
+  justify-items: start;
   gap: var(--brick-space-4);
   padding: var(--brick-space-5);
   background: var(--brick-color-surface-raised);
   color: var(--brick-color-text-primary);
 }
 
+.avatar-appearance-preview {
+  display: grid;
+  inline-size: 100%;
+  place-items: center;
+}
+
 .avatar-customization {
   display: grid;
-  gap: var(--brick-space-5);
+  gap: var(--brick-border-width);
   min-inline-size: 0;
-  padding: var(--brick-space-5);
+  padding: 0;
+  overflow: clip;
   border: var(--brick-border-width) solid var(--brick-color-border-subtle);
   border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-border-subtle);
+}
+
+.avatar-customization > * {
+  padding: var(--brick-space-5);
   background: var(--brick-color-surface-raised);
 }
 
@@ -267,7 +280,6 @@
   .avatar-image-state-panel,
   .avatar-control-panel,
   .avatar-scoped-appearance-grid > div,
-  .avatar-customization,
   .avatar-stress-panel {
     padding: var(--brick-space-4);
   }

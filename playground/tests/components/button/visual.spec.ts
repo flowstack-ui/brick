@@ -9,6 +9,7 @@ test("Button recipes and high-risk states", async ({ page }) => {
   await setAppearance(page, "dark");
   await expect(page.getByTestId("button-tones")).toHaveScreenshot("tones-dark.png");
   await expect(page.getByTestId("button-sizes")).toHaveScreenshot("sizes-dark.png");
+  await expect(page.locator("#scenario-button-appearance")).toHaveScreenshot("appearance-dark.png");
 });
 
 test("Button constrained, RTL, and forced-color evidence", async ({ page }) => {

@@ -23,6 +23,12 @@ Verification has three explicit tiers:
 - release candidate: `npm run check:release`, which adds the complete browser
   matrix, packed application Consumer, and CSS-size report.
 
+The local release runner keeps one worker per project and restarts WebKit in
+bounded shards so a long qualification run cannot accumulate one browser
+process indefinitely. Pass one or more project names directly to
+`scripts/run-release-browser-tests.mjs` when reproducing a release-profile
+failure. Main-branch and publication jobs use the same bounded project runner.
+
 Do not rerun the repository or release tier after every focused edit. Escalate
 when the affected component is stable or when a shared boundary requires
 broader evidence.
@@ -56,8 +62,32 @@ npm run size:css
 `test:browser` is the deterministic Chromium pull-request tier, including the
 reviewed visual baselines. `test:browser:release` runs functional coverage in
 desktop Chromium, Firefox, and WebKit plus Pixel and iPhone device profiles.
+Release projects run sequentially with one worker per browser profile so one
+engine cannot exhaust resources or turn host contention into false failures.
 Use `test:visual:update` only for an intentional visual change, inspect every
 generated image, and never update baselines merely to make a failure pass.
+
+The playground uses development port `3010` and strict automated-test port
+`4010`; Consumer uses `3011` and `4011`. Browser commands do not reuse an
+existing test listener. Playwright owns and stops the preview it starts on
+success, failure, timeout, or interruption. `npm run test:processes` checks
+both test ports without changing process state. Installed browser binaries may
+remain cached, but one-shot preview, browser, and worker processes may not.
+
+Pull-request CI builds the repository evidence once and runs the conservative
+complete Chromium suite. Pushes to `main` distribute all five portable browser
+profiles across independent clean runners, and nightly CI repeats the complete
+release gate remotely. A named component remains the smallest local affected
+unit; shared or unknown changes expand to the repository gate. Reviewed macOS
+visual baselines and named physical-device checks remain explicit human release
+evidence.
+
+CI and advanced local diagnosis can reuse an already-built playground without
+starting a development server:
+
+```bash
+npm run test:browser:project:built -- chromium playground/tests/components/button/behavior.spec.ts
+```
 
 ## Fast component and type tests
 

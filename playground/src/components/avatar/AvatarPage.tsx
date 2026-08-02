@@ -1,4 +1,3 @@
-import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
@@ -347,12 +346,12 @@ export function AvatarPage() {
               data-testid="avatar-appearance"
             >
               <EvidenceSurface data-brick-appearance="light">
-                <Code>light</Code>
-                <Avatar alt="Ada Lovelace" fallback="AL" />
+                <SpecimenLabel>Light</SpecimenLabel>
+                <div className="avatar-appearance-preview"><Avatar alt="Ada Lovelace" fallback="AL" /></div>
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
-                <Code>dark</Code>
-                <Avatar alt="Ada Lovelace" fallback="AL" />
+                <SpecimenLabel>Dark</SpecimenLabel>
+                <div className="avatar-appearance-preview"><Avatar alt="Ada Lovelace" fallback="AL" /></div>
               </EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>
@@ -360,8 +359,9 @@ export function AvatarPage() {
             description="The code names every supported hook and exactly matches the rendered result."
             title="Consumer customization"
           >
-            <EvidenceSurface as="article" className="avatar-customization" inset="lg">
+            <EvidenceSurface as="article" className="avatar-customization" inset="none">
               <div>
+                <SpecimenLabel>Customized</SpecimenLabel>
                 <Text as="h4" variant="title-sm">Root and component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
                   Root class, slot, native style, and public Avatar tokens
@@ -384,7 +384,7 @@ export function AvatarPage() {
   }}
 />`}</PlaygroundCodeBlock>
               </div>
-              <EvidenceSurface className="avatar-customization__preview">
+              <div className="avatar-customization__preview">
                 <Avatar
                   alt="Customized identity"
                   className="custom-avatar"
@@ -394,7 +394,7 @@ export function AvatarPage() {
                   status="online"
                   style={customTokens}
                 />
-              </EvidenceSurface>
+              </div>
             </EvidenceSurface>
           </EvidenceGroup>
         </VStack>

@@ -1,16 +1,27 @@
 import assert from "node:assert/strict";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 const dryRun = process.argv.includes("--dry-run");
+const tarballArgument = process.argv.indexOf("--tarball");
+const tarball = tarballArgument === -1
+  ? undefined
+  : process.argv[tarballArgument + 1];
+
+if (tarballArgument !== -1 && !tarball) {
+  throw new Error("--tarball requires an archive path");
+}
+
 const temp = await mkdtemp(join(tmpdir(), "brick-package-"));
 
 try {
   const result = spawnSync(
     "npm",
-    ["pack", "--json", "--pack-destination", temp, ...(dryRun ? ["--dry-run"] : [])],
+    tarball
+      ? ["publish", "--dry-run", "--json", resolve(tarball)]
+      : ["pack", "--json", "--pack-destination", temp, ...(dryRun ? ["--dry-run"] : [])],
     {
       encoding: "utf8",
       env: { ...process.env, npm_config_cache: join(temp, "npm-cache") },
@@ -21,7 +32,8 @@ try {
     process.exit(result.status ?? 1);
   }
 
-  const [pack] = JSON.parse(result.stdout);
+  const output = JSON.parse(result.stdout);
+  const pack = Array.isArray(output) ? output[0] : output;
   const files = new Set(pack.files.map((file) => file.path));
   for (const required of [
     "LICENSE",
@@ -60,7 +72,9 @@ try {
 
   const packageJson = JSON.parse(await readFile("package.json", "utf8"));
   assert.equal(packageJson.repository.url, "git+https://github.com/flowstack-ui/brick.git");
-  console.log(`Verified ${pack.files.length} packed files (${pack.size} bytes).`);
+  console.log(
+    `Verified ${pack.files.length} packed files (${pack.size} bytes)${tarball ? " in the release archive" : ""}.`,
+  );
 } finally {
   await rm(temp, { recursive: true, force: true });
 }

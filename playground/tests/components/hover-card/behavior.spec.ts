@@ -124,7 +124,11 @@ test("HoverCard keeps its genuine link contract and passes the focused accessibi
     'href="/hover-card/destination?resource=render-resource"',
   );
   await link.focus();
-  await expect(page.locator("[data-slot='hover-card']").filter({ hasText: "12 minute read" })).toBeVisible();
+  const hoverCard = page
+    .locator("[data-slot='hover-card']")
+    .filter({ hasText: "12 minute read" });
+  await expect(hoverCard).toBeVisible();
+  await expect(hoverCard).toHaveCSS("opacity", "1");
   // Portalled preview content is intentionally generic and outside landmarks.
   expect((await new AxeBuilder({ page }).disableRules(["region"]).analyze()).violations).toEqual([]);
 });

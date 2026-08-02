@@ -40,7 +40,7 @@ test("right side, sticky containment, composition, mobile reflow, and accessibil
 });
 
 test("desktop playground shell consumes Sidebar while mobile policy remains Drawer", async ({ page }) => {
-  if ((page.viewportSize()?.width ?? 0) <= 1200) {
+  if ((page.viewportSize()?.width ?? 0) < 1280) {
     await page.getByRole("button", { name: "Open component navigation" }).click();
     await expect(page.getByRole("dialog")).toBeVisible();
   } else {

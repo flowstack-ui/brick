@@ -1,10 +1,11 @@
-import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
+import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
 installVisualDefaults("/card");
 
 test("Card hierarchy and recipes", async ({ page }) => {
   await expect(page.getByTestId("card-variants")).toHaveScreenshot("variants-light.png");
   await expect(page.getByTestId("card-sizes")).toHaveScreenshot("sizes-light.png");
+  await expectEvidenceScreenshot(page, page.locator(".card-customization-list"), "customization-light.png");
   await setAppearance(page, "dark");
   await expect(page.getByTestId("card-overview")).toHaveScreenshot("overview-dark.png");
   await expect(page.getByTestId("card-appearance")).toHaveScreenshot("appearance-scopes.png");

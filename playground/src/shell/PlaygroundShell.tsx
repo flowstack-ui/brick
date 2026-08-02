@@ -1,15 +1,17 @@
-import { useRef, useState, type ReactElement, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactElement, type ReactNode } from "react";
 import {
   AppBar,
   Button,
   Container,
   Drawer,
+  Hide,
   Icon,
   IconButton,
   HStack,
   Link,
   ScrollArea,
   Sidebar,
+  Show,
   SkipLink,
   Text,
   VStack,
@@ -57,6 +59,7 @@ export function PlaygroundShell({
   skipLink?: PlaygroundSkipLink;
 }) {
   const [mobileNavigationOpen, setMobileNavigationOpen] = useState(false);
+  const [restoreMobileNavigationFocus, setRestoreMobileNavigationFocus] = useState(true);
   const mobileNavigationTriggerRef = useRef<HTMLElement>(null);
   const {
     appearance,
@@ -65,6 +68,19 @@ export function PlaygroundShell({
     setDirection,
   } = useReviewEnvironment();
   const pageTitle = entry.title;
+
+  useEffect(() => {
+    const desktopQuery = window.matchMedia("(min-width: 80rem)");
+    const closeMobileNavigation = ({ matches }: Pick<MediaQueryList, "matches">) => {
+      if (!matches) return;
+      setRestoreMobileNavigationFocus(false);
+      setMobileNavigationOpen(false);
+    };
+
+    closeMobileNavigation(desktopQuery);
+    desktopQuery.addEventListener("change", closeMobileNavigation);
+    return () => desktopQuery.removeEventListener("change", closeMobileNavigation);
+  }, []);
 
   return (
     <div className="evidence-app" data-playground-shell="" id="top">
@@ -81,15 +97,18 @@ export function PlaygroundShell({
             </Link>
           </AppBar.Start>
           <AppBar.End>
-            <IconButton
-              aria-label="Open component navigation"
-              className="evidence-mobile-menu"
-              onPress={() => setMobileNavigationOpen(true)}
-              ref={mobileNavigationTriggerRef}
-              size="sm"
-            >
-              <Icon size="xs"><MenuIcon /></Icon>
-            </IconButton>
+            <Hide as="span" className="evidence-mobile-menu" from="xl">
+              <IconButton
+                aria-label="Open component navigation"
+                onPress={() => {
+                  setRestoreMobileNavigationFocus(true);
+                  setMobileNavigationOpen(true);
+                }}
+                ref={mobileNavigationTriggerRef}
+              >
+                <Icon size="xs"><MenuIcon /></Icon>
+              </IconButton>
+            </Hide>
           </AppBar.End>
         </AppBar.Toolbar>
       </AppBar.Root>
@@ -102,9 +121,9 @@ export function PlaygroundShell({
           <Drawer.Overlay />
           <Drawer.Content
             className="evidence-mobile-drawer"
-            finalFocus={mobileNavigationTriggerRef}
+            finalFocus={restoreMobileNavigationFocus ? mobileNavigationTriggerRef : undefined}
             placement="start"
-            size="sm"
+            size="full"
           >
             <Drawer.Header>
               <VStack gap="1">
@@ -131,20 +150,28 @@ export function PlaygroundShell({
       </Drawer.Root>
 
       <Sidebar.Root className="evidence-layout" position="sticky">
-        <Sidebar.Panel aria-label="Component index" className="evidence-sidebar">
-          <Sidebar.Content>
-            <ScrollArea.Root
-              className="evidence-sidebar-scroll"
-              scrollbarVisibility="interaction"
-            >
-              <ScrollArea.Viewport>
-                <ComponentNavigation
-                  currentRoute={entry.route}
-                  entries={playgroundEntries}
-                />
-              </ScrollArea.Viewport>
-            </ScrollArea.Root>
-          </Sidebar.Content>
+        <Sidebar.Panel asChild>
+          <Show
+            aria-label="Component index"
+            as="aside"
+            className="evidence-sidebar"
+            from="xl"
+            slot="sidebar-panel"
+          >
+            <Sidebar.Content>
+              <ScrollArea.Root
+                className="evidence-sidebar-scroll"
+                scrollbarVisibility="interaction"
+              >
+                <ScrollArea.Viewport>
+                  <ComponentNavigation
+                    currentRoute={entry.route}
+                    entries={playgroundEntries}
+                  />
+                </ScrollArea.Viewport>
+              </ScrollArea.Root>
+            </Sidebar.Content>
+          </Show>
         </Sidebar.Panel>
 
         <Sidebar.Main asChild>

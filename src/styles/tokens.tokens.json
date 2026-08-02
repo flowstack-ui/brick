@@ -53,9 +53,9 @@
         "dangerSurfacePressed": { "$value": "#ffcbd5" },
         "dangerBorder": { "$value": { "colorSpace": "srgb", "components": [0.937, 0.612, 0.675], "hex": "#ef9cad" } },
         "dangerText": { "$value": { "colorSpace": "srgb", "components": [0.678, 0.137, 0.247], "hex": "#ad233f" } },
-        "dangerSolid": { "$value": "#c92f4f" },
-        "dangerSolidHover": { "$value": "#bc2948" },
-        "dangerSolidPressed": { "$value": "#ad223f" },
+        "dangerSolid": { "$value": "#ad233f" },
+        "dangerSolidHover": { "$value": "#9f1f38" },
+        "dangerSolidPressed": { "$value": "#901a33" },
         "scrim": { "$value": { "colorSpace": "srgb", "components": [0.08, 0.075, 0.07], "alpha": 0.55, "hex": "#1413128c" } },
         "shadow": { "$value": { "colorSpace": "srgb", "components": [0.08, 0.075, 0.07], "alpha": 0.18, "hex": "#1413122e" } }
       }
@@ -111,9 +111,9 @@
         "dangerSurfacePressed": { "$value": "#681d2d" },
         "dangerBorder": { "$value": { "colorSpace": "srgb", "components": [0.6, 0.188, 0.271], "hex": "#993045" } },
         "dangerText": { "$value": { "colorSpace": "srgb", "components": [1, 0.576, 0.655], "hex": "#ff93a7" } },
-        "dangerSolid": { "$value": "#c62f4d" },
-        "dangerSolidHover": { "$value": "#cf3654" },
-        "dangerSolidPressed": { "$value": "#af2642" },
+        "dangerSolid": { "$value": "#af2642" },
+        "dangerSolidHover": { "$value": "#bd2c49" },
+        "dangerSolidPressed": { "$value": "#9f2038" },
         "scrim": { "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.72, "hex": "#000000b8" } },
         "shadow": { "$value": { "colorSpace": "srgb", "components": [0, 0, 0], "alpha": 0.5, "hex": "#00000080" } }
       }

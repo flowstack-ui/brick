@@ -18,5 +18,10 @@ Button follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Danger solid Buttons now retain WCAG AA text contrast in both appearances
+  and throughout hover and pressed interaction states.
 - Full-width and intrinsically sized Buttons now use border-box sizing and can
   shrink and wrap without clipping at extreme zoom or constrained widths.
+- Loading presentation now uses the shared private action-spinner recipe while
+  preserving Button-specific sizing, colors, disabled treatment, and RTL and
+  preference behavior.

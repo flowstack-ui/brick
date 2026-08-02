@@ -3,7 +3,6 @@ import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
   VStack,
-  Badge,
   Button,
   Text,
   type TextAlign,
@@ -322,11 +321,11 @@ export function TextPage() {
           >
             <Grid.Root columns={2} className="text-scoped-grid" data-testid="text-appearance">
               <EvidenceSurface data-brick-appearance="light">
-                <Badge>light</Badge>
+                <SpecimenLabel>Light</SpecimenLabel>
                 <Text>{comparisonCopy}</Text>
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
-                <Badge>dark</Badge>
+                <SpecimenLabel>Dark</SpecimenLabel>
                 <Text>{comparisonCopy}</Text>
               </EvidenceSurface>
             </Grid.Root>
@@ -337,6 +336,7 @@ export function TextPage() {
           >
             <EvidenceSurface as="article" className="text-customization" inset="lg">
               <div>
+                <SpecimenLabel>Customized</SpecimenLabel>
                 <Text as="h4" variant="title-sm">Local Text variables</Text>
                 <Text as="p" tone="secondary" variant="body-sm">Size, weight, tracking, and foreground change on this instance only.</Text>
                 <PlaygroundCodeBlock aria-label="Text customization example" tabIndex={0}>{`<Text

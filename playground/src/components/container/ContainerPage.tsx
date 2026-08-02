@@ -10,6 +10,8 @@ import {
   type ContainerMeasure,
 } from "@flowstack-ui/brick";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./container.playground.css";
@@ -179,21 +181,16 @@ export function ContainerPage() {
       </Scenario>
 
       <Scenario {...containerScenarios[6]}>
-        <Grid.Root data-testid="container-customization" gap="4" minItemSize="md">
-          <Boundary label="Light scope">
-            <div className="container-theme" data-appearance="light">
-              <Container><Content /></Container>
-            </div>
-          </Boundary>
-          <Boundary label="Dark scope">
-            <div className="container-theme" data-appearance="dark">
-              <Container><Content /></Container>
-            </div>
-          </Boundary>
-          <Boundary label="48rem maximum · 2.5rem gutter">
-            <Container style={customStyle}><Content /></Container>
-          </Boundary>
-        </Grid.Root>
+        <VStack data-testid="container-customization" gap="4">
+          <Grid.Root columns={2} gap="4">
+            <EvidenceSurface className="container-appearance" data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><Container><Content /></Container></EvidenceSurface>
+            <EvidenceSurface className="container-appearance" data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><Container><Content /></Container></EvidenceSurface>
+          </Grid.Root>
+          <EvidenceSurface className="playground-customization-evidence" inset="none"><Grid.Root className="playground-customization-layout" columns={2} gap="0"><VStack gap="2"><SpecimenLabel>Customized</SpecimenLabel><Text as="h3" variant="title-sm">Container CSS properties</Text><Text tone="secondary" variant="body-sm">The preview changes only the maximum inline size and logical gutter shown here.</Text><PlaygroundCodeBlock aria-label="Container customization example">{`.custom-container {
+  --brick-container-max-inline-size: 48rem;
+  --brick-container-padding-inline: 2.5rem;
+}`}</PlaygroundCodeBlock></VStack><div className="playground-customization-preview"><Container style={customStyle}><Content /></Container></div></Grid.Root></EvidenceSurface>
+        </VStack>
       </Scenario>
 
       <Scenario {...containerScenarios[7]}>

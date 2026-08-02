@@ -10,7 +10,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.20.4");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.20.11");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -607,6 +607,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "NavigationMenu",
       "NavigationMenuContent",
       "NavigationMenuIndicator",
+      "NavigationMenuIndicatorArrow",
       "NavigationMenuItem",
       "NavigationMenuLink",
       "NavigationMenuList",

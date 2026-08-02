@@ -14,6 +14,8 @@ Combobox follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Popup options now inherit Root size and match the control's 36/44/52px
+  `sm`/`md`/`lg` minimum target instead of using a fixed 40px row.
 - Opening the option list from Trigger now allows mobile browsers to scroll the
   focused input into view above the virtual keyboard.
 - Authored options now visibly filter while typing and `defaultValue` displays

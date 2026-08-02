@@ -11,6 +11,7 @@ import {
   Text,
   VStack,
 } from "@flowstack-ui/brick";
+import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import {
   FormEvidenceCell as Cell,
@@ -300,8 +301,8 @@ export function FormPage() {
         <VStack className="forms-evidence-stack">
           <EvidenceGroup description="The same default Form rhythm composes inside adjacent local appearance scopes." title="Scoped appearances">
             <Grid.Root columns={2} className="forms-scoped-grid" data-testid="form-appearance">
-              <EvidenceSurface data-brick-appearance="light"><Code>light</Code><Form aria-label="Light form"><SimpleFields prefix="form-light" /></Form></EvidenceSurface>
-              <EvidenceSurface data-brick-appearance="dark"><Code>dark</Code><Form aria-label="Dark form"><SimpleFields prefix="form-dark" /></Form></EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><Form aria-label="Light form"><SimpleFields prefix="form-light" /></Form></EvidenceSurface>
+              <EvidenceSurface data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><Form aria-label="Dark form"><SimpleFields prefix="form-dark" /></Form></EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="The code names supported hooks and exactly matches the rendered result." title="Consumer customization">

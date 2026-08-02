@@ -10,7 +10,6 @@ import {
   Grid,
   HStack,
   SkipLink,
-  Surface,
   Text,
   VStack,
 } from "@flowstack-ui/brick";
@@ -96,11 +95,45 @@ export function SkipLinkPage() {
     </Scenario>
 
     <Scenario {...skipLinkScenarios[6]}>
-      <VStack className="skip-link-evidence-stack" gap="6"><EvidenceGroup title="Scoped appearances" description="Compact badges identify the same Skip Link defaults in separate light and dark scopes."><Grid.Root columns={2} className="skip-link-grid" data-testid="skip-link-appearance"><EvidenceSurface data-brick-appearance="light"><Badge size="sm">Light</Badge><SkipLink.Root href="#appearance-light-target">Skip light navigation</SkipLink.Root><Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#appearance-light-target"]')?.focus()} size="sm" variant="outline">Focus light link</Button><Target id="appearance-light-target" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><Badge size="sm">Dark</Badge><SkipLink.Root href="#appearance-dark-target">Skip dark navigation</SkipLink.Root><Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#appearance-dark-target"]')?.focus()} size="sm" variant="outline">Focus dark link</Button><Target id="appearance-dark-target" /></EvidenceSurface></Grid.Root></EvidenceGroup><EvidenceGroup title="Consumer customization" description="A violet surface and pill boundary come only from the documented variables shown."><EvidenceSurface as="article" className="skip-link-customization" data-testid="skip-link-customization" inset="lg"><VStack gap="2"><Badge size="sm" tone="accent">Customized</Badge><Text as="h4" variant="title-sm">Violet bypass surface</Text><Text as="p" tone="secondary" variant="body-sm">The link keeps the same focus and target behavior while consumer variables alter only its paint.</Text><PlaygroundCodeBlock>{`--brick-skip-link-background: #2e1065;\n--brick-skip-link-foreground: #ffffff;\n--brick-skip-link-border-color: #c4b5fd;\n--brick-skip-link-radius: 999px;`}</PlaygroundCodeBlock></VStack><SkipLink.Root href="#custom-target" style={customStyle}>Skip customized navigation</SkipLink.Root><Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#custom-target"]')?.focus()} size="sm">Focus customized link</Button><Target id="custom-target" /></EvidenceSurface></EvidenceGroup></VStack>
+      <VStack className="skip-link-evidence-stack" gap="6">
+        <EvidenceGroup title="Scoped appearances" description="Compact badges identify the same Skip Link defaults in separate light and dark scopes.">
+          <Grid.Root columns={2} className="skip-link-grid" data-testid="skip-link-appearance">
+            <EvidenceSurface className="skip-link-appearance-surface" data-brick-appearance="light">
+              <SpecimenLabel>Light</SpecimenLabel>
+              <SkipLink.Root href="#appearance-light-target">Skip light navigation</SkipLink.Root>
+              <Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#appearance-light-target"]')?.focus()} size="sm" variant="outline">Focus light link</Button>
+              <Target id="appearance-light-target" />
+            </EvidenceSurface>
+            <EvidenceSurface className="skip-link-appearance-surface" data-brick-appearance="dark">
+              <SpecimenLabel>Dark</SpecimenLabel>
+              <SkipLink.Root href="#appearance-dark-target">Skip dark navigation</SkipLink.Root>
+              <Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#appearance-dark-target"]')?.focus()} size="sm" variant="outline">Focus dark link</Button>
+              <Target id="appearance-dark-target" />
+            </EvidenceSurface>
+          </Grid.Root>
+        </EvidenceGroup>
+        <EvidenceGroup title="Consumer customization" description="A violet surface and pill boundary come only from the documented variables shown.">
+          <EvidenceSurface as="article" className="skip-link-customization playground-customization-evidence" data-testid="skip-link-customization" inset="none">
+            <Grid.Root className="skip-link-customization__layout playground-customization-layout" columns={2} gap="0">
+              <VStack gap="2">
+                <SpecimenLabel>Customized</SpecimenLabel>
+                <Text as="h4" variant="title-sm">Violet bypass surface</Text>
+                <Text as="p" tone="secondary" variant="body-sm">The link keeps the same focus and target behavior while consumer variables alter only its paint.</Text>
+                <PlaygroundCodeBlock>{`--brick-skip-link-background: #2e1065;\n--brick-skip-link-foreground: #ffffff;\n--brick-skip-link-border-color: #c4b5fd;\n--brick-skip-link-radius: 999px;`}</PlaygroundCodeBlock>
+              </VStack>
+              <div className="skip-link-customization__preview playground-customization-preview">
+                <SkipLink.Root href="#custom-target" style={customStyle}>Skip customized navigation</SkipLink.Root>
+                <Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#custom-target"]')?.focus()} size="sm">Focus customized link</Button>
+                <Target id="custom-target" />
+              </div>
+            </Grid.Root>
+          </EvidenceSurface>
+        </EvidenceGroup>
+      </VStack>
     </Scenario>
 
     <Scenario {...skipLinkScenarios[7]}>
-      <Grid.Root columns={2} className="skip-link-grid" data-testid="skip-link-stress"><Surface bordered className="skip-link-stress-panel" inset="md"><Badge size="sm">Narrow LTR</Badge><div className="skip-link-phone"><SkipLink.Root href="#localized-target">Skip the full international workspace navigation and continue directly to the primary release review content</SkipLink.Root><Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#localized-target"]')?.focus()} size="sm" variant="outline">Reveal long label</Button><Target id="localized-target" /></div></Surface><Surface bordered className="skip-link-stress-panel" dir="rtl" inset="md"><Badge size="sm">RTL</Badge><div className="skip-link-phone"><SkipLink.Root href="#rtl-target">تخطى أدوات التنقل وانتقل إلى المحتوى الرئيسي</SkipLink.Root><Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#rtl-target"]')?.focus()} size="sm" variant="outline">إظهار رابط التخطي</Button><Target id="rtl-target">المحتوى الرئيسي لمساحة العمل</Target></div></Surface></Grid.Root>
+      <Grid.Root columns={2} className="skip-link-grid" data-testid="skip-link-stress"><EvidenceSurface className="skip-link-stress-panel"><Badge size="sm">Narrow LTR</Badge><div className="skip-link-phone"><SkipLink.Root href="#localized-target">Skip the full international workspace navigation and continue directly to the primary release review content</SkipLink.Root><Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#localized-target"]')?.focus()} size="sm" variant="outline">Reveal long label</Button><Target id="localized-target" /></div></EvidenceSurface><EvidenceSurface className="skip-link-stress-panel" dir="rtl"><Badge size="sm">RTL</Badge><div className="skip-link-phone"><SkipLink.Root href="#rtl-target">تخطى أدوات التنقل وانتقل إلى المحتوى الرئيسي</SkipLink.Root><Button onClick={() => document.querySelector<HTMLAnchorElement>('[href="#rtl-target"]')?.focus()} size="sm" variant="outline">إظهار رابط التخطي</Button><Target id="rtl-target">المحتوى الرئيسي لمساحة العمل</Target></div></EvidenceSurface></Grid.Root>
     </Scenario>
   </VStack>;
 }

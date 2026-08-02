@@ -1,4 +1,3 @@
-import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { type CSSProperties, type ReactNode } from "react";
 import {
@@ -283,12 +282,12 @@ export function BadgePage() {
               data-testid="badge-appearance"
             >
               <EvidenceSurface data-brick-appearance="light">
-                <Code>light</Code>
-                <Badge>Status</Badge>
+                <SpecimenLabel>Light</SpecimenLabel>
+                <div className="badge-appearance-preview"><Badge>Status</Badge></div>
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
-                <Code>dark</Code>
-                <Badge>Status</Badge>
+                <SpecimenLabel>Dark</SpecimenLabel>
+                <div className="badge-appearance-preview"><Badge>Status</Badge></div>
               </EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>
@@ -296,8 +295,9 @@ export function BadgePage() {
             description="The code names the supported mechanism and exactly matches the rendered result."
             title="Consumer customization"
           >
-            <EvidenceSurface as="article" className="badge-customization" inset="lg">
+            <EvidenceSurface as="article" className="badge-customization" inset="none">
               <div>
+                <SpecimenLabel>Customized</SpecimenLabel>
                 <Text as="h4" variant="title-sm">Component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
                   Public Badge tokens replace the complete color recipe and
@@ -321,14 +321,14 @@ export function BadgePage() {
   Status
 </Badge>`}</PlaygroundCodeBlock>
               </div>
-              <EvidenceSurface className="badge-customization__preview">
+              <div className="badge-customization__preview">
                 <Badge
                   data-slot="custom-status"
                   style={tokenCustomization}
                 >
                   Status
                 </Badge>
-              </EvidenceSurface>
+              </div>
             </EvidenceSurface>
           </EvidenceGroup>
         </VStack>

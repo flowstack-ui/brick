@@ -131,8 +131,8 @@
     overflow: hidden;
     color: var(--brick-collapsible-content-foreground);
   }
-  .brick-collapsible-content[data-state="open"] { animation: brick-collapsible-open var(--brick-motion-duration-fast) var(--brick-motion-easing-decelerate); }
-  .brick-collapsible-content[data-state="closed"] { animation: brick-collapsible-close var(--brick-motion-duration-fast) var(--brick-motion-easing-accelerate); }
+  .brick-collapsible-content[data-state="open"] { animation: brick-collapsible-open var(--brick-motion-duration-fast) var(--brick-motion-easing-enter) both; }
+  .brick-collapsible-content[data-state="closed"] { animation: brick-collapsible-close var(--brick-motion-duration-fast) var(--brick-motion-easing-exit) both; }
   .brick-collapsible-content-inner { box-sizing: border-box; min-inline-size: 0; padding-block: var(--brick-collapsible-content-padding-block); padding-inline: var(--brick-collapsible-content-padding-inline); }
 
   .brick-collapsible[data-orientation="horizontal"] .brick-collapsible-content {
@@ -141,6 +141,7 @@
   }
   .brick-collapsible[data-orientation="horizontal"] .brick-collapsible-content[data-state="open"] { animation-name: brick-collapsible-open-horizontal; }
   .brick-collapsible[data-orientation="horizontal"] .brick-collapsible-content[data-state="closed"] { animation-name: brick-collapsible-close-horizontal; }
+  .brick-collapsible-content[data-initial-open] { animation: none; }
   .brick-collapsible[data-orientation="horizontal"] .brick-collapsible-content-inner {
     inline-size: var(--content-width);
     min-block-size: var(--brick-collapsible-trigger-height);

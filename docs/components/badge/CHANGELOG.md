@@ -12,3 +12,8 @@ Badge follows the package version of `@flowstack-ui/brick`.
   tag routing, and native Atom composition.
 - Root and subpath exports, static CSS, server-safe rendering, native props and
   refs, and public visual state hooks.
+
+### Fixed
+
+- Solid danger Badges now retain WCAG AA foreground contrast in light and dark
+  appearances.

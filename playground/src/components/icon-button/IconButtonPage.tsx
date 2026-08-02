@@ -1,4 +1,3 @@
-import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
@@ -263,7 +262,10 @@ export function IconButtonPage() {
           className="playground-output-stack"
           data-testid="icon-button-composition"
         >
-          <RenderedOutput label="href Icon Button HTML">
+          <RenderedOutput
+            label="href Icon Button HTML"
+            previewLabel="Direct href"
+          >
             <IconButton
               aria-label="Documentation"
               data-testid="icon-button-link-href"
@@ -272,7 +274,10 @@ export function IconButtonPage() {
               <ArrowIcon />
             </IconButton>
           </RenderedOutput>
-          <RenderedOutput label="render Icon Button HTML">
+          <RenderedOutput
+            label="render Icon Button HTML"
+            previewLabel="render anchor"
+          >
             <IconButton
               aria-label="Documentation"
               data-testid="icon-button-link-render"
@@ -281,7 +286,10 @@ export function IconButtonPage() {
               <ArrowIcon />
             </IconButton>
           </RenderedOutput>
-          <RenderedOutput label="asChild Icon Button HTML">
+          <RenderedOutput
+            label="asChild Icon Button HTML"
+            previewLabel="asChild anchor"
+          >
             <IconButton
               aria-label="Documentation"
               asChild
@@ -346,24 +354,24 @@ export function IconButtonPage() {
             description="Adjacent light and dark scopes preserve the selected recipe."
             title="Scoped appearances"
           >
-            <Grid.Root columns={2} className="icon-button-appearance-grid">
-              <EvidenceSurface data-brick-appearance="light">
-                <Code>light</Code>
-                <IconButton
+            <Grid.Root columns={2} className="icon-button-appearance-grid" data-testid="icon-button-appearance">
+              <EvidenceSurface className="icon-button-appearance-panel" data-brick-appearance="light">
+                <SpecimenLabel>Light</SpecimenLabel>
+                <div className="icon-button-appearance-panel__preview"><IconButton
                   aria-label="Search"
                   data-testid="icon-button-appearance-light"
                 >
                   <SearchIcon />
-                </IconButton>
+                </IconButton></div>
               </EvidenceSurface>
-              <EvidenceSurface data-brick-appearance="dark">
-                <Code>dark</Code>
-                <IconButton
+              <EvidenceSurface className="icon-button-appearance-panel" data-brick-appearance="dark">
+                <SpecimenLabel>Dark</SpecimenLabel>
+                <div className="icon-button-appearance-panel__preview"><IconButton
                   aria-label="Search"
                   data-testid="icon-button-appearance-dark"
                 >
                   <SearchIcon />
-                </IconButton>
+                </IconButton></div>
               </EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>

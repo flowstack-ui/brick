@@ -11,6 +11,7 @@
     --brick-accordion-focus-ring: var(--brick-color-focus-ring);
     --brick-accordion-radius: var(--brick-radius-control);
     --brick-accordion-trigger-height: 2.75rem;
+    --brick-accordion-horizontal-height: 14rem;
     --brick-accordion-trigger-padding-inline: var(--brick-space-3);
     --brick-accordion-content-padding-block: var(--brick-space-3);
     --brick-accordion-content-padding-inline: var(--brick-space-3);
@@ -45,18 +46,19 @@
   [dir="rtl"] .brick-accordion-trigger[data-state="closed"] .brick-accordion-indicator { transform: scaleX(-1); }
   [dir="rtl"] .brick-accordion-trigger[data-state="open"] .brick-accordion-indicator { transform: rotate(90deg); }
   .brick-accordion-content { box-sizing: border-box; min-inline-size: 0; overflow: hidden; color: var(--brick-accordion-content-foreground); }
-  .brick-accordion-content[data-state="open"] { animation: brick-accordion-open var(--brick-motion-duration-fast) var(--brick-motion-easing-decelerate); }
-  .brick-accordion-content[data-state="closed"] { animation: brick-accordion-close var(--brick-motion-duration-fast) var(--brick-motion-easing-accelerate); }
+  .brick-accordion-content[data-state="open"] { animation: brick-accordion-open var(--brick-motion-duration-fast) var(--brick-motion-easing-enter) both; }
+  .brick-accordion-content[data-state="closed"] { animation: brick-accordion-close var(--brick-motion-duration-fast) var(--brick-motion-easing-exit) both; }
   .brick-accordion-content-inner { box-sizing: border-box; min-inline-size: 0; padding-block: var(--brick-accordion-content-padding-block); padding-inline: var(--brick-accordion-content-padding-inline); }
-  .brick-accordion[data-orientation="horizontal"] { display: flex; inline-size: max-content; max-inline-size: 100%; align-items: stretch; overflow-x: auto; overflow-y: clip; }
-  .brick-accordion[data-orientation="horizontal"] .brick-accordion-item { display: flex; flex: 0 0 auto; align-items: stretch; border-block-end: 0; border-inline-end: var(--brick-border-width) solid var(--brick-accordion-divider-color); }
+  .brick-accordion[data-orientation="horizontal"] { display: flex; inline-size: max-content; max-inline-size: 100%; block-size: var(--brick-accordion-horizontal-height); align-items: stretch; overflow-x: auto; overflow-y: clip; }
+  .brick-accordion[data-orientation="horizontal"] .brick-accordion-item { display: flex; flex: 0 0 auto; block-size: 100%; align-items: stretch; border-block-end: 0; border-inline-end: var(--brick-border-width) solid var(--brick-accordion-divider-color); }
   .brick-accordion[data-orientation="horizontal"] .brick-accordion-item:last-child { border-inline-end: 0; }
-  .brick-accordion[data-orientation="horizontal"] .brick-accordion-header { display: flex; flex: 0 0 auto; }
-  .brick-accordion[data-orientation="horizontal"] .brick-accordion-trigger { inline-size: auto; }
-  .brick-accordion[data-orientation="horizontal"] .brick-accordion-content { flex: 0 0 auto; min-block-size: var(--brick-accordion-trigger-height); }
+  .brick-accordion[data-orientation="horizontal"] .brick-accordion-header { display: flex; flex: 0 0 auto; block-size: 100%; }
+  .brick-accordion[data-orientation="horizontal"] .brick-accordion-trigger { inline-size: 100%; min-inline-size: 0; block-size: var(--brick-accordion-trigger-height); min-block-size: var(--brick-accordion-trigger-height); writing-mode: vertical-rl; text-orientation: mixed; }
+  .brick-accordion[data-orientation="horizontal"] .brick-accordion-content { flex: 0 0 auto; block-size: 100%; min-block-size: 0; writing-mode: horizontal-tb; }
   .brick-accordion[data-orientation="horizontal"] .brick-accordion-content[data-state="open"] { animation-name: brick-accordion-open-horizontal; }
   .brick-accordion[data-orientation="horizontal"] .brick-accordion-content[data-state="closed"] { animation-name: brick-accordion-close-horizontal; }
-  .brick-accordion[data-orientation="horizontal"] .brick-accordion-content-inner { inline-size: var(--content-width); min-block-size: var(--brick-accordion-trigger-height); }
+  .brick-accordion-content[data-initial-open] { animation: none; }
+  .brick-accordion[data-orientation="horizontal"] .brick-accordion-content-inner { inline-size: max-content; block-size: 100%; min-block-size: 0; }
   @keyframes brick-accordion-open { from { block-size: 0; } to { block-size: var(--content-height); } }
   @keyframes brick-accordion-close { from { block-size: var(--content-height); } to { block-size: 0; } }
   @keyframes brick-accordion-open-horizontal { from { inline-size: 0; } to { inline-size: var(--content-width); } }

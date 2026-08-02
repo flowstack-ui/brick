@@ -1,4 +1,8 @@
-import { resolvePlaygroundEntry } from "./component-registry.js";
+import { useEffect, useState } from "react";
+import {
+  playgroundEntries,
+  resolvePlaygroundEntry,
+} from "./component-registry.js";
 import {
   ButtonPage,
   buttonScenarios,
@@ -148,8 +152,68 @@ import { ShowPage, showScenarios } from "../components/show/ShowPage.js";
 import { HidePage, hideScenarios } from "../components/hide/HidePage.js";
 import { PlaygroundShell } from "../shell/PlaygroundShell.js";
 
+const playgroundRoutes = new Set(playgroundEntries.map((entry) => entry.route));
+
+function usePlaygroundPath() {
+  const [path, setPath] = useState(() => window.location.pathname);
+
+  useEffect(() => {
+    const syncPath = () => setPath(window.location.pathname);
+    const navigateInPlayground = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        !(event.target instanceof Element)
+      ) {
+        return;
+      }
+
+      const link = event.target.closest<HTMLAnchorElement>("a[href]");
+      if (
+        !link ||
+        link.hasAttribute("download") ||
+        (link.target && link.target !== "_self")
+      ) {
+        return;
+      }
+
+      const destination = new URL(link.href, window.location.href);
+      if (
+        destination.origin !== window.location.origin ||
+        !playgroundRoutes.has(destination.pathname) ||
+        (destination.pathname === window.location.pathname &&
+          destination.search === window.location.search)
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      window.history.pushState(
+        null,
+        "",
+        `${destination.pathname}${destination.search}${destination.hash}`,
+      );
+      setPath(destination.pathname);
+      window.scrollTo({ left: 0, top: 0 });
+    };
+
+    document.addEventListener("click", navigateInPlayground);
+    window.addEventListener("popstate", syncPath);
+    return () => {
+      document.removeEventListener("click", navigateInPlayground);
+      window.removeEventListener("popstate", syncPath);
+    };
+  }, []);
+
+  return path;
+}
+
 export function PlaygroundApp() {
-  const path = window.location.pathname;
+  const path = usePlaygroundPath();
 
   if (path === "/skip-link/fixture") {
     return <SkipLinkFixturePage />;

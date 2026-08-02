@@ -180,6 +180,16 @@
   color: var(--brick-color-text-primary);
 }
 
+.dialog-appearance-panel {
+  grid-template-rows: auto 1fr;
+  place-items: center;
+  align-content: stretch;
+}
+
+.dialog-appearance-panel > .playground-specimen-label {
+  justify-self: start;
+}
+
 .dialog-appearance-panel > span {
   color: var(--brick-color-text-secondary);
   font-size: var(--brick-font-size-sm);

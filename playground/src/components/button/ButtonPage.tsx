@@ -292,8 +292,8 @@ export function ButtonPage() {
           description="Optional content and unavailable states retain intrinsic Button dimensions and expose the expected accessible state."
           title="Content and state specimens"
         >
-          <Grid.Root columns={4}
-            className="button-specimen-grid button-specimen-grid--four"
+          <Grid.Root columns={5}
+            className="button-specimen-grid button-specimen-grid--five"
             data-testid="button-states"
           >
             <SpecimenCell label="startIcon">
@@ -316,6 +316,11 @@ export function ButtonPage() {
             </SpecimenCell>
             <SpecimenCell label="loading">
               <Button data-testid="button-loading" loading>
+                Action
+              </Button>
+            </SpecimenCell>
+            <SpecimenCell label="disabled + loading">
+              <Button data-testid="button-disabled-loading" disabled loading>
                 Action
               </Button>
             </SpecimenCell>

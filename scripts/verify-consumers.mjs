@@ -1,6 +1,6 @@
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 const packageRoot = resolve(".");
@@ -10,6 +10,14 @@ const packageJson = JSON.parse(
 const atomVersion = packageJson.dependencies["@flowstack-ui/atom"];
 const temp = await mkdtemp(join(tmpdir(), "brick-consumers-"));
 const cache = join(temp, "npm-cache");
+const tarballArgument = process.argv.indexOf("--tarball");
+const suppliedTarball = tarballArgument === -1
+  ? undefined
+  : process.argv[tarballArgument + 1];
+
+if (tarballArgument !== -1 && !suppliedTarball) {
+  throw new Error("--tarball requires an archive path");
+}
 
 function run(command, args, cwd) {
   const result = spawnSync(command, args, {
@@ -22,12 +30,20 @@ function run(command, args, cwd) {
     process.stderr.write(result.stderr);
     process.exit(result.status ?? 1);
   }
+  return result.stdout;
 }
 
 try {
-  console.log("Packing Brick once for clean React consumer verification...");
-  run("npm", ["pack", "--pack-destination", temp], packageRoot);
-  const tarball = join(temp, "flowstack-ui-brick-0.1.0.tgz");
+  let tarball;
+  if (suppliedTarball) {
+    tarball = resolve(suppliedTarball);
+    console.log(`Using release archive ${basename(tarball)} for clean React consumer verification...`);
+  } else {
+    console.log("Packing Brick once for clean React consumer verification...");
+    const packOutput = run("npm", ["pack", "--json", "--pack-destination", temp], packageRoot);
+    const [{ filename }] = JSON.parse(packOutput);
+    tarball = join(temp, basename(filename));
+  }
 
   for (const reactVersion of ["18.3.1", "19.2.3"]) {
     const reactMajor = reactVersion.split(".")[0];
@@ -115,7 +131,7 @@ if (Skeleton !== SubpathSkeleton) throw new Error("Skeleton subpath export misma
 if (DropdownMenu !== SubpathDropdownMenu || Object.keys(SubpathDropdownMenu).length !== 20) throw new Error("Dropdown Menu subpath smoke failed");
 if (ContextMenu !== SubpathContextMenu || Object.keys(SubpathContextMenu).length !== 20) throw new Error("Context Menu subpath smoke failed");
 if (Menubar !== SubpathMenubar || Object.keys(SubpathMenubar).length !== 21) throw new Error("Menubar subpath smoke failed");
-if (NavigationMenu !== SubpathNavigationMenu || Object.keys(SubpathNavigationMenu).length !== 9) throw new Error("Navigation Menu subpath smoke failed");
+if (NavigationMenu !== SubpathNavigationMenu || Object.keys(SubpathNavigationMenu).length !== 10) throw new Error("Navigation Menu subpath smoke failed");
 if (BottomNavigation !== SubpathBottomNavigation || Object.keys(SubpathBottomNavigation).length !== 4) throw new Error("Bottom Navigation subpath smoke failed");
 if (VisuallyHidden !== SubpathVisuallyHidden || Object.keys(SubpathVisuallyHidden).length !== 1) throw new Error("Visually Hidden subpath smoke failed");
 if (Show !== SubpathShow || Hide !== SubpathHide) throw new Error("Responsive visibility subpath export mismatch");

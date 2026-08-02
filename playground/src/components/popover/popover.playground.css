@@ -16,3 +16,4 @@
   font: inherit;
 }
 .popover-persistent-preview{z-index:14}
+.popover-appearance-panel{grid-template-rows:auto 1fr;place-items:center;align-content:stretch}.popover-appearance-panel>.playground-specimen-label{justify-self:start}

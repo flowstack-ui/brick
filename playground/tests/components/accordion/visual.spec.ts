@@ -9,6 +9,8 @@ test("Accordion defaults, variants, sizes, selection, states, and orientation", 
   await expect(page.getByTestId("accordion-selection")).toHaveScreenshot("selection-light.png");
   await expect(page.getByTestId("accordion-states")).toHaveScreenshot("states-light.png");
   await expect(page.getByTestId("accordion-orientation")).toHaveScreenshot("orientation-light.png");
+  await expect(page.getByTestId("accordion-composition")).toHaveScreenshot("composition-light.png");
+  await expect(page.getByTestId("accordion-theme")).toHaveScreenshot("theme-light.png");
   await setAppearance(page, "dark");
   await expect(page.getByTestId("accordion-appearance")).toHaveScreenshot("appearance-dark.png");
 });

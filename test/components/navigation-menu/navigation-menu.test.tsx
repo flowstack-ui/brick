@@ -19,7 +19,15 @@ describe("NavigationMenu", () => {
     expect(screen.getByRole("list")).toHaveClass("brick-navigation-menu__list");
     expect(screen.getByRole("button", { name: "Products" })).toHaveClass("brick-navigation-menu__trigger");
     expect(screen.getByRole("link", { name: "Pricing" })).toHaveAttribute("aria-current", "page");
+    expect(document.querySelector(".brick-navigation-menu__indicator-arrow")).toHaveAttribute("data-slot", "navigation-menu-indicator-arrow");
+    expect(document.querySelector(".brick-navigation-menu__indicator-arrow")).toHaveAttribute("aria-hidden", "true");
     expect(document.querySelector(".brick-navigation-menu__viewport")).toHaveAttribute("data-state", "open");
+  });
+
+  it("preserves custom Indicator content instead of adding the default arrow", () => {
+    render(<NavigationMenu.Root aria-label="Custom indicator" defaultValue="products"><NavigationMenu.List><NavigationMenu.Item value="products"><NavigationMenu.Trigger>Products</NavigationMenu.Trigger><NavigationMenu.Content>Products panel</NavigationMenu.Content></NavigationMenu.Item><NavigationMenu.Indicator><span data-testid="custom-indicator" /></NavigationMenu.Indicator></NavigationMenu.List><NavigationMenu.Viewport /></NavigationMenu.Root>);
+    expect(screen.getByTestId("custom-indicator")).toBeInTheDocument();
+    expect(document.querySelector(".brick-navigation-menu__indicator-arrow")).not.toBeInTheDocument();
   });
 
   it("supports explicit vertical orientation and native link activation", async () => {

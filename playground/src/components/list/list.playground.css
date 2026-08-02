@@ -1,10 +1,11 @@
 .list-page { inline-size: 100%; }
 .list-overview { max-inline-size: 42rem; }
-.list-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); align-self: stretch; }
+.list-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-4); align-self: stretch; }
 .list-grid { align-items: stretch; }
 .list-grid > * { min-inline-size: 0; }
-.list-output-grid { align-items: start; }
-.list-customization { align-items: center; }
+.list-output-grid { align-items: stretch; }
+.list-output-grid > * { block-size: 100%; }
+.list-customization { align-items: stretch; }
 .list-narrow { inline-size: min(100%, 14rem); }
 
 @media (max-width: 64rem) {

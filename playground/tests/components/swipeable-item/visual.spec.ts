@@ -6,6 +6,7 @@ test("Swipeable Item defaults, variants, actions, and controlled state", async (
   await expectEvidenceScreenshot(page, page.getByTestId("swipeable-overview"), "overview-light.png");
   await expectEvidenceScreenshot(page, page.locator("#scenario-swipeable-item-variants"), "variants-light.png");
   await expectEvidenceScreenshot(page, page.locator("#scenario-swipeable-item-sides"), "sides-light.png");
+  await expectEvidenceScreenshot(page, page.getByTestId("swipeable-alternative"), "alternative-light.png");
   const controlled = page.locator("#scenario-swipeable-item-controlled");
   await controlled.getByRole("button", { name: "Open end" }).click();
   await expectEvidenceScreenshot(page, controlled, "controlled-end.png");

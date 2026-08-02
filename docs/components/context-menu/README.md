@@ -47,11 +47,16 @@ Action-like rows accept the `neutral` or `danger` tone when exposed; `neutral` i
 
 ## Visual recipes and states
 
-The trigger receives no Brick surface. The overlay uses compact collision-aware rows with accent highlighting and visible disabled, danger, and selection states.
+The trigger receives no Brick surface. The overlay uses collision-aware 32/44/48px `sm`/`md`/`lg` minimum rows with accent highlighting and visible disabled, danger, and selection states.
 
 ## Tokens and CSS hooks
 
 Public variables use the `--brick-context-menu-*` namespace for content surface, row geometry, supporting text, disabled and danger states, separators, indicators, focus, and motion.
+
+Popup entry motion travels from the actual Atom `data-side`: bottom moves
+downward, top upward, right rightward, and left leftward. This includes a top
+or bottom side selected when a submenu cannot fit inline. Entry uses opacity
+and single-axis translation without scale motion.
 
 Documented tokens are `--brick-context-menu-content-background`, `--brick-context-menu-content-foreground`, `--brick-context-menu-content-border`, `--brick-context-menu-content-radius`, `--brick-context-menu-content-shadow`, `--brick-context-menu-content-padding`, `--brick-context-menu-content-max-block-size`, `--brick-context-menu-row-min-block-size`, `--brick-context-menu-row-padding-inline`, `--brick-context-menu-row-gap`, `--brick-context-menu-row-radius`, `--brick-context-menu-row-foreground`, `--brick-context-menu-row-highlighted-background`, `--brick-context-menu-row-highlighted-foreground`, `--brick-context-menu-description-foreground`, `--brick-context-menu-shortcut-foreground`, `--brick-context-menu-label-foreground`, `--brick-context-menu-disabled-foreground`, `--brick-context-menu-danger-foreground`, `--brick-context-menu-danger-background`, `--brick-context-menu-separator-color`, `--brick-context-menu-indicator-size`, `--brick-context-menu-focus-ring`, `--brick-context-menu-motion-duration`.
 
@@ -64,6 +69,12 @@ Set documented variables on Root or Content as applicable. Use `className` and `
 ## Responsive behavior
 
 Popup geometry stays collision-aware and constrained to available space. Narrow layouts preserve usable targets, logical alignment, zoom, and writing direction; applications decide whether the pattern belongs in their mobile information architecture.
+
+Repeated secondary clicks inside the same Trigger keep the custom menu open and
+move it to the latest invocation point. Invoking another Context Menu target
+closes the previous root and opens the new target without exposing the browser
+menu. With a submenu open, activation inside its ancestor menu closes only the
+submenu; activation outside every menu surface closes the complete menu tree.
 
 ## Accessibility
 

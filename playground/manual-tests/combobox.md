@@ -17,7 +17,7 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every Result. Record revi
 
 ## Step 1: Visual hierarchy and recipes
 
-Scan 01–09 at 100% zoom. Expect aligned controls, compact appearance badges, no abnormal gap between 08 and 09, no sticky navigation overlap, and each named recipe to change only its documented dimension.
+Scan 01–09 at 100% zoom. Expect aligned controls, compact appearance badges, no abnormal gap between 08 and 09, no sticky navigation overlap, and each named recipe to change only its documented dimension. Confirm `sm`, `md`, and `lg` controls and option rows match at 36px, 44px, and 52px minimum heights.
 
 Result:
 

@@ -7,6 +7,8 @@ test("Badge recipes and geometry", async ({ page }) => {
   await expect(page.getByTestId("badge-tones")).toHaveScreenshot("tones-light.png");
   await expect(page.getByTestId("badge-sizes")).toHaveScreenshot("sizes-light.png");
   await expectEvidenceScreenshot(page, page.getByTestId("badge-composition"), "composition-output-light.png");
+  await expect(page.getByTestId("badge-appearance")).toHaveScreenshot("appearance-light.png");
+  await expectEvidenceScreenshot(page, page.locator(".badge-customization"), "customization-light.png");
 });
 
 test("Badge constrained and forced-color evidence", async ({ page }) => {

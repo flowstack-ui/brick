@@ -46,11 +46,18 @@ Action-like rows accept the `neutral` or `danger` tone when exposed; `neutral` i
 
 ## Visual recipes and states
 
-The persistent root has a subtle bounded rail. Open triggers use accent-soft state; popup rows retain visible focus, disabled, danger, and selected states.
+The persistent root has a subtle bounded rail. Its triggers and popup rows use
+32/44/48px `sm`/`md`/`lg` minimums. Open triggers use accent-soft state; popup
+rows retain visible focus, disabled, danger, and selected states.
 
 ## Tokens and CSS hooks
 
 Persistent-root variables use `--brick-menubar-*` for its surface and trigger geometry. The same namespace exposes popup surface, row, supporting text, state, focus, and motion hooks.
+
+Popup entry motion travels from the actual Atom `data-side`: bottom moves
+downward, top upward, right rightward, and left leftward. This includes a top
+or bottom side selected when a submenu cannot fit inline. Entry uses opacity
+and single-axis translation without scale motion.
 
 Documented tokens are `--brick-menubar-background`, `--brick-menubar-border`, `--brick-menubar-radius`, `--brick-menubar-padding`, `--brick-menubar-gap`, `--brick-menubar-trigger-min-block-size`, `--brick-menubar-trigger-padding-inline`, `--brick-menubar-trigger-radius`, `--brick-menubar-trigger-foreground`, `--brick-menubar-trigger-interaction-background`, `--brick-menubar-trigger-open-background`, `--brick-menubar-trigger-open-foreground`, `--brick-menubar-trigger-focus-ring`.
 

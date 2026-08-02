@@ -64,7 +64,7 @@
 }
 
 .evidence-mobile-menu {
-  display: none;
+  display: inline-flex;
 }
 
 .evidence-layout {
@@ -220,20 +220,11 @@
   padding-block-start: 0;
 }
 
-@media (max-width: 1200px) {
-  .evidence-mobile-menu {
-    display: inline-flex;
-  }
-
+@media (width < 80rem) {
   .evidence-layout {
     display: block;
     padding: 0;
   }
-
-  .evidence-sidebar {
-    display: none;
-  }
-
 }
 
 @media (max-width: 64rem), (max-height: 40rem) {

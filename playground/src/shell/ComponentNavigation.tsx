@@ -12,13 +12,12 @@ export function ComponentNavigation({
 }) {
   const categories = Array.from(
     new Set(entries.map((entry) => entry.category)),
-  );
+  ).sort((left, right) => left.localeCompare(right));
 
   return (
     <NavList.Root
       aria-label="Component navigation"
       className="evidence-navigation"
-      size="sm"
     >
       {categories.map((category) => (
         <NavList.Section
@@ -30,6 +29,7 @@ export function ComponentNavigation({
           <NavList.List>
             {entries
               .filter((entry) => entry.category === category)
+              .sort((left, right) => left.title.localeCompare(right.title))
               .map((entry) => (
                 <NavList.Item key={entry.id}>
                   <NavList.Link

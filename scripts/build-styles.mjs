@@ -35,6 +35,7 @@ await writeFile(
     '@import "../../src/styles/layers.css";',
     '@import "./tokens.source.css";',
     '@import "../../src/styles/foundations.css";',
+    '@import "../../src/components/_action-spinner/action-spinner.css";',
     '@import "../../src/components/button/button.css";',
     '@import "../../src/components/icon-button/icon-button.css";',
     '@import "../../src/components/icon/icon.css";',

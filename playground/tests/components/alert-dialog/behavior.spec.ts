@@ -34,6 +34,7 @@ test("AlertDialog exposes default alert semantics, safe focus, and explicit resp
   const action = alert.getByRole("button", { name: "Delete project" });
   await expect(cancel).toBeFocused();
   await expect(action).toHaveAttribute("data-tone", "danger");
+  await expect(alert).toHaveCSS("opacity", "1");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await cancel.click();
   await expect(alert).toBeHidden();

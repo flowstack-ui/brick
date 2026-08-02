@@ -384,12 +384,12 @@ export function CardPage() {
             data-testid="card-appearance"
           >
             <EvidenceSurface className="card-appearance-panel" data-brick-appearance="light">
-              <span>Light scope</span>
-              <RecipeCard />
+              <SpecimenLabel>Light</SpecimenLabel>
+              <div className="card-appearance-preview"><RecipeCard /></div>
             </EvidenceSurface>
             <EvidenceSurface className="card-appearance-panel" data-brick-appearance="dark">
-              <span>Dark scope</span>
-              <RecipeCard />
+              <SpecimenLabel>Dark</SpecimenLabel>
+              <div className="card-appearance-preview"><RecipeCard /></div>
             </EvidenceSurface>
           </Grid.Root>
         </EvidenceGroup>
@@ -401,6 +401,7 @@ export function CardPage() {
           <div className="card-customization-list">
             <EvidenceSurface as="article" className="card-customization" inset="lg">
               <div>
+                <SpecimenLabel>Customized</SpecimenLabel>
                 <Text as="h4" variant="title-sm">Component CSS properties</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
                   Public Card tokens change spacing, radius, and the selected
@@ -440,6 +441,7 @@ export function CardPage() {
 
             <EvidenceSurface as="article" className="card-customization" inset="lg">
               <div>
+                <SpecimenLabel>Customized</SpecimenLabel>
                 <Text as="h4" variant="title-sm">Consumer hooks</Text>
                 <Text as="p" tone="secondary" variant="body-sm">
                   className, style, and data-slot pass through for direct local

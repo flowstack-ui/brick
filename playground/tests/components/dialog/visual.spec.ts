@@ -1,4 +1,4 @@
-import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
+import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
 installVisualDefaults("/dialog");
 
@@ -6,6 +6,7 @@ test("Dialog default and anatomy surfaces", async ({ page }) => {
   await page.getByRole("button", { name: "Edit profile" }).click();
   await expect(page).toHaveScreenshot("overview-light.png");
   await page.keyboard.press("Escape");
+  await expectEvidenceScreenshot(page, page.getByTestId("dialog-appearance"), "appearance-light.png");
   await setAppearance(page, "dark");
   await page.getByRole("button", { name: "Inspect dialog anatomy" }).click();
   await expect(page).toHaveScreenshot("anatomy-dark.png");

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, forwardRef, useContext } from "react";
+import { createContext, forwardRef, useContext, type HTMLAttributes } from "react";
 import {
   NavigationMenu as AtomNavigationMenu,
   type NavigationMenuContentProps as AtomNavigationMenuContentProps,
@@ -23,6 +23,7 @@ export type NavigationMenuTriggerProps = AtomNavigationMenuTriggerProps;
 export type NavigationMenuContentProps = AtomNavigationMenuContentProps;
 export type NavigationMenuLinkProps = AtomNavigationMenuLinkProps;
 export type NavigationMenuIndicatorProps = AtomNavigationMenuIndicatorProps;
+export interface NavigationMenuIndicatorArrowProps extends Omit<HTMLAttributes<HTMLSpanElement>, "children"> { "data-slot"?: string }
 export type NavigationMenuViewportProps = AtomNavigationMenuViewportProps;
 
 const SizeContext = createContext<NavigationMenuSize>("md");
@@ -51,13 +52,16 @@ export function NavigationMenuContent({ className, "data-slot": dataSlot, ...pro
 export const NavigationMenuLink = forwardRef<HTMLAnchorElement, NavigationMenuLinkProps>(function NavigationMenuLink({ className, "data-slot": dataSlot, ...props }, ref) {
   return <AtomNavigationMenu.Link {...props} className={merge("brick-navigation-menu__link", className)} data-slot={slot(dataSlot, "navigation-menu-link")} ref={ref} />;
 });
-export const NavigationMenuIndicator = forwardRef<HTMLDivElement, NavigationMenuIndicatorProps>(function NavigationMenuIndicator({ className, "data-slot": dataSlot, ...props }, ref) {
-  return <AtomNavigationMenu.Indicator {...props} className={merge("brick-navigation-menu__indicator", className)} data-slot={slot(dataSlot, "navigation-menu-indicator")} ref={ref} />;
+export const NavigationMenuIndicatorArrow = forwardRef<HTMLSpanElement, NavigationMenuIndicatorArrowProps>(function NavigationMenuIndicatorArrow({ className, "data-slot": dataSlot, ...props }, ref) {
+  return <span {...props} aria-hidden="true" className={merge("brick-navigation-menu__indicator-arrow", className)} data-slot={slot(dataSlot, "navigation-menu-indicator-arrow")} ref={ref} />;
+});
+export const NavigationMenuIndicator = forwardRef<HTMLDivElement, NavigationMenuIndicatorProps>(function NavigationMenuIndicator({ children, className, "data-slot": dataSlot, ...props }, ref) {
+  return <AtomNavigationMenu.Indicator {...props} className={merge("brick-navigation-menu__indicator", className)} data-slot={slot(dataSlot, "navigation-menu-indicator")} ref={ref}>{children === undefined ? <NavigationMenuIndicatorArrow /> : children}</AtomNavigationMenu.Indicator>;
 });
 export const NavigationMenuViewport = forwardRef<HTMLDivElement, NavigationMenuViewportProps>(function NavigationMenuViewport({ className, "data-slot": dataSlot, ...props }, ref) {
   return <AtomNavigationMenu.Viewport {...props} className={merge("brick-navigation-menu__viewport", className)} data-slot={slot(dataSlot, "navigation-menu-viewport")} ref={ref} />;
 });
 
-for (const [component, name] of [[NavigationMenuRoot, "Root"], [NavigationMenuSub, "Sub"], [NavigationMenuList, "List"], [NavigationMenuItem, "Item"], [NavigationMenuTrigger, "Trigger"], [NavigationMenuLink, "Link"], [NavigationMenuIndicator, "Indicator"], [NavigationMenuViewport, "Viewport"]] as const) component.displayName = `NavigationMenu.${name}`;
+for (const [component, name] of [[NavigationMenuRoot, "Root"], [NavigationMenuSub, "Sub"], [NavigationMenuList, "List"], [NavigationMenuItem, "Item"], [NavigationMenuTrigger, "Trigger"], [NavigationMenuLink, "Link"], [NavigationMenuIndicator, "Indicator"], [NavigationMenuIndicatorArrow, "IndicatorArrow"], [NavigationMenuViewport, "Viewport"]] as const) component.displayName = `NavigationMenu.${name}`;
 
-export const NavigationMenu = Object.freeze({ Root: NavigationMenuRoot, Sub: NavigationMenuSub, List: NavigationMenuList, Item: NavigationMenuItem, Trigger: NavigationMenuTrigger, Content: NavigationMenuContent, Link: NavigationMenuLink, Indicator: NavigationMenuIndicator, Viewport: NavigationMenuViewport });
+export const NavigationMenu = Object.freeze({ Root: NavigationMenuRoot, Sub: NavigationMenuSub, List: NavigationMenuList, Item: NavigationMenuItem, Trigger: NavigationMenuTrigger, Content: NavigationMenuContent, Link: NavigationMenuLink, Indicator: NavigationMenuIndicator, IndicatorArrow: NavigationMenuIndicatorArrow, Viewport: NavigationMenuViewport });

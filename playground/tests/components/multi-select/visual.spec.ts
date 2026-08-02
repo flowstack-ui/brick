@@ -24,6 +24,7 @@ test("MultiSelect recipes, geometry, options, and states", async ({ page }) => {
 
 test("MultiSelect dark, narrow RTL, and forced-color evidence", async ({ page }) => {
   await setAppearance(page, "dark");
+  await removeStickyCaptureOverlap(page);
   await expect(page.getByTestId("multi-select-appearance")).toHaveScreenshot("appearance-dark.png");
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByTestId("multi-select-stress")).toHaveScreenshot("stress-mobile.png");

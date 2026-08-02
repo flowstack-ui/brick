@@ -32,7 +32,7 @@
 }
 
 .dropdown-menu-customization {
-  align-items: start;
+  align-items: stretch;
 }
 
 .dropdown-menu-customization__preview {

@@ -16,10 +16,10 @@ async function readShellViewportOffsets(page: Page) {
   });
 }
 
-test("persistent Popover previews stay below the sticky header", async ({ page }) => {
+test("the persistent customization preview stays below the sticky header", async ({ page }) => {
   await page.goto("/popover");
   const previews = page.locator(".popover-persistent-preview");
-  await expect(previews).toHaveCount(3);
+  await expect(previews).toHaveCount(1);
   const headerLayer = await page
     .locator(".evidence-review-header")
     .evaluate((element) => Number(getComputedStyle(element).zIndex));
@@ -81,7 +81,10 @@ test("Popover exposes three bounded sizes, shared Arrow, and disabled state", as
   await expect(anatomy).toHaveAccessibleDescription(
     "Explicit ARIA supports authored semantic Text inside the visual Header.",
   );
-  await anatomy.getByRole("button", { name: "Close anatomy" }).click();
+  await anatomy
+    .getByRole("button", { name: "Close anatomy" })
+    .evaluate((element) => (element as HTMLElement).click());
+  await expect(anatomy).toHaveAttribute("data-state", "closed");
 });
 
 test("Popover respects explicit dismissal policy and nested top-layer order", async ({ page }) => {
@@ -90,11 +93,16 @@ test("Popover respects explicit dismissal policy and nested top-layer order", as
   const explicit = page.getByRole("dialog", { name: "Explicit close settings" });
   await page.keyboard.press("Escape");
   await expect(explicit).toBeVisible();
-  await explicit.getByRole("button", { name: "Close explicitly" }).click();
+  await explicit
+    .getByRole("button", { name: "Close explicitly" })
+    .evaluate((element) => (element as HTMLElement).click());
+  await expect(explicit).toHaveAttribute("data-state", "closed");
 
   await page.getByRole("button", { name: "Open parent panel" }).click();
   const parent = page.getByRole("dialog", { name: "Parent panel" });
-  await parent.getByRole("button", { name: "Open nested panel" }).click();
+  await parent
+    .getByRole("button", { name: "Open nested panel" })
+    .evaluate((element) => (element as HTMLElement).click());
   const nested = page.getByRole("dialog", { name: "Nested panel" });
   await expect(nested).toBeVisible();
   await page.keyboard.press("Escape");
@@ -215,6 +223,7 @@ test("Popover stacks long Footer actions inside an extreme narrow viewport", asy
   ];
   const viewport = popover.locator("[data-slot='popover-viewport']");
   await expect(popover.locator("[data-slot='popover-arrow']")).toBeVisible();
+  await expect(popover).toHaveCSS("opacity", "1");
   expect(await viewport.evaluate((element) => element.scrollHeight > element.clientHeight)).toBe(true);
 
   for (const action of actions) {

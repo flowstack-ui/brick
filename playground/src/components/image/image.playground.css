@@ -1,7 +1,8 @@
 .image-page { inline-size: 100%; }
 .image-overview { max-inline-size: 48rem; }
 .image-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); }
-.image-grid { align-items: start; }
+.image-grid { align-items: stretch; }
+.image-grid > * { block-size: 100%; }
 .image-grid .brick-image { min-inline-size: 0; }
 .image-grid--radii .brick-image { min-block-size: 8rem; }
 .image-action { inline-size: 100%; block-size: auto; padding: 0; overflow: hidden; }

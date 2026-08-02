@@ -5,7 +5,7 @@
     --brick-menubar-radius: var(--brick-radius-control);
     --brick-menubar-padding: var(--brick-space-1);
     --brick-menubar-gap: var(--brick-space-1);
-    --brick-menubar-trigger-min-block-size: 2.5rem;
+    --brick-menubar-trigger-min-block-size: var(--brick-control-target-min);
     --brick-menubar-trigger-padding-inline: var(--brick-space-3);
     --brick-menubar-trigger-radius: calc(var(--brick-radius-control) - var(--brick-border-width));
     --brick-menubar-trigger-foreground: var(--brick-color-text-primary);
@@ -49,6 +49,11 @@
   .brick-menubar__trigger[data-state="open"] { background: var(--brick-menubar-trigger-open-background); color: var(--brick-menubar-trigger-open-foreground); }
   .brick-menubar__trigger[data-disabled] { color: var(--brick-color-text-muted); opacity: 0.65; }
 
+  .brick-menubar__content[data-state="closed"] {
+    visibility: hidden;
+    transition: none;
+  }
+
   :where(.brick-menubar__content, .brick-menubar__sub-content) {
     --brick-action-menu-content-background: var(--brick-menubar-content-background, var(--brick-color-surface-overlay));
     --brick-action-menu-content-foreground: var(--brick-menubar-content-foreground, var(--brick-color-text-primary));
@@ -58,7 +63,7 @@
     --brick-action-menu-content-padding: var(--brick-menubar-content-padding, var(--brick-space-1));
     --brick-action-menu-content-max-block-size: var(--brick-menubar-content-max-block-size, 20rem);
     --brick-action-menu-content-z-index: var(--brick-layer-overlay);
-    --brick-action-menu-row-min-block-size: var(--brick-menubar-row-min-block-size, 2.5rem);
+    --brick-action-menu-row-min-block-size: var(--brick-menubar-row-min-block-size, var(--brick-control-target-min));
     --brick-action-menu-row-padding-inline: var(--brick-menubar-row-padding-inline, var(--brick-space-3));
     --brick-action-menu-row-gap: var(--brick-menubar-row-gap, var(--brick-space-2));
     --brick-action-menu-row-radius: var(--brick-menubar-row-radius, var(--brick-radius-control));

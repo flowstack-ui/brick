@@ -87,6 +87,7 @@ Stable classes use `.brick-accordion*`. Root exposes `data-variant`,
 `--brick-accordion-trigger-open-background`, `--brick-accordion-foreground`,
 `--brick-accordion-content-foreground`, `--brick-accordion-focus-ring`,
 `--brick-accordion-radius`, `--brick-accordion-trigger-height`,
+`--brick-accordion-horizontal-height`,
 `--brick-accordion-trigger-padding-inline`,
 `--brick-accordion-content-padding-block`,
 `--brick-accordion-content-padding-inline`, and
@@ -101,10 +102,12 @@ attributes under component ownership.
 ## Responsive behavior
 
 Vertical panels animate measured height. Horizontal Items form an inline
-sequence and place Header beside Content; panels animate measured width while
-inner geometry stays stable. Narrow groups own inline scrolling and never
-create page overflow. RTL reverses reading order and horizontal arrow direction.
-Reduced motion removes panel and indicator motion.
+sequence of vertical trigger rails beside normally oriented Content; panels
+animate measured width toward inline-end while inner geometry stays stable.
+That means Content opens rightward in LTR and leftward in RTL. Narrow groups
+own inline scrolling and never create page overflow. RTL also reverses reading
+order and horizontal arrow direction. Reduced motion removes panel and
+indicator motion.
 
 ## Accessibility
 

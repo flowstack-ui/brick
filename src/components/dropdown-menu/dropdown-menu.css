@@ -7,7 +7,7 @@
     --brick-dropdown-menu-content-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 48%);
     --brick-dropdown-menu-content-padding: var(--brick-space-1);
     --brick-dropdown-menu-content-max-block-size: 20rem;
-    --brick-dropdown-menu-row-min-block-size: 2.5rem;
+    --brick-dropdown-menu-row-min-block-size: var(--brick-control-target-min);
     --brick-dropdown-menu-row-padding-inline: var(--brick-space-3);
     --brick-dropdown-menu-row-gap: var(--brick-space-2);
     --brick-dropdown-menu-row-radius: var(--brick-radius-control);

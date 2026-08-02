@@ -1,5 +1,5 @@
 .feed-page { inline-size: 100%; }
-.feed-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-3); }
+.feed-cell { display: flex; min-inline-size: 0; flex-direction: column; gap: var(--brick-space-4); }
 .feed-specimens > *, .feed-customization > * { min-inline-size: 0; }
 .feed-keyboard-help { margin-block-end: var(--brick-space-3); }
 .feed-article-header { justify-content: space-between; margin-block-end: var(--brick-space-2); }
@@ -9,6 +9,6 @@
 .feed-status { min-block-size: 1.5rem; }
 .feed-keyboard-scroll { block-size: 16rem; inline-size: 100%; overflow: hidden; }
 .feed-keyboard-viewport { block-size: 100%; min-block-size: 0; padding: var(--brick-space-2); overflow-y: auto; }
-.feed-customization { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: var(--brick-space-5); align-items: start; }
+.feed-customization { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: stretch; }
 .feed-constrained { inline-size: 20rem; max-inline-size: 100%; }
 @media (max-width: 64rem) { .feed-specimens, .feed-specimens--three, .feed-customization { --brick-grid-columns: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr); } }

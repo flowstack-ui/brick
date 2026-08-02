@@ -32,11 +32,11 @@ import "@flowstack-ui/brick/styles.css";
 
 ## Anatomy and DOM ownership
 
-Root renders navigation, List a native list, Item a list item, Link a native destination, Trigger a disclosure control, Content a rich destination panel, Indicator the active trigger marker, Viewport the measured panel surface, and Sub a nested navigation root.
+Root renders navigation, List a native list, Item a list item, Link a native destination, Trigger a disclosure control, Content a rich destination panel, Indicator the measured active-trigger marker, IndicatorArrow its decorative Viewport connector, Viewport the measured panel surface, and Sub a nested navigation root. An Indicator without children supplies IndicatorArrow automatically; explicit children replace it.
 
 ## API
 
-Public exports are `NavigationMenu`, `NavigationMenuRoot`, `NavigationMenuSub`, `NavigationMenuList`, `NavigationMenuItem`, `NavigationMenuTrigger`, `NavigationMenuContent`, `NavigationMenuLink`, `NavigationMenuIndicator`, `NavigationMenuViewport`, `NavigationMenuRootProps`, `NavigationMenuSubProps`, `NavigationMenuListProps`, `NavigationMenuItemProps`, `NavigationMenuTriggerProps`, `NavigationMenuContentProps`, `NavigationMenuLinkProps`, `NavigationMenuIndicatorProps`, `NavigationMenuViewportProps`, `NavigationMenuSize`.
+Public exports are `NavigationMenu`, `NavigationMenuRoot`, `NavigationMenuSub`, `NavigationMenuList`, `NavigationMenuItem`, `NavigationMenuTrigger`, `NavigationMenuContent`, `NavigationMenuLink`, `NavigationMenuIndicator`, `NavigationMenuIndicatorArrow`, `NavigationMenuViewport`, `NavigationMenuRootProps`, `NavigationMenuSubProps`, `NavigationMenuListProps`, `NavigationMenuItemProps`, `NavigationMenuTriggerProps`, `NavigationMenuContentProps`, `NavigationMenuLinkProps`, `NavigationMenuIndicatorProps`, `NavigationMenuIndicatorArrowProps`, `NavigationMenuViewportProps`, `NavigationMenuSize`.
 
 | Prop | Values | Default |
 | --- | --- | --- |
@@ -46,13 +46,22 @@ Action-like rows accept `tone="neutral"` or `tone="danger"` when exposed; neutra
 
 ## Visual recipes and states
 
-Controls are paintless until hover, focus, open, or active. The measured overlay follows trigger content, Indicator tracks the active trigger, and sizes change only control geometry.
+Controls are paintless until hover, focus, open, or active. Links and triggers
+use 32/44/48px `sm`/`md`/`lg` minimums. Compact chevrons communicate
+disclosure, current links use a one-pixel underline, and the measured
+IndicatorArrow connects the open trigger to the Viewport without becoming a
+second selection bar. The Viewport uses the restrained shared control radius
+by default; consumers that need a different brand treatment can set
+`--brick-navigation-menu-viewport-radius` without adding a behavioral variant.
+In vertical orientation, the Viewport follows Atom's
+measured active-trigger offset so the connector stays attached while panels of
+different heights replace one another.
 
 ## Tokens and CSS hooks
 
 Public variables use the `--brick-navigation-menu-*` namespace for gaps, control geometry and states, focus, chevron, indicator, viewport surface and sizing, and motion.
 
-Documented tokens are `--brick-navigation-menu-gap`, `--brick-navigation-menu-control-min-block-size`, `--brick-navigation-menu-control-padding-inline`, `--brick-navigation-menu-control-radius`, `--brick-navigation-menu-control-foreground`, `--brick-navigation-menu-control-hover-background`, `--brick-navigation-menu-control-open-background`, `--brick-navigation-menu-control-open-foreground`, `--brick-navigation-menu-control-current-foreground`, `--brick-navigation-menu-focus-ring`, `--brick-navigation-menu-chevron-size`, `--brick-navigation-menu-chevron-gap`, `--brick-navigation-menu-indicator-size`, `--brick-navigation-menu-indicator-color`, `--brick-navigation-menu-viewport-background`, `--brick-navigation-menu-viewport-foreground`, `--brick-navigation-menu-viewport-border`, `--brick-navigation-menu-viewport-radius`, `--brick-navigation-menu-viewport-shadow`, `--brick-navigation-menu-viewport-padding`, `--brick-navigation-menu-viewport-max-inline-size`, `--brick-navigation-menu-motion-duration`.
+Documented tokens are `--brick-navigation-menu-gap`, `--brick-navigation-menu-control-min-block-size`, `--brick-navigation-menu-control-padding-inline`, `--brick-navigation-menu-control-radius`, `--brick-navigation-menu-control-foreground`, `--brick-navigation-menu-control-hover-background`, `--brick-navigation-menu-control-open-background`, `--brick-navigation-menu-control-open-foreground`, `--brick-navigation-menu-control-current-foreground`, `--brick-navigation-menu-focus-ring`, `--brick-navigation-menu-chevron-size`, `--brick-navigation-menu-chevron-stroke`, `--brick-navigation-menu-chevron-gap`, `--brick-navigation-menu-current-underline-size`, `--brick-navigation-menu-current-underline-offset`, `--brick-navigation-menu-indicator-size`, `--brick-navigation-menu-indicator-offset`, `--brick-navigation-menu-indicator-color`, `--brick-navigation-menu-indicator-border`, `--brick-navigation-menu-viewport-background`, `--brick-navigation-menu-viewport-foreground`, `--brick-navigation-menu-viewport-border`, `--brick-navigation-menu-viewport-radius`, `--brick-navigation-menu-viewport-shadow`, `--brick-navigation-menu-viewport-padding`, `--brick-navigation-menu-viewport-max-inline-size`, `--brick-navigation-menu-motion-duration`.
 
 Stable output includes `data-size`, component `data-slot` hooks, and Atom state attributes.
 
