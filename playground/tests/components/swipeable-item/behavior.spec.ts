@@ -18,7 +18,12 @@ test("defaults, three-part anatomy, labels, and vertical-pan policy are determin
   await expect(root.locator('[aria-label="Delete actions"]')).toHaveAttribute("data-side", "end");
 });
 
-test("pointer and keyboard reveal settle, close, and preserve nested controls", async ({ page }) => {
+test("pointer reveal settles and closes through the revealed action", async ({ page }, testInfo) => {
+  test.skip(
+    testInfo.project.name === "mobile-webkit",
+    "Playwright's Linux mobile WebKit emulation does not reliably emit mouse-backed PointerEvents; physical touch remains manual evidence.",
+  );
+
   const root = page.getByTestId("swipeable-overview-item");
   const content = root.locator(".brick-swipeable-item__content");
   const box = await content.boundingBox();
@@ -30,7 +35,11 @@ test("pointer and keyboard reveal settle, close, and preserve nested controls", 
   await expect(root).toHaveAttribute("data-side", "end");
   await root.getByRole("button", { name: "Delete" }).click();
   await expect(root).toHaveAttribute("data-state", "closed");
+});
 
+test("keyboard reveal closes and preserves nested controls", async ({ page }) => {
+  const root = page.getByTestId("swipeable-overview-item");
+  const content = root.locator(".brick-swipeable-item__content");
   await content.focus();
   await content.press("ArrowRight");
   await expect(root).toHaveAttribute("data-side", "start");
