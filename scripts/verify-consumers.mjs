@@ -14,6 +14,7 @@ const tarballArgument = process.argv.indexOf("--tarball");
 const suppliedTarball = tarballArgument === -1
   ? undefined
   : process.argv[tarballArgument + 1];
+const commandTimeoutMs = 180_000;
 
 if (tarballArgument !== -1 && !suppliedTarball) {
   throw new Error("--tarball requires an archive path");
@@ -24,7 +25,13 @@ function run(command, args, cwd) {
     cwd,
     encoding: "utf8",
     env: { ...process.env, npm_config_cache: cache },
+    timeout: commandTimeoutMs,
   });
+  if (result.error?.code === "ETIMEDOUT") {
+    throw new Error(
+      `${command} ${args[0] ?? ""} exceeded the ${commandTimeoutMs / 1_000}-second consumer-verification timeout`,
+    );
+  }
   if (result.status !== 0) {
     process.stderr.write(result.stdout);
     process.stderr.write(result.stderr);

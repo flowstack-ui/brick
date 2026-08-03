@@ -1,45 +1,11 @@
 # @flowstack-ui/brick
 
-Opinionated styled React components built on `@flowstack-ui/atom`.
+Finished, accessible React components built on
+[`@flowstack-ui/atom`](https://www.npmjs.com/package/@flowstack-ui/atom).
 
-Brick provides finished, accessible React components with static CSS, semantic
-design tokens, light and dark appearances, and a documented customization
-contract. The initial catalog includes Button, Card, Dialog, AlertDialog,
-Drawer, Badge, NotificationBadge, Avatar, Toggle, ToggleGroup, IconButton,
-AppBar, Tooltip, HoverCard, Popover, DropdownMenu, ContextMenu, Menubar, Form, Field, Fieldset, Checkbox,
-CheckboxGroup, RadioGroup, Switch, Breadcrumb, Tabs, Collapsible, Accordion, Input, Textarea, Select, Slider, Rating, FileUpload, Text, Icon, Image, Skeleton, Progress, ProgressCircle, Code, CodeBlock, Link, Stack, HStack, VStack, Grid,
-Container, Show, Hide, Surface, Divider, Scroll Area, List, Table, Toolbar, Pagination, Toast, NavList, NavigationMenu,
-BottomNavigation, SkipLink, and VisuallyHidden.
-
-## Boundary
-
-- Atom owns reusable behavior, state, semantics, focus, keyboard interaction,
-  portals, positioning, and accessibility.
-- Brick owns styled reusable React components and their visual system.
-- Application blocks, product data, routing policy, persistence, and business
-  workflows are outside this package.
-
-## Component guides
-
-- [Combobox](docs/components/combobox/README.md)
-
-| Family | Components |
-| --- | --- |
-| Actions and selection | [Button](docs/components/button/README.md), [Icon Button](docs/components/icon-button/README.md), [Toggle](docs/components/toggle/README.md), [Toggle Group](docs/components/toggle-group/README.md), [Toolbar](docs/components/toolbar/README.md) |
-| Navigation | [Pagination](docs/components/pagination/README.md), [Skip Link](docs/components/skip-link/README.md) |
-| Data display | [Aspect Ratio](docs/components/aspect-ratio/README.md), [Data Grid](docs/components/data-grid/README.md) |
-| Data display | [Tree Grid](docs/components/tree-grid/README.md) |
-| Data display | [Tree](docs/components/tree/README.md), [Feed](docs/components/feed/README.md) |
-| Actions | [Swipeable Item](docs/components/swipeable-item/README.md) |
-| Forms and choices | [Form](docs/components/form/README.md), [Field](docs/components/field/README.md), [Fieldset](docs/components/fieldset/README.md), [Input](docs/components/input/README.md), [Number Input](docs/components/number-input/README.md), [OTP Field](docs/components/otp-field/README.md), [Password Toggle Field](docs/components/password-toggle-field/README.md), [Textarea](docs/components/textarea/README.md), [Select](docs/components/select/README.md), [Multi Select](docs/components/multi-select/README.md), [Slider](docs/components/slider/README.md), [Rating](docs/components/rating/README.md), [File Upload](docs/components/file-upload/README.md), [Checkbox](docs/components/checkbox/README.md), [Checkbox Group](docs/components/checkbox-group/README.md), [Radio Group](docs/components/radio-group/README.md), [Switch](docs/components/switch/README.md) |
-| Content and status | [Text](docs/components/text/README.md), [Icon](docs/components/icon/README.md), [Image](docs/components/image/README.md), [Visually Hidden](docs/components/visually-hidden/README.md), [Skeleton](docs/components/skeleton/README.md), [Progress](docs/components/progress/README.md), [Progress Circle](docs/components/progress-circle/README.md), [Toast](docs/components/toast/README.md), [Collapsible](docs/components/collapsible/README.md), [Accordion](docs/components/accordion/README.md), [Code](docs/components/code/README.md), [Code Block](docs/components/code-block/README.md), [Avatar](docs/components/avatar/README.md), [Badge](docs/components/badge/README.md), [Chip](docs/components/chip/README.md), [Notification Badge](docs/components/notification-badge/README.md), [Card](docs/components/card/README.md), [List](docs/components/list/README.md), [Table](docs/components/table/README.md), [Divider](docs/components/divider/README.md) |
-| Contextual overlays | [Tooltip](docs/components/tooltip/README.md), [Hover Card](docs/components/hover-card/README.md), [Popover](docs/components/popover/README.md), [Dropdown Menu](docs/components/dropdown-menu/README.md), [Context Menu](docs/components/context-menu/README.md), [Menubar](docs/components/menubar/README.md) |
-| Modal surfaces | [Dialog](docs/components/dialog/README.md), [Alert Dialog](docs/components/alert-dialog/README.md), [Drawer](docs/components/drawer/README.md) |
-| Navigation and layout | [Breadcrumb](docs/components/breadcrumb/README.md), [Tabs](docs/components/tabs/README.md), [Navigation Menu](docs/components/navigation-menu/README.md), [Bottom Navigation](docs/components/bottom-navigation/README.md), [Link](docs/components/link/README.md), [Nav List](docs/components/nav-list/README.md), [Sidebar](docs/components/sidebar/README.md), [App Bar](docs/components/app-bar/README.md), [Stack](docs/components/stack/README.md), [Grid](docs/components/grid/README.md), [Container](docs/components/container/README.md), [Show](docs/components/show/README.md), [Hide](docs/components/hide/README.md), [Surface](docs/components/surface/README.md), [Scroll Area](docs/components/scroll-area/README.md) |
-
-See the complete [documentation index](docs/README.md) for installation,
-appearance, testing, playground, manual-review, workbook, Consumer, and release
-workflows.
+Brick provides static CSS, semantic design tokens, light and dark appearances,
+responsive defaults, and documented customization hooks. Components are ready
+to use without requiring an application-level CSS processor.
 
 ## Installation
 
@@ -47,180 +13,126 @@ workflows.
 npm install @flowstack-ui/brick @flowstack-ui/atom react react-dom
 ```
 
+Brick supports React and React DOM 18 or newer.
+
+## Styles
+
 Import the complete stylesheet once in the application root:
 
 ```ts
 import "@flowstack-ui/brick/styles.css";
 ```
 
-The optional reset is separate and must be chosen explicitly:
+New applications may opt into Brick's separate reset:
 
 ```ts
 import "@flowstack-ui/brick/reset.css";
 import "@flowstack-ui/brick/styles.css";
 ```
 
-Use `@flowstack-ui/brick/tokens.css` when only the visual tokens are needed.
+Use the token entry point when only Brick's semantic variables are needed:
+
+```ts
+import "@flowstack-ui/brick/tokens.css";
+```
+
+Do not import `tokens.css` together with `styles.css`; the complete stylesheet
+already includes the tokens.
+
+## Quick start
 
 ```tsx
-import { AlertDialog, AppBar, Avatar, Badge, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Collapsible, Dialog, Divider, Drawer, Field, Fieldset, Form, Grid, HoverCard, HStack, Icon, IconButton, Image, Input, Link, List, NotificationBadge, Popover, Progress, ProgressCircle, RadioGroup, ScrollArea, Select, Skeleton, Stack, Surface, Tabs, Text, Textarea, Toggle, ToggleGroup, VStack } from "@flowstack-ui/brick";
+import {
+  Button,
+  Card,
+  Field,
+  HStack,
+  Input,
+  Text,
+  VStack,
+} from "@flowstack-ui/brick";
 
-<Button>Save changes</Button>;
+export function AccountCard() {
+  return (
+    <Card.Root>
+      <Card.Content>
+        <VStack gap="4">
+          <Text as="h2" variant="title-md">
+            Account settings
+          </Text>
 
-<Text as="h2" variant="title-md">Account settings</Text>;
+          <Field.Root id="account-email">
+            <Field.Label>Email</Field.Label>
+            <Input name="email" type="email" />
+          </Field.Root>
 
-<Link href="/guides">Read the component guides</Link>;
-
-<VStack gap="3">
-  <Text as="h2" variant="title-md">Account settings</Text>
-  <HStack gap="2" wrap>
-    <Button>Save</Button>
-    <Button tone="neutral" variant="outline">Cancel</Button>
-  </HStack>
-</VStack>;
-
-<IconButton aria-label="Search" href="/search"><SearchIcon /></IconButton>;
-
-<AppBar.Root position="sticky">
-  <AppBar.Toolbar>
-    <AppBar.Start>Workspace</AppBar.Start>
-    <AppBar.End><IconButton aria-label="Search"><SearchIcon /></IconButton></AppBar.End>
-  </AppBar.Toolbar>
-</AppBar.Root>;
-
-<Badge tone="success">Published</Badge>;
-
-<NotificationBadge count={4}>
-  <button aria-label="Inbox, 4 unread messages">Inbox</button>
-</NotificationBadge>;
-
-<Avatar
-  alt="Ada Lovelace"
-  fallback="AL"
-  src="/people/ada.jpg"
-  status="online"
-/>;
-
-<Image.Root src="/workspace.jpg" ratio={16 / 9}>
-  <Image.Content alt="Designers reviewing the workspace" width={1200} height={675} />
-  <Image.Fallback>Image unavailable</Image.Fallback>
-</Image.Root>;
-
-<Toggle defaultPressed>Favorite</Toggle>;
-
-<ToggleGroup.Root ariaLabel="Project view" attached defaultValue="cards">
-  <ToggleGroup.Item value="cards">Cards</ToggleGroup.Item>
-  <ToggleGroup.Item value="list">List</ToggleGroup.Item>
-</ToggleGroup.Root>;
-
-<Checkbox name="terms" required value="accepted">Accept the terms</Checkbox>;
-
-<Field.Root id="account-email">
-  <Field.Label>Email</Field.Label>
-  <Input name="email" type="email" />
-</Field.Root>;
-
-<Form>
-  <Fieldset.Root required>
-    <Fieldset.Legend>Notifications</Fieldset.Legend>
-    <CheckboxGroup.Root allValues={["email", "push"]} name="notifications">
-      <CheckboxGroup.Parent>Select all</CheckboxGroup.Parent>
-      <CheckboxGroup.Item value="email">
-        <CheckboxGroup.ItemLabel>Email</CheckboxGroup.ItemLabel>
-        <CheckboxGroup.ItemDescription>Weekly account report.</CheckboxGroup.ItemDescription>
-      </CheckboxGroup.Item>
-      <CheckboxGroup.Item value="push">Push</CheckboxGroup.Item>
-    </CheckboxGroup.Root>
-  </Fieldset.Root>
-</Form>;
-
-<Card.Root>
-  <Card.Content>Project summary</Card.Content>
-</Card.Root>;
-
-<Dialog.Root>
-  <Dialog.Trigger asChild>
-    <Button>Open dialog</Button>
-  </Dialog.Trigger>
-  <Dialog.Portal>
-    <Dialog.Overlay />
-    <Dialog.Content aria-label="Example dialog">Dialog content</Dialog.Content>
-  </Dialog.Portal>
-</Dialog.Root>;
-
-<AlertDialog.Root>
-  <AlertDialog.Trigger asChild>
-    <Button tone="danger" variant="outline">Remove project</Button>
-  </AlertDialog.Trigger>
-  <AlertDialog.Portal>
-    <AlertDialog.Overlay />
-    <AlertDialog.Content>
-      <AlertDialog.Title>Remove project?</AlertDialog.Title>
-      <AlertDialog.Description>This cannot be undone.</AlertDialog.Description>
-      <AlertDialog.Cancel asChild><Button variant="outline">Cancel</Button></AlertDialog.Cancel>
-      <AlertDialog.Action asChild><Button tone="danger">Remove</Button></AlertDialog.Action>
-    </AlertDialog.Content>
-  </AlertDialog.Portal>
-</AlertDialog.Root>;
-
-<Drawer.Root>
-  <Drawer.Trigger asChild><Button variant="outline">Filters</Button></Drawer.Trigger>
-  <Drawer.Portal>
-    <Drawer.Overlay />
-    <Drawer.Content placement="end" size="md">
-      <Drawer.Title>Filter projects</Drawer.Title>
-      <Drawer.Description>Narrow the visible project list.</Drawer.Description>
-      <Drawer.Close asChild><Button>Apply</Button></Drawer.Close>
-    </Drawer.Content>
-  </Drawer.Portal>
-</Drawer.Root>;
-
-<HoverCard.Root>
-  <HoverCard.Trigger asChild><a href="/people/ada">Ada Lovelace</a></HoverCard.Trigger>
-  <HoverCard.Portal>
-    <HoverCard.Content size="md">
-      <strong>Ada Lovelace</strong>
-      <p>Mathematician and early computing author.</p>
-      <HoverCard.Arrow />
-    </HoverCard.Content>
-  </HoverCard.Portal>
-</HoverCard.Root>;
-
-<Popover.Root>
-  <Popover.Trigger asChild><Button variant="outline">Project settings</Button></Popover.Trigger>
-  <Popover.Portal>
-    <Popover.Content size="md">
-      <Popover.Title>Project settings</Popover.Title>
-      <Popover.Description>Change compact workspace options.</Popover.Description>
-      <Popover.Body>{/* application controls */}</Popover.Body>
-      <Popover.Footer><Popover.Close asChild><Button>Done</Button></Popover.Close></Popover.Footer>
-      <Popover.Arrow />
-    </Popover.Content>
-  </Popover.Portal>
-</Popover.Root>;
+          <HStack gap="2" wrap>
+            <Button>Save changes</Button>
+            <Button tone="neutral" variant="outline">
+              Cancel
+            </Button>
+          </HStack>
+        </VStack>
+      </Card.Content>
+    </Card.Root>
+  );
+}
 ```
 
-## Development
+Components can also be imported through documented subpaths:
 
-```bash
-npm run build
-npm run typecheck
-npm test
-npm run build:playground
-npm run dev:playground
-npm run dev:playground:network
-npm run build:consumer
-npm run dev:consumer
-npm run dev:consumer:network
-npm run test:consumer
-npm run dev:test
-npm run test:browser
-npm run test:browser:release
-npm run test:all
-npm run pack:check
+```tsx
+import { Button } from "@flowstack-ui/brick/button";
 ```
 
-The playground uses `http://127.0.0.1:3010` locally. Its network command uses
-the same port for real-device review. Playwright uses local preview port `4010`
-and stops that server after the run. Both ports are strict and will not
-silently increment when occupied.
+## Appearance and customization
+
+With no explicit appearance, Brick follows `prefers-color-scheme`. Set an
+appearance on the document or any subtree:
+
+```html
+<html data-brick-appearance="dark">
+```
+
+Override public semantic variables with ordinary CSS:
+
+```css
+.brand-theme {
+  --brick-color-accent-solid: #5b5bd6;
+  --brick-color-accent-on-solid: #ffffff;
+  --brick-radius-control: 0.75rem;
+}
+```
+
+See [Appearance and tokens](docs/guides/appearance-and-tokens.md) for the full
+contract.
+
+## Documentation
+
+- [Installation and stylesheet setup](docs/guides/installation.md)
+- [Appearance and semantic tokens](docs/guides/appearance-and-tokens.md)
+
+The complete component guides live with the source repository:
+
+| Family | Components |
+| --- | --- |
+| Actions and selection | [Button](https://github.com/flowstack-ui/brick/blob/main/docs/components/button/README.md), [Icon Button](https://github.com/flowstack-ui/brick/blob/main/docs/components/icon-button/README.md), [Toggle](https://github.com/flowstack-ui/brick/blob/main/docs/components/toggle/README.md), [Toggle Group](https://github.com/flowstack-ui/brick/blob/main/docs/components/toggle-group/README.md), [Toolbar](https://github.com/flowstack-ui/brick/blob/main/docs/components/toolbar/README.md), [Pagination](https://github.com/flowstack-ui/brick/blob/main/docs/components/pagination/README.md) |
+| Accessibility | [Skip Link](https://github.com/flowstack-ui/brick/blob/main/docs/components/skip-link/README.md), [Visually Hidden](https://github.com/flowstack-ui/brick/blob/main/docs/components/visually-hidden/README.md) |
+| Data display | [Aspect Ratio](https://github.com/flowstack-ui/brick/blob/main/docs/components/aspect-ratio/README.md), [Data Grid](https://github.com/flowstack-ui/brick/blob/main/docs/components/data-grid/README.md), [Tree Grid](https://github.com/flowstack-ui/brick/blob/main/docs/components/tree-grid/README.md), [Tree](https://github.com/flowstack-ui/brick/blob/main/docs/components/tree/README.md), [Feed](https://github.com/flowstack-ui/brick/blob/main/docs/components/feed/README.md), [Swipeable Item](https://github.com/flowstack-ui/brick/blob/main/docs/components/swipeable-item/README.md) |
+| Forms and choices | [Form](https://github.com/flowstack-ui/brick/blob/main/docs/components/form/README.md), [Field](https://github.com/flowstack-ui/brick/blob/main/docs/components/field/README.md), [Fieldset](https://github.com/flowstack-ui/brick/blob/main/docs/components/fieldset/README.md), [Input](https://github.com/flowstack-ui/brick/blob/main/docs/components/input/README.md), [Number Input](https://github.com/flowstack-ui/brick/blob/main/docs/components/number-input/README.md), [OTP Field](https://github.com/flowstack-ui/brick/blob/main/docs/components/otp-field/README.md), [Password Toggle Field](https://github.com/flowstack-ui/brick/blob/main/docs/components/password-toggle-field/README.md), [Textarea](https://github.com/flowstack-ui/brick/blob/main/docs/components/textarea/README.md), [Select](https://github.com/flowstack-ui/brick/blob/main/docs/components/select/README.md), [Combobox](https://github.com/flowstack-ui/brick/blob/main/docs/components/combobox/README.md), [Multi Select](https://github.com/flowstack-ui/brick/blob/main/docs/components/multi-select/README.md), [File Upload](https://github.com/flowstack-ui/brick/blob/main/docs/components/file-upload/README.md), [Checkbox](https://github.com/flowstack-ui/brick/blob/main/docs/components/checkbox/README.md), [Checkbox Group](https://github.com/flowstack-ui/brick/blob/main/docs/components/checkbox-group/README.md), [Radio Group](https://github.com/flowstack-ui/brick/blob/main/docs/components/radio-group/README.md), [Switch](https://github.com/flowstack-ui/brick/blob/main/docs/components/switch/README.md), [Slider](https://github.com/flowstack-ui/brick/blob/main/docs/components/slider/README.md), [Rating](https://github.com/flowstack-ui/brick/blob/main/docs/components/rating/README.md) |
+| Content and status | [Text](https://github.com/flowstack-ui/brick/blob/main/docs/components/text/README.md), [Icon](https://github.com/flowstack-ui/brick/blob/main/docs/components/icon/README.md), [Image](https://github.com/flowstack-ui/brick/blob/main/docs/components/image/README.md), [Code](https://github.com/flowstack-ui/brick/blob/main/docs/components/code/README.md), [Code Block](https://github.com/flowstack-ui/brick/blob/main/docs/components/code-block/README.md), [Avatar](https://github.com/flowstack-ui/brick/blob/main/docs/components/avatar/README.md), [Badge](https://github.com/flowstack-ui/brick/blob/main/docs/components/badge/README.md), [Chip](https://github.com/flowstack-ui/brick/blob/main/docs/components/chip/README.md), [Notification Badge](https://github.com/flowstack-ui/brick/blob/main/docs/components/notification-badge/README.md), [Card](https://github.com/flowstack-ui/brick/blob/main/docs/components/card/README.md), [List](https://github.com/flowstack-ui/brick/blob/main/docs/components/list/README.md), [Table](https://github.com/flowstack-ui/brick/blob/main/docs/components/table/README.md), [Divider](https://github.com/flowstack-ui/brick/blob/main/docs/components/divider/README.md), [Collapsible](https://github.com/flowstack-ui/brick/blob/main/docs/components/collapsible/README.md), [Accordion](https://github.com/flowstack-ui/brick/blob/main/docs/components/accordion/README.md), [Skeleton](https://github.com/flowstack-ui/brick/blob/main/docs/components/skeleton/README.md), [Progress](https://github.com/flowstack-ui/brick/blob/main/docs/components/progress/README.md), [Progress Circle](https://github.com/flowstack-ui/brick/blob/main/docs/components/progress-circle/README.md), [Toast](https://github.com/flowstack-ui/brick/blob/main/docs/components/toast/README.md) |
+| Contextual overlays | [Tooltip](https://github.com/flowstack-ui/brick/blob/main/docs/components/tooltip/README.md), [Hover Card](https://github.com/flowstack-ui/brick/blob/main/docs/components/hover-card/README.md), [Popover](https://github.com/flowstack-ui/brick/blob/main/docs/components/popover/README.md), [Dropdown Menu](https://github.com/flowstack-ui/brick/blob/main/docs/components/dropdown-menu/README.md), [Context Menu](https://github.com/flowstack-ui/brick/blob/main/docs/components/context-menu/README.md), [Menubar](https://github.com/flowstack-ui/brick/blob/main/docs/components/menubar/README.md) |
+| Modal surfaces | [Dialog](https://github.com/flowstack-ui/brick/blob/main/docs/components/dialog/README.md), [Alert Dialog](https://github.com/flowstack-ui/brick/blob/main/docs/components/alert-dialog/README.md), [Drawer](https://github.com/flowstack-ui/brick/blob/main/docs/components/drawer/README.md) |
+| Navigation and layout | [Breadcrumb](https://github.com/flowstack-ui/brick/blob/main/docs/components/breadcrumb/README.md), [Tabs](https://github.com/flowstack-ui/brick/blob/main/docs/components/tabs/README.md), [Navigation Menu](https://github.com/flowstack-ui/brick/blob/main/docs/components/navigation-menu/README.md), [Bottom Navigation](https://github.com/flowstack-ui/brick/blob/main/docs/components/bottom-navigation/README.md), [Link](https://github.com/flowstack-ui/brick/blob/main/docs/components/link/README.md), [Nav List](https://github.com/flowstack-ui/brick/blob/main/docs/components/nav-list/README.md), [Sidebar](https://github.com/flowstack-ui/brick/blob/main/docs/components/sidebar/README.md), [App Bar](https://github.com/flowstack-ui/brick/blob/main/docs/components/app-bar/README.md), [Stack](https://github.com/flowstack-ui/brick/blob/main/docs/components/stack/README.md), [Grid](https://github.com/flowstack-ui/brick/blob/main/docs/components/grid/README.md), [Container](https://github.com/flowstack-ui/brick/blob/main/docs/components/container/README.md), [Show](https://github.com/flowstack-ui/brick/blob/main/docs/components/show/README.md), [Hide](https://github.com/flowstack-ui/brick/blob/main/docs/components/hide/README.md), [Surface](https://github.com/flowstack-ui/brick/blob/main/docs/components/surface/README.md), [Scroll Area](https://github.com/flowstack-ui/brick/blob/main/docs/components/scroll-area/README.md) |
+
+## Package boundary
+
+`@flowstack-ui/atom` owns reusable behavior, state, semantics, focus, keyboard
+interaction, portals, positioning, and accessibility. Brick owns the finished
+visual components, static CSS, semantic tokens, and public customization
+contract. Application data, routing, persistence, and business workflows stay
+outside the package.
+
+## License
+
+MIT

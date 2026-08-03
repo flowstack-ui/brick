@@ -332,7 +332,9 @@
     "./reset.css": "./dist/reset.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "docs/guides/installation.md",
+    "docs/guides/appearance-and-tokens.md"
   ],
   "scripts": {
     "clean": "node scripts/clean.mjs",

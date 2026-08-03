@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { join, posix, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 const dryRun = process.argv.includes("--dry-run");
@@ -15,6 +15,29 @@ if (tarballArgument !== -1 && !tarball) {
 }
 
 const temp = await mkdtemp(join(tmpdir(), "brick-package-"));
+
+function readTarballFile(path) {
+  const result = spawnSync("tar", ["-xOf", resolve(tarball), `package/${path}`], {
+    encoding: "utf8",
+  });
+  assert.equal(result.status, 0, `unable to read ${path} from release archive`);
+  return result.stdout;
+}
+
+async function readPackedFile(path) {
+  return tarball ? readTarballFile(path) : readFile(path, "utf8");
+}
+
+function assertPackedLinksResolve(path, source, files) {
+  const links = source.matchAll(/\[[^\]]*\]\(([^)\s]+)(?:\s+["'][^)]*)?\)/gu);
+  for (const [, rawHref] of links) {
+    const href = rawHref.replace(/^<|>$/gu, "").split("#", 1)[0];
+    if (!href || /^(?:https?:|mailto:)/u.test(href)) continue;
+    const target = posix.normalize(posix.join(posix.dirname(path), href));
+    assert.ok(!target.startsWith("../"), `${path} links outside the package: ${rawHref}`);
+    assert.ok(files.has(target), `${path} links to unpacked file ${target}`);
+  }
+}
 
 try {
   const result = spawnSync(
@@ -61,17 +84,56 @@ try {
     "dist/styles.css",
     "dist/tokens.css",
     "dist/reset.css",
+    "docs/guides/installation.md",
+    "docs/guides/appearance-and-tokens.md",
     "package.json",
   ]) {
     assert.ok(files.has(required), `packed artifact is missing ${required}`);
   }
 
+  const allowedMetadata = new Set([
+    "LICENSE",
+    "README.md",
+    "package.json",
+    "docs/guides/installation.md",
+    "docs/guides/appearance-and-tokens.md",
+  ]);
   for (const file of files) {
-    assert.doesNotMatch(file, /(?:^|\/)(?:src|test|playground|scripts|node_modules)(?:\/|$)/);
+    const isRuntimeFile = /^dist\/.+\.(?:js|css|d\.ts)(?:\.map)?$/u.test(file);
+    assert.ok(
+      allowedMetadata.has(file) || isRuntimeFile,
+      `packed artifact contains non-public file ${file}`,
+    );
   }
 
-  const packageJson = JSON.parse(await readFile("package.json", "utf8"));
+  const packageJson = JSON.parse(await readPackedFile("package.json"));
   assert.equal(packageJson.repository.url, "git+https://github.com/flowstack-ui/brick.git");
+
+  const publicMarkdown = [
+    "README.md",
+    "docs/guides/installation.md",
+    "docs/guides/appearance-and-tokens.md",
+  ];
+  const forbiddenDocumentation = [
+    /\bplayground\b/iu,
+    /\bapps\/consumer\b/iu,
+    /\b(?:application|packed) Consumer\b/u,
+    /\bdev:consumer\b/iu,
+    /\bworkbook\b/iu,
+    /\bcontribut(?:e|ing|or)\b/iu,
+    /manual[- ](?:review|test|protocol)/iu,
+    /\bcheck:release\b/iu,
+    /\btest:browser\b/iu,
+    /\bnpm run\b/iu,
+  ];
+  for (const path of publicMarkdown) {
+    const source = await readPackedFile(path);
+    for (const pattern of forbiddenDocumentation) {
+      assert.doesNotMatch(source, pattern, `${path} contains repository-only guidance`);
+    }
+    assertPackedLinksResolve(path, source, files);
+  }
+
   console.log(
     `Verified ${pack.files.length} packed files (${pack.size} bytes)${tarball ? " in the release archive" : ""}.`,
   );

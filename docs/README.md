@@ -10,7 +10,6 @@ This directory is the public documentation authority for
 - [Appearance and tokens](guides/appearance-and-tokens.md) — light, dark,
   system appearance, semantic tokens, and scoped customization
 - [Component guides](#component-guides) — public API and usage contracts
-- [Contributing](contributing/README.md) — component work and evidence routing
 
 ## Component guides
 
@@ -173,19 +172,4 @@ This directory is the public documentation authority for
   scrolling, gutter, and visibility
 
 Every released component owns one folder containing its public `README.md` and
-`CHANGELOG.md`. Start new documentation from
-[`components/_template/`](components/_template/).
-
-## Contributor workflows
-
-| Task | Guide |
-| --- | --- |
-| Route component work | [Contributing index](contributing/README.md) |
-| Build or change a component | [Component workstream](contributing/component-workstream.md) |
-| Write or review public docs | [Documentation contract](contributing/documentation.md) |
-| Add playground evidence | [Playground evidence](contributing/playground.md) |
-| Run human review | [Manual testing](contributing/manual-testing.md) |
-| Update the evidence workbook | [Coverage workbook](../playground/docs/coverage-workbook.md) |
-| Choose automated tests | [Testing](guides/testing.md) |
-| Verify the packed Consumer | [Consumer verification](contributing/consumer-verification.md) |
-| Release the package | [Releasing](guides/releasing.md) |
+`CHANGELOG.md`.

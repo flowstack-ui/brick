@@ -66,6 +66,3 @@ Component anatomy owns its semantic element and styling contract. It does not
 nest `Text`; its local variables alias the same semantic recipes that `Text`
 uses. Override a semantic recipe to change a role across Brick, or a documented
 component variable for one component only.
-
-Run `npm run verify:typography` to reject incomplete recipes, light/dark drift,
-and component typography that bypasses the shared system.
