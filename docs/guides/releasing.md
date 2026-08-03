@@ -39,8 +39,7 @@ clean jobs, creates one archive, verifies that same archive through package,
 React 18/19, and application Consumer checks, and publishes only that archive
 with provenance.
 
-For the first publication, place a short-lived granular npm token in the
-protected environment as `NPM_TOKEN`. After the package exists, configure npm
-trusted publishing for `flowstack-ui/brick`, `.github/workflows/publish.yml`,
-and the `npm` environment, then remove the bootstrap token. Later releases use
-the workflow's OIDC identity and do not require a long-lived npm secret.
+npm trusted publishing authorizes `flowstack-ui/brick`,
+`.github/workflows/publish.yml`, and the protected `npm` environment. The
+workflow uses that OIDC identity directly; no npm token or long-lived npm
+secret is required.

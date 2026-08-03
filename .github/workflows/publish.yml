@@ -168,12 +168,7 @@ jobs:
           name: brick-release-package
           path: ${{ runner.temp }}/brick-package
       - name: Publish verified archive
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        shell: bash
-        run: |
-          if [[ -z "${NODE_AUTH_TOKEN:-}" ]]; then unset NODE_AUTH_TOKEN; fi
-          npm publish "$RUNNER_TEMP"/brick-package/*.tgz --access public --provenance
+        run: npm publish "$RUNNER_TEMP"/brick-package/*.tgz --access public --provenance
 
   release:
     needs: [validate, publish]
