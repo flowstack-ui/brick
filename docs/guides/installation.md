@@ -1,10 +1,14 @@
 # Installation
 
-Install Brick with its Atom and React peer dependencies:
+Install Brick in an existing React application:
 
 ```bash
-npm install @flowstack-ui/brick @flowstack-ui/atom react react-dom
+npm install @flowstack-ui/brick
 ```
+
+Brick installs its compatible `@flowstack-ui/atom` version automatically; do
+not install Atom separately. React and React DOM 18 or newer are peer
+dependencies and must be provided by the consuming application.
 
 Import the complete stylesheet once from the application root:
 

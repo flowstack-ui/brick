@@ -10,10 +10,11 @@ to use without requiring an application-level CSS processor.
 ## Installation
 
 ```bash
-npm install @flowstack-ui/brick @flowstack-ui/atom react react-dom
+npm install @flowstack-ui/brick
 ```
 
-Brick supports React and React DOM 18 or newer.
+Brick installs its compatible Atom version automatically. The consuming
+application must provide React and React DOM 18 or newer.
 
 ## Styles
 
