@@ -85,7 +85,9 @@ jobs:
     needs: package
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # WebKit is intentionally restarted across 12 one-worker shards. Keep the
+    # job boundary large enough for the complete browser corpus.
+    timeout-minutes: 50
     strategy:
       fail-fast: false
       matrix:

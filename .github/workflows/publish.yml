@@ -80,7 +80,10 @@ jobs:
   browser:
     needs: repository
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    # WebKit is intentionally restarted across 12 one-worker shards. The full
+    # release corpus takes longer than the Chromium/Firefox profiles, so this
+    # boundary must cover the complete healthy shard sequence.
+    timeout-minutes: 50
     strategy:
       fail-fast: false
       matrix:

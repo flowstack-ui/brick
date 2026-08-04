@@ -6,6 +6,12 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## 0.1.2 - 2026-08-04
 
+### Changed
+
+- Expanded the CI and protected-release browser job boundary so the intentional
+  12-shard WebKit qualification can complete instead of being cancelled while
+  healthy shards are still passing.
+
 ### Fixed
 
 - Made the modular Checkbox Group, Toggle Group, Pagination, and Code Block
