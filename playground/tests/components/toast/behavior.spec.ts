@@ -89,6 +89,9 @@ test("queue, overlap, logical positions, mobile containment, and accessibility a
   expect(box).not.toBeNull();
   expect(box!.x).toBeGreaterThanOrEqual(0);
   expect(box!.x + box!.width).toBeLessThanOrEqual(320);
+  await expect(
+    viewport.locator(".brick-toast[data-state='visible']"),
+  ).toHaveCSS("opacity", "1");
   expect((await new AxeBuilder({ page }).include(".brick-toast-viewport").analyze()).violations).toEqual([]);
 
   await page.setViewportSize({ width: 1120, height: 900 });
