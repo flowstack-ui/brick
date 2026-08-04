@@ -34,6 +34,19 @@ import { Link } from "@flowstack-ui/brick";
 import "@flowstack-ui/brick/styles.css";
 ```
 
+The complete stylesheet above is the recommended default. For a measured
+route-aware build, replace it with the shared foundation and this component's
+stylesheet:
+
+```tsx
+import "@flowstack-ui/brick/styles/core.css"; // once at the application root
+import "@flowstack-ui/brick/styles/link.css";
+```
+
+Add the modular stylesheet for every other Brick component the route renders.
+Do not combine modular styles with `styles.css` or `tokens.css`.
+
+
 Brick requires the exact public Atom dependency declared by the package and
 React 18 or newer.
 

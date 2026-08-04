@@ -14,7 +14,11 @@ important exclusions that consumers could otherwise assume are supported.
 
 ## Installation and imports
 
-Show the root export, stable component subpath, and required stylesheet.
+Show the root export, stable component subpath, and complete stylesheet as the
+recommended default. Then show the optional route-aware alternative:
+`styles/core.css` once plus the exact component stylesheet. State that modular
+styles replace rather than accompany `styles.css` and `tokens.css`, and that
+consumers must load a stylesheet for every Brick component the route renders.
 
 ## Quick start
 

@@ -48,6 +48,9 @@ const changelogDiaryPatterns = [
 const componentSubpaths = {
   "notification-badge": "badge",
 };
+const componentStyleSubpaths = {
+  "notification-badge": "badge",
+};
 const componentSymbols = {
   "alert-dialog": "AlertDialog",
   "app-bar": "AppBar",
@@ -277,6 +280,13 @@ for (const componentId of requested) {
 
   if (!documentation.includes('@flowstack-ui/brick/styles.css')) {
     failures.push(`${componentId}: missing compiled stylesheet import`);
+  }
+  if (!documentation.includes('@flowstack-ui/brick/styles/core.css')) {
+    failures.push(`${componentId}: missing modular CSS foundation import`);
+  }
+  const componentStyleSubpath = componentStyleSubpaths[componentId] ?? componentId;
+  if (!documentation.includes(`@flowstack-ui/brick/styles/${componentStyleSubpath}.css`)) {
+    failures.push(`${componentId}: missing modular component stylesheet import`);
   }
 }
 

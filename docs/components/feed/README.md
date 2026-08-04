@@ -25,6 +25,19 @@ import { Feed } from "@flowstack-ui/brick";
 import "@flowstack-ui/brick/styles.css";
 ```
 
+The complete stylesheet above is the recommended default. For a measured
+route-aware build, replace it with the shared foundation and this component's
+stylesheet:
+
+```tsx
+import "@flowstack-ui/brick/styles/core.css"; // once at the application root
+import "@flowstack-ui/brick/styles/feed.css";
+```
+
+Add the modular stylesheet for every other Brick component the route renders.
+Do not combine modular styles with `styles.css` or `tokens.css`.
+
+
 ## Quick start
 
 ```tsx
