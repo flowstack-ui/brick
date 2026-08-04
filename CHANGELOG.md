@@ -4,6 +4,15 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.1.2 - 2026-08-04
+
+### Fixed
+
+- Made the modular Checkbox Group, Toggle Group, Pagination, and Code Block
+  stylesheets self-sufficient by including the shared visual recipes those
+  public components render internally. Their appearance no longer depends on
+  a previously visited route or an undocumented transitive stylesheet import.
+
 ## 0.1.1 - 2026-08-04
 
 ### Added

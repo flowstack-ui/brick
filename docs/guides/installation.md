@@ -56,8 +56,10 @@ import "@flowstack-ui/brick/styles/card.css";
 
 `core.css` contains Brick's layer order, default tokens, and component-scoped
 foundations. Import it before component styles. Each component stylesheet owns
-that component's rules and any private shared recipe it requires; it does not
-repeat tokens or foundations.
+that component's rules and every shared visual recipe it renders internally;
+for example, `checkbox-group.css` already includes the Checkbox artwork and
+`toggle-group.css` already includes the Toggle item recipe. Component styles do
+not repeat tokens or foundations.
 
 Do not combine modular component styles with `styles.css` or `tokens.css`.
 Choose the complete stylesheet for the simplest and safest installation.

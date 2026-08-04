@@ -1143,4 +1143,21 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
     assert.doesNotMatch(css, /@(?:tailwind|source|theme|utility|custom-variant)/);
     assert.doesNotMatch(css, /\.\.\//);
   }
+
+  const [checkboxGroup, toggleGroup, pagination, codeBlock] = await Promise.all(
+    ["checkbox-group", "toggle-group", "pagination", "code-block"].map((name) =>
+      readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8"),
+    ),
+  );
+
+  assert.match(checkboxGroup, /\.brick-checkbox-control/);
+  assert.match(checkboxGroup, /\.brick-checkbox-group/);
+  assert.match(toggleGroup, /\.brick-toggle-group-item/);
+  assert.match(toggleGroup, /\.brick-toggle-group/);
+  assert.match(pagination, /\.brick-icon/);
+  assert.match(pagination, /\.brick-pagination/);
+  assert.match(codeBlock, /\.brick-button/);
+  assert.match(codeBlock, /\.brick-code(?:\W|$)/);
+  assert.match(codeBlock, /\.brick-scroll-area/);
+  assert.match(codeBlock, /\.brick-code-block/);
 });

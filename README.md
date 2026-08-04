@@ -50,7 +50,9 @@ import "@flowstack-ui/brick/styles/card.css";
 
 Import `core.css` once before any component styles, then import the stylesheet
 matching each Brick JavaScript subpath the route renders. A component
-stylesheet includes its private visual helpers but not tokens or foundations.
+stylesheet includes every shared visual recipe that component renders
+internally, so `checkbox-group.css`, for example, does not require a separate
+`checkbox.css` import. Component styles do not repeat tokens or foundations.
 Do not combine this modular path with `styles.css` or `tokens.css`. The complete
 stylesheet remains the recommended default unless measured route CSS makes the
 additional import ownership worthwhile.
