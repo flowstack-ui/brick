@@ -31,6 +31,13 @@ test("Code Block overflow, stress, and accessibility remain contained", async ({
   expect(await scroll.evaluate((node) => node.scrollWidth)).toBeGreaterThan(await scroll.evaluate((node) => node.clientWidth));
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await page.locator("html").evaluate((node) => node.scrollWidth)).toBeLessThanOrEqual(390);
+  const shortCode = page.getByRole("region", { name: "Overview Button source" }).locator("pre");
+  const longCode = page.getByRole("region", { name: "Long source" }).locator("pre");
+  await expect(shortCode).toHaveCSS("font-size", "16px");
+  await expect(longCode).toHaveCSS("font-size", "16px");
+  for (const code of [shortCode, longCode]) {
+    await expect(code).toHaveCSS("-webkit-text-size-adjust", "100%");
+  }
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });

@@ -123,8 +123,9 @@ is not accepted and Brick does not bundle a tokenizer.
 
 The root fills available inline space but owns no external dimensions or
 breakpoints. `scroll` preserves long lines in the horizontal viewport; `wrap`
-reflows them. Code defaults to LTR inside an RTL page while Header follows page
-direction.
+reflows them. Scrollable source normalizes mobile browser text adjustment so
+short and long examples retain the selected Code Block size. Code defaults to
+LTR inside an RTL page while Header follows page direction.
 
 ## Accessibility
 
