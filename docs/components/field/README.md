@@ -35,7 +35,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ```tsx
 <Field.Root name="email" required>
-  <Field.Label>Email <Field.RequiredIndicator /></Field.Label>
+  <Field.Label>Email</Field.Label>
   <input type="email" />
   <Field.Description>Work email only.</Field.Description>
   <Field.Error>Please enter a valid email.</Field.Error>
@@ -61,7 +61,11 @@ Public exports are `Field`, `FieldRoot`, `FieldLabel`, `FieldDescription`,
 | `asChild` | `boolean` | `false` |
 
 Root inherits Atom relationship, generated-id, required, disabled, invalid,
-name, and control-ownership props. RequiredIndicator accepts `fallback`.
+name, and control-ownership props. Label renders its default required marker
+when Root is required; do not add a second RequiredIndicator inside that Label.
+Use Label's `requiredIndicator` or `optionalIndicator` props to replace its
+inline indicator. Use the standalone RequiredIndicator part only when an
+explicitly separate conditional indicator is needed; it accepts `fallback`.
 Every part requires children and supports either one `asChild` element or
 Atom `render`, never both.
 

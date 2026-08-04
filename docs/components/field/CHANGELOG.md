@@ -17,6 +17,8 @@ Field follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Corrected the quick start to rely on Label's automatic required marker
+  instead of rendering a duplicate standalone RequiredIndicator.
 - Checkbox validation now propagates through Field after interaction.
 - Inline validation with `Field.Error` now aggregates native invalid state,
   focuses the visible control, clears after correction or reset, and permits

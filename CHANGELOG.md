@@ -4,6 +4,11 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Fixed
+
+- Corrected Field's public quick start so required fields render Label's one
+  automatic marker instead of duplicating it with a nested RequiredIndicator.
+
 ## 0.1.2 - 2026-08-04
 
 ### Changed
