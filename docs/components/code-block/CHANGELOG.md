@@ -6,8 +6,8 @@ Code Block follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
-- Normalized text adjustment on the native `pre` owner so mobile browsers do
-  not inflate long scrollable examples independently of shorter Code Blocks.
+- Disabled automatic mobile text inflation on the native `pre` owner so long
+  scrollable examples cannot be enlarged independently of shorter Code Blocks.
 
 ### Added
 

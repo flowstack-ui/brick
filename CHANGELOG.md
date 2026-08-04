@@ -6,9 +6,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Fixed
 
-- Normalized text adjustment on Code Block's scrollable `pre` so mobile
-  browsers keep long and short examples at the same selected typography size
-  without requiring the optional Brick reset.
+- Disabled automatic mobile text inflation on Code Block's scrollable `pre` so
+  long and short examples keep the same selected typography size without
+  requiring the optional Brick reset.
 - Corrected Field's public quick start so required fields render Label's one
   automatic marker instead of duplicating it with a nested RequiredIndicator.
 
