@@ -14,13 +14,13 @@ const customStyle = { "--brick-tabs-indicator-color": "#7c3aed", "--brick-tabs-s
 
 function Star() { return <svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.8" /></svg>; }
 
-function DemoTabs({ ariaLabel, defaultValue = "overview", fullWidth, orientation = "horizontal", size = "md", variant = "line", indicator = variant === "line" }: { ariaLabel: string; defaultValue?: string; fullWidth?: boolean; orientation?: "horizontal" | "vertical"; size?: TabsSize; variant?: TabsVariant; indicator?: boolean }) {
+function DemoTabs({ ariaLabel, defaultValue = "overview", fullWidth, orientation = "horizontal", size = "md", variant = "line", indicator = true }: { ariaLabel: string; defaultValue?: string; fullWidth?: boolean; orientation?: "horizontal" | "vertical"; size?: TabsSize; variant?: TabsVariant; indicator?: boolean }) {
   return <Tabs.Root defaultValue={defaultValue} fullWidth={fullWidth} orientation={orientation} size={size} variant={variant}><Tabs.List ariaLabel={ariaLabel}><Tabs.Trigger value="overview">Overview</Tabs.Trigger><Tabs.Trigger value="activity">Activity</Tabs.Trigger><Tabs.Trigger value="settings">Settings</Tabs.Trigger>{indicator ? <Tabs.Indicator /> : null}</Tabs.List><Tabs.Content value="overview"><Text>Overview panel content.</Text></Tabs.Content><Tabs.Content value="activity"><Text>Activity panel content.</Text></Tabs.Content><Tabs.Content value="settings"><Text>Settings panel content.</Text></Tabs.Content></Tabs.Root>;
 }
 
 export const tabsScenarios = [
   { id: "tabs.overview", number: 1, title: "Overview", description: "Tabs defaults to one medium horizontal line list with automatic activation and the first related panel selected." },
-  { id: "tabs.variants", number: 2, title: "Variants", description: "Line, solid, soft, and enclosed change only visual treatment while identical tabs and panels remain selected." },
+  { id: "tabs.variants", number: 2, title: "Variants", description: "Line alone paints the optional measured indicator; solid, soft, and enclosed keep complete server-stable selected treatments." },
   { id: "tabs.sizes", number: 3, title: "Sizes", description: "Small, medium, and large change shared trigger typography, height, spacing, and panel inset only." },
   { id: "tabs.layout", number: 4, title: "Orientation and width", navigationTitle: "Layout", description: "Vertical orientation changes semantic keyboard direction; full width distributes horizontal triggers equally." },
   { id: "tabs.content", number: 5, title: "Content and states", navigationTitle: "States", description: "Composed icons, long labels, selected state, and disabled state remain aligned without changing defaults unnecessarily." },

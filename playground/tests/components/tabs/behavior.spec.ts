@@ -15,7 +15,11 @@ test("defaults expose complete relationships and automatic keyboard activation",
 });
 
 test("variants, sizes, vertical navigation, fitted width, and disabled state are complete", async ({ page }) => {
-  for (const variant of ["line", "solid", "soft", "enclosed"]) await expect(page.getByTestId("tabs-variants").locator(`.brick-tabs[data-variant='${variant}']`)).toHaveCount(1);
+  for (const variant of ["line", "solid", "soft", "enclosed"]) {
+    const root = page.getByTestId("tabs-variants").locator(`.brick-tabs[data-variant='${variant}']`);
+    await expect(root).toHaveCount(1);
+    await expect(root.locator(".brick-tabs-indicator")).toHaveCSS("display", variant === "line" ? "block" : "none");
+  }
   const heights: number[] = [];
   for (const size of ["sm", "md", "lg"]) heights.push((await page.getByTestId("tabs-sizes").locator(`.brick-tabs[data-size='${size}'] .brick-tabs-trigger`).first().boundingBox())!.height);
   expect(heights[0]).toBeLessThan(heights[1]); expect(heights[1]).toBeLessThan(heights[2]);

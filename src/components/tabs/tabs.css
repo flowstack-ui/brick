@@ -79,6 +79,7 @@
   .brick-tabs-indicator { position: absolute; z-index: 1; pointer-events: none; background: var(--brick-tabs-indicator-color); transition: translate var(--brick-motion-duration-fast) var(--brick-motion-easing-standard), inline-size var(--brick-motion-duration-fast) var(--brick-motion-easing-standard), block-size var(--brick-motion-duration-fast) var(--brick-motion-easing-standard); }
   .brick-tabs-indicator[data-orientation="horizontal"] { inset-block-end: 0; left: 0; inline-size: var(--tabs-indicator-width); block-size: 0.125rem; translate: var(--tabs-indicator-left) 0; }
   .brick-tabs-indicator[data-orientation="vertical"] { inset-block-start: 0; inset-inline-end: 0; inline-size: 0.125rem; block-size: var(--tabs-indicator-height); translate: 0 var(--tabs-indicator-top); }
+  .brick-tabs:not([data-variant="line"]) .brick-tabs-indicator { display: none; }
 
   .brick-tabs[data-variant="line"] .brick-tabs-trigger[data-state="active"] { border-block-end-color: var(--brick-tabs-indicator-color); }
   .brick-tabs[data-variant="line"] .brick-tabs-list[data-orientation="vertical"] .brick-tabs-trigger[data-state="active"] { border-block-end-color: transparent; border-inline-end-color: var(--brick-tabs-indicator-color); }

@@ -58,10 +58,13 @@ value, `keepMounted`, and `focusable`.
 
 ## Visual recipes and states
 
-Line emphasizes selection with an edge and optional moving Indicator. Solid
-uses a neutral contained rail, soft uses accent-soft selection, and enclosed
-joins the active trigger to the panel. Sizes change control typography and
-rhythm. Hover, active, selected, disabled, and focus-visible remain distinct.
+Line emphasizes selection with a server-rendered selected edge and an optional
+moving Indicator after Atom can measure the active Trigger. The Indicator is a
+line-only visual enhancement: solid, soft, and enclosed hide it and render
+their complete selected treatment directly on the active Trigger. This keeps
+every recipe visually stable on the first paint and through hydration. Sizes
+change control typography and rhythm. Hover, active, selected, disabled, and
+focus-visible remain distinct.
 
 ## Tokens and CSS hooks
 
@@ -80,6 +83,8 @@ include `--brick-tabs-foreground`, `--brick-tabs-selected-foreground`,
 
 Set supported variables on Root. Use `className` or `style` for local layout;
 do not replace selected/focus affordances or rewrite Atom state attributes.
+Use `Tabs.Indicator` only when a line recipe benefits from the moving accent;
+the selected state remains visible without it.
 
 ## Responsive behavior
 

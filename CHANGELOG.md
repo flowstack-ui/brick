@@ -4,6 +4,12 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Changed
+
+- Limited Tabs' measured Indicator to the line recipe. Every recipe now keeps
+  complete server-stable selected paint through hydration, and non-line
+  variants ignore the optional Indicator visually.
+
 ## 0.1.0 - 2026-08-02
 
 ### Changed

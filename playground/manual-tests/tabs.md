@@ -22,7 +22,10 @@ tested.
 
 Open `/tabs`; review 01–03. Focus and activate identical tabs in each recipe.
 Expected: defaults are medium line; only the named variant or size changes;
-selection, panel content, alignment, and focus remain clear.
+selection, panel content, alignment, and focus remain clear. Reload while
+watching the variants: line may enhance its already visible selected edge with
+the measured Indicator, while solid, soft, and enclosed never reveal an extra
+underline or change selected paint during hydration.
 
 ## Step 2 — Layout, content, states
 
