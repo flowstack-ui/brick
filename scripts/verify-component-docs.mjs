@@ -288,6 +288,17 @@ for (const componentId of requested) {
   if (!documentation.includes(`@flowstack-ui/brick/styles/${componentStyleSubpath}.css`)) {
     failures.push(`${componentId}: missing modular component stylesheet import`);
   }
+
+  if (componentId === "field") {
+    const quickStart = documentation.match(
+      /## Quick start\n([\s\S]*?)\n## Anatomy and DOM ownership/,
+    )?.[1];
+    if (quickStart?.includes("<Field.RequiredIndicator")) {
+      failures.push(
+        "field: required quick start must use Label's automatic marker instead of adding a duplicate RequiredIndicator",
+      );
+    }
+  }
 }
 
 for (const componentId of componentIds) {
