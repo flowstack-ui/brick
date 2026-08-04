@@ -1160,4 +1160,5 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   assert.match(codeBlock, /\.brick-code(?:\W|$)/);
   assert.match(codeBlock, /\.brick-scroll-area/);
   assert.match(codeBlock, /\.brick-code-block/);
+  assert.match(codeBlock, /\.brick-code-block-pre\{[^}]*text-size-adjust:\s*100%/);
 });

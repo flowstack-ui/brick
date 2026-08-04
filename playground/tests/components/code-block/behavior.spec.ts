@@ -35,9 +35,6 @@ test("Code Block overflow, stress, and accessibility remain contained", async ({
   const longCode = page.getByRole("region", { name: "Long source" }).locator("pre");
   await expect(shortCode).toHaveCSS("font-size", "16px");
   await expect(longCode).toHaveCSS("font-size", "16px");
-  for (const code of [shortCode, longCode]) {
-    await expect(code).toHaveCSS("-webkit-text-size-adjust", "100%");
-  }
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });
