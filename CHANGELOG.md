@@ -4,6 +4,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.1.1 - 2026-08-04
+
 ### Added
 
 - Added optional `styles/core.css` and `styles/<component>.css` exports for
