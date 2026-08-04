@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { componentStyleNames } from "../../scripts/css-entrypoints.mjs";
 
 const packageRoot = new URL("../../", import.meta.url);
 
@@ -317,10 +318,16 @@ test("package metadata defines the public Brick boundary", async () => {
       default: "./dist/code-block.js",
     },
     "./styles.css": "./dist/styles.css",
+    "./styles/*.css": "./dist/styles/*.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css",
   });
   assert.deepEqual(packageJson.sideEffects, ["**/*.css"]);
+  const componentSubpaths = Object.entries(packageJson.exports)
+    .filter(([path, target]) => path !== "." && typeof target === "object")
+    .map(([path]) => path.slice(2))
+    .sort();
+  assert.deepEqual([...componentStyleNames].sort(), componentSubpaths);
 });
 
 test("built package entrypoint can be imported without a CSS loader", async () => {
@@ -1112,4 +1119,28 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.doesNotMatch(styles, /@(?:tailwind|source|theme|utility|custom-variant)/);
   assert.doesNotMatch(styles, /\.\.\//);
   assert.doesNotMatch(styles, /body\s*\{[^}]*margin:/);
+});
+
+test("optional modular CSS entrypoints preserve the complete default", async () => {
+  const core = await readFile(new URL("../../dist/styles/core.css", import.meta.url), "utf8");
+  assert.match(core, /--brick-color-accent-solid/);
+  assert.match(core, /brick\.foundations/);
+  assert.doesNotMatch(core, /\.brick-button/);
+
+  assert.equal(componentStyleNames.length, 74);
+  for (const name of componentStyleNames) {
+    const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
+    assert.match(css, /@layer brick\.tokens,brick\.foundations/);
+    if (name === "visually-hidden") {
+      assert.match(css, /brick\.components,brick\.effects/);
+      assert.doesNotMatch(css, /\.brick-/);
+    } else {
+      assert.match(css, /@layer brick\.components/);
+      assert.match(css, /@layer brick\.effects/);
+      assert.match(css, /\.brick-/);
+    }
+    assert.doesNotMatch(css, /--brick-color-accent-solid:/);
+    assert.doesNotMatch(css, /@(?:tailwind|source|theme|utility|custom-variant)/);
+    assert.doesNotMatch(css, /\.\.\//);
+  }
 });

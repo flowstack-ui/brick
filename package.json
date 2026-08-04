@@ -328,6 +328,7 @@
       "default": "./dist/sidebar.js"
     },
     "./styles.css": "./dist/styles.css",
+    "./styles/*.css": "./dist/styles/*.css",
     "./tokens.css": "./dist/tokens.css",
     "./reset.css": "./dist/reset.css"
   },

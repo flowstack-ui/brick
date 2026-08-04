@@ -41,3 +41,25 @@ import "@flowstack-ui/brick/tokens.css";
 
 Do not import both `tokens.css` and `styles.css`; the complete stylesheet
 already contains the tokens.
+
+## Optional route-aware CSS
+
+Applications with measured all-component CSS cost may load the shared visual
+foundation once and select component styles by the same names as Brick's
+JavaScript subpaths:
+
+```ts
+import "@flowstack-ui/brick/styles/core.css";
+import "@flowstack-ui/brick/styles/button.css";
+import "@flowstack-ui/brick/styles/card.css";
+```
+
+`core.css` contains Brick's layer order, default tokens, and component-scoped
+foundations. Import it before component styles. Each component stylesheet owns
+that component's rules and any private shared recipe it requires; it does not
+repeat tokens or foundations.
+
+Do not combine modular component styles with `styles.css` or `tokens.css`.
+Choose the complete stylesheet for the simplest and safest installation.
+Choose modular styles only when the application can reliably own every style
+import and production measurement shows that route-level selection matters.

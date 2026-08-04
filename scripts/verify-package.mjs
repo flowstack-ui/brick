@@ -3,6 +3,7 @@ import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, posix, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
+import { componentStyleNames } from "./css-entrypoints.mjs";
 
 const dryRun = process.argv.includes("--dry-run");
 const tarballArgument = process.argv.indexOf("--tarball");
@@ -82,6 +83,8 @@ try {
     "dist/avatar.js",
     "dist/avatar.d.ts",
     "dist/styles.css",
+    "dist/styles/core.css",
+    ...componentStyleNames.map((name) => `dist/styles/${name}.css`),
     "dist/tokens.css",
     "dist/reset.css",
     "docs/guides/installation.md",

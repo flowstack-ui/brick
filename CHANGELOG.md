@@ -4,6 +4,12 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Added
+
+- Added optional `styles/core.css` and `styles/<component>.css` exports for
+  route-aware applications with measured all-component CSS cost. The complete
+  `styles.css` entrypoint remains unchanged and recommended by default.
+
 ### Changed
 
 - Limited Tabs' measured Indicator to the line recipe. Every recipe now keeps
