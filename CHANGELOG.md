@@ -4,6 +4,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.1.3 - 2026-08-05
+
 ### Fixed
 
 - Disabled automatic mobile text inflation on Code Block's scrollable `pre` so
