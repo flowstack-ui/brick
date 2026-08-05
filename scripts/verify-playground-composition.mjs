@@ -37,7 +37,11 @@ assert.deepEqual(registeredIds, [...expectedRouteIds].sort());
 
 const packageData = JSON.parse(packageJson);
 const publicComponentIds = Object.keys(packageData.exports)
-  .filter((entry) => entry !== "." && !entry.endsWith(".css"))
+  .filter((entry) => (
+    entry !== "."
+    && !entry.endsWith(".css")
+    && !entry.startsWith("./agents/")
+  ))
   .map((entry) => entry.slice(2))
   .sort();
 assert.deepEqual(

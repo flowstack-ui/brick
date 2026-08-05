@@ -1,0 +1,11 @@
+{
+  "schema": "flowstack.agent-component.v1", "id": "grid", "name": "Grid", "package": "@flowstack-ui/brick", "layer": "brick", "kind": "component",
+  "purpose": "Arrange content on tokenized two-dimensional tracks with public column, row, gap, and item-placement controls.",
+  "useWhen": ["Content needs coordinated rows and columns or responsive card tracks."],
+  "avoidWhen": [{ "condition": "The layout has one primary row or column.", "useInstead": "Stack" }],
+  "composition": ["Choose Grid tracks from the minimum readable child size; use Grid.Item placement only when source order remains meaningful."],
+  "rules": [{ "id": "grid-source-order", "level": "must", "statement": "Keep DOM order meaningful; visual placement must not create a confusing keyboard or reading sequence." }, { "id": "grid-css", "level": "must", "statement": "Load styles.css or core.css plus grid.css." }],
+  "commonMistakes": [{ "mistake": "Keeping too many columns until cards become unreadably narrow.", "correction": "Reduce columns at the content's real minimum width, not at a device-name breakpoint." }],
+  "validation": ["Test intrinsic sizing, overflow, zoom, narrow widths, source order, and RTL.", "Confirm each child remains readable before and after track changes."],
+  "related": ["stack", "card", "surface"]
+}

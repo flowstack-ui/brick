@@ -21,6 +21,9 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/index.d.ts",
       default: "./dist/index.js",
     },
+    "./agents/manifest.json": "./dist/agents/manifest.json",
+    "./agents/*.json": "./dist/agents/*.json",
+    "./agents/*.md": "./dist/agents/*.md",
     "./button": {
       types: "./dist/button.d.ts",
       default: "./dist/button.js",
