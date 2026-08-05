@@ -1,0 +1,11 @@
+{
+  "schema": "flowstack.agent-component.v1", "id": "card", "name": "Card", "package": "@flowstack-ui/brick", "layer": "brick", "kind": "component",
+  "purpose": "Group content about one subject in a finished static compound surface with header, content, and footer anatomy.",
+  "useWhen": ["A bounded subject needs a title, supporting content, and optional actions as one visual unit."],
+  "avoidWhen": [{ "condition": "Only generic background, border, radius, or elevation is needed.", "useInstead": "Surface" }],
+  "composition": ["Compose Card.Root with only the Header, Title, Description, Content, and Footer parts the subject needs."],
+  "rules": [{ "id": "card-not-clickable-div", "level": "must", "statement": "Do not turn the whole Card into an unnamed clickable div; place explicit Link or Button controls inside or use a valid link composition." }, { "id": "card-css", "level": "must", "statement": "Load styles.css or core.css plus card.css and styles for nested components." }],
+  "commonMistakes": [{ "mistake": "Using Card for every spacing group.", "correction": "Use Stack or Surface when there is no bounded card subject." }],
+  "validation": ["Check heading order and explicit action names.", "Check content flow, focus visibility, narrow widths, and appearance contrast."],
+  "related": ["surface", "stack", "grid", "button", "link"]
+}

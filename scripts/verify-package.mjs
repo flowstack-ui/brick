@@ -89,6 +89,8 @@ try {
     "dist/reset.css",
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
+    "docs/guides/agent-knowledge.md",
+    "dist/agents/manifest.json",
     "package.json",
   ]) {
     assert.ok(files.has(required), `packed artifact is missing ${required}`);
@@ -100,22 +102,32 @@ try {
     "package.json",
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
+    "docs/guides/agent-knowledge.md",
   ]);
   for (const file of files) {
     const isRuntimeFile = /^dist\/.+\.(?:js|css|d\.ts)(?:\.map)?$/u.test(file);
+    const isAgentArtifact = /^dist\/agents\/.+\.(?:json|md)$/u.test(file);
     assert.ok(
-      allowedMetadata.has(file) || isRuntimeFile,
+      allowedMetadata.has(file) || isRuntimeFile || isAgentArtifact,
       `packed artifact contains non-public file ${file}`,
     );
   }
 
   const packageJson = JSON.parse(await readPackedFile("package.json"));
   assert.equal(packageJson.repository.url, "git+https://github.com/flowstack-ui/brick.git");
+  const agentManifest = JSON.parse(await readPackedFile("dist/agents/manifest.json"));
+  assert.equal(agentManifest.package, packageJson.name);
+  assert.ok(agentManifest.components.length > 0, "Agent Knowledge manifest is empty");
+  for (const component of agentManifest.components) {
+    assert.ok(files.has(`dist/agents/${component.id}.json`));
+    assert.ok(files.has(`dist/agents/${component.id}.md`));
+  }
 
   const publicMarkdown = [
     "README.md",
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
+    "docs/guides/agent-knowledge.md",
   ];
   const forbiddenDocumentation = [
     /\bplayground\b/iu,

@@ -1,0 +1,11 @@
+{
+  "schema": "flowstack.agent-component.v1", "id": "link", "name": "Link", "package": "@flowstack-ui/brick", "layer": "brick", "kind": "component",
+  "purpose": "Render finished native navigation as inline, standalone, or button-like content without changing its link semantics.",
+  "useWhen": ["The user moves to a route, URL, document, download, email address, or telephone destination."],
+  "avoidWhen": [{ "condition": "The interaction changes current state without navigating.", "useInstead": "Button" }],
+  "composition": ["Provide a real href or compose a router-owned anchor, then choose a visual variant independently from navigation semantics."],
+  "rules": [{ "id": "link-destination", "level": "must", "statement": "Preserve anchor semantics and a real destination even when the link looks like a button." }, { "id": "link-css", "level": "must", "statement": "Load styles.css or core.css plus link.css." }],
+  "commonMistakes": [{ "mistake": "Replacing a destination with Button because the design is prominent.", "correction": "Use Link and select the appropriate Brick variant." }],
+  "validation": ["Inspect href and accessible name.", "Test focus, Enter navigation, visited/external behavior when relevant, and contrast."],
+  "related": ["@flowstack-ui/atom/agents/link", "button"]
+}

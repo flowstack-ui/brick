@@ -1,0 +1,11 @@
+{
+  "schema": "flowstack.agent-component.v1", "id": "stack", "name": "Stack", "package": "@flowstack-ui/brick", "layer": "brick", "kind": "component",
+  "purpose": "Arrange children in one tokenized row or column with logical spacing, alignment, wrapping, and responsive-friendly public props.",
+  "useWhen": ["Content needs one-dimensional vertical or horizontal layout."],
+  "avoidWhen": [{ "condition": "Both rows and columns need explicit track control.", "useInstead": "Grid" }],
+  "composition": ["Choose VStack for vertical flow or HStack for horizontal flow; set gap and alignment from the content relationship."],
+  "rules": [{ "id": "stack-one-dimension", "level": "must", "statement": "Use Stack for one primary layout axis and allow wrapping only when the resulting order remains clear." }, { "id": "stack-css", "level": "must", "statement": "Load styles.css or core.css plus stack.css." }],
+  "commonMistakes": [{ "mistake": "Adding repeated custom flex utilities for ordinary rows and columns.", "correction": "Use Stack so spacing and logical-direction behavior stay on the Brick contract." }],
+  "validation": ["Check source and visual order at narrow widths and zoom.", "Check gap, wrapping, alignment, and RTL behavior."],
+  "related": ["grid", "surface", "card"]
+}

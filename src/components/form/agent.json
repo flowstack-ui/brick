@@ -1,0 +1,11 @@
+{
+  "schema": "flowstack.agent-component.v1", "id": "form", "name": "Form", "package": "@flowstack-ui/brick", "layer": "brick", "kind": "component",
+  "purpose": "Provide a finished native submission boundary and consistent form rhythm while Atom owns submission and validation behavior.",
+  "useWhen": ["Related controls submit user input as one operation."],
+  "avoidWhen": [{ "condition": "Controls are unrelated immediate settings or actions.", "useInstead": "Individual Field and Button compositions" }],
+  "composition": ["Compose Form -> Fieldset for related groups -> Field for each control -> a named submit Button."],
+  "rules": [{ "id": "form-native", "level": "must", "statement": "Keep native submission available and give submitted controls names." }, { "id": "form-css", "level": "must", "statement": "Load styles.css or core.css plus form.css and every rendered child component stylesheet." }],
+  "commonMistakes": [{ "mistake": "Treating Form as a complete login or contact workflow.", "correction": "Keep business workflow in the application or a future Block; Form owns the generic visual boundary." }],
+  "validation": ["Submit with keyboard and pointer.", "Inspect submitted values, invalid relationships, spacing, and narrow-layout behavior."],
+  "related": ["@flowstack-ui/atom/agents/form", "field", "fieldset", "button"]
+}
