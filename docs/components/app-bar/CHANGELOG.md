@@ -6,6 +6,9 @@ App Bar follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for component selection, composition,
+  CSS-delivery, recurring mistakes, and validation.
+
 - Initial `Root`, `Toolbar`, `Start`, `Center`, and `End` compound API.
 - Static, absolute, sticky, and fixed positioning with compact and comfortable
   toolbar densities.

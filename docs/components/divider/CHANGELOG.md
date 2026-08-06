@@ -6,6 +6,9 @@ Divider follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for component selection, composition,
+  CSS-delivery, recurring mistakes, and validation.
+
 - Initial Atom-backed `Divider` with horizontal and vertical orientation,
   decorative and semantic output, solid/dashed/dotted lines, three
   thicknesses, logical inset, horizontal labels, vertical stretch,

@@ -4,6 +4,22 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.1.4 - 2026-08-06
+
+### Added
+
+- Added package-level layer-selection and interface-composition Agent
+  Knowledge that requires Brick-first component selection, records native or
+  framework fallbacks, and keeps direct Atom use out of ordinary Brick
+  applications.
+- Added navigation, responsive visibility, media, typography, application
+  shell, and layout guidance for App Bar, Breadcrumb, Bottom Navigation,
+  Container, Divider, Drawer, Hide, Icon Button, Image, Navigation Menu, Nav
+  List, Pagination, Scroll Area, Show, Sidebar, Skip Link, Tabs, Text, and
+  Toolbar.
+- Extended the agent manifest with a backward-compatible `guides` collection
+  and validated `flowstack.agent-guide.v1` artifacts.
+
 ## 0.1.3 - 2026-08-05
 
 ### Fixed

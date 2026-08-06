@@ -6,6 +6,9 @@ Icon Button follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for component selection, composition,
+  CSS-delivery, recurring mistakes, and validation.
+
 - Added the Atom-backed Icon Button action and genuine link paths.
 - Added four variants, six tones, five square sizes, rounded/circle geometry,
   loading, disabled, forced-colors, dark, and reduced-motion presentation.

@@ -11,6 +11,9 @@ Drawer follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for component selection, composition,
+  CSS-delivery, recurring mistakes, and validation.
+
 - Initial modal-only twelve-part Drawer namespace with Root, Trigger, Portal,
   Overlay, Content, Header, Title, Description, Body, Footer, Close, and Branch.
 - Logical start/end/top/bottom placement and small, medium, large, and full

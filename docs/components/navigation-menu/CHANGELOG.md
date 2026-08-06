@@ -14,6 +14,9 @@ Navigation Menu follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for component selection, composition,
+  CSS-delivery, recurring mistakes, and validation.
+
 - Added the decorative `NavigationMenu.IndicatorArrow` part. Indicator renders
   it by default when no custom Indicator children are supplied.
 
