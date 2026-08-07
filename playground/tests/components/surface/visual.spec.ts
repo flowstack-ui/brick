@@ -59,3 +59,18 @@ test("Surface appearance, customization, mobile, and forced colors", async ({
     "elevations-forced-colors.png",
   );
 });
+
+test("Surface optional media composition", async ({ page }) => {
+  await expectEvidenceScreenshot(
+    page,
+    page.getByTestId("surface-layered"),
+    "media-light.png",
+  );
+
+  await setAppearance(page, "dark");
+  await expectEvidenceScreenshot(
+    page,
+    page.getByTestId("surface-layered"),
+    "media-dark.png",
+  );
+});

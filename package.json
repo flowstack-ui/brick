@@ -322,6 +322,10 @@
       "types": "./dist/code-block.d.ts",
       "default": "./dist/code-block.js"
     },
+    "./carousel": {
+      "types": "./dist/carousel.d.ts",
+      "default": "./dist/carousel.js"
+    },
     "./nav-list": {
       "types": "./dist/nav-list.d.ts",
       "default": "./dist/nav-list.js"
@@ -430,7 +434,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.21.0"
+    "@flowstack-ui/atom": "0.22.2"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

@@ -12,6 +12,9 @@ App Bar follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public comfortable and compact Toolbar minimum block-size recipe
+  tokens for application-owned viewport and shell calculations without
+  duplicating Brick's density values.
 - Added public Agent Knowledge for component selection, composition,
   CSS-delivery, recurring mistakes, and validation.
 

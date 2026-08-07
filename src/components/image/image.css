@@ -60,6 +60,12 @@
     object-position: var(--brick-image-position);
   }
 
+  .brick-image[data-fill],
+  .brick-image[data-fill] > .brick-image__content,
+  .brick-image[data-fill] > .brick-image__fallback {
+    block-size: 100%;
+  }
+
   .brick-image[data-ratio] > .brick-image__content,
   .brick-image[data-ratio] > .brick-image__fallback {
     position: absolute;

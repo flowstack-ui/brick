@@ -1,9 +1,18 @@
 export {
   Surface,
+  SurfaceContent,
+  SurfaceMedia,
+  SurfaceRoot,
+  SurfaceScrim,
+  type SurfaceContentProps,
   type SurfaceElement,
   type SurfaceElevation,
   type SurfaceInset,
   type SurfaceLevel,
+  type SurfaceMediaProps,
   type SurfaceProps,
   type SurfaceRadius,
+  type SurfaceScrimDirection,
+  type SurfaceScrimProps,
+  type SurfaceScrimStrength,
 } from "./components/surface/index.js";

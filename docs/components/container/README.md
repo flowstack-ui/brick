@@ -144,6 +144,12 @@ Nest only to create a deliberately narrower content region. Use
 `gutter="none"` when the outer Container already owns page gutters. Do not
 nest an equal or wider Container as ordinary grouping.
 
+Separate shell regions that should share one visual grid line must repeat the
+same named `measure` and `gutter`. For example, an App Bar, hero content, and
+an attached proof rail can each own a Container boundary while still aligning
+because they use the same recipes; do not recreate those widths independently
+in application CSS.
+
 ## Accessibility
 
 Container adds no role, name, landmark, focus target, state, or keyboard

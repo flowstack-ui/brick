@@ -67,6 +67,7 @@ export const componentIds = [
   "tree",
   "toolbar",
   "pagination",
+  "carousel",
   "notification-badge",
   "popover",
   "stack",

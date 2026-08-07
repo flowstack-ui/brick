@@ -13,7 +13,7 @@ an authored unavailable state.
 ## When not to use
 
 Use Avatar for people or entity identity, Icon for inline SVG symbols, and
-native CSS backgrounds for decorative background paint. Image is not an
+Surface.Media for decorative layered background media. Image is not an
 optimizer, gallery, lightbox, figure/caption, upload editor, or framework image
 loader.
 
@@ -39,9 +39,11 @@ Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
 
-Public exports are `Image`, `ImageRootProps`, `ImageContentProps`,
-`ImageFallbackProps`, `ImageFit`, `ImagePosition`, `ImageRadius`, and
-`ImageFrame`.
+Public exports are `Image`, `ImageRoot`, `ImageContent`, `ImageFallback`,
+`ImageRootProps`, `ImageContentProps`, `ImageFallbackProps`, `ImageFit`,
+`ImagePosition`, `ImageRadius`, and `ImageFrame`.
+Direct parts are equivalent to the compound namespace and support imports from
+React Server Components without a client wrapper around `Image`.
 
 ## Quick start
 
@@ -76,6 +78,7 @@ exclusive under Atom's source state.
 | `radius` | `none`, `sm`, `md`, `lg`, `full` | `none` |
 | `frame` | `none`, `subtle` | `none` |
 | `ratio` | positive finite number | intrinsic |
+| `fill` | `boolean` | `false` |
 | `onLoadingStatusChange` | `(status) => void` | none |
 
 ### Content and Fallback
@@ -88,6 +91,21 @@ its image ref. `src` belongs to Root.
 `Image.Fallback` accepts Atom `when="idle" | "loading" | "error"` or an array
 of those values. Its default covers all three non-loaded states. All parts
 retain Atom `render` and `asChild` composition.
+
+`fill` makes Root, Content, and Fallback consume a block size established by
+the parent. It is useful for media slots and other deliberately sized regions:
+
+```tsx
+<Surface.Media>
+  <Image.Root fill fit="cover" src="/workspace.jpg">
+    <Image.Content alt="" height={675} width={1200} />
+  </Image.Root>
+</Surface.Media>
+```
+
+`fill` does not position Image absolutely or infer geometry. The parent must
+establish the available block size; `fit` and `position` still control the
+pixels inside it. Prefer `ratio` when the image should establish its own box.
 
 ## Visual recipes and states
 
@@ -105,7 +123,8 @@ states.
 Stable classes are `.brick-image`, `.brick-image__content`, and
 `.brick-image__fallback`. Stable slots are `image`, `image-content`, and
 `image-fallback` through `data-slot`. Root exposes `data-fit`, `data-position`, `data-radius`,
-`data-frame`, optional `data-ratio`, and Atom `data-state`.
+`data-frame`, optional `data-ratio`, optional `data-fill`, and Atom
+`data-state`.
 
 Public variables:
 

@@ -4,6 +4,29 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Added
+
+- Added the Atom-backed `Carousel` component family with optional controls,
+  picker dots, touch scrolling, autoplay control, modular CSS, and Agent
+  Knowledge.
+
+### Added
+
+- Expanded public Agent Knowledge with Badge guidance and qualified interface
+  composition rules for scoped appearance themes, shared shell geometry,
+  inherited foregrounds, inline text spacing, decorative annotations, and
+  Theme/Block/Blueprint/application ownership.
+- Added public App Bar comfortable and compact Toolbar minimum block-size
+  recipe tokens for application-owned viewport calculations without
+  duplicating Brick's density values.
+- Added optional `Surface.Media`, `Surface.Scrim`, and `Surface.Content`
+  composition for decorative image, video, canvas, and authored background
+  layers with logical contrast gradients and unchanged ordinary Surface output.
+- Added direct RSC-safe Image and Surface part exports while retaining the
+  existing compound namespaces and callable `Surface` API.
+- Added explicit Image parent-fill geometry for media slots and other
+  parent-sized regions without inferring ratio or positioning.
+
 ## 0.1.5 - 2026-08-07
 
 ### Added

@@ -36,12 +36,15 @@ Notes or issue:
 
 Setup: Open `04 Density`, `05 Surface`, and `06 Positions`.
 
-Action: Compare compact, comfortable, and spacious toolbars; inspect bordered,
-shadowed, and blurred surfaces; then scroll each position example.
+Action: Compare compact and comfortable toolbars; inspect their computed public
+density measurement tokens, then inspect bordered, shadowed, and blurred
+surfaces and scroll each position example.
 
-Expected: Density changes coordinated height and spacing. Surface options stay
-independent and readable. Static, sticky, absolute, and fixed positions behave
-as labeled without covering required content or causing horizontal scrolling.
+Expected: Density changes coordinated height and spacing. Comfortable resolves
+to the public 4rem minimum and compact to the public 3rem minimum while larger
+authored content remains able to grow. Surface options stay independent and
+readable. Static, sticky, absolute, and fixed positions behave as labeled
+without covering required content or causing horizontal scrolling.
 
 Result:
 Notes or issue:

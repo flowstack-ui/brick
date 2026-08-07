@@ -43,7 +43,12 @@ import { Pagination } from "../../dist/pagination.js";
 import { HStack, Stack, VStack } from "../../dist/stack.js";
 import { Grid } from "../../dist/grid.js";
 import { Container } from "../../dist/container.js";
-import { Surface } from "../../dist/surface.js";
+import {
+  Surface,
+  SurfaceContent,
+  SurfaceMedia,
+  SurfaceScrim,
+} from "../../dist/surface.js";
 import { Divider } from "../../dist/divider.js";
 import { ScrollArea } from "../../dist/scroll-area.js";
 import { NavList } from "../../dist/nav-list.js";
@@ -848,6 +853,34 @@ test("Surface renders one deterministic semantic host without behavior", () => {
   assert.match(markup, /data-slot="surface"/);
   assert.match(markup, /id="server-surface"/);
   assert.doesNotMatch(markup, /role=|tabindex/i);
+});
+
+test("Surface renders deterministic optional decorative layers during SSR", () => {
+  const markup = renderToString(
+    React.createElement(
+      Surface,
+      { as: "section", id: "server-layered-surface" },
+      React.createElement(
+        SurfaceMedia,
+        null,
+        React.createElement("video", { muted: true }),
+      ),
+      React.createElement(SurfaceScrim, {
+        direction: "inline-start",
+        strength: "strong",
+      }),
+      React.createElement(SurfaceContent, null, "Foreground content"),
+    ),
+  );
+
+  assert.match(markup, /^<section/);
+  assert.match(markup, /class="brick-surface__media"/);
+  assert.match(markup, /class="brick-surface__scrim"/);
+  assert.match(markup, /class="brick-surface__content"/);
+  assert.match(markup, /aria-hidden="true"/);
+  assert.match(markup, /data-direction="inline-start"/);
+  assert.match(markup, /data-strength="strong"/);
+  assert.match(markup, />Foreground content</);
 });
 
 test("Divider renders deterministic Atom-backed line and label anatomy", () => {

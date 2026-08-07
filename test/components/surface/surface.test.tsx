@@ -3,6 +3,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import {
   Surface,
+  SurfaceContent,
+  SurfaceMedia,
+  SurfaceRoot,
+  SurfaceScrim,
   type SurfaceElement,
   type SurfaceElevation,
   type SurfaceInset,
@@ -28,6 +32,48 @@ describe("Surface", () => {
     expect(surface).not.toHaveAttribute("role");
     expect(surface).toHaveTextContent("Content");
     expect(surface.children).toHaveLength(0);
+  });
+
+  it("keeps ordinary Surface unchanged and layers only authored compound parts", () => {
+    const mediaRef = createRef<HTMLDivElement>();
+    const scrimRef = createRef<HTMLDivElement>();
+    const contentRef = createRef<HTMLDivElement>();
+    const { container } = render(
+      <Surface.Root data-testid="layered-surface" radius="none">
+        <Surface.Media data-media="art" ref={mediaRef}>
+          <img alt="" src="/decorative.jpg" />
+        </Surface.Media>
+        <Surface.Scrim
+          data-scrim="contrast"
+          direction="inline-start"
+          ref={scrimRef}
+          strength="strong"
+        />
+        <Surface.Content data-content="foreground" ref={contentRef}>
+          Foreground
+        </Surface.Content>
+      </Surface.Root>,
+    );
+
+    const surface = screen.getByTestId("layered-surface");
+    expect(Surface.Root).toBe(SurfaceRoot);
+    expect(Surface.Media).toBe(SurfaceMedia);
+    expect(Surface.Scrim).toBe(SurfaceScrim);
+    expect(Surface.Content).toBe(SurfaceContent);
+    expect(surface.children).toHaveLength(3);
+    expect(mediaRef.current).toHaveClass("brick-surface__media");
+    expect(mediaRef.current).toHaveAttribute("aria-hidden", "true");
+    expect(mediaRef.current).toHaveAttribute("data-slot", "surface-media");
+    expect(mediaRef.current).toHaveAttribute("data-media", "art");
+    expect(scrimRef.current).toHaveClass("brick-surface__scrim");
+    expect(scrimRef.current).toHaveAttribute("aria-hidden", "true");
+    expect(scrimRef.current).toHaveAttribute("data-direction", "inline-start");
+    expect(scrimRef.current).toHaveAttribute("data-strength", "strong");
+    expect(scrimRef.current).toHaveAttribute("data-scrim", "contrast");
+    expect(contentRef.current).toHaveClass("brick-surface__content");
+    expect(contentRef.current).toHaveAttribute("data-slot", "surface-content");
+    expect(contentRef.current).toHaveAttribute("data-content", "foreground");
+    expect(container.querySelector("img")).toHaveAttribute("alt", "");
   });
 
   it("exposes every closed visual recipe independently", () => {

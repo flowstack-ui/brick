@@ -6,6 +6,9 @@ Container follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Expanded Agent Knowledge for aligning separate shell regions through shared
+  Container measure and gutter recipes.
+
 - Added public Agent Knowledge for component selection, composition,
   CSS-delivery, recurring mistakes, and validation.
 

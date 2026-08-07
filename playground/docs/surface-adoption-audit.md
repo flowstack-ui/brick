@@ -74,6 +74,7 @@ different owner.
 | Toolbar | overview, comparison cells, and appearance scopes | Toolbar surfaces, control states, separators, orientation, and overflow geometry |
 | Chip | overview, comparison cells, appearance scopes, and customization shell | Chip recipes, authored value content, removal state, containment, and boundary examples |
 | Pagination | overview, comparison cells, appearance scopes, customization shell, and stress panels | Pagination root/control recipes, current and disabled state paint, and inline overflow geometry |
+| Carousel | slide content and dark appearance scope | Carousel viewport, controls, picker state, snap geometry, and overflow behavior |
 | Link | overview, specimen-grid cells, appearance scopes, customization shell/preview, stress panel | Link recipes, inline wrapping, composition output, and code block |
 | Nav List | overview, specimen cells, appearance scopes, customization shell, and stress panel | Nav List rows, current-state recipes, disclosure anatomy, and composition output |
 | Sidebar | route evidence stages and customization shell | Sidebar Panel paint, state geometry, and desktop shell ownership |

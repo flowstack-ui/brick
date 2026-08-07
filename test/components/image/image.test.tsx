@@ -3,6 +3,9 @@ import { render, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   Image,
+  ImageContent,
+  ImageFallback,
+  ImageRoot,
   type ImageFit,
   type ImageFrame,
   type ImagePosition,
@@ -29,6 +32,12 @@ class MockImage {
 afterEach(() => { pending.length = 0; vi.unstubAllGlobals(); });
 
 describe("Image", () => {
+  it("exposes direct RSC-safe parts without changing the compound family", () => {
+    expect(Image.Root).toBe(ImageRoot);
+    expect(Image.Content).toBe(ImageContent);
+    expect(Image.Fallback).toBe(ImageFallback);
+  });
+
   it("renders closed defaults and authored fallback while loading", () => {
     vi.stubGlobal("Image", MockImage);
     const ref = createRef<HTMLDivElement>();
@@ -47,9 +56,21 @@ describe("Image", () => {
     expect(root).toHaveAttribute("data-position", "center");
     expect(root).toHaveAttribute("data-radius", "none");
     expect(root).toHaveAttribute("data-frame", "none");
+    expect(root).not.toHaveAttribute("data-fill");
     expect(root).not.toHaveAttribute("data-ratio");
     expect(getByText("Image unavailable")).toHaveClass("brick-image__fallback");
     expect(root.querySelector("img")).toBeNull();
+  });
+
+  it("exposes explicit parent-filling geometry without leaking the prop", () => {
+    const { getByTestId } = render(
+      <Image.Root data-testid="root" fill>
+        <Image.Fallback>Empty</Image.Fallback>
+      </Image.Root>,
+    );
+    const root = getByTestId("root");
+    expect(root).toHaveAttribute("data-fill", "");
+    expect(root).not.toHaveAttribute("fill");
   });
 
   it("forwards native image attributes after load and preserves authored alt", async () => {

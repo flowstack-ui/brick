@@ -9,6 +9,7 @@
 .image-action .brick-image { inline-size: 100%; }
 .image-customization { align-items: center; }
 .image-narrow { inline-size: min(100%, 11rem); }
+.image-fill-frame { inline-size: min(100%, 24rem); block-size: 18rem; }
 
 @media (max-width: 52rem) {
   .image-grid--three,

@@ -1,0 +1,64 @@
+{
+  "schema": "flowstack.agent-component.v1",
+  "id": "badge",
+  "name": "Badge",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "kind": "component",
+  "purpose": "Present a short passive category, status, or metadata label with a complete Brick visual recipe.",
+  "useWhen": [
+    "A short non-interactive label needs a bounded visual treatment that remains understandable in its surrounding content."
+  ],
+  "avoidWhen": [
+    {
+      "condition": "The element performs an action, changes state, announces a live update, or displays a count attached to another element.",
+      "useInstead": "Button, an appropriate control, a live-status pattern, or NotificationBadge"
+    }
+  ],
+  "composition": [
+    "Place the short label directly in Badge; when an icon or separately styled Text is necessary, keep those children passive and let Badge own their spacing and foreground."
+  ],
+  "rules": [
+    {
+      "id": "badge-passive",
+      "level": "must",
+      "statement": "Keep Badge passive; do not add click, press, selection, or disclosure behavior to it."
+    },
+    {
+      "id": "badge-inherited-text",
+      "level": "must",
+      "statement": "When composing Text inside Badge, use tone=inherit unless that Text intentionally communicates a separate semantic tone, so the Badge recipe continues to own foreground contrast."
+    },
+    {
+      "id": "badge-child-spacing",
+      "level": "must",
+      "statement": "Rely on Badge's gap for an icon and label instead of literal whitespace, wrapper margins, or positional offsets."
+    },
+    {
+      "id": "badge-short-label",
+      "level": "must",
+      "statement": "Keep the label short and do not use Badge as a container for explanatory prose."
+    },
+    {
+      "id": "badge-css",
+      "level": "must",
+      "statement": "Load styles.css or core.css plus badge.css."
+    }
+  ],
+  "commonMistakes": [
+    {
+      "mistake": "Nesting default-tone Text in a Badge, manually spacing an icon and label, or using Badge as an eyebrow solely for uppercase styling.",
+      "correction": "Use plain Badge text when possible, tone=inherit for nested Text, Badge's own gap for children, and Text variant=eyebrow for a short editorial heading introduction."
+    }
+  ],
+  "validation": [
+    "Check label brevity, passive semantics, child spacing, foreground contrast for every variant and tone, zoom, forced colors, and RTL.",
+    "Confirm nested Text inherits the Badge foreground and CSS is loaded."
+  ],
+  "related": [
+    "text",
+    "icon",
+    "notification-badge",
+    "button"
+  ]
+}

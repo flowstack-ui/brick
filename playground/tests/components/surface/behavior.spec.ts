@@ -177,3 +177,56 @@ test("appearance, phone reflow, RTL, focus, and axe remain sound", async ({
     .analyze();
   expect(results.violations).toEqual([]);
 });
+
+test("optional media layers fill the root while content remains foreground", async ({
+  page,
+}) => {
+  const surface = page.getByTestId("surface-layered");
+  const media = page.getByTestId("surface-layered-media");
+  const scrim = page.getByTestId("surface-layered-scrim");
+  const content = page.getByTestId("surface-layered-content");
+  const imageRoot = media.locator(".brick-image");
+  const imageContent = media.locator(".brick-image__content");
+
+  await expect(media).toHaveAttribute("aria-hidden", "true");
+  await expect(media).toHaveAttribute("data-slot", "surface-media");
+  await expect(scrim).toHaveAttribute("aria-hidden", "true");
+  await expect(scrim).toHaveAttribute("data-direction", "inline-start");
+  await expect(scrim).toHaveAttribute("data-strength", "strong");
+  await expect(content).toHaveAttribute("data-slot", "surface-content");
+  await expect(media).toHaveCSS("pointer-events", "none");
+  await expect(scrim).toHaveCSS("pointer-events", "none");
+  await expect(media).toHaveCSS("overflow", "hidden");
+
+  const [surfaceBox, mediaBox, scrimBox, imageRootBox, imageContentBox] = await Promise.all([
+    box(surface),
+    box(media),
+    box(scrim),
+    box(imageRoot),
+    box(imageContent),
+  ]);
+  for (const layer of [mediaBox, scrimBox, imageRootBox]) {
+    expect(layer.x).toBeCloseTo(surfaceBox.x, 0);
+    expect(layer.y).toBeCloseTo(surfaceBox.y, 0);
+    expect(layer.width).toBeCloseTo(surfaceBox.width, 0);
+    expect(layer.height).toBeCloseTo(surfaceBox.height, 0);
+  }
+  const imageContentBoxSize = await imageRoot.evaluate((element) => ({
+    height: element.clientHeight,
+    width: element.clientWidth,
+  }));
+  expect(imageContentBox.width).toBeCloseTo(imageContentBoxSize.width, 0);
+  expect(imageContentBox.height).toBeCloseTo(imageContentBoxSize.height, 0);
+
+  const stacking = await Promise.all(
+    [media, scrim, content].map((part) =>
+      part.evaluate((element) => getComputedStyle(element).zIndex),
+    ),
+  );
+  expect(stacking).toEqual(["0", "1", "2"]);
+
+  const results = await new AxeBuilder({ page })
+    .include('[data-testid="surface-layered"]')
+    .analyze();
+  expect(results.violations).toEqual([]);
+});

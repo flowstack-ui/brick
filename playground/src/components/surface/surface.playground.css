@@ -78,6 +78,23 @@
   inline-size: min(100%, 20rem);
 }
 
+.surface-layered,
+.surface-layered > .brick-surface__content,
+.surface-layered > .brick-surface__media > .brick-image {
+  min-block-size: 22rem;
+}
+
+.surface-layered__copy {
+  box-sizing: border-box;
+  max-inline-size: 34rem;
+  min-block-size: 22rem;
+  padding: var(--brick-space-6);
+}
+
+.surface-layered__copy > * {
+  margin: 0;
+}
+
 @media (max-width: 64rem) {
   .brick-grid.surface-grid--four {
     --brick-grid-columns: 2;

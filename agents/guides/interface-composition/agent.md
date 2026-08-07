@@ -19,6 +19,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **track-based responsive layout:** use Grid. Use Stack when only one axis matters.
 - **visual region:** use Surface or Card. Use Card for titled or actionable contained content and Surface for a general visual boundary.
 - **brand or content image:** use Image. Keep alt text and fallback behavior intentional.
+- **one of several peer campaigns or authored content regions:** use Carousel. Keep invariant evidence outside; let each Slide own a complete Surface when its media and message belong together.
 - **site navigation:** use NavigationMenu or NavList. Use NavigationMenu for disclosure navigation and NavList for persistent route lists.
 - **responsive desktop and mobile alternatives:** use Show and Hide. Keep one CSS-controlled breakpoint contract and avoid hydration-dependent visibility; distinct navigation patterns should consume one application-owned destination model.
 - **grouped application actions:** use Toolbar. Do not use AppBar.Toolbar as an ARIA toolbar.
@@ -31,6 +32,9 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **MUST:** When desktop and mobile require distinct navigation components, share application-owned destination labels, hrefs, values, and ordering while preserving each pattern's correct Brick anatomy; do not duplicate navigation content or force one interaction tree across breakpoints.
 - **MUST:** Use Show and Hide for first-paint visibility; when a controlled interactive overlay may remain open across a breakpoint, synchronize its application state at that boundary so a hidden modal cannot retain focus, scroll lock, or isolation.
 - **SHOULD:** Express reusable brand values through semantic Brick tokens and a theme rather than repeating literal application values.
+- **MUST:** For a locally dark or light region, set data-brick-appearance on the region owner and provide the complete semantic token set in the theme; do not recolor each descendant independently.
+- **SHOULD:** Keep decorative annotations that must not redistribute primary content outside Stack or Grid flow through narrow application-owned positioning; do not invent a Brick component solely for their coordinates.
+- **MUST:** Classify findings before changing a package: behavior and accessibility belong to Atom, finished reusable component paint belongs to Brick, brand values belong to Theme, repeated responsive section composition may belong to Block or Blueprint, and one-page art direction remains application-owned.
 - **MUST:** When styles.css or styles/core.css is loaded, change the document canvas, foreground, and body typography through semantic Brick tokens instead of repeating the body bindings that Brick's foundation already owns.
 - **MUST:** Do not write a direct declaration against a Brick part until the correct component, supported props, semantic tokens, component tokens, and public compound parts have been checked in order.
 - **MUST:** Target only documented Brick tokens, public compound parts, stable brick-* base classes, documented slots, and documented state attributes; inspected internal wrappers or implementation selectors are not APIs.
@@ -75,7 +79,8 @@ Emit this record for every native/framework fallback or direct stable-hook decla
 
 - Inspect the rendered DOM, accessible names, heading order, landmarks, focus order, keyboard operation, touch targets, contrast, zoom, and RTL behavior.
 - Test every adopted breakpoint without JavaScript-dependent first-paint flicker.
-- Confirm layout primitives own ordinary gap, alignment, wrapping, width, and visibility before accepting custom CSS.
+- Confirm layout primitives own ordinary gap, alignment, wrapping, width, and visibility before accepting custom CSS; verify separately meaningful inline nodes use layout gap rather than literal spaces or offsets.
+- Confirm local appearance scopes supply complete semantic foreground, background, boundary, action, focus, and interaction-state token pairs without child-by-child recoloring.
 - Confirm repeated CSS values are theme tokens, component-specific values use documented component tokens, and every remaining direct stable-hook declaration has a complete customization gap report.
 - Run the package's CSS-delivery check and the application's accessibility, browser, and performance checks.
 

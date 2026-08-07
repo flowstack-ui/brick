@@ -110,6 +110,20 @@ Badge applies its public gap token when children include an icon and label:
 </Badge>
 ```
 
+When a separately configured `Text` child is necessary, inherit Badge's
+foreground so the selected Badge recipe continues to own contrast:
+
+```tsx
+<Badge tone="accent" shape="pill">
+  <Icon size="xs">{icon}</Icon>
+  <Text tone="inherit" variant="caption">Built for business</Text>
+</Badge>
+```
+
+Prefer plain label text when no separate Text recipe is needed. Do not use
+default-tone Text inside Badge, add literal spaces around children, or select
+Badge only to imitate an editorial eyebrow.
+
 ## Evidence
 
 - [Playground](../../../playground/src/components/badge/BadgePage.tsx)
