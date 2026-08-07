@@ -14,7 +14,7 @@ import { Text as RootText } from "../../../src/index.js";
 
 const ref = createRef<HTMLElement>();
 const elements: TextElement[] = ["span", "p", "div", "h1", "h2", "h3", "h4", "h5", "h6"];
-const variants: TextVariant[] = ["display", "title-lg", "title-md", "title-sm", "body-lg", "body-md", "body-sm", "caption"];
+const variants: TextVariant[] = ["display", "title-lg", "title-md", "title-sm", "body-lg", "body-md", "body-sm", "caption", "eyebrow"];
 const tones: TextTone[] = ["inherit", "primary", "secondary", "muted", "accent", "info", "success", "warning", "danger"];
 const weights: TextWeight[] = ["inherit", "regular", "medium", "semibold"];
 const aligns: TextAlign[] = ["start", "center", "end"];

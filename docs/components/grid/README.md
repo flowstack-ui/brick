@@ -89,8 +89,10 @@ Root and optional Item each render exactly one selected native element:
 ```
 
 Root never clones, wraps, reorders, or annotates ordinary children. Item adds
-only the wrapper explicitly authored by the consumer. Each selected element is
-its corresponding `HTMLElement` ref target.
+only the wrapper explicitly authored by the consumer unless `asChild` is set.
+With `asChild`, Item transfers its placement hooks to exactly one authored
+React element and adds no wrapper. Each selected or composed element is its
+corresponding `HTMLElement` ref target.
 
 ## API
 
@@ -117,6 +119,7 @@ selects intrinsic mode; otherwise Root uses explicit mode.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `as` | `div`, `span`, `section`, `article`, `header`, `footer`, `aside`, `li` | `div` |
+| `asChild` | `boolean` | `false` |
 | `columnSpan` | `1`–`12`, `full` | unset |
 | `columnStart` / `columnEnd` | grid lines `1`–`13` | unset |
 | `rowSpan` | `1`–`12` | unset |
@@ -129,6 +132,20 @@ selects intrinsic mode; otherwise Root uses explicit mode.
 On each axis, a span and explicit end are mutually exclusive. A start may
 combine with a span or end. `columnSpan="full"` cannot combine with column
 start/end.
+
+Set `asChild` when an existing element should itself be the grid item:
+
+```tsx
+<Grid.Item asChild columnStart={2}>
+  <NavigationMenu.Link href="/services" variant="panel">
+    <Surface inset="sm">Services</Surface>
+  </NavigationMenu.Link>
+</Grid.Item>
+```
+
+`asChild` requires exactly one React element and cannot be combined with
+`as`. Grid classes, placement metadata, native props, events, styles, and the
+ref are merged onto that element without changing its semantics.
 
 ## Visual recipes and states
 
@@ -218,9 +235,9 @@ for paint. Use Item only for placement or self-alignment. Native global
 attributes, events, ARIA/data attributes, `className`, `style`, slot hook, and
 an `HTMLElement` ref pass to each authored part.
 
-Grid does not expose `asChild`, `render`, child cloning, arbitrary template
-strings, named areas, responsive objects, padding, margins, width/height,
-overflow, or generic style props.
+Grid Root does not expose `asChild`; neither part exposes `render`. Grid also
+excludes arbitrary template strings, named areas, responsive objects, padding,
+margins, width/height, overflow, or generic style props.
 
 ## Examples
 

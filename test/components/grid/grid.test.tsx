@@ -226,6 +226,49 @@ describe("Grid", () => {
     expect(item).not.toHaveAttribute("columnSpan");
   });
 
+  it("composes Item placement onto one authored child without a wrapper", () => {
+    const itemRef = createRef<HTMLElement>();
+    let childClicks = 0;
+    let itemClicks = 0;
+    render(
+      <Grid.Root columns={2}>
+        <Grid.Item
+          asChild
+          className="consumer-item"
+          columnStart={2}
+          onClick={() => itemClicks++}
+          ref={itemRef}
+          style={{ minInlineSize: 0 }}
+        >
+          <a
+            className="destination"
+            href="/reports"
+            onClick={(event) => {
+              event.preventDefault();
+              childClicks++;
+            }}
+            style={{ color: "red" }}
+          >
+            Reports
+          </a>
+        </Grid.Item>
+      </Grid.Root>,
+    );
+
+    const link = screen.getByRole("link", { name: "Reports" });
+    fireEvent.click(link);
+
+    expect(link).toBe(itemRef.current);
+    expect(link.parentElement).toHaveClass("brick-grid");
+    expect(link).toHaveClass("destination", "brick-grid-item", "consumer-item");
+    expect(link).toHaveAttribute("data-column-start", "2");
+    expect(link).toHaveAttribute("data-slot", "grid-item");
+    expect(link.style.color).toBe("red");
+    expect(link.style.minInlineSize).toBe("0");
+    expect(childClicks).toBe(1);
+    expect(itemClicks).toBe(1);
+  });
+
   it("keeps the namespace immutable and parts independently addressable", () => {
     expect(Object.isFrozen(Grid)).toBe(true);
     expect(Grid.Root.displayName).toBe("Grid.Root");

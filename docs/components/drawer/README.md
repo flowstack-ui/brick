@@ -15,9 +15,13 @@ content. Drawer does not own application navigation or responsive shell policy.
 ## Installation and imports
 
 ```tsx
-import { Drawer } from "@flowstack-ui/brick/drawer";
+import * as Drawer from "@flowstack-ui/brick/drawer";
 import "@flowstack-ui/brick/styles.css";
 ```
+
+The module-namespace form above is safe in React Server Components and keeps
+the containing page server-rendered. Inside an already client-owned module,
+the legacy `import { Drawer }` runtime object remains supported.
 
 The complete stylesheet above is the recommended default. For a measured
 route-aware build, replace it with the shared foundation and this component's
@@ -62,7 +66,12 @@ Public exports are the `Drawer` namespace; named `DrawerRoot`,
 `DrawerTrigger`, `DrawerPortal`, `DrawerOverlay`, `DrawerContent`,
 `DrawerHeader`, `DrawerTitle`, `DrawerDescription`, `DrawerBody`,
 `DrawerFooter`, `DrawerClose`, and `DrawerBranch` parts; their corresponding
-prop types; and `DrawerPlacement` plus `DrawerSize`.
+prop types; and `DrawerPlacement`, `DrawerSize`, plus `DrawerFooterJustify`.
+
+The component subpath additionally exports `Root`, `Trigger`, `Portal`,
+`Overlay`, `Content`, `Header`, `Title`, `Description`, `Body`, `Footer`,
+`Close`, and `Branch` as short aliases for the recommended RSC-safe
+module-namespace composition.
 
 ```ts
 DrawerRootProps
@@ -82,17 +91,27 @@ DrawerBranchProps
 | Content prop | Values | Default |
 | --- | --- | --- |
 | `placement` | `start`, `end`, `top`, `bottom` | `end` |
-| `size` | `sm`, `md`, `lg`, `full` | `md` |
+| `size` | `sm`, `md`, `lg`, `xl`, `full` | `md` |
+
+| Footer prop | Values | Default |
+| --- | --- | --- |
+| `justify` | `start`, `center`, `end`, `between` | `end` |
 
 Root and all behavior parts
 inherit Atom modal/drawer props. Header, Body, and Footer accept native div
-attributes and `data-slot`.
+attributes and `data-slot`. Footer `justify` controls simple logical action
+distribution; use layout components inside Footer for more complex grouping,
+and use `Button fullWidth` when an action itself should fill the row. Footer
+reflects the selected value through `data-justify`.
 
 ## Visual recipes and states
 
-Placement selects the entering edge; start/end are logical. Size selects inline
-dimensions for side drawers and block dimensions for top/bottom; `full` uses
-the viewport. Atom owns state, focus trap/return, dismissal, presence, portal,
+Placement selects the entering edge; start/end are logical. Size selects fixed
+inline dimensions for side drawers and content-responsive block-size caps for
+top/bottom drawers. `xl` may grow to the available viewport but still shrinks
+around shorter content; `full` always uses the viewport. A top/bottom Drawer
+grows with its authored content until the selected cap, then Body becomes the
+scroll owner. Atom owns state, focus trap/return, dismissal, presence, portal,
 and placement state.
 
 ## Tokens and CSS hooks
@@ -101,11 +120,18 @@ Stable classes and overridable `data-slot` values cover Trigger, Overlay,
 Content, Header, Title, Description, Body, Footer, Close, and Branch. Content
 reflects `data-size`; Atom reflects placement. Public tokens are
 `--brick-drawer-inline-size-sm`, `--brick-drawer-inline-size-md`,
-`--brick-drawer-inline-size-lg`, `--brick-drawer-block-size-sm`,
-`--brick-drawer-block-size-md`, `--brick-drawer-block-size-lg`,
-`--brick-drawer-radius`, `--brick-drawer-shadow`, `--brick-drawer-space`,
+`--brick-drawer-inline-size-lg`, `--brick-drawer-inline-size-xl`,
+`--brick-drawer-block-size-sm`, `--brick-drawer-block-size-md`,
+`--brick-drawer-block-size-lg`, `--brick-drawer-block-size-xl`,
+`--brick-drawer-background`, `--brick-drawer-radius`,
+`--brick-drawer-shadow`, `--brick-drawer-space`,
 `--brick-drawer-safe-top`, `--brick-drawer-safe-right`,
 `--brick-drawer-safe-bottom`, and `--brick-drawer-safe-left`.
+
+`--brick-drawer-background` and `--brick-drawer-radius` may be set on a theme
+ancestor to change every Drawer in that scope, or on one Content instance for
+a local exception. When unset, they fall back to
+`--brick-color-surface-overlay` and `--brick-radius-overlay`, respectively.
 
 ## Customization
 

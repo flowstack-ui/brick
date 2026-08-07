@@ -4,6 +4,12 @@ App Bar follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Clarified that Root defaults to a semantic `header`, that non-banner chrome
+  should deliberately compose another host, and that Container belongs between
+  a full-bleed Root and bounded Toolbar content.
+
 ### Added
 
 - Added public Agent Knowledge for component selection, composition,

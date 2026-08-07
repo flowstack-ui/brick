@@ -158,6 +158,12 @@ test("semantic output, native attributes, ref, and customization are real", asyn
   await page.getByRole("button", { name: "Inspect ref" }).click();
   await expect(semantics.getByText("Ref host: SECTION")).toBeVisible();
 
+  const composed = page.getByTestId("grid-composed-item");
+  await expect(composed).toHaveJSProperty("tagName", "A");
+  await expect(composed).toHaveClass(/brick-grid-item/);
+  await expect(composed).toHaveAttribute("data-column-start", "2");
+  await expect(composed.locator("xpath=parent::*")).toHaveClass(/brick-grid/);
+
   const custom = page.locator(".grid-page .playground-customization-preview.brick-grid");
   await expect(custom).toHaveCSS("column-gap", "32px");
   await expect(custom).toHaveCSS("row-gap", "8px");

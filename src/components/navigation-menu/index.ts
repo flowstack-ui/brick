@@ -21,4 +21,5 @@ export {
   type NavigationMenuIndicatorArrowProps,
   type NavigationMenuViewportProps,
   type NavigationMenuSize,
+  type NavigationMenuLinkVariant,
 } from "./NavigationMenu.js";

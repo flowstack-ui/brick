@@ -61,6 +61,11 @@ createElement(Grid.Item, { columnStart: 2, columnSpan: 3 });
 createElement(Grid.Item, { columnStart: 2, columnEnd: 5 });
 createElement(Grid.Item, { rowStart: 2, rowSpan: 3 });
 createElement(Grid.Item, { rowStart: 2, rowEnd: 5 });
+createElement(Grid.Item, {
+  asChild: true,
+  children: createElement("a", { href: "/reports" }),
+  columnStart: 2,
+});
 
 // @ts-expect-error Root hosts are deliberately closed.
 createElement(Grid.Root, { as: "table" });
@@ -90,8 +95,12 @@ createElement(Grid.Item, { columnStart: 14 });
 createElement(Grid.Item, { rowSpan: 13 });
 // @ts-expect-error Ordering is deliberately excluded.
 createElement(Grid.Item, { order: 2 });
-// @ts-expect-error No asChild composition API.
+// @ts-expect-error Root deliberately has no asChild composition API.
 createElement(Grid.Root, { asChild: true });
+// @ts-expect-error Item asChild requires exactly one React element.
+createElement(Grid.Item, { asChild: true, children: "Text" });
+// @ts-expect-error Item asChild and as are mutually exclusive.
+createElement(Grid.Item, { as: "article", asChild: true, children: createElement("a") });
 // @ts-expect-error No render composition API.
 createElement(Grid.Item, { render: createElement("div") });
 

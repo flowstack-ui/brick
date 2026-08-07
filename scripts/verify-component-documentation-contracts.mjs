@@ -117,8 +117,8 @@ for (const componentId of requested) {
   }
 
   for (const token of contract.publicTokens) {
-    if (!css.includes(`${token}:`)) {
-      failures.push(`${componentId}: CSS no longer defines public token ${token}`);
+    if (!css.includes(`${token}:`) && !css.includes(`var(${token},`)) {
+      failures.push(`${componentId}: CSS neither defines nor consumes public token ${token}`);
     }
     if (!documentation.includes(token)) {
       failures.push(`${componentId}: README omits public token ${token}`);

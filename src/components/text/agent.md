@@ -6,7 +6,7 @@ Apply Brick typography roles, sizes, tones, weight, alignment, and wrapping whil
 
 ## Use when
 
-- Interface copy needs Brick typography, including headings, paragraphs, labels, captions, metadata, or inline text.
+- Interface copy needs Brick typography, including headings, paragraphs, short editorial eyebrows, captions, metadata, or inline text.
 
 ## Choose something else when
 
@@ -21,6 +21,7 @@ Apply Brick typography roles, sizes, tones, weight, alignment, and wrapping whil
 - **MUST:** Do not choose heading or paragraph semantics solely from the desired font size.
 - **MUST:** Use Text for standalone styled interface copy instead of native spans plus duplicate typography CSS.
 - **MUST:** Preserve readable body sizing, line height, measure, contrast, and user font scaling.
+- **MUST:** Reserve variant=eyebrow for short labels that introduce a nearby heading; use body text for explanatory sentences and Badge for passive status or category content.
 - **MUST:** Load styles.css or core.css plus text.css.
 
 ## Common mistakes

@@ -134,6 +134,10 @@ separates. `render` replaces the root. `asChild` merges the root contract
 onto one React element. Labels are passive content and never replace headings,
 legends, or field labels.
 
+Place Divider between complete groups under their shared layout owner. A
+Divider must not split a disclosure trigger from the content it controls; when
+rows repeat, every boundary should occupy the same relative anatomy.
+
 ## Examples
 
 ### Vertical peer-group boundary

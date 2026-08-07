@@ -25,7 +25,8 @@ export type TextVariant =
   | "body-lg"
   | "body-md"
   | "body-sm"
-  | "caption";
+  | "caption"
+  | "eyebrow";
 
 export type TextTone =
   | "inherit"

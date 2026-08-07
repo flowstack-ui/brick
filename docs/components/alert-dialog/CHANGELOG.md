@@ -18,6 +18,8 @@ Alert Dialog follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added logical Footer `justify` values for start, center, end, and
+  space-between response distribution; end remains the default.
 - Initial twelve-part `AlertDialog` compound namespace with Root, Trigger,
   Portal, Overlay, Content, Header, Title, Description, Body, Footer, Cancel,
   and Action.

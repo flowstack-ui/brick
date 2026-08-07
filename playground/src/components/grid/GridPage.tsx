@@ -323,6 +323,13 @@ export function GridPage() {
               </Grid.Item>
             </Grid.Root>
           </RenderedOutput>
+          <Grid.Root columns={2} gap="2">
+            <Grid.Item asChild columnStart={2}>
+              <a data-testid="grid-composed-item" href="#grid-semantics">
+                Composed destination
+              </a>
+            </Grid.Item>
+          </Grid.Root>
           <HStack gap="3">
             <Button
               onClick={() => setRefHost(semanticRef.current?.tagName ?? "Missing")}

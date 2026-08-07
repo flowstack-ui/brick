@@ -11,6 +11,21 @@ test("defaults, links, disclosure, sizes, orientation, state, and composition wo
   await expect(products).toHaveAttribute("aria-expanded", "false");
   await products.click();
   await expect(products).toHaveAttribute("aria-expanded", "true");
+  const panelLink = root.getByRole("link", { name: /Analytics/ });
+  const panelSurface = panelLink.locator(":scope > .brick-surface");
+  await expect(panelLink).toHaveAttribute("data-variant", "panel");
+  await expect(panelLink).toHaveCSS("white-space", "normal");
+  await expect(panelLink).toHaveCSS("padding", "0px");
+  await expect(panelSurface).toHaveCSS("padding", "12px");
+  await expect(panelSurface).toHaveAttribute("data-level", "subtle");
+  const [panelLinkBox, panelSurfaceBox] = await Promise.all([panelLink.boundingBox(), panelSurface.boundingBox()]);
+  expect(panelLinkBox?.width).toBeGreaterThan(0);
+  expect(panelLinkBox?.width).toBeCloseTo(panelSurfaceBox?.width ?? 0, 0);
+  await products.focus();
+  await page.keyboard.press("Tab");
+  await panelLink.focus();
+  await expect(panelLink).toBeFocused();
+  await expect(panelSurface).toHaveCSS("outline-style", "solid");
   const indicator = root.locator(".brick-navigation-menu__indicator");
   const indicatorArrow = indicator.locator(".brick-navigation-menu__indicator-arrow");
   const viewport = root.locator(".brick-navigation-menu__viewport");
@@ -70,6 +85,12 @@ test("defaults, links, disclosure, sizes, orientation, state, and composition wo
   const disabled = page.getByRole("navigation", { name: "Unavailable destination" }).getByRole("button", { name: "Products" });
   await expect(disabled).toBeDisabled();
   await expect(page.locator("[data-router-link='docs']")).toHaveAttribute("aria-current", "page");
+  const panelFallback = page.getByTestId("navigation-menu-panel-fallback");
+  await page.keyboard.press("Tab");
+  await panelFallback.focus();
+  await expect(panelFallback).toBeFocused();
+  expect(await panelFallback.evaluate((element) => element.matches(":focus-visible"))).toBe(true);
+  await expect(panelFallback).toHaveCSS("outline-style", "solid");
 });
 
 test("keyboard, mobile replacement, RTL, and accessibility work", async ({ page }) => {

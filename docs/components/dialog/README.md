@@ -106,7 +106,7 @@ Public exports are the `Dialog` namespace; named `DialogRoot`,
 `DialogTrigger`, `DialogPortal`, `DialogOverlay`, `DialogContent`,
 `DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogBody`,
 `DialogFooter`, `DialogClose`, and `DialogBranch` parts; and their
-corresponding prop types plus `DialogSize`.
+corresponding prop types plus `DialogSize` and `DialogFooterJustify`.
 
 ```ts
 DialogRootProps
@@ -143,6 +143,17 @@ the preferred maximum inline measure only. Content also forwards native ARIA,
 
 Portal forwards `container` and `disabled`. A container must be a same-document
 `HTMLElement`. Overlay forwards its independent `disabled` dismissal control.
+
+### Footer
+
+| Prop | Values | Default |
+| --- | --- | --- |
+| `justify` | `start`, `center`, `end`, `between` | `end` |
+
+Use `justify` for simple logical action distribution. Compose a layout
+component inside Footer for more complex groups; use `Button fullWidth` when
+the action itself should fill the available row. Footer reflects the selected
+value through `data-justify`.
 
 ### Trigger, Close, and Branch
 

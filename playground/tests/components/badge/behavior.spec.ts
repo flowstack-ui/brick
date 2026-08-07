@@ -82,6 +82,10 @@ test("native composition preserves the finished passive root", async ({
   page,
 }) => {
   const region = page.getByTestId("badge-composition");
+  const iconLabel = region.getByTestId("badge-icon-label");
+  await expect(iconLabel).toHaveCSS("gap", "4px");
+  await expect(iconLabel.locator(".brick-icon")).toBeVisible();
+  await expect(iconLabel).toContainText("Built for business");
   for (const testId of ["badge-render", "badge-as-child"]) {
     const badge = region.getByTestId(testId);
     await expect(badge).toHaveClass(/brick-badge/);

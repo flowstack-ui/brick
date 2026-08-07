@@ -5,6 +5,7 @@ import {
   HStack,
   VStack,
   Badge,
+  Icon,
   Text,
   Button,
   type BadgeShape,
@@ -232,6 +233,16 @@ export function BadgePage() {
                 <Text as="p" className="badge-inline-context">
                   Environment <Badge>Staging</Badge>
                 </Text>
+              </SpecimenCell>
+              <SpecimenCell label="icon and label">
+                <Badge data-testid="badge-icon-label" shape="pill" tone="accent">
+                  <Icon size="xs">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                    </svg>
+                  </Icon>
+                  Built for business
+                </Badge>
               </SpecimenCell>
             </Grid.Root>
           </EvidenceGroup>

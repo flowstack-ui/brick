@@ -4,6 +4,11 @@ Divider follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Documented complete-group and consistent-owner placement for repeated
+  boundaries, including disclosure content.
+
 ### Added
 
 - Added public Agent Knowledge for component selection, composition,

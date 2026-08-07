@@ -18,6 +18,7 @@ export {
   type AlertDialogContentProps,
   type AlertDialogDescriptionProps,
   type AlertDialogFooterProps,
+  type AlertDialogFooterJustify,
   type AlertDialogHeaderProps,
   type AlertDialogOverlayProps,
   type AlertDialogPortalProps,

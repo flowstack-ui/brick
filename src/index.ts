@@ -65,13 +65,19 @@ export {
   type CardTitleProps,
   type CardVariant,
 } from "./components/card/index.js";
-export { Dialog, type DialogSize } from "./components/dialog/index.js";
+export {
+  Dialog,
+  type DialogFooterJustify,
+  type DialogSize,
+} from "./components/dialog/index.js";
 export {
   AlertDialog,
+  type AlertDialogFooterJustify,
   type AlertDialogSize,
 } from "./components/alert-dialog/index.js";
 export {
   Drawer,
+  type DrawerFooterJustify,
   type DrawerPlacement,
   type DrawerSize,
 } from "./components/drawer/index.js";

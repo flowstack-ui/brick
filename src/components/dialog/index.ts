@@ -18,6 +18,7 @@ export {
   type DialogContentProps,
   type DialogDescriptionProps,
   type DialogFooterProps,
+  type DialogFooterJustify,
   type DialogHeaderProps,
   type DialogOverlayProps,
   type DialogPortalProps,

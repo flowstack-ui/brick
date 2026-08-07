@@ -54,7 +54,7 @@ Root renders navigation, List a native list, Item a list item, Link a native des
 
 ## API
 
-Public exports are `NavigationMenu`, `NavigationMenuRoot`, `NavigationMenuSub`, `NavigationMenuList`, `NavigationMenuItem`, `NavigationMenuTrigger`, `NavigationMenuContent`, `NavigationMenuLink`, `NavigationMenuIndicator`, `NavigationMenuIndicatorArrow`, `NavigationMenuViewport`, `NavigationMenuRootProps`, `NavigationMenuSubProps`, `NavigationMenuListProps`, `NavigationMenuItemProps`, `NavigationMenuTriggerProps`, `NavigationMenuContentProps`, `NavigationMenuLinkProps`, `NavigationMenuIndicatorProps`, `NavigationMenuIndicatorArrowProps`, `NavigationMenuViewportProps`, `NavigationMenuSize`.
+Public exports are `NavigationMenu`, `NavigationMenuRoot`, `NavigationMenuSub`, `NavigationMenuList`, `NavigationMenuItem`, `NavigationMenuTrigger`, `NavigationMenuContent`, `NavigationMenuLink`, `NavigationMenuIndicator`, `NavigationMenuIndicatorArrow`, `NavigationMenuViewport`, `NavigationMenuRootProps`, `NavigationMenuSubProps`, `NavigationMenuListProps`, `NavigationMenuItemProps`, `NavigationMenuTriggerProps`, `NavigationMenuContentProps`, `NavigationMenuLinkProps`, `NavigationMenuIndicatorProps`, `NavigationMenuIndicatorArrowProps`, `NavigationMenuViewportProps`, `NavigationMenuSize`, `NavigationMenuLinkVariant`.
 
 The component subpath additionally exports `Root`, `Sub`, `List`, `Item`,
 `Trigger`, `Content`, `Link`, `Indicator`, `IndicatorArrow`, and `Viewport` as
@@ -63,6 +63,7 @@ short aliases for the recommended module-namespace composition.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `size` | `sm`, `md`, `lg` | `md` |
+| `variant` | `control`, `panel` | `control` |
 
 Action-like rows accept `tone="neutral"` or `tone="danger"` when exposed; neutral is the default. Behavioral props come from the matching Atom parts.
 
@@ -78,6 +79,13 @@ by default; consumers that need a different brand treatment can set
 In vertical orientation, the Viewport follows Atom's
 measured active-trigger offset so the connector stays attached while panels of
 different heights replace one another.
+
+`Link variant="panel"` turns the same native destination into a full-width,
+wrapping link frame for concise rich content. Place one direct `Surface` child
+inside it so Surface owns background, inset, border, elevation, and radius
+while the Link owns the complete click, touch, and focus target. Never place
+another link or control inside it. If a direct Surface is omitted, the Link
+keeps its own visible focus ring rather than leaving keyboard focus invisible.
 In horizontal orientation, Atom centers the Viewport on the active Trigger and
 collision-shifts it inside the visible browser boundary. Brick uses the same
 physical geometry for the Indicator arrow in LTR and RTL. Set the inherited
@@ -85,11 +93,14 @@ physical geometry for the Indicator arrow in LTR and RTL. Set the inherited
 
 ## Tokens and CSS hooks
 
-Public variables use the `--brick-navigation-menu-*` namespace for gaps, control geometry and states, focus, chevron, indicator, viewport surface and sizing, and motion.
+Public variables use the `--brick-navigation-menu-*` namespace for gaps,
+control geometry and states, focus, chevron, indicator, viewport surface and
+sizing, and motion. A composed panel Link uses Surface props and
+`--brick-surface-*` variables for its visual container.
 
 Documented tokens are `--brick-navigation-menu-gap`, `--brick-navigation-menu-control-min-block-size`, `--brick-navigation-menu-control-padding-inline`, `--brick-navigation-menu-control-radius`, `--brick-navigation-menu-control-foreground`, `--brick-navigation-menu-control-hover-background`, `--brick-navigation-menu-control-open-background`, `--brick-navigation-menu-control-open-foreground`, `--brick-navigation-menu-control-current-foreground`, `--brick-navigation-menu-focus-ring`, `--brick-navigation-menu-chevron-size`, `--brick-navigation-menu-chevron-stroke`, `--brick-navigation-menu-chevron-gap`, `--brick-navigation-menu-current-underline-size`, `--brick-navigation-menu-current-underline-offset`, `--brick-navigation-menu-indicator-size`, `--brick-navigation-menu-indicator-offset`, `--brick-navigation-menu-indicator-color`, `--brick-navigation-menu-indicator-border`, `--brick-navigation-menu-viewport-background`, `--brick-navigation-menu-viewport-foreground`, `--brick-navigation-menu-viewport-border`, `--brick-navigation-menu-viewport-radius`, `--brick-navigation-menu-viewport-shadow`, `--brick-navigation-menu-viewport-padding`, `--brick-navigation-menu-viewport-max-inline-size`, `--brick-navigation-menu-motion-duration`.
-
-Stable output includes `data-size`, component `data-slot` hooks, and Atom state attributes.
+Stable output includes `data-size`, Link `data-variant`, component `data-slot`
+hooks, and Atom state attributes.
 
 ## Customization
 
@@ -112,6 +123,20 @@ Name icon-only triggers and label every command or destination clearly. Preserve
 Every part preserves its Atom native attributes, refs, custom slots, handlers, and supported `render` or `asChild` composition. Link remains an anchor unless composed with a router adapter.
 
 ## Examples
+
+```tsx
+<NavigationMenu.Link href="/services" variant="panel">
+  <Surface inset="sm" level="subtle" radius="surface">
+    <VStack gap="2">
+      <Text variant="eyebrow">One accountable team</Text>
+      <Text weight="semibold">Explore every service</Text>
+      <Text tone="secondary" variant="body-sm">
+        One destination with concise supporting context.
+      </Text>
+    </VStack>
+  </Surface>
+</NavigationMenu.Link>
+```
 
 See the [component playground](../../../playground/src/components/navigation-menu/) for defaults, sizes, anatomy, state, composition, customization, responsive, RTL, and preference evidence.
 

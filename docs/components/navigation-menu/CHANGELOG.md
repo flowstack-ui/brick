@@ -14,6 +14,10 @@ Navigation Menu follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added the `panel` Link variant for one full-width, wrapping rich destination
+  frame inside Navigation Menu Content. A direct Surface child owns its inset,
+  radius, border, elevation, and paint without shrinking the anchor hit area.
+
 - Added short named part exports on the `navigation-menu` subpath so
   `import * as NavigationMenu` preserves compound syntax when composed from a
   React Server Component without making the containing page client-rendered.
@@ -25,6 +29,10 @@ Navigation Menu follows the package version of `@flowstack-ui/brick`.
   it by default when no custom Indicator children are supplied.
 
 ### Fixed
+
+- Panel Links now retain the normal Link focus ring when their direct child is
+  not a Surface; the ring transfers to the Surface boundary only when that
+  documented composition is present.
 
 - Upgraded to Atom 0.21.0 and now positions the horizontal Viewport from its
   collision-aware active-trigger geometry instead of centering it on the

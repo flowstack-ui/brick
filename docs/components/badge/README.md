@@ -70,7 +70,7 @@ Stable hooks are `.brick-badge`, Atom slot `badge`, and `data-variant`,
 `--brick-badge-background`, `--brick-badge-foreground`,
 `--brick-badge-border-color`, `--brick-badge-min-block-size`,
 `--brick-badge-inline-padding`, `--brick-badge-block-padding`,
-`--brick-badge-font-size`, `--brick-badge-radius`,
+`--brick-badge-gap`, `--brick-badge-font-size`, `--brick-badge-radius`,
 `--brick-badge-tone-solid`, `--brick-badge-tone-on-solid`,
 `--brick-badge-tone-soft`, `--brick-badge-tone-on-soft`,
 `--brick-badge-tone-border`, and `--brick-badge-tone-text`.
@@ -99,6 +99,15 @@ rendered span; composed output must remain passive.
 
 ```tsx
 <Badge variant="outline" tone="success">Ready</Badge>
+```
+
+Badge applies its public gap token when children include an icon and label:
+
+```tsx
+<Badge tone="accent" shape="pill">
+  <Icon size="xs">{icon}</Icon>
+  Built for business
+</Badge>
 ```
 
 ## Evidence

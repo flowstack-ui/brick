@@ -34,10 +34,10 @@ test("Text controlled comparisons change only variant, tone, weight, or alignmen
   const variantTexts = page
     .getByTestId("text-variants")
     .locator(".brick-text");
-  await expect(variantTexts).toHaveCount(8);
+  await expect(variantTexts).toHaveCount(9);
   const expectedVariants = [
     "display", "title-lg", "title-md", "title-sm",
-    "body-lg", "body-md", "body-sm", "caption",
+    "body-lg", "body-md", "body-sm", "caption", "eyebrow",
   ];
   const sizes: number[] = [];
   for (let index = 0; index < expectedVariants.length; index += 1) {
@@ -48,7 +48,10 @@ test("Text controlled comparisons change only variant, tone, weight, or alignmen
     await expect(text).toHaveText("Build dependable interfaces.");
     sizes.push(Number.parseFloat(await text.evaluate((node) => getComputedStyle(node).fontSize)));
   }
-  expect(sizes).toEqual([40, 32, 24, 20, 20, 16, 14, 12]);
+  expect(sizes).toEqual([40, 32, 24, 20, 20, 16, 14, 12, 12]);
+  await expect(variantTexts.nth(8)).toHaveCSS("font-weight", "600");
+  await expect(variantTexts.nth(8)).toHaveCSS("letter-spacing", "0.96px");
+  await expect(variantTexts.nth(8)).toHaveCSS("text-transform", "uppercase");
 
   const toneTexts = page.getByTestId("text-tones").locator(".brick-text");
   await expect(toneTexts).toHaveCount(9);

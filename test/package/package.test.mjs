@@ -851,6 +851,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(alertDialog.AlertDialogContent, brick.AlertDialog.Content);
   assert.equal(drawer.Drawer, brick.Drawer);
   assert.equal(drawer.DrawerContent, brick.Drawer.Content);
+  assert.equal(drawer.Root, brick.Drawer.Root);
+  assert.equal(drawer.Trigger, brick.Drawer.Trigger);
+  assert.equal(drawer.Portal, brick.Drawer.Portal);
+  assert.equal(drawer.Content, brick.Drawer.Content);
   assert.equal(badge.Badge, brick.Badge);
   assert.equal(badge.NotificationBadge, brick.NotificationBadge);
   assert.equal(chip.Chip, brick.Chip);
@@ -1096,7 +1100,26 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-dialog-max-inline-size/);
   assert.match(styles, /--brick-alert-dialog-max-inline-size/);
   assert.match(styles, /--brick-drawer-inline-size-md/);
+  assert.match(styles, /--brick-drawer-inline-size-xl/);
+  assert.match(styles, /--brick-drawer-block-size-xl/);
+  assert.match(
+    styles,
+    /max-block-size:var\(--brick-drawer-block-size-md\)/,
+  );
+  assert.match(
+    styles,
+    /var\(--brick-drawer-background,var\(--brick-color-surface-overlay\)\)/,
+  );
+  assert.match(
+    styles,
+    /var\(--brick-drawer-radius,var\(--brick-radius-overlay\)\)/,
+  );
+  assert.doesNotMatch(
+    styles,
+    /--brick-drawer-radius:var\(--brick-radius-overlay\)/,
+  );
   assert.match(styles, /--brick-badge-min-block-size/);
+  assert.match(styles, /--brick-badge-gap/);
   assert.match(styles, /--brick-avatar-status-ring-color/);
   assert.match(styles, /--brick-toggle-min-block-size/);
   assert.match(styles, /--brick-tooltip-background/);
@@ -1127,6 +1150,8 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-divider-color/);
   assert.match(styles, /--brick-scroll-area-scrollbar-thumb/);
   assert.match(styles, /--brick-nav-list-row-radius/);
+  assert.match(styles, /--brick-nav-list-row-padding-inline-start/);
+  assert.match(styles, /--brick-nav-list-row-padding-inline-end/);
   assert.match(styles, /--brick-sidebar-panel-width/);
   assert.match(styles, /--brick-code-font-family/);
   assert.match(styles, /--brick-code-block-background/);

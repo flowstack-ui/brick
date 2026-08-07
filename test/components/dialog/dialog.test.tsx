@@ -50,14 +50,23 @@ describe("Dialog", () => {
     );
     expect(screen.getByText("Profile form")).toHaveClass("brick-dialog-body");
     expect(screen.getByText("Owned portal branch")).toHaveClass("brick-dialog-branch");
-    expect(screen.getByRole("button", { name: "Cancel" }).parentElement).toHaveClass(
-      "brick-dialog-footer",
-    );
+    expect(screen.getByRole("button", { name: "Cancel" }).parentElement)
+      .toHaveClass("brick-dialog-footer");
+    expect(screen.getByRole("button", { name: "Cancel" }).parentElement)
+      .toHaveAttribute("data-justify", "end");
     expect(document.querySelector(".brick-dialog-overlay")).toHaveAttribute(
       "data-slot",
       "dialog-overlay",
     );
   });
+
+  it.each(["start", "center", "end", "between"] as const)(
+    "forwards the %s Footer action distribution",
+    (justify) => {
+      render(<Dialog.Footer justify={justify}>Actions</Dialog.Footer>);
+      expect(screen.getByText("Actions")).toHaveAttribute("data-justify", justify);
+    },
+  );
 
   it("forwards native props, refs, classes, styles, slots, and every size", () => {
     const ref = createRef<HTMLDivElement>();

@@ -1,6 +1,17 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
+test("Dialog Footer maps logical action distribution to flex alignment", async ({ page }) => {
+  await page.goto("/dialog");
+  await page.getByRole("button", { name: "Edit profile" }).click();
+  const footer = page.getByTestId("dialog-overview-content").locator("[data-slot='dialog-footer']");
+  await expect(footer).toHaveAttribute("data-justify", "end");
+  for (const [justify, expected] of [["start", "flex-start"], ["center", "center"], ["between", "space-between"]] as const) {
+    await footer.evaluate((element, value) => element.setAttribute("data-justify", value), justify);
+    await expect.poll(() => footer.evaluate((element) => getComputedStyle(element).justifyContent)).toBe(expected);
+  }
+});
+
 async function readShellViewportOffsets(page: Page) {
   return page.evaluate(() => {
     const readOffset = (selector: string) => {

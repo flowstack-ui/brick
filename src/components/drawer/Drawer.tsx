@@ -1,3 +1,5 @@
+"use client";
+
 import { forwardRef, type HTMLAttributes } from "react";
 import {
   Drawer as AtomDrawer,
@@ -16,7 +18,8 @@ import {
 } from "@flowstack-ui/atom/modal";
 
 export type DrawerPlacement = "start" | "end" | "top" | "bottom";
-export type DrawerSize = "sm" | "md" | "lg" | "full";
+export type DrawerSize = "sm" | "md" | "lg" | "xl" | "full";
+export type DrawerFooterJustify = "start" | "center" | "end" | "between";
 export type DrawerRootProps = AtomModalRootProps;
 export type DrawerTriggerProps = AtomDrawerTriggerProps;
 export type DrawerPortalProps = AtomDrawerPortalProps;
@@ -35,6 +38,8 @@ export type DrawerBodyProps = HTMLAttributes<HTMLDivElement> & {
   "data-slot"?: string;
 };
 export type DrawerFooterProps = HTMLAttributes<HTMLDivElement> & {
+  /** Logical action distribution. @default "end" */
+  justify?: DrawerFooterJustify;
   "data-slot"?: string;
 };
 export type DrawerTitleProps = AtomDrawerTitleProps;
@@ -160,11 +165,15 @@ export const DrawerBody = forwardRef<HTMLDivElement, DrawerBodyProps>(
 );
 
 export const DrawerFooter = forwardRef<HTMLDivElement, DrawerFooterProps>(
-  function DrawerFooter({ className, "data-slot": dataSlot, ...props }, ref) {
+  function DrawerFooter(
+    { className, justify = "end", "data-slot": dataSlot, ...props },
+    ref,
+  ) {
     return (
       <div
         {...props}
         className={mergeClassName("brick-drawer-footer", className)}
+        data-justify={justify}
         data-slot={slotOrDefault(dataSlot, "drawer-footer")}
         ref={ref}
       />

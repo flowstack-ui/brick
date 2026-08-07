@@ -16,6 +16,7 @@ const recipes = [
   "body-md",
   "body-sm",
   "caption",
+  "eyebrow",
   "code-inline",
   "code-block-sm",
   "code-block-md",

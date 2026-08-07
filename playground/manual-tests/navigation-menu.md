@@ -23,7 +23,10 @@ Expected: the default is medium; only the named size or anatomy changes; text,
 icons, shortcuts, focus, and popup geometry remain aligned. Confirm `sm`, `md`,
 and `lg` links and triggers have 32px, 44px, and 48px minimum heights. Confirm
 the automatic chevrons remain visually compact and current links use a thin,
-offset underline.
+offset underline. Confirm panel Links fill their grid cell, wrap rich content,
+and make each direct Surface child one coherent clickable and focused area.
+In Composition, focus the fallback panel Link and confirm its own outline stays
+visible when no direct Surface is present.
 
 ## Step 2 — State and behavior
 

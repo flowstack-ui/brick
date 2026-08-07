@@ -26,7 +26,7 @@ import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./drawer.playground.css";
 
 const placements: DrawerPlacement[] = ["start", "end", "top", "bottom"];
-const sizes: DrawerSize[] = ["sm", "md", "lg", "full"];
+const sizes: DrawerSize[] = ["sm", "md", "lg", "xl", "full"];
 const titleLevels = ["h1", "h2", "h3", "h4", "h5", "h6"] as const;
 
 const tokenCustomization = {
@@ -340,8 +340,8 @@ export function DrawerPage() {
       </Scenario>
 
       <Scenario {...drawerScenarios[1]}>
-        <Grid.Root columns={4}
-          className="drawer-specimen-grid drawer-specimen-grid--four"
+        <Grid.Root columns={5}
+          className="drawer-specimen-grid drawer-specimen-grid--five"
           data-testid="drawer-placements"
         >
           {placements.map((placement) => (

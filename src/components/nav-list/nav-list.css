@@ -6,6 +6,8 @@
     --brick-nav-list-content-inset: var(--brick-space-3);
     --brick-nav-list-row-min-block-size: 2.75rem;
     --brick-nav-list-row-padding-inline: var(--brick-space-3);
+    --brick-nav-list-row-padding-inline-start: var(--brick-nav-list-row-padding-inline);
+    --brick-nav-list-row-padding-inline-end: var(--brick-nav-list-row-padding-inline);
     --brick-nav-list-row-padding-block: var(--brick-space-2);
     --brick-nav-list-row-radius: var(--brick-radius-control);
     --brick-nav-list-link-foreground: var(--brick-color-text-secondary);
@@ -83,7 +85,9 @@
     min-block-size: var(--brick-nav-list-row-min-block-size);
     align-items: center;
     gap: var(--brick-nav-list-icon-gap);
-    padding: var(--brick-nav-list-row-padding-block) var(--brick-nav-list-row-padding-inline);
+    padding-block: var(--brick-nav-list-row-padding-block);
+    padding-inline-start: var(--brick-nav-list-row-padding-inline-start);
+    padding-inline-end: var(--brick-nav-list-row-padding-inline-end);
     border: var(--brick-border-width) solid transparent;
     border-radius: var(--brick-nav-list-row-radius);
     background: transparent;

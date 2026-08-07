@@ -6,10 +6,26 @@ Drawer follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Top and bottom Drawers now grow naturally with their content until the
+  selected size cap; Body scroll begins only after that cap is reached.
+- Drawer Content now accepts an inherited `--brick-drawer-background` theme
+  value while retaining `--brick-color-surface-overlay` as its default.
+- Drawer radius now accepts an inherited `--brick-drawer-radius` theme value
+  instead of redeclaring and shadowing it on every Content instance; the
+  default still falls back to `--brick-radius-overlay`.
 - Inherited Atom's document-only scroll lock so sticky application chrome
   remains anchored while Drawer is open at a nonzero page offset.
 
 ### Added
+
+- Added logical Footer `justify` values for start, center, end, and
+  space-between action distribution; end remains the default.
+- Added the `xl` size: an almost-full side width and a content-responsive
+  top/bottom cap that may reach the viewport without forcing short content to
+  fill it.
+- Added short named part exports on the `drawer` subpath so
+  `import * as Drawer` preserves compound syntax from a React Server Component
+  without promoting the containing page to a Client Component.
 
 - Added public Agent Knowledge for component selection, composition,
   CSS-delivery, recurring mistakes, and validation.

@@ -4,6 +4,45 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.1.5 - 2026-08-07
+
+### Added
+
+- Expanded public Agent Knowledge with source-backed AppBar header/Container
+  composition, shared responsive-navigation data, responsive overlay-state
+  cleanup, and complete-group Nav List/Divider boundary guidance.
+- Added logical `justify="start|center|end|between"` action distribution to
+  Drawer, Dialog, and Alert Dialog Footers while retaining `end` as the
+  default.
+- Added an `xl` Drawer size that may grow to the available viewport for
+  content-heavy top/bottom surfaces while still shrinking around short
+  content; `full` remains the only always-viewport-sized recipe.
+- Added logical Nav List row-padding tokens so surrounding Drawers, Sidebars,
+  and application shells can align leading labels and trailing disclosure
+  indicators independently without moving either with positional CSS.
+- Added an RSC-safe Drawer module namespace on the component subpath,
+  preserving `Drawer.Root` composition without promoting a Next.js server page
+  to a Client Component.
+- Added `Grid.Item asChild` so one existing link, Surface, or component can
+  receive Grid placement directly without an extra wrapper or height CSS.
+
+### Fixed
+
+- Made top and bottom Drawer sizes content-responsive maximums instead of
+  fixed heights, preserving Body scrolling only after the selected cap is
+  reached; full-size Drawers remain viewport-sized.
+- Allowed Drawer background to inherit the public
+  `--brick-drawer-background` token from a theme ancestor while retaining
+  `--brick-color-surface-overlay` as its unchanged default fallback.
+- Allowed Drawer radius to inherit the public `--brick-drawer-radius` token
+  from a theme ancestor while retaining `--brick-radius-overlay` as its
+  unchanged default fallback.
+- Kept Navigation Menu panel-link focus visible when a consumer omits the
+  documented direct Surface child; composed Surface panels still receive the
+  focus ring on their visible boundary.
+- Kept wrapper-free Grid Items safe across React Server Component boundaries
+  by composing a ref callback only when an actual child or consumer ref exists.
+
 ## 0.1.4 - 2026-08-06
 
 ### Added

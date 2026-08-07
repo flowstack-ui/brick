@@ -12,6 +12,19 @@ test("defaults and recipes preserve finished navigation semantics", async ({ pag
   await expect(root.getByRole("link", { name: "Workspace" })).toHaveAttribute("aria-current", "page");
 });
 
+test("logical row padding can align leading and trailing content independently", async ({ page }) => {
+  const root = page.getByTestId("nav-list-overview").locator(".brick-nav-list");
+  const link = root.getByRole("link", { name: "Workspace" });
+
+  await root.evaluate((element) => {
+    element.style.setProperty("--brick-nav-list-row-padding-inline-start", "1rem");
+    element.style.setProperty("--brick-nav-list-row-padding-inline-end", "2rem");
+  });
+
+  await expect(link).toHaveCSS("padding-left", "16px");
+  await expect(link).toHaveCSS("padding-right", "32px");
+});
+
 test("disclosure updates native state and relationship output", async ({ page }) => {
   const scenario = page.locator('[data-scenario="nav-list.sections"]');
   const trigger = scenario.getByRole("button", { name: "Foundations" });

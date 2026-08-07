@@ -375,7 +375,7 @@ void invalidAlertDialogBackdrop;
 void invalidAlertDialogOverlay;
 
 const drawerPlacement: DrawerPlacement = "start";
-const drawerSize: DrawerSize = "full";
+const drawerSize: DrawerSize = "xl";
 const drawerRootProps: DrawerRootProps = {
   children: createElement(Drawer.Trigger, null, "Open drawer"),
   closeOnBackdropClick: false,
@@ -402,7 +402,7 @@ const invalidDrawerSize: DrawerContentProps = {
   "aria-label": "Invalid",
   children: "Invalid",
   // @ts-expect-error Drawer sizes are a closed recipe set.
-  size: "xl",
+  size: "xxl",
 };
 // @ts-expect-error Drawer is a namespace and not a callable flat component.
 const invalidFlatDrawer = createElement(Drawer, { title: "Invalid" });

@@ -1,10 +1,14 @@
 import {
+  Children,
+  cloneElement,
   createElement,
   forwardRef,
   type CSSProperties,
   type ForwardedRef,
   type HTMLAttributes,
+  type ReactElement,
   type ReactNode,
+  type Ref,
 } from "react";
 
 export type GridRootElement =
@@ -113,12 +117,23 @@ type GridItemRowPlacement =
       rowEnd: GridLine;
     };
 
+type GridItemHostProps =
+  | {
+      as?: GridItemElement;
+      asChild?: false;
+      children?: ReactNode;
+    }
+  | {
+      as?: never;
+      asChild: true;
+      children: ReactElement<Record<string, unknown>>;
+    };
+
 export type GridItemProps =
   GridItemNativeProps &
   GridItemColumnPlacement &
-  GridItemRowPlacement & {
-    as?: GridItemElement;
-    children?: ReactNode;
+  GridItemRowPlacement &
+  GridItemHostProps & {
     align?: GridSelfAlign;
     justify?: GridSelfJustify;
     className?: string;
@@ -128,6 +143,52 @@ export type GridItemProps =
 
 function mergeClassName(base: string, className: string | undefined) {
   return className ? `${base} ${className}` : base;
+}
+
+function composeRefs<T>(...refs: Array<Ref<T> | undefined>) {
+  return (value: T | null) => {
+    for (const ref of refs) {
+      if (typeof ref === "function") ref(value);
+      else if (ref) ref.current = value;
+    }
+  };
+}
+
+function mergeComposedProps(
+  original: Record<string, unknown>,
+  override: Record<string, unknown>,
+) {
+  const merged = { ...original, ...override };
+
+  for (const [key, value] of Object.entries(override)) {
+    const current = original[key];
+    if (
+      key.startsWith("on") &&
+      typeof current === "function" &&
+      typeof value === "function"
+    ) {
+      merged[key] = (...args: unknown[]) => {
+        value(...args);
+        current(...args);
+      };
+    } else if (
+      key === "className" &&
+      typeof current === "string" &&
+      typeof value === "string"
+    ) {
+      merged[key] = `${current} ${value}`;
+    } else if (
+      key === "style" &&
+      current &&
+      value &&
+      typeof current === "object" &&
+      typeof value === "object"
+    ) {
+      merged[key] = { ...current, ...value };
+    }
+  }
+
+  return merged;
 }
 
 function GridRootImpl(
@@ -173,6 +234,7 @@ function GridRootImpl(
 function GridItemImpl(
   {
     as = "div",
+    asChild = false,
     columnSpan,
     columnStart,
     columnEnd,
@@ -189,25 +251,36 @@ function GridItemImpl(
   }: GridItemProps,
   ref: ForwardedRef<HTMLElement>,
 ) {
-  return createElement(
-    as,
-    {
-      ...props,
-      className: mergeClassName("brick-grid-item", className),
-      "data-align": align !== "auto" ? align : undefined,
-      "data-column-end": columnEnd,
-      "data-column-span": columnSpan,
-      "data-column-start": columnStart,
-      "data-justify": justify !== "auto" ? justify : undefined,
-      "data-row-end": rowEnd,
-      "data-row-span": rowSpan,
-      "data-row-start": rowStart,
-      "data-slot": slot,
-      ref,
-      style,
-    },
-    children,
-  );
+  const itemProps = {
+    ...props,
+    className: mergeClassName("brick-grid-item", className),
+    "data-align": align !== "auto" ? align : undefined,
+    "data-column-end": columnEnd,
+    "data-column-span": columnSpan,
+    "data-column-start": columnStart,
+    "data-justify": justify !== "auto" ? justify : undefined,
+    "data-row-end": rowEnd,
+    "data-row-span": rowSpan,
+    "data-row-start": rowStart,
+    "data-slot": slot,
+    ref,
+    style,
+  };
+
+  if (asChild) {
+    const child = Children.only(children) as ReactElement<Record<string, unknown>>;
+    const childRef = child.props.ref as Ref<HTMLElement> | undefined;
+    const composedRef = childRef || ref ? composeRefs(childRef, ref) : undefined;
+    return cloneElement(
+      child,
+      mergeComposedProps(child.props, {
+        ...itemProps,
+        ref: composedRef,
+      }),
+    );
+  }
+
+  return createElement(as, itemProps, children);
 }
 
 const GridRoot = forwardRef<HTMLElement, GridRootProps>(GridRootImpl);

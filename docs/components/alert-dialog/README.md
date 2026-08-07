@@ -109,7 +109,7 @@ Public exports are the `AlertDialog` namespace; named `AlertDialogRoot`,
 `AlertDialogContent`, `AlertDialogHeader`, `AlertDialogTitle`,
 `AlertDialogDescription`, `AlertDialogBody`, `AlertDialogFooter`,
 `AlertDialogCancel`, and `AlertDialogAction` parts; and their corresponding
-prop types plus `AlertDialogSize`.
+prop types plus `AlertDialogSize` and `AlertDialogFooterJustify`.
 
 ```ts
 AlertDialogRootProps
@@ -147,6 +147,17 @@ preferred maximum inline measure. Content also forwards supported native ARIA,
 Portal forwards `container` and `disabled`. A container must be a same-document
 `HTMLElement`. Overlay has no dismissal-control prop because scrim interaction
 never closes AlertDialog.
+
+### Footer
+
+| Prop | Values | Default |
+| --- | --- | --- |
+| `justify` | `start`, `center`, `end`, `between` | `end` |
+
+Use `justify` for simple logical response distribution. Compose a layout
+component inside Footer for more complex groups; use `Button fullWidth` when
+one response itself should fill the available row. Footer reflects the
+selected value through `data-justify`.
 
 ### Trigger, Cancel, and Action
 

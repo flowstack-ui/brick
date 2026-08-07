@@ -13,6 +13,7 @@ import {
 } from "@flowstack-ui/atom/alert-dialog";
 
 export type AlertDialogSize = "sm" | "md";
+export type AlertDialogFooterJustify = "start" | "center" | "end" | "between";
 export type AlertDialogRootProps = AtomAlertDialogRootProps;
 export type AlertDialogTriggerProps = AtomAlertDialogTriggerProps;
 export type AlertDialogPortalProps = AtomAlertDialogPortalProps;
@@ -27,6 +28,8 @@ export type AlertDialogBodyProps = HTMLAttributes<HTMLDivElement> & {
   "data-slot"?: string;
 };
 export type AlertDialogFooterProps = HTMLAttributes<HTMLDivElement> & {
+  /** Logical response distribution. @default "end" */
+  justify?: AlertDialogFooterJustify;
   "data-slot"?: string;
 };
 export type AlertDialogTitleProps = AtomAlertDialogTitleProps;
@@ -161,13 +164,14 @@ export const AlertDialogFooter = forwardRef<
   HTMLDivElement,
   AlertDialogFooterProps
 >(function AlertDialogFooter(
-  { className, "data-slot": dataSlot, ...props },
+  { className, justify = "end", "data-slot": dataSlot, ...props },
   ref,
 ) {
   return (
     <div
       {...props}
       className={mergeClassName("brick-alert-dialog-footer", className)}
+      data-justify={justify}
       data-slot={slotOrDefault(dataSlot, "alert-dialog-footer")}
       ref={ref}
     />
