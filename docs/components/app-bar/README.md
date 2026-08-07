@@ -50,7 +50,7 @@ Named part exports and the root package export are also available.
 
 | Part | Default DOM | Ref |
 | --- | --- | --- |
-| `Root` | Atom AppBar landmark/header | `HTMLElement` |
+| `Root` | semantic `header` | `HTMLElement` |
 | `Toolbar` | structural `div` | `HTMLDivElement` |
 | `Start`, `Center`, `End` | section `div` | `HTMLDivElement` |
 
@@ -120,6 +120,12 @@ forced-color output, and reduced-transparency fallback.
 
 Every part forwards its public Atom/native props and composition behavior.
 Refs target the elements in the anatomy table.
+
+Keep Root's default `header` when it owns page or application banner content.
+Use `asChild` or `render` only when another intentional host is required, such
+as neutral AppBar chrome inside a Drawer. When the AppBar surface should remain
+full bleed but its content needs a bounded measure, compose
+`Root > Container > Toolbar`; do not cap Root itself.
 
 ## Examples
 

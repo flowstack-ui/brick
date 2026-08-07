@@ -16,6 +16,7 @@
     --brick-badge-min-block-size: 1.5rem;
     --brick-badge-inline-padding: 0.5rem;
     --brick-badge-block-padding: 0.125rem;
+    --brick-badge-gap: var(--brick-space-1);
     --brick-badge-radius: var(--brick-radius-control);
     --brick-badge-font-size: var(--brick-typography-control-sm-font-size);
 
@@ -26,6 +27,7 @@
     max-inline-size: 100%;
     align-items: center;
     justify-content: safe center;
+    gap: var(--brick-badge-gap);
     padding-block: var(--brick-badge-block-padding);
     padding-inline: var(--brick-badge-inline-padding);
     border: var(--brick-border-width) solid var(--brick-badge-border-color);

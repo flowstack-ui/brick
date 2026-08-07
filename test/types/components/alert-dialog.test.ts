@@ -2,6 +2,7 @@ import { createElement } from "react";
 import {
   AlertDialog,
   type AlertDialogContentProps,
+  type AlertDialogFooterProps,
   type AlertDialogOverlayProps,
   type AlertDialogRootProps,
   type AlertDialogSize,
@@ -29,12 +30,14 @@ const titleProps: AlertDialogTitleProps = {
   as: "h1",
   children: "Remove workspace?",
 };
+const footerProps: AlertDialogFooterProps = { children: "Responses", justify: "center" };
 
 void AlertDialog;
 void rootProps;
 void contentProps;
 void overlayProps;
 void titleProps;
+void footerProps;
 
 // @ts-expect-error AlertDialog sizes are a closed set.
 const invalidSize: AlertDialogSize = "lg";
@@ -52,6 +55,8 @@ const invalidPlacement: AlertDialogContentProps = { placement: "bottom" };
 const invalidLoading: AlertDialogContentProps = { loading: true };
 // @ts-expect-error AlertDialog Title accepts heading elements only.
 const invalidTitle: AlertDialogTitleProps = { as: "div", children: "Remove?" };
+// @ts-expect-error AlertDialog Footer distribution is a closed set.
+const invalidFooter: AlertDialogFooterProps = { justify: "stretch" };
 
 void invalidSize;
 void invalidFlatAlert;
@@ -61,3 +66,4 @@ void invalidTone;
 void invalidPlacement;
 void invalidLoading;
 void invalidTitle;
+void invalidFooter;

@@ -47,7 +47,7 @@ describe("Text", () => {
   it("exposes every closed visual recipe through stable metadata", () => {
     const variants: TextVariant[] = [
       "display", "title-lg", "title-md", "title-sm",
-      "body-lg", "body-md", "body-sm", "caption",
+      "body-lg", "body-md", "body-sm", "caption", "eyebrow",
     ];
     const tones: TextTone[] = [
       "inherit", "primary", "secondary", "muted", "accent",

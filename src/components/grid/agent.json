@@ -4,8 +4,8 @@
   "useWhen": ["Content needs coordinated rows and columns or responsive card tracks."],
   "avoidWhen": [{ "condition": "The layout has one primary row or column.", "useInstead": "Stack" }],
   "composition": ["Choose Grid tracks from the minimum readable child size; use Grid.Item placement only when source order remains meaningful."],
-  "rules": [{ "id": "grid-source-order", "level": "must", "statement": "Keep DOM order meaningful; visual placement must not create a confusing keyboard or reading sequence." }, { "id": "grid-css", "level": "must", "statement": "Load styles.css or core.css plus grid.css." }],
-  "commonMistakes": [{ "mistake": "Keeping too many columns until cards become unreadably narrow.", "correction": "Reduce columns at the content's real minimum width, not at a device-name breakpoint." }],
+  "rules": [{ "id": "grid-source-order", "level": "must", "statement": "Keep DOM order meaningful; visual placement must not create a confusing keyboard or reading sequence." }, { "id": "grid-item-as-child", "level": "must", "statement": "Use Grid.Item asChild when an existing link, Surface, or component should itself receive placement; provide exactly one element and preserve its native semantics." }, { "id": "grid-css", "level": "must", "statement": "Load styles.css or core.css plus grid.css." }],
+  "commonMistakes": [{ "mistake": "Keeping too many columns until cards become unreadably narrow.", "correction": "Reduce columns at the content's real minimum width, not at a device-name breakpoint." }, { "mistake": "Adding a Grid.Item wrapper and height CSS around an element that should itself stretch as the grid item.", "correction": "Compose that one element with Grid.Item asChild." }],
   "validation": ["Test intrinsic sizing, overflow, zoom, narrow widths, source order, and RTL.", "Confirm each child remains readable before and after track changes."],
   "related": ["stack", "card", "surface"]
 }

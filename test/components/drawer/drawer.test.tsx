@@ -2,6 +2,7 @@ import { createRef } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import * as DrawerModule from "../../../src/drawer.js";
 import {
   Drawer,
   DrawerContent,
@@ -51,19 +52,29 @@ describe("Drawer", () => {
     );
     expect(screen.getByText("Filter controls")).toHaveClass("brick-drawer-body");
     expect(screen.getByText("Owned portal branch")).toHaveClass("brick-drawer-branch");
-    expect(screen.getByRole("button", { name: "Apply filters" }).parentElement).toHaveClass(
-      "brick-drawer-footer",
-    );
+    expect(screen.getByRole("button", { name: "Apply filters" }).parentElement)
+      .toHaveClass("brick-drawer-footer");
+    expect(screen.getByRole("button", { name: "Apply filters" }).parentElement)
+      .toHaveAttribute("data-justify", "end");
     expect(document.querySelector(".brick-drawer-overlay")).toHaveAttribute(
       "data-slot",
       "drawer-overlay",
     );
   });
 
+  it.each(["start", "center", "end", "between"] as const)(
+    "forwards the %s Footer action distribution",
+    (justify) => {
+      render(<Drawer.Footer justify={justify}>Actions</Drawer.Footer>);
+      expect(screen.getByText("Actions")).toHaveAttribute("data-justify", justify);
+    },
+  );
+
   it.each([
     ["start", "sm"],
     ["end", "md"],
     ["top", "lg"],
+    ["bottom", "xl"],
     ["bottom", "full"],
   ] as const)("forwards the %s placement and %s size", (placement, size) => {
     render(
@@ -230,5 +241,9 @@ describe("Drawer", () => {
   it("exports namespace parts as the canonical direct components", () => {
     expect(Drawer.Root).toBe(DrawerRoot);
     expect(Drawer.Content).toBe(DrawerContent);
+    expect(DrawerModule.Root).toBe(DrawerRoot);
+    expect(DrawerModule.Content).toBe(DrawerContent);
+    expect(DrawerModule.Trigger).toBe(Drawer.Trigger);
+    expect(DrawerModule.Portal).toBe(Drawer.Portal);
   });
 });

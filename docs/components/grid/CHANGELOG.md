@@ -6,6 +6,8 @@ Grid follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added `Grid.Item asChild` so one authored link, Surface, or component can
+  receive Grid placement and self-alignment without an extra wrapper.
 - Initial compound `Grid.Root` and optional `Grid.Item` API.
 - Exact equal columns, intrinsic auto-fit columns, tokenized uniform and axis
   gaps, Root item alignment, Item spans, line placement, full-column

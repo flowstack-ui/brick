@@ -54,14 +54,23 @@ describe("AlertDialog", () => {
     expect(screen.getByText("Project: Mobile checkout refresh")).toHaveClass(
       "brick-alert-dialog-body",
     );
-    expect(screen.getByRole("button", { name: "Keep project" }).parentElement).toHaveClass(
-      "brick-alert-dialog-footer",
-    );
+    expect(screen.getByRole("button", { name: "Keep project" }).parentElement)
+      .toHaveClass("brick-alert-dialog-footer");
+    expect(screen.getByRole("button", { name: "Keep project" }).parentElement)
+      .toHaveAttribute("data-justify", "end");
     expect(document.querySelector(".brick-alert-dialog-overlay")).toHaveAttribute(
       "aria-hidden",
       "true",
     );
   });
+
+  it.each(["start", "center", "end", "between"] as const)(
+    "forwards the %s Footer response distribution",
+    (justify) => {
+      render(<AlertDialog.Footer justify={justify}>Responses</AlertDialog.Footer>);
+      expect(screen.getByText("Responses")).toHaveAttribute("data-justify", justify);
+    },
+  );
 
   it("forwards native props, refs, classes, styles, slots, events, and both sizes", () => {
     const ref = createRef<HTMLDivElement>();

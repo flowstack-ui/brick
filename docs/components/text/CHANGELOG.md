@@ -6,10 +6,12 @@ Text follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added the `eyebrow` Text variant for short uppercase editorial labels.
+
 - Added public Agent Knowledge for component selection, composition,
   CSS-delivery, recurring mistakes, and validation.
 
-- Initial Text API with independent semantic hosts and eight visual type
+- Initial Text API with independent semantic hosts and nine visual type
   recipes.
 - Primary, secondary, muted, accent, info, success, warning, danger, and
   inherited foreground roles; regular, medium, semibold, and inherited weight;

@@ -16,6 +16,7 @@ import {
 } from "@flowstack-ui/atom/modal";
 
 export type DialogSize = "sm" | "md" | "lg";
+export type DialogFooterJustify = "start" | "center" | "end" | "between";
 export type DialogRootProps = AtomModalRootProps;
 export type DialogTriggerProps = AtomDialogTriggerProps;
 export type DialogPortalProps = AtomDialogPortalProps;
@@ -25,7 +26,11 @@ export interface DialogContentProps extends AtomDialogContentProps {
 }
 export type DialogHeaderProps = HTMLAttributes<HTMLDivElement> & { "data-slot"?: string };
 export type DialogBodyProps = HTMLAttributes<HTMLDivElement> & { "data-slot"?: string };
-export type DialogFooterProps = HTMLAttributes<HTMLDivElement> & { "data-slot"?: string };
+export type DialogFooterProps = HTMLAttributes<HTMLDivElement> & {
+  /** Logical action distribution. @default "end" */
+  justify?: DialogFooterJustify;
+  "data-slot"?: string;
+};
 export type DialogTitleProps = AtomDialogTitleProps;
 export type DialogDescriptionProps = AtomDialogDescriptionProps;
 export type DialogCloseProps = AtomDialogCloseProps;
@@ -138,11 +143,15 @@ export const DialogBody = forwardRef<HTMLDivElement, DialogBodyProps>(
 );
 
 export const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(
-  function DialogFooter({ className, "data-slot": dataSlot, ...props }, ref) {
+  function DialogFooter(
+    { className, justify = "end", "data-slot": dataSlot, ...props },
+    ref,
+  ) {
     return (
       <div
         {...props}
         className={mergeClassName("brick-dialog-footer", className)}
+        data-justify={justify}
         data-slot={slotOrDefault(dataSlot, "dialog-footer")}
         ref={ref}
       />

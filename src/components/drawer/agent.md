@@ -19,17 +19,22 @@ Present a finished modal side sheet while Atom owns focus, dismissal, portal, sc
 ## Rules
 
 - **MUST:** Use Drawer parts rather than hand-building overlay, focus trap, Escape, outside interaction, or portal behavior.
-- **MUST:** Choose size, placement, and full-screen mobile presentation from content needs without duplicating mounted dialog trees.
+- **MUST:** Choose size and placement from content needs: use xl when content may need the viewport but should shrink when short, and full only when the surface must always fill it.
+- **MUST:** Let top and bottom Drawers grow naturally to their selected size cap; keep long overflow in Drawer.Body instead of forcing a fixed application height.
+- **MUST:** Use Footer justify for simple action distribution, a Brick layout component inside Footer for complex grouping, and Button fullWidth only when the action itself should fill the row.
+- **MUST:** In React Server Components, import the component subpath as import * as Drawer from @flowstack-ui/brick/drawer; use the legacy root-package runtime object only inside a client-owned module.
 - **MUST:** Load styles.css or core.css plus drawer.css.
 
 ## Common mistakes
 
 - **Avoid:** Building a mobile menu as an absolutely positioned div or placing Close outside the labeled content hierarchy. **Instead:** Use Drawer anatomy and compose the menu content with Brick navigation and layout components.
+- **Avoid:** Adding use client to an entire Next page only to dereference the legacy Drawer runtime object. **Instead:** Use the RSC-safe module-namespace subpath so only Drawer remains client-owned.
 
 ## Validation checklist
 
-- Test labeling, initial focus, focus containment/return, Escape, overlay, Close, scroll lock, touch, reduced motion, narrow screens, and nested portals.
+- Test labeling, initial focus, focus containment/return, Escape, overlay, Close, scroll lock, content growth and capped Body overflow, touch, reduced motion, narrow screens, and nested portals.
 - Confirm CSS and every composed child component stylesheet are loaded.
+- In a React Server Component consumer, confirm the module-namespace form passes a production prerender without promoting the page to use client.
 
 ## Related guidance
 

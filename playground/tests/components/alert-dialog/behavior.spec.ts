@@ -1,6 +1,17 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator } from "@playwright/test";
 
+test("AlertDialog Footer maps logical response distribution to flex alignment", async ({ page }) => {
+  await page.goto("/alert-dialog");
+  await page.getByRole("button", { name: "Delete project?" }).click();
+  const footer = page.getByTestId("alert-dialog-overview-content").locator("[data-slot='alert-dialog-footer']");
+  await expect(footer).toHaveAttribute("data-justify", "end");
+  for (const [justify, expected] of [["start", "flex-start"], ["center", "center"], ["between", "space-between"]] as const) {
+    await footer.evaluate((element, value) => element.setAttribute("data-justify", value), justify);
+    await expect.poll(() => footer.evaluate((element) => getComputedStyle(element).justifyContent)).toBe(expected);
+  }
+});
+
 async function expectAlertDefaults(
   alert: Locator,
   slot = "alert-dialog-content",

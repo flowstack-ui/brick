@@ -20,7 +20,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **visual region:** use Surface or Card. Use Card for titled or actionable contained content and Surface for a general visual boundary.
 - **brand or content image:** use Image. Keep alt text and fallback behavior intentional.
 - **site navigation:** use NavigationMenu or NavList. Use NavigationMenu for disclosure navigation and NavList for persistent route lists.
-- **responsive desktop and mobile alternatives:** use Show and Hide. Keep one CSS-controlled breakpoint contract and avoid hydration-dependent visibility.
+- **responsive desktop and mobile alternatives:** use Show and Hide. Keep one CSS-controlled breakpoint contract and avoid hydration-dependent visibility; distinct navigation patterns should consume one application-owned destination model.
 - **grouped application actions:** use Toolbar. Do not use AppBar.Toolbar as an ARIA toolbar.
 
 ## Rules
@@ -28,6 +28,8 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **MUST:** Assign page structure to Brick components before writing element-level CSS.
 - **MUST:** Do not use Stack, Surface, Button, or another convenient component when a more specific Brick navigation, media, content, or interaction component owns the job.
 - **MUST:** Preserve document landmarks and semantic elements when Brick does not provide an owner; Brick-first is not permission to erase HTML meaning.
+- **MUST:** When desktop and mobile require distinct navigation components, share application-owned destination labels, hrefs, values, and ordering while preserving each pattern's correct Brick anatomy; do not duplicate navigation content or force one interaction tree across breakpoints.
+- **MUST:** Use Show and Hide for first-paint visibility; when a controlled interactive overlay may remain open across a breakpoint, synchronize its application state at that boundary so a hidden modal cannot retain focus, scroll lock, or isolation.
 - **SHOULD:** Express reusable brand values through semantic Brick tokens and a theme rather than repeating literal application values.
 - **MUST:** When styles.css or styles/core.css is loaded, change the document canvas, foreground, and body typography through semantic Brick tokens instead of repeating the body bindings that Brick's foundation already owns.
 - **MUST:** Do not write a direct declaration against a Brick part until the correct component, supported props, semantic tokens, component tokens, and public compound parts have been checked in order.

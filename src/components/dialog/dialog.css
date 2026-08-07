@@ -123,6 +123,18 @@
     padding: var(--brick-space-3) var(--brick-dialog-space) var(--brick-dialog-space);
   }
 
+  .brick-dialog-footer[data-justify="start"] {
+    justify-content: flex-start;
+  }
+
+  .brick-dialog-footer[data-justify="center"] {
+    justify-content: center;
+  }
+
+  .brick-dialog-footer[data-justify="between"] {
+    justify-content: space-between;
+  }
+
   @supports not (height: 100dvb) {
     .brick-dialog-content {
       --brick-dialog-max-block-size: calc(100vh - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));

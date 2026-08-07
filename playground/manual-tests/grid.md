@@ -70,10 +70,11 @@ Setup: Continue through `08` and `09`.
 Action: Inspect the captured HTML, activate **Inspect ref**, switch light/dark,
 and compare customization code with the live result.
 
-Expected: Output contains the authored section/articles, Root/Item hooks, and
-no invented `role="grid"` or wrapper. Ref reports `SECTION`. Appearance does
-not change geometry. Customized row gap, column gap, border, and padding match
-the shown code exactly.
+Expected: Output contains the authored section/articles and Root/Item hooks,
+with no invented `role="grid"`. The composed destination is the direct Grid
+child, receives Item placement, and has no extra Item wrapper. Ref reports
+`SECTION`. Appearance does not change geometry. Customized row gap, column
+gap, border, and padding match the shown code exactly.
 
 Result:
 Notes or issue:

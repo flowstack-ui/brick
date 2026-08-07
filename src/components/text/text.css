@@ -5,6 +5,7 @@
     --brick-text-font-weight: var(--brick-typography-body-md-font-weight);
     --brick-text-line-height: var(--brick-typography-body-md-line-height);
     --brick-text-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    --brick-text-text-transform: none;
     --brick-text-foreground: var(--brick-color-text-primary);
 
     margin: 0;
@@ -16,6 +17,7 @@
     line-height: var(--brick-text-line-height);
     overflow-wrap: break-word;
     text-align: start;
+    text-transform: var(--brick-text-text-transform);
     text-wrap: wrap;
   }
 
@@ -73,6 +75,15 @@
     --brick-text-font-weight: var(--brick-typography-caption-font-weight);
     --brick-text-line-height: var(--brick-typography-caption-line-height);
     --brick-text-letter-spacing: var(--brick-typography-caption-letter-spacing);
+  }
+
+  .brick-text[data-variant="eyebrow"] {
+    --brick-text-font-family: var(--brick-typography-eyebrow-font-family);
+    --brick-text-font-size: var(--brick-typography-eyebrow-font-size);
+    --brick-text-font-weight: var(--brick-typography-eyebrow-font-weight);
+    --brick-text-line-height: var(--brick-typography-eyebrow-line-height);
+    --brick-text-letter-spacing: var(--brick-typography-eyebrow-letter-spacing);
+    --brick-text-text-transform: uppercase;
   }
 
   .brick-text[data-tone="inherit"] {

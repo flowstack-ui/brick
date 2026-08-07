@@ -15,5 +15,7 @@ Badge follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Added a themeable default gap between composed Badge children such as an
+  icon and visible label.
 - Solid danger Badges now retain WCAG AA foreground contrast in light and dark
   appearances.

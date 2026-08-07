@@ -62,12 +62,14 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
 import { AppBar as SubpathAppBar } from "@flowstack-ui/brick/app-bar";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
+import { Drawer as SubpathDrawer } from "@flowstack-ui/brick/drawer";
+import * as DrawerModule from "@flowstack-ui/brick/drawer";
 import { Badge as SubpathBadge, NotificationBadge as SubpathNotificationBadge } from "@flowstack-ui/brick/badge";
 import { Chip as SubpathChip } from "@flowstack-ui/brick/chip";
 import { Avatar as SubpathAvatar } from "@flowstack-ui/brick/avatar";
@@ -111,6 +113,8 @@ if (Button !== SubpathButton) throw new Error("Button subpath export mismatch");
 if (IconButton !== SubpathIconButton) throw new Error("IconButton subpath export mismatch");
 if (AppBar !== SubpathAppBar) throw new Error("AppBar subpath export mismatch");
 if (Card !== SubpathCard) throw new Error("Card subpath export mismatch");
+if (Drawer !== SubpathDrawer || Object.keys(SubpathDrawer).length !== 12) throw new Error("Drawer subpath smoke failed");
+if (DrawerModule.Root !== Drawer.Root || DrawerModule.Trigger !== Drawer.Trigger || DrawerModule.Content !== Drawer.Content) throw new Error("Drawer module namespace smoke failed");
 if (AlertDialog !== SubpathAlertDialog) throw new Error("AlertDialog subpath export mismatch");
 if (Badge !== SubpathBadge || NotificationBadge !== SubpathNotificationBadge) throw new Error("Badge subpath export mismatch");
 if (Chip !== SubpathChip || Object.keys(SubpathChip).length !== 3) throw new Error("Chip subpath smoke failed");
@@ -153,6 +157,8 @@ const appBarMarkup = renderToString(React.createElement(AppBar.Root, { position:
 if (!appBarMarkup.includes("brick-app-bar") || !appBarMarkup.includes('data-position="sticky"')) throw new Error("AppBar SSR smoke failed");
 const cardMarkup = renderToString(React.createElement(Card.Root, { as: "article" }, React.createElement(Card.Title, { as: "h1" }, "Card consumer")));
 if (!cardMarkup.includes("brick-card") || !cardMarkup.includes("Card consumer")) throw new Error("Card SSR smoke failed");
+const drawerMarkup = renderToString(React.createElement(DrawerModule.Root, null, React.createElement(DrawerModule.Trigger, null, "Open navigation")));
+if (!drawerMarkup.includes("brick-drawer-trigger") || !drawerMarkup.includes("Open navigation")) throw new Error("Drawer module SSR smoke failed");
 const badgeMarkup = renderToString(React.createElement(Badge, { tone: "success" }, "Published"));
 if (!badgeMarkup.includes("brick-badge") || !badgeMarkup.includes("Published")) throw new Error("Badge SSR smoke failed");
 const chipMarkup = renderToString(React.createElement(Chip.Root, null, React.createElement(Chip.Label, null, "Riley Chen"), React.createElement(Chip.RemoveTrigger, { ariaLabel: "Remove Riley Chen" })));
@@ -242,12 +248,14 @@ if (!css.includes(".brick-swipeable-item") || !css.includes("--brick-swipeable-i
     await writeFile(
       join(consumer, "verify.ts"),
 	`import { createElement } from "react";
-import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HideProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type OTPFieldRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type RadioGroupRootProps, type ShowProps, type SkeletonProps, type SurfaceProps, type SwipeableItemRootProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HideProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type OTPFieldRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type RadioGroupRootProps, type ShowProps, type SkeletonProps, type SurfaceProps, type SwipeableItemRootProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
 import { AppBar as SubpathAppBar } from "@flowstack-ui/brick/app-bar";
 import { Card as SubpathCard } from "@flowstack-ui/brick/card";
+import * as DrawerModule from "@flowstack-ui/brick/drawer";
+import type { DrawerRootProps } from "@flowstack-ui/brick/drawer";
 import { Container as SubpathContainer } from "@flowstack-ui/brick/container";
 import { Surface as SubpathSurface } from "@flowstack-ui/brick/surface";
 import { Chip as SubpathChip } from "@flowstack-ui/brick/chip";
@@ -270,6 +278,7 @@ const props: ButtonProps = { children: "Consumer" };
 const iconButtonProps: IconButtonProps = { "aria-label": "Search", children: createElement("svg"), href: "/search" };
 const appBarProps: AppBarRootProps = { children: createElement(AppBar.Toolbar, null, "Workspace"), position: "sticky" };
 const cardProps: CardRootProps = { as: "article", children: "Consumer" };
+const drawerModuleProps: DrawerRootProps = { children: createElement(DrawerModule.Trigger, null, "Open navigation") };
 const alertDialogProps: AlertDialogContentProps = { size: "sm", children: "Consumer" };
 const badgeProps: BadgeProps = { children: "Published", tone: "success" };
 const notificationBadgeProps: NotificationBadgeProps = { count: 4, children: createElement("button", null, "Inbox") };
@@ -343,6 +352,7 @@ void AppBar;
 void SubpathAppBar;
 void appBarProps;
 void Card;
+void Drawer; void DrawerModule; void drawerModuleProps;
 void SubpathCard;
 void props;
 void cardProps;

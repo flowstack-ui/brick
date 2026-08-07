@@ -18,6 +18,7 @@ export {
   type DrawerContentProps,
   type DrawerDescriptionProps,
   type DrawerFooterProps,
+  type DrawerFooterJustify,
   type DrawerHeaderProps,
   type DrawerOverlayProps,
   type DrawerPlacement,

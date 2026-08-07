@@ -14,6 +14,8 @@ Dialog follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added logical Footer `justify` values for start, center, end, and
+  space-between action distribution; end remains the default.
 - Initial modal-only twelve-part `Dialog` compound namespace with Root, Trigger, Portal,
   Overlay, Content, Header, Title, Description, Body, Footer, Close, and Branch.
 - Small, medium, and large centered surfaces with safe-area-aware dynamic

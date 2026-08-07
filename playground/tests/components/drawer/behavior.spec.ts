@@ -1,6 +1,17 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator } from "@playwright/test";
 
+test("Drawer Footer maps logical action distribution to flex alignment", async ({ page }) => {
+  await page.goto("/drawer");
+  await page.getByRole("button", { name: "Filter projects" }).click();
+  const footer = page.getByTestId("drawer-overview-content").locator("[data-slot='drawer-footer']");
+  await expect(footer).toHaveAttribute("data-justify", "end");
+  for (const [justify, expected] of [["start", "flex-start"], ["center", "center"], ["between", "space-between"]] as const) {
+    await footer.evaluate((element, value) => element.setAttribute("data-justify", value), justify);
+    await expect.poll(() => footer.evaluate((element) => getComputedStyle(element).justifyContent)).toBe(expected);
+  }
+});
+
 async function expectDrawerDefaults(
   drawer: Locator,
   slot = "drawer-content",
@@ -81,7 +92,7 @@ test("Drawer sizes remain ordered and only full occupies a mobile viewport", asy
   await page.goto("/drawer");
   const widths: number[] = [];
 
-  for (const size of ["sm", "md", "lg", "full"] as const) {
+  for (const size of ["sm", "md", "lg", "xl", "full"] as const) {
     await page.getByRole("button", { name: `Open ${size} drawer` }).click();
     const drawer = page.getByTestId(`drawer-size-${size}`);
     await expect(drawer).toHaveAttribute("data-placement", "end");
@@ -98,7 +109,37 @@ test("Drawer sizes remain ordered and only full occupies a mobile viewport", asy
   expect(widths[0]).toBeLessThan(widths[1]);
   expect(widths[1]).toBeLessThan(widths[2]);
   expect(widths[2]).toBeLessThan(widths[3]);
-  expect(widths[3]).toBeCloseTo(390, 0);
+  expect(widths[3]).toBeLessThan(widths[4]);
+  expect(widths[4]).toBeCloseTo(390, 0);
+});
+
+test("top Drawer grows with content until its size cap, then Body scrolls", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 640 });
+  await page.goto("/drawer");
+  await page.getByRole("button", { name: "Open top drawer" }).click();
+
+  const drawer = page.getByTestId("drawer-placement-top");
+  const body = drawer.locator("[data-slot='drawer-body']");
+  await expectDrawerSettled(drawer);
+
+  const naturalBox = await drawer.boundingBox();
+  expect(naturalBox).not.toBeNull();
+  expect(naturalBox!.height).toBeLessThan(384);
+
+  await body.evaluate((element) => {
+    for (let index = 0; index < 30; index += 1) {
+      const paragraph = document.createElement("p");
+      paragraph.textContent = `Additional navigation destination ${index + 1}`;
+      element.append(paragraph);
+    }
+  });
+
+  await expect.poll(async () => (await drawer.boundingBox())?.height).toBeCloseTo(384, 0);
+  expect(
+    await body.evaluate((element) => element.scrollHeight > element.clientHeight),
+  ).toBe(true);
 });
 
 test("Drawer renders only authored anatomy and every supported Title level", async ({

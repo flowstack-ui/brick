@@ -133,7 +133,10 @@ Link anatomy adds `__link-start`, `__link-content`, `__link-label`,
 Public variables include `--brick-nav-list-gap`,
 `--brick-nav-list-section-gap`, `--brick-nav-list-item-gap`,
 `--brick-nav-list-content-inset`, `--brick-nav-list-row-min-block-size`,
-row padding/radius, link foreground/surface state variables,
+`--brick-nav-list-row-padding-block`,
+`--brick-nav-list-row-padding-inline`, and its logical
+`--brick-nav-list-row-padding-inline-start` / `-end` overrides, row radius,
+link foreground/surface state variables,
 `--brick-nav-list-current-border`, `--brick-nav-list-focus-ring`,
 icon size/gap, description foreground, label typography aliases, and
 `--brick-nav-list-trigger-indicator-size`.
@@ -153,6 +156,8 @@ icon size/gap, description foreground, label typography aliases, and
 ```
 
 Prefer closed recipes first. Use public variables for deliberate local themes.
+The logical row-padding overrides are useful when leading text and trailing
+artwork must align independently with a surrounding Sidebar, Drawer, or shell.
 
 ## Responsive behavior
 
@@ -179,6 +184,11 @@ Every part forwards its Atom composition contract. A composed Link must
 produce a final destination anchor. `asChild` delegates complete child
 anatomy; normal and `render` Link paths receive Brick label/icon/description
 anatomy.
+
+When top-level rows use Dividers, place each boundary after the complete Item
+or collapsible Section it separates. Never place a Divider between a
+SectionTrigger and its controlled SectionContent, and keep repeated boundaries
+under the same layout owner so spacing remains consistent.
 
 Refs match the rendered parts: landmark/section/label/trigger `HTMLElement`,
 List `HTMLUListElement | HTMLOListElement`, Item `HTMLLIElement`, Link

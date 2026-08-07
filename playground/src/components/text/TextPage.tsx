@@ -28,6 +28,7 @@ const variants: TextVariant[] = [
   "body-md",
   "body-sm",
   "caption",
+  "eyebrow",
 ];
 const tones: TextTone[] = [
   "inherit",
@@ -94,7 +95,7 @@ export const textScenarios = [
   },
   {
     description:
-      "Eight restrained visual recipes change typography only. Every specimen keeps the default span host, primary tone, identical copy, and natural wrapping.",
+      "Nine restrained visual recipes change typography only. Every specimen keeps the default span host, primary tone, identical copy, and natural wrapping.",
     id: "text.variants",
     number: 2,
     title: "Type variants",

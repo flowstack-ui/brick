@@ -2,6 +2,7 @@ import { createElement } from "react";
 import {
   Dialog,
   type DialogContentProps,
+  type DialogFooterProps,
   type DialogRootProps,
   type DialogSize,
   type DialogTitleProps,
@@ -25,11 +26,13 @@ const titleProps: DialogTitleProps = {
   as: "h1",
   children: "Project settings",
 };
+const footerProps: DialogFooterProps = { children: "Actions", justify: "start" };
 
 void Dialog;
 void rootProps;
 void contentProps;
 void titleProps;
+void footerProps;
 
 // @ts-expect-error Dialog sizes are a closed set.
 const invalidSize: DialogSize = "xl";
@@ -45,6 +48,8 @@ const invalidPlacement: DialogContentProps = { placement: "end" };
 const invalidFullscreen: DialogContentProps = { fullscreen: true };
 // @ts-expect-error Dialog Title accepts heading elements only.
 const invalidTitle: DialogTitleProps = { as: "div", children: "Settings" };
+// @ts-expect-error Dialog Footer distribution is a closed set.
+const invalidFooter: DialogFooterProps = { justify: "stretch" };
 
 void invalidSize;
 void invalidFlatDialog;
@@ -53,3 +58,4 @@ void invalidTone;
 void invalidPlacement;
 void invalidFullscreen;
 void invalidTitle;
+void invalidFooter;

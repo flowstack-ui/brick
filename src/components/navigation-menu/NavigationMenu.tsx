@@ -15,13 +15,14 @@ import {
 } from "@flowstack-ui/atom/navigation-menu";
 
 export type NavigationMenuSize = "sm" | "md" | "lg";
+export type NavigationMenuLinkVariant = "control" | "panel";
 export interface NavigationMenuRootProps extends AtomNavigationMenuRootProps { size?: NavigationMenuSize }
 export type NavigationMenuSubProps = AtomNavigationMenuSubProps;
 export type NavigationMenuListProps = AtomNavigationMenuListProps;
 export type NavigationMenuItemProps = AtomNavigationMenuItemProps;
 export type NavigationMenuTriggerProps = AtomNavigationMenuTriggerProps;
 export type NavigationMenuContentProps = AtomNavigationMenuContentProps;
-export type NavigationMenuLinkProps = AtomNavigationMenuLinkProps;
+export interface NavigationMenuLinkProps extends AtomNavigationMenuLinkProps { variant?: NavigationMenuLinkVariant }
 export type NavigationMenuIndicatorProps = AtomNavigationMenuIndicatorProps;
 export interface NavigationMenuIndicatorArrowProps extends Omit<HTMLAttributes<HTMLSpanElement>, "children"> { "data-slot"?: string }
 export type NavigationMenuViewportProps = AtomNavigationMenuViewportProps;
@@ -49,8 +50,8 @@ export const NavigationMenuTrigger = forwardRef<HTMLButtonElement, NavigationMen
 export function NavigationMenuContent({ className, "data-slot": dataSlot, ...props }: NavigationMenuContentProps) {
   return <AtomNavigationMenu.Content {...props} className={merge("brick-navigation-menu__content", className)} data-slot={slot(dataSlot, "navigation-menu-content")} />;
 }
-export const NavigationMenuLink = forwardRef<HTMLAnchorElement, NavigationMenuLinkProps>(function NavigationMenuLink({ className, "data-slot": dataSlot, ...props }, ref) {
-  return <AtomNavigationMenu.Link {...props} className={merge("brick-navigation-menu__link", className)} data-slot={slot(dataSlot, "navigation-menu-link")} ref={ref} />;
+export const NavigationMenuLink = forwardRef<HTMLAnchorElement, NavigationMenuLinkProps>(function NavigationMenuLink({ className, "data-slot": dataSlot, variant = "control", ...props }, ref) {
+  return <AtomNavigationMenu.Link {...props} className={merge("brick-navigation-menu__link", className)} data-slot={slot(dataSlot, "navigation-menu-link")} data-variant={variant} ref={ref} />;
 });
 export const NavigationMenuIndicatorArrow = forwardRef<HTMLSpanElement, NavigationMenuIndicatorArrowProps>(function NavigationMenuIndicatorArrow({ className, "data-slot": dataSlot, ...props }, ref) {
   return <span {...props} aria-hidden="true" className={merge("brick-navigation-menu__indicator-arrow", className)} data-slot={slot(dataSlot, "navigation-menu-indicator-arrow")} ref={ref} />;

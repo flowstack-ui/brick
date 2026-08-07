@@ -14,25 +14,29 @@ Provide a finished top surface and one-row start, geometrically centered, and en
 
 ## Required composition
 
-- Compose Root > Toolbar > Start, Center, and End, then place Brick brand, navigation, text, and action components in the matching sections.
+- Root renders a semantic header by default. For a contained full-bleed bar, compose Root > Container > Toolbar > Start, Center, and End; omit Container only when Toolbar should use the full available width.
 
 ## Rules
 
+- **MUST:** Keep AppBar.Root's default header when it owns page or application banner content; use asChild or render only when another semantic or neutral host is intentionally required, such as non-banner chrome inside a Drawer.
+- **MUST:** Place Container between Root and Toolbar when the AppBar surface should remain full bleed while its content uses a bounded measure; do not cap Root itself or recreate Toolbar geometry.
 - **MUST:** Do not treat AppBar.Toolbar as an ARIA toolbar; compose Toolbar for grouped-control keyboard behavior.
 - **MUST:** Keep application-specific visibility and wrapping policy outside AppBar and implement it with Brick responsive/layout components.
 - **MUST:** Load styles.css or core.css plus app-bar.css.
 
 ## Common mistakes
 
-- **Avoid:** Hand-building a header row with div and flex CSS or expecting AppBar to create menus and breakpoints. **Instead:** Use AppBar for the top surface and compose the dedicated navigation, layout, and visibility owners inside it.
+- **Avoid:** Hand-building a header row with div and flex CSS, assuming Root defaults to div, capping the full AppBar surface with application width CSS, or expecting AppBar to create menus and breakpoints. **Instead:** Use Root's default header for banner content, place Container around Toolbar when content needs a measure, and compose the dedicated navigation, layout, and visibility owners inside it.
 
 ## Validation checklist
 
+- Check the final Root element and landmark ownership, including non-banner composed hosts.
 - Check geometric centering with unequal side content, truncation, zoom, narrow widths, and RTL.
 - Confirm landmark names, actions, navigation, and modular CSS are complete.
 
 ## Related guidance
 
+- `container`
 - `toolbar`
 - `navigation-menu`
 - `nav-list`

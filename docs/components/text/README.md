@@ -92,7 +92,7 @@ recipe metadata, and documented variables are stable public hooks.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `as` | `span`, `p`, `div`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6` | `span` |
-| `variant` | `display`, `title-lg`, `title-md`, `title-sm`, `body-lg`, `body-md`, `body-sm`, `caption` | `body-md` |
+| `variant` | `display`, `title-lg`, `title-md`, `title-sm`, `body-lg`, `body-md`, `body-sm`, `caption`, `eyebrow` | `body-md` |
 | `tone` | `inherit`, `primary`, `secondary`, `muted`, `accent`, `info`, `success`, `warning`, `danger` | `primary` |
 | `weight` | `inherit`, `regular`, `medium`, `semibold` | recipe default |
 | `align` | `start`, `center`, `end` | natural/start |
@@ -113,6 +113,8 @@ data attributes pass to the selected host. The ref type is `HTMLElement`.
 - `title-lg`, `title-md`, and `title-sm` create heading hierarchy.
 - `body-lg`, `body-md`, and `body-sm` cover prose and supporting copy.
 - `caption` covers compact metadata without replacing accessible labels.
+- `eyebrow` covers a short uppercase editorial label placed before a heading;
+  it is not body copy, status, or category semantics.
 
 Display/title recipes use the heading family, semibold weight, tight leading,
 and restrained negative tracking. Body/caption recipes use the body family,
@@ -145,6 +147,7 @@ Public Text variables:
 - `--brick-text-font-weight`
 - `--brick-text-line-height`
 - `--brick-text-letter-spacing`
+- `--brick-text-text-transform`
 - `--brick-text-foreground`
 
 Each Text variant aliases the matching public semantic recipe:
@@ -215,6 +218,14 @@ polymorphism; specialized components own those contracts.
 ```tsx
 <Text as="h3" variant="title-lg">
   Billing history
+</Text>
+```
+
+### Section eyebrow
+
+```tsx
+<Text variant="eyebrow" tone="accent">
+  Built for business
 </Text>
 ```
 

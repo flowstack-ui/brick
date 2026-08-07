@@ -122,6 +122,18 @@
     padding: var(--brick-space-3) var(--brick-alert-dialog-space) var(--brick-alert-dialog-space);
   }
 
+  .brick-alert-dialog-footer[data-justify="start"] {
+    justify-content: flex-start;
+  }
+
+  .brick-alert-dialog-footer[data-justify="center"] {
+    justify-content: center;
+  }
+
+  .brick-alert-dialog-footer[data-justify="between"] {
+    justify-content: space-between;
+  }
+
   @supports not (height: 100dvb) {
     .brick-alert-dialog-content {
       --brick-alert-dialog-max-block-size: calc(100vh - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
