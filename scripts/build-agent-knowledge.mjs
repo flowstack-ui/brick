@@ -38,8 +38,11 @@ function renderGuide(data) {
   const decisionOrder = data.decisionOrder.map((item, index) => `${index + 1}. ${item}`).join("\n");
   const selection = data.selection.map(({ intent, use, note }) => `- **${intent}:** use ${use}.${note ? ` ${note}` : ""}`).join("\n");
   const rules = data.rules.map(({ level, statement }) => `- **${level.toUpperCase()}:** ${statement}`).join("\n");
+  const customization = data.customization
+    ? `\n\n## Customization order\n\n${data.customization.order.map(({ owner, instruction }, index) => `${index + 1}. **${owner}:** ${instruction}`).join("\n")}\n\n**Class name policy:** ${data.customization.classNamePolicy}\n\n**Direct CSS policy:** ${data.customization.directCssPolicy}\n\n### Required gap report\n\n${data.customization.gapReport.requiredWhen}\n\n${list(data.customization.gapReport.fields.map((field) => `\`${field}\``))}`
+    : "";
   const fallback = `1. ${data.nativeFallback.check}\n2. ${data.nativeFallback.use}\n3. ${data.nativeFallback.report}`;
-  return `# ${data.name}\n\n## Purpose\n\n${data.purpose}\n\n## Decision order\n\n${decisionOrder}\n\n## Selection map\n\n${selection}\n\n## Rules\n\n${rules}\n\n## Native fallback\n\n${fallback}\n\n## Validation checklist\n\n${list(data.validation)}\n\n## Related guidance\n\n${list(data.related.map((item) => `\`${item}\``))}\n`;
+  return `# ${data.name}\n\n## Purpose\n\n${data.purpose}\n\n## Decision order\n\n${decisionOrder}\n\n## Selection map\n\n${selection}\n\n## Rules\n\n${rules}${customization}\n\n## Native fallback\n\n${fallback}\n\n## Validation checklist\n\n${list(data.validation)}\n\n## Related guidance\n\n${list(data.related.map((item) => `\`${item}\``))}\n`;
 }
 
 function validate(data, file) {
@@ -69,6 +72,13 @@ function validateGuide(data, file) {
   for (const item of data.selection ?? []) if (!item.intent || !item.use) failures.push("every selection item needs intent and use");
   for (const rule of data.rules ?? []) if (!rule.id || !["must", "should"].includes(rule.level) || !rule.statement) failures.push("every rule needs id, must/should level, and statement");
   for (const key of ["check", "use", "report"]) if (!data.nativeFallback?.[key]) failures.push(`nativeFallback.${key} must be a non-empty string`);
+  if (data.customization !== undefined) {
+    if (!Array.isArray(data.customization.order) || data.customization.order.length === 0) failures.push("customization.order must be a non-empty array");
+    for (const item of data.customization.order ?? []) if (!item.owner || !item.instruction) failures.push("every customization.order item needs owner and instruction");
+    for (const key of ["classNamePolicy", "directCssPolicy"]) if (!data.customization[key]) failures.push(`customization.${key} must be a non-empty string`);
+    if (!data.customization.gapReport?.requiredWhen) failures.push("customization.gapReport.requiredWhen must be a non-empty string");
+    if (!Array.isArray(data.customization.gapReport?.fields) || data.customization.gapReport.fields.length === 0) failures.push("customization.gapReport.fields must be a non-empty array");
+  }
   if (failures.length) throw new Error(`${relative(packageRoot, file)}:\n- ${failures.join("\n- ")}`);
 }
 

@@ -17,7 +17,10 @@ import "@flowstack-ui/brick/styles.css";
 ```
 
 This stylesheet contains default tokens, foundations, released component CSS,
-and required keyframes. Importing JavaScript does not import CSS automatically.
+and required keyframes. Its low-specificity document foundation applies the
+canvas, primary foreground, body family, body size, and body line height from
+Brick's semantic tokens. A theme changes those tokens instead of repeating a
+separate `body` rule. Importing JavaScript does not import CSS automatically.
 
 ## Optional reset
 
@@ -28,8 +31,9 @@ import "@flowstack-ui/brick/reset.css";
 import "@flowstack-ui/brick/styles.css";
 ```
 
-The reset is never included by `styles.css`. Existing applications can omit it
-and keep their own reset or browser defaults.
+The reset is never included by `styles.css`. It owns neutral normalization such
+as page sizing and margin removal; it does not paint the document. Existing
+applications can omit it and keep their own reset or browser defaults.
 
 ## Tokens without components
 
@@ -54,9 +58,10 @@ import "@flowstack-ui/brick/styles/button.css";
 import "@flowstack-ui/brick/styles/card.css";
 ```
 
-`core.css` contains Brick's layer order, default tokens, and component-scoped
-foundations. Import it before component styles. Each component stylesheet owns
-that component's rules and every shared visual recipe it renders internally;
+`core.css` contains Brick's layer order, default tokens, and foundations,
+including the same token-driven document canvas and body typography as the
+complete stylesheet. Import it before component styles. Each component
+stylesheet owns that component's rules and every shared visual recipe it renders internally;
 for example, `checkbox-group.css` already includes the Checkbox artwork and
 `toggle-group.css` already includes the Toggle item recipe. Component styles do
 not repeat tokens or foundations.

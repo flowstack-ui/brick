@@ -9,7 +9,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 1. Map the page into landmarks, bounded regions, layout relationships, content, navigation, actions, media, and responsive changes.
 2. Choose the Brick owner for each relationship and read every selected component guide before implementation.
 3. Compose from the outside inward: AppBar or page landmark, Container, Grid or Stack, Surface or Card, then content and controls.
-4. Use component props and theme tokens before stable component hooks, and use application CSS only for product-specific composition.
+4. Follow the customization order completely: component owner, supported props, semantic theme tokens, component tokens, public parts, and only then a narrow stable-hook escape hatch.
 5. Audit responsive behavior, accessibility, CSS delivery, and native fallbacks before treating the composition as complete.
 
 ## Selection map
@@ -29,7 +29,39 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **MUST:** Do not use Stack, Surface, Button, or another convenient component when a more specific Brick navigation, media, content, or interaction component owns the job.
 - **MUST:** Preserve document landmarks and semantic elements when Brick does not provide an owner; Brick-first is not permission to erase HTML meaning.
 - **SHOULD:** Express reusable brand values through semantic Brick tokens and a theme rather than repeating literal application values.
+- **MUST:** When styles.css or styles/core.css is loaded, change the document canvas, foreground, and body typography through semantic Brick tokens instead of repeating the body bindings that Brick's foundation already owns.
+- **MUST:** Do not write a direct declaration against a Brick part until the correct component, supported props, semantic tokens, component tokens, and public compound parts have been checked in order.
+- **MUST:** Target only documented Brick tokens, public compound parts, stable brick-* base classes, documented slots, and documented state attributes; inspected internal wrappers or implementation selectors are not APIs.
+- **MUST:** When a direct stable-hook override remains because no public prop or token expresses the requirement, emit the required customization gap report and classify its owner before treating the interface as complete.
 - **SHOULD:** Classify repeated purposeful sections as Block candidates and repeated page arrangements as Blueprint candidates only after real reuse evidence.
+
+## Customization order
+
+1. **Correct Brick component:** Select the component whose semantic, behavioral, layout, content, navigation, or surface contract owns the job; styling a convenient substitute is not equivalent.
+2. **Supported props and recipes:** Use the component's documented variant, tone, size, density, orientation, placement, and other closed recipes when they express the result.
+3. **Semantic theme tokens:** Assign reusable brand color, typography, spacing, radius, surface, focus, and motion roles through a theme scope, preserving required foreground/background and interaction-state pairs.
+4. **Documented component tokens:** Use stable --brick-<component>-* variables for supported anatomy-specific adjustments instead of overriding the declaration that consumes them.
+5. **Public compound parts:** Place product-specific composition classes on the public part that owns the region; do not create slot maps or select private wrappers.
+6. **Narrow stable-hook escape hatch:** Use className or style only for application-owned composition or a value Brick does not expose, and target a documented public hook when direct CSS is unavoidable.
+
+**Class name policy:** className scopes a product composition or supplies consumer-defined token values. It must not replace a supported prop, repeat a reusable theme value, or depend on undocumented anatomy.
+
+**Direct CSS policy:** Direct declarations on a stable Brick class are a last resort. Keep them narrow, preserve component state and accessibility, verify the affected responsive and appearance states, and report the missing public capability.
+
+### Required gap report
+
+Emit this record for every native/framework fallback or direct stable-hook declaration that remains after the ordered search.
+
+- `interfaceJob`
+- `brickOwnerSearched`
+- `supportedPropsChecked`
+- `semanticTokensChecked`
+- `componentTokensChecked`
+- `publicPartsChecked`
+- `fallbackOrOverride`
+- `missingCapability`
+- `proposedOwner`
+- `verification`
 
 ## Native fallback
 
@@ -42,7 +74,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - Inspect the rendered DOM, accessible names, heading order, landmarks, focus order, keyboard operation, touch targets, contrast, zoom, and RTL behavior.
 - Test every adopted breakpoint without JavaScript-dependent first-paint flicker.
 - Confirm layout primitives own ordinary gap, alignment, wrapping, width, and visibility before accepting custom CSS.
-- Confirm repeated CSS values are theme tokens and repeated purposeful compositions are recorded for later extraction rather than copied silently.
+- Confirm repeated CSS values are theme tokens, component-specific values use documented component tokens, and every remaining direct stable-hook declaration has a complete customization gap report.
 - Run the package's CSS-delivery check and the application's accessibility, browser, and performance checks.
 
 ## Related guidance

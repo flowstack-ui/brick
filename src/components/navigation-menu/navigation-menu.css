@@ -105,7 +105,8 @@
   .brick-navigation-menu__indicator[data-state="visible"] { opacity: 1; }
   .brick-navigation-menu__indicator[data-orientation="horizontal"] {
     inset-block-start: 100%;
-    inset-inline-start: 0;
+    inset-inline-start: auto;
+    left: 0;
     inline-size: var(--atom-navigation-menu-trigger-width);
     block-size: var(--brick-navigation-menu-indicator-offset);
     align-items: flex-end;
@@ -172,7 +173,13 @@
     scale: 0.98;
     transition: inline-size var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-standard), block-size var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-standard), translate var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-standard), opacity var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-enter), scale var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-enter);
   }
-  .brick-navigation-menu[data-orientation="horizontal"] > .brick-navigation-menu__viewport { inset-block-start: calc(100% + var(--brick-space-2)); inset-inline-start: 50%; translate: -50% 0; }
+  .brick-navigation-menu[data-orientation="horizontal"] > .brick-navigation-menu__viewport {
+    inset-block-start: calc(100% + var(--brick-space-2));
+    inset-inline-start: auto;
+    left: var(--atom-navigation-menu-viewport-left);
+    max-inline-size: min(var(--brick-navigation-menu-viewport-max-inline-size), var(--atom-navigation-menu-viewport-available-width));
+    translate: 0 0;
+  }
   .brick-navigation-menu[data-orientation="vertical"] > .brick-navigation-menu__viewport { inset-block-start: 0; inset-inline-start: calc(100% + var(--brick-space-2)); translate: 0 var(--atom-navigation-menu-trigger-top, 0); }
   .brick-navigation-menu__viewport[data-state="open"] { opacity: 1; scale: 1; }
   .brick-navigation-menu__content { box-sizing: border-box; inline-size: max-content; max-inline-size: var(--brick-navigation-menu-viewport-max-inline-size); min-block-size: 0; padding: var(--brick-navigation-menu-viewport-padding); }

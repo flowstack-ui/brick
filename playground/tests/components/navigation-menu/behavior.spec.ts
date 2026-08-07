@@ -25,8 +25,17 @@ test("defaults, links, disclosure, sizes, orientation, state, and composition wo
   const current = root.getByRole("link", { name: "Pricing" });
   await expect(current).toHaveAttribute("data-active", "");
   await expect(current).toHaveCSS("text-decoration-thickness", "1px");
-  const [indicatorBox, viewportBox] = await Promise.all([indicator.boundingBox(), viewport.boundingBox()]);
+  const [triggerBox, indicatorBox, indicatorArrowBox, viewportBox] = await Promise.all([products.boundingBox(), indicator.boundingBox(), indicatorArrow.boundingBox(), viewport.boundingBox()]);
   expect(indicatorBox && viewportBox && indicatorBox.y + indicatorBox.height).toBeCloseTo(viewportBox?.y ?? 0, 0);
+  if (!triggerBox || !viewportBox) throw new Error("Horizontal Navigation Menu geometry is not measurable.");
+  const visibleBoundary = await page.evaluate(() => ({ left: window.visualViewport?.offsetLeft ?? 0, width: window.visualViewport?.width ?? document.documentElement.clientWidth }));
+  const boundaryStart = visibleBoundary.left + 8;
+  const boundaryEnd = visibleBoundary.left + visibleBoundary.width - 8;
+  const preferredLeft = triggerBox.x + triggerBox.width / 2 - viewportBox.width / 2;
+  const expectedLeft = Math.min(Math.max(preferredLeft, boundaryStart), boundaryEnd - viewportBox.width);
+  expect(viewportBox.x).toBeCloseTo(expectedLeft, 0);
+  expect(indicatorArrowBox && viewportBox && indicatorArrowBox.x + indicatorArrowBox.width / 2).toBeGreaterThanOrEqual(viewportBox?.x ?? 0);
+  expect(indicatorArrowBox && viewportBox && indicatorArrowBox.x + indicatorArrowBox.width / 2).toBeLessThanOrEqual((viewportBox?.x ?? 0) + (viewportBox?.width ?? 0));
   for (const [index, size] of ["sm", "md", "lg"].entries()) {
     const sizedRoot = page.getByTestId("navigation-menu-size").locator(`.brick-navigation-menu[data-size='${size}']`);
     await expect(sizedRoot).toHaveCount(1);
@@ -72,7 +81,16 @@ test("keyboard, mobile replacement, RTL, and accessibility work", async ({ page 
   const rtl = page.getByRole("navigation", { name: "التنقل الرئيسي" });
   const products = rtl.getByRole("button", { name: "المنتجات" });
   await products.click();
-  await expect(rtl.locator(".brick-navigation-menu__indicator-arrow")).toBeVisible();
+  const rtlArrow = rtl.locator(".brick-navigation-menu__indicator-arrow");
+  const rtlViewport = rtl.locator(".brick-navigation-menu__viewport");
+  await expect(rtlArrow).toBeVisible();
+  await expect.poll(async () => {
+    const [rtlTriggerBox, rtlArrowBox, rtlViewportBox] = await Promise.all([products.boundingBox(), rtlArrow.boundingBox(), rtlViewport.boundingBox()]);
+    if (!rtlTriggerBox || !rtlArrowBox || !rtlViewportBox) return false;
+    const triggerCenter = rtlTriggerBox.x + rtlTriggerBox.width / 2;
+    const arrowCenter = rtlArrowBox.x + rtlArrowBox.width / 2;
+    return Math.abs(triggerCenter - arrowCenter) <= 1 && arrowCenter >= rtlViewportBox.x && arrowCenter <= rtlViewportBox.x + rtlViewportBox.width;
+  }).toBe(true);
   await page.keyboard.press("Escape");
   await products.focus(); await products.press("ArrowLeft");
   await expect(rtl.getByRole("link", { name: "الأسعار" })).toBeFocused();

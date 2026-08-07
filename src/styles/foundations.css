@@ -1,4 +1,12 @@
 @layer brick.foundations {
+  :where(body) {
+    background-color: var(--brick-color-surface-canvas);
+    color: var(--brick-color-text-primary);
+    font-family: var(--brick-font-family-body);
+    font-size: var(--brick-typography-body-md-font-size);
+    line-height: var(--brick-typography-body-md-line-height);
+  }
+
   :where([class^="brick-"], [class*=" brick-"]) {
     box-sizing: border-box;
     font-family: var(--brick-font-family-body);

@@ -28,6 +28,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - **MUST:** Do not import @flowstack-ui/atom directly in an application that has selected Brick; report a Brick gap if the finished component is missing.
 - **MUST:** Load styles.css once, or core.css once plus every rendered component's modular stylesheet; never mix the two delivery modes.
 - **MUST:** Choose components by semantic and interaction intent rather than by visual resemblance.
+- **MUST:** After selecting a Brick owner, follow interface-composition's ordered prop, semantic-token, component-token, public-part, and stable-hook customization contract.
 - **SHOULD:** Record intentional native or framework fallbacks with the searched Brick component and missing capability.
 
 ## Native fallback
@@ -38,7 +39,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 
 ## Validation checklist
 
-- List every native layout, text, image, navigation, and interactive element and name why Brick does not own it.
+- List every native layout, text, image, navigation, and interactive element and name why Brick does not own it; list every direct Brick stable-hook declaration and its completed customization gap report.
 - Confirm there are no direct @flowstack-ui/atom imports.
 - Confirm every rendered Brick component has its required modular CSS or the complete stylesheet is loaded once.
 - Classify each repeated composition as component, theme, Block, Blueprint, adapter, or application ownership.

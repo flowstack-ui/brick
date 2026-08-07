@@ -34,5 +34,11 @@ typography, media, navigation, visibility, or control replacements. Ordinary
 Brick applications do not import Atom directly. When no Brick component owns
 the job, record the native or framework fallback and its missing capability.
 
+After selecting a component, read `interface-composition` and follow its
+customization order: supported props, semantic theme tokens, documented
+component tokens, public compound parts, and only then a narrow `className` or
+stable-hook escape hatch. The JSON artifact defines a structured gap report
+for every fallback or direct Brick declaration that remains after this search.
+
 Agent Knowledge is public usage guidance. It does not contain private prompts,
 ranking policy, customer information, or application workflows.
