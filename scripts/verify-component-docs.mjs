@@ -120,6 +120,7 @@ const componentSymbols = {
   tree: "Tree",
   toolbar: "Toolbar",
   pagination: "Pagination",
+  carousel: "Carousel",
   "notification-badge": "NotificationBadge",
   popover: "Popover",
   stack: "Stack",

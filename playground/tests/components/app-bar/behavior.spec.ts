@@ -141,8 +141,44 @@ test("AppBar density changes only Toolbar geometry", async ({ page }) => {
   await expect(compactToolbar).toHaveAttribute("data-density", "compact");
   await expect(comfortableToolbar).not.toHaveAttribute("role");
   await expect(compactToolbar).not.toHaveAttribute("role");
+  expect(
+    await comfortableToolbar.evaluate((element) =>
+      getComputedStyle(element)
+        .getPropertyValue("--brick-app-bar-toolbar-min-block-size-comfortable")
+        .trim(),
+    ),
+  ).toBe("4rem");
+  expect(
+    await compactToolbar.evaluate((element) =>
+      getComputedStyle(element)
+        .getPropertyValue("--brick-app-bar-toolbar-min-block-size-compact")
+        .trim(),
+    ),
+  ).toBe("3rem");
+  expect(
+    await comfortableToolbar.evaluate((element) =>
+      getComputedStyle(element)
+        .getPropertyValue("--brick-app-bar-toolbar-min-block-size")
+        .trim(),
+    ),
+  ).toBe("4rem");
+  expect(
+    await compactToolbar.evaluate((element) =>
+      getComputedStyle(element)
+        .getPropertyValue("--brick-app-bar-toolbar-min-block-size")
+        .trim(),
+    ),
+  ).toBe("3rem");
   expect((await comfortableToolbar.boundingBox())!.height).toBe(64);
   expect((await compactToolbar.boundingBox())!.height).toBe(48);
+
+  await comfortable.evaluate((element) => {
+    element.style.setProperty(
+      "--brick-app-bar-toolbar-min-block-size-comfortable",
+      "5rem",
+    );
+  });
+  expect((await comfortableToolbar.boundingBox())!.height).toBe(80);
 });
 
 test("AppBar surface options remain independent", async ({ page }) => {

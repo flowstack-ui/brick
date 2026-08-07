@@ -36,6 +36,26 @@ test("Image forwards native output and swaps broken and absent sources into the 
   await expect(nativeImage).toHaveAttribute("decoding", "async");
   await expect(nativeImage).toHaveAttribute("data-slot", "image-content");
 
+  const fillFrame = page.getByTestId("image-fill-frame");
+  const fillRoot = fillFrame.locator(".brick-image");
+  const fillContent = fillRoot.locator(".brick-image__content");
+  await expect(fillRoot).toHaveAttribute("data-fill", "");
+  const [frameSize, rootSize, contentSize] = await Promise.all(
+    [fillFrame, fillRoot, fillContent].map((locator) =>
+      locator.evaluate((element) => ({
+        height: element.getBoundingClientRect().height,
+        width: element.getBoundingClientRect().width,
+      })),
+    ),
+  );
+  const rootContentSize = await fillRoot.evaluate((element) => ({
+    height: element.clientHeight,
+    width: element.clientWidth,
+  }));
+  expect(rootSize).toEqual(frameSize);
+  expect(contentSize.height).toBeCloseTo(rootContentSize.height, 0);
+  expect(contentSize.width).toBeCloseTo(rootContentSize.width, 0);
+
   const stateRoot = page.getByTestId("image-state");
   const loadedBox = await stateRoot.boundingBox();
   await page.getByRole("button", { name: "Broken" }).click();

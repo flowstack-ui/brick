@@ -2259,6 +2259,17 @@ componentDocumentationContracts.pagination = {
   publicTokens: ["--brick-pagination-root-background","--brick-pagination-root-border-color","--brick-pagination-root-radius","--brick-pagination-root-padding","--brick-pagination-list-gap","--brick-pagination-list-overflow-padding","--brick-pagination-control-min-size","--brick-pagination-control-inline-padding","--brick-pagination-control-radius","--brick-pagination-control-foreground","--brick-pagination-control-background","--brick-pagination-control-border-color","--brick-pagination-control-hover-background","--brick-pagination-control-pressed-background","--brick-pagination-current-background","--brick-pagination-current-foreground","--brick-pagination-current-border-color","--brick-pagination-disabled-foreground","--brick-pagination-focus-ring","--brick-pagination-ellipsis-foreground","--brick-pagination-icon-size","--brick-pagination-transition-duration","--brick-pagination-font-family","--brick-pagination-font-size","--brick-pagination-font-weight","--brick-pagination-line-height","--brick-pagination-letter-spacing"],
 };
 
+componentDocumentationContracts.carousel = {
+  source: "src/components/carousel/Carousel.tsx",
+  exportSource: "src/components/carousel/index.ts",
+  css: "src/components/carousel/carousel.css",
+  exports: ["Carousel","CarouselRoot","CarouselViewport","CarouselTrack","CarouselSlide","CarouselNavigation","CarouselPrevious","CarouselNext","CarouselControls","CarouselRotationControl","CarouselPicker","CarouselPickerItem","CarouselRootProps","CarouselViewportProps","CarouselTrackProps","CarouselSlideProps","CarouselNavigationProps","CarouselPreviousProps","CarouselNextProps","CarouselControlsProps","CarouselRotationControlProps","CarouselPickerProps","CarouselPickerItemProps","CarouselSize","CarouselControlPlacement"],
+  unions: { CarouselSize: ["sm", "md", "lg"], CarouselControlPlacement: ["overlay", "outside"] },
+  defaults: { size: "md", controlPlacement: "overlay" },
+  dataAttributes: ["data-control-placement", "data-size", "data-slot"],
+  publicTokens: ["--brick-carousel-gap","--brick-carousel-radius","--brick-carousel-control-size","--brick-carousel-control-foreground","--brick-carousel-control-background","--brick-carousel-control-border-color","--brick-carousel-control-hover-background","--brick-carousel-control-shadow","--brick-carousel-focus-ring","--brick-carousel-picker-gap","--brick-carousel-picker-target-size","--brick-carousel-picker-background","--brick-carousel-picker-padding","--brick-carousel-picker-radius","--brick-carousel-dot-size","--brick-carousel-dot-background","--brick-carousel-dot-active-background","--brick-carousel-transition-duration"],
+};
+
 componentDocumentationContracts["multi-select"] = {
   ...componentDocumentationContracts.select,
   source: "src/components/multi-select/MultiSelect.tsx",

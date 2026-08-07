@@ -1,5 +1,8 @@
 export {
   Image,
+  ImageContent,
+  ImageFallback,
+  ImageRoot,
   type ImageContentProps,
   type ImageFallbackProps,
   type ImageFit,

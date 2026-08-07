@@ -1,1 +1,41 @@
-{"schema":"flowstack.agent-component.v1","id":"text","name":"Text","package":"@flowstack-ui/brick","layer":"brick","kind":"component","purpose":"Apply Brick typography roles, sizes, tones, weight, alignment, and wrapping while preserving the chosen semantic text element.","useWhen":["Interface copy needs Brick typography, including headings, paragraphs, short editorial eyebrows, captions, metadata, or inline text."],"avoidWhen":[{"condition":"A component such as Button, Link, Field.Label, Card.Title, or Badge already owns the text role.","useInstead":"that component's named text part"}],"composition":["Choose the semantic element first, then select the closest Brick text role, size, and tone; use Stack for text layout rather than wrapper spans."],"rules":[{"id":"text-semantics","level":"must","statement":"Do not choose heading or paragraph semantics solely from the desired font size."},{"id":"text-brick-first","level":"must","statement":"Use Text for standalone styled interface copy instead of native spans plus duplicate typography CSS."},{"id":"text-readable","level":"must","statement":"Preserve readable body sizing, line height, measure, contrast, and user font scaling."},{"id":"text-eyebrow","level":"must","statement":"Reserve variant=eyebrow for short labels that introduce a nearby heading; use body text for explanatory sentences and Badge for passive status or category content."},{"id":"text-css","level":"must","statement":"Load styles.css or core.css plus text.css."}],"commonMistakes":[{"mistake":"Using five spans to build brand text, selecting all-caps eyebrow styling for paragraph descriptions, or setting headings from appearance.","correction":"Use Text with semantic elements and reserve display treatments for their intended short roles."}],"validation":["Check heading order, semantics, line length, wrapping, truncation, user font scaling, zoom, contrast, themes, and RTL.","Confirm parent component text parts are not bypassed and CSS is loaded."],"related":["stack","link","card","field","badge"]}
+{
+  "schema": "flowstack.agent-component.v1",
+  "id": "text",
+  "name": "Text",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "kind": "component",
+  "purpose": "Apply Brick typography roles, sizes, tones, weight, alignment, and wrapping while preserving the chosen semantic text element.",
+  "useWhen": [
+    "Interface copy needs Brick typography, including headings, paragraphs, short editorial eyebrows, captions, metadata, or inline text."
+  ],
+  "avoidWhen": [
+    {
+      "condition": "A component such as Button, Link, Field.Label, Card.Title, or Badge already owns the text role.",
+      "useInstead": "that component's named text part"
+    }
+  ],
+  "composition": [
+    "Choose the semantic element first, then select the closest Brick text role, size, and tone; use Stack for text layout rather than wrapper spans."
+  ],
+  "rules": [
+    { "id": "text-semantics", "level": "must", "statement": "Do not choose heading or paragraph semantics solely from the desired font size." },
+    { "id": "text-brick-first", "level": "must", "statement": "Use Text for standalone styled interface copy instead of native spans plus duplicate typography CSS." },
+    { "id": "text-readable", "level": "must", "statement": "Preserve readable body sizing, line height, measure, contrast, and user font scaling." },
+    { "id": "text-eyebrow", "level": "must", "statement": "Reserve variant=eyebrow for short labels that introduce a nearby heading; do not select it merely to make unrelated copy smaller. Use body text for explanatory sentences and Badge for passive status or category content." },
+    { "id": "text-inherit-parent-foreground", "level": "must", "statement": "Use tone=inherit when Text is intentionally composed inside a parent such as Badge that owns the foreground and contrast relationship." },
+    { "id": "text-inline-peers", "level": "should", "statement": "Give separately meaningful inline peer labels compatible typography metrics and arrange them with HStack gap rather than literal spaces or manual positional offsets." },
+    { "id": "text-css", "level": "must", "statement": "Load styles.css or core.css plus text.css." }
+  ],
+  "commonMistakes": [
+    {
+      "mistake": "Using five spans to build brand text, selecting all-caps eyebrow styling for paragraph descriptions, allowing nested Text to override a parent's foreground, or aligning peer labels with literal whitespace.",
+      "correction": "Use Text with semantic elements, reserve display treatments for their intended roles, inherit the owning foreground, and use HStack gap for layout between separate nodes."
+    }
+  ],
+  "validation": [
+    "Check heading order, semantics, line length, wrapping, truncation, user font scaling, zoom, contrast, themes, and RTL.",
+    "Confirm parent component text parts and foreground ownership are not bypassed, peer labels align without positional CSS, and CSS is loaded."
+  ],
+  "related": ["stack", "link", "card", "field", "badge"]
+}

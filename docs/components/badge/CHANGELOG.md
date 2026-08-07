@@ -6,6 +6,9 @@ Badge follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge covering passive selection, inherited Text
+  foreground, composed child spacing, CSS delivery, and validation.
+
 - Initial direct Badge component built on the public server-safe Atom Badge
   subpath.
 - Three Badge variants, six tones, three sizes, rounded/pill shapes, passive

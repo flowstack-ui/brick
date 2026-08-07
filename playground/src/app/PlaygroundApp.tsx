@@ -89,6 +89,7 @@ import { FeedPage, feedScenarios } from "../components/feed/FeedPage.js";
 import { SwipeableItemPage, swipeableItemScenarios } from "../components/swipeable-item/SwipeableItemPage.js";
 import { ToolbarPage, toolbarScenarios } from "../components/toolbar/ToolbarPage.js";
 import { PaginationPage, paginationScenarios } from "../components/pagination/PaginationPage.js";
+import { CarouselPage, carouselScenarios } from "../components/carousel/CarouselPage.js";
 import { CodePage, codeScenarios } from "../components/code/CodePage.js";
 import { CodeBlockPage, codeBlockScenarios } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
@@ -426,6 +427,9 @@ export function PlaygroundApp() {
   }
   if (entry.id === "pagination") {
     return <PlaygroundShell entry={entry} scenarios={paginationScenarios}><PaginationPage /></PlaygroundShell>;
+  }
+  if (entry.id === "carousel") {
+    return <PlaygroundShell entry={entry} scenarios={carouselScenarios}><CarouselPage /></PlaygroundShell>;
   }
 
   if (entry.id === "code") {

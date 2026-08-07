@@ -1,8 +1,10 @@
 # Surface
 
 Surface paints a semantic region with a controlled background level, optional
-border, elevation, radius, and inset. It renders one native element and adds no
-layout, clipping, interaction, role, or runtime color context.
+border, elevation, radius, and inset. Ordinary Surface renders one native
+element. Optional Media, Scrim, and Content parts layer decorative authored
+media behind foreground content without adding interaction or runtime color
+context.
 
 ## When and where to use
 
@@ -39,8 +41,10 @@ Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
 
-Public exports are `Surface`, `SurfaceProps`, `SurfaceElement`,
-`SurfaceLevel`, `SurfaceElevation`, `SurfaceRadius`, and `SurfaceInset`.
+Public exports are `Surface`, `SurfaceRoot`, `SurfaceMedia`, `SurfaceScrim`,
+`SurfaceContent`, their prop types, `SurfaceScrimStrength`,
+`SurfaceScrimDirection`, `SurfaceProps`, `SurfaceElement`, `SurfaceLevel`,
+`SurfaceElevation`, `SurfaceRadius`, and `SurfaceInset`.
 
 ## Quick start
 
@@ -55,7 +59,7 @@ Public exports are `Surface`, `SurfaceProps`, `SurfaceElement`,
 
 ## Anatomy and DOM ownership
 
-Surface renders exactly one selected native element:
+Ordinary Surface renders exactly one selected native element:
 
 ```html
 <section
@@ -72,7 +76,18 @@ Surface renders exactly one selected native element:
 ```
 
 It never inserts an inner element, clips descendants, or changes child order.
-The selected element is the `HTMLElement` ref target.
+The selected element is the `HTMLElement` ref target. Authored layered parts
+render only when explicitly composed:
+
+| Part | Element | Responsibility |
+| --- | --- | --- |
+| `Surface.Root` / callable `Surface` | selected native host | paint, edge, radius, inset, and layered containing block when needed |
+| `Surface.Media` | `div` | decorative noninteractive image, video, canvas, SVG, or other visual layer |
+| `Surface.Scrim` | `div` | optional contrast-protecting uniform paint or logical gradient |
+| `Surface.Content` | `div` | foreground application content |
+
+Direct named part exports are equivalent to the compound parts and are safe to
+import from React Server Components.
 
 ## API
 
@@ -86,6 +101,18 @@ The selected element is the `HTMLElement` ref target.
 | `inset` | `none`, `sm`, `md`, `lg` | `none` |
 | `slot` | `string` | `surface` |
 | `children` | `ReactNode` | optional |
+
+### Scrim
+
+| Prop | Values | Default |
+| --- | --- | --- |
+| `strength` | `soft`, `medium`, `strong` | `medium` |
+| `direction` | `uniform`, `inline-start`, `inline-end`, `block-start`, `block-end` | `uniform` |
+| `slot` | `string` | `surface-scrim` |
+
+Media and Content accept authored children, native div attributes, class,
+style, slot, and refs. Media and Scrim are always `aria-hidden` and ignore
+pointer interaction. Scrim accepts no children.
 
 Native global/ARIA/data attributes, events, `className`, `style`, and an
 `HTMLElement` ref pass through.
@@ -121,6 +148,10 @@ Public variables:
 - `--brick-surface-shadow`
 - `--brick-surface-radius`
 - `--brick-surface-padding`
+- `--brick-surface-scrim-color`
+- `--brick-surface-scrim-soft`
+- `--brick-surface-scrim-medium`
+- `--brick-surface-scrim-strong`
 
 ## Customization
 
@@ -162,8 +193,9 @@ self-contained content object. Native props and refs target the one authored
 host.
 
 Surface does not expose `asChild`, `render`, custom-component hosts, tones,
-translucency, clipping, style-system props, runtime context, responsive
-objects, or arbitrary recipe values.
+translucency, generic clipping props, style-system props, runtime context,
+responsive objects, or arbitrary recipe values. Media clipping is limited to
+its own decorative layer.
 
 ## Examples
 
@@ -186,6 +218,30 @@ objects, or arbitrary recipe values.
   </Surface>
 </Surface>
 ```
+
+### Decorative media behind content
+
+```tsx
+<Surface as="section" radius="none">
+  <Surface.Media>
+    <ImageRoot src="/workspace.jpg" fill fit="cover">
+      <ImageContent alt="" width={1200} height={675} />
+    </ImageRoot>
+  </Surface.Media>
+  <Surface.Scrim direction="inline-start" strength="strong" />
+  <Surface.Content>
+    <Container>
+      <VStack gap="3">Foreground content</VStack>
+    </Container>
+  </Surface.Content>
+</Surface>
+```
+
+Background media is decorative. Keep meaningful images and controlled video
+in normal document content. The media owner retains loading, fitting, playback,
+poster, caption, and reduced-motion policy. Scrim improves contrast but does
+not replace contrast verification across every media state. When layered parts
+are used, place all foreground children inside Content.
 
 ## Evidence
 

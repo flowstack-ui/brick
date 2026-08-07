@@ -61,6 +61,7 @@ export const componentStyleEntries = [
   ["swipeable-item", ["components/swipeable-item/swipeable-item.css"]],
   ["toolbar", ["components/toolbar/toolbar.css"]],
   ["pagination", ["components/icon/icon.css", "components/pagination/pagination.css"]],
+  ["carousel", ["components/icon/icon.css", "components/carousel/carousel.css"]],
   ["stack", ["components/stack/stack.css"]],
   ["grid", ["components/grid/grid.css"]],
   ["container", ["components/container/container.css"]],

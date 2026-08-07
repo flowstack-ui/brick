@@ -1,0 +1,4 @@
+import { expect, installVisualDefaults, test } from "../../visual-harness.js";
+installVisualDefaults("/carousel");
+test("Carousel overview and optional controls", async ({ page }) => { await page.setViewportSize({ width: 1120, height: 1300 }); await expect(page.locator("#scenario-carousel-overview")).toHaveScreenshot("overview-light.png"); await expect(page.locator("#scenario-carousel-controls")).toHaveScreenshot("controls-light.png"); });
+test("Carousel rotation and appearance", async ({ page }) => { await page.setViewportSize({ width: 1120, height: 1500 }); await page.locator("#scenario-carousel-rotation").getByRole("button", { name: "Stop slide rotation" }).click(); await expect(page.locator("#scenario-carousel-rotation")).toHaveScreenshot("rotation-light.png"); await expect(page.locator("#scenario-carousel-appearance")).toHaveScreenshot("appearance-light.png"); });

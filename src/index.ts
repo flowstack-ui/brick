@@ -7,6 +7,33 @@ export {
   type ButtonVariant,
 } from "./components/button/index.js";
 export {
+  Carousel,
+  CarouselControls,
+  CarouselNavigation,
+  CarouselNext,
+  CarouselPicker,
+  CarouselPickerItem,
+  CarouselPrevious,
+  CarouselRoot,
+  CarouselRotationControl,
+  CarouselSlide,
+  CarouselTrack,
+  CarouselViewport,
+  type CarouselControlPlacement,
+  type CarouselControlsProps,
+  type CarouselNavigationProps,
+  type CarouselNextProps,
+  type CarouselPickerItemProps,
+  type CarouselPickerProps,
+  type CarouselPreviousProps,
+  type CarouselRootProps,
+  type CarouselRotationControlProps,
+  type CarouselSize,
+  type CarouselSlideProps,
+  type CarouselTrackProps,
+  type CarouselViewportProps,
+} from "./components/carousel/index.js";
+export {
   IconButton,
   type IconButtonProps,
   type IconButtonShape,
@@ -22,6 +49,9 @@ export {
 } from "./components/icon/index.js";
 export {
   Image,
+  ImageContent,
+  ImageFallback,
+  ImageRoot,
   type ImageContentProps,
   type ImageFallbackProps,
   type ImageFit,
@@ -433,12 +463,21 @@ export {
 } from "./components/container/index.js";
 export {
   Surface,
+  SurfaceContent,
+  SurfaceMedia,
+  SurfaceRoot,
+  SurfaceScrim,
+  type SurfaceContentProps,
   type SurfaceElement,
   type SurfaceElevation,
   type SurfaceInset,
   type SurfaceLevel,
+  type SurfaceMediaProps,
   type SurfaceProps,
   type SurfaceRadius,
+  type SurfaceScrimDirection,
+  type SurfaceScrimProps,
+  type SurfaceScrimStrength,
 } from "./components/surface/index.js";
 export {
   Divider,

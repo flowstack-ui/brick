@@ -96,7 +96,10 @@ attributes include Atom `data-position`/`data-density` and Brick
 `--brick-app-bar-foreground`, `--brick-app-bar-border-color`,
 `--brick-app-bar-blurred-background`,
 `--brick-app-bar-reduced-transparency-background`, and
-`--brick-app-bar-shadow`.
+`--brick-app-bar-shadow`. Brick also publishes the density measurements
+`--brick-app-bar-toolbar-min-block-size-comfortable` and
+`--brick-app-bar-toolbar-min-block-size-compact`; Toolbar resolves the selected
+recipe through `--brick-app-bar-toolbar-min-block-size`.
 
 ## Customization
 
@@ -109,6 +112,12 @@ truncation, offsets, and navigation behavior.
 Root fills available inline size. AppBar does not wrap itself or prescribe
 breakpoints; applications decide what truncates, hides, scrolls, or moves.
 Logical tracks and edges support RTL.
+
+When an application-owned opening region must fill the viewport remaining
+below a one-row App Bar, reference the token matching the authored Toolbar
+density instead of repeating `4rem` or `3rem`. Treat it as a minimum recipe:
+zoomed, translated, or enlarged content may make the rendered Toolbar taller,
+and the opening region must be allowed to grow rather than clip.
 
 ## Accessibility
 

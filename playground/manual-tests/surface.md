@@ -16,7 +16,7 @@
 Scenario order: `01 Overview`, `02 Levels`, `03 Borders`, `04 Elevation`,
 `05 Radius`, `06 Inset`, `07 Semantic hosts and composition`,
 `08 Appearance and customization`,
-`09 Responsive, nesting, and forced colors`.
+`09 Responsive, nesting, and forced colors`, `10 Layered media`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
@@ -85,6 +85,22 @@ controls.
 
 Expected: The default Surface adds no spoken role or announcement. Authored
 semantic hosts remain discoverable, and control names/order are unchanged.
+
+Result:
+Notes or issue:
+
+## Step 6 — Layered media
+
+Setup: Review `10` in light, dark, RTL, narrow, zoomed, reduced-motion, and
+forced-color conditions.
+
+Action: Inspect the Surface, Media, Scrim, Content, and Image output, then
+attempt pointer and screen-reader navigation through the decorative layers.
+
+Expected: Media and Scrim fill the Surface behind Content, inherit its radius,
+ignore pointer input, and add no accessibility output. The logical gradient
+follows direction, foreground content remains readable, ordinary Surface
+output elsewhere is unchanged, and forced colors removes decorative layers.
 
 Result:
 Notes or issue:

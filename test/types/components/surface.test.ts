@@ -1,6 +1,10 @@
 import { createElement, createRef } from "react";
 import {
   Surface,
+  SurfaceContent,
+  SurfaceMedia,
+  SurfaceRoot,
+  SurfaceScrim,
   type SurfaceElement,
   type SurfaceElevation,
   type SurfaceInset,
@@ -41,6 +45,14 @@ createElement(RootSurface, {
   level: "canvas",
   radius: "none",
 });
+createElement(SurfaceRoot, null,
+  createElement(SurfaceMedia, null, createElement("video", { muted: true })),
+  createElement(SurfaceScrim, { direction: "inline-start", strength: "strong" }),
+  createElement(SurfaceContent, null, "Foreground"));
+createElement(Surface.Root, null,
+  createElement(Surface.Media, null, createElement("canvas")),
+  createElement(Surface.Scrim, { direction: "block-end", strength: "soft" }),
+  createElement(Surface.Content, null, "Foreground"));
 
 // @ts-expect-error Hosts are deliberately closed.
 createElement(Surface, { as: "button" });
@@ -62,6 +74,12 @@ createElement(Surface, { overflow: true });
 createElement(Surface, { asChild: true });
 // @ts-expect-error No render composition API.
 createElement(Surface, { render: createElement("div") });
+// @ts-expect-error Scrim strength is a closed contrast recipe.
+createElement(SurfaceScrim, { strength: "opaque" });
+// @ts-expect-error Scrim direction uses logical closed values.
+createElement(SurfaceScrim, { direction: "left" });
+// @ts-expect-error Scrim never owns authored content.
+createElement(SurfaceScrim, { children: "Meaningful content" });
 
 void elements;
 void levels;

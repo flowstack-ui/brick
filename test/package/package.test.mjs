@@ -11,7 +11,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.21.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.22.2");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -320,6 +320,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/code-block.d.ts",
       default: "./dist/code-block.js",
     },
+    "./carousel": {
+      types: "./dist/carousel.d.ts",
+      default: "./dist/carousel.js",
+    },
     "./styles.css": "./dist/styles.css",
     "./styles/*.css": "./dist/styles/*.css",
     "./tokens.css": "./dist/tokens.css",
@@ -382,6 +386,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const tree = await import(new URL("../../dist/tree.js", import.meta.url));
   const toolbar = await import(new URL("../../dist/toolbar.js", import.meta.url));
   const pagination = await import(new URL("../../dist/pagination.js", import.meta.url));
+  const carousel = await import(new URL("../../dist/carousel.js", import.meta.url));
   const numberInput = await import(new URL("../../dist/number-input.js", import.meta.url));
   const otpField = await import(new URL("../../dist/otp-field.js", import.meta.url));
   const passwordToggleField = await import(new URL("../../dist/password-toggle-field.js", import.meta.url));
@@ -446,6 +451,18 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "BreadcrumbSeparator",
       "Button",
       "Card",
+      "Carousel",
+      "CarouselControls",
+      "CarouselNavigation",
+      "CarouselNext",
+      "CarouselPicker",
+      "CarouselPickerItem",
+      "CarouselPrevious",
+      "CarouselRoot",
+      "CarouselRotationControl",
+      "CarouselSlide",
+      "CarouselTrack",
+      "CarouselViewport",
       "Checkbox",
       "CheckboxGroup",
       "Chip",
@@ -562,6 +579,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Icon",
       "IconButton",
       "Image",
+      "ImageContent",
+      "ImageFallback",
+      "ImageRoot",
       "Input",
       "Link",
       "List",
@@ -725,6 +745,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "SliderValueLabel",
       "Stack",
       "Surface",
+      "SurfaceContent",
+      "SurfaceMedia",
+      "SurfaceRoot",
+      "SurfaceScrim",
       "SwipeableItem",
       "SwipeableItemActions",
       "SwipeableItemContent",
@@ -835,6 +859,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(pagination.Pagination, brick.Pagination);
   assert.equal(pagination.PaginationRoot, brick.Pagination.Root);
   assert.equal(pagination.PaginationItems, brick.Pagination.Items);
+  assert.equal(carousel.Carousel, brick.Carousel);
+  assert.equal(carousel.CarouselRoot, brick.Carousel.Root);
+  assert.equal(carousel.CarouselPickerItem, brick.Carousel.PickerItem);
+  assert.equal(carousel.Root, brick.Carousel.Root);
+  assert.equal(carousel.PickerItem, brick.Carousel.PickerItem);
   assert.equal(numberInput.NumberInput, brick.NumberInput);
   assert.equal(numberInput.NumberInputInput, brick.NumberInput.Input);
   assert.equal(otpField.OTPField, brick.OTPField);
@@ -1000,6 +1029,13 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(grid.Grid.Item, brick.Grid.Item);
   assert.equal(container.Container, brick.Container);
   assert.equal(surface.Surface, brick.Surface);
+  assert.equal(surface.SurfaceRoot, brick.Surface.Root);
+  assert.equal(surface.SurfaceMedia, brick.Surface.Media);
+  assert.equal(surface.SurfaceScrim, brick.Surface.Scrim);
+  assert.equal(surface.SurfaceContent, brick.Surface.Content);
+  assert.equal(image.ImageRoot, brick.Image.Root);
+  assert.equal(image.ImageContent, brick.Image.Content);
+  assert.equal(image.ImageFallback, brick.Image.Fallback);
   assert.equal(divider.Divider, brick.Divider);
   assert.equal(scrollArea.ScrollArea, brick.ScrollArea);
   assert.equal(scrollArea.ScrollAreaRoot, brick.ScrollArea.Root);
@@ -1173,7 +1209,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 74);
+  assert.equal(componentStyleNames.length, 75);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,brick\.foundations/);

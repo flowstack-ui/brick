@@ -20,6 +20,7 @@ export interface ImageRootProps extends AtomImageRootProps {
   radius?: ImageRadius;
   frame?: ImageFrame;
   ratio?: number;
+  fill?: boolean;
 }
 
 export interface ImageContentProps extends AtomImageContentProps {}
@@ -29,13 +30,14 @@ function mergeClassName(base: string, className?: string) {
   return className ? `${base} ${className}` : base;
 }
 
-const ImageRoot = forwardRef<HTMLDivElement, ImageRootProps>(function ImageRoot(
+export const ImageRoot = forwardRef<HTMLDivElement, ImageRootProps>(function ImageRoot(
   {
     fit = "cover",
     position = "center",
     radius = "none",
     frame = "none",
     ratio,
+    fill = false,
     className,
     "data-slot": dataSlot = "image",
     ...props
@@ -48,6 +50,7 @@ const ImageRoot = forwardRef<HTMLDivElement, ImageRootProps>(function ImageRoot(
       className={mergeClassName("brick-image", className)}
       data-fit={fit}
       data-frame={frame}
+      data-fill={fill ? "" : undefined}
       data-position={position}
       data-radius={radius}
       data-ratio={ratio === undefined ? undefined : ""}
@@ -63,7 +66,7 @@ const ImageRoot = forwardRef<HTMLDivElement, ImageRootProps>(function ImageRoot(
   );
 });
 
-const ImageContent = forwardRef<HTMLImageElement, ImageContentProps>(function ImageContent(
+export const ImageContent = forwardRef<HTMLImageElement, ImageContentProps>(function ImageContent(
   { className, "data-slot": dataSlot = "image-content", ...props },
   ref,
 ) {
@@ -77,7 +80,7 @@ const ImageContent = forwardRef<HTMLImageElement, ImageContentProps>(function Im
   );
 });
 
-const ImageFallback = forwardRef<HTMLDivElement, ImageFallbackProps>(function ImageFallback(
+export const ImageFallback = forwardRef<HTMLDivElement, ImageFallbackProps>(function ImageFallback(
   { className, "data-slot": dataSlot = "image-fallback", ...props },
   ref,
 ) {

@@ -5,6 +5,9 @@ import {
   Container,
   Grid,
   HStack,
+  ImageContent,
+  ImageFallback,
+  ImageRoot,
   List,
   Surface,
   Text,
@@ -133,6 +136,11 @@ export const surfaceScenarios = [
     description:
       "Narrow, RTL, nested, focus, long-content, and forced-color evidence preserves content and meaningful boundaries.",
     id: "surface.stress", number: 9, title: "Responsive, nesting, and forced colors",
+  },
+  {
+    description:
+      "Optional Media, Scrim, and Content parts layer decorative authored media behind readable foreground content without changing ordinary Surface output.",
+    id: "surface.media", number: 10, title: "Layered media",
   },
 ] as const satisfies readonly ScenarioDefinition[];
 
@@ -371,6 +379,46 @@ export function SurfacePage() {
             </Surface>
           </Cell>
         </Grid.Root>
+      </Scenario>
+
+      <Scenario {...surfaceScenarios[9]}>
+        <Surface
+          className="surface-layered"
+          data-testid="surface-layered"
+          radius="surface"
+          style={{
+            "--brick-surface-foreground": "var(--brick-color-accent-on-solid)",
+          } as CSSProperties}
+        >
+          <Surface.Media data-testid="surface-layered-media">
+            <ImageRoot
+              fill
+              fit="cover"
+              position="center"
+              src="/assets/image/workspace-landscape.png"
+            >
+              <ImageContent alt="" height={675} width={1200} />
+              <ImageFallback>Background unavailable</ImageFallback>
+            </ImageRoot>
+          </Surface.Media>
+          <Surface.Scrim
+            data-testid="surface-layered-scrim"
+            direction="inline-start"
+            strength="strong"
+          />
+          <Surface.Content data-testid="surface-layered-content">
+            <VStack className="surface-layered__copy" gap="3" justify="center">
+              <Text as="h3" tone="inherit" variant="title-lg">
+                Media stays behind the message.
+              </Text>
+              <Text tone="inherit" variant="body-md">
+                Surface owns the visual layers. Image keeps its loading and
+                fitting contract. The application still owns the content.
+              </Text>
+              <Button size="sm">Review the composition</Button>
+            </VStack>
+          </Surface.Content>
+        </Surface>
       </Scenario>
     </VStack>
   );

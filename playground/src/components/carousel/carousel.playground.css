@@ -1,0 +1,5 @@
+.carousel-demo-slide { min-block-size: 18rem; display: flex; align-items: center; }
+.carousel-demo-slide-content { padding-inline: calc(var(--brick-carousel-control-size) + (var(--brick-carousel-gap) * 2)); }
+.carousel-demo-grid { align-items: start; }
+.carousel-demo-grid > * { min-inline-size: 0; }
+@media (max-width: 760px) { .carousel-demo-grid { --brick-grid-columns: minmax(0, 1fr); grid-template-columns: 1fr; } .carousel-demo-slide { min-block-size: 15rem; } }

@@ -28,6 +28,8 @@ This directory is the public documentation authority for
   entry point
 - [Pagination](components/pagination/README.md) — generated numbered-page
   navigation for bounded result sets
+- [Carousel](components/carousel/README.md) — one-slide sequences with optional
+  navigation, picker dots, touch scrolling, and controlled rotation
 
 ### Accessibility
 

@@ -1,4 +1,9 @@
 @layer brick.components {
+  :root {
+    --brick-app-bar-toolbar-min-block-size-comfortable: 4rem;
+    --brick-app-bar-toolbar-min-block-size-compact: 3rem;
+  }
+
   .brick-app-bar {
     --brick-app-bar-background: var(--brick-color-surface-base);
     --brick-app-bar-foreground: var(--brick-color-text-primary);
@@ -114,11 +119,15 @@
   }
 
   .brick-app-bar-toolbar {
+    --brick-app-bar-toolbar-min-block-size: var(
+      --brick-app-bar-toolbar-min-block-size-comfortable
+    );
+
     display: grid;
     box-sizing: border-box;
     inline-size: 100%;
     min-inline-size: 0;
-    min-block-size: 4rem;
+    min-block-size: var(--brick-app-bar-toolbar-min-block-size);
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     gap: var(--brick-space-3);
@@ -126,7 +135,10 @@
   }
 
   .brick-app-bar-toolbar[data-density="compact"] {
-    min-block-size: 3rem;
+    --brick-app-bar-toolbar-min-block-size: var(
+      --brick-app-bar-toolbar-min-block-size-compact
+    );
+    min-block-size: var(--brick-app-bar-toolbar-min-block-size);
     gap: var(--brick-space-2);
   }
 

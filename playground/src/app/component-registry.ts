@@ -226,6 +226,13 @@ export const componentEntries = [
   },
   {
     category: "Data display",
+    description: "One-slide sequences with optional controls and rotation.",
+    id: "carousel",
+    route: "/carousel",
+    title: "Carousel",
+  },
+  {
+    category: "Data display",
     description: "Inline technical literals with native code semantics.",
     id: "code",
     route: "/code",

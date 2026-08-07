@@ -22,6 +22,7 @@ Provide a finished top surface and one-row start, geometrically centered, and en
 - **MUST:** Place Container between Root and Toolbar when the AppBar surface should remain full bleed while its content uses a bounded measure; do not cap Root itself or recreate Toolbar geometry.
 - **MUST:** Do not treat AppBar.Toolbar as an ARIA toolbar; compose Toolbar for grouped-control keyboard behavior.
 - **MUST:** Keep application-specific visibility and wrapping policy outside AppBar and implement it with Brick responsive/layout components.
+- **MUST:** When application layout references an App Bar density measurement, use the matching public comfortable or compact minimum block-size token instead of repeating Brick's value; allow the rendered bar and adjacent content to grow under zoom or enlarged content.
 - **MUST:** Load styles.css or core.css plus app-bar.css.
 
 ## Common mistakes

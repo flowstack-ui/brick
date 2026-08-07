@@ -6,6 +6,14 @@ Image follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added explicit `fill` geometry so Image Root, Content, and Fallback can
+  consume a parent-established block size, including `Surface.Media`, while
+  retaining independent fit and focal-position recipes.
+
+- Added direct `ImageRoot`, `ImageContent`, and `ImageFallback` exports so
+  React Server Components can reference the client parts without serializing a
+  compound namespace.
+
 - Added public Agent Knowledge for component selection, composition,
   CSS-delivery, recurring mistakes, and validation.
 

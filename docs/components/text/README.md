@@ -125,6 +125,12 @@ brand-colored role. Secondary and muted reduce emphasis; info, success,
 warning, and danger add semantic foreground color but never supply meaning
 alone.
 
+Use `tone="inherit"` when Text is intentionally nested in a parent component
+such as Badge that owns its foreground and contrast pair. When two separately
+meaningful inline Text nodes form one row, give them compatible typography
+metrics and use `HStack` gap for their relationship instead of literal spaces
+or positional offsets.
+
 Text has no interactive state or motion.
 
 ## Tokens and CSS hooks
@@ -228,6 +234,9 @@ polymorphism; specialized components own those contracts.
   Built for business
 </Text>
 ```
+
+Eyebrow is a content role, not a generic small-text recipe. Use it only for a
+short label that introduces a nearby heading.
 
 ### Supporting and status copy
 

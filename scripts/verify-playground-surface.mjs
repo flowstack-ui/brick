@@ -35,8 +35,8 @@ assert.match(registry, /route:\s*"\/surface"/);
 assert.match(page, /data-component-page="surface"/);
 assert.equal(
   [...page.matchAll(/<Scenario\b/g)].length,
-  9,
-  "Surface playground must retain its nine adopted scenarios",
+  10,
+  "Surface playground must retain its ten adopted scenarios",
 );
 assert.match(output, /<Surface as="article" bordered/);
 assert.match(output, /<Grid\.Root className="playground-output-evidence__layout">/);

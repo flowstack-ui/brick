@@ -6,6 +6,11 @@ Surface follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added optional `Surface.Media`, `Surface.Scrim`, and `Surface.Content`
+  layered composition with direct RSC-safe part exports, decorative media
+  semantics, logical scrim gradients, public scrim tokens, and unchanged
+  ordinary Surface output.
+
 - Initial one-root `Surface` API with four semantic levels, independent border,
   elevation, radius, and inset recipes, controlled semantic hosts, native
   prop/ref forwarding, forced-colors boundaries, and public CSS variables.

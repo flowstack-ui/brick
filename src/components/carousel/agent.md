@@ -1,0 +1,54 @@
+# Carousel agent guide
+
+## Purpose
+
+Present one item or campaign at a time with optional navigation, picker dots, touch scrolling, and user-controlled rotation.
+
+## Use when
+
+- Several peer items benefit from sharing one bounded visual region.
+- A campaign hero needs multiple authored messages without placing them all in the initial viewport.
+
+## Choose something else when
+
+- Every item must be visible for comparison or comprehension. Use Grid, Stack, List, or Tabs.
+- The content is only decorative image rotation. Use a non-interactive media treatment that respects reduced motion.
+
+## Required composition
+
+- Compose Root, Viewport, Track, and one Slide per unique value; add Navigation, Controls, Previous, Next, Picker, PickerItem, and RotationControl only when the product needs them.
+- In a React Server Component, import the subpath as a module namespace with import * as Carousel from '@flowstack-ui/brick/carousel'; use the frozen Carousel runtime object only inside client components.
+- When automatic rotation is enabled, always render RotationControl, Previous, and Next so people can stop and navigate the sequence.
+- Build campaign-specific slide content from Brick layout, typography, action, and media components; Carousel does not own hero messaging or proof content.
+- When artwork, scrim, and copy form one peer campaign, compose a complete Surface with Media, Scrim, and Content inside each Slide; keep genuinely invariant evidence or navigation outside the rotating sequence.
+
+## Rules
+
+- **MUST:** Treat arrows and picker dots as optional authored controls; dots represent direct slide selection and are not Tabs.
+- **MUST:** Never enable automatic rotation without a visible RotationControl and direct Previous and Next controls.
+- **SHOULD:** Give campaign slides stable responsive geometry so changing the active slide does not move surrounding page content.
+- **MUST:** When controls overlay slides, reserve application-owned content safe areas so arrows, rotation controls, and picker targets never obscure authored text or actions.
+- **SHOULD:** Prioritize only initially visible campaign media and defer non-current media when the image delivery layer supports it.
+- **MUST:** Load styles.css or core.css plus carousel.css.
+
+## Common mistakes
+
+- **Avoid:** Using Tabs for picker dots or hiding the only way to stop autoplay. **Instead:** Use PickerItem buttons and render RotationControl whenever autoplay can run.
+- **Avoid:** Putting unrelated proof rails or page sections inside every hero slide. **Instead:** Rotate only the peer campaign content and keep stable page evidence outside the Carousel.
+- **Avoid:** Rotating campaign copy while leaving campaign-specific artwork behind as one unrelated background. **Instead:** Decide whether media is invariant or part of the campaign; when it communicates that campaign, place the complete Surface inside Slide.
+
+## Validation checklist
+
+- Check optional-control compositions, first and last boundaries, loop behavior, picker selection, native horizontal touch scrolling, focus pause, hover pause, reduced motion, RTL, and screen-reader naming.
+- Confirm inactive slides are unavailable to focus and assistive technology, control focus rings remain visible, overlay controls do not cover content, complete campaign media changes with its copy, and slide changes do not cause page-level layout shift.
+
+## Related guidance
+
+- `button`
+- `icon-button`
+- `image`
+- `surface`
+- `stack`
+- `grid`
+- `text`
+- `tabs`

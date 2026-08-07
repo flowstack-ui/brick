@@ -6,6 +6,10 @@ Text follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Expanded Agent Knowledge for parent-owned foreground inheritance, semantic
+  eyebrow selection, and gap-based alignment of separately meaningful inline
+  text.
+
 - Added the `eyebrow` Text variant for short uppercase editorial labels.
 
 - Added public Agent Knowledge for component selection, composition,

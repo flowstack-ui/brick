@@ -49,6 +49,11 @@ fallback remain readable, RTL start shows the opposite horizontal region from
 LTR start without mirroring pixels, long fallback text stays contained, and no
 page-level horizontal scrolling appears.
 
+Also inspect the layered Image on `/surface`. Confirm explicit `fill` makes
+both the Image root and visible Content cover the complete Surface media layer
+at desktop and mobile sizes while `fit="cover"` preserves the source ratio by
+cropping rather than stretching pixels.
+
 Result:
 Notes or issue:
 
