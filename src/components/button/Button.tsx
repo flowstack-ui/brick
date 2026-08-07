@@ -1,6 +1,6 @@
 import { forwardRef, type ReactElement, type ReactNode } from "react";
 import {
-  Button as AtomButton,
+  ButtonRoot as AtomButtonRoot,
   type ButtonRootProps as AtomButtonRootProps,
 } from "@flowstack-ui/atom/button";
 
@@ -89,7 +89,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
   );
 
   return (
-    <AtomButton.Root
+    <AtomButtonRoot
       {...rootProps}
       asChild={asChild}
       className={mergeClassName(className)}
@@ -102,7 +102,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
       render={render}
     >
       {content}
-    </AtomButton.Root>
+    </AtomButtonRoot>
   );
 });
 

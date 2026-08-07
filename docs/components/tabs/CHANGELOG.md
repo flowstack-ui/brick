@@ -12,5 +12,8 @@ Tabs follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for component selection, composition,
+  CSS-delivery, recurring mistakes, and validation.
+
 - Added the complete five-part Tabs API with four variants, three sizes,
   full-width and orientation-aware layout, and Atom-owned interaction.

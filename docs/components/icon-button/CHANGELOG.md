@@ -6,12 +6,17 @@ Icon Button follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for component selection, composition,
+  CSS-delivery, recurring mistakes, and validation.
+
 - Added the Atom-backed Icon Button action and genuine link paths.
 - Added four variants, six tones, five square sizes, rounded/circle geometry,
   loading, disabled, forced-colors, dark, and reduced-motion presentation.
 
 ### Fixed
 
+- Icon Button now composes Atom's direct Button root export so it can render
+  directly from a Next.js server page without an application client wrapper.
 - Danger solid Icon Buttons now retain WCAG AA icon contrast in both
   appearances and throughout hover and pressed interaction states.
 - Centered the loading spinner when IconButton inherits right-to-left

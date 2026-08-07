@@ -14,10 +14,22 @@ Navigation Menu follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added short named part exports on the `navigation-menu` subpath so
+  `import * as NavigationMenu` preserves compound syntax when composed from a
+  React Server Component without making the containing page client-rendered.
+
+- Added public Agent Knowledge for component selection, composition,
+  CSS-delivery, recurring mistakes, and validation.
+
 - Added the decorative `NavigationMenu.IndicatorArrow` part. Indicator renders
   it by default when no custom Indicator children are supplied.
 
 ### Fixed
+
+- Upgraded to Atom 0.21.0 and now positions the horizontal Viewport from its
+  collision-aware active-trigger geometry instead of centering it on the
+  complete Navigation Menu root. The Indicator follows the same physical
+  coordinates so its arrow remains aligned in LTR and RTL.
 
 - Vertical Viewports now follow the Root-relative active-trigger geometry
   carried by exact Atom `0.20.11`, so the Indicator arrow remains connected

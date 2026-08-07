@@ -1,0 +1,77 @@
+{
+  "schema": "flowstack.agent-guide.v1",
+  "id": "interface-composition",
+  "name": "Brick interface composition",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "kind": "guide",
+  "purpose": "Build complete interfaces from Brick's structural, content, navigation, action, responsive, and surface components before adding narrow application styling.",
+  "decisionOrder": [
+    "Map the page into landmarks, bounded regions, layout relationships, content, navigation, actions, media, and responsive changes.",
+    "Choose the Brick owner for each relationship and read every selected component guide before implementation.",
+    "Compose from the outside inward: AppBar or page landmark, Container, Grid or Stack, Surface or Card, then content and controls.",
+    "Follow the customization order completely: component owner, supported props, semantic theme tokens, component tokens, public parts, and only then a narrow stable-hook escape hatch.",
+    "Audit responsive behavior, accessibility, CSS delivery, and native fallbacks before treating the composition as complete."
+  ],
+  "selection": [
+    { "intent": "page width and gutters", "use": "Container", "note": "Do not reproduce max-width and inline padding on every section." },
+    { "intent": "row or column relationship", "use": "HStack or VStack", "note": "Use Stack when direction is selected dynamically." },
+    { "intent": "track-based responsive layout", "use": "Grid", "note": "Use Stack when only one axis matters." },
+    { "intent": "visual region", "use": "Surface or Card", "note": "Use Card for titled or actionable contained content and Surface for a general visual boundary." },
+    { "intent": "brand or content image", "use": "Image", "note": "Keep alt text and fallback behavior intentional." },
+    { "intent": "site navigation", "use": "NavigationMenu or NavList", "note": "Use NavigationMenu for disclosure navigation and NavList for persistent route lists." },
+    { "intent": "responsive desktop and mobile alternatives", "use": "Show and Hide", "note": "Keep one CSS-controlled breakpoint contract and avoid hydration-dependent visibility." },
+    { "intent": "grouped application actions", "use": "Toolbar", "note": "Do not use AppBar.Toolbar as an ARIA toolbar." }
+  ],
+  "rules": [
+    { "id": "interface-outside-in", "level": "must", "statement": "Assign page structure to Brick components before writing element-level CSS." },
+    { "id": "interface-correct-owner", "level": "must", "statement": "Do not use Stack, Surface, Button, or another convenient component when a more specific Brick navigation, media, content, or interaction component owns the job." },
+    { "id": "interface-native-semantics", "level": "must", "statement": "Preserve document landmarks and semantic elements when Brick does not provide an owner; Brick-first is not permission to erase HTML meaning." },
+    { "id": "interface-theme-first", "level": "should", "statement": "Express reusable brand values through semantic Brick tokens and a theme rather than repeating literal application values." },
+    { "id": "interface-document-foundation", "level": "must", "statement": "When styles.css or styles/core.css is loaded, change the document canvas, foreground, and body typography through semantic Brick tokens instead of repeating the body bindings that Brick's foundation already owns." },
+    { "id": "interface-customization-order", "level": "must", "statement": "Do not write a direct declaration against a Brick part until the correct component, supported props, semantic tokens, component tokens, and public compound parts have been checked in order." },
+    { "id": "interface-public-hooks-only", "level": "must", "statement": "Target only documented Brick tokens, public compound parts, stable brick-* base classes, documented slots, and documented state attributes; inspected internal wrappers or implementation selectors are not APIs." },
+    { "id": "interface-report-token-gap", "level": "must", "statement": "When a direct stable-hook override remains because no public prop or token expresses the requirement, emit the required customization gap report and classify its owner before treating the interface as complete." },
+    { "id": "interface-extract-evidence", "level": "should", "statement": "Classify repeated purposeful sections as Block candidates and repeated page arrangements as Blueprint candidates only after real reuse evidence." }
+  ],
+  "customization": {
+    "order": [
+      { "owner": "Correct Brick component", "instruction": "Select the component whose semantic, behavioral, layout, content, navigation, or surface contract owns the job; styling a convenient substitute is not equivalent." },
+      { "owner": "Supported props and recipes", "instruction": "Use the component's documented variant, tone, size, density, orientation, placement, and other closed recipes when they express the result." },
+      { "owner": "Semantic theme tokens", "instruction": "Assign reusable brand color, typography, spacing, radius, surface, focus, and motion roles through a theme scope, preserving required foreground/background and interaction-state pairs." },
+      { "owner": "Documented component tokens", "instruction": "Use stable --brick-<component>-* variables for supported anatomy-specific adjustments instead of overriding the declaration that consumes them." },
+      { "owner": "Public compound parts", "instruction": "Place product-specific composition classes on the public part that owns the region; do not create slot maps or select private wrappers." },
+      { "owner": "Narrow stable-hook escape hatch", "instruction": "Use className or style only for application-owned composition or a value Brick does not expose, and target a documented public hook when direct CSS is unavoidable." }
+    ],
+    "classNamePolicy": "className scopes a product composition or supplies consumer-defined token values. It must not replace a supported prop, repeat a reusable theme value, or depend on undocumented anatomy.",
+    "directCssPolicy": "Direct declarations on a stable Brick class are a last resort. Keep them narrow, preserve component state and accessibility, verify the affected responsive and appearance states, and report the missing public capability.",
+    "gapReport": {
+      "requiredWhen": "Emit this record for every native/framework fallback or direct stable-hook declaration that remains after the ordered search.",
+      "fields": [
+        "interfaceJob",
+        "brickOwnerSearched",
+        "supportedPropsChecked",
+        "semanticTokensChecked",
+        "componentTokensChecked",
+        "publicPartsChecked",
+        "fallbackOrOverride",
+        "missingCapability",
+        "proposedOwner",
+        "verification"
+      ]
+    }
+  },
+  "nativeFallback": {
+    "check": "Review the interface map against the manifest and selected component guides, including layout, text, image, visibility, and navigation owners.",
+    "use": "Keep native landmarks and product-specific semantic structures where no Brick component adds a useful contract; add only narrow composition classes.",
+    "report": "Record what Brick lacked, whether an adapter or new component is warranted, and whether the pattern belongs to Theme, Block, Blueprint, or the application."
+  },
+  "validation": [
+    "Inspect the rendered DOM, accessible names, heading order, landmarks, focus order, keyboard operation, touch targets, contrast, zoom, and RTL behavior.",
+    "Test every adopted breakpoint without JavaScript-dependent first-paint flicker.",
+    "Confirm layout primitives own ordinary gap, alignment, wrapping, width, and visibility before accepting custom CSS.",
+    "Confirm repeated CSS values are theme tokens, component-specific values use documented component tokens, and every remaining direct stable-hook declaration has a complete customization gap report.",
+    "Run the package's CSS-delivery check and the application's accessibility, browser, and performance checks."
+  ],
+  "related": ["layer-selection", "app-bar", "container", "stack", "grid", "surface", "card", "navigation-menu", "show", "hide"]
+}

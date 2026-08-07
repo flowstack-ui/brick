@@ -97,6 +97,7 @@ import { DropdownMenu as SubpathDropdownMenu } from "@flowstack-ui/brick/dropdow
 import { ContextMenu as SubpathContextMenu } from "@flowstack-ui/brick/context-menu";
 import { Menubar as SubpathMenubar } from "@flowstack-ui/brick/menubar";
 import { NavigationMenu as SubpathNavigationMenu } from "@flowstack-ui/brick/navigation-menu";
+import * as NavigationMenuModule from "@flowstack-ui/brick/navigation-menu";
 import { BottomNavigation as SubpathBottomNavigation } from "@flowstack-ui/brick/bottom-navigation";
 import { VisuallyHidden as SubpathVisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
 import { Show as SubpathShow } from "@flowstack-ui/brick/show";
@@ -139,6 +140,7 @@ if (DropdownMenu !== SubpathDropdownMenu || Object.keys(SubpathDropdownMenu).len
 if (ContextMenu !== SubpathContextMenu || Object.keys(SubpathContextMenu).length !== 20) throw new Error("Context Menu subpath smoke failed");
 if (Menubar !== SubpathMenubar || Object.keys(SubpathMenubar).length !== 21) throw new Error("Menubar subpath smoke failed");
 if (NavigationMenu !== SubpathNavigationMenu || Object.keys(SubpathNavigationMenu).length !== 10) throw new Error("Navigation Menu subpath smoke failed");
+if (NavigationMenuModule.Root !== NavigationMenu.Root || NavigationMenuModule.Link !== NavigationMenu.Link || NavigationMenuModule.Viewport !== NavigationMenu.Viewport) throw new Error("Navigation Menu module namespace smoke failed");
 if (BottomNavigation !== SubpathBottomNavigation || Object.keys(SubpathBottomNavigation).length !== 4) throw new Error("Bottom Navigation subpath smoke failed");
 if (VisuallyHidden !== SubpathVisuallyHidden || Object.keys(SubpathVisuallyHidden).length !== 1) throw new Error("Visually Hidden subpath smoke failed");
 if (Show !== SubpathShow || Hide !== SubpathHide) throw new Error("Responsive visibility subpath export mismatch");
@@ -203,7 +205,7 @@ const contextMarkup = renderToString(React.createElement(ContextMenu.Root, null,
 if (!contextMarkup.includes("brick-context-menu__trigger") || !contextMarkup.includes("Region")) throw new Error("Context Menu SSR smoke failed");
 const menubarMarkup = renderToString(React.createElement(Menubar.Root, { "aria-label": "Commands" }, React.createElement(Menubar.Menu, { value: "file" }, React.createElement(Menubar.Trigger, null, "File"))));
 if (!menubarMarkup.includes("brick-menubar") || !menubarMarkup.includes('role="menubar"')) throw new Error("Menubar SSR smoke failed");
-const navigationMarkup = renderToString(React.createElement(NavigationMenu.Root, { "aria-label": "Primary" }, React.createElement(NavigationMenu.List, null, React.createElement(NavigationMenu.Item, { value: "docs" }, React.createElement(NavigationMenu.Link, { href: "/docs" }, "Docs")))));
+const navigationMarkup = renderToString(React.createElement(NavigationMenuModule.Root, { "aria-label": "Primary" }, React.createElement(NavigationMenuModule.List, null, React.createElement(NavigationMenuModule.Item, { value: "docs" }, React.createElement(NavigationMenuModule.Link, { href: "/docs" }, "Docs")))));
 if (!navigationMarkup.includes("brick-navigation-menu") || !navigationMarkup.includes('href="/docs"')) throw new Error("Navigation Menu SSR smoke failed");
 const bottomNavigationMarkup = renderToString(React.createElement(BottomNavigation.Root, { ariaLabel: "Primary", defaultValue: "home" }, React.createElement(BottomNavigation.Item, { href: "/home", value: "home" }, React.createElement(BottomNavigation.Icon, null, "H"), React.createElement(BottomNavigation.Label, null, "Home"))));
 if (!bottomNavigationMarkup.includes("brick-bottom-navigation") || !bottomNavigationMarkup.includes('aria-current="page"') || !bottomNavigationMarkup.includes('data-safe-area=""')) throw new Error("Bottom Navigation SSR smoke failed");
@@ -218,7 +220,7 @@ if (!SubpathTooltip || Object.keys(SubpathTooltip).length !== 8) throw new Error
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
 const coreCss = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles/core.css", import.meta.url), "utf8");
 const buttonCss = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles/button.css", import.meta.url), "utf8");
-if (!coreCss.includes("--brick-color-accent-solid") || !coreCss.includes("brick.foundations") || coreCss.includes(".brick-button")) throw new Error("Modular core CSS export is invalid");
+if (!coreCss.includes("--brick-color-accent-solid") || !coreCss.includes("brick.foundations") || !coreCss.includes(":where(body)") || coreCss.includes(".brick-button")) throw new Error("Modular core CSS export is invalid");
 if (!buttonCss.includes(".brick-button") || buttonCss.includes("--brick-color-accent-solid:")) throw new Error("Modular Button CSS export is invalid");
 if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-chip") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover") || !css.includes(".brick-checkbox") || !css.includes(".brick-checkbox-group") || !css.includes(".brick-radio-group") || !css.includes(".brick-input") || !css.includes(".brick-textarea") || !css.includes(".brick-link") || !css.includes(".brick-text") || !css.includes(".brick-grid") || !css.includes(".brick-container") || !css.includes(".brick-surface")) throw new Error("CSS export missing");
 if (!css.includes(".brick-switch") || !css.includes("--brick-switch-track-inline-size")) throw new Error("Switch CSS export missing");
@@ -263,6 +265,7 @@ import { PasswordToggleField as SubpathPasswordToggleField } from "@flowstack-ui
 import { Show as SubpathShow } from "@flowstack-ui/brick/show";
 import { Hide as SubpathHide } from "@flowstack-ui/brick/hide";
 import { SwipeableItem as SubpathSwipeableItem } from "@flowstack-ui/brick/swipeable-item";
+import * as NavigationMenuModule from "@flowstack-ui/brick/navigation-menu";
 const props: ButtonProps = { children: "Consumer" };
 const iconButtonProps: IconButtonProps = { "aria-label": "Search", children: createElement("svg"), href: "/search" };
 const appBarProps: AppBarRootProps = { children: createElement(AppBar.Toolbar, null, "Workspace"), position: "sticky" };
@@ -297,6 +300,7 @@ const dropdownProps: DropdownMenuRootProps = { children: createElement(DropdownM
 const contextProps: ContextMenuRootProps = { children: createElement(ContextMenu.Trigger, null, "Region"), size: "md" };
 const menubarProps: MenubarRootProps = { "aria-label": "Commands", children: createElement(Menubar.Menu, { children: createElement(Menubar.Trigger, null, "File"), value: "file" }), size: "md" };
 const navigationProps: NavigationMenuRootProps = { "aria-label": "Primary", children: createElement(NavigationMenu.List), size: "md" };
+const navigationModuleProps: NavigationMenuRootProps = { "aria-label": "Module primary", children: createElement(NavigationMenuModule.List), size: "md" };
 const bottomNavigationProps: BottomNavigationRootProps = { ariaLabel: "Primary", children: createElement(BottomNavigation.Item, { value: "home" }, "Home"), safeArea: true };
 const visuallyHiddenProps: VisuallyHiddenRootProps = { children: "Search" };
 const showProps: ShowProps = { as: "aside", children: "Wide", from: "md" };
@@ -327,7 +331,7 @@ void skeletonProps;
 void DropdownMenu; void dropdownProps;
 void ContextMenu; void contextProps;
 void Menubar; void menubarProps;
-void NavigationMenu; void navigationProps; void BottomNavigation; void bottomNavigationProps; void VisuallyHidden; void SubpathVisuallyHidden; void visuallyHiddenProps;
+void NavigationMenu; void navigationProps; void NavigationMenuModule; void navigationModuleProps; void BottomNavigation; void bottomNavigationProps; void VisuallyHidden; void SubpathVisuallyHidden; void visuallyHiddenProps;
 void Show; void SubpathShow; void showProps; void Hide; void SubpathHide; void hideProps;
 void SwipeableItem; void SubpathSwipeableItem; void swipeableProps;
 void Button;

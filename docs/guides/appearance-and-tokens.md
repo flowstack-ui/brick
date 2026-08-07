@@ -17,6 +17,12 @@ Set an appearance on the document or any subtree:
 
 Remove the attribute to return to the system preference.
 
+The complete stylesheet and modular `core.css` apply the active semantic
+canvas, primary text color, body family, body size, and body line height to the
+document body through a low-specificity foundation rule. Themes normally
+change those semantic values rather than adding another body rule. Consumer
+CSS in a later layer can deliberately replace the document treatment.
+
 ## Custom themes
 
 Override public semantic variables through ordinary CSS:

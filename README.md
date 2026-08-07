@@ -7,6 +7,10 @@ Brick provides static CSS, semantic design tokens, light and dark appearances,
 responsive defaults, and documented customization hooks. Components are ready
 to use without requiring an application-level CSS processor.
 
+The complete stylesheet also gives the document body a token-driven canvas,
+foreground, and default body typography. Themes change those semantic tokens;
+applications can deliberately override the low-specificity foundation later.
+
 ## Installation
 
 ```bash
@@ -24,7 +28,8 @@ Import the complete stylesheet once in the application root:
 import "@flowstack-ui/brick/styles.css";
 ```
 
-New applications may opt into Brick's separate reset:
+New applications may opt into Brick's separate neutral reset for page sizing,
+margin removal, and browser normalization:
 
 ```ts
 import "@flowstack-ui/brick/reset.css";

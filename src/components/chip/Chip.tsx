@@ -1,10 +1,10 @@
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from "react";
 import {
-  Badge as AtomBadge,
+  BadgeRoot as AtomBadgeRoot,
   type BadgeRootProps as AtomBadgeRootProps,
 } from "@flowstack-ui/atom/badge";
 import {
-  Button as AtomButton,
+  ButtonRoot as AtomButtonRoot,
   type ButtonRootProps as AtomButtonRootProps,
 } from "@flowstack-ui/atom/button";
 
@@ -54,7 +54,7 @@ export const ChipRoot = forwardRef<HTMLSpanElement, ChipRootProps>(
     ref,
   ) {
     return (
-      <AtomBadge.Root
+      <AtomBadgeRoot
         {...props}
         className={classes("brick-chip", className)}
         data-shape={shape}
@@ -93,7 +93,7 @@ export const ChipRemoveTrigger = forwardRef<HTMLElement, ChipRemoveTriggerProps>
     ref,
   ) {
     return (
-      <AtomButton.Root
+      <AtomButtonRoot
         {...props}
         aria-label={ariaLabel}
         className={classes("brick-chip__remove-trigger", className)}
@@ -103,7 +103,7 @@ export const ChipRemoveTrigger = forwardRef<HTMLElement, ChipRemoveTriggerProps>
         ref={ref}
       >
         {children ?? <DefaultRemoveIcon />}
-      </AtomButton.Root>
+      </AtomButtonRoot>
     );
   },
 );

@@ -11,7 +11,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.20.11");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.21.0");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -946,6 +946,16 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(contextMenu.ContextMenu, brick.ContextMenu);
   assert.equal(menubar.Menubar, brick.Menubar);
   assert.equal(navigationMenu.NavigationMenu, brick.NavigationMenu);
+  assert.equal(navigationMenu.Root, brick.NavigationMenu.Root);
+  assert.equal(navigationMenu.Sub, brick.NavigationMenu.Sub);
+  assert.equal(navigationMenu.List, brick.NavigationMenu.List);
+  assert.equal(navigationMenu.Item, brick.NavigationMenu.Item);
+  assert.equal(navigationMenu.Trigger, brick.NavigationMenu.Trigger);
+  assert.equal(navigationMenu.Content, brick.NavigationMenu.Content);
+  assert.equal(navigationMenu.Link, brick.NavigationMenu.Link);
+  assert.equal(navigationMenu.Indicator, brick.NavigationMenu.Indicator);
+  assert.equal(navigationMenu.IndicatorArrow, brick.NavigationMenu.IndicatorArrow);
+  assert.equal(navigationMenu.Viewport, brick.NavigationMenu.Viewport);
   assert.equal(bottomNavigation.BottomNavigation, brick.BottomNavigation);
   assert.equal(bottomNavigation.BottomNavigationRoot, brick.BottomNavigation.Root);
   assert.equal(bottomNavigation.BottomNavigationItem, brick.BottomNavigation.Item);
@@ -1022,6 +1032,10 @@ test("published CSS entrypoints are complete browser CSS", async () => {
 
   assert.match(styles, /--brick-color-accent-solid/);
   assert.match(styles, /brick\.foundations/);
+  assert.match(
+    styles,
+    /:where\(body\)\{[^}]*background-color:var\(--brick-color-surface-canvas\)[^}]*color:var\(--brick-color-text-primary\)[^}]*font-family:var\(--brick-font-family-body\)[^}]*font-size:var\(--brick-typography-body-md-font-size\)[^}]*line-height:var\(--brick-typography-body-md-line-height\)/,
+  );
   assert.match(styles, /\.brick-button/);
   assert.match(styles, /\.brick-icon-button/);
   assert.match(styles, /\.brick-icon/);
@@ -1128,6 +1142,10 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   const core = await readFile(new URL("../../dist/styles/core.css", import.meta.url), "utf8");
   assert.match(core, /--brick-color-accent-solid/);
   assert.match(core, /brick\.foundations/);
+  assert.match(
+    core,
+    /:where\(body\)\{[^}]*background-color:var\(--brick-color-surface-canvas\)[^}]*color:var\(--brick-color-text-primary\)[^}]*font-family:var\(--brick-font-family-body\)[^}]*font-size:var\(--brick-typography-body-md-font-size\)[^}]*line-height:var\(--brick-typography-body-md-line-height\)/,
+  );
   assert.doesNotMatch(core, /\.brick-button/);
 
   assert.equal(componentStyleNames.length, 74);

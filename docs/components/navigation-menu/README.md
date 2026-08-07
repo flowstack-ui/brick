@@ -13,9 +13,14 @@ Do not use it for application commands, form choices, small action lists, or con
 ## Installation and imports
 
 ```tsx
-import { NavigationMenu } from "@flowstack-ui/brick/navigation-menu";
+import * as NavigationMenu from "@flowstack-ui/brick/navigation-menu";
 import "@flowstack-ui/brick/styles.css";
 ```
+
+The module-namespace import is safe to compose from a React Server Component:
+each part remains a focused Client Component while the containing page remains
+server-rendered. The legacy `import { NavigationMenu }` runtime object remains
+available for client-owned modules.
 
 The complete stylesheet above is the recommended default. For a measured
 route-aware build, replace it with the shared foundation and this component's
@@ -51,6 +56,10 @@ Root renders navigation, List a native list, Item a list item, Link a native des
 
 Public exports are `NavigationMenu`, `NavigationMenuRoot`, `NavigationMenuSub`, `NavigationMenuList`, `NavigationMenuItem`, `NavigationMenuTrigger`, `NavigationMenuContent`, `NavigationMenuLink`, `NavigationMenuIndicator`, `NavigationMenuIndicatorArrow`, `NavigationMenuViewport`, `NavigationMenuRootProps`, `NavigationMenuSubProps`, `NavigationMenuListProps`, `NavigationMenuItemProps`, `NavigationMenuTriggerProps`, `NavigationMenuContentProps`, `NavigationMenuLinkProps`, `NavigationMenuIndicatorProps`, `NavigationMenuIndicatorArrowProps`, `NavigationMenuViewportProps`, `NavigationMenuSize`.
 
+The component subpath additionally exports `Root`, `Sub`, `List`, `Item`,
+`Trigger`, `Content`, `Link`, `Indicator`, `IndicatorArrow`, and `Viewport` as
+short aliases for the recommended module-namespace composition.
+
 | Prop | Values | Default |
 | --- | --- | --- |
 | `size` | `sm`, `md`, `lg` | `md` |
@@ -69,6 +78,10 @@ by default; consumers that need a different brand treatment can set
 In vertical orientation, the Viewport follows Atom's
 measured active-trigger offset so the connector stays attached while panels of
 different heights replace one another.
+In horizontal orientation, Atom centers the Viewport on the active Trigger and
+collision-shifts it inside the visible browser boundary. Brick uses the same
+physical geometry for the Indicator arrow in LTR and RTL. Set the inherited
+`collisionPadding` prop on `Viewport` to change its eight-pixel boundary gap.
 
 ## Tokens and CSS hooks
 
@@ -84,7 +97,11 @@ Set documented variables on Root or Content as applicable. Use `className` and `
 
 ## Responsive behavior
 
-Popup geometry stays collision-aware and constrained to available space. Narrow layouts preserve usable targets, logical alignment, zoom, and writing direction; applications decide whether the pattern belongs in their mobile information architecture.
+Popup geometry stays centered on the active Trigger when space permits, then
+collision-shifts and constrains itself to the visible boundary. Narrow layouts
+preserve usable targets, arrow alignment, zoom, and writing direction;
+applications decide whether the pattern belongs in their mobile information
+architecture.
 
 ## Accessibility
 

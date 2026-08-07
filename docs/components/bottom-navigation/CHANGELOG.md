@@ -10,4 +10,7 @@ Bottom Navigation follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for component selection, composition,
+  CSS-delivery, recurring mistakes, and validation.
+
 - Added the complete four-part Bottom Navigation family with native destination and controlled-view models; four surface variants; accent and neutral tones; full and floating layouts; equal and centered arrangements; three sizes; four position intents; indicator and item selection shapes; three accessible label policies; safe-area handling; elevation; blur; and composition.

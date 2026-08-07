@@ -4,6 +4,42 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.1.4 - 2026-08-06
+
+### Added
+
+- Added an RSC-safe Navigation Menu module namespace on the component subpath,
+  preserving `NavigationMenu.Root` composition without promoting a Next.js
+  server page to a Client Component.
+- Added package-level layer-selection and interface-composition Agent
+  Knowledge that requires Brick-first component selection, records native or
+  framework fallbacks, and keeps direct Atom use out of ordinary Brick
+  applications.
+- Added navigation, responsive visibility, media, typography, application
+  shell, and layout guidance for App Bar, Breadcrumb, Bottom Navigation,
+  Container, Divider, Drawer, Hide, Icon Button, Image, Navigation Menu, Nav
+  List, Pagination, Scroll Area, Show, Sidebar, Skip Link, Tabs, Text, and
+  Toolbar.
+- Extended the agent manifest with a backward-compatible `guides` collection
+  and validated `flowstack.agent-guide.v1` artifacts.
+
+### Changed
+
+- Made the complete and modular core styles apply the active semantic canvas,
+  primary foreground, and default body typography to the document through a
+  low-specificity foundation rule, so themes no longer repeat those bindings.
+
+### Fixed
+
+- Made plain Button, Icon Button, and Chip safe to render directly from a
+  Next.js server page by composing Atom's direct primitive exports instead of
+  dereferencing compound namespaces across the React Server Component
+  boundary.
+- Upgraded the exact Atom dependency to `0.21.0` and aligned Navigation Menu's
+  horizontal Viewport with Atom's active-trigger-centered, collision-aware
+  geometry. The panel no longer centers on the full navigation row, and its
+  Indicator arrow remains aligned in LTR and RTL.
+
 ## 0.1.3 - 2026-08-05
 
 ### Fixed
