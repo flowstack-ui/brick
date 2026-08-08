@@ -45,6 +45,10 @@ Notes or issue:
 
 Review light, dark, forced colors, reduced motion, RTL, 200%, 400%, and mobile. Confirm controls remain perceivable, slide content is not clipped, picker dots do not wrap incorrectly, and surrounding layout does not shift.
 
+Give the Overview Carousel's immediate parent a fixed block size. Confirm
+Root, Viewport, Track, and the active Slide fill it without making the page or
+authored slide content viewport-sized.
+
 Result:
 Notes or issue:
 

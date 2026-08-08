@@ -11,6 +11,16 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   and solid, soft, outline, or ghost control treatments. Interaction-only
   arrows remain keyboard reachable and reveal briefly after touch.
 
+### Added
+
+- Added an opt-in Carousel parent-fill recipe, including flex-grown parent
+  support, plus public navigation and controls inset variables so full-height
+  compositions retain component-owned internal geometry without acquiring a
+  product-owned viewport policy.
+- Expanded interface-composition Agent Knowledge with responsibility-based
+  source organization and intent-focused comment rules for complex product
+  assemblies.
+
 ### Fixed
 
 - Updated the exact Atom dependency to `0.22.5`, retaining the cross-browser

@@ -31,6 +31,8 @@ export type CarouselNavigationVisibility = "always" | "interaction";
 export type CarouselPickerVariant = "surface" | "bare";
 
 export interface CarouselRootProps extends AtomCarouselRootProps {
+  /** Fill an explicitly sized parent and propagate that block size through Viewport, Track, and Slide. @default false */
+  fill?: boolean;
   /** Coordinated control and picker scale. @default "md" */
   size?: CarouselSize;
   /** Place navigation over the slide or in document flow. @default "overlay" */
@@ -104,6 +106,7 @@ export const CarouselRoot = forwardRef<HTMLDivElement, CarouselRootProps>(
       controlPlacement = "overlay",
       controlShape = "circle",
       controlVariant = "soft",
+      fill = false,
       size = "md",
       "data-slot": dataSlot,
       onPointerUpCapture,
@@ -136,6 +139,7 @@ export const CarouselRoot = forwardRef<HTMLDivElement, CarouselRootProps>(
         data-control-placement={controlPlacement}
         data-control-shape={controlShape}
         data-control-variant={controlVariant}
+        data-fill={fill ? "" : undefined}
         data-size={size}
         data-slot={dataSlot ?? "carousel"}
         data-touch-navigation={touchNavigationVisible ? "visible" : undefined}

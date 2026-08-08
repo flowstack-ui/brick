@@ -12,6 +12,20 @@ test("Carousel navigates with arrows and picker dots", async ({ page }) => {
   await expect(root.getByText("A foundation that scales.")).toBeVisible();
 });
 
+test("Carousel fill propagates an explicitly owned parent height", async ({ page }) => {
+  const root = page.locator("#scenario-carousel-overview .brick-carousel");
+  await expect(root).toHaveAttribute("data-fill", "");
+
+  for (const part of [
+    root,
+    root.locator(".brick-carousel__viewport"),
+    root.locator(".brick-carousel__track"),
+    root.locator('.brick-carousel__slide[data-state="active"]'),
+  ]) {
+    await expect(part).toHaveCSS("height", "420px");
+  }
+});
+
 test("Carousel permits control-free and picker-only composition", async ({ page }) => {
   const scenario = page.locator("#scenario-carousel-controls");
   await expect(scenario.getByRole("group", { name: "Manual story" }).getByRole("button")).toHaveCount(0);

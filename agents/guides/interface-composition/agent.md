@@ -40,6 +40,8 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **MUST:** Target only documented Brick tokens, public compound parts, stable brick-* base classes, documented slots, and documented state attributes; inspected internal wrappers or implementation selectors are not APIs.
 - **MUST:** When a direct stable-hook override remains because no public prop or token expresses the requirement, emit the required customization gap report and classify its owner before treating the interface as complete.
 - **SHOULD:** Classify repeated purposeful sections as Block candidates and repeated page arrangements as Blueprint candidates only after real reuse evidence.
+- **SHOULD:** Split long product compositions by stable responsibility—authored content, repeated item, invariant supporting region, and outer assembly—without pretending those local modules are reusable Brick components.
+- **MUST:** Comment non-obvious ownership, accessibility order, breakpoint, sizing, and browser-lifecycle constraints; do not add comments that only translate a component name or prop into prose.
 
 ## Customization order
 
@@ -82,6 +84,7 @@ Emit this record for every native/framework fallback or direct stable-hook decla
 - Confirm layout primitives own ordinary gap, alignment, wrapping, width, and visibility before accepting custom CSS; verify separately meaningful inline nodes use layout gap rather than literal spaces or offsets.
 - Confirm local appearance scopes supply complete semantic foreground, background, boundary, action, focus, and interaction-state token pairs without child-by-child recoloring.
 - Confirm repeated CSS values are theme tokens, component-specific values use documented component tokens, and every remaining direct stable-hook declaration has a complete customization gap report.
+- Confirm source order follows rendered ownership, static content is separate from interaction assembly when it obscures the component tree, and comments explain why a constraint exists rather than what an obvious line does.
 - Run the package's CSS-delivery check and the application's accessibility, browser, and performance checks.
 
 ## Related guidance

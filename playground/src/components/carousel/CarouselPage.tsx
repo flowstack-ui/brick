@@ -29,7 +29,7 @@ function FullCarousel(props: Omit<React.ComponentProps<typeof Carousel.Root>, "c
 
 export function CarouselPage() {
   return <VStack data-component-page="carousel" gap="6">
-    <Scenario {...carouselScenarios[0]}><FullCarousel /></Scenario>
+    <Scenario {...carouselScenarios[0]}><div className="carousel-demo-fill-frame"><FullCarousel fill /></div></Scenario>
     <Scenario {...carouselScenarios[1]}><Grid.Root className="carousel-demo-grid" columns={2} gap="4"><VStack gap="2"><Text as="h3" variant="title-sm">No controls</Text><Carousel.Root aria-label="Manual story" defaultValue="build"><Slides /></Carousel.Root></VStack><VStack gap="2"><Text as="h3" variant="title-sm">Picker only</Text><Carousel.Root aria-label="Picker story" defaultValue="build" controlPlacement="outside"><Slides /><Carousel.Controls><Picker /></Carousel.Controls></Carousel.Root></VStack></Grid.Root></Scenario>
     <Scenario {...carouselScenarios[2]}><FullCarousel defaultAutoPlay interval={4000} /></Scenario>
     <Scenario {...carouselScenarios[3]}><Grid.Root className="carousel-demo-grid" columns={2} gap="4"><FullCarousel controlShape="rounded" controlVariant="outline" size="sm" /><Surface className="carousel-demo-dark" data-brick-appearance="dark" inset="md" level="canvas"><FullCarousel controlPlacement="outside" controlVariant="ghost" size="lg" /></Surface></Grid.Root></Scenario>

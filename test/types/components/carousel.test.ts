@@ -11,7 +11,7 @@ import {
 } from "../../../src/carousel.js";
 const size: CarouselSize = "lg";
 const placement: CarouselControlPlacement = "outside";
-const props: CarouselRootProps = { children: null, size, controlPlacement: placement, defaultValue: "one" };
+const props: CarouselRootProps = { children: null, size, controlPlacement: placement, defaultValue: "one", fill: true };
 const controlSize: CarouselControlSize = "xs";
 const shape: CarouselControlShape = "circle";
 const variant: CarouselControlVariant = "ghost";

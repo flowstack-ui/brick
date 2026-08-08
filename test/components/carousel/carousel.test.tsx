@@ -29,6 +29,7 @@ describe("Carousel", () => {
     expect(root).toHaveAttribute("data-control-placement", "overlay");
     expect(root).toHaveAttribute("data-control-shape", "circle");
     expect(root).toHaveAttribute("data-control-variant", "soft");
+    expect(root).not.toHaveAttribute("data-fill");
     expect(root.querySelector(".brick-carousel__viewport")).toBeTruthy();
     expect(root.querySelectorAll(".brick-carousel__slide")).toHaveLength(3);
     expect(screen.getByRole("button", { name: "Previous slide" }).querySelector("svg")).toBeTruthy();
@@ -42,10 +43,11 @@ describe("Carousel", () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();
     const ref = createRef<HTMLDivElement>();
-    render(<Standard className="custom" controlPlacement="outside" onValueChange={onValueChange} ref={ref} size="lg" />);
+    render(<Standard className="custom" controlPlacement="outside" fill onValueChange={onValueChange} ref={ref} size="lg" />);
     expect(ref.current).toHaveClass("brick-carousel", "custom");
     expect(ref.current).toHaveAttribute("data-size", "lg");
     expect(ref.current).toHaveAttribute("data-control-placement", "outside");
+    expect(ref.current).toHaveAttribute("data-fill", "");
     await user.click(screen.getByRole("button", { name: "Next slide" }));
     expect(onValueChange).toHaveBeenLastCalledWith("two", "next");
     expect(screen.getByRole("button", { name: "Second story" })).toHaveAttribute("data-state", "active");

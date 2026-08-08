@@ -77,6 +77,7 @@ root and subpath imports.
 
 | Prop | Values | Default |
 | --- | --- | --- |
+| `fill` | boolean | `false` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `controlPlacement` | `overlay`, `outside` | `overlay` |
 | `controlShape` | `rounded`, `circle` | `circle` |
@@ -106,7 +107,8 @@ states change paint without changing behavior.
 Stable classes are `.brick-carousel`, `.brick-carousel__viewport`, `.brick-carousel__track`, `.brick-carousel__slide`, `.brick-carousel__navigation`, `.brick-carousel__previous`, `.brick-carousel__next`, `.brick-carousel__controls`, `.brick-carousel__rotation-control`, `.brick-carousel__picker`, and `.brick-carousel__picker-item`.
 
 Root exposes `data-control-placement`, `data-control-shape`,
-`data-control-variant`, `data-size`, `data-touch-navigation`, and `data-slot`;
+`data-control-variant`, optional `data-fill`, `data-size`,
+`data-touch-navigation`, and `data-slot`;
 Navigation exposes `data-visibility`, Picker exposes `data-variant`, and each
 direction/rotation control exposes optional `data-size`, `data-shape`, and
 `data-variant`. Atom's `data-initialized`, `data-state`, `data-value`,
@@ -136,6 +138,11 @@ Public variables:
 - `--brick-carousel-dot-active-background`
 - `--brick-carousel-transition-duration`
 - `--brick-carousel-transition-easing`
+- `--brick-carousel-navigation-block-start`
+- `--brick-carousel-navigation-block-end`
+- `--brick-carousel-navigation-inline`
+- `--brick-carousel-navigation-transform`
+- `--brick-carousel-controls-block-end`
 
 ## Customization
 
@@ -144,6 +151,11 @@ Choose `size` and `controlPlacement` first. Then customize semantic theme tokens
 ## Responsive behavior
 
 Slides occupy one viewport width and snap during native horizontal scrolling.
+`fill` propagates an explicitly sized parent's block size through Viewport,
+Track, and Slide; it does not create a viewport-height policy or resize
+authored slide content such as Surface and Container. The recipe uses an
+internal grid so percentage heights also resolve when the Root receives its
+used size by growing inside a flex composition.
 Looping moves the authored boundary slide in the requested direction and then
 silently rebases; it does not clone authored content. Controls remain authored
 and may move outside the media with `controlPlacement="outside"`. Picker dots
@@ -163,7 +175,7 @@ remain keyboard focusable even while visually at rest.
 
 ## Composition, native props, and refs
 
-Refs target the root, viewport, track, slides, controls, and picker hosts. Atom-backed parts preserve supported native props, render, and `asChild`; Brick-only Navigation and Controls preserve native div props. Carousel does not own slide typography, actions, media, campaign content, or stable hero height.
+Refs target the root, viewport, track, slides, controls, and picker hosts. Atom-backed parts preserve supported native props, render, and `asChild`; Brick-only Navigation and Controls preserve native div props. Carousel does not own slide typography, actions, media, campaign content, or the parent height that `fill` consumes.
 
 ## Examples
 

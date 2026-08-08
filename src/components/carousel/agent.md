@@ -21,6 +21,7 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 - When automatic rotation is enabled, always render RotationControl, Previous, and Next so people can stop and navigate the sequence; place RotationControl before Viewport in DOM order.
 - Build campaign-specific slide content from Brick layout, typography, action, and media components; Carousel does not own hero messaging or proof content.
 - When artwork, scrim, and copy form one peer campaign, compose a complete Surface with Media, Scrim, and Content inside each Slide; keep genuinely invariant evidence or navigation outside the rotating sequence.
+- When a parent already owns a stable block size, use Root fill to propagate it through Carousel's Viewport, Track, and Slides; continue sizing authored Surface, Content, and layout components explicitly.
 
 ## Rules
 
@@ -31,6 +32,7 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 - **MUST:** Preserve requested direction at loop boundaries and never clone authored slide content, IDs, controls, or form fields.
 - **MUST:** Keep viewport motion instant until Atom exposes data-initialized; Brick's shipped Carousel CSS already enables smooth motion only after that signal.
 - **SHOULD:** Give campaign slides stable responsive geometry so changing the active slide does not move surrounding page content.
+- **MUST:** Treat fill as internal size propagation, not a viewport-height policy; the application or Block must establish the available parent height.
 - **MUST:** When controls overlay slides, reserve application-owned content safe areas so arrows, rotation controls, and picker targets never obscure authored text or actions.
 - **SHOULD:** Prioritize only initially visible campaign media and defer non-current media when the image delivery layer supports it.
 - **MUST:** Load styles.css or core.css plus carousel.css.
@@ -40,6 +42,7 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 - **Avoid:** Using Tabs for picker dots or hiding the only way to stop autoplay. **Instead:** Use PickerItem buttons and render RotationControl whenever autoplay can run.
 - **Avoid:** Putting unrelated proof rails or page sections inside every hero slide. **Instead:** Rotate only the peer campaign content and keep stable page evidence outside the Carousel.
 - **Avoid:** Rotating campaign copy while leaving campaign-specific artwork behind as one unrelated background. **Instead:** Decide whether media is invariant or part of the campaign; when it communicates that campaign, place the complete Surface inside Slide.
+- **Avoid:** Repeating block-size rules across Carousel Viewport, Track, and Slide. **Instead:** Establish the parent height once and opt into Root fill; size only the authored content inside each Slide separately.
 
 ## Validation checklist
 
