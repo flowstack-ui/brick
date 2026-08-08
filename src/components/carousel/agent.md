@@ -18,7 +18,7 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 
 - Compose Root, Viewport, Track, and one Slide per unique value; add Navigation, Controls, Previous, Next, Picker, PickerItem, and RotationControl only when the product needs them.
 - In a React Server Component, import the subpath as a module namespace with import * as Carousel from '@flowstack-ui/brick/carousel'; use the frozen Carousel runtime object only inside client components.
-- When automatic rotation is enabled, always render RotationControl, Previous, and Next so people can stop and navigate the sequence.
+- When automatic rotation is enabled, always render RotationControl, Previous, and Next so people can stop and navigate the sequence; place RotationControl before Viewport in DOM order.
 - Build campaign-specific slide content from Brick layout, typography, action, and media components; Carousel does not own hero messaging or proof content.
 - When artwork, scrim, and copy form one peer campaign, compose a complete Surface with Media, Scrim, and Content inside each Slide; keep genuinely invariant evidence or navigation outside the rotating sequence.
 
@@ -26,6 +26,10 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 
 - **MUST:** Treat arrows and picker dots as optional authored controls; dots represent direct slide selection and are not Tabs.
 - **MUST:** Never enable automatic rotation without a visible RotationControl and direct Previous and Next controls.
+- **MUST:** Keep picker treatment independent from arrow visibility; use Picker variant bare for dots without a capsule and Navigation visibility interaction only when arrows remain discoverable through focus, pointer, and touch.
+- **SHOULD:** Use a compact xs ghost RotationControl when the required stop mechanism should remain visually quiet; never remove it while automatic rotation can run.
+- **MUST:** Preserve requested direction at loop boundaries and never clone authored slide content, IDs, controls, or form fields.
+- **MUST:** Keep viewport motion instant until Atom exposes data-initialized; Brick's shipped Carousel CSS already enables smooth motion only after that signal.
 - **SHOULD:** Give campaign slides stable responsive geometry so changing the active slide does not move surrounding page content.
 - **MUST:** When controls overlay slides, reserve application-owned content safe areas so arrows, rotation controls, and picker targets never obscure authored text or actions.
 - **SHOULD:** Prioritize only initially visible campaign media and defer non-current media when the image delivery layer supports it.
@@ -39,7 +43,7 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 
 ## Validation checklist
 
-- Check optional-control compositions, first and last boundaries, loop behavior, picker selection, native horizontal touch scrolling, focus pause, hover pause, reduced motion, RTL, and screen-reader naming.
+- Check optional-control compositions, first and last boundaries in both directions, interaction-only arrow discovery, independent picker treatment, native horizontal touch scrolling, focus pause, hover pause, reduced motion, RTL, and screen-reader naming.
 - Confirm inactive slides are unavailable to focus and assistive technology, control focus rings remain visible, overlay controls do not cover content, complete campaign media changes with its copy, and slide changes do not cause page-level layout shift.
 
 ## Related guidance

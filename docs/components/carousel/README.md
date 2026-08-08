@@ -35,12 +35,12 @@ import * as Carousel from "@flowstack-ui/brick/carousel";
       <Carousel.Slide value="second" label="Managed hosting">Second</Carousel.Slide>
     </Carousel.Track>
   </Carousel.Viewport>
-  <Carousel.Navigation>
+  <Carousel.Navigation visibility="interaction">
     <Carousel.Previous />
     <Carousel.Next />
   </Carousel.Navigation>
   <Carousel.Controls>
-    <Carousel.Picker>
+    <Carousel.Picker variant="bare">
       <Carousel.PickerItem value="first" />
       <Carousel.PickerItem value="second" />
     </Carousel.Picker>
@@ -70,33 +70,56 @@ from the root or subpath.
 `CarouselViewportProps`, `CarouselTrackProps`, `CarouselSlideProps`,
 `CarouselNavigationProps`, `CarouselPreviousProps`, `CarouselNextProps`,
 `CarouselControlsProps`, `CarouselRotationControlProps`, `CarouselPickerProps`,
-`CarouselPickerItemProps`, `CarouselSize`, and `CarouselControlPlacement` from
+`CarouselPickerItemProps`, `CarouselSize`, `CarouselControlPlacement`,
+`CarouselControlSize`, `CarouselControlShape`, `CarouselControlVariant`,
+`CarouselNavigationVisibility`, and `CarouselPickerVariant` from
 root and subpath imports.
 
 | Prop | Values | Default |
 | --- | --- | --- |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `controlPlacement` | `overlay`, `outside` | `overlay` |
+| `controlShape` | `rounded`, `circle` | `circle` |
+| `controlVariant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
+| `visibility` (Navigation) | `always`, `interaction` | `always` |
+| `variant` (Picker) | `surface`, `bare` | `surface` |
+
+`Previous`, `Next`, and `RotationControl` accept independent `size`, `shape`,
+and `variant` overrides. `Navigation visibility="interaction"` reveals arrows
+on keyboard or fine-pointer interaction and briefly after touch. Picker's
+`surface` and `bare` variants are independent of arrow visibility.
 
 Each Slide and PickerItem requires the same unique `value`. A Slide's `label` becomes the default accessible PickerItem label. Authored children replace the default direction, rotation, or dot artwork without replacing Atom behavior.
 
 ## Visual recipes and states
 
-Small, medium, and large recipes coordinate control and picker geometry. Overlay placement floats controls above authored slide content; outside placement moves them into document flow. Hover, focus-visible, active picker, disabled boundary, playing, and stopped states change paint without changing behavior.
+Small, medium, and large root recipes coordinate control and picker geometry;
+direction and rotation controls may use `xs` through `xl` independently. Circle
+and rounded shapes plus solid, soft, outline, and ghost treatments keep control
+hierarchy themeable without application CSS. Overlay placement floats controls
+above authored slide content; outside placement moves them into document flow.
+Hover, focus-visible, active picker, disabled boundary, playing, and stopped
+states change paint without changing behavior.
 
 ## Tokens and CSS hooks
 
 Stable classes are `.brick-carousel`, `.brick-carousel__viewport`, `.brick-carousel__track`, `.brick-carousel__slide`, `.brick-carousel__navigation`, `.brick-carousel__previous`, `.brick-carousel__next`, `.brick-carousel__controls`, `.brick-carousel__rotation-control`, `.brick-carousel__picker`, and `.brick-carousel__picker-item`.
 
-Root exposes `data-control-placement`, `data-size`, and `data-slot`; Atom's
-`data-state`, `data-value`, `data-direction`, and disabled attributes remain
-available on the relevant parts.
+Root exposes `data-control-placement`, `data-control-shape`,
+`data-control-variant`, `data-size`, `data-touch-navigation`, and `data-slot`;
+Navigation exposes `data-visibility`, Picker exposes `data-variant`, and each
+direction/rotation control exposes optional `data-size`, `data-shape`, and
+`data-variant`. Atom's `data-initialized`, `data-state`, `data-value`,
+`data-direction`, and disabled attributes remain available on the relevant
+parts. Brick keeps viewport movement instant until `data-initialized` is
+present so server-rendered loop boundaries settle before smooth motion begins.
 
 Public variables:
 
 - `--brick-carousel-gap`
 - `--brick-carousel-radius`
 - `--brick-carousel-control-size`
+- `--brick-carousel-control-radius`
 - `--brick-carousel-control-foreground`
 - `--brick-carousel-control-background`
 - `--brick-carousel-control-border-color`
@@ -112,6 +135,7 @@ Public variables:
 - `--brick-carousel-dot-background`
 - `--brick-carousel-dot-active-background`
 - `--brick-carousel-transition-duration`
+- `--brick-carousel-transition-easing`
 
 ## Customization
 
@@ -119,11 +143,23 @@ Choose `size` and `controlPlacement` first. Then customize semantic theme tokens
 
 ## Responsive behavior
 
-Slides occupy one viewport width and snap during native horizontal scrolling. Controls remain authored and may move outside the media with `controlPlacement="outside"`. Picker dots are ordinary named buttons, not Tabs. Automatic rotation pauses for focus and hover and must expose a stop/start control. Inactive slides remain mounted but are hidden from interaction and assistive technology by Atom.
+Slides occupy one viewport width and snap during native horizontal scrolling.
+Looping moves the authored boundary slide in the requested direction and then
+silently rebases; it does not clone authored content. Controls remain authored
+and may move outside the media with `controlPlacement="outside"`. Picker dots
+are ordinary named buttons, not Tabs. Automatic rotation pauses for focus and
+hover and must expose a stop/start control. Inactive slides remain mounted but
+are hidden from interaction and assistive technology by Atom.
 
 ## Accessibility
 
-Give Root a concise accessible label. Slides are labelled groups, picker items are direct named buttons, and inactive slides are inert and assistive-hidden. If automatic rotation is enabled, include RotationControl, Previous, and Next. Rotation pauses for hover and focus and does not restart after focus without an explicit user action.
+Give Root a concise accessible label. Slides are labelled groups, picker items
+are direct named buttons, and inactive slides are inert and assistive-hidden.
+If automatic rotation is enabled, include RotationControl, Previous, and Next,
+and author RotationControl before the rotating viewport so it is the first
+focusable carousel control. Rotation pauses for hover and focus and does not
+restart after focus without an explicit user action. Interaction-only arrows
+remain keyboard focusable even while visually at rest.
 
 ## Composition, native props, and refs
 
@@ -133,14 +169,14 @@ Refs target the root, viewport, track, slides, controls, and picker hosts. Atom-
 
 ```tsx
 <Carousel.Root defaultValue="launch" defaultAutoPlay interval={8000} aria-label="Company highlights">
+  <Carousel.Controls>
+    <Carousel.RotationControl size="xs" variant="ghost" />
+    <Carousel.Picker variant="bare">{pickerItems}</Carousel.Picker>
+  </Carousel.Controls>
   <Carousel.Viewport>
     <Carousel.Track>{slides}</Carousel.Track>
   </Carousel.Viewport>
-  <Carousel.Navigation><Carousel.Previous /><Carousel.Next /></Carousel.Navigation>
-  <Carousel.Controls>
-    <Carousel.RotationControl />
-    <Carousel.Picker>{pickerItems}</Carousel.Picker>
-  </Carousel.Controls>
+  <Carousel.Navigation visibility="interaction"><Carousel.Previous /><Carousel.Next /></Carousel.Navigation>
 </Carousel.Root>
 ```
 
