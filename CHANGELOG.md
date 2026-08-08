@@ -4,6 +4,12 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Fixed
+
+- Updated the exact Atom dependency to `0.22.3` so Carousel rotation controls
+  toggle once across Chromium, Firefox, and WebKit while keyboard focus still
+  stops automatic rotation.
+
 ### Added
 
 - Added the Atom-backed `Carousel` component family with optional controls,
