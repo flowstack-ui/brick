@@ -1,3 +1,5 @@
+.carousel-demo-fill-frame { block-size: 26.25rem; }
+.carousel-demo-fill-frame .carousel-demo-slide { block-size: 100%; }
 .carousel-demo-slide { min-block-size: 18rem; display: flex; align-items: center; }
 .carousel-demo-slide-content { padding-inline: calc(var(--brick-carousel-control-size) + (var(--brick-carousel-gap) * 2)); }
 .carousel-demo-grid { align-items: start; }

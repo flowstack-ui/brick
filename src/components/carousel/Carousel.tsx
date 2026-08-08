@@ -1,6 +1,13 @@
 "use client";
 
-import { forwardRef, type HTMLAttributes } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+  type HTMLAttributes,
+  type PointerEventHandler,
+} from "react";
 import {
   Carousel as AtomCarousel,
   type CarouselNextProps as AtomCarouselNextProps,
@@ -17,23 +24,48 @@ import { Icon } from "../icon/index.js";
 
 export type CarouselSize = "sm" | "md" | "lg";
 export type CarouselControlPlacement = "overlay" | "outside";
+export type CarouselControlSize = "xs" | "sm" | "md" | "lg" | "xl";
+export type CarouselControlShape = "rounded" | "circle";
+export type CarouselControlVariant = "solid" | "soft" | "outline" | "ghost";
+export type CarouselNavigationVisibility = "always" | "interaction";
+export type CarouselPickerVariant = "surface" | "bare";
 
 export interface CarouselRootProps extends AtomCarouselRootProps {
+  /** Fill an explicitly sized parent and propagate that block size through Viewport, Track, and Slide. @default false */
+  fill?: boolean;
   /** Coordinated control and picker scale. @default "md" */
   size?: CarouselSize;
   /** Place navigation over the slide or in document flow. @default "overlay" */
   controlPlacement?: CarouselControlPlacement;
+  /** Default visual hierarchy for direction and rotation controls. @default "soft" */
+  controlVariant?: CarouselControlVariant;
+  /** Default corner geometry for direction and rotation controls. @default "circle" */
+  controlShape?: CarouselControlShape;
 }
 
 export type CarouselViewportProps = AtomCarouselViewportProps;
 export type CarouselTrackProps = AtomCarouselTrackProps;
 export type CarouselSlideProps = AtomCarouselSlideProps;
-export type CarouselPreviousProps = AtomCarouselPreviousProps;
-export type CarouselNextProps = AtomCarouselNextProps;
-export type CarouselPickerProps = AtomCarouselPickerProps;
+interface CarouselControlVisualProps {
+  /** Override the inherited control size. */
+  size?: CarouselControlSize;
+  /** Override the inherited control shape. */
+  shape?: CarouselControlShape;
+  /** Override the inherited control visual hierarchy. */
+  variant?: CarouselControlVariant;
+}
+
+export interface CarouselPreviousProps extends AtomCarouselPreviousProps, CarouselControlVisualProps {}
+export interface CarouselNextProps extends AtomCarouselNextProps, CarouselControlVisualProps {}
+export interface CarouselPickerProps extends AtomCarouselPickerProps {
+  /** Picker container treatment. @default "surface" */
+  variant?: CarouselPickerVariant;
+}
 export type CarouselPickerItemProps = AtomCarouselPickerItemProps;
-export type CarouselRotationControlProps = AtomCarouselRotationControlProps;
+export interface CarouselRotationControlProps extends AtomCarouselRotationControlProps, CarouselControlVisualProps {}
 export interface CarouselNavigationProps extends HTMLAttributes<HTMLDivElement> {
+  /** Keep arrows visible or reveal them during pointer, touch, or focus interaction. @default "always" */
+  visibility?: CarouselNavigationVisibility;
   "data-slot"?: string;
 }
 export interface CarouselControlsProps extends HTMLAttributes<HTMLDivElement> {
@@ -68,8 +100,53 @@ function RotationIcon() {
 }
 
 export const CarouselRoot = forwardRef<HTMLDivElement, CarouselRootProps>(
-  function CarouselRoot({ className, controlPlacement = "overlay", size = "md", "data-slot": dataSlot, ...props }, ref) {
-    return <AtomCarousel.Root {...props} className={mergeClassName("brick-carousel", className)} data-control-placement={controlPlacement} data-size={size} data-slot={dataSlot ?? "carousel"} ref={ref} />;
+  function CarouselRoot(
+    {
+      className,
+      controlPlacement = "overlay",
+      controlShape = "circle",
+      controlVariant = "soft",
+      fill = false,
+      size = "md",
+      "data-slot": dataSlot,
+      onPointerUpCapture,
+      ...props
+    },
+    ref,
+  ) {
+    const [touchNavigationVisible, setTouchNavigationVisible] = useState(false);
+    const touchRevealTimerRef = useRef<number | null>(null);
+
+    useEffect(() => () => {
+      if (touchRevealTimerRef.current !== null) window.clearTimeout(touchRevealTimerRef.current);
+    }, []);
+
+    const handlePointerUpCapture: PointerEventHandler<HTMLDivElement> = (event) => {
+      onPointerUpCapture?.(event);
+      if (event.defaultPrevented || event.pointerType === "mouse") return;
+      if (touchRevealTimerRef.current !== null) window.clearTimeout(touchRevealTimerRef.current);
+      setTouchNavigationVisible(true);
+      touchRevealTimerRef.current = window.setTimeout(() => {
+        touchRevealTimerRef.current = null;
+        setTouchNavigationVisible(false);
+      }, 2500);
+    };
+
+    return (
+      <AtomCarousel.Root
+        {...props}
+        className={mergeClassName("brick-carousel", className)}
+        data-control-placement={controlPlacement}
+        data-control-shape={controlShape}
+        data-control-variant={controlVariant}
+        data-fill={fill ? "" : undefined}
+        data-size={size}
+        data-slot={dataSlot ?? "carousel"}
+        data-touch-navigation={touchNavigationVisible ? "visible" : undefined}
+        onPointerUpCapture={handlePointerUpCapture}
+        ref={ref}
+      />
+    );
   },
 );
 
@@ -92,20 +169,20 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
 );
 
 export const CarouselNavigation = forwardRef<HTMLDivElement, CarouselNavigationProps>(
-  function CarouselNavigation({ className, "data-slot": dataSlot, ...props }, ref) {
-    return <div {...props} className={mergeClassName("brick-carousel__navigation", className)} data-slot={dataSlot ?? "carousel-navigation"} ref={ref} />;
+  function CarouselNavigation({ className, visibility = "always", "data-slot": dataSlot, ...props }, ref) {
+    return <div {...props} className={mergeClassName("brick-carousel__navigation", className)} data-slot={dataSlot ?? "carousel-navigation"} data-visibility={visibility} ref={ref} />;
   },
 );
 
 export const CarouselPrevious = forwardRef<HTMLButtonElement, CarouselPreviousProps>(
-  function CarouselPrevious({ children, className, "data-slot": dataSlot, ...props }, ref) {
-    return <AtomCarousel.Previous {...props} className={mergeClassName("brick-carousel__previous", className)} data-slot={dataSlot ?? "carousel-previous"} ref={ref}>{children ?? <DirectionIcon direction="previous" />}</AtomCarousel.Previous>;
+  function CarouselPrevious({ children, className, shape, size, variant, "data-slot": dataSlot, ...props }, ref) {
+    return <AtomCarousel.Previous {...props} className={mergeClassName("brick-carousel__previous", className)} data-shape={shape} data-size={size} data-slot={dataSlot ?? "carousel-previous"} data-variant={variant} ref={ref}>{children ?? <DirectionIcon direction="previous" />}</AtomCarousel.Previous>;
   },
 );
 
 export const CarouselNext = forwardRef<HTMLButtonElement, CarouselNextProps>(
-  function CarouselNext({ children, className, "data-slot": dataSlot, ...props }, ref) {
-    return <AtomCarousel.Next {...props} className={mergeClassName("brick-carousel__next", className)} data-slot={dataSlot ?? "carousel-next"} ref={ref}>{children ?? <DirectionIcon direction="next" />}</AtomCarousel.Next>;
+  function CarouselNext({ children, className, shape, size, variant, "data-slot": dataSlot, ...props }, ref) {
+    return <AtomCarousel.Next {...props} className={mergeClassName("brick-carousel__next", className)} data-shape={shape} data-size={size} data-slot={dataSlot ?? "carousel-next"} data-variant={variant} ref={ref}>{children ?? <DirectionIcon direction="next" />}</AtomCarousel.Next>;
   },
 );
 
@@ -116,14 +193,14 @@ export const CarouselControls = forwardRef<HTMLDivElement, CarouselControlsProps
 );
 
 export const CarouselRotationControl = forwardRef<HTMLButtonElement, CarouselRotationControlProps>(
-  function CarouselRotationControl({ children, className, "data-slot": dataSlot, ...props }, ref) {
-    return <AtomCarousel.RotationControl {...props} className={mergeClassName("brick-carousel__rotation-control", className)} data-slot={dataSlot ?? "carousel-rotation-control"} ref={ref}>{children ?? <RotationIcon />}</AtomCarousel.RotationControl>;
+  function CarouselRotationControl({ children, className, shape, size, variant, "data-slot": dataSlot, ...props }, ref) {
+    return <AtomCarousel.RotationControl {...props} className={mergeClassName("brick-carousel__rotation-control", className)} data-shape={shape} data-size={size} data-slot={dataSlot ?? "carousel-rotation-control"} data-variant={variant} ref={ref}>{children ?? <RotationIcon />}</AtomCarousel.RotationControl>;
   },
 );
 
 export const CarouselPicker = forwardRef<HTMLDivElement, CarouselPickerProps>(
-  function CarouselPicker({ className, "data-slot": dataSlot, ...props }, ref) {
-    return <AtomCarousel.Picker {...props} className={mergeClassName("brick-carousel__picker", className)} data-slot={dataSlot ?? "carousel-picker"} ref={ref} />;
+  function CarouselPicker({ className, variant = "surface", "data-slot": dataSlot, ...props }, ref) {
+    return <AtomCarousel.Picker {...props} className={mergeClassName("brick-carousel__picker", className)} data-slot={dataSlot ?? "carousel-picker"} data-variant={variant} ref={ref} />;
   },
 );
 

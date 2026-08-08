@@ -27,21 +27,27 @@ describe("Carousel", () => {
     expect(root).toHaveClass("brick-carousel");
     expect(root).toHaveAttribute("data-size", "md");
     expect(root).toHaveAttribute("data-control-placement", "overlay");
+    expect(root).toHaveAttribute("data-control-shape", "circle");
+    expect(root).toHaveAttribute("data-control-variant", "soft");
+    expect(root).not.toHaveAttribute("data-fill");
     expect(root.querySelector(".brick-carousel__viewport")).toBeTruthy();
     expect(root.querySelectorAll(".brick-carousel__slide")).toHaveLength(3);
     expect(screen.getByRole("button", { name: "Previous slide" }).querySelector("svg")).toBeTruthy();
     expect(screen.getByRole("button", { name: "Start slide rotation" }).querySelector("svg")).toBeTruthy();
     expect(screen.getByRole("button", { name: "First story" })).toHaveAttribute("data-state", "active");
+    expect(root.querySelector(".brick-carousel__navigation")).toHaveAttribute("data-visibility", "always");
+    expect(root.querySelector(".brick-carousel__picker")).toHaveAttribute("data-variant", "surface");
   });
 
   it("preserves behavior, recipes, hooks, and refs", async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();
     const ref = createRef<HTMLDivElement>();
-    render(<Standard className="custom" controlPlacement="outside" onValueChange={onValueChange} ref={ref} size="lg" />);
+    render(<Standard className="custom" controlPlacement="outside" fill onValueChange={onValueChange} ref={ref} size="lg" />);
     expect(ref.current).toHaveClass("brick-carousel", "custom");
     expect(ref.current).toHaveAttribute("data-size", "lg");
     expect(ref.current).toHaveAttribute("data-control-placement", "outside");
+    expect(ref.current).toHaveAttribute("data-fill", "");
     await user.click(screen.getByRole("button", { name: "Next slide" }));
     expect(onValueChange).toHaveBeenLastCalledWith("two", "next");
     expect(screen.getByRole("button", { name: "Second story" })).toHaveAttribute("data-state", "active");
@@ -51,5 +57,23 @@ describe("Carousel", () => {
     render(<Carousel.Root aria-label="Gallery" defaultValue="one"><Carousel.Viewport><Carousel.Track><Carousel.Slide value="one">Only slide</Carousel.Slide></Carousel.Track></Carousel.Viewport></Carousel.Root>);
     expect(screen.getByRole("group", { name: "Gallery" })).toBeVisible();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
+  });
+
+  it("exposes independent compact control, picker, and navigation recipes", () => {
+    render(
+      <Carousel.Root aria-label="Campaigns" defaultValue="one" controlShape="rounded" controlVariant="outline">
+        <Carousel.Viewport><Carousel.Track><Carousel.Slide value="one">Only slide</Carousel.Slide></Carousel.Track></Carousel.Viewport>
+        <Carousel.Navigation visibility="interaction"><Carousel.Previous variant="ghost" /><Carousel.Next shape="circle" /></Carousel.Navigation>
+        <Carousel.Controls><Carousel.RotationControl size="xs" variant="ghost" /><Carousel.Picker variant="bare"><Carousel.PickerItem value="one" /></Carousel.Picker></Carousel.Controls>
+      </Carousel.Root>,
+    );
+    const root = screen.getByRole("group", { name: "Campaigns" });
+    expect(root).toHaveAttribute("data-control-shape", "rounded");
+    expect(root).toHaveAttribute("data-control-variant", "outline");
+    expect(root.querySelector(".brick-carousel__navigation")).toHaveAttribute("data-visibility", "interaction");
+    expect(screen.getByRole("button", { name: "Previous slide" })).toHaveAttribute("data-variant", "ghost");
+    expect(screen.getByRole("button", { name: "Next slide" })).toHaveAttribute("data-shape", "circle");
+    expect(screen.getByRole("button", { name: "Start slide rotation" })).toHaveAttribute("data-size", "xs");
+    expect(root.querySelector(".brick-carousel__picker")).toHaveAttribute("data-variant", "bare");
   });
 });

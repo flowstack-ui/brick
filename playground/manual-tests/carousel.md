@@ -21,6 +21,11 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 
 Operate arrows and picker dots by pointer, keyboard, and touch swipe. Confirm one slide settles at a time, focus remains visible, labels match destinations, and the control-free example remains usable by native horizontal scrolling.
 
+With looping enabled, advance from the last slide to the first and back from
+the first to the last. Confirm the requested direction never reverses, only
+the authored slides exist in the accessibility tree, and the silent boundary
+reposition does not flash or announce a duplicate.
+
 Result:
 Notes or issue:
 
@@ -28,12 +33,21 @@ Notes or issue:
 
 Start rotation, then hover, focus inside, and use the stop control. Confirm rotation pauses for interaction, does not restart without explicit action after focus, and all direct controls remain available.
 
+Confirm the compact rotation control is the first focusable carousel control.
+For interaction-only arrows, confirm fine-pointer hover and keyboard focus
+reveal them, touch interaction reveals them briefly, and picker visibility is
+independent of arrow visibility.
+
 Result:
 Notes or issue:
 
 ## Step 3 — Reflow and preferences
 
 Review light, dark, forced colors, reduced motion, RTL, 200%, 400%, and mobile. Confirm controls remain perceivable, slide content is not clipped, picker dots do not wrap incorrectly, and surrounding layout does not shift.
+
+Give the Overview Carousel's immediate parent a fixed block size. Confirm
+Root, Viewport, Track, and the active Slide fill it without making the page or
+authored slide content viewport-sized.
 
 Result:
 Notes or issue:

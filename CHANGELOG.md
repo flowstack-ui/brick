@@ -4,11 +4,32 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Changed
+
+- Expanded Carousel with independently configurable arrow visibility, bare or
+  surfaced picker dots, compact per-control sizing, circle or rounded shapes,
+  and solid, soft, outline, or ghost control treatments. Interaction-only
+  arrows remain keyboard reachable and reveal briefly after touch.
+
+### Added
+
+- Added an opt-in Carousel parent-fill recipe, including flex-grown parent
+  support, plus public navigation and controls inset variables so full-height
+  compositions retain component-owned internal geometry without acquiring a
+  product-owned viewport policy.
+- Expanded interface-composition Agent Knowledge with responsibility-based
+  source organization and intent-focused comment rules for complex product
+  assemblies.
+
 ### Fixed
 
-- Updated the exact Atom dependency to `0.22.3` so Carousel rotation controls
-  toggle once across Chromium, Firefox, and WebKit while keyboard focus still
-  stops automatic rotation.
+- Updated the exact Atom dependency to `0.22.5`, retaining the cross-browser
+  rotation-control correction and direction-preserving Carousel loop
+  settlement while adopting exact SSR hydration alignment and its
+  initialization signal.
+- Kept loop navigation moving in the requested direction across the last/first
+  boundary without cloning authored slide content, and repaired Carousel's
+  radius, shadow, motion, and surface recipes to use generated Brick tokens.
 
 ### Added
 
