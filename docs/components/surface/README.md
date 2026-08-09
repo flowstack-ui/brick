@@ -114,6 +114,11 @@ Media and Content accept authored children, native div attributes, class,
 style, slot, and refs. Media and Scrim are always `aria-hidden` and ignore
 pointer interaction. Scrim accepts no children.
 
+Scrim strength is deliberately perceptual rather than a small numeric step.
+It changes the starting paint intensity and, for directional scrims, the
+gradient reach. Themes normally set only `--brick-surface-scrim-color`; Brick
+keeps the relative `soft`, `medium`, and `strong` ladder consistent.
+
 Native global/ARIA/data attributes, events, `className`, `style`, and an
 `HTMLElement` ref pass through.
 
@@ -152,6 +157,10 @@ Public variables:
 - `--brick-surface-scrim-soft`
 - `--brick-surface-scrim-medium`
 - `--brick-surface-scrim-strong`
+- `--brick-surface-scrim-gradient-stop`
+- `--brick-surface-scrim-gradient-stop-soft`
+- `--brick-surface-scrim-gradient-stop-medium`
+- `--brick-surface-scrim-gradient-stop-strong`
 
 ## Customization
 

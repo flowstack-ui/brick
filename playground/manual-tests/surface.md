@@ -98,9 +98,11 @@ Action: Inspect the Surface, Media, Scrim, Content, and Image output, then
 attempt pointer and screen-reader navigation through the decorative layers.
 
 Expected: Media and Scrim fill the Surface behind Content, inherit its radius,
-ignore pointer input, and add no accessibility output. The logical gradient
-follows direction, foreground content remains readable, ordinary Surface
-output elsewhere is unchanged, and forced colors removes decorative layers.
+ignore pointer input, and add no accessibility output. Over identical media,
+soft, medium, and strong remain clearly distinguishable through both paint
+intensity and directional reach. The logical gradient follows direction,
+foreground content remains readable, ordinary Surface output elsewhere is
+unchanged, and forced colors removes decorative layers.
 
 Result:
 Notes or issue:

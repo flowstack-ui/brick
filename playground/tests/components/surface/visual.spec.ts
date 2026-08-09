@@ -63,11 +63,21 @@ test("Surface appearance, customization, mobile, and forced colors", async ({
 test("Surface optional media composition", async ({ page }) => {
   await expectEvidenceScreenshot(
     page,
+    page.getByTestId("surface-scrim-comparison"),
+    "scrim-strengths-light.png",
+  );
+  await expectEvidenceScreenshot(
+    page,
     page.getByTestId("surface-layered"),
     "media-light.png",
   );
 
   await setAppearance(page, "dark");
+  await expectEvidenceScreenshot(
+    page,
+    page.getByTestId("surface-scrim-comparison"),
+    "scrim-strengths-dark.png",
+  );
   await expectEvidenceScreenshot(
     page,
     page.getByTestId("surface-layered"),

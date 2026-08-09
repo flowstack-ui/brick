@@ -17,6 +17,7 @@ import {
   type SurfaceInset,
   type SurfaceLevel,
   type SurfaceRadius,
+  type SurfaceScrimStrength,
 } from "@flowstack-ui/brick";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
@@ -28,6 +29,7 @@ const levels: SurfaceLevel[] = ["canvas", "base", "subtle", "raised"];
 const elevations: SurfaceElevation[] = ["none", "low", "medium", "high"];
 const radii: SurfaceRadius[] = ["none", "subtle", "surface"];
 const insets: SurfaceInset[] = ["none", "sm", "md", "lg"];
+const scrimStrengths: SurfaceScrimStrength[] = ["soft", "medium", "strong"];
 const hosts: SurfaceElement[] = [
   "div", "section", "article", "aside", "nav", "main", "header", "footer",
   "form",
@@ -382,6 +384,42 @@ export function SurfacePage() {
       </Scenario>
 
       <Scenario {...surfaceScenarios[9]}>
+        <Grid.Root
+          className="surface-scrim-grid"
+          columns={3}
+          data-testid="surface-scrim-comparison"
+          gap="3"
+        >
+          {scrimStrengths.map((strength) => (
+            <VStack gap="2" key={strength}>
+              <SpecimenLabel>
+                {strength[0].toUpperCase() + strength.slice(1)}
+              </SpecimenLabel>
+              <Surface
+                className="surface-scrim-comparison"
+                radius="surface"
+              >
+                <Surface.Media>
+                  <ImageRoot
+                    fill
+                    fit="cover"
+                    position="center"
+                    src="/assets/image/workspace-landscape.png"
+                  >
+                    <ImageContent alt="" height={675} width={1200} />
+                    <ImageFallback>Background unavailable</ImageFallback>
+                  </ImageRoot>
+                </Surface.Media>
+                <Surface.Scrim
+                  data-testid={`surface-scrim-${strength}`}
+                  direction="inline-start"
+                  strength={strength}
+                />
+              </Surface>
+            </VStack>
+          ))}
+        </Grid.Root>
+
         <Surface
           className="surface-layered"
           data-testid="surface-layered"
