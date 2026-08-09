@@ -4,6 +4,12 @@ Surface follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Made `soft`, `medium`, and `strong` Scrim recipes perceptually distinct by
+  widening both paint intensity and directional gradient reach while keeping
+  theme ownership limited to the semantic scrim color.
+
 ### Added
 
 - Added optional `Surface.Media`, `Surface.Scrim`, and `Surface.Content`

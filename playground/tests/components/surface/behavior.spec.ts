@@ -230,3 +230,37 @@ test("optional media layers fill the root while content remains foreground", asy
     .analyze();
   expect(results.violations).toEqual([]);
 });
+
+test("scrim strength changes both paint intensity and directional reach", async ({
+  page,
+}) => {
+  const scrims = ["soft", "medium", "strong"].map((strength) =>
+    page.getByTestId(`surface-scrim-${strength}`),
+  );
+  const recipes = await Promise.all(
+    scrims.map((scrim) =>
+      scrim.evaluate((element) => {
+        const style = getComputedStyle(element);
+        return {
+          backgroundImage: style.backgroundImage,
+          gradientStop: style.getPropertyValue(
+            "--brick-surface-scrim-gradient-stop",
+          ).trim(),
+        };
+      }),
+    ),
+  );
+
+  expect(recipes.map(({ gradientStop }) => gradientStop)).toEqual([
+    "68%",
+    "82%",
+    "94%",
+  ]);
+  expect(new Set(recipes.map(({ backgroundImage }) => backgroundImage)).size)
+    .toBe(3);
+
+  const results = await new AxeBuilder({ page })
+    .include('[data-testid="surface-scrim-comparison"]')
+    .analyze();
+  expect(results.violations).toEqual([]);
+});

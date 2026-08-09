@@ -24,6 +24,7 @@ Apply semantic background layers, boundaries, elevation, radius, inset, and opti
 - **MUST:** Treat Surface.Media as decorative and noninteractive; keep meaningful media and controls in Content or ordinary document flow.
 - **MUST:** Give Brick Image explicit fill inside Surface.Media so its actual Content and Fallback consume the complete media layer.
 - **MUST:** Put every foreground child inside Surface.Content when Media or Scrim is used.
+- **SHOULD:** Choose Scrim strength through the public prop and let the theme provide only the semantic scrim color unless one deliberate instance requires an advanced recipe override.
 - **MUST:** Verify foreground contrast against every media state; Scrim does not prove contrast by itself.
 
 ## Common mistakes

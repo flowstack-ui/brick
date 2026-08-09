@@ -15,21 +15,25 @@
     --brick-surface-radius: var(--brick-radius-surface);
     --brick-surface-padding: var(--brick-space-0);
     --brick-surface-scrim-color: var(--brick-color-scrim);
+    /* Strength is perceptual: intensity and directional reach move together. */
     --brick-surface-scrim-soft: color-mix(
       in srgb,
       var(--brick-surface-scrim-color),
-      transparent 68%
+      transparent 76%
     );
     --brick-surface-scrim-medium: color-mix(
       in srgb,
       var(--brick-surface-scrim-color),
-      transparent 48%
+      transparent 44%
     );
     --brick-surface-scrim-strong: color-mix(
       in srgb,
       var(--brick-surface-scrim-color),
-      transparent 28%
+      transparent 8%
     );
+    --brick-surface-scrim-gradient-stop-soft: 68%;
+    --brick-surface-scrim-gradient-stop-medium: 82%;
+    --brick-surface-scrim-gradient-stop-strong: 94%;
 
     box-sizing: border-box;
     min-inline-size: 0;
@@ -79,6 +83,9 @@
 
   .brick-surface__scrim {
     --brick-surface-scrim-paint: var(--brick-surface-scrim-medium);
+    --brick-surface-scrim-gradient-stop: var(
+      --brick-surface-scrim-gradient-stop-medium
+    );
 
     z-index: 1;
     background: var(--brick-surface-scrim-paint);
@@ -86,17 +93,23 @@
 
   .brick-surface__scrim[data-strength="soft"] {
     --brick-surface-scrim-paint: var(--brick-surface-scrim-soft);
+    --brick-surface-scrim-gradient-stop: var(
+      --brick-surface-scrim-gradient-stop-soft
+    );
   }
 
   .brick-surface__scrim[data-strength="strong"] {
     --brick-surface-scrim-paint: var(--brick-surface-scrim-strong);
+    --brick-surface-scrim-gradient-stop: var(
+      --brick-surface-scrim-gradient-stop-strong
+    );
   }
 
   .brick-surface__scrim[data-direction="inline-start"] {
     background: linear-gradient(
       to right,
       var(--brick-surface-scrim-paint),
-      transparent 82%
+      transparent var(--brick-surface-scrim-gradient-stop)
     );
   }
 
@@ -104,7 +117,7 @@
     background: linear-gradient(
       to left,
       var(--brick-surface-scrim-paint),
-      transparent 82%
+      transparent var(--brick-surface-scrim-gradient-stop)
     );
   }
 
@@ -112,7 +125,7 @@
     background: linear-gradient(
       to left,
       var(--brick-surface-scrim-paint),
-      transparent 82%
+      transparent var(--brick-surface-scrim-gradient-stop)
     );
   }
 
@@ -120,7 +133,7 @@
     background: linear-gradient(
       to right,
       var(--brick-surface-scrim-paint),
-      transparent 82%
+      transparent var(--brick-surface-scrim-gradient-stop)
     );
   }
 
@@ -128,7 +141,7 @@
     background: linear-gradient(
       to bottom,
       var(--brick-surface-scrim-paint),
-      transparent 82%
+      transparent var(--brick-surface-scrim-gradient-stop)
     );
   }
 
@@ -136,7 +149,7 @@
     background: linear-gradient(
       to top,
       var(--brick-surface-scrim-paint),
-      transparent 82%
+      transparent var(--brick-surface-scrim-gradient-stop)
     );
   }
 

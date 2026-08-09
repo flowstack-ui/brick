@@ -6,6 +6,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Changed
 
+- Made Surface Scrim strength recipes visibly distinct over real media by
+  widening both paint intensity and logical gradient reach.
+
 - Expanded Carousel with independently configurable arrow visibility, bare or
   surfaced picker dots, compact per-control sizing, circle or rounded shapes,
   and solid, soft, outline, or ghost control treatments. Interaction-only

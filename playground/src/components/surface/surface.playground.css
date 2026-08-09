@@ -84,6 +84,10 @@
   min-block-size: 22rem;
 }
 
+.surface-scrim-comparison {
+  min-block-size: 13rem;
+}
+
 .surface-layered__copy {
   box-sizing: border-box;
   max-inline-size: 34rem;
@@ -113,5 +117,9 @@
   .surface-cell,
   .surface-elevation-stage {
     padding: var(--brick-space-3);
+  }
+
+  .brick-grid.surface-scrim-grid {
+    --brick-grid-columns: 1;
   }
 }
