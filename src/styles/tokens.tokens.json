@@ -209,6 +209,7 @@
           "primary": { "$value": "{reference.light.color.textPrimary}" },
           "secondary": { "$value": "{reference.light.color.textSecondary}" },
           "muted": { "$value": "{reference.light.color.textMuted}" },
+          "disabled": { "$value": "{reference.light.color.textMuted}" },
           "inverse": { "$value": "{reference.light.color.onSolid}" }
         },
         "border": {
@@ -442,6 +443,7 @@
           "primary": { "$value": "{reference.dark.color.textPrimary}" },
           "secondary": { "$value": "{reference.dark.color.textSecondary}" },
           "muted": { "$value": "{reference.dark.color.textMuted}" },
+          "disabled": { "$value": "{reference.dark.color.textMuted}" },
           "inverse": { "$value": "{reference.light.color.textPrimary}" }
         },
         "border": {

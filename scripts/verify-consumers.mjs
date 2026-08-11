@@ -224,6 +224,8 @@ const swipeableMarkup = renderToString(React.createElement(SwipeableItem.Root, n
 if (!swipeableMarkup.includes("brick-swipeable-item") || !swipeableMarkup.includes('aria-label="Message actions"')) throw new Error("Swipeable Item SSR smoke failed");
 if (!SubpathTooltip || Object.keys(SubpathTooltip).length !== 8) throw new Error("Tooltip subpath smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
+const themeContract = JSON.parse(await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/theme-contract.json")), "utf8"));
+if (themeContract.$schema !== "flowstack.brick-theme-contract.v1" || themeContract.package.name !== "@flowstack-ui/brick") throw new Error("Theme contract export is invalid");
 const coreCss = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles/core.css", import.meta.url), "utf8");
 const buttonCss = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles/button.css", import.meta.url), "utf8");
 if (!coreCss.includes("--brick-color-accent-solid") || !coreCss.includes("brick.foundations") || !coreCss.includes(":where(body)") || coreCss.includes(".brick-button")) throw new Error("Modular core CSS export is invalid");

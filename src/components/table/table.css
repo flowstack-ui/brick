@@ -16,7 +16,7 @@
     --brick-table-radius: var(--brick-radius-surface);
     --brick-table-header-background: var(--brick-color-surface-subtle);
     --brick-table-header-foreground: var(--brick-color-text-primary);
-    --brick-table-body-background: var(--brick-color-surface);
+    --brick-table-body-background: var(--brick-color-surface-base);
     --brick-table-row-stripe-background: var(--brick-color-surface-subtle);
     --brick-table-footer-background: var(--brick-color-surface-subtle);
     --brick-table-footer-foreground: var(--brick-color-text-primary);
@@ -59,13 +59,13 @@
     vertical-align: middle;
     overflow-wrap: break-word;
   }
-  .brick-table__head { color: var(--brick-table-header-foreground); background: var(--brick-table-header-background); font-weight: var(--brick-typography-heading-sm-font-weight); white-space: nowrap; }
+  .brick-table__head { color: var(--brick-table-header-foreground); background: var(--brick-table-header-background); font-weight: var(--brick-typography-compact-title-font-weight); white-space: nowrap; }
   .brick-table__cell { background: var(--brick-table-body-background); }
   .brick-table__head[data-align="center"], .brick-table__cell[data-align="center"] { text-align: center; }
   .brick-table__head[data-align="end"], .brick-table__cell[data-align="end"] { text-align: end; }
   .brick-table__head[data-numeric], .brick-table__cell[data-numeric] { white-space: nowrap; font-variant-numeric: tabular-nums; }
   .brick-table__footer .brick-table__head,
-  .brick-table__footer .brick-table__cell { color: var(--brick-table-footer-foreground); background: var(--brick-table-footer-background); font-weight: var(--brick-typography-heading-sm-font-weight); }
+  .brick-table__footer .brick-table__cell { color: var(--brick-table-footer-foreground); background: var(--brick-table-footer-background); font-weight: var(--brick-typography-compact-title-font-weight); }
   .brick-table[data-striped] .brick-table__body .brick-table__row:nth-child(even) .brick-table__cell,
   .brick-table[data-striped] .brick-table__body .brick-table__row:nth-child(even) .brick-table__head { background: var(--brick-table-row-stripe-background); }
 

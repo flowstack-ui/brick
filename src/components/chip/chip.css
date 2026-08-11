@@ -14,7 +14,7 @@
     --brick-chip-remove-foreground: var(--brick-color-text-secondary);
     --brick-chip-remove-background: transparent;
     --brick-chip-remove-hover-background: var(--brick-color-surface-raised);
-    --brick-chip-remove-active-background: var(--brick-color-surface-muted);
+    --brick-chip-remove-active-background: var(--brick-color-border-subtle);
 
     display: inline-flex;
     box-sizing: border-box;
@@ -46,7 +46,7 @@
     --brick-chip-foreground: var(--brick-color-accent-on-soft);
     --brick-chip-border-color: var(--brick-color-accent-border);
     --brick-chip-remove-foreground: var(--brick-color-accent-text);
-    --brick-chip-remove-hover-background: var(--brick-color-accent-subtle);
+    --brick-chip-remove-hover-background: var(--brick-color-accent-soft);
     --brick-chip-remove-active-background: var(--brick-color-accent-soft);
   }
 

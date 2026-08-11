@@ -24,6 +24,7 @@ test("package metadata defines the public Brick boundary", async () => {
     "./agents/manifest.json": "./dist/agents/manifest.json",
     "./agents/*.json": "./dist/agents/*.json",
     "./agents/*.md": "./dist/agents/*.md",
+    "./theme-contract.json": "./dist/theme-contract.json",
     "./appearance": {
       types: "./dist/appearance.d.ts",
       default: "./dist/appearance.js",
@@ -1247,7 +1248,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   assert.equal(componentStyleNames.length, 79);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
-    assert.match(css, /@layer brick\.tokens,brick\.foundations/);
+    assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);
     if (name === "visually-hidden") {
       assert.match(css, /brick\.components,brick\.utilities,brick\.effects/);
       assert.doesNotMatch(css, /\.brick-/);

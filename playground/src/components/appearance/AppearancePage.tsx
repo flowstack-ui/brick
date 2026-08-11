@@ -50,6 +50,13 @@ export const appearanceScenarios = [
     description:
       "Actions and native fields inherit the nearest scope through narrow layout, zoom, keyboard focus, and direction changes.",
   },
+  {
+    id: "appearance.theme-contract",
+    number: 6,
+    title: "Theme contract selector prototype",
+    description:
+      "A named theme restores its own complete light map after a nested dark boundary through static, low-specificity selectors.",
+  },
 ] as const satisfies readonly ScenarioDefinition[];
 
 function AppearancePanel({
@@ -237,6 +244,41 @@ export function AppearancePage() {
             <AppearancePanel appearance="dark" testId="appearance-stress-dark" />
           </div>
         </Grid.Root>
+      </Scenario>
+
+      <Scenario {...appearanceScenarios[5]}>
+        <Appearance value="light">
+          <Surface
+            bordered
+            className="appearance-theme-prototype"
+            data-flowstack-theme="contract-prototype"
+            data-testid="theme-contract-light-outer"
+            inset="md"
+            level="raised"
+          >
+            <Text variant="body-sm">Theme light outer</Text>
+            <Appearance value="dark">
+              <Surface
+                bordered
+                data-testid="theme-contract-dark-middle"
+                inset="md"
+                level="raised"
+              >
+                <Text variant="body-sm">Theme dark middle</Text>
+                <Appearance value="light">
+                  <Surface
+                    bordered
+                    data-testid="theme-contract-light-inner"
+                    inset="sm"
+                    level="raised"
+                  >
+                    <Text variant="body-sm">Theme light inner</Text>
+                  </Surface>
+                </Appearance>
+              </Surface>
+            </Appearance>
+          </Surface>
+        </Appearance>
       </Scenario>
     </VStack>
   );

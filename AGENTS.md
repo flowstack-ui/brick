@@ -13,6 +13,9 @@ This repository contains the public `@flowstack-ui/brick` package.
   build output, or `node_modules/`.
 - Public JavaScript must never require consumers to run a CSS processor.
 - Public CSS classes and variables use the `brick-` and `--brick-` prefixes.
+- Before theme-contract, token, appearance, or cascade work, read
+  [`docs/guides/theme-contract.md`](docs/guides/theme-contract.md) and preserve
+  the generated `flowstack.brick-theme-contract.v1` boundary.
 - Components use public Atom behavior directly; do not create local headless
   primitives or compatibility wrappers.
 - Classify behavior, semantics, accessibility, focus, interaction, state,

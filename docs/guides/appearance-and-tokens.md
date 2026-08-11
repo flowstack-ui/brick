@@ -76,17 +76,19 @@ boundary. Do not define light only at the outer theme root and assume it will
 return after a dark nested scope.
 
 ```css
-[data-theme="ocean"],
-[data-theme="ocean"][data-brick-appearance="light"],
-[data-theme="ocean"] [data-brick-appearance="light"] {
+@layer flowstack.theme {
+:where([data-flowstack-theme="ocean"]),
+:where([data-flowstack-theme="ocean"][data-brick-appearance="light"]),
+:where([data-flowstack-theme="ocean"] [data-brick-appearance="light"]) {
   color-scheme: light;
   /* Complete Ocean light semantic color assignments. */
 }
 
-[data-theme="ocean"][data-brick-appearance="dark"],
-[data-theme="ocean"] [data-brick-appearance="dark"] {
+:where([data-flowstack-theme="ocean"][data-brick-appearance="dark"]),
+:where([data-flowstack-theme="ocean"] [data-brick-appearance="dark"]) {
   color-scheme: dark;
   /* Complete Ocean dark semantic color assignments. */
+}
 }
 ```
 
@@ -94,6 +96,10 @@ Appearance-independent typography, radius, density, and motion values may
 remain on the outer theme root. Every color role claimed by an appearance must
 be complete, including surfaces, text, borders, focus, interaction states,
 status colors, scrim, and shadow.
+
+Brick reserves `flowstack.theme` between its token and foundation layers. The
+generated [theme contract](theme-contract.md) publishes the exact semantic and
+approved component-input boundary for theme tooling.
 
 ### Portalled content
 

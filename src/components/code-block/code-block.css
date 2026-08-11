@@ -13,7 +13,7 @@
     --brick-code-block-font-weight: var(--brick-typography-code-block-md-font-weight);
     --brick-code-block-line-height: var(--brick-typography-code-block-md-line-height);
     --brick-code-block-letter-spacing: var(--brick-typography-code-block-md-letter-spacing);
-    --brick-code-block-selection-background: var(--brick-color-accent-surface);
+    --brick-code-block-selection-background: var(--brick-color-accent-soft);
     --brick-code-block-selection-foreground: var(--brick-color-accent-text);
 
     box-sizing: border-box;

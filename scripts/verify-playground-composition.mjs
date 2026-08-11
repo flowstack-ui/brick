@@ -39,6 +39,7 @@ const packageData = JSON.parse(packageJson);
 const publicComponentIds = Object.keys(packageData.exports)
   .filter((entry) => (
     entry !== "."
+    && entry !== "./theme-contract.json"
     && !entry.endsWith(".css")
     && !entry.startsWith("./agents/")
   ))
