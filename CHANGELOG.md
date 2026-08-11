@@ -26,6 +26,7 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 - Made Divider safe for Next.js Server Component prerendering by consuming
   Atom's direct server-safe root instead of dereferencing a client namespace.
+- Corrected Divider Agent Knowledge to use Brick's direct `Divider` export.
 - Updated the exact Atom dependency to `0.22.6`, adopting its server-safe
   Divider boundary and public Accordion/List Agent Knowledge.
 - Expanded Stack with canonical responsive values, logical main-axis edge

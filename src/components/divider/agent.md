@@ -14,7 +14,7 @@ Render a finished decorative or semantic content boundary with horizontal or ver
 
 ## Required composition
 
-- Use Divider.Root inside the layout owner shared by the adjacent complete groups and choose decorative=false only when the separation has meaning.
+- Use Divider inside the layout owner shared by the adjacent complete groups and choose decorative=false only when the separation has meaning.
 
 ## Rules
 
