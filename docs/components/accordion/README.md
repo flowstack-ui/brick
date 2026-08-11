@@ -89,6 +89,10 @@ and outline adds one containing border. Sizes coordinate trigger height,
 typography, indicator, and panel padding. A locked-open single trigger remains
 focusable with `aria-disabled="true"` and `data-locked-open`.
 
+Grouped vertical recipes use the Root as the outer silhouette: interior Trigger
+edges stay square, only the exposed first and last corners follow the Root
+radius, and keyboard focus remains fully visible outside that silhouette.
+
 ## Tokens and CSS hooks
 
 Stable classes use `.brick-accordion*`. Root exposes `data-variant`,
