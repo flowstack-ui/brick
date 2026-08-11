@@ -15,10 +15,12 @@ Present a finished modal side sheet while Atom owns focus, dismissal, portal, sc
 ## Required composition
 
 - Compose Trigger and Portal with Overlay and Content; put a header containing Title, Description when useful, and Close inside Content, then use Stack/NavList for its body.
+- Title is a native heading rather than a polymorphic layout host. Use its as prop to choose the heading level; do not pass a multi-element brand or layout through asChild. When the surface intentionally has no visible heading, give Content an explicit accessible name such as aria-label="Mobile navigation".
 
 ## Rules
 
 - **MUST:** Use Drawer parts rather than hand-building overlay, focus trap, Escape, outside interaction, or portal behavior.
+- **MUST:** Give Content an accessible name with a concise Title or, when no visible heading is appropriate, an explicit aria-label or aria-labelledby on Content.
 - **MUST:** Choose size and placement from content needs: use xl when content may need the viewport but should shrink when short, and full only when the surface must always fill it.
 - **MUST:** Let top and bottom Drawers grow naturally to their selected size cap; keep long overflow in Drawer.Body instead of forcing a fixed application height.
 - **MUST:** Use Footer justify for simple action distribution, a Brick layout component inside Footer for complex grouping, and Button fullWidth only when the action itself should fill the row.
@@ -29,6 +31,7 @@ Present a finished modal side sheet while Atom owns focus, dismissal, portal, sc
 
 - **Avoid:** Building a mobile menu as an absolutely positioned div or placing Close outside the labeled content hierarchy. **Instead:** Use Drawer anatomy and compose the menu content with Brick navigation and layout components.
 - **Avoid:** Adding use client to an entire Next page only to dereference the legacy Drawer runtime object. **Instead:** Use the RSC-safe module-namespace subpath so only Drawer remains client-owned.
+- **Avoid:** Using asChild on Title or treating a brand lockup as a heading. **Instead:** Keep branding in the visual header and name Content explicitly when there is no concise visible title.
 
 ## Validation checklist
 

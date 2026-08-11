@@ -101,11 +101,15 @@ Public exports are `Card`, `CardRootProps`, `CardRootElement`,
 | Prop | Values | Default |
 |---|---|---|
 | `as` | `div`, `article`, `section`, `li` | `div` |
+| `bordered` | boolean | `true` |
 | `variant` | `outline`, `elevated`, `subtle` | `outline` |
 | `size` | `sm`, `md`, `lg` | `md` |
 
 Root also accepts ordinary `HTMLAttributes<HTMLElement>`, including `id`,
 ARIA and data attributes, events, `className`, `style`, and `ref`.
+`bordered={false}` removes only the selected recipe's border geometry while
+retaining its background, elevation, radius, clipping, and anatomy. It is
+useful when authored media must reach Card's clipped outer edge.
 
 ### Card.Title
 
@@ -146,6 +150,7 @@ They do not set width, height, grid columns, or viewport breakpoints.
 |---|---|
 | `--brick-card-space` | Section inset and coordinated region spacing |
 | `--brick-card-radius` | Root surface radius |
+| `--brick-card-border-width` | Root border geometry |
 | `--brick-card-shadow` | Elevated surface shadow |
 
 ### Stable classes and slots
@@ -160,7 +165,8 @@ They do not set width, height, grid columns, or viewport breakpoints.
 | Content | `.brick-card-content` | `card-content` |
 | Footer | `.brick-card-footer` | `card-footer` |
 
-Root reflects `data-variant` and `data-size`. Classes, slots, and the three
+Root reflects optional `data-bordered` with the value `"false"`, plus
+`data-variant` and `data-size`. Classes, slots, and the public
 component tokens are the stable Card-specific CSS contract. Semantic surface,
 border, text, radius, spacing, and shadow-color tokens remain the normal theme
 layer.

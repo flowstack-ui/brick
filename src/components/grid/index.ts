@@ -14,4 +14,5 @@ export {
   type GridSelfAlign,
   type GridSelfJustify,
   type GridSpan,
+  type ResponsiveValue,
 } from "./Grid.js";

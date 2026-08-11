@@ -111,8 +111,9 @@ pixels inside it. Prefer `ratio` when the image should establish its own box.
 
 Fit changes only `object-fit`; position changes only `object-position`. Logical
 start/end reverse under RTL without mirroring pixels. Radius clips the complete
-frame. `frame="subtle"` adds a semantic canvas and border. Ratio reserves the
-box; without it, loaded native dimensions remain intrinsic.
+frame. `frame="none"` reserves no border geometry, so embedded media reaches
+the Root edge. `frame="subtle"` adds a semantic canvas and one-pixel border.
+Ratio reserves the box; without it, loaded native dimensions remain intrinsic.
 
 Atom exposes `data-state="idle | loading | loaded | error"`. Content appears
 only when loaded. Authored Fallback fills the same reserved box for its selected
@@ -133,6 +134,7 @@ Public variables:
 - `--brick-image-radius`
 - `--brick-image-frame-background`
 - `--brick-image-frame-border`
+- `--brick-image-frame-border-width`
 - `--brick-image-fallback-foreground`
 - `--brick-image-fallback-inset`
 

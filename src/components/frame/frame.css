@@ -1,0 +1,86 @@
+@layer brick.utilities {
+  .brick-frame[data-frame] {
+    /* Prevent base and breakpoint constraints from leaking into nested Frames. */
+    --brick-frame-inline-size: initial;
+    --brick-frame-min-inline-size: initial;
+    --brick-frame-max-inline-size: initial;
+    --brick-frame-block-size: initial;
+    --brick-frame-min-block-size: initial;
+    --brick-frame-max-block-size: initial;
+    --brick-frame-inline-size-sm: initial;
+    --brick-frame-inline-size-md: initial;
+    --brick-frame-inline-size-lg: initial;
+    --brick-frame-inline-size-xl: initial;
+    --brick-frame-min-inline-size-sm: initial;
+    --brick-frame-min-inline-size-md: initial;
+    --brick-frame-min-inline-size-lg: initial;
+    --brick-frame-min-inline-size-xl: initial;
+    --brick-frame-max-inline-size-sm: initial;
+    --brick-frame-max-inline-size-md: initial;
+    --brick-frame-max-inline-size-lg: initial;
+    --brick-frame-max-inline-size-xl: initial;
+    --brick-frame-block-size-sm: initial;
+    --brick-frame-block-size-md: initial;
+    --brick-frame-block-size-lg: initial;
+    --brick-frame-block-size-xl: initial;
+    --brick-frame-min-block-size-sm: initial;
+    --brick-frame-min-block-size-md: initial;
+    --brick-frame-min-block-size-lg: initial;
+    --brick-frame-min-block-size-xl: initial;
+    --brick-frame-max-block-size-sm: initial;
+    --brick-frame-max-block-size-md: initial;
+    --brick-frame-max-block-size-lg: initial;
+    --brick-frame-max-block-size-xl: initial;
+    box-sizing: border-box;
+    inline-size: var(--brick-frame-inline-size, auto);
+    min-inline-size: var(--brick-frame-min-inline-size, auto);
+    max-inline-size: var(--brick-frame-max-inline-size, none);
+    block-size: var(--brick-frame-block-size, auto);
+    min-block-size: var(--brick-frame-min-block-size, auto);
+    max-block-size: var(--brick-frame-max-block-size, none);
+  }
+
+  @media (width >= 30rem) {
+    .brick-frame[data-frame] {
+      inline-size: var(--brick-frame-inline-size-sm, var(--brick-frame-inline-size, auto));
+      min-inline-size: var(--brick-frame-min-inline-size-sm, var(--brick-frame-min-inline-size, auto));
+      max-inline-size: var(--brick-frame-max-inline-size-sm, var(--brick-frame-max-inline-size, none));
+      block-size: var(--brick-frame-block-size-sm, var(--brick-frame-block-size, auto));
+      min-block-size: var(--brick-frame-min-block-size-sm, var(--brick-frame-min-block-size, auto));
+      max-block-size: var(--brick-frame-max-block-size-sm, var(--brick-frame-max-block-size, none));
+    }
+  }
+
+  @media (width >= 48rem) {
+    .brick-frame[data-frame] {
+      inline-size: var(--brick-frame-inline-size-md, var(--brick-frame-inline-size-sm, var(--brick-frame-inline-size, auto)));
+      min-inline-size: var(--brick-frame-min-inline-size-md, var(--brick-frame-min-inline-size-sm, var(--brick-frame-min-inline-size, auto)));
+      max-inline-size: var(--brick-frame-max-inline-size-md, var(--brick-frame-max-inline-size-sm, var(--brick-frame-max-inline-size, none)));
+      block-size: var(--brick-frame-block-size-md, var(--brick-frame-block-size-sm, var(--brick-frame-block-size, auto)));
+      min-block-size: var(--brick-frame-min-block-size-md, var(--brick-frame-min-block-size-sm, var(--brick-frame-min-block-size, auto)));
+      max-block-size: var(--brick-frame-max-block-size-md, var(--brick-frame-max-block-size-sm, var(--brick-frame-max-block-size, none)));
+    }
+  }
+
+  @media (width >= 64rem) {
+    .brick-frame[data-frame] {
+      inline-size: var(--brick-frame-inline-size-lg, var(--brick-frame-inline-size-md, var(--brick-frame-inline-size-sm, var(--brick-frame-inline-size, auto))));
+      min-inline-size: var(--brick-frame-min-inline-size-lg, var(--brick-frame-min-inline-size-md, var(--brick-frame-min-inline-size-sm, var(--brick-frame-min-inline-size, auto))));
+      max-inline-size: var(--brick-frame-max-inline-size-lg, var(--brick-frame-max-inline-size-md, var(--brick-frame-max-inline-size-sm, var(--brick-frame-max-inline-size, none))));
+      block-size: var(--brick-frame-block-size-lg, var(--brick-frame-block-size-md, var(--brick-frame-block-size-sm, var(--brick-frame-block-size, auto))));
+      min-block-size: var(--brick-frame-min-block-size-lg, var(--brick-frame-min-block-size-md, var(--brick-frame-min-block-size-sm, var(--brick-frame-min-block-size, auto))));
+      max-block-size: var(--brick-frame-max-block-size-lg, var(--brick-frame-max-block-size-md, var(--brick-frame-max-block-size-sm, var(--brick-frame-max-block-size, none))));
+    }
+  }
+
+  @media (width >= 80rem) {
+    .brick-frame[data-frame] {
+      inline-size: var(--brick-frame-inline-size-xl, var(--brick-frame-inline-size-lg, var(--brick-frame-inline-size-md, var(--brick-frame-inline-size-sm, var(--brick-frame-inline-size, auto)))));
+      min-inline-size: var(--brick-frame-min-inline-size-xl, var(--brick-frame-min-inline-size-lg, var(--brick-frame-min-inline-size-md, var(--brick-frame-min-inline-size-sm, var(--brick-frame-min-inline-size, auto)))));
+      max-inline-size: var(--brick-frame-max-inline-size-xl, var(--brick-frame-max-inline-size-lg, var(--brick-frame-max-inline-size-md, var(--brick-frame-max-inline-size-sm, var(--brick-frame-max-inline-size, none)))));
+      block-size: var(--brick-frame-block-size-xl, var(--brick-frame-block-size-lg, var(--brick-frame-block-size-md, var(--brick-frame-block-size-sm, var(--brick-frame-block-size, auto)))));
+      min-block-size: var(--brick-frame-min-block-size-xl, var(--brick-frame-min-block-size-lg, var(--brick-frame-min-block-size-md, var(--brick-frame-min-block-size-sm, var(--brick-frame-min-block-size, auto)))));
+      max-block-size: var(--brick-frame-max-block-size-xl, var(--brick-frame-max-block-size-lg, var(--brick-frame-max-block-size-md, var(--brick-frame-max-block-size-sm, var(--brick-frame-max-block-size, none)))));
+    }
+  }
+}

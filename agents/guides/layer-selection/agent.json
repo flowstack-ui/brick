@@ -20,7 +20,9 @@
     { "intent": "top application or page bar", "use": "AppBar", "note": "Compose navigation and action components inside its sections." },
     { "intent": "responsive presence", "use": "Show or Hide", "note": "Use CSS media visibility rather than rendering two JavaScript-controlled trees." },
     { "intent": "image with resilient loading", "use": "Image", "note": "Use an adapter only when a framework image optimizer provides a measured capability Brick lacks." },
-    { "intent": "navigation destination", "use": "Link or Button with href", "note": "Use Link for ordinary navigation and Button only for an emphasized destination." }
+    { "intent": "navigation destination", "use": "Link or Button with href", "note": "Use Link for ordinary navigation and Button only for an emphasized destination." },
+    { "intent": "grouped disclosure sections", "use": "Accordion", "note": "Choose Collapsible for one independent disclosure and Tabs for one shared switching panel." },
+    { "intent": "ordered or unordered content", "use": "List", "note": "Choose NavList, an interactive collection, Table, or DataGrid when rows navigate, select, activate, or expose data relationships." }
   ],
   "rules": [
     { "id": "brick-first", "level": "must", "statement": "Use an existing Brick component when it owns the interface job instead of recreating it with native elements and application CSS." },
@@ -41,5 +43,5 @@
     "Confirm every rendered Brick component has its required modular CSS or the complete stylesheet is loaded once.",
     "Classify each repeated composition as component, theme, Block, Blueprint, adapter, or application ownership."
   ],
-  "related": ["interface-composition", "app-bar", "container", "stack", "grid", "text", "image", "show", "hide"]
+  "related": ["interface-composition", "app-bar", "container", "stack", "grid", "text", "image", "show", "hide", "accordion", "list"]
 }

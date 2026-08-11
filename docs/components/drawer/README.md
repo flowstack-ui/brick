@@ -97,8 +97,9 @@ DrawerBranchProps
 | --- | --- | --- |
 | `justify` | `start`, `center`, `end`, `between` | `end` |
 
-Root and all behavior parts
-inherit Atom modal/drawer props. Header, Body, and Footer accept native div
+Root and the composable behavior parts inherit Atom modal/drawer props. Title
+is intentionally a native heading with an `as` level prop rather than an
+`asChild` layout host; Description is a native paragraph. Header, Body, and Footer accept native div
 attributes and `data-slot`. Footer `justify` controls simple logical action
 distribution; use layout components inside Footer for more complex grouping,
 and use `Button fullWidth` when an action itself should fill the row. Footer
@@ -147,14 +148,18 @@ pattern. Logical placement supports RTL.
 ## Accessibility
 
 Atom owns modal semantics, focus containment/return, Escape and outside
-dismissal. Supply a Title and, when useful, Description. Keep an accessible
-Close action and use Branch only for externally portalled content that belongs
-to the same modal interaction.
+dismissal. Supply a concise Title and, when useful, Description. When a visible
+heading would be inappropriate, give Content an explicit `aria-label` or
+`aria-labelledby`; do not pass a multi-element brand lockup through Title.
+Keep an accessible Close action and use Branch only for externally portalled
+content that belongs to the same modal interaction.
 
 ## Composition, native props, and refs
 
-Atom behavior parts inherit Atom composition/native props. Brick structure
-parts are native divs. Refs target the elements listed under anatomy.
+Atom behavior parts inherit their documented Atom composition/native props.
+Title remains a native heading and Description remains a native paragraph;
+neither is a generic polymorphic layout wrapper. Brick structure parts are
+native divs. Refs target the elements listed under anatomy.
 
 ## Examples
 

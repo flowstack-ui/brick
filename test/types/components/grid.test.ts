@@ -66,6 +66,16 @@ createElement(Grid.Item, {
   children: createElement("a", { href: "/reports" }),
   columnStart: 2,
 });
+createElement(Grid.Root, {
+  columns: { initial: 1, md: 2, lg: 4 },
+  gap: { initial: "2", md: "4" },
+  align: { initial: "stretch", lg: "center" },
+});
+createElement(Grid.Item, {
+  columnSpan: { initial: "full", lg: 4 },
+  rowSpan: { initial: 1, md: 2 },
+  justify: { initial: "auto", lg: "end" },
+});
 
 // @ts-expect-error Root hosts are deliberately closed.
 createElement(Grid.Root, { as: "table" });
@@ -81,6 +91,10 @@ createElement(Grid.Root, { minItemSize: "18rem" });
 createElement(Grid.Root, { gap: "8" });
 // @ts-expect-error Responsive objects are excluded.
 createElement(Grid.Root, { columns: { base: 1, md: 3 } });
+// @ts-expect-error Responsive objects require an initial value.
+createElement(Grid.Root, { columns: { md: 3 } });
+// @ts-expect-error Responsive spans cannot combine with explicit line placement.
+createElement(Grid.Item, { columnSpan: { initial: 1, lg: 3 }, columnStart: 2 });
 // @ts-expect-error Physical alignment is excluded.
 createElement(Grid.Root, { align: "left" });
 // @ts-expect-error Span and explicit end are mutually exclusive.

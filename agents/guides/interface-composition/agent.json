@@ -9,30 +9,48 @@
   "decisionOrder": [
     "Map the page into landmarks, bounded regions, layout relationships, content, navigation, actions, media, and responsive changes.",
     "Choose the Brick owner for each relationship and read every selected component guide before implementation.",
-    "Compose from the outside inward: AppBar or page landmark, Container, Grid or Stack, Surface or Card, then content and controls.",
+    "Compose from the outside inward: AppBar or page landmark, Section, Container, Grid or Stack, Surface or Card, then content and controls.",
+    "Decide how each child participates in its parent: content-sized, fixed, automatic, proportional, placed, stretched, or deliberately constrained.",
     "Follow the customization order completely: component owner, supported props, semantic theme tokens, component tokens, public parts, and only then a narrow stable-hook escape hatch.",
     "Audit responsive behavior, accessibility, CSS delivery, and native fallbacks before treating the composition as complete."
   ],
   "selection": [
     { "intent": "page width and gutters", "use": "Container", "note": "Do not reproduce max-width and inline padding on every section." },
-    { "intent": "row or column relationship", "use": "HStack or VStack", "note": "Use Stack when direction is selected dynamically." },
+    { "intent": "major page-region rhythm", "use": "Section", "note": "Keep paint in Surface, width and gutters in Container, and local child relationships in Stack or Grid." },
+    { "intent": "row or column relationship", "use": "HStack, VStack, or responsive Stack", "note": "Use fixed-axis conveniences when the axis stays fixed and Stack when the same content changes axis at a Brick breakpoint." },
+    { "intent": "child flex allocation", "use": "Stack.Item", "note": "Choose content-sized, fixed, automatic, or proportional growth before writing flex CSS." },
+    { "intent": "child grid participation", "use": "Grid.Item", "note": "Use spans, placement, or self-alignment; keep a real wrapper when it establishes the participation box and use asChild only when the child should be that box." },
+    { "intent": "local logical size constraint", "use": "Frame", "note": "Use only for inline/block size or min/max constraints; keep parent participation on the owning layout Item and overflow in ScrollArea." },
+    { "intent": "overlapping depth relationship", "use": "ZStack", "note": "Prefer Surface media anatomy for ordinary media, scrim, and foreground compositions." },
     { "intent": "track-based responsive layout", "use": "Grid", "note": "Use Stack when only one axis matters." },
     { "intent": "visual region", "use": "Surface or Card", "note": "Use Card for titled or actionable contained content and Surface for a general visual boundary." },
+    { "intent": "local light or dark semantic-token boundary", "use": "Appearance", "note": "Pass exactly one existing host; it may contain any number of descendants, and Appearance adds no paint, layout, or wrapper." },
     { "intent": "brand or content image", "use": "Image", "note": "Keep alt text and fallback behavior intentional." },
     { "intent": "one of several peer campaigns or authored content regions", "use": "Carousel", "note": "Keep invariant evidence outside; let each Slide own a complete Surface when its media and message belong together." },
     { "intent": "site navigation", "use": "NavigationMenu or NavList", "note": "Use NavigationMenu for disclosure navigation and NavList for persistent route lists." },
-    { "intent": "responsive desktop and mobile alternatives", "use": "Show and Hide", "note": "Keep one CSS-controlled breakpoint contract and avoid hydration-dependent visibility; distinct navigation patterns should consume one application-owned destination model." },
-    { "intent": "grouped application actions", "use": "Toolbar", "note": "Do not use AppBar.Toolbar as an ARIA toolbar." }
+    { "intent": "responsive desktop and mobile alternatives", "use": "Show and Hide", "note": "Use only when interface or content changes; use responsive Stack when only arrangement changes." },
+    { "intent": "grouped application actions", "use": "Toolbar", "note": "Do not use AppBar.Toolbar as an ARIA toolbar." },
+    { "intent": "several related disclosure sections", "use": "Accordion", "note": "Preserve Header, Trigger, Content, and ContentInner ownership; use Collapsible for one disclosure." },
+    { "intent": "semantic item or sequence content", "use": "List", "note": "Use structured row parts only when needed and keep Trailing compact on narrow screens." }
   ],
   "rules": [
     { "id": "interface-outside-in", "level": "must", "statement": "Assign page structure to Brick components before writing element-level CSS." },
+    { "id": "interface-section-rhythm", "level": "must", "statement": "Use Section's named responsive rhythm for major page regions; use as=div when spacing is needed without thematic section semantics." },
+    { "id": "interface-painted-section", "level": "must", "statement": "When Surface paint must cover Section rhythm, compose Surface asChild around Section so one host keeps the responsibilities separate." },
+    { "id": "interface-blueprint-first", "level": "must", "statement": "Build from a blueprint, select the owning Brick components, render their defaults, choose supported props, then apply Theme, Block, or application customization in that order." },
+    { "id": "interface-responsive-single-content", "level": "must", "statement": "Keep one copy of content when only its layout changes; use responsive Stack values instead of duplicated Show/Hide trees." },
+    { "id": "interface-responsive-layout-grammar", "level": "must", "statement": "Use responsive Grid tracks, gaps, spans, and alignment or responsive ZStack logical placement when only those relationships change; do not duplicate content or change semantic order." },
+    { "id": "interface-parent-participation", "level": "must", "statement": "Separate component internal geometry from parent participation; configure the finished component for its anatomy and the owning layout or Item part for its relationship to siblings." },
+    { "id": "interface-frame-constraints", "level": "must", "statement": "Use Frame for a qualified local logical size constraint instead of repeating width/height CSS or adding size props to a finished component; do not use Frame when Container measure, layout participation, AspectRatio, or ScrollArea owns the actual job." },
+    { "id": "interface-definite-size-owner", "level": "must", "statement": "Keep a real layout-item wrapper when it establishes flex or grid participation or the definite parent size required by ScrollArea, Carousel fill, or Image fill; asChild is not a wrapper-removal goal by itself." },
     { "id": "interface-correct-owner", "level": "must", "statement": "Do not use Stack, Surface, Button, or another convenient component when a more specific Brick navigation, media, content, or interaction component owns the job." },
     { "id": "interface-native-semantics", "level": "must", "statement": "Preserve document landmarks and semantic elements when Brick does not provide an owner; Brick-first is not permission to erase HTML meaning." },
     { "id": "interface-responsive-navigation-data", "level": "must", "statement": "When desktop and mobile require distinct navigation components, share application-owned destination labels, hrefs, values, and ordering while preserving each pattern's correct Brick anatomy; do not duplicate navigation content or force one interaction tree across breakpoints." },
     { "id": "interface-responsive-overlay-state", "level": "must", "statement": "Use Show and Hide for first-paint visibility; when a controlled interactive overlay may remain open across a breakpoint, synchronize its application state at that boundary so a hidden modal cannot retain focus, scroll lock, or isolation." },
     { "id": "interface-theme-first", "level": "should", "statement": "Express reusable brand values through semantic Brick tokens and a theme rather than repeating literal application values." },
-    { "id": "interface-local-appearance-scope", "level": "must", "statement": "For a locally dark or light region, set data-brick-appearance on the region owner and provide the complete semantic token set in the theme; do not recolor each descendant independently." },
-    { "id": "interface-decoration-out-of-flow", "level": "should", "statement": "Keep decorative annotations that must not redistribute primary content outside Stack or Grid flow through narrow application-owned positioning; do not invent a Brick component solely for their coordinates." },
+    { "id": "interface-local-appearance-scope", "level": "must", "statement": "For a locally dark or light region, pass the existing region owner as the one direct child of Appearance and provide complete appearance-dependent color and shadow values for explicit light and dark re-entry; keep typography, density, geometry, and motion on the shared Theme root, and do not recolor descendants independently or add a Surface only to carry appearance." },
+    { "id": "interface-portal-appearance", "level": "must", "statement": "When a portal leaves a local appearance scope, either target a portal container inside that scope or apply Appearance to every portalled visual root; never assume the trigger's CSS ancestry crosses the portal." },
+    { "id": "interface-depth-layout", "level": "should", "statement": "Use ZStack for reusable nine-position overlap; retain narrow application positioning only for artwork coordinates that ZStack intentionally does not own." },
     { "id": "interface-ownership-classification", "level": "must", "statement": "Classify findings before changing a package: behavior and accessibility belong to Atom, finished reusable component paint belongs to Brick, brand values belong to Theme, repeated responsive section composition may belong to Block or Blueprint, and one-page art direction remains application-owned." },
     { "id": "interface-document-foundation", "level": "must", "statement": "When styles.css or styles/core.css is loaded, change the document canvas, foreground, and body typography through semantic Brick tokens instead of repeating the body bindings that Brick's foundation already owns." },
     { "id": "interface-customization-order", "level": "must", "statement": "Do not write a direct declaration against a Brick part until the correct component, supported props, semantic tokens, component tokens, and public compound parts have been checked in order." },
@@ -69,6 +87,17 @@
       ]
     }
   },
+  "planningRecord": {
+    "purpose": "Record the layout decision before generated implementation so Engine and TemplateFlow preserve ownership.",
+    "fields": [
+      "relationship",
+      "owner",
+      "parentParticipation",
+      "responsiveChange",
+      "constraintSource",
+      "fallbackReport"
+    ]
+  },
   "nativeFallback": {
     "check": "Review the interface map against the manifest and selected component guides, including layout, text, image, visibility, and navigation owners.",
     "use": "Keep native landmarks and product-specific semantic structures where no Brick component adds a useful contract; add only narrow composition classes.",
@@ -78,10 +107,12 @@
     "Inspect the rendered DOM, accessible names, heading order, landmarks, focus order, keyboard operation, touch targets, contrast, zoom, and RTL behavior.",
     "Test every adopted breakpoint without JavaScript-dependent first-paint flicker.",
     "Confirm layout primitives own ordinary gap, alignment, wrapping, width, and visibility before accepting custom CSS; verify separately meaningful inline nodes use layout gap rather than literal spaces or offsets.",
-    "Confirm local appearance scopes supply complete semantic foreground, background, boundary, action, focus, and interaction-state token pairs without child-by-child recoloring.",
+    "Confirm every ScrollArea, Carousel fill, and Image fill composition can name the ancestor that establishes its definite size; use Frame when that ancestor needs an explicit logical size constraint, and never expect the child to invent it.",
+    "Confirm light to dark to light and dark to light to dark scopes restore the theme's complete semantic foreground, background, boundary, action, focus, status, scrim, shadow, and interaction-state pairs without child-by-child recoloring.",
+    "Confirm every portalled visual root either remains inside the intended theme/appearance container or receives an explicit Appearance scope.",
     "Confirm repeated CSS values are theme tokens, component-specific values use documented component tokens, and every remaining direct stable-hook declaration has a complete customization gap report.",
     "Confirm source order follows rendered ownership, static content is separate from interaction assembly when it obscures the component tree, and comments explain why a constraint exists rather than what an obvious line does.",
     "Run the package's CSS-delivery check and the application's accessibility, browser, and performance checks."
   ],
-  "related": ["layer-selection", "app-bar", "container", "stack", "grid", "surface", "card", "navigation-menu", "show", "hide"]
+  "related": ["layer-selection", "appearance", "app-bar", "section", "container", "stack", "z-stack", "grid", "frame", "surface", "card", "navigation-menu", "show", "hide", "accordion", "list"]
 }

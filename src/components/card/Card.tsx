@@ -7,6 +7,7 @@ export type CardTitleElement = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 export interface CardRootProps extends HTMLAttributes<HTMLElement> {
   as?: CardRootElement;
+  bordered?: boolean;
   variant?: CardVariant;
   size?: CardSize;
   "data-slot"?: string;
@@ -37,6 +38,7 @@ function slotOrDefault(slot: string | undefined, defaultSlot: string) {
 const CardRoot = forwardRef<HTMLElement, CardRootProps>(function CardRoot(
   {
     as = "div",
+    bordered = true,
     variant = "outline",
     size = "md",
     className,
@@ -51,6 +53,7 @@ const CardRoot = forwardRef<HTMLElement, CardRootProps>(function CardRoot(
     {
       ...rootProps,
       className: mergeClassName("brick-card", className),
+      "data-bordered": bordered ? undefined : "false",
       "data-size": size,
       "data-slot": slotOrDefault(dataSlot, "card"),
       "data-variant": variant,

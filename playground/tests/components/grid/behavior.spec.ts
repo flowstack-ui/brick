@@ -195,3 +195,20 @@ test("RTL, focus order, reflow, and accessibility remain source ordered", async 
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });
+
+test("responsive Grid changes tracks and spans without changing source order", async ({ page }) => {
+  const grid = page.getByTestId("grid-responsive");
+  const items = grid.locator(":scope > *");
+  await expect(items).toHaveText(["First", "Responsive feature", "Last"]);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect((await grid.evaluate((node) => getComputedStyle(node).gridTemplateColumns.split(" ").length))).toBe(1);
+  await expect(items.nth(1)).toHaveCSS("grid-column-start", "1");
+  await expect(items.nth(1)).toHaveCSS("grid-column-end", "-1");
+
+  await page.setViewportSize({ width: 1120, height: 900 });
+  expect((await grid.evaluate((node) => getComputedStyle(node).gridTemplateColumns.split(" ").length))).toBe(4);
+  await expect(items.nth(1)).toHaveCSS("grid-column-start", "auto");
+  await expect(items.nth(1)).toHaveCSS("grid-column-end", "span 2");
+  await expect(items).toHaveText(["First", "Responsive feature", "Last"]);
+});

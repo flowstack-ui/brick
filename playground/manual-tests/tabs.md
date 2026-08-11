@@ -31,7 +31,11 @@ underline or change selected paint during hydration.
 
 Review 04–05. Use arrows in horizontal and vertical lists and try Locked.
 Expected: correct arrow axis, equal fitted width, aligned icon/long labels, and
-disabled tabs never focus or activate.
+disabled tabs never focus or activate. Focus the first and last Trigger in
+solid and soft Lists inside the clipped responsive Card; every side of the
+focus ring remains visible. The responsive vertical example uses
+two equal visual columns at phone width and one column beside its panel at the
+desktop breakpoint while Arrow Up and Arrow Down remain unchanged.
 
 ## Step 3 — Activation and composition
 

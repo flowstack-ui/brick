@@ -6,6 +6,8 @@ Card follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added optional `bordered={false}` so edge-to-edge media can retain Card's
+  selected background, elevation, radius, and clipping without a border seam.
 - Initial `Card.Root`, `Card.Header`, `Card.Title`, `Card.Description`,
   `Card.Action`, `Card.Content`, and `Card.Footer` compound API.
 - Outline, elevated, and subtle variants with small, medium, and large sizes.

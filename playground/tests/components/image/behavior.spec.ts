@@ -13,6 +13,7 @@ test("Image defaults and authored accessibility output are deterministic", async
   await expect(root).toHaveAttribute("data-position", "center");
   await expect(root).toHaveAttribute("data-radius", "none");
   await expect(root).toHaveAttribute("data-frame", "none");
+  await expect(root).toHaveCSS("border-top-width", "0px");
   await expect(root.locator("img")).toHaveAttribute("alt", "Designers reviewing the workspace");
   await expect(page.locator("#scenario-image-accessibility img[alt='']")).toHaveCount(2);
 });
@@ -23,7 +24,9 @@ test("Image fit, focal position, radius, frame, and ratio recipes are observable
   const positions = await page.locator("#scenario-image-positions .brick-image__content").evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).objectPosition));
   expect(positions).toEqual(["50% 50%", "50% 0%", "50% 100%", "0% 50%", "100% 50%"]);
   await expect(page.locator("#scenario-image-geometry [data-radius='full']")).toHaveCSS("border-radius", /9999px|50%/);
-  await expect(page.locator("#scenario-image-geometry [data-frame='subtle']")).not.toHaveCSS("border-color", "rgba(0, 0, 0, 0)");
+  const subtleFrame = page.locator("#scenario-image-geometry [data-frame='subtle']");
+  await expect(subtleFrame).toHaveCSS("border-top-width", "1px");
+  await expect(subtleFrame).not.toHaveCSS("border-color", "rgba(0, 0, 0, 0)");
   const ratio = page.locator("#scenario-image-fits .brick-image").first();
   expect(await ratio.evaluate((node) => Math.abs(node.getBoundingClientRect().width / node.getBoundingClientRect().height - 4 / 3))).toBeLessThan(0.02);
 });

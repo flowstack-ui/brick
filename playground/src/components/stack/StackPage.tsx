@@ -358,6 +358,27 @@ export function StackPage() {
               </HStack>
             </EvidenceSurface>
           </EvidenceGroup>
+          <EvidenceGroup
+            description="One source order changes from a compact column to equal horizontal tracks without duplicating content."
+            title="Responsive arrangement"
+          >
+            <EvidenceSurface className="stack-stress-panel">
+              <Stack
+                data-testid="stack-responsive"
+                direction={{ initial: "column", lg: "row" }}
+                gap={{ initial: "2", lg: "5" }}
+                startSpacing={{ initial: "1", lg: "3" }}
+                endSpacing={{ initial: "1", lg: "3" }}
+              >
+                <Stack.Item data-testid="stack-responsive-first" flex={{ initial: "content", lg: 1 }}>
+                  <Item>First responsive track</Item>
+                </Stack.Item>
+                <Stack.Item data-testid="stack-responsive-second" flex={{ initial: "content", lg: 1 }}>
+                  <Item>Second responsive track</Item>
+                </Stack.Item>
+              </Stack>
+            </EvidenceSurface>
+          </EvidenceGroup>
         </VStack>
       </Scenario>
     </VStack>

@@ -4,6 +4,12 @@ Image follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Made `frame="none"` reserve zero border width so embedded media reaches the
+  Root edge without a transparent one-pixel seam; `frame="subtle"` retains the
+  established semantic border.
+
 ### Added
 
 - Added explicit `fill` geometry so Image Root, Content, and Fallback can

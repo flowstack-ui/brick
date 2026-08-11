@@ -15,13 +15,13 @@ async function collect(directory, extension) {
 }
 
 const expectedRouteIds = [
-  "accordion", "alert-dialog", "app-bar", "aspect-ratio", "avatar", "badge", "bottom-navigation", "breadcrumb", "button", "card", "carousel",
+  "accordion", "alert-dialog", "app-bar", "appearance", "aspect-ratio", "avatar", "badge", "bottom-navigation", "breadcrumb", "button", "card", "carousel",
   "checkbox", "checkbox-group", "chip", "code", "code-block", "collapsible", "combobox", "container",
   "context-menu", "data-grid", "dialog", "divider", "drawer", "dropdown-menu", "feed", "field", "fieldset", "form", "grid",
   "hide", "hover-card", "icon", "icon-button", "image", "input", "textarea", "link", "list", "multi-select",
   "file-upload", "menubar", "nav-list", "navigation-menu", "notification-badge", "number-input", "otp-field", "popover", "progress", "progress-circle", "radio-group", "rating", "scroll-area", "select", "sidebar", "slider",
-  "pagination", "password-toggle-field", "show", "skeleton", "skip-link", "stack", "surface", "swipeable-item", "switch", "table", "tabs", "text", "toast", "toggle", "toggle-group", "toolbar", "tooltip", "tree", "tree-grid",
-  "visually-hidden",
+  "pagination", "password-toggle-field", "show", "skeleton", "skip-link", "stack", "section", "frame", "surface", "swipeable-item", "switch", "table", "tabs", "text", "toast", "toggle", "toggle-group", "toolbar", "tooltip", "tree", "tree-grid",
+  "visually-hidden", "z-stack",
 ];
 
 const [registry, packageJson, tsxPaths] = await Promise.all([

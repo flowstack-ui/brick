@@ -21,6 +21,10 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 
 Operate arrows and picker dots by pointer, keyboard, and touch swipe. Confirm one slide settles at a time, focus remains visible, labels match destinations, and the control-free example remains usable by native horizontal scrolling.
 
+Tab to the native Viewport at each rounded edge. Confirm its rounded indicator
+appears above the active slide without being covered by media or cropped by
+Viewport or parent clipping.
+
 With looping enabled, advance from the last slide to the first and back from
 the first to the last. Confirm the requested direction never reverses, only
 the authored slides exist in the accessibility tree, and the silent boundary

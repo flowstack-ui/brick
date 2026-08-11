@@ -1,0 +1,13 @@
+@layer playground.components {
+  .appearance-page {
+    min-inline-size: 0;
+  }
+
+  .appearance-page .brick-appearance {
+    min-inline-size: 0;
+  }
+
+  .appearance-stress {
+    container-type: inline-size;
+  }
+}

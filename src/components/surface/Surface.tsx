@@ -1,10 +1,15 @@
 import {
+  Children,
+  cloneElement,
   createElement,
   forwardRef,
+  Fragment,
   type CSSProperties,
   type ForwardedRef,
   type HTMLAttributes,
+  type ReactElement,
   type ReactNode,
+  type Ref,
 } from "react";
 
 export type SurfaceElement =
@@ -36,9 +41,11 @@ type SurfaceNativeProps = Omit<
   "children" | "className" | "style"
 >;
 
-export interface SurfaceProps extends SurfaceNativeProps {
-  as?: SurfaceElement;
-  children?: ReactNode;
+type SurfaceHostProps =
+  | { as?: SurfaceElement; asChild?: false; children?: ReactNode }
+  | { as?: never; asChild: true; children: ReactElement };
+
+export type SurfaceProps = SurfaceNativeProps & SurfaceHostProps & {
   level?: SurfaceLevel;
   bordered?: boolean;
   elevation?: SurfaceElevation;
@@ -47,7 +54,7 @@ export interface SurfaceProps extends SurfaceNativeProps {
   className?: string;
   style?: CSSProperties;
   slot?: string;
-}
+};
 
 type SurfacePartNativeProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -80,9 +87,54 @@ function mergeClassName(className: string | undefined) {
   return className ? `brick-surface ${className}` : "brick-surface";
 }
 
+function composeRefs<T>(...refs: Array<Ref<T> | undefined>) {
+  return (value: T | null) => {
+    for (const ref of refs) {
+      if (typeof ref === "function") ref(value);
+      else if (ref) ref.current = value;
+    }
+  };
+}
+
+function mergeComposedProps(
+  original: Record<string, unknown>,
+  override: Record<string, unknown>,
+) {
+  const merged = { ...original, ...override };
+  for (const [key, value] of Object.entries(override)) {
+    const current = original[key];
+    if (
+      key.startsWith("on") &&
+      typeof current === "function" &&
+      typeof value === "function"
+    ) {
+      merged[key] = (...args: unknown[]) => {
+        value(...args);
+        current(...args);
+      };
+    } else if (
+      key === "className" &&
+      typeof current === "string" &&
+      typeof value === "string"
+    ) {
+      merged[key] = `${current} ${value}`;
+    } else if (
+      key === "style" &&
+      current &&
+      value &&
+      typeof current === "object" &&
+      typeof value === "object"
+    ) {
+      merged[key] = { ...current, ...value };
+    }
+  }
+  return merged;
+}
+
 function SurfaceImpl(
   {
     as = "div",
+    asChild = false,
     bordered = false,
     children,
     className,
@@ -95,21 +147,40 @@ function SurfaceImpl(
   }: SurfaceProps,
   ref: ForwardedRef<HTMLElement>,
 ) {
-  return createElement(
-    as,
-    {
-      ...props,
-      className: mergeClassName(className),
-      "data-bordered": bordered ? "" : undefined,
-      "data-elevation": elevation,
-      "data-inset": inset,
-      "data-level": level,
-      "data-radius": radius,
-      "data-slot": slot,
-      ref,
-    },
-    children,
-  );
+  const rootProps = {
+    ...props,
+    className: mergeClassName(className),
+    "data-bordered": bordered ? "" : undefined,
+    "data-elevation": elevation,
+    "data-inset": inset,
+    "data-level": level,
+    "data-radius": radius,
+    "data-slot": slot,
+    ref,
+  };
+
+  if (asChild) {
+    const child = Children.only(children) as ReactElement<Record<string, unknown>>;
+    if (child.type === Fragment) {
+      throw new Error(
+        "Surface with asChild requires one DOM or component host; a Fragment cannot receive Surface paint.",
+      );
+    }
+    const childRef = (
+      "ref" in child.props
+        ? child.props.ref
+        : (child as ReactElement & { ref?: Ref<HTMLElement> }).ref
+    ) as Ref<HTMLElement> | undefined;
+    return cloneElement(
+      child,
+      mergeComposedProps(child.props, {
+        ...rootProps,
+        ref: childRef || ref ? composeRefs(childRef, ref) : undefined,
+      }),
+    );
+  }
+
+  return createElement(as, rootProps, children);
 }
 
 function mergePartClassName(base: string, className: string | undefined) {

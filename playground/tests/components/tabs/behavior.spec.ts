@@ -69,3 +69,61 @@ test("manual activation, composition, overflow, and RTL work", async ({ page }) 
 });
 
 test("Tabs page has no automatically detectable accessibility violations", async ({ page }) => { expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]); });
+
+test("responsive visual layout does not change vertical tab semantics", async ({ page }) => {
+  const root = page.getByTestId("tabs-responsive-layout");
+  const list = root.getByRole("tablist", { name: "Responsive workflow" });
+  await expect(list).toHaveAttribute("data-radius", "none");
+  await expect(list).toHaveAttribute("data-trigger-radius", "default");
+  await expect(list).toHaveCSS("border-radius", "0px");
+  for (const trigger of await list.getByRole("tab").all()) {
+    await expect(trigger).not.toHaveCSS("border-radius", "0px");
+  }
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(root).toHaveCSS("flex-direction", "column");
+  await expect(list).toHaveCSS("grid-template-columns", /.+ .+/);
+  expect((await list.boundingBox())!.width).toBeGreaterThan(0);
+  expect((await root.getByRole("tabpanel").boundingBox())!.width).toBeGreaterThan(0);
+
+  const first = list.getByRole("tab", { name: "Create" });
+  await first.focus();
+  await first.press("ArrowDown");
+  await expect(list.getByRole("tab", { name: "Build" })).toHaveAttribute(
+    "aria-selected",
+    "true",
+  );
+
+  await page.setViewportSize({ width: 1120, height: 900 });
+  await expect(root).toHaveCSS("flex-direction", "row");
+  await first.focus();
+  const focusGeometry = await list.evaluate((node) => {
+    const listStyle = getComputedStyle(node);
+    const trigger = node.querySelector<HTMLElement>(".brick-tabs-trigger")!;
+    const triggerStyle = getComputedStyle(trigger);
+    const ringReach =
+      Number.parseFloat(triggerStyle.outlineWidth) +
+      Number.parseFloat(triggerStyle.outlineOffset);
+
+    return {
+      ringReach,
+      paddingBlockStart: Number.parseFloat(listStyle.paddingBlockStart),
+      paddingBlockEnd: Number.parseFloat(listStyle.paddingBlockEnd),
+      paddingInlineStart: Number.parseFloat(listStyle.paddingInlineStart),
+      paddingInlineEnd: Number.parseFloat(listStyle.paddingInlineEnd),
+    };
+  });
+  for (const inset of [
+    focusGeometry.paddingBlockStart,
+    focusGeometry.paddingBlockEnd,
+    focusGeometry.paddingInlineStart,
+    focusGeometry.paddingInlineEnd,
+  ]) {
+    expect(inset).toBeGreaterThanOrEqual(focusGeometry.ringReach);
+  }
+  const desktopTracks = await list.evaluate((node) =>
+    getComputedStyle(node).gridTemplateColumns.split(" ").length,
+  );
+  expect(desktopTracks).toBe(1);
+  await expect(list).toHaveAttribute("aria-orientation", "vertical");
+});

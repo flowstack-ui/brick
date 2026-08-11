@@ -3,7 +3,6 @@
 .evidence-app *::before,
 .evidence-app *::after {
   box-sizing: border-box;
-  min-inline-size: 0;
 }
 
 :root {

@@ -320,7 +320,7 @@ export function CardPage() {
           data-testid="card-composition"
         >
           <SpecimenCell label="Image composition">
-            <Card.Root data-testid="card-composition-image">
+            <Card.Root bordered={false} data-testid="card-composition-image">
               <Image.Root className="card-media-example" fit="contain" frame="subtle" ratio={16 / 9} src="/assets/icon-button/brick-image.png">
                 <Image.Content
                   alt="Three colorful Brick blocks"

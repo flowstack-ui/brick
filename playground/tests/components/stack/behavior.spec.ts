@@ -168,3 +168,31 @@ test("Stack RTL, reflow, and accessibility preserve logical source order", async
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });
+
+test("responsive Stack values change arrangement without changing source order", async ({
+  page,
+}) => {
+  const stack = page.getByTestId("stack-responsive");
+  const first = page.getByTestId("stack-responsive-first");
+  const second = page.getByTestId("stack-responsive-second");
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(stack).toHaveCSS("flex-direction", "column");
+  await expect(stack).toHaveCSS("gap", "8px");
+  await expect(first).toHaveCSS("flex-grow", "0");
+  expect((await box(second)).y).toBeGreaterThan((await box(first)).y);
+  await expect(stack.locator(".stack-demo-item")).toHaveText([
+    "First responsive track",
+    "Second responsive track",
+  ]);
+
+  await page.setViewportSize({ width: 1120, height: 900 });
+  await expect(stack).toHaveCSS("flex-direction", "row");
+  await expect(stack).toHaveCSS("gap", "24px");
+  await expect(first).toHaveCSS("flex-grow", "1");
+  await expect(second).toHaveCSS("flex-grow", "1");
+  const firstBox = await box(first);
+  const secondBox = await box(second);
+  expect(Math.abs(firstBox.width - secondBox.width)).toBeLessThanOrEqual(1);
+  expect(secondBox.x).toBeGreaterThan(firstBox.x);
+});

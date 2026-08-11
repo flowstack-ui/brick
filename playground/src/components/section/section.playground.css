@@ -1,0 +1,31 @@
+.section-page {
+  padding-block: var(--brick-space-6);
+}
+
+.section-stage,
+.section-boundary {
+  min-inline-size: 0;
+  border: var(--brick-border-width) solid var(--brick-color-border-subtle);
+  border-radius: var(--brick-radius-surface);
+  background: var(--brick-color-surface-base);
+}
+
+.section-page .brick-section {
+  outline: 2px dashed var(--brick-color-accent-border);
+  outline-offset: -2px;
+}
+
+.section-page .brick-section > .brick-container {
+  min-block-size: 3rem;
+}
+
+.section-vertical {
+  block-size: 20rem;
+  writing-mode: vertical-rl;
+}
+
+@media (width < 48rem) {
+  .section-stress-grid {
+    --brick-grid-columns: 1;
+  }
+}

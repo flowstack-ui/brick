@@ -1,0 +1,9 @@
+.frame-canvas,
+.frame-scroll {
+  block-size: 100%;
+}
+
+.frame-vertical {
+  writing-mode: vertical-rl;
+}
+

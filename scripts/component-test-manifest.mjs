@@ -1,4 +1,5 @@
 export const componentIds = [
+  "appearance",
   "alert-dialog",
   "aspect-ratio",
   "app-bar",
@@ -49,6 +50,8 @@ export const componentIds = [
   "form",
   "grid",
   "container",
+  "section",
+  "frame",
   "surface",
   "hover-card",
   "icon",
@@ -71,6 +74,7 @@ export const componentIds = [
   "notification-badge",
   "popover",
   "stack",
+  "z-stack",
   "text",
   "toggle",
   "toggle-group",

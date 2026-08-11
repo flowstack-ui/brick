@@ -44,7 +44,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 Public exports are `Grid`, `GridRootProps`, `GridItemProps`,
 `GridRootElement`, `GridItemElement`, `GridColumns`, `GridLine`, `GridSpan`,
 `GridColumnSpan`, `GridGap`, `GridMinItemSize`, `GridAlign`, `GridJustify`,
-`GridSelfAlign`, and `GridSelfJustify`.
+`GridSelfAlign`, `GridSelfJustify`, and `ResponsiveValue`.
 
 ## Quick start
 
@@ -101,13 +101,13 @@ corresponding `HTMLElement` ref target.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `as` | `div`, `span`, `section`, `article`, `nav`, `header`, `footer`, `main`, `aside`, `ul`, `ol`, `li` | `div` |
-| `columns` | `1`–`12` | `1` |
+| `columns` | `1`–`12`, or responsive object | `1` |
 | `minItemSize` | `xs`, `sm`, `md`, `lg`, `xl` | unset |
-| `gap` | `0`, `1`, `2`, `3`, `4`, `5`, `6` | `0` |
-| `rowGap` | `0`, `1`, `2`, `3`, `4`, `5`, `6` | inherits `gap` |
-| `columnGap` | `0`, `1`, `2`, `3`, `4`, `5`, `6` | inherits `gap` |
-| `align` | `stretch`, `start`, `center`, `end`, `baseline` | `stretch` |
-| `justify` | `stretch`, `start`, `center`, `end` | `stretch` |
+| `gap` | `0`, `1`, `2`, `3`, `4`, `5`, `6`, or responsive object | `0` |
+| `rowGap` | `0`, `1`, `2`, `3`, `4`, `5`, `6`, or responsive object | inherits `gap` |
+| `columnGap` | `0`, `1`, `2`, `3`, `4`, `5`, `6`, or responsive object | inherits `gap` |
+| `align` | `stretch`, `start`, `center`, `end`, `baseline`, or responsive object | `stretch` |
+| `justify` | `stretch`, `start`, `center`, `end`, or responsive object | `stretch` |
 | `slot` | `string` | `grid` |
 | `children` | `ReactNode` | optional |
 
@@ -120,18 +120,23 @@ selects intrinsic mode; otherwise Root uses explicit mode.
 | --- | --- | --- |
 | `as` | `div`, `span`, `section`, `article`, `header`, `footer`, `aside`, `li` | `div` |
 | `asChild` | `boolean` | `false` |
-| `columnSpan` | `1`–`12`, `full` | unset |
+| `columnSpan` | `1`–`12`, `full`, or responsive object | unset |
 | `columnStart` / `columnEnd` | grid lines `1`–`13` | unset |
-| `rowSpan` | `1`–`12` | unset |
+| `rowSpan` | `1`–`12`, or responsive object | unset |
 | `rowStart` / `rowEnd` | grid lines `1`–`13` | unset |
-| `align` | `auto`, `stretch`, `start`, `center`, `end`, `baseline` | `auto` |
-| `justify` | `auto`, `stretch`, `start`, `center`, `end` | `auto` |
+| `align` | `auto`, `stretch`, `start`, `center`, `end`, `baseline`, or responsive object | `auto` |
+| `justify` | `auto`, `stretch`, `start`, `center`, `end`, or responsive object | `auto` |
 | `slot` | `string` | `grid-item` |
 | `children` | `ReactNode` | optional |
 
 On each axis, a span and explicit end are mutually exclusive. A start may
 combine with a span or end. `columnSpan="full"` cannot combine with column
 start/end.
+
+A responsive span is deliberately unanchored and cannot combine with explicit
+start/end lines. Keep explicit lines static, or let the responsive item
+auto-place. This prevents stale line geometry when a span changes to or from
+`full`.
 
 Set `asChild` when an existing element should itself be the grid item:
 
@@ -210,12 +215,25 @@ Paint and outer sizing remain consumer or Surface/Card responsibilities.
 
 ## Responsive behavior
 
-Intrinsic mode responds to Grid's available inline size without JavaScript,
-viewport breakpoints, or responsive prop objects. Its `min(100%, …)` track
+Intrinsic mode responds to Grid's available inline size without JavaScript or
+viewport breakpoints. Its `min(100%, …)` track
 safeguard prevents the minimum token from forcing page overflow.
 
-Explicit mode keeps the requested track count. Application CSS owns a
-different mode or count at application breakpoints.
+Explicit mode accepts Brick's responsive object grammar:
+
+```tsx
+<Grid.Root columns={{ initial: 1, md: 2, lg: 4 }} gap={{ initial: "2", lg: "4" }}>
+  <Card.Root>First</Card.Root>
+  <Grid.Item columnSpan={{ initial: "full", lg: 2 }}>
+    <Card.Root>Featured</Card.Root>
+  </Grid.Item>
+</Grid.Root>
+```
+
+Objects require `initial` and may add `sm`, `md`, `lg`, and `xl`. The same
+grammar applies to Root gaps/alignment and unanchored Item spans/alignment.
+It never changes DOM or focus order. `minItemSize` and explicit line placement
+remain static.
 
 ## Accessibility
 

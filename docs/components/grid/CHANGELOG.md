@@ -6,6 +6,9 @@ Grid follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added focused responsive values for explicit Root columns, gaps, alignment,
+  and unanchored Item spans/alignment while preserving intrinsic reflow,
+  source order, and static explicit line placement.
 - Added `Grid.Item asChild` so one authored link, Surface, or component can
   receive Grid placement and self-alignment without an extra wrapper.
 - Initial compound `Grid.Root` and optional `Grid.Item` API.

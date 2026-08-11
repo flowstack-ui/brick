@@ -94,6 +94,7 @@ import from React Server Components.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `as` | `div`, `section`, `article`, `aside`, `nav`, `main`, `header`, `footer`, `form`, `li` | `div` |
+| `asChild` | `boolean` | `false` |
 | `level` | `canvas`, `base`, `subtle`, `raised` | `base` |
 | `bordered` | `boolean` | `false` |
 | `elevation` | `none`, `low`, `medium`, `high` | `none` |
@@ -121,6 +122,10 @@ keeps the relative `soft`, `medium`, and `strong` ladder consistent.
 
 Native global/ARIA/data attributes, events, `className`, `style`, and an
 `HTMLElement` ref pass through.
+
+With `asChild`, Surface applies its paint recipes to exactly one existing
+non-Fragment element without adding a wrapper. It preserves the child's host,
+class, style, handlers, and ref while composing the forwarded Surface ref.
 
 ## Visual recipes and states
 
@@ -201,10 +206,24 @@ Surface paints; Container constrains; Stack and Grid arrange; Card represents a
 self-contained content object. Native props and refs target the one authored
 host.
 
-Surface does not expose `asChild`, `render`, custom-component hosts, tones,
+Surface does not expose `render`, custom-component hosts, tones,
 translucency, generic clipping props, style-system props, runtime context,
 responsive objects, or arbitrary recipe values. Media clipping is limited to
 its own decorative layer.
+
+When another Brick component already owns the semantic or layout host, use
+the narrow wrapper-free composition path:
+
+```tsx
+<Surface asChild level="subtle">
+  <Section spacing="xl">
+    <Container>...</Container>
+  </Section>
+</Surface>
+```
+
+`asChild` requires one element and rejects Fragments. It does not change the
+child's semantics or turn Surface into a generic render-prop API.
 
 ## Examples
 

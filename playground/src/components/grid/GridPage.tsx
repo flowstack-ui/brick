@@ -377,6 +377,11 @@ export function GridPage() {
 
       <Scenario {...gridScenarios[9]}>
         <VStack data-testid="grid-stress" gap="6">
+          <EvidenceGroup title="Responsive explicit tracks" description="One authored Grid changes columns, gap, alignment, and the featured item's span without changing source order."><Grid.Root columns={{ initial: 1, md: 2, lg: 4 }} data-testid="grid-responsive" gap={{ initial: "2", lg: "4" }} align={{ initial: "stretch", lg: "center" }}>
+            <Tile>First</Tile>
+            <Grid.Item columnSpan={{ initial: "full", lg: 2 }}><Tile>Responsive feature</Tile></Grid.Item>
+            <Tile>Last</Tile>
+          </Grid.Root></EvidenceGroup>
           <EvidenceGroup title="Responsive boundaries" description="Intrinsic tracks reflow long localized actions without widening the constrained application-owned frame."><Grid.Root className="grid-narrow" gap="2" minItemSize="xs">
             <Button>Review localization</Button>
             <Button tone="neutral">Donaudampfschifffahrtsgesellschaft</Button>

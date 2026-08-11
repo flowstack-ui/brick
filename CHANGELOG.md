@@ -4,7 +4,34 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Added
+
+- Added public Accordion and List Agent Knowledge and guaranteed both artifacts
+  remain discoverable in the packed manifest.
+- Added `Frame` as the narrow responsive logical size-constraint owner for rails,
+  copy regions, media canvases, and bounded ScrollArea compositions.
+- Added focused responsive Grid tracks, gaps, spans, and alignment; responsive
+  ZStack logical placement; and a Tabs List zero-radius recipe for nested
+  selectors without changing source order or Atom behavior.
+- Expanded Agent Knowledge with internal-geometry versus parent-participation
+  ownership, definite-size prerequisites, and Blueprint/Engine planning fields.
+- Added Icon Agent Knowledge for SVG semantics, control naming, currentColor,
+  directional RTL, composition, and layout ownership.
+- Added the `Section` layout primitive with responsive, themeable page-region
+  rhythm and wrapper-free `Surface asChild` composition.
+- Added a Carousel Root radius recipe for square edge-to-edge campaign
+  Surfaces while preserving the rounded default.
+
 ### Changed
+
+- Made Divider safe for Next.js Server Component prerendering by consuming
+  Atom's direct server-safe root instead of dereferencing a client namespace.
+- Updated the exact Atom dependency to `0.22.6`, adopting its server-safe
+  Divider boundary and public Accordion/List Agent Knowledge.
+- Expanded Stack with canonical responsive values, logical main-axis edge
+  spacing, and responsive Stack.Item flex recipes while preserving DOM order.
+- Added optional Tabs.Content inset recipes and responsive visual layout recipes
+  without changing existing panel defaults or semantic keyboard orientation.
 
 - Made Surface Scrim strength recipes visibly distinct over real media by
   widening both paint intensity and logical gradient reach.
@@ -16,6 +43,18 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added an optional Card border override so elevated, clipped media Cards can
+  remain borderless without application CSS.
+- Added `ZStack` for source-ordered, naturally sized overlap compositions with root and per-item nine-position alignment.
+
+- Added the server-safe, wrapper-free `Appearance` utility for explicit light,
+  dark, and inherited semantic-token scopes on exactly one existing host,
+  including deterministic portal-root composition without a provider.
+
+- Made generated explicit light and dark scopes self-contained by requiring
+  matching appearance-dependent semantic contracts and emitting every color
+  and shadow assignment without resetting inherited typography or geometry.
+
 - Added an opt-in Carousel parent-fill recipe, including flex-grown parent
   support, plus public navigation and controls inset variables so full-height
   compositions retain component-owned internal geometry without acquiring a
@@ -26,6 +65,13 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Fixed
 
+- Kept solid and soft Tabs edge-trigger focus rings inside their List inset,
+  independently controllable Trigger radius, and gave Carousel's clipped
+  Viewport an overlay-safe focus indicator above slide media.
+- Isolated every Frame constraint variable so nested Frames cannot inherit a
+  parent's base or breakpoint geometry.
+- Made Image `frame="none"` reserve zero border width so edge-to-edge media no
+  longer exposes a transparent one-pixel seam against its parent surface.
 - Updated the exact Atom dependency to `0.22.5`, retaining the cross-browser
   rotation-control correction and direction-preserving Carousel loop
   settlement while adopting exact SSR hydration alignment and its

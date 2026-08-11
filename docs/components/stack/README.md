@@ -1,8 +1,9 @@
 # Stack
 
-Stack is Brick's one-dimensional layout primitive. Use Stack or VStack for
-vertical flows and HStack for horizontal rows. All three share one rendered
-contract and tokenized spacing scale.
+Stack is Brick's one-dimensional layout primitive. Use VStack for a fixed
+vertical flow, HStack for a fixed horizontal row, and Stack when the axis
+changes at a Brick breakpoint. Stack.Item controls how an individual child
+uses available space.
 
 ## When and where to use
 
@@ -40,8 +41,9 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 
 Public exports are `Stack`, `HStack`, `VStack`, `StackProps`, `HStackProps`,
-`VStackProps`, `StackElement`, `StackDirection`, `StackGap`, `StackAlign`, and
-`StackJustify`.
+`VStackProps`, `StackElement`, `StackDirection`, `StackGap`, `StackAlign`,
+`StackJustify`, `Stack.Item`, `StackItemProps`, `StackItemElement`,
+`StackItemAlign`, `StackItemFlex`, `ResponsiveValue`, and `StackBreakpoint`.
 
 ## Quick start
 
@@ -86,8 +88,14 @@ The selected element is the ref target.
 | `align` | `stretch`, `start`, `center`, `end`, `baseline` | `stretch` |
 | `justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | `start` |
 | `wrap` | `boolean` | `false` |
+| `startSpacing` | spacing values `0` through `6` | `0` |
+| `endSpacing` | spacing values `0` through `6` | `0` |
 | `slot` | `string` | `stack` |
 | `children` | `ReactNode` | optional |
+
+Direction, gap, align, justify, wrap, and logical edge spacing accept either a
+plain value or `{ initial, sm?, md?, lg?, xl? }`. The breakpoint thresholds
+are 30rem, 48rem, 64rem, and 80rem, matching Show and Hide.
 
 HStack fixes `direction="row"` and defaults `align="center"`. VStack fixes
 `direction="column"` and defaults `align="stretch"`. Their prop types omit
@@ -104,7 +112,23 @@ axis; wrapping is opt-in. The root has `min-inline-size: 0` so shrinking and
 truncating children can remain contained.
 
 Stack has no interactive state, animation, background, border, radius,
-typography, size, margin, padding, position, or overflow.
+typography, size, margin, position, or overflow. Padding remains zero except
+for explicitly requested logical main-axis edge spacing.
+
+### Stack.Item
+
+`Stack.Item` renders a `div` by default and supports `asChild` for applying the
+flex recipe to an existing direct child. `content` is content-sized and
+shrinkable, `fixed` neither grows nor shrinks, `auto` grows from its content
+basis, and numeric values `1` through `4` divide available space
+proportionally. Both `flex` and `align` accept responsive values, allowing an
+item to remain content-sized in a mobile column and become proportional in a
+desktop row. `align` overrides the parent's cross-axis alignment.
+
+Use the default Item wrapper when proportional siblings need equal outer
+tracks despite different child padding or borders. Use `asChild` when the
+existing child itself should be the flex item and its own box geometry is an
+intentional part of allocation.
 
 ## Tokens and CSS hooks
 
@@ -118,6 +142,8 @@ Stable hooks:
 ```
 
 Optional metadata uses `data-align`, `data-justify`, and `data-wrap`.
+Logical edge spacing uses `data-start-spacing` and `data-end-spacing`, with
+breakpoint-suffixed forms for responsive overrides.
 The root always exposes `data-slot`, `data-direction`, and `data-gap`.
 
 Public variable:
@@ -146,9 +172,16 @@ Local sizing and paint remain consumer responsibilities.
 
 ## Responsive behavior
 
-Stack has no responsive objects or internal breakpoints. Use `wrap` for
-content-driven row reflow and application CSS for layout-mode changes.
-Direction and start/end follow the inherited writing direction.
+Use responsive Stack values when the same content changes arrangement. Use
+Show and Hide only when the actual interface changes. Direction and logical
+start/end spacing follow the inherited writing direction.
+
+```tsx
+<Stack direction={{ initial: "column", lg: "row" }} gap={{ initial: "4", lg: "6" }}>
+  <Stack.Item flex={1}><Surface>Copy</Surface></Stack.Item>
+  <Stack.Item flex={2}><Image.Root>...</Image.Root></Stack.Item>
+</Stack>
+```
 
 ## Accessibility
 
@@ -162,9 +195,9 @@ localization, and RTL without changing child semantics.
 
 ## Composition, native props, and refs
 
-Use `as` to select an approved semantic host. Stack does not expose `asChild`,
-`render`, child cloning, separators, responsive props, arbitrary gaps, or item
-grow/shrink/order APIs. The `HTMLElement` ref targets the selected host.
+Use `as` to select an approved semantic root. Root does not expose `asChild`;
+Stack.Item does. Reverse direction, item order, arbitrary breakpoints, and raw
+grow/shrink/basis props remain excluded.
 
 ## Examples
 

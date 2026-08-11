@@ -95,19 +95,23 @@ Each Slide and PickerItem requires the same unique `value`. A Slide's `label` be
 ## Visual recipes and states
 
 Small, medium, and large root recipes coordinate control and picker geometry;
+`radius="surface|none"` coordinates Viewport and overlay-focus corners;
 direction and rotation controls may use `xs` through `xl` independently. Circle
 and rounded shapes plus solid, soft, outline, and ghost treatments keep control
 hierarchy themeable without application CSS. Overlay placement floats controls
 above authored slide content; outside placement moves them into document flow.
 Hover, focus-visible, active picker, disabled boundary, playing, and stopped
-states change paint without changing behavior.
+states change paint without changing behavior. For overlay compositions, the
+focusable native Viewport activates a rounded Root overlay indicator above
+slide media so neither clipping nor artwork can crop or cover keyboard focus.
+Outside-control compositions retain an ordinary Viewport outline.
 
 ## Tokens and CSS hooks
 
 Stable classes are `.brick-carousel`, `.brick-carousel__viewport`, `.brick-carousel__track`, `.brick-carousel__slide`, `.brick-carousel__navigation`, `.brick-carousel__previous`, `.brick-carousel__next`, `.brick-carousel__controls`, `.brick-carousel__rotation-control`, `.brick-carousel__picker`, and `.brick-carousel__picker-item`.
 
 Root exposes `data-control-placement`, `data-control-shape`,
-`data-control-variant`, optional `data-fill`, `data-size`,
+`data-control-variant`, optional `data-fill`, `data-radius`, `data-size`,
 `data-touch-navigation`, and `data-slot`;
 Navigation exposes `data-visibility`, Picker exposes `data-variant`, and each
 direction/rotation control exposes optional `data-size`, `data-shape`, and
@@ -148,6 +152,10 @@ Public variables:
 
 Choose `size` and `controlPlacement` first. Then customize semantic theme tokens or the documented `--brick-carousel-*` variables. Use part `className` or `style` only for intentional product-specific composition, such as positioning controls around unusual media.
 
+Use `radius="none"` rather than overriding `--brick-carousel-radius` when the
+Carousel sits edge-to-edge inside a square Surface. Omission preserves the
+finished surface-radius default.
+
 ## Responsive behavior
 
 Slides occupy one viewport width and snap during native horizontal scrolling.
@@ -171,7 +179,9 @@ If automatic rotation is enabled, include RotationControl, Previous, and Next,
 and author RotationControl before the rotating viewport so it is the first
 focusable carousel control. Rotation pauses for hover and focus and does not
 restart after focus without an explicit user action. Interaction-only arrows
-remain keyboard focusable even while visually at rest.
+remain keyboard focusable even while visually at rest. Viewport and control
+focus indicators remain fully visible above clipped media and at rounded
+boundaries.
 
 ## Composition, native props, and refs
 

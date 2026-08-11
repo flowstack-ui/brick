@@ -6,6 +6,8 @@ Carousel follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added `Carousel.Root radius="surface|none"` so Viewport and overlay-focus
+  geometry can match square or rounded containing Surfaces without CSS.
 - Added an opt-in parent-fill recipe that propagates an explicitly owned block
   size through Root, Viewport, Track, and Slide, including flex-grown parents,
   without making ordinary Carousels viewport-sized.
@@ -14,6 +16,9 @@ Carousel follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Added an overlay-safe rounded focus-visible indicator above slide media so
+  Viewport clipping, edge-to-edge parents, and artwork cannot crop or cover
+  keyboard focus.
 - Updated the Atom behavior dependency so pointer activation of
   RotationControl no longer races focus handling in Firefox or WebKit.
 

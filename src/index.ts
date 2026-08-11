@@ -1,4 +1,9 @@
 export {
+  Appearance,
+  type AppearanceProps,
+  type AppearanceValue,
+} from "./components/appearance/index.js";
+export {
   Button,
   type ButtonProps,
   type ButtonShape,
@@ -27,6 +32,7 @@ export {
   type CarouselPickerProps,
   type CarouselPreviousProps,
   type CarouselRootProps,
+  type CarouselRadius,
   type CarouselRotationControlProps,
   type CarouselSize,
   type CarouselSlideProps,
@@ -255,12 +261,17 @@ export {
   TabsList,
   TabsRoot,
   TabsTrigger,
+  type TabsContentInset,
   type TabsContentProps,
   type TabsIndicatorProps,
+  type TabsLayout,
+  type TabsListColumns,
+  type TabsListRadius,
   type TabsListProps,
   type TabsRootProps,
   type TabsSize,
   type TabsTriggerProps,
+  type TabsTriggerRadius,
   type TabsVariant,
 } from "./components/tabs/index.js";
 export {
@@ -429,14 +440,33 @@ export {
   Stack,
   VStack,
   type HStackProps,
+  type ResponsiveValue,
   type StackAlign,
+  type StackBreakpoint,
   type StackDirection,
   type StackElement,
   type StackGap,
+  type StackItemAlign,
+  type StackItemElement,
+  type StackItemFlex,
+  type StackItemProps,
   type StackJustify,
   type StackProps,
   type VStackProps,
 } from "./components/stack/index.js";
+export {
+  ZStack,
+  ZStackItem,
+  ZStackRoot,
+  type ZStackAlign,
+  type ZStackElement,
+  type ZStackItemAlign,
+  type ZStackItemElement,
+  type ZStackItemJustify,
+  type ZStackItemProps,
+  type ZStackJustify,
+  type ZStackRootProps,
+} from "./components/z-stack/index.js";
 export {
   Grid,
   type GridAlign,
@@ -461,6 +491,18 @@ export {
   type ContainerMeasure,
   type ContainerProps,
 } from "./components/container/index.js";
+export {
+  Section,
+  type SectionElement,
+  type SectionProps,
+  type SectionSpacing,
+} from "./components/section/index.js";
+export {
+  Frame,
+  type FrameElement,
+  type FrameLength,
+  type FrameProps,
+} from "./components/frame/index.js";
 export {
   Surface,
   SurfaceContent,

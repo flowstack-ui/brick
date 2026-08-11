@@ -9,6 +9,13 @@ export interface PlaygroundEntry {
 export const componentEntries = [
   {
     category: "Layout",
+    description: "Explicit light, dark, and inherited semantic-token scopes.",
+    id: "appearance",
+    route: "/appearance",
+    title: "Appearance",
+  },
+  {
+    category: "Layout",
     description: "CSS-only content shown from a fixed viewport breakpoint.",
     id: "show",
     route: "/show",
@@ -254,6 +261,13 @@ export const componentEntries = [
   },
   {
     category: "Layout",
+    description: "Source-ordered depth layout and nine-position placement.",
+    id: "z-stack",
+    route: "/z-stack",
+    title: "ZStack",
+  },
+  {
+    category: "Layout",
     description: "Tokenized two-dimensional tracks and item placement.",
     id: "grid",
     route: "/grid",
@@ -265,6 +279,20 @@ export const componentEntries = [
     id: "container",
     route: "/container",
     title: "Container",
+  },
+  {
+    category: "Layout",
+    description: "Themeable responsive rhythm for major page regions.",
+    id: "section",
+    route: "/section",
+    title: "Section",
+  },
+  {
+    category: "Layout",
+    description: "Responsive logical size constraints for one local element.",
+    id: "frame",
+    route: "/frame",
+    title: "Frame",
   },
   {
     category: "Layout",

@@ -11,7 +11,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.22.5");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.22.6");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -24,6 +24,10 @@ test("package metadata defines the public Brick boundary", async () => {
     "./agents/manifest.json": "./dist/agents/manifest.json",
     "./agents/*.json": "./dist/agents/*.json",
     "./agents/*.md": "./dist/agents/*.md",
+    "./appearance": {
+      types: "./dist/appearance.d.ts",
+      default: "./dist/appearance.js",
+    },
     "./button": {
       types: "./dist/button.d.ts",
       default: "./dist/button.js",
@@ -272,6 +276,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/stack.d.ts",
       default: "./dist/stack.js",
     },
+    "./z-stack": {
+      types: "./dist/z-stack.d.ts",
+      default: "./dist/z-stack.js",
+    },
     "./grid": {
       types: "./dist/grid.d.ts",
       default: "./dist/grid.js",
@@ -279,6 +287,14 @@ test("package metadata defines the public Brick boundary", async () => {
     "./container": {
       types: "./dist/container.d.ts",
       default: "./dist/container.js",
+    },
+    "./section": {
+      types: "./dist/section.d.ts",
+      default: "./dist/section.js",
+    },
+    "./frame": {
+      types: "./dist/frame.d.ts",
+      default: "./dist/frame.js",
     },
     "./surface": {
       types: "./dist/surface.d.ts",
@@ -339,6 +355,7 @@ test("package metadata defines the public Brick boundary", async () => {
 
 test("built package entrypoint can be imported without a CSS loader", async () => {
   const brick = await import(new URL("../../dist/index.js", import.meta.url));
+  const appearance = await import(new URL("../../dist/appearance.js", import.meta.url));
   const button = await import(new URL("../../dist/button.js", import.meta.url));
   const iconButton = await import(new URL("../../dist/icon-button.js", import.meta.url));
   const icon = await import(new URL("../../dist/icon.js", import.meta.url));
@@ -391,8 +408,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const otpField = await import(new URL("../../dist/otp-field.js", import.meta.url));
   const passwordToggleField = await import(new URL("../../dist/password-toggle-field.js", import.meta.url));
   const stack = await import(new URL("../../dist/stack.js", import.meta.url));
+  const zStack = await import(new URL("../../dist/z-stack.js", import.meta.url));
   const grid = await import(new URL("../../dist/grid.js", import.meta.url));
   const container = await import(new URL("../../dist/container.js", import.meta.url));
+  const section = await import(new URL("../../dist/section.js", import.meta.url));
+  const frame = await import(new URL("../../dist/frame.js", import.meta.url));
   const surface = await import(new URL("../../dist/surface.js", import.meta.url));
   const divider = await import(new URL("../../dist/divider.js", import.meta.url));
   const scrollArea = await import(new URL("../../dist/scroll-area.js", import.meta.url));
@@ -432,6 +452,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "AppBarRoot",
       "AppBarStart",
       "AppBarToolbar",
+      "Appearance",
       "AspectRatio",
       "AspectRatioRoot",
       "Avatar",
@@ -572,6 +593,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "FileUploadRoot",
       "FileUploadTrigger",
       "Form",
+      "Frame",
       "Grid",
       "HStack",
       "Hide",
@@ -705,6 +727,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ScrollArea",
       "ScrollAreaRoot",
       "ScrollAreaViewport",
+      "Section",
       "Select",
       "SelectArrow",
       "SelectContent",
@@ -823,9 +846,13 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "VStack",
       "VisuallyHidden",
       "VisuallyHiddenRoot",
+      "ZStack",
+      "ZStackItem",
+      "ZStackRoot",
       "toast"
     ],
   );
+  assert.equal(appearance.Appearance, brick.Appearance);
   assert.equal(button.Button, brick.Button);
   assert.equal(iconButton.IconButton, brick.IconButton);
   assert.equal(icon.Icon, brick.Icon);
@@ -1024,10 +1051,15 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(stack.Stack, brick.Stack);
   assert.equal(stack.HStack, brick.HStack);
   assert.equal(stack.VStack, brick.VStack);
+  assert.equal(zStack.ZStack, brick.ZStack);
+  assert.equal(zStack.ZStackRoot, brick.ZStack.Root);
+  assert.equal(zStack.ZStackItem, brick.ZStack.Item);
   assert.equal(grid.Grid, brick.Grid);
   assert.equal(grid.Grid.Root, brick.Grid.Root);
   assert.equal(grid.Grid.Item, brick.Grid.Item);
   assert.equal(container.Container, brick.Container);
+  assert.equal(section.Section, brick.Section);
+  assert.equal(frame.Frame, brick.Frame);
   assert.equal(surface.Surface, brick.Surface);
   assert.equal(surface.SurfaceRoot, brick.Surface.Root);
   assert.equal(surface.SurfaceMedia, brick.Surface.Media);
@@ -1116,6 +1148,8 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-stack/);
   assert.match(styles, /\.brick-grid/);
   assert.match(styles, /\.brick-container/);
+  assert.match(styles, /\.brick-section/);
+  assert.match(styles, /\.brick-frame/);
   assert.match(styles, /\.brick-show/);
   assert.match(styles, /\.brick-hide/);
   assert.match(styles, /\.brick-surface/);
@@ -1182,6 +1216,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-stack-gap/);
   assert.match(styles, /--brick-grid-columns/);
   assert.match(styles, /--brick-container-max-inline-size/);
+  assert.match(styles, /--brick-section-spacing/);
   assert.match(styles, /--brick-surface-background/);
   assert.match(styles, /--brick-divider-color/);
   assert.match(styles, /--brick-scroll-area-scrollbar-thumb/);
@@ -1209,16 +1244,17 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 75);
+  assert.equal(componentStyleNames.length, 79);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,brick\.foundations/);
     if (name === "visually-hidden") {
-      assert.match(css, /brick\.components,brick\.effects/);
+      assert.match(css, /brick\.components,brick\.utilities,brick\.effects/);
       assert.doesNotMatch(css, /\.brick-/);
     } else {
-      assert.match(css, /@layer brick\.components/);
-      assert.match(css, /@layer brick\.effects/);
+      if (name === "frame") assert.match(css, /@layer brick\.utilities/);
+      else assert.match(css, /@layer brick\.components/);
+      assert.match(css, /(?:brick\.utilities,brick\.effects|@layer brick\.effects)/);
       assert.match(css, /\.brick-/);
     }
     assert.doesNotMatch(css, /--brick-color-accent-solid:/);

@@ -9,6 +9,7 @@ import { Avatar } from "../../dist/avatar.js";
 import { Toggle } from "../../dist/toggle.js";
 import { ToggleGroup } from "../../dist/toggle-group.js";
 import { AppBar } from "../../dist/app-bar.js";
+import { Appearance } from "../../dist/appearance.js";
 import { HoverCard } from "../../dist/hover-card.js";
 import { Popover } from "../../dist/popover.js";
 import { Form } from "../../dist/form.js";
@@ -43,6 +44,8 @@ import { Pagination } from "../../dist/pagination.js";
 import { HStack, Stack, VStack } from "../../dist/stack.js";
 import { Grid } from "../../dist/grid.js";
 import { Container } from "../../dist/container.js";
+import { Section } from "../../dist/section.js";
+import { Frame } from "../../dist/frame.js";
 import {
   Surface,
   SurfaceContent,
@@ -61,6 +64,30 @@ import { AspectRatio } from "../../dist/aspect-ratio.js";
 import { Show } from "../../dist/show.js";
 import { Hide } from "../../dist/hide.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("Appearance renders deterministic nested and wrapper-free server scopes", () => {
+  const markup = renderToString(
+    React.createElement(
+      Appearance,
+      { value: "dark" },
+      React.createElement(
+        "section",
+        null,
+        React.createElement(
+          Appearance,
+          { value: "light" },
+          React.createElement(AppBar.Root, { "aria-label": "Scoped app bar" }),
+        ),
+      ),
+    ),
+  );
+
+  assert.match(markup, /<section[^>]*class="brick-appearance"/);
+  assert.match(markup, /data-brick-appearance="dark"/);
+  assert.match(markup, /<header[^>]*brick-app-bar brick-appearance/);
+  assert.match(markup, /data-brick-appearance="light"/);
+  assert.doesNotMatch(markup, /<div[^>]*brick-appearance/);
+});
 
 test("Show and Hide render deterministic always-mounted responsive hosts", () => {
   const markup = renderToString(React.createElement(React.Fragment, null,
@@ -826,6 +853,58 @@ test("Container renders one deterministic semantic host without behavior", () =>
   assert.doesNotMatch(markup, /role=|tabindex/i);
 });
 
+test("Section renders deterministic responsive logical rhythm without behavior", () => {
+  const markup = renderToString(
+    React.createElement(
+      Section,
+      {
+        endSpacing: { initial: "sm", md: "lg" },
+        id: "server-section",
+        spacing: { initial: "md", lg: "xl" },
+        startSpacing: "none",
+      },
+      React.createElement("h2", null, "Services"),
+    ),
+  );
+
+  assert.match(markup, /^<section/);
+  assert.match(markup, /class="brick-section"/);
+  assert.match(markup, /data-spacing="md"/);
+  assert.match(markup, /data-spacing-lg="xl"/);
+  assert.match(markup, /data-start-spacing="none"/);
+  assert.match(markup, /data-end-spacing="sm"/);
+  assert.match(markup, /data-end-spacing-md="lg"/);
+  assert.match(markup, /data-slot="section"/);
+  assert.match(markup, /id="server-section"/);
+  assert.doesNotMatch(markup, /role=|tabindex/i);
+});
+
+test("Frame renders deterministic responsive logical constraints without behavior", () => {
+  const markup = renderToString(
+    React.createElement(
+      Frame,
+      {
+        as: "article",
+        id: "server-frame",
+        maxBlockSize: { initial: 320, lg: "24rem" },
+        maxInlineSize: "68ch",
+        minInlineSize: 0,
+      },
+      "Constrained content",
+    ),
+  );
+
+  assert.match(markup, /^<article/);
+  assert.match(markup, /class="brick-frame"/);
+  assert.match(markup, /data-slot="frame"/);
+  assert.match(markup, /--brick-frame-max-inline-size:68ch/);
+  assert.match(markup, /--brick-frame-min-inline-size:0/);
+  assert.match(markup, /--brick-frame-max-block-size:320px/);
+  assert.match(markup, /--brick-frame-max-block-size-lg:24rem/);
+  assert.match(markup, /id="server-frame"/);
+  assert.doesNotMatch(markup, /role=|tabindex/i);
+});
+
 test("Surface renders one deterministic semantic host without behavior", () => {
   const markup = renderToString(
     React.createElement(
@@ -853,6 +932,27 @@ test("Surface renders one deterministic semantic host without behavior", () => {
   assert.match(markup, /data-slot="surface"/);
   assert.match(markup, /id="server-surface"/);
   assert.doesNotMatch(markup, /role=|tabindex/i);
+});
+
+test("Surface asChild composes one deterministic Section host during SSR", () => {
+  const markup = renderToString(
+    React.createElement(
+      Surface,
+      { asChild: true, level: "subtle" },
+      React.createElement(
+        Section,
+        { id: "server-painted-section", spacing: "lg" },
+        "Painted section",
+      ),
+    ),
+  );
+
+  assert.match(markup, /^<section/);
+  assert.match(markup, /class="brick-section brick-surface"/);
+  assert.match(markup, /data-spacing="lg"/);
+  assert.match(markup, /data-level="subtle"/);
+  assert.match(markup, /id="server-painted-section"/);
+  assert.equal((markup.match(/<section/g) ?? []).length, 1);
 });
 
 test("Surface renders deterministic optional decorative layers during SSR", () => {

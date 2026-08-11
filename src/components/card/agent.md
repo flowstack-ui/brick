@@ -20,6 +20,7 @@ Group content about one subject in a finished static compound surface with heade
 
 - **MUST:** Do not turn the whole Card into an unnamed clickable div; place explicit Link or Button controls inside or use a valid link composition.
 - **MUST:** Load styles.css or core.css plus card.css and styles for nested components.
+- **SHOULD:** Use bordered={false} when edge-to-edge authored media should meet Card's clipped outer boundary without retaining the selected recipe's border; do not remove that geometry with application CSS.
 
 ## Common mistakes
 

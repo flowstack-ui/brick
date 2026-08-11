@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Style a bounded scroll viewport and scrollbar anatomy while preserving Atom and native input behavior.
+Style a bounded scroll viewport and native scrollbar presentation while preserving Atom and native input behavior.
 
 ## Use when
 
@@ -14,11 +14,12 @@ Style a bounded scroll viewport and scrollbar anatomy while preserving Atom and 
 
 ## Required composition
 
-- Compose Viewport and the needed Scrollbar/Thumb parts inside Root, adding Corner for two-axis presentation; give the wrapper a real size constraint.
+- Compose Viewport inside Root and give Root a real size constraint from its parent layout; Brick's current native scrollbar presentation needs no authored Scrollbar or Thumb parts.
 
 ## Rules
 
 - **MUST:** Provide a bounded size; ScrollArea cannot create meaningful scrolling without a constrained viewport.
+- **MUST:** Identify the parent that owns the maximum or fixed block size before styling Viewport; do not apply a random height directly to the scrolling part.
 - **MUST:** Preserve wheel, trackpad, touch, keyboard, focus, and nested page scrolling.
 - **MUST:** Load styles.css or core.css plus scroll-area.css.
 
@@ -29,7 +30,7 @@ Style a bounded scroll viewport and scrollbar anatomy while preserving Atom and 
 ## Validation checklist
 
 - Test both axes, mouse, trackpad, touch, keyboard, focus ring, nested scrolling, mobile tables, zoom, and RTL.
-- Confirm the viewport constraint and CSS are loaded.
+- Confirm the parent constraint, viewport geometry, and CSS are loaded.
 
 ## Related guidance
 

@@ -1,0 +1,5 @@
+@layer brick.components {
+  .brick-appearance {
+    box-sizing: border-box;
+  }
+}

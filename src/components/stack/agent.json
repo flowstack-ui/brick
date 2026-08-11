@@ -1,11 +1,16 @@
 {
-  "schema": "flowstack.agent-component.v1", "id": "stack", "name": "Stack", "package": "@flowstack-ui/brick", "layer": "brick", "kind": "component",
-  "purpose": "Arrange children in one tokenized row or column with logical spacing, alignment, wrapping, and responsive-friendly public props.",
+  "schema": "flowstack.agent-component.v1",
+  "id": "stack",
+  "name": "Stack",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "kind": "component",
+  "purpose": "Arrange children on one primary axis with responsive direction, tokenized spacing, alignment, wrapping, and explicit child sizing.",
   "useWhen": ["Content needs one-dimensional vertical or horizontal layout."],
-  "avoidWhen": [{ "condition": "Both rows and columns need explicit track control.", "useInstead": "Grid" }],
-  "composition": ["Choose VStack for vertical flow or HStack for horizontal flow; set gap and alignment from the content relationship."],
-  "rules": [{ "id": "stack-one-dimension", "level": "must", "statement": "Use Stack for one primary layout axis and allow wrapping only when the resulting order remains clear." }, { "id": "stack-css", "level": "must", "statement": "Load styles.css or core.css plus stack.css." }],
-  "commonMistakes": [{ "mistake": "Adding repeated custom flex utilities for ordinary rows and columns.", "correction": "Use Stack so spacing and logical-direction behavior stay on the Brick contract." }],
-  "validation": ["Check source and visual order at narrow widths and zoom.", "Check gap, wrapping, alignment, and RTL behavior."],
-  "related": ["grid", "surface", "card"]
+  "avoidWhen": [{ "condition": "Both rows and columns need explicit track control.", "useInstead": "Grid" }, { "condition": "Content overlaps in depth.", "useInstead": "ZStack or Surface media anatomy" }],
+  "composition": ["Choose VStack when the axis is always vertical, HStack when it is always horizontal, and Stack when the same content changes axis at a breakpoint.", "Use Stack.Item when one direct child must remain content-sized, fixed, or consume a proportional share.", "When the parent changes axis, review each Item flex recipe too; a proportional desktop column usually becomes content-sized in a mobile column.", "Keep the Item wrapper when equal outer tracks contain children with different padding or borders; use asChild only when the child's own box should participate in flex allocation."],
+  "rules": [{ "id": "stack-one-dimension", "level": "must", "statement": "Use Stack for one primary layout axis and allow wrapping only when the resulting order remains clear." }, { "id": "stack-responsive-arrangement", "level": "must", "statement": "Use responsive Stack values for arrangement changes; use Show/Hide only when the actual interface changes." }, { "id": "stack-source-order", "level": "must", "statement": "Preserve reading and focus order; do not simulate reverse direction or visual ordering." }, { "id": "stack-css", "level": "must", "statement": "Load styles.css or core.css plus stack.css." }],
+  "commonMistakes": [{ "mistake": "Duplicating the same content through Show/Hide only to switch row and column.", "correction": "Use responsive Stack direction." }, { "mistake": "Writing grow/shrink CSS for ordinary columns.", "correction": "Use Stack.Item flex recipes." }],
+  "validation": ["Check source and visual order at narrow widths and zoom.", "Check every authored breakpoint, logical edge spacing, wrapping, alignment, and RTL behavior."],
+  "related": ["grid", "z-stack", "show", "hide", "surface", "card"]
 }

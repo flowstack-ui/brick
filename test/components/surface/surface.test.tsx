@@ -123,6 +123,53 @@ describe("Surface", () => {
     }
   });
 
+  it("composes Surface paint onto one existing host without a wrapper", () => {
+    const childRef = createRef<HTMLElement>();
+    const surfaceRef = createRef<HTMLElement>();
+    const calls: string[] = [];
+    const { container } = render(
+      <Surface
+        asChild
+        bordered
+        className="surface-owner"
+        onClick={() => calls.push("surface")}
+        ref={surfaceRef}
+        style={{ "--brick-surface-radius": "0px" } as CSSProperties}
+      >
+        <section
+          className="section-owner"
+          data-testid="composed-surface"
+          onClick={() => calls.push("child")}
+          ref={childRef}
+          style={{ minInlineSize: 0 }}
+        >
+          Content
+        </section>
+      </Surface>,
+    );
+    const surface = screen.getByTestId("composed-surface");
+    fireEvent.click(surface);
+
+    expect(surface.tagName).toBe("SECTION");
+    expect(container.children).toHaveLength(1);
+    expect(container.firstElementChild).toBe(surface);
+    expect(surface).toBe(childRef.current);
+    expect(surface).toBe(surfaceRef.current);
+    expect(surface).toHaveClass("section-owner", "brick-surface", "surface-owner");
+    expect(surface).toHaveAttribute("data-bordered", "");
+    expect(surface.style.minInlineSize).toBe("0");
+    expect(surface.style.getPropertyValue("--brick-surface-radius")).toBe("0px");
+    expect(calls).toEqual(["surface", "child"]);
+  });
+
+  it("rejects a Fragment as an asChild host", () => {
+    expect(() => render(
+      <Surface asChild>
+        <><span>One</span><span>Two</span></>
+      </Surface>,
+    )).toThrow(/Fragment cannot receive Surface paint/);
+  });
+
   it("forwards native props, events, class, style, slot, children, and ref", () => {
     const ref = createRef<HTMLElement>();
     let clicks = 0;

@@ -21,6 +21,8 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - **responsive presence:** use Show or Hide. Use CSS media visibility rather than rendering two JavaScript-controlled trees.
 - **image with resilient loading:** use Image. Use an adapter only when a framework image optimizer provides a measured capability Brick lacks.
 - **navigation destination:** use Link or Button with href. Use Link for ordinary navigation and Button only for an emphasized destination.
+- **grouped disclosure sections:** use Accordion. Choose Collapsible for one independent disclosure and Tabs for one shared switching panel.
+- **ordered or unordered content:** use List. Choose NavList, an interactive collection, Table, or DataGrid when rows navigate, select, activate, or expose data relationships.
 
 ## Rules
 
@@ -55,3 +57,5 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - `image`
 - `show`
 - `hide`
+- `accordion`
+- `list`

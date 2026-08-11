@@ -22,6 +22,7 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 - Build campaign-specific slide content from Brick layout, typography, action, and media components; Carousel does not own hero messaging or proof content.
 - When artwork, scrim, and copy form one peer campaign, compose a complete Surface with Media, Scrim, and Content inside each Slide; keep genuinely invariant evidence or navigation outside the rotating sequence.
 - When a parent already owns a stable block size, use Root fill to propagate it through Carousel's Viewport, Track, and Slides; continue sizing authored Surface, Content, and layout components explicitly.
+- Match Root radius to the visible containing geometry; use radius=none when an edge-to-edge square Surface owns the campaign boundary.
 
 ## Rules
 
@@ -33,6 +34,8 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 - **MUST:** Keep viewport motion instant until Atom exposes data-initialized; Brick's shipped Carousel CSS already enables smooth motion only after that signal.
 - **SHOULD:** Give campaign slides stable responsive geometry so changing the active slide does not move surrounding page content.
 - **MUST:** Treat fill as internal size propagation, not a viewport-height policy; the application or Block must establish the available parent height.
+- **MUST:** Name the parent layout or section that establishes the definite block size before enabling fill; retain a real wrapper when that wrapper is the sizing box.
+- **MUST:** Treat radius as Viewport and overlay-focus geometry only; it must not alter selection, scrolling, control placement, or slide anatomy.
 - **MUST:** When controls overlay slides, reserve application-owned content safe areas so arrows, rotation controls, and picker targets never obscure authored text or actions.
 - **SHOULD:** Prioritize only initially visible campaign media and defer non-current media when the image delivery layer supports it.
 - **MUST:** Load styles.css or core.css plus carousel.css.
@@ -47,7 +50,7 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 ## Validation checklist
 
 - Check optional-control compositions, first and last boundaries in both directions, interaction-only arrow discovery, independent picker treatment, native horizontal touch scrolling, focus pause, hover pause, reduced motion, RTL, and screen-reader naming.
-- Confirm inactive slides are unavailable to focus and assistive technology, control focus rings remain visible, overlay controls do not cover content, complete campaign media changes with its copy, and slide changes do not cause page-level layout shift.
+- Confirm inactive slides are unavailable to focus and assistive technology, the overlay-safe Viewport focus indicator remains visible above slide media, control focus rings remain complete at rounded edges, overlay controls do not cover content, complete campaign media changes with its copy, and slide changes do not cause page-level layout shift.
 
 ## Related guidance
 

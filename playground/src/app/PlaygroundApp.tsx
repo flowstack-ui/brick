@@ -93,11 +93,17 @@ import { CarouselPage, carouselScenarios } from "../components/carousel/Carousel
 import { CodePage, codeScenarios } from "../components/code/CodePage.js";
 import { CodeBlockPage, codeBlockScenarios } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
+import { ZStackPage, zStackScenarios } from "../components/z-stack/ZStackPage.js";
 import { GridPage, gridScenarios } from "../components/grid/GridPage.js";
 import {
   ContainerPage,
   containerScenarios,
 } from "../components/container/ContainerPage.js";
+import {
+  SectionPage,
+  sectionScenarios,
+} from "../components/section/SectionPage.js";
+import { FramePage, frameScenarios } from "../components/frame/FramePage.js";
 import {
   SurfacePage,
   surfaceScenarios,
@@ -151,6 +157,7 @@ import { CollapsiblePage, collapsibleScenarios } from "../components/collapsible
 import { AccordionPage, accordionScenarios } from "../components/accordion/AccordionPage.js";
 import { ShowPage, showScenarios } from "../components/show/ShowPage.js";
 import { HidePage, hideScenarios } from "../components/hide/HidePage.js";
+import { AppearancePage, appearanceScenarios } from "../components/appearance/AppearancePage.js";
 import { PlaygroundShell } from "../shell/PlaygroundShell.js";
 
 const playgroundRoutes = new Set(playgroundEntries.map((entry) => entry.route));
@@ -228,6 +235,7 @@ export function PlaygroundApp() {
 
   if (entry.id === "show") return <PlaygroundShell entry={entry} scenarios={showScenarios}><ShowPage /></PlaygroundShell>;
   if (entry.id === "hide") return <PlaygroundShell entry={entry} scenarios={hideScenarios}><HidePage /></PlaygroundShell>;
+  if (entry.id === "appearance") return <PlaygroundShell entry={entry} scenarios={appearanceScenarios}><AppearancePage /></PlaygroundShell>;
 
   if (entry.id === "visually-hidden") {
     return <PlaygroundShell entry={entry} scenarios={visuallyHiddenScenarios}><VisuallyHiddenPage /></PlaygroundShell>;
@@ -448,6 +456,14 @@ export function PlaygroundApp() {
     );
   }
 
+  if (entry.id === "z-stack") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={zStackScenarios}>
+        <ZStackPage />
+      </PlaygroundShell>
+    );
+  }
+
   if (entry.id === "grid") {
     return (
       <PlaygroundShell entry={entry} scenarios={gridScenarios}>
@@ -460,6 +476,22 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={containerScenarios}>
         <ContainerPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "section") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={sectionScenarios}>
+        <SectionPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "frame") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={frameScenarios}>
+        <FramePage />
       </PlaygroundShell>
     );
   }
