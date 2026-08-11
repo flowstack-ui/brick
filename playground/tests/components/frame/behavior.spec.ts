@@ -9,7 +9,12 @@ test("the four qualified constraint families resolve without prop leakage", asyn
   await page.setViewportSize({ width: 1280, height: 900 });
   const cases = page.getByTestId("frame-cases").locator(".brick-frame");
   await expect(cases.nth(0)).toHaveCSS("min-width", "144px");
-  await expect(cases.nth(1)).toHaveCSS("max-width", "483.75px");
+  await expect(cases.nth(1)).toHaveCSS("max-width", /px$/);
+  expect(
+    await cases.nth(1).evaluate((element) =>
+      element.style.getPropertyValue("--brick-frame-max-inline-size"),
+    ),
+  ).toBe("48ch");
   await expect(cases.nth(2)).toHaveCSS("min-height", "288px");
   await expect(cases.nth(3)).toHaveCSS("max-height", "256px");
   await expect(cases.nth(3).locator(".brick-scroll-area")).toHaveCSS("height", "256px");
