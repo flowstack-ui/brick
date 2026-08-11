@@ -86,6 +86,11 @@ render only when explicitly composed:
 | `Surface.Scrim` | `div` | optional contrast-protecting uniform paint or logical gradient |
 | `Surface.Content` | `div` | foreground application content |
 
+`Surface.Content` establishes the foreground layer but deliberately adds no
+padding. When foreground content needs spacing on every edge, set `inset` on
+the Surface root. Stack `startSpacing` and `endSpacing` remain primary-axis
+spacing and are not substitutes for a Surface inset.
+
 Direct named part exports are equivalent to the compound parts and are safe to
 import from React Server Components.
 

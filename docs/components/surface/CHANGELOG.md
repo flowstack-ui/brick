@@ -6,6 +6,9 @@ Surface follows the package version of `@flowstack-ui/brick`.
 
 ### Changed
 
+- Clarified in public and Agent Knowledge guidance that the Surface root's
+  `inset` recipe owns four-sided content spacing, while `Surface.Content` owns
+  foreground layering and Stack edge spacing remains axis-specific.
 - Made `soft`, `medium`, and `strong` Scrim recipes perceptually distinct by
   widening both paint intensity and directional gradient reach while keeping
   theme ownership limited to the semantic scrim color.

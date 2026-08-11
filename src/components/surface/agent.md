@@ -15,13 +15,14 @@ Apply semantic background layers, boundaries, elevation, radius, inset, and opti
 
 ## Required composition
 
-- Choose Surface level and boundary by hierarchy, then compose public layout and content components inside. Use asChild around Section when paint must cover the Section rhythm without another host. For background media, author Media, optional Scrim, and Content in that order.
+- Choose Surface level and boundary by hierarchy, then compose public layout and content components inside. Use asChild around Section when paint must cover the Section rhythm without another host. For background media, author Media, optional Scrim, and Content in that order. When layered foreground content needs four-sided breathing room, set inset on the Surface root; Content owns foreground layering, not padding.
 
 ## Rules
 
 - **SHOULD:** Choose surface level by information hierarchy, not decoration alone.
 - **MUST:** Use asChild only with one existing non-Fragment host that already owns the required semantics or layout; preserve that child's meaning and keep Surface responsible only for paint.
 - **MUST:** Load styles.css or core.css plus surface.css.
+- **MUST:** Use the Surface inset recipe for four-sided internal spacing; Surface.Content provides z-order only, and Stack startSpacing/endSpacing remain axis-specific.
 - **MUST:** Treat Surface.Media as decorative and noninteractive; keep meaningful media and controls in Content or ordinary document flow.
 - **MUST:** Give Brick Image explicit fill inside Surface.Media so its actual Content and Fallback consume the complete media layer.
 - **MUST:** Put every foreground child inside Surface.Content when Media or Scrim is used.
@@ -32,12 +33,14 @@ Apply semantic background layers, boundaries, elevation, radius, inset, and opti
 
 - **Avoid:** Using arbitrary background colors to recreate a surface. **Instead:** Use Surface and theme its semantic tokens.
 - **Avoid:** Adding absolute-positioning and z-index CSS for ordinary background media. **Instead:** Use Surface.Media, Surface.Scrim, and Surface.Content.
+- **Avoid:** Expecting Surface.Content or Stack edge spacing to create padding on every foreground edge. **Instead:** Set inset on the Surface root, then use Stack only for child arrangement and primary-axis spacing.
 
 ## Validation checklist
 
 - Check foreground contrast against the selected surface in every appearance.
 - Confirm nested surfaces communicate hierarchy without excessive borders or elevation.
 - Confirm Media and Scrim fill the root, remain hidden from assistive technology and pointer input, and Content stays above both.
+- Check that layered foreground content has intentional spacing on all four logical edges at narrow and wide sizes.
 
 ## Related guidance
 
