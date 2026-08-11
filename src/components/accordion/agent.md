@@ -27,17 +27,19 @@ Present a finished group of related disclosure sections while Atom owns expanded
 - **MUST:** Keep visible padding and panel layout in ContentInner rather than Content so Atom can measure and animate the panel accurately.
 - **MUST:** Choose Header level from the page outline and opt out of optional Content landmarks when the resulting region count would be noisy.
 - **MUST:** Load styles.css or core.css plus accordion.css.
+- **MUST:** Keep grouped trigger corners continuous with the enclosing Root and verify that the complete focus ring remains visible at the first and last group edges.
 
 ## Common mistakes
 
 - **Avoid:** Using Accordion for one disclosure, nesting a finished Button in Trigger, or placing padding directly on Content. **Instead:** Use Collapsible for one region, let Trigger own its visual recipe, and put panel spacing in ContentInner.
 - **Avoid:** Accepting the default heading level or region landmark count without checking the host page. **Instead:** Set Header to the correct document level and use landmark=false when many open panels would create excessive landmarks.
+- **Avoid:** Rounding every Trigger in one outlined group or clipping Root paint so the first and last Trigger focus rings are cut off. **Instead:** Treat Root as the group silhouette, keep interior Trigger edges square, round only exposed group corners, and preserve visible focus outside the group boundary.
 
 ## Validation checklist
 
 - Check complete anatomy, unique values, heading order, Trigger names, linked panel relationships, landmark usefulness, and CSS delivery.
 - Test Enter, Space, Home, End, orientation-aware arrows, RTL, disabled and locked-open state, single and multiple modes, and controlled and uncontrolled state.
-- Test initial open, open and close motion, dynamic panel measurement, reduced motion, focus geometry, long labels, narrow widths, zoom, and forced colors.
+- Test initial open, open and close motion, dynamic panel measurement, reduced motion, complete first and last Trigger focus geometry, continuous grouped corners, long labels, narrow widths, zoom, and forced colors.
 
 ## Related guidance
 

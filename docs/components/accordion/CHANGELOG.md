@@ -4,6 +4,12 @@ Accordion follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Kept vertical group interiors square, rounded only exposed outer Trigger
+  corners, and stopped Root paint containment from clipping the first or last
+  Trigger focus ring.
+
 ### Added
 
 - Added public Agent Knowledge for selecting grouped disclosures, preserving
