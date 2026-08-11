@@ -23,6 +23,7 @@ import {
 import { Icon } from "../icon/index.js";
 
 export type CarouselSize = "sm" | "md" | "lg";
+export type CarouselRadius = "none" | "surface";
 export type CarouselControlPlacement = "overlay" | "outside";
 export type CarouselControlSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type CarouselControlShape = "rounded" | "circle";
@@ -35,6 +36,8 @@ export interface CarouselRootProps extends AtomCarouselRootProps {
   fill?: boolean;
   /** Coordinated control and picker scale. @default "md" */
   size?: CarouselSize;
+  /** Viewport and overlay-focus corner geometry. @default "surface" */
+  radius?: CarouselRadius;
   /** Place navigation over the slide or in document flow. @default "overlay" */
   controlPlacement?: CarouselControlPlacement;
   /** Default visual hierarchy for direction and rotation controls. @default "soft" */
@@ -107,6 +110,7 @@ export const CarouselRoot = forwardRef<HTMLDivElement, CarouselRootProps>(
       controlShape = "circle",
       controlVariant = "soft",
       fill = false,
+      radius = "surface",
       size = "md",
       "data-slot": dataSlot,
       onPointerUpCapture,
@@ -140,6 +144,7 @@ export const CarouselRoot = forwardRef<HTMLDivElement, CarouselRootProps>(
         data-control-shape={controlShape}
         data-control-variant={controlVariant}
         data-fill={fill ? "" : undefined}
+        data-radius={radius}
         data-size={size}
         data-slot={dataSlot ?? "carousel"}
         data-touch-navigation={touchNavigationVisible ? "visible" : undefined}

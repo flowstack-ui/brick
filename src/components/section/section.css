@@ -1,0 +1,126 @@
+@layer brick.components {
+  .brick-section {
+    --brick-section-space-none: 0rem;
+    --brick-section-space-sm: clamp(2rem, 4vw, 3rem);
+    --brick-section-space-md: clamp(3rem, 6vw, 5rem);
+    --brick-section-space-lg: clamp(4rem, 8vw, 7rem);
+    --brick-section-space-xl: clamp(5rem, 10vw, 9rem);
+    --brick-section-space-2xl: clamp(6rem, 12vw, 12rem);
+    --brick-section-spacing: var(--brick-section-space-md);
+    --brick-section-start-spacing: var(--brick-section-spacing);
+    --brick-section-end-spacing: var(--brick-section-spacing);
+
+    box-sizing: border-box;
+    min-inline-size: 0;
+  }
+
+  /* Section owns the block axis even when Surface paints the same host. */
+  .brick-section[data-spacing] {
+    padding-block: var(--brick-section-start-spacing)
+      var(--brick-section-end-spacing);
+  }
+
+  .brick-section[data-spacing="none"] { --brick-section-spacing: var(--brick-section-space-none); }
+  .brick-section[data-spacing="sm"] { --brick-section-spacing: var(--brick-section-space-sm); }
+  .brick-section[data-spacing="lg"] { --brick-section-spacing: var(--brick-section-space-lg); }
+  .brick-section[data-spacing="xl"] { --brick-section-spacing: var(--brick-section-space-xl); }
+  .brick-section[data-spacing="2xl"] { --brick-section-spacing: var(--brick-section-space-2xl); }
+
+  .brick-section[data-start-spacing="none"] { --brick-section-start-spacing: var(--brick-section-space-none); }
+  .brick-section[data-start-spacing="sm"] { --brick-section-start-spacing: var(--brick-section-space-sm); }
+  .brick-section[data-start-spacing="md"] { --brick-section-start-spacing: var(--brick-section-space-md); }
+  .brick-section[data-start-spacing="lg"] { --brick-section-start-spacing: var(--brick-section-space-lg); }
+  .brick-section[data-start-spacing="xl"] { --brick-section-start-spacing: var(--brick-section-space-xl); }
+  .brick-section[data-start-spacing="2xl"] { --brick-section-start-spacing: var(--brick-section-space-2xl); }
+
+  .brick-section[data-end-spacing="none"] { --brick-section-end-spacing: var(--brick-section-space-none); }
+  .brick-section[data-end-spacing="sm"] { --brick-section-end-spacing: var(--brick-section-space-sm); }
+  .brick-section[data-end-spacing="md"] { --brick-section-end-spacing: var(--brick-section-space-md); }
+  .brick-section[data-end-spacing="lg"] { --brick-section-end-spacing: var(--brick-section-space-lg); }
+  .brick-section[data-end-spacing="xl"] { --brick-section-end-spacing: var(--brick-section-space-xl); }
+  .brick-section[data-end-spacing="2xl"] { --brick-section-end-spacing: var(--brick-section-space-2xl); }
+
+  @media (width >= 30rem) {
+    .brick-section[data-spacing-sm="none"] { --brick-section-spacing: var(--brick-section-space-none); }
+    .brick-section[data-spacing-sm="sm"] { --brick-section-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-spacing-sm="md"] { --brick-section-spacing: var(--brick-section-space-md); }
+    .brick-section[data-spacing-sm="lg"] { --brick-section-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-spacing-sm="xl"] { --brick-section-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-spacing-sm="2xl"] { --brick-section-spacing: var(--brick-section-space-2xl); }
+    .brick-section[data-start-spacing-sm="none"] { --brick-section-start-spacing: var(--brick-section-space-none); }
+    .brick-section[data-start-spacing-sm="sm"] { --brick-section-start-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-start-spacing-sm="md"] { --brick-section-start-spacing: var(--brick-section-space-md); }
+    .brick-section[data-start-spacing-sm="lg"] { --brick-section-start-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-start-spacing-sm="xl"] { --brick-section-start-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-start-spacing-sm="2xl"] { --brick-section-start-spacing: var(--brick-section-space-2xl); }
+    .brick-section[data-end-spacing-sm="none"] { --brick-section-end-spacing: var(--brick-section-space-none); }
+    .brick-section[data-end-spacing-sm="sm"] { --brick-section-end-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-end-spacing-sm="md"] { --brick-section-end-spacing: var(--brick-section-space-md); }
+    .brick-section[data-end-spacing-sm="lg"] { --brick-section-end-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-end-spacing-sm="xl"] { --brick-section-end-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-end-spacing-sm="2xl"] { --brick-section-end-spacing: var(--brick-section-space-2xl); }
+  }
+
+  @media (width >= 48rem) {
+    .brick-section[data-spacing-md="none"] { --brick-section-spacing: var(--brick-section-space-none); }
+    .brick-section[data-spacing-md="sm"] { --brick-section-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-spacing-md="md"] { --brick-section-spacing: var(--brick-section-space-md); }
+    .brick-section[data-spacing-md="lg"] { --brick-section-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-spacing-md="xl"] { --brick-section-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-spacing-md="2xl"] { --brick-section-spacing: var(--brick-section-space-2xl); }
+    .brick-section[data-start-spacing-md="none"] { --brick-section-start-spacing: var(--brick-section-space-none); }
+    .brick-section[data-start-spacing-md="sm"] { --brick-section-start-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-start-spacing-md="md"] { --brick-section-start-spacing: var(--brick-section-space-md); }
+    .brick-section[data-start-spacing-md="lg"] { --brick-section-start-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-start-spacing-md="xl"] { --brick-section-start-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-start-spacing-md="2xl"] { --brick-section-start-spacing: var(--brick-section-space-2xl); }
+    .brick-section[data-end-spacing-md="none"] { --brick-section-end-spacing: var(--brick-section-space-none); }
+    .brick-section[data-end-spacing-md="sm"] { --brick-section-end-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-end-spacing-md="md"] { --brick-section-end-spacing: var(--brick-section-space-md); }
+    .brick-section[data-end-spacing-md="lg"] { --brick-section-end-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-end-spacing-md="xl"] { --brick-section-end-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-end-spacing-md="2xl"] { --brick-section-end-spacing: var(--brick-section-space-2xl); }
+  }
+
+  @media (width >= 64rem) {
+    .brick-section[data-spacing-lg="none"] { --brick-section-spacing: var(--brick-section-space-none); }
+    .brick-section[data-spacing-lg="sm"] { --brick-section-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-spacing-lg="md"] { --brick-section-spacing: var(--brick-section-space-md); }
+    .brick-section[data-spacing-lg="lg"] { --brick-section-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-spacing-lg="xl"] { --brick-section-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-spacing-lg="2xl"] { --brick-section-spacing: var(--brick-section-space-2xl); }
+    .brick-section[data-start-spacing-lg="none"] { --brick-section-start-spacing: var(--brick-section-space-none); }
+    .brick-section[data-start-spacing-lg="sm"] { --brick-section-start-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-start-spacing-lg="md"] { --brick-section-start-spacing: var(--brick-section-space-md); }
+    .brick-section[data-start-spacing-lg="lg"] { --brick-section-start-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-start-spacing-lg="xl"] { --brick-section-start-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-start-spacing-lg="2xl"] { --brick-section-start-spacing: var(--brick-section-space-2xl); }
+    .brick-section[data-end-spacing-lg="none"] { --brick-section-end-spacing: var(--brick-section-space-none); }
+    .brick-section[data-end-spacing-lg="sm"] { --brick-section-end-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-end-spacing-lg="md"] { --brick-section-end-spacing: var(--brick-section-space-md); }
+    .brick-section[data-end-spacing-lg="lg"] { --brick-section-end-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-end-spacing-lg="xl"] { --brick-section-end-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-end-spacing-lg="2xl"] { --brick-section-end-spacing: var(--brick-section-space-2xl); }
+  }
+
+  @media (width >= 80rem) {
+    .brick-section[data-spacing-xl="none"] { --brick-section-spacing: var(--brick-section-space-none); }
+    .brick-section[data-spacing-xl="sm"] { --brick-section-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-spacing-xl="md"] { --brick-section-spacing: var(--brick-section-space-md); }
+    .brick-section[data-spacing-xl="lg"] { --brick-section-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-spacing-xl="xl"] { --brick-section-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-spacing-xl="2xl"] { --brick-section-spacing: var(--brick-section-space-2xl); }
+    .brick-section[data-start-spacing-xl="none"] { --brick-section-start-spacing: var(--brick-section-space-none); }
+    .brick-section[data-start-spacing-xl="sm"] { --brick-section-start-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-start-spacing-xl="md"] { --brick-section-start-spacing: var(--brick-section-space-md); }
+    .brick-section[data-start-spacing-xl="lg"] { --brick-section-start-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-start-spacing-xl="xl"] { --brick-section-start-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-start-spacing-xl="2xl"] { --brick-section-start-spacing: var(--brick-section-space-2xl); }
+    .brick-section[data-end-spacing-xl="none"] { --brick-section-end-spacing: var(--brick-section-space-none); }
+    .brick-section[data-end-spacing-xl="sm"] { --brick-section-end-spacing: var(--brick-section-space-sm); }
+    .brick-section[data-end-spacing-xl="md"] { --brick-section-end-spacing: var(--brick-section-space-md); }
+    .brick-section[data-end-spacing-xl="lg"] { --brick-section-end-spacing: var(--brick-section-space-lg); }
+    .brick-section[data-end-spacing-xl="xl"] { --brick-section-end-spacing: var(--brick-section-space-xl); }
+    .brick-section[data-end-spacing-xl="2xl"] { --brick-section-end-spacing: var(--brick-section-space-2xl); }
+  }
+}

@@ -24,6 +24,7 @@ export {
   type CarouselPickerVariant,
   type CarouselPreviousProps,
   type CarouselRootProps,
+  type CarouselRadius,
   type CarouselRotationControlProps,
   type CarouselSize,
   type CarouselSlideProps,

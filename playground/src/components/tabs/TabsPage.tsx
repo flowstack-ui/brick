@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from "react";
-import { Grid, Icon, Tabs, Text, VStack, type TabsSize, type TabsVariant } from "@flowstack-ui/brick";
+import { Card, Grid, Icon, Tabs, Text, VStack, type TabsSize, type TabsVariant } from "@flowstack-ui/brick";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { FormEvidenceCell as Cell, FormEvidenceGroup as EvidenceGroup, FormRenderedOutput as RenderedOutput } from "../../shared/FormEvidence.js";
@@ -36,7 +36,41 @@ export function TabsPage() {
     <Scenario {...tabsScenarios[0]}><EvidenceSurface inset="lg" data-testid="tabs-overview"><DemoTabs ariaLabel="Overview sections" /></EvidenceSurface></Scenario>
     <Scenario {...tabsScenarios[1]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="tabs-variants">{variants.map((variant) => <Cell key={variant} label={variant}><DemoTabs ariaLabel={`${variant} sections`} variant={variant} /></Cell>)}</Grid.Root></Scenario>
     <Scenario {...tabsScenarios[2]}><Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="tabs-sizes">{sizes.map((size) => <Cell key={size} label={size}><DemoTabs ariaLabel={`${size} sections`} size={size} /></Cell>)}</Grid.Root></Scenario>
-    <Scenario {...tabsScenarios[3]}><Grid.Root columns={2} className="forms-grid forms-grid--two forms-grid--preview-start" data-testid="tabs-layout"><Cell label="vertical"><DemoTabs ariaLabel="Vertical sections" orientation="vertical" /></Cell><Cell label="full width"><DemoTabs ariaLabel="Fitted sections" fullWidth variant="soft" /></Cell></Grid.Root></Scenario>
+    <Scenario {...tabsScenarios[3]}>
+      <VStack gap="4" data-testid="tabs-layout">
+        <Grid.Root columns={2} className="forms-grid forms-grid--two forms-grid--preview-start">
+          <Cell label="vertical"><DemoTabs ariaLabel="Vertical sections" orientation="vertical" /></Cell>
+          <Cell label="full width"><DemoTabs ariaLabel="Fitted sections" fullWidth variant="soft" /></Cell>
+        </Grid.Root>
+        <EvidenceSurface inset="lg">
+          <SpecimenLabel>responsive visual layout</SpecimenLabel>
+          <Card.Root bordered={false} variant="elevated">
+          <Tabs.Root
+            data-testid="tabs-responsive-layout"
+            defaultValue="create"
+            layout={{ initial: "stacked", lg: "side" }}
+            orientation="vertical"
+            variant="soft"
+          >
+            <Tabs.List ariaLabel="Responsive workflow" columns={{ initial: 2, lg: 1 }} radius="none" triggerRadius="default">
+              <Tabs.Trigger value="create">Create</Tabs.Trigger>
+              <Tabs.Trigger value="build">Build</Tabs.Trigger>
+              <Tabs.Trigger value="launch">Launch</Tabs.Trigger>
+            </Tabs.List>
+            <Tabs.Content inset="none" value="create">
+              <EvidenceSurface inset="lg"><Text>Create panel content.</Text></EvidenceSurface>
+            </Tabs.Content>
+            <Tabs.Content inset="none" value="build">
+              <EvidenceSurface inset="lg"><Text>Build panel content.</Text></EvidenceSurface>
+            </Tabs.Content>
+            <Tabs.Content inset="none" value="launch">
+              <EvidenceSurface inset="lg"><Text>Launch panel content.</Text></EvidenceSurface>
+            </Tabs.Content>
+          </Tabs.Root>
+          </Card.Root>
+        </EvidenceSurface>
+      </VStack>
+    </Scenario>
     <Scenario {...tabsScenarios[4]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="tabs-content"><Cell label="icon content"><Tabs.Root defaultValue="saved"><Tabs.List ariaLabel="Icon sections"><Tabs.Trigger value="saved"><Icon size="xs"><Star /></Icon>Saved</Tabs.Trigger><Tabs.Trigger value="recent">Recent</Tabs.Trigger></Tabs.List><Tabs.Content value="saved">Saved panel content.</Tabs.Content><Tabs.Content value="recent">Recent panel content.</Tabs.Content></Tabs.Root></Cell><Cell label="disabled"><Tabs.Root defaultValue="ready"><Tabs.List ariaLabel="State sections"><Tabs.Trigger value="ready">Ready</Tabs.Trigger><Tabs.Trigger disabled value="locked">Locked</Tabs.Trigger><Tabs.Trigger value="later">Later</Tabs.Trigger><Tabs.Indicator /></Tabs.List><Tabs.Content value="ready">Ready panel.</Tabs.Content><Tabs.Content value="later">Later panel.</Tabs.Content></Tabs.Root></Cell></Grid.Root></Scenario>
     <Scenario {...tabsScenarios[5]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="tabs-activation"><Cell label="automatic"><DemoTabs ariaLabel="Automatic sections" /></Cell><Cell label="manual"><Tabs.Root activationMode="manual" value={manual} onValueChange={setManual}><Tabs.List ariaLabel="Manual sections"><Tabs.Trigger value="one">One</Tabs.Trigger><Tabs.Trigger value="two">Two</Tabs.Trigger></Tabs.List><Tabs.Content focusable value="one">Manual panel one.</Tabs.Content><Tabs.Content focusable keepMounted value="two">Manual panel two.</Tabs.Content></Tabs.Root><Text tone="secondary" variant="body-sm">Selected: {manual}</Text></Cell></Grid.Root></Scenario>
     <Scenario {...tabsScenarios[6]}><VStack className="forms-evidence-stack" data-testid="tabs-composition"><EvidenceGroup title="render output" description="The final semantic hosts retain Atom and Brick output."><RenderedOutput label="Rendered Tabs HTML"><Tabs.Root defaultValue="one" render={<section data-adapter="tabs-root" />}><Tabs.List ariaLabel="Rendered sections" render={<nav data-adapter="tabs-list" />}><Tabs.Trigger value="one" render={<button data-adapter="tabs-trigger" />}>One</Tabs.Trigger></Tabs.List><Tabs.Content value="one" render={<div data-adapter="tabs-panel" />}>Panel</Tabs.Content></Tabs.Root></RenderedOutput></EvidenceGroup><EvidenceGroup title="asChild output" description="Consumer hosts receive the same roles and relationships without wrappers."><RenderedOutput label="Composed Tabs HTML"><Tabs.Root defaultValue="one" asChild><section data-adapter="child-root"><Tabs.List ariaLabel="Composed sections" asChild><nav><Tabs.Trigger value="one" asChild><button data-adapter="child-trigger">One</button></Tabs.Trigger></nav></Tabs.List><Tabs.Content value="one" asChild><div data-adapter="child-panel">Panel</div></Tabs.Content></section></Tabs.Root></RenderedOutput></EvidenceGroup></VStack></Scenario>

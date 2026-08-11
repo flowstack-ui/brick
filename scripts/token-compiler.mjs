@@ -118,29 +118,51 @@ function declarationEntries(appearance, tokens) {
     });
 }
 
+function assertMatchingAppearanceContract(lightEntries, darkEntries) {
+  const lightNames = lightEntries.map(([name]) => name);
+  const darkNames = darkEntries.map(([name]) => name);
+  const lightOnly = lightNames.filter((name) => !darkNames.includes(name));
+  const darkOnly = darkNames.filter((name) => !lightNames.includes(name));
+
+  if (lightOnly.length || darkOnly.length) {
+    throw new Error(
+      `Semantic appearances must expose the same public variables. ` +
+        `Light only: ${lightOnly.join(", ") || "none"}. ` +
+        `Dark only: ${darkOnly.join(", ") || "none"}.`,
+    );
+  }
+}
+
 function declarations(entries) {
   return entries.map(([name, value]) => `    ${name}: ${value};`).join("\n");
+}
+
+function appearanceEntries(entries) {
+  return entries.filter(
+    ([name]) =>
+      name.startsWith("--brick-color-") || name.startsWith("--brick-shadow-"),
+  );
 }
 
 export async function compileTokens(sourceFile) {
   const source = JSON.parse(await readFile(sourceFile, "utf8"));
   const tokens = collectTokens(source);
-  const lightEntries = declarationEntries("light", tokens);
-  const lightValues = new Map(lightEntries);
-  const darkEntries = declarationEntries("dark", tokens).filter(
-    ([name, value]) => lightValues.get(name) !== value,
-  );
+  const allLightEntries = declarationEntries("light", tokens);
+  const lightEntries = appearanceEntries(allLightEntries);
+  const darkEntries = appearanceEntries(declarationEntries("dark", tokens));
+  assertMatchingAppearanceContract(lightEntries, darkEntries);
+  const allLight = declarations(allLightEntries);
   const light = declarations(lightEntries);
   const dark = declarations(darkEntries);
 
-  if (!light || !dark) {
+  if (!allLight || !light || !dark) {
     throw new Error("Token source must define semantic.light and semantic.dark");
   }
 
   return `@layer brick.tokens {
   :root {
     color-scheme: light dark;
-${light}
+${allLight}
   }
 
   @media (prefers-color-scheme: dark) {

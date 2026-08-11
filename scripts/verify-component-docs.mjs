@@ -52,6 +52,7 @@ const componentStyleSubpaths = {
   "notification-badge": "badge",
 };
 const componentSymbols = {
+  appearance: "Appearance",
   "alert-dialog": "AlertDialog",
   "app-bar": "AppBar",
   "aspect-ratio": "AspectRatio",
@@ -99,6 +100,8 @@ const componentSymbols = {
   form: "Form",
   grid: "Grid",
   container: "Container",
+  section: "Section",
+  frame: "Frame",
   surface: "Surface",
   "hover-card": "HoverCard",
   icon: "Icon",
@@ -124,6 +127,7 @@ const componentSymbols = {
   "notification-badge": "NotificationBadge",
   popover: "Popover",
   stack: "Stack",
+  "z-stack": "ZStack",
   text: "Text",
   toggle: "Toggle",
   "toggle-group": "ToggleGroup",

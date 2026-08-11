@@ -107,7 +107,8 @@ for (const componentId of requested) {
   for (const attribute of contract.dataAttributes) {
     if (
       !source.includes(`${attribute}=`) &&
-      !source.includes(`"${attribute}":`)
+      !source.includes(`"${attribute}":`) &&
+      !source.includes(`responsiveDataAttributes("${attribute}"`)
     ) {
       failures.push(`${componentId}: source no longer emits ${attribute}`);
     }

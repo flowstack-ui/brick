@@ -118,6 +118,12 @@ try {
   const agentManifest = JSON.parse(await readPackedFile("dist/agents/manifest.json"));
   assert.equal(agentManifest.package, packageJson.name);
   assert.ok(agentManifest.components.length > 0, "Agent Knowledge manifest is empty");
+  for (const requiredComponent of ["accordion", "list"]) {
+    assert.ok(
+      agentManifest.components.some((component) => component.id === requiredComponent),
+      `Agent Knowledge manifest is missing ${requiredComponent}`,
+    );
+  }
   for (const component of agentManifest.components) {
     assert.ok(files.has(`dist/agents/${component.id}.json`));
     assert.ok(files.has(`dist/agents/${component.id}.md`));

@@ -15,11 +15,12 @@ Apply semantic background layers, boundaries, elevation, radius, inset, and opti
 
 ## Required composition
 
-- Choose Surface level and boundary by hierarchy, then compose public layout and content components inside. For background media, author Media, optional Scrim, and Content in that order.
+- Choose Surface level and boundary by hierarchy, then compose public layout and content components inside. Use asChild around Section when paint must cover the Section rhythm without another host. For background media, author Media, optional Scrim, and Content in that order.
 
 ## Rules
 
 - **SHOULD:** Choose surface level by information hierarchy, not decoration alone.
+- **MUST:** Use asChild only with one existing non-Fragment host that already owns the required semantics or layout; preserve that child's meaning and keep Surface responsible only for paint.
 - **MUST:** Load styles.css or core.css plus surface.css.
 - **MUST:** Treat Surface.Media as decorative and noninteractive; keep meaningful media and controls in Content or ordinary document flow.
 - **MUST:** Give Brick Image explicit fill inside Surface.Media so its actual Content and Fallback consume the complete media layer.
@@ -41,5 +42,7 @@ Apply semantic background layers, boundaries, elevation, radius, inset, and opti
 ## Related guidance
 
 - `card`
+- `section`
+- `container`
 - `stack`
 - `grid`

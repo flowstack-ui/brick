@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 import {
   Tabs as AtomTabs,
   type TabsContentProps as AtomTabsContentProps,
@@ -10,15 +11,27 @@ import {
 
 export type TabsSize = "sm" | "md" | "lg";
 export type TabsVariant = "line" | "solid" | "soft" | "enclosed";
+export type TabsContentInset = "none" | "sm" | "md" | "lg";
+export type TabsLayout = "auto" | "stacked" | "side";
+export type TabsListColumns = 1 | 2 | 3 | 4;
+export type TabsListRadius = "default" | "none";
+export type TabsTriggerRadius = "default" | "none";
 
 export interface TabsRootProps extends AtomTabsRootProps {
   size?: TabsSize;
   variant?: TabsVariant;
   fullWidth?: boolean;
+  layout?: ResponsiveValue<TabsLayout>;
 }
-export type TabsListProps = AtomTabsListProps;
+export type TabsListProps = AtomTabsListProps & {
+  columns?: ResponsiveValue<TabsListColumns>;
+  radius?: TabsListRadius;
+  triggerRadius?: TabsTriggerRadius;
+};
 export type TabsTriggerProps = AtomTabsTriggerProps;
-export type TabsContentProps = AtomTabsContentProps;
+export interface TabsContentProps extends AtomTabsContentProps {
+  inset?: TabsContentInset;
+}
 export type TabsIndicatorProps = AtomTabsIndicatorProps;
 
 function classes(base: string, className?: string) {
@@ -27,16 +40,19 @@ function classes(base: string, className?: string) {
 
 export const TabsRoot = forwardRef<HTMLDivElement, TabsRootProps>(
   function TabsRoot(
-    { className, fullWidth = false, size = "md", variant = "line", "data-slot": slot, ...props },
+    { className, fullWidth = false, layout = "auto", size = "md", variant = "line", "data-slot": slot, ...props },
     ref,
   ) {
-    return <AtomTabs.Root {...props} className={classes("brick-tabs", className)} data-full-width={fullWidth ? "" : undefined} data-size={size} data-slot={slot ?? "tabs-root"} data-variant={variant} ref={ref} />;
+    return <AtomTabs.Root {...props} {...responsiveDataAttributes("data-layout", layout, { defaultValue: "auto" })} className={classes("brick-tabs", className)} data-full-width={fullWidth ? "" : undefined} data-size={size} data-slot={slot ?? "tabs-root"} data-variant={variant} ref={ref} />;
   },
 );
 
 export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
-  function TabsList({ className, "data-slot": slot, ...props }, ref) {
-    return <AtomTabs.List {...props} className={classes("brick-tabs-list", className)} data-slot={slot ?? "tabs-list"} ref={ref} />;
+  function TabsList({ className, columns, radius = "default", triggerRadius, "data-slot": slot, ...props }, ref) {
+    const columnAttributes = columns === undefined
+      ? {}
+      : responsiveDataAttributes("data-columns", columns, { alwaysInitial: true });
+    return <AtomTabs.List {...props} {...columnAttributes} className={classes("brick-tabs-list", className)} data-radius={radius} data-slot={slot ?? "tabs-list"} data-trigger-radius={triggerRadius} ref={ref} />;
   },
 );
 
@@ -47,8 +63,8 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
 );
 
 export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
-  function TabsContent({ className, "data-slot": slot, ...props }, ref) {
-    return <AtomTabs.Content {...props} className={classes("brick-tabs-content", className)} data-slot={slot ?? "tabs-content"} ref={ref} />;
+  function TabsContent({ className, inset, "data-slot": slot, ...props }, ref) {
+    return <AtomTabs.Content {...props} className={classes("brick-tabs-content", className)} data-inset={inset} data-slot={slot ?? "tabs-content"} ref={ref} />;
   },
 );
 

@@ -20,7 +20,8 @@
     "When automatic rotation is enabled, always render RotationControl, Previous, and Next so people can stop and navigate the sequence; place RotationControl before Viewport in DOM order.",
     "Build campaign-specific slide content from Brick layout, typography, action, and media components; Carousel does not own hero messaging or proof content.",
     "When artwork, scrim, and copy form one peer campaign, compose a complete Surface with Media, Scrim, and Content inside each Slide; keep genuinely invariant evidence or navigation outside the rotating sequence.",
-    "When a parent already owns a stable block size, use Root fill to propagate it through Carousel's Viewport, Track, and Slides; continue sizing authored Surface, Content, and layout components explicitly."
+    "When a parent already owns a stable block size, use Root fill to propagate it through Carousel's Viewport, Track, and Slides; continue sizing authored Surface, Content, and layout components explicitly.",
+    "Match Root radius to the visible containing geometry; use radius=none when an edge-to-edge square Surface owns the campaign boundary."
   ],
   "rules": [
     { "id": "carousel-optional-controls", "level": "must", "statement": "Treat arrows and picker dots as optional authored controls; dots represent direct slide selection and are not Tabs." },
@@ -31,6 +32,8 @@
     { "id": "carousel-initial-motion-gate", "level": "must", "statement": "Keep viewport motion instant until Atom exposes data-initialized; Brick's shipped Carousel CSS already enables smooth motion only after that signal." },
     { "id": "carousel-stable-geometry", "level": "should", "statement": "Give campaign slides stable responsive geometry so changing the active slide does not move surrounding page content." },
     { "id": "carousel-fill-ownership", "level": "must", "statement": "Treat fill as internal size propagation, not a viewport-height policy; the application or Block must establish the available parent height." },
+    { "id": "carousel-fill-parent", "level": "must", "statement": "Name the parent layout or section that establishes the definite block size before enabling fill; retain a real wrapper when that wrapper is the sizing box." },
+    { "id": "carousel-radius-visual-only", "level": "must", "statement": "Treat radius as Viewport and overlay-focus geometry only; it must not alter selection, scrolling, control placement, or slide anatomy." },
     { "id": "carousel-overlay-safe-area", "level": "must", "statement": "When controls overlay slides, reserve application-owned content safe areas so arrows, rotation controls, and picker targets never obscure authored text or actions." },
     { "id": "carousel-media-loading", "level": "should", "statement": "Prioritize only initially visible campaign media and defer non-current media when the image delivery layer supports it." },
     { "id": "carousel-css", "level": "must", "statement": "Load styles.css or core.css plus carousel.css." }
@@ -43,7 +46,7 @@
   ],
   "validation": [
     "Check optional-control compositions, first and last boundaries in both directions, interaction-only arrow discovery, independent picker treatment, native horizontal touch scrolling, focus pause, hover pause, reduced motion, RTL, and screen-reader naming.",
-    "Confirm inactive slides are unavailable to focus and assistive technology, control focus rings remain visible, overlay controls do not cover content, complete campaign media changes with its copy, and slide changes do not cause page-level layout shift."
+    "Confirm inactive slides are unavailable to focus and assistive technology, the overlay-safe Viewport focus indicator remains visible above slide media, control focus rings remain complete at rounded edges, overlay controls do not cover content, complete campaign media changes with its copy, and slide changes do not cause page-level layout shift."
   ],
   "related": ["button", "icon-button", "image", "surface", "stack", "grid", "text", "tabs"]
 }

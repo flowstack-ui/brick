@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import {
-  Divider as AtomDivider,
+  DividerRoot as AtomDividerRoot,
   type DividerRootProps,
 } from "@flowstack-ui/atom/divider";
 
@@ -80,7 +80,7 @@ function DividerImpl(
   const labeled = !composed && children !== undefined && children !== null;
 
   return (
-    <AtomDivider.Root
+    <AtomDividerRoot
       {...props}
       asChild={composed}
       className={mergeClassName(className)}
@@ -111,7 +111,7 @@ function DividerImpl(
           />
         </>
       ) : undefined}
-    </AtomDivider.Root>
+    </AtomDividerRoot>
   );
 }
 

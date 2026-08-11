@@ -47,6 +47,7 @@
 
   .brick-carousel[data-size="sm"] { --brick-carousel-control-size: 2.25rem; --brick-carousel-dot-size: 0.375rem; }
   .brick-carousel[data-size="lg"] { --brick-carousel-control-size: 3.25rem; --brick-carousel-dot-size: 0.625rem; }
+  .brick-carousel[data-radius="none"] { --brick-carousel-radius: 0rem; }
 
   .brick-carousel[data-control-shape="rounded"] { --brick-carousel-control-radius: var(--brick-radius-control); }
   .brick-carousel[data-control-shape="circle"] { --brick-carousel-control-radius: var(--brick-radius-full); }
@@ -87,6 +88,25 @@
   }
 
   .brick-carousel__viewport::-webkit-scrollbar { display: none; }
+
+  .brick-carousel__viewport:focus-visible {
+    outline: var(--brick-border-focus-width) solid var(--brick-carousel-focus-ring);
+    outline-offset: var(--brick-border-focus-offset);
+  }
+
+  .brick-carousel[data-control-placement="overlay"]:has(> .brick-carousel__viewport:focus-visible)::after {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    border: var(--brick-border-focus-width) solid var(--brick-carousel-focus-ring);
+    border-radius: var(--brick-carousel-radius);
+    content: "";
+    pointer-events: none;
+  }
+
+  .brick-carousel[data-control-placement="overlay"] > .brick-carousel__viewport:focus-visible {
+    outline: none;
+  }
 
   .brick-carousel[data-initialized] > .brick-carousel__viewport {
     scroll-behavior: smooth;
@@ -325,6 +345,8 @@
   }
 
   @media (forced-colors: active) {
+    .brick-carousel__viewport:focus-visible { outline-color: Highlight; }
+    .brick-carousel[data-control-placement="overlay"]:has(> .brick-carousel__viewport:focus-visible)::after { border-color: Highlight; }
     .brick-carousel__previous,
     .brick-carousel__next,
     .brick-carousel__rotation-control { border-color: ButtonText; }

@@ -184,7 +184,10 @@ test("Card composes Brick Image, explicit controls, and an application link", as
   await page.goto("/card");
   const imageCard = page.getByTestId("card-composition-image");
   const controlsCard = page.getByTestId("card-composition-controls");
-  await expectCardDefaults(imageCard);
+  await expect(imageCard).toHaveAttribute("data-variant", "outline");
+  await expect(imageCard).toHaveAttribute("data-size", "md");
+  await expect(imageCard).toHaveAttribute("data-bordered", "false");
+  await expect(imageCard).toHaveCSS("border-top-width", "0px");
   await expectCardDefaults(controlsCard);
   const image = imageCard.getByRole("img", {
     name: "Three colorful Brick blocks",

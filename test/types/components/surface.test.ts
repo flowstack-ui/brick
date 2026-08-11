@@ -53,6 +53,7 @@ createElement(Surface.Root, null,
   createElement(Surface.Media, null, createElement("canvas")),
   createElement(Surface.Scrim, { direction: "block-end", strength: "soft" }),
   createElement(Surface.Content, null, "Foreground"));
+createElement(Surface, { asChild: true, children: createElement("section") });
 
 // @ts-expect-error Hosts are deliberately closed.
 createElement(Surface, { as: "button" });
@@ -70,8 +71,10 @@ createElement(Surface, { inset: { base: "sm", lg: "lg" } });
 createElement(Surface, { surfaceColor: "accent" });
 // @ts-expect-error Surface never owns clipping.
 createElement(Surface, { overflow: true });
-// @ts-expect-error No asChild composition API.
-createElement(Surface, { asChild: true });
+// @ts-expect-error asChild requires one React element child.
+createElement(Surface, { asChild: true, children: "Text" });
+// @ts-expect-error as and asChild cannot be combined.
+createElement(Surface, { as: "section", asChild: true, children: createElement("section") });
 // @ts-expect-error No render composition API.
 createElement(Surface, { render: createElement("div") });
 // @ts-expect-error Scrim strength is a closed contrast recipe.

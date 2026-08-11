@@ -23,10 +23,12 @@ describe("Card", () => {
     expect(root).toHaveAttribute("data-slot", "card");
     expect(root).toHaveAttribute("data-variant", "outline");
     expect(root).toHaveAttribute("data-size", "md");
+    expect(root).not.toHaveAttribute("data-bordered");
     expect(root).not.toHaveAttribute("role");
     expect(root).not.toHaveAttribute("tabindex");
     expect(root).not.toHaveAttribute("variant");
     expect(root).not.toHaveAttribute("size");
+    expect(root).not.toHaveAttribute("bordered");
   });
 
   it("renders every public part with its stable class and default slot", () => {
@@ -99,6 +101,16 @@ describe("Card", () => {
       rerender(<Card.Root size={size}>Recipe</Card.Root>);
       expect(container.firstElementChild).toHaveAttribute("data-size", size);
     }
+  });
+
+  it("can remove recipe border geometry without changing the selected variant", () => {
+    const { container } = render(
+      <Card.Root bordered={false} variant="elevated">Borderless media card</Card.Root>,
+    );
+
+    expect(container.firstElementChild).toHaveAttribute("data-bordered", "false");
+    expect(container.firstElementChild).toHaveAttribute("data-variant", "elevated");
+    expect(container.firstElementChild).not.toHaveAttribute("bordered");
   });
 
   it("supports only the approved Root semantic elements", () => {

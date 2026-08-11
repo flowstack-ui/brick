@@ -12,6 +12,10 @@ Surface follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added wrapper-free `asChild` composition for applying Surface paint to one
+  existing semantic or layout host, including class/style/event/ref merging
+  and explicit Section composition guidance.
+
 - Added optional `Surface.Media`, `Surface.Scrim`, and `Surface.Content`
   layered composition with direct RSC-safe part exports, decorative media
   semantics, logical scrim gradients, public scrim tokens, and unchanged

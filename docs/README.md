@@ -15,6 +15,11 @@ This directory is the public documentation authority for
 
 ## Component guides
 
+### Appearance and layout
+
+- [Appearance](components/appearance/README.md) — explicit light, dark, and
+  inherited semantic-token scopes without a provider or required wrapper
+
 ### Actions and selection
 
 - [Button](components/button/README.md) — styled actions and button-like
@@ -160,10 +165,14 @@ This directory is the public documentation authority for
   structure
 - [Stack](components/stack/README.md) — tokenized one-dimensional rows and
   columns
+- [ZStack](components/z-stack/README.md) — source-ordered overlapping layers
+  and nine-position placement
 - [Grid](components/grid/README.md) — tokenized two-dimensional tracks and
   item placement
 - [Container](components/container/README.md) — centered content measures and
   logical page gutters
+- [Section](components/section/README.md) — responsive page-region rhythm
+- [Frame](components/frame/README.md) — responsive logical size constraints
 - [Show](components/show/README.md) — CSS-only content shown from a fixed
   viewport breakpoint
 - [Hide](components/hide/README.md) — CSS-only content hidden from a fixed

@@ -143,4 +143,53 @@ describe("Stack", () => {
     expect(screen.getByTestId("vertical")).toHaveAttribute("data-align", "center");
     expect(screen.getByTestId("vertical")).toHaveAttribute("data-justify", "end");
   });
+
+  it("serializes responsive layout values without viewport JavaScript", () => {
+    render(
+      <Stack
+        align={{ initial: "stretch", lg: "center" }}
+        data-testid="responsive"
+        direction={{ initial: "column", lg: "row" }}
+        endSpacing={{ initial: "2", md: "4" }}
+        gap={{ initial: "3", lg: "6" }}
+        justify={{ initial: "start", xl: "between" }}
+        startSpacing={{ initial: "1", md: "3" }}
+        wrap={{ initial: false, sm: true, lg: false }}
+      />,
+    );
+    const stack = screen.getByTestId("responsive");
+    expect(stack).toHaveAttribute("data-direction", "column");
+    expect(stack).toHaveAttribute("data-direction-lg", "row");
+    expect(stack).toHaveAttribute("data-gap", "3");
+    expect(stack).toHaveAttribute("data-gap-lg", "6");
+    expect(stack).toHaveAttribute("data-align-lg", "center");
+    expect(stack).toHaveAttribute("data-justify-xl", "between");
+    expect(stack).toHaveAttribute("data-wrap-sm", "true");
+    expect(stack).toHaveAttribute("data-wrap-lg", "false");
+    expect(stack).toHaveAttribute("data-start-spacing", "1");
+    expect(stack).toHaveAttribute("data-start-spacing-md", "3");
+    expect(stack).toHaveAttribute("data-end-spacing", "2");
+    expect(stack).toHaveAttribute("data-end-spacing-md", "4");
+  });
+
+  it("sizes Stack.Item and composes an existing child", () => {
+    const ref = createRef<HTMLElement>();
+    render(
+      <Stack>
+        <Stack.Item data-testid="fixed" flex="fixed">Navigation</Stack.Item>
+        <Stack.Item align={{ initial: "auto", lg: "end" }} asChild flex={{ initial: "content", lg: 2 }} ref={ref}>
+          <section className="existing">Content</section>
+        </Stack.Item>
+      </Stack>,
+    );
+    expect(screen.getByTestId("fixed")).toHaveAttribute("data-flex", "fixed");
+    const content = screen.getByText("Content");
+    expect(content).toBe(ref.current);
+    expect(content.tagName).toBe("SECTION");
+    expect(content).toHaveClass("existing", "brick-stack-item");
+    expect(content).toHaveAttribute("data-flex", "content");
+    expect(content).toHaveAttribute("data-flex-lg", "2");
+    expect(content).toHaveAttribute("data-align-lg", "end");
+    expect(content).toHaveAttribute("data-slot", "stack-item");
+  });
 });

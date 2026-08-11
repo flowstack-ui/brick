@@ -10,6 +10,12 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
+
+export type { ResponsiveValue };
 
 export type GridRootElement =
   | "div"
@@ -60,18 +66,18 @@ type GridRootNativeProps = Omit<
 interface GridRootBaseProps extends GridRootNativeProps {
   as?: GridRootElement;
   children?: ReactNode;
-  gap?: GridGap;
-  rowGap?: GridGap;
-  columnGap?: GridGap;
-  align?: GridAlign;
-  justify?: GridJustify;
+  gap?: ResponsiveValue<GridGap>;
+  rowGap?: ResponsiveValue<GridGap>;
+  columnGap?: ResponsiveValue<GridGap>;
+  align?: ResponsiveValue<GridAlign>;
+  justify?: ResponsiveValue<GridJustify>;
   className?: string;
   style?: CSSProperties;
   slot?: string;
 }
 
 type ExplicitGridProps = {
-  columns?: GridColumns;
+  columns?: ResponsiveValue<GridColumns>;
   minItemSize?: never;
 };
 
@@ -88,10 +94,17 @@ type GridItemNativeProps = Omit<
   "children" | "className" | "style"
 >;
 
+type ResponsiveObject<T> = Extract<ResponsiveValue<T>, object>;
+
 type GridItemColumnPlacement =
   | {
       columnSpan?: GridSpan;
       columnStart?: GridLine;
+      columnEnd?: never;
+    }
+  | {
+      columnSpan: ResponsiveObject<GridColumnSpan>;
+      columnStart?: never;
       columnEnd?: never;
     }
   | {
@@ -109,6 +122,11 @@ type GridItemRowPlacement =
   | {
       rowSpan?: GridSpan;
       rowStart?: GridLine;
+      rowEnd?: never;
+    }
+  | {
+      rowSpan: ResponsiveObject<GridSpan>;
+      rowStart?: never;
       rowEnd?: never;
     }
   | {
@@ -134,8 +152,8 @@ export type GridItemProps =
   GridItemColumnPlacement &
   GridItemRowPlacement &
   GridItemHostProps & {
-    align?: GridSelfAlign;
-    justify?: GridSelfJustify;
+    align?: ResponsiveValue<GridSelfAlign>;
+    justify?: ResponsiveValue<GridSelfJustify>;
     className?: string;
     style?: CSSProperties;
     slot?: string;
@@ -210,19 +228,28 @@ function GridRootImpl(
   ref: ForwardedRef<HTMLElement>,
 ) {
   const mode = minItemSize === undefined ? "explicit" : "intrinsic";
+  const columnAttributes = mode === "explicit"
+    ? responsiveDataAttributes("data-columns", columns, { alwaysInitial: true })
+    : {};
+  const rowGapAttributes = rowGap === undefined
+    ? {}
+    : responsiveDataAttributes("data-row-gap", rowGap, { alwaysInitial: true });
+  const columnGapAttributes = columnGap === undefined
+    ? {}
+    : responsiveDataAttributes("data-column-gap", columnGap, { alwaysInitial: true });
   return createElement(
     as,
     {
       ...props,
+      ...columnAttributes,
+      ...responsiveDataAttributes("data-gap", gap, { alwaysInitial: true }),
+      ...rowGapAttributes,
+      ...columnGapAttributes,
+      ...responsiveDataAttributes("data-align", align, { defaultValue: "stretch" }),
+      ...responsiveDataAttributes("data-justify", justify, { defaultValue: "stretch" }),
       className: mergeClassName("brick-grid", className),
-      "data-align": align !== "stretch" ? align : undefined,
-      "data-column-gap": columnGap,
-      "data-columns": mode === "explicit" ? columns : undefined,
-      "data-gap": gap,
-      "data-justify": justify !== "stretch" ? justify : undefined,
       "data-min-item-size": minItemSize,
       "data-mode": mode,
-      "data-row-gap": rowGap,
       "data-slot": slot,
       ref,
       style,
@@ -251,16 +278,22 @@ function GridItemImpl(
   }: GridItemProps,
   ref: ForwardedRef<HTMLElement>,
 ) {
+  const columnSpanAttributes = columnSpan === undefined
+    ? {}
+    : responsiveDataAttributes("data-column-span", columnSpan, { alwaysInitial: true });
+  const rowSpanAttributes = rowSpan === undefined
+    ? {}
+    : responsiveDataAttributes("data-row-span", rowSpan, { alwaysInitial: true });
   const itemProps = {
     ...props,
+    ...columnSpanAttributes,
+    ...rowSpanAttributes,
+    ...responsiveDataAttributes("data-align", align, { defaultValue: "auto" }),
+    ...responsiveDataAttributes("data-justify", justify, { defaultValue: "auto" }),
     className: mergeClassName("brick-grid-item", className),
-    "data-align": align !== "auto" ? align : undefined,
     "data-column-end": columnEnd,
-    "data-column-span": columnSpan,
     "data-column-start": columnStart,
-    "data-justify": justify !== "auto" ? justify : undefined,
     "data-row-end": rowEnd,
-    "data-row-span": rowSpan,
     "data-row-start": rowStart,
     "data-slot": slot,
     ref,

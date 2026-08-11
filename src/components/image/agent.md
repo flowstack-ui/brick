@@ -23,6 +23,7 @@ Provide styled resilient media with Atom loading/fallback behavior, sizing recip
 - **MUST:** Provide meaningful alt text, or alt="" for a decorative image.
 - **SHOULD:** Reserve dimensions or aspect ratio to prevent layout shift.
 - **MUST:** Use explicit fill when Image must consume a parent-established block size, such as Surface.Media; retain fit and position for the intended crop.
+- **MUST:** Name and preserve the parent sizing box when fill is used; Image propagates into available geometry but does not create that geometry.
 - **MUST:** Load styles.css or core.css plus image.css.
 - **MUST:** Use direct named Image parts across a React Server Component boundary instead of wrapping the complete consumer in use client.
 

@@ -1,5 +1,5 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
-import { Button, Checkbox, CodeBlock, Grid, Text, VStack, type CodeBlockSize, type CodeBlockVariant } from "@flowstack-ui/brick";
+import { Button, Checkbox, CodeBlock, Frame, Grid, Text, VStack, type CodeBlockSize, type CodeBlockVariant } from "@flowstack-ui/brick";
 import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
@@ -11,7 +11,7 @@ const longSource = `const endpoint = "https://api.example.test/projects/flowstac
 const variants: CodeBlockVariant[] = ["subtle", "bordered", "plain"];
 const sizes: CodeBlockSize[] = ["sm", "md"];
 
-function Cell({ children, label }: { children: ReactNode; label: string }) { return <EvidenceSurface className="code-block-cell"><SpecimenLabel>{label}</SpecimenLabel>{children}</EvidenceSurface>; }
+function Cell({ children, label }: { children: ReactNode; label: string }) { return <EvidenceSurface className="code-block-cell"><SpecimenLabel>{label}</SpecimenLabel><Frame inlineSize="100%" minInlineSize={0}>{children}</Frame></EvidenceSurface>; }
 function Basic({ label, ...props }: { label: string } & Partial<React.ComponentProps<typeof CodeBlock.Root>>) { return <CodeBlock.Root value={source} {...props}><CodeBlock.Content aria-label={label} /></CodeBlock.Root>; }
 
 export const codeBlockScenarios = [

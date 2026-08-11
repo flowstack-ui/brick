@@ -15,11 +15,18 @@ Style related in-page panel switching while Atom owns tab semantics, selection, 
 ## Required composition
 
 - Compose Trigger and optional Indicator inside List with matching Content values inside Root; lay out panel content with Brick components.
+- Keep the default panel inset for ordinary copy; use Content inset=none for edge-to-edge media or nested surfaces rather than overriding component CSS.
+- When vertical tab semantics stay correct but mobile needs full-width content, use responsive Root layout stacked to side; do not change semantic orientation with CSS.
+- When the same vertical selector needs a compact mobile grid, use responsive List columns (for example, initial 2 and lg 1) rather than application selectors; keyboard orientation remains vertical.
+- When a solid or soft List is nested inside a clipping parent that owns the outer corners, use List radius=none rather than overriding Tabs selectors; add triggerRadius=default only when individual Trigger surfaces should remain rounded.
+- Keep the shipped solid and soft List inset at or above the complete focus-ring reach; do not reduce it inside a clipping Card or Surface.
 
 ## Rules
 
 - **MUST:** Use Tabs only for related in-page panels, not to imitate a site navigation underline.
 - **MUST:** Define a deliberate narrow-width overflow or wrapping policy without clipping triggers or indicator focus.
+- **MUST:** Treat List columns as visual placement only; keep DOM order and the semantic orientation that matches the intended arrow keys.
+- **MUST:** Treat List radius and Trigger radius as independent visual geometry only; neither may alter inset, selection, focus, orientation, columns, or keyboard behavior.
 - **MUST:** Load styles.css or core.css plus tabs.css.
 
 ## Common mistakes
@@ -28,7 +35,7 @@ Style related in-page panel switching while Atom owns tab semantics, selection, 
 
 ## Validation checklist
 
-- Check automatic/manual activation, arrows, Home/End, Enter/Space, disabled, controlled, keep-mounted, overflow, focus rings, themes, zoom, and RTL.
+- Check automatic/manual activation, arrows, Home/End, Enter/Space, disabled, controlled, keep-mounted, overflow, complete focus rings at every List edge and inside clipping parents, themes, zoom, and RTL.
 - Confirm CSS is loaded.
 
 ## Related guidance

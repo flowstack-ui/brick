@@ -1,4 +1,5 @@
 export const componentStyleEntries = [
+  ["appearance", ["components/appearance/appearance.css"]],
   ["button", ["components/_action-spinner/action-spinner.css", "components/button/button.css"]],
   ["icon-button", ["components/_action-spinner/action-spinner.css", "components/icon-button/icon-button.css"]],
   ["icon", ["components/icon/icon.css"]],
@@ -63,8 +64,11 @@ export const componentStyleEntries = [
   ["pagination", ["components/icon/icon.css", "components/pagination/pagination.css"]],
   ["carousel", ["components/icon/icon.css", "components/carousel/carousel.css"]],
   ["stack", ["components/stack/stack.css"]],
+  ["z-stack", ["components/z-stack/z-stack.css"]],
   ["grid", ["components/grid/grid.css"]],
   ["container", ["components/container/container.css"]],
+  ["section", ["components/section/section.css"]],
+  ["frame", ["components/frame/frame.css"]],
   ["show", ["components/show/show.css"]],
   ["hide", ["components/hide/hide.css"]],
   ["surface", ["components/surface/surface.css"]],

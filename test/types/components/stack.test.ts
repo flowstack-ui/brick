@@ -4,10 +4,13 @@ import {
   Stack,
   VStack,
   type HStackProps,
+  type ResponsiveValue,
   type StackAlign,
   type StackDirection,
   type StackElement,
   type StackGap,
+  type StackItemFlex,
+  type StackItemProps,
   type StackJustify,
   type StackProps,
   type VStackProps,
@@ -37,12 +40,19 @@ const props: StackProps = {
 };
 const horizontal: HStackProps = { children: "Actions", gap: "2" };
 const vertical: VStackProps = { children: "Fields", gap: "4" };
+const responsiveDirection: ResponsiveValue<StackDirection> = { initial: "column", lg: "row" };
+const itemFlex: StackItemFlex = 2;
+const item: StackItemProps = { children: "Content", flex: itemFlex, align: "end" };
 
 createElement(Stack, { ...props, ref });
 createElement(RootStack, { ...props, ref });
 createElement(HStack, { ...horizontal, ref });
 createElement(VStack, { ...vertical, ref });
 createElement(Stack, {});
+createElement(Stack, { direction: responsiveDirection, gap: { initial: "2", md: "5" } });
+createElement(Stack.Item, item);
+createElement(Stack.Item, { flex: { initial: "content", lg: 2 }, align: { initial: "auto", lg: "end" } });
+createElement(Stack.Item, { asChild: true, children: createElement("section") });
 
 // @ts-expect-error Stack hosts are deliberately closed.
 createElement(Stack, { as: "table" });
@@ -62,8 +72,12 @@ createElement(Stack, { wrap: "reverse" });
 createElement(HStack, { direction: "column" });
 // @ts-expect-error VStack owns its direction.
 createElement(VStack, { direction: "row" });
-// @ts-expect-error No asChild composition API.
+// @ts-expect-error Root has no asChild composition API.
 createElement(Stack, { asChild: true });
+// @ts-expect-error Responsive values require an initial value.
+createElement(Stack, { direction: { lg: "row" } });
+// @ts-expect-error Item visual ordering is excluded.
+createElement(Stack.Item, { order: 2 });
 
 void elements;
 void directions;

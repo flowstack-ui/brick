@@ -5,8 +5,8 @@ test.beforeEach(async ({ page }) => { await page.goto("/carousel"); await expect
 
 test("Carousel navigates with arrows and picker dots", async ({ page }) => {
   const root = page.locator("#scenario-carousel-overview .brick-carousel");
-  await root.hover();
-  await root.getByRole("button", { name: "Next slide" }).click();
+  const next = root.getByRole("button", { name: "Next slide" });
+  await next.press("Enter");
   await expect(root.getByRole("button", { name: "Launch faster" })).toHaveAttribute("data-state", "active");
   await root.getByRole("button", { name: "Grow without rewrites" }).click();
   await expect(root.getByText("A foundation that scales.")).toBeVisible();
@@ -24,6 +24,38 @@ test("Carousel fill propagates an explicitly owned parent height", async ({ page
   ]) {
     await expect(part).toHaveCSS("height", "420px");
   }
+});
+
+test("Carousel Viewport keeps its focus indicator inside its clipped edge", async ({ page }) => {
+  const root = page.locator("#scenario-carousel-overview .brick-carousel").first();
+  const viewport = page
+    .locator("#scenario-carousel-overview .brick-carousel__viewport")
+    .first();
+  await viewport.focus();
+  await expect(viewport).toBeFocused();
+
+  const focusGeometry = await viewport.evaluate((node) => {
+    const style = getComputedStyle(node);
+    return {
+      outlineStyle: style.outlineStyle,
+      radius: Number.parseFloat(style.borderStartStartRadius),
+    };
+  });
+  const overlayGeometry = await root.evaluate((node) => {
+    const style = getComputedStyle(node, "::after");
+    return {
+      content: style.content,
+      borderStyle: style.borderStyle,
+      borderWidth: Number.parseFloat(style.borderTopWidth),
+      radius: Number.parseFloat(style.borderStartStartRadius),
+    };
+  });
+  expect(focusGeometry.outlineStyle).toBe("none");
+  expect(focusGeometry.radius).toBeGreaterThan(0);
+  expect(overlayGeometry.content).not.toBe("none");
+  expect(overlayGeometry.borderStyle).toBe("solid");
+  expect(overlayGeometry.borderWidth).toBeGreaterThan(0);
+  expect(overlayGeometry.radius).toBeGreaterThan(0);
 });
 
 test("Carousel permits control-free and picker-only composition", async ({ page }) => {
@@ -58,10 +90,9 @@ test("Carousel keeps interaction arrows keyboard reachable and picker treatment 
 test("Carousel loop preserves forward direction across the last boundary", async ({ page }) => {
   const root = page.locator("#scenario-carousel-overview .brick-carousel");
   const next = root.getByRole("button", { name: "Next slide" });
-  await root.hover();
-  await next.click();
-  await next.click();
-  await next.click();
+  await next.press("Enter");
+  await next.press("Enter");
+  await next.press("Enter");
   await expect(root.locator('[data-slot="carousel-slide"][data-value="build"]')).toHaveAttribute("data-state", "active");
   await expect(root.locator('[data-slot="carousel-slide"][data-value="build"]')).not.toHaveAttribute("data-loop-position", "before");
 });

@@ -104,6 +104,44 @@ describe("Grid", () => {
     }
   });
 
+  it("serializes responsive tracks, gaps, spans, and alignment", () => {
+    render(
+      <Grid.Root
+        align={{ initial: "stretch", md: "center" }}
+        columnGap={{ initial: "2", lg: "5" }}
+        columns={{ initial: 1, md: 2, lg: 4 }}
+        data-testid="root"
+        gap={{ initial: "1", md: "3" }}
+        justify={{ initial: "stretch", xl: "end" }}
+        rowGap={{ initial: "2", sm: "4" }}
+      >
+        <Grid.Item
+          align={{ initial: "auto", md: "center" }}
+          columnSpan={{ initial: "full", lg: 2 }}
+          data-testid="item"
+          justify={{ initial: "auto", xl: "end" }}
+          rowSpan={{ initial: 1, md: 2 }}
+        />
+      </Grid.Root>,
+    );
+    const root = screen.getByTestId("root");
+    const item = screen.getByTestId("item");
+
+    expect(root).toHaveAttribute("data-columns", "1");
+    expect(root).toHaveAttribute("data-columns-md", "2");
+    expect(root).toHaveAttribute("data-columns-lg", "4");
+    expect(root).toHaveAttribute("data-gap-md", "3");
+    expect(root).toHaveAttribute("data-row-gap-sm", "4");
+    expect(root).toHaveAttribute("data-column-gap-lg", "5");
+    expect(root).toHaveAttribute("data-align-md", "center");
+    expect(root).toHaveAttribute("data-justify-xl", "end");
+    expect(item).toHaveAttribute("data-column-span", "full");
+    expect(item).toHaveAttribute("data-column-span-lg", "2");
+    expect(item).toHaveAttribute("data-row-span-md", "2");
+    expect(item).toHaveAttribute("data-align-md", "center");
+    expect(item).toHaveAttribute("data-justify-xl", "end");
+  });
+
   it("supports every adopted Root and Item semantic host", () => {
     const roots: GridRootElement[] = [
       "div", "span", "section", "article", "nav", "header", "footer",

@@ -6,6 +6,9 @@ Accordion follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for selecting grouped disclosures, preserving
+  complete anatomy, heading and landmark policy, ContentInner ownership, CSS
+  delivery, and interaction validation.
 - Added the seven-part Atom-backed Accordion with single and multiple models,
   locked-open and disabled semantics, landmark control, three variants and
   sizes, two-axis motion, direction-aware keyboard navigation, composition,

@@ -59,7 +59,11 @@ different owner.
 | Stack | overview, grid shell/cells, appearance scopes, customization shell/preview, stress panel | demo items, wrapping/containment constraints, Stack geometry; code block |
 | Grid | frame shells and customization shell where wrapping does not alter the grid being measured | grid cells, tracks, spans, placement markers, narrow/vertical geometry, code block |
 | Container | generic appearance/customization stage only when Container remains the measured child | measure boundaries, dashed width guides, nesting, full-bleed, vertical-writing geometry |
+| Section | contained paint examples where Surface remains the visual owner | page-region rhythm, semantic region choice, logical start/end spacing, and wrapper-free Surface composition |
+| Frame | generic evidence surfaces around bounded content | logical size constraints, definite-parent percentage sizing, nested-variable isolation, and Scroll Area bounds |
 | Surface | none of the recipe specimens; they intentionally isolate Surface against raw contrasting stages | all Surface recipe stages, inset marker, nesting and elevation contrast; code block |
+| ZStack | overview, placement, composition, and stress evidence stages | ZStack overlap and placement geometry; the stage layer being positioned; source-order evidence |
+| Appearance | overview, nested-scope, portal-action, and semantic-host evidence surfaces | Appearance boundaries themselves; explicit semantic-token scope and wrapper-free host composition |
 | Divider | overview, appearance, customization, and generic specimen cells | Divider line recipes, measured inset/axis stages, and forced-color evidence |
 | Scroll Area | generic specimen cells, appearance scopes, and customization shell | Scroll Area viewport boundaries, axis constraints, native scrollbar paint, and code sample |
 | Code | generic overview/cell/appearance/customization stages | Code recipes, inline wrapping, native output, and technical literal paint |
