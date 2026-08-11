@@ -10,6 +10,8 @@ Divider follows the package version of `@flowstack-ui/brick`.
   static prerendering no longer serializes a namespace member as undefined.
 - Documented complete-group and consistent-owner placement for repeated
   boundaries, including disclosure content.
+- Corrected Agent Knowledge to teach Brick's direct `Divider` export rather
+  than a nonexistent `Divider.Root` compound part.
 
 ### Added
 
