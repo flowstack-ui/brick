@@ -10,6 +10,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   including semantic token classifications, audited component theme inputs,
   cascade placement, source-aware token verification, and clean-consumer
   discovery.
+- Advanced the generated theme contract to revision 2 and added 76 semantic
+  contrast-pair declarations covering maintained
+  normal-text, interaction-state, and focus-indicator adjacencies for Theme
+  validation.
 - Added public Accordion and List Agent Knowledge and guaranteed both artifacts
   remain discoverable in the packed manifest.
 - Added `Frame` as the narrow responsive logical size-constraint owner for rails,

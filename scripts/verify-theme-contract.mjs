@@ -19,9 +19,24 @@ if (unresolved.length) {
 
 const contract = await createThemeContract(packageRoot);
 if (contract.$schema !== themeContractSchema) throw new Error("Unexpected theme contract schema");
+if (contract.contractVersion !== 2) throw new Error("Contrast declarations require theme contract revision 2");
 if (!contract.componentThemeInputs.length) throw new Error("No component theme inputs were published");
 if (contract.tokens.some((token) => !token.classification)) {
   throw new Error("Every contract token must have a classification");
+}
+if (contract.contrast?.algorithm !== "wcag2-relative-luminance" || contract.contrast?.colorSpace !== "srgb") {
+  throw new Error("The Brick contrast contract must use the version-one sRGB WCAG 2 algorithm");
+}
+if (!contract.contrast.pairs.length) throw new Error("No semantic contrast pairs were published");
+for (const pair of contract.contrast.pairs) {
+  const foreground = contract.tokens.find(({ name }) => name === pair.foreground);
+  const background = contract.tokens.find(({ name }) => name === pair.background);
+  if (foreground?.classification !== "required" || foreground.type !== "color") {
+    throw new Error(`${pair.id} foreground is not a required color token`);
+  }
+  if (background?.classification !== "required" || background.type !== "color") {
+    throw new Error(`${pair.id} background is not a required color token`);
+  }
 }
 
 for (const [componentId, component] of Object.entries(componentDocumentationContracts)) {

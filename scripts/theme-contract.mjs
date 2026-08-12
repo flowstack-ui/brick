@@ -42,6 +42,68 @@ function tokenNames(source, pattern) {
   return [...source.matchAll(pattern)].map((match) => match[1]);
 }
 
+function createContrastContract(source, records) {
+  if (source?.$schema !== "flowstack.brick-contrast-pairs.v1") {
+    throw new Error("src/styles/contrast-pairs.json has an unsupported schema");
+  }
+  if (source.algorithm !== "wcag2-relative-luminance" || source.colorSpace !== "srgb") {
+    throw new Error("src/styles/contrast-pairs.json must use the version-one sRGB WCAG 2 algorithm");
+  }
+  if (!Array.isArray(source.groups) || source.groups.length === 0) {
+    throw new Error("src/styles/contrast-pairs.json must declare contrast groups");
+  }
+
+  const pairs = [];
+  const ids = new Set();
+  for (const [index, group] of source.groups.entries()) {
+    if (
+      !group || typeof group !== "object" ||
+      typeof group.id !== "string" || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(group.id) ||
+      (group.kind !== "text" && group.kind !== "non-text") ||
+      typeof group.foreground !== "string" ||
+      !Array.isArray(group.backgrounds) || group.backgrounds.length === 0 ||
+      typeof group.minimumRatio !== "number" ||
+      !Number.isFinite(group.minimumRatio) || group.minimumRatio < 1 || group.minimumRatio > 21
+    ) {
+      throw new Error(`Invalid contrast group at index ${index}`);
+    }
+    if (group.kind === "text" && group.minimumRatio < 4.5) {
+      throw new Error(`${group.id} normal text must require at least 4.5:1`);
+    }
+    if (group.kind === "non-text" && group.minimumRatio < 3) {
+      throw new Error(`${group.id} non-text contrast must require at least 3:1`);
+    }
+
+    const foreground = records.get(group.foreground);
+    if (foreground?.classification !== "required" || foreground.type !== "color") {
+      throw new Error(`${group.id} has an unknown required color foreground ${group.foreground}`);
+    }
+    for (const backgroundName of group.backgrounds) {
+      const background = records.get(backgroundName);
+      if (background?.classification !== "required" || background.type !== "color") {
+        throw new Error(`${group.id} has an unknown required color background ${backgroundName}`);
+      }
+      const suffix = backgroundName.replace(/^--brick-color-/u, "");
+      const id = `${group.id}/${suffix}`;
+      if (ids.has(id)) throw new Error(`Duplicate contrast pair ${id}`);
+      ids.add(id);
+      pairs.push({
+        id,
+        kind: group.kind,
+        foreground: group.foreground,
+        background: backgroundName,
+        minimumRatio: group.minimumRatio,
+      });
+    }
+  }
+
+  return {
+    algorithm: source.algorithm,
+    colorSpace: source.colorSpace,
+    pairs: pairs.sort((left, right) => left.id.localeCompare(right.id)),
+  };
+}
+
 export async function inspectThemeSources(packageRoot) {
   const tokenSourcePath = resolve(packageRoot, "src/styles/tokens.tokens.json");
   const tokens = await readTokenSource(tokenSourcePath);
@@ -104,6 +166,7 @@ export async function inspectThemeSources(packageRoot) {
 
 export async function createThemeContract(packageRoot) {
   const packageJson = JSON.parse(await readFile(resolve(packageRoot, "package.json"), "utf8"));
+  const contrastSource = JSON.parse(await readFile(resolve(packageRoot, "src/styles/contrast-pairs.json"), "utf8"));
   const inspection = await inspectThemeSources(packageRoot);
   const layerSource = await readFile(resolve(packageRoot, "src/styles/layers.css"), "utf8");
   const layerOrder = parseLayerOrder(layerSource);
@@ -196,11 +259,12 @@ export async function createThemeContract(packageRoot) {
 
   return {
     $schema: themeContractSchema,
-    contractVersion: 1,
+    contractVersion: 2,
     package: { name: packageJson.name, version: packageJson.version },
     sources: {
       tokens: "src/styles/tokens.tokens.json",
       components: "scripts/component-documentation-contracts.mjs",
+      contrast: "src/styles/contrast-pairs.json",
       cascade: "src/styles/layers.css",
     },
     css: {
@@ -220,6 +284,7 @@ export async function createThemeContract(packageRoot) {
       id,
       tokens: tokenNames.sort(),
     })),
+    contrast: createContrastContract(contrastSource, records),
     componentThemeInputs: [...componentInputs].sort(([left], [right]) => left.localeCompare(right)).map(([name, input]) => ({
       name,
       ...input,

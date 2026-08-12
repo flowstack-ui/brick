@@ -122,6 +122,9 @@ try {
   const agentManifest = JSON.parse(await readPackedFile("dist/agents/manifest.json"));
   const themeContract = JSON.parse(await readPackedFile("dist/theme-contract.json"));
   assert.equal(themeContract.$schema, "flowstack.brick-theme-contract.v1");
+  assert.equal(themeContract.contractVersion, 2);
+  assert.equal(themeContract.contrast.algorithm, "wcag2-relative-luminance");
+  assert.equal(themeContract.contrast.pairs.length, 76);
   assert.equal(packageJson.exports["./theme-contract.json"], "./dist/theme-contract.json");
   assert.equal(agentManifest.package, packageJson.name);
   assert.ok(agentManifest.components.length > 0, "Agent Knowledge manifest is empty");

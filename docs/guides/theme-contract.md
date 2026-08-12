@@ -10,12 +10,18 @@ import contract from "@flowstack-ui/brick/theme-contract.json" with { type: "jso
 The artifact uses the `flowstack.brick-theme-contract.v1` schema identifier.
 It is generated from Brick's token source, component documentation contracts,
 and cascade declaration, so theme tooling does not need a copied token list.
+Contract revision 2 adds the required contrast declaration. Consumers that
+need compiler-enforced pair safety must require `contractVersion >= 2`; the
+schema identifier remains version 1 because the JSON addition is additive for
+existing contract readers.
 
 The contract records:
 
 - every semantic variable, type, light and dark default, and appearance
   behavior;
 - atomic color families that must be reviewed together;
+- semantic foreground/background pairs, their text or non-text kind, and the
+  minimum contrast ratio Theme must validate without rounding;
 - approved inherited component inputs and their semantic fallbacks;
 - local component extension variables and implementation-only variables;
 - component recipes, defaults, and state attributes used by qualification;
@@ -31,6 +37,19 @@ values are the small audited set that may inherit from a theme scope.
 `optional-extension` values are public component-instance escape hatches, not
 global theme controls. `internal` values belong to Brick implementation.
 Deprecated values, when introduced, include their replacements.
+
+## Contrast pairs
+
+Brick publishes only adjacencies promised by maintained component recipes. It
+does not ask Theme to test every theoretical combination of semantic colors.
+Normal authored text pairs require `4.5:1`; meaningful non-text indicators
+require `3:1`. Disabled text and arbitrary local component overrides remain
+outside this static contract, while browser qualification covers opacity,
+gradients, images, and composition-specific adjacency.
+
+The public contract uses `wcag2-relative-luminance` over opaque sRGB values.
+Theme owns the calculation and generated report; Brick owns the declared pair
+semantics and thresholds.
 
 Brick currently approves Drawer background and radius as inherited component
 inputs. Other documented component variables remain available for local
