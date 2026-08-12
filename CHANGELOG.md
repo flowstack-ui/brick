@@ -4,6 +4,14 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.1.8 - 2026-08-12
+
+### Fixed
+
+- Made the generated-theme catalog-navigation qualification follow Brick's
+  responsive mobile navigation drawer, allowing the release gate to exercise
+  the same theme persistence assertion across desktop and mobile browsers.
+
 ## 0.1.7 - 2026-08-12
 
 ### Added

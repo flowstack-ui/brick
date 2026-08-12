@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("the query-selected theme is present before application code and follows catalog navigation", async ({ page }) => {
+test("the query-selected theme is present before application code and follows catalog navigation", async ({ page, isMobile }) => {
   await page.goto("/button?theme=qualification");
 
   await expect(page.locator("html")).toHaveAttribute("data-flowstack-theme", "qualification");
@@ -11,7 +11,16 @@ test("the query-selected theme is present before application code and follows ca
     "rgb(0, 97, 84)",
   );
 
-  await page.getByRole("navigation", { name: "Component navigation" }).getByRole("link", { name: "Card", exact: true }).click();
+  if (isMobile) {
+    await page.getByRole("button", { name: "Open component navigation" }).click();
+  }
+
+  const componentNavigation = isMobile
+    ? page
+        .getByRole("dialog", { name: "Brick components" })
+        .getByRole("navigation", { name: "Component navigation" })
+    : page.getByRole("navigation", { name: "Component navigation" });
+  await componentNavigation.getByRole("link", { name: "Card", exact: true }).click();
   await expect(page).toHaveURL(/\/card\?theme=qualification$/);
   await expect(page.locator("html")).toHaveAttribute("data-flowstack-theme", "qualification");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
