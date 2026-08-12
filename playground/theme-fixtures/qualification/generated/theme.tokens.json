@@ -1,0 +1,770 @@
+{
+  "$extensions": {
+    "flowstack.theme": {
+      "brickVersion": "0.1.6",
+      "id": "qualification",
+      "schema": "flowstack.theme-tokens.v1"
+    }
+  },
+  "$schema": "https://www.designtokens.org/tr/drafts/format/",
+  "brick": {
+    "dark": {
+      "color": {
+        "accent": {
+          "border": {
+            "$type": "color",
+            "$value": "#328d78"
+          },
+          "on-soft": {
+            "$type": "color",
+            "$value": "#82e8d2"
+          },
+          "on-solid": {
+            "$type": "color",
+            "$value": "#05251e"
+          },
+          "soft": {
+            "$type": "color",
+            "$value": "#123c32"
+          },
+          "soft-hover": {
+            "$type": "color",
+            "$value": "#174a3d"
+          },
+          "soft-pressed": {
+            "$type": "color",
+            "$value": "#1c5849"
+          },
+          "solid": {
+            "$type": "color",
+            "$value": "#7dd1bd"
+          },
+          "solid-hover": {
+            "$type": "color",
+            "$value": "#63e0c5"
+          },
+          "solid-pressed": {
+            "$type": "color",
+            "$value": "#2fc3a6"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "#75e2ca"
+          }
+        },
+        "border": {
+          "default": {
+            "$type": "color",
+            "$value": "#3e6657"
+          },
+          "strong": {
+            "$type": "color",
+            "$value": "#6b9485"
+          },
+          "subtle": {
+            "$type": "color",
+            "$value": "#28483d"
+          }
+        },
+        "danger": {
+          "border": {
+            "$type": "color",
+            "$value": "#993045"
+          },
+          "on-soft": {
+            "$type": "color",
+            "$value": "#ff93a7"
+          },
+          "on-solid": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "soft": {
+            "$type": "color",
+            "$value": "#44131e"
+          },
+          "soft-hover": {
+            "$type": "color",
+            "$value": "#561825"
+          },
+          "soft-pressed": {
+            "$type": "color",
+            "$value": "#681d2d"
+          },
+          "solid": {
+            "$type": "color",
+            "$value": "#af2642"
+          },
+          "solid-hover": {
+            "$type": "color",
+            "$value": "#bd2c49"
+          },
+          "solid-pressed": {
+            "$type": "color",
+            "$value": "#9f2038"
+          },
+          "surface": {
+            "$type": "color",
+            "$value": "#44131e"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "#ff93a7"
+          }
+        },
+        "focus-ring": {
+          "$type": "color",
+          "$value": "#ff9a52"
+        },
+        "info": {
+          "border": {
+            "$type": "color",
+            "$value": "#2c6ba7"
+          },
+          "on-soft": {
+            "$type": "color",
+            "$value": "#95c9f6"
+          },
+          "on-solid": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "soft": {
+            "$type": "color",
+            "$value": "#102840"
+          },
+          "soft-hover": {
+            "$type": "color",
+            "$value": "#143654"
+          },
+          "soft-pressed": {
+            "$type": "color",
+            "$value": "#184267"
+          },
+          "solid": {
+            "$type": "color",
+            "$value": "#0a6ec3"
+          },
+          "solid-hover": {
+            "$type": "color",
+            "$value": "#1178cf"
+          },
+          "solid-pressed": {
+            "$type": "color",
+            "$value": "#075fa9"
+          },
+          "surface": {
+            "$type": "color",
+            "$value": "#102840"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "#95c9f6"
+          }
+        },
+        "scrim": {
+          "$type": "color",
+          "$value": "#000000b8"
+        },
+        "shadow": {
+          "$type": "color",
+          "$value": "#00000080"
+        },
+        "success": {
+          "border": {
+            "$type": "color",
+            "$value": "#237350"
+          },
+          "on-soft": {
+            "$type": "color",
+            "$value": "#7bd1ad"
+          },
+          "on-solid": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "soft": {
+            "$type": "color",
+            "$value": "#0e3022"
+          },
+          "soft-hover": {
+            "$type": "color",
+            "$value": "#123d2b"
+          },
+          "soft-pressed": {
+            "$type": "color",
+            "$value": "#174b35"
+          },
+          "solid": {
+            "$type": "color",
+            "$value": "#18794e"
+          },
+          "solid-hover": {
+            "$type": "color",
+            "$value": "#1e8357"
+          },
+          "solid-pressed": {
+            "$type": "color",
+            "$value": "#12663f"
+          },
+          "surface": {
+            "$type": "color",
+            "$value": "#0e3022"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "#7bd1ad"
+          }
+        },
+        "surface": {
+          "base": {
+            "$type": "color",
+            "$value": "#0d1d18"
+          },
+          "canvas": {
+            "$type": "color",
+            "$value": "#081511"
+          },
+          "overlay": {
+            "$type": "color",
+            "$value": "#1c382f"
+          },
+          "raised": {
+            "$type": "color",
+            "$value": "#172f27"
+          },
+          "subtle": {
+            "$type": "color",
+            "$value": "#132821"
+          }
+        },
+        "text": {
+          "disabled": {
+            "$type": "color",
+            "$value": "#7f958c"
+          },
+          "inverse": {
+            "$type": "color",
+            "$value": "#10231d"
+          },
+          "muted": {
+            "$type": "color",
+            "$value": "#95b0a6"
+          },
+          "primary": {
+            "$type": "color",
+            "$value": "#ecf8f3"
+          },
+          "secondary": {
+            "$type": "color",
+            "$value": "#c5dcd3"
+          }
+        },
+        "warning": {
+          "border": {
+            "$type": "color",
+            "$value": "#905f12"
+          },
+          "on-soft": {
+            "$type": "color",
+            "$value": "#f2bd59"
+          },
+          "on-solid": {
+            "$type": "color",
+            "$value": "#211f1c"
+          },
+          "soft": {
+            "$type": "color",
+            "$value": "#3d2707"
+          },
+          "soft-hover": {
+            "$type": "color",
+            "$value": "#4d3108"
+          },
+          "soft-pressed": {
+            "$type": "color",
+            "$value": "#5d3b09"
+          },
+          "solid": {
+            "$type": "color",
+            "$value": "#e39019"
+          },
+          "solid-hover": {
+            "$type": "color",
+            "$value": "#eda025"
+          },
+          "solid-pressed": {
+            "$type": "color",
+            "$value": "#cf7d08"
+          },
+          "surface": {
+            "$type": "color",
+            "$value": "#3d2707"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "#f2bd59"
+          }
+        }
+      },
+      "shadow": {
+        "raised": {
+          "$type": "shadow",
+          "$value": "0rem 0.5rem 1.5rem -0.25rem #00000080"
+        },
+        "sm": {
+          "$type": "shadow",
+          "$value": "0rem 0.125rem 0.375rem 0rem #00000080"
+        }
+      }
+    },
+    "light": {
+      "color": {
+        "accent": {
+          "border": {
+            "$type": "color",
+            "$value": "#65b9a8"
+          },
+          "on-soft": {
+            "$type": "color",
+            "$value": "#064c43"
+          },
+          "on-solid": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "soft": {
+            "$type": "color",
+            "$value": "#d7f4ed"
+          },
+          "soft-hover": {
+            "$type": "color",
+            "$value": "#c4ebe2"
+          },
+          "soft-pressed": {
+            "$type": "color",
+            "$value": "#afe2d6"
+          },
+          "solid": {
+            "$type": "color",
+            "$value": "#006154"
+          },
+          "solid-hover": {
+            "$type": "color",
+            "$value": "#00594f"
+          },
+          "solid-pressed": {
+            "$type": "color",
+            "$value": "#00483f"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "#006154"
+          }
+        },
+        "border": {
+          "default": {
+            "$type": "color",
+            "$value": "#afc3ba"
+          },
+          "strong": {
+            "$type": "color",
+            "$value": "#6e8c80"
+          },
+          "subtle": {
+            "$type": "color",
+            "$value": "#d8e3de"
+          }
+        },
+        "danger": {
+          "border": {
+            "$type": "color",
+            "$value": "#ef9cad"
+          },
+          "on-soft": {
+            "$type": "color",
+            "$value": "#ad233f"
+          },
+          "on-solid": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "soft": {
+            "$type": "color",
+            "$value": "#ffeef1"
+          },
+          "soft-hover": {
+            "$type": "color",
+            "$value": "#ffdde3"
+          },
+          "soft-pressed": {
+            "$type": "color",
+            "$value": "#ffcbd5"
+          },
+          "solid": {
+            "$type": "color",
+            "$value": "#ad233f"
+          },
+          "solid-hover": {
+            "$type": "color",
+            "$value": "#9f1f38"
+          },
+          "solid-pressed": {
+            "$type": "color",
+            "$value": "#901a33"
+          },
+          "surface": {
+            "$type": "color",
+            "$value": "#ffeef1"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "#ad233f"
+          }
+        },
+        "focus-ring": {
+          "$type": "color",
+          "$value": "#ff7a1a"
+        },
+        "info": {
+          "border": {
+            "$type": "color",
+            "$value": "#95c9f6"
+          },
+          "on-soft": {
+            "$type": "color",
+            "$value": "#105da9"
+          },
+          "on-solid": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "soft": {
+            "$type": "color",
+            "$value": "#ecf6ff"
+          },
+          "soft-hover": {
+            "$type": "color",
+            "$value": "#dceeff"
+          },
+          "soft-pressed": {
+            "$type": "color",
+            "$value": "#cbe7ff"
+          },
+          "solid": {
+            "$type": "color",
+            "$value": "#0073d0"
+          },
+          "solid-hover": {
+            "$type": "color",
+            "$value": "#0068bd"
+          },
+          "solid-pressed": {
+            "$type": "color",
+            "$value": "#005da9"
+          },
+          "surface": {
+            "$type": "color",
+            "$value": "#ecf6ff"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "#105da9"
+          }
+        },
+        "scrim": {
+          "$type": "color",
+          "$value": "#1413128c"
+        },
+        "shadow": {
+          "$type": "color",
+          "$value": "#1413122e"
+        },
+        "success": {
+          "border": {
+            "$type": "color",
+            "$value": "#7bd1ad"
+          },
+          "on-soft": {
+            "$type": "color",
+            "$value": "#136e4c"
+          },
+          "on-solid": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "soft": {
+            "$type": "color",
+            "$value": "#e8fbf3"
+          },
+          "soft-hover": {
+            "$type": "color",
+            "$value": "#d7f6e9"
+          },
+          "soft-pressed": {
+            "$type": "color",
+            "$value": "#c5efdd"
+          },
+          "solid": {
+            "$type": "color",
+            "$value": "#18794e"
+          },
+          "solid-hover": {
+            "$type": "color",
+            "$value": "#146f46"
+          },
+          "solid-pressed": {
+            "$type": "color",
+            "$value": "#10643e"
+          },
+          "surface": {
+            "$type": "color",
+            "$value": "#e8fbf3"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "#136e4c"
+          }
+        },
+        "surface": {
+          "base": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "canvas": {
+            "$type": "color",
+            "$value": "#f7f9f7"
+          },
+          "overlay": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "raised": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "subtle": {
+            "$type": "color",
+            "$value": "#edf3f0"
+          }
+        },
+        "text": {
+          "disabled": {
+            "$type": "color",
+            "$value": "#72877f"
+          },
+          "inverse": {
+            "$type": "color",
+            "$value": "#ffffff"
+          },
+          "muted": {
+            "$type": "color",
+            "$value": "#5f746d"
+          },
+          "primary": {
+            "$type": "color",
+            "$value": "#10231d"
+          },
+          "secondary": {
+            "$type": "color",
+            "$value": "#36534a"
+          }
+        },
+        "warning": {
+          "border": {
+            "$type": "color",
+            "$value": "#e3a644"
+          },
+          "on-soft": {
+            "$type": "color",
+            "$value": "#714904"
+          },
+          "on-solid": {
+            "$type": "color",
+            "$value": "#211f1c"
+          },
+          "soft": {
+            "$type": "color",
+            "$value": "#fff7e3"
+          },
+          "soft-hover": {
+            "$type": "color",
+            "$value": "#ffedc2"
+          },
+          "soft-pressed": {
+            "$type": "color",
+            "$value": "#ffe3a1"
+          },
+          "solid": {
+            "$type": "color",
+            "$value": "#f29f21"
+          },
+          "solid-hover": {
+            "$type": "color",
+            "$value": "#e58c0e"
+          },
+          "solid-pressed": {
+            "$type": "color",
+            "$value": "#d87d00"
+          },
+          "surface": {
+            "$type": "color",
+            "$value": "#fff7e3"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "#714904"
+          }
+        }
+      },
+      "shadow": {
+        "raised": {
+          "$type": "shadow",
+          "$value": "0rem 0.5rem 1.5rem -0.25rem #1413122e"
+        },
+        "sm": {
+          "$type": "shadow",
+          "$value": "0rem 0.125rem 0.375rem 0rem #1413122e"
+        }
+      }
+    }
+  },
+  "components": {
+    "drawer": {
+      "background": {
+        "$type": "color",
+        "$value": "var(--brick-color-surface-overlay)"
+      },
+      "radius": {
+        "$type": "dimension",
+        "$value": "1.5rem"
+      }
+    }
+  },
+  "extensions": {
+    "flowstack": {
+      "dev/qualification": {
+        "chart": {
+          "revenue": {
+            "$type": "string",
+            "$value": "#0ea5e9"
+          }
+        },
+        "marketing": {
+          "promotion": {
+            "$type": "string",
+            "$value": "#8b5cf6"
+          }
+        }
+      }
+    }
+  },
+  "foundations": {
+    "radius": {
+      "control": {
+        "$type": "dimension",
+        "$value": "0.625rem"
+      },
+      "overlay": {
+        "$type": "dimension",
+        "$value": "1.25rem"
+      },
+      "surface": {
+        "$type": "dimension",
+        "$value": "1rem"
+      }
+    }
+  },
+  "palettes": {
+    "ember": {
+      "400": {
+        "$type": "string",
+        "$value": "#ff9a52"
+      },
+      "500": {
+        "$type": "string",
+        "$value": "#ff7a1a"
+      },
+      "600": {
+        "$type": "string",
+        "$value": "#d95e00"
+      }
+    },
+    "evergreen": {
+      "50": {
+        "$type": "string",
+        "$value": "#e5faf4"
+      },
+      "100": {
+        "$type": "string",
+        "$value": "#d1f3ea"
+      },
+      "200": {
+        "$type": "string",
+        "$value": "#afe5d8"
+      },
+      "300": {
+        "$type": "string",
+        "$value": "#7dd1bd"
+      },
+      "400": {
+        "$type": "string",
+        "$value": "#45b79f"
+      },
+      "500": {
+        "$type": "string",
+        "$value": "#169881"
+      },
+      "600": {
+        "$type": "string",
+        "$value": "#087b69"
+      },
+      "700": {
+        "$type": "string",
+        "$value": "#006154"
+      },
+      "800": {
+        "$type": "string",
+        "$value": "#064c43"
+      },
+      "900": {
+        "$type": "string",
+        "$value": "#073d36"
+      }
+    },
+    "product": {
+      "analytics": {
+        "$type": "string",
+        "$value": "#0ea5e9"
+      },
+      "promotion": {
+        "$type": "string",
+        "$value": "#8b5cf6"
+      }
+    }
+  },
+  "roles": {
+    "analytics": {
+      "$type": "string",
+      "$value": "#0ea5e9"
+    },
+    "brand": {
+      "focus": {
+        "$type": "string",
+        "$value": "#ff7a1a"
+      },
+      "primary": {
+        "$type": "string",
+        "$value": "#006154"
+      },
+      "primary-dark": {
+        "$type": "string",
+        "$value": "#7dd1bd"
+      }
+    },
+    "promotion": {
+      "$type": "string",
+      "$value": "#8b5cf6"
+    }
+  }
+}

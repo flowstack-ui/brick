@@ -191,6 +191,12 @@ function usePlaygroundPath() {
 
       const destination = new URL(link.href, window.location.href);
       if (
+        !destination.searchParams.has("theme")
+        && new URLSearchParams(window.location.search).get("theme") === "qualification"
+      ) {
+        destination.searchParams.set("theme", "qualification");
+      }
+      if (
         destination.origin !== window.location.origin ||
         !playgroundRoutes.has(destination.pathname) ||
         (destination.pathname === window.location.pathname &&

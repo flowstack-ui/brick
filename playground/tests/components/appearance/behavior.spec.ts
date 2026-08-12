@@ -71,16 +71,38 @@ test("theme contract selectors restore the nearest nested appearance", async ({ 
 
   await expect(lightOuter).toHaveCSS(
     "background-color",
-    "rgb(255, 244, 214)",
+    "rgb(255, 255, 255)",
   );
   await expect(darkMiddle).toHaveCSS(
     "background-color",
-    "rgb(23, 50, 77)",
+    "rgb(23, 47, 39)",
   );
   await expect(lightInner).toHaveCSS(
     "background-color",
-    "rgb(255, 244, 214)",
+    "rgb(255, 255, 255)",
   );
   await expect(lightInner).toHaveCSS("color-scheme", "light");
   await expect(darkMiddle).toHaveCSS("color-scheme", "dark");
+  await expect(page.getByRole("textbox", { name: "Qualification native control" })).toHaveCSS(
+    "color-scheme",
+    "light",
+  );
+  await expect(lightOuter).toHaveCSS("--flowstack-theme-roles-promotion", "#8b5cf6");
+});
+
+test("compiled component inputs reach scoped and explicit portal roots", async ({ page }) => {
+  await page.getByRole("button", { name: "Open themed scoped portal" }).click();
+  const scoped = page.getByTestId("theme-scoped-drawer");
+  await expect(scoped).toHaveCSS("border-top-left-radius", "24px");
+  await expect(scoped).toHaveCSS("background-color", "rgb(28, 56, 47)");
+  await expect(scoped).toHaveCSS("color-scheme", "dark");
+  await page.getByRole("button", { name: "Close themed scoped portal" }).click();
+
+  await page.getByRole("button", { name: "Open themed body portal" }).click();
+  const explicit = page.getByTestId("theme-explicit-drawer");
+  await expect(explicit).toHaveAttribute("data-flowstack-theme", "qualification");
+  await expect(explicit).toHaveAttribute("data-brick-appearance", "light");
+  await expect(explicit).toHaveCSS("border-top-left-radius", "24px");
+  await expect(explicit).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(page.getByTestId("theme-explicit-overlay")).toHaveCSS("color-scheme", "light");
 });

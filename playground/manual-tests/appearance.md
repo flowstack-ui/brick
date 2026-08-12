@@ -13,7 +13,7 @@
 | Assistive technology | |
 | Playground route | `/appearance` |
 
-Scenario order: `01 Overview`, `02 Nested re-entry`, `03 Wrapper-free composition`, `04 Explicit portal scope`, `05 Controls, focus, and reflow`.
+Scenario order: `01 Overview`, `02 Nested re-entry`, `03 Wrapper-free composition`, `04 Explicit portal scope`, `05 Controls, focus, and reflow`, `06 Compiled theme and nested appearances`, `07 Compiled component inputs and portals`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
@@ -40,6 +40,21 @@ dismissal, scroll lock, and return behavior remain unchanged. Result:
 Review at narrow width, 200% and 400% zoom, RTL, forced colors, reduced motion,
 keyboard-only, and the recorded assistive technology. Expected: scopes do not
 change semantics, focus order, containment, or readable contrast. Result:
+
+## Step 5 — compiled Theme qualification
+
+Inspect scenarios 06 and 07, then choose `Qualification` in the global Theme
+control and visit several component routes. Expected: teal replaces Brick's
+purple accent everywhere, orange focus remains visible, light-dark-light
+re-entry is complete, the native input follows its explicit color scheme, and
+the Theme choice survives catalog navigation and reload. Result:
+
+## Step 6 — Theme portal and component inputs
+
+Open both themed Drawers in scenario 07. Expected: the container portal is
+dark teal, the body-level portal is explicitly light, both use the generated
+1.5rem Drawer radius, retain normal focus/dismissal behavior, and do not
+require a Theme runtime or a Brick dependency on Theme. Result:
 
 ## Completion
 

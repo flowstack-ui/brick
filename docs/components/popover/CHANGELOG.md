@@ -6,6 +6,8 @@ Popover follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- The playground's composed Brick Input now draws only Input's rounded focus
+  ring instead of also inheriting an obsolete raw-input outline.
 - Modal Popover now inherits Atom's document-only scroll lock so sticky
   application chrome remains anchored at nonzero page offsets.
 

@@ -64,8 +64,10 @@ export function PlaygroundShell({
   const {
     appearance,
     direction,
+    theme,
     setAppearance,
     setDirection,
+    setTheme,
   } = useReviewEnvironment();
   const pageTitle = entry.title;
 
@@ -198,6 +200,8 @@ export function PlaygroundShell({
                 direction={direction}
                 onAppearanceChange={setAppearance}
                 onDirectionChange={setDirection}
+                onThemeChange={setTheme}
+                theme={theme}
               />
             </Container>
 
