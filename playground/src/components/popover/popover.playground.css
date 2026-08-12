@@ -5,7 +5,8 @@
 
 /* Input owns its native control paint; this neutralizes the historical raw
    input demo rule above while preserving the Field layout. */
-.popover-project-field .brick-input-control {
+.popover-project-field .brick-input-control,
+.popover-project-field .brick-input-control:focus-visible {
   min-block-size: 0;
   padding: 0;
   border: 0;

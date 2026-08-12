@@ -5,6 +5,7 @@ import {
   Drawer,
   Grid,
   HStack,
+  Input,
   Surface,
   Text,
   VStack,
@@ -53,9 +54,17 @@ export const appearanceScenarios = [
   {
     id: "appearance.theme-contract",
     number: 6,
-    title: "Theme contract selector prototype",
+    title: "Compiled theme and nested appearances",
     description:
-      "A named theme restores its own complete light map after a nested dark boundary through static, low-specificity selectors.",
+      "The generated qualification theme restores its complete light map after a nested dark boundary and keeps project-only colors outside Brick's vocabulary.",
+  },
+  {
+    id: "appearance.theme-portals",
+    number: 7,
+    title: "Compiled component inputs and portals",
+    navigationTitle: "Theme portals",
+    description:
+      "Generated Drawer inputs reach a dark portal kept inside its theme scope and explicit light theme and appearance attributes on body-level portal roots.",
   },
 ] as const satisfies readonly ScenarioDefinition[];
 
@@ -121,6 +130,47 @@ function ScopedPortalPanel() {
                 <Drawer.Footer>
                   <Drawer.Close asChild>
                     <Button variant="outline">Close contained review</Button>
+                  </Drawer.Close>
+                </Drawer.Footer>
+              </Drawer.Content>
+            </Drawer.Portal>
+          </Drawer.Root>
+        ) : null}
+      </Surface>
+    </Appearance>
+  );
+}
+
+function ThemeScopedPortalPanel() {
+  const [container, setContainer] = useState<HTMLElement | null>(null);
+
+  return (
+    <Appearance value="dark">
+      <Surface
+        bordered
+        data-flowstack-theme="qualification"
+        data-testid="theme-scoped-container"
+        inset="md"
+        level="base"
+        ref={setContainer}
+      >
+        {container ? (
+          <Drawer.Root>
+            <Drawer.Trigger asChild>
+              <Button>Open themed scoped portal</Button>
+            </Drawer.Trigger>
+            <Drawer.Portal container={container}>
+              <Drawer.Overlay />
+              <Drawer.Content data-testid="theme-scoped-drawer" size="sm">
+                <Drawer.Header>
+                  <Drawer.Title>Scoped theme preview</Drawer.Title>
+                  <Drawer.Description>
+                    This portal inherits Theme and Appearance from its container.
+                  </Drawer.Description>
+                </Drawer.Header>
+                <Drawer.Footer>
+                  <Drawer.Close asChild>
+                    <Button variant="outline">Close themed scoped portal</Button>
                   </Drawer.Close>
                 </Drawer.Footer>
               </Drawer.Content>
@@ -251,12 +301,13 @@ export function AppearancePage() {
           <Surface
             bordered
             className="appearance-theme-prototype"
-            data-flowstack-theme="contract-prototype"
+            data-flowstack-theme="qualification"
             data-testid="theme-contract-light-outer"
             inset="md"
             level="raised"
           >
-            <Text variant="body-sm">Theme light outer</Text>
+            <Text variant="body-sm">Qualification light outer</Text>
+            <Input aria-label="Qualification native control" placeholder="Native color scheme" />
             <Appearance value="dark">
               <Surface
                 bordered
@@ -264,7 +315,7 @@ export function AppearancePage() {
                 inset="md"
                 level="raised"
               >
-                <Text variant="body-sm">Theme dark middle</Text>
+                <Text variant="body-sm">Qualification dark middle</Text>
                 <Appearance value="light">
                   <Surface
                     bordered
@@ -279,6 +330,46 @@ export function AppearancePage() {
             </Appearance>
           </Surface>
         </Appearance>
+      </Scenario>
+
+      <Scenario {...appearanceScenarios[6]}>
+        <Grid.Root gap="4" minItemSize="sm">
+          <ThemeScopedPortalPanel />
+          <Surface bordered data-flowstack-theme="qualification" inset="md">
+            <Drawer.Root>
+              <Drawer.Trigger asChild>
+                <Button>Open themed body portal</Button>
+              </Drawer.Trigger>
+              <Drawer.Portal>
+                <Appearance value="light">
+                  <Drawer.Overlay
+                    data-flowstack-theme="qualification"
+                    data-testid="theme-explicit-overlay"
+                  />
+                </Appearance>
+                <Appearance value="light">
+                  <Drawer.Content
+                    data-flowstack-theme="qualification"
+                    data-testid="theme-explicit-drawer"
+                    size="sm"
+                  >
+                    <Drawer.Header>
+                      <Drawer.Title>Explicit light theme preview</Drawer.Title>
+                      <Drawer.Description>
+                        Body-level portal roots reproduce both authored scopes.
+                      </Drawer.Description>
+                    </Drawer.Header>
+                    <Drawer.Footer>
+                      <Drawer.Close asChild>
+                        <Button variant="outline">Close themed body portal</Button>
+                      </Drawer.Close>
+                    </Drawer.Footer>
+                  </Drawer.Content>
+                </Appearance>
+              </Drawer.Portal>
+            </Drawer.Root>
+          </Surface>
+        </Grid.Root>
       </Scenario>
     </VStack>
   );

@@ -68,13 +68,21 @@ test("review controls update the document environment", async ({ page }) => {
   await page.goto("/button");
 
   await expect(page.locator(".review-controls.brick-toolbar")).toHaveCount(1);
-  await expect(page.locator(".review-controls .brick-toolbar__toggle-group")).toHaveCount(2);
+  await expect(page.locator(".review-controls .brick-toolbar__toggle-group")).toHaveCount(3);
   await expect(
     page.locator(".review-controls .brick-toolbar__toggle-item"),
-  ).toHaveCount(5);
-  await expect(page.locator(".review-controls .brick-toolbar__separator")).toHaveCount(1);
+  ).toHaveCount(7);
+  await expect(page.locator(".review-controls .brick-toolbar__separator")).toHaveCount(2);
   await expect(page.getByRole("toolbar", { name: "Review controls" })).toBeVisible();
   await expect(page.getByRole("group", { name: "Direction" })).toBeAttached();
+  await expect(page.getByRole("group", { name: "Theme" })).toBeAttached();
+
+  await page.getByRole("button", { name: "Qualification", exact: true }).click();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flowstack-theme",
+    "qualification",
+  );
+  await expect(page).toHaveURL(/\?theme=qualification$/);
 
   await page.getByRole("button", { name: "dark", exact: true }).click();
   await expect(
@@ -116,7 +124,7 @@ test("review controls remain content-sized in a stacked header", async ({
   ]);
 
   expect(panelBox!.width).toBeLessThan(contentBox!.width);
-  expect(itemBoxes).toHaveLength(5);
+  expect(itemBoxes).toHaveLength(7);
   expect(Math.min(...itemBoxes.map(({ left }) => left))).toBeGreaterThanOrEqual(panelBox!.x);
   expect(Math.max(...itemBoxes.map(({ right }) => right))).toBeLessThanOrEqual(panelBox!.x + panelBox!.width);
   expect(Math.max(...itemBoxes.map(({ width }) => width))).toBeLessThan(panelBox!.width);

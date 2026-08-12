@@ -1,0 +1,163 @@
+{
+  "$schema": "flowstack.theme.v1",
+  "metadata": {
+    "id": "qualification",
+    "name": "Theme Qualification",
+    "description": "High-contrast teal and orange instrument theme for Brick browser qualification."
+  },
+  "compatibility": {
+    "brick": "^0.1.0"
+  },
+  "appearances": {
+    "supported": [
+      "light",
+      "dark"
+    ],
+    "default": "system"
+  },
+  "palettes": {
+    "evergreen": {
+      "50": "#e5faf4",
+      "100": "#d1f3ea",
+      "200": "#afe5d8",
+      "300": "#7dd1bd",
+      "400": "#45b79f",
+      "500": "#169881",
+      "600": "#087b69",
+      "700": "#006154",
+      "800": "#064c43",
+      "900": "#073d36"
+    },
+    "ember": {
+      "400": "#ff9a52",
+      "500": "#ff7a1a",
+      "600": "#d95e00"
+    },
+    "product": {
+      "promotion": "#8b5cf6",
+      "analytics": "#0ea5e9"
+    }
+  },
+  "roles": {
+    "brand": {
+      "primary": "{palettes.evergreen.700}",
+      "primary-dark": "{palettes.evergreen.300}",
+      "focus": "{palettes.ember.500}"
+    },
+    "promotion": "{palettes.product.promotion}",
+    "analytics": "{palettes.product.analytics}"
+  },
+  "brick": {
+    "light": {
+      "color": {
+        "accent": {
+          "border": "#65b9a8",
+          "on-soft": "#064c43",
+          "on-solid": "#ffffff",
+          "soft": "#d7f4ed",
+          "soft-hover": "#c4ebe2",
+          "soft-pressed": "#afe2d6",
+          "solid": "{roles.brand.primary}",
+          "solid-hover": "#00594f",
+          "solid-pressed": "#00483f",
+          "text": "#006154"
+        },
+        "border": {
+          "default": "#afc3ba",
+          "strong": "#6e8c80",
+          "subtle": "#d8e3de"
+        },
+        "focus-ring": "{roles.brand.focus}",
+        "surface": {
+          "base": "#ffffff",
+          "canvas": "#f7f9f7",
+          "overlay": "#ffffff",
+          "raised": "#ffffff",
+          "subtle": "#edf3f0"
+        },
+        "text": {
+          "disabled": "#72877f",
+          "inverse": "#ffffff",
+          "muted": "#5f746d",
+          "primary": "#10231d",
+          "secondary": "#36534a"
+        }
+      }
+    },
+    "dark": {
+      "color": {
+        "accent": {
+          "border": "#328d78",
+          "on-soft": "#82e8d2",
+          "on-solid": "#05251e",
+          "soft": "#123c32",
+          "soft-hover": "#174a3d",
+          "soft-pressed": "#1c5849",
+          "solid": "{roles.brand.primary-dark}",
+          "solid-hover": "#63e0c5",
+          "solid-pressed": "#2fc3a6",
+          "text": "#75e2ca"
+        },
+        "border": {
+          "default": "#3e6657",
+          "strong": "#6b9485",
+          "subtle": "#28483d"
+        },
+        "focus-ring": "#ff9a52",
+        "surface": {
+          "base": "#0d1d18",
+          "canvas": "#081511",
+          "overlay": "#1c382f",
+          "raised": "#172f27",
+          "subtle": "#132821"
+        },
+        "text": {
+          "disabled": "#7f958c",
+          "inverse": "#10231d",
+          "muted": "#95b0a6",
+          "primary": "#ecf8f3",
+          "secondary": "#c5dcd3"
+        }
+      }
+    }
+  },
+  "foundations": {
+    "radius": {
+      "control": "0.625rem",
+      "overlay": "1.25rem",
+      "surface": "1rem"
+    }
+  },
+  "components": {
+    "drawer": {
+      "background": "var(--brick-color-surface-overlay)",
+      "radius": "1.5rem"
+    }
+  },
+  "extensions": {
+    "flowstack.dev/qualification": {
+      "chart": {
+        "revenue": "{roles.analytics}"
+      },
+      "marketing": {
+        "promotion": "{roles.promotion}"
+      }
+    }
+  },
+  "requirements": {
+    "fonts": [
+      {
+        "family": "system-ui",
+        "source": "application"
+      }
+    ]
+  },
+  "guidance": {
+    "purpose": "Qualification only; not a reusable product theme.",
+    "review": [
+      "Accent controls must be teal rather than Brick purple.",
+      "Focus rings must be orange in both appearances.",
+      "Project promotion and analytics roles remain outside Brick vocabulary."
+    ]
+  }
+}

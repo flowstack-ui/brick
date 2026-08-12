@@ -58,6 +58,12 @@ test("Popover opens intentionally with generated name and description, then rest
   expect(arrowBox!.width).toBeGreaterThan(0);
   expect(arrowBox!.height).toBeGreaterThan(0);
   await expect(popover.getByRole("button", { name: "Reset" })).toHaveAttribute("data-variant", "outline");
+  const input = popover.getByRole("textbox", { name: "Project name" });
+  await input.focus();
+  await expect(input).toHaveCSS("outline-style", "none");
+  expect(
+    await input.locator("xpath=..").evaluate((element) => getComputedStyle(element).boxShadow),
+  ).not.toBe("none");
   await page.keyboard.press("Escape");
   await expect(popover).toBeHidden();
   await expect(trigger).toBeFocused();
