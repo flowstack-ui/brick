@@ -39,17 +39,18 @@ function Profile({ person = "Ada Lovelace" }: { person?: string }) {
   return <HStack className="hover-card-profile"><Avatar alt="" fallback={fallback} /><div><Text weight="semibold">{person}</Text><Text as="p" tone="secondary" variant="body-sm">{person === "Ada Lovelace" ? "Mathematician and early computing author." : "Computer scientist and compiler pioneer."}</Text><Badge>Available</Badge></div></HStack>;
 }
 
-function Preview({ align = "center", arrow = true, children = <Profile />, disabled = false, label, side = "bottom", size }: {
+function Preview({ align = "center", arrow = true, children = <Profile />, closeDelay = 0, disabled = false, label, side = "bottom", size }: {
   align?: "start" | "center" | "end";
   arrow?: boolean;
   children?: ReactNode;
+  closeDelay?: number;
   disabled?: boolean;
   label: string;
   side?: "top" | "right" | "bottom" | "left";
   size?: HoverCardSize;
 }) {
   const resource = label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  return <HoverCard.Root closeDelay={0} disabled={disabled} openDelay={0}><HoverCard.Trigger asChild><Link href={`/hover-card/destination?resource=${resource}`}>{label}</Link></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content align={align} data-testid={`hover-card-content-${resource}`} side={side} size={size}>{children}{arrow ? <HoverCard.Arrow /> : null}</HoverCard.Content></HoverCard.Portal></HoverCard.Root>;
+  return <HoverCard.Root closeDelay={closeDelay} disabled={disabled} openDelay={0}><HoverCard.Trigger asChild><Link href={`/hover-card/destination?resource=${resource}`}>{label}</Link></HoverCard.Trigger><HoverCard.Portal><HoverCard.Content align={align} data-testid={`hover-card-content-${resource}`} side={side} size={size}>{children}{arrow ? <HoverCard.Arrow /> : null}</HoverCard.Content></HoverCard.Portal></HoverCard.Root>;
 }
 
 function ScopedPreview({ appearance }: { appearance: "light" | "dark" }) {
@@ -86,7 +87,7 @@ export function HoverCardPage() {
     </Grid.Root></Scenario>
 
     <Scenario {...hoverCardScenarios[5]}><VStack className="hover-card-evidence-stack" data-testid="hover-card-composition">
-      <EvidenceGroup description="Both previews remain passive summaries whose full content exists at their genuine destinations." title="Preview content"><Grid.Root columns={2} className="hover-card-specimen-grid hover-card-specimen-grid--two"><Cell label="profile"><Preview label="Grace Hopper"><Profile person="Grace Hopper" /></Preview></Cell><Cell label="document"><Preview label="Compiler project notes" size="lg"><div className="hover-card-document"><Badge>Document</Badge><Text weight="semibold">Compiler project notes</Text><Text as="p" tone="secondary" variant="body-sm">Updated July 18 · 12 minute read · Engineering workspace.</Text></div></Preview></Cell></Grid.Root></EvidenceGroup>
+      <EvidenceGroup description="Both previews remain passive summaries whose full content exists at their genuine destinations." title="Preview content"><Grid.Root columns={2} className="hover-card-specimen-grid hover-card-specimen-grid--two"><Cell label="profile"><Preview closeDelay={300} label="Grace Hopper"><Profile person="Grace Hopper" /></Preview></Cell><Cell label="document"><Preview label="Compiler project notes" size="lg"><div className="hover-card-document"><Badge>Document</Badge><Text weight="semibold">Compiler project notes</Text><Text as="p" tone="secondary" variant="body-sm">Updated July 18 · 12 minute read · Engineering workspace.</Text></div></Preview></Cell></Grid.Root></EvidenceGroup>
       <EvidenceGroup description="Trigger composition changes only the authored link mechanism; each live result is paired with its actual link output." title="Trigger composition"><Grid.Root className="playground-output-stack"><RenderedOutput label="asChild Hover Card Trigger HTML"><Preview label="As-child resource" /></RenderedOutput><RenderedOutput label="render Hover Card Trigger HTML"><HoverCard.Root openDelay={0}><HoverCard.Trigger data-testid="hover-card-render" render={<a href="/hover-card/destination?resource=render-resource" />}>Render resource</HoverCard.Trigger><HoverCard.Portal><HoverCard.Content><Profile /><HoverCard.Arrow /></HoverCard.Content></HoverCard.Portal></HoverCard.Root></RenderedOutput></Grid.Root></EvidenceGroup>
     </VStack></Scenario>
 

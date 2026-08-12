@@ -31,9 +31,7 @@ test("repeated invocation, target transfer, and menu-tree dismissal work", async
   const secondTarget = page.getByRole("article", { name: "Mobile prototype" });
   await firstTarget.scrollIntoViewIfNeeded();
   const firstTargetBox = await firstTarget.boundingBox();
-  const secondTargetBox = await secondTarget.boundingBox();
   expect(firstTargetBox).not.toBeNull();
-  expect(secondTargetBox).not.toBeNull();
 
   await page.evaluate(() => {
     (window as Window & { contextMenuDefaults?: boolean[] }).contextMenuDefaults = [];
@@ -44,26 +42,27 @@ test("repeated invocation, target transfer, and menu-tree dismissal work", async
     });
   });
 
-  const firstPoint = {
-    x: firstTargetBox!.x + 24,
-    y: firstTargetBox!.y + firstTargetBox!.height / 2,
-  };
-  const repeatedPoint = {
-    x: firstTargetBox!.x + firstTargetBox!.width - 24,
-    y: firstPoint.y,
-  };
-  await page.mouse.click(firstPoint.x, firstPoint.y, { button: "right" });
+  const firstPosition = { x: 24, y: firstTargetBox!.height / 2 };
+  await firstTarget.click({ button: "right", position: firstPosition });
   const firstMenu = page.getByRole("menu", { name: "Design proposal actions" });
   await expect(firstMenu).toBeVisible();
   const firstMenuBox = await firstMenu.boundingBox();
 
-  await page.mouse.click(repeatedPoint.x, repeatedPoint.y, { button: "right" });
+  const repeatedTargetBox = await firstTarget.boundingBox();
+  expect(repeatedTargetBox).not.toBeNull();
+  await page.mouse.click(
+    repeatedTargetBox!.x + repeatedTargetBox!.width - 24,
+    repeatedTargetBox!.y + repeatedTargetBox!.height / 2,
+    { button: "right" },
+  );
   await expect(firstMenu).toBeVisible();
   const repeatedMenuBox = await firstMenu.boundingBox();
   expect(firstMenuBox).not.toBeNull();
   expect(repeatedMenuBox).not.toBeNull();
   expect(Math.abs(repeatedMenuBox!.x - firstMenuBox!.x)).toBeGreaterThan(20);
 
+  const secondTargetBox = await secondTarget.boundingBox();
+  expect(secondTargetBox).not.toBeNull();
   const secondTargetPoints = [
     { x: secondTargetBox!.x + 12, y: secondTargetBox!.y + 12 },
     { x: secondTargetBox!.x + secondTargetBox!.width - 12, y: secondTargetBox!.y + 12 },
