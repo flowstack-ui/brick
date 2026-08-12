@@ -25,7 +25,7 @@
     --brick-color-danger-solid-pressed: #901a33;
     --brick-color-danger-surface: #ffeef1;
     --brick-color-danger-text: #ad233f;
-    --brick-color-focus-ring: #ff7a1a;
+    --brick-color-focus-ring: #d95e00;
     --brick-color-info-border: #95c9f6;
     --brick-color-info-on-soft: #105da9;
     --brick-color-info-on-solid: #ffffff;
@@ -96,7 +96,7 @@
     --flowstack-theme-palettes-product-analytics: #0ea5e9;
     --flowstack-theme-palettes-product-promotion: #8b5cf6;
     --flowstack-theme-roles-analytics: #0ea5e9;
-    --flowstack-theme-roles-brand-focus: #ff7a1a;
+    --flowstack-theme-roles-brand-focus: #d95e00;
     --flowstack-theme-roles-brand-primary: #006154;
     --flowstack-theme-roles-brand-primary-dark: #7dd1bd;
     --flowstack-theme-roles-promotion: #8b5cf6;
@@ -206,7 +206,7 @@
     --brick-color-danger-solid-pressed: #901a33;
     --brick-color-danger-surface: #ffeef1;
     --brick-color-danger-text: #ad233f;
-    --brick-color-focus-ring: #ff7a1a;
+    --brick-color-focus-ring: #d95e00;
     --brick-color-info-border: #95c9f6;
     --brick-color-info-on-soft: #105da9;
     --brick-color-info-on-solid: #ffffff;

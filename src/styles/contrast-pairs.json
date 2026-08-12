@@ -1,0 +1,148 @@
+{
+  "$schema": "flowstack.brick-contrast-pairs.v1",
+  "$description": "Canonical semantic color adjacencies that every compiled Brick theme must preserve. Muted text on subtle surfaces and disabled text are excluded because those contexts are not a maintained normal-text promise.",
+  "algorithm": "wcag2-relative-luminance",
+  "colorSpace": "srgb",
+  "groups": [
+    {
+      "id": "text-primary-on-surface",
+      "kind": "text",
+      "foreground": "--brick-color-text-primary",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "text-secondary-on-surface",
+      "kind": "text",
+      "foreground": "--brick-color-text-secondary",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "text-muted-on-surface",
+      "kind": "text",
+      "foreground": "--brick-color-text-muted",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "text-inverse-on-neutral-solid",
+      "kind": "text",
+      "foreground": "--brick-color-text-inverse",
+      "backgrounds": ["--brick-color-text-primary", "--brick-color-text-secondary"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "accent-on-solid",
+      "kind": "text",
+      "foreground": "--brick-color-accent-on-solid",
+      "backgrounds": ["--brick-color-accent-solid", "--brick-color-accent-solid-hover", "--brick-color-accent-solid-pressed"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "accent-on-soft",
+      "kind": "text",
+      "foreground": "--brick-color-accent-on-soft",
+      "backgrounds": ["--brick-color-accent-soft", "--brick-color-accent-soft-hover", "--brick-color-accent-soft-pressed"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "accent-text-on-surface",
+      "kind": "text",
+      "foreground": "--brick-color-accent-text",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "info-on-solid",
+      "kind": "text",
+      "foreground": "--brick-color-info-on-solid",
+      "backgrounds": ["--brick-color-info-solid", "--brick-color-info-solid-hover", "--brick-color-info-solid-pressed"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "info-on-soft",
+      "kind": "text",
+      "foreground": "--brick-color-info-on-soft",
+      "backgrounds": ["--brick-color-info-soft", "--brick-color-info-soft-hover", "--brick-color-info-soft-pressed"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "info-text-on-surface",
+      "kind": "text",
+      "foreground": "--brick-color-info-text",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "success-on-solid",
+      "kind": "text",
+      "foreground": "--brick-color-success-on-solid",
+      "backgrounds": ["--brick-color-success-solid", "--brick-color-success-solid-hover", "--brick-color-success-solid-pressed"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "success-on-soft",
+      "kind": "text",
+      "foreground": "--brick-color-success-on-soft",
+      "backgrounds": ["--brick-color-success-soft", "--brick-color-success-soft-hover", "--brick-color-success-soft-pressed"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "success-text-on-surface",
+      "kind": "text",
+      "foreground": "--brick-color-success-text",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "warning-on-solid",
+      "kind": "text",
+      "foreground": "--brick-color-warning-on-solid",
+      "backgrounds": ["--brick-color-warning-solid", "--brick-color-warning-solid-hover", "--brick-color-warning-solid-pressed"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "warning-on-soft",
+      "kind": "text",
+      "foreground": "--brick-color-warning-on-soft",
+      "backgrounds": ["--brick-color-warning-soft", "--brick-color-warning-soft-hover", "--brick-color-warning-soft-pressed"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "warning-text-on-surface",
+      "kind": "text",
+      "foreground": "--brick-color-warning-text",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "danger-on-solid",
+      "kind": "text",
+      "foreground": "--brick-color-danger-on-solid",
+      "backgrounds": ["--brick-color-danger-solid", "--brick-color-danger-solid-hover", "--brick-color-danger-solid-pressed"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "danger-on-soft",
+      "kind": "text",
+      "foreground": "--brick-color-danger-on-soft",
+      "backgrounds": ["--brick-color-danger-soft", "--brick-color-danger-soft-hover", "--brick-color-danger-soft-pressed"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "danger-text-on-surface",
+      "kind": "text",
+      "foreground": "--brick-color-danger-text",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "focus-ring-on-surface",
+      "kind": "non-text",
+      "foreground": "--brick-color-focus-ring",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "minimumRatio": 3
+    }
+  ]
+}

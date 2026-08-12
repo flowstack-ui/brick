@@ -29,6 +29,14 @@ assert.equal(manifest.activation.appearanceAttribute, contract.css.appearanceAtt
 const required = contract.tokens.filter(({ classification }) => classification === "required");
 assert.equal(report.counts.brickRequired, required.length * contract.css.appearanceValues.length);
 assert.equal(report.counts.componentInputs, contract.componentThemeInputs.length);
+assert.equal(report.counts.contrastPairs, contract.contrast.pairs.length * source.appearances.supported.length);
+assert.equal(report.contrast.algorithm, contract.contrast.algorithm);
+assert.equal(report.contrast.colorSpace, contract.contrast.colorSpace);
+assert.equal(report.contrast.pairs.length, report.counts.contrastPairs);
+for (const result of report.contrast.pairs) {
+  assert.equal(result.valid, true);
+  assert.ok(result.ratio >= result.minimumRatio, `${result.appearance}/${result.id} has insufficient contrast`);
+}
 for (const { name } of required) {
   assert.match(css, new RegExp(`${name.replaceAll("-", "\\-")}:`), `missing ${name}`);
 }

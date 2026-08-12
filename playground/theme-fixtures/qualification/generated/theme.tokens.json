@@ -424,7 +424,7 @@
         },
         "focus-ring": {
           "$type": "color",
-          "$value": "#ff7a1a"
+          "$value": "#d95e00"
         },
         "info": {
           "border": {
@@ -751,7 +751,7 @@
     "brand": {
       "focus": {
         "$type": "string",
-        "$value": "#ff7a1a"
+        "$value": "#d95e00"
       },
       "primary": {
         "$type": "string",

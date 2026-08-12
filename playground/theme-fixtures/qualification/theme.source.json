@@ -42,7 +42,7 @@
     "brand": {
       "primary": "{palettes.evergreen.700}",
       "primary-dark": "{palettes.evergreen.300}",
-      "focus": "{palettes.ember.500}"
+      "focus": "{palettes.ember.600}"
     },
     "promotion": "{palettes.product.promotion}",
     "analytics": "{palettes.product.analytics}"
