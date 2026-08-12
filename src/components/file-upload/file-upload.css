@@ -73,7 +73,7 @@
     color: var(--brick-file-upload-trigger-foreground);
     cursor: pointer;
     font: inherit;
-    font-weight: var(--brick-typography-label-font-weight);
+    font-weight: var(--brick-typography-label-md-font-weight);
   }
 
   .brick-file-upload__trigger:hover:not(:disabled):not([aria-disabled="true"]) { filter: brightness(0.96); }

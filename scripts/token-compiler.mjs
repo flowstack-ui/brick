@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 
 const aliasPattern = /^\{([^}]+)\}$/;
 
-function collectTokens(node, path = [], inheritedType, tokens = new Map()) {
+export function collectTokens(node, path = [], inheritedType, tokens = new Map()) {
   if (!node || typeof node !== "object" || Array.isArray(node)) {
     throw new TypeError(`Invalid token group at ${path.join(".") || "root"}`);
   }
@@ -25,7 +25,7 @@ function collectTokens(node, path = [], inheritedType, tokens = new Map()) {
   return tokens;
 }
 
-function resolveToken(path, tokens, resolving = new Set()) {
+export function resolveToken(path, tokens, resolving = new Set()) {
   const token = tokens.get(path);
   if (!token) throw new Error(`Unknown token alias: ${path}`);
   if (resolving.has(path)) {
@@ -75,7 +75,7 @@ function serializeShadow(value) {
     .join(", ");
 }
 
-function serializeValue(token) {
+export function serializeValue(token) {
   switch (token.type) {
     case "color":
       return serializeColor(token.value);
@@ -100,7 +100,7 @@ function serializeValue(token) {
   }
 }
 
-function cssName(path, appearance) {
+export function cssName(path, appearance) {
   const prefix = `semantic.${appearance}.`;
   if (!path.startsWith(prefix)) {
     throw new Error(`Expected semantic ${appearance} token, received ${path}`);
@@ -108,7 +108,7 @@ function cssName(path, appearance) {
   return `--brick-${path.slice(prefix.length).replaceAll(".", "-")}`;
 }
 
-function declarationEntries(appearance, tokens) {
+export function declarationEntries(appearance, tokens) {
   return [...tokens.keys()]
     .filter((path) => path.startsWith(`semantic.${appearance}.`))
     .sort()
@@ -145,8 +145,7 @@ function appearanceEntries(entries) {
 }
 
 export async function compileTokens(sourceFile) {
-  const source = JSON.parse(await readFile(sourceFile, "utf8"));
-  const tokens = collectTokens(source);
+  const tokens = await readTokenSource(sourceFile);
   const allLightEntries = declarationEntries("light", tokens);
   const lightEntries = appearanceEntries(allLightEntries);
   const darkEntries = appearanceEntries(declarationEntries("dark", tokens));
@@ -182,4 +181,9 @@ ${dark}
   }
 }
 `;
+}
+
+export async function readTokenSource(sourceFile) {
+  const source = JSON.parse(await readFile(sourceFile, "utf8"));
+  return collectTokens(source);
 }

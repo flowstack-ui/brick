@@ -11,3 +11,30 @@
     container-type: inline-size;
   }
 }
+
+@layer flowstack.theme {
+  :where([data-flowstack-theme="contract-prototype"]),
+  :where([data-flowstack-theme="contract-prototype"][data-brick-appearance="light"]),
+  :where([data-flowstack-theme="contract-prototype"] [data-brick-appearance="light"]) {
+    color-scheme: light;
+    --brick-color-surface-raised: #fff4d6;
+    --brick-color-text-primary: #35280a;
+    --brick-color-border-subtle: #c9a84c;
+  }
+
+  :where([data-flowstack-theme="contract-prototype"][data-brick-appearance="dark"]),
+  :where([data-flowstack-theme="contract-prototype"] [data-brick-appearance="dark"]) {
+    color-scheme: dark;
+    --brick-color-surface-raised: #17324d;
+    --brick-color-text-primary: #eaf5ff;
+    --brick-color-border-subtle: #5b8db8;
+  }
+}
+
+@layer playground.components {
+  .appearance-theme-prototype,
+  .appearance-theme-prototype [data-brick-appearance] {
+    display: grid;
+    gap: var(--brick-space-3);
+  }
+}

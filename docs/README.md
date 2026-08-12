@@ -9,6 +9,8 @@ This directory is the public documentation authority for
   setup
 - [Appearance and tokens](guides/appearance-and-tokens.md) — light, dark,
   system appearance, semantic tokens, and scoped customization
+- [Theme contract](guides/theme-contract.md) — generated token classifications,
+  approved component inputs, scope attributes, and cascade position
 - [Agent Knowledge](guides/agent-knowledge.md) — public human- and
   machine-readable component selection, composition, and validation guidance
 - [Component guides](#component-guides) — public API and usage contracts

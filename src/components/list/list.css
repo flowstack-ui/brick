@@ -52,8 +52,8 @@
     --brick-list-item-column-gap: var(--brick-space-2);
     --brick-list-title-font-size: var(--brick-typography-body-sm-font-size);
     --brick-list-title-line-height: var(--brick-typography-body-sm-line-height);
-    --brick-list-description-font-size: var(--brick-typography-supporting-xs-font-size);
-    --brick-list-description-line-height: var(--brick-typography-supporting-xs-line-height);
+    --brick-list-description-font-size: var(--brick-typography-caption-font-size);
+    --brick-list-description-line-height: var(--brick-typography-caption-line-height);
   }
 
   .brick-list[data-size="lg"] {
@@ -61,8 +61,8 @@
     --brick-list-item-column-gap: var(--brick-space-4);
     --brick-list-title-font-size: var(--brick-typography-body-lg-font-size);
     --brick-list-title-line-height: var(--brick-typography-body-lg-line-height);
-    --brick-list-description-font-size: var(--brick-typography-supporting-md-font-size);
-    --brick-list-description-line-height: var(--brick-typography-supporting-md-line-height);
+    --brick-list-description-font-size: var(--brick-typography-body-md-font-size);
+    --brick-list-description-line-height: var(--brick-typography-body-md-line-height);
   }
 
   .brick-list[data-density="compact"] {

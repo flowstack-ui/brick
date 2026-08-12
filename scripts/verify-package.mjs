@@ -91,6 +91,8 @@ try {
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/agent-knowledge.md",
     "dist/agents/manifest.json",
+    "dist/theme-contract.json",
+    "docs/guides/theme-contract.md",
     "package.json",
   ]) {
     assert.ok(files.has(required), `packed artifact is missing ${required}`);
@@ -102,13 +104,15 @@ try {
     "package.json",
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
+    "docs/guides/theme-contract.md",
     "docs/guides/agent-knowledge.md",
   ]);
   for (const file of files) {
     const isRuntimeFile = /^dist\/.+\.(?:js|css|d\.ts)(?:\.map)?$/u.test(file);
     const isAgentArtifact = /^dist\/agents\/.+\.(?:json|md)$/u.test(file);
+    const isThemeContract = file === "dist/theme-contract.json";
     assert.ok(
-      allowedMetadata.has(file) || isRuntimeFile || isAgentArtifact,
+      allowedMetadata.has(file) || isRuntimeFile || isAgentArtifact || isThemeContract,
       `packed artifact contains non-public file ${file}`,
     );
   }
@@ -116,6 +120,9 @@ try {
   const packageJson = JSON.parse(await readPackedFile("package.json"));
   assert.equal(packageJson.repository.url, "git+https://github.com/flowstack-ui/brick.git");
   const agentManifest = JSON.parse(await readPackedFile("dist/agents/manifest.json"));
+  const themeContract = JSON.parse(await readPackedFile("dist/theme-contract.json"));
+  assert.equal(themeContract.$schema, "flowstack.brick-theme-contract.v1");
+  assert.equal(packageJson.exports["./theme-contract.json"], "./dist/theme-contract.json");
   assert.equal(agentManifest.package, packageJson.name);
   assert.ok(agentManifest.components.length > 0, "Agent Knowledge manifest is empty");
   for (const requiredComponent of ["accordion", "list"]) {
@@ -133,6 +140,7 @@ try {
     "README.md",
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
+    "docs/guides/theme-contract.md",
     "docs/guides/agent-knowledge.md",
   ];
   const forbiddenDocumentation = [

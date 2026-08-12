@@ -745,6 +745,18 @@ export const componentDocumentationContracts = {
       "--brick-drawer-safe-bottom",
       "--brick-drawer-safe-left",
     ],
+    themeInputs: {
+      "--brick-drawer-background": {
+        type: "color",
+        fallback: "--brick-color-surface-overlay",
+        supportedRange: "CSS <color>",
+      },
+      "--brick-drawer-radius": {
+        type: "dimension",
+        fallback: "--brick-radius-overlay",
+        supportedRange: "non-negative CSS <length>",
+      },
+    },
   },
   field: {
     source: "src/components/field/Field.tsx",

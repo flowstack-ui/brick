@@ -139,12 +139,15 @@ Override public semantic variables with ordinary CSS:
 ```
 
 See [Appearance and tokens](docs/guides/appearance-and-tokens.md) for the full
-contract.
+customization guide. Theme tooling can discover Brick's generated
+[`flowstack.brick-theme-contract.v1`](docs/guides/theme-contract.md) artifact
+through `@flowstack-ui/brick/theme-contract.json`.
 
 ## Documentation
 
 - [Installation and stylesheet setup](docs/guides/installation.md)
 - [Appearance and semantic tokens](docs/guides/appearance-and-tokens.md)
+- [Generated theme contract](docs/guides/theme-contract.md)
 
 The complete component guides live with the source repository:
 

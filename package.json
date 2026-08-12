@@ -34,6 +34,7 @@
     "./agents/manifest.json": "./dist/agents/manifest.json",
     "./agents/*.json": "./dist/agents/*.json",
     "./agents/*.md": "./dist/agents/*.md",
+    "./theme-contract.json": "./dist/theme-contract.json",
     "./appearance": {
       "types": "./dist/appearance.d.ts",
       "default": "./dist/appearance.js"
@@ -359,16 +360,18 @@
     "dist",
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
+    "docs/guides/theme-contract.md",
     "docs/guides/agent-knowledge.md"
   ],
   "scripts": {
     "clean": "node scripts/clean.mjs",
-    "build": "npm run clean && npm run build:js && npm run build:css && npm run agents:build",
+    "build": "npm run clean && npm run build:js && npm run build:css && npm run build:theme-contract && npm run agents:build",
     "agents:build": "node scripts/build-agent-knowledge.mjs",
     "agents:check": "node scripts/build-agent-knowledge.mjs --check",
     "build:js": "tsc -p tsconfig.build.json",
     "build:css": "node scripts/build-styles.mjs --mode production",
     "build:css:dev": "node scripts/build-styles.mjs --mode development",
+    "build:theme-contract": "node scripts/build-theme-contract.mjs",
     "build:playground": "npm run build && npm run build:playground:built",
     "build:playground:built": "vite build --config playground/vite.config.ts",
     "build:consumer": "npm run build && npm run build:consumer:built",
@@ -415,6 +418,7 @@
     "verify:consumer:built": "node scripts/verify-app-consumer.mjs",
     "verify:consumer:archive": "node scripts/verify-app-consumer.mjs --tarball",
     "verify:repository-contract": "node scripts/verify-repository-contract.mjs",
+    "verify:theme-contract": "node scripts/verify-theme-contract.mjs",
     "test:processes": "node scripts/check-test-ports.mjs",
     "verify:typography": "node scripts/verify-typography.mjs",
     "verify:playground-primitives": "node scripts/verify-playground-primitives.mjs",
@@ -433,7 +437,7 @@
     "verify:playground-composition": "node scripts/verify-playground-composition.mjs",
     "check": "npm run check:repository",
     "check:focused": "npm run test:component",
-    "check:repository": "npm run verify:repository-contract && npm run agents:check && npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run verify:playground-code && npm run verify:playground-nav-list && npm run verify:playground-sidebar && npm run verify:playground-icon && npm run verify:playground-image && npm run verify:playground-list && npm run verify:playground-composition && npm run build && npm run typecheck:built && npm run test:node:built && npm run test:components && npm run test:css && npm run build:playground:built && npm run build:consumer:built && npm run pack:check && npm run verify:consumers:built",
+    "check:repository": "npm run verify:repository-contract && npm run verify:theme-contract && npm run agents:check && npm run test:ownership && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run verify:playground-code && npm run verify:playground-nav-list && npm run verify:playground-sidebar && npm run verify:playground-icon && npm run verify:playground-image && npm run verify:playground-list && npm run verify:playground-composition && npm run build && npm run typecheck:built && npm run test:node:built && npm run test:components && npm run test:css && npm run build:playground:built && npm run build:consumer:built && npm run pack:check && npm run verify:consumers:built",
     "check:release": "npm run check:repository && npm run test:browser:release:built && npm run verify:consumer:built && npm run size:css",
     "prepublishOnly": "npm run build"
   },

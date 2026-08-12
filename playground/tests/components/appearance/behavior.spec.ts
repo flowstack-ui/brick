@@ -63,3 +63,24 @@ test("Appearance explicitly scopes portalled visual roots without changing Drawe
   await expect(containedContent).not.toBeAttached();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 });
+
+test("theme contract selectors restore the nearest nested appearance", async ({ page }) => {
+  const lightOuter = page.getByTestId("theme-contract-light-outer");
+  const darkMiddle = page.getByTestId("theme-contract-dark-middle");
+  const lightInner = page.getByTestId("theme-contract-light-inner");
+
+  await expect(lightOuter).toHaveCSS(
+    "background-color",
+    "rgb(255, 244, 214)",
+  );
+  await expect(darkMiddle).toHaveCSS(
+    "background-color",
+    "rgb(23, 50, 77)",
+  );
+  await expect(lightInner).toHaveCSS(
+    "background-color",
+    "rgb(255, 244, 214)",
+  );
+  await expect(lightInner).toHaveCSS("color-scheme", "light");
+  await expect(darkMiddle).toHaveCSS("color-scheme", "dark");
+});

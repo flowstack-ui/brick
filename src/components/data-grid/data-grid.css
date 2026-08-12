@@ -8,7 +8,7 @@
     --brick-data-grid-radius: var(--brick-radius-surface);
     --brick-data-grid-header-background: var(--brick-color-surface-subtle);
     --brick-data-grid-header-foreground: var(--brick-color-text-primary);
-    --brick-data-grid-body-background: var(--brick-color-surface);
+    --brick-data-grid-body-background: var(--brick-color-surface-base);
     --brick-data-grid-footer-background: var(--brick-color-surface-subtle);
     --brick-data-grid-cell-foreground: var(--brick-color-text-primary);
     --brick-data-grid-cell-padding-inline: var(--brick-space-4);
@@ -36,9 +36,9 @@
   .brick-data-grid__caption[data-side="top"] { caption-side: top; padding-block-end: var(--brick-data-grid-caption-gap); }
   .brick-data-grid__caption[data-side="bottom"] { caption-side: bottom; padding-block-start: var(--brick-data-grid-caption-gap); }
   .brick-data-grid__column-header, .brick-data-grid__cell { box-sizing: border-box; min-block-size: var(--brick-data-grid-row-min-block-size); padding-block: var(--brick-data-grid-cell-padding-block); padding-inline: var(--brick-data-grid-cell-padding-inline); border-block-end: var(--brick-data-grid-border-width) solid var(--brick-data-grid-border-color); text-align: start; vertical-align: middle; overflow-wrap: break-word; }
-  .brick-data-grid__column-header { color: var(--brick-data-grid-header-foreground); background: var(--brick-data-grid-header-background); font-weight: var(--brick-typography-heading-sm-font-weight); white-space: nowrap; }
+  .brick-data-grid__column-header { color: var(--brick-data-grid-header-foreground); background: var(--brick-data-grid-header-background); font-weight: var(--brick-typography-compact-title-font-weight); white-space: nowrap; }
   .brick-data-grid__cell { background: var(--brick-data-grid-body-background); }
-  .brick-data-grid__footer :where(.brick-data-grid__column-header, .brick-data-grid__cell) { background: var(--brick-data-grid-footer-background); font-weight: var(--brick-typography-heading-sm-font-weight); }
+  .brick-data-grid__footer :where(.brick-data-grid__column-header, .brick-data-grid__cell) { background: var(--brick-data-grid-footer-background); font-weight: var(--brick-typography-compact-title-font-weight); }
   :where(.brick-data-grid__column-header, .brick-data-grid__cell)[data-align="center"] { text-align: center; }
   :where(.brick-data-grid__column-header, .brick-data-grid__cell)[data-align="end"] { text-align: end; }
   :where(.brick-data-grid__column-header, .brick-data-grid__cell)[data-numeric] { white-space: nowrap; font-variant-numeric: tabular-nums; }
