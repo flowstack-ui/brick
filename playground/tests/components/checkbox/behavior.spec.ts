@@ -24,6 +24,20 @@ test("Checkbox overview preserves the default medium unchecked state", async ({ 
   await expect(checkbox).toHaveAttribute("aria-checked", "true");
 });
 
+test("Checkbox keeps the row clickable while control feedback stays on the square", async ({ page }) => {
+  const checkbox = page
+    .getByTestId("checkbox-overview")
+    .getByRole("checkbox", { name: "Ready to publish" });
+  const control = checkbox.locator(".brick-checkbox-control");
+
+  await checkbox.hover();
+  await expect(checkbox).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await checkbox.focus();
+  await expect(checkbox).toHaveCSS("outline-style", "none");
+  await expect(control).toHaveCSS("outline-style", "solid");
+  expect((await checkbox.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+});
+
 test("Checkbox state and size comparisons change only their named dimension", async ({ page }) => {
   const states = page.getByTestId("checkbox-states").getByRole("checkbox");
   await expect(states).toHaveCount(3);

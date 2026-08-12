@@ -63,7 +63,10 @@ Public exports are `PasswordToggleField`, `PasswordToggleFieldRoot`,
 `underline` rejects `shape`. Root preserves controlled/uncontrolled visibility, change callback, disabled, read-only, invalid, required, and validation props. Input preserves supported password input/native props. Toggle children replace the default Icon. Icon accepts required visible/hidden nodes, with Brick defaults when omitted.
 
 ## Visual recipes and states
-Recipes, sizes, and shapes align with Input. Visibility changes native input type and artwork only, not geometry. Focus, invalid, disabled, read-only, and required states derive from Atom.
+Recipes, sizes, and shapes align with Input. Visibility changes native input
+type and artwork only, not geometry. The default artwork is optically centered
+inside the square action. Focus, invalid, disabled, read-only, and required
+states derive from Atom.
 
 ## Tokens and CSS hooks
 Public variables are `--brick-password-height` and `--brick-password-radius`. Root exposes `data-variant`, `data-size`, `data-shape`, `data-full-width`, and `data-slot`; Atom exposes visibility and form-state data attributes. Do not target private SVG paths.

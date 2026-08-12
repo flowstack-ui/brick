@@ -59,8 +59,10 @@ and normal children are available.
 
 ## Visual recipes and states
 
-Size changes the complete row and visual control. Atom states drive checked,
-mixed, unchecked, disabled, invalid, hover, active, and focus-visible output.
+Size changes the complete row and visual control. The complete row remains the
+clickable target, while hover, active, and focus-visible feedback is confined
+to the visual checkbox square. Atom states drive checked, mixed, unchecked,
+disabled, invalid, and read-only output.
 
 ## Tokens and CSS hooks
 

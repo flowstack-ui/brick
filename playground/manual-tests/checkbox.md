@@ -26,8 +26,10 @@ Action: Toggle each checkbox by its row and with Space; compare unchecked,
 checked, indeterminate, and each size.
 
 Expected: Activation happens once and focus stays visible. State changes only
-the native state/mark; sizes change the complete row and control together while
-identical content makes comparisons reliable.
+the native state/mark; the complete row remains clickable without receiving a
+painted hover, press, or focus treatment; feedback stays on the visual square.
+Sizes change the complete row and control together while identical content
+makes comparisons reliable.
 
 Result:
 Notes or issue:
