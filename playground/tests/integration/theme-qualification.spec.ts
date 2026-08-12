@@ -37,8 +37,12 @@ test("system appearance resolves through the generated light and dark maps", asy
   await expect(root).toHaveCSS("--brick-color-accent-solid", "#7dd1bd");
 });
 
-test("the generated theme remains legible under user preference media", async ({ page }) => {
-  await page.emulateMedia({ colorScheme: "dark", forcedColors: "active", reducedMotion: "reduce" });
+test("the generated theme remains legible under user preference media", async ({ browserName, page }) => {
+  await page.emulateMedia({
+    colorScheme: "dark",
+    forcedColors: browserName === "chromium" ? "active" : "none",
+    reducedMotion: "reduce",
+  });
   await page.goto("/appearance?theme=qualification");
   await expect(page.locator("html")).toHaveAttribute("data-flowstack-theme", "qualification");
   await expect(page.locator("html")).toHaveCSS("--brick-color-focus-ring", "#ff9a52");

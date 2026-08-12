@@ -1,6 +1,6 @@
 {
   "name": "@flowstack-ui/brick",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Opinionated styled React components built on @flowstack-ui/atom.",
   "type": "module",
   "license": "MIT",

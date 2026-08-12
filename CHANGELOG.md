@@ -4,6 +4,14 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.1.9 - 2026-08-12
+
+### Fixed
+
+- Limited forced-colors emulation in the generated-theme accessibility
+  qualification to Chromium, while retaining dark-appearance, reduced-motion,
+  token, visibility, and Axe coverage across Chromium, Firefox, and WebKit.
+
 ## 0.1.8 - 2026-08-12
 
 ### Fixed
