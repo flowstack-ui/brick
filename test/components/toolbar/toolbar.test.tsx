@@ -14,6 +14,8 @@ describe("Toolbar", () => {
     expect(screen.getByRole("button", { name: "Save" })).toHaveClass("brick-toolbar__button");
     expect(screen.getByRole("separator")).toHaveClass("brick-toolbar__separator");
     expect(screen.getByRole("group", { name: "Format" })).toHaveClass("brick-toolbar__toggle-group");
+    expect(screen.getByRole("group", { name: "Format" })).toHaveAttribute("data-tone", "accent");
+    expect(screen.getByRole("group", { name: "Format" })).toHaveAttribute("data-variant", "soft");
     expect(screen.getByRole("button", { name: "Bold" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("link", { name: "Help" })).toHaveClass("brick-toolbar__link");
   });
@@ -25,6 +27,13 @@ describe("Toolbar", () => {
     expect(rootRef.current).toHaveAttribute("data-size", "lg");
     expect(rootRef.current).toHaveAttribute("data-variant", "outline");
     expect(buttonRef.current).toHaveClass("brick-toolbar__button", "action");
+  });
+  it("applies shared toggle variant and tone at the Toolbar group boundary", () => {
+    render(<Toolbar.Root ariaLabel="Views"><Toolbar.ToggleGroup ariaLabel="View" defaultValue="preview" tone="neutral" variant="solid"><Toolbar.ToggleItem value="preview">Preview</Toolbar.ToggleItem><Toolbar.ToggleItem value="code">Code</Toolbar.ToggleItem></Toolbar.ToggleGroup></Toolbar.Root>);
+    const group = screen.getByRole("group", { name: "View" });
+    expect(group).toHaveAttribute("data-tone", "neutral");
+    expect(group).toHaveAttribute("data-variant", "solid");
+    expect(screen.getByRole("button", { name: "Preview" })).toHaveAttribute("aria-pressed", "true");
   });
   it("preserves Atom command and toggle behavior", async () => {
     const user = userEvent.setup(); const action = vi.fn(); const toggle = vi.fn();

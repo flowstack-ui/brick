@@ -18,7 +18,7 @@ Scenario order: `01 Overview`, `02 Variants`, `03 Sizes`, `04 Shapes`, `05 Visib
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Recipes and visibility
-Setup: Review 01–05. Action: Compare recipes and toggle default and localized examples by pointer and keyboard. Expected: Text never shifts, eye artwork remains optically centered inside its square action, focus remains visible, and action names always describe the next action. Result:
+Setup: Review 01–05. Action: Compare recipes and toggle default and localized examples by pointer and keyboard. Expected: Text never shifts, the complete field has visible hover feedback, eye artwork remains optically centered inside its square action, input and visibility-button focus keep one matching semantic frame while the button gains a compact inset ring in the same color, and action names always describe the next action. Result:
 Notes or issue:
 
 ## Step 2 — States and form composition

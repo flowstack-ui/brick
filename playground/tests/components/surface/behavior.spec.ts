@@ -101,7 +101,15 @@ test("border, elevation, radius, and inset remain independent", async ({
   const insetValues = await insets.evaluateAll((elements) =>
     elements.map((element) => parseFloat(getComputedStyle(element).paddingLeft)),
   );
-  expect(insetValues).toEqual([0, 12, 24, 32]);
+  expect(insetValues).toEqual([0, 12, 24, 32, 48, 64]);
+
+  const responsiveInset = page.getByTestId("surface-responsive-inset");
+  await page.setViewportSize({ width: 700, height: 800 });
+  await expect(responsiveInset).toHaveCSS("padding-left", "12px");
+  await page.setViewportSize({ width: 900, height: 800 });
+  await expect(responsiveInset).toHaveCSS("padding-left", "32px");
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await expect(responsiveInset).toHaveCSS("padding-left", "64px");
 });
 
 test("semantic output, ref, and public customization are exact", async ({

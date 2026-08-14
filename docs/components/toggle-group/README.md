@@ -60,6 +60,7 @@ values, and `(value: string) => void`; multiple mode requires
 | Root prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
+| `tone` | `accent`, `neutral` | `accent` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `shape` | `rounded`, `pill` | `rounded` |
 | `attached` | `boolean` | `false` |
@@ -73,9 +74,15 @@ Item requires `value`. Atom supplies
 orientation, direction, looping, disabled state, composition, and native props.
 Native `color` is excluded.
 
+Neutral solid selection uses a strong theme-derived neutral surface with the
+normal foreground instead of the inverse black/white pair.
+
+Disabled Items use Toggle's faded disabled foreground and quiet surface;
+selected disabled Items do not retain enabled outline or inset emphasis.
+
 ## Visual recipes and states
 
-Root recipes cascade uniformly to Items. Separated groups use a gap and may
+Root variant and tone recipes cascade uniformly to Items. Separated groups use a gap and may
 wrap; attached groups join borders and logical corners. `fullWidth` distributes
 Items evenly. Every variant retains a distinct selected treatment.
 
@@ -83,7 +90,7 @@ Items evenly. Every variant retains a distinct selected treatment.
 
 Stable hooks are `.brick-toggle-group`, `.brick-toggle-group-item`, their Atom
 slots/state attributes, and Root `data-orientation`, `data-attached`,
-`data-full-width`, `data-variant`, `data-size`, and `data-shape`. Item exposes
+`data-full-width`, `data-variant`, `data-tone`, `data-size`, and `data-shape`. Item exposes
 `data-state`, `data-value`, `data-disabled`, and `data-icon-only`. Public tokens
 are `--brick-toggle-group-gap`, `--brick-toggle-min-block-size`,
 `--brick-toggle-padding-inline`, `--brick-toggle-gap`,

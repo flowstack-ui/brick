@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Apply Brick typography roles, sizes, tones, weight, alignment, and wrapping while preserving the chosen semantic text element.
+Apply Brick typography roles, tones, weight, alignment, wrapping, and deliberate transforms through flexible Text or named semantic text exports.
 
 ## Use when
 
-- Interface copy needs Brick typography, including headings, paragraphs, short editorial eyebrows, captions, metadata, or inline text.
+- Interface copy needs Brick typography, including headings, paragraphs, short editorial eyebrows, captions, metadata, or inline text. Prefer Heading, Paragraph, Caption, and Eyebrow for their common roles; use Text for a different deliberate semantic/visual pairing.
 
 ## Choose something else when
 
@@ -14,26 +14,29 @@ Apply Brick typography roles, sizes, tones, weight, alignment, and wrapping whil
 
 ## Required composition
 
-- Choose the semantic element first, then select the closest Brick text role, size, and tone; use Stack for text layout rather than wrapper spans.
+- Choose the named semantic export when it fits. Heading requires an explicit level and keeps that level independent from its visual variant. Otherwise choose Text's semantic element first, then its closest visual variant and tone. Keep inline components that complete the same sentence inside that text owner, and use Stack only for separately meaningful text peers.
 
 ## Rules
 
-- **MUST:** Do not choose heading or paragraph semantics solely from the desired font size.
+- **MUST:** Do not choose heading or paragraph semantics solely from the desired font size. Use the display scale, responsive visual variant, or responsive logical alignment without changing the correct semantic level.
+- **MUST:** Author real names and titles with their correct casing. Use transform only for deliberate visual presentation; CSS capitalize is not language-aware title case and must not repair registry or product content.
+- **MUST:** Prefer Heading, Paragraph, Caption, or Eyebrow for ordinary roles; use Text when their fixed semantic host or restricted visual family does not fit.
 - **MUST:** Use Text for standalone styled interface copy instead of native spans plus duplicate typography CSS.
 - **MUST:** Preserve readable body sizing, line height, measure, contrast, and user font scaling.
 - **MUST:** Reserve variant=eyebrow for short labels that introduce a nearby heading; do not select it merely to make unrelated copy smaller. Use body text for explanatory sentences and Badge for passive status or category content.
 - **MUST:** Use tone=inherit when Text is intentionally composed inside a parent such as Badge that owns the foreground and contrast relationship.
+- **MUST:** Keep a Link or other inline component that completes one sentence inside the semantic Text paragraph and let it inherit the surrounding typography and natural wrapping.
 - **SHOULD:** Give separately meaningful inline peer labels compatible typography metrics and arrange them with HStack gap rather than literal spaces or manual positional offsets.
 - **MUST:** Load styles.css or core.css plus text.css.
 
 ## Common mistakes
 
-- **Avoid:** Using five spans to build brand text, selecting all-caps eyebrow styling for paragraph descriptions, allowing nested Text to override a parent's foreground, or aligning peer labels with literal whitespace. **Instead:** Use Text with semantic elements, reserve display treatments for their intended roles, inherit the owning foreground, and use HStack gap for layout between separate nodes.
+- **Avoid:** Using five spans to build brand text, repeatedly spelling ordinary headings and paragraphs as Text plus as, using capitalize to repair authored titles, selecting all-caps eyebrow styling for paragraph descriptions, allowing nested Text to override a parent's foreground, splitting one sentence into layout siblings, or aligning independent peer labels with literal whitespace. **Instead:** Use the named semantic exports where they fit, author correct casing, reserve transforms and display treatments for their intended roles, inherit the owning foreground, keep one sentence in one text flow, and use HStack gap only between separate peers.
 
 ## Validation checklist
 
-- Check heading order, semantics, line length, wrapping, truncation, user font scaling, zoom, contrast, themes, and RTL.
-- Confirm parent component text parts and foreground ownership are not bypassed, peer labels align without positional CSS, and CSS is loaded.
+- Check heading order, semantics, responsive visual-recipe changes at Brick breakpoints, line length, wrapping, truncation, user font scaling, zoom, contrast, themes, and RTL.
+- Confirm named exports render one correct native host, Heading level follows document structure, transformed text preserves authored content in the DOM, inline sentence content remains inside its semantic owner, independent peer labels align without positional CSS, parent foreground ownership is not bypassed, and CSS is loaded.
 
 ## Related guidance
 

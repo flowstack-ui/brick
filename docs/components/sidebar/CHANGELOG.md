@@ -6,6 +6,9 @@ Sidebar follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added `surface="transparent|base|raised"` so panel paint is independent from
+  docked/floating geometry and can intentionally inherit an ancestor Surface.
+
 - Added public Agent Knowledge for component selection, composition,
   CSS-delivery, recurring mistakes, and validation.
 

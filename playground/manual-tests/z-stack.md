@@ -19,7 +19,10 @@ Scenario order: `01 Overview`, `02 Nine-position placement`,
 
 ## Step 1 — Overlap and placement
 
-Review scenarios 01 and 02. Confirm every layer shares one region, the root keeps natural size, and top-start, center, and bottom-end placement match their labels without absolute positioning.
+Review scenarios 01 and 02. Confirm every layer shares one region, the root
+keeps natural size, the Overlay remains visibly above the positioned
+Foundation layer, and top-start, center, and bottom-end placement match their
+labels without absolute positioning.
 
 Result:
 Notes or issue:

@@ -4,6 +4,54 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Expanded Surface `inset` with theme-derived `xl` and `2xl` page-panel
+  recipes plus the shared mobile-first responsive value grammar, with updated
+  public, machine-readable, browser, visual, and manual evidence.
+- Expanded Text with direct Heading, Paragraph, Caption, and Eyebrow semantic
+  exports plus an explicit closed visual transform recipe. Named exports reuse
+  Text's one-element implementation and keep heading level independent from
+  typography variant.
+
+### Added
+
+- Added OTP Field Agent Knowledge for accessible naming, one-value segmented
+  entry, paste/autofill preservation, application policy boundaries, and
+  deliberate focus and submission.
+- Added Select Agent Knowledge for accessible naming, compound option anatomy,
+  controlled application effects, and correct selection against adjacent
+  choice, filtering, action, and navigation components.
+- Added Code Block Agent Knowledge and routed preserved multi-line technical
+  source through the package layer-selection guide.
+- Added `accent` and `neutral` selected-state tones to Toggle and ToggleGroup,
+  and matching variant/tone recipes to Toolbar ToggleGroup without changing
+  Atom-owned behavior.
+- Advanced the generated theme contract to revision 3 with closed categorical
+  component inputs and conditional contrast declarations.
+- Added shared floating and modal semantic shadow roles for consistent
+  theme-wide overlay elevation.
+
+### Changed
+
+- Made Link follow an audited project decoration policy by default while
+  retaining explicit underlined and plain local variants.
+- Made visible Show and Hide hosts layout-transparent by default so responsive
+  wrappers preserve parent-owned flex and grid spacing.
+
+### Fixed
+
+- Preserved ZStack source-order painting when an earlier ratio-based Image or
+  another positioned layer precedes a later authored overlay.
+- Gave neutral solid Toolbar ToggleItems a component-specific layered surface
+  recipe and clarified disabled paint across interactive controls.
+- Corrected neutral solid recipes across Button, IconButton, Badge, Toggle,
+  ToggleGroup, and Toolbar ToggleItems so they use theme-derived neutral
+  surfaces rather than appearance-inverting black/white fills.
+- Kept Toolbar focus rings fully visible inside horizontal and vertical
+  scrolling boundaries, including edge controls and the plain variant.
+- Added whole-field Password Toggle Field hover feedback and made the
+  keyboard-focused visibility action use the same semantic focus color as its
+  field frame.
+
 ## 0.1.9 - 2026-08-12
 
 ### Fixed

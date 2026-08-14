@@ -11,3 +11,6 @@ Password Toggle Field follows the package version of `@flowstack-ui/brick`.
 
 - Removed inline-baseline drift from the default eye artwork so it remains
   optically centered inside the square visibility action.
+- Added the missing Input-family field hover feedback and replaced the
+  Toggle's browser-colored focus outline with a compact inset ring that uses
+  the same semantic focus color as the complete field frame.

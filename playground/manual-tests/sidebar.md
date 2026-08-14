@@ -48,7 +48,7 @@ Setup: Review scenarios 08–09 in light, dark, forced colors, reduced motion, 2
 
 Action: Repeat the primary Trigger interaction and inspect customized and localized shells.
 
-Expected: State, hierarchy, focus, borders, names, and main content remain perceivable without overlap, clipping, unwanted page scrolling, or motion when reduced motion is requested.
+Expected: State, hierarchy, focus, borders, names, and main content remain perceivable without overlap, clipping, unwanted page scrolling, or motion when reduced motion is requested. Transparent, base, and raised surface choices paint only the panel as documented, while floating keeps its raised default unless explicitly overridden.
 
 Result:
 Notes or issue:

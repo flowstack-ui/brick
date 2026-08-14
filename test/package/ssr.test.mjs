@@ -775,7 +775,7 @@ test("Link renders deterministic native navigation without a client boundary", (
   assert.match(markup, /^<a/);
   assert.match(markup, /class="brick-link"/);
   assert.match(markup, /data-slot="link"/);
-  assert.match(markup, /data-variant="underline"/);
+  assert.match(markup, /data-variant="theme"/);
   assert.match(markup, /data-tone="neutral"/);
   assert.match(markup, /data-size="inherit"/);
   assert.match(markup, /href="\/guides"/);

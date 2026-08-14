@@ -14,12 +14,14 @@
     "Keep purposeful sections in Blocks, page arrangements in Blueprints, theme values in a Theme, and business behavior in the application."
   ],
   "selection": [
-    { "intent": "text with Brick typography", "use": "Text", "note": "Choose the semantic rendered element through its public API." },
+    { "intent": "headings, paragraphs, captions, and eyebrows", "use": "Heading, Paragraph, Caption, or Eyebrow", "note": "Give Heading an explicit semantic level and choose its visual variant independently." },
+    { "intent": "other text with Brick typography", "use": "Text", "note": "Choose the semantic rendered element through its public API and author the intended letter case in content." },
     { "intent": "one-dimensional alignment", "use": "Stack, HStack, or VStack", "note": "Use Grid for two-dimensional track relationships." },
     { "intent": "bounded page width", "use": "Container", "note": "Use Surface or Card when the region also needs a visual boundary." },
     { "intent": "top application or page bar", "use": "AppBar", "note": "Compose navigation and action components inside its sections." },
     { "intent": "responsive presence", "use": "Show or Hide", "note": "Use CSS media visibility rather than rendering two JavaScript-controlled trees." },
     { "intent": "image with resilient loading", "use": "Image", "note": "Use an adapter only when a framework image optimizer provides a measured capability Brick lacks." },
+    { "intent": "preserved multi-line technical source", "use": "Code Block", "note": "Keep syntax tokenization in a consumer adapter and pass the exact plain source separately for copy behavior." },
     { "intent": "navigation destination", "use": "Link or Button with href", "note": "Use Link for ordinary navigation and Button only for an emphasized destination." },
     { "intent": "grouped disclosure sections", "use": "Accordion", "note": "Choose Collapsible for one independent disclosure and Tabs for one shared switching panel." },
     { "intent": "ordered or unordered content", "use": "List", "note": "Choose NavList, an interactive collection, Table, or DataGrid when rows navigate, select, activate, or expose data relationships." }
@@ -43,5 +45,5 @@
     "Confirm every rendered Brick component has its required modular CSS or the complete stylesheet is loaded once.",
     "Classify each repeated composition as component, theme, Block, Blueprint, adapter, or application ownership."
   ],
-  "related": ["interface-composition", "app-bar", "container", "stack", "grid", "text", "image", "show", "hide", "accordion", "list"]
+  "related": ["interface-composition", "app-bar", "container", "stack", "grid", "text", "image", "code-block", "show", "hide", "accordion", "list"]
 }

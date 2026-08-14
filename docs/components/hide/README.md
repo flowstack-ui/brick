@@ -1,6 +1,6 @@
 # Hide
 
-Hide keeps content mounted while removing it from visual layout from one fixed viewport breakpoint. It is CSS layout, not conditional React rendering.
+Hide keeps content mounted while removing it from visual layout from one fixed viewport breakpoint. It is CSS layout, not conditional React rendering. When visible, its host is layout-transparent so parent flex and grid spacing continue to apply directly to its children.
 
 ## When and where to use
 
@@ -41,7 +41,7 @@ Exports: `Hide`, `HideProps`, `HideBreakpoint`, and `HideElement`.
 
 ## Anatomy and DOM ownership
 
-Hide renders one native host, `div` by default, with `.brick-hide`, `data-from`, and `data-slot="hide"`. Children always render. The ref targets the selected `HTMLElement`.
+Hide renders one native host, `div` by default, with `.brick-hide`, `data-from`, and `data-slot="hide"`. The host remains in the DOM and the ref targets it, but its visible `display: contents` layout contributes no wrapper box. Children always render.
 
 ## API
 
@@ -56,7 +56,7 @@ Thresholds are `30rem`, `48rem`, `64rem`, and `80rem`.
 
 ## Visual recipes and states
 
-Below `from`, Hide assigns no display; from the threshold upward it applies `display:none`. It has no visual or interaction recipes.
+Below `from`, Hide applies `display:contents`; from the threshold upward it applies `display:none`. It has no visual or interaction recipes.
 
 ## Tokens and CSS hooks
 
@@ -76,7 +76,7 @@ Hide adds no role or ARIA. Hidden descendants leave focus navigation and the acc
 
 ## Composition, native props, and refs
 
-Choose a valid semantic host. Hide adds a real wrapper and has no `asChild`, render, fallback, or unmount API. Avoid invalid table grammar and duplicate responsive content identity.
+Omit `as` when the default `div` is sufficient. Use `as` only for deliberate HTML semantics or valid document structure; it does not create a layout box. Put paint and geometry on a child layout component. Hide has no `asChild`, render, fallback, or unmount API. Avoid invalid table grammar and duplicate responsive content identity.
 
 ## Examples
 

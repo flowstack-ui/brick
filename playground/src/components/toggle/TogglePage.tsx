@@ -7,6 +7,7 @@ import {
   Toggle,
   type ToggleShape,
   type ToggleSize,
+  type ToggleTone,
   type ToggleVariant,
 } from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
@@ -16,6 +17,7 @@ import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./toggle.playground.css";
 
 const variants: ToggleVariant[] = ["solid", "soft", "outline", "ghost"];
+const tones: ToggleTone[] = ["accent", "neutral"];
 const sizes: ToggleSize[] = ["sm", "md", "lg"];
 const shapes: ToggleShape[] = ["rounded", "pill"];
 const customTokens = {
@@ -151,13 +153,22 @@ export function TogglePage() {
       </Scenario>
 
       <Scenario {...toggleScenarios[1]}>
-        <Grid.Root columns={4} className="toggle-specimen-grid toggle-specimen-grid--four" data-testid="toggle-variants">
-          {variants.map((variant) => (
-            <Cell key={variant} label={variant}>
-              <Toggle variant={variant}>Preview</Toggle>
-            </Cell>
-          ))}
-        </Grid.Root>
+        <VStack className="toggle-evidence-stack">
+          <Grid.Root columns={4} className="toggle-specimen-grid toggle-specimen-grid--four" data-testid="toggle-variants">
+            {variants.map((variant) => (
+              <Cell key={variant} label={variant}>
+                <Toggle variant={variant}>Preview</Toggle>
+              </Cell>
+            ))}
+          </Grid.Root>
+          <Grid.Root columns={2} className="toggle-specimen-grid toggle-specimen-grid--two" data-testid="toggle-tones">
+            {tones.map((tone) => (
+              <Cell key={tone} label={tone}>
+                <Toggle defaultPressed tone={tone} variant="solid">Preview</Toggle>
+              </Cell>
+            ))}
+          </Grid.Root>
+        </VStack>
       </Scenario>
 
       <Scenario {...toggleScenarios[2]}>

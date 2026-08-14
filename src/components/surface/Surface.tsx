@@ -11,6 +11,10 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
 
 export type SurfaceElement =
   | "div"
@@ -27,7 +31,7 @@ export type SurfaceElement =
 export type SurfaceLevel = "canvas" | "base" | "subtle" | "raised";
 export type SurfaceElevation = "none" | "low" | "medium" | "high";
 export type SurfaceRadius = "none" | "subtle" | "surface";
-export type SurfaceInset = "none" | "sm" | "md" | "lg";
+export type SurfaceInset = "none" | "sm" | "md" | "lg" | "xl" | "2xl";
 export type SurfaceScrimStrength = "soft" | "medium" | "strong";
 export type SurfaceScrimDirection =
   | "uniform"
@@ -50,7 +54,7 @@ export type SurfaceProps = SurfaceNativeProps & SurfaceHostProps & {
   bordered?: boolean;
   elevation?: SurfaceElevation;
   radius?: SurfaceRadius;
-  inset?: SurfaceInset;
+  inset?: ResponsiveValue<SurfaceInset>;
   className?: string;
   style?: CSSProperties;
   slot?: string;
@@ -149,10 +153,10 @@ function SurfaceImpl(
 ) {
   const rootProps = {
     ...props,
+    ...responsiveDataAttributes("data-inset", inset, { alwaysInitial: true }),
     className: mergeClassName(className),
     "data-bordered": bordered ? "" : undefined,
     "data-elevation": elevation,
-    "data-inset": inset,
     "data-level": level,
     "data-radius": radius,
     "data-slot": slot,

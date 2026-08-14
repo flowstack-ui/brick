@@ -14,6 +14,9 @@ Select follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Select Agent Knowledge covering component selection, required
+  compound anatomy, accessible naming, controlled application effects, common
+  mistakes, and validation.
 - Initial compound Select API built on Atom Select 0.9.3 with complete styled
   anatomy, native forms, Field relationships, controlled/uncontrolled value
   and open state, groups, disabled options, scrolling, portal positioning, and

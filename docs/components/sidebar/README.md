@@ -64,6 +64,7 @@ and `Footer` are static panel regions.
 | `variant` | `docked`, `floating` | `docked` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `position` | `static`, `sticky` | `static` |
+| `surface` | `transparent`, `base`, `raised` | `base` when docked; `raised` when floating |
 | `defaultState` | `expanded`, `rail`, `offcanvas` | `expanded` |
 | `collapsedState` | `rail`, `offcanvas` | `offcanvas` |
 | `side` | `left`, `right` | `left` |
@@ -76,7 +77,10 @@ class, style, slot, ref, `render`, and `asChild`.
 ## Visual recipes and states
 
 Docked attaches the panel to the shell edge with a logical separator.
-Floating adds gap, radius, border, and elevation. Size controls closed expanded
+Floating adds gap, radius, border, and elevation. Surface selects panel paint
+independently: transparent lets an ancestor Surface own the shell background,
+base uses the ordinary panel surface, and raised uses the elevated panel
+surface. Size controls closed expanded
 and rail widths. Static participates in normal layout; sticky uses the public
 offset and available-height variables.
 
@@ -84,7 +88,7 @@ Rail changes width only; consumers explicitly provide compact, accessibly
 named content. Offcanvas reaches a zero track and Atom immediately makes Panel
 inert and hidden from assistive technology.
 
-Root emits `data-variant`, `data-size`, and `data-position`; Atom emits
+Root emits `data-variant`, `data-size`, `data-position`, and `data-surface`; Atom emits
 `data-state`, `data-side`, `data-collapsed-state`, and disabled metadata.
 
 ## Tokens and CSS hooks
@@ -111,11 +115,16 @@ Public variables include `--brick-sidebar-expanded-width-sm`,
 ```tsx
 <Sidebar.Root
   position="sticky"
+  surface="transparent"
   style={{ "--brick-sidebar-sticky-offset": "3rem" }}
 >
   {/* parts */}
 </Sidebar.Root>
 ```
+
+Prefer the closed surface recipes for panel paint. A transparent Sidebar may
+be nested in an ancestor Surface so that one outer region owns the background;
+do not override Sidebar background selectors to make the panel blend.
 
 ## Responsive behavior
 

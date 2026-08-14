@@ -21,7 +21,7 @@ export function ZStackPage() {
       <Scenario {...zStackScenarios[0]}>
         <Canvas>
           <ZStack.Root data-testid="z-stack-overview">
-            <Surface inset="lg" level="subtle" radius="surface"><Text>Foundation layer</Text></Surface>
+            <Surface className="z-stack-positioned-layer" inset="lg" level="subtle" radius="surface"><Text>Foundation layer</Text></Surface>
             <ZStack.Item align="center" justify="center"><Badge>Overlay</Badge></ZStack.Item>
           </ZStack.Root>
         </Canvas>

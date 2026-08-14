@@ -22,7 +22,7 @@
     --brick-navigation-menu-viewport-foreground: var(--brick-color-text-primary);
     --brick-navigation-menu-viewport-border: var(--brick-color-border-subtle);
     --brick-navigation-menu-viewport-radius: var(--brick-radius-control);
-    --brick-navigation-menu-viewport-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 48%);
+    --brick-navigation-menu-viewport-shadow: var(--brick-shadow-floating);
     --brick-navigation-menu-viewport-padding: var(--brick-space-4);
     --brick-navigation-menu-viewport-max-inline-size: min(42rem, calc(100dvi - 2 * var(--brick-space-3)));
     --brick-navigation-menu-motion-duration: var(--brick-motion-duration-fast);

@@ -13,7 +13,17 @@
       color-mix(in srgb, var(--brick-color-shadow), transparent 18%);
     --brick-surface-shadow: var(--brick-surface-elevation-none);
     --brick-surface-radius: var(--brick-radius-surface);
-    --brick-surface-padding: var(--brick-space-0);
+    --brick-surface-inset-none: var(--brick-space-0);
+    --brick-surface-inset-sm: var(--brick-space-3);
+    --brick-surface-inset-md: var(--brick-space-5);
+    --brick-surface-inset-lg: var(--brick-space-6);
+    --brick-surface-inset-xl: calc(
+      var(--brick-space-6) + var(--brick-space-4)
+    );
+    --brick-surface-inset-2xl: calc(
+      var(--brick-space-6) + var(--brick-space-6)
+    );
+    --brick-surface-padding: var(--brick-surface-inset-none);
     --brick-surface-scrim-color: var(--brick-color-scrim);
     /* Strength is perceptual: intensity and directional reach move together. */
     --brick-surface-scrim-soft: color-mix(
@@ -196,15 +206,59 @@
   }
 
   .brick-surface[data-inset="sm"] {
-    --brick-surface-padding: var(--brick-space-3);
+    --brick-surface-padding: var(--brick-surface-inset-sm);
   }
 
   .brick-surface[data-inset="md"] {
-    --brick-surface-padding: var(--brick-space-5);
+    --brick-surface-padding: var(--brick-surface-inset-md);
   }
 
   .brick-surface[data-inset="lg"] {
-    --brick-surface-padding: var(--brick-space-6);
+    --brick-surface-padding: var(--brick-surface-inset-lg);
+  }
+
+  .brick-surface[data-inset="xl"] {
+    --brick-surface-padding: var(--brick-surface-inset-xl);
+  }
+
+  .brick-surface[data-inset="2xl"] {
+    --brick-surface-padding: var(--brick-surface-inset-2xl);
+  }
+
+  @media (width >= 30rem) {
+    .brick-surface[data-inset-sm="none"] { --brick-surface-padding: var(--brick-surface-inset-none); }
+    .brick-surface[data-inset-sm="sm"] { --brick-surface-padding: var(--brick-surface-inset-sm); }
+    .brick-surface[data-inset-sm="md"] { --brick-surface-padding: var(--brick-surface-inset-md); }
+    .brick-surface[data-inset-sm="lg"] { --brick-surface-padding: var(--brick-surface-inset-lg); }
+    .brick-surface[data-inset-sm="xl"] { --brick-surface-padding: var(--brick-surface-inset-xl); }
+    .brick-surface[data-inset-sm="2xl"] { --brick-surface-padding: var(--brick-surface-inset-2xl); }
+  }
+
+  @media (width >= 48rem) {
+    .brick-surface[data-inset-md="none"] { --brick-surface-padding: var(--brick-surface-inset-none); }
+    .brick-surface[data-inset-md="sm"] { --brick-surface-padding: var(--brick-surface-inset-sm); }
+    .brick-surface[data-inset-md="md"] { --brick-surface-padding: var(--brick-surface-inset-md); }
+    .brick-surface[data-inset-md="lg"] { --brick-surface-padding: var(--brick-surface-inset-lg); }
+    .brick-surface[data-inset-md="xl"] { --brick-surface-padding: var(--brick-surface-inset-xl); }
+    .brick-surface[data-inset-md="2xl"] { --brick-surface-padding: var(--brick-surface-inset-2xl); }
+  }
+
+  @media (width >= 64rem) {
+    .brick-surface[data-inset-lg="none"] { --brick-surface-padding: var(--brick-surface-inset-none); }
+    .brick-surface[data-inset-lg="sm"] { --brick-surface-padding: var(--brick-surface-inset-sm); }
+    .brick-surface[data-inset-lg="md"] { --brick-surface-padding: var(--brick-surface-inset-md); }
+    .brick-surface[data-inset-lg="lg"] { --brick-surface-padding: var(--brick-surface-inset-lg); }
+    .brick-surface[data-inset-lg="xl"] { --brick-surface-padding: var(--brick-surface-inset-xl); }
+    .brick-surface[data-inset-lg="2xl"] { --brick-surface-padding: var(--brick-surface-inset-2xl); }
+  }
+
+  @media (width >= 80rem) {
+    .brick-surface[data-inset-xl="none"] { --brick-surface-padding: var(--brick-surface-inset-none); }
+    .brick-surface[data-inset-xl="sm"] { --brick-surface-padding: var(--brick-surface-inset-sm); }
+    .brick-surface[data-inset-xl="md"] { --brick-surface-padding: var(--brick-surface-inset-md); }
+    .brick-surface[data-inset-xl="lg"] { --brick-surface-padding: var(--brick-surface-inset-lg); }
+    .brick-surface[data-inset-xl="xl"] { --brick-surface-padding: var(--brick-surface-inset-xl); }
+    .brick-surface[data-inset-xl="2xl"] { --brick-surface-padding: var(--brick-surface-inset-2xl); }
   }
 
   @media (forced-colors: active) {

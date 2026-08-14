@@ -135,7 +135,9 @@ export const SliderMarker = forwardRef<HTMLSpanElement, SliderMarkerProps>(
   ) {
     const context = useSliderContext();
     const percent = context.valueToPercent(value);
+    const range = context.getRangeState();
     const edge = percent <= 0 ? "start" : percent >= 100 ? "end" : undefined;
+    const selected = percent >= range.startPercent && percent <= range.endPercent;
     const resolvedStyle = {
       ...style,
       "--brick-slider-marker-percent": percent,
@@ -148,6 +150,7 @@ export const SliderMarker = forwardRef<HTMLSpanElement, SliderMarkerProps>(
         className={mergeClassName("brick-slider__marker", className)}
         data-edge={edge}
         data-orientation={context.orientation}
+        data-selected={selected ? "" : undefined}
         data-slot={dataSlot ?? "slider-marker"}
         data-value={value}
         ref={ref}

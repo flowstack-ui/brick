@@ -11,8 +11,8 @@ control keeps the same meaning in both states.
 ## When not to use
 
 Use Button for one-shot actions, Checkbox for submitted choices, and
-ToggleGroup for related pressed commands. Toggle has no loading, tone, or icon
-placement API.
+ToggleGroup for related pressed commands. Toggle has no loading, semantic
+status tone, or icon placement API.
 
 ## Installation and imports
 
@@ -49,12 +49,13 @@ Toggle renders Atom `Toggle.Root` as a native `button` and forwards an
 
 ## API
 
-Public exports are `Toggle`, `ToggleProps`, `ToggleVariant`, `ToggleSize`, and
-`ToggleShape`.
+Public exports are `Toggle`, `ToggleProps`, `ToggleVariant`, `ToggleTone`,
+`ToggleSize`, and `ToggleShape`.
 
 | Prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
+| `tone` | `accent`, `neutral` | `accent` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `shape` | `rounded`, `pill` | `rounded` |
 | `iconOnly` | `boolean` | `false` |
@@ -65,14 +66,21 @@ native button props, `asChild`, and `render`. Native `color` and standalone
 
 ## Visual recipes and states
 
-Each variant keeps a distinct resting and pressed treatment. Sizes change the
+Each variant keeps a distinct resting and pressed treatment. Tone selects an
+accent or neutral pressed-state palette without implying status. Sizes change the
 whole control geometry; `pill` changes radius; `iconOnly` makes the control
 square. Atom exposes pressed, hover, focus, active, and disabled state.
+
+Neutral solid selection uses a strong theme-derived neutral surface with the
+normal foreground instead of the inverse black/white pair.
+
+Disabled Toggles use a faded disabled foreground and quiet surface; selected
+disabled state does not retain the enabled outline or inset selection edge.
 
 ## Tokens and CSS hooks
 
 Stable hooks are `.brick-toggle`, slot `toggle`, `data-variant`, `data-size`,
-`data-shape`, `data-icon-only`, `data-state`, and `data-disabled`. Public
+`data-tone`, `data-shape`, `data-icon-only`, `data-state`, and `data-disabled`. Public
 tokens are `--brick-toggle-min-block-size`, `--brick-toggle-padding-inline`,
 `--brick-toggle-gap`, `--brick-toggle-radius`, and
 `--brick-toggle-icon-size`.
@@ -101,7 +109,7 @@ semantics when composing. The ref targets the rendered `HTMLButtonElement`.
 ## Examples
 
 ```tsx
-<Toggle variant="outline" pressed={pinned} onPressedChange={setPinned}>
+<Toggle tone="neutral" variant="outline" pressed={pinned} onPressedChange={setPinned}>
   Pin
 </Toggle>
 ```

@@ -22,6 +22,7 @@ import {
 export type SidebarVariant = "docked" | "floating";
 export type SidebarSize = "sm" | "md" | "lg";
 export type SidebarPosition = "static" | "sticky";
+export type SidebarSurface = "transparent" | "base" | "raised";
 
 type ComposedProps<T extends { children?: ReactNode; render?: unknown }> = Omit<T, "asChild" | "children" | "render"> & (
   | { asChild: true; render?: never; children: ReactElement<{ children?: ReactNode }> }
@@ -32,6 +33,7 @@ export type SidebarRootProps = Omit<ComposedProps<AtomRootProps>, "size"> & {
   variant?: SidebarVariant;
   size?: SidebarSize;
   position?: SidebarPosition;
+  surface?: SidebarSurface;
 };
 export type SidebarPanelProps = ComposedProps<AtomPanelProps>;
 export type SidebarMainProps = ComposedProps<AtomMainProps>;
@@ -87,8 +89,9 @@ function Region({ baseClass, defaultSlot, props, ref }: { baseClass: string; def
   return <div {...rest} className={merged.className} data-slot={merged["data-slot"]} ref={ref}>{children}</div>;
 }
 
-export const SidebarRoot = forwardRef<HTMLDivElement, SidebarRootProps>(function SidebarRoot({ asChild = false, children, className, position = "static", render, size = "md", variant = "docked", "data-slot": dataSlot, ...props }, ref) {
-  return <AtomSidebar.Root {...props} asChild={asChild} className={mergeClassName("brick-sidebar", className)} data-position={position} data-size={size} data-slot={slot(dataSlot, "sidebar")} data-variant={variant} ref={ref} render={render}>{children}</AtomSidebar.Root>;
+export const SidebarRoot = forwardRef<HTMLDivElement, SidebarRootProps>(function SidebarRoot({ asChild = false, children, className, position = "static", render, size = "md", surface, variant = "docked", "data-slot": dataSlot, ...props }, ref) {
+  const resolvedSurface = surface ?? (variant === "floating" ? "raised" : "base");
+  return <AtomSidebar.Root {...props} asChild={asChild} className={mergeClassName("brick-sidebar", className)} data-position={position} data-size={size} data-slot={slot(dataSlot, "sidebar")} data-surface={resolvedSurface} data-variant={variant} ref={ref} render={render}>{children}</AtomSidebar.Root>;
 });
 export const SidebarTrigger = forwardRef<HTMLButtonElement, SidebarTriggerProps>(function SidebarTrigger({ asChild = false, children, className, render, "data-slot": dataSlot, ...props }, ref) {
   return <AtomSidebar.Trigger {...props} asChild={asChild} className={mergeClassName("brick-sidebar__trigger", className)} data-slot={slot(dataSlot, "sidebar-trigger")} ref={ref} render={render}>{children}</AtomSidebar.Trigger>;

@@ -472,6 +472,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "BreadcrumbRoot",
       "BreadcrumbSeparator",
       "Button",
+      "Caption",
       "Card",
       "Carousel",
       "CarouselControls",
@@ -580,6 +581,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "DropdownMenuSubContent",
       "DropdownMenuSubTrigger",
       "DropdownMenuTrigger",
+      "Eyebrow",
       "Feed",
       "Field",
       "Fieldset",
@@ -597,6 +599,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Frame",
       "Grid",
       "HStack",
+      "Heading",
       "Hide",
       "HoverCard",
       "Icon",
@@ -687,6 +690,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "PaginationNext",
       "PaginationPrevious",
       "PaginationRoot",
+      "Paragraph",
       "PasswordToggleField",
       "PasswordToggleFieldIcon",
       "PasswordToggleFieldInput",
@@ -1048,6 +1052,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(textarea.TextareaRoot, brick.Textarea.Root);
   assert.equal(textarea.TextareaCount, brick.Textarea.Count);
   assert.equal(text.Text, brick.Text);
+  assert.equal(text.Heading, brick.Heading);
+  assert.equal(text.Paragraph, brick.Paragraph);
+  assert.equal(text.Caption, brick.Caption);
+  assert.equal(text.Eyebrow, brick.Eyebrow);
   assert.equal(link.Link, brick.Link);
   assert.equal(stack.Stack, brick.Stack);
   assert.equal(stack.HStack, brick.HStack);

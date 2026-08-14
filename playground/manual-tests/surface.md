@@ -29,7 +29,9 @@ the page controls.
 
 Expected: The default is a quiet base surface. Each scenario changes only its
 labelled dimension. Shadows form four clear but restrained levels, corners
-progress from square to surface radius, and inset increases evenly.
+progress from square to surface radius, and inset increases evenly through the
+six recipes. The responsive specimen moves from compact to spacious to
+expansive inset without changing its content or paint.
 
 Result:
 Notes or issue:
@@ -70,8 +72,9 @@ Action: Resize/rotate, read the Arabic specimen, tab to **Focus boundary**, and
 inspect the elevated nested surface.
 
 Expected: Panels stack in one column; text, edges, and focus remain visible
-without horizontal scrolling or clipping. Logical inset is even in RTL.
-Forced colors replace lost shadows with visible system-color boundaries.
+without horizontal scrolling or clipping. Logical inset is even in RTL and
+the responsive inset follows the shared viewport breakpoints. Forced colors
+replace lost shadows with visible system-color boundaries.
 
 Result:
 Notes or issue:

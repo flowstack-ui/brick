@@ -5,7 +5,7 @@
     --brick-popover-muted-foreground: var(--brick-color-text-secondary);
     --brick-popover-border: var(--brick-color-border-subtle);
     --brick-popover-radius: var(--brick-radius-overlay);
-    --brick-popover-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 48%);
+    --brick-popover-shadow: var(--brick-shadow-floating);
     --brick-popover-space: var(--brick-space-4);
     --brick-popover-max-inline-size-sm: 18rem;
     --brick-popover-max-inline-size-md: 24rem;

@@ -18,7 +18,7 @@ Scenario order: `01 Overview`, `02 Breakpoints`, `03 Exact edges and live resize
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Responsive layout and natural display
-Setup: Review 01–04 while resizing across every named threshold. Action: Inspect exact edges and each display specimen. Expected: Show appears only from its threshold without changing the visible display mode, layout gaps, or content. Result:
+Setup: Review 01–04 while resizing across every named threshold. Action: Inspect exact edges and each child-display specimen. Expected: Show appears only from its threshold and remains layout-transparent while each child retains its authored display and the parent keeps control of gaps. Result:
 Notes or issue:
 
 ## Step 2 — Composition and retained state

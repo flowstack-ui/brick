@@ -19,7 +19,7 @@ describe("Link", () => {
     expect(link).toHaveAttribute("href", "/guides");
     expect(link).toHaveClass("brick-link");
     expect(link).toHaveAttribute("data-slot", "link");
-    expect(link).toHaveAttribute("data-variant", "underline");
+    expect(link).toHaveAttribute("data-variant", "theme");
     expect(link).toHaveAttribute("data-tone", "accent");
     expect(link).toHaveAttribute("data-size", "inherit");
     expect(link).not.toHaveAttribute("role");
@@ -30,7 +30,7 @@ describe("Link", () => {
   });
 
   it("exposes every closed visual recipe without leaking visual props", () => {
-    const variants: LinkVariant[] = ["underline", "plain"];
+    const variants: LinkVariant[] = ["theme", "underline", "plain"];
     const tones: LinkTone[] = ["accent", "neutral", "inherit"];
     const sizes: LinkSize[] = ["inherit", "sm", "md", "lg"];
     const { rerender } = render(<Link href="/reference">Reference</Link>);

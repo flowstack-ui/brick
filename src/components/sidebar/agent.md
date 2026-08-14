@@ -20,11 +20,12 @@ Provide a finished application-shell side region with expanded, rail, and offcan
 
 - **MUST:** Use Sidebar state and public layout hooks instead of manually translating a generic aside and overlapping its active items.
 - **MUST:** Avoid duplicate main landmarks when composing Sidebar.Main into an existing shell.
+- **MUST:** Choose panel paint with surface; use transparent when an ancestor Surface owns the shell background instead of overriding Sidebar background selectors.
 - **MUST:** Load styles.css or core.css plus sidebar.css and every composed child stylesheet.
 
 ## Common mistakes
 
-- **Avoid:** Using Sidebar as a modal drawer or letting highlighted rail items overflow into Main. **Instead:** Use Drawer for modal use and validate Sidebar's expanded, rail, and offcanvas geometry.
+- **Avoid:** Using Sidebar as a modal drawer, overriding panel background selectors, or letting highlighted rail items overflow into Main. **Instead:** Use Drawer for modal use, choose the public surface recipe, and validate Sidebar's expanded, rail, and offcanvas geometry.
 
 ## Validation checklist
 

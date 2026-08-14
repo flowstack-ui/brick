@@ -107,6 +107,21 @@ test("markers stay contained and their track positions remain selectable",async(
   }
   const track=root.locator(".brick-slider__track");
   const trackBox=await track.boundingBox();
+  const [startBox,endBox]=await Promise.all([
+    markers.first().boundingBox(),
+    markers.last().boundingBox(),
+  ]);
+  expect(startBox!.width).toBeGreaterThan(0);
+  expect(endBox!.width).toBeGreaterThan(0);
+  expect(startBox!.x+startBox!.width/2).toBeGreaterThan(trackBox!.x);
+  expect(endBox!.x+endBox!.width/2).toBeLessThan(trackBox!.x+trackBox!.width);
+  await expect(markers.first()).toHaveAttribute("data-selected", "");
+  await expect(markers.last()).not.toHaveAttribute("data-selected");
+  const [selectedPaint,unselectedPaint]=await Promise.all([
+    markers.first().evaluate(element=>getComputedStyle(element,"::before").backgroundColor),
+    markers.last().evaluate(element=>getComputedStyle(element,"::before").backgroundColor),
+  ]);
+  expect(selectedPaint).not.toBe(unselectedPaint);
   await page.mouse.click(trackBox!.x+trackBox!.width*0.75,trackBox!.y+trackBox!.height/2);
   await expect(root.getByRole("slider")).toHaveAttribute("aria-valuenow","4");
 });

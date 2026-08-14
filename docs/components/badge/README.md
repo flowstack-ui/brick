@@ -124,6 +124,9 @@ Prefer plain label text when no separate Text recipe is needed. Do not use
 default-tone Text inside Badge, add literal spaces around children, or select
 Badge only to imitate an editorial eyebrow.
 
+The neutral solid recipe remains a neutral surface with the normal foreground;
+it does not switch to the inverse black/white pair between appearances.
+
 ## Evidence
 
 - [Playground](../../../playground/src/components/badge/BadgePage.tsx)

@@ -73,7 +73,7 @@
     --brick-multi-select-content-foreground: var(--brick-color-text-primary);
     --brick-multi-select-content-border: var(--brick-color-border-subtle);
     --brick-multi-select-content-radius: var(--brick-radius-control);
-    --brick-multi-select-content-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 48%);
+    --brick-multi-select-content-shadow: var(--brick-shadow-floating);
     --brick-multi-select-content-max-block-size: min(20rem, var(--available-height, 20rem));
     --brick-multi-select-content-padding: var(--brick-space-1);
     --brick-multi-select-content-z-index: 70;

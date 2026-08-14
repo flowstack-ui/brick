@@ -1,8 +1,12 @@
 @layer brick.components {
   .brick-badge,
   .brick-notification-badge {
-    --brick-badge-tone-solid: var(--brick-color-text-primary);
-    --brick-badge-tone-on-solid: var(--brick-color-text-inverse);
+    --brick-badge-tone-solid: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 16%
+    );
+    --brick-badge-tone-on-solid: var(--brick-color-text-primary);
     --brick-badge-tone-soft: var(--brick-color-surface-subtle);
     --brick-badge-tone-on-soft: var(--brick-color-text-primary);
     --brick-badge-tone-border: var(--brick-color-border-strong);

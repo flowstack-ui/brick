@@ -34,9 +34,10 @@ test("Text controlled comparisons change only variant, tone, weight, or alignmen
   const variantTexts = page
     .getByTestId("text-variants")
     .locator(".brick-text");
-  await expect(variantTexts).toHaveCount(9);
+  await expect(variantTexts).toHaveCount(12);
   const expectedVariants = [
-    "display", "title-lg", "title-md", "title-sm",
+    "display", "display-sm", "display-md", "display-lg",
+    "title-lg", "title-md", "title-sm",
     "body-lg", "body-md", "body-sm", "caption", "eyebrow",
   ];
   const sizes: number[] = [];
@@ -48,10 +49,19 @@ test("Text controlled comparisons change only variant, tone, weight, or alignmen
     await expect(text).toHaveText("Build dependable interfaces.");
     sizes.push(Number.parseFloat(await text.evaluate((node) => getComputedStyle(node).fontSize)));
   }
-  expect(sizes).toEqual([40, 32, 24, 20, 20, 16, 14, 12, 12]);
-  await expect(variantTexts.nth(8)).toHaveCSS("font-weight", "600");
-  await expect(variantTexts.nth(8)).toHaveCSS("letter-spacing", "0.96px");
-  await expect(variantTexts.nth(8)).toHaveCSS("text-transform", "uppercase");
+  expect(sizes).toEqual([40, 40, 52, 64, 32, 24, 20, 20, 16, 14, 12, 12]);
+  await expect(variantTexts.nth(11)).toHaveCSS("font-weight", "600");
+  await expect(variantTexts.nth(11)).toHaveCSS("letter-spacing", "0.96px");
+  await expect(variantTexts.nth(11)).toHaveCSS("text-transform", "uppercase");
+
+  const responsiveHeading = page.getByTestId("text-responsive-variant");
+  await expect(responsiveHeading).toHaveAttribute("data-variant", "display-sm");
+  await expect(responsiveHeading).toHaveAttribute("data-variant-md", "display-md");
+  await expect(responsiveHeading).toHaveAttribute("data-variant-lg", "display-lg");
+  await expect(responsiveHeading).toHaveAttribute("data-align", "center");
+  await expect(responsiveHeading).toHaveAttribute("data-align-lg", "start");
+  await expect(responsiveHeading).toHaveCSS("font-size", "64px");
+  await expect(responsiveHeading).toHaveCSS("text-align", "start");
 
   const toneTexts = page.getByTestId("text-tones").locator(".brick-text");
   await expect(toneTexts).toHaveCount(9);
@@ -85,6 +95,14 @@ test("Text controlled comparisons change only variant, tone, weight, or alignmen
   expect(
     Math.max(...alignmentOffsets) - Math.min(...alignmentOffsets),
   ).toBeLessThanOrEqual(1);
+
+  const transformTexts = page.getByTestId("text-transforms").locator(".brick-text");
+  const transformValues = ["none", "uppercase", "lowercase", "capitalize"];
+  await expect(transformTexts).toHaveCount(transformValues.length);
+  for (let index = 0; index < transformValues.length; index += 1) {
+    await expect(transformTexts.nth(index)).toHaveAttribute("data-transform", transformValues[index]);
+    await expect(transformTexts.nth(index)).toHaveCSS("text-transform", transformValues[index]);
+  }
 });
 
 test("Text semantic hosts retain identical visual recipes and actual output", async ({
@@ -110,6 +128,14 @@ test("Text semantic hosts retain identical visual recipes and actual output", as
   await expect(output).toContainText("<h2");
   await expect(output).toContainText('data-variant="body-md"');
   await expect(output).toContainText('id="text-output-heading"');
+
+  const named = page.getByTestId("text-named");
+  await expect(named.getByRole("heading", { level: 3, name: "Project settings" }))
+    .toHaveAttribute("data-variant", "title-lg");
+  await expect(named.getByText("Manage the defaults shared by this workspace."))
+    .toHaveJSProperty("tagName", "P");
+  await expect(named.getByText("Updated today")).toHaveAttribute("data-variant", "caption");
+  await expect(named.getByText("Workspace", { exact: true })).toHaveAttribute("data-variant", "eyebrow");
 });
 
 test("Text wrapping and overflow remain bounded and deliberate", async ({

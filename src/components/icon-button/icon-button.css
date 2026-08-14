@@ -100,10 +100,22 @@
   }
 
   .brick-icon-button[data-tone="neutral"] {
-    --brick-icon-button-tone-solid: var(--brick-color-text-primary);
-    --brick-icon-button-tone-solid-hover: var(--brick-color-text-secondary);
-    --brick-icon-button-tone-solid-pressed: var(--brick-color-border-strong);
-    --brick-icon-button-tone-on-solid: var(--brick-color-text-inverse);
+    --brick-icon-button-tone-solid: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 16%
+    );
+    --brick-icon-button-tone-solid-hover: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 22%
+    );
+    --brick-icon-button-tone-solid-pressed: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 28%
+    );
+    --brick-icon-button-tone-on-solid: var(--brick-color-text-primary);
     --brick-icon-button-tone-soft: var(--brick-color-surface-subtle);
     --brick-icon-button-tone-soft-hover: var(--brick-color-surface-base);
     --brick-icon-button-tone-soft-pressed: var(--brick-color-border-subtle);
@@ -204,9 +216,9 @@
   .brick-icon-button[data-disabled] {
     border-color: var(--brick-color-border-subtle);
     background: var(--brick-color-surface-subtle);
-    color: var(--brick-color-text-secondary);
+    color: var(--brick-color-text-disabled);
     cursor: not-allowed;
-    opacity: 0.65;
+    opacity: 0.55;
   }
 
   .brick-icon-button[data-loading] {

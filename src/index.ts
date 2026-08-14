@@ -155,6 +155,7 @@ export {
   type ToggleProps,
   type ToggleShape,
   type ToggleSize,
+  type ToggleTone,
   type ToggleVariant,
 } from "./components/toggle/index.js";
 export {
@@ -403,12 +404,24 @@ export {
 export * from "./components/multi-select/index.js";
 export * from "./components/combobox/index.js";
 export {
+  Caption,
+  Eyebrow,
+  Heading,
+  Paragraph,
   Text,
+  type CaptionProps,
+  type EyebrowProps,
+  type HeadingLevel,
+  type HeadingProps,
+  type HeadingVariant,
+  type ParagraphProps,
+  type ParagraphVariant,
   type TextAlign,
   type TextElement,
   type TextLineClamp,
   type TextProps,
   type TextTone,
+  type TextTransform,
   type TextVariant,
   type TextWeight,
   type TextWrap,
@@ -617,6 +630,7 @@ export {
   type SidebarRegionProps,
   type SidebarRootProps,
   type SidebarSize,
+  type SidebarSurface,
   type SidebarTriggerProps,
   type SidebarVariant,
 } from "./components/sidebar/index.js";
@@ -769,7 +783,7 @@ export {
   type SwipeableItemRootProps,
   type SwipeableItemVariant,
 } from "./components/swipeable-item/index.js";
-export { Toolbar, ToolbarButton, ToolbarLink, ToolbarRoot, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem, type ToolbarButtonProps, type ToolbarLinkProps, type ToolbarRootProps, type ToolbarSeparatorProps, type ToolbarSize, type ToolbarToggleGroupProps, type ToolbarToggleItemProps, type ToolbarVariant } from "./components/toolbar/index.js";
+export { Toolbar, ToolbarButton, ToolbarLink, ToolbarRoot, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem, type ToolbarButtonProps, type ToolbarLinkProps, type ToolbarRootProps, type ToolbarSeparatorProps, type ToolbarSize, type ToolbarToggleGroupProps, type ToolbarToggleItemProps, type ToolbarToggleTone, type ToolbarToggleVariant, type ToolbarVariant } from "./components/toolbar/index.js";
 export * from "./components/pagination/index.js";
 export * from "./components/skip-link/index.js";
 export * from "./components/show/index.js";

@@ -1,3 +1,4 @@
 .z-stack-canvas { max-inline-size: 44rem; }
 .z-stack-stage { min-block-size: 16rem; }
+.z-stack-positioned-layer { position: relative; }
 .z-stack-canvas .brick-z-stack-item { margin: var(--brick-space-3); }

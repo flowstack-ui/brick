@@ -18,6 +18,8 @@ Badge follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Neutral solid Badges now use a strong theme-derived neutral surface and
+  normal foreground instead of the inverse black/white pair.
 - Added a themeable default gap between composed Badge children such as an
   icon and visible label.
 - Solid danger Badges now retain WCAG AA foreground contrast in light and dark

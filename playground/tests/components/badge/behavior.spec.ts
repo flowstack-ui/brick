@@ -59,6 +59,15 @@ test("tone matrix covers every variant and semantic tone", async ({ page }) => {
       ).toHaveCount(1);
     }
   }
+  expect(await region.locator(`${specimenBadge}[data-variant="solid"][data-tone="neutral"]`).evaluate((element) => {
+    const probe = document.createElement("span");
+    probe.style.color = "var(--brick-color-text-primary)";
+    document.body.append(probe);
+    const primary = getComputedStyle(probe).color;
+    probe.remove();
+    const style = getComputedStyle(element);
+    return style.backgroundColor !== primary && style.color === primary;
+  })).toBe(true);
 });
 
 test("sizes and shapes remain controlled comparisons", async ({ page }) => {

@@ -8,10 +8,18 @@ test("defaults and closed recipes own coordinated geometry", async ({ page }) =>
   await expect(root).toHaveAttribute("data-variant", "docked");
   await expect(root).toHaveAttribute("data-size", "md");
   await expect(root).toHaveAttribute("data-position", "static");
+  await expect(root).toHaveAttribute("data-surface", "base");
   const panel = root.locator(".brick-sidebar__panel");
   const main = root.locator(".brick-sidebar__main");
   const panelBox = await panel.boundingBox(); const mainBox = await main.boundingBox();
   expect(panelBox!.x + panelBox!.width).toBeLessThanOrEqual(mainBox!.x + 1);
+});
+
+test("panel surface selection remains independent from docked or floating geometry", async ({ page }) => {
+  const scenario = page.locator('[data-scenario="sidebar.appearance"]');
+  const transparent = scenario.locator('.brick-sidebar[data-surface="transparent"]');
+  await expect(transparent).toHaveAttribute("data-variant", "docked");
+  await expect(transparent.locator(".brick-sidebar__panel")).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
 });
 
 test("controlled Trigger changes state and offcanvas output remains inert", async ({ page }) => {

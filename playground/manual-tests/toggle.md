@@ -25,9 +25,10 @@ Setup: Open `/toggle` in system appearance.
 Action: Activate `01 Overview`; compare every recipe in `02 Variants` and both
 pressed states in `03 States`.
 
-Expected: Default soft medium rounded Toggle changes pressed state once and
-retains focus. Variants remain visually distinct when pressed. State changes
-do not alter size, label, or geometry.
+Expected: Default soft accent medium rounded Toggle changes pressed state once
+and retains focus. Variants remain visually distinct when pressed. Accent and
+neutral solid tones remain distinct without implying semantic status. State
+changes do not alter size, label, or geometry.
 
 Result:
 Notes or issue:
@@ -67,8 +68,10 @@ Setup: Open `07 Disabled`.
 Action: Tab through and attempt to activate disabled unpressed and pressed
 examples.
 
-Expected: Both preserve their visible state and geometry, are skipped or
-announced unavailable according to native behavior, and never change state.
+Expected: Both preserve their visible state and geometry while using a clearly
+faded disabled foreground. Pressed-disabled keeps a quiet surface distinction
+without the enabled outline or inset state edge. Both are skipped or announced
+unavailable according to native behavior and never change state.
 
 Result:
 Notes or issue:
