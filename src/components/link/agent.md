@@ -14,8 +14,8 @@ Render finished native navigation as inline, standalone, or button-like content 
 
 ## Required composition
 
-- Provide a real href or compose a router-owned anchor. Leave variant="theme" to follow the project decoration policy, or choose underline/plain for a local exception.
-- When a Link completes a sentence or paragraph, keep it inside that semantic Text owner and use size="inherit" so typography and wrapping remain one coherent text flow; use layout components only for independently meaningful peer items.
+- Provide a real href or compose a router-owned anchor. Leave the default theme variant to follow the project decoration policy, or choose underline/plain for a local exception.
+- When a Link completes a sentence or paragraph, keep it inside that semantic Text owner and leave its default inherited size so typography and wrapping remain one coherent text flow; use layout components only for independently meaningful peer items.
 
 ## Rules
 
@@ -26,8 +26,8 @@ Render finished native navigation as inline, standalone, or button-like content 
 
 ## Common mistakes
 
-- **Avoid:** Replacing a destination with Button because the design is prominent. **Instead:** Use Link and select the appropriate Brick variant.
-- **Avoid:** Rendering prose and the Link that completes it as separate Stack children. **Instead:** Render one semantic Text sentence with an inline Link using size="inherit"; reserve Stack for independent peers.
+- **Avoid:** Replacing ordinary inline or standalone navigation with Button only to increase emphasis. **Instead:** Use Link for ordinary navigation; use Button with a real href only when the destination intentionally needs a filled, soft, outlined, or ghost action treatment.
+- **Avoid:** Rendering prose and the Link that completes it as separate Stack children, or explicitly restating Link's default inherited size. **Instead:** Render one semantic Text sentence with an inline Link and leave its inherited size implicit; reserve Stack for independent peers.
 - **Avoid:** Removing resting underlines globally without validating links against surrounding text. **Instead:** Use the Theme Link input so compilation validates the required text distinction, or keep underlines.
 
 ## Validation checklist

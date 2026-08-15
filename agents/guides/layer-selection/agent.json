@@ -16,6 +16,7 @@
   "selection": [
     { "intent": "headings, paragraphs, captions, and eyebrows", "use": "Heading, Paragraph, Caption, or Eyebrow", "note": "Give Heading an explicit semantic level and choose its visual variant independently." },
     { "intent": "other text with Brick typography", "use": "Text", "note": "Choose the semantic rendered element through its public API and author the intended letter case in content." },
+    { "intent": "extended quotation with visible attribution", "use": "native blockquote with Brick text content", "note": "Keep attribution outside blockquote; when the quotation and attribution form one self-contained unit, use native figure with direct blockquote and figcaption children. Cite names a referenced work, not the person quoted." },
     { "intent": "one-dimensional alignment", "use": "Stack, HStack, or VStack", "note": "Use Grid for two-dimensional track relationships." },
     { "intent": "bounded page width", "use": "Container", "note": "Use Surface or Card when the region also needs a visual boundary." },
     { "intent": "top application or page bar", "use": "AppBar", "note": "Compose navigation and action components inside its sections." },

@@ -4,6 +4,13 @@ Link follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Corrected Agent Knowledge to use Link for ordinary navigation while retaining
+  Button `href` mode for destinations that intentionally need an action-control
+  treatment, and clarified that Link's inherited size and theme variant are
+  defaults that should not be restated.
+
 ### Added
 
 - Initial Link API built on Atom Link with required native destinations,

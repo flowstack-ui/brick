@@ -32,6 +32,10 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Changed
 
+- Corrected Link Agent Knowledge to preserve the documented boundary between
+  ordinary Link navigation and emphasized Button destinations with a real
+  `href`, keep default Link values implicit, and add package-level native
+  quotation and attribution guidance.
 - Clarified Card Agent Knowledge and public guidance so title-only metadata
   uses Stack composition without unintentionally narrowing Card descriptions.
 - Made Link follow an audited project decoration policy by default while

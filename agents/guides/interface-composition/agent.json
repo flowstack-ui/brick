@@ -31,7 +31,8 @@
     { "intent": "responsive desktop and mobile alternatives", "use": "Show and Hide", "note": "Use only when interface or content changes; use responsive Stack when only arrangement changes." },
     { "intent": "grouped application actions", "use": "Toolbar", "note": "Do not use AppBar.Toolbar as an ARIA toolbar." },
     { "intent": "several related disclosure sections", "use": "Accordion", "note": "Preserve Header, Trigger, Content, and ContentInner ownership; use Collapsible for one disclosure." },
-    { "intent": "semantic item or sequence content", "use": "List", "note": "Use structured row parts only when needed and keep Trailing compact on narrow screens." }
+    { "intent": "semantic item or sequence content", "use": "List", "note": "Use structured row parts only when needed and keep Trailing compact on narrow screens." },
+    { "intent": "extended quotation and attribution", "use": "native figure, blockquote, and figcaption with Brick text content", "note": "Keep blockquote and figcaption as direct figure children when they form one self-contained unit, keep attribution outside the quoted content, and use cite only for the title of a referenced work." }
   ],
   "rules": [
     { "id": "interface-outside-in", "level": "must", "statement": "Assign page structure to Brick components before writing element-level CSS." },
@@ -45,6 +46,7 @@
     { "id": "interface-definite-size-owner", "level": "must", "statement": "Keep a real layout-item wrapper when it establishes flex or grid participation or the definite parent size required by ScrollArea, Carousel fill, or Image fill; asChild is not a wrapper-removal goal by itself." },
     { "id": "interface-correct-owner", "level": "must", "statement": "Do not use Stack, Surface, Button, or another convenient component when a more specific Brick navigation, media, content, or interaction component owns the job." },
     { "id": "interface-native-semantics", "level": "must", "statement": "Preserve document landmarks and semantic elements when Brick does not provide an owner; Brick-first is not permission to erase HTML meaning." },
+    { "id": "interface-native-quotation", "level": "must", "statement": "For an extended quotation, preserve native blockquote semantics and keep attribution outside the quoted content; when figure and figcaption associate the pair, keep blockquote and figcaption as direct figure children, use Brick content components inside them, and add narrow Block or application CSS only after supported composition cannot express the remaining relationship." },
     { "id": "interface-responsive-navigation-data", "level": "must", "statement": "When desktop and mobile require distinct navigation components, share application-owned destination labels, hrefs, values, and ordering while preserving each pattern's correct Brick anatomy; do not duplicate navigation content or force one interaction tree across breakpoints." },
     { "id": "interface-responsive-overlay-state", "level": "must", "statement": "Use Show and Hide for first-paint visibility; when a controlled interactive overlay may remain open across a breakpoint, synchronize its application state at that boundary so a hidden modal cannot retain focus, scroll lock, or isolation." },
     { "id": "interface-theme-first", "level": "should", "statement": "Express reusable brand values through semantic Brick tokens and a theme rather than repeating literal application values." },
