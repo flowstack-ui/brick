@@ -32,6 +32,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Changed
 
+- Clarified Card Agent Knowledge and public guidance so title-only metadata
+  uses Stack composition without unintentionally narrowing Card descriptions.
 - Made Link follow an audited project decoration policy by default while
   retaining explicit underlined and plain local variants.
 - Made visible Show and Hide hosts layout-transparent by default so responsive
