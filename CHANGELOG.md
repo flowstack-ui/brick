@@ -32,6 +32,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Changed
 
+- Expanded the optional neutral reset to remove browser margins from native
+  `figure` and `blockquote` elements for higher-level semantic compositions.
 - Corrected Link Agent Knowledge to preserve the documented boundary between
   ordinary Link navigation and emphasized Button destinations with a real
   `href`, keep default Link values implicit, and add package-level native

@@ -1238,6 +1238,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-control-min-block-size-xl/);
   assert.match(tokens, /data-brick-appearance/);
   assert.match(reset, /brick\.reset/);
+  assert.match(reset, /blockquote,figure\{margin:0\}/);
   assert.doesNotMatch(styles, /@(?:tailwind|source|theme|utility|custom-variant)/);
   assert.doesNotMatch(styles, /\.\.\//);
   assert.doesNotMatch(styles, /body\s*\{[^}]*margin:/);

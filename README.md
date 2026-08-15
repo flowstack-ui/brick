@@ -29,7 +29,8 @@ import "@flowstack-ui/brick/styles.css";
 ```
 
 New applications may opt into Brick's separate neutral reset for page sizing,
-margin removal, and browser normalization:
+body, `figure`, and `blockquote` margin removal, and browser normalization.
+Higher-level FLOWSTACK packs may require this complete two-import setup:
 
 ```ts
 import "@flowstack-ui/brick/reset.css";

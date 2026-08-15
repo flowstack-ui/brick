@@ -16,6 +16,11 @@
     margin: 0;
   }
 
+  blockquote,
+  figure {
+    margin: 0;
+  }
+
   button,
   input,
   optgroup,
