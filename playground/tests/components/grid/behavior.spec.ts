@@ -169,6 +169,14 @@ test("semantic output, native attributes, ref, and customization are real", asyn
   await expect(custom).toHaveCSS("row-gap", "8px");
   await expect(custom).toHaveCSS("border-top-width", "2px");
   await expect(custom).toHaveCSS("padding-top", "16px");
+
+  const semanticList = page.getByRole("list", { name: "Semantic peer collection" });
+  await expect(semanticList).toHaveJSProperty("tagName", "UL");
+  await expect(semanticList).toHaveCSS("margin-top", "0px");
+  await expect(semanticList).toHaveCSS("margin-left", "0px");
+  await expect(semanticList).toHaveCSS("padding-left", "0px");
+  await expect(semanticList).toHaveCSS("list-style-type", "none");
+  await expect(semanticList.locator(":scope > li")).toHaveCount(2);
 });
 
 test("RTL, focus order, reflow, and accessibility remain source ordered", async ({

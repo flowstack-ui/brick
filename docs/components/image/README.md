@@ -10,10 +10,14 @@ Use Image for project thumbnails, article media, product screenshots, and other
 ordinary responsive media that needs a stable frame, crop/contain behavior, or
 an authored unavailable state.
 
+Use Image for a larger editorial or profile portrait when its authored aspect
+ratio, crop, focal position, or available measure communicates identity. Use
+Avatar instead for a compact fixed-square identity token.
+
 ## When not to use
 
-Use Avatar for people or entity identity, Icon for inline SVG symbols, and
-Surface.Media for decorative layered background media. Image is not an
+Use Avatar for compact fixed-square people or entity identity, Icon for inline
+SVG symbols, and Surface.Media for decorative layered background media. Image is not an
 optimizer, gallery, lightbox, figure/caption, upload editor, or framework image
 loader.
 
@@ -167,6 +171,11 @@ Every Content requires an authored alt decision. Use concise contextual alt for
 informative media and `alt=""` for decoration. Inside an already named action,
 the image is usually decorative. Never repeat nearby text, derive a name from a
 filename, or write “image of.” Complex images need adjacent extended content.
+
+For a profile portrait, use the person's name when the portrait communicates
+identity beyond the surrounding copy. Use `alt=""` only when that specific
+portrait is intentionally decorative; the mere presence of a nearby name does
+not establish one universal answer.
 
 Fallback adds no live region, focus, role, or generated announcement. Add
 application status messaging only when a source change matters to the task.

@@ -4,6 +4,12 @@ Stack follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Normalized native margin and markers for supported `ul` and `ol` Stack
+  hosts so semantic one-dimensional lists retain Stack alignment without
+  consumer reset CSS.
+
 ### Added
 
 - Added responsive direction, gap, alignment, distribution, wrapping, and

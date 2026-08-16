@@ -32,6 +32,12 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Changed
 
+- Normalized Grid and Stack root margins and semantic `ul`/`ol` padding and
+  markers so supported list hosts preserve the same authored alignment as
+  their default neutral hosts.
+- Clarified Form Agent Knowledge so Fieldset is reserved for meaningful
+  labelled subgroups, and Sidebar guidance so bounded long content composes a
+  ScrollArea instead of assuming Sidebar.Content owns overflow.
 - Expanded the optional neutral reset to remove browser margins from native
   `figure` and `blockquote` elements for higher-level semantic compositions.
 - Corrected Link Agent Knowledge to preserve the documented boundary between

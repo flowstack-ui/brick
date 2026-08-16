@@ -78,6 +78,11 @@ Stack renders exactly one selected native element:
 There is no Atom primitive, wrapper, role, generated ID, or reordered content.
 The selected element is the ref target.
 
+When Stack renders `ul` or `ol`, it removes the browser's visual list margin
+and markers while retaining native list semantics and authored `li` children.
+This lets semantic peer rows share the same logical alignment as other Stack
+hosts without consumer reset CSS.
+
 ## API
 
 | Prop | Values | Stack default |

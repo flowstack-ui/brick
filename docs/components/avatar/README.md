@@ -4,12 +4,15 @@ Avatar presents an image or fallback identity in a finished Brick frame.
 
 ## When and where to use
 
-Use it for people, organizations, or other compact identities.
+Use it for people, organizations, or other compact identities in a fixed
+square frame with explicit fallback content.
 
 ## When not to use
 
 Do not use it as a generic image, upload control, avatar editor, group, or
 presence system. A status ring is visual metadata, not a live announcement.
+Use Image for a larger editorial or profile portrait when authored aspect
+ratio, crop, focal position, or available measure communicates identity.
 
 ## Installation and imports
 
@@ -96,6 +99,12 @@ Use meaningful `alt` for an informative image. Use `alt=""` for decorative
 identity; the fallback is then hidden from assistive technology. Without an
 image, a non-empty `alt` labels the fallback image role. Status needs separate
 accessible text when it conveys meaningful presence.
+
+Nearby identity text does not make every Avatar decorative automatically.
+Choose `alt` from context: preserve a meaningful alternative when the Avatar
+adds identity that the surrounding content does not already provide, and use
+`alt=""` only when the same identity is already supplied by adjacent text or
+the owning control's accessible name.
 
 ## Composition, native props, and refs
 

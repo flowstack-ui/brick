@@ -14,7 +14,7 @@ Provide a finished native submission boundary and consistent form rhythm while A
 
 ## Required composition
 
-- Compose Form -> Fieldset for related groups -> Field for each control -> a named submit Button.
+- Compose Form -> Field for each independently labelled control -> a named submit Button; add Fieldset only when multiple controls answer one meaningful group question.
 
 ## Rules
 
@@ -24,6 +24,7 @@ Provide a finished native submission boundary and consistent form rhythm while A
 ## Common mistakes
 
 - **Avoid:** Treating Form as a complete login or contact workflow. **Instead:** Keep business workflow in the application or a future Block; Form owns the generic visual boundary.
+- **Avoid:** Wrapping the entire form in Fieldset only to obtain spacing, then repeating the page heading as its legend. **Instead:** Let Form own ordinary field rhythm and reserve Fieldset for a real labelled subgroup.
 
 ## Validation checklist
 

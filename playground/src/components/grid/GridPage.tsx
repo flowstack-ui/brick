@@ -330,6 +330,16 @@ export function GridPage() {
               </a>
             </Grid.Item>
           </Grid.Root>
+          <Grid.Root
+            aria-label="Semantic peer collection"
+            as="ul"
+            columns={2}
+            data-testid="grid-semantic-list"
+            gap="2"
+          >
+            <li>First peer</li>
+            <li>Second peer</li>
+          </Grid.Root>
           <HStack gap="3">
             <Button
               onClick={() => setRefHost(semanticRef.current?.tagName ?? "Missing")}

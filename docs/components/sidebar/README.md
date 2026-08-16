@@ -17,6 +17,7 @@ breakpoints, routing, persistence, scrollspy, or mobile Drawer switching.
 ## Installation and imports
 
 ```tsx
+import { ScrollArea } from "@flowstack-ui/brick/scroll-area";
 import { Sidebar } from "@flowstack-ui/brick/sidebar";
 import "@flowstack-ui/brick/styles.css";
 ```
@@ -41,7 +42,11 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
   <Sidebar.Trigger aria-label="Toggle workspace sidebar">☰</Sidebar.Trigger>
   <Sidebar.Panel aria-label="Workspace tools">
     <Sidebar.Header>Workspace</Sidebar.Header>
-    <Sidebar.Content>{navigation}</Sidebar.Content>
+    <Sidebar.Content>
+      <ScrollArea.Root>
+        <ScrollArea.Viewport>{navigation}</ScrollArea.Viewport>
+      </ScrollArea.Root>
+    </Sidebar.Content>
     <Sidebar.Footer>{account}</Sidebar.Footer>
   </Sidebar.Panel>
   <Sidebar.Main>{page}</Sidebar.Main>
@@ -145,6 +150,12 @@ relationships, and offcanvas inert behavior are Atom-owned.
 Root renders `div`, Trigger `button`, Panel `aside`, Main `main`, and static
 regions `div` by default. `render` and `asChild` replace those hosts while
 preserving classes, slots, behavior, and refs. Avoid multiple Main landmarks.
+
+`Sidebar.Content` is the flexible panel region; it intentionally does not
+choose overflow behavior. When navigation or tools can exceed the panel's
+available block size, constrain the region through the shell and compose
+`ScrollArea.Root > ScrollArea.Viewport` inside Content. Keep ordinary short
+content unscrolled.
 
 ## Examples
 

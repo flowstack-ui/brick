@@ -132,6 +132,10 @@ test("Stack semantic output, ref, native attributes, and customization are real"
     );
   }
   await expect(hosts.nth(2)).toHaveAttribute("aria-label", "Project actions");
+  await expect(hosts.nth(3)).toHaveCSS("margin-top", "0px");
+  await expect(hosts.nth(3)).toHaveCSS("margin-left", "0px");
+  await expect(hosts.nth(3)).toHaveCSS("padding-left", "0px");
+  await expect(hosts.nth(3)).toHaveCSS("list-style-type", "none");
   const output = semantics.locator("[data-rendered-output]");
   await expect(output).toContainText("<section");
   await expect(output).toContainText('data-direction="column"');

@@ -4,6 +4,12 @@ Image follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Clarified that Image is appropriate for larger editorial/profile portraits
+  while Avatar owns compact fixed-square identity tokens, and documented
+  contextual portrait alternative-text decisions.
+
 ### Fixed
 
 - Made `frame="none"` reserve zero border width so embedded media reaches the

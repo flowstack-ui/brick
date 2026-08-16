@@ -4,6 +4,12 @@ Grid follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Normalized native margin, padding, and markers when Grid uses its supported
+  `ul` or `ol` semantic hosts, preventing semantic peer grids from drifting
+  away from surrounding Container alignment.
+
 ### Added
 
 - Added focused responsive values for explicit Root columns, gaps, alignment,

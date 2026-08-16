@@ -94,6 +94,10 @@ With `asChild`, Item transfers its placement hooks to exactly one authored
 React element and adds no wrapper. Each selected or composed element is its
 corresponding `HTMLElement` ref target.
 
+When Root renders `ul` or `ol`, Grid removes the browser's visual list margin,
+padding, and markers so its tracks begin on the same logical edges as other
+Grid hosts. Native list semantics and authored `li` children remain intact.
+
 ## API
 
 ### Root
@@ -245,6 +249,10 @@ DOM order remains reading and sequential focus order. Item placement never
 changes it. Dense flow, `order`, reverse behavior, and responsive visual
 reordering are deliberately excluded. Choose valid semantic hosts and children
 and name repeated landmarks.
+
+Use `as="ul"` or `as="ol"` when the peer collection is meaningfully a list.
+Do not add consumer CSS to cancel its native list geometry; Grid owns that
+normalization for its supported semantic hosts.
 
 ## Composition, native props, and refs
 
