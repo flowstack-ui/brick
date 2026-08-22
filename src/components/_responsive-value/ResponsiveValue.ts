@@ -7,7 +7,9 @@ export type ResponsiveValue<T> =
 const breakpoints: ResponsiveBreakpoint[] = ["sm", "md", "lg", "xl"];
 
 function serialize(value: unknown) {
-  return typeof value === "boolean" ? String(value) : value;
+  return typeof value === "boolean" || typeof value === "number"
+    ? String(value)
+    : value;
 }
 
 export function responsiveDataAttributes<T>(

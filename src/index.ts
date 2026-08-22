@@ -84,6 +84,7 @@ export {
   type AppBarRootProps,
   type AppBarSectionProps,
   type AppBarTone,
+  type AppBarToolbarInset,
   type AppBarToolbarProps,
   type AppBarVariant,
 } from "./components/app-bar/index.js";
@@ -449,6 +450,28 @@ export {
   type ListVariant,
 } from "./components/list/index.js";
 export {
+  ReorderableList,
+  ReorderableListActions,
+  ReorderableListContent,
+  ReorderableListDropIndicator,
+  ReorderableListHandle,
+  ReorderableListItem,
+  ReorderableListMoveAfter,
+  ReorderableListMoveBefore,
+  ReorderableListMoveToEnd,
+  ReorderableListMoveToStart,
+  ReorderableListRoot,
+  type ReorderableListActionsProps,
+  type ReorderableListContentProps,
+  type ReorderableListDropIndicatorProps,
+  type ReorderableListHandleProps,
+  type ReorderableListItemProps,
+  type ReorderableListMoveProps,
+  type ReorderableListRootProps,
+  type ReorderableListSize,
+  type ReorderableListVariant,
+} from "./components/reorderable-list/index.js";
+export {
   HStack,
   Stack,
   VStack,
@@ -467,6 +490,7 @@ export {
   type StackProps,
   type VStackProps,
 } from "./components/stack/index.js";
+export type { SpacingValue } from "./components/_spacing-value/SpacingValue.js";
 export {
   ZStack,
   ZStackItem,

@@ -5,6 +5,7 @@ import {
   VStack,
   type HStackProps,
   type ResponsiveValue,
+  type SpacingValue,
   type StackAlign,
   type StackDirection,
   type StackElement,
@@ -15,7 +16,10 @@ import {
   type StackProps,
   type VStackProps,
 } from "../../../src/stack.js";
-import { Stack as RootStack } from "../../../src/index.js";
+import {
+  Stack as RootStack,
+  type SpacingValue as RootSpacingValue,
+} from "../../../src/index.js";
 
 const ref = createRef<HTMLElement>();
 const elements: StackElement[] = [
@@ -24,6 +28,8 @@ const elements: StackElement[] = [
 ];
 const directions: StackDirection[] = ["row", "column"];
 const gaps: StackGap[] = ["0", "1", "2", "3", "4", "5", "6"];
+const spacingValues: SpacingValue[] = [8, "2rem", "var(--section-gap)"];
+const rootSpacingValue: RootSpacingValue = 8;
 const aligns: StackAlign[] = ["stretch", "start", "center", "end", "baseline"];
 const justifies: StackJustify[] = [
   "start", "center", "end", "between", "around", "evenly",
@@ -50,16 +56,14 @@ createElement(HStack, { ...horizontal, ref });
 createElement(VStack, { ...vertical, ref });
 createElement(Stack, {});
 createElement(Stack, { direction: responsiveDirection, gap: { initial: "2", md: "5" } });
+createElement(Stack, { gap: 8, startSpacing: "2rem", endSpacing: "var(--edge-space)" });
+createElement(Stack, { gap: { initial: 3, md: "2rem", lg: 8 } });
 createElement(Stack.Item, item);
 createElement(Stack.Item, { flex: { initial: "content", lg: 2 }, align: { initial: "auto", lg: "end" } });
 createElement(Stack.Item, { asChild: true, children: createElement("section") });
 
 // @ts-expect-error Stack hosts are deliberately closed.
 createElement(Stack, { as: "table" });
-// @ts-expect-error Arbitrary gap values are excluded.
-createElement(Stack, { gap: "8" });
-// @ts-expect-error Arbitrary numeric gaps are excluded.
-createElement(Stack, { gap: 2 });
 // @ts-expect-error Reverse direction is excluded.
 createElement(Stack, { direction: "row-reverse" });
 // @ts-expect-error Physical alignment is excluded.
@@ -82,5 +86,7 @@ createElement(Stack.Item, { order: 2 });
 void elements;
 void directions;
 void gaps;
+void spacingValues;
+void rootSpacingValue;
 void aligns;
 void justifies;

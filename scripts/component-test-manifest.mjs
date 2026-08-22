@@ -64,6 +64,7 @@ export const componentIds = [
   "textarea",
   "link",
   "list",
+  "reorderable-list",
   "table",
   "data-grid",
   "tree-grid",

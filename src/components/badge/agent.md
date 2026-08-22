@@ -21,7 +21,7 @@ Present a short passive category, status, or metadata label with a complete Bric
 - **MUST:** Keep Badge passive; do not add click, press, selection, or disclosure behavior to it.
 - **MUST:** When composing Text inside Badge, use tone=inherit unless that Text intentionally communicates a separate semantic tone, so the Badge recipe continues to own foreground contrast.
 - **MUST:** Rely on Badge's gap for an icon and label instead of literal whitespace, wrapper margins, or positional offsets.
-- **MUST:** Keep the label short and do not use Badge as a container for explanatory prose.
+- **MUST:** Keep the label short and atomic; Badge stays on one line, so use ordinary Text for explanatory or prose-length content.
 - **MUST:** Load styles.css or core.css plus badge.css.
 
 ## Common mistakes
@@ -30,7 +30,7 @@ Present a short passive category, status, or metadata label with a complete Bric
 
 ## Validation checklist
 
-- Check label brevity, passive semantics, child spacing, foreground contrast for every variant and tone, zoom, forced colors, and RTL.
+- Check label brevity, one-line atomic sizing, passive semantics, child spacing, foreground contrast for every variant and tone, zoom, forced colors, and RTL.
 - Confirm nested Text inherits the Badge foreground and CSS is loaded.
 
 ## Related guidance

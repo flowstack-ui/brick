@@ -4,6 +4,12 @@ Grid follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Expanded uniform, row, and column gaps to accept numeric base-unit factors,
+  explicit CSS values, and responsive mixtures while preserving existing
+  string-token geometry.
+
 ### Fixed
 
 - Normalized native margin, padding, and markers when Grid uses its supported

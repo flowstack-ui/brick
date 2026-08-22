@@ -89,6 +89,20 @@ test("uniform and axis gaps map to exact geometry", async ({ page }) => {
   await expect(column).toHaveCSS("column-gap", "32px");
 });
 
+test("numeric, explicit, and responsive Grid gaps share one resolver", async ({ page }) => {
+  const factor = page.locator('[data-spacing-example="factor"]');
+  const explicit = page.locator('[data-spacing-example="explicit"]');
+  const responsive = page.locator('[data-spacing-example="responsive"]');
+
+  await expect(factor).toHaveCSS("gap", "32px");
+  await expect(explicit).toHaveCSS("row-gap", "20px");
+  await expect(explicit).toHaveCSS("column-gap", "36px");
+  await expect(responsive).toHaveCSS("gap", "32px");
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(responsive).toHaveCSS("gap", "8px");
+});
+
 test("Root and Item alignment map to native Grid geometry", async ({ page }) => {
   for (const value of ["stretch", "start", "center", "end", "baseline"]) {
     await expect(page.locator(`[data-align-example="${value}"]`)).toHaveCSS(

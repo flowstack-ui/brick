@@ -44,8 +44,7 @@
     font-variant-numeric: tabular-nums;
     letter-spacing: var(--brick-typography-control-sm-letter-spacing);
     line-height: var(--brick-typography-control-sm-line-height);
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    white-space: nowrap;
     text-align: start;
     vertical-align: baseline;
   }

@@ -21,6 +21,11 @@ test("List variants, sizes, densities, markers, and nesting remain independent",
   const variants = page.locator("#scenario-list-variants .brick-list");
   await expect(variants.nth(0)).toHaveCSS("border-top-width", "0px");
   await expect(variants.nth(2)).not.toHaveCSS("border-top-width", "0px");
+  const borderedItem = variants.nth(2).locator(".brick-list__item").first();
+  const borderedRow = borderedItem.locator(".brick-list__row");
+  await expect(borderedRow).toHaveCSS("display", "inline");
+  const [borderedItemBox, borderedRowBox] = await Promise.all([borderedItem.boundingBox(), borderedRow.boundingBox()]);
+  expect(borderedRowBox!.y - borderedItemBox!.y).toBeLessThan(24);
   const sizeValues = await page.locator("#scenario-list-sizing .list-grid--three .brick-list__row").evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).fontSize));
   expect(new Set(sizeValues).size).toBe(3);
   const densityHeights = await page.locator("#scenario-list-sizing .list-grid--two .brick-list__item").evaluateAll((nodes) => nodes.slice(0, 4).map((node) => node.getBoundingClientRect().height));

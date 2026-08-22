@@ -43,7 +43,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 Public exports are `Grid`, `GridRootProps`, `GridItemProps`,
 `GridRootElement`, `GridItemElement`, `GridColumns`, `GridLine`, `GridSpan`,
-`GridColumnSpan`, `GridGap`, `GridMinItemSize`, `GridAlign`, `GridJustify`,
+`GridColumnSpan`, `GridGap`, `SpacingValue`, `GridMinItemSize`, `GridAlign`, `GridJustify`,
 `GridSelfAlign`, `GridSelfJustify`, and `ResponsiveValue`.
 
 ## Quick start
@@ -107,9 +107,9 @@ Grid hosts. Native list semantics and authored `li` children remain intact.
 | `as` | `div`, `span`, `section`, `article`, `nav`, `header`, `footer`, `main`, `aside`, `ul`, `ol`, `li` | `div` |
 | `columns` | `1`–`12`, or responsive object | `1` |
 | `minItemSize` | `xs`, `sm`, `md`, `lg`, `xl` | unset |
-| `gap` | `0`, `1`, `2`, `3`, `4`, `5`, `6`, or responsive object | `0` |
-| `rowGap` | `0`, `1`, `2`, `3`, `4`, `5`, `6`, or responsive object | inherits `gap` |
-| `columnGap` | `0`, `1`, `2`, `3`, `4`, `5`, `6`, or responsive object | inherits `gap` |
+| `gap` | numeric factor, explicit CSS value, legacy token, or responsive object | `0` |
+| `rowGap` | same spacing grammar | inherits `gap` |
+| `columnGap` | same spacing grammar | inherits `gap` |
 | `align` | `stretch`, `start`, `center`, `end`, `baseline`, or responsive object | `stretch` |
 | `justify` | `stretch`, `start`, `center`, `end`, or responsive object | `stretch` |
 | `slot` | `string` | `grid` |
@@ -160,8 +160,9 @@ ref are merged onto that element without changing its semantics.
 
 Explicit mode uses `repeat(n, minmax(0, 1fr))`. Intrinsic mode uses
 `auto-fit` with minimum sizes `8rem`, `12rem`, `16rem`, `20rem`, and `24rem`
-for `xs` through `xl`. Gap values map to `--brick-space-0` through
-`--brick-space-6`.
+for `xs` through `xl`. Legacy string gaps map to `--brick-space-0` through
+`--brick-space-6`; numeric factors calculate from `--brick-space-1`; explicit
+CSS values pass through. See [Layout spacing values](../../guides/spacing-values.md).
 
 Numeric Item column placement is for explicit-column Roots. Intrinsic Roots
 use native auto-placement or `columnSpan="full"` because numeric placement can
@@ -226,7 +227,7 @@ safeguard prevents the minimum token from forcing page overflow.
 Explicit mode accepts Brick's responsive object grammar:
 
 ```tsx
-<Grid.Root columns={{ initial: 1, md: 2, lg: 4 }} gap={{ initial: "2", lg: "4" }}>
+<Grid.Root columns={{ initial: 1, md: 2, lg: 4 }} gap={{ initial: 3, lg: 8 }}>
   <Card.Root>First</Card.Root>
   <Grid.Item columnSpan={{ initial: "full", lg: 2 }}>
     <Card.Root>Featured</Card.Root>

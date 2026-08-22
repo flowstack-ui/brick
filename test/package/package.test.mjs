@@ -11,7 +11,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.22.6");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.23.0");
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -245,6 +245,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/list.d.ts",
       default: "./dist/list.js",
     },
+    "./reorderable-list": {
+      types: "./dist/reorderable-list.d.ts",
+      default: "./dist/reorderable-list.js",
+    },
     "./table": {
       types: "./dist/table.d.ts",
       default: "./dist/table.js",
@@ -388,6 +392,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const progressCircle = await import(new URL("../../dist/progress-circle.js", import.meta.url));
   const slider = await import(new URL("../../dist/slider.js", import.meta.url));
   const rating = await import(new URL("../../dist/rating.js", import.meta.url));
+  const reorderableList = await import(new URL("../../dist/reorderable-list.js", import.meta.url));
   const fileUpload = await import(new URL("../../dist/file-upload.js", import.meta.url));
   const feed = await import(new URL("../../dist/feed.js", import.meta.url));
   const swipeableItem = await import(new URL("../../dist/swipeable-item.js", import.meta.url));
@@ -729,6 +734,17 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Rating",
       "RatingItem",
       "RatingRoot",
+      "ReorderableList",
+      "ReorderableListActions",
+      "ReorderableListContent",
+      "ReorderableListDropIndicator",
+      "ReorderableListHandle",
+      "ReorderableListItem",
+      "ReorderableListMoveAfter",
+      "ReorderableListMoveBefore",
+      "ReorderableListMoveToEnd",
+      "ReorderableListMoveToStart",
+      "ReorderableListRoot",
       "ScrollArea",
       "ScrollAreaRoot",
       "ScrollAreaViewport",
@@ -992,6 +1008,17 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(rating.Rating, brick.Rating);
   assert.equal(rating.RatingRoot, brick.Rating.Root);
   assert.equal(rating.RatingItem, brick.Rating.Item);
+  assert.equal(reorderableList.ReorderableList, brick.ReorderableList);
+  assert.equal(reorderableList.ReorderableListRoot, brick.ReorderableList.Root);
+  assert.equal(reorderableList.ReorderableListItem, brick.ReorderableList.Item);
+  assert.equal(reorderableList.ReorderableListContent, brick.ReorderableList.Content);
+  assert.equal(reorderableList.ReorderableListHandle, brick.ReorderableList.Handle);
+  assert.equal(reorderableList.ReorderableListDropIndicator, brick.ReorderableList.DropIndicator);
+  assert.equal(reorderableList.ReorderableListActions, brick.ReorderableList.Actions);
+  assert.equal(reorderableList.ReorderableListMoveBefore, brick.ReorderableList.MoveBefore);
+  assert.equal(reorderableList.ReorderableListMoveAfter, brick.ReorderableList.MoveAfter);
+  assert.equal(reorderableList.ReorderableListMoveToStart, brick.ReorderableList.MoveToStart);
+  assert.equal(reorderableList.ReorderableListMoveToEnd, brick.ReorderableList.MoveToEnd);
   assert.equal(fileUpload.FileUpload, brick.FileUpload);
   assert.equal(fileUpload.FileUploadRoot, brick.FileUpload.Root);
   assert.equal(fileUpload.FileUploadHiddenInput, brick.FileUpload.HiddenInput);
@@ -1254,7 +1281,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 79);
+  assert.equal(componentStyleNames.length, 80);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);

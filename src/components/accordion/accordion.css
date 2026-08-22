@@ -44,9 +44,7 @@
   .brick-accordion-trigger[data-locked-open] { cursor: default; }
   .brick-accordion-indicator { display: inline-flex; inline-size: var(--brick-accordion-indicator-size); block-size: var(--brick-accordion-indicator-size); flex: 0 0 auto; align-items: center; justify-content: center; margin-inline-start: auto; transform: rotate(0deg); transition: transform var(--brick-motion-duration-fast) var(--brick-motion-easing-standard); }
   .brick-accordion-indicator > svg { inline-size: 100%; block-size: 100%; }
-  .brick-accordion-trigger[data-state="open"] .brick-accordion-indicator { transform: rotate(90deg); }
-  [dir="rtl"] .brick-accordion-trigger[data-state="closed"] .brick-accordion-indicator { transform: scaleX(-1); }
-  [dir="rtl"] .brick-accordion-trigger[data-state="open"] .brick-accordion-indicator { transform: rotate(90deg); }
+  .brick-accordion-trigger[data-state="open"] .brick-accordion-indicator { transform: rotate(180deg); }
   .brick-accordion-content { box-sizing: border-box; min-inline-size: 0; overflow: hidden; color: var(--brick-accordion-content-foreground); }
   .brick-accordion-content[data-state="open"] { animation: brick-accordion-open var(--brick-motion-duration-fast) var(--brick-motion-easing-enter) both; }
   .brick-accordion-content[data-state="closed"] { animation: brick-accordion-close var(--brick-motion-duration-fast) var(--brick-motion-easing-exit) both; }
@@ -56,6 +54,7 @@
   .brick-accordion[data-orientation="horizontal"] .brick-accordion-item:last-child { border-inline-end: 0; }
   .brick-accordion[data-orientation="horizontal"] .brick-accordion-header { display: flex; flex: 0 0 auto; block-size: 100%; }
   .brick-accordion[data-orientation="horizontal"] .brick-accordion-trigger { inline-size: 100%; min-inline-size: 0; block-size: var(--brick-accordion-trigger-height); min-block-size: var(--brick-accordion-trigger-height); writing-mode: vertical-rl; text-orientation: mixed; }
+  .brick-accordion[data-orientation="horizontal"] .brick-accordion-trigger:focus-visible { outline-offset: calc(-1 * var(--brick-border-focus-width)); }
   .brick-accordion[data-orientation="horizontal"] .brick-accordion-content { flex: 0 0 auto; block-size: 100%; min-block-size: 0; writing-mode: horizontal-tb; }
   .brick-accordion[data-orientation="horizontal"] .brick-accordion-content[data-state="open"] { animation-name: brick-accordion-open-horizontal; }
   .brick-accordion[data-orientation="horizontal"] .brick-accordion-content[data-state="closed"] { animation-name: brick-accordion-close-horizontal; }

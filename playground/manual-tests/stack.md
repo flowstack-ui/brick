@@ -24,11 +24,15 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 Setup: Open `/stack`; review `01` through `03` top to bottom.
 
-Action: Compare Stack, HStack, VStack, and gaps zero through six.
+Action: Compare Stack, HStack, VStack, legacy gaps zero through six, numeric
+factor 8, explicit 2.25rem, and the responsive 2-to-8 example while crossing
+the 48rem breakpoint.
 
 Expected: Stack and VStack form identical columns. HStack forms one centered
-row. Child order never changes. Each gap increases consistently without adding
-outer spacing or changing the items.
+row. Child order never changes. Legacy gaps preserve their established sizes;
+factor 8 is 2rem, explicit 2.25rem is exact, and the responsive example changes
+from 0.5rem to 2rem without missing or stale spacing. None adds outer spacing
+or changes the items.
 
 Result:
 Notes or issue:

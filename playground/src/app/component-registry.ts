@@ -176,6 +176,13 @@ export const componentEntries = [
     title: "List",
   },
   {
+    category: "Actions",
+    description: "Manual linear ordering with drag, keyboard, touch, and direct movement.",
+    id: "reorderable-list",
+    route: "/reorderable-list",
+    title: "Reorderable List",
+  },
+  {
     category: "Data display",
     description: "Native static tabular data with responsive containment.",
     id: "table",

@@ -2,6 +2,10 @@ const verification = {
   schemaVersion: 1,
   id: "brick",
   kind: "public-package-with-consumer",
+  browserSupport: {
+    query: "baseline 2023 with downstream",
+    portableEngines: ["chromium", "firefox", "webkit"],
+  },
   commands: {
     focused: "check:focused",
     repository: "check:repository",

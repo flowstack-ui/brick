@@ -90,6 +90,7 @@ try {
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/agent-knowledge.md",
+    "docs/guides/browser-support.md",
     "dist/agents/manifest.json",
     "dist/theme-contract.json",
     "docs/guides/theme-contract.md",
@@ -106,6 +107,7 @@ try {
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/theme-contract.md",
     "docs/guides/agent-knowledge.md",
+    "docs/guides/browser-support.md",
   ]);
   for (const file of files) {
     const isRuntimeFile = /^dist\/.+\.(?:js|css|d\.ts)(?:\.map)?$/u.test(file);
@@ -145,6 +147,7 @@ try {
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/theme-contract.md",
     "docs/guides/agent-knowledge.md",
+    "docs/guides/browser-support.md",
   ];
   const forbiddenDocumentation = [
     /\bplayground\b/iu,

@@ -6,6 +6,7 @@ export default defineConfig({
   build: {
     outDir: "dist",
     sourcemap: true,
+    target: ["chrome120", "edge120", "firefox121", "safari17.2"],
   },
   server: {
     host: "127.0.0.1",

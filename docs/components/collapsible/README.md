@@ -79,9 +79,14 @@ default artwork. Indicator and ContentInner intentionally stay fixed hosts.
 
 Plain has no containing paint, soft adds a subtle neutral surface, and outline
 adds one containing border. Sizes coordinate trigger height, typography,
-spacing, indicator size, and ContentInner padding. Open state rotates the
-indicator. Vertical Content expands to measured height; horizontal Content
+spacing, indicator size, and ContentInner padding. The default decorative
+Indicator points down while closed and up while open in both LTR and RTL.
+Vertical Content expands to measured height; horizontal Content
 expands to measured width while ContentInner preserves final geometry.
+
+Vertical Root preserves the complete outward Trigger focus ring. Horizontal
+Root owns inline scrolling, so its Trigger focus ring is inset inside the
+control rather than clipped by the scroll boundary.
 
 ## Tokens and CSS hooks
 

@@ -15,8 +15,13 @@ import {
   type ResponsiveBreakpoint,
   type ResponsiveValue,
 } from "../_responsive-value/ResponsiveValue.js";
+import {
+  responsiveSpacingStyles,
+  type SpacingValue,
+} from "../_spacing-value/SpacingValue.js";
 
 export type { ResponsiveValue };
+export type { SpacingValue };
 export type StackBreakpoint = ResponsiveBreakpoint;
 export type StackElement =
   | "div" | "span" | "section" | "article" | "nav" | "header"
@@ -25,7 +30,7 @@ export type StackItemElement =
   | "div" | "span" | "section" | "article" | "header" | "footer"
   | "aside" | "li";
 export type StackDirection = "row" | "column";
-export type StackGap = "0" | "1" | "2" | "3" | "4" | "5" | "6";
+export type StackGap = SpacingValue;
 export type StackAlign = "stretch" | "start" | "center" | "end" | "baseline";
 export type StackJustify =
   | "start" | "center" | "end" | "between" | "around" | "evenly";
@@ -104,6 +109,7 @@ function StackImpl(
     endSpacing = "0",
     className,
     slot = "stack",
+    style,
     children,
     ...props
   }: StackProps,
@@ -123,6 +129,12 @@ function StackImpl(
     className: mergeClassName("brick-stack", className),
     "data-slot": slot,
     ref,
+    style: {
+      ...responsiveSpacingStyles("--brick-stack-gap", gap),
+      ...responsiveSpacingStyles("--brick-stack-start-spacing", startSpacing),
+      ...responsiveSpacingStyles("--brick-stack-end-spacing", endSpacing),
+      ...style,
+    },
   }, children);
 }
 

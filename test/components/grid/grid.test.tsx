@@ -142,6 +142,28 @@ describe("Grid", () => {
     expect(item).toHaveAttribute("data-justify-xl", "end");
   });
 
+  it("resolves numeric, explicit, axis-specific, and responsive gaps", () => {
+    render(
+      <Grid.Root
+        columnGap={{ initial: "var(--product-column-gap)", lg: 9 }}
+        columns={2}
+        data-testid="spacing"
+        gap={{ initial: 8, md: "2rem" }}
+        rowGap="1.25rem"
+      />,
+    );
+    const grid = screen.getByTestId("spacing");
+
+    expect(grid.style.getPropertyValue("--brick-grid-gap-input"))
+      .toBe("calc(var(--brick-space-1) * 8)");
+    expect(grid.style.getPropertyValue("--brick-grid-gap-md-input")).toBe("2rem");
+    expect(grid.style.getPropertyValue("--brick-grid-row-gap-input")).toBe("1.25rem");
+    expect(grid.style.getPropertyValue("--brick-grid-column-gap-input"))
+      .toBe("var(--product-column-gap)");
+    expect(grid.style.getPropertyValue("--brick-grid-column-gap-lg-input"))
+      .toBe("calc(var(--brick-space-1) * 9)");
+  });
+
   it("supports every adopted Root and Item semantic host", () => {
     const roots: GridRootElement[] = [
       "div", "span", "section", "article", "nav", "header", "footer",

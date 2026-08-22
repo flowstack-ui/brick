@@ -82,8 +82,10 @@ Prefer recipe props, then semantic and public Badge tokens. Use `className` and
 
 ## Responsive behavior
 
-Badge sizes to its content and does not own responsive layout. Keep labels
-short; surrounding layout owns wrapping and truncation.
+Badge sizes to its content, keeps its short label on one line, and does not own
+responsive layout. Use ordinary Text for explanatory or prose-length content;
+surrounding layout or a deliberate scroll owner contains the Badge's intrinsic
+width.
 
 ## Accessibility
 

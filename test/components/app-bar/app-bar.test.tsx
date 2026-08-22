@@ -23,6 +23,7 @@ describe("AppBar", () => {
     const toolbar = root.querySelector("[data-slot='appbar-toolbar']");
     expect(toolbar).toHaveClass("brick-app-bar-toolbar");
     expect(toolbar).toHaveAttribute("data-density", "compact");
+    expect(toolbar).toHaveAttribute("data-inset", "default");
     expect(toolbar).not.toHaveAttribute("role");
     expect(root.querySelector("[data-slot='appbar-start']")).toHaveClass("brick-app-bar-start");
     expect(root.querySelector("[data-slot='appbar-center']")).toHaveClass("brick-app-bar-center");
@@ -55,6 +56,16 @@ describe("AppBar", () => {
     expect(root).toHaveAttribute("data-elevated", "");
     expect(root).toHaveStyle({ insetBlockStart: "4px" });
     expect(root.querySelector("[data-slot='appbar-toolbar']")).toBe(toolbarRef.current);
+
+    rerender(
+      <AppBar.Root aria-label="Inset">
+        <AppBar.Toolbar inset="none">Content</AppBar.Toolbar>
+      </AppBar.Root>,
+    );
+    expect(root.querySelector("[data-slot='appbar-toolbar']")).toHaveAttribute(
+      "data-inset",
+      "none",
+    );
 
     for (const variant of variants) {
       rerender(<AppBar.Root aria-label="Secondary" variant={variant}>Content</AppBar.Root>);

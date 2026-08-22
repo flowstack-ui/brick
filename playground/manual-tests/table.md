@@ -24,7 +24,9 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 Review scenarios 01–05. Confirm captions, sections, row/column headers,
 footer, spans, line/outline/stripe, size/density, and logical/numeric alignment
-match their labels without accidental hover or focus behavior.
+match their labels without accidental hover or focus behavior. Confirm outline
+header and footer paint follows all four softened corners without clipping a
+top or bottom Caption.
 
 Result:
 Notes or issue:
@@ -42,7 +44,9 @@ Notes or issue:
 
 Review 07–08 in light, dark, and forced colors. Scroll the bounded specimen.
 Confirm header cells remain opaque and aligned, captions/footer remain clear,
-boundaries persist, and the shown variables match the customized preview.
+boundaries persist, and the shown variables match the customized preview. In a
+bounded vertical-scroll composition, confirm the Scroll Area viewport keeps
+all four corners stable while the line-variant Table moves inside it.
 
 Result:
 Notes or issue:

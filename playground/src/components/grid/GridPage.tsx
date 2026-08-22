@@ -109,7 +109,7 @@ export const gridScenarios = [
   },
   {
     description:
-      "The complete gap scale changes both axes. Axis overrides then change only row or column spacing.",
+      "Legacy gaps preserve established geometry. Numeric factors, explicit CSS values, responsive mixtures, and axis overrides share one spacing grammar.",
     id: "grid.gaps",
     number: 5,
     title: "Gaps",
@@ -213,7 +213,7 @@ export function GridPage() {
           >
             <Grid.Root gap="4" minItemSize="sm">
               {gaps.map((value) => (
-                <Cell key={value} label={value}>
+                <Cell key={value} label={String(value)}>
                   <Grid.Root columns={2} data-gap-example={value} gap={value}>
                     <IdenticalTiles />
                   </Grid.Root>
@@ -233,6 +233,38 @@ export function GridPage() {
               </Cell>
               <Cell label="columnGap 6">
                 <Grid.Root columnGap="6" columns={2} data-axis-example="column" gap="2">
+                  <IdenticalTiles />
+                </Grid.Root>
+              </Cell>
+            </Grid.Root>
+          </EvidenceGroup>
+          <EvidenceGroup
+            description="The same prop accepts calculated factors, explicit CSS, and breakpoint-specific mixtures without local layout CSS."
+            title="Calculated and explicit gaps"
+          >
+            <Grid.Root columns={{ initial: 1, md: 3 }} gap={4}>
+              <Cell label="factor 8">
+                <Grid.Root columns={2} data-spacing-example="factor" gap={8}>
+                  <IdenticalTiles />
+                </Grid.Root>
+              </Cell>
+              <Cell label="explicit axes">
+                <Grid.Root
+                  columnGap="2.25rem"
+                  columns={2}
+                  data-spacing-example="explicit"
+                  gap={2}
+                  rowGap="1.25rem"
+                >
+                  <IdenticalTiles />
+                </Grid.Root>
+              </Cell>
+              <Cell label="responsive 2 → 8">
+                <Grid.Root
+                  columns={2}
+                  data-spacing-example="responsive"
+                  gap={{ initial: 2, md: 8 }}
+                >
                   <IdenticalTiles />
                 </Grid.Root>
               </Cell>

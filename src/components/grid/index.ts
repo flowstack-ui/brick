@@ -15,4 +15,5 @@ export {
   type GridSelfJustify,
   type GridSpan,
   type ResponsiveValue,
+  type SpacingValue,
 } from "./Grid.js";

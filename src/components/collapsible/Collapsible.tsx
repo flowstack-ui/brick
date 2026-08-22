@@ -72,7 +72,7 @@ export const CollapsibleIndicator = forwardRef<HTMLSpanElement, CollapsibleIndic
       >
         {children ?? (
           <svg fill="none" viewBox="0 0 16 16">
-            <path d="m6 3.5 4.5 4.5L6 12.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+            <path d="m3.5 6 4.5 4.5L12.5 6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
           </svg>
         )}
       </span>

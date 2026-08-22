@@ -30,6 +30,7 @@ describe("Collapsible", () => {
     expect(trigger).toHaveAttribute("type", "button");
     expect(trigger).toHaveAttribute("aria-expanded", "false");
     expect(trigger.querySelector(".brick-collapsible-indicator")).toHaveAttribute("aria-hidden", "true");
+    expect(trigger.querySelector(".brick-collapsible-indicator path")).toHaveAttribute("d", "m3.5 6 4.5 4.5L12.5 6");
     expect(screen.queryByRole("region")).not.toBeInTheDocument();
 
     fireEvent.click(trigger);

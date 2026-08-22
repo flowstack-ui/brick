@@ -80,6 +80,7 @@ import { ChipPage, chipScenarios } from "../components/chip/ChipPage.js";
 import { IconPage, iconScenarios } from "../components/icon/IconPage.js";
 import { ImagePage, imageScenarios } from "../components/image/ImagePage.js";
 import { ListPage, listScenarios } from "../components/list/ListPage.js";
+import { ReorderableListPage, reorderableListScenarios } from "../components/reorderable-list/ReorderableListPage.js";
 import { TablePage, tableScenarios } from "../components/table/TablePage.js";
 import { DataGridPage, dataGridScenarios } from "../components/data-grid/DataGridPage.js";
 import { TreeGridPage, treeGridScenarios } from "../components/tree-grid/TreeGridPage.js";
@@ -163,10 +164,16 @@ import { PlaygroundShell } from "../shell/PlaygroundShell.js";
 const playgroundRoutes = new Set(playgroundEntries.map((entry) => entry.route));
 
 function usePlaygroundPath() {
-  const [path, setPath] = useState(() => window.location.pathname);
+  const [locationKey, setLocationKey] = useState(
+    () => `${window.location.pathname}${window.location.search}${window.location.hash}`,
+  );
 
   useEffect(() => {
-    const syncPath = () => setPath(window.location.pathname);
+    const syncLocation = () => {
+      setLocationKey(
+        `${window.location.pathname}${window.location.search}${window.location.hash}`,
+      );
+    };
     const navigateInPlayground = (event: MouseEvent) => {
       if (
         event.defaultPrevented ||
@@ -211,19 +218,19 @@ function usePlaygroundPath() {
         "",
         `${destination.pathname}${destination.search}${destination.hash}`,
       );
-      setPath(destination.pathname);
+      syncLocation();
       window.scrollTo({ left: 0, top: 0 });
     };
 
     document.addEventListener("click", navigateInPlayground);
-    window.addEventListener("popstate", syncPath);
+    window.addEventListener("popstate", syncLocation);
     return () => {
       document.removeEventListener("click", navigateInPlayground);
-      window.removeEventListener("popstate", syncPath);
+      window.removeEventListener("popstate", syncLocation);
     };
   }, []);
 
-  return path;
+  return new URL(locationKey, window.location.origin).pathname;
 }
 
 export function PlaygroundApp() {
@@ -413,6 +420,10 @@ export function PlaygroundApp() {
 
   if (entry.id === "list") {
     return <PlaygroundShell entry={entry} scenarios={listScenarios}><ListPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "reorderable-list") {
+    return <PlaygroundShell entry={entry} scenarios={reorderableListScenarios}><ReorderableListPage /></PlaygroundShell>;
   }
 
   if (entry.id === "table") {

@@ -117,6 +117,7 @@ const componentSymbols = {
   "multi-select": "MultiSelect",
   link: "Link",
   list: "List",
+  "reorderable-list": "ReorderableList",
   table: "Table",
   "data-grid": "Data Grid",
   "tree-grid": "Tree Grid",

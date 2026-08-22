@@ -18,6 +18,8 @@ Badge follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Kept short status and category labels on one line so compact Badge content
+  remains atomic in tables, cards, and metadata rows.
 - Neutral solid Badges now use a strong theme-derived neutral surface and
   normal foreground instead of the inverse black/white pair.
 - Added a themeable default gap between composed Badge children such as an

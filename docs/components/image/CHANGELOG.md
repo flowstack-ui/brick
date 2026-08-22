@@ -6,6 +6,10 @@ Image follows the package version of `@flowstack-ui/brick`.
 
 ### Changed
 
+- Expanded delivery guidance for responsive source selection, intrinsic
+  geometry, likely-LCP priority, deferred images, and cold/warm/constrained
+  qualification without changing the Image runtime API.
+
 - Clarified that Image is appropriate for larger editorial/profile portraits
   while Avatar owns compact fixed-square identity tokens, and documented
   contextual portrait alternative-text decisions.

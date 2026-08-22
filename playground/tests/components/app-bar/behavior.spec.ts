@@ -29,6 +29,7 @@ test("AppBar exposes its default landmark, anatomy, and geometric center", async
   const center = root.locator("[data-slot='appbar-center']");
   const end = root.locator("[data-slot='appbar-end']");
   await expect(toolbar).not.toHaveAttribute("role");
+  await expect(toolbar).toHaveAttribute("data-inset", "default");
   await expect(start).toBeVisible();
   await expect(center).toBeVisible();
   await expect(end).toBeVisible();
@@ -44,6 +45,24 @@ test("AppBar exposes its default landmark, anatomy, and geometric center", async
     0,
   );
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+});
+
+test("AppBar Toolbar can yield inline inset to a containing layout owner", async ({
+  page,
+}) => {
+  await page.goto("/app-bar");
+  const toolbar = page
+    .getByTestId("app-bar-overview")
+    .locator("[data-slot='appbar-toolbar']");
+
+  await expect(toolbar).toHaveAttribute("data-inset", "default");
+  expect(
+    await toolbar.evaluate((element) => getComputedStyle(element).paddingInlineStart),
+  ).not.toBe("0px");
+
+  await toolbar.evaluate((element) => element.setAttribute("data-inset", "none"));
+  await expect(toolbar).toHaveCSS("padding-inline-start", "0px");
+  await expect(toolbar).toHaveCSS("padding-inline-end", "0px");
 });
 
 test("AppBar variants change only the default neutral surface treatment", async ({

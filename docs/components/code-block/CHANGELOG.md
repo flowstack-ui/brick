@@ -6,6 +6,8 @@ Code Block follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Moved the historical WebKit text-size-adjustment declaration to Brick's
+  target-driven CSS compiler while retaining the standard authored property.
 - Disabled automatic mobile text inflation on the native `pre` owner so long
   scrollable examples cannot be enlarged independently of shorter Code Blocks.
 
