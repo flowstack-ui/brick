@@ -25,6 +25,16 @@ test("logical row padding can align leading and trailing content independently",
   await expect(link).toHaveCSS("padding-right", "32px");
 });
 
+test("neutral soft current paint stays visible and changes on hover", async ({ page }) => {
+  const root = page.locator('[data-scenario="nav-list.tones"] .brick-nav-list[data-tone="neutral"][data-variant="soft"]').first();
+  const current = root.getByRole("link", { name: "Workspace" });
+  const before = await current.evaluate((element) => getComputedStyle(element).backgroundColor);
+  const parent = await current.evaluate((element) => getComputedStyle(element.parentElement!).backgroundColor);
+  expect(before).not.toBe(parent);
+  await current.hover();
+  await expect.poll(() => current.evaluate((element) => getComputedStyle(element).backgroundColor)).not.toBe(before);
+});
+
 test("disclosure updates native state and relationship output", async ({ page }) => {
   const scenario = page.locator('[data-scenario="nav-list.sections"]');
   const trigger = scenario.getByRole("button", { name: "Foundations" });

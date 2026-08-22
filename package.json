@@ -271,6 +271,10 @@
       "types": "./dist/list.d.ts",
       "default": "./dist/list.js"
     },
+    "./reorderable-list": {
+      "types": "./dist/reorderable-list.d.ts",
+      "default": "./dist/reorderable-list.js"
+    },
     "./table": {
       "types": "./dist/table.d.ts",
       "default": "./dist/table.js"
@@ -361,7 +365,8 @@
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/theme-contract.md",
-    "docs/guides/agent-knowledge.md"
+    "docs/guides/agent-knowledge.md",
+    "docs/guides/browser-support.md"
   ],
   "scripts": {
     "clean": "node scripts/clean.mjs",
@@ -443,8 +448,7 @@
     "prepublishOnly": "npm run build"
   },
   "browserslist": [
-    "defaults and supports es6-module",
-    "not IE 11"
+    "baseline 2023 with downstream"
   ],
   "overrides": {
     "brace-expansion": "5.0.9",
@@ -455,7 +459,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.22.6"
+    "@flowstack-ui/atom": "0.23.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

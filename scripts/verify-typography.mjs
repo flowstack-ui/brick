@@ -9,6 +9,9 @@ const tokenSource = JSON.parse(
 
 const recipes = [
   "display",
+  "display-sm",
+  "display-md",
+  "display-lg",
   "title-lg",
   "title-md",
   "title-sm",

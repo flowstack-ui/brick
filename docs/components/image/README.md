@@ -10,10 +10,14 @@ Use Image for project thumbnails, article media, product screenshots, and other
 ordinary responsive media that needs a stable frame, crop/contain behavior, or
 an authored unavailable state.
 
+Use Image for a larger editorial or profile portrait when its authored aspect
+ratio, crop, focal position, or available measure communicates identity. Use
+Avatar instead for a compact fixed-square identity token.
+
 ## When not to use
 
-Use Avatar for people or entity identity, Icon for inline SVG symbols, and
-Surface.Media for decorative layered background media. Image is not an
+Use Avatar for compact fixed-square people or entity identity, Icon for inline
+SVG symbols, and Surface.Media for decorative layered background media. Image is not an
 optimizer, gallery, lightbox, figure/caption, upload editor, or framework image
 loader.
 
@@ -161,12 +165,31 @@ reserve intrinsic ratio; `srcSet` and `sizes` let the browser choose a source.
 Image defines no breakpoints. Its owner chooses surrounding Grid, Stack,
 Container, and responsive dimensions.
 
+For delivery-sensitive images, keep the source directly discoverable and do
+not lazy-load a measured or strongly expected LCP image. Use eager loading and
+reserve `fetchPriority="high"` for the small number of genuinely critical
+images. Ordinary below-fold images may use native lazy loading. If a product
+requires an exact proximity or intent boundary, the application should decide
+when to attach the source; native lazy loading remains a browser scheduling
+hint rather than an exact scroll threshold.
+
+Image does not generate formats, resize assets, choose a CDN, emit document
+preloads, or decide a product's critical path. Those remain application,
+framework-adapter, build, or hosting responsibilities. Qualify delivery with
+cold and warm visits, narrow and wide source selection, constrained loading,
+blocked media, transferred bytes, and layout-shift evidence.
+
 ## Accessibility
 
 Every Content requires an authored alt decision. Use concise contextual alt for
 informative media and `alt=""` for decoration. Inside an already named action,
 the image is usually decorative. Never repeat nearby text, derive a name from a
 filename, or write “image of.” Complex images need adjacent extended content.
+
+For a profile portrait, use the person's name when the portrait communicates
+identity beyond the surrounding copy. Use `alt=""` only when that specific
+portrait is intentionally decorative; the mere presence of a nearby name does
+not establish one universal answer.
 
 Fallback adds no live region, focus, role, or generated announcement. Add
 application status messaging only when a source change matters to the task.

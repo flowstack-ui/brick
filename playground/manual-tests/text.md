@@ -24,7 +24,7 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 Setup: Open `/text`; review `01` through `03` top to bottom.
 
-Action: Compare repeated copy across the default, nine variants, and nine
+Action: Compare repeated copy across the default, twelve variants, and nine
 tones.
 
 Expected: The default is ordinary primary body text. Type recipes form a clear,
@@ -40,12 +40,15 @@ Notes or issue:
 
 Setup: Continue through `04` and `05`.
 
-Action: Compare weights and alignments, then inspect the live semantic hosts
-and rendered HTML.
+Action: Compare weights, alignments, and transforms, then inspect the live
+semantic hosts, named Heading/Paragraph/Caption/Eyebrow exports, and rendered
+HTML.
 
-Expected: Only the named weight or alignment changes. Start/end follow the
-page direction. Span, paragraph, div, and heading retain identical body-md
-appearance; the output shows the actual selected element and attributes.
+Expected: Only the named weight, alignment, or transform changes. Start/end
+follow the page direction. Authored DOM text is unchanged by visual transform.
+Span, paragraph, div, and heading retain identical body-md appearance; named
+exports render one correct host, Heading uses its explicit level independently
+from title-lg, and the output shows the selected element and attributes.
 
 Result:
 Notes or issue:

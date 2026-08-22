@@ -10,19 +10,23 @@ import contract from "@flowstack-ui/brick/theme-contract.json" with { type: "jso
 The artifact uses the `flowstack.brick-theme-contract.v1` schema identifier.
 It is generated from Brick's token source, component documentation contracts,
 and cascade declaration, so theme tooling does not need a copied token list.
-Contract revision 2 adds the required contrast declaration. Consumers that
-need compiler-enforced pair safety must require `contractVersion >= 2`; the
-schema identifier remains version 1 because the JSON addition is additive for
-existing contract readers.
+Contract revision 2 added the required contrast declaration. Revision 3 adds
+closed categorical component inputs and conditional contrast pairs. The
+schema identifier remains version 1 because both revisions are additive for
+existing contract readers. Theme accepts revision 2 and newer, while tooling
+that needs categorical inputs and conditional validation must feature-detect
+the revision 3 fields.
 
 The contract records:
 
 - every semantic variable, type, light and dark default, and appearance
   behavior;
 - atomic color families that must be reviewed together;
-- semantic foreground/background pairs, their text or non-text kind, and the
-  minimum contrast ratio Theme must validate without rounding;
-- approved inherited component inputs and their semantic fallbacks;
+- semantic foreground/background pairs, their text, text-distinction, or
+  non-text kind, optional component-input condition, and minimum contrast
+  ratio Theme must validate without rounding;
+- approved inherited component inputs, their semantic fallbacks, and any
+  closed `allowedValues` vocabulary;
 - local component extension variables and implementation-only variables;
 - component recipes, defaults, and state attributes used by qualification;
 - the reserved theme and appearance attributes; and
@@ -43,7 +47,9 @@ Deprecated values, when introduced, include their replacements.
 Brick publishes only adjacencies promised by maintained component recipes. It
 does not ask Theme to test every theoretical combination of semantic colors.
 Normal authored text pairs require `4.5:1`; meaningful non-text indicators
-require `3:1`. Disabled text and arbitrary local component overrides remain
+require `3:1`. A conditional text-distinction pair requires `3:1` when a
+categorical theme decision removes the non-color cue that normally identifies
+an element. Disabled text and arbitrary local component overrides remain
 outside this static contract, while browser qualification covers opacity,
 gradients, images, and composition-specific adjacency.
 
@@ -51,10 +57,18 @@ The public contract uses `wcag2-relative-luminance` over opaque sRGB values.
 Theme owns the calculation and generated report; Brick owns the declared pair
 semantics and thresholds.
 
-Brick currently approves Drawer background and radius as inherited component
-inputs. Other documented component variables remain available for local
-instance customization but are intentionally not accepted as global Theme
-inputs until a real product proves that scope safe.
+Brick currently approves Drawer background and radius plus Link resting
+decoration as inherited component inputs. `components.link.decoration` accepts
+only `"underline"` or `"none"`. When `"none"` is active, Theme validates the
+accent Link text against adjacent primary text at `3:1`; Link restores its
+underline on hover, focus, and active interaction. An explicit
+`variant="underline"` or `variant="plain"` remains a local exception.
+
+Other documented component variables remain available for local instance
+customization but are intentionally not accepted as global Theme inputs until
+a real product proves that scope safe. Shared appearance-dependent elevation
+uses semantic `--brick-shadow-floating` and `--brick-shadow-modal` tokens,
+which themes may map through `brick.light.shadow` and `brick.dark.shadow`.
 
 ## Cascade and scopes
 

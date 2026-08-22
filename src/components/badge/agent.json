@@ -37,7 +37,7 @@
     {
       "id": "badge-short-label",
       "level": "must",
-      "statement": "Keep the label short and do not use Badge as a container for explanatory prose."
+      "statement": "Keep the label short and atomic; Badge stays on one line, so use ordinary Text for explanatory or prose-length content."
     },
     {
       "id": "badge-css",
@@ -52,7 +52,7 @@
     }
   ],
   "validation": [
-    "Check label brevity, passive semantics, child spacing, foreground contrast for every variant and tone, zoom, forced colors, and RTL.",
+    "Check label brevity, one-line atomic sizing, passive semantics, child spacing, foreground contrast for every variant and tone, zoom, forced colors, and RTL.",
     "Confirm nested Text inherits the Badge foreground and CSS is loaded."
   ],
   "related": [

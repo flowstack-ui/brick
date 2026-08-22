@@ -39,7 +39,10 @@ Public exports are `ZStack`, `ZStackRoot`, `ZStackItem`, `ZStackRootProps`,
 ## Anatomy and DOM ownership
 
 Root renders one host. Every direct child occupies the same grid area. Item is
-optional and either renders one selected host or decorates its one child.
+optional and either renders one selected host or decorates its one child. The
+root isolates the layer group and keeps direct children at one internal
+stacking level, so later authored overlays remain above earlier positioned
+media.
 
 ## API
 

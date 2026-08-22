@@ -22,7 +22,7 @@ const elements: SurfaceElement[] = [
 const levels: SurfaceLevel[] = ["canvas", "base", "subtle", "raised"];
 const elevations: SurfaceElevation[] = ["none", "low", "medium", "high"];
 const radii: SurfaceRadius[] = ["none", "subtle", "surface"];
-const insets: SurfaceInset[] = ["none", "sm", "md", "lg"];
+const insets: SurfaceInset[] = ["none", "sm", "md", "lg", "xl", "2xl"];
 const props: SurfaceProps = {
   "aria-label": "Release readiness",
   as: "section",
@@ -30,7 +30,7 @@ const props: SurfaceProps = {
   children: "Content",
   className: "consumer-surface",
   elevation: "medium",
-  inset: "lg",
+  inset: { initial: "lg", xl: "2xl" },
   level: "raised",
   onClick: () => undefined,
   radius: "subtle",
@@ -64,8 +64,8 @@ createElement(Surface, { elevation: 8 });
 // @ts-expect-error Radius uses a closed semantic recipe.
 createElement(Surface, { radius: "full" });
 // @ts-expect-error Inset uses a closed recipe.
-createElement(Surface, { inset: "xl" });
-// @ts-expect-error Responsive objects are application policy.
+createElement(Surface, { inset: "3xl" });
+// @ts-expect-error Responsive inset requires the shared initial key.
 createElement(Surface, { inset: { base: "sm", lg: "lg" } });
 // @ts-expect-error Historical runtime color scope is excluded.
 createElement(Surface, { surfaceColor: "accent" });

@@ -65,7 +65,7 @@ export const AccordionIndicator = forwardRef<HTMLSpanElement, AccordionIndicator
   { children, className, "data-slot": slot, ...props },
   ref,
 ) {
-  return <span {...props} aria-hidden="true" className={classes("brick-accordion-indicator", className)} data-slot={slot ?? "accordion-indicator"} ref={ref}>{children ?? <svg fill="none" viewBox="0 0 16 16"><path d="m6 3.5 4.5 4.5L6 12.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" /></svg>}</span>;
+  return <span {...props} aria-hidden="true" className={classes("brick-accordion-indicator", className)} data-slot={slot ?? "accordion-indicator"} ref={ref}>{children ?? <svg fill="none" viewBox="0 0 16 16"><path d="m3.5 6 4.5 4.5L12.5 6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" /></svg>}</span>;
 });
 
 export const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(function AccordionContent(

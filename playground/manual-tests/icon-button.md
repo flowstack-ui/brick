@@ -85,7 +85,7 @@ disabled-plus-loading specimens. Tab through the row and attempt activation.
 
 Expected: The SVG and image are decorative and each control has one complete
 accessible name. All targets remain the default square size. Disabled controls
-cannot activate. Loading remains focusable, retains its name, exposes busy
+use a clearly faded foreground and cannot activate. Loading remains focusable, retains its name, exposes busy
 state, hides the original icon, and shows one centered spinner. Combined
 disabled and loading behavior remains visually and semantically clear.
 

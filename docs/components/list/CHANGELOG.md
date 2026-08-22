@@ -4,6 +4,12 @@ List follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Kept native markers beside the first content line in bordered simple and
+  structured rows instead of allowing the private block row to push content
+  below the marker.
+
 ### Added
 
 - Added public Agent Knowledge for native list meaning, structured row anatomy,

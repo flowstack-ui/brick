@@ -125,6 +125,12 @@ Header, Action, Content, and Footer accept native `div` attributes.
 Description accepts native paragraph attributes. All part slots are
 overridable with `data-slot`.
 
+`Card.Action` reserves the Header's trailing grid column across the title and
+description rows. This is appropriate when both text regions should make room
+for compact trailing content. When metadata belongs beside only the title and
+the description should retain the full header measure, compose the title and
+metadata in a Brick `HStack` and omit `Card.Action`.
+
 ## Visual recipes and states
 
 ### Variants

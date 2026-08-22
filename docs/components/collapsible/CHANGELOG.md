@@ -4,6 +4,12 @@ Collapsible follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Preserved the complete outward Trigger focus ring in vertical compositions,
+  inset it inside horizontal scroll boundaries, and changed the default
+  Indicator to point down when closed and up when open.
+
 ### Added
 
 - Added the five-part Atom-backed Collapsible with plain, soft, and outline

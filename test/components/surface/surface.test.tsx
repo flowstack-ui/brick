@@ -80,7 +80,7 @@ describe("Surface", () => {
     const levels: SurfaceLevel[] = ["canvas", "base", "subtle", "raised"];
     const elevations: SurfaceElevation[] = ["none", "low", "medium", "high"];
     const radii: SurfaceRadius[] = ["none", "subtle", "surface"];
-    const insets: SurfaceInset[] = ["none", "sm", "md", "lg"];
+    const insets: SurfaceInset[] = ["none", "sm", "md", "lg", "xl", "2xl"];
     const { rerender } = render(<Surface data-testid="surface" />);
 
     for (const level of levels) {
@@ -109,6 +109,22 @@ describe("Surface", () => {
 
     rerender(<Surface bordered data-testid="surface" />);
     expect(screen.getByTestId("surface")).toHaveAttribute("data-bordered", "");
+  });
+
+  it("serializes responsive inset with the shared mobile-first grammar", () => {
+    render(
+      <Surface
+        data-testid="surface"
+        inset={{ initial: "sm", md: "lg", xl: "2xl" }}
+      />,
+    );
+    const surface = screen.getByTestId("surface");
+
+    expect(surface).toHaveAttribute("data-inset", "sm");
+    expect(surface).toHaveAttribute("data-inset-md", "lg");
+    expect(surface).toHaveAttribute("data-inset-xl", "2xl");
+    expect(surface).not.toHaveAttribute("data-inset-sm");
+    expect(surface).not.toHaveAttribute("data-inset-lg");
   });
 
   it("supports every adopted semantic host", () => {

@@ -115,7 +115,8 @@ Marker changes only marker presentation.
 Items support simple direct content or a three-column structured row. Long
 Title and Description content wraps rather than truncates. Disabled changes
 opacity only; List has no hover, active, selected, loading, validation, focus,
-or motion state.
+or motion state. Bordered lists keep visible native markers beside the first
+content line for both simple and structured rows.
 
 ## Tokens and CSS hooks
 

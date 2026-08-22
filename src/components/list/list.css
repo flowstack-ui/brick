@@ -89,6 +89,23 @@
 
   .brick-list[data-variant="bordered"][data-marker="none"] > .brick-list__item { padding-inline: 0; }
 
+  .brick-list[data-variant="bordered"] > .brick-list__item > .brick-list__row {
+    display: inline;
+  }
+
+  .brick-list[data-variant="bordered"] > .brick-list__item > .brick-list__row:has(> :where(.brick-list__leading, .brick-list__content, .brick-list__trailing)) {
+    display: inline-grid;
+    inline-size: calc(100% - var(--brick-list-marker-gap) - 1em);
+    vertical-align: top;
+  }
+
+  .brick-list[data-variant="bordered"][data-marker="none"] > .brick-list__item > .brick-list__row { display: block; }
+
+  .brick-list[data-variant="bordered"][data-marker="none"] > .brick-list__item > .brick-list__row:has(> :where(.brick-list__leading, .brick-list__content, .brick-list__trailing)) {
+    display: grid;
+    inline-size: auto;
+  }
+
   .brick-list__item {
     box-sizing: border-box;
     min-inline-size: 0;

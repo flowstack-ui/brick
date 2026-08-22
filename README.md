@@ -29,7 +29,8 @@ import "@flowstack-ui/brick/styles.css";
 ```
 
 New applications may opt into Brick's separate neutral reset for page sizing,
-margin removal, and browser normalization:
+body, `figure`, and `blockquote` margin removal, and browser normalization.
+Higher-level FLOWSTACK packs may require this complete two-import setup:
 
 ```ts
 import "@flowstack-ui/brick/reset.css";
@@ -148,12 +149,13 @@ through `@flowstack-ui/brick/theme-contract.json`.
 - [Installation and stylesheet setup](docs/guides/installation.md)
 - [Appearance and semantic tokens](docs/guides/appearance-and-tokens.md)
 - [Generated theme contract](docs/guides/theme-contract.md)
+- [Browser support and progressive enhancement](docs/guides/browser-support.md)
 
 The complete component guides live with the source repository:
 
 | Family | Components |
 | --- | --- |
-| Actions and selection | [Button](https://github.com/flowstack-ui/brick/blob/main/docs/components/button/README.md), [Icon Button](https://github.com/flowstack-ui/brick/blob/main/docs/components/icon-button/README.md), [Toggle](https://github.com/flowstack-ui/brick/blob/main/docs/components/toggle/README.md), [Toggle Group](https://github.com/flowstack-ui/brick/blob/main/docs/components/toggle-group/README.md), [Toolbar](https://github.com/flowstack-ui/brick/blob/main/docs/components/toolbar/README.md), [Pagination](https://github.com/flowstack-ui/brick/blob/main/docs/components/pagination/README.md) |
+| Actions and selection | [Button](https://github.com/flowstack-ui/brick/blob/main/docs/components/button/README.md), [Icon Button](https://github.com/flowstack-ui/brick/blob/main/docs/components/icon-button/README.md), [Toggle](https://github.com/flowstack-ui/brick/blob/main/docs/components/toggle/README.md), [Toggle Group](https://github.com/flowstack-ui/brick/blob/main/docs/components/toggle-group/README.md), [Toolbar](https://github.com/flowstack-ui/brick/blob/main/docs/components/toolbar/README.md), [Pagination](https://github.com/flowstack-ui/brick/blob/main/docs/components/pagination/README.md), [Reorderable List](https://github.com/flowstack-ui/brick/blob/main/docs/components/reorderable-list/README.md) |
 | Accessibility | [Skip Link](https://github.com/flowstack-ui/brick/blob/main/docs/components/skip-link/README.md), [Visually Hidden](https://github.com/flowstack-ui/brick/blob/main/docs/components/visually-hidden/README.md) |
 | Data display | [Aspect Ratio](https://github.com/flowstack-ui/brick/blob/main/docs/components/aspect-ratio/README.md), [Data Grid](https://github.com/flowstack-ui/brick/blob/main/docs/components/data-grid/README.md), [Tree Grid](https://github.com/flowstack-ui/brick/blob/main/docs/components/tree-grid/README.md), [Tree](https://github.com/flowstack-ui/brick/blob/main/docs/components/tree/README.md), [Feed](https://github.com/flowstack-ui/brick/blob/main/docs/components/feed/README.md), [Swipeable Item](https://github.com/flowstack-ui/brick/blob/main/docs/components/swipeable-item/README.md), [Carousel](https://github.com/flowstack-ui/brick/blob/main/docs/components/carousel/README.md) |
 | Forms and choices | [Form](https://github.com/flowstack-ui/brick/blob/main/docs/components/form/README.md), [Field](https://github.com/flowstack-ui/brick/blob/main/docs/components/field/README.md), [Fieldset](https://github.com/flowstack-ui/brick/blob/main/docs/components/fieldset/README.md), [Input](https://github.com/flowstack-ui/brick/blob/main/docs/components/input/README.md), [Number Input](https://github.com/flowstack-ui/brick/blob/main/docs/components/number-input/README.md), [OTP Field](https://github.com/flowstack-ui/brick/blob/main/docs/components/otp-field/README.md), [Password Toggle Field](https://github.com/flowstack-ui/brick/blob/main/docs/components/password-toggle-field/README.md), [Textarea](https://github.com/flowstack-ui/brick/blob/main/docs/components/textarea/README.md), [Select](https://github.com/flowstack-ui/brick/blob/main/docs/components/select/README.md), [Combobox](https://github.com/flowstack-ui/brick/blob/main/docs/components/combobox/README.md), [Multi Select](https://github.com/flowstack-ui/brick/blob/main/docs/components/multi-select/README.md), [File Upload](https://github.com/flowstack-ui/brick/blob/main/docs/components/file-upload/README.md), [Checkbox](https://github.com/flowstack-ui/brick/blob/main/docs/components/checkbox/README.md), [Checkbox Group](https://github.com/flowstack-ui/brick/blob/main/docs/components/checkbox-group/README.md), [Radio Group](https://github.com/flowstack-ui/brick/blob/main/docs/components/radio-group/README.md), [Switch](https://github.com/flowstack-ui/brick/blob/main/docs/components/switch/README.md), [Slider](https://github.com/flowstack-ui/brick/blob/main/docs/components/slider/README.md), [Rating](https://github.com/flowstack-ui/brick/blob/main/docs/components/rating/README.md) |

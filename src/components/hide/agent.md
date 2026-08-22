@@ -20,10 +20,13 @@ Hide content through Brick's CSS breakpoint contract without JavaScript viewport
 
 - **MUST:** Use Hide instead of JavaScript matchMedia for first-paint responsive visibility.
 - **MUST:** Do not hide the only accessible name, error, instruction, or required content at a breakpoint.
+- **MUST:** Rely on Hide's layout-transparent visible state inside parent layouts and put paint or geometry on a child layout component.
+- **MUST:** Omit default-valued props such as as=div; use as only for deliberate HTML semantics or valid document structure.
 - **MUST:** Load styles.css or core.css plus hide.css.
 
 ## Common mistakes
 
+- **Avoid:** Adding application CSS to repair Hide spacing or writing as=div even though div is the default. **Instead:** Rely on Hide's layout-transparent default and specify as only when semantics require another host.
 - **Avoid:** Using Hide without its modular CSS or duplicating two interactive trees with conflicting IDs. **Instead:** Load hide.css and verify alternate compositions have independent valid relationships.
 
 ## Validation checklist

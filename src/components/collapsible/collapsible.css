@@ -23,7 +23,7 @@
     box-sizing: border-box;
     inline-size: 100%;
     min-inline-size: 0;
-    overflow: clip;
+    overflow: visible;
     border: var(--brick-border-width) solid var(--brick-collapsible-border-color);
     border-radius: var(--brick-collapsible-radius);
     background: var(--brick-collapsible-background);
@@ -77,6 +77,10 @@
     flex: 0 0 auto;
   }
 
+  .brick-collapsible[data-orientation="horizontal"] .brick-collapsible-trigger:focus-visible {
+    outline-offset: calc(-1 * var(--brick-border-focus-width));
+  }
+
   .brick-collapsible-trigger {
     display: flex;
     box-sizing: border-box;
@@ -121,9 +125,7 @@
     transition: transform var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
   }
   .brick-collapsible-indicator > svg { display: block; inline-size: 100%; block-size: 100%; }
-  .brick-collapsible-trigger[data-state="open"] .brick-collapsible-indicator { transform: rotate(90deg); }
-  [dir="rtl"] .brick-collapsible-trigger[data-state="closed"] .brick-collapsible-indicator { transform: scaleX(-1); }
-  [dir="rtl"] .brick-collapsible-trigger[data-state="open"] .brick-collapsible-indicator { transform: rotate(90deg); }
+  .brick-collapsible-trigger[data-state="open"] .brick-collapsible-indicator { transform: rotate(180deg); }
 
   .brick-collapsible-content {
     box-sizing: border-box;

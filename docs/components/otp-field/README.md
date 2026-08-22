@@ -70,7 +70,18 @@ Prefer recipe props and semantic tokens, then the two component variables. Compo
 Groups use logical flex layout and may wrap only at group boundaries. Keep code length appropriate for the available width. RTL preserves authored cell order while logical groups and separators remain contained.
 
 ## Accessibility
-Use Field for the visible group label. Each cell receives a position-aware accessible name; localize it with `getInputLabel`. Only the first cell owns native required validity so the segmented control contributes one validation target and one named form value. Masking is visual privacy, not secure storage.
+Use Field for a visible group label when that label helps the interface. When
+nearby instructions make another visible label genuinely redundant, give Root
+an equivalent standalone accessible name with `aria-label` or
+`aria-labelledby`. Each cell receives a position-aware accessible name;
+localize it with `getInputLabel`. Only the first cell owns native required
+validity so the segmented control contributes one validation target and one
+named form value. Masking is visual privacy, not secure storage.
+
+Keep `autoFocus` off unless the product deliberately moves focus into an
+already-explained code challenge and verifies keyboard, screen-reader, error,
+and focus-recovery behavior. Keep completion separate from submission unless
+the application explicitly owns the complete automatic-submission workflow.
 
 ## Composition, native props, and refs
 Root, Input, and Separator preserve Atom composition/native props; Group preserves div props. Root and Group refs target divs, Input targets `HTMLInputElement`, and Separator targets `HTMLSpanElement`.

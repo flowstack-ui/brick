@@ -90,6 +90,7 @@ try {
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/agent-knowledge.md",
+    "docs/guides/browser-support.md",
     "dist/agents/manifest.json",
     "dist/theme-contract.json",
     "docs/guides/theme-contract.md",
@@ -106,6 +107,7 @@ try {
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/theme-contract.md",
     "docs/guides/agent-knowledge.md",
+    "docs/guides/browser-support.md",
   ]);
   for (const file of files) {
     const isRuntimeFile = /^dist\/.+\.(?:js|css|d\.ts)(?:\.map)?$/u.test(file);
@@ -122,13 +124,13 @@ try {
   const agentManifest = JSON.parse(await readPackedFile("dist/agents/manifest.json"));
   const themeContract = JSON.parse(await readPackedFile("dist/theme-contract.json"));
   assert.equal(themeContract.$schema, "flowstack.brick-theme-contract.v1");
-  assert.equal(themeContract.contractVersion, 2);
+  assert.equal(themeContract.contractVersion, 4);
   assert.equal(themeContract.contrast.algorithm, "wcag2-relative-luminance");
-  assert.equal(themeContract.contrast.pairs.length, 76);
+  assert.equal(themeContract.contrast.pairs.length, 91);
   assert.equal(packageJson.exports["./theme-contract.json"], "./dist/theme-contract.json");
   assert.equal(agentManifest.package, packageJson.name);
   assert.ok(agentManifest.components.length > 0, "Agent Knowledge manifest is empty");
-  for (const requiredComponent of ["accordion", "list"]) {
+  for (const requiredComponent of ["accordion", "list", "select"]) {
     assert.ok(
       agentManifest.components.some((component) => component.id === requiredComponent),
       `Agent Knowledge manifest is missing ${requiredComponent}`,
@@ -145,6 +147,7 @@ try {
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/theme-contract.md",
     "docs/guides/agent-knowledge.md",
+    "docs/guides/browser-support.md",
   ];
   const forbiddenDocumentation = [
     /\bplayground\b/iu,

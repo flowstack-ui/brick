@@ -9,7 +9,7 @@ import {
   type LinkRootProps as AtomLinkRootProps,
 } from "@flowstack-ui/atom/link";
 
-export type LinkVariant = "underline" | "plain";
+export type LinkVariant = "theme" | "underline" | "plain";
 export type LinkTone = "accent" | "neutral" | "inherit";
 export type LinkSize = "inherit" | "sm" | "md" | "lg";
 
@@ -66,7 +66,7 @@ function mergeClassName(className: string | undefined) {
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   {
-    variant = "underline",
+    variant = "theme",
     tone = "accent",
     size = "inherit",
     startIcon,

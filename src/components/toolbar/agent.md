@@ -14,12 +14,14 @@ Style one logical group of related commands with Atom toolbar semantics and rovi
 
 ## Required composition
 
-- Compose Button, Link, Separator, and ToggleGroup/ToggleItem parts inside a named Root; use Brick icons and concise visible or accessible labels.
+- Compose Button, Link, Separator, and ToggleGroup/ToggleItem parts inside a named Root; configure Toggle selection through its shared variant and accent/neutral tone, and use Brick icons with concise visible or accessible labels.
 
 ## Rules
 
 - **MUST:** Use Toolbar rather than adding manual arrow-key handlers or role=toolbar to an AppBar row.
 - **MUST:** Define a deliberate narrow-width wrap, scroll, or alternative composition without breaking roving focus order.
+- **MUST:** Configure Toolbar ToggleItems through their ToggleGroup variant and tone; do not replace Toolbar behavior with a standalone ToggleGroup or style Items independently.
+- **MUST:** Treat neutral as non-accent intent and let Toolbar own its layered selected-surface recipe; do not copy a neutral solid Button fill into ToggleItems.
 - **MUST:** Load styles.css or core.css plus toolbar.css and any composed Icon stylesheet.
 
 ## Common mistakes

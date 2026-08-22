@@ -21,6 +21,10 @@ const productionCss = production.code.toString();
 for (const marker of ["@layer", "@container", "@keyframes", "prefers-reduced-motion", "forced-colors"]) {
   assert.match(readableCss, new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 }
+assert.match(readableCss, /-webkit-backdrop-filter:\s*blur\(\.75rem\) saturate\(1\.15\)/, "the adopted target must generate the WebKit prefix");
+assert.match(readableCss, /backdrop-filter:\s*blur\(\.75rem\) saturate\(1\.15\)/, "the standard declaration must remain in emitted CSS");
+assert.match(readableCss, /-webkit-text-size-adjust:\s*none/, "the adopted target must generate the WebKit text-adjustment prefix");
+assert.match(readableCss, /text-size-adjust:\s*none/, "the standard text-adjustment declaration must remain in emitted CSS");
 assert.doesNotMatch(productionCss, /@import|@tailwind|@source|@theme/);
 assert.ok(productionCss.length < readableCss.length, "production CSS should be minified");
 

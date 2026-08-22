@@ -11,9 +11,17 @@ describe("Sidebar", () => {
     expect(ref.current).toHaveAttribute("data-variant", "docked");
     expect(ref.current).toHaveAttribute("data-size", "md");
     expect(ref.current).toHaveAttribute("data-position", "static");
+    expect(ref.current).toHaveAttribute("data-surface", "base");
     expect(screen.getByRole("complementary", { name: "Workspace" })).toContainElement(screen.getByText("Navigation"));
     expect(screen.getByRole("main")).toHaveTextContent("Main");
     expect(screen.getByRole("button", { name: "Toggle" })).toHaveAttribute("aria-expanded", "true");
+  });
+
+  it("resolves panel surfaces independently from shell geometry", () => {
+    const { rerender } = render(<Sidebar.Root variant="floating"><Sidebar.Panel>Panel</Sidebar.Panel><Sidebar.Main>Main</Sidebar.Main></Sidebar.Root>);
+    expect(screen.getByText("Main").closest(".brick-sidebar")).toHaveAttribute("data-surface", "raised");
+    rerender(<Sidebar.Root surface="transparent" variant="floating"><Sidebar.Panel>Panel</Sidebar.Panel><Sidebar.Main>Main</Sidebar.Main></Sidebar.Root>);
+    expect(screen.getByText("Main").closest(".brick-sidebar")).toHaveAttribute("data-surface", "transparent");
   });
 
   it("preserves controlled state, exact targets, disabled behavior, and relationships", () => {

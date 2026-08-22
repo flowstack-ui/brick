@@ -86,6 +86,11 @@ Use native labeled controls, Field/Fieldset relationships, clear errors, and a
 discoverable submit action. Form does not announce custom validation or
 submission results automatically.
 
+Fieldset is conditional, not a required wrapper around every Form. Add it when
+several controls answer one meaningful group question and can be named by one
+Legend. For a simple sequence of independently labelled text fields, compose
+the Fields directly under Form and let Form own their vertical rhythm.
+
 ## Composition, native props, and refs
 
 Native form props are forwarded. `asChild` and `render` follow the discriminated

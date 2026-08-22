@@ -16,7 +16,7 @@ Reveal one independent in-flow region while Atom owns disclosure state, relation
 ## Required composition
 
 - Compose Root with one Trigger and one Content; put ContentInner inside Content so visible padding does not corrupt measured animation geometry.
-- Use Indicator inside Trigger for the canonical decorative state cue; normal Brick layout and content components belong inside ContentInner.
+- Use Indicator inside Trigger for the canonical decorative state cue; the default points down while closed and up while open, and normal Brick layout and content components belong inside ContentInner.
 
 ## Rules
 
@@ -25,6 +25,7 @@ Reveal one independent in-flow region while Atom owns disclosure state, relation
 - **MUST:** Keep visible padding in ContentInner rather than Content so Atom can measure and animate the region accurately.
 - **MUST:** Use Collapsible for in-flow disclosure, not as a substitute for modal Drawer behavior or responsive Show/Hide policy.
 - **MUST:** Load styles.css or core.css plus collapsible.css.
+- **MUST:** Keep the default Indicator pointing down while closed and up while open in both LTR and RTL; use custom decorative artwork only for a deliberate alternate state language.
 
 ## Common mistakes
 
@@ -34,7 +35,7 @@ Reveal one independent in-flow region while Atom owns disclosure state, relation
 
 ## Validation checklist
 
-- Test the accessible Trigger name, aria-expanded/aria-controls relationship, Enter and Space, controlled and uncontrolled state, disabled behavior, and focus retention.
+- Test the accessible Trigger name, aria-expanded/aria-controls relationship, Enter and Space, controlled and uncontrolled state, disabled behavior, focus retention, and the default down/up Indicator state.
 - Test open/close measurement, dynamic content, reduced motion, long labels, narrow widths, RTL, and horizontal overflow.
 - When adapting Collapsible inside another surface, report any Root geometry override instead of silently treating plain as a behavior-only recipe.
 

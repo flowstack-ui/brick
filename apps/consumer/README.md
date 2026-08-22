@@ -14,6 +14,8 @@ flow, AlertDialog for a destructive decision, Drawer for an application-owned
 filter workflow, Badge for passive workspace status, Avatar for collaborator
 identity and presence, and NotificationBadge for
 a clearly named task control through their public package subpaths.
+Reorderable List is composed as a realistic release-order workflow with
+keyboard, pointer, and direct movement paths through its public subpath.
 
 ## Commands
 

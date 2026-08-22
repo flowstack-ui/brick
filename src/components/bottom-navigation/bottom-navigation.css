@@ -156,7 +156,6 @@
 
   .brick-bottom-navigation[data-blurred] {
     background: var(--brick-bottom-navigation-blurred-background);
-    -webkit-backdrop-filter: blur(0.75rem) saturate(1.15);
     backdrop-filter: blur(0.75rem) saturate(1.15);
   }
 
@@ -314,7 +313,6 @@
   @media (prefers-reduced-transparency: reduce) {
     .brick-bottom-navigation[data-blurred] {
       background: var(--brick-bottom-navigation-reduced-transparency-background);
-      -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
   }

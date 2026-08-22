@@ -11,6 +11,10 @@ This directory is the public documentation authority for
   system appearance, semantic tokens, and scoped customization
 - [Theme contract](guides/theme-contract.md) — generated token classifications,
   approved component inputs, scope attributes, and cascade position
+- [Browser support](guides/browser-support.md) — pinned target, generated CSS,
+  progressive enhancement, and platform evidence
+- [Layout spacing values](guides/spacing-values.md) — numeric base-unit
+  factors, legacy tokens, explicit CSS values, and responsive mixtures
 - [Agent Knowledge](guides/agent-knowledge.md) — public human- and
   machine-readable component selection, composition, and validation guidance
 - [Component guides](#component-guides) — public API and usage contracts
@@ -105,6 +109,8 @@ This directory is the public documentation authority for
   single or multiple selection and two-axis layout
 - [List](components/list/README.md) — native ordered and unordered content
   collections with optional structured anatomy
+- [Reorderable List](components/reorderable-list/README.md) — deliberate
+  manual ordering with drag, keyboard, touch, and direct movement
 - [Table](components/table/README.md) — native static tabular data with
   responsive containment and sorting composition
 - [Skeleton](components/skeleton/README.md) — motion-safe loading placeholders

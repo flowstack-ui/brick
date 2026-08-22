@@ -4,6 +4,11 @@ ZStack follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Preserve authored paint order when an earlier layer, such as a ratio-based
+  Image, establishes positioned painting before a later overlay.
+
 ### Added
 
 - Added responsive Root and Item logical alignment through Brick's canonical

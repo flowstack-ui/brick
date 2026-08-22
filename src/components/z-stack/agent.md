@@ -20,6 +20,7 @@ Overlap authored children in one depth-aware layout while preserving source, rea
 ## Rules
 
 - **MUST:** Keep DOM order meaningful because later children paint above earlier children.
+- **MUST:** Keep media before its overlay in source; ZStack preserves that order even when the media establishes a positioned layer.
 - **MUST:** Keep decorative layers from intercepting input intended for interactive content.
 - **MUST:** Use responsive logical alignment only to move the same authored layer; never change source order, depth order, or focus order at a breakpoint.
 - **MUST:** Load styles.css or core.css plus z-stack.css.

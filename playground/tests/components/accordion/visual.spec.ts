@@ -22,3 +22,9 @@ test("Accordion responsive and forced colors", async ({ page }) => {
   await useForcedColors(page);
   await expect(page.getByTestId("accordion-variants")).toHaveScreenshot("variants-forced-colors.png");
 });
+
+test("Accordion edge focus remains complete", async ({ page }) => {
+  const overview = page.getByTestId("accordion-overview");
+  await overview.getByRole("button", { name: "Account settings" }).focus();
+  await expect(overview).toHaveScreenshot("focus-ring-light.png");
+});

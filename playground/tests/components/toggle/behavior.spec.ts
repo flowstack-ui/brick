@@ -35,6 +35,24 @@ test("Toggle comparison scenarios change only their named dimensions", async ({ 
         .locator(`.brick-toggle[data-size="${size}"]`),
     ).toHaveAttribute("data-variant", "soft");
   }
+
+  const neutral = page.getByTestId("toggle-tones").locator('.brick-toggle[data-tone="neutral"]');
+  await expect(neutral).toHaveAttribute("data-variant", "solid");
+  await expect(neutral).toHaveAttribute("aria-pressed", "true");
+  const [accentBackground, neutralBackground] = await Promise.all([
+    page.getByTestId("toggle-tones").locator('.brick-toggle[data-tone="accent"]').evaluate((element) => getComputedStyle(element).backgroundColor),
+    neutral.evaluate((element) => getComputedStyle(element).backgroundColor),
+  ]);
+  expect(neutralBackground).not.toBe(accentBackground);
+  expect(await neutral.evaluate((element) => {
+    const probe = document.createElement("span");
+    probe.style.color = "var(--brick-color-text-primary)";
+    document.body.append(probe);
+    const primary = getComputedStyle(probe).color;
+    probe.remove();
+    const style = getComputedStyle(element);
+    return style.backgroundColor !== primary && style.color === primary;
+  })).toBe(true);
 });
 
 test("Toggle pressed recipes remain visually distinct", async ({ page }) => {
@@ -66,9 +84,18 @@ test("Toggle composition, disabled state, customization, and RTL remain observab
   await expect(output.first()).toContainText('aria-pressed="false"');
   await page.getByTestId("toggle-render").click();
   await expect(output.first()).toContainText('aria-pressed="true"');
-  await expect(
-    page.getByTestId("toggle-disabled").getByRole("button", { name: "Preview" }).first(),
-  ).toBeDisabled();
+  const disabled = page.getByTestId("toggle-disabled").getByRole("button", { name: "Preview" });
+  await expect(disabled.first()).toBeDisabled();
+  await expect(disabled.first()).toHaveCSS("opacity", "0.55");
+  await expect(disabled.last()).toHaveCSS("box-shadow", "none");
+  expect(await disabled.last().evaluate((element) => {
+    const probe = document.createElement("span");
+    probe.style.color = "var(--brick-color-border-subtle)";
+    document.body.append(probe);
+    const expected = getComputedStyle(probe).color;
+    probe.remove();
+    return getComputedStyle(element).borderTopColor === expected;
+  })).toBe(true);
   await expect(page.locator("[data-slot='custom-toggle']")).toHaveCSS(
     "border-radius",
     "12px",

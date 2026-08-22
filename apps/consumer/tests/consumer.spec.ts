@@ -76,6 +76,16 @@ test("composes Pagination through its public subpath", async ({ page }) => {
   await expect(pagination.getByRole("button", { name: "Page 2, current page" })).toBeVisible();
 });
 
+test("composes Reorderable List through its public subpath", async ({ page }) => {
+  const list = page.getByRole("list", { name: "Release order" });
+  const items = list.locator('[data-slot="reorderable-list-item"]');
+  await expect(items).toHaveCount(3);
+  const move = list.getByRole("button", { name: "Move Build the packed artifact later" });
+  await move.click();
+  await expect(items.nth(1)).toContainText("Build the packed artifact");
+  await expect(move).toBeFocused();
+});
+
 test("composes the complete menu family through public subpaths", async ({ page }) => {
   const navigation = page.getByRole("navigation", { name: "Workspace destinations", exact: true });
   await expect(navigation).toHaveClass(/brick-navigation-menu/);

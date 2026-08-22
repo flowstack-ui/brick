@@ -74,7 +74,9 @@ discriminated `asChild` or `render` composition contract.
 
 Root size cascades shared row/control geometry. Orientation arranges Items.
 Atom owns item checked/mixed state, aggregate Parent state, values, disabled/
-invalid state, and form behavior.
+invalid state, and form behavior. Item and Parent rows remain fully clickable,
+while hover, press, and focus-visible feedback stays on their visual checkbox
+squares.
 
 ## Tokens and CSS hooks
 

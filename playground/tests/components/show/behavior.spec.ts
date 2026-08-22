@@ -1,12 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 test.beforeEach(async ({ page }) => { await page.goto("/show"); });
-test("Show uses exact md boundary, stays mounted, and preserves visible display", async ({ page }) => {
+test("Show uses exact md boundary, stays mounted, and stays layout-transparent", async ({ page }) => {
   const root = page.getByTestId("show-primary");
   await page.setViewportSize({ width: 767, height: 800 }); await expect(root).toHaveCSS("display", "none"); await expect(root).toBeAttached();
-  await page.setViewportSize({ width: 768, height: 800 }); await expect(root).not.toHaveCSS("display", "none");
+  await page.setViewportSize({ width: 768, height: 800 }); await expect(root).toHaveCSS("display", "contents");
   const displays = page.getByTestId("show-display").locator(".brick-show");
-  for (const [index, value] of ["block", "inline", "flex", "grid"].entries()) await expect(displays.nth(index)).toHaveCSS("display", value);
+  for (const item of await displays.all()) await expect(item).toHaveCSS("display", "contents");
 });
 test("Show and Hide are complementary and state survives responsive hiding", async ({ page }) => {
   await page.setViewportSize({ width: 767, height: 800 });

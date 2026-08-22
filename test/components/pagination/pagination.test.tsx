@@ -44,4 +44,38 @@ describe("Pagination", () => {
     rerender(<Pagination.Root totalPages={0}><Pagination.List><Pagination.Items /></Pagination.List></Pagination.Root>);
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
   });
+
+  it("renders URL-backed pages as native links with inert boundaries", () => {
+    render(
+      <Pagination.Root
+        aria-label="Incident result pages"
+        getPageHref={({ page }) => `/incidents?status=open&page=${page}`}
+        page={1}
+        totalPages={3}
+      >
+        <Pagination.List>
+          <Pagination.Previous />
+          <Pagination.Items />
+          <Pagination.Next />
+        </Pagination.List>
+      </Pagination.Root>,
+    );
+
+    const current = screen.getByRole("link", { name: "Page 1, current page" });
+    expect(current).toHaveAttribute("href", "/incidents?status=open&page=1");
+    expect(current).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "Go to page 2" })).toHaveAttribute(
+      "href",
+      "/incidents?status=open&page=2",
+    );
+    expect(screen.getByRole("link", { name: "Next page" })).toHaveAttribute(
+      "href",
+      "/incidents?status=open&page=2",
+    );
+
+    const previous = screen.getByRole("link", { name: "Previous page" });
+    expect(previous).not.toHaveAttribute("href");
+    expect(previous).toHaveAttribute("aria-disabled", "true");
+    expect(previous).toHaveAttribute("tabindex", "-1");
+  });
 });

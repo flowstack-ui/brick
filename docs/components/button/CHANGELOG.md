@@ -18,6 +18,10 @@ Button follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Disabled Buttons now use a faded disabled foreground, subtle boundary, and
+  quiet surface instead of resembling enabled neutral outlines.
+- Neutral solid Buttons now use a strong theme-derived neutral surface and
+  normal foreground instead of the inverse black/white pair.
 - Danger solid Buttons now retain WCAG AA text contrast in both appearances
   and throughout hover and pressed interaction states.
 - Full-width and intrinsically sized Buttons now use border-box sizing and can

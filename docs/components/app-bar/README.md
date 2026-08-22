@@ -61,8 +61,8 @@ semantics.
 
 Public exports are the `AppBar` namespace; named `AppBarRoot`,
 `AppBarToolbar`, `AppBarStart`, `AppBarCenter`, and `AppBarEnd` parts; and
-`AppBarRootProps`, `AppBarToolbarProps`, `AppBarSectionProps`,
-`AppBarVariant`, and `AppBarTone`.
+`AppBarRootProps`, `AppBarToolbarProps`, `AppBarToolbarInset`,
+`AppBarSectionProps`, `AppBarVariant`, and `AppBarTone`.
 
 | Root prop | Values | Default |
 | --- | --- | --- |
@@ -76,6 +76,10 @@ Public exports are the `AppBar` namespace; named `AppBarRoot`,
 | --- | --- | --- |
 | Root `position` | `static`, `absolute`, `sticky`, `fixed` | `static` |
 | Toolbar `density` | `compact`, `comfortable` | `comfortable` |
+
+| Brick Toolbar prop | Values | Default |
+| --- | --- | --- |
+| `inset` | `default`, `none` | `default` |
 
 Atom Root and Toolbar supply these layout values plus native/composition props.
 Sections inherit Atom section props.
@@ -99,7 +103,8 @@ attributes include Atom `data-position`/`data-density` and Brick
 `--brick-app-bar-shadow`. Brick also publishes the density measurements
 `--brick-app-bar-toolbar-min-block-size-comfortable` and
 `--brick-app-bar-toolbar-min-block-size-compact`; Toolbar resolves the selected
-recipe through `--brick-app-bar-toolbar-min-block-size`.
+recipe through `--brick-app-bar-toolbar-min-block-size`. Toolbar's logical
+content inset resolves through `--brick-app-bar-toolbar-padding-inline`.
 
 ## Customization
 
@@ -134,7 +139,8 @@ Keep Root's default `header` when it owns page or application banner content.
 Use `asChild` or `render` only when another intentional host is required, such
 as neutral AppBar chrome inside a Drawer. When the AppBar surface should remain
 full bleed but its content needs a bounded measure, compose
-`Root > Container > Toolbar`; do not cap Root itself.
+`Root > Container > Toolbar inset="none"`; Container then owns the page gutter
+without doubling Toolbar's default viewport-safe inset. Do not cap Root itself.
 
 ## Examples
 

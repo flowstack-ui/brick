@@ -4,6 +4,14 @@ Avatar follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Clarified that Avatar owns compact fixed-square identity tokens while Image
+  owns larger editorial/profile portraits whose authored aspect ratio, crop,
+  focal position, or available measure communicates identity.
+- Documented contextual alternative-text decisions instead of treating nearby
+  identity text as an automatic decorative-image rule.
+
 ### Added
 
 - Initial direct Avatar built on the public Atom Avatar subpath.

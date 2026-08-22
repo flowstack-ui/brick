@@ -19,6 +19,7 @@ Present a finished group of related disclosure sections while Atom owns expanded
 - Compose Root > Item > Header > Trigger with Indicator inside Trigger, then place Content > ContentInner as Header's sibling inside the same Item.
 - Put visible panel padding and ordinary Brick layout in ContentInner so Content remains Atom's measured motion boundary.
 - Choose Header levels from the host document and use Content landmark=false when many regions would make landmark navigation noisy.
+- Use the default decorative Indicator when the standard down-when-closed and up-when-open state cue fits; authored Indicator children may replace only the artwork.
 
 ## Rules
 
@@ -28,6 +29,7 @@ Present a finished group of related disclosure sections while Atom owns expanded
 - **MUST:** Choose Header level from the page outline and opt out of optional Content landmarks when the resulting region count would be noisy.
 - **MUST:** Load styles.css or core.css plus accordion.css.
 - **MUST:** Keep grouped trigger corners continuous with the enclosing Root and verify that the complete focus ring remains visible at the first and last group edges.
+- **MUST:** Keep the default Indicator pointing down while closed and up while open in both LTR and RTL; use custom decorative artwork only for a deliberate alternate state language.
 
 ## Common mistakes
 
@@ -39,7 +41,7 @@ Present a finished group of related disclosure sections while Atom owns expanded
 
 - Check complete anatomy, unique values, heading order, Trigger names, linked panel relationships, landmark usefulness, and CSS delivery.
 - Test Enter, Space, Home, End, orientation-aware arrows, RTL, disabled and locked-open state, single and multiple modes, and controlled and uncontrolled state.
-- Test initial open, open and close motion, dynamic panel measurement, reduced motion, complete first and last Trigger focus geometry, continuous grouped corners, long labels, narrow widths, zoom, and forced colors.
+- Test initial open, open and close motion, down/up Indicator state, dynamic panel measurement, reduced motion, complete first and last Trigger focus geometry, continuous grouped corners, long labels, narrow widths, zoom, and forced colors.
 
 ## Related guidance
 

@@ -32,7 +32,8 @@ In 06, Tab to the first vertical Trigger; use Up/Down and Home/End. Repeat on
 horizontal with Left/Right, then repeat horizontal in RTL at 09. Activate with
 Enter and Space. Inspect 07 output. Expected: focus follows enabled Triggers in
 visual reading order; disabled items are skipped; activation happens once;
-expanded, controls, IDs, labels, headings, and optional region role match.
+expanded, controls, IDs, labels, headings, and optional region role match. The
+default Indicator points down while closed and up while open.
 
 ## Step 3 — Appearance, responsive overflow, and motion
 
@@ -40,7 +41,9 @@ Review 08–09 in light/dark at desktop, phone width, 200% and 400%, reduced
 motion, and forced colors. Open and close vertical and horizontal panels.
 Expected: customization matches code; inner content does not reflow while
 moving; narrow horizontal scrolling stays inside Accordion; the page does not
-overflow; focus, indicator, dividers, and text remain visible.
+overflow; the complete focus ring remains visible around vertical edge
+Triggers and inside horizontal scroll boundaries; indicator, dividers, and
+text remain visible.
 
 ## Step 4 — Assistive technology
 

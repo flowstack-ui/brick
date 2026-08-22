@@ -18,7 +18,7 @@ Scenario order: `01 Overview`, `02 Breakpoints`, `03 Exact edges and live resize
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Responsive layout and natural display
-Setup: Review 01–04 across every threshold. Action: Inspect exact edges and display specimens. Expected: Hide disappears exactly from its threshold and never changes visible display. Result:
+Setup: Review 01–04 across every threshold. Action: Inspect exact edges and child-display specimens. Expected: Hide remains visible and layout-transparent below its threshold, then disappears exactly at it without changing parent gaps or child layout. Result:
 Notes or issue:
 
 ## Step 2 — Composition and retained state

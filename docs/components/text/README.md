@@ -1,14 +1,15 @@
 # Text
 
-Text is Brick's finished component for authored headings, paragraphs, inline
-copy, captions, supporting descriptions, and status copy. The selected HTML
-element supplies semantics; the visual recipe supplies typography.
+Text is Brick's finished family for authored headings, paragraphs, inline
+copy, captions, supporting descriptions, and status copy. `Heading`,
+`Paragraph`, `Caption`, and `Eyebrow` provide common semantic defaults; `Text`
+keeps the selected HTML element independent from its visual recipe.
 
 ## When and where to use
 
-Use Text for standalone copy that should follow Brick's typography and
-foreground system. Choose an explicit heading host from the document
-hierarchy, a paragraph for prose, or the default span for inline content.
+Use a named export for ordinary headings, paragraphs, captions, and editorial
+eyebrows. Use Text when a deliberate semantic host and visual recipe pairing
+falls outside those defaults.
 
 ## When not to use
 
@@ -16,18 +17,18 @@ Use the owning component for Field labels, Dialog titles, Button labels, and
 other component anatomy. Use future Link, Code, Code Block, or List components
 for those distinct roles.
 
-Text does not provide margins, content width, arbitrary font properties,
-automatic heading levels, live status behavior, editing, copying controls, or
-rich-text policy.
+The family does not provide margins, content width, arbitrary font properties,
+automatic heading levels, language-aware title casing, live status behavior,
+editing, copying controls, or rich-text policy.
 
 ## Installation and imports
 
 Import from the root or stable subpath and load Brick styles once:
 
 ```tsx
-import { Text } from "@flowstack-ui/brick";
+import { Caption, Eyebrow, Heading, Paragraph, Text } from "@flowstack-ui/brick";
 // or
-import { Text } from "@flowstack-ui/brick/text";
+import { Caption, Eyebrow, Heading, Paragraph, Text } from "@flowstack-ui/brick/text";
 
 import "@flowstack-ui/brick/styles.css";
 ```
@@ -45,22 +46,25 @@ Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
 
-Public exports are `Text`, `TextProps`, `TextElement`, `TextVariant`,
-`TextTone`, `TextWeight`, `TextAlign`, `TextWrap`, and `TextLineClamp`.
+Public exports include `Text`, `Heading`, `Paragraph`, `Caption`, `Eyebrow`,
+`TextProps`, `HeadingProps`, `ParagraphProps`, `CaptionProps`, `EyebrowProps`,
+`HeadingLevel`, `HeadingVariant`, `ParagraphVariant`, `TextElement`,
+`TextVariant`, `TextTone`, `TextWeight`, `TextAlign`, `TextWrap`,
+`TextTransform`, and `TextLineClamp`.
 
 ## Quick start
 
 ```tsx
-<Text as="h2" variant="title-md">
+<Heading level={2} variant="title-md">
   Account settings
-</Text>
-<Text as="p" tone="secondary">
+</Heading>
+<Paragraph tone="secondary">
   Manage the details used across your workspace.
-</Text>
+</Paragraph>
 ```
 
-`as` and `variant` are independent. Choose `h2` because it is the correct
-heading level, not because of its visual size.
+Heading `level` and `variant` are independent. Choose level 2 because it is
+correct in the document hierarchy, not because of its visual size.
 
 ## Anatomy and DOM ownership
 
@@ -92,11 +96,12 @@ recipe metadata, and documented variables are stable public hooks.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `as` | `span`, `p`, `div`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6` | `span` |
-| `variant` | `display`, `title-lg`, `title-md`, `title-sm`, `body-lg`, `body-md`, `body-sm`, `caption`, `eyebrow` | `body-md` |
+| `variant` | `display`, `display-sm`, `display-md`, `display-lg`, `title-lg`, `title-md`, `title-sm`, `body-lg`, `body-md`, `body-sm`, `caption`, `eyebrow`; or a responsive value | `body-md` |
 | `tone` | `inherit`, `primary`, `secondary`, `muted`, `accent`, `info`, `success`, `warning`, `danger` | `primary` |
 | `weight` | `inherit`, `regular`, `medium`, `semibold` | recipe default |
-| `align` | `start`, `center`, `end` | natural/start |
+| `align` | `start`, `center`, `end`; or a responsive value | natural/start |
 | `wrap` | `wrap`, `nowrap`, `balance`, `pretty` | `wrap` |
+| `transform` | `none`, `uppercase`, `lowercase`, `capitalize` | variant recipe |
 | `truncate` | `boolean` | `false` |
 | `lineClamp` | `2`, `3`, `4`, `5`, `6` | none |
 | `slot` | `string` | `text` |
@@ -107,14 +112,31 @@ component's `data-slot` hook; it is not forwarded as the native HTML `slot`
 attribute. `className`, `style`, native global attributes, events, ARIA, and
 data attributes pass to the selected host. The ref type is `HTMLElement`.
 
+### Named semantic exports
+
+| Export | Native host | Visual variants | Default |
+| --- | --- | --- | --- |
+| `Heading` | required `level={1..6}` | `display`, `display-sm`, `display-md`, `display-lg`, `title-lg`, `title-md`, `title-sm`; or a responsive value | `title-lg` |
+| `Paragraph` | `p` | `body-lg`, `body-md`, `body-sm` | `body-md` |
+| `Caption` | `span` | fixed | `caption` |
+| `Eyebrow` | `span` | fixed | `eyebrow` |
+
+All four render through Text and add no wrapper. Use Text directly when a
+different valid host/recipe combination is intentional.
+
 ## Visual recipes and states
 
-- `display` is the largest restrained product headline.
+- `display` preserves Brick's original restrained product headline.
+- `display-sm`, `display-md`, and `display-lg` provide an explicit authored
+  display scale without coupling size to heading level.
 - `title-lg`, `title-md`, and `title-sm` create heading hierarchy.
 - `body-lg`, `body-md`, and `body-sm` cover prose and supporting copy.
 - `caption` covers compact metadata without replacing accessible labels.
 - `eyebrow` covers a short uppercase editorial label placed before a heading;
   it is not body copy, status, or category semantics.
+- `transform` changes visual presentation without rewriting the authored DOM
+  text. CSS `capitalize` is not language-aware title case; author names and
+  product titles with their correct casing instead.
 
 Display/title recipes use the heading family, semibold weight, tight leading,
 and restrained negative tracking. Body/caption recipes use the body family,
@@ -142,8 +164,9 @@ Stable hooks:
 [data-slot="text"]
 ```
 
-Recipe metadata uses `data-variant`, `data-tone`, and, when applicable,
-`data-weight`, `data-align`, `data-wrap`, `data-truncate`, and
+Recipe metadata uses `data-variant`, responsive `data-variant-sm|md|lg|xl`,
+`data-tone`, and, when applicable,
+`data-weight`, `data-align`, `data-transform`, `data-wrap`, `data-truncate`, and
 `data-line-clamp`.
 
 Public Text variables:
@@ -186,9 +209,24 @@ consumer's responsibility.
 
 ## Responsive behavior
 
-Text has no responsive prop objects or breakpoints. It wraps naturally within
-its parent, allows long words to break, inherits direction, and uses logical
-alignment. It imposes no fixed height, width, measure, or surrounding margin.
+`variant` and logical `align` accept Brick's shared
+`{ initial, sm?, md?, lg?, xl? }` shape. Use them when visual hierarchy or
+alignment should adapt while the native host and heading level remain
+unchanged:
+
+```tsx
+<Heading
+  level={1}
+  align={{ initial: "center", lg: "start" }}
+  variant={{ initial: "display-sm", md: "display-md", lg: "display-lg" }}
+>
+  A headline with one stable semantic level
+</Heading>
+```
+
+Other typography inputs remain scalar. Text wraps naturally, allows long
+words to break, inherits direction, and imposes no fixed height, width,
+measure, or surrounding margin.
 
 `pretty` is a progressive enhancement. Unsupported browsers retain readable
 normal wrapping.

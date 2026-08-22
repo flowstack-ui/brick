@@ -14,6 +14,8 @@ Checkbox Group follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Item and Parent hover, press, and focus-visible feedback now stays on the
+  visual square while each complete label row remains clickable.
 - Root size and shared Checkbox token overrides now inherit through every Item
   and Parent.
 - Required group validation now remains neutral until interaction, presents

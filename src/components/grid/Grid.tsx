@@ -14,8 +14,13 @@ import {
   responsiveDataAttributes,
   type ResponsiveValue,
 } from "../_responsive-value/ResponsiveValue.js";
+import {
+  responsiveSpacingStyles,
+  type SpacingValue,
+} from "../_spacing-value/SpacingValue.js";
 
 export type { ResponsiveValue };
+export type { SpacingValue };
 
 export type GridRootElement =
   | "div"
@@ -51,7 +56,7 @@ export type GridSpan =
   | 1 | 2 | 3 | 4 | 5 | 6
   | 7 | 8 | 9 | 10 | 11 | 12;
 export type GridColumnSpan = GridSpan | "full";
-export type GridGap = "0" | "1" | "2" | "3" | "4" | "5" | "6";
+export type GridGap = SpacingValue;
 export type GridMinItemSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type GridAlign = "stretch" | "start" | "center" | "end" | "baseline";
 export type GridJustify = "stretch" | "start" | "center" | "end";
@@ -252,7 +257,16 @@ function GridRootImpl(
       "data-mode": mode,
       "data-slot": slot,
       ref,
-      style,
+      style: {
+        ...responsiveSpacingStyles("--brick-grid-gap", gap),
+        ...(rowGap === undefined
+          ? {}
+          : responsiveSpacingStyles("--brick-grid-row-gap", rowGap)),
+        ...(columnGap === undefined
+          ? {}
+          : responsiveSpacingStyles("--brick-grid-column-gap", columnGap)),
+        ...style,
+      },
     },
     children,
   );

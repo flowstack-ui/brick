@@ -64,11 +64,13 @@ Notes or issue:
 Setup: Open `08 Stress`; test at 390 px, 200%, and 400% zoom, then RTL and
 forced colors.
 
-Action: Inspect long/localized Badge content and surrounding layout.
+Action: Inspect short localized Badge content and the surrounding wrapping
+layout.
 
-Expected: Text wraps or sizes without clipping, overlap, or page overflow;
-logical padding remains balanced in RTL, and system colors preserve content and
-boundaries.
+Expected: Valid short labels stay on one line without clipping, overlap, or
+page overflow; prose-length content is represented by ordinary Text instead of
+Badge. Logical padding remains balanced in RTL, and system colors preserve
+content and boundaries.
 
 Result:
 Notes or issue:

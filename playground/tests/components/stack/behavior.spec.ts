@@ -54,6 +54,19 @@ test("Stack gaps and axes produce exact controlled geometry", async ({ page }) =
   expect((await box(rowItems.nth(1))).x).toBeGreaterThan((await box(rowItems.nth(0))).x);
 });
 
+test("Stack calculates numeric, explicit, and responsive spacing", async ({ page }) => {
+  const factor = page.locator('[data-spacing-example="factor"]');
+  const explicit = page.locator('[data-spacing-example="explicit"]');
+  const responsive = page.locator('[data-spacing-example="responsive"]');
+
+  await expect(factor).toHaveCSS("gap", "32px");
+  await expect(explicit).toHaveCSS("gap", "36px");
+  await expect(responsive).toHaveCSS("gap", "32px");
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(responsive).toHaveCSS("gap", "8px");
+});
+
 test("Stack alignment and distribution map to the intended flex behavior", async ({
   page,
 }) => {
@@ -132,6 +145,10 @@ test("Stack semantic output, ref, native attributes, and customization are real"
     );
   }
   await expect(hosts.nth(2)).toHaveAttribute("aria-label", "Project actions");
+  await expect(hosts.nth(3)).toHaveCSS("margin-top", "0px");
+  await expect(hosts.nth(3)).toHaveCSS("margin-left", "0px");
+  await expect(hosts.nth(3)).toHaveCSS("padding-left", "0px");
+  await expect(hosts.nth(3)).toHaveCSS("list-style-type", "none");
   const output = semantics.locator("[data-rendered-output]");
   await expect(output).toContainText("<section");
   await expect(output).toContainText('data-direction="column"');

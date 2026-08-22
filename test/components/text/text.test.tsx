@@ -2,11 +2,16 @@ import { createRef } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import {
+  Caption,
+  Eyebrow,
+  Heading,
+  Paragraph,
   Text,
   type TextAlign,
   type TextElement,
   type TextLineClamp,
   type TextTone,
+  type TextTransform,
   type TextVariant,
   type TextWeight,
   type TextWrap,
@@ -46,7 +51,8 @@ describe("Text", () => {
 
   it("exposes every closed visual recipe through stable metadata", () => {
     const variants: TextVariant[] = [
-      "display", "title-lg", "title-md", "title-sm",
+      "display", "display-sm", "display-md", "display-lg",
+      "title-lg", "title-md", "title-sm",
       "body-lg", "body-md", "body-sm", "caption", "eyebrow",
     ];
     const tones: TextTone[] = [
@@ -56,6 +62,7 @@ describe("Text", () => {
     const weights: TextWeight[] = ["inherit", "regular", "medium", "semibold"];
     const aligns: TextAlign[] = ["start", "center", "end"];
     const wraps: TextWrap[] = ["wrap", "nowrap", "balance", "pretty"];
+    const transforms: TextTransform[] = ["none", "uppercase", "lowercase", "capitalize"];
     const clamps: TextLineClamp[] = [2, 3, 4, 5, 6];
     const { rerender } = render(<Text>Recipe text</Text>);
 
@@ -81,6 +88,10 @@ describe("Text", () => {
       if (wrap === "wrap") expect(text).not.toHaveAttribute("data-wrap");
       else expect(text).toHaveAttribute("data-wrap", wrap);
     }
+    for (const transform of transforms) {
+      rerender(<Text transform={transform}>Recipe text</Text>);
+      expect(screen.getByText("Recipe text")).toHaveAttribute("data-transform", transform);
+    }
     for (const lineClamp of clamps) {
       rerender(<Text lineClamp={lineClamp}>Recipe text</Text>);
       expect(screen.getByText("Recipe text")).toHaveAttribute(
@@ -88,6 +99,50 @@ describe("Text", () => {
         String(lineClamp),
       );
     }
+  });
+
+  it("emits responsive visual recipes without changing the semantic host", () => {
+    render(
+      <Heading
+        level={1}
+        align={{ initial: "center", lg: "start" }}
+        variant={{ initial: "display-sm", md: "display-md", lg: "display-lg" }}
+      >
+        Responsive product heading
+      </Heading>,
+    );
+
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading.tagName).toBe("H1");
+    expect(heading).toHaveAttribute("data-variant", "display-sm");
+    expect(heading).toHaveAttribute("data-variant-md", "display-md");
+    expect(heading).toHaveAttribute("data-variant-lg", "display-lg");
+    expect(heading).toHaveAttribute("data-align", "center");
+    expect(heading).toHaveAttribute("data-align-lg", "start");
+  });
+
+  it("provides named semantic text components without coupling hierarchy to appearance", () => {
+    render(
+      <>
+        <Heading level={3}>Project settings</Heading>
+        <Heading level={2} variant="title-sm">Compact section</Heading>
+        <Paragraph>Readable supporting copy.</Paragraph>
+        <Paragraph variant="body-lg">Prominent supporting copy.</Paragraph>
+        <Caption>5 Blocks</Caption>
+        <Eyebrow>Application</Eyebrow>
+      </>,
+    );
+
+    expect(screen.getByText("Project settings").tagName).toBe("H3");
+    expect(screen.getByText("Project settings")).toHaveAttribute("data-variant", "title-lg");
+    expect(screen.getByText("Compact section").tagName).toBe("H2");
+    expect(screen.getByText("Compact section")).toHaveAttribute("data-variant", "title-sm");
+    expect(screen.getByText("Readable supporting copy.").tagName).toBe("P");
+    expect(screen.getByText("Readable supporting copy.")).toHaveAttribute("data-variant", "body-md");
+    expect(screen.getByText("Prominent supporting copy.")).toHaveAttribute("data-variant", "body-lg");
+    expect(screen.getByText("5 Blocks").tagName).toBe("SPAN");
+    expect(screen.getByText("5 Blocks")).toHaveAttribute("data-variant", "caption");
+    expect(screen.getByText("Application")).toHaveAttribute("data-variant", "eyebrow");
   });
 
   it("forwards native attributes, events, consumer hooks, content, and ref", () => {

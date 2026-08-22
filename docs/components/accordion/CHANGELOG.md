@@ -6,6 +6,8 @@ Accordion follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Changed the default Indicator to point down when closed and up when open,
+  and kept horizontal scrolling boundaries from clipping Trigger focus.
 - Kept vertical group interiors square, rounded only exposed outer Trigger
   corners, and stopped Root paint containment from clipping the first or last
   Trigger focus ring.

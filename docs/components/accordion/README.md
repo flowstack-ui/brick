@@ -89,9 +89,14 @@ and outline adds one containing border. Sizes coordinate trigger height,
 typography, indicator, and panel padding. A locked-open single trigger remains
 focusable with `aria-disabled="true"` and `data-locked-open`.
 
+The default decorative Indicator points down while its Item is closed and up
+while it is open. This vertical state cue stays the same in LTR and RTL.
+
 Grouped vertical recipes use the Root as the outer silhouette: interior Trigger
 edges stay square, only the exposed first and last corners follow the Root
 radius, and keyboard focus remains fully visible outside that silhouette.
+Horizontal groups own inline scrolling, so their Trigger focus ring is inset
+inside the control rather than clipped by the scroll boundary.
 
 ## Tokens and CSS hooks
 

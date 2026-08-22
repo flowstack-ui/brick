@@ -34,6 +34,25 @@ test("activation, relationships, disabled, and mounted lifecycle remain correct"
   await expect(mounted).toHaveAttribute("hidden");
 });
 
+test("default indicator direction and focus geometry remain complete", async ({ page }) => {
+  const verticalRoot = page.getByTestId("collapsible-overview").locator(".brick-collapsible");
+  const verticalTrigger = verticalRoot.getByRole("button", { name: "Notification details" });
+  const indicator = verticalTrigger.locator(".brick-collapsible-indicator");
+
+  await expect(indicator).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 0)");
+  await verticalTrigger.focus();
+  await expect(verticalTrigger).toBeFocused();
+  await expect(verticalRoot).toHaveCSS("overflow", "visible");
+  await expect(verticalTrigger).toHaveCSS("outline-style", "solid");
+  await verticalTrigger.click();
+  await expect(indicator).toHaveCSS("transform", "matrix(-1, 0, 0, -1, 0, 0)");
+
+  const horizontalRoot = page.getByTestId("collapsible-orientation").locator(".brick-collapsible[data-orientation='horizontal']");
+  const horizontalTrigger = horizontalRoot.getByRole("button");
+  await horizontalTrigger.focus();
+  expect(await horizontalTrigger.evaluate((element) => Number.parseFloat(getComputedStyle(element).outlineOffset))).toBeLessThan(0);
+});
+
 test("orientation, live content, narrow reflow, RTL, and accessibility are stable", async ({ page }) => {
   const orientation = page.getByTestId("collapsible-orientation");
   await expect(orientation.locator(".brick-collapsible[data-orientation='horizontal']")).toHaveCount(1);

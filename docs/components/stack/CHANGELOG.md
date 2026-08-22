@@ -4,6 +4,20 @@ Stack follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Expanded gap and logical edge spacing to accept numeric base-unit factors,
+  explicit CSS values, and responsive mixtures while preserving existing
+  string-token geometry.
+- Preserved the public zero-through-six string scale as compatibility aliases
+  while removing the silent no-recipe failure for larger numeric values.
+
+### Fixed
+
+- Normalized native margin and markers for supported `ul` and `ol` Stack
+  hosts so semantic one-dimensional lists retain Stack alignment without
+  consumer reset CSS.
+
 ### Added
 
 - Added responsive direction, gap, alignment, distribution, wrapping, and

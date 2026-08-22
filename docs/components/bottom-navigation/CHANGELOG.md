@@ -6,6 +6,8 @@ Bottom Navigation follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Kept authored blur CSS standards-first and moved the required WebKit prefix
+  to the package's target-driven CSS build without changing the fallback.
 - Fixed every size to a stable base height across viewport widths, destination counts, label-visibility policies, and mobile browser-chrome changes. Positioned recipes now use only stable maximum safe-area insets, small bars no longer clip labels, and Notification Badge anchors to the glyph without shifting the Icon/Label column.
 
 ### Added

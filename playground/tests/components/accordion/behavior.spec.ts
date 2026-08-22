@@ -92,6 +92,25 @@ test("vertical and direction-aware horizontal keyboard navigation are stable", a
   await expect(rtl.nth(1)).toBeFocused();
 });
 
+test("default indicator direction and focus geometry remain complete", async ({ page }) => {
+  const verticalRoot = page.getByTestId("accordion-overview").locator(".brick-accordion");
+  const verticalTrigger = verticalRoot.getByRole("button", { name: "Account settings" });
+  const indicator = verticalTrigger.locator(".brick-accordion-indicator");
+
+  await expect(indicator).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 0)");
+  await verticalTrigger.focus();
+  await expect(verticalTrigger).toBeFocused();
+  await expect(verticalRoot).toHaveCSS("overflow", "visible");
+  await expect(verticalTrigger).toHaveCSS("outline-style", "solid");
+  await verticalTrigger.click();
+  await expect(indicator).toHaveCSS("transform", "matrix(-1, 0, 0, -1, 0, 0)");
+
+  const horizontalRoot = page.getByTestId("accordion-orientation").locator(".brick-accordion[data-orientation='horizontal']");
+  const horizontalTrigger = horizontalRoot.getByRole("button").first();
+  await horizontalTrigger.focus();
+  expect(await horizontalTrigger.evaluate((element) => Number.parseFloat(getComputedStyle(element).outlineOffset))).toBeLessThan(0);
+});
+
 test("responsive overflow and accessibility remain contained", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   const phone = page.locator(".accordion-phone");

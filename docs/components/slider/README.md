@@ -69,14 +69,16 @@ Recipes change paint and geometry only. Atom state attributes drive disabled, re
 
 ## Tokens and CSS hooks
 
-Stable classes are `.brick-slider` and its `__track`, `__range`, `__thumb`, `__marker`, and `__value-label` parts. Root exposes `data-size`, `data-variant`, and `data-slot`; Marker exposes `data-edge`, `data-orientation`, `data-value`, and `data-slot`.
+Stable classes are `.brick-slider` and its `__track`, `__range`, `__thumb`, `__marker`, and `__value-label` parts. Root exposes `data-size`, `data-variant`, and `data-slot`; Marker exposes `data-edge`, `data-orientation`, `data-selected`, `data-value`, and `data-slot`.
 
 Public variables are `--brick-slider-track-background`,
 `--brick-slider-track-border`, `--brick-slider-track-size`,
 `--brick-slider-track-length`, `--brick-slider-range-background`,
 `--brick-slider-thumb-background`, `--brick-slider-thumb-border`,
 `--brick-slider-thumb-shadow`, `--brick-slider-thumb-size`,
-`--brick-slider-marker-color`, `--brick-slider-value-label-background`, and
+`--brick-slider-marker-color`, `--brick-slider-marker-selected-color`,
+`--brick-slider-marker-size`,
+`--brick-slider-value-label-background`, and
 `--brick-slider-value-label-foreground`.
 
 ## Customization
@@ -85,7 +87,15 @@ Prefer recipes, then scope public variables: `<Slider.Root style={{ "--brick-sli
 
 ## Responsive behavior
 
-Brick preserves 44px thumb targets, logical RTL geometry, vertical layout, narrow containment, zoom, forced colors, and reduced motion. Endpoint markers remain inside Track. Horizontal ValueLabel receives dedicated space; for dense ranges or long values, use an external application-owned output to avoid collisions.
+Brick preserves 44px thumb targets, logical RTL geometry, vertical layout,
+narrow containment, zoom, forced colors, and reduced motion. Horizontal
+endpoint marker dots remain visibly inset within the rounded Track caps while
+optional endpoint labels remain contained. Selected and unselected dots use
+separate semantic accent foregrounds: unselected dots use the recipe's accent
+paint while selected dots use its validated on-color. Both adapt to the active
+appearance, accent, and solid or soft recipe. Horizontal ValueLabel receives
+dedicated space; for dense ranges or long values, use an external
+application-owned output to avoid collisions.
 
 ## Accessibility
 

@@ -132,6 +132,9 @@
     "drawer": {
       "background": "var(--brick-color-surface-overlay)",
       "radius": "1.5rem"
+    },
+    "link": {
+      "decoration": "interaction"
     }
   },
   "extensions": {

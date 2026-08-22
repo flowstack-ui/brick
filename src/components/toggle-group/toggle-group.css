@@ -59,9 +59,9 @@
   }
 
   .brick-toggle-group[data-variant="solid"] > .brick-toggle-group-item[data-state="on"] {
-    border-color: var(--brick-color-accent-solid);
-    background: var(--brick-color-accent-solid);
-    color: var(--brick-color-accent-on-solid);
+    border-color: var(--brick-toggle-tone-solid);
+    background: var(--brick-toggle-tone-solid);
+    color: var(--brick-toggle-tone-on-solid);
     box-shadow: none;
   }
 
@@ -71,9 +71,9 @@
   }
 
   .brick-toggle-group[data-variant="outline"] > .brick-toggle-group-item[data-state="on"] {
-    border-color: var(--brick-color-accent-border);
+    border-color: var(--brick-toggle-tone-border);
     background: transparent;
-    color: var(--brick-color-accent-text);
+    color: var(--brick-toggle-tone-text);
     box-shadow: none;
   }
 
@@ -83,13 +83,13 @@
 
   .brick-toggle-group[data-variant="ghost"] > .brick-toggle-group-item[data-state="on"] {
     border-color: transparent;
-    background: var(--brick-color-accent-soft);
+    background: var(--brick-toggle-tone-soft);
     box-shadow: none;
   }
 
   .brick-toggle-group[data-variant="solid"] > .brick-toggle-group-item[data-state="on"]:not([data-disabled]):active {
-    border-color: var(--brick-color-accent-solid-pressed);
-    background: var(--brick-color-accent-solid-pressed);
+    border-color: var(--brick-toggle-tone-solid-pressed);
+    background: var(--brick-toggle-tone-solid-pressed);
   }
 
   .brick-toggle-group[data-attached="true"] {
@@ -152,8 +152,8 @@
 
   @media (hover: hover) and (pointer: fine) {
     .brick-toggle-group[data-variant="solid"] > .brick-toggle-group-item[data-state="on"]:not([data-disabled]):hover {
-      border-color: var(--brick-color-accent-solid-hover);
-      background: var(--brick-color-accent-solid-hover);
+      border-color: var(--brick-toggle-tone-solid-hover);
+      background: var(--brick-toggle-tone-solid-hover);
     }
   }
 }

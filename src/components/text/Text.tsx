@@ -5,6 +5,10 @@ import {
   type HTMLAttributes,
   type ReactNode,
 } from "react";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
 
 export type TextElement =
   | "span"
@@ -19,6 +23,9 @@ export type TextElement =
 
 export type TextVariant =
   | "display"
+  | "display-sm"
+  | "display-md"
+  | "display-lg"
   | "title-lg"
   | "title-md"
   | "title-sm"
@@ -42,7 +49,18 @@ export type TextTone =
 export type TextWeight = "inherit" | "regular" | "medium" | "semibold";
 export type TextAlign = "start" | "center" | "end";
 export type TextWrap = "wrap" | "nowrap" | "balance" | "pretty";
+export type TextTransform = "none" | "uppercase" | "lowercase" | "capitalize";
 export type TextLineClamp = 2 | 3 | 4 | 5 | 6;
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+export type HeadingVariant =
+  | "display"
+  | "display-sm"
+  | "display-md"
+  | "display-lg"
+  | "title-lg"
+  | "title-md"
+  | "title-sm";
+export type ParagraphVariant = "body-lg" | "body-md" | "body-sm";
 
 type TextNativeProps = Omit<
   HTMLAttributes<HTMLElement>,
@@ -59,19 +77,21 @@ type TextOverflowProps =
       lineClamp?: TextLineClamp;
     };
 
-export type TextProps = TextNativeProps &
-  TextOverflowProps & {
+type TextVisualProps = {
     as?: TextElement;
     children: ReactNode;
-    variant?: TextVariant;
+    variant?: ResponsiveValue<TextVariant>;
     tone?: TextTone;
     weight?: TextWeight;
-    align?: TextAlign;
+    align?: ResponsiveValue<TextAlign>;
     wrap?: TextWrap;
+    transform?: TextTransform;
     className?: string;
     style?: CSSProperties;
     slot?: string;
   };
+
+export type TextProps = TextNativeProps & TextOverflowProps & TextVisualProps;
 
 function mergeClassName(className: string | undefined) {
   return className ? `brick-text ${className}` : "brick-text";
@@ -85,6 +105,7 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     weight,
     align,
     wrap = "wrap",
+    transform,
     truncate = false,
     lineClamp,
     className,
@@ -99,12 +120,13 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     {
       ...props,
       className: mergeClassName(className),
-      "data-align": align,
+      ...responsiveDataAttributes("data-align", align),
       "data-line-clamp": lineClamp,
       "data-slot": slot,
       "data-tone": tone,
+      "data-transform": transform,
       "data-truncate": truncate ? "" : undefined,
-      "data-variant": variant,
+      ...responsiveDataAttributes("data-variant", variant, { alwaysInitial: true }),
       "data-weight": weight,
       "data-wrap": wrap !== "wrap" ? wrap : undefined,
       ref,
@@ -114,3 +136,50 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
 });
 
 Text.displayName = "Text";
+
+type NamedTextProps = TextNativeProps &
+  TextOverflowProps &
+  Omit<TextVisualProps, "as" | "variant">;
+
+export type HeadingProps = NamedTextProps & {
+  level: HeadingLevel;
+  variant?: ResponsiveValue<HeadingVariant>;
+};
+
+export const Heading = forwardRef<HTMLElement, HeadingProps>(function Heading(
+  { level, variant = "title-lg", ...props },
+  ref,
+) {
+  return <Text {...props} as={`h${level}`} ref={ref} variant={variant} />;
+});
+
+Heading.displayName = "Heading";
+
+export type ParagraphProps = NamedTextProps & {
+  variant?: ResponsiveValue<ParagraphVariant>;
+};
+
+export const Paragraph = forwardRef<HTMLElement, ParagraphProps>(function Paragraph(
+  { variant = "body-md", ...props },
+  ref,
+) {
+  return <Text {...props} as="p" ref={ref} variant={variant} />;
+});
+
+Paragraph.displayName = "Paragraph";
+
+export type CaptionProps = NamedTextProps;
+
+export const Caption = forwardRef<HTMLElement, CaptionProps>(function Caption(props, ref) {
+  return <Text {...props} as="span" ref={ref} variant="caption" />;
+});
+
+Caption.displayName = "Caption";
+
+export type EyebrowProps = NamedTextProps;
+
+export const Eyebrow = forwardRef<HTMLElement, EyebrowProps>(function Eyebrow(props, ref) {
+  return <Text {...props} as="span" ref={ref} variant="eyebrow" />;
+});
+
+Eyebrow.displayName = "Eyebrow";

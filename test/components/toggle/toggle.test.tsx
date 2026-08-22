@@ -6,6 +6,7 @@ import {
   Toggle,
   type ToggleShape,
   type ToggleSize,
+  type ToggleTone,
   type ToggleVariant,
 } from "../../../src/toggle.js";
 
@@ -18,6 +19,7 @@ describe("Toggle", () => {
     expect(toggle).toHaveAttribute("aria-pressed", "false");
     expect(toggle).toHaveAttribute("data-state", "off");
     expect(toggle).toHaveAttribute("data-variant", "soft");
+    expect(toggle).toHaveAttribute("data-tone", "accent");
     expect(toggle).toHaveAttribute("data-size", "md");
     expect(toggle).toHaveAttribute("data-shape", "rounded");
     expect(toggle).not.toHaveAttribute("data-icon-only");
@@ -53,6 +55,7 @@ describe("Toggle", () => {
     const variants: ToggleVariant[] = ["solid", "soft", "outline", "ghost"];
     const sizes: ToggleSize[] = ["sm", "md", "lg"];
     const shapes: ToggleShape[] = ["rounded", "pill"];
+    const tones: ToggleTone[] = ["accent", "neutral"];
     const { rerender } = render(<Toggle>Recipe</Toggle>);
     const toggle = screen.getByRole("button", { name: "Recipe" });
     for (const variant of variants) {
@@ -66,6 +69,10 @@ describe("Toggle", () => {
     for (const shape of shapes) {
       rerender(<Toggle shape={shape}>Recipe</Toggle>);
       expect(toggle).toHaveAttribute("data-shape", shape);
+    }
+    for (const tone of tones) {
+      rerender(<Toggle tone={tone}>Recipe</Toggle>);
+      expect(toggle).toHaveAttribute("data-tone", tone);
     }
   });
 

@@ -1,6 +1,6 @@
 import { createRef } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   HStack,
   Stack,
@@ -170,6 +170,62 @@ describe("Stack", () => {
     expect(stack).toHaveAttribute("data-start-spacing-md", "3");
     expect(stack).toHaveAttribute("data-end-spacing", "2");
     expect(stack).toHaveAttribute("data-end-spacing-md", "4");
+  });
+
+  it("resolves numeric factors, explicit CSS values, and responsive mixtures", () => {
+    render(
+      <Stack
+        data-testid="spacing"
+        endSpacing={{ initial: "var(--product-edge)", lg: 10 }}
+        gap={{ initial: 8, md: "2rem", lg: "10" }}
+        startSpacing="1.25rem"
+      />,
+    );
+    const stack = screen.getByTestId("spacing");
+
+    expect(stack).toHaveAttribute("data-gap", "8");
+    expect(stack).toHaveAttribute("data-gap-md", "2rem");
+    expect(stack).toHaveAttribute("data-gap-lg", "10");
+    expect(stack.style.getPropertyValue("--brick-stack-gap-input"))
+      .toBe("calc(var(--brick-space-1) * 8)");
+    expect(stack.style.getPropertyValue("--brick-stack-gap-md-input")).toBe("2rem");
+    expect(stack.style.getPropertyValue("--brick-stack-gap-lg-input"))
+      .toBe("calc(var(--brick-space-1) * 10)");
+    expect(stack.style.getPropertyValue("--brick-stack-start-spacing-input"))
+      .toBe("1.25rem");
+    expect(stack.style.getPropertyValue("--brick-stack-end-spacing-input"))
+      .toBe("var(--product-edge)");
+    expect(stack.style.getPropertyValue("--brick-stack-end-spacing-lg-input"))
+      .toBe("calc(var(--brick-space-1) * 10)");
+  });
+
+  it("preserves the established string-token scale", () => {
+    render(<Stack data-testid="legacy-spacing" gap="6" />);
+    expect(screen.getByTestId("legacy-spacing").style.getPropertyValue(
+      "--brick-stack-gap-input",
+    )).toBe("var(--brick-space-6)");
+  });
+
+  it("warns and falls back to zero for obvious invalid spacing", () => {
+    const warning = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    render(
+      <Stack
+        data-testid="invalid-spacing"
+        endSpacing="-2"
+        gap={Number.NaN}
+        startSpacing=""
+      />,
+    );
+    const stack = screen.getByTestId("invalid-spacing");
+
+    expect(stack.style.getPropertyValue("--brick-stack-gap-input"))
+      .toBe("var(--brick-space-0)");
+    expect(stack.style.getPropertyValue("--brick-stack-start-spacing-input"))
+      .toBe("var(--brick-space-0)");
+    expect(stack.style.getPropertyValue("--brick-stack-end-spacing-input"))
+      .toBe("var(--brick-space-0)");
+    expect(warning).toHaveBeenCalledTimes(3);
+    warning.mockRestore();
   });
 
   it("sizes Stack.Item and composes an existing child", () => {

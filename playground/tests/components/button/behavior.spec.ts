@@ -59,6 +59,15 @@ test("Button specimens change only the dimension owned by their scenario", async
     await expect(control).toHaveAttribute("data-size", "md");
     await expect(control).toHaveAttribute("data-shape", "rounded");
   }
+  expect(await page.getByTestId("button-tones").locator('.brick-button[data-variant="solid"][data-tone="neutral"]').evaluate((element) => {
+    const probe = document.createElement("span");
+    probe.style.color = "var(--brick-color-text-primary)";
+    document.body.append(probe);
+    const primary = getComputedStyle(probe).color;
+    probe.remove();
+    const style = getComputedStyle(element);
+    return style.backgroundColor !== primary && style.color === primary;
+  })).toBe(true);
 
   const shapes = page.getByTestId("button-shapes").locator(".brick-button");
   await expect(shapes).toHaveCount(3);
@@ -82,6 +91,16 @@ test("Button specimens change only the dimension owned by their scenario", async
     await expect(control).toHaveAttribute("data-size", "md");
     await expect(control).toHaveAttribute("data-shape", "rounded");
   }
+  const disabled = page.getByTestId("button-disabled");
+  await expect(disabled).toHaveCSS("opacity", "0.55");
+  expect(await disabled.evaluate((element) => {
+    const probe = document.createElement("span");
+    probe.style.color = "var(--brick-color-border-subtle)";
+    document.body.append(probe);
+    const expected = getComputedStyle(probe).color;
+    probe.remove();
+    return getComputedStyle(element).borderTopColor === expected;
+  })).toBe(true);
 
   const consumerHooks = page.locator(
     '.button-customization [data-slot="custom-action"]',

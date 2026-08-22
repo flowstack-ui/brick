@@ -99,6 +99,11 @@ Link also preserves Atom `href`, `active`, `current`, `disabled`,
 `aria-current`, `render`, and `asChild`. `asChild` delegates all content and
 therefore cannot be combined with the three Brick anatomy props.
 
+`startIcon` and `endIcon` are decorative and their wrappers are hidden from
+assistive technology. A meaningful count or Badge belongs in `children`; use a
+Brick HStack inside Link to arrange the label and metadata while preserving one
+complete clickable destination row.
+
 List preserves `ordered`. Section preserves `collapsible`, `open`,
 `defaultOpen`, `onOpenChange`, and `disabled`. SectionLabel preserves
 `as="h2|h3|h4|h5|h6|div"`. SectionContent preserves `forceMount`. Every part
@@ -115,7 +120,9 @@ indentation.
 Hover, pressed, current, open, focus-visible, and disabled remain distinct.
 Current state comes from Atom `active`/`aria-current`; Brick never compares
 URLs. Vertical links fill their track. Horizontal links remain content-sized
-and wrap.
+and wrap. Neutral soft current rows use an opaque appearance-aware layered
+surface instead of a raised surface that can disappear against a base panel;
+their current-hover paint remains separately visible.
 
 Root emits `data-variant`, `data-tone`, and `data-size` for visual recipes.
 
@@ -136,7 +143,7 @@ Public variables include `--brick-nav-list-gap`,
 `--brick-nav-list-row-padding-block`,
 `--brick-nav-list-row-padding-inline`, and its logical
 `--brick-nav-list-row-padding-inline-start` / `-end` overrides, row radius,
-link foreground/surface state variables,
+link foreground/surface state variables, including the current-hover surface,
 `--brick-nav-list-current-border`, `--brick-nav-list-focus-ring`,
 icon size/gap, description foreground, label typography aliases, and
 `--brick-nav-list-trigger-indicator-size`.

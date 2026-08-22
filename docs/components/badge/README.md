@@ -82,8 +82,10 @@ Prefer recipe props, then semantic and public Badge tokens. Use `className` and
 
 ## Responsive behavior
 
-Badge sizes to its content and does not own responsive layout. Keep labels
-short; surrounding layout owns wrapping and truncation.
+Badge sizes to its content, keeps its short label on one line, and does not own
+responsive layout. Use ordinary Text for explanatory or prose-length content;
+surrounding layout or a deliberate scroll owner contains the Badge's intrinsic
+width.
 
 ## Accessibility
 
@@ -123,6 +125,9 @@ foreground so the selected Badge recipe continues to own contrast:
 Prefer plain label text when no separate Text recipe is needed. Do not use
 default-tone Text inside Badge, add literal spaces around children, or select
 Badge only to imitate an editorial eyebrow.
+
+The neutral solid recipe remains a neutral surface with the normal foreground;
+it does not switch to the inverse black/white pair between appearances.
 
 ## Evidence
 

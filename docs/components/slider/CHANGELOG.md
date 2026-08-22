@@ -13,6 +13,11 @@ Slider follows the package version of `@flowstack-ui/brick`.
   labels are optional.
 - Correct RTL range geometry and committed click/drag behavior for horizontal,
   vertical, range, RTL, and marker positions.
+- Inset horizontal endpoint marker dots within the rounded Track caps, including
+  empty decorative markers without labels.
+- Give unselected markers semantic accent paint and selected markers the
+  corresponding validated on-color so their state remains distinct across
+  appearance, accent, and Slider recipe changes.
 
 ### Added
 

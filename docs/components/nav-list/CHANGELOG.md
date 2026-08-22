@@ -6,6 +6,10 @@ Nav List follows the package version of `@flowstack-ui/brick`.
 
 ### Changed
 
+- Changed neutral soft current rows to an opaque appearance-aware layered
+  surface with a distinct current-hover state, preventing equivalent adjacent
+  surfaces in both light and dark appearances.
+
 - Documented that repeated Dividers follow complete Items or collapsible
   Sections under one layout owner and never split a trigger from its content.
 

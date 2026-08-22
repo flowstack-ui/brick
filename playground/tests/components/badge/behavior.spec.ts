@@ -59,6 +59,15 @@ test("tone matrix covers every variant and semantic tone", async ({ page }) => {
       ).toHaveCount(1);
     }
   }
+  expect(await region.locator(`${specimenBadge}[data-variant="solid"][data-tone="neutral"]`).evaluate((element) => {
+    const probe = document.createElement("span");
+    probe.style.color = "var(--brick-color-text-primary)";
+    document.body.append(probe);
+    const primary = getComputedStyle(probe).color;
+    probe.remove();
+    const style = getComputedStyle(element);
+    return style.backgroundColor !== primary && style.color === primary;
+  })).toBe(true);
 });
 
 test("sizes and shapes remain controlled comparisons", async ({ page }) => {
@@ -118,7 +127,7 @@ test("appearance and customization hooks remain local and exact", async ({
   expect(style.foreground).not.toBe(style.background);
 });
 
-test("long content and RTL remain contained", async ({ page }) => {
+test("short labels remain atomic and RTL stays contained", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 720 });
   const stress = page.getByTestId("badge-stress");
   await expect(stress).toBeVisible();
@@ -133,6 +142,7 @@ test("long content and RTL remain contained", async ({ page }) => {
     const box = await badge.boundingBox();
     expect(box!.x).toBeGreaterThanOrEqual(0);
     expect(box!.x + box!.width).toBeLessThanOrEqual(320.5);
+    await expect(badge).toHaveCSS("white-space", "nowrap");
   }
   await expect(stress.locator(`[dir='rtl'] ${specimenBadge}`)).toHaveText(
     "قيد المراجعة",

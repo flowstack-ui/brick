@@ -106,7 +106,6 @@
 
   .brick-app-bar[data-blurred] {
     background: var(--brick-app-bar-blurred-background);
-    -webkit-backdrop-filter: blur(0.75rem) saturate(1.15);
     backdrop-filter: blur(0.75rem) saturate(1.15);
   }
 
@@ -122,6 +121,11 @@
     --brick-app-bar-toolbar-min-block-size: var(
       --brick-app-bar-toolbar-min-block-size-comfortable
     );
+    --brick-app-bar-toolbar-padding-inline: clamp(
+      var(--brick-space-4),
+      4vw,
+      var(--brick-space-6)
+    );
 
     display: grid;
     box-sizing: border-box;
@@ -131,7 +135,11 @@
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     gap: var(--brick-space-3);
-    padding-inline: clamp(var(--brick-space-4), 4vw, var(--brick-space-6));
+    padding-inline: var(--brick-app-bar-toolbar-padding-inline);
+  }
+
+  .brick-app-bar-toolbar[data-inset="none"] {
+    --brick-app-bar-toolbar-padding-inline: 0;
   }
 
   .brick-app-bar-toolbar[data-density="compact"] {
@@ -166,7 +174,6 @@
   @media (prefers-reduced-transparency: reduce) {
     .brick-app-bar[data-blurred] {
       background: var(--brick-app-bar-reduced-transparency-background);
-      -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
   }

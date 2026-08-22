@@ -17,6 +17,7 @@ describe("Accordion", () => {
     expect(root).toHaveAttribute("data-size", "md");
     expect(root).toHaveAttribute("data-orientation", "vertical");
     expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(trigger.querySelector(".brick-accordion-indicator path")).toHaveAttribute("d", "m3.5 6 4.5 4.5L12.5 6");
     fireEvent.click(trigger);
     const region = screen.getByRole("region");
     expect(trigger).toHaveAttribute("aria-controls", region.id);

@@ -112,6 +112,15 @@ test("IconButton exposes every closed visual recipe at the promised geometry", a
     await expect(control).toHaveAttribute("data-size", "md");
     await expect(control).toHaveAttribute("data-shape", "rounded");
   }
+  expect(await page.getByTestId("icon-button-tones").locator('.brick-icon-button[data-variant="solid"][data-tone="neutral"]').evaluate((element) => {
+    const probe = document.createElement("span");
+    probe.style.color = "var(--brick-color-text-primary)";
+    document.body.append(probe);
+    const primary = getComputedStyle(probe).color;
+    probe.remove();
+    const style = getComputedStyle(element);
+    return style.backgroundColor !== primary && style.color === primary;
+  })).toBe(true);
 
   const expectedSizes = [
     { icon: 14, name: "xs action", target: 28 },
@@ -181,6 +190,7 @@ test("IconButton keeps one decorative icon and complete names across states", as
     "/assets/icon-button/brick-image.png",
   );
   await expect(disabled).toBeDisabled();
+  await expect(disabled).toHaveCSS("opacity", "0.55");
   await expect(loading).toHaveAttribute("aria-busy", "true");
   await expect(unavailableLoading).toBeDisabled();
   await expect(unavailableLoading).toHaveAttribute("aria-busy", "true");

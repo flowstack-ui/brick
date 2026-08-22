@@ -17,7 +17,7 @@ import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./link.playground.css";
 
-const variants: LinkVariant[] = ["underline", "plain"];
+const variants: LinkVariant[] = ["theme", "underline", "plain"];
 const tones: LinkTone[] = ["accent", "neutral", "inherit"];
 const sizes: LinkSize[] = ["inherit", "sm", "md", "lg"];
 
@@ -45,8 +45,8 @@ function Cell({ children, label }: { children: ReactNode; label: string }) {
 }
 
 export const linkScenarios = [
-  { id: "link.overview", number: 1, title: "Overview", description: "Link’s canonical rendering is an underlined accent destination that inherits the typography around it and preserves native anchor behavior." },
-  { id: "link.variants", number: 2, title: "Variants", description: "Underline and plain change only resting decoration. Plain is reserved for contexts that already communicate navigation." },
+  { id: "link.overview", number: 1, title: "Overview", description: "Link’s canonical rendering follows the theme decoration policy, whose Brick fallback is an underlined accent destination that preserves native anchor behavior." },
+  { id: "link.variants", number: 2, title: "Variants", description: "Theme, underline, and plain change only resting decoration. Explicit variants override the inherited theme choice." },
   { id: "link.tones", number: 3, title: "Tones", description: "Accent, neutral, and inherited foregrounds keep the same default decoration, content, size, and destination behavior." },
   { id: "link.sizes", number: 4, title: "Sizes", description: "Inherited typography follows surrounding copy; explicit small, medium, and large values use Brick body recipes." },
   { id: "link.content", number: 5, title: "Content", description: "Default text, decorative logical icons, and long destination names remain aligned, named, wrapped, and contained." },
@@ -129,6 +129,16 @@ export function LinkPage() {
               <PlaygroundCodeBlock tabIndex={0}>--brick-link-foreground; --brick-link-decoration-thickness; --brick-link-decoration-offset</PlaygroundCodeBlock>
             </VStack>
             <Surface bordered inset="md"><Link href="#link-destination" style={customStyle}>Read customized guidance</Link></Surface>
+            <Surface
+              bordered
+              inset="md"
+              style={{ "--brick-link-decoration": "none" } as CSSProperties}
+            >
+              <VStack gap="2">
+                <Link href="#link-destination">Theme-following decoration</Link>
+                <Link href="#link-destination" variant="underline">Explicit underline decoration</Link>
+              </VStack>
+            </Surface>
           </EvidenceSurface>
         </VStack>
       </Scenario>

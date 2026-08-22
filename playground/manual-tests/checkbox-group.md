@@ -40,8 +40,10 @@ Action: Compare identical groups at every size and orientation; resize the
 horizontal row. Operate structured, disabled, and invalid examples.
 
 Expected: Size differences are visible across complete rows. Horizontal content
-wraps safely. Item labels/descriptions stay associated; group- and item-level
-disabled/invalid states remain visually and behaviorally distinct.
+wraps safely. Complete rows remain clickable without painted row feedback;
+hover, press, and focus-visible treatment stays on each visual square. Item
+labels/descriptions stay associated; group- and item-level disabled/invalid
+states remain visually and behaviorally distinct.
 
 Result:
 Notes or issue:

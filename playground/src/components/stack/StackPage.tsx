@@ -82,7 +82,7 @@ export const stackScenarios = [
   },
   {
     description:
-      "The complete spacing scale changes only the gap between identical children. Zero through six map directly to Brick space tokens.",
+      "Legacy tokens preserve established geometry. Numeric factors, explicit CSS values, and responsive mixtures add measured spacing without component CSS.",
     id: "stack.gaps",
     number: 3,
     title: "Gaps",
@@ -168,15 +168,47 @@ export function StackPage() {
       </Scenario>
 
       <Scenario {...stackScenarios[2]}>
-        <Grid.Root columns={4} className="stack-grid stack-grid--four" data-testid="stack-gaps">
-          {gaps.map((gap) => (
-            <Cell key={gap} label={gap}>
-              <VStack data-gap-example={gap} gap={gap}>
-                <Item>First</Item><Item>Second</Item>
-              </VStack>
-            </Cell>
-          ))}
-        </Grid.Root>
+        <VStack data-testid="stack-gaps" gap={6}>
+          <EvidenceGroup
+            description="String values zero through six retain the established nonlinear Brick token scale."
+            title="Legacy token compatibility"
+          >
+            <Grid.Root columns={4} className="stack-grid stack-grid--four">
+              {gaps.map((gap) => (
+                <Cell key={gap} label={String(gap)}>
+                  <VStack data-gap-example={gap} gap={gap}>
+                    <Item>First</Item><Item>Second</Item>
+                  </VStack>
+                </Cell>
+              ))}
+            </Grid.Root>
+          </EvidenceGroup>
+          <EvidenceGroup
+            description="Numbers calculate from the base unit; explicit CSS and responsive mixtures use the same prop."
+            title="Calculated and explicit spacing"
+          >
+            <Grid.Root columns={{ initial: 1, md: 3 }} gap={4}>
+              <Cell label="factor 8">
+                <VStack data-spacing-example="factor" gap={8}>
+                  <Item>First</Item><Item>Second</Item>
+                </VStack>
+              </Cell>
+              <Cell label="explicit 2.25rem">
+                <VStack data-spacing-example="explicit" gap="2.25rem">
+                  <Item>First</Item><Item>Second</Item>
+                </VStack>
+              </Cell>
+              <Cell label="responsive 2 → 8">
+                <VStack
+                  data-spacing-example="responsive"
+                  gap={{ initial: 2, md: 8 }}
+                >
+                  <Item>First</Item><Item>Second</Item>
+                </VStack>
+              </Cell>
+            </Grid.Root>
+          </EvidenceGroup>
+        </VStack>
       </Scenario>
 
       <Scenario {...stackScenarios[3]}>

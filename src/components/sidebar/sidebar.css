@@ -38,10 +38,21 @@
   .brick-sidebar[data-side="right"] > .brick-sidebar__main { grid-column: 1; grid-row: 1; }
 
   .brick-sidebar[data-variant="floating"] {
-    --brick-sidebar-panel-background: var(--brick-color-surface-raised);
     --brick-sidebar-panel-radius: var(--brick-radius-surface);
     --brick-sidebar-panel-gap: var(--brick-space-3);
     padding: var(--brick-space-3);
+  }
+
+  .brick-sidebar[data-surface="transparent"] {
+    --brick-sidebar-panel-background: transparent;
+  }
+
+  .brick-sidebar[data-surface="base"] {
+    --brick-sidebar-panel-background: var(--brick-color-surface-base);
+  }
+
+  .brick-sidebar[data-surface="raised"] {
+    --brick-sidebar-panel-background: var(--brick-color-surface-raised);
   }
 
   .brick-sidebar__panel {

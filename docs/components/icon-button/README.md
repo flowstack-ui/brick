@@ -102,6 +102,12 @@ All four variants support all six tones. Sizes are square 28, 36, 44, 52, and
 60 CSS pixels with 14, 16, 18, 20, and 24 CSS-pixel icon boxes. `rounded` uses
 the control radius; `circle` uses the full radius.
 
+Neutral solid controls use a strong neutral surface and the normal foreground,
+not an appearance-inverting black/white treatment.
+
+Disabled IconButtons use the disabled foreground and reduced opacity so they do
+not resemble an enabled neutral outline action.
+
 Hover is limited to fine hover-capable pointers. Focus-visible uses the global
 focus ring. Disabled uses a subdued surface. Loading hides the visible icon,
 retains the square footprint and accessible name, exposes `aria-busy`, and

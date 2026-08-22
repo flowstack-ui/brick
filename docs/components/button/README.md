@@ -166,6 +166,13 @@ by the public type. Put any icon inside that child instead.
 action. `info`, `success`, `warning`, and `danger` communicate genuine semantic
 meaning; they are not decorative palette choices.
 
+Neutral solid controls use a strong neutral surface with the normal foreground;
+they are not inverse black/white controls. The surface is derived from the
+active theme's neutral surface and text semantics.
+
+Disabled Buttons use the disabled foreground, subtle boundary and surface, and
+reduced opacity. They never receive hover or pressed paint.
+
 ### Sizes and shapes
 
 | Size | Minimum block size |

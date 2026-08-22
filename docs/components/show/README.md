@@ -1,6 +1,6 @@
 # Show
 
-Show keeps content mounted and adds it to visual layout from one fixed viewport breakpoint. It is CSS responsive visibility, not conditional React rendering.
+Show keeps content mounted and adds it to visual layout from one fixed viewport breakpoint. It is CSS responsive visibility, not conditional React rendering. When visible, its host is layout-transparent so parent flex and grid spacing continue to apply directly to its children.
 
 ## When and where to use
 
@@ -41,7 +41,7 @@ Exports: `Show`, `ShowProps`, `ShowBreakpoint`, and `ShowElement`.
 
 ## Anatomy and DOM ownership
 
-Show renders one native host, `div` by default, with `.brick-show`, `data-from`, and `data-slot="show"`. Children are not inspected or conditionally rendered. The ref targets the selected `HTMLElement`.
+Show renders one native host, `div` by default, with `.brick-show`, `data-from`, and `data-slot="show"`. The host remains in the DOM and the ref targets it, but its visible `display: contents` layout contributes no wrapper box. Children are not inspected or conditionally rendered.
 
 ## API
 
@@ -56,7 +56,7 @@ Thresholds are `30rem`, `48rem`, `64rem`, and `80rem`.
 
 ## Visual recipes and states
 
-Below `from`, Show applies `display:none`; from the threshold upward it assigns no display value. It has no colors, spacing, typography, interaction, appearance, RTL, or motion recipe.
+Below `from`, Show applies `display:none`; from the threshold upward it applies `display:contents`. It has no colors, spacing, typography, interaction, appearance, RTL, or motion recipe.
 
 ## Tokens and CSS hooks
 
@@ -76,7 +76,7 @@ Show adds no role or ARIA. `display:none` removes hidden descendants from focus 
 
 ## Composition, native props, and refs
 
-Choose a semantic `as` host and valid children. Show adds a real wrapper and has no `asChild`, render, fallback, `when`, or unmount API. Avoid invalid table grammar and duplicate IDs/forms/landmarks across responsive copies.
+Omit `as` when the default `div` is sufficient. Use `as` only for deliberate HTML semantics or valid document structure; it does not create a layout box. Put backgrounds, borders, padding, and sizing on a child layout component rather than the layout-transparent Show host. Show has no `asChild`, render, fallback, `when`, or unmount API. Avoid invalid table grammar and duplicate IDs/forms/landmarks across responsive copies.
 
 ## Examples
 

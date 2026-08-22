@@ -17,11 +17,7 @@
     --brick-alert-dialog-max-block-size: calc(100dvb - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     --brick-alert-dialog-space: var(--brick-space-5);
     --brick-alert-dialog-radius: var(--brick-radius-overlay);
-    --brick-alert-dialog-shadow: 0 1.5rem 4.5rem color-mix(
-      in srgb,
-      var(--brick-color-shadow),
-      transparent 4%
-    );
+    --brick-alert-dialog-shadow: var(--brick-shadow-modal);
 
     position: fixed;
     z-index: calc(var(--brick-layer-overlay) + 1);

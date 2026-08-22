@@ -54,6 +54,7 @@ export const componentStyleEntries = [
   ["text", ["components/text/text.css"]],
   ["link", ["components/link/link.css"]],
   ["list", ["components/list/list.css"]],
+  ["reorderable-list", ["components/reorderable-list/reorderable-list.css"]],
   ["table", ["components/table/table.css"]],
   ["data-grid", ["components/data-grid/data-grid.css"]],
   ["tree-grid", ["components/tree-grid/tree-grid.css"]],

@@ -1,0 +1,14 @@
+@layer playground.components {
+  .reorderable-list-page,
+  .reorderable-list-cell { min-inline-size: 0; }
+  .reorderable-list-cell { display: grid; gap: var(--brick-space-3); align-content: start; }
+  .reorderable-list-grid { align-items: start; }
+  .reorderable-list-narrow { inline-size: min(100%, 20rem); }
+  @media (max-width: 1200px) {
+    .reorderable-list-grid--sizes { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 800px) {
+    .reorderable-list-grid--two,
+    .reorderable-list-grid--sizes { grid-template-columns: minmax(0, 1fr); }
+  }
+}
