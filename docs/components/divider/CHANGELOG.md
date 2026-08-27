@@ -6,6 +6,9 @@ Divider follows the package version of `@flowstack-ui/brick`.
 
 ### Changed
 
+- Changed the default line paint from the quiet subtle border role to the
+  ordinary structural border role so section boundaries remain perceptible on
+  canvas and panel surfaces in light and dark appearances.
 - Consumed Atom's direct server-safe Divider root so Next.js Server Component
   static prerendering no longer serializes a namespace member as undefined.
 - Documented complete-group and consistent-owner placement for repeated

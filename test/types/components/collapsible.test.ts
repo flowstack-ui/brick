@@ -18,6 +18,7 @@ const indicatorProps: CollapsibleIndicatorProps = { children: "+", "data-slot": 
 const innerProps: CollapsibleContentInnerProps = { children: "Content", title: "Details" };
 createElement(CollapsibleRoot, { ...rootProps, ref: rootRef });
 createElement(Collapsible.Root, rootProps);
+createElement(Collapsible.Trigger, { "aria-label": "Open navigation", iconOnly: true });
 createElement(Collapsible.Indicator, indicatorProps);
 createElement(Collapsible.ContentInner, innerProps);
 createElement(RootCollapsible.Root, rootProps);

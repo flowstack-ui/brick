@@ -71,9 +71,9 @@
   }
 
   .brick-toggle-group[data-variant="outline"] > .brick-toggle-group-item[data-state="on"] {
-    border-color: var(--brick-toggle-tone-border);
+    border-color: var(--brick-toggle-tone-outline-border);
     background: transparent;
-    color: var(--brick-toggle-tone-text);
+    color: var(--brick-toggle-tone-outline-foreground);
     box-shadow: none;
   }
 

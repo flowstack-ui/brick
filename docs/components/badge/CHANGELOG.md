@@ -6,6 +6,12 @@ Badge follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added `size="xl"` for deliberate passive icon wells used by empty states and
+  similar noninteractive illustrations.
+
+- Added `shape="circle"` for exact-square passive icon or single-character
+  markers with nearby context.
+
 - Added public Agent Knowledge covering passive selection, inherited Text
   foreground, composed child spacing, CSS delivery, and validation.
 

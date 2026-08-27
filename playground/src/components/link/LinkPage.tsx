@@ -46,7 +46,7 @@ function Cell({ children, label }: { children: ReactNode; label: string }) {
 
 export const linkScenarios = [
   { id: "link.overview", number: 1, title: "Overview", description: "Link’s canonical rendering follows the theme decoration policy, whose Brick fallback is an underlined accent destination that preserves native anchor behavior." },
-  { id: "link.variants", number: 2, title: "Variants", description: "Theme, underline, and plain change only resting decoration. Explicit variants override the inherited theme choice." },
+  { id: "link.variants", number: 2, title: "Variants", description: "Theme follows the compiled decoration policy, underline remains persistent, and plain stays decoration-free inside unmistakable navigation." },
   { id: "link.tones", number: 3, title: "Tones", description: "Accent, neutral, and inherited foregrounds keep the same default decoration, content, size, and destination behavior." },
   { id: "link.sizes", number: 4, title: "Sizes", description: "Inherited typography follows surrounding copy; explicit small, medium, and large values use Brick body recipes." },
   { id: "link.content", number: 5, title: "Content", description: "Default text, decorative logical icons, and long destination names remain aligned, named, wrapped, and contained." },

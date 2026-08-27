@@ -11,6 +11,9 @@ ZStack follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added named Root isolation and Item layer/edge-spacing props so independently
+  operable media overlays can compose with expanded LinkBox destinations
+  without consumer positioning CSS.
 - Added responsive Root and Item logical alignment through Brick's canonical
   responsive-value grammar without adding coordinates or visual ordering.
 - Added ZStack.Root and ZStack.Item with CSS Grid overlap, natural sizing, nine-position alignment, semantic hosts, and optional asChild composition.

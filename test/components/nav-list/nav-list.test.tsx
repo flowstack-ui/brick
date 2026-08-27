@@ -32,6 +32,7 @@ describe("NavList", () => {
     expect(root).toHaveAttribute("data-orientation", "vertical");
     expect(root.querySelector("ul > li > a")).toBe(link);
     expect(link).toHaveAttribute("aria-current", "page");
+    expect(link).toHaveAttribute("data-has-description");
     expect(link.querySelectorAll("[aria-hidden='true']")).toHaveLength(2);
     expect(link.querySelector(".brick-nav-list__link-description")).toHaveTextContent("Text entry");
   });
@@ -72,7 +73,7 @@ describe("NavList", () => {
         <NavList.Root aria-label="Settings">
           <NavList.Section collapsible onOpenChange={setOpen} open={open}>
             <NavList.SectionLabel as="h3">Account</NavList.SectionLabel>
-            <NavList.SectionTrigger>Toggle account</NavList.SectionTrigger>
+            <NavList.SectionTrigger startIcon={<svg data-testid="account-icon" />}>Toggle account</NavList.SectionTrigger>
             <NavList.SectionContent forceMount>
               <NavList.List><NavList.Item><NavList.Link href="/profile">Profile</NavList.Link></NavList.Item></NavList.List>
             </NavList.SectionContent>
@@ -85,11 +86,28 @@ describe("NavList", () => {
     const heading = screen.getByRole("heading", { level: 3, name: "Account" });
     const content = document.querySelector("[data-slot='nav-list-section-content']")!;
     expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByTestId("account-icon").parentElement).toHaveClass("brick-nav-list__link-start");
     expect(content).toHaveAttribute("hidden");
     expect(content).toHaveAttribute("aria-labelledby", heading.id);
     fireEvent.click(trigger);
     expect(trigger).toHaveAttribute("aria-expanded", "true");
     expect(content).not.toHaveAttribute("hidden");
+  });
+
+  it("exposes the ghost current-destination recipe", () => {
+    render(
+      <NavList.Root aria-label="Ghost navigation" variant="ghost">
+        <NavList.List>
+          <NavList.Item><NavList.Link active href="/current">Current</NavList.Link></NavList.Item>
+        </NavList.List>
+      </NavList.Root>,
+    );
+
+    expect(screen.getByRole("navigation", { name: "Ghost navigation" })).toHaveAttribute(
+      "data-variant",
+      "ghost",
+    );
+    expect(screen.getByRole("link", { name: "Current" })).not.toHaveAttribute("data-has-description");
   });
 
   it("preserves asChild anatomy without adding supporting wrappers", () => {

@@ -17,6 +17,9 @@ Stack follows the package version of `@flowstack-ui/brick`.
 - Normalized native margin and markers for supported `ul` and `ol` Stack
   hosts so semantic one-dimensional lists retain Stack alignment without
   consumer reset CSS.
+- Preserved a composed child's declared minimum block size when `Stack.Item`
+  uses `asChild`, preventing Button and input controls from shrinking below
+  their size recipe.
 
 ### Added
 

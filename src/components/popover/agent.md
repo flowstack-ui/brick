@@ -14,15 +14,17 @@ Present a compact click-open panel anchored to a trigger while Atom owns placeme
 
 ## Required composition
 
-- Compose Root > Trigger plus Portal > Content; place Title and Description when they clarify the panel, and arrange authored content through Header, Body, Footer, and Close as needed.
+- Compose Root > Trigger plus Portal > Content; place Title and Description when they clarify the panel, arrange authored content through Header, Body, Footer, and Close as needed, and use density=compact for concise utility panels.
 - When a local Appearance scope owns the trigger, portal into that scope or apply the same Appearance to Content because ordinary portal ancestry does not preserve the local theme boundary.
 
 ## Rules
 
+- **MUST:** Use the comfortable default for ordinary contextual work and density=compact for concise notification, filter, and utility panels; do not recreate compact rhythm with private selectors.
 - **MUST:** Use Popover for compact nonmodal click-open work; do not use it for a blocking workflow or as a substitute for persistent page content.
 - **MUST:** Keep Trigger and portalled Content inside one Root and use the public structure parts instead of recreating panel spacing and hierarchy with private selectors.
 - **MUST:** When Content leaves a local appearance or theme scope through Portal, reproduce that scope on the portalled visual root or target a container inside it.
 - **MUST:** Give the trigger a complete accessible name and include Title or Description when the panel purpose would otherwise be unclear.
+- **MUST:** Keep Content and Arrow on the finished Popover surface contract so they share background and border paint; do not independently recolor or offset the Arrow.
 - **MUST:** Load styles.css or core.css plus popover.css.
 
 ## Common mistakes
@@ -31,7 +33,7 @@ Present a compact click-open panel anchored to a trigger while Atom owns placeme
 
 ## Validation checklist
 
-- Check trigger naming, open and close behavior, focus return, Escape and outside dismissal, collision placement, zoom, narrow viewports, and RTL.
+- Check trigger naming, open and close behavior, focus return, Escape and outside dismissal, centered and edge collision placement, Arrow attachment at every supported radius, zoom, narrow viewports, and RTL.
 - Check light and dark appearance on the actual portalled Content and confirm the matching CSS is loaded.
 
 ## Related guidance

@@ -115,10 +115,14 @@ no `disabled`, `loading`, action, shape, width, or filled-variant prop.
 
 - `theme` follows `--brick-link-decoration`, which falls back to `underline`.
 - `underline` keeps a visible underline at rest regardless of the theme.
-- `plain` removes the resting underline and restores it for hover,
-  focus-visible, and active interaction. Use it only in clear navigation.
+- `plain` removes decoration in every interaction state. Use it only where a
+  navigation container, placement, current state, hover/pressed treatment,
+  and focus ring make the destination affordance clear without an underline.
+  It uses the regular system weight instead of applying the theme Link emphasis;
+  native `aria-current` still raises the current destination to medium weight.
 - `accent` is the default navigational foreground. `neutral` uses primary
-  content color. `inherit` follows the surrounding current color.
+  content color at rest and the semantic accent interaction foreground on
+  hover and press. `inherit` follows the surrounding current color.
 - `inherit` follows all surrounding typography. `sm`, `md`, and `lg` use the
   Brick body-sm, body-md, and body-lg recipes.
 - Native `aria-current` uses medium weight without adding a custom selected
@@ -200,7 +204,8 @@ horizontal scrolling.
   “click here.”
 - Keep a real final `a[href]`; do not use Link for an action.
 - The Brick fallback underline provides a non-color affordance. Plain requires
-  unmistakable navigational context. A theme that removes resting underlines
+  unmistakable navigational context plus visible current, hover/pressed, and
+  focus treatment. A theme that removes resting underlines
   must pass the declared link/text distinction check.
 - Decorative icon wrappers are hidden from assistive technology. Visible text
   or an explicit native ARIA label must name the destination.

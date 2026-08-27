@@ -11,6 +11,9 @@ Rating follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added `Rating.Summary` for a compact one-star numeric aggregate with one
+  localized accessible label.
+- Added `Rating.Display` for compact, localized, noninteractive aggregate scores without a focusable slider.
 - Added opt-in `allowClear` behavior while preserving stable selection by
   default.
 - Added the Atom-backed two-part Rating with one-slider semantics, fractional fill, default/custom artwork, three sizes, two tones, two variants, Field/form integration, accessibility, responsive and preference styling, and independent automated/manual evidence.

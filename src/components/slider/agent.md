@@ -23,6 +23,7 @@ Provide a styled approximate numeric single-value or range input while Atom owns
 - **MUST:** Use Slider only when approximate direct manipulation is appropriate; use NumberInput or Select when exact or named choices matter.
 - **MUST:** Provide one visible Field label for the complete Slider or a complete accessible name for every standalone Thumb.
 - **SHOULD:** Use an external application-owned output when dense ranges or long localized values would collide with a thumb ValueLabel.
+- **SHOULD:** Keep the default Track inset when a parent clips overflow; set the public Track-inset token to zero only when the surrounding composition preserves complete endpoint target and focus paint.
 - **MUST:** Load styles.css or core.css plus slider.css.
 
 ## Common mistakes
@@ -32,7 +33,7 @@ Provide a styled approximate numeric single-value or range input while Atom owns
 ## Validation checklist
 
 - Check pointer, touch, keyboard, large steps, range bounds, controlled values, reset, disabled, read-only, invalid, and form submission.
-- Check horizontal and vertical orientation, RTL, narrow containment, 44px targets, zoom, reduced motion, forced colors, and label readability.
+- Check horizontal and vertical orientation, RTL, narrow containment, complete 44px endpoint targets, any customized Track inset, zoom, reduced motion, forced colors, and label readability.
 
 ## Related guidance
 

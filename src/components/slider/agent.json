@@ -41,6 +41,11 @@
       "statement": "Use an external application-owned output when dense ranges or long localized values would collide with a thumb ValueLabel."
     },
     {
+      "id": "slider-track-inset",
+      "level": "should",
+      "statement": "Keep the default Track inset when a parent clips overflow; set the public Track-inset token to zero only when the surrounding composition preserves complete endpoint target and focus paint."
+    },
+    {
       "id": "slider-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus slider.css."
@@ -54,7 +59,7 @@
   ],
   "validation": [
     "Check pointer, touch, keyboard, large steps, range bounds, controlled values, reset, disabled, read-only, invalid, and form submission.",
-    "Check horizontal and vertical orientation, RTL, narrow containment, 44px targets, zoom, reduced motion, forced colors, and label readability."
+    "Check horizontal and vertical orientation, RTL, narrow containment, complete 44px endpoint targets, any customized Track inset, zoom, reduced motion, forced colors, and label readability."
   ],
   "related": [
     "field",

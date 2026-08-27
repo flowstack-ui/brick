@@ -36,8 +36,8 @@ describe("Badge", () => {
       "warning",
       "danger",
     ];
-    const sizes: BadgeSize[] = ["sm", "md", "lg"];
-    const shapes: BadgeShape[] = ["rounded", "pill"];
+    const sizes: BadgeSize[] = ["sm", "md", "lg", "xl"];
+    const shapes: BadgeShape[] = ["rounded", "pill", "circle"];
     const { rerender } = render(<Badge>Status</Badge>);
     const badge = screen.getByText("Status");
 

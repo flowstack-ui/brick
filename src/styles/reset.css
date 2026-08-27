@@ -16,6 +16,11 @@
     margin: 0;
   }
 
+  ::selection {
+    background: var(--brick-color-accent-solid);
+    color: var(--brick-color-accent-on-solid);
+  }
+
   blockquote,
   figure {
     margin: 0;
@@ -39,5 +44,12 @@
 
   [hidden] {
     display: none !important;
+  }
+
+  @media (forced-colors: active) {
+    ::selection {
+      background: Highlight;
+      color: HighlightText;
+    }
   }
 }

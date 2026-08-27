@@ -53,6 +53,18 @@ test("default indicator direction and focus geometry remain complete", async ({ 
   expect(await horizontalTrigger.evaluate((element) => Number.parseFloat(getComputedStyle(element).outlineOffset))).toBeLessThan(0);
 });
 
+test("icon-only trigger uses square geometry and centers its artwork", async ({ page }) => {
+  const trigger = page.getByRole("button", { name: "Open compact details" });
+  const artwork = trigger.locator("svg");
+  await expect(trigger).toHaveAttribute("data-icon-only", "");
+  const [triggerBox, artworkBox] = await Promise.all([trigger.boundingBox(), artwork.boundingBox()]);
+  expect(triggerBox).not.toBeNull();
+  expect(artworkBox).not.toBeNull();
+  expect(triggerBox!.width).toBeCloseTo(triggerBox!.height, 1);
+  expect(artworkBox!.x + artworkBox!.width / 2).toBeCloseTo(triggerBox!.x + triggerBox!.width / 2, 1);
+  expect(artworkBox!.y + artworkBox!.height / 2).toBeCloseTo(triggerBox!.y + triggerBox!.height / 2, 1);
+});
+
 test("orientation, live content, narrow reflow, RTL, and accessibility are stable", async ({ page }) => {
   const orientation = page.getByTestId("collapsible-orientation");
   await expect(orientation.locator(".brick-collapsible[data-orientation='horizontal']")).toHaveCount(1);

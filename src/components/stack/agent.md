@@ -20,6 +20,7 @@ Arrange children on one primary axis with responsive direction, tokenized spacin
 - Use Stack.Item when one direct child must remain content-sized, fixed, or consume a proportional share.
 - When the parent changes axis, review each Item flex recipe too; a proportional desktop column usually becomes content-sized in a mobile column.
 - Keep the Item wrapper when equal outer tracks contain children with different padding or borders; use asChild only when the child's own box should participate in flex allocation.
+- When Stack.Item composes a control with asChild, rely on the control's own size recipe; Stack preserves its declared minimum block size while adding flex participation.
 
 ## Rules
 

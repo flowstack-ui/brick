@@ -50,6 +50,7 @@ describe("Popover", () => {
     expect(popover).toHaveClass("brick-popover");
     expect(popover).toHaveAttribute("data-slot", "popover");
     expect(popover).toHaveAttribute("data-size", "md");
+    expect(popover).toHaveAttribute("data-density", "comfortable");
     expect(screen.getByText("Settings form")).toHaveClass("brick-popover__body");
     expect(screen.getByRole("button", { name: "Done" })).toHaveClass("brick-popover__close");
     expect(document.querySelector("[data-slot='popover-arrow']")).toHaveClass("brick-popover__arrow");
@@ -70,6 +71,7 @@ describe("Popover", () => {
             className="consumer-popover"
             data-purpose="settings"
             data-slot="quick-controls"
+            density="compact"
             onClick={onClick}
             ref={contentRef}
             size="lg"
@@ -88,6 +90,7 @@ describe("Popover", () => {
     expect(contentRef.current).toHaveAttribute("data-purpose", "settings");
     expect(contentRef.current).toHaveAttribute("data-slot", "quick-controls");
     expect(contentRef.current).toHaveAttribute("data-size", "lg");
+    expect(contentRef.current).toHaveAttribute("data-density", "compact");
     expect(contentRef.current).toHaveStyle({ marginTop: "2px" });
     fireEvent.click(contentRef.current!);
     expect(onClick).toHaveBeenCalledOnce();

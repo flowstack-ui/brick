@@ -34,7 +34,7 @@ function UrlBacked() {
 
 export function PaginationPage() {
   return <VStack className="pagination-page" data-component-page="pagination" gap="6">
-    <Scenario {...paginationScenarios[0]}><EvidenceSurface inset="lg"><Standard defaultPage={6} totalPages={20} /></EvidenceSurface></Scenario>
+    <Scenario {...paginationScenarios[0]}><EvidenceSurface inset="lg"><Standard boundaryVariant="outline" defaultPage={6} totalPages={20} /></EvidenceSurface></Scenario>
     <Scenario {...paginationScenarios[1]}><RenderedOutput label="Rendered Pagination HTML"><Standard defaultPage={6} totalPages={20} variant="outline" /></RenderedOutput></Scenario>
     <Scenario {...paginationScenarios[2]}><Grid.Root className="pagination-grid" columns={3} gap="4">{variants.map(variant => <Cell key={variant} label={variant}><Standard defaultPage={4} totalPages={8} variant={variant} /></Cell>)}</Grid.Root></Scenario>
     <Scenario {...paginationScenarios[3]}><Grid.Root className="pagination-grid" columns={3} gap="4">{sizes.map(size => <Cell key={size} label={size}><Standard defaultPage={3} size={size} totalPages={5} /></Cell>)}</Grid.Root></Scenario>

@@ -26,6 +26,7 @@ describe("Feed", () => {
 
     expect(root).toHaveClass("brick-feed");
     expect(root).toHaveAttribute("data-density", "comfortable");
+    expect(root).toHaveAttribute("data-divider-strength", "subtle");
     expect(root).toHaveAttribute("data-variant", "divided");
     expect(root).toHaveAttribute("data-slot", "feed");
     expect(articles).toHaveLength(2);
@@ -42,6 +43,7 @@ describe("Feed", () => {
   it("exposes every closed recipe without leaking recipe props", () => {
     const variants = ["plain", "divided", "outline"] as const;
     const densities = ["compact", "comfortable"] as const;
+    const dividerStrengths = ["subtle", "default"] as const;
     const { rerender } = render(<ActivityFeed />);
 
     for (const variant of variants) {
@@ -53,6 +55,12 @@ describe("Feed", () => {
         expect(root).not.toHaveAttribute("density");
         expect(root).not.toHaveAttribute("variant");
       }
+    }
+    for (const dividerStrength of dividerStrengths) {
+      rerender(<ActivityFeed dividerStrength={dividerStrength} />);
+      const root = screen.getByRole("feed", { name: "Activity" });
+      expect(root).toHaveAttribute("data-divider-strength", dividerStrength);
+      expect(root).not.toHaveAttribute("dividerStrength");
     }
   });
 

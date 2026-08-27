@@ -14,7 +14,7 @@ Render finished native navigation as inline, standalone, or button-like content 
 
 ## Required composition
 
-- Provide a real href or compose a router-owned anchor. Leave the default theme variant to follow the project decoration policy, or choose underline/plain for a local exception.
+- Provide a real href or compose a router-owned anchor. Leave the default theme variant to follow the project decoration policy, choose underline for a persistent local affordance, or choose plain only inside unmistakable navigation whose container, current state, hover/pressed treatment, and focus ring preserve the destination affordance without decoration. Neutral navigation stays primary at rest and gains semantic accent emphasis on hover and press.
 - When a Link completes a sentence or paragraph, keep it inside that semantic Text owner and leave its default inherited size so typography and wrapping remain one coherent text flow; use layout components only for independently meaningful peer items.
 
 ## Rules
@@ -36,6 +36,7 @@ Render finished native navigation as inline, standalone, or button-like content 
 - For inline prose links, confirm the Link remains inside the owning sentence or paragraph, inherits its typography, and wraps as one text flow.
 - Test focus, Enter navigation, visited/external behavior when relevant, and contrast.
 - For no-resting-underline themes, verify the compiled 3:1 text-distinction result and the interactive underline.
+- For explicit plain navigation, verify no interaction underline appears, neutral destinations gain semantic accent hover/press emphasis, and container, current, and focus treatments still communicate the destination.
 
 ## Related guidance
 

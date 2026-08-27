@@ -14,6 +14,9 @@ Avatar follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added named `2xl`, `3xl`, `4xl`, and `5xl` sizes for larger square profile
+  identities without inline size-token overrides.
+
 - Initial direct Avatar built on the public Atom Avatar subpath.
 - Required explicit alternative and fallback content, five sizes, circle and
   rounded shapes, and neutral finished styling.

@@ -50,6 +50,11 @@
       "statement": "Provide separate accessible status text when a status ring communicates meaningful availability."
     },
     {
+      "id": "avatar-named-size",
+      "level": "must",
+      "statement": "Choose the nearest named Avatar size, including 2xl through 5xl for larger square profile identities, instead of overriding --brick-avatar-size inline; use Image for authored non-square portrait media."
+    },
+    {
       "id": "avatar-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus avatar.css."
@@ -63,7 +68,7 @@
   ],
   "validation": [
     "Check fixed square size, crop, fallback, informative and decorative naming, passive semantics, nearby identity/status text, light/dark/forced colors, zoom, and RTL.",
-    "Confirm CSS is loaded and any owning Button, Link, or NotificationBadge preserves its own public contract."
+    "Confirm a named Avatar size is used, CSS is loaded, and any owning Button, Link, or NotificationBadge preserves its own public contract."
   ],
-  "related": ["image", "button", "link", "notification-badge"]
+  "related": ["image", "button", "link", "notification-badge", "badge", "status"]
 }

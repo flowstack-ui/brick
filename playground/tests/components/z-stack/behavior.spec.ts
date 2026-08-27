@@ -26,7 +26,12 @@ test("ZStack overlaps children in source order with logical placement", async ({
 });
 
 test("composition, focus order, reflow, and accessibility remain authored", async ({ page }) => {
-  await expect(page.getByText("Composed label")).toHaveClass(/brick-z-stack-item/);
+  const composedRoot = page.getByTestId("z-stack-composition");
+  const composedAction = composedRoot.getByRole("button", { name: "Composed action" });
+  await expect(composedRoot).toHaveCSS("isolation", "auto");
+  await expect(composedAction).toHaveClass(/brick-z-stack-item/);
+  await expect(composedAction).toHaveCSS("z-index", "2");
+  await expect(composedAction).toHaveCSS("margin", "12px");
   const actions = page.getByTestId("z-stack-stress").getByRole("button");
   await actions.first().focus();
   await page.keyboard.press("Tab");

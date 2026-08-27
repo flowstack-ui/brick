@@ -113,6 +113,9 @@ focus ring. Disabled uses a subdued surface. Loading hides the visible icon,
 retains the square footprint and accessible name, exposes `aria-busy`, and
 centers a CSS spinner in LTR and RTL. Reduced motion removes transitions and
 slows the spinner; forced colors restores system boundaries and focus.
+When an owning disclosure such as Popover composes IconButton as its trigger,
+`aria-expanded="true"` keeps the recipe's pressed surface visible until the
+disclosure closes. This is open-state feedback, not a persistent toggle.
 
 ## Tokens and CSS hooks
 

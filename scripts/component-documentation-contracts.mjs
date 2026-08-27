@@ -142,7 +142,7 @@ export const componentDocumentationContracts = {
     css: "src/components/avatar/avatar.css",
     exports: ["Avatar", "AvatarProps", "AvatarShape", "AvatarSize", "AvatarStatus"],
     unions: {
-      AvatarSize: ["xs", "sm", "md", "lg", "xl"],
+      AvatarSize: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"],
       AvatarShape: ["circle", "rounded"],
       AvatarStatus: ["online", "away", "busy", "offline"],
     },
@@ -279,8 +279,8 @@ export const componentDocumentationContracts = {
     unions: {
       BadgeVariant: ["soft", "solid", "outline"],
       BadgeTone: ["neutral", "accent", "info", "success", "warning", "danger"],
-      BadgeSize: ["sm", "md", "lg"],
-      BadgeShape: ["rounded", "pill"],
+      BadgeSize: ["sm", "md", "lg", "xl"],
+      BadgeShape: ["rounded", "pill", "circle"],
     },
     defaults: {
       variant: "soft",
@@ -957,6 +957,17 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-size"],
     publicTokens: ["--brick-radio-group-gap", "--brick-radio-control-size", "--brick-radio-dot-size", "--brick-radio-target-min-size", "--brick-radio-item-gap", "--brick-radio-item-padding-inline", "--brick-radio-item-radius", "--brick-radio-foreground", "--brick-radio-control-background", "--brick-radio-control-border", "--brick-radio-checked", "--brick-radio-focus-ring", "--brick-radio-invalid", "--brick-radio-readonly-background"],
   },
+  "segment-group": {
+    source: "src/components/segment-group/SegmentGroup.tsx",
+    exportSource: "src/components/segment-group/index.ts",
+    css: "src/components/segment-group/segment-group.css",
+    exports: ["SegmentGroup", "SegmentGroupIndicator", "SegmentGroupIndicatorProps", "SegmentGroupItem", "SegmentGroupItemProps", "SegmentGroupItemText", "SegmentGroupItemTextProps", "SegmentGroupRoot", "SegmentGroupRootProps", "SegmentGroupSize"],
+    unions: { SegmentGroupSize: ["sm", "md", "lg"] },
+    documentedValues: { orientation: ["horizontal", "vertical"] },
+    defaults: { size: "md", orientation: "horizontal", fullWidth: false, iconOnly: false },
+    dataAttributes: ["data-full-width", "data-icon-only", "data-size"],
+    publicTokens: ["--brick-segment-group-min-block-size", "--brick-segment-group-item-padding-inline", "--brick-segment-group-item-gap", "--brick-segment-group-icon-size", "--brick-segment-group-inset", "--brick-segment-group-background", "--brick-segment-group-indicator-background", "--brick-segment-group-indicator-border", "--brick-segment-group-foreground", "--brick-segment-group-selected-foreground", "--brick-segment-group-focus-ring"],
+  },
   switch: {
     source: "src/components/switch/Switch.tsx",
     exportSource: "src/components/switch/index.ts",
@@ -1241,6 +1252,7 @@ export const componentDocumentationContracts = {
       "PopoverCloseProps",
       "PopoverContent",
       "PopoverContentProps",
+      "PopoverDensity",
       "PopoverDescription",
       "PopoverDescriptionProps",
       "PopoverFooter",
@@ -1259,16 +1271,18 @@ export const componentDocumentationContracts = {
       "PopoverTriggerProps",
     ],
     unions: {
+      PopoverDensity: ["comfortable", "compact"],
       PopoverSize: ["sm", "md", "lg"],
     },
     defaults: {
+      density: "comfortable",
       size: "md",
       sideOffset: 8,
       asChild: false,
     },
     sourceClaims: ['triggerMode="click"'],
     documentationClaims: ["`triggerMode` to `click`"],
-    dataAttributes: ["data-size", "data-slot"],
+    dataAttributes: ["data-density", "data-size", "data-slot"],
     publicTokens: [
       "--brick-popover-background",
       "--brick-popover-foreground",
@@ -1464,6 +1478,37 @@ export const componentDocumentationContracts = {
       },
     },
   },
+  "link-box": {
+    source: "src/components/link-box/LinkBox.tsx",
+    exportSource: "src/components/link-box/index.ts",
+    css: "src/components/link-box/link-box.css",
+    exports: [
+      "LinkBox",
+      "LinkBoxAction",
+      "LinkBoxLink",
+      "LinkBoxRoot",
+      "LinkBoxActionProps",
+      "LinkBoxLinkProps",
+      "LinkBoxRootElement",
+      "LinkBoxRootProps",
+    ],
+    unions: {
+      LinkBoxRootElement: ["div", "article", "section", "li"],
+    },
+    defaults: {
+      as: "div",
+      tone: "inherit",
+      variant: "plain",
+    },
+    dataAttributes: ["data-slot"],
+    publicTokens: [
+      "--brick-link-box-radius",
+      "--brick-link-box-hover-ring",
+      "--brick-link-box-active-ring",
+      "--brick-link-box-focus-ring",
+      "--brick-link-box-focus-offset",
+    ],
+  },
   list: {
     source: "src/components/list/List.tsx",
     exportSource: "src/components/list/index.ts",
@@ -1620,10 +1665,10 @@ export const componentDocumentationContracts = {
     source: "src/components/feed/Feed.tsx",
     exportSource: "src/components/feed/index.ts",
     css: "src/components/feed/feed.css",
-    exports: ["Feed", "FeedDensity", "FeedItemProps", "FeedRootProps", "FeedVariant"],
-    unions: { FeedVariant: ["plain", "divided", "outline"], FeedDensity: ["compact", "comfortable"] },
-    defaults: { variant: "divided", density: "comfortable" },
-    dataAttributes: ["data-density", "data-slot", "data-variant"],
+    exports: ["Feed", "FeedDensity", "FeedDividerStrength", "FeedItemProps", "FeedRootProps", "FeedVariant"],
+    unions: { FeedVariant: ["plain", "divided", "outline"], FeedDensity: ["compact", "comfortable"], FeedDividerStrength: ["subtle", "default"] },
+    defaults: { variant: "divided", density: "comfortable", dividerStrength: "subtle" },
+    dataAttributes: ["data-density", "data-divider-strength", "data-slot", "data-variant"],
     publicTokens: ["--brick-feed-gap", "--brick-feed-item-padding-block", "--brick-feed-item-padding-inline", "--brick-feed-background", "--brick-feed-foreground", "--brick-feed-border-color", "--brick-feed-border-width", "--brick-feed-radius", "--brick-feed-divider-color", "--brick-feed-focus-color", "--brick-feed-focus-width", "--brick-feed-focus-offset", "--brick-feed-transition-duration"],
   },
   "swipeable-item": {
@@ -1927,6 +1972,31 @@ export const componentDocumentationContracts = {
       "--brick-grid-item-row-end",
     ],
   },
+  group: {
+    source: "src/components/group/Group.tsx",
+    exportSource: "src/components/group/index.ts",
+    css: "src/components/group/group.css",
+    exports: ["Group", "GroupElement", "GroupOrientation", "GroupProps"],
+    unions: {
+      GroupElement: ["div", "span"],
+      GroupOrientation: ["horizontal", "vertical"],
+    },
+    defaults: {
+      as: "div",
+      attached: false,
+      gap: 2,
+      grow: false,
+      orientation: "horizontal",
+      slot: "group",
+    },
+    dataAttributes: [
+      "data-attached",
+      "data-grow",
+      "data-orientation",
+      "data-slot",
+    ],
+    publicTokens: ["--brick-group-gap", "--brick-group-overlap"],
+  },
   container: {
     source: "src/components/container/Container.tsx",
     exportSource: "src/components/container/index.ts",
@@ -2096,7 +2166,7 @@ export const componentDocumentationContracts = {
     css: "src/components/nav-list/nav-list.css",
     exports: ["NavList"],
     unions: {
-      NavListVariant: ["soft", "solid", "outline"],
+      NavListVariant: ["soft", "solid", "outline", "ghost"],
       NavListTone: ["accent", "neutral"],
       NavListSize: ["sm", "md", "lg"],
     },
@@ -2106,7 +2176,9 @@ export const componentDocumentationContracts = {
       "--brick-nav-list-gap", "--brick-nav-list-section-gap",
       "--brick-nav-list-content-inset", "--brick-nav-list-row-min-block-size",
       "--brick-nav-list-row-radius", "--brick-nav-list-current-border",
-      "--brick-nav-list-focus-ring",
+      "--brick-nav-list-focus-ring", "--brick-nav-list-section-label-padding-inline",
+      "--brick-nav-list-section-label-font-size", "--brick-nav-list-section-label-font-weight",
+      "--brick-nav-list-section-label-line-height", "--brick-nav-list-section-label-letter-spacing",
     ],
   },
   sidebar: {
@@ -2381,8 +2453,9 @@ componentDocumentationContracts.rating = {
   exportSource: "src/components/rating/index.ts",
   css: "src/components/rating/rating.css",
   exports: [
-    "Rating", "RatingItem", "RatingItemProps", "RatingRoot",
-    "RatingRootProps", "RatingSize", "RatingTone", "RatingVariant",
+    "Rating", "RatingDisplay", "RatingDisplayProps", "RatingItem",
+    "RatingItemProps", "RatingRoot", "RatingRootProps", "RatingSize",
+    "RatingSummary", "RatingSummaryProps", "RatingTone", "RatingVariant",
   ],
   unions: {
     RatingSize: ["sm", "md", "lg"],
@@ -2394,6 +2467,57 @@ componentDocumentationContracts.rating = {
   publicTokens: [
     "--brick-rating-item-size", "--brick-rating-gap",
     "--brick-rating-empty-color", "--brick-rating-fill-color",
+  ],
+};
+
+componentDocumentationContracts["data-list"] = {
+  source: "src/components/data-list/DataList.tsx",
+  exportSource: "src/components/data-list/index.ts",
+  css: "src/components/data-list/data-list.css",
+  exports: [
+    "DataList", "DataListItem", "DataListItemProps", "DataListLabel",
+    "DataListLabelProps", "DataListLabelWidth", "DataListOrientation",
+    "DataListRoot", "DataListRootProps", "DataListSize", "DataListValue",
+    "DataListValueProps",
+  ],
+  unions: {
+    DataListSize: ["sm", "md", "lg"],
+    DataListOrientation: ["vertical", "horizontal"],
+    DataListLabelWidth: ["auto", "sm", "md", "lg"],
+  },
+  defaults: {
+    divide: false,
+    labelWidth: "auto",
+    orientation: "vertical",
+    size: "md",
+    slot: "data-list-root",
+  },
+  dataAttributes: [
+    "data-divide", "data-label-width", "data-orientation", "data-size", "data-slot",
+  ],
+  publicTokens: [
+    "--brick-data-list-gap", "--brick-data-list-item-gap",
+    "--brick-data-list-label-size", "--brick-data-list-divider-color",
+  ],
+};
+
+componentDocumentationContracts.status = {
+  source: "src/components/status/Status.tsx",
+  exportSource: "src/components/status/index.ts",
+  css: "src/components/status/status.css",
+  exports: [
+    "Status", "StatusIndicator", "StatusLabel", "StatusPartProps",
+    "StatusRoot", "StatusRootProps", "StatusSize", "StatusTone",
+  ],
+  unions: {
+    StatusSize: ["sm", "md", "lg"],
+    StatusTone: ["neutral", "accent", "info", "success", "warning", "danger"],
+  },
+  defaults: { size: "md", tone: "neutral" },
+  dataAttributes: ["data-size", "data-slot", "data-tone"],
+  publicTokens: [
+    "--brick-status-indicator-size", "--brick-status-gap",
+    "--brick-status-color",
   ],
 };
 
@@ -2423,7 +2547,7 @@ componentDocumentationContracts.slider = {
     "--brick-slider-range-background", "--brick-slider-thumb-background",
     "--brick-slider-thumb-border", "--brick-slider-thumb-shadow",
     "--brick-slider-thumb-size", "--brick-slider-marker-color",
-    "--brick-slider-value-label-background",
+    "--brick-slider-marker-border", "--brick-slider-value-label-background",
     "--brick-slider-value-label-foreground",
   ],
 };

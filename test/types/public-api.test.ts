@@ -489,7 +489,7 @@ const missingAvatarAlt: AvatarProps = { fallback: "AL" };
 // @ts-expect-error Avatar requires explicit fallback content.
 const missingAvatarFallback: AvatarProps = { alt: "Ada Lovelace" };
 // @ts-expect-error Avatar sizes are a closed recipe set.
-const invalidAvatarSize: AvatarProps = { alt: "Ada", fallback: "A", size: "2xl" };
+const invalidAvatarSize: AvatarProps = { alt: "Ada", fallback: "A", size: "6xl" };
 // @ts-expect-error Avatar shapes are a closed recipe set.
 const invalidAvatarShape: AvatarProps = { alt: "Ada", fallback: "A", shape: "square" };
 // @ts-expect-error Avatar statuses are concrete availability states.

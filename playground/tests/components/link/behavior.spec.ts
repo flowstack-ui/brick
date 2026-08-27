@@ -21,11 +21,30 @@ test("variants, tones, and sizes change only their controlled dimension", async 
   await expect(variants.nth(0)).toHaveCSS("text-decoration-line", "underline");
   await expect(variants.nth(1)).toHaveCSS("text-decoration-line", "underline");
   await expect(variants.nth(2)).toHaveCSS("text-decoration-line", "none");
+  await variants.nth(2).hover();
+  await expect(variants.nth(2)).toHaveCSS("text-decoration-line", "none");
+  await variants.nth(2).focus();
+  await expect(variants.nth(2)).toHaveCSS("text-decoration-line", "none");
+  await expect(variants.nth(2)).toHaveCSS("font-weight", "400");
+  await expect(variants.nth(2)).toHaveCSS("outline-style", "solid");
 
   const tones = page.getByTestId("link-tones").locator(".brick-link");
   expect(await tones.evaluateAll((items) => items.map((item) => item.textContent))).toEqual([
     "Read navigation guidance", "Read navigation guidance", "Read navigation guidance",
   ]);
+  const neutralRestColor = await tones.nth(1).evaluate(
+    (item) => getComputedStyle(item).color,
+  );
+  await tones.nth(1).hover();
+  const neutralHoverColor = await tones.nth(1).evaluate(
+    (item) => getComputedStyle(item).color,
+  );
+  await tones.nth(0).hover();
+  const accentHoverColor = await tones.nth(0).evaluate(
+    (item) => getComputedStyle(item).color,
+  );
+  expect(neutralHoverColor).not.toBe(neutralRestColor);
+  expect(neutralHoverColor).toBe(accentHoverColor);
 
   const sizes = page.getByTestId("link-sizes").locator(".brick-link");
   const fontSizes = await sizes.evaluateAll((items) =>

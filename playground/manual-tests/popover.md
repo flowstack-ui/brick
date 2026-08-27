@@ -40,7 +40,9 @@ Action: Open every size, semantic anatomy, side, and alignment example.
 
 Expected: Size changes preferred width only. Authored parts and explicit/native
 relationships match labels. Collision handling keeps panels visible and Arrow
-follows the resolved side.
+follows the resolved side. Compact density reduces only internal panel rhythm;
+Title and Description keep zero native margins so authored Stack spacing stays
+in control.
 
 Result:
 Notes or issue:

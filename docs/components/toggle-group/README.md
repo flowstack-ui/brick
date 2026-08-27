@@ -77,6 +77,10 @@ Native `color` is excluded.
 Neutral solid selection uses a strong theme-derived neutral surface with the
 normal foreground instead of the inverse black/white pair.
 
+Outline selection uses the tone's solid accent for its border while preserving
+the normal primary foreground. This keeps selection visible without tinting
+labels or turning the outline recipe into a soft fill.
+
 Disabled Items use Toggle's faded disabled foreground and quiet surface;
 selected disabled Items do not retain enabled outline or inset emphasis.
 

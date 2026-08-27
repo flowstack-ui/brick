@@ -18,6 +18,9 @@ Button follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Disabled ghost and outline Buttons now remain transparent instead of gaining
+  a filled disabled surface.
+
 - Disabled Buttons now use a faded disabled foreground, subtle boundary, and
   quiet surface instead of resembling enabled neutral outlines.
 - Neutral solid Buttons now use a strong theme-derived neutral surface and

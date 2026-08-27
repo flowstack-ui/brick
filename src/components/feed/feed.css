@@ -29,6 +29,10 @@
     --brick-feed-item-padding-inline: var(--brick-space-3);
   }
 
+  .brick-feed[data-divider-strength="default"] {
+    --brick-feed-divider-color: var(--brick-color-border-default);
+  }
+
   .brick-feed[data-variant="divided"] {
     --brick-feed-gap: 0;
     background: var(--brick-feed-background);

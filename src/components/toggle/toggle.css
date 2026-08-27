@@ -15,6 +15,8 @@
     --brick-toggle-tone-on-soft: var(--brick-color-accent-on-soft);
     --brick-toggle-tone-border: var(--brick-color-accent-border);
     --brick-toggle-tone-text: var(--brick-color-accent-text);
+    --brick-toggle-tone-outline-border: var(--brick-color-accent-solid);
+    --brick-toggle-tone-outline-foreground: var(--brick-color-text-primary);
 
     display: inline-flex;
     box-sizing: border-box;
@@ -73,6 +75,8 @@
     --brick-toggle-tone-on-soft: var(--brick-color-text-primary);
     --brick-toggle-tone-border: var(--brick-color-border-strong);
     --brick-toggle-tone-text: var(--brick-color-text-primary);
+    --brick-toggle-tone-outline-border: var(--brick-color-border-strong);
+    --brick-toggle-tone-outline-foreground: var(--brick-color-text-primary);
   }
 
   :where(.brick-toggle, .brick-toggle-group-item) > :where(svg, img) {
@@ -111,9 +115,9 @@
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-variant="outline"][data-state="on"] {
-    border-color: var(--brick-toggle-tone-border);
+    border-color: var(--brick-toggle-tone-outline-border);
     background: transparent;
-    color: var(--brick-toggle-tone-text);
+    color: var(--brick-toggle-tone-outline-foreground);
     box-shadow: none;
   }
 

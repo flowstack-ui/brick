@@ -20,6 +20,11 @@ test("variants, sizes, vertical navigation, fitted width, and disabled state are
     await expect(root).toHaveCount(1);
     await expect(root.locator(".brick-tabs-indicator")).toHaveCSS("display", variant === "line" ? "block" : "none");
   }
+  const squareLineList = page.getByRole("tablist", { name: "line sections" });
+  await expect(squareLineList).toHaveAttribute("data-trigger-radius", "none");
+  for (const trigger of await squareLineList.getByRole("tab").all()) {
+    await expect(trigger).toHaveCSS("border-radius", "0px");
+  }
   const heights: number[] = [];
   for (const size of ["sm", "md", "lg"]) heights.push((await page.getByTestId("tabs-sizes").locator(`.brick-tabs[data-size='${size}'] .brick-tabs-trigger`).first().boundingBox())!.height);
   expect(heights[0]).toBeLessThan(heights[1]); expect(heights[1]).toBeLessThan(heights[2]);

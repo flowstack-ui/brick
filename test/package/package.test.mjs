@@ -77,6 +77,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/avatar.d.ts",
       default: "./dist/avatar.js",
     },
+    "./status": {
+      types: "./dist/status.d.ts",
+      default: "./dist/status.js",
+    },
     "./toggle": {
       types: "./dist/toggle.d.ts",
       default: "./dist/toggle.js",
@@ -120,6 +124,10 @@ test("package metadata defines the public Brick boundary", async () => {
     "./radio-group": {
       types: "./dist/radio-group.d.ts",
       default: "./dist/radio-group.js",
+    },
+    "./segment-group": {
+      types: "./dist/segment-group.d.ts",
+      default: "./dist/segment-group.js",
     },
     "./switch": {
       types: "./dist/switch.d.ts",
@@ -241,6 +249,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/link.d.ts",
       default: "./dist/link.js",
     },
+    "./link-box": {
+      types: "./dist/link-box.d.ts",
+      default: "./dist/link-box.js",
+    },
     "./list": {
       types: "./dist/list.d.ts",
       default: "./dist/list.js",
@@ -280,6 +292,14 @@ test("package metadata defines the public Brick boundary", async () => {
     "./stack": {
       types: "./dist/stack.d.ts",
       default: "./dist/stack.js",
+    },
+    "./group": {
+      types: "./dist/group.d.ts",
+      default: "./dist/group.js",
+    },
+    "./data-list": {
+      types: "./dist/data-list.d.ts",
+      default: "./dist/data-list.js",
     },
     "./z-stack": {
       types: "./dist/z-stack.d.ts",
@@ -373,6 +393,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const badge = await import(new URL("../../dist/badge.js", import.meta.url));
   const chip = await import(new URL("../../dist/chip.js", import.meta.url));
   const avatar = await import(new URL("../../dist/avatar.js", import.meta.url));
+  const status = await import(new URL("../../dist/status.js", import.meta.url));
   const toggle = await import(new URL("../../dist/toggle.js", import.meta.url));
   const toggleGroup = await import(new URL("../../dist/toggle-group.js", import.meta.url));
   const tooltip = await import(new URL("../../dist/tooltip.js", import.meta.url));
@@ -384,6 +405,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const checkbox = await import(new URL("../../dist/checkbox.js", import.meta.url));
   const checkboxGroup = await import(new URL("../../dist/checkbox-group.js", import.meta.url));
   const radioGroup = await import(new URL("../../dist/radio-group.js", import.meta.url));
+  const segmentGroup = await import(new URL("../../dist/segment-group.js", import.meta.url));
   const switchModule = await import(new URL("../../dist/switch.js", import.meta.url));
   const breadcrumb = await import(new URL("../../dist/breadcrumb.js", import.meta.url));
   const tabs = await import(new URL("../../dist/tabs.js", import.meta.url));
@@ -401,6 +423,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const textarea = await import(new URL("../../dist/textarea.js", import.meta.url));
   const text = await import(new URL("../../dist/text.js", import.meta.url));
   const link = await import(new URL("../../dist/link.js", import.meta.url));
+  const linkBox = await import(new URL("../../dist/link-box.js", import.meta.url));
   const list = await import(new URL("../../dist/list.js", import.meta.url));
   const table = await import(new URL("../../dist/table.js", import.meta.url));
   const dataGrid = await import(new URL("../../dist/data-grid.js", import.meta.url));
@@ -414,6 +437,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const otpField = await import(new URL("../../dist/otp-field.js", import.meta.url));
   const passwordToggleField = await import(new URL("../../dist/password-toggle-field.js", import.meta.url));
   const stack = await import(new URL("../../dist/stack.js", import.meta.url));
+  const group = await import(new URL("../../dist/group.js", import.meta.url));
+  const dataList = await import(new URL("../../dist/data-list.js", import.meta.url));
   const zStack = await import(new URL("../../dist/z-stack.js", import.meta.url));
   const grid = await import(new URL("../../dist/grid.js", import.meta.url));
   const container = await import(new URL("../../dist/container.js", import.meta.url));
@@ -562,6 +587,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "DataGridRoot",
       "DataGridRow",
       "DataGridSortIndicator",
+      "DataList",
+      "DataListItem",
+      "DataListLabel",
+      "DataListRoot",
+      "DataListValue",
       "Dialog",
       "Divider",
       "Drawer",
@@ -603,6 +633,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Form",
       "Frame",
       "Grid",
+      "Group",
       "HStack",
       "Heading",
       "Hide",
@@ -615,6 +646,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ImageRoot",
       "Input",
       "Link",
+      "LinkBox",
+      "LinkBoxAction",
+      "LinkBoxLink",
+      "LinkBoxRoot",
       "List",
       "Menubar",
       "MenubarArrow",
@@ -732,8 +767,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "RadioGroupItem",
       "RadioGroupRoot",
       "Rating",
+      "RatingDisplay",
       "RatingItem",
       "RatingRoot",
+      "RatingSummary",
       "ReorderableList",
       "ReorderableListActions",
       "ReorderableListContent",
@@ -749,6 +786,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ScrollAreaRoot",
       "ScrollAreaViewport",
       "Section",
+      "SegmentGroup",
+      "SegmentGroupIndicator",
+      "SegmentGroupItem",
+      "SegmentGroupItemText",
+      "SegmentGroupRoot",
       "Select",
       "SelectArrow",
       "SelectContent",
@@ -788,6 +830,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "SliderTrack",
       "SliderValueLabel",
       "Stack",
+      "Status",
+      "StatusIndicator",
+      "StatusLabel",
+      "StatusRoot",
       "Surface",
       "SurfaceContent",
       "SurfaceMedia",
@@ -939,6 +985,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(chip.ChipLabel, brick.Chip.Label);
   assert.equal(chip.ChipRemoveTrigger, brick.Chip.RemoveTrigger);
   assert.equal(avatar.Avatar, brick.Avatar);
+  assert.equal(status.Status, brick.Status);
+  assert.equal(status.StatusRoot, brick.Status.Root);
+  assert.equal(status.StatusIndicator, brick.Status.Indicator);
+  assert.equal(status.StatusLabel, brick.Status.Label);
   assert.equal(toggle.Toggle, brick.Toggle);
   assert.equal(toggleGroup.ToggleGroup, brick.ToggleGroup);
   assert.equal(toggleGroup.ToggleGroupRoot, brick.ToggleGroup.Root);
@@ -966,6 +1016,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(radioGroup.RadioGroup, brick.RadioGroup);
   assert.equal(radioGroup.RadioGroupRoot, brick.RadioGroup.Root);
   assert.equal(radioGroup.RadioGroupItem, brick.RadioGroup.Item);
+  assert.equal(segmentGroup.SegmentGroup, brick.SegmentGroup);
+  assert.equal(segmentGroup.SegmentGroupRoot, brick.SegmentGroup.Root);
+  assert.equal(segmentGroup.SegmentGroupItem, brick.SegmentGroup.Item);
+  assert.equal(segmentGroup.SegmentGroupItemText, brick.SegmentGroup.ItemText);
+  assert.equal(segmentGroup.SegmentGroupIndicator, brick.SegmentGroup.Indicator);
   assert.equal(switchModule.Switch, brick.Switch);
   assert.equal(switchModule.SwitchRoot, brick.Switch.Root);
   assert.equal(switchModule.SwitchThumb, brick.Switch.Thumb);
@@ -1006,8 +1061,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(slider.SliderMarker, brick.Slider.Marker);
   assert.equal(slider.SliderValueLabel, brick.Slider.ValueLabel);
   assert.equal(rating.Rating, brick.Rating);
+  assert.equal(rating.RatingDisplay, brick.Rating.Display);
   assert.equal(rating.RatingRoot, brick.Rating.Root);
   assert.equal(rating.RatingItem, brick.Rating.Item);
+  assert.equal(rating.RatingSummary, brick.Rating.Summary);
   assert.equal(reorderableList.ReorderableList, brick.ReorderableList);
   assert.equal(reorderableList.ReorderableListRoot, brick.ReorderableList.Root);
   assert.equal(reorderableList.ReorderableListItem, brick.ReorderableList.Item);
@@ -1084,9 +1141,19 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(text.Caption, brick.Caption);
   assert.equal(text.Eyebrow, brick.Eyebrow);
   assert.equal(link.Link, brick.Link);
+  assert.equal(linkBox.LinkBox, brick.LinkBox);
+  assert.equal(linkBox.LinkBoxRoot, brick.LinkBox.Root);
+  assert.equal(linkBox.LinkBoxLink, brick.LinkBox.Link);
+  assert.equal(linkBox.LinkBoxAction, brick.LinkBox.Action);
   assert.equal(stack.Stack, brick.Stack);
   assert.equal(stack.HStack, brick.HStack);
   assert.equal(stack.VStack, brick.VStack);
+  assert.equal(group.Group, brick.Group);
+  assert.equal(dataList.DataList, brick.DataList);
+  assert.equal(dataList.DataListRoot, brick.DataList.Root);
+  assert.equal(dataList.DataListItem, brick.DataList.Item);
+  assert.equal(dataList.DataListLabel, brick.DataList.Label);
+  assert.equal(dataList.DataListValue, brick.DataList.Value);
   assert.equal(zStack.ZStack, brick.ZStack);
   assert.equal(zStack.ZStackRoot, brick.ZStack.Root);
   assert.equal(zStack.ZStackItem, brick.ZStack.Item);
@@ -1174,6 +1241,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-textarea/);
   assert.match(styles, /\.brick-text/);
   assert.match(styles, /\.brick-link/);
+  assert.match(styles, /\.brick-link-box/);
   assert.match(styles, /\.brick-breadcrumb/);
   assert.match(styles, /\.brick-pagination/);
   assert.match(styles, /\.brick-bottom-navigation/);
@@ -1192,6 +1260,10 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-divider/);
   assert.match(styles, /\.brick-scroll-area/);
   assert.match(styles, /\.brick-nav-list/);
+  assert.match(
+    styles,
+    /\.brick-nav-list__link\[data-has-description\].*margin-block-start:calc\(\(1em\s*\*\s*var\(--brick-nav-list-label-line-height\)\s*-\s*var\(--brick-nav-list-icon-size\)\)\s*\*\s*\.5\)/,
+  );
   assert.match(styles, /\.brick-sidebar/);
   assert.match(styles, /\.brick-code/);
   assert.match(styles, /\.brick-code-block/);
@@ -1242,6 +1314,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-textarea-padding-inline/);
   assert.match(styles, /--brick-text-font-size/);
   assert.match(styles, /--brick-link-foreground/);
+  assert.match(styles, /--brick-link-box-focus-ring/);
   assert.match(styles, /--brick-breadcrumb-foreground/);
   assert.match(styles, /--brick-pagination-current-background/);
   assert.match(styles, /--brick-bottom-navigation-selection-background/);
@@ -1266,6 +1339,8 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(tokens, /data-brick-appearance/);
   assert.match(reset, /brick\.reset/);
   assert.match(reset, /blockquote,figure\{margin:0\}/);
+  assert.match(reset, /::selection\{background:var\(--brick-color-accent-solid\);color:var\(--brick-color-accent-on-solid\)\}/);
+  assert.match(reset, /@media \(forced-colors:active\)\{::selection\{color:highlighttext;background:highlight\}\}/);
   assert.doesNotMatch(styles, /@(?:tailwind|source|theme|utility|custom-variant)/);
   assert.doesNotMatch(styles, /\.\.\//);
   assert.doesNotMatch(styles, /body\s*\{[^}]*margin:/);
@@ -1281,7 +1356,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 80);
+  assert.equal(componentStyleNames.length, 85);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);

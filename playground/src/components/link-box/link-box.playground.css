@@ -1,0 +1,5 @@
+@layer playground.component {
+  .link-box-example {
+    inline-size: min(100%, 24rem);
+  }
+}

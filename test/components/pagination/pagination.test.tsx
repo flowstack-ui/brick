@@ -27,10 +27,11 @@ describe("Pagination", () => {
     const user = userEvent.setup();
     const onPageChange = vi.fn();
     const rootRef = createRef<HTMLElement>();
-    render(<Pagination.Root aria-label="Pages" className="custom-root" defaultPage={2} getItemAriaLabel={({ page, isCurrent }) => isCurrent ? `Current ${page}` : `Open ${page}`} nextAriaLabel="Forward" onPageChange={onPageChange} previousAriaLabel="Back" ref={rootRef} size="lg" totalPages={4} variant="outline"><Pagination.List><Pagination.Previous aria-label="Earlier" /><Pagination.Items itemProps={{ className: "custom-item" }} /><Pagination.Next /></Pagination.List></Pagination.Root>);
+    render(<Pagination.Root aria-label="Pages" boundaryVariant="outline" className="custom-root" defaultPage={2} getItemAriaLabel={({ page, isCurrent }) => isCurrent ? `Current ${page}` : `Open ${page}`} nextAriaLabel="Forward" onPageChange={onPageChange} previousAriaLabel="Back" ref={rootRef} size="lg" totalPages={4} variant="outline"><Pagination.List><Pagination.Previous aria-label="Earlier" /><Pagination.Items itemProps={{ className: "custom-item" }} /><Pagination.Next /></Pagination.List></Pagination.Root>);
     expect(rootRef.current).toHaveClass("brick-pagination", "custom-root");
     expect(rootRef.current).toHaveAttribute("data-size", "lg");
     expect(rootRef.current).toHaveAttribute("data-variant", "outline");
+    expect(rootRef.current).toHaveAttribute("data-boundary-variant", "outline");
     expect(screen.getByRole("button", { name: "Earlier" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Current 2" })).toHaveClass("custom-item");
     await user.click(screen.getByRole("button", { name: "Forward" }));

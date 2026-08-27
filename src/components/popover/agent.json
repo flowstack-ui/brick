@@ -16,10 +16,15 @@
     }
   ],
   "composition": [
-    "Compose Root > Trigger plus Portal > Content; place Title and Description when they clarify the panel, and arrange authored content through Header, Body, Footer, and Close as needed.",
+    "Compose Root > Trigger plus Portal > Content; place Title and Description when they clarify the panel, arrange authored content through Header, Body, Footer, and Close as needed, and use density=compact for concise utility panels.",
     "When a local Appearance scope owns the trigger, portal into that scope or apply the same Appearance to Content because ordinary portal ancestry does not preserve the local theme boundary."
   ],
   "rules": [
+    {
+      "id": "popover-density",
+      "level": "must",
+      "statement": "Use the comfortable default for ordinary contextual work and density=compact for concise notification, filter, and utility panels; do not recreate compact rhythm with private selectors."
+    },
     {
       "id": "popover-click-context",
       "level": "must",
@@ -41,6 +46,11 @@
       "statement": "Give the trigger a complete accessible name and include Title or Description when the panel purpose would otherwise be unclear."
     },
     {
+      "id": "popover-surface-integrity",
+      "level": "must",
+      "statement": "Keep Content and Arrow on the finished Popover surface contract so they share background and border paint; do not independently recolor or offset the Arrow."
+    },
+    {
       "id": "popover-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus popover.css."
@@ -53,7 +63,7 @@
     }
   ],
   "validation": [
-    "Check trigger naming, open and close behavior, focus return, Escape and outside dismissal, collision placement, zoom, narrow viewports, and RTL.",
+    "Check trigger naming, open and close behavior, focus return, Escape and outside dismissal, centered and edge collision placement, Arrow attachment at every supported radius, zoom, narrow viewports, and RTL.",
     "Check light and dark appearance on the actual portalled Content and confirm the matching CSS is loaded."
   ],
   "related": [

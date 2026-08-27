@@ -146,7 +146,7 @@ decorative content, but never nested controls.
 - `outline` uses a raised surface and strong complete border.
 - `soft` uses a subtle fill and restrained border.
 - `underline` uses a transparent surface and bottom line.
-- `sm`, `md`, and `lg` use 36px, 44px, and 52px minimum trigger and option-row heights.
+- `sm`, `md`, and `lg` use 36px, 44px, and 52px minimum trigger and option-row heights plus the shared `control-sm`, `control-md`, and `control-lg` typography used by button-like peers.
 - `sharp`, `rounded`, and `pill` change Trigger geometry only.
 
 The popup and options do not change with Trigger variant. Atom's data state

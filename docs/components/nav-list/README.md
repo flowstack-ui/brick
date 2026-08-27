@@ -81,7 +81,7 @@ recipes and aligned Link content.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `soft`, `solid`, `outline` | `soft` |
+| `variant` | `soft`, `solid`, `outline`, `ghost` | `soft` |
 | `tone` | `accent`, `neutral` | `accent` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `orientation` | `vertical`, `horizontal` | `vertical` |
@@ -99,6 +99,16 @@ Link also preserves Atom `href`, `active`, `current`, `disabled`,
 `aria-current`, `render`, and `asChild`. `asChild` delegates all content and
 therefore cannot be combined with the three Brick anatomy props.
 
+### SectionTrigger additions
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `startIcon` | `ReactNode` | none |
+
+The trigger start icon uses the same decorative size and alignment owner as a
+Link start icon. `asChild` delegates the complete trigger anatomy and therefore
+cannot be combined with `startIcon`.
+
 `startIcon` and `endIcon` are decorative and their wrappers are hidden from
 assistive technology. A meaningful count or Badge belongs in `children`; use a
 Brick HStack inside Link to arrange the label and metadata while preserving one
@@ -109,11 +119,16 @@ List preserves `ordered`. Section preserves `collapsible`, `open`,
 `as="h2|h3|h4|h5|h6|div"`. SectionContent preserves `forceMount`. Every part
 preserves native props, class, style, slot, ref, `render`, and `asChild`.
 
+Section labels use the active size recipe and the same logical leading-column
+inset as destination rows. This keeps a static group title aligned with the
+row icons without Block-owned padding or text-transform overrides.
+
 ## Visual recipes and states
 
 The default soft accent recipe gives the current destination a quiet accent
 surface and semibold label. Solid uses a filled current row; outline uses a
-current border. Neutral changes current/open emphasis to the neutral family.
+current border. Ghost keeps the current row transparent while retaining accent
+text and a soft hover cue. Neutral changes current/open emphasis to the neutral family.
 Size coordinates row target, padding, text, icons, descriptions, and group
 indentation.
 
@@ -125,6 +140,8 @@ surface instead of a raised surface that can disappear against a base panel;
 their current-hover paint remains separately visible.
 
 Root emits `data-variant`, `data-tone`, and `data-size` for visual recipes.
+Collapsible SectionContent animates through Atom's measured open/close lifecycle
+and becomes immediate under reduced motion.
 
 ## Tokens and CSS hooks
 
@@ -137,6 +154,11 @@ Part classes are `.brick-nav-list`, `.brick-nav-list__list`,
 Link anatomy adds `__link-start`, `__link-content`, `__link-label`,
 `__link-description`, and `__link-end`.
 
+Start and end icon owners align to the optical center of the first label line.
+This keeps one-line rows centered while descriptions can extend below without
+pulling the icon toward the combined text block's center. Brick resolves the
+unitless typography line-height against `1em` before calculating that offset.
+
 Public variables include `--brick-nav-list-gap`,
 `--brick-nav-list-section-gap`, `--brick-nav-list-item-gap`,
 `--brick-nav-list-content-inset`, `--brick-nav-list-row-min-block-size`,
@@ -146,6 +168,11 @@ Public variables include `--brick-nav-list-gap`,
 link foreground/surface state variables, including the current-hover surface,
 `--brick-nav-list-current-border`, `--brick-nav-list-focus-ring`,
 icon size/gap, description foreground, label typography aliases, and
+`--brick-nav-list-section-label-padding-inline`,
+`--brick-nav-list-section-label-font-size`,
+`--brick-nav-list-section-label-font-weight`,
+`--brick-nav-list-section-label-line-height`,
+`--brick-nav-list-section-label-letter-spacing`, and
 `--brick-nav-list-trigger-indicator-size`.
 
 ## Customization

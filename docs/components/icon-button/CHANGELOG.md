@@ -17,6 +17,8 @@ Icon Button follows the package version of `@flowstack-ui/brick`.
 
 - Disabled Icon Buttons now use the disabled foreground and stronger fading so
   they do not resemble enabled neutral outline actions.
+- Icon Buttons composed as disclosure triggers now retain their pressed recipe
+  while `aria-expanded="true"`.
 - Neutral solid Icon Buttons now use a strong theme-derived neutral surface
   and normal foreground instead of the inverse black/white pair.
 - Icon Button now composes Atom's direct Button root export so it can render

@@ -122,7 +122,33 @@ test("markers stay contained and their track positions remain selectable",async(
     markers.last().evaluate(element=>getComputedStyle(element,"::before").backgroundColor),
   ]);
   expect(selectedPaint).not.toBe(unselectedPaint);
+  const trackCenter=trackBox!.y+trackBox!.height/2;
+  for(const marker of await markers.all()){
+    const dotCenter=await marker.evaluate(element=>{
+      const markerBox=element.getBoundingClientRect();
+      const dot=getComputedStyle(element,"::before");
+      return markerBox.y + Number.parseFloat(dot.top);
+    });
+    expect(dotCenter).toBeCloseTo(trackCenter,0);
+  }
   await page.mouse.click(trackBox!.x+trackBox!.width*0.75,trackBox!.y+trackBox!.height/2);
   await expect(root.getByRole("slider")).toHaveAttribute("aria-valuenow","4");
+});
+test("endpoint thumb targets remain inside the Slider boundary",async({page})=>{
+  const rangeRoot=page.getByTestId("slider-values").locator(".brick-slider").last();
+  const thumbs=rangeRoot.getByRole("slider");
+  await thumbs.first().focus();
+  await thumbs.first().press("Home");
+  await thumbs.last().focus();
+  await thumbs.last().press("End");
+
+  const rootBox=await rangeRoot.boundingBox();
+  const startBox=await thumbs.first().boundingBox();
+  const endBox=await thumbs.last().boundingBox();
+  expect(rootBox).not.toBeNull();
+  expect(startBox).not.toBeNull();
+  expect(endBox).not.toBeNull();
+  expect(startBox!.x).toBeGreaterThanOrEqual(rootBox!.x-1);
+  expect(endBox!.x+endBox!.width).toBeLessThanOrEqual(rootBox!.x+rootBox!.width+1);
 });
 test("mobile containment, target size, and accessibility remain correct",async({page})=>{await page.setViewportSize({width:390,height:844});expect((await page.getByTestId("slider-stress").boundingBox())!.width).toBeLessThanOrEqual(390);const box=await page.getByTestId("slider-overview").getByRole("slider").boundingBox();expect(box!.height).toBeGreaterThanOrEqual(44);expect((await new AxeBuilder({page}).analyze()).violations).toEqual([])});

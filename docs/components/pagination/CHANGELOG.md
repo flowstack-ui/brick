@@ -6,6 +6,8 @@ Pagination follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added `boundaryVariant` so Previous and Next can use an outline recipe while
+  numbered items retain the Root presentation.
 - Added native URL-backed Pagination through Atom `Root.getPageHref`, with
   styled anchor controls, browser navigation semantics, and inert boundary
   links while retaining the existing button-controlled mode.

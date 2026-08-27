@@ -33,6 +33,7 @@ import { SkipLink } from "../../dist/skip-link.js";
 import { Textarea } from "../../dist/textarea.js";
 import { Text } from "../../dist/text.js";
 import { Link } from "../../dist/link.js";
+import { LinkBox } from "../../dist/link-box.js";
 import { List } from "../../dist/list.js";
 import { Table } from "../../dist/table.js";
 import { DataGrid } from "../../dist/data-grid.js";
@@ -782,6 +783,27 @@ test("Link renders deterministic native navigation without a client boundary", (
   assert.match(markup, /aria-current="page"/);
   assert.match(markup, /brick-link__content/);
   assert.doesNotMatch(markup, /role=|tabindex|aria-disabled/i);
+});
+
+test("Link Box renders one native destination inside a neutral server-safe region", () => {
+  const markup = renderToString(
+    React.createElement(
+      LinkBox.Root,
+      { as: "article" },
+      React.createElement(LinkBox.Link, { href: "/products/stride" }, "Stride"),
+      React.createElement(
+        LinkBox.Action,
+        null,
+        React.createElement("button", { type: "button" }, "Save"),
+      ),
+    ),
+  );
+
+  assert.match(markup, /^<article/);
+  assert.match(markup, /class="brick-link-box"/);
+  assert.match(markup, /<a[^>]*brick-link-box__link[^>]*href="\/products\/stride"/);
+  assert.match(markup, /class="brick-link-box__action"/);
+  assert.doesNotMatch(markup, /<article[^>]*(role|tabindex)=/i);
 });
 
 test("Stack family renders deterministic semantic layout without behavior", () => {

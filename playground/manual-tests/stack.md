@@ -62,7 +62,9 @@ switch light/dark, and compare the customization code with its preview.
 Expected: Hosts match their labels; the list contains list items and navigation
 is named. Output keeps authored order and shows no invented role. Ref reports
 `SECTION`. Appearance does not alter layout. Customized gap, border, and
-padding exactly match the shown code.
+padding exactly match the shown code. A Button composed through
+`Stack.Item asChild` retains the same height as the corresponding standalone
+Button size recipe.
 
 Result:
 Notes or issue:

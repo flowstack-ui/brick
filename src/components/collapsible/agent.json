@@ -21,7 +21,8 @@
   ],
   "composition": [
     "Compose Root with one Trigger and one Content; put ContentInner inside Content so visible padding does not corrupt measured animation geometry.",
-    "Use Indicator inside Trigger for the canonical decorative state cue; the default points down while closed and up while open, and normal Brick layout and content components belong inside ContentInner."
+    "Use Indicator inside Trigger for the canonical decorative state cue; the default points down while closed and up while open, and normal Brick layout and content components belong inside ContentInner.",
+    "Use Trigger iconOnly for a square, centered disclosure control; give it a complete accessible name and let the Root size own its target."
   ],
   "rules": [
     {
@@ -53,12 +54,21 @@
       "id": "collapsible-indicator-direction",
       "level": "must",
       "statement": "Keep the default Indicator pointing down while closed and up while open in both LTR and RTL; use custom decorative artwork only for a deliberate alternate state language."
+    },
+    {
+      "id": "collapsible-icon-only",
+      "level": "must",
+      "statement": "Use Trigger iconOnly instead of sizing a general Trigger with layout wrappers when the disclosure control contains only artwork."
     }
   ],
   "commonMistakes": [
     {
       "mistake": "Using Collapsible Trigger asChild around a finished Button or Icon Button.",
       "correction": "Use Trigger as the only visual control owner and author its label, icon, and optional Indicator directly."
+    },
+    {
+      "mistake": "Forcing a normal Trigger into a square with Frame or local alignment CSS.",
+      "correction": "Use Trigger iconOnly so its Root size supplies square geometry and centered artwork."
     },
     {
       "mistake": "Putting padding on Content or animating an application wrapper independently.",
@@ -70,7 +80,7 @@
     }
   ],
   "validation": [
-    "Test the accessible Trigger name, aria-expanded/aria-controls relationship, Enter and Space, controlled and uncontrolled state, disabled behavior, focus retention, and the default down/up Indicator state.",
+    "Test the accessible Trigger name, aria-expanded/aria-controls relationship, Enter and Space, controlled and uncontrolled state, disabled behavior, focus retention, the default down/up Indicator state, and icon-only centering.",
     "Test open/close measurement, dynamic content, reduced motion, long labels, narrow widths, RTL, and horizontal overflow.",
     "When adapting Collapsible inside another surface, report any Root geometry override instead of silently treating plain as a behavior-only recipe."
   ],

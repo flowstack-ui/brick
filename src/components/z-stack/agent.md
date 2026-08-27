@@ -16,6 +16,7 @@ Overlap authored children in one depth-aware layout while preserving source, rea
 ## Required composition
 
 - Place natural-size layers directly in ZStack.Root and use ZStack.Item only when one layer needs its own nine-position alignment.
+- For a corner action over media, use ZStack.Root isolation="open" and ZStack.Item layer="action" with edgeSpacing instead of recreating stacking, z-index, and inset margins in local CSS.
 
 ## Rules
 
@@ -23,12 +24,15 @@ Overlap authored children in one depth-aware layout while preserving source, rea
 - **MUST:** Keep media before its overlay in source; ZStack preserves that order even when the media establishes a positioned layer.
 - **MUST:** Keep decorative layers from intercepting input intended for interactive content.
 - **MUST:** Use responsive logical alignment only to move the same authored layer; never change source order, depth order, or focus order at a breakpoint.
+- **MUST:** Use the closed content and action layers only for authored overlay participation; do not invent arbitrary z-index values or use layer to reorder meaning.
+- **MUST:** Use edgeSpacing for a positioned layer that needs theme-space inset from its aligned edges; it supports the same responsive spacing vocabulary as Stack.
 - **MUST:** Load styles.css or core.css plus z-stack.css.
 
 ## Common mistakes
 
 - **Avoid:** Replacing ordinary linear layout with overlap. **Instead:** Use Stack or Grid unless layers intentionally share space.
 - **Avoid:** Rebuilding Surface media anatomy. **Instead:** Prefer Surface for standard media-backed content.
+- **Avoid:** Adding inline isolation, z-index, or margin styles to make an overlay action clickable and inset. **Instead:** Use isolation="open", layer="action", and edgeSpacing on ZStack's public composition API.
 
 ## Validation checklist
 

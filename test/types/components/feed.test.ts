@@ -2,6 +2,7 @@ import { createElement, createRef } from "react";
 import {
   Feed,
   type FeedDensity,
+  type FeedDividerStrength,
   type FeedItemProps,
   type FeedRootProps,
   type FeedVariant,
@@ -12,12 +13,14 @@ const rootRef = createRef<HTMLElement>();
 const itemRef = createRef<HTMLElement>();
 const variants: FeedVariant[] = ["plain", "divided", "outline"];
 const densities: FeedDensity[] = ["compact", "comfortable"];
+const dividerStrengths: FeedDividerStrength[] = ["subtle", "default"];
 const rootProps: FeedRootProps = {
   "aria-label": "Activity",
   busy: true,
   children: null,
   className: "consumer-feed",
   density: "compact",
+  dividerStrength: "default",
   onKeyDown: (event) => event.preventDefault(),
   setSize: "unknown",
   style: { maxWidth: 640 },
@@ -38,11 +41,14 @@ createElement(Feed.Root, { ...rootProps, ref: rootRef }, createElement(Feed.Item
 void RootFeed;
 void variants;
 void densities;
+void dividerStrengths;
 
 // @ts-expect-error Feed variants are closed.
 const invalidVariant: FeedVariant = "cards";
 // @ts-expect-error Feed density is closed.
 const invalidDensity: FeedDensity = "spacious";
+// @ts-expect-error Feed divider strength is closed.
+const invalidDividerStrength: FeedDividerStrength = "strong";
 // @ts-expect-error Atom owns aria-busy through busy.
 const invalidBusy: FeedRootProps = { "aria-busy": true, children: null };
 // @ts-expect-error Atom owns position metadata through position/index.
@@ -53,6 +59,7 @@ const invalidLoading: FeedRootProps = { children: null, loading: true };
 const invalidItems: FeedRootProps = { children: null, items: [] };
 void invalidVariant;
 void invalidDensity;
+void invalidDividerStrength;
 void invalidBusy;
 void invalidPosition;
 void invalidLoading;

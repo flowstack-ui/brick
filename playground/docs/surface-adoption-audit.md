@@ -57,6 +57,7 @@ different owner.
 | App Bar | overview, specimen-grid shell/cells, appearance panels, customization shell/preview, stress panel, generic surface stage | App Bar roots; position containing block; position markers; phone frame; code block |
 | Text | overview, grid shell/cells, appearance scopes, customization shell/preview, stress panel | typography constraint/overflow evidence; native ref target; code block |
 | Stack | overview, grid shell/cells, appearance scopes, customization shell/preview, stress panel | demo items, wrapping/containment constraints, Stack geometry; code block |
+| Group | overview, comparison cells, appearance scopes, customization shell, and stress panels | Group attachment geometry, shared control borders, and focus-state evidence |
 | Grid | frame shells and customization shell where wrapping does not alter the grid being measured | grid cells, tracks, spans, placement markers, narrow/vertical geometry, code block |
 | Container | generic appearance/customization stage only when Container remains the measured child | measure boundaries, dashed width guides, nesting, full-bleed, vertical-writing geometry |
 | Section | contained paint examples where Surface remains the visual owner | page-region rhythm, semantic region choice, logical start/end spacing, and wrapper-free Surface composition |
@@ -69,6 +70,7 @@ different owner.
 | Code | generic overview/cell/appearance/customization stages | Code recipes, inline wrapping, native output, and technical literal paint |
 | Code Block | generic outer evidence cells and appearance stages | Code Block recipes, technical surface paint, overflow, selection, and source anatomy |
 | List | overview, specimen cells, appearance scopes, customization shell, and stress panel | List markers, dividers, borders, anatomy, nesting, and exact output |
+| Data List | overview, comparison cells, appearance scopes, customization shell, and stress panels | Data List label/value semantics, orientation, dividers, and logical label-measure evidence |
 | Table | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Table boundaries, section paint, sticky/overflow geometry, and rendered native output |
 | Data Grid | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Data Grid boundaries, active/selection state paint, cell navigation geometry, and explicit overflow containment |
 | Tree Grid | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Tree Grid boundaries, hierarchy and active/selection state paint, cell geometry, rounded clipping, and explicit overflow containment |
@@ -81,6 +83,7 @@ different owner.
 | Reorderable List | overview, variant and size cells, appearance scopes, customization shell, and stress panels | Reorderable List item recipes, drag target paint, drop indicators, orientation, and movement geometry |
 | Carousel | slide content and dark appearance scope | Carousel viewport, controls, picker state, snap geometry, and overflow behavior |
 | Link | overview, specimen-grid cells, appearance scopes, customization shell/preview, stress panel | Link recipes, inline wrapping, composition output, and code block |
+| Link Box | overview, comparison cells, and stress stages | Link Box target geometry, whole-region hover/focus paint, independent-action layering, and the Card surfaces used as its content |
 | Nav List | overview, specimen cells, appearance scopes, customization shell, and stress panel | Nav List rows, current-state recipes, disclosure anatomy, and composition output |
 | Sidebar | route evidence stages and customization shell | Sidebar Panel paint, state geometry, and desktop shell ownership |
 | Breadcrumb | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, and stress panel | Breadcrumb trail recipes, wrapping, separators, current-page semantics, collapse composition, and exact output |
@@ -91,10 +94,12 @@ different owner.
 | Alert Dialog | overview/action/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Alert Dialog and overlay roots; decision/action evidence; portal stages; code block |
 | Drawer | overview/action/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Drawer and overlay roots; static branch reconstruction; edge/positioning stages; code block |
 | Badge | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Badge recipes and inline-flow geometry; code block |
+| Status | overview, comparison cells, appearance scopes, customization shell, and stress panels | Status indicator/label recipes, passive semantics, tones, and exact output |
 | Notification Badge | overview/semantics/stress panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Notification Badge anchor, overlap, placement, and owning-control paint; code block |
 | Avatar | overview/control/image-state/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Avatar image/fallback/status paint and media crop diagnostics; code block |
 | Toggle | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Toggle recipes and selected-state customization; code block |
 | Toggle Group | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Toggle Group recipes, attachment geometry, and selected-state customization; code block |
+| Segment Group | overview, size/layout cells, appearance scopes, customization shell/preview, and stress panel | Segment Group root/item/indicator recipes, measured selection geometry, and radio-state evidence; code block |
 | Tooltip | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Tooltip content/arrow roots and portal positioning; code block |
 | Hover Card | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Hover Card content/arrow roots, genuine-link preview positioning, document/profile internals; code block |
 | Popover | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Popover content/arrow roots, anchor marker and positioning, Input/Field anatomy; code block |

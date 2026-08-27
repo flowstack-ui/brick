@@ -141,7 +141,9 @@ desktop row. `align` overrides the parent's cross-axis alignment.
 Use the default Item wrapper when proportional siblings need equal outer
 tracks despite different child padding or borders. Use `asChild` when the
 existing child itself should be the flex item and its own box geometry is an
-intentional part of allocation.
+intentional part of allocation. In `asChild` composition, Stack preserves the
+child component's declared minimum block size, so controls such as Button do
+not become shorter merely because they participate in a Stack flex recipe.
 
 ## Tokens and CSS hooks
 

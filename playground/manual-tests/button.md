@@ -88,8 +88,9 @@ activation.
 
 Expected: Icons are decorative unless their surrounding content supplies the
 meaning. Disabled cannot activate, preserves the default medium geometry, and
-uses a faded disabled foreground with a subtle boundary rather than resembling
-an enabled neutral outline.
+uses the readable disabled foreground with a subtle boundary rather than
+resembling an enabled neutral outline. Outline and ghost specimens retain a
+transparent surface rather than adding a disabled fill.
 Loading remains focusable, preserves its accessible name and dimensions, blocks
 repeat activation, and shows one centered spinner. Combined disabled and
 loading presentation remains visibly unavailable without shifting geometry.

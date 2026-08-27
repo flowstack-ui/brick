@@ -90,6 +90,8 @@
     touch-action: manipulation;
   }
 
+  .brick-tabs-list[data-trigger-radius="none"] > .brick-tabs-trigger { border-radius: 0; }
+
   .brick-tabs-trigger:hover:not(:disabled) { background: var(--brick-tabs-hover-background); color: var(--brick-color-text-primary); }
   .brick-tabs-trigger[data-state="active"] { color: var(--brick-tabs-selected-foreground); }
   .brick-tabs-trigger:focus-visible, .brick-tabs-content:focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-tabs-focus-ring); outline-offset: var(--brick-border-focus-offset); }
@@ -108,6 +110,7 @@
   .brick-tabs:not([data-variant="line"]) .brick-tabs-indicator { display: none; }
 
   .brick-tabs[data-variant="line"] .brick-tabs-trigger[data-state="active"] { border-block-end-color: var(--brick-tabs-indicator-color); }
+  .brick-tabs[data-variant="line"] { --brick-tabs-selected-foreground: var(--brick-color-text-primary); }
   .brick-tabs[data-variant="line"] .brick-tabs-list[data-orientation="vertical"] .brick-tabs-trigger[data-state="active"] { border-block-end-color: transparent; border-inline-end-color: var(--brick-tabs-indicator-color); }
 
   .brick-tabs[data-variant="solid"] { --brick-tabs-list-background: var(--brick-color-surface-subtle); --brick-tabs-selected-background: var(--brick-color-surface-raised); }
@@ -115,8 +118,7 @@
   .brick-tabs:is([data-variant="solid"], [data-variant="soft"]) .brick-tabs-list { padding: var(--brick-tabs-list-padding); border: 0; border-radius: var(--brick-tabs-radius); }
   .brick-tabs:is([data-variant="solid"], [data-variant="soft"]) .brick-tabs-trigger { border-radius: calc(var(--brick-tabs-radius) - var(--brick-space-1)); }
   .brick-tabs:is([data-variant="solid"], [data-variant="soft"]) > .brick-tabs-list[data-radius="none"] { border-radius: 0; }
-  .brick-tabs:is([data-variant="solid"], [data-variant="soft"]) > .brick-tabs-list[data-radius="none"]:not([data-trigger-radius="default"]) > .brick-tabs-trigger,
-  .brick-tabs:is([data-variant="solid"], [data-variant="soft"]) > .brick-tabs-list[data-trigger-radius="none"] > .brick-tabs-trigger { border-radius: 0; }
+  .brick-tabs:is([data-variant="solid"], [data-variant="soft"]) > .brick-tabs-list[data-radius="none"]:not([data-trigger-radius="default"]) > .brick-tabs-trigger { border-radius: 0; }
   .brick-tabs:is([data-variant="solid"], [data-variant="soft"]) > .brick-tabs-list[data-trigger-radius="default"] > .brick-tabs-trigger { border-radius: calc(var(--brick-tabs-radius) - var(--brick-space-1)); }
   .brick-tabs:is([data-variant="solid"], [data-variant="soft"]) .brick-tabs-trigger[data-state="active"] { background: var(--brick-tabs-selected-background); box-shadow: var(--brick-shadow-sm); }
 

@@ -67,6 +67,26 @@
     --brick-avatar-fallback-font-size: 1.25rem;
   }
 
+  .brick-avatar[data-size="2xl"] {
+    --brick-avatar-size: 5rem;
+    --brick-avatar-fallback-font-size: 1.5rem;
+  }
+
+  .brick-avatar[data-size="3xl"] {
+    --brick-avatar-size: 6rem;
+    --brick-avatar-fallback-font-size: 1.75rem;
+  }
+
+  .brick-avatar[data-size="4xl"] {
+    --brick-avatar-size: 7rem;
+    --brick-avatar-fallback-font-size: 2rem;
+  }
+
+  .brick-avatar[data-size="5xl"] {
+    --brick-avatar-size: 8rem;
+    --brick-avatar-fallback-font-size: 2.25rem;
+  }
+
   .brick-avatar[data-status="online"] {
     --brick-avatar-status-ring-color: var(--brick-color-success-solid);
   }

@@ -12,6 +12,8 @@
     --brick-pagination-control-foreground: var(--brick-color-text-secondary);
     --brick-pagination-control-background: transparent;
     --brick-pagination-control-border-color: transparent;
+    --brick-pagination-boundary-background: var(--brick-pagination-control-background);
+    --brick-pagination-boundary-border-color: var(--brick-pagination-control-border-color);
     --brick-pagination-control-hover-background: var(--brick-color-surface-subtle);
     --brick-pagination-control-pressed-background: var(--brick-color-border-subtle);
     --brick-pagination-current-background: var(--brick-color-accent-solid);
@@ -48,6 +50,11 @@
     --brick-pagination-root-background: var(--brick-color-surface-base);
     --brick-pagination-root-padding: var(--brick-space-1);
     border-color: var(--brick-pagination-root-border-color);
+  }
+
+  .brick-pagination[data-boundary-variant="outline"] {
+    --brick-pagination-boundary-background: var(--brick-color-surface-base);
+    --brick-pagination-boundary-border-color: var(--brick-color-border-subtle);
   }
 
   .brick-pagination[data-size="sm"] {
@@ -121,6 +128,12 @@
     text-decoration: none;
     touch-action: manipulation;
     transition: color var(--brick-pagination-transition-duration), background-color var(--brick-pagination-transition-duration), border-color var(--brick-pagination-transition-duration);
+  }
+
+  .brick-pagination__previous,
+  .brick-pagination__next {
+    border-color: var(--brick-pagination-boundary-border-color);
+    background: var(--brick-pagination-boundary-background);
   }
 
   .brick-pagination__previous:hover:not(:disabled):not([aria-disabled="true"]),

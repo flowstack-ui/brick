@@ -63,11 +63,16 @@
   .brick-card-header {
     display: grid;
     min-inline-size: 0;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
     grid-auto-flow: row;
-    gap: var(--brick-space-1) var(--brick-space-3);
+    row-gap: var(--brick-space-1);
     align-items: start;
     padding: var(--brick-card-space);
+  }
+
+  .brick-card-header:has(> .brick-card-action) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--brick-space-3);
   }
 
   .brick-card-title,

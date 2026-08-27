@@ -116,6 +116,19 @@ describe("Collapsible", () => {
     expect(screen.getByTestId("indicator").querySelector("svg")).toBeNull();
   });
 
+  it("supports an icon-only trigger without leaking the recipe prop", () => {
+    render(
+      <Collapsible.Root size="sm">
+        <Collapsible.Trigger aria-label="Open navigation" iconOnly>
+          <svg aria-hidden="true" viewBox="0 0 16 16" />
+        </Collapsible.Trigger>
+      </Collapsible.Root>,
+    );
+    const trigger = screen.getByRole("button", { name: "Open navigation" });
+    expect(trigger).toHaveAttribute("data-icon-only", "");
+    expect(trigger).not.toHaveAttribute("iconOnly");
+  });
+
   it("merges classes, styles, slots, native props, and refs on every part", () => {
     const rootRef = createRef<HTMLDivElement>();
     const triggerRef = createRef<HTMLButtonElement>();

@@ -17,6 +17,7 @@ Reveal one independent in-flow region while Atom owns disclosure state, relation
 
 - Compose Root with one Trigger and one Content; put ContentInner inside Content so visible padding does not corrupt measured animation geometry.
 - Use Indicator inside Trigger for the canonical decorative state cue; the default points down while closed and up while open, and normal Brick layout and content components belong inside ContentInner.
+- Use Trigger iconOnly for a square, centered disclosure control; give it a complete accessible name and let the Root size own its target.
 
 ## Rules
 
@@ -26,16 +27,18 @@ Reveal one independent in-flow region while Atom owns disclosure state, relation
 - **MUST:** Use Collapsible for in-flow disclosure, not as a substitute for modal Drawer behavior or responsive Show/Hide policy.
 - **MUST:** Load styles.css or core.css plus collapsible.css.
 - **MUST:** Keep the default Indicator pointing down while closed and up while open in both LTR and RTL; use custom decorative artwork only for a deliberate alternate state language.
+- **MUST:** Use Trigger iconOnly instead of sizing a general Trigger with layout wrappers when the disclosure control contains only artwork.
 
 ## Common mistakes
 
 - **Avoid:** Using Collapsible Trigger asChild around a finished Button or Icon Button. **Instead:** Use Trigger as the only visual control owner and author its label, icon, and optional Indicator directly.
+- **Avoid:** Forcing a normal Trigger into a square with Frame or local alignment CSS. **Instead:** Use Trigger iconOnly so its Root size supplies square geometry and centered artwork.
 - **Avoid:** Putting padding on Content or animating an application wrapper independently. **Instead:** Keep Content as the measured motion boundary and put visible spacing in ContentInner.
 - **Avoid:** Choosing Collapsible when the page must be inert behind the open panel. **Instead:** Use Drawer or Dialog so Atom can own modal isolation, focus, dismissal, and scroll locking.
 
 ## Validation checklist
 
-- Test the accessible Trigger name, aria-expanded/aria-controls relationship, Enter and Space, controlled and uncontrolled state, disabled behavior, focus retention, and the default down/up Indicator state.
+- Test the accessible Trigger name, aria-expanded/aria-controls relationship, Enter and Space, controlled and uncontrolled state, disabled behavior, focus retention, the default down/up Indicator state, and icon-only centering.
 - Test open/close measurement, dynamic content, reduced motion, long labels, narrow widths, RTL, and horizontal overflow.
 - When adapting Collapsible inside another surface, report any Root geometry override instead of silently treating plain as a behavior-only recipe.
 

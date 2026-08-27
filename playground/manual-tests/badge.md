@@ -27,7 +27,9 @@ Action: Inspect `01 Overview`; compare all specimens in `02 Variants`,
 
 Expected: The default passive Badge remains soft neutral, small, and rounded.
 Each comparison changes only its named visual dimension. Text stays centered,
-readable, and vertically balanced without implying a control.
+readable, and vertically balanced without implying a control. The xl circle
+specimen forms a balanced passive icon well without implying IconButton
+behavior.
 
 Result:
 Notes or issue:

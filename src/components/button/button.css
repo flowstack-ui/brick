@@ -79,11 +79,24 @@
   }
 
   .brick-button[data-disabled] {
-    border-color: var(--brick-color-border-subtle);
-    background: var(--brick-color-surface-subtle);
     color: var(--brick-color-text-disabled);
     cursor: not-allowed;
-    opacity: 0.55;
+    opacity: 1;
+  }
+
+  .brick-button[data-disabled]:is([data-variant="solid"], [data-variant="soft"]) {
+    border-color: var(--brick-color-border-subtle);
+    background: var(--brick-color-surface-subtle);
+  }
+
+  .brick-button[data-disabled][data-variant="outline"] {
+    border-color: var(--brick-color-border-subtle);
+    background: transparent;
+  }
+
+  .brick-button[data-disabled][data-variant="ghost"] {
+    border-color: transparent;
+    background: transparent;
   }
 
   .brick-button[data-loading] {

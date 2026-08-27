@@ -25,6 +25,7 @@ Present one compact, accessible choice from a predefined list while Atom owns se
 - **MUST:** Use Select only for one value from a predefined select-only collection; keep actions, destinations, editable filtering, and multiple selection in their owning components.
 - **MUST:** Wrap every option's primary visible and accessible label in Select.ItemText and keep interactive descendants out of options.
 - **MUST:** Keep translation loading, locale detection, persistence, URL changes, analytics, and other effects in the application callback rather than inside Select.
+- **MUST:** Use the same named size as adjacent Button, Toggle, ToggleGroup, or other button-like controls; Select Trigger consumes shared control typography and 36/44/52px geometry rather than editable-field typography.
 - **MUST:** Load styles.css or core.css plus select.css.
 
 ## Common mistakes
@@ -39,6 +40,7 @@ Present one compact, accessible choice from a predefined list while Atom owns se
 - Test keyboard opening, typeahead, selection, Escape dismissal, focus return, and disabled-option skipping.
 - Confirm a controlled onValueChange reports the selected value once without embedding application side effects in the component.
 - Check long localized option labels, narrow viewports, zoom, RTL, dark appearance, and forced colors.
+- Compare Trigger height, typography, icon scale, radius, and baseline with adjacent button-like controls at the same size.
 
 ## Related guidance
 

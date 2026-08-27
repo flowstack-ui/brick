@@ -29,7 +29,10 @@ Notes or issue:
 
 ## Step 2 — Composition and source order
 
-Review scenario 03 and inspect the composed label. Confirm it is the direct root child, receives ZStack.Item hooks, and has no additional wrapper.
+Review scenario 03 and inspect the composed action. Confirm it is the direct
+root child, receives ZStack.Item hooks, has no additional wrapper, remains
+inset from the logical edges, and participates above ancestor content without
+consumer positioning CSS.
 
 Result:
 Notes or issue:

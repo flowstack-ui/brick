@@ -111,6 +111,17 @@
   .brick-collapsible-trigger:focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-collapsible-focus-ring); outline-offset: var(--brick-border-focus-offset); }
   .brick-collapsible-trigger:is(:disabled, [data-disabled]) { opacity: 0.55; cursor: not-allowed; }
 
+  .brick-collapsible-trigger[data-icon-only] {
+    inline-size: var(--brick-collapsible-trigger-height);
+    min-inline-size: var(--brick-collapsible-trigger-height);
+    block-size: var(--brick-collapsible-trigger-height);
+    min-block-size: var(--brick-collapsible-trigger-height);
+    flex: 0 0 var(--brick-collapsible-trigger-height);
+    justify-content: center;
+    padding: 0;
+    text-align: center;
+  }
+
   .brick-collapsible-indicator {
     display: inline-flex;
     inline-size: var(--brick-collapsible-indicator-size);

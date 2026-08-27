@@ -246,6 +246,8 @@ describe("Stack", () => {
     expect(content).toHaveAttribute("data-flex", "content");
     expect(content).toHaveAttribute("data-flex-lg", "2");
     expect(content).toHaveAttribute("data-align-lg", "end");
+    expect(content).toHaveAttribute("data-stack-item-composed", "");
     expect(content).toHaveAttribute("data-slot", "stack-item");
+    expect(screen.getByTestId("fixed")).not.toHaveAttribute("data-stack-item-composed");
   });
 });

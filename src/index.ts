@@ -152,6 +152,16 @@ export {
   type AvatarStatus,
 } from "./components/avatar/index.js";
 export {
+  Status,
+  StatusIndicator,
+  StatusLabel,
+  StatusRoot,
+  type StatusPartProps,
+  type StatusRootProps,
+  type StatusSize,
+  type StatusTone,
+} from "./components/status/index.js";
+export {
   Toggle,
   type ToggleProps,
   type ToggleShape,
@@ -208,6 +218,7 @@ export {
   type PopoverBodyProps,
   type PopoverCloseProps,
   type PopoverContentProps,
+  type PopoverDensity,
   type PopoverDescriptionProps,
   type PopoverFooterProps,
   type PopoverHeaderProps,
@@ -256,6 +267,18 @@ export {
   type RadioGroupRootProps,
   type RadioGroupSize,
 } from "./components/radio-group/index.js";
+export {
+  SegmentGroup,
+  SegmentGroupIndicator,
+  SegmentGroupItem,
+  SegmentGroupItemText,
+  SegmentGroupRoot,
+  type SegmentGroupIndicatorProps,
+  type SegmentGroupItemProps,
+  type SegmentGroupItemTextProps,
+  type SegmentGroupRootProps,
+  type SegmentGroupSize,
+} from "./components/segment-group/index.js";
 export {
   Tabs,
   TabsContent,
@@ -436,6 +459,16 @@ export {
   type LinkVariant,
 } from "./components/link/index.js";
 export {
+  LinkBox,
+  LinkBoxAction,
+  LinkBoxLink,
+  LinkBoxRoot,
+  type LinkBoxActionProps,
+  type LinkBoxLinkProps,
+  type LinkBoxRootElement,
+  type LinkBoxRootProps,
+} from "./components/link-box/index.js";
+export {
   List,
   type ListContentProps,
   type ListDensity,
@@ -491,6 +524,26 @@ export {
   type VStackProps,
 } from "./components/stack/index.js";
 export type { SpacingValue } from "./components/_spacing-value/SpacingValue.js";
+export {
+  Group,
+  type GroupElement,
+  type GroupOrientation,
+  type GroupProps,
+} from "./components/group/index.js";
+export {
+  DataList,
+  DataListItem,
+  DataListLabel,
+  DataListRoot,
+  DataListValue,
+  type DataListItemProps,
+  type DataListLabelProps,
+  type DataListLabelWidth,
+  type DataListOrientation,
+  type DataListRootProps,
+  type DataListSize,
+  type DataListValueProps,
+} from "./components/data-list/index.js";
 export {
   ZStack,
   ZStackItem,
@@ -793,6 +846,7 @@ export {
 export {
   Feed,
   type FeedDensity,
+  type FeedDividerStrength,
   type FeedItemProps,
   type FeedRootProps,
   type FeedVariant,

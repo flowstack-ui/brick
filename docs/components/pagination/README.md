@@ -52,7 +52,7 @@ The frozen namespace contains `Root`, `List`, `Previous`, `Items`, `Item`, `Elli
 `PaginationItems`, `PaginationItem`, `PaginationEllipsis`, `PaginationNext`,
 `PaginationRootProps`, `PaginationListProps`, `PaginationPreviousProps`,
 `PaginationItemsProps`, `PaginationItemProps`, `PaginationEllipsisProps`,
-`PaginationNextProps`, `PaginationVariant`, and `PaginationSize` are available
+`PaginationNextProps`, `PaginationVariant`, `PaginationBoundaryVariant`, and `PaginationSize` are available
 from root and subpath imports.
 
 ### Root recipes
@@ -60,9 +60,14 @@ from root and subpath imports.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `plain`, `soft`, `outline` | `plain` |
+| `boundaryVariant` | `plain`, `outline` | `plain` |
 | `size` | `sm`, `md`, `lg` | `md` |
 
 Root preserves Atom's `totalPages`, controlled `page`, `defaultPage`, `onPageChange`, `siblingCount`, `boundaryCount`, `disabled`, `previousAriaLabel`, `nextAriaLabel`, `getItemAriaLabel`, and `getPageHref`. Previous and Next use logical chevrons when children are omitted. Authored children replace that visible content.
+
+`boundaryVariant="outline"` gives only Previous and Next a bounded control
+treatment while generated page numbers retain the Root recipe. Use it instead
+of styling the two boundary parts independently.
 
 `getPageHref` receives `page`, `currentPage`, `totalPages`, and `isCurrent`.
 When present, the application route owns the current page and activation does

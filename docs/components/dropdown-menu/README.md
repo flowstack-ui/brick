@@ -62,6 +62,10 @@ Action-like rows accept the `neutral` or `danger` tone when exposed; `neutral` i
 
 The overlay uses a raised surface, 32/44/48px `sm`/`md`/`lg` minimum rows, accent highlighting, visible disabled and danger states, selection indicators, and collision-aware nested content.
 
+`Leading` owns the density-aware icon slot. A direct Brick `Icon`, SVG, or
+image is centered and normalized to that slot, so consumers choose artwork
+and tone without manually sizing it for each menu density.
+
 ## Tokens and CSS hooks
 
 Public variables use the `--brick-dropdown-menu-*` namespace for content surface, row geometry, supporting text, disabled and danger states, separators, indicators, focus, and motion.
@@ -90,6 +94,8 @@ Name icon-only triggers and label every command or destination clearly. Preserve
 ## Composition, native props, and refs
 
 Root provides size context. Interactive and structural parts preserve Atom native props, refs, custom slots, `render`, and `asChild` where supported. Static content parts also support `render` and `asChild`.
+
+For a destination row, compose `Item asChild` around a real Brick `Link`. Brick preserves the menu-row grid across that composition, including `Leading`, `ItemLabel`, `Description`, and `Shortcut`; command rows remain `Item` elements with `onSelect`.
 
 ## Examples
 

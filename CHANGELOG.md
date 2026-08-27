@@ -4,6 +4,28 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Added
+
+- Added Agent Knowledge for Feed, Skeleton, and Visually Hidden, including
+  passive notification-stream, busy-region, and equivalent hidden-text
+  boundaries qualified by the Application notification-tray batch.
+- Added public `DataList` term/value composition and passive `Status` dot-plus-label presentation.
+
+- Added NavList's transparent current-row `ghost` recipe, aligned
+  SectionTrigger start icons, and measured disclosure motion backed by Atom's
+  section-content lifecycle.
+- Aligned NavList section labels to the destination leading column with the
+  active size recipe, removing compact uppercase drift from grouped sidebars.
+- Corrected NavList start/end icon first-line centering with broadly supported
+  CSS math so icon and label centers no longer drift in ordinary one-line rows.
+- Made outline Input use a truly transparent resting and hover surface while
+  preserving Soft as the filled input recipe.
+- Added `SegmentGroup`, an Atom Radio Group-backed compact one-of-many control
+  with three shared sizes and a measured moving indicator.
+- Made outline Toggle and ToggleGroup selection use the true accent border while
+  keeping primary text neutral, and strengthened Slider marker visibility across
+  light and dark appearances.
+
 - Added one shared Stack and Grid spacing grammar: numeric base-unit factors,
   explicit CSS values, responsive mixtures, and backward-compatible legacy
   string tokens.
@@ -19,6 +41,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 - Added native URL-backed Pagination controls through `Root.getPageHref`,
   preserving browser navigation and disabled-boundary semantics without
   changing the existing controlled button mode.
+- Added Pagination `boundaryVariant="outline"` so Previous and Next can share
+  Brick-owned outlined paint without consumer border overrides.
 - Prevented Pagination's inline overflow owner from clipping control focus
   outlines by reserving the full outline width and offset.
 - Kept the current Pagination destination on the accent-solid hover and press
@@ -32,7 +56,14 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   Text's one-element implementation and keep heading level independent from
   typography variant.
 
-### Added
+- Added `Group` as a role-free inline layout primitive with horizontal and
+  vertical attachment, tokenized spacing, equal growth, logical outside
+  corners, shared interior borders, and contained focus/hover stacking.
+- Added `LinkBox` for one native destination expanded across a containing
+  region, with whole-region hover and focus treatment plus independently
+  layered secondary controls.
+- Expanded ZStack with closed isolation, named overlay layers, and responsive
+  edge spacing for independent actions over expanded destination cards.
 
 - Added Table Agent Knowledge for native comparison semantics, explicit
   overflow containment, responsive relationship preservation, and the strict
@@ -58,6 +89,13 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Changed
 
+- Made Skeleton default and highlight paint contextual semantic tints so
+  placeholders remain visible on dark overlay surfaces.
+- Aligned Select and MultiSelect with Button, Toggle, ToggleGroup, and Tabs by
+  shared named-size control typography and 36/44/52px geometry, while keeping
+  editable Input, Textarea, and Combobox text on the mobile-safe 16px floor.
+- Kept selected line-tab labels and icons on primary text so the active edge
+  owns accent paint and authored metadata can opt into accent independently.
 - Normalized Grid and Stack root margins and semantic `ul`/`ol` padding and
   markers so supported list hosts preserve the same authored alignment as
   their default neutral hosts.
@@ -79,6 +117,12 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Fixed
 
+- Kept complete Slider Thumb targets and focus treatment inside the component
+  boundary at minimum and maximum values, including clipped disclosure
+  compositions.
+- Removed Card Header's empty trailing-column gap when no `Card.Action` is
+  authored, so title-only Stack metadata and full-width descriptions receive
+  the complete content measure.
 - Moved Code Block's historical WebKit text-size-adjustment declaration to
   target-driven CSS compilation while retaining the standard authored source.
 - Preserved Accordion and Collapsible focus rings across ordinary and
@@ -93,6 +137,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   another positioned layer precedes a later authored overlay.
 - Gave neutral solid Toolbar ToggleItems a component-specific layered surface
   recipe and clarified disabled paint across interactive controls.
+- Kept disabled Button labels at full component opacity while relying on the
+  semantic disabled foreground; outline and ghost disabled surfaces remain
+  transparent.
 - Corrected neutral solid recipes across Button, IconButton, Badge, Toggle,
   ToggleGroup, and Toolbar ToggleItems so they use theme-derived neutral
   surfaces rather than appearance-inverting black/white fills.

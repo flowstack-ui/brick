@@ -91,6 +91,10 @@
       "types": "./dist/avatar.d.ts",
       "default": "./dist/avatar.js"
     },
+    "./status": {
+      "types": "./dist/status.d.ts",
+      "default": "./dist/status.js"
+    },
     "./toggle": {
       "types": "./dist/toggle.d.ts",
       "default": "./dist/toggle.js"
@@ -134,6 +138,10 @@
     "./radio-group": {
       "types": "./dist/radio-group.d.ts",
       "default": "./dist/radio-group.js"
+    },
+    "./segment-group": {
+      "types": "./dist/segment-group.d.ts",
+      "default": "./dist/segment-group.js"
     },
     "./switch": {
       "types": "./dist/switch.d.ts",
@@ -267,6 +275,10 @@
       "types": "./dist/link.d.ts",
       "default": "./dist/link.js"
     },
+    "./link-box": {
+      "types": "./dist/link-box.d.ts",
+      "default": "./dist/link-box.js"
+    },
     "./list": {
       "types": "./dist/list.d.ts",
       "default": "./dist/list.js"
@@ -302,6 +314,14 @@
     "./stack": {
       "types": "./dist/stack.d.ts",
       "default": "./dist/stack.js"
+    },
+    "./group": {
+      "types": "./dist/group.d.ts",
+      "default": "./dist/group.js"
+    },
+    "./data-list": {
+      "types": "./dist/data-list.d.ts",
+      "default": "./dist/data-list.js"
     },
     "./z-stack": {
       "types": "./dist/z-stack.d.ts",
@@ -365,6 +385,7 @@
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/theme-contract.md",
+    "docs/guides/control-sizing.md",
     "docs/guides/agent-knowledge.md",
     "docs/guides/browser-support.md"
   ],
@@ -475,6 +496,7 @@
     "browserslist": "^4.28.6",
     "jsdom": "^26.1.0",
     "lightningcss": "^1.32.0",
+    "lucide-react": "^0.468.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "typescript": "^5.9.3",

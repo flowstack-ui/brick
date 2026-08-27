@@ -170,8 +170,10 @@ Neutral solid controls use a strong neutral surface with the normal foreground;
 they are not inverse black/white controls. The surface is derived from the
 active theme's neutral surface and text semantics.
 
-Disabled Buttons use the disabled foreground, subtle boundary and surface, and
-reduced opacity. They never receive hover or pressed paint.
+Disabled Buttons use the disabled foreground at full component opacity so the
+unavailable label remains readable. Solid and soft variants retain a quiet disabled surface, while
+outline and ghost variants remain transparent. Disabled controls never receive
+hover or pressed paint.
 
 ### Sizes and shapes
 

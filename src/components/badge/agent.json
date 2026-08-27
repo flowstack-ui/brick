@@ -5,7 +5,7 @@
   "package": "@flowstack-ui/brick",
   "layer": "brick",
   "kind": "component",
-  "purpose": "Present a short passive category, status, or metadata label with a complete Brick visual recipe.",
+  "purpose": "Present a short passive category, status, metadata label, or compact circular passive marker with a complete Brick visual recipe.",
   "useWhen": [
     "A short non-interactive label needs a bounded visual treatment that remains understandable in its surrounding content."
   ],
@@ -16,7 +16,7 @@
     }
   ],
   "composition": [
-    "Place the short label directly in Badge; when an icon or separately styled Text is necessary, keep those children passive and let Badge own their spacing and foreground."
+    "Place the short label directly in Badge; when an icon or separately styled Text is necessary, keep those children passive and let Badge own their spacing and foreground. Use size=xl with shape=circle only for a deliberate passive empty-state icon well."
   ],
   "rules": [
     {
@@ -40,6 +40,11 @@
       "statement": "Keep the label short and atomic; Badge stays on one line, so use ordinary Text for explanatory or prose-length content."
     },
     {
+      "id": "badge-circle",
+      "level": "must",
+      "statement": "Use shape=circle only for one compact passive icon or single character with nearby context; use IconButton for an action and Status for a dot-and-label state."
+    },
+    {
       "id": "badge-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus badge.css."
@@ -47,18 +52,20 @@
   ],
   "commonMistakes": [
     {
-      "mistake": "Nesting default-tone Text in a Badge, manually spacing an icon and label, or using Badge as an eyebrow solely for uppercase styling.",
-      "correction": "Use plain Badge text when possible, tone=inherit for nested Text, Badge's own gap for children, and Text variant=eyebrow for a short editorial heading introduction."
+      "mistake": "Nesting default-tone Text in a Badge, manually spacing an icon and label, using a padded rounded Badge for a circular verification marker, or using Badge as an eyebrow solely for uppercase styling.",
+      "correction": "Use plain Badge text when possible, tone=inherit for nested Text, Badge's own gap for children, shape=circle for a passive icon marker, and Text variant=eyebrow for a short editorial heading introduction."
     }
   ],
   "validation": [
     "Check label brevity, one-line atomic sizing, passive semantics, child spacing, foreground contrast for every variant and tone, zoom, forced colors, and RTL.",
-    "Confirm nested Text inherits the Badge foreground and CSS is loaded."
+    "Confirm nested Text inherits the Badge foreground, circle geometry remains exactly square, and CSS is loaded."
   ],
   "related": [
     "text",
     "icon",
     "notification-badge",
-    "button"
+    "button",
+    "status",
+    "z-stack"
   ]
 }

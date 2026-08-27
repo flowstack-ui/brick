@@ -7,8 +7,11 @@ export {
   type ZStackItemAlign,
   type ZStackItemElement,
   type ZStackItemJustify,
+  type ZStackItemLayer,
   type ZStackItemProps,
+  type ZStackIsolation,
   type ZStackJustify,
   type ZStackRootProps,
   type ResponsiveValue,
+  type SpacingValue,
 } from "./ZStack.js";

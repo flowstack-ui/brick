@@ -17,8 +17,8 @@ const tones: BadgeTone[] = [
   "warning",
   "danger",
 ];
-const sizes: BadgeSize[] = ["sm", "md", "lg"];
-const shapes: BadgeShape[] = ["rounded", "pill"];
+const sizes: BadgeSize[] = ["sm", "md", "lg", "xl"];
+const shapes: BadgeShape[] = ["rounded", "pill", "circle"];
 const ref = createRef<HTMLSpanElement>();
 const nativeProps: BadgeProps = {
   "aria-describedby": "status-help",
@@ -47,9 +47,9 @@ const invalidVariant: BadgeVariant = "ghost";
 // @ts-expect-error Badge tones are closed.
 const invalidTone: BadgeTone = "brand";
 // @ts-expect-error Badge sizes are closed.
-const invalidSize: BadgeSize = "xl";
+const invalidSize: BadgeSize = "2xl";
 // @ts-expect-error Badge shapes are closed.
-const invalidShape: BadgeShape = "circle";
+const invalidShape: BadgeShape = "square";
 // @ts-expect-error Native color is excluded in favor of semantic tone.
 const invalidColor: BadgeProps = { children: "Status", color: "red" };
 // @ts-expect-error Badge has no interactive selected state.

@@ -71,6 +71,11 @@ Their types are `CollapsibleRootProps`, `CollapsibleTriggerProps`,
 | `orientation` | `vertical`, `horizontal` | `vertical` |
 | `onOpenChange` | `(open) => void` | optional |
 
+Trigger accepts `iconOnly`. It uses the Root size to create a square,
+centered disclosure control and emits `data-icon-only`. Supply a complete
+accessible name with `aria-label`; do not add a sizing wrapper or compose a
+second Button recipe.
+
 Content supports `keepMounted`. Atom-backed parts preserve native props,
 callbacks, refs, `render`, and `asChild`. Indicator children replace its
 default artwork. Indicator and ContentInner intentionally stay fixed hosts.
@@ -81,6 +86,7 @@ Plain has no containing paint, soft adds a subtle neutral surface, and outline
 adds one containing border. Sizes coordinate trigger height, typography,
 spacing, indicator size, and ContentInner padding. The default decorative
 Indicator points down while closed and up while open in both LTR and RTL.
+An icon-only Trigger retains the same size target while centering its artwork.
 Vertical Content expands to measured height; horizontal Content
 expands to measured width while ContentInner preserves final geometry.
 

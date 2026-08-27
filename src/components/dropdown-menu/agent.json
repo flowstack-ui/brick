@@ -1,0 +1,79 @@
+{
+  "schema": "flowstack.agent-component.v1",
+  "id": "dropdown-menu",
+  "name": "DropdownMenu",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "kind": "component",
+  "purpose": "Present a compact button-triggered set of commands, persistent choices, or secondary destinations while Atom owns menu semantics, focus, keyboard navigation, dismissal, and floating placement.",
+  "useWhen": [
+    "An explicit button opens a compact set of commands, selection rows, or secondary destinations that benefit from menu keyboard behavior."
+  ],
+  "avoidWhen": [
+    {
+      "condition": "The content is primary site navigation, persistent navigation, a right-click-only surface, or a form selection field.",
+      "useInstead": "NavigationMenu or NavList, ContextMenu, or Select according to the interface job"
+    }
+  ],
+  "composition": [
+    "Compose Root > Trigger plus Portal > Content; use Item, CheckboxItem, RadioGroup/RadioItem, Separator, and Sub parts according to the menu job, and use Leading, ItemLabel, Description, and Shortcut for stable row anatomy.",
+    "Use Trigger asChild around a finished Brick Button or IconButton so the trigger retains a complete accessible name and finished control paint.",
+    "When a menu row is a destination, compose Item asChild around one real Brick Link and keep the visible item label destination-specific; commands remain action items with onSelect.",
+    "Place a direct Brick Icon, SVG, or image inside Leading and let the density-aware slot normalize and center its geometry."
+  ],
+  "rules": [
+    {
+      "id": "dropdown-menu-complete-anatomy",
+      "level": "must",
+      "statement": "Use Root, Trigger, Portal, and Content together and let Atom own focus, roving keyboard behavior, Escape, outside dismissal, focus return, and collision-aware placement."
+    },
+    {
+      "id": "dropdown-menu-trigger-owner",
+      "level": "must",
+      "statement": "Compose Trigger asChild around a finished, named Brick Button or IconButton rather than styling the behavior trigger as an unfinished control."
+    },
+    {
+      "id": "dropdown-menu-destination-semantics",
+      "level": "must",
+      "statement": "Preserve real anchor semantics for destination rows by composing Item asChild around Link; do not attach route navigation to a command-only div or button row."
+    },
+    {
+      "id": "dropdown-menu-row-anatomy",
+      "level": "must",
+      "statement": "Use Leading, ItemLabel, Description, Shortcut, and ItemIndicator for row content instead of application wrapper spans and alignment CSS."
+    },
+    {
+      "id": "dropdown-menu-danger",
+      "level": "must",
+      "statement": "Use tone=danger only for genuinely destructive commands and do not use danger paint as decorative emphasis."
+    },
+    {
+      "id": "dropdown-menu-css",
+      "level": "must",
+      "statement": "Load styles.css or core.css plus dropdown-menu.css and every composed child component stylesheet."
+    }
+  ],
+  "commonMistakes": [
+    {
+      "mistake": "Hand-positioning a menu-like Surface, using Popover for command rows, nesting buttons inside menu items, or treating primary application navigation as a Dropdown Menu.",
+      "correction": "Use complete DropdownMenu anatomy for compact secondary actions or destinations, preserve one interactive owner per row, and choose NavigationMenu, NavList, or Drawer for primary navigation."
+    },
+    {
+      "mistake": "Using an unlabeled icon as Trigger or rebuilding row icon/label/description alignment with custom spans and CSS.",
+      "correction": "Use a named Brick IconButton or Button as Trigger and compose the public DropdownMenu row anatomy."
+    }
+  ],
+  "validation": [
+    "Test trigger naming, click and keyboard opening, arrow-key movement, Home/End where supported, selection, disabled rows, Escape and outside dismissal, focus return, submenus, density-aware Leading icon alignment, zoom, narrow viewports, and RTL.",
+    "Confirm command versus destination semantics, real anchor href values, danger meaning, collision-aware placement, light/dark appearance, forced colors, and complete CSS delivery."
+  ],
+  "related": [
+    "navigation-menu",
+    "nav-list",
+    "context-menu",
+    "select",
+    "button",
+    "icon-button",
+    "link"
+  ]
+}

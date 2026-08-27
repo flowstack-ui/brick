@@ -73,6 +73,12 @@ describe("Tabs", () => {
     expect(screen.getByTestId("list")).not.toHaveAttribute("triggerRadius");
   });
 
+  it("exposes the independent trigger radius recipe for line tabs", () => {
+    render(<Tabs.Root defaultValue="one" variant="line"><Tabs.List data-testid="line-list" triggerRadius="none"><Tabs.Trigger value="one">One</Tabs.Trigger></Tabs.List><Tabs.Content value="one">Panel</Tabs.Content></Tabs.Root>);
+    expect(screen.getByTestId("line-list")).toHaveAttribute("data-trigger-radius", "none");
+    expect(screen.getByRole("tab", { name: "One" })).toBeVisible();
+  });
+
   it("serializes responsive visual layout without changing semantic orientation", () => {
     render(<Tabs.Root data-testid="root" layout={{ initial: "stacked", lg: "side" }} orientation="vertical"><Tabs.List columns={{ initial: 2, lg: 1 }} /></Tabs.Root>);
     const root = screen.getByTestId("root");

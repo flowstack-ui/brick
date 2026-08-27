@@ -45,6 +45,7 @@ import { Toolbar } from "@flowstack-ui/brick/toolbar";
 import { Pagination } from "@flowstack-ui/brick/pagination";
 import { ReorderableList } from "@flowstack-ui/brick/reorderable-list";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
+import { Group } from "@flowstack-ui/brick/group";
 import { Grid } from "@flowstack-ui/brick/grid";
 import { Container } from "@flowstack-ui/brick/container";
 import { Surface } from "@flowstack-ui/brick/surface";
@@ -442,7 +443,7 @@ export function App() {
                 <Field.Description>Select one available workspace plan.</Field.Description>
                 <Field.Error>Choose a billing plan.</Field.Error>
               </Field.Root>
-              <HStack gap="2"><Button type="submit">Save plan</Button><Button tone="neutral" type="reset" variant="outline">Reset plan</Button></HStack>
+              <Group aria-label="Plan form actions" attached role="group"><Button type="submit">Save plan</Button><Button tone="neutral" type="reset" variant="outline">Reset plan</Button></Group>
               <Text aria-live="polite" data-testid="consumer-plan-status" tone="secondary">{planStatus}</Text>
             </VStack>
           </Form>

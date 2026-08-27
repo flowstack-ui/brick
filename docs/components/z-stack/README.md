@@ -48,19 +48,32 @@ media.
 
 Root renders `div` by default and supports the Stack semantic host set. `align` and `justify` accept `stretch`, `start`, `center`, or `end` and default to `stretch`. Item renders `div` by default or decorates one child with `asChild`; its `align` and `justify` add `auto` as the default.
 
+Root `isolation="open"` deliberately lets a named Item layer participate in an
+ancestor stacking context. Keep the default `contained` for ordinary overlays.
+Item `layer` supplies the closed `base`, `content`, and `action` depth levels;
+`edgeSpacing` accepts the same responsive spacing grammar as Stack gap.
+
 | Prop | Values | Root default |
 | --- | --- | --- |
 | `as` | supported semantic hosts | `div` |
 | `align` | `stretch`, `start`, `center`, `end` | `stretch` |
 | `justify` | `stretch`, `start`, `center`, `end` | `stretch` |
+| `isolation` | `contained`, `open` | `contained` |
 | `slot` | `string` | `z-stack` |
+
+| Item prop | Values | Default |
+| --- | --- | --- |
+| `align`, `justify` | `auto`, `stretch`, `start`, `center`, `end` | `auto` |
+| `edgeSpacing` | responsive Brick spacing value | none |
+| `layer` | `base`, `content`, `action` | `base` |
 
 Root exposes `.brick-z-stack` and `data-slot="z-stack"`. Item exposes `.brick-z-stack-item` and `data-slot="z-stack-item"`. Placement metadata is emitted only for non-default recipes. ZStack exposes no public CSS variables.
 
 ## Visual recipes and states
 
 Root and Item alignment independently support stretch, start, center, and end.
-ZStack has no interactive state, paint, radius, spacing, or motion.
+Named layers and edge spacing express overlay participation without arbitrary
+coordinates. ZStack has no interactive state, paint, radius, or motion.
 
 ## Tokens and CSS hooks
 
@@ -70,7 +83,9 @@ component variables.
 
 ## Customization
 
-Use Brick props for placement. Size and paint the authored children with
+Use Brick props for placement. For a separately operable `LinkBox.Action`
+over media, use `isolation="open"` on Root and `layer="action"` plus
+`edgeSpacing` on the composed Item. Size and paint the authored children with
 Surface, Image, or application-owned styles rather than painting ZStack.
 
 ## Responsive behavior

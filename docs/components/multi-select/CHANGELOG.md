@@ -6,11 +6,17 @@ MultiSelect follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Aligned MultiSelect Trigger typography with Button, Toggle, ToggleGroup, and
+  other button-like controls at matching `sm`, `md`, and `lg` sizes. The
+  trigger is not editable, so the 16px mobile-entry exception does not apply.
 - Popup options now inherit Root size and match the trigger's 36/44/52px
   `sm`/`md`/`lg` minimum target instead of using a fixed 40px row.
 
 ### Added
 
+- Added public MultiSelect Agent Knowledge covering select-only multiple
+  choice, required compound anatomy, shared control-size alignment, form and
+  application boundaries, common mistakes, and validation.
 - Initial compound MultiSelect API built on Atom MultiSelect 0.10.1 with complete styled
   anatomy, repeated-value native forms, Field relationships, controlled/uncontrolled value arrays
   and open state, groups, disabled options, scrolling, portal positioning, and

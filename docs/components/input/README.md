@@ -118,6 +118,9 @@ Clear artwork is private decorative anatomy. The forwarded ref always targets
 | `size` | `sm`, `md`, `lg` | `md` |
 | `shape` | `sharp`, `rounded`, `pill` | `rounded` |
 | `fullWidth` | `boolean` | `true` |
+
+Outline uses a transparent resting and hover surface so it can blend into a
+Sidebar or other containing surface; Soft intentionally owns a filled surface.
 | `startAdornment` | `ReactNode` | none |
 | `endAdornment` | `ReactNode` | none |
 | `clearable` | `boolean` | `false` |

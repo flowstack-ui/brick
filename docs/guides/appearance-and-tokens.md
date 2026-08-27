@@ -48,6 +48,11 @@ document body through a low-specificity foundation rule. Themes normally
 change those semantic values rather than adding another body rule. Consumer
 CSS in a later layer can deliberately replace the document treatment.
 
+The optional reset stylesheet also maps native text selection to the active
+accent solid/on-solid pair, with system `Highlight` colors in forced-colors mode.
+This makes drag selection follow the compiled theme without requiring
+application CSS.
+
 ## Custom themes
 
 Override public semantic variables through ordinary CSS:

@@ -7,6 +7,7 @@ export {
   PaginationNext,
   PaginationPrevious,
   PaginationRoot,
+  type PaginationBoundaryVariant,
   type PaginationEllipsisProps,
   type PaginationItemProps,
   type PaginationItemsProps,

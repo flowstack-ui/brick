@@ -25,6 +25,7 @@ Present one compact person or entity identity with a finished fixed-square image
 - **MUST:** Supply explicit localized fallback content; do not generate initials or infer identity from a filename.
 - **MUST:** Keep Avatar passive; wrap it with the public Button or Link that owns any action or destination.
 - **MUST:** Provide separate accessible status text when a status ring communicates meaningful availability.
+- **MUST:** Choose the nearest named Avatar size, including 2xl through 5xl for larger square profile identities, instead of overriding --brick-avatar-size inline; use Image for authored non-square portrait media.
 - **MUST:** Load styles.css or core.css plus avatar.css.
 
 ## Common mistakes
@@ -34,7 +35,7 @@ Present one compact person or entity identity with a finished fixed-square image
 ## Validation checklist
 
 - Check fixed square size, crop, fallback, informative and decorative naming, passive semantics, nearby identity/status text, light/dark/forced colors, zoom, and RTL.
-- Confirm CSS is loaded and any owning Button, Link, or NotificationBadge preserves its own public contract.
+- Confirm a named Avatar size is used, CSS is loaded, and any owning Button, Link, or NotificationBadge preserves its own public contract.
 
 ## Related guidance
 
@@ -42,3 +43,5 @@ Present one compact person or entity identity with a finished fixed-square image
 - `button`
 - `link`
 - `notification-badge`
+- `badge`
+- `status`

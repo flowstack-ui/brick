@@ -41,8 +41,18 @@ test("Data Grid passes accessibility checks", async ({ page }) => {
   await expect(page.locator("#scenario-data-grid-appearance [data-playground-specimen-label]" )).toHaveText(["light", "dark", "customized"]);
   await expect(page.locator("#scenario-data-grid-appearance h3")).toHaveText("Data Grid CSS properties");
   const customFooterCells = page.locator("#scenario-data-grid-appearance .data-grid-customization tfoot tr").locator("th, td");
+  const customHeaderCells = page.locator("#scenario-data-grid-appearance .data-grid-customization thead tr").locator("th, td");
+  await expect(customHeaderCells.first()).not.toHaveCSS("border-top-left-radius", "0px");
+  await expect(customHeaderCells.last()).not.toHaveCSS("border-top-right-radius", "0px");
   await expect(customFooterCells.first()).not.toHaveCSS("border-bottom-left-radius", "0px");
   await expect(customFooterCells.last()).not.toHaveCSS("border-bottom-right-radius", "0px");
+  const bodyOnlyGrid = page.locator("#scenario-data-grid-sorting .brick-data-grid");
+  const bodyOnlyHeaderCells = bodyOnlyGrid.locator("thead tr").locator("th, td");
+  const bodyOnlyLastCells = bodyOnlyGrid.locator("tbody tr").last().locator("th, td");
+  await expect(bodyOnlyHeaderCells.first()).not.toHaveCSS("border-top-left-radius", "0px");
+  await expect(bodyOnlyHeaderCells.last()).not.toHaveCSS("border-top-right-radius", "0px");
+  await expect(bodyOnlyLastCells.first()).not.toHaveCSS("border-bottom-left-radius", "0px");
+  await expect(bodyOnlyLastCells.last()).not.toHaveCSS("border-bottom-right-radius", "0px");
   const rtl = page.locator("#scenario-data-grid-stress [dir=rtl] .brick-data-grid");
   await expect(rtl).toHaveAttribute("dir", "rtl");
   await expect(rtl.locator("caption")).toHaveText("نتائج التحقق من الحزم");

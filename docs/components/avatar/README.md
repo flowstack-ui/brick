@@ -56,7 +56,7 @@ Public exports are `Avatar`, `AvatarProps`, `AvatarSize`, `AvatarShape`, and
 | `src` | `string` | none |
 | `alt` | `string` (required; `""` allowed) | — |
 | `fallback` | `ReactNode` (required) | — |
-| `size` | `xs`, `sm`, `md`, `lg`, `xl` | `md` |
+| `size` | `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `5xl` | `md` |
 | `shape` | `circle`, `rounded` | `circle` |
 | `status` | `online`, `away`, `busy`, `offline` | none |
 | `fallbackDelayMs` | `number` | Atom default |
@@ -84,9 +84,11 @@ size-recipe detail, not a public token.
 
 ## Customization
 
-Use size, shape, and status first, then public Avatar tokens. Root `className`
-and `style` are escape hatches; image/fallback classes are styling hooks, not
-renderable parts.
+Use size, shape, and status first, then public Avatar tokens. Named `2xl`–`5xl`
+sizes cover larger square profile identities; use Image for non-square or
+editorial portraits instead of overriding `--brick-avatar-size`. Root
+`className` and `style` are escape hatches; image/fallback classes are styling
+hooks, not renderable parts.
 
 ## Responsive behavior
 

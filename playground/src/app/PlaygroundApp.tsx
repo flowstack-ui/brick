@@ -16,6 +16,7 @@ import {
   appBarScenarios,
 } from "../components/app-bar/AppBarPage.js";
 import { LinkPage, linkScenarios } from "../components/link/LinkPage.js";
+import { LinkBoxPage, linkBoxScenarios } from "../components/link-box/LinkBoxPage.js";
 import { NavListPage, navListScenarios } from "../components/nav-list/NavListPage.js";
 import { SidebarPage, sidebarScenarios } from "../components/sidebar/SidebarPage.js";
 import {
@@ -94,6 +95,8 @@ import { CarouselPage, carouselScenarios } from "../components/carousel/Carousel
 import { CodePage, codeScenarios } from "../components/code/CodePage.js";
 import { CodeBlockPage, codeBlockScenarios } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
+import { GroupPage, groupScenarios } from "../components/group/GroupPage.js";
+import { DataListPage, dataListScenarios } from "../components/data-list/DataListPage.js";
 import { ZStackPage, zStackScenarios } from "../components/z-stack/ZStackPage.js";
 import { GridPage, gridScenarios } from "../components/grid/GridPage.js";
 import {
@@ -137,6 +140,7 @@ import {
   RadioGroupPage,
   radioGroupScenarios,
 } from "../components/radio-group/RadioGroupPage.js";
+import { SegmentGroupPage, segmentGroupScenarios } from "../components/segment-group/SegmentGroupPage.js";
 import { SwitchPage, switchScenarios } from "../components/switch/SwitchPage.js";
 import { BreadcrumbPage, breadcrumbScenarios } from "../components/breadcrumb/BreadcrumbPage.js";
 import { TabsPage, tabsScenarios } from "../components/tabs/TabsPage.js";
@@ -152,6 +156,7 @@ import { ProgressPage, progressScenarios } from "../components/progress/Progress
 import { ProgressCirclePage, progressCircleScenarios } from "../components/progress-circle/ProgressCirclePage.js";
 import { SliderPage, sliderScenarios } from "../components/slider/SliderPage.js";
 import { RatingPage, ratingScenarios } from "../components/rating/RatingPage.js";
+import { StatusPage, statusScenarios } from "../components/status/StatusPage.js";
 import { FileUploadPage, fileUploadScenarios } from "../components/file-upload/FileUploadPage.js";
 import { ToastPage, toastScenarios } from "../components/toast/ToastPage.js";
 import { CollapsiblePage, collapsibleScenarios } from "../components/collapsible/CollapsiblePage.js";
@@ -274,6 +279,14 @@ export function PlaygroundApp() {
     );
   }
 
+  if (entry.id === "link-box") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={linkBoxScenarios}>
+        <LinkBoxPage />
+      </PlaygroundShell>
+    );
+  }
+
   if (entry.id === "nav-list") {
     return (
       <PlaygroundShell entry={entry} scenarios={navListScenarios}>
@@ -346,6 +359,14 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={avatarScenarios}>
         <AvatarPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "status") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={statusScenarios}>
+        <StatusPage />
       </PlaygroundShell>
     );
   }
@@ -469,6 +490,22 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={stackScenarios}>
         <StackPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "group") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={groupScenarios}>
+        <GroupPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "data-list") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={dataListScenarios}>
+        <DataListPage />
       </PlaygroundShell>
     );
   }
@@ -621,6 +658,14 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={radioGroupScenarios}>
         <RadioGroupPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "segment-group") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={segmentGroupScenarios}>
+        <SegmentGroupPage />
       </PlaygroundShell>
     );
   }

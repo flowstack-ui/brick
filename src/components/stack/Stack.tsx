@@ -157,6 +157,7 @@ function StackItemImpl(
     ...responsiveDataAttributes("data-align", align, { defaultValue: "auto" }),
     ...responsiveDataAttributes("data-flex", flex, { alwaysInitial: true }),
     className: mergeClassName("brick-stack-item", className),
+    "data-stack-item-composed": asChild ? "" : undefined,
     "data-slot": slot,
     ref,
     style,

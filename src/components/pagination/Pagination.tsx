@@ -11,9 +11,12 @@ import {
 import { Icon } from "../icon/index.js";
 
 export type PaginationVariant = "plain" | "soft" | "outline";
+export type PaginationBoundaryVariant = "plain" | "outline";
 export type PaginationSize = "sm" | "md" | "lg";
 
 export interface PaginationRootProps extends AtomPaginationRootProps {
+  /** Previous and Next control recipe. @default "plain" */
+  boundaryVariant?: PaginationBoundaryVariant;
   /** Containing surface recipe. @default "plain" */
   variant?: PaginationVariant;
   /** Control and type scale. @default "md" */
@@ -42,11 +45,12 @@ function DirectionIcon({ direction }: { direction: "previous" | "next" }) {
 }
 
 export const PaginationRoot = forwardRef<HTMLElement, PaginationRootProps>(
-  function PaginationRoot({ className, size = "md", variant = "plain", "data-slot": dataSlot, ...props }, ref) {
+  function PaginationRoot({ boundaryVariant = "plain", className, size = "md", variant = "plain", "data-slot": dataSlot, ...props }, ref) {
     return (
       <AtomPagination.Root
         {...props}
         className={mergeClassName("brick-pagination", className)}
+        data-boundary-variant={boundaryVariant === "plain" ? undefined : boundaryVariant}
         data-size={size}
         data-slot={dataSlot ?? "pagination"}
         data-variant={variant}

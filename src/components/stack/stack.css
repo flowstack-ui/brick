@@ -43,10 +43,11 @@
   .brick-stack-item {
     box-sizing: border-box;
     min-inline-size: 0;
-    min-block-size: 0;
     flex: 0 1 auto;
     align-self: auto;
   }
+
+  .brick-stack-item:not([data-stack-item-composed]) { min-block-size: 0; }
 
   .brick-stack-item[data-flex="fixed"] { flex: 0 0 auto; }
   .brick-stack-item[data-flex="auto"] { flex: 1 1 auto; }

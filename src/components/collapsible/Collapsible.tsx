@@ -13,7 +13,9 @@ export interface CollapsibleRootProps extends AtomCollapsibleRootProps {
   variant?: CollapsibleVariant;
   size?: CollapsibleSize;
 }
-export type CollapsibleTriggerProps = AtomCollapsibleTriggerProps;
+export type CollapsibleTriggerProps = AtomCollapsibleTriggerProps & {
+  iconOnly?: boolean;
+};
 export type CollapsibleContentProps = AtomCollapsibleContentProps;
 
 export interface CollapsibleIndicatorProps extends Omit<HTMLAttributes<HTMLSpanElement>, "children" | "aria-hidden"> {
@@ -48,11 +50,12 @@ export const CollapsibleRoot = forwardRef<HTMLDivElement, CollapsibleRootProps>(
 );
 
 export const CollapsibleTrigger = forwardRef<HTMLButtonElement, CollapsibleTriggerProps>(
-  function CollapsibleTrigger({ className, "data-slot": slot, ...props }, ref) {
+  function CollapsibleTrigger({ className, iconOnly = false, "data-slot": slot, ...props }, ref) {
     return (
       <AtomCollapsible.Trigger
         {...props}
         className={classes("brick-collapsible-trigger", className)}
+        data-icon-only={iconOnly ? "" : undefined}
         data-slot={slot ?? "collapsible-trigger"}
         ref={ref}
       />

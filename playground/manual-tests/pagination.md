@@ -41,6 +41,8 @@ Inspect all variants and sizes in light, dark, forced colors, and reduced motion
 Confirm the current page retains its accent-on-solid foreground and uses the
 accent-solid hover and pressed states instead of the neutral page-control
 background.
+Confirm `boundaryVariant="outline"` borders only Previous and Next while page
+numbers retain the Root recipe.
 
 Result:
 Notes or issue:

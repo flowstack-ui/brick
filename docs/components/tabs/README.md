@@ -75,6 +75,10 @@ List accepts `radius="default|none"`. `default` preserves the variant recipe;
 `none` removes List and Trigger corners for a solid or soft selector nested
 inside a clipping parent that owns the outer corners.
 
+List also accepts `triggerRadius="default|none"` for every variant. Use
+`triggerRadius="none"` for square line tabs when the selected underline, not a
+rounded tab silhouette, should own the active geometry.
+
 Content accepts `inset` values `none`, `sm`, `md`, and `lg`. Omission keeps
 the root-size-derived panel spacing; `none` supports edge-to-edge media or a
 nested Surface. The selected value is exposed as `data-inset`.
@@ -85,8 +89,9 @@ value, `keepMounted`, and `focusable`.
 
 ## Visual recipes and states
 
-Line emphasizes selection with a server-rendered selected edge and an optional
-moving Indicator after Atom can measure the active Trigger. The Indicator is a
+Line emphasizes selection with a server-rendered accent edge and an optional
+moving Indicator after Atom can measure the active Trigger while its active
+label and icon use primary text rather than accent color. The Indicator is a
 line-only visual enhancement: solid, soft, and enclosed hide it and render
 their complete selected treatment directly on the active Trigger. This keeps
 every recipe visually stable on the first paint and through hydration. Sizes
@@ -138,6 +143,11 @@ when that square List should retain individually rounded Trigger surfaces;
 omission preserves the existing List-radius relationship. Both radius choices
 change only visual geometry and do not affect layout, columns, focus, or Atom
 behavior.
+
+When a page header visually continues the List divider beneath sorting, view,
+or action controls, keep those unrelated controls outside `Tabs.List`. Use the
+surrounding Brick layout and a decorative Divider for the shared edge; do not
+place non-tab controls inside the tablist for visual convenience.
 
 ## Accessibility
 

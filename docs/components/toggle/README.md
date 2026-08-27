@@ -74,6 +74,9 @@ square. Atom exposes pressed, hover, focus, active, and disabled state.
 Neutral solid selection uses a strong theme-derived neutral surface with the
 normal foreground instead of the inverse black/white pair.
 
+Outline selection uses the tone's solid accent for its border while preserving
+the normal primary foreground. The recipe does not add a soft fill.
+
 Disabled Toggles use a faded disabled foreground and quiet surface; selected
 disabled state does not retain the enabled outline or inset selection edge.
 

@@ -55,6 +55,11 @@
     inline-size: fit-content;
   }
 
+  .brick-input[data-variant="outline"] {
+    --brick-input-background: transparent;
+    --brick-input-hover-background: transparent;
+  }
+
   .brick-input[data-variant="soft"] {
     --brick-input-background: var(--brick-color-surface-subtle);
     --brick-input-border: var(--brick-color-border-subtle);

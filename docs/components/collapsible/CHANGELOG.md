@@ -12,6 +12,9 @@ Collapsible follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added `iconOnly` to Trigger so compact disclosure controls use the Root's
+  square size target and center their artwork without consumer wrappers.
+
 - Added the five-part Atom-backed Collapsible with plain, soft, and outline
   variants; three coordinated sizes; decorative indicator; measured height
   motion; live content resizing; composition; and accessibility evidence.

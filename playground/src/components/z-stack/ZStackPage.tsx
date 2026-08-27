@@ -38,9 +38,9 @@ export function ZStackPage() {
       </Scenario>
       <Scenario {...zStackScenarios[2]}>
         <Canvas>
-          <ZStack.Root data-testid="z-stack-composition">
+          <ZStack.Root data-testid="z-stack-composition" isolation="open">
             <Surface className="z-stack-stage" level="subtle" radius="surface" />
-            <ZStack.Item align="end" asChild justify="start"><Text weight="semibold">Composed label</Text></ZStack.Item>
+            <ZStack.Item align="end" asChild edgeSpacing="3" justify="end" layer="action"><Button size="sm">Composed action</Button></ZStack.Item>
           </ZStack.Root>
         </Canvas>
       </Scenario>

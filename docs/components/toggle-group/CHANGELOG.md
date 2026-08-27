@@ -13,6 +13,9 @@ Toggle Group follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Outline selection now uses the true accent border while keeping its label on
+  the normal primary foreground instead of tinting the text.
+
 - Disabled Items now use a more faded foreground and quiet selected surface
   without retaining enabled outline or inset emphasis.
 - Neutral solid selected Items now use a strong theme-derived neutral surface
