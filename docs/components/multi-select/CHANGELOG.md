@@ -4,6 +4,8 @@ MultiSelect follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Fixed
 
 - Aligned MultiSelect Trigger typography with Button, Toggle, ToggleGroup, and
@@ -17,6 +19,9 @@ MultiSelect follows the package version of `@flowstack-ui/brick`.
 - Added public MultiSelect Agent Knowledge covering select-only multiple
   choice, required compound anatomy, shared control-size alignment, form and
   application boundaries, common mistakes, and validation.
+- Expanded MultiSelect Agent Knowledge with deduplicated array state, the
+  button-owned popup listbox model, persistent toggling, repeated-value native
+  submission, responsive checks, and unsupported specialized-control routing.
 - Initial compound MultiSelect API built on Atom MultiSelect 0.10.1 with complete styled
   anatomy, repeated-value native forms, Field relationships, controlled/uncontrolled value arrays
   and open state, groups, disabled options, scrolling, portal positioning, and

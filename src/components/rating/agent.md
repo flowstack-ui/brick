@@ -22,6 +22,9 @@ Collect a short ordered score, present a repeated-star aggregate, or present a c
 - **MUST:** Use Root and Item only when the person can choose a score; use Display for aggregate or read-only presentation so passive content does not create a focusable slider.
 - **MUST:** Give Display and Summary a localized label that states the score and maximum, such as label="4.5 out of 5 stars"; use Summary valueText for localized visible formatting and keep adjacent review counts as ordinary text.
 - **MUST:** Provide one visible Field label for an input Rating or a complete accessible name for a standalone Root.
+- **MUST:** Use a valid ordered min and max, positive step, and Item endpoint values; keep repeated selection stable by default and enable allowClear only when clearing to the minimum is intentional.
+- **MUST:** Preserve one focusable slider Root with decorative Items, one-pointer capture, cross-item dragging, vertical page scrolling, cancellation rollback, lost-capture finalization, keyboard steps, and horizontal LTR and RTL behavior.
+- **MUST:** Preserve disabled, read-only, invalid, required-above-minimum validity, Field relationships, named hidden submission, validation focus, and uncontrolled form reset for input Rating.
 - **MUST:** Load styles.css or core.css plus rating.css.
 
 ## Common mistakes
@@ -38,7 +41,9 @@ Collect a short ordered score, present a repeated-star aggregate, or present a c
 
 ## Related guidance
 
+- `@flowstack-ui/atom/agents/rating`
 - `field`
 - `slider`
+- `radio-group`
 - `progress`
 - `badge`

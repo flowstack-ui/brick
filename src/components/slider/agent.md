@@ -23,6 +23,8 @@ Provide a styled approximate numeric single-value or range input while Atom owns
 - **MUST:** Use Slider only when approximate direct manipulation is appropriate; use NumberInput or Select when exact or named choices matter.
 - **MUST:** Provide one visible Field label for the complete Slider or a complete accessible name for every standalone Thumb.
 - **SHOULD:** Use an external application-owned output when dense ranges or long localized values would collide with a thumb ValueLabel.
+- **MUST:** Use onValueChange for live updates and onValueCommit for completed interactions; true pointer cancellation restores the pointer-down value without commit while lost capture commits the latest value.
+- **MUST:** Preserve one active pointer session, non-slider-axis page scrolling, orientation-aware keys, and horizontal LTR and RTL pointer and Arrow behavior.
 - **SHOULD:** Keep the default Track inset when a parent clips overflow; set the public Track-inset token to zero only when the surrounding composition preserves complete endpoint target and focus paint.
 - **MUST:** Load styles.css or core.css plus slider.css.
 
@@ -37,7 +39,10 @@ Provide a styled approximate numeric single-value or range input while Atom owns
 
 ## Related guidance
 
+- `@flowstack-ui/atom/agents/slider`
 - `field`
 - `number-input`
 - `select`
 - `progress`
+- `rating`
+- `form`

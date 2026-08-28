@@ -49,5 +49,5 @@
   "validation": [
     "Check visible state text, semantic tone, decorative indicator, primary label color, light/dark, forced colors, zoom, RTL, and deliberate live-region ownership."
   ],
-  "related": ["badge", "notification-badge", "avatar", "progress", "alert"]
+  "related": ["badge", "notification-badge", "avatar", "progress", "toast"]
 }

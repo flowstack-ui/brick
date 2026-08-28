@@ -1,88 +1,19 @@
 {
-  "schema": "flowstack.agent-component.v1",
-  "id": "select",
-  "name": "Select",
-  "package": "@flowstack-ui/brick",
-  "layer": "brick",
-  "kind": "component",
-  "purpose": "Present one compact, accessible choice from a predefined list while Atom owns selection, keyboard behavior, popup positioning, and native form participation.",
-  "useWhen": [
-    "A person must choose exactly one value from a predefined list that should remain compact until opened."
-  ],
-  "avoidWhen": [
-    {
-      "condition": "A short set of choices should remain visible.",
-      "useInstead": "Radio Group"
-    },
-    {
-      "condition": "The person must filter or enter a value.",
-      "useInstead": "Combobox"
-    },
-    {
-      "condition": "The popup contains actions or destinations rather than values.",
-      "useInstead": "Dropdown Menu for actions or Link navigation for destinations"
-    }
-  ],
-  "composition": [
-    "Compose Select.Root -> Select.Trigger with Select.Value and Select.Icon -> Select.Content -> Select.Viewport -> Select.Group -> Select.Item with Select.ItemText and Select.ItemIndicator.",
-    "Give every Select an accessible name through Field.Label or an explicit aria-label on Select.Trigger; placeholder text is never the label.",
-    "Use controlled value and onValueChange when an application-owned choice immediately changes locale, theme, routing, or another external system; Select does not implement that side effect."
-  ],
+  "schema": "flowstack.agent-component.v1", "id": "select", "name": "Select", "package": "@flowstack-ui/brick", "layer": "brick", "kind": "component",
+  "purpose": "Present one compact finished choice from a predefined list while Atom owns selection, trigger and listbox semantics, keyboard behavior, positioning, dismissal, validation, and native select form behavior.",
+  "useWhen": ["A person chooses exactly one value from a predefined list whose options should stay collapsed until opened."],
+  "avoidWhen": [{"condition": "A short set should remain visible, several values may be selected, editable filtering or free-form entry is required, or rows are commands or destinations.", "useInstead": "RadioGroup, MultiSelect, Combobox, DropdownMenu, or Link"}],
+  "composition": ["Compose Select.Root with a named Select.Trigger containing Select.Value and optional Select.Icon, then exactly one Select.Content or Select.Listbox. Place stable uniquely valued Items with ItemText inside optional Viewport and Group with Label; add indicators, separators, scroll buttons, Portal, and a direct popup Arrow only when required.", "Use the same sm, md, or lg size as adjacent button-like controls. Keep locale loading, routing, persistence, analytics, and every other effect in onValueChange at the application boundary."],
   "rules": [
-    {
-      "id": "select-single-value",
-      "level": "must",
-      "statement": "Use Select only for one value from a predefined select-only collection; keep actions, destinations, editable filtering, and multiple selection in their owning components."
-    },
-    {
-      "id": "select-item-text",
-      "level": "must",
-      "statement": "Wrap every option's primary visible and accessible label in Select.ItemText and keep interactive descendants out of options."
-    },
-    {
-      "id": "select-application-effect",
-      "level": "must",
-      "statement": "Keep translation loading, locale detection, persistence, URL changes, analytics, and other effects in the application callback rather than inside Select."
-    },
-    {
-      "id": "select-control-size-alignment",
-      "level": "must",
-      "statement": "Use the same named size as adjacent Button, Toggle, ToggleGroup, or other button-like controls; Select Trigger consumes shared control typography and 36/44/52px geometry rather than editable-field typography."
-    },
-    {
-      "id": "select-css",
-      "level": "must",
-      "statement": "Load styles.css or core.css plus select.css."
-    }
+    {"id": "select-single-value", "level": "must", "statement": "Use Select only for one predefined value and keep controlled value and open state aligned with their matching callbacks."},
+    {"id": "select-trigger-name", "level": "must", "statement": "Give Trigger a visible Field label or equivalent accessible name; placeholder and selected value are not the control name, and Trigger must retain combobox, expanded, controls, active-descendant, required, read-only, invalid, and disabled relationships."},
+    {"id": "select-item-text", "level": "must", "statement": "Give every Item a stable unique value and ItemText or label, keep interactive descendants out, and preserve that text for closed display, option naming, typeahead, and the hidden native select."},
+    {"id": "select-keyboard-form", "level": "must", "statement": "Preserve Trigger-owned opening, Arrow/Home/End, typeahead, Enter/Space selection, Tab, Escape, disabled skipping, focus restoration, native select options and submission, required validity, external form association, and reset."},
+    {"id": "select-popup-anatomy", "level": "must", "statement": "Render Content or Listbox once, keep Arrow directly inside it, and keep scroll buttons outside the registered Viewport so Atom owns positioning, collision, dismissal, and overflow state."},
+    {"id": "select-application-effect", "level": "must", "statement": "Keep translation loading, locale detection, persistence, navigation, analytics, and other effects in the application callback rather than inside Select."},
+    {"id": "select-css", "level": "must", "statement": "Load styles.css or core.css plus select.css and Field CSS when composed."}
   ],
-  "commonMistakes": [
-    {
-      "mistake": "Using placeholder or the currently selected short code as the only accessible name.",
-      "correction": "Add Field.Label or aria-label to the Trigger and keep the value as the selected value."
-    },
-    {
-      "mistake": "Using Select as a language-navigation implementation that detects, stores, or routes locales internally.",
-      "correction": "Let Select report the chosen value and connect those application responsibilities through onValueChange."
-    },
-    {
-      "mistake": "Replacing the compound option anatomy with clickable custom rows.",
-      "correction": "Map data into Select.Item, Select.ItemText, and Select.ItemIndicator so Atom retains collection and accessibility ownership."
-    }
-  ],
-  "validation": [
-    "Confirm the Trigger has an accessible name distinct from its current value and exposes the expected combobox state.",
-    "Test keyboard opening, typeahead, selection, Escape dismissal, focus return, and disabled-option skipping.",
-    "Confirm a controlled onValueChange reports the selected value once without embedding application side effects in the component.",
-    "Check long localized option labels, narrow viewports, zoom, RTL, dark appearance, and forced colors.",
-    "Compare Trigger height, typography, icon scale, radius, and baseline with adjacent button-like controls at the same size."
-  ],
-  "related": [
-    "@flowstack-ui/atom/agents/select",
-    "field",
-    "form",
-    "radio-group",
-    "combobox",
-    "multi-select",
-    "dropdown-menu"
-  ]
+  "commonMistakes": [{"mistake": "Using placeholder or a selected code as the only name, omitting ItemText, rendering both popup owners, or rebuilding options as clickable rows.", "correction": "Name Trigger separately and preserve one Atom-owned popup with registered stable Items and ItemText."}, {"mistake": "Using Select for multiple or editable choice, commands, navigation rows, or hidden application state and effects.", "correction": "Choose MultiSelect, Combobox, DropdownMenu, or Link and connect legitimate value effects through onValueChange."}],
+  "validation": ["Verify Trigger naming and Field relationships, controlled and uncontrolled value and open state, placeholder and closed selected label, pointer/touch and keyboard opening, active descendant, Home/End, typeahead, selection, disabled Items, Tab, Escape, outside activation, and focus return.", "Verify hidden native options and submission, required inline/native validity, external form, reset, groups and labels, Viewport and scroll buttons, Portal and non-Portal paths, Arrow placement, direction, collision handling, and nested modal ownership.", "Verify all sizes, long localized labels, narrow widths, zoom, RTL, touch targets, light and dark appearance, forced colors, and alignment with adjacent button-like controls."],
+  "related": [{"kind": "package", "package": "@flowstack-ui/atom", "id": "select", "versionPolicy": "installed-exact"}, {"kind": "package", "package": "@flowstack-ui/atom", "id": "listbox", "versionPolicy": "installed-exact"}, "field", "form", "radio-group", "combobox", "multi-select", "dropdown-menu", "link"]
 }

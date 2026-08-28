@@ -28,6 +28,7 @@ Coordinate related multi-selection with structured item labels, optional descrip
 - **MUST:** Supply Parent allValues explicitly from the selectable declared set and do not include disabled choices or derive the set from DOM children.
 - **MUST:** Use the vertical default for scan-heavy groups and horizontal only when wrapped reading order remains clear under narrow widths, zoom, and localization.
 - **MUST:** Keep required or invalid messaging at group scope when any eligible option can satisfy the requirement; do not paint every Item as individually invalid.
+- **MUST:** Preserve disabled and read-only Items, one-or-more required validity, first-enabled validation focus, Fieldset relationships, named repeated-value submission, external form association, and uncontrolled reset.
 - **MUST:** Load styles.css or core.css plus checkbox-group.css and any Fieldset styles used.
 
 ## Common mistakes
@@ -49,4 +50,7 @@ Coordinate related multi-selection with structured item labels, optional descrip
 - `checkbox`
 - `fieldset`
 - `radio-group`
+- `toggle-group`
+- `select`
 - `combobox`
+- `form`

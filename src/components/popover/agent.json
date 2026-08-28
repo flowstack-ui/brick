@@ -5,72 +5,40 @@
   "package": "@flowstack-ui/brick",
   "layer": "brick",
   "kind": "component",
-  "purpose": "Present a compact click-open panel anchored to a trigger while Atom owns placement, focus, dismissal, and portal behavior.",
-  "useWhen": [
-    "A trigger needs a small contextual panel for details, filters, or compact editing that does not block the rest of the page."
-  ],
+  "purpose": "Present a finished compact click-open interactive panel anchored to a trigger or explicit anchor while Atom owns placement, dismissal, focus, portal, and optional modal behavior.",
+  "useWhen": ["A trigger needs a small contextual panel for details, filters, or compact editing that belongs near its point of invocation."],
   "avoidWhen": [
-    {
-      "condition": "The content is short noninteractive help, a hover preview, or a task that must create a modal boundary.",
-      "useInstead": "Tooltip, HoverCard, or Dialog according to the interaction"
-    }
+    {"condition": "The content is noninteractive help, a passive hover preview, a command or option collection, or a larger blocking task.", "useInstead": "Tooltip, HoverCard, Menu, Select or Combobox, or Dialog"},
+    {"condition": "The task should enter from a screen edge or remain as persistent page content.", "useInstead": "Drawer or an in-page Brick composition"}
   ],
   "composition": [
-    "Compose Root > Trigger plus Portal > Content; place Title and Description when they clarify the panel, arrange authored content through Header, Body, Footer, and Close as needed, and use density=compact for concise utility panels.",
-    "When a local Appearance scope owns the trigger, portal into that scope or apply the same Appearance to Content because ordinary portal ancestry does not preserve the local theme boundary."
+    "Compose Popover.Root with Popover.Trigger and Popover.Portal; add Popover.Anchor only when positioning must reference an element other than Trigger. Inside Popover.Content, arrange Header with Title and optional Description, Body, Footer, and Close as needed; keep Arrow as a direct Content child.",
+    "Use density=compact for concise filter and utility panels. When a local Appearance scope owns the trigger, portal into that scope or apply the same Appearance to Content because ordinary portal ancestry does not preserve the local theme boundary."
   ],
   "rules": [
-    {
-      "id": "popover-density",
-      "level": "must",
-      "statement": "Use the comfortable default for ordinary contextual work and density=compact for concise notification, filter, and utility panels; do not recreate compact rhythm with private selectors."
-    },
-    {
-      "id": "popover-click-context",
-      "level": "must",
-      "statement": "Use Popover for compact nonmodal click-open work; do not use it for a blocking workflow or as a substitute for persistent page content."
-    },
-    {
-      "id": "popover-complete-anatomy",
-      "level": "must",
-      "statement": "Keep Trigger and portalled Content inside one Root and use the public structure parts instead of recreating panel spacing and hierarchy with private selectors."
-    },
-    {
-      "id": "popover-theme-scope",
-      "level": "must",
-      "statement": "When Content leaves a local appearance or theme scope through Portal, reproduce that scope on the portalled visual root or target a container inside it."
-    },
-    {
-      "id": "popover-accessible-context",
-      "level": "must",
-      "statement": "Give the trigger a complete accessible name and include Title or Description when the panel purpose would otherwise be unclear."
-    },
-    {
-      "id": "popover-surface-integrity",
-      "level": "must",
-      "statement": "Keep Content and Arrow on the finished Popover surface contract so they share background and border paint; do not independently recolor or offset the Arrow."
-    },
-    {
-      "id": "popover-css",
-      "level": "must",
-      "statement": "Load styles.css or core.css plus popover.css."
-    }
+    {"id": "popover-click-context", "level": "must", "statement": "Use Brick Popover for compact click-open interactive work; choose Menu, Select, or Combobox when the panel's job is command or option selection, and Dialog for a larger blocking workflow."},
+    {"id": "popover-complete-anatomy", "level": "must", "statement": "Keep Trigger and portalled Content inside one Root, use Anchor only for a distinct positioning reference, and use the public structure parts instead of recreating panel spacing or hierarchy with private selectors."},
+    {"id": "popover-accessible-name", "level": "must", "statement": "Give Content an accessible name with one visible Title or an explicit native aria-label or aria-labelledby; add Description or native aria-describedby only when descriptive text is present."},
+    {"id": "popover-modal-choice", "level": "must", "statement": "Keep the default non-modal behavior for ordinary attached work; set modal only when the compact panel must trap focus, isolate the background, and lock document scrolling."},
+    {"id": "popover-visible-close", "level": "must", "statement": "Provide a visible Close when modal is enabled or when outside interaction, Escape, and trigger toggling do not make the dismissal path obvious."},
+    {"id": "popover-focus-dismissal", "level": "must", "statement": "Use the owned initial and final focus targets and onInteractOutside preventDefault contract when customization is required; do not replace Atom's focus-out, Escape, completed-interaction, restoration, and nested-layer handling."},
+    {"id": "popover-density", "level": "must", "statement": "Use the comfortable default for ordinary contextual work and density=compact for concise filter and utility panels; do not recreate compact rhythm with private selectors."},
+    {"id": "popover-theme-scope", "level": "must", "statement": "When Content leaves a local Appearance scope through Portal, reproduce that scope on the portalled visual root or target a container inside it."},
+    {"id": "popover-positioning-arrow", "level": "must", "statement": "Style from resolved data-side and available-size variables, keep Arrow as a direct Content child, and preserve its shared border and surface paint instead of assuming requested placement or independently recoloring it."},
+    {"id": "popover-responsive", "level": "should", "statement": "Keep the panel compact and verify collision shifts and flips, constrained scrolling, action reachability, zoom, touch input, narrow viewports, and LTR and RTL placement."},
+    {"id": "popover-css", "level": "must", "statement": "Load styles.css or core.css plus popover.css."}
   ],
   "commonMistakes": [
-    {
-      "mistake": "Hand-positioning a floating div, assuming a portalled panel inherits a nearby theme scope, or putting a modal task in Popover.",
-      "correction": "Use complete Popover anatomy, make the portal scope explicit, and choose Dialog when focus must remain inside the task."
-    }
+    {"mistake": "Hand-positioning a floating div, using Popover for a menu or tooltip, forcing it modal for every utility panel, or closing it with ad hoc document listeners.", "correction": "Choose by interaction job, use complete Popover anatomy, keep ordinary popovers non-modal, and use the preventable outside-interaction contract."},
+    {"mistake": "Assuming portalled Content inherits a nearby Appearance scope or placing Arrow inside an authored viewport wrapper.", "correction": "Make the portal scope explicit and keep Arrow directly under Content so placement and finished surface paint remain intact."}
   ],
   "validation": [
-    "Check trigger naming, open and close behavior, focus return, Escape and outside dismissal, centered and edge collision placement, Arrow attachment at every supported radius, zoom, narrow viewports, and RTL.",
-    "Check light and dark appearance on the actual portalled Content and confirm the matching CSS is loaded."
+    "Verify trigger and Content naming, controlled and disabled state, keyboard, pointer, and touch opening, initial focus, Tab behavior, Close, Escape, outside interaction, focus-out dismissal, outside focus destination, and trigger restoration.",
+    "Verify explicit Anchor positioning, collision shifts and flips at every supported side, LTR and RTL, available-size variables, direct Arrow geometry, constrained scrolling, nested portalled controlled layers, zoom, and narrow viewports.",
+    "When modal is enabled, verify a visible close path, focus containment, background isolation, scroll lock, and exit presence; check light and dark Appearance on actual portalled Content and required CSS."
   ],
   "related": [
-    "dialog",
-    "hover-card",
-    "tooltip",
-    "appearance",
-    "stack"
+    {"kind": "package", "package": "@flowstack-ui/atom", "id": "popover", "versionPolicy": "installed-exact"},
+    "dialog", "drawer", "dropdown-menu", "select", "combobox", "hover-card", "tooltip", "appearance"
   ]
 }

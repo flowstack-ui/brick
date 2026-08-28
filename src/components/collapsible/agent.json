@@ -46,6 +46,16 @@
       "statement": "Use Collapsible for in-flow disclosure, not as a substitute for modal Drawer behavior or responsive Show/Hide policy."
     },
     {
+      "id": "collapsible-presence",
+      "level": "must",
+      "statement": "Leave keepMounted false unless retained DOM or exit animation is required; when enabled, preserve Atom's closed hidden state and never expose retained descendants to interaction."
+    },
+    {
+      "id": "collapsible-live-measurement",
+      "level": "must",
+      "statement": "Consume Atom's live content width and height variables for Brick motion across responsive reflow and intrinsic content changes; never hard-code a stale measured dimension or animate a competing wrapper."
+    },
+    {
       "id": "collapsible-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus collapsible.css."
@@ -81,10 +91,11 @@
   ],
   "validation": [
     "Test the accessible Trigger name, aria-expanded/aria-controls relationship, Enter and Space, controlled and uncontrolled state, disabled behavior, focus retention, the default down/up Indicator state, and icon-only centering.",
-    "Test open/close measurement, dynamic content, reduced motion, long labels, narrow widths, RTL, and horizontal overflow.",
+    "Test default unmount, keepMounted hidden descendants, initial-open state, open/close measurement, dynamic and responsive width/height changes, exit presence, reduced motion, long labels, narrow widths, RTL, and horizontal overflow without unintended page-load entrance motion.",
     "When adapting Collapsible inside another surface, report any Root geometry override instead of silently treating plain as a behavior-only recipe."
   ],
   "related": [
+    { "kind": "package", "package": "@flowstack-ui/atom", "id": "collapsible", "versionPolicy": "installed-exact" },
     "accordion",
     "drawer",
     "app-bar",

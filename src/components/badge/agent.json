@@ -25,6 +25,11 @@
       "statement": "Keep Badge passive; do not add click, press, selection, or disclosure behavior to it."
     },
     {
+      "id": "badge-context-live",
+      "level": "must",
+      "statement": "Keep every count or status understandable from visible text or its owning control without relying on color, shape, or placement, and never assume Badge announces changes or joins a sibling control name automatically."
+    },
+    {
       "id": "badge-inherited-text",
       "level": "must",
       "statement": "When composing Text inside Badge, use tone=inherit unless that Text intentionally communicates a separate semantic tone, so the Badge recipe continues to own foreground contrast."
@@ -61,6 +66,7 @@
     "Confirm nested Text inherits the Badge foreground, circle geometry remains exactly square, and CSS is loaded."
   ],
   "related": [
+    { "kind": "package", "package": "@flowstack-ui/atom", "id": "badge", "versionPolicy": "installed-exact" },
     "text",
     "icon",
     "notification-badge",

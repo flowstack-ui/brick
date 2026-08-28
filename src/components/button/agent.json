@@ -7,5 +7,5 @@
   "rules": [{ "id": "button-semantics", "level": "must", "statement": "Use action mode for operations and href link mode for emphasized destinations; visual prominence never justifies hiding navigation in onPress." }, { "id": "button-css", "level": "must", "statement": "Load styles.css or core.css plus button.css." }],
   "commonMistakes": [{ "mistake": "Navigating from onPress without a real href.", "correction": "Use Button href mode for emphasized navigation or Link for ordinary navigation." }],
   "validation": ["Confirm an accessible name and action semantics.", "Test focus, keyboard activation, disabled/loading behavior, and contrast in every supported appearance; disabled labels must remain readable while ghost and outline controls stay transparent."],
-  "related": ["@flowstack-ui/atom/agents/button", "link", "form"]
+  "related": [{ "kind": "package", "package": "@flowstack-ui/atom", "id": "button", "versionPolicy": "installed-exact" }, "link", "form"]
 }

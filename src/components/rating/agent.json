@@ -36,6 +36,21 @@
       "statement": "Provide one visible Field label for an input Rating or a complete accessible name for a standalone Root."
     },
     {
+      "id": "rating-scale-clear",
+      "level": "must",
+      "statement": "Use a valid ordered min and max, positive step, and Item endpoint values; keep repeated selection stable by default and enable allowClear only when clearing to the minimum is intentional."
+    },
+    {
+      "id": "rating-input-behavior",
+      "level": "must",
+      "statement": "Preserve one focusable slider Root with decorative Items, one-pointer capture, cross-item dragging, vertical page scrolling, cancellation rollback, lost-capture finalization, keyboard steps, and horizontal LTR and RTL behavior."
+    },
+    {
+      "id": "rating-form-state",
+      "level": "must",
+      "statement": "Preserve disabled, read-only, invalid, required-above-minimum validity, Field relationships, named hidden submission, validation focus, and uncontrolled form reset for input Rating."
+    },
+    {
       "id": "rating-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus rating.css."
@@ -61,8 +76,10 @@
     "Confirm CSS is loaded."
   ],
   "related": [
+    { "kind": "package", "package": "@flowstack-ui/atom", "id": "rating", "versionPolicy": "installed-exact" },
     "field",
     "slider",
+    "radio-group",
     "progress",
     "badge"
   ]

@@ -18,6 +18,21 @@ and human-readable Markdown. Read `layer-selection` and
 @flowstack-ui/brick/agents/interface-composition.md
 ```
 
+Use `@flowstack-ui/brick/agents/coverage.json` to inspect the exact released
+catalog behind that manifest. The `flowstack.agent-coverage.v1` report lists
+every public component owner and surface, its documentation and Agent
+Knowledge ownership, explicit source-only exclusions, and structured package
+guide destinations. Its package version matches the installed Brick version.
+Complete releases have equal `componentOwners` and `guidedComponentOwners`,
+100 percent classified public surfaces, and no invalid exclusion or unresolved
+selection destination.
+
+Structured external references use `versionPolicy: "installed-exact"`. Release
+verification resolves the installed dependency's Agent Knowledge manifest and
+checks that the referenced JSON artifact declares the expected ID, package,
+and layer. Build, check, pack, consumer, and publication verification reject a
+missing or mismatched installed external artifact.
+
 The source pair lives beside the component it describes. `agent.json` is the
 structured authority and `agent.md` is generated from it. Brick guidance adds
 finished visual and CSS decisions while referring behavioral ownership to
@@ -28,6 +43,10 @@ Package-level guide sources live under `agents/guides/`. They use
 `flowstack.agent-guide.v1`; component sources continue to use
 `flowstack.agent-component.v1`. Manifest `guides` is additive, so consumers
 that already read only `components` remain compatible.
+
+Package guide selection entries also include structured component, guide,
+package, or native/application destinations. Agents should resolve those IDs
+instead of treating the human-readable `use` sentence as a foreign key.
 
 For a finished Brick interface, search Brick before writing native layout,
 typography, media, navigation, visibility, or control replacements. Ordinary

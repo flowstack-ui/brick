@@ -4,6 +4,8 @@ Context Menu follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Fixed
 
 - Default `md` command rows now use Brick's shared 44px comfortable target;
@@ -22,4 +24,7 @@ Context Menu follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for supplemental command discovery, paintless
+  target composition, contextual input, accessible naming, shared menu
+  behavior, and exact installed Atom ContextMenu and Menu references.
 - Added the complete styled Context Menu family with a paintless trigger region, three popup sizes, structured rows, choices, nested menus, and touch-context support through Atom.

@@ -7,5 +7,5 @@
   "rules": [{ "id": "textarea-label", "level": "must", "statement": "Use a persistent accessible label." }, { "id": "textarea-css", "level": "must", "statement": "Load styles.css or core.css plus textarea.css and field.css when composed with Field." }],
   "commonMistakes": [{ "mistake": "Using a single-line Input for long freeform content.", "correction": "Use Textarea and allow a usable multi-line measure." }],
   "validation": ["Inspect label, name, and messaging relationships.", "Test multi-line entry, resize policy, narrow widths, invalid/disabled states, and contrast."],
-  "related": ["@flowstack-ui/atom/agents/textarea", "field", "input"]
+  "related": [{ "kind": "package", "package": "@flowstack-ui/atom", "id": "textarea", "versionPolicy": "installed-exact" }, "field", "input"]
 }

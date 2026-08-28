@@ -311,6 +311,25 @@ for (const componentId of requested) {
       );
     }
   }
+
+  if (componentId === "hover-card") {
+    const quickStart = documentation.match(
+      /## Quick start\n([\s\S]*?)\n## Anatomy and DOM ownership/,
+    )?.[1];
+    if (/<HoverCard\.Trigger\b[^>]*\bhref\s*=/u.test(quickStart ?? "")) {
+      failures.push(
+        "hover-card: quick start must not pass href to the default span-backed Trigger",
+      );
+    }
+    if (
+      !/<HoverCard\.Trigger\s+asChild>/u.test(quickStart ?? "")
+      || !/<(?:a|Link)\s+href=/u.test(quickStart ?? "")
+    ) {
+      failures.push(
+        "hover-card: quick start must compose Trigger asChild around a real anchor or Link",
+      );
+    }
+  }
 }
 
 for (const componentId of componentIds) {

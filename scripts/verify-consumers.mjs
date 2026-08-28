@@ -14,10 +14,17 @@ const tarballArgument = process.argv.indexOf("--tarball");
 const suppliedTarball = tarballArgument === -1
   ? undefined
   : process.argv[tarballArgument + 1];
+const atomTarballArgument = process.argv.indexOf("--atom-tarball");
+const suppliedAtomTarball = atomTarballArgument === -1
+  ? process.env.FLOWSTACK_ATOM_TARBALL
+  : process.argv[atomTarballArgument + 1];
 const commandTimeoutMs = 180_000;
 
 if (tarballArgument !== -1 && !suppliedTarball) {
   throw new Error("--tarball requires an archive path");
+}
+if (atomTarballArgument !== -1 && !suppliedAtomTarball) {
+  throw new Error("--atom-tarball requires an archive path");
 }
 
 function run(command, args, cwd) {
@@ -41,6 +48,22 @@ function run(command, args, cwd) {
 }
 
 try {
+  const atomInstallTarget = suppliedAtomTarball
+    ? resolve(suppliedAtomTarball)
+    : `@flowstack-ui/atom@${atomVersion}`;
+  if (suppliedAtomTarball) {
+    const atomPackageSource = run(
+      "tar",
+      ["-xOf", atomInstallTarget, "package/package.json"],
+      packageRoot,
+    );
+    const atomPackage = JSON.parse(atomPackageSource);
+    if (atomPackage.name !== "@flowstack-ui/atom" || atomPackage.version !== atomVersion) {
+      throw new Error(`Atom release archive must be @flowstack-ui/atom@${atomVersion}`);
+    }
+    console.log(`Using Atom release archive ${basename(atomInstallTarget)} for clean React consumer verification...`);
+  }
+
   let tarball;
   if (suppliedTarball) {
     tarball = resolve(suppliedTarball);
@@ -226,6 +249,30 @@ if (!SubpathTooltip || Object.keys(SubpathTooltip).length !== 8) throw new Error
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
 const themeContract = JSON.parse(await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/theme-contract.json")), "utf8"));
 if (themeContract.$schema !== "flowstack.brick-theme-contract.v1" || themeContract.package.name !== "@flowstack-ui/brick") throw new Error("Theme contract export is invalid");
+const agentManifest = JSON.parse(await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/agents/manifest.json")), "utf8"));
+const agentCoverage = JSON.parse(await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/agents/coverage.json")), "utf8"));
+if (agentManifest.schema !== "flowstack.agent-manifest.v1" || agentManifest.package !== "@flowstack-ui/brick") throw new Error("Agent Knowledge manifest export is invalid");
+if (agentManifest.coverage !== "./coverage.json") throw new Error("Agent Knowledge manifest does not link coverage");
+if (agentCoverage.schema !== "flowstack.agent-coverage.v1" || agentCoverage.package !== agentManifest.package || agentCoverage.packageVersion !== agentManifest.packageVersion) throw new Error("Agent Knowledge coverage export is invalid");
+if (agentCoverage.summary.guidedComponentOwners !== agentCoverage.summary.componentOwners || agentCoverage.summary.unclassified !== 0 || agentCoverage.summary.invalidExclusions !== 0 || agentCoverage.summary.unresolvedSelections !== 0) throw new Error("Installed Agent Knowledge catalog is incomplete");
+if (agentCoverage.failures.length !== 0) throw new Error("Installed Agent Knowledge catalog contains failures");
+if (agentCoverage.components.map((entry) => entry.id).sort().join(",") !== agentManifest.components.map((entry) => entry.id).sort().join(",")) throw new Error("Installed Agent Knowledge catalog differs from the manifest");
+for (const entry of [...agentManifest.components, ...agentManifest.guides]) {
+  const artifact = JSON.parse(await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/agents/" + entry.id + ".json")), "utf8"));
+  if (artifact.id !== entry.id || artifact.package !== agentManifest.package || artifact.layer !== "brick") throw new Error("Installed Agent Knowledge artifact is invalid: " + entry.id);
+  await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/agents/" + entry.id + ".md")), "utf8");
+}
+for (const component of agentCoverage.components) {
+  for (const subpath of component.publicSubpaths) {
+    const module = await import("@flowstack-ui/brick" + subpath.slice(1));
+    for (const symbol of component.publicValueSymbols) if (!(symbol in module)) throw new Error("Missing installed component symbol: " + component.id + "#" + symbol);
+  }
+}
+const rootModule = await import("@flowstack-ui/brick");
+for (const surface of agentCoverage.surfaces.filter((entry) => entry.surface.startsWith(".#") && entry.value)) {
+  const symbol = surface.surface.slice(2);
+  if (!(symbol in rootModule)) throw new Error("Missing installed root symbol: " + symbol);
+}
 const coreCss = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles/core.css", import.meta.url), "utf8");
 const buttonCss = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles/button.css", import.meta.url), "utf8");
 if (!coreCss.includes("--brick-color-accent-solid") || !coreCss.includes("brick.foundations") || !coreCss.includes(":where(body)") || coreCss.includes(".brick-button")) throw new Error("Modular core CSS export is invalid");
@@ -424,7 +471,7 @@ void textProps;
         "--ignore-scripts",
         "--save-exact",
         tarball,
-        `@flowstack-ui/atom@${atomVersion}`,
+        atomInstallTarget,
         `react@${reactVersion}`,
         `react-dom@${reactVersion}`,
         `@types/react@${reactMajor}`,

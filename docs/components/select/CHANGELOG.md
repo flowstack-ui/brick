@@ -4,6 +4,8 @@ Select follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Fixed
 
 - Aligned Select Trigger typography with Button, Toggle, ToggleGroup, and other
@@ -20,6 +22,9 @@ Select follows the package version of `@flowstack-ui/brick`.
 - Added public Select Agent Knowledge covering component selection, required
   compound anatomy, accessible naming, controlled application effects, common
   mistakes, and validation.
+- Expanded Select Agent Knowledge with the Atom-owned value/open model,
+  trigger/listbox and native-form contracts, popup overflow anatomy, responsive
+  appearance checks, and the Brick gap boundary for persistent collections.
 - Initial compound Select API built on Atom Select 0.9.3 with complete styled
   anatomy, native forms, Field relationships, controlled/uncontrolled value
   and open state, groups, disabled options, scrolling, portal positioning, and

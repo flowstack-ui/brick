@@ -54,7 +54,19 @@ test("outline clipping, responsive overflow, RTL, preferences, and accessibility
   await page.setViewportSize({ width: 390, height: 844 });
   const container = page.locator("#scenario-tree-grid-stress .brick-tree-grid-container").first();
   expect(await container.evaluate(node => node.scrollWidth > node.clientWidth)).toBe(true);
-  expect(await page.locator("body").evaluate(node => node.scrollWidth <= node.clientWidth + 1)).toBe(true);
+  const containment = await container.evaluate(node => {
+    const boundary = node.getBoundingClientRect();
+    const parentBoundary = node.parentElement?.getBoundingClientRect();
+    return {
+      insideParent: parentBoundary
+        ? boundary.left >= parentBoundary.left - 1
+          && boundary.right <= parentBoundary.right + 1
+        : false,
+      insideViewport: boundary.left >= -1
+        && boundary.right <= document.documentElement.clientWidth + 1,
+    };
+  });
+  expect(containment).toEqual({ insideParent: true, insideViewport: true });
   const rtl = page.locator("#scenario-tree-grid-stress [dir=rtl] .brick-tree-grid");
   await expect(rtl).toHaveAttribute("dir", "rtl");
   await expect(rtl.locator("caption")).toHaveText("ملفات الإصدار");

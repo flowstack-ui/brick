@@ -11,7 +11,9 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
+  assert.equal(packageJson.version, "0.1.10");
   assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.24.0");
+  assert.deepEqual(packageJson.publishConfig, { access: "public" });
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
@@ -22,6 +24,7 @@ test("package metadata defines the public Brick boundary", async () => {
       default: "./dist/index.js",
     },
     "./agents/manifest.json": "./dist/agents/manifest.json",
+    "./agents/coverage.json": "./dist/agents/coverage.json",
     "./agents/*.json": "./dist/agents/*.json",
     "./agents/*.md": "./dist/agents/*.md",
     "./theme-contract.json": "./dist/theme-contract.json",
@@ -380,6 +383,26 @@ test("package metadata defines the public Brick boundary", async () => {
     .map(([path]) => path.slice(2))
     .sort();
   assert.deepEqual([...componentStyleNames].sort(), componentSubpaths);
+});
+
+test("release identity, changelog, dependency lock, and provenance stay aligned", async () => {
+  const [packageJsonSource, lockSource, changelog, workflow] = await Promise.all([
+    readFile(new URL("package.json", packageRoot), "utf8"),
+    readFile(new URL("package-lock.json", packageRoot), "utf8"),
+    readFile(new URL("CHANGELOG.md", packageRoot), "utf8"),
+    readFile(new URL(".github/workflows/publish.yml", packageRoot), "utf8"),
+  ]);
+  const packageJson = JSON.parse(packageJsonSource);
+  const packageLock = JSON.parse(lockSource);
+  const lockedRoot = packageLock.packages[""];
+  const lockedAtom = packageLock.packages["node_modules/@flowstack-ui/atom"];
+
+  assert.equal(packageLock.version, packageJson.version);
+  assert.equal(lockedRoot.version, packageJson.version);
+  assert.equal(lockedRoot.dependencies["@flowstack-ui/atom"], packageJson.dependencies["@flowstack-ui/atom"]);
+  assert.equal(lockedAtom.version, packageJson.dependencies["@flowstack-ui/atom"]);
+  assert.match(changelog, new RegExp(`^## ${packageJson.version} - 2026-08-28$`, "m"));
+  assert.match(workflow, /npm publish[^\n]+--provenance/u);
 });
 
 test("built package entrypoint can be imported without a CSS loader", async () => {

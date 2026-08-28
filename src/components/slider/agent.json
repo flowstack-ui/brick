@@ -41,6 +41,16 @@
       "statement": "Use an external application-owned output when dense ranges or long localized values would collide with a thumb ValueLabel."
     },
     {
+      "id": "slider-change-commit",
+      "level": "must",
+      "statement": "Use onValueChange for live updates and onValueCommit for completed interactions; true pointer cancellation restores the pointer-down value without commit while lost capture commits the latest value."
+    },
+    {
+      "id": "slider-input-direction",
+      "level": "must",
+      "statement": "Preserve one active pointer session, non-slider-axis page scrolling, orientation-aware keys, and horizontal LTR and RTL pointer and Arrow behavior."
+    },
+    {
       "id": "slider-track-inset",
       "level": "should",
       "statement": "Keep the default Track inset when a parent clips overflow; set the public Track-inset token to zero only when the surrounding composition preserves complete endpoint target and focus paint."
@@ -62,9 +72,12 @@
     "Check horizontal and vertical orientation, RTL, narrow containment, complete 44px endpoint targets, any customized Track inset, zoom, reduced motion, forced colors, and label readability."
   ],
   "related": [
+    { "kind": "package", "package": "@flowstack-ui/atom", "id": "slider", "versionPolicy": "installed-exact" },
     "field",
     "number-input",
     "select",
-    "progress"
+    "progress",
+    "rating",
+    "form"
   ]
 }

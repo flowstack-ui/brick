@@ -4,8 +4,13 @@ Toggle follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Added
 
+- Expanded public Agent Knowledge for persistent-command selection, stable
+  naming, controlled pressed state, composition, and the exact installed Atom
+  Toggle reference.
 - Added `accent` and `neutral` selected-state tones without introducing
   semantic status tones.
 - Initial direct Toggle API with solid, soft, outline, and ghost variants.

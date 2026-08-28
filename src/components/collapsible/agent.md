@@ -25,6 +25,8 @@ Reveal one independent in-flow region while Atom owns disclosure state, relation
 - **MUST:** Let Collapsible Trigger own its finished control recipe; do not compose Button or Icon Button into Trigger because competing visual recipes would own one element.
 - **MUST:** Keep visible padding in ContentInner rather than Content so Atom can measure and animate the region accurately.
 - **MUST:** Use Collapsible for in-flow disclosure, not as a substitute for modal Drawer behavior or responsive Show/Hide policy.
+- **MUST:** Leave keepMounted false unless retained DOM or exit animation is required; when enabled, preserve Atom's closed hidden state and never expose retained descendants to interaction.
+- **MUST:** Consume Atom's live content width and height variables for Brick motion across responsive reflow and intrinsic content changes; never hard-code a stale measured dimension or animate a competing wrapper.
 - **MUST:** Load styles.css or core.css plus collapsible.css.
 - **MUST:** Keep the default Indicator pointing down while closed and up while open in both LTR and RTL; use custom decorative artwork only for a deliberate alternate state language.
 - **MUST:** Use Trigger iconOnly instead of sizing a general Trigger with layout wrappers when the disclosure control contains only artwork.
@@ -39,11 +41,12 @@ Reveal one independent in-flow region while Atom owns disclosure state, relation
 ## Validation checklist
 
 - Test the accessible Trigger name, aria-expanded/aria-controls relationship, Enter and Space, controlled and uncontrolled state, disabled behavior, focus retention, the default down/up Indicator state, and icon-only centering.
-- Test open/close measurement, dynamic content, reduced motion, long labels, narrow widths, RTL, and horizontal overflow.
+- Test default unmount, keepMounted hidden descendants, initial-open state, open/close measurement, dynamic and responsive width/height changes, exit presence, reduced motion, long labels, narrow widths, RTL, and horizontal overflow without unintended page-load entrance motion.
 - When adapting Collapsible inside another surface, report any Root geometry override instead of silently treating plain as a behavior-only recipe.
 
 ## Related guidance
 
+- `@flowstack-ui/atom/agents/collapsible`
 - `accordion`
 - `drawer`
 - `app-bar`

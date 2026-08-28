@@ -93,6 +93,7 @@ try {
     "docs/guides/agent-knowledge.md",
     "docs/guides/browser-support.md",
     "dist/agents/manifest.json",
+    "dist/agents/coverage.json",
     "dist/theme-contract.json",
     "docs/guides/theme-contract.md",
     "package.json",
@@ -124,6 +125,7 @@ try {
   const packageJson = JSON.parse(await readPackedFile("package.json"));
   assert.equal(packageJson.repository.url, "git+https://github.com/flowstack-ui/brick.git");
   const agentManifest = JSON.parse(await readPackedFile("dist/agents/manifest.json"));
+  const agentCoverage = JSON.parse(await readPackedFile("dist/agents/coverage.json"));
   const themeContract = JSON.parse(await readPackedFile("dist/theme-contract.json"));
   assert.equal(themeContract.$schema, "flowstack.brick-theme-contract.v1");
   assert.equal(themeContract.contractVersion, 4);
@@ -131,6 +133,38 @@ try {
   assert.equal(themeContract.contrast.pairs.length, 91);
   assert.equal(packageJson.exports["./theme-contract.json"], "./dist/theme-contract.json");
   assert.equal(agentManifest.package, packageJson.name);
+  assert.equal(agentManifest.packageVersion, packageJson.version);
+  assert.equal(agentManifest.coverage, "./coverage.json");
+  assert.equal(agentCoverage.schema, "flowstack.agent-coverage.v1");
+  assert.equal(agentCoverage.package, packageJson.name);
+  assert.equal(agentCoverage.packageVersion, packageJson.version);
+  assert.equal(packageJson.exports["./agents/coverage.json"], "./dist/agents/coverage.json");
+  assert.equal(agentCoverage.summary.unclassified, 0);
+  assert.equal(agentCoverage.summary.invalidExclusions, 0);
+  assert.equal(agentCoverage.summary.unresolvedSelections, 0);
+  assert.equal(agentCoverage.summary.guidedComponentOwners, agentCoverage.summary.componentOwners);
+  assert.equal(agentCoverage.failures.length, 0);
+  assert.ok(agentCoverage.surfaces.some(({ surface, classification }) => surface === "." && classification === "aggregate"));
+  assert.ok(Array.isArray(agentCoverage.nativeApplicationDestinations));
+  for (const component of agentCoverage.components) {
+    const manifestRecord = agentManifest.components.find(({ id }) => id === component.id);
+    assert.ok(manifestRecord, `coverage component is absent from manifest: ${component.id}`);
+    assert.deepEqual(component.manifestPaths, { json: manifestRecord.json, markdown: manifestRecord.markdown });
+    assert.equal(typeof component.agentSources?.json, "string");
+    assert.equal(typeof component.agentSources?.markdown, "string");
+    assert.ok(Array.isArray(component.publicValueSymbols));
+  }
+  for (const guide of agentCoverage.guides) {
+    const manifestRecord = agentManifest.guides.find(({ id }) => id === guide.id);
+    assert.ok(manifestRecord, `coverage guide is absent from manifest: ${guide.id}`);
+    assert.deepEqual(guide.manifestPaths, { json: manifestRecord.json, markdown: manifestRecord.markdown });
+    assert.equal(typeof guide.agentSources?.json, "string");
+    assert.equal(typeof guide.agentSources?.markdown, "string");
+  }
+  assert.deepEqual(
+    agentCoverage.components.map(({ id }) => id).sort(),
+    agentManifest.components.map(({ id }) => id).sort(),
+  );
   assert.ok(agentManifest.components.length > 0, "Agent Knowledge manifest is empty");
   for (const requiredComponent of ["accordion", "list", "select"]) {
     assert.ok(
@@ -141,6 +175,20 @@ try {
   for (const component of agentManifest.components) {
     assert.ok(files.has(`dist/agents/${component.id}.json`));
     assert.ok(files.has(`dist/agents/${component.id}.md`));
+    const artifact = JSON.parse(await readPackedFile(`dist/agents/${component.id}.json`));
+    assert.equal(artifact.schema, "flowstack.agent-component.v1");
+    assert.equal(artifact.id, component.id);
+    assert.equal(artifact.package, packageJson.name);
+    assert.equal(artifact.layer, "brick");
+  }
+  for (const guide of agentManifest.guides) {
+    assert.ok(files.has(`dist/agents/${guide.id}.json`));
+    assert.ok(files.has(`dist/agents/${guide.id}.md`));
+    const artifact = JSON.parse(await readPackedFile(`dist/agents/${guide.id}.json`));
+    assert.equal(artifact.schema, "flowstack.agent-guide.v1");
+    assert.equal(artifact.id, guide.id);
+    assert.equal(artifact.package, packageJson.name);
+    assert.equal(artifact.layer, "brick");
   }
 
   const publicMarkdown = [

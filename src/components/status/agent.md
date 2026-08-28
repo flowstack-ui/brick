@@ -37,4 +37,4 @@ Present a compact passive state with a semantic indicator and readable label, or
 - `notification-badge`
 - `avatar`
 - `progress`
-- `alert`
+- `toast`

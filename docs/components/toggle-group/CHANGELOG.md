@@ -4,8 +4,13 @@ Toggle Group follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Added
 
+- Expanded public Agent Knowledge for pressed-command group selection, value
+  shapes, unique items, roving focus, responsive ownership, and the exact
+  installed Atom ToggleGroup reference.
 - Added shared `accent` and `neutral` selected-state tones on Root.
 - Initial single- and multiple-selection `Root` and `Item` compound API.
 - Separated, wrapping, attached, full-width, horizontal, and vertical layouts

@@ -12,7 +12,12 @@ Before publishing a package version:
    coverage, the packed application Consumer, and the CSS-size report. Review
    Chromium visual diffs explicitly.
 4. Confirm the clean React 18 and React 19 progress log completed both runtime
-   and type-consumer checks.
+   and type-consumer checks. Before the exact Atom dependency is published,
+   pass its closed candidate archive to `verify:consumers:built` after `--` as
+   `--atom-tarball /absolute/path/to/atom.tgz`; the verifier rejects a package
+   name or version that does not match Brick's exact dependency. Set the same
+   absolute path in `FLOWSTACK_ATOM_TARBALL` when running the complete
+   repository or release command graph locally.
 5. Complete each affected component's numbered manual protocol. Any required
    physical environment not used is `blocked`, never passed by inference.
 6. Recalculate and visually inspect changed workbook sheets; verify the Index

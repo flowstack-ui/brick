@@ -4,6 +4,8 @@ Dialog follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Fixed
 
 - Inherited Atom's document-only scroll lock so sticky application chrome
@@ -14,6 +16,9 @@ Dialog follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for selecting, composing, styling, and
+  validating Dialog, including exact installed Atom Dialog and Modal
+  behavioral references.
 - Added logical Footer `justify` values for start, center, end, and
   space-between action distribution; end remains the default.
 - Initial modal-only twelve-part `Dialog` compound namespace with Root, Trigger, Portal,
