@@ -81,27 +81,63 @@ jobs:
           retention-days: 14
 
   browser-main:
-    name: browser (${{ matrix.project }})
+    name: browser (${{ matrix.label }})
     needs: package
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    # WebKit is intentionally restarted across 12 one-worker shards. Keep the
-    # job boundary large enough for the complete browser corpus.
-    timeout-minutes: 50
+    # WebKit keeps its 12 one-worker browser restarts, distributed across three
+    # independent job groups so one failed group can be rerun without repeating
+    # the other eight healthy shards.
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
         include:
           - project: chromium
             engine: chromium
+            label: chromium
+            shard_group: ""
+            artifact: chromium
           - project: firefox
             engine: firefox
-          - project: webkit
-            engine: webkit
+            label: firefox
+            shard_group: ""
+            artifact: firefox
           - project: mobile-chromium
             engine: chromium
+            label: mobile-chromium
+            shard_group: ""
+            artifact: mobile-chromium
+          - project: webkit
+            engine: webkit
+            label: webkit, group 1/3
+            shard_group: 1/3
+            artifact: webkit-1-of-3
+          - project: webkit
+            engine: webkit
+            label: webkit, group 2/3
+            shard_group: 2/3
+            artifact: webkit-2-of-3
+          - project: webkit
+            engine: webkit
+            label: webkit, group 3/3
+            shard_group: 3/3
+            artifact: webkit-3-of-3
           - project: mobile-webkit
             engine: webkit
+            label: mobile-webkit, group 1/3
+            shard_group: 1/3
+            artifact: mobile-webkit-1-of-3
+          - project: mobile-webkit
+            engine: webkit
+            label: mobile-webkit, group 2/3
+            shard_group: 2/3
+            artifact: mobile-webkit-2-of-3
+          - project: mobile-webkit
+            engine: webkit
+            label: mobile-webkit, group 3/3
+            shard_group: 3/3
+            artifact: mobile-webkit-3-of-3
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -117,10 +153,12 @@ jobs:
           path: playground/dist
       - run: npx playwright install --with-deps ${{ matrix.engine }}
       - run: npm run test:browser:release:project:built -- ${{ matrix.project }}
+        env:
+          FLOWSTACK_RELEASE_SHARD_GROUP: ${{ matrix.shard_group }}
       - if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: brick-playwright-${{ matrix.project }}
+          name: brick-playwright-${{ matrix.artifact }}
           path: |
             playwright-report/
             test-results/
