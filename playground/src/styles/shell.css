@@ -277,5 +277,6 @@
 
   .review-controls {
     position: static;
+    inline-size: 100%;
   }
 }

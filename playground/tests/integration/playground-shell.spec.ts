@@ -133,17 +133,18 @@ test("review controls remain content-sized in a stacked header", async ({
 test("review controls contain their overflow on narrow viewports", async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/button");
+  await page.setViewportSize({ width: 390, height: 844 });
 
   const panel = page.locator(".review-controls");
+  await expect.poll(() => page.locator("html").evaluate((element) => element.scrollWidth))
+    .toBeLessThanOrEqual(390);
   const sizes = await panel.evaluate((element) => ({
     clientWidth: element.clientWidth,
     scrollWidth: element.scrollWidth,
   }));
 
-  expect(await page.locator("html").evaluate((element) => element.scrollWidth))
-    .toBeLessThanOrEqual(390);
   expect(sizes.clientWidth).toBeLessThanOrEqual(390);
   expect(sizes.scrollWidth).toBeGreaterThan(sizes.clientWidth);
 
