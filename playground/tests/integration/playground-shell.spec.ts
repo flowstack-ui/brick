@@ -134,8 +134,10 @@ test("review controls contain their overflow on narrow viewports", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/button");
-  await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+  await page.goto("/text");
+  await page
+    .getByText("واجهة موثوقة تحافظ على وضوح المحتوى في المساحات الضيقة.")
+    .scrollIntoViewIfNeeded();
 
   const reviewHeader = page.locator(".evidence-review-header");
   const stickyPosition = await reviewHeader.evaluate((element) => ({
