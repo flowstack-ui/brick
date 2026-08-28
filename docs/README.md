@@ -66,6 +66,7 @@ This directory is the public documentation authority for
 
 ### Forms and choices
 
+- [Color Picker](components/color-picker/README.md) — Atom-backed hexadecimal editing, presets, native chooser, floating content, and form submission
 - [Form](components/form/README.md) — native submission boundary and form
   rhythm
 - [Field](components/field/README.md) — one labeled control and its

@@ -20,6 +20,17 @@ test("renders the release palette through the public Color Swatch subpath", asyn
   await expect(palette.getByRole("img", { name: "Release and review mix" })).toBeVisible();
 });
 
+test("edits a release accent through the packed Color Picker subpath", async ({ page }) => {
+  const form = page.getByRole("form", { name: "Publishing preferences" });
+  const input = form.getByRole("textbox", { name: "Release accent color" });
+  await form.getByRole("button", { name: "Choose release accent preset" }).click();
+  await page.getByRole("dialog", { name: "Release accent presets" }).getByRole("button", { name: "Use review rose" }).click();
+  await expect(input).toHaveValue("#d86f85");
+  await expect(form.locator("input[name='release-accent']")).toHaveValue("#d86f85");
+  await form.getByRole("button", { name: "Reset preferences" }).click();
+  await expect(input).toHaveValue("#6d5bd0");
+});
+
 test("composes Skip Link before repeated application chrome", async ({ page }) => {
   const root = page.getByRole("link", { name: "Skip to workspace content" });
   const target = page.getByRole("main");

@@ -60,6 +60,8 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - **visual count or presence dot over one owning element:** use NotificationBadge. Choose Badge for an in-flow passive label or count, Status for a named state, Button for an actionable count, and visible Text when the value must be announced or understood without the owner; NotificationBadge does not announce changes.
 - **compact identity for a named person, organization, or entity:** use Avatar. Choose Image for a larger editorial portrait and NotificationBadge only when the owning Avatar needs a separate visual count or presence indicator.
 - **short passive in-flow label, category, status, or count:** use Badge. Choose NotificationBadge for an overlaid count or dot, Status for richer named state semantics, and Button when the label is actionable.
+- **editable, selectable, or submitted opaque hexadecimal color:** use ColorPicker. Choose ColorSwatch for a passive preview; richer alpha, gradient, channel, eyedropper, and color-space editing remains an Atom-first gap.
+- **passive preview of one color or a compact color mix:** use ColorSwatch. Choose ColorPicker when the user must edit, select, or submit the value; keep interaction on a semantic owner.
 - **short assistive-only equivalent for meaning already conveyed visually:** use VisuallyHidden. Choose visible Text for essential instructions, state, errors, or announcements, and keep an IconButton or Button itself visible while placing the hidden equivalent inside it.
 - **approximate numeric value or ordered range through spatial manipulation:** use Slider. Choose NumberInput for exact entry, Progress for read-only completion, and Rating for a short ordered score.
 - **short ordered score input or recognizable passive score aggregate:** use Rating. Choose Slider for a general numeric setting and RadioGroup when choices have distinct categorical meanings.
@@ -135,6 +137,8 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - `notification-badge`
 - `avatar`
 - `badge`
+- `color-picker`
+- `color-swatch`
 - `visually-hidden`
 - `slider`
 - `rating`

@@ -28,8 +28,13 @@ test("Password field hover and shared focus frame match Input-family feedback", 
   });
 
   const rest = await state();
-  await root.hover();
-  await expect.poll(state).not.toEqual(rest);
+  const supportsHover = await page.evaluate(() =>
+    matchMedia("(hover: hover) and (pointer: fine)").matches
+  );
+  if (supportsHover) {
+    await root.hover();
+    await expect.poll(state).not.toEqual(rest);
+  }
   await input.focus();
   await expect.poll(settledFocusState).not.toBeNull();
   const inputFocus = await focusState();

@@ -88,6 +88,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/color-swatch.d.ts",
       default: "./dist/color-swatch.js",
     },
+    "./color-picker": {
+      types: "./dist/color-picker.d.ts",
+      default: "./dist/color-picker.js",
+    },
     "./toggle": {
       types: "./dist/toggle.d.ts",
       default: "./dist/toggle.js",
@@ -426,6 +430,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const avatar = await import(new URL("../../dist/avatar.js", import.meta.url));
   const status = await import(new URL("../../dist/status.js", import.meta.url));
   const colorSwatch = await import(new URL("../../dist/color-swatch.js", import.meta.url));
+  const colorPicker = await import(new URL("../../dist/color-picker.js", import.meta.url));
   const toggle = await import(new URL("../../dist/toggle.js", import.meta.url));
   const toggleGroup = await import(new URL("../../dist/toggle-group.js", import.meta.url));
   const tooltip = await import(new URL("../../dist/tooltip.js", import.meta.url));
@@ -573,6 +578,16 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "CollapsibleIndicator",
       "CollapsibleRoot",
       "CollapsibleTrigger",
+      "ColorPicker",
+      "ColorPickerContent",
+      "ColorPickerControl",
+      "ColorPickerHiddenInput",
+      "ColorPickerInput",
+      "ColorPickerLabel",
+      "ColorPickerNativeInput",
+      "ColorPickerRoot",
+      "ColorPickerSwatchTrigger",
+      "ColorPickerTrigger",
       "ColorSwatch",
       "ColorSwatchMix",
       "ColorSwatchRoot",
@@ -1029,6 +1044,16 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(colorSwatch.ColorSwatch, brick.ColorSwatch);
   assert.equal(colorSwatch.ColorSwatchRoot, brick.ColorSwatch.Root);
   assert.equal(colorSwatch.ColorSwatchMix, brick.ColorSwatch.Mix);
+  assert.equal(colorPicker.ColorPicker, brick.ColorPicker);
+  assert.equal(colorPicker.ColorPickerRoot, brick.ColorPicker.Root);
+  assert.equal(colorPicker.ColorPickerLabel, brick.ColorPicker.Label);
+  assert.equal(colorPicker.ColorPickerControl, brick.ColorPicker.Control);
+  assert.equal(colorPicker.ColorPickerInput, brick.ColorPicker.Input);
+  assert.equal(colorPicker.ColorPickerNativeInput, brick.ColorPicker.NativeInput);
+  assert.equal(colorPicker.ColorPickerHiddenInput, brick.ColorPicker.HiddenInput);
+  assert.equal(colorPicker.ColorPickerTrigger, brick.ColorPicker.Trigger);
+  assert.equal(colorPicker.ColorPickerContent, brick.ColorPicker.Content);
+  assert.equal(colorPicker.ColorPickerSwatchTrigger, brick.ColorPicker.SwatchTrigger);
   assert.equal(toggle.Toggle, brick.Toggle);
   assert.equal(toggleGroup.ToggleGroup, brick.ToggleGroup);
   assert.equal(toggleGroup.ToggleGroupRoot, brick.ToggleGroup.Root);
@@ -1397,7 +1422,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 87);
+  assert.equal(componentStyleNames.length, 88);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);

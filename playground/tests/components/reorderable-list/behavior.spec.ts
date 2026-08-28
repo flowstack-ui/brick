@@ -16,7 +16,7 @@ test("direct movement changes stable order once and retains focus", async ({ pag
   const scenario = page.locator("#scenario-reorderable-list-direct");
   const later = scenario.getByRole("button", { name: "Move Connect source later" });
   await later.focus();
-  await later.click();
+  await later.press("Enter");
   expect(await orderedValues(scenario)).toEqual(["configure", "connect", "verify", "launch"]);
   await expect(scenario.getByRole("button", { name: "Move Connect source later" })).toBeFocused();
   await expect(scenario.getByRole("button", { name: "Move Configure deployment earlier" })).toBeDisabled();
@@ -45,10 +45,56 @@ test("mouse drag commits on a valid item and abandons invalid space", async ({ p
   const scenario = page.locator("#scenario-reorderable-list-overview");
   const handle = scenario.getByRole("button", { name: "Reorder Connect source" });
   const target = scenario.locator('li[data-value="verify"]');
+  const viewport = page.viewportSize();
+  expect(viewport).not.toBeNull();
+  const [initialHandleBox, initialTargetBox, topInset] = await Promise.all([
+    handle.boundingBox(),
+    target.boundingBox(),
+    page.locator(".evidence-review-header").evaluate((element) => {
+      const position = getComputedStyle(element).position;
+      if (position !== "sticky" && position !== "fixed") return 0;
+      const bounds = element.getBoundingClientRect();
+      return Math.max(0, bounds.y + bounds.height);
+    }),
+  ]);
+  expect(initialHandleBox).not.toBeNull();
+  expect(initialTargetBox).not.toBeNull();
+  const dragRegionHeight = initialTargetBox!.y + initialTargetBox!.height - initialHandleBox!.y;
+  const availableHeight = viewport!.height - topInset;
+  expect(dragRegionHeight).toBeLessThan(availableHeight);
+  const desiredHandleY = topInset + (availableHeight - dragRegionHeight) / 2;
+  await page.evaluate((scrollDelta) => {
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollBy(0, scrollDelta);
+  }, initialHandleBox!.y - desiredHandleY);
+  await page.evaluate(() => new Promise<void>((resolve) =>
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+  ));
   const [handleBox, targetBox] = await Promise.all([handle.boundingBox(), target.boundingBox()]);
+  expect(handleBox!.y).toBeGreaterThanOrEqual(0);
+  expect(handleBox!.y + handleBox!.height).toBeLessThanOrEqual(viewport!.height);
+  expect(targetBox!.y).toBeGreaterThanOrEqual(0);
+  expect(targetBox!.y + targetBox!.height).toBeLessThanOrEqual(viewport!.height);
+  expect(await handle.evaluate((element) => {
+    const bounds = element.getBoundingClientRect();
+    return document.elementFromPoint(
+      bounds.x + bounds.width / 2,
+      bounds.y + bounds.height / 2,
+    )?.closest("button") === element;
+  })).toBe(true);
+  expect(await target.evaluate((element) => {
+    const bounds = element.getBoundingClientRect();
+    return element.contains(document.elementFromPoint(
+      bounds.x + bounds.width / 2,
+      bounds.y + bounds.height * 0.8,
+    ));
+  })).toBe(true);
   await page.mouse.move(handleBox!.x + handleBox!.width / 2, handleBox!.y + handleBox!.height / 2);
   await page.mouse.down();
   await page.mouse.move(targetBox!.x + targetBox!.width / 2, targetBox!.y + targetBox!.height * 0.8, { steps: 8 });
+  const indicator = target.locator('[data-slot="reorderable-list-drop-indicator"]');
+  await expect(indicator).toHaveAttribute("data-state", "active");
+  await expect(indicator).toHaveAttribute("data-position", "after");
   await page.mouse.up();
   expect(await orderedValues(scenario)).toEqual(["configure", "verify", "connect", "launch"]);
 
@@ -93,6 +139,7 @@ test("recipes, targets, focus rings, states, and narrow geometry remain complete
 });
 
 test("horizontal and RTL compositions preserve logical containment", async ({ page }) => {
+  await page.setViewportSize({ width: 1120, height: 900 });
   const scenario = page.locator("#scenario-reorderable-list-direction");
   const horizontal = scenario.locator('[data-orientation="horizontal"]');
   await expect(horizontal).toHaveCSS("overflow-x", "auto");

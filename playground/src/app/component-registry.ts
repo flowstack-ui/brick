@@ -477,6 +477,13 @@ export const componentEntries = [
     title: "Color Swatch",
   },
   {
+    category: "Forms",
+    description: "Opaque hexadecimal editing, native chooser, presets, and submission.",
+    id: "color-picker",
+    route: "/color-picker",
+    title: "Color Picker",
+  },
+  {
     category: "Actions",
     description: "Standalone pressed-state actions.",
     id: "toggle",

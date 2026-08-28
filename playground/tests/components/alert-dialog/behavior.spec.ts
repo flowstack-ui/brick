@@ -339,19 +339,45 @@ test("AlertDialog responses remain reachable under extreme reflow", async ({
     const action = alert.getByRole("button", {
       name: "Confirm tracked decision",
     });
+    const cancel = alert.getByRole("button", {
+      name: "Cancel tracked decision",
+    });
     await expect(alert).toHaveCSS("overflow-y", "auto");
     await action.scrollIntoViewIfNeeded();
-    const [alertBox, actionBox] = await Promise.all([
+    const [alertBox, cancelBox, actionBox] = await Promise.all([
       alert.boundingBox(),
+      cancel.boundingBox(),
       action.boundingBox(),
     ]);
     expect(alertBox).not.toBeNull();
+    expect(cancelBox).not.toBeNull();
     expect(actionBox).not.toBeNull();
     expect(actionBox!.y).toBeGreaterThanOrEqual(alertBox!.y);
     expect(actionBox!.y + actionBox!.height).toBeLessThanOrEqual(
       alertBox!.y + alertBox!.height + 1,
     );
-    await action.click();
+    const actionsOverlap = !(
+      cancelBox!.x + cancelBox!.width <= actionBox!.x ||
+      actionBox!.x + actionBox!.width <= cancelBox!.x ||
+      cancelBox!.y + cancelBox!.height <= actionBox!.y ||
+      actionBox!.y + actionBox!.height <= cancelBox!.y
+    );
+    expect(actionsOverlap).toBe(false);
+    expect(
+      await action.evaluate((element) => {
+        const bounds = element.getBoundingClientRect();
+        return document
+          .elementFromPoint(
+            bounds.x + bounds.width / 2,
+            bounds.y + bounds.height / 2,
+          )
+          ?.closest("button") === element;
+      }),
+    ).toBe(true);
+    await action.focus();
+    await expect(action).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(alert).toBeHidden();
   }
 });
 
