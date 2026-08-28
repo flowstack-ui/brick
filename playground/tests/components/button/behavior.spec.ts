@@ -92,7 +92,15 @@ test("Button specimens change only the dimension owned by their scenario", async
     await expect(control).toHaveAttribute("data-shape", "rounded");
   }
   const disabled = page.getByTestId("button-disabled");
-  await expect(disabled).toHaveCSS("opacity", "0.55");
+  await expect(disabled).toHaveCSS("opacity", "1");
+  expect(await disabled.evaluate((element) => {
+    const probe = document.createElement("span");
+    probe.style.color = "var(--brick-color-text-disabled)";
+    document.body.append(probe);
+    const expected = getComputedStyle(probe).color;
+    probe.remove();
+    return getComputedStyle(element).color === expected;
+  })).toBe(true);
   expect(await disabled.evaluate((element) => {
     const probe = document.createElement("span");
     probe.style.color = "var(--brick-color-border-subtle)";
