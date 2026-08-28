@@ -149,70 +149,8 @@ test("review controls contain their overflow on narrow viewports", async ({
   await page.setViewportSize({ width: 390, height: 844 });
 
   const panel = page.locator(".review-controls");
-  await expect.poll(() => page.evaluate(async () => {
-    const root = document.documentElement;
-    const baseline = root.scrollWidth;
-    if (baseline <= innerWidth) return null;
-
-    const crossesViewport = (element: Element) => {
-      const rect = element.getBoundingClientRect();
-      return rect.left < -0.5 || rect.right > innerWidth + 0.5;
-    };
-    const describe = (element: Element | null) => {
-      if (!(element instanceof HTMLElement)) return null;
-      const rect = element.getBoundingClientRect();
-      const style = getComputedStyle(element);
-      return {
-        clientWidth: element.clientWidth,
-        inlineSize: style.inlineSize,
-        maxInlineSize: style.maxInlineSize,
-        minInlineSize: style.minInlineSize,
-        overflowX: style.overflowX,
-        rect: { left: rect.left, right: rect.right, width: rect.width },
-        scrollWidth: element.scrollWidth,
-        selector: [
-          element.tagName.toLowerCase(),
-          element.id ? `#${element.id}` : "",
-          ...[...element.classList].map((name) => `.${name}`),
-        ].join(""),
-        whiteSpace: style.whiteSpace,
-      };
-    };
-    const candidates = {
-      main: document.querySelector(".evidence-main-column"),
-      pageHeader: document.querySelector(".evidence-page-header"),
-      reviewControls: document.querySelector(".review-controls"),
-      reviewHeader: document.querySelector(".evidence-review-header"),
-      scenarioNav: document.querySelector(".scenario-nav"),
-      scenarioNavRoot: document.querySelector(".scenario-nav-scroll"),
-      textContent: document.querySelector(".text-page"),
-    };
-    const geometry = Object.fromEntries(
-      Object.entries(candidates).map(([name, element]) => [name, describe(element)]),
-    );
-    const crossingLeaves = [...document.querySelectorAll("*")]
-      .filter((element) => crossesViewport(element))
-      .filter((element) => ![...element.children].some(crossesViewport))
-      .map(describe);
-
-    const interventions: Record<string, number | null> = {};
-    for (const [name, element] of Object.entries(candidates)) {
-      if (!(element instanceof HTMLElement)) {
-        interventions[name] = null;
-        continue;
-      }
-      const previous = element.style.overflowX;
-      element.style.overflowX = "hidden";
-      void root.offsetWidth;
-      await new Promise(requestAnimationFrame);
-      interventions[name] = root.scrollWidth;
-      element.style.overflowX = previous;
-      void root.offsetWidth;
-      await new Promise(requestAnimationFrame);
-    }
-
-    return { baseline, crossingLeaves, geometry, innerWidth, interventions };
-  })).toBeNull();
+  await expect.poll(() => page.locator("html").evaluate((element) => element.scrollWidth))
+    .toBeLessThanOrEqual(390);
   const sizes = await panel.evaluate((element) => ({
     clientWidth: element.clientWidth,
     scrollWidth: element.scrollWidth,
