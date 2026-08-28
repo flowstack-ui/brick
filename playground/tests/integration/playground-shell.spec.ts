@@ -179,21 +179,31 @@ test("review controls contain their overflow on narrow viewports", async ({
       };
     };
     const candidates = {
-      main: document.querySelector(".evidence-main-column"),
-      pageHeader: document.querySelector(".evidence-page-header"),
-      reviewControls: document.querySelector(".review-controls"),
-      reviewHeader: document.querySelector(".evidence-review-header"),
-      scenarioNav: document.querySelector(".scenario-nav"),
-      scenarioNavRoot: document.querySelector(".scenario-nav-scroll"),
       textContent: document.querySelector(".text-page"),
+      variants: document.querySelector("[data-testid='text-variants']"),
+      tones: document.querySelector("[data-testid='text-tones']"),
+      weights: document.querySelector("[data-testid='text-weights']"),
+      transforms: document.querySelector("[data-testid='text-transforms']"),
+      alignments: document.querySelector("[data-testid='text-alignments']"),
+      semantics: document.querySelector("[data-testid='text-semantics']"),
+      wraps: document.querySelector("[data-testid='text-wraps']"),
+      overflow: document.querySelector("[data-testid='text-overflow']"),
+      native: document.querySelector("[data-testid='text-native']"),
+      appearance: document.querySelector("[data-testid='text-appearance']"),
+      customization: document.querySelector(".text-customization"),
+      stress: document.querySelector("[data-testid='text-stress']"),
     };
     const geometry = Object.fromEntries(
       Object.entries(candidates).map(([name, element]) => [name, describe(element)]),
     );
-    const crossingLeaves = [...document.querySelectorAll("*")]
+    const textPage = document.querySelector(".text-page");
+    const crossingLeaves = [...(textPage?.querySelectorAll("*") ?? [])]
       .filter((element) => crossesViewport(element))
       .filter((element) => ![...element.children].some(crossesViewport))
-      .map(describe);
+      .map((element) => ({
+        ...describe(element),
+        text: element.textContent?.trim().slice(0, 100),
+      }));
 
     const interventions: Record<string, number | null> = {};
     for (const [name, element] of Object.entries(candidates)) {
