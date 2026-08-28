@@ -39,12 +39,12 @@
     min-inline-size: 0;
   }
 
-  .brick-link-box:has(.brick-link-box__link:hover)::before {
+  .brick-link-box:not([data-variant="plain"]):has(.brick-link-box__link:hover)::before {
     box-shadow: 0 0 0 var(--brick-border-width)
       var(--brick-link-box-hover-ring);
   }
 
-  .brick-link-box:has(.brick-link-box__link:active)::before {
+  .brick-link-box:not([data-variant="plain"]):has(.brick-link-box__link:active)::before {
     box-shadow: 0 0 0 var(--brick-border-focus-width)
       var(--brick-link-box-active-ring);
   }

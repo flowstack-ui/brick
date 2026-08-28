@@ -8,7 +8,7 @@
       transparent 18%
     );
     --brick-card-background: var(--brick-color-surface-raised);
-    --brick-card-border-color: var(--brick-color-border-subtle);
+    --brick-card-border-color: var(--brick-color-border-default);
     --brick-card-border-width: var(--brick-border-width);
     --brick-card-title-size: var(--brick-typography-surface-title-md-font-size);
 

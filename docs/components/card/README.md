@@ -286,6 +286,22 @@ Links. Navigation should remain a real link. Card itself never interprets
 
 ## Examples
 
+### Edge media and inset header
+
+```tsx
+<Card.Root as="article">
+  <Image.Root src="/story.jpg">...</Image.Root>
+  <Card.Header>
+    <Eyebrow>Research</Eyebrow>
+    <Card.Title as="h2">A field guide</Card.Title>
+    <Card.Description>Practical notes from the team.</Card.Description>
+  </Card.Header>
+</Card.Root>
+```
+
+The Root clips the media to its outer top corners. Header owns the full text
+inset below it; do not substitute Content when that top inset is required.
+
 ### Header action and wrapping footer
 
 ```tsx

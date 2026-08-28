@@ -1,6 +1,6 @@
 # Surface
 
-Surface paints a semantic region with a controlled background level, optional
+Surface paints a semantic region with a controlled tone and background level, optional
 border, elevation, radius, and inset. Ordinary Surface renders one native
 element. Optional Media, Scrim, and Content parts layer decorative authored
 media behind foreground content without adding interaction or runtime color
@@ -44,7 +44,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 Public exports are `Surface`, `SurfaceRoot`, `SurfaceMedia`, `SurfaceScrim`,
 `SurfaceContent`, their prop types, `SurfaceScrimStrength`,
 `SurfaceScrimDirection`, `SurfaceProps`, `SurfaceElement`, `SurfaceLevel`,
-`SurfaceElevation`, `SurfaceRadius`, and `SurfaceInset`.
+`SurfaceElevation`, `SurfaceRadius`, `SurfaceInset`, and `SurfaceTone`.
 
 ## Quick start
 
@@ -101,6 +101,7 @@ import from React Server Components.
 | `as` | `div`, `section`, `article`, `aside`, `nav`, `main`, `header`, `footer`, `form`, `li` | `div` |
 | `asChild` | `boolean` | `false` |
 | `level` | `canvas`, `base`, `subtle`, `raised` | `base` |
+| `tone` | `neutral`, `accent` | `neutral` |
 | `bordered` | `boolean` | `false` |
 | `elevation` | `none`, `low`, `medium`, `high` | `none` |
 | `radius` | `none`, `subtle`, `surface` | `surface` |
@@ -134,7 +135,9 @@ class, style, handlers, and ref while composing the forwarded Surface ref.
 
 ## Visual recipes and states
 
-`level` selects a semantic background layer. Border, elevation, radius, and
+`tone="neutral"` lets `level` select a semantic background layer.
+`tone="accent"` selects the paired accent-solid background and foreground for
+branded or conversion planes, not status messaging. Border, elevation, radius, and
 inset remain independent so consumers can change only the visual dimension
 they intend to demonstrate. Surface has no hover, focus, selected, disabled,
 loading, validation, typography, or motion state.
@@ -147,7 +150,7 @@ surfaces use a system border instead of relying on shadow alone.
 ## Tokens and CSS hooks
 
 Stable hooks are `.brick-surface`, `[data-slot="surface"]`, `data-slot`,
-`data-level`, `data-bordered`, `data-elevation`, `data-radius`, and
+`data-tone`, `data-level`, `data-bordered`, `data-elevation`, `data-radius`, and
 `data-inset`. Responsive inset adds only the authored
 `data-inset-sm`, `data-inset-md`, `data-inset-lg`, and `data-inset-xl`
 overrides.
@@ -229,7 +232,7 @@ Surface paints; Container constrains; Stack and Grid arrange; Card represents a
 self-contained content object. Native props and refs target the one authored
 host.
 
-Surface does not expose `render`, custom-component hosts, tones,
+Surface does not expose `render`, custom-component hosts, status tones,
 translucency, generic clipping props, style-system props, runtime context,
 broad responsive paint objects, or arbitrary recipe values. Media clipping is
 limited to its own decorative layer.

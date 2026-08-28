@@ -343,6 +343,10 @@
       "types": "./dist/frame.d.ts",
       "default": "./dist/frame.js"
     },
+    "./bleed": {
+      "types": "./dist/bleed.d.ts",
+      "default": "./dist/bleed.js"
+    },
     "./surface": {
       "types": "./dist/surface.d.ts",
       "default": "./dist/surface.js"

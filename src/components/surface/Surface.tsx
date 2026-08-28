@@ -29,6 +29,7 @@ export type SurfaceElement =
   | "li";
 
 export type SurfaceLevel = "canvas" | "base" | "subtle" | "raised";
+export type SurfaceTone = "neutral" | "accent";
 export type SurfaceElevation = "none" | "low" | "medium" | "high";
 export type SurfaceRadius = "none" | "subtle" | "surface";
 export type SurfaceInset = "none" | "sm" | "md" | "lg" | "xl" | "2xl";
@@ -51,6 +52,7 @@ type SurfaceHostProps =
 
 export type SurfaceProps = SurfaceNativeProps & SurfaceHostProps & {
   level?: SurfaceLevel;
+  tone?: SurfaceTone;
   bordered?: boolean;
   elevation?: SurfaceElevation;
   radius?: SurfaceRadius;
@@ -147,6 +149,7 @@ function SurfaceImpl(
     level = "base",
     radius = "surface",
     slot = "surface",
+    tone = "neutral",
     ...props
   }: SurfaceProps,
   ref: ForwardedRef<HTMLElement>,
@@ -160,6 +163,7 @@ function SurfaceImpl(
     "data-level": level,
     "data-radius": radius,
     "data-slot": slot,
+    "data-tone": tone,
     ref,
   };
 

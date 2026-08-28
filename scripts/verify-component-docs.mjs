@@ -58,6 +58,7 @@ const componentSymbols = {
   "aspect-ratio": "AspectRatio",
   avatar: "Avatar",
   badge: "Badge",
+  bleed: "Bleed",
   button: "Button",
   card: "Card",
   chip: "Chip",

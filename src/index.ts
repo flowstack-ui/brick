@@ -467,6 +467,7 @@ export {
   type LinkBoxLinkProps,
   type LinkBoxRootElement,
   type LinkBoxRootProps,
+  type LinkBoxVariant,
 } from "./components/link-box/index.js";
 export {
   List,
@@ -594,6 +595,11 @@ export {
   type FrameProps,
 } from "./components/frame/index.js";
 export {
+  Bleed,
+  type BleedElement,
+  type BleedProps,
+} from "./components/bleed/index.js";
+export {
   Surface,
   SurfaceContent,
   SurfaceMedia,
@@ -610,6 +616,7 @@ export {
   type SurfaceScrimDirection,
   type SurfaceScrimProps,
   type SurfaceScrimStrength,
+  type SurfaceTone,
 } from "./components/surface/index.js";
 export {
   Divider,

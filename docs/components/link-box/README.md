@@ -59,6 +59,11 @@ control above that target. Root owns no focus, click, or link semantics.
 
 ## API
 
+`LinkBox.Root` accepts `variant="outline" | "plain"`; the default is
+`outline`. The root emits `data-variant`. Use `plain` for editorial layouts
+whose media and text should remain visually unboxed while the stretched link
+still owns the shared focus treatment.
+
 Public exports are `LinkBox`, `LinkBoxRoot`, `LinkBoxLink`, `LinkBoxAction`,
 `LinkBoxRootProps`, `LinkBoxRootElement`, `LinkBoxLinkProps`, and
 `LinkBoxActionProps`.
@@ -68,6 +73,7 @@ Public exports are `LinkBox`, `LinkBoxRoot`, `LinkBoxLink`, `LinkBoxAction`,
 | Prop | Values | Default |
 | --- | --- | --- |
 | `as` | `div`, `article`, `section`, `li` | `div` |
+| `variant` | `outline`, `plain` | `outline` |
 | `data-slot` | string | `link-box` |
 
 Root accepts ordinary `HTMLAttributes<HTMLElement>`, including `id`, ARIA and
@@ -106,10 +112,14 @@ a div ref. Native attributes and documented slot overrides pass through.
 
 ## Visual recipes and states
 
-Hover outlines the complete Root with the strong border role. Active uses the
+The default outline variant outlines the complete Root on hover with the strong
+border role. Active uses the
 accent border. Keyboard focus remains on Link while one Root-sized focus ring
 is painted without layout shift. Forced colors use system highlight colors,
 and reduced motion removes the short ring transition.
+
+Use `variant="plain"` for visually unbounded editorial previews. It removes
+hover and active boundary paint while preserving the complete focus-visible ring.
 
 ## Tokens and CSS hooks
 
@@ -196,3 +206,5 @@ Prefer a normal Link where pointer text selection is important.
 ## Changelog
 
 See the [Link Box changelog](CHANGELOG.md).
+Public exports include `LinkBox`, `LinkBoxRoot`, `LinkBoxLink`,
+`LinkBoxAction`, their prop types, `LinkBoxRootElement`, and `LinkBoxVariant`.

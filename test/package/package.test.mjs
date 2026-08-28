@@ -321,6 +321,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/frame.d.ts",
       default: "./dist/frame.js",
     },
+    "./bleed": {
+      types: "./dist/bleed.d.ts",
+      default: "./dist/bleed.js",
+    },
     "./surface": {
       types: "./dist/surface.d.ts",
       default: "./dist/surface.js",
@@ -444,6 +448,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const container = await import(new URL("../../dist/container.js", import.meta.url));
   const section = await import(new URL("../../dist/section.js", import.meta.url));
   const frame = await import(new URL("../../dist/frame.js", import.meta.url));
+  const bleed = await import(new URL("../../dist/bleed.js", import.meta.url));
   const surface = await import(new URL("../../dist/surface.js", import.meta.url));
   const divider = await import(new URL("../../dist/divider.js", import.meta.url));
   const scrollArea = await import(new URL("../../dist/scroll-area.js", import.meta.url));
@@ -488,6 +493,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "AspectRatioRoot",
       "Avatar",
       "Badge",
+      "Bleed",
       "BottomNavigation",
       "BottomNavigationIcon",
       "BottomNavigationItem",
@@ -1163,6 +1169,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(container.Container, brick.Container);
   assert.equal(section.Section, brick.Section);
   assert.equal(frame.Frame, brick.Frame);
+  assert.equal(bleed.Bleed, brick.Bleed);
   assert.equal(surface.Surface, brick.Surface);
   assert.equal(surface.SurfaceRoot, brick.Surface.Root);
   assert.equal(surface.SurfaceMedia, brick.Surface.Media);
@@ -1356,7 +1363,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 85);
+  assert.equal(componentStyleNames.length, 86);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);
@@ -1364,7 +1371,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
       assert.match(css, /brick\.components,brick\.utilities,brick\.effects/);
       assert.doesNotMatch(css, /\.brick-/);
     } else {
-      if (name === "frame") assert.match(css, /@layer brick\.utilities/);
+      if (name === "frame" || name === "bleed") assert.match(css, /@layer brick\.utilities/);
       else assert.match(css, /@layer brick\.components/);
       assert.match(css, /(?:brick\.utilities,brick\.effects|@layer brick\.effects)/);
       assert.match(css, /\.brick-/);

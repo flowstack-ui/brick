@@ -23,11 +23,13 @@ Group content about one subject in a finished static compound surface with heade
 - **MUST:** Load styles.css or core.css plus card.css and styles for nested components.
 - **SHOULD:** Use bordered={false} when edge-to-edge authored media should meet Card's clipped outer boundary without retaining the selected recipe's border; do not remove that geometry with application CSS.
 - **SHOULD:** Use Card.Action only when every Header text row should reserve its trailing column; otherwise compose title-only metadata in a Brick HStack.
+- **SHOULD:** For edge media, place authored Image directly under Card.Root, then use Card.Header for topic, title, and description so the root clips outer corners and the complete text region receives Card inset.
 
 ## Common mistakes
 
 - **Avoid:** Using Card for every spacing group. **Instead:** Use Stack or Surface when there is no bounded card subject.
 - **Avoid:** Using Card.Action for a title-only Badge and unintentionally narrowing the description below it. **Instead:** Place the title and Badge in a Brick HStack, then render Card.Description as the next full-width Header child.
+- **Avoid:** Placing Card.Content directly after edge media and expecting top inset. **Instead:** Use Card.Header for the introductory text anatomy.
 
 ## Validation checklist
 

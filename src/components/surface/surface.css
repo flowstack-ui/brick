@@ -181,6 +181,12 @@
     --brick-surface-background: var(--brick-color-surface-raised);
   }
 
+  .brick-surface[data-tone="accent"] {
+    --brick-surface-background: var(--brick-color-accent-solid);
+    --brick-surface-foreground: var(--brick-color-accent-on-solid);
+    --brick-surface-border-color: var(--brick-color-accent-border);
+  }
+
   .brick-surface[data-bordered] {
     --brick-surface-border-width: var(--brick-border-width);
   }

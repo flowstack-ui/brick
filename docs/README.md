@@ -192,6 +192,7 @@ This directory is the public documentation authority for
   logical page gutters
 - [Section](components/section/README.md) — responsive page-region rhythm
 - [Frame](components/frame/README.md) — responsive logical size constraints
+- [Bleed](components/bleed/README.md) — responsive logical negative margins for deliberate edge media
 - [Show](components/show/README.md) — CSS-only content shown from a fixed
   viewport breakpoint
 - [Hide](components/hide/README.md) — CSS-only content hidden from a fixed

@@ -51,6 +51,11 @@
       "id": "link-box-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus link-box.css; the modular entry includes Link styling."
+    },
+    {
+      "id": "link-box-plain-editorial",
+      "level": "should",
+      "statement": "Use Root variant plain for an unbounded editorial preview whose edge media and unpadded copy should not receive a hover boundary; focus-visible remains intact."
     }
   ],
   "commonMistakes": [

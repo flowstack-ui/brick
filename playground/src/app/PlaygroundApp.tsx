@@ -108,6 +108,7 @@ import {
   sectionScenarios,
 } from "../components/section/SectionPage.js";
 import { FramePage, frameScenarios } from "../components/frame/FramePage.js";
+import { BleedPage, bleedScenarios } from "../components/bleed/BleedPage.js";
 import {
   SurfacePage,
   surfaceScenarios,
@@ -546,6 +547,14 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={frameScenarios}>
         <FramePage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "bleed") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={bleedScenarios}>
+        <BleedPage />
       </PlaygroundShell>
     );
   }

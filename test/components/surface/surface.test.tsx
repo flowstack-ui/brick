@@ -12,6 +12,7 @@ import {
   type SurfaceInset,
   type SurfaceLevel,
   type SurfaceRadius,
+  type SurfaceTone,
 } from "../../../src/surface.js";
 
 describe("Surface", () => {
@@ -25,6 +26,7 @@ describe("Surface", () => {
     expect(surface).toHaveClass("brick-surface");
     expect(surface).toHaveAttribute("data-slot", "surface");
     expect(surface).toHaveAttribute("data-level", "base");
+    expect(surface).toHaveAttribute("data-tone", "neutral");
     expect(surface).toHaveAttribute("data-elevation", "none");
     expect(surface).toHaveAttribute("data-radius", "surface");
     expect(surface).toHaveAttribute("data-inset", "none");
@@ -81,6 +83,7 @@ describe("Surface", () => {
     const elevations: SurfaceElevation[] = ["none", "low", "medium", "high"];
     const radii: SurfaceRadius[] = ["none", "subtle", "surface"];
     const insets: SurfaceInset[] = ["none", "sm", "md", "lg", "xl", "2xl"];
+    const tones: SurfaceTone[] = ["neutral", "accent"];
     const { rerender } = render(<Surface data-testid="surface" />);
 
     for (const level of levels) {
@@ -105,6 +108,10 @@ describe("Surface", () => {
     for (const inset of insets) {
       rerender(<Surface data-testid="surface" inset={inset} />);
       expect(screen.getByTestId("surface")).toHaveAttribute("data-inset", inset);
+    }
+    for (const tone of tones) {
+      rerender(<Surface data-testid="surface" tone={tone} />);
+      expect(screen.getByTestId("surface")).toHaveAttribute("data-tone", tone);
     }
 
     rerender(<Surface bordered data-testid="surface" />);

@@ -1491,16 +1491,18 @@ export const componentDocumentationContracts = {
       "LinkBoxLinkProps",
       "LinkBoxRootElement",
       "LinkBoxRootProps",
+      "LinkBoxVariant",
     ],
     unions: {
       LinkBoxRootElement: ["div", "article", "section", "li"],
+      LinkBoxVariant: ["outline", "plain"],
     },
     defaults: {
       as: "div",
       tone: "inherit",
       variant: "plain",
     },
-    dataAttributes: ["data-slot"],
+    dataAttributes: ["data-slot", "data-variant"],
     publicTokens: [
       "--brick-link-box-radius",
       "--brick-link-box-hover-ring",
@@ -2203,6 +2205,19 @@ export const componentDocumentationContracts = {
       "--brick-sidebar-available-block-size", "--brick-sidebar-transition-duration",
     ],
   },
+  bleed: {
+    source: "src/components/bleed/Bleed.tsx",
+    exportSource: "src/components/bleed/index.ts",
+    css: "src/components/bleed/bleed.css",
+    exports: ["Bleed", "BleedElement", "BleedProps"],
+    unions: {
+      BleedElement: ["div", "span", "section", "article", "aside", "main", "header", "footer", "nav", "ul", "ol", "li"],
+    },
+    defaults: { as: "div", asChild: false, slot: "bleed" },
+    dataAttributes: ["data-bleed", "data-slot"],
+    publicTokens: [],
+    privateTokenPrefixes: ["--brick-bleed-"],
+  },
   surface: {
     source: "src/components/surface/Surface.tsx",
     exportSource: "src/components/surface/index.ts",
@@ -2215,6 +2230,7 @@ export const componentDocumentationContracts = {
       "SurfaceLevel",
       "SurfaceProps",
       "SurfaceRadius",
+      "SurfaceTone",
     ],
     unions: {
       SurfaceElement: [
@@ -2225,6 +2241,7 @@ export const componentDocumentationContracts = {
       SurfaceElevation: ["none", "low", "medium", "high"],
       SurfaceRadius: ["none", "subtle", "surface"],
       SurfaceInset: ["none", "sm", "md", "lg", "xl", "2xl"],
+      SurfaceTone: ["neutral", "accent"],
     },
     defaults: {
       as: "div",
@@ -2235,6 +2252,7 @@ export const componentDocumentationContracts = {
       level: "base",
       radius: "surface",
       slot: "surface",
+      tone: "neutral",
     },
     dataAttributes: [
       "data-bordered",
@@ -2243,6 +2261,7 @@ export const componentDocumentationContracts = {
       "data-level",
       "data-radius",
       "data-slot",
+      "data-tone",
     ],
     publicTokens: [
       "--brick-surface-background",

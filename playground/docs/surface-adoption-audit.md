@@ -62,6 +62,7 @@ different owner.
 | Container | generic appearance/customization stage only when Container remains the measured child | measure boundaries, dashed width guides, nesting, full-bleed, vertical-writing geometry |
 | Section | contained paint examples where Surface remains the visual owner | page-region rhythm, semantic region choice, logical start/end spacing, and wrapper-free Surface composition |
 | Frame | generic evidence surfaces around bounded content | logical size constraints, definite-parent percentage sizing, nested-variable isolation, and Scroll Area bounds |
+| Bleed | generic evidence stages around inset parents | negative logical margin geometry, responsive edge ownership, nested-variable isolation, and overflow diagnostics |
 | Surface | none of the recipe specimens; they intentionally isolate Surface against raw contrasting stages | all Surface recipe stages, inset marker, nesting and elevation contrast; code block |
 | ZStack | overview, placement, composition, and stress evidence stages | ZStack overlap and placement geometry; the stage layer being positioned; source-order evidence |
 | Appearance | overview, nested-scope, portal-action, and semantic-host evidence surfaces | Appearance boundaries themselves; explicit semantic-token scope and wrapper-free host composition |

@@ -6,9 +6,11 @@ import {
 import { Link, type LinkProps } from "../link/index.js";
 
 export type LinkBoxRootElement = "div" | "article" | "section" | "li";
+export type LinkBoxVariant = "outline" | "plain";
 
 export interface LinkBoxRootProps extends HTMLAttributes<HTMLElement> {
   as?: LinkBoxRootElement;
+  variant?: LinkBoxVariant;
   "data-slot"?: string;
 }
 
@@ -28,6 +30,7 @@ export const LinkBoxRoot = forwardRef<HTMLElement, LinkBoxRootProps>(
       as = "div",
       className,
       "data-slot": dataSlot = "link-box",
+      variant = "outline",
       ...props
     },
     ref,
@@ -36,6 +39,7 @@ export const LinkBoxRoot = forwardRef<HTMLElement, LinkBoxRootProps>(
       ...props,
       className: classes("brick-link-box", className),
       "data-slot": dataSlot,
+      "data-variant": variant,
       ref,
     });
   },

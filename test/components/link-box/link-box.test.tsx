@@ -22,6 +22,7 @@ describe("LinkBox", () => {
     const root = link.closest(".brick-link-box");
     expect(root?.tagName).toBe("DIV");
     expect(root).toHaveAttribute("data-slot", "link-box");
+    expect(root).toHaveAttribute("data-variant", "outline");
     expect(root).not.toHaveAttribute("role");
     expect(root).not.toHaveAttribute("tabindex");
     expect(link).toHaveAttribute("href", "/products/stride-run-360");
@@ -29,6 +30,16 @@ describe("LinkBox", () => {
     expect(link).toHaveAttribute("data-slot", "link-box-link");
     expect(link).toHaveAttribute("data-variant", "plain");
     expect(link).toHaveAttribute("data-tone", "inherit");
+  });
+
+  it("exposes the plain boundary variant without changing link semantics", () => {
+    render(
+      <LinkBox.Root data-testid="root" variant="plain">
+        <LinkBox.Link href="/journal">Journal</LinkBox.Link>
+      </LinkBox.Root>,
+    );
+    expect(screen.getByTestId("root")).toHaveAttribute("data-variant", "plain");
+    expect(screen.getByRole("link", { name: "Journal" })).toHaveAttribute("href", "/journal");
   });
 
   it("supports the closed semantic Root host set", () => {

@@ -28,6 +28,7 @@ Expand one real destination across a containing region while keeping secondary c
 - **MUST:** For an Action nested in a ZStack overlay, use ZStack's public isolation and named-layer API, then prove the independent action and expanded link both activate correctly in a real browser.
 - **MUST:** Do not add role, tabIndex, click handlers, or Pressable behavior to LinkBox.Root.
 - **MUST:** Load styles.css or core.css plus link-box.css; the modular entry includes Link styling.
+- **SHOULD:** Use Root variant plain for an unbounded editorial preview whose edge media and unpadded copy should not receive a hover boundary; focus-visible remains intact.
 
 ## Common mistakes
 

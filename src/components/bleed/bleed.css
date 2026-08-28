@@ -1,0 +1,46 @@
+@layer brick.utilities {
+  .brick-bleed[data-bleed] {
+    box-sizing: border-box;
+    min-inline-size: 0;
+    margin-inline-start: calc(-1 * var(--brick-bleed-inline-start, 0px));
+    margin-inline-end: calc(-1 * var(--brick-bleed-inline-end, 0px));
+    margin-block-start: calc(-1 * var(--brick-bleed-block-start, 0px));
+    margin-block-end: calc(-1 * var(--brick-bleed-block-end, 0px));
+  }
+
+  @media (width >= 30rem) {
+    .brick-bleed[data-bleed] {
+      margin-inline-start: calc(-1 * var(--brick-bleed-inline-start-sm, var(--brick-bleed-inline-start, 0px)));
+      margin-inline-end: calc(-1 * var(--brick-bleed-inline-end-sm, var(--brick-bleed-inline-end, 0px)));
+      margin-block-start: calc(-1 * var(--brick-bleed-block-start-sm, var(--brick-bleed-block-start, 0px)));
+      margin-block-end: calc(-1 * var(--brick-bleed-block-end-sm, var(--brick-bleed-block-end, 0px)));
+    }
+  }
+
+  @media (width >= 48rem) {
+    .brick-bleed[data-bleed] {
+      margin-inline-start: calc(-1 * var(--brick-bleed-inline-start-md, var(--brick-bleed-inline-start-sm, var(--brick-bleed-inline-start, 0px))));
+      margin-inline-end: calc(-1 * var(--brick-bleed-inline-end-md, var(--brick-bleed-inline-end-sm, var(--brick-bleed-inline-end, 0px))));
+      margin-block-start: calc(-1 * var(--brick-bleed-block-start-md, var(--brick-bleed-block-start-sm, var(--brick-bleed-block-start, 0px))));
+      margin-block-end: calc(-1 * var(--brick-bleed-block-end-md, var(--brick-bleed-block-end-sm, var(--brick-bleed-block-end, 0px))));
+    }
+  }
+
+  @media (width >= 64rem) {
+    .brick-bleed[data-bleed] {
+      margin-inline-start: calc(-1 * var(--brick-bleed-inline-start-lg, var(--brick-bleed-inline-start-md, var(--brick-bleed-inline-start-sm, var(--brick-bleed-inline-start, 0px)))));
+      margin-inline-end: calc(-1 * var(--brick-bleed-inline-end-lg, var(--brick-bleed-inline-end-md, var(--brick-bleed-inline-end-sm, var(--brick-bleed-inline-end, 0px)))));
+      margin-block-start: calc(-1 * var(--brick-bleed-block-start-lg, var(--brick-bleed-block-start-md, var(--brick-bleed-block-start-sm, var(--brick-bleed-block-start, 0px)))));
+      margin-block-end: calc(-1 * var(--brick-bleed-block-end-lg, var(--brick-bleed-block-end-md, var(--brick-bleed-block-end-sm, var(--brick-bleed-block-end, 0px)))));
+    }
+  }
+
+  @media (width >= 80rem) {
+    .brick-bleed[data-bleed] {
+      margin-inline-start: calc(-1 * var(--brick-bleed-inline-start-xl, var(--brick-bleed-inline-start-lg, var(--brick-bleed-inline-start-md, var(--brick-bleed-inline-start-sm, var(--brick-bleed-inline-start, 0px))))));
+      margin-inline-end: calc(-1 * var(--brick-bleed-inline-end-xl, var(--brick-bleed-inline-end-lg, var(--brick-bleed-inline-end-md, var(--brick-bleed-inline-end-sm, var(--brick-bleed-inline-end, 0px))))));
+      margin-block-start: calc(-1 * var(--brick-bleed-block-start-xl, var(--brick-bleed-block-start-lg, var(--brick-bleed-block-start-md, var(--brick-bleed-block-start-sm, var(--brick-bleed-block-start, 0px))))));
+      margin-block-end: calc(-1 * var(--brick-bleed-block-end-xl, var(--brick-bleed-block-end-lg, var(--brick-bleed-block-end-md, var(--brick-bleed-block-end-sm, var(--brick-bleed-block-end, 0px))))));
+    }
+  }
+}

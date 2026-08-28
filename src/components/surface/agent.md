@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Apply semantic background layers, boundaries, elevation, radius, inset, and optional decorative media layering without implying a specific content object.
+Apply semantic background tones and layers, boundaries, elevation, radius, inset, and optional decorative media layering without implying a specific content object.
 
 ## Use when
 
@@ -20,6 +20,7 @@ Apply semantic background layers, boundaries, elevation, radius, inset, and opti
 ## Rules
 
 - **SHOULD:** Choose surface level by information hierarchy, not decoration alone.
+- **SHOULD:** Use accent tone only for a branded or conversion plane, never as a generic status surface.
 - **MUST:** Use asChild only with one existing non-Fragment host that already owns the required semantics or layout; preserve that child's meaning and keep Surface responsible only for paint.
 - **MUST:** Load styles.css or core.css plus surface.css.
 - **MUST:** Use the Surface inset recipe for four-sided internal spacing; Surface.Content provides z-order only, and Stack startSpacing/endSpacing remain axis-specific.

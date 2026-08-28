@@ -75,6 +75,7 @@ export const componentStyleEntries = [
   ["container", ["components/container/container.css"]],
   ["section", ["components/section/section.css"]],
   ["frame", ["components/frame/frame.css"]],
+  ["bleed", ["components/bleed/bleed.css"]],
   ["show", ["components/show/show.css"]],
   ["hide", ["components/hide/hide.css"]],
   ["surface", ["components/surface/surface.css"]],

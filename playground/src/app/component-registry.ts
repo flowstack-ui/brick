@@ -324,6 +324,13 @@ export const componentEntries = [
   },
   {
     category: "Layout",
+    description: "Responsive logical negative margins for deliberate edge media.",
+    id: "bleed",
+    route: "/bleed",
+    title: "Bleed",
+  },
+  {
+    category: "Layout",
     description: "Neutral surface levels, borders, elevation, radius, and inset.",
     id: "surface",
     route: "/surface",

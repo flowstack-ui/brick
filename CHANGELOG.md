@@ -6,6 +6,17 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
+- Added `Bleed`, a responsive logical-edge layout primitive for deliberate
+  edge media and cross-plane editorial compositions.
+
+### Changed
+
+- Added paired accent planes to `Surface`, plain editorial containment to
+  `LinkBox`, stronger default outline boundaries to `Card`, and documented
+  direct edge-media composition for card headers.
+
+### Added
+
 - Added Agent Knowledge for Feed, Skeleton, and Visually Hidden, including
   passive notification-stream, busy-region, and equivalent hidden-text
   boundaries qualified by the Application notification-tray batch.

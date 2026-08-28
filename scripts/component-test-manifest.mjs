@@ -5,6 +5,7 @@ export const componentIds = [
   "app-bar",
   "avatar",
   "badge",
+  "bleed",
   "status",
   "button",
   "card",

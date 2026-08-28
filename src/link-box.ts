@@ -7,4 +7,5 @@ export {
   type LinkBoxLinkProps,
   type LinkBoxRootElement,
   type LinkBoxRootProps,
+  type LinkBoxVariant,
 } from "./components/link-box/index.js";
