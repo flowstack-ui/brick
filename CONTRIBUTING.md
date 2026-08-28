@@ -65,3 +65,10 @@ composition, and CSS-size evidence.
 Every component change must keep its source, tests, public guide, changelog,
 catalog evidence, manual protocol, and coverage record aligned. Reusable
 behavior or accessibility defects belong in Atom first.
+
+## Community and security
+
+Search existing issues and use the structured issue forms for bug reports and
+feature requests. Report vulnerabilities privately according to
+[SECURITY.md](SECURITY.md). By participating, you agree to follow the
+[Code of Conduct](CODE_OF_CONDUCT.md).
