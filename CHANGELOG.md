@@ -6,6 +6,15 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 - No unreleased changes.
 
+## 0.1.11 - 2026-08-28
+
+### Fixed
+
+- Corrected Link Box release evidence on short mobile viewports by bringing the
+  full-card target into view, proving the sampled point is inside the visual
+  viewport, retaining exact Link ownership, and activating that point to verify
+  native navigation.
+
 ## 0.1.10 - 2026-08-28
 
 ### Added

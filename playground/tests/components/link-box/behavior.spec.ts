@@ -10,12 +10,33 @@ test("the native Link owns the complete visual target and focus ring", async ({ 
   await expect(root).not.toHaveAttribute("tabindex");
   await expect(link).toHaveAttribute("href", "#link-box-product");
 
-  const targetOwnsCardCenter = await root.evaluate((element) => {
+  await root.scrollIntoViewIfNeeded();
+  const targetEvidence = await root.evaluate((element) => {
     const box = element.getBoundingClientRect();
-    const target = document.elementFromPoint(box.x + box.width / 2, box.y + box.height - 20);
-    return target?.classList.contains("brick-link-box__link") ?? false;
+    const point = {
+      x: box.x + box.width / 2,
+      y: box.y + box.height - 20,
+    };
+    return {
+      ownsLink:
+        document.elementFromPoint(point.x, point.y) ===
+        element.querySelector(".brick-link-box__link"),
+      point,
+      position: {
+        x: box.width / 2,
+        y: box.height - 20,
+      },
+      viewport: {
+        height: window.innerHeight,
+        width: window.innerWidth,
+      },
+    };
   });
-  expect(targetOwnsCardCenter).toBe(true);
+  expect(targetEvidence.point.x).toBeGreaterThanOrEqual(0);
+  expect(targetEvidence.point.x).toBeLessThan(targetEvidence.viewport.width);
+  expect(targetEvidence.point.y).toBeGreaterThanOrEqual(0);
+  expect(targetEvidence.point.y).toBeLessThan(targetEvidence.viewport.height);
+  expect(targetEvidence.ownsLink).toBe(true);
 
   await link.focus();
   await expect(link).toBeFocused();
@@ -24,6 +45,11 @@ test("the native Link owns the complete visual target and focus ring", async ({ 
     getComputedStyle(element, "::before").outlineStyle,
   );
   expect(focusOutline).toBe("solid");
+
+  await root.click({
+    position: targetEvidence.position,
+  });
+  await expect(page).toHaveURL(/#link-box-product$/);
 });
 
 test("a secondary action remains independent from navigation", async ({ page }) => {
