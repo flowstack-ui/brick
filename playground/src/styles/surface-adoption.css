@@ -173,6 +173,10 @@
   min-inline-size: 0;
 }
 
+[data-component-page="text"] .text-cell__preview {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 [data-component-page] :is(
   .button-customization__preview,
   .icon-button-customization__preview,

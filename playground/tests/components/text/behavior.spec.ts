@@ -242,6 +242,9 @@ test("Text native attributes, ref, appearance, customization, RTL, and reflow re
   const variantGrid = page.getByTestId("text-variants");
   const variantCell = variantGrid.locator(".text-cell").first();
   const variantText = variantCell.locator(".brick-text");
+  await variantText.evaluate((element) => {
+    element.style.setProperty("--brick-text-font-size", "5rem");
+  });
   const [gridWidths, cellBox, textBox] = await Promise.all([
     variantGrid.evaluate((element) => ({
       clientWidth: element.clientWidth,

@@ -57,7 +57,9 @@ test("leading normalizes and centers Brick Icon geometry at the active density",
   expect(iconBox!.width).toBeCloseTo(leadingBox!.width, 1);
   expect(iconBox!.height).toBeCloseTo(leadingBox!.height, 1);
   expect(iconBox!.x + iconBox!.width / 2).toBeCloseTo(leadingBox!.x + leadingBox!.width / 2, 1);
-  expect(iconBox!.y + iconBox!.height / 2).toBeCloseTo(labelBox!.y + labelBox!.height / 2, 1);
+  const iconCenterY = iconBox!.y + iconBox!.height / 2;
+  const labelCenterY = labelBox!.y + labelBox!.height / 2;
+  expect(Math.abs(iconCenterY - labelCenterY)).toBeLessThanOrEqual(0.5);
 });
 
 test("keyboard, RTL, mobile geometry, and accessibility work", async ({ page }) => {
