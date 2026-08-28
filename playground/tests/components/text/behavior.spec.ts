@@ -237,42 +237,8 @@ test("Text native attributes, ref, appearance, customization, RTL, and reflow re
   await expect(rtlEnd).toHaveCSS("text-align", "end");
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect.poll(() => page.evaluate(() => {
-    const documentScrollWidth = document.documentElement.scrollWidth;
-    if (documentScrollWidth <= innerWidth) return null;
-
-    const offenders = [...document.querySelectorAll<HTMLElement>("*")]
-      .map((element) => {
-        const rect = element.getBoundingClientRect();
-        const style = getComputedStyle(element);
-        return {
-          clientWidth: element.clientWidth,
-          inlineSize: style.inlineSize,
-          maxInlineSize: style.maxInlineSize,
-          minInlineSize: style.minInlineSize,
-          overflowX: style.overflowX,
-          rect: {
-            left: rect.left,
-            right: rect.right,
-            width: rect.width,
-          },
-          scrollWidth: element.scrollWidth,
-          selector: [
-            element.tagName.toLowerCase(),
-            element.id ? `#${element.id}` : "",
-            ...[...element.classList].map((name) => `.${name}`),
-          ].join(""),
-          whiteSpace: style.whiteSpace,
-        };
-      })
-      .filter(({ clientWidth, overflowX, rect, scrollWidth }) =>
-        rect.left < -0.5
-        || rect.right > innerWidth + 0.5
-        || rect.width > innerWidth + 0.5
-        || (scrollWidth > clientWidth && overflowX === "visible"));
-
-    return { documentScrollWidth, innerWidth, offenders };
-  })).toBeNull();
+  await expect.poll(() => page.locator("html").evaluate((element) => element.scrollWidth))
+    .toBeLessThanOrEqual(390);
   await page.addStyleTag({
     content: ".brick-text{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}",
   });
