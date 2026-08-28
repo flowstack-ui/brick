@@ -484,7 +484,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.23.0"
+    "@flowstack-ui/atom": "0.24.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
