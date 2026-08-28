@@ -125,6 +125,12 @@ Header, Action, Content, and Footer accept native `div` attributes.
 Description accepts native paragraph attributes. All part slots are
 overridable with `data-slot`.
 
+`Card.Action` reserves the Header's trailing grid column across the title and
+description rows. This is appropriate when both text regions should make room
+for compact trailing content. When metadata belongs beside only the title and
+the description should retain the full header measure, compose the title and
+metadata in a Brick `HStack` and omit `Card.Action`.
+
 ## Visual recipes and states
 
 ### Variants
@@ -279,6 +285,22 @@ Links. Navigation should remain a real link. Card itself never interprets
 `onClick` as keyboard-accessible behavior.
 
 ## Examples
+
+### Edge media and inset header
+
+```tsx
+<Card.Root as="article">
+  <Image.Root src="/story.jpg">...</Image.Root>
+  <Card.Header>
+    <Eyebrow>Research</Eyebrow>
+    <Card.Title as="h2">A field guide</Card.Title>
+    <Card.Description>Practical notes from the team.</Card.Description>
+  </Card.Header>
+</Card.Root>
+```
+
+The Root clips the media to its outer top corners. Header owns the full text
+inset below it; do not substitute Content when that top inset is required.
 
 ### Header action and wrapping footer
 

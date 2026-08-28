@@ -27,4 +27,25 @@ describe("Rating", () => {
   it("forwards props, refs, classes, and slots", () => {
     const rootRef = createRef<HTMLDivElement>(); const itemRef = createRef<HTMLSpanElement>(); render(<Rating.Root ref={rootRef} aria-label="Rating" className="consumer"><Rating.Item ref={itemRef} className="consumer-item" data-slot="custom-item" value={1} /></Rating.Root>); expect(rootRef.current).toHaveClass("brick-rating", "consumer"); expect(itemRef.current).toHaveClass("brick-rating__item", "consumer-item"); expect(itemRef.current).toHaveAttribute("data-slot", "custom-item");
   });
+
+  it("renders a compact, noninteractive aggregate display", () => {
+    render(<Rating.Display label="4.5 out of 5 stars" size="sm" value={4.5} />);
+    const display = screen.getByRole("img", { name: "4.5 out of 5 stars" });
+    expect(display).toHaveClass("brick-rating", "brick-rating--display");
+    expect(display).not.toHaveAttribute("tabindex");
+    expect(display.querySelectorAll(".brick-rating__item")).toHaveLength(5);
+    const items = display.querySelectorAll(".brick-rating__item");
+    expect((items[3] as HTMLElement).style.getPropertyValue("--brick-rating-fill")).toBe("100%");
+    expect((items[4] as HTMLElement).style.getPropertyValue("--brick-rating-fill")).toBe("50%");
+  });
+
+  it("renders a compact one-star numeric summary with one accessible label", () => {
+    render(<Rating.Summary label="4.8 out of 5 stars" size="sm" value={4.8} valueText="4.8" />);
+    const summary = screen.getByRole("img", { name: "4.8 out of 5 stars" });
+    expect(summary).toHaveClass("brick-rating-summary");
+    expect(summary).toHaveAttribute("data-size", "sm");
+    expect(summary).not.toHaveAttribute("tabindex");
+    expect(summary.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+    expect(summary).toHaveTextContent("4.8");
+  });
 });

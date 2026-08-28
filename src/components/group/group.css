@@ -1,0 +1,90 @@
+@layer brick.components {
+  .brick-group {
+    --brick-group-gap: var(--brick-group-gap-input, var(--brick-space-2));
+    --brick-group-overlap: var(--brick-border-width);
+
+    display: inline-flex;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    align-items: center;
+    gap: var(--brick-group-gap);
+    isolation: isolate;
+    vertical-align: middle;
+  }
+
+  .brick-group[data-orientation="vertical"] {
+    flex-direction: column;
+  }
+
+  .brick-group[data-grow] {
+    display: flex;
+    inline-size: 100%;
+  }
+
+  .brick-group[data-grow] > * {
+    flex: 1 1 0;
+    min-inline-size: 0;
+  }
+
+  .brick-group[data-attached] {
+    gap: 0;
+  }
+
+  .brick-group[data-attached] > * {
+    flex-shrink: 0;
+  }
+
+  .brick-group[data-attached] > :hover {
+    z-index: 1;
+  }
+
+  .brick-group[data-attached] > :is(:focus-visible, :focus-within) {
+    z-index: 2;
+  }
+
+  .brick-group[data-attached][data-orientation="horizontal"]
+    > :first-child:not(:last-child) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  .brick-group[data-attached][data-orientation="horizontal"]
+    > :not(:first-child, :last-child) {
+    border-radius: 0;
+  }
+
+  .brick-group[data-attached][data-orientation="horizontal"]
+    > :last-child:not(:first-child) {
+    margin-inline-start: calc(-1 * var(--brick-group-overlap));
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+
+  .brick-group[data-attached][data-orientation="horizontal"]
+    > :not(:first-child, :last-child) {
+    margin-inline-start: calc(-1 * var(--brick-group-overlap));
+  }
+
+  .brick-group[data-attached][data-orientation="vertical"]
+    > :first-child:not(:last-child) {
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  .brick-group[data-attached][data-orientation="vertical"]
+    > :not(:first-child, :last-child) {
+    border-radius: 0;
+  }
+
+  .brick-group[data-attached][data-orientation="vertical"]
+    > :last-child:not(:first-child) {
+    margin-block-start: calc(-1 * var(--brick-group-overlap));
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+  }
+
+  .brick-group[data-attached][data-orientation="vertical"]
+    > :not(:first-child, :last-child) {
+    margin-block-start: calc(-1 * var(--brick-group-overlap));
+  }
+}

@@ -5,6 +5,18 @@
     --brick-toggle-gap: 0.5rem;
     --brick-toggle-radius: var(--brick-radius-control);
     --brick-toggle-icon-size: 1.125rem;
+    --brick-toggle-tone-solid: var(--brick-color-accent-solid);
+    --brick-toggle-tone-solid-hover: var(--brick-color-accent-solid-hover);
+    --brick-toggle-tone-solid-pressed: var(--brick-color-accent-solid-pressed);
+    --brick-toggle-tone-on-solid: var(--brick-color-accent-on-solid);
+    --brick-toggle-tone-soft: var(--brick-color-accent-soft);
+    --brick-toggle-tone-soft-hover: var(--brick-color-accent-soft-hover);
+    --brick-toggle-tone-soft-pressed: var(--brick-color-accent-soft-pressed);
+    --brick-toggle-tone-on-soft: var(--brick-color-accent-on-soft);
+    --brick-toggle-tone-border: var(--brick-color-accent-border);
+    --brick-toggle-tone-text: var(--brick-color-accent-text);
+    --brick-toggle-tone-outline-border: var(--brick-color-accent-solid);
+    --brick-toggle-tone-outline-foreground: var(--brick-color-text-primary);
 
     display: inline-flex;
     box-sizing: border-box;
@@ -37,6 +49,36 @@
       color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
   }
 
+  :where(
+    .brick-toggle[data-tone="neutral"],
+    .brick-toggle-group[data-tone="neutral"] > .brick-toggle-group-item
+  ) {
+    --brick-toggle-tone-solid: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 16%
+    );
+    --brick-toggle-tone-solid-hover: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 22%
+    );
+    --brick-toggle-tone-solid-pressed: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 28%
+    );
+    --brick-toggle-tone-on-solid: var(--brick-color-text-primary);
+    --brick-toggle-tone-soft: var(--brick-color-surface-subtle);
+    --brick-toggle-tone-soft-hover: var(--brick-color-surface-base);
+    --brick-toggle-tone-soft-pressed: var(--brick-color-border-subtle);
+    --brick-toggle-tone-on-soft: var(--brick-color-text-primary);
+    --brick-toggle-tone-border: var(--brick-color-border-strong);
+    --brick-toggle-tone-text: var(--brick-color-text-primary);
+    --brick-toggle-tone-outline-border: var(--brick-color-border-strong);
+    --brick-toggle-tone-outline-foreground: var(--brick-color-text-primary);
+  }
+
   :where(.brick-toggle, .brick-toggle-group-item) > :where(svg, img) {
     flex: 0 0 auto;
     inline-size: var(--brick-toggle-icon-size);
@@ -54,16 +96,16 @@
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-state="on"] {
-    border-color: var(--brick-color-accent-border);
-    background: var(--brick-color-accent-soft);
-    color: var(--brick-color-accent-on-soft);
-    box-shadow: inset 0 -0.125rem 0 var(--brick-color-accent-solid);
+    border-color: var(--brick-toggle-tone-border);
+    background: var(--brick-toggle-tone-soft);
+    color: var(--brick-toggle-tone-on-soft);
+    box-shadow: inset 0 -0.125rem 0 var(--brick-toggle-tone-solid);
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-variant="solid"][data-state="on"] {
-    border-color: var(--brick-color-accent-solid);
-    background: var(--brick-color-accent-solid);
-    color: var(--brick-color-accent-on-solid);
+    border-color: var(--brick-toggle-tone-solid);
+    background: var(--brick-toggle-tone-solid);
+    color: var(--brick-toggle-tone-on-solid);
     box-shadow: none;
   }
 
@@ -73,9 +115,9 @@
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-variant="outline"][data-state="on"] {
-    border-color: var(--brick-color-accent-border);
+    border-color: var(--brick-toggle-tone-outline-border);
     background: transparent;
-    color: var(--brick-color-accent-text);
+    color: var(--brick-toggle-tone-outline-foreground);
     box-shadow: none;
   }
 
@@ -85,31 +127,32 @@
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-variant="ghost"][data-state="on"] {
     border-color: transparent;
-    background: var(--brick-color-accent-soft);
+    background: var(--brick-toggle-tone-soft);
     box-shadow: none;
   }
 
   :where(.brick-toggle, .brick-toggle-group-item):not([data-disabled]):active {
-    background: var(--brick-color-accent-soft-pressed);
+    background: var(--brick-toggle-tone-soft-pressed);
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-variant="solid"][data-state="on"]:not([data-disabled]):active {
-    border-color: var(--brick-color-accent-solid-pressed);
-    background: var(--brick-color-accent-solid-pressed);
+    border-color: var(--brick-toggle-tone-solid-pressed);
+    background: var(--brick-toggle-tone-solid-pressed);
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-disabled] {
     border-color: var(--brick-color-border-subtle);
     background: var(--brick-color-surface-subtle);
-    color: var(--brick-color-text-secondary);
+    color: var(--brick-color-text-disabled);
     box-shadow: none;
     cursor: not-allowed;
-    opacity: 0.65;
+    opacity: 0.55;
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-disabled][data-state="on"] {
-    border-color: var(--brick-color-border-strong);
-    box-shadow: inset 0 -0.125rem 0 var(--brick-color-text-secondary);
+    border-color: var(--brick-color-border-subtle);
+    background: var(--brick-color-surface-base);
+    box-shadow: none;
   }
 
   :where(.brick-toggle, .brick-toggle-group-item)[data-size="sm"] {
@@ -147,12 +190,12 @@
     }
 
     :where(.brick-toggle, .brick-toggle-group-item):not([data-disabled])[data-state="on"]:hover {
-      background: var(--brick-color-accent-soft-hover);
+      background: var(--brick-toggle-tone-soft-hover);
     }
 
     :where(.brick-toggle, .brick-toggle-group-item)[data-variant="solid"][data-state="on"]:not([data-disabled]):hover {
-      border-color: var(--brick-color-accent-solid-hover);
-      background: var(--brick-color-accent-solid-hover);
+      border-color: var(--brick-toggle-tone-solid-hover);
+      background: var(--brick-toggle-tone-solid-hover);
     }
 
     :where(.brick-toggle, .brick-toggle-group-item)[data-variant="ghost"]:not([data-disabled]):hover {
@@ -160,7 +203,7 @@
     }
 
     :where(.brick-toggle, .brick-toggle-group-item)[data-variant="ghost"]:not([data-disabled])[data-state="on"]:hover {
-      background: var(--brick-color-accent-soft-hover);
+      background: var(--brick-toggle-tone-soft-hover);
     }
   }
 

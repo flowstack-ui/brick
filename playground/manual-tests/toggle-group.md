@@ -39,8 +39,9 @@ Setup: Review `03 Variants`, `04 Sizes`, and `05 Shapes`.
 Action: Select the same value in every comparison.
 
 Expected: Solid, soft, and outline selected treatments are visually distinct.
-Size changes shared target geometry only. Shape changes radius only. Icon-only
-Items have complete names and centered artwork.
+Accent and neutral tones cascade uniformly to every Item. Size changes shared
+target geometry only. Shape changes radius only. Icon-only Items have complete
+names and centered artwork.
 
 Result:
 Notes or issue:
@@ -66,9 +67,9 @@ Setup: Open `07 States`.
 Action: Use arrow keys in the vertical group, then navigate Root-disabled and
 Item-disabled examples.
 
-Expected: Vertical uses its documented arrow axis. Disabled Root and Item
-remain visibly unavailable, retain selection, are skipped appropriately, and
-cannot change state.
+Expected: Vertical uses its documented arrow axis. Disabled Root and Item use
+a faded disabled foreground, retain a quiet selection without enabled outline
+or inset emphasis, are skipped appropriately, and cannot change state.
 
 Result:
 Notes or issue:

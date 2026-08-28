@@ -52,16 +52,21 @@ separately documented Notification Badge family.
 | --- | --- | --- |
 | `variant` | `soft`, `solid`, `outline` | `soft` |
 | `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
-| `size` | `sm`, `md`, `lg` | `md` |
-| `shape` | `rounded`, `pill` | `rounded` |
+| `size` | `sm`, `md`, `lg`, `xl` | `md` |
+| `shape` | `rounded`, `pill`, `circle` | `rounded` |
 
 Atom/native span props are inherited except native `color`.
 
 ## Visual recipes and states
 
 Variant changes fill and boundary, tone changes semantic color, size changes
-the complete label, and shape selects rounded or pill geometry. Badge is
-passive and has no interactive state.
+the complete label, and shape selects rounded, pill, or exact-square circle
+geometry. Circle is for one passive icon or single character with nearby
+context; use IconButton for actions and Status for dot-and-label state. Badge
+is passive and has no interactive state.
+
+The `xl` size supplies a deliberate passive icon well for empty states and
+similar noninteractive illustrations. It is not an action target.
 
 ## Tokens and CSS hooks
 
@@ -82,8 +87,10 @@ Prefer recipe props, then semantic and public Badge tokens. Use `className` and
 
 ## Responsive behavior
 
-Badge sizes to its content and does not own responsive layout. Keep labels
-short; surrounding layout owns wrapping and truncation.
+Badge sizes to its content, keeps its short label on one line, and does not own
+responsive layout. Use ordinary Text for explanatory or prose-length content;
+surrounding layout or a deliberate scroll owner contains the Badge's intrinsic
+width.
 
 ## Accessibility
 
@@ -99,6 +106,10 @@ rendered span; composed output must remain passive.
 
 ```tsx
 <Badge variant="outline" tone="success">Ready</Badge>
+
+<Badge aria-label="Verified" shape="circle" tone="accent">
+  <Icon aria-hidden size="xs">{checkIcon}</Icon>
+</Badge>
 ```
 
 Badge applies its public gap token when children include an icon and label:
@@ -123,6 +134,9 @@ foreground so the selected Badge recipe continues to own contrast:
 Prefer plain label text when no separate Text recipe is needed. Do not use
 default-tone Text inside Badge, add literal spaces around children, or select
 Badge only to imitate an editorial eyebrow.
+
+The neutral solid recipe remains a neutral surface with the normal foreground;
+it does not switch to the inverse black/white pair between appearances.
 
 ## Evidence
 

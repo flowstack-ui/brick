@@ -67,7 +67,7 @@
   ],
   "validation": [
     "Inspect ul or ol and li output, ordered meaning, marker behavior, structured-part order, nesting, roles, and CSS delivery.",
-    "Test long titles and descriptions, compact and comfortable density, all variants and markers, 320 CSS px, 200 and 400 percent zoom, RTL, and forced colors.",
+    "Test long titles and descriptions, compact and comfortable density, all variants and markers, first-line marker alignment in bordered simple and structured rows, 320 CSS px, 200 and 400 percent zoom, RTL, and forced colors.",
     "Confirm Trailing content does not squeeze Content, controls have names and touch targets, disabled descendants are handled explicitly, and List adds no keyboard model."
   ],
   "related": [

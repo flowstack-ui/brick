@@ -177,6 +177,48 @@
     user-select: none;
   }
 
+  /*
+   * Destination rows may compose a Brick Link through the menu item's
+   * `asChild` contract. Restore the menu-row recipe above Link's inline
+   * presentation and flatten Link's content wrapper so Leading, ItemLabel,
+   * Description, and Shortcut continue to participate in the row grid.
+   */
+  .brick-link:is(
+    .brick-dropdown-menu__item,
+    .brick-context-menu__item,
+    .brick-menubar__item
+  ) {
+    display: grid;
+    inline-size: 100%;
+    align-items: center;
+    gap: var(--brick-action-menu-row-gap);
+    color: var(--brick-action-menu-row-foreground);
+    font-family: var(--brick-typography-control-md-font-family);
+    font-size: var(--brick-action-menu-font-size);
+    font-weight: var(--brick-typography-control-md-font-weight);
+    line-height: var(--brick-action-menu-line-height);
+    text-decoration-line: none;
+    vertical-align: middle;
+  }
+
+  .brick-link:is(
+    .brick-dropdown-menu__item,
+    .brick-context-menu__item,
+    .brick-menubar__item
+  ) > .brick-link__content {
+    display: contents;
+  }
+
+  .brick-link:is(
+    .brick-dropdown-menu__item,
+    .brick-context-menu__item,
+    .brick-menubar__item
+  ):is(:hover, :focus-visible, :active) {
+    outline: 0;
+    color: currentColor;
+    text-decoration-line: none;
+  }
+
   :where(
     .brick-dropdown-menu__item,
     .brick-dropdown-menu__checkbox-item,
@@ -262,6 +304,32 @@
     block-size: var(--brick-action-menu-indicator-size);
     place-items: center;
     color: currentColor;
+  }
+
+  :is(
+    .brick-dropdown-menu__leading,
+    .brick-context-menu__leading,
+    .brick-menubar__leading
+  ) > .brick-icon {
+    --brick-icon-size: var(--brick-action-menu-indicator-size);
+  }
+
+  :is(
+    .brick-dropdown-menu__leading,
+    .brick-context-menu__leading,
+    .brick-menubar__leading
+  ) > .brick-icon[data-size] {
+    --brick-icon-size: var(--brick-action-menu-indicator-size);
+  }
+
+  :where(
+    .brick-dropdown-menu__leading,
+    .brick-context-menu__leading,
+    .brick-menubar__leading
+  ) > :where(svg, img) {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
   }
 
   :where(

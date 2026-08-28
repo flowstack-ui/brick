@@ -76,6 +76,15 @@
     .brick-checkbox-group-item,
     .brick-checkbox-group-parent
   ):is(:focus-visible, [data-focus-visible]) {
+    outline: none;
+  }
+
+  :where(
+    .brick-checkbox,
+    .brick-checkbox-group-item,
+    .brick-checkbox-group-parent
+  ):is(:focus-visible, [data-focus-visible]) .brick-checkbox-control {
+    border-color: var(--brick-color-focus-ring);
     outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
     outline-offset: var(--brick-border-focus-offset);
   }
@@ -170,14 +179,6 @@
     .brick-checkbox,
     .brick-checkbox-group-item,
     .brick-checkbox-group-parent
-  ):not([data-disabled], [data-readonly]):active {
-    background: var(--brick-color-accent-soft-pressed);
-  }
-
-  :where(
-    .brick-checkbox,
-    .brick-checkbox-group-item,
-    .brick-checkbox-group-parent
   ):not([data-disabled], [data-readonly]):active .brick-checkbox-control {
     transform: scale(0.94);
   }
@@ -247,14 +248,6 @@
       .brick-checkbox,
       .brick-checkbox-group-item,
       .brick-checkbox-group-parent
-    ):not([data-disabled], [data-readonly]):hover {
-      background: var(--brick-color-accent-soft);
-    }
-
-    :where(
-      .brick-checkbox,
-      .brick-checkbox-group-item,
-      .brick-checkbox-group-parent
     ):not([data-disabled], [data-readonly], [data-invalid]):hover .brick-checkbox-control {
       border-color: var(--brick-color-accent-border);
     }
@@ -293,6 +286,15 @@
     .brick-checkbox-control {
       border-color: ButtonText;
       background: Canvas;
+    }
+
+    :where(
+      .brick-checkbox,
+      .brick-checkbox-group-item,
+      .brick-checkbox-group-parent
+    ):is(:focus-visible, [data-focus-visible]) .brick-checkbox-control {
+      border-color: Highlight;
+      outline-color: Highlight;
     }
 
     :where(

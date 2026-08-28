@@ -130,7 +130,7 @@ export const badgeScenarios = [
   },
   {
     description:
-      "Long localized and unbroken labels wrap inside a constrained container, while genuine RTL content remains in normal reading order without clipping or page overflow.",
+      "Valid short labels stay atomic inside a constrained container, while the surrounding layout may wrap whole Badges and genuine RTL content remains in normal reading order.",
     id: "badge.stress",
     navigationTitle: "Stress",
     number: 8,
@@ -348,15 +348,13 @@ export function BadgePage() {
       <Scenario {...badgeScenarios[7]}>
         <VStack className="badge-evidence-stack" data-testid="badge-stress">
           <EvidenceGroup
-            description="Both localized and unbroken content wrap inside a 20rem application-owned frame."
+            description="The application-owned frame may move whole Badges to another row, but each compact label stays on one line."
             title="Constrained-width stress"
           >
             <EvidenceSurface className="badge-stress-panel">
               <HStack className="badge-phone-frame" wrap>
-                <Badge>Awaiting detailed workspace verification</Badge>
-                <Badge>
-                  ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
-                </Badge>
+                <Badge>Awaiting review</Badge>
+                <Badge>Requires follow-up</Badge>
               </HStack>
             </EvidenceSurface>
           </EvidenceGroup>

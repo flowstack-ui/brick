@@ -11,6 +11,10 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
 
 export type SurfaceElement =
   | "div"
@@ -25,9 +29,10 @@ export type SurfaceElement =
   | "li";
 
 export type SurfaceLevel = "canvas" | "base" | "subtle" | "raised";
+export type SurfaceTone = "neutral" | "accent";
 export type SurfaceElevation = "none" | "low" | "medium" | "high";
 export type SurfaceRadius = "none" | "subtle" | "surface";
-export type SurfaceInset = "none" | "sm" | "md" | "lg";
+export type SurfaceInset = "none" | "sm" | "md" | "lg" | "xl" | "2xl";
 export type SurfaceScrimStrength = "soft" | "medium" | "strong";
 export type SurfaceScrimDirection =
   | "uniform"
@@ -47,10 +52,11 @@ type SurfaceHostProps =
 
 export type SurfaceProps = SurfaceNativeProps & SurfaceHostProps & {
   level?: SurfaceLevel;
+  tone?: SurfaceTone;
   bordered?: boolean;
   elevation?: SurfaceElevation;
   radius?: SurfaceRadius;
-  inset?: SurfaceInset;
+  inset?: ResponsiveValue<SurfaceInset>;
   className?: string;
   style?: CSSProperties;
   slot?: string;
@@ -143,19 +149,21 @@ function SurfaceImpl(
     level = "base",
     radius = "surface",
     slot = "surface",
+    tone = "neutral",
     ...props
   }: SurfaceProps,
   ref: ForwardedRef<HTMLElement>,
 ) {
   const rootProps = {
     ...props,
+    ...responsiveDataAttributes("data-inset", inset, { alwaysInitial: true }),
     className: mergeClassName(className),
     "data-bordered": bordered ? "" : undefined,
     "data-elevation": elevation,
-    "data-inset": inset,
     "data-level": level,
     "data-radius": radius,
     "data-slot": slot,
+    "data-tone": tone,
     ref,
   };
 

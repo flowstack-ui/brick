@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => { await page.goto("/link"); });
 test("default preserves native output and adopted recipes", async ({ page }) => {
   const link = page.getByTestId("link-overview").getByRole("link");
   await expect(link).toHaveAttribute("href", "#link-destination");
-  await expect(link).toHaveAttribute("data-variant", "underline");
+  await expect(link).toHaveAttribute("data-variant", "theme");
   await expect(link).toHaveAttribute("data-tone", "accent");
   await expect(link).toHaveAttribute("data-size", "inherit");
   await expect(link).toHaveCSS("text-decoration-line", "underline");
@@ -17,14 +17,34 @@ test("default preserves native output and adopted recipes", async ({ page }) => 
 
 test("variants, tones, and sizes change only their controlled dimension", async ({ page }) => {
   const variants = page.getByTestId("link-variants").locator(".brick-link");
-  await expect(variants).toHaveCount(2);
+  await expect(variants).toHaveCount(3);
   await expect(variants.nth(0)).toHaveCSS("text-decoration-line", "underline");
-  await expect(variants.nth(1)).toHaveCSS("text-decoration-line", "none");
+  await expect(variants.nth(1)).toHaveCSS("text-decoration-line", "underline");
+  await expect(variants.nth(2)).toHaveCSS("text-decoration-line", "none");
+  await variants.nth(2).hover();
+  await expect(variants.nth(2)).toHaveCSS("text-decoration-line", "none");
+  await variants.nth(2).focus();
+  await expect(variants.nth(2)).toHaveCSS("text-decoration-line", "none");
+  await expect(variants.nth(2)).toHaveCSS("font-weight", "400");
+  await expect(variants.nth(2)).toHaveCSS("outline-style", "solid");
 
   const tones = page.getByTestId("link-tones").locator(".brick-link");
   expect(await tones.evaluateAll((items) => items.map((item) => item.textContent))).toEqual([
     "Read navigation guidance", "Read navigation guidance", "Read navigation guidance",
   ]);
+  const neutralRestColor = await tones.nth(1).evaluate(
+    (item) => getComputedStyle(item).color,
+  );
+  await tones.nth(1).hover();
+  const neutralHoverColor = await tones.nth(1).evaluate(
+    (item) => getComputedStyle(item).color,
+  );
+  await tones.nth(0).hover();
+  const accentHoverColor = await tones.nth(0).evaluate(
+    (item) => getComputedStyle(item).color,
+  );
+  expect(neutralHoverColor).not.toBe(neutralRestColor);
+  expect(neutralHoverColor).toBe(accentHoverColor);
 
   const sizes = page.getByTestId("link-sizes").locator(".brick-link");
   const fontSizes = await sizes.evaluateAll((items) =>
@@ -79,6 +99,12 @@ test("native and router composition produce inspectable anchors", async ({ page 
 test("customization is visible and the component route has no axe violations", async ({ page }) => {
   const custom = page.getByRole("link", { name: "Read customized guidance" });
   await expect(custom).toHaveCSS("text-decoration-thickness", "2.56px");
+  const themed = page.getByRole("link", { name: "Theme-following decoration" });
+  const explicit = page.getByRole("link", { name: "Explicit underline decoration" });
+  await expect(themed).toHaveCSS("text-decoration-line", "none");
+  await expect(explicit).toHaveCSS("text-decoration-line", "underline");
+  await themed.focus();
+  await expect(themed).toHaveCSS("text-decoration-line", "underline");
   const results = await new AxeBuilder({ page })
     .include('[data-component-page="link"]')
     .analyze();

@@ -24,6 +24,7 @@ import {
 } from "@flowstack-ui/atom/popover";
 
 export type PopoverSize = "sm" | "md" | "lg";
+export type PopoverDensity = "comfortable" | "compact";
 export type PopoverRootProps = Omit<
   AtomPopoverRootProps,
   "triggerMode" | "openDelay" | "closeDelay"
@@ -34,6 +35,8 @@ export type PopoverPortalProps = AtomPopoverPortalProps;
 export interface PopoverContentProps extends AtomPopoverContentProps {
   /** Preferred maximum inline size. @default "md" */
   size?: PopoverSize;
+  /** Visual inset and title density. @default "comfortable" */
+  density?: PopoverDensity;
 }
 export type PopoverTitleProps = AtomPopoverTitleProps;
 export type PopoverDescriptionProps = AtomPopoverDescriptionProps;
@@ -162,13 +165,21 @@ export const PopoverPortal = AtomPopover.Portal;
 
 export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
   function PopoverContent(
-    { className, sideOffset = 8, size = "md", "data-slot": dataSlot, ...props },
+    {
+      className,
+      density = "comfortable",
+      sideOffset = 8,
+      size = "md",
+      "data-slot": dataSlot,
+      ...props
+    },
     ref,
   ) {
     return (
       <AtomPopover.Content
         {...props}
         className={mergeClassName("brick-popover", className)}
+        data-density={density}
         data-size={size}
         data-slot={slotOrDefault(dataSlot, "popover")}
         ref={ref}

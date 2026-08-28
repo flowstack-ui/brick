@@ -11,9 +11,12 @@ import {
 import { Icon } from "../icon/index.js";
 
 export type PaginationVariant = "plain" | "soft" | "outline";
+export type PaginationBoundaryVariant = "plain" | "outline";
 export type PaginationSize = "sm" | "md" | "lg";
 
 export interface PaginationRootProps extends AtomPaginationRootProps {
+  /** Previous and Next control recipe. @default "plain" */
+  boundaryVariant?: PaginationBoundaryVariant;
   /** Containing surface recipe. @default "plain" */
   variant?: PaginationVariant;
   /** Control and type scale. @default "md" */
@@ -42,11 +45,12 @@ function DirectionIcon({ direction }: { direction: "previous" | "next" }) {
 }
 
 export const PaginationRoot = forwardRef<HTMLElement, PaginationRootProps>(
-  function PaginationRoot({ className, size = "md", variant = "plain", "data-slot": dataSlot, ...props }, ref) {
+  function PaginationRoot({ boundaryVariant = "plain", className, size = "md", variant = "plain", "data-slot": dataSlot, ...props }, ref) {
     return (
       <AtomPagination.Root
         {...props}
         className={mergeClassName("brick-pagination", className)}
+        data-boundary-variant={boundaryVariant === "plain" ? undefined : boundaryVariant}
         data-size={size}
         data-slot={dataSlot ?? "pagination"}
         data-variant={variant}
@@ -66,7 +70,7 @@ function controlChildren(children: ReactNode, direction: "previous" | "next") {
   return children ?? <DirectionIcon direction={direction} />;
 }
 
-export const PaginationPrevious = forwardRef<HTMLButtonElement, PaginationPreviousProps>(
+export const PaginationPrevious = forwardRef<HTMLElement, PaginationPreviousProps>(
   function PaginationPrevious({ children, className, "data-slot": dataSlot, ...props }, ref) {
     return <AtomPagination.Previous {...props} className={mergeClassName("brick-pagination__previous", className)} data-slot={dataSlot ?? "pagination-previous"} ref={ref}>{controlChildren(children, "previous")}</AtomPagination.Previous>;
   },
@@ -81,7 +85,7 @@ export function PaginationItems({ itemProps, ellipsisProps }: PaginationItemsPro
   );
 }
 
-export const PaginationItem = forwardRef<HTMLButtonElement, PaginationItemProps>(
+export const PaginationItem = forwardRef<HTMLElement, PaginationItemProps>(
   function PaginationItem({ className, "data-slot": dataSlot, ...props }, ref) {
     return <AtomPagination.Item {...props} className={mergeClassName("brick-pagination__item", className)} data-slot={dataSlot ?? "pagination-item"} ref={ref} />;
   },
@@ -93,7 +97,7 @@ export const PaginationEllipsis = forwardRef<HTMLSpanElement, PaginationEllipsis
   },
 );
 
-export const PaginationNext = forwardRef<HTMLButtonElement, PaginationNextProps>(
+export const PaginationNext = forwardRef<HTMLElement, PaginationNextProps>(
   function PaginationNext({ children, className, "data-slot": dataSlot, ...props }, ref) {
     return <AtomPagination.Next {...props} className={mergeClassName("brick-pagination__next", className)} data-slot={dataSlot ?? "pagination-next"} ref={ref}>{controlChildren(children, "next")}</AtomPagination.Next>;
   },

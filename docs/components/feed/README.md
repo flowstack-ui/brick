@@ -72,7 +72,8 @@ loading UI, or article schema. Authored children remain in their original order.
 
 ### Exports
 
-`Feed`, `FeedRootProps`, `FeedItemProps`, `FeedVariant`, and `FeedDensity` are
+`Feed`, `FeedRootProps`, `FeedItemProps`, `FeedVariant`, `FeedDensity`, and
+`FeedDividerStrength` are
 available from the root package and Feed subpath.
 
 ### Root recipes
@@ -81,6 +82,7 @@ available from the root package and Feed subpath.
 | --- | --- | --- |
 | `variant` | `plain`, `divided`, `outline` | `divided` |
 | `density` | `compact`, `comfortable` | `comfortable` |
+| `dividerStrength` | `subtle`, `default` | `subtle` |
 
 Root also preserves Atom `busy`, `setSize`, `render`, `asChild`, native
 attributes/events, `className`, `style`, custom `data-slot`, and an
@@ -107,10 +109,15 @@ active affordance. An Item receives the Feed focus outline only when the
 article itself is focus-visible; links and buttons inside retain their own
 focus paint.
 
+Divider strength changes only the rule contrast for divided feeds. Use
+`default` when a compact tray or dense utility surface needs clearer row
+separation; keep `subtle` for ordinary continuous reading.
+
 ## Tokens and CSS hooks
 
 Stable classes are `.brick-feed` and `.brick-feed__item`; default slots are
-`feed` and `feed-item`. Root exposes `data-variant` and `data-density`, while
+`feed` and `feed-item`. Root exposes `data-variant`, `data-density`, and
+`data-divider-strength`, while
 Atom exposes `data-busy`, `data-position`, and `data-setsize` when applicable.
 
 Public variables:

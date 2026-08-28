@@ -26,6 +26,8 @@ selection, panel content, alignment, and focus remain clear. Reload while
 watching the variants: line may enhance its already visible selected edge with
 the measured Indicator, while solid, soft, and enclosed never reveal an extra
 underline or change selected paint during hydration.
+Confirm the square-line example has zero Trigger radius while its selected
+underline and complete focus ring remain visible.
 
 ## Step 2 — Layout, content, states
 

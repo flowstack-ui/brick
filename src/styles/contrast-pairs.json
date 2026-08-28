@@ -54,6 +54,27 @@
       "minimumRatio": 4.5
     },
     {
+      "id": "link-text-on-surface",
+      "kind": "text",
+      "foreground": "--brick-color-link-text",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "link-text-hover-on-surface",
+      "kind": "text",
+      "foreground": "--brick-color-link-text-hover",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "minimumRatio": 4.5
+    },
+    {
+      "id": "link-text-pressed-on-surface",
+      "kind": "text",
+      "foreground": "--brick-color-link-text-pressed",
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "minimumRatio": 4.5
+    },
+    {
       "id": "info-on-solid",
       "kind": "text",
       "foreground": "--brick-color-info-on-solid",

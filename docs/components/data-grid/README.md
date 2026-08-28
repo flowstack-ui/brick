@@ -175,7 +175,9 @@ composition remain available.
 
 Author Container when wide content needs horizontal overflow. It never appears
 implicitly and does not alter grid semantics. Logical alignment mirrors under
-RTL, while numeric content uses tabular figures.
+RTL, while numeric content uses tabular figures. The `outline` recipe owns the
+outer boundary and rounds the exposed first and last cells to that boundary;
+do not add a second clipping or border wrapper merely to repair its corners.
 
 ## Accessibility
 

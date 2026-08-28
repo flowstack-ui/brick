@@ -19,14 +19,20 @@ Scenario order: `01 Overview`, `02 Nine-position placement`,
 
 ## Step 1 — Overlap and placement
 
-Review scenarios 01 and 02. Confirm every layer shares one region, the root keeps natural size, and top-start, center, and bottom-end placement match their labels without absolute positioning.
+Review scenarios 01 and 02. Confirm every layer shares one region, the root
+keeps natural size, the Overlay remains visibly above the positioned
+Foundation layer, and top-start, center, and bottom-end placement match their
+labels without absolute positioning.
 
 Result:
 Notes or issue:
 
 ## Step 2 — Composition and source order
 
-Review scenario 03 and inspect the composed label. Confirm it is the direct root child, receives ZStack.Item hooks, and has no additional wrapper.
+Review scenario 03 and inspect the composed action. Confirm it is the direct
+root child, receives ZStack.Item hooks, has no additional wrapper, remains
+inset from the logical edges, and participates above ancestor content without
+consumer positioning CSS.
 
 Result:
 Notes or issue:

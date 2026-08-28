@@ -4,6 +4,12 @@ Form follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Clarified that Fieldset is reserved for meaningful labelled subgroups and
+  must not wrap an entire Form merely to repeat a page heading or create
+  spacing.
+
 ### Added
 
 - Aligned the Form-provided Fieldset first-content gap with the default Field

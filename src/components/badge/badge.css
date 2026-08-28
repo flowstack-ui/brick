@@ -1,8 +1,12 @@
 @layer brick.components {
   .brick-badge,
   .brick-notification-badge {
-    --brick-badge-tone-solid: var(--brick-color-text-primary);
-    --brick-badge-tone-on-solid: var(--brick-color-text-inverse);
+    --brick-badge-tone-solid: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 16%
+    );
+    --brick-badge-tone-on-solid: var(--brick-color-text-primary);
     --brick-badge-tone-soft: var(--brick-color-surface-subtle);
     --brick-badge-tone-on-soft: var(--brick-color-text-primary);
     --brick-badge-tone-border: var(--brick-color-border-strong);
@@ -40,14 +44,28 @@
     font-variant-numeric: tabular-nums;
     letter-spacing: var(--brick-typography-control-sm-letter-spacing);
     line-height: var(--brick-typography-control-sm-line-height);
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    white-space: nowrap;
     text-align: start;
     vertical-align: baseline;
   }
 
   .brick-badge[data-shape="pill"] {
     --brick-badge-radius: var(--brick-radius-full);
+  }
+
+  .brick-badge[data-shape="circle"] {
+    --brick-badge-radius: var(--brick-radius-full);
+    inline-size: var(--brick-badge-min-block-size);
+    min-inline-size: var(--brick-badge-min-block-size);
+    max-inline-size: none;
+    flex: none;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .brick-badge[data-shape="circle"] > :is(svg, [data-slot="icon"]) {
+    inline-size: 1em;
+    block-size: 1em;
   }
 
   .brick-badge[data-size="sm"] {
@@ -62,6 +80,18 @@
     --brick-badge-inline-padding: 0.625rem;
     --brick-badge-block-padding: 0.1875rem;
     --brick-badge-font-size: var(--brick-typography-control-lg-font-size);
+  }
+
+  .brick-badge[data-size="xl"] {
+    --brick-badge-min-block-size: 2.75rem;
+    --brick-badge-inline-padding: 0.75rem;
+    --brick-badge-block-padding: 0.25rem;
+    --brick-badge-font-size: var(--brick-typography-control-xl-font-size);
+  }
+
+  .brick-badge[data-size="xl"][data-shape="circle"] > :is(svg, [data-slot="icon"]) {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
   }
 
   .brick-badge[data-variant="solid"] {

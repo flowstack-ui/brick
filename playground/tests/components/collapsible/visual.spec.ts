@@ -18,3 +18,8 @@ test("Collapsible responsive and forced colors", async ({ page }) => {
   await useForcedColors(page);
   await expect(page.getByTestId("collapsible-variants")).toHaveScreenshot("variants-forced-colors.png");
 });
+test("Collapsible focus remains complete", async ({ page }) => {
+  const overview = page.getByTestId("collapsible-overview");
+  await overview.getByRole("button", { name: "Notification details" }).focus();
+  await expect(overview).toHaveScreenshot("focus-ring-light.png");
+});

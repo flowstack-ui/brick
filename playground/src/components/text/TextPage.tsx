@@ -4,10 +4,15 @@ import {
   Grid,
   VStack,
   Button,
+  Caption,
+  Eyebrow,
+  Heading,
+  Paragraph,
   Text,
   type TextAlign,
   type TextElement,
   type TextTone,
+  type TextTransform,
   type TextVariant,
   type TextWeight,
   type TextWrap,
@@ -21,6 +26,9 @@ import "./text-wrap.playground.css";
 
 const variants: TextVariant[] = [
   "display",
+  "display-sm",
+  "display-md",
+  "display-lg",
   "title-lg",
   "title-md",
   "title-sm",
@@ -44,6 +52,7 @@ const tones: TextTone[] = [
 const weights: TextWeight[] = ["inherit", "regular", "medium", "semibold"];
 const aligns: TextAlign[] = ["start", "center", "end"];
 const wraps: TextWrap[] = ["wrap", "nowrap", "balance", "pretty"];
+const transforms: TextTransform[] = ["none", "uppercase", "lowercase", "capitalize"];
 const semanticHosts: TextElement[] = ["span", "p", "div", "h2"];
 const comparisonCopy = "Build dependable interfaces.";
 const wrapCopy =
@@ -166,13 +175,25 @@ export function TextPage() {
       </Scenario>
 
       <Scenario {...textScenarios[1]}>
-        <Grid.Root columns={4} className="text-grid text-grid--four" data-testid="text-variants">
-          {variants.map((variant) => (
-            <Cell key={variant} label={variant}>
-              <Text variant={variant}>{comparisonCopy}</Text>
-            </Cell>
-          ))}
-        </Grid.Root>
+        <VStack gap="4">
+          <Grid.Root columns={4} className="text-grid text-grid--four" data-testid="text-variants">
+            {variants.map((variant) => (
+              <Cell key={variant} label={variant}>
+                <Text variant={variant}>{comparisonCopy}</Text>
+              </Cell>
+            ))}
+          </Grid.Root>
+          <EvidenceSurface inset="md">
+            <Heading
+              data-testid="text-responsive-variant"
+              level={2}
+              align={{ initial: "center", lg: "start" }}
+              variant={{ initial: "display-sm", md: "display-md", lg: "display-lg" }}
+            >
+              One heading level, responsive visual hierarchy
+            </Heading>
+          </EvidenceSurface>
+        </VStack>
       </Scenario>
 
       <Scenario {...textScenarios[2]}>
@@ -195,6 +216,18 @@ export function TextPage() {
               {weights.map((weight) => (
                 <Cell key={weight} label={weight}>
                   <Text weight={weight}>{comparisonCopy}</Text>
+                </Cell>
+              ))}
+            </Grid.Root>
+          </EvidenceGroup>
+          <EvidenceGroup
+            description="Explicit transforms change presentation without rewriting authored content; semantic titles should still be authored with their correct casing."
+            title="Text transforms"
+          >
+            <Grid.Root columns={4} className="text-grid text-grid--four" data-testid="text-transforms">
+              {transforms.map((transform) => (
+                <Cell key={transform} label={transform}>
+                  <Text transform={transform}>Flowstack API access</Text>
                 </Cell>
               ))}
             </Grid.Root>
@@ -232,6 +265,17 @@ export function TextPage() {
                 Account settings
               </Text>
             </RenderedOutput>
+          </EvidenceGroup>
+          <EvidenceGroup
+            description="Named exports supply common semantic hosts and typography defaults while Heading still requires an authored document level."
+            title="Named semantic text"
+          >
+            <VStack data-testid="text-named" gap="2">
+              <Heading level={3}>Project settings</Heading>
+              <Paragraph tone="secondary">Manage the defaults shared by this workspace.</Paragraph>
+              <Caption tone="muted">Updated today</Caption>
+              <Eyebrow>Workspace</Eyebrow>
+            </VStack>
           </EvidenceGroup>
         </VStack>
       </Scenario>

@@ -5,18 +5,22 @@
     --brick-pagination-root-radius: var(--brick-radius-control);
     --brick-pagination-root-padding: 0;
     --brick-pagination-list-gap: var(--brick-space-1);
-    --brick-pagination-list-overflow-padding: var(--brick-space-1);
+    --brick-pagination-list-overflow-padding: calc(var(--brick-border-focus-width) + var(--brick-border-focus-offset));
     --brick-pagination-control-min-size: 2.5rem;
     --brick-pagination-control-inline-padding: var(--brick-space-2);
     --brick-pagination-control-radius: var(--brick-radius-subtle);
     --brick-pagination-control-foreground: var(--brick-color-text-secondary);
     --brick-pagination-control-background: transparent;
     --brick-pagination-control-border-color: transparent;
+    --brick-pagination-boundary-background: var(--brick-pagination-control-background);
+    --brick-pagination-boundary-border-color: var(--brick-pagination-control-border-color);
     --brick-pagination-control-hover-background: var(--brick-color-surface-subtle);
     --brick-pagination-control-pressed-background: var(--brick-color-border-subtle);
     --brick-pagination-current-background: var(--brick-color-accent-solid);
     --brick-pagination-current-foreground: var(--brick-color-accent-on-solid);
     --brick-pagination-current-border-color: var(--brick-color-accent-solid);
+    --brick-pagination-current-hover-background: var(--brick-color-accent-solid-hover);
+    --brick-pagination-current-pressed-background: var(--brick-color-accent-solid-pressed);
     --brick-pagination-disabled-foreground: var(--brick-color-text-disabled);
     --brick-pagination-focus-ring: var(--brick-color-focus-ring);
     --brick-pagination-ellipsis-foreground: var(--brick-color-text-muted);
@@ -46,6 +50,11 @@
     --brick-pagination-root-background: var(--brick-color-surface-base);
     --brick-pagination-root-padding: var(--brick-space-1);
     border-color: var(--brick-pagination-root-border-color);
+  }
+
+  .brick-pagination[data-boundary-variant="outline"] {
+    --brick-pagination-boundary-background: var(--brick-color-surface-base);
+    --brick-pagination-boundary-border-color: var(--brick-color-border-subtle);
   }
 
   .brick-pagination[data-size="sm"] {
@@ -116,22 +125,39 @@
     color: var(--brick-pagination-control-foreground);
     background: var(--brick-pagination-control-background);
     cursor: pointer;
+    text-decoration: none;
     touch-action: manipulation;
     transition: color var(--brick-pagination-transition-duration), background-color var(--brick-pagination-transition-duration), border-color var(--brick-pagination-transition-duration);
   }
 
-  .brick-pagination__previous:hover:not(:disabled),
-  .brick-pagination__item:hover:not(:disabled),
-  .brick-pagination__next:hover:not(:disabled) { background: var(--brick-pagination-control-hover-background); }
+  .brick-pagination__previous,
+  .brick-pagination__next {
+    border-color: var(--brick-pagination-boundary-border-color);
+    background: var(--brick-pagination-boundary-background);
+  }
 
-  .brick-pagination__previous:active:not(:disabled),
-  .brick-pagination__item:active:not(:disabled),
-  .brick-pagination__next:active:not(:disabled) { background: var(--brick-pagination-control-pressed-background); }
+  .brick-pagination__previous:hover:not(:disabled):not([aria-disabled="true"]),
+  .brick-pagination__item:hover:not(:disabled):not([aria-disabled="true"]),
+  .brick-pagination__next:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--brick-pagination-control-hover-background); }
+
+  .brick-pagination__previous:active:not(:disabled):not([aria-disabled="true"]),
+  .brick-pagination__item:active:not(:disabled):not([aria-disabled="true"]),
+  .brick-pagination__next:active:not(:disabled):not([aria-disabled="true"]) { background: var(--brick-pagination-control-pressed-background); }
 
   .brick-pagination__item[aria-current="page"] {
     color: var(--brick-pagination-current-foreground);
     border-color: var(--brick-pagination-current-border-color);
     background: var(--brick-pagination-current-background);
+  }
+
+  .brick-pagination__item[aria-current="page"]:hover:not(:disabled):not([aria-disabled="true"]) {
+    border-color: var(--brick-pagination-current-hover-background);
+    background: var(--brick-pagination-current-hover-background);
+  }
+
+  .brick-pagination__item[aria-current="page"]:active:not(:disabled):not([aria-disabled="true"]) {
+    border-color: var(--brick-pagination-current-pressed-background);
+    background: var(--brick-pagination-current-pressed-background);
   }
 
   .brick-pagination__previous:focus-visible,
@@ -143,7 +169,10 @@
 
   .brick-pagination__previous:disabled,
   .brick-pagination__item:disabled,
-  .brick-pagination__next:disabled {
+  .brick-pagination__next:disabled,
+  .brick-pagination__previous[aria-disabled="true"],
+  .brick-pagination__item[aria-disabled="true"],
+  .brick-pagination__next[aria-disabled="true"] {
     color: var(--brick-pagination-disabled-foreground);
     cursor: not-allowed;
   }
@@ -164,6 +193,9 @@
     .brick-pagination__next:focus-visible { outline-color: Highlight; }
     .brick-pagination__previous:disabled,
     .brick-pagination__item:disabled,
-    .brick-pagination__next:disabled { color: GrayText; }
+    .brick-pagination__next:disabled,
+    .brick-pagination__previous[aria-disabled="true"],
+    .brick-pagination__item[aria-disabled="true"],
+    .brick-pagination__next[aria-disabled="true"] { color: GrayText; }
   }
 }

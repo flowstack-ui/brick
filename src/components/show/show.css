@@ -1,4 +1,5 @@
 @layer brick.components {
+  .brick-show { display: contents !important; }
   @media (width < 30rem) { .brick-show[data-from="sm"] { display: none !important; } }
   @media (width < 48rem) { .brick-show[data-from="md"] { display: none !important; } }
   @media (width < 64rem) { .brick-show[data-from="lg"] { display: none !important; } }

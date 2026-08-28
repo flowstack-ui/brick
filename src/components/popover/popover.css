@@ -3,9 +3,9 @@
     --brick-popover-background: var(--brick-color-surface-overlay);
     --brick-popover-foreground: var(--brick-color-text-primary);
     --brick-popover-muted-foreground: var(--brick-color-text-secondary);
-    --brick-popover-border: var(--brick-color-border-subtle);
+    --brick-popover-border: var(--brick-color-border-default);
     --brick-popover-radius: var(--brick-radius-overlay);
-    --brick-popover-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 48%);
+    --brick-popover-shadow: var(--brick-shadow-floating);
     --brick-popover-space: var(--brick-space-4);
     --brick-popover-max-inline-size-sm: 18rem;
     --brick-popover-max-inline-size-md: 24rem;
@@ -42,6 +42,10 @@
       var(--brick-popover-max-inline-size-lg),
       calc(100dvi - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right))
     );
+  }
+
+  .brick-popover[data-density="compact"] {
+    --brick-popover-space: var(--brick-space-3);
   }
 
   .brick-popover > [data-slot="popover-viewport"] {
@@ -83,11 +87,14 @@
     padding-block-end: var(--brick-space-2);
   }
 
+  .brick-popover :where([data-slot="popover-title"], [data-slot="popover-description"]) {
+    min-inline-size: 0;
+    margin: 0;
+  }
+
   .brick-popover > [data-slot="popover-viewport"] > [data-slot="popover-title"],
   .brick-popover > [data-slot="popover-viewport"] > [data-slot="popover-description"],
   .brick-popover__header > :where([data-slot="popover-title"], [data-slot="popover-description"]) {
-    min-inline-size: 0;
-    margin: 0;
     padding-inline: var(--brick-popover-space);
   }
 
@@ -110,6 +117,14 @@
     font-weight: var(--brick-typography-compact-title-lg-font-weight);
     letter-spacing: var(--brick-typography-compact-title-lg-letter-spacing);
     line-height: var(--brick-typography-compact-title-lg-line-height);
+  }
+
+  .brick-popover[data-density="compact"] :where([data-slot="popover-title"]) {
+    font-family: var(--brick-typography-compact-title-font-family);
+    font-size: var(--brick-typography-compact-title-font-size);
+    font-weight: var(--brick-typography-compact-title-font-weight);
+    letter-spacing: var(--brick-typography-compact-title-letter-spacing);
+    line-height: var(--brick-typography-compact-title-line-height);
   }
 
   .brick-popover :where([data-slot="popover-description"]) {

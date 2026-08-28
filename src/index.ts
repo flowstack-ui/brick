@@ -84,6 +84,7 @@ export {
   type AppBarRootProps,
   type AppBarSectionProps,
   type AppBarTone,
+  type AppBarToolbarInset,
   type AppBarToolbarProps,
   type AppBarVariant,
 } from "./components/app-bar/index.js";
@@ -151,10 +152,21 @@ export {
   type AvatarStatus,
 } from "./components/avatar/index.js";
 export {
+  Status,
+  StatusIndicator,
+  StatusLabel,
+  StatusRoot,
+  type StatusPartProps,
+  type StatusRootProps,
+  type StatusSize,
+  type StatusTone,
+} from "./components/status/index.js";
+export {
   Toggle,
   type ToggleProps,
   type ToggleShape,
   type ToggleSize,
+  type ToggleTone,
   type ToggleVariant,
 } from "./components/toggle/index.js";
 export {
@@ -206,6 +218,7 @@ export {
   type PopoverBodyProps,
   type PopoverCloseProps,
   type PopoverContentProps,
+  type PopoverDensity,
   type PopoverDescriptionProps,
   type PopoverFooterProps,
   type PopoverHeaderProps,
@@ -254,6 +267,18 @@ export {
   type RadioGroupRootProps,
   type RadioGroupSize,
 } from "./components/radio-group/index.js";
+export {
+  SegmentGroup,
+  SegmentGroupIndicator,
+  SegmentGroupItem,
+  SegmentGroupItemText,
+  SegmentGroupRoot,
+  type SegmentGroupIndicatorProps,
+  type SegmentGroupItemProps,
+  type SegmentGroupItemTextProps,
+  type SegmentGroupRootProps,
+  type SegmentGroupSize,
+} from "./components/segment-group/index.js";
 export {
   Tabs,
   TabsContent,
@@ -403,12 +428,24 @@ export {
 export * from "./components/multi-select/index.js";
 export * from "./components/combobox/index.js";
 export {
+  Caption,
+  Eyebrow,
+  Heading,
+  Paragraph,
   Text,
+  type CaptionProps,
+  type EyebrowProps,
+  type HeadingLevel,
+  type HeadingProps,
+  type HeadingVariant,
+  type ParagraphProps,
+  type ParagraphVariant,
   type TextAlign,
   type TextElement,
   type TextLineClamp,
   type TextProps,
   type TextTone,
+  type TextTransform,
   type TextVariant,
   type TextWeight,
   type TextWrap,
@@ -421,6 +458,17 @@ export {
   type LinkTone,
   type LinkVariant,
 } from "./components/link/index.js";
+export {
+  LinkBox,
+  LinkBoxAction,
+  LinkBoxLink,
+  LinkBoxRoot,
+  type LinkBoxActionProps,
+  type LinkBoxLinkProps,
+  type LinkBoxRootElement,
+  type LinkBoxRootProps,
+  type LinkBoxVariant,
+} from "./components/link-box/index.js";
 export {
   List,
   type ListContentProps,
@@ -435,6 +483,28 @@ export {
   type ListTrailingProps,
   type ListVariant,
 } from "./components/list/index.js";
+export {
+  ReorderableList,
+  ReorderableListActions,
+  ReorderableListContent,
+  ReorderableListDropIndicator,
+  ReorderableListHandle,
+  ReorderableListItem,
+  ReorderableListMoveAfter,
+  ReorderableListMoveBefore,
+  ReorderableListMoveToEnd,
+  ReorderableListMoveToStart,
+  ReorderableListRoot,
+  type ReorderableListActionsProps,
+  type ReorderableListContentProps,
+  type ReorderableListDropIndicatorProps,
+  type ReorderableListHandleProps,
+  type ReorderableListItemProps,
+  type ReorderableListMoveProps,
+  type ReorderableListRootProps,
+  type ReorderableListSize,
+  type ReorderableListVariant,
+} from "./components/reorderable-list/index.js";
 export {
   HStack,
   Stack,
@@ -454,6 +524,27 @@ export {
   type StackProps,
   type VStackProps,
 } from "./components/stack/index.js";
+export type { SpacingValue } from "./components/_spacing-value/SpacingValue.js";
+export {
+  Group,
+  type GroupElement,
+  type GroupOrientation,
+  type GroupProps,
+} from "./components/group/index.js";
+export {
+  DataList,
+  DataListItem,
+  DataListLabel,
+  DataListRoot,
+  DataListValue,
+  type DataListItemProps,
+  type DataListLabelProps,
+  type DataListLabelWidth,
+  type DataListOrientation,
+  type DataListRootProps,
+  type DataListSize,
+  type DataListValueProps,
+} from "./components/data-list/index.js";
 export {
   ZStack,
   ZStackItem,
@@ -504,6 +595,11 @@ export {
   type FrameProps,
 } from "./components/frame/index.js";
 export {
+  Bleed,
+  type BleedElement,
+  type BleedProps,
+} from "./components/bleed/index.js";
+export {
   Surface,
   SurfaceContent,
   SurfaceMedia,
@@ -520,6 +616,7 @@ export {
   type SurfaceScrimDirection,
   type SurfaceScrimProps,
   type SurfaceScrimStrength,
+  type SurfaceTone,
 } from "./components/surface/index.js";
 export {
   Divider,
@@ -617,6 +714,7 @@ export {
   type SidebarRegionProps,
   type SidebarRootProps,
   type SidebarSize,
+  type SidebarSurface,
   type SidebarTriggerProps,
   type SidebarVariant,
 } from "./components/sidebar/index.js";
@@ -755,6 +853,7 @@ export {
 export {
   Feed,
   type FeedDensity,
+  type FeedDividerStrength,
   type FeedItemProps,
   type FeedRootProps,
   type FeedVariant,
@@ -769,7 +868,7 @@ export {
   type SwipeableItemRootProps,
   type SwipeableItemVariant,
 } from "./components/swipeable-item/index.js";
-export { Toolbar, ToolbarButton, ToolbarLink, ToolbarRoot, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem, type ToolbarButtonProps, type ToolbarLinkProps, type ToolbarRootProps, type ToolbarSeparatorProps, type ToolbarSize, type ToolbarToggleGroupProps, type ToolbarToggleItemProps, type ToolbarVariant } from "./components/toolbar/index.js";
+export { Toolbar, ToolbarButton, ToolbarLink, ToolbarRoot, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem, type ToolbarButtonProps, type ToolbarLinkProps, type ToolbarRootProps, type ToolbarSeparatorProps, type ToolbarSize, type ToolbarToggleGroupProps, type ToolbarToggleItemProps, type ToolbarToggleTone, type ToolbarToggleVariant, type ToolbarVariant } from "./components/toolbar/index.js";
 export * from "./components/pagination/index.js";
 export * from "./components/skip-link/index.js";
 export * from "./components/show/index.js";

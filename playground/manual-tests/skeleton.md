@@ -33,7 +33,9 @@ content is fully interactive.
 
 Review 08–09 in light/dark, phone width, 200%/400%, RTL, forced colors, and
 reduced motion. Expected: defaults adapt, customization matches code, geometry
-does not clip, forced colors retain shapes, and animation stops.
+does not clip, contextual placeholder paint remains visibly distinct on base,
+raised, and overlay surfaces in both appearances, forced colors retain shapes,
+and animation stops.
 
 ## Step 4 — Assistive technology
 

@@ -7,6 +7,7 @@ import {
 import type {
   ToggleShape,
   ToggleSize,
+  ToggleTone,
   ToggleVariant,
 } from "../toggle/Toggle.js";
 
@@ -16,6 +17,8 @@ type ToggleGroupRootCommonProps = Omit<
 > & {
   /** Shared item visual treatment. @default "soft" */
   variant?: ToggleVariant;
+  /** Shared selected-state color treatment. @default "accent" */
+  tone?: ToggleTone;
   /** Shared item size. @default "md" */
   size?: ToggleSize;
   /** Shared item and outer group geometry. @default "rounded" */
@@ -64,6 +67,7 @@ export const ToggleGroupRoot = forwardRef<
 >(function ToggleGroupRoot(props, ref) {
   const {
     variant = "soft",
+    tone = "accent",
     size = "md",
     shape = "rounded",
     attached = false,
@@ -78,6 +82,7 @@ export const ToggleGroupRoot = forwardRef<
     "data-full-width": fullWidth ? "" : undefined,
     "data-shape": shape,
     "data-size": size,
+    "data-tone": tone,
     "data-variant": variant,
     ref,
   } as const;

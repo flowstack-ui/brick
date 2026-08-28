@@ -32,6 +32,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **grouped application actions:** use Toolbar. Do not use AppBar.Toolbar as an ARIA toolbar.
 - **several related disclosure sections:** use Accordion. Preserve Header, Trigger, Content, and ContentInner ownership; use Collapsible for one disclosure.
 - **semantic item or sequence content:** use List. Use structured row parts only when needed and keep Trailing compact on narrow screens.
+- **extended quotation and attribution:** use native figure, blockquote, and figcaption with Brick text content. Keep blockquote and figcaption as direct figure children when they form one self-contained unit, keep attribution outside the quoted content, and use cite only for the title of a referenced work.
 
 ## Rules
 
@@ -41,11 +42,14 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **MUST:** Build from a blueprint, select the owning Brick components, render their defaults, choose supported props, then apply Theme, Block, or application customization in that order.
 - **MUST:** Keep one copy of content when only its layout changes; use responsive Stack values instead of duplicated Show/Hide trees.
 - **MUST:** Use responsive Grid tracks, gaps, spans, and alignment or responsive ZStack logical placement when only those relationships change; do not duplicate content or change semantic order.
+- **MUST:** Use numeric Stack and Grid spacing factors for ordinary rhythm, including responsive values; use explicit CSS spacing only for a measured exception or application token instead of adding layout CSS merely because a value is outside the legacy token scale.
 - **MUST:** Separate component internal geometry from parent participation; configure the finished component for its anatomy and the owning layout or Item part for its relationship to siblings.
+- **MUST:** Give controls that share a row the same named size so button-like peers share height, control typography, icon scale, and radius; keep editable Input, Textarea, and Combobox text at least 16px while preserving the same outer geometry, and never repair mismatches with per-component heights, transforms, margins, or literal radii.
 - **MUST:** Use Frame for a qualified local logical size constraint instead of repeating width/height CSS or adding size props to a finished component; do not use Frame when Container measure, layout participation, AspectRatio, or ScrollArea owns the actual job.
 - **MUST:** Keep a real layout-item wrapper when it establishes flex or grid participation or the definite parent size required by ScrollArea, Carousel fill, or Image fill; asChild is not a wrapper-removal goal by itself.
 - **MUST:** Do not use Stack, Surface, Button, or another convenient component when a more specific Brick navigation, media, content, or interaction component owns the job.
 - **MUST:** Preserve document landmarks and semantic elements when Brick does not provide an owner; Brick-first is not permission to erase HTML meaning.
+- **MUST:** For an extended quotation, preserve native blockquote semantics and keep attribution outside the quoted content; when figure and figcaption associate the pair, keep blockquote and figcaption as direct figure children, use Brick content components inside them, and add narrow Block or application CSS only after supported composition cannot express the remaining relationship.
 - **MUST:** When desktop and mobile require distinct navigation components, share application-owned destination labels, hrefs, values, and ordering while preserving each pattern's correct Brick anatomy; do not duplicate navigation content or force one interaction tree across breakpoints.
 - **MUST:** Use Show and Hide for first-paint visibility; when a controlled interactive overlay may remain open across a breakpoint, synchronize its application state at that boundary so a hidden modal cannot retain focus, scroll lock, or isolation.
 - **SHOULD:** Express reusable brand values through semantic Brick tokens and a theme rather than repeating literal application values.
@@ -54,6 +58,8 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **SHOULD:** Use ZStack for reusable nine-position overlap; retain narrow application positioning only for artwork coordinates that ZStack intentionally does not own.
 - **MUST:** Classify findings before changing a package: behavior and accessibility belong to Atom, finished reusable component paint belongs to Brick, brand values belong to Theme, repeated responsive section composition may belong to Block or Blueprint, and one-page art direction remains application-owned.
 - **MUST:** When styles.css or styles/core.css is loaded, change the document canvas, foreground, and body typography through semantic Brick tokens instead of repeating the body bindings that Brick's foundation already owns.
+- **MUST:** Keep required HTML, CSS, and Web API behavior within the package or application's declared browser floor; place newer visual and platform features behind a usable baseline rather than assuming parsing, prefixes, emulation, or one engine proves interoperability.
+- **MUST:** Author standards-based CSS and let the declared build target generate historical vendor syntax when supported; use a documented feature-specific fallback or bounded workaround for behavior a transformer cannot supply, and never add prefixes by visual guess.
 - **MUST:** Do not write a direct declaration against a Brick part until the correct component, supported props, semantic tokens, component tokens, and public compound parts have been checked in order.
 - **MUST:** Target only documented Brick tokens, public compound parts, stable brick-* base classes, documented slots, and documented state attributes; inspected internal wrappers or implementation selectors are not APIs.
 - **MUST:** When a direct stable-hook override remains because no public prop or token expresses the requirement, emit the required customization gap report and classify its owner before treating the interface as complete.
@@ -104,6 +110,7 @@ Emit this record for every native/framework fallback or direct stable-hook decla
 - Confirm light to dark to light and dark to light to dark scopes restore the theme's complete semantic foreground, background, boundary, action, focus, status, scrim, shadow, and interaction-state pairs without child-by-child recoloring.
 - Confirm every portalled visual root either remains inside the intended theme/appearance container or receives an explicit Appearance scope.
 - Confirm repeated CSS values are theme tokens, component-specific values use documented component tokens, and every remaining direct stable-hook declaration has a complete customization gap report.
+- Confirm required syntax matches the declared browser floor, permission-sensitive APIs include a useful rejection path, optional features retain a usable baseline, and portable behavior has representative Chromium, Firefox, and WebKit evidence; treat Playwright WebKit and device emulation as engine evidence rather than physical-platform proof.
 - Confirm source order follows rendered ownership, static content is separate from interaction assembly when it obscures the component tree, and comments explain why a constraint exists rather than what an obvious line does.
 - Run the package's CSS-delivery check and the application's accessibility, browser, and performance checks.
 

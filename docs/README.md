@@ -11,6 +11,12 @@ This directory is the public documentation authority for
   system appearance, semantic tokens, and scoped customization
 - [Theme contract](guides/theme-contract.md) — generated token classifications,
   approved component inputs, scope attributes, and cascade position
+- [Control sizing](guides/control-sizing.md) — shared inline control geometry,
+  typography, radius, and editable-field exceptions
+- [Browser support](guides/browser-support.md) — pinned target, generated CSS,
+  progressive enhancement, and platform evidence
+- [Layout spacing values](guides/spacing-values.md) — numeric base-unit
+  factors, legacy tokens, explicit CSS values, and responsive mixtures
 - [Agent Knowledge](guides/agent-knowledge.md) — public human- and
   machine-readable component selection, composition, and validation guidance
 - [Component guides](#component-guides) — public API and usage contracts
@@ -71,6 +77,7 @@ This directory is the public documentation authority for
 - [Password Toggle Field](components/password-toggle-field/README.md) — password entry with visibility control
 - [Textarea](components/textarea/README.md) — finished native multi-line text
 - [Radio Group](components/radio-group/README.md) — finished visible single-selection choices
+- [Segment Group](components/segment-group/README.md) — compact one-of-many modes with a moving indicator
 - [Switch](components/switch/README.md) — immediate binary settings
   entry with manual or bounded automatic sizing and optional character count
 - [Select](components/select/README.md) — finished single-value select-only choice
@@ -94,6 +101,7 @@ This directory is the public documentation authority for
 - [Avatar](components/avatar/README.md) — identity image, fallback, and visual
   status
 - [Badge](components/badge/README.md) — passive inline labels
+- [Status](components/status/README.md) — passive semantic dot and label
 - [Chip](components/chip/README.md) — compact authored values with optional
   explicit removal
 - [Notification Badge](components/notification-badge/README.md) — attached
@@ -105,6 +113,10 @@ This directory is the public documentation authority for
   single or multiple selection and two-axis layout
 - [List](components/list/README.md) — native ordered and unordered content
   collections with optional structured anatomy
+- [Data List](components/data-list/README.md) — native term-and-value facts with
+  responsive alignment
+- [Reorderable List](components/reorderable-list/README.md) — deliberate
+  manual ordering with drag, keyboard, touch, and direct movement
 - [Table](components/table/README.md) — native static tabular data with
   responsive containment and sorting composition
 - [Skeleton](components/skeleton/README.md) — motion-safe loading placeholders
@@ -115,6 +127,7 @@ This directory is the public documentation authority for
   determinate and indeterminate task progress
 - [Slider](components/slider/README.md) — single-value and range numeric input
 - [Rating](components/rating/README.md) — fractional single-slider rating input
+  and passive aggregate presentations
 - [Toast](components/toast/README.md) — temporary non-blocking application
   outcomes and process updates
 
@@ -159,6 +172,8 @@ This directory is the public documentation authority for
 - [Bottom Navigation](components/bottom-navigation/README.md) — compact,
   persistent top-level destinations for narrow application layouts
 - [Link](components/link/README.md) — inline and standalone native navigation
+- [Link Box](components/link-box/README.md) — one native destination expanded
+  across a containing region with independent secondary controls
 - [Nav List](components/nav-list/README.md) — grouped native destination lists
   with current and collapsible states
 - [Sidebar](components/sidebar/README.md) — persistent complementary panel and
@@ -167,6 +182,8 @@ This directory is the public documentation authority for
   structure
 - [Stack](components/stack/README.md) — tokenized one-dimensional rows and
   columns
+- [Group](components/group/README.md) — compact inline clusters with optional
+  attached borders and logical corners
 - [ZStack](components/z-stack/README.md) — source-ordered overlapping layers
   and nine-position placement
 - [Grid](components/grid/README.md) — tokenized two-dimensional tracks and
@@ -175,6 +192,7 @@ This directory is the public documentation authority for
   logical page gutters
 - [Section](components/section/README.md) — responsive page-region rhythm
 - [Frame](components/frame/README.md) — responsive logical size constraints
+- [Bleed](components/bleed/README.md) — responsive logical negative margins for deliberate edge media
 - [Show](components/show/README.md) — CSS-only content shown from a fixed
   viewport breakpoint
 - [Hide](components/hide/README.md) — CSS-only content hidden from a fixed

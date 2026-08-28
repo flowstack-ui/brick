@@ -27,10 +27,11 @@ describe("Pagination", () => {
     const user = userEvent.setup();
     const onPageChange = vi.fn();
     const rootRef = createRef<HTMLElement>();
-    render(<Pagination.Root aria-label="Pages" className="custom-root" defaultPage={2} getItemAriaLabel={({ page, isCurrent }) => isCurrent ? `Current ${page}` : `Open ${page}`} nextAriaLabel="Forward" onPageChange={onPageChange} previousAriaLabel="Back" ref={rootRef} size="lg" totalPages={4} variant="outline"><Pagination.List><Pagination.Previous aria-label="Earlier" /><Pagination.Items itemProps={{ className: "custom-item" }} /><Pagination.Next /></Pagination.List></Pagination.Root>);
+    render(<Pagination.Root aria-label="Pages" boundaryVariant="outline" className="custom-root" defaultPage={2} getItemAriaLabel={({ page, isCurrent }) => isCurrent ? `Current ${page}` : `Open ${page}`} nextAriaLabel="Forward" onPageChange={onPageChange} previousAriaLabel="Back" ref={rootRef} size="lg" totalPages={4} variant="outline"><Pagination.List><Pagination.Previous aria-label="Earlier" /><Pagination.Items itemProps={{ className: "custom-item" }} /><Pagination.Next /></Pagination.List></Pagination.Root>);
     expect(rootRef.current).toHaveClass("brick-pagination", "custom-root");
     expect(rootRef.current).toHaveAttribute("data-size", "lg");
     expect(rootRef.current).toHaveAttribute("data-variant", "outline");
+    expect(rootRef.current).toHaveAttribute("data-boundary-variant", "outline");
     expect(screen.getByRole("button", { name: "Earlier" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Current 2" })).toHaveClass("custom-item");
     await user.click(screen.getByRole("button", { name: "Forward" }));
@@ -43,5 +44,39 @@ describe("Pagination", () => {
     expect(document.querySelector(".brick-pagination__ellipsis")).toHaveTextContent("…");
     rerender(<Pagination.Root totalPages={0}><Pagination.List><Pagination.Items /></Pagination.List></Pagination.Root>);
     expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
+  });
+
+  it("renders URL-backed pages as native links with inert boundaries", () => {
+    render(
+      <Pagination.Root
+        aria-label="Incident result pages"
+        getPageHref={({ page }) => `/incidents?status=open&page=${page}`}
+        page={1}
+        totalPages={3}
+      >
+        <Pagination.List>
+          <Pagination.Previous />
+          <Pagination.Items />
+          <Pagination.Next />
+        </Pagination.List>
+      </Pagination.Root>,
+    );
+
+    const current = screen.getByRole("link", { name: "Page 1, current page" });
+    expect(current).toHaveAttribute("href", "/incidents?status=open&page=1");
+    expect(current).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "Go to page 2" })).toHaveAttribute(
+      "href",
+      "/incidents?status=open&page=2",
+    );
+    expect(screen.getByRole("link", { name: "Next page" })).toHaveAttribute(
+      "href",
+      "/incidents?status=open&page=2",
+    );
+
+    const previous = screen.getByRole("link", { name: "Previous page" });
+    expect(previous).not.toHaveAttribute("href");
+    expect(previous).toHaveAttribute("aria-disabled", "true");
+    expect(previous).toHaveAttribute("tabindex", "-1");
   });
 });

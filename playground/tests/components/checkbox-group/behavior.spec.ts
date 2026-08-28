@@ -28,6 +28,20 @@ test("CheckboxGroup overview preserves the default medium vertical unchecked sta
   await expect(items.last()).toHaveAttribute("aria-checked", "false");
 });
 
+test("CheckboxGroup keeps item rows clickable while control feedback stays on each square", async ({ page }) => {
+  const item = page
+    .getByTestId("checkbox-group-overview")
+    .getByRole("checkbox", { name: "Email reports" });
+  const control = item.locator(".brick-checkbox-control");
+
+  await item.hover();
+  await expect(item).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await item.focus();
+  await expect(item).toHaveCSS("outline-style", "none");
+  await expect(control).toHaveCSS("outline-style", "solid");
+  expect((await item.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+});
+
 test("CheckboxGroup ownership examples begin identically and retain their ownership behavior", async ({ page }) => {
   const ownership = page.getByTestId("checkbox-group-ownership");
   const groups = ownership.getByRole("group");

@@ -52,6 +52,8 @@ Notes or issue:
 Inspect plain/divided/outline, compact/comfortable, Item focus, descendant
 focus, light/dark scopes, and the token override. Confirm no Item hover or
 whole-row action affordance and no background escapes rounded outline Items.
+Compare subtle and default divider strengths: both must preserve the same
+geometry, while default provides a clearer internal boundary on compact trays.
 
 Result:
 Notes or issue:

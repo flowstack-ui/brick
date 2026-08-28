@@ -28,7 +28,7 @@ import "./surface.playground.css";
 const levels: SurfaceLevel[] = ["canvas", "base", "subtle", "raised"];
 const elevations: SurfaceElevation[] = ["none", "low", "medium", "high"];
 const radii: SurfaceRadius[] = ["none", "subtle", "surface"];
-const insets: SurfaceInset[] = ["none", "sm", "md", "lg"];
+const insets: SurfaceInset[] = ["none", "sm", "md", "lg", "xl", "2xl"];
 const scrimStrengths: SurfaceScrimStrength[] = ["soft", "medium", "strong"];
 const hosts: SurfaceElement[] = [
   "div", "section", "article", "aside", "nav", "main", "header", "footer",
@@ -224,20 +224,31 @@ export function SurfacePage() {
       </Scenario>
 
       <Scenario {...surfaceScenarios[5]}>
-        <Grid.Root
-          className="surface-grid surface-grid--four"
-          columns={4}
-          data-testid="surface-insets"
-          gap="4"
-        >
-          {insets.map((inset) => (
-            <Cell key={inset} label={inset}>
-              <Surface bordered inset={inset}>
-                <div className="surface-inset-marker"><Content /></div>
-              </Surface>
-            </Cell>
-          ))}
-        </Grid.Root>
+        <VStack gap="4">
+          <Grid.Root
+            className="surface-grid surface-grid--three"
+            columns={3}
+            data-testid="surface-insets"
+            gap="4"
+          >
+            {insets.map((inset) => (
+              <Cell key={inset} label={inset}>
+                <Surface bordered inset={inset}>
+                  <div className="surface-inset-marker"><Content /></div>
+                </Surface>
+              </Cell>
+            ))}
+          </Grid.Root>
+          <Surface
+            bordered
+            data-testid="surface-responsive-inset"
+            inset={{ initial: "sm", md: "lg", xl: "2xl" }}
+          >
+            <div className="surface-inset-marker">
+              <Content>Responsive page-panel inset</Content>
+            </div>
+          </Surface>
+        </VStack>
       </Scenario>
 
       <Scenario {...surfaceScenarios[6]}>

@@ -14,12 +14,15 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 
 ## Selection map
 
-- **text with Brick typography:** use Text. Choose the semantic rendered element through its public API.
+- **headings, paragraphs, captions, and eyebrows:** use Heading, Paragraph, Caption, or Eyebrow. Give Heading an explicit semantic level and choose its visual variant independently.
+- **other text with Brick typography:** use Text. Choose the semantic rendered element through its public API and author the intended letter case in content.
+- **extended quotation with visible attribution:** use native blockquote with Brick text content. Keep attribution outside blockquote; when the quotation and attribution form one self-contained unit, use native figure with direct blockquote and figcaption children. Cite names a referenced work, not the person quoted.
 - **one-dimensional alignment:** use Stack, HStack, or VStack. Use Grid for two-dimensional track relationships.
 - **bounded page width:** use Container. Use Surface or Card when the region also needs a visual boundary.
 - **top application or page bar:** use AppBar. Compose navigation and action components inside its sections.
 - **responsive presence:** use Show or Hide. Use CSS media visibility rather than rendering two JavaScript-controlled trees.
 - **image with resilient loading:** use Image. Use an adapter only when a framework image optimizer provides a measured capability Brick lacks.
+- **preserved multi-line technical source:** use Code Block. Keep syntax tokenization in a consumer adapter and pass the exact plain source separately for copy behavior.
 - **navigation destination:** use Link or Button with href. Use Link for ordinary navigation and Button only for an emphasized destination.
 - **grouped disclosure sections:** use Accordion. Choose Collapsible for one independent disclosure and Tabs for one shared switching panel.
 - **ordered or unordered content:** use List. Choose NavList, an interactive collection, Table, or DataGrid when rows navigate, select, activate, or expose data relationships.
@@ -55,6 +58,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - `grid`
 - `text`
 - `image`
+- `code-block`
 - `show`
 - `hide`
 - `accordion`

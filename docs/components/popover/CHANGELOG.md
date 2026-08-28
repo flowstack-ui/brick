@@ -4,8 +4,17 @@ Popover follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Added
+
+- Added `density="compact"` for concise utility panels while preserving the
+  comfortable default.
+
 ### Fixed
 
+- Normalized nested Title and Description margins so native heading and
+  paragraph defaults cannot enlarge composed headers.
+- Popover now uses a visible structural border, with the Arrow inheriting the
+  same border and surface paint so both parts read as one overlay.
 - Modal Popover now inherits Atom's document-only scroll lock so sticky
   application chrome remains anchored at nonzero page offsets.
 

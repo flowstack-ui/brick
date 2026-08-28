@@ -15,4 +15,5 @@ export {
   type SurfaceScrimDirection,
   type SurfaceScrimProps,
   type SurfaceScrimStrength,
+  type SurfaceTone,
 } from "./components/surface/index.js";

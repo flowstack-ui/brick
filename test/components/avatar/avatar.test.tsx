@@ -107,7 +107,7 @@ describe("Avatar", () => {
   });
 
   it("exposes every size, shape, and optional status as closed metadata", () => {
-    const sizes: AvatarSize[] = ["xs", "sm", "md", "lg", "xl"];
+    const sizes: AvatarSize[] = ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"];
     const shapes: AvatarShape[] = ["circle", "rounded"];
     const statuses: AvatarStatus[] = ["online", "away", "busy", "offline"];
     const { rerender } = render(<Avatar alt="Ada" fallback="A" />);

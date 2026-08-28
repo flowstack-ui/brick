@@ -11,6 +11,45 @@ import {
 
 export const themeContractSchema = "flowstack.brick-theme-contract.v1";
 
+const cssCustomPropertyPattern = /^--[_a-z][_a-z0-9-]*$/u;
+const componentAuthorPathPattern = /^[a-z0-9]+(?:\.[a-z0-9]+)*$/u;
+
+function validateComponentThemeInput(name, input, component) {
+  if (!input || typeof input !== "object") throw new Error(`${component} has an invalid theme input ${name}`);
+  if (input.authorPath !== undefined && (typeof input.authorPath !== "string" || !componentAuthorPathPattern.test(input.authorPath))) {
+    throw new Error(`${component} theme input ${name} has an invalid authorPath`);
+  }
+  if (input.valueAssignments === undefined) return;
+  if (!Array.isArray(input.allowedValues) || input.allowedValues.some((value) => typeof value !== "string")) {
+    throw new Error(`${component} recipe input ${name} requires string allowedValues`);
+  }
+  const expectedKeys = [...input.allowedValues].sort();
+  const actualKeys = Object.keys(input.valueAssignments).sort();
+  if (JSON.stringify(actualKeys) !== JSON.stringify(expectedKeys)) {
+    throw new Error(`${component} recipe input ${name} must assign every allowed value exactly once`);
+  }
+  let outputNames;
+  for (const value of input.allowedValues) {
+    const assignments = input.valueAssignments[value];
+    if (!Array.isArray(assignments) || assignments.length === 0) {
+      throw new Error(`${component} recipe input ${name} has no assignments for ${value}`);
+    }
+    const names = assignments.map((assignment) => assignment?.name).sort();
+    if (new Set(names).size !== names.length || names.some((outputName) => typeof outputName !== "string" || !cssCustomPropertyPattern.test(outputName))) {
+      throw new Error(`${component} recipe input ${name} has invalid assignment outputs for ${value}`);
+    }
+    for (const assignment of assignments) {
+      if (typeof assignment.type !== "string" || assignment.type.length === 0 || (typeof assignment.value !== "string" && typeof assignment.value !== "number")) {
+        throw new Error(`${component} recipe input ${name} has an invalid assignment for ${value}`);
+      }
+    }
+    if (outputNames === undefined) outputNames = names;
+    else if (JSON.stringify(names) !== JSON.stringify(outputNames)) {
+      throw new Error(`${component} recipe input ${name} must assign the same outputs for every value`);
+    }
+  }
+}
+
 async function filesBelow(root, extensions) {
   const found = [];
   async function visit(directory) {
@@ -42,7 +81,7 @@ function tokenNames(source, pattern) {
   return [...source.matchAll(pattern)].map((match) => match[1]);
 }
 
-function createContrastContract(source, records) {
+function createContrastContract(source, records, componentInputs) {
   if (source?.$schema !== "flowstack.brick-contrast-pairs.v1") {
     throw new Error("src/styles/contrast-pairs.json has an unsupported schema");
   }
@@ -59,7 +98,7 @@ function createContrastContract(source, records) {
     if (
       !group || typeof group !== "object" ||
       typeof group.id !== "string" || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(group.id) ||
-      (group.kind !== "text" && group.kind !== "non-text") ||
+      !new Set(["text", "text-distinction", "non-text"]).has(group.kind) ||
       typeof group.foreground !== "string" ||
       !Array.isArray(group.backgrounds) || group.backgrounds.length === 0 ||
       typeof group.minimumRatio !== "number" ||
@@ -70,8 +109,20 @@ function createContrastContract(source, records) {
     if (group.kind === "text" && group.minimumRatio < 4.5) {
       throw new Error(`${group.id} normal text must require at least 4.5:1`);
     }
-    if (group.kind === "non-text" && group.minimumRatio < 3) {
-      throw new Error(`${group.id} non-text contrast must require at least 3:1`);
+    if ((group.kind === "non-text" || group.kind === "text-distinction") && group.minimumRatio < 3) {
+      throw new Error(`${group.id} ${group.kind} contrast must require at least 3:1`);
+    }
+    if (group.when !== undefined) {
+      const input = group.when && typeof group.when === "object"
+        ? componentInputs.get(group.when.componentInput)
+        : undefined;
+      if (
+        !input ||
+        !Array.isArray(input.allowedValues) ||
+        !input.allowedValues.includes(group.when.equals)
+      ) {
+        throw new Error(`${group.id} has an invalid component-input condition`);
+      }
     }
 
     const foreground = records.get(group.foreground);
@@ -93,6 +144,7 @@ function createContrastContract(source, records) {
         foreground: group.foreground,
         background: backgroundName,
         minimumRatio: group.minimumRatio,
+        ...(group.when ? { when: group.when } : {}),
       });
     }
   }
@@ -175,12 +227,17 @@ export async function createThemeContract(packageRoot) {
 
   const publicComponentTokens = new Map();
   const componentInputs = new Map();
+  const recipeOutputs = new Set();
   const components = Object.entries(componentDocumentationContracts)
     .sort(([left], [right]) => left.localeCompare(right))
     .map(([id, component]) => {
       for (const name of component.publicTokens ?? []) publicComponentTokens.set(name, id);
       for (const [name, input] of Object.entries(component.themeInputs ?? {})) {
+        validateComponentThemeInput(name, input, id);
         componentInputs.set(name, { ...input, component: id });
+        for (const assignments of Object.values(input.valueAssignments ?? {})) {
+          for (const assignment of assignments) recipeOutputs.add(assignment.name);
+        }
       }
       return {
         id,
@@ -224,6 +281,7 @@ export async function createThemeContract(packageRoot) {
     ...inspection.referencedBy.keys(),
     ...inspection.runtimeBy.keys(),
     ...publicComponentTokens.keys(),
+    ...recipeOutputs,
   ]);
   for (const name of [...allNames].sort()) {
     if (records.has(name)) continue;
@@ -259,7 +317,7 @@ export async function createThemeContract(packageRoot) {
 
   return {
     $schema: themeContractSchema,
-    contractVersion: 2,
+    contractVersion: 4,
     package: { name: packageJson.name, version: packageJson.version },
     sources: {
       tokens: "src/styles/tokens.tokens.json",
@@ -284,7 +342,7 @@ export async function createThemeContract(packageRoot) {
       id,
       tokens: tokenNames.sort(),
     })),
-    contrast: createContrastContract(contrastSource, records),
+    contrast: createContrastContract(contrastSource, records, componentInputs),
     componentThemeInputs: [...componentInputs].sort(([left], [right]) => left.localeCompare(right)).map(([name, input]) => ({
       name,
       ...input,

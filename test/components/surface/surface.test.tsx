@@ -12,6 +12,7 @@ import {
   type SurfaceInset,
   type SurfaceLevel,
   type SurfaceRadius,
+  type SurfaceTone,
 } from "../../../src/surface.js";
 
 describe("Surface", () => {
@@ -25,6 +26,7 @@ describe("Surface", () => {
     expect(surface).toHaveClass("brick-surface");
     expect(surface).toHaveAttribute("data-slot", "surface");
     expect(surface).toHaveAttribute("data-level", "base");
+    expect(surface).toHaveAttribute("data-tone", "neutral");
     expect(surface).toHaveAttribute("data-elevation", "none");
     expect(surface).toHaveAttribute("data-radius", "surface");
     expect(surface).toHaveAttribute("data-inset", "none");
@@ -80,7 +82,8 @@ describe("Surface", () => {
     const levels: SurfaceLevel[] = ["canvas", "base", "subtle", "raised"];
     const elevations: SurfaceElevation[] = ["none", "low", "medium", "high"];
     const radii: SurfaceRadius[] = ["none", "subtle", "surface"];
-    const insets: SurfaceInset[] = ["none", "sm", "md", "lg"];
+    const insets: SurfaceInset[] = ["none", "sm", "md", "lg", "xl", "2xl"];
+    const tones: SurfaceTone[] = ["neutral", "accent"];
     const { rerender } = render(<Surface data-testid="surface" />);
 
     for (const level of levels) {
@@ -106,9 +109,29 @@ describe("Surface", () => {
       rerender(<Surface data-testid="surface" inset={inset} />);
       expect(screen.getByTestId("surface")).toHaveAttribute("data-inset", inset);
     }
+    for (const tone of tones) {
+      rerender(<Surface data-testid="surface" tone={tone} />);
+      expect(screen.getByTestId("surface")).toHaveAttribute("data-tone", tone);
+    }
 
     rerender(<Surface bordered data-testid="surface" />);
     expect(screen.getByTestId("surface")).toHaveAttribute("data-bordered", "");
+  });
+
+  it("serializes responsive inset with the shared mobile-first grammar", () => {
+    render(
+      <Surface
+        data-testid="surface"
+        inset={{ initial: "sm", md: "lg", xl: "2xl" }}
+      />,
+    );
+    const surface = screen.getByTestId("surface");
+
+    expect(surface).toHaveAttribute("data-inset", "sm");
+    expect(surface).toHaveAttribute("data-inset-md", "lg");
+    expect(surface).toHaveAttribute("data-inset-xl", "2xl");
+    expect(surface).not.toHaveAttribute("data-inset-sm");
+    expect(surface).not.toHaveAttribute("data-inset-lg");
   });
 
   it("supports every adopted semantic host", () => {

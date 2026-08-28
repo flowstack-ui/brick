@@ -43,7 +43,9 @@ import { Feed } from "@flowstack-ui/brick/feed";
 import { SwipeableItem } from "@flowstack-ui/brick/swipeable-item";
 import { Toolbar } from "@flowstack-ui/brick/toolbar";
 import { Pagination } from "@flowstack-ui/brick/pagination";
+import { ReorderableList } from "@flowstack-ui/brick/reorderable-list";
 import { HStack, VStack } from "@flowstack-ui/brick/stack";
+import { Group } from "@flowstack-ui/brick/group";
 import { Grid } from "@flowstack-ui/brick/grid";
 import { Container } from "@flowstack-ui/brick/container";
 import { Surface } from "@flowstack-ui/brick/surface";
@@ -139,6 +141,11 @@ export function App() {
     { id: "publish", title: "Atom package published", summary: "Version 0.19.8 is available from npm.", status: "Published" },
     { id: "review", title: "Brick review ready", summary: "The Feed component is ready for consumer verification.", status: "Review" },
     { id: "docs", title: "Usage guide updated", summary: "Dynamic updates and keyboard movement are documented.", status: "Docs" },
+  ]);
+  const [releaseOrder, setReleaseOrder] = useState([
+    { id: "build", title: "Build the packed artifact", owner: "Release engineering" },
+    { id: "verify", title: "Verify the consumer install", owner: "Quality engineering" },
+    { id: "approve", title: "Approve the release evidence", owner: "Maintainer" },
   ]);
 
   useEffect(() => {
@@ -436,7 +443,7 @@ export function App() {
                 <Field.Description>Select one available workspace plan.</Field.Description>
                 <Field.Error>Choose a billing plan.</Field.Error>
               </Field.Root>
-              <HStack gap="2"><Button type="submit">Save plan</Button><Button tone="neutral" type="reset" variant="outline">Reset plan</Button></HStack>
+              <Group aria-label="Plan form actions" attached role="group"><Button type="submit">Save plan</Button><Button tone="neutral" type="reset" variant="outline">Reset plan</Button></Group>
               <Text aria-live="polite" data-testid="consumer-plan-status" tone="secondary">{planStatus}</Text>
             </VStack>
           </Form>
@@ -899,6 +906,39 @@ export function App() {
               </DataGrid.Root>
             </DataGrid.Container>
             <Pagination.Root aria-label="Verification queue pages" page={1} totalPages={3} size="sm"><Pagination.List><Pagination.Previous /><Pagination.Items /><Pagination.Next /></Pagination.List></Pagination.Root>
+          </Card.Content>
+        </Card.Root>
+
+        <Card.Root as="section" variant="outline">
+          <Card.Header>
+            <Card.Title as="h2">Release order</Card.Title>
+            <Card.Description>One editable workflow composed from the packed Reorderable List subpath.</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <ReorderableList.Root
+              aria-label="Release order"
+              getItemLabel={(id) => releaseOrder.find((item) => item.id === id)?.title ?? id}
+              items={releaseOrder.map((item) => item.id)}
+              onItemsChange={(values) => setReleaseOrder((current) => values.map((id) => current.find((item) => item.id === id)!))}
+              variant="soft"
+            >
+              {releaseOrder.map((item) => (
+                <ReorderableList.Item key={item.id} value={item.id}>
+                  <ReorderableList.Handle aria-label={`Reorder ${item.title}`}>⋮⋮</ReorderableList.Handle>
+                  <ReorderableList.Content>
+                    <VStack gap="1">
+                      <Text as="h3" variant="title-sm">{item.title}</Text>
+                      <Text tone="secondary" variant="body-sm">{item.owner}</Text>
+                    </VStack>
+                  </ReorderableList.Content>
+                  <ReorderableList.Actions>
+                    <ReorderableList.MoveBefore aria-label={`Move ${item.title} earlier`}>↑</ReorderableList.MoveBefore>
+                    <ReorderableList.MoveAfter aria-label={`Move ${item.title} later`}>↓</ReorderableList.MoveAfter>
+                  </ReorderableList.Actions>
+                  <ReorderableList.DropIndicator />
+                </ReorderableList.Item>
+              ))}
+            </ReorderableList.Root>
           </Card.Content>
         </Card.Root>
 

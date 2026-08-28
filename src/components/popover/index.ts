@@ -17,6 +17,7 @@ export {
   type PopoverBodyProps,
   type PopoverCloseProps,
   type PopoverContentProps,
+  type PopoverDensity,
   type PopoverDescriptionProps,
   type PopoverFooterProps,
   type PopoverHeaderProps,

@@ -56,4 +56,26 @@ describe("ZStack", () => {
     expect(item).toHaveAttribute("data-justify", "end");
     expect(item).toHaveAttribute("data-justify-lg", "center");
   });
+
+  it("expresses open overlay participation without consumer CSS", () => {
+    render(
+      <ZStack.Root data-testid="root" isolation="open">
+        <span>Media</span>
+        <ZStack.Item
+          data-testid="action"
+          edgeSpacing={{ initial: "3", md: 5 }}
+          layer="action"
+        >
+          Save
+        </ZStack.Item>
+      </ZStack.Root>,
+    );
+    expect(screen.getByTestId("root")).toHaveAttribute("data-isolation", "open");
+    expect(screen.getByTestId("action")).toHaveAttribute("data-edge-spacing", "3");
+    expect(screen.getByTestId("action")).toHaveAttribute("data-edge-spacing-md", "5");
+    expect(screen.getByTestId("action")).toHaveAttribute("data-layer", "action");
+    expect(screen.getByTestId("action").getAttribute("style")).toContain(
+      "--brick-z-stack-item-edge-spacing-input: var(--brick-space-3)",
+    );
+  });
 });

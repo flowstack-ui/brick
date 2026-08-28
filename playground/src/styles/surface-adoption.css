@@ -162,6 +162,21 @@
   gap: var(--brick-space-4);
 }
 
+/* Text's largest display recipes can exceed a narrow grid item's min-content
+   contribution. Keep that evidence grid as the containment owner while cells
+   shrink and wrap inside its explicit tracks. */
+[data-component-page="text"] .text-grid {
+  overflow: hidden;
+}
+
+[data-component-page="text"] .text-cell {
+  min-inline-size: 0;
+}
+
+[data-component-page="text"] .text-cell__preview {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 [data-component-page] :is(
   .button-customization__preview,
   .icon-button-customization__preview,

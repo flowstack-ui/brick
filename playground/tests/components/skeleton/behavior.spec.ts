@@ -19,3 +19,16 @@ test("region ownership, narrow geometry, and accessibility remain correct", asyn
   await page.setViewportSize({ width: 390, height: 844 }); expect((await page.getByTestId("skeleton-stress").boundingBox())!.width).toBeLessThanOrEqual(390);
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 });
+test("contextual paint remains visible on a dark overlay surface", async ({ page }) => {
+  const skeleton = page.getByTestId("skeleton-appearance").locator('[data-brick-appearance="dark"] .brick-skeleton-line').first();
+  const colors = await skeleton.evaluate((element) => {
+    const parent = element.parentElement!;
+    parent.style.background = "var(--brick-color-surface-overlay)";
+    return {
+      skeleton: getComputedStyle(element).backgroundColor,
+      surface: getComputedStyle(parent).backgroundColor,
+    };
+  });
+  expect(colors.skeleton).not.toBe(colors.surface);
+  expect(colors.skeleton).not.toBe("rgba(0, 0, 0, 0)");
+});

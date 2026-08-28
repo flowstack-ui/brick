@@ -1,0 +1,88 @@
+{
+  "schema": "flowstack.agent-component.v1",
+  "id": "select",
+  "name": "Select",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "kind": "component",
+  "purpose": "Present one compact, accessible choice from a predefined list while Atom owns selection, keyboard behavior, popup positioning, and native form participation.",
+  "useWhen": [
+    "A person must choose exactly one value from a predefined list that should remain compact until opened."
+  ],
+  "avoidWhen": [
+    {
+      "condition": "A short set of choices should remain visible.",
+      "useInstead": "Radio Group"
+    },
+    {
+      "condition": "The person must filter or enter a value.",
+      "useInstead": "Combobox"
+    },
+    {
+      "condition": "The popup contains actions or destinations rather than values.",
+      "useInstead": "Dropdown Menu for actions or Link navigation for destinations"
+    }
+  ],
+  "composition": [
+    "Compose Select.Root -> Select.Trigger with Select.Value and Select.Icon -> Select.Content -> Select.Viewport -> Select.Group -> Select.Item with Select.ItemText and Select.ItemIndicator.",
+    "Give every Select an accessible name through Field.Label or an explicit aria-label on Select.Trigger; placeholder text is never the label.",
+    "Use controlled value and onValueChange when an application-owned choice immediately changes locale, theme, routing, or another external system; Select does not implement that side effect."
+  ],
+  "rules": [
+    {
+      "id": "select-single-value",
+      "level": "must",
+      "statement": "Use Select only for one value from a predefined select-only collection; keep actions, destinations, editable filtering, and multiple selection in their owning components."
+    },
+    {
+      "id": "select-item-text",
+      "level": "must",
+      "statement": "Wrap every option's primary visible and accessible label in Select.ItemText and keep interactive descendants out of options."
+    },
+    {
+      "id": "select-application-effect",
+      "level": "must",
+      "statement": "Keep translation loading, locale detection, persistence, URL changes, analytics, and other effects in the application callback rather than inside Select."
+    },
+    {
+      "id": "select-control-size-alignment",
+      "level": "must",
+      "statement": "Use the same named size as adjacent Button, Toggle, ToggleGroup, or other button-like controls; Select Trigger consumes shared control typography and 36/44/52px geometry rather than editable-field typography."
+    },
+    {
+      "id": "select-css",
+      "level": "must",
+      "statement": "Load styles.css or core.css plus select.css."
+    }
+  ],
+  "commonMistakes": [
+    {
+      "mistake": "Using placeholder or the currently selected short code as the only accessible name.",
+      "correction": "Add Field.Label or aria-label to the Trigger and keep the value as the selected value."
+    },
+    {
+      "mistake": "Using Select as a language-navigation implementation that detects, stores, or routes locales internally.",
+      "correction": "Let Select report the chosen value and connect those application responsibilities through onValueChange."
+    },
+    {
+      "mistake": "Replacing the compound option anatomy with clickable custom rows.",
+      "correction": "Map data into Select.Item, Select.ItemText, and Select.ItemIndicator so Atom retains collection and accessibility ownership."
+    }
+  ],
+  "validation": [
+    "Confirm the Trigger has an accessible name distinct from its current value and exposes the expected combobox state.",
+    "Test keyboard opening, typeahead, selection, Escape dismissal, focus return, and disabled-option skipping.",
+    "Confirm a controlled onValueChange reports the selected value once without embedding application side effects in the component.",
+    "Check long localized option labels, narrow viewports, zoom, RTL, dark appearance, and forced colors.",
+    "Compare Trigger height, typography, icon scale, radius, and baseline with adjacent button-like controls at the same size."
+  ],
+  "related": [
+    "@flowstack-ui/atom/agents/select",
+    "field",
+    "form",
+    "radio-group",
+    "combobox",
+    "multi-select",
+    "dropdown-menu"
+  ]
+}

@@ -1,0 +1,63 @@
+@layer brick.components {
+  .brick-status {
+    --brick-status-indicator-size: 0.5rem;
+    --brick-status-gap: var(--brick-space-2);
+    --brick-status-color: var(--brick-color-border-strong);
+
+    display: inline-flex;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    align-items: center;
+    gap: var(--brick-status-gap);
+    color: var(--brick-color-text-primary);
+    font-family: var(--brick-typography-body-sm-font-family);
+    font-size: var(--brick-typography-body-sm-font-size);
+    font-weight: var(--brick-typography-body-sm-font-weight);
+    line-height: var(--brick-typography-body-sm-line-height);
+    letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    vertical-align: middle;
+  }
+
+  .brick-status[data-size="sm"] {
+    --brick-status-indicator-size: 0.375rem;
+    --brick-status-gap: var(--brick-space-1);
+    font-family: var(--brick-typography-caption-font-family);
+    font-size: var(--brick-typography-caption-font-size);
+    font-weight: var(--brick-typography-caption-font-weight);
+    line-height: var(--brick-typography-caption-line-height);
+    letter-spacing: var(--brick-typography-caption-letter-spacing);
+  }
+
+  .brick-status[data-size="lg"] {
+    --brick-status-indicator-size: 0.625rem;
+    font-family: var(--brick-typography-body-md-font-family);
+    font-size: var(--brick-typography-body-md-font-size);
+    font-weight: var(--brick-typography-body-md-font-weight);
+    line-height: var(--brick-typography-body-md-line-height);
+    letter-spacing: var(--brick-typography-body-md-letter-spacing);
+  }
+
+  .brick-status[data-tone="accent"] { --brick-status-color: var(--brick-color-accent-solid); }
+  .brick-status[data-tone="info"] { --brick-status-color: var(--brick-color-info-solid); }
+  .brick-status[data-tone="success"] { --brick-status-color: var(--brick-color-success-solid); }
+  .brick-status[data-tone="warning"] { --brick-status-color: var(--brick-color-warning-solid); }
+  .brick-status[data-tone="danger"] { --brick-status-color: var(--brick-color-danger-solid); }
+
+  .brick-status__indicator {
+    display: block;
+    box-sizing: border-box;
+    inline-size: var(--brick-status-indicator-size);
+    block-size: var(--brick-status-indicator-size);
+    flex: none;
+    border-radius: var(--brick-radius-full);
+    background: var(--brick-status-color);
+  }
+
+  .brick-status__label { min-inline-size: 0; color: inherit; }
+
+  @media (forced-colors: active) {
+    .brick-status { color: CanvasText; }
+    .brick-status__indicator { border: var(--brick-border-width) solid CanvasText; background: CanvasText; }
+    .brick-status:not([data-tone="neutral"]) .brick-status__indicator { border-color: Highlight; background: Highlight; }
+  }
+}

@@ -4,6 +4,162 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Added
+
+- Added `Bleed`, a responsive logical-edge layout primitive for deliberate
+  edge media and cross-plane editorial compositions.
+
+### Changed
+
+- Added paired accent planes to `Surface`, plain editorial containment to
+  `LinkBox`, stronger default outline boundaries to `Card`, and documented
+  direct edge-media composition for card headers.
+
+### Added
+
+- Added Agent Knowledge for Feed, Skeleton, and Visually Hidden, including
+  passive notification-stream, busy-region, and equivalent hidden-text
+  boundaries qualified by the Application notification-tray batch.
+- Added public `DataList` term/value composition and passive `Status` dot-plus-label presentation.
+
+- Added NavList's transparent current-row `ghost` recipe, aligned
+  SectionTrigger start icons, and measured disclosure motion backed by Atom's
+  section-content lifecycle.
+- Aligned NavList section labels to the destination leading column with the
+  active size recipe, removing compact uppercase drift from grouped sidebars.
+- Corrected NavList start/end icon first-line centering with broadly supported
+  CSS math so icon and label centers no longer drift in ordinary one-line rows.
+- Made outline Input use a truly transparent resting and hover surface while
+  preserving Soft as the filled input recipe.
+- Added `SegmentGroup`, an Atom Radio Group-backed compact one-of-many control
+  with three shared sizes and a measured moving indicator.
+- Made outline Toggle and ToggleGroup selection use the true accent border while
+  keeping primary text neutral, and strengthened Slider marker visibility across
+  light and dark appearances.
+
+- Added one shared Stack and Grid spacing grammar: numeric base-unit factors,
+  explicit CSS values, responsive mixtures, and backward-compatible legacy
+  string tokens.
+
+- Adopted the pinned `baseline 2023 with downstream` browser floor for emitted
+  CSS and made target-driven compilation own historical vendor prefixing.
+
+- Added `ReorderableList` for deliberate manual ordering with outline and soft
+  recipes, stable item anatomy, pointer, touch, keyboard, cancellation, direct
+  movement controls, insertion feedback, and the exact published Atom 0.23.0
+  behavior boundary.
+
+- Added native URL-backed Pagination controls through `Root.getPageHref`,
+  preserving browser navigation and disabled-boundary semantics without
+  changing the existing controlled button mode.
+- Added Pagination `boundaryVariant="outline"` so Previous and Next can share
+  Brick-owned outlined paint without consumer border overrides.
+- Prevented Pagination's inline overflow owner from clipping control focus
+  outlines by reserving the full outline width and offset.
+- Kept the current Pagination destination on the accent-solid hover and press
+  scale instead of replacing it with a neutral control state.
+
+- Expanded Surface `inset` with theme-derived `xl` and `2xl` page-panel
+  recipes plus the shared mobile-first responsive value grammar, with updated
+  public, machine-readable, browser, visual, and manual evidence.
+- Expanded Text with direct Heading, Paragraph, Caption, and Eyebrow semantic
+  exports plus an explicit closed visual transform recipe. Named exports reuse
+  Text's one-element implementation and keep heading level independent from
+  typography variant.
+
+- Added `Group` as a role-free inline layout primitive with horizontal and
+  vertical attachment, tokenized spacing, equal growth, logical outside
+  corners, shared interior borders, and contained focus/hover stacking.
+- Added `LinkBox` for one native destination expanded across a containing
+  region, with whole-region hover and focus treatment plus independently
+  layered secondary controls.
+- Expanded ZStack with closed isolation, named overlay layers, and responsive
+  edge spacing for independent actions over expanded destination cards.
+
+- Added Table Agent Knowledge for native comparison semantics, explicit
+  overflow containment, responsive relationship preservation, and the strict
+  static Table versus Data Grid boundary.
+- Added App Bar Toolbar `inset="none"` and a public inline-padding token so a
+  bounded Container can own page gutters without double-insetting header
+  content.
+- Added OTP Field Agent Knowledge for accessible naming, one-value segmented
+  entry, paste/autofill preservation, application policy boundaries, and
+  deliberate focus and submission.
+- Added Select Agent Knowledge for accessible naming, compound option anatomy,
+  controlled application effects, and correct selection against adjacent
+  choice, filtering, action, and navigation components.
+- Added Code Block Agent Knowledge and routed preserved multi-line technical
+  source through the package layer-selection guide.
+- Added `accent` and `neutral` selected-state tones to Toggle and ToggleGroup,
+  and matching variant/tone recipes to Toolbar ToggleGroup without changing
+  Atom-owned behavior.
+- Advanced the generated theme contract to revision 3 with closed categorical
+  component inputs and conditional contrast declarations.
+- Added shared floating and modal semantic shadow roles for consistent
+  theme-wide overlay elevation.
+
+### Changed
+
+- Made Skeleton default and highlight paint contextual semantic tints so
+  placeholders remain visible on dark overlay surfaces.
+- Aligned Select and MultiSelect with Button, Toggle, ToggleGroup, and Tabs by
+  shared named-size control typography and 36/44/52px geometry, while keeping
+  editable Input, Textarea, and Combobox text on the mobile-safe 16px floor.
+- Kept selected line-tab labels and icons on primary text so the active edge
+  owns accent paint and authored metadata can opt into accent independently.
+- Normalized Grid and Stack root margins and semantic `ul`/`ol` padding and
+  markers so supported list hosts preserve the same authored alignment as
+  their default neutral hosts.
+- Clarified Form Agent Knowledge so Fieldset is reserved for meaningful
+  labelled subgroups, and Sidebar guidance so bounded long content composes a
+  ScrollArea instead of assuming Sidebar.Content owns overflow.
+- Expanded the optional neutral reset to remove browser margins from native
+  `figure` and `blockquote` elements for higher-level semantic compositions.
+- Corrected Link Agent Knowledge to preserve the documented boundary between
+  ordinary Link navigation and emphasized Button destinations with a real
+  `href`, keep default Link values implicit, and add package-level native
+  quotation and attribution guidance.
+- Clarified Card Agent Knowledge and public guidance so title-only metadata
+  uses Stack composition without unintentionally narrowing Card descriptions.
+- Made Link follow an audited project decoration policy by default while
+  retaining explicit underlined and plain local variants.
+- Made visible Show and Hide hosts layout-transparent by default so responsive
+  wrappers preserve parent-owned flex and grid spacing.
+
+### Fixed
+
+- Kept complete Slider Thumb targets and focus treatment inside the component
+  boundary at minimum and maximum values, including clipped disclosure
+  compositions.
+- Removed Card Header's empty trailing-column gap when no `Card.Action` is
+  authored, so title-only Stack metadata and full-width descriptions receive
+  the complete content measure.
+- Moved Code Block's historical WebKit text-size-adjustment declaration to
+  target-driven CSS compilation while retaining the standard authored source.
+- Preserved Accordion and Collapsible focus rings across ordinary and
+  horizontally scrolling compositions, and changed their default disclosure
+  Indicators to point down when closed and up when open.
+- Kept short Badge labels on one line so compact status and category metadata
+  remains atomic in constrained comparisons.
+- Preserved visible Table captions outside outline clipping while explicit cell
+  radii keep header, body, and footer paint inside softened corners; clarified
+  stable Scroll Area boundary ownership for vertically moving tables.
+- Preserved ZStack source-order painting when an earlier ratio-based Image or
+  another positioned layer precedes a later authored overlay.
+- Gave neutral solid Toolbar ToggleItems a component-specific layered surface
+  recipe and clarified disabled paint across interactive controls.
+- Kept disabled Button labels at full component opacity while relying on the
+  semantic disabled foreground; outline and ghost disabled surfaces remain
+  transparent.
+- Corrected neutral solid recipes across Button, IconButton, Badge, Toggle,
+  ToggleGroup, and Toolbar ToggleItems so they use theme-derived neutral
+  surfaces rather than appearance-inverting black/white fills.
+- Kept Toolbar focus rings fully visible inside horizontal and vertical
+  scrolling boundaries, including edge controls and the plain variant.
+- Added whole-field Password Toggle Field hover feedback and made the
+  keyboard-focused visibility action use the same semantic focus color as its
+  field frame.
+
 ## 0.1.9 - 2026-08-12
 
 ### Fixed

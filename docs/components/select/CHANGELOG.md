@@ -6,6 +6,9 @@ Select follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Aligned Select Trigger typography with Button, Toggle, ToggleGroup, and other
+  button-like controls at matching `sm`, `md`, and `lg` sizes. Select is not an
+  editable field, so the 16px mobile-entry exception does not apply.
 - Popup options now inherit Root size and match the trigger's 36/44/52px
   `sm`/`md`/`lg` minimum target instead of using a fixed 40px row.
 
@@ -14,6 +17,9 @@ Select follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Select Agent Knowledge covering component selection, required
+  compound anatomy, accessible naming, controlled application effects, common
+  mistakes, and validation.
 - Initial compound Select API built on Atom Select 0.9.3 with complete styled
   anatomy, native forms, Field relationships, controlled/uncontrolled value
   and open state, groups, disabled options, scrolling, portal positioning, and

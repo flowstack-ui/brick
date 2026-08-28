@@ -71,10 +71,16 @@
 
   .brick-table[data-variant="outline"] { border: var(--brick-table-border-width) solid var(--brick-table-border-color); border-radius: var(--brick-table-radius); }
   .brick-table[data-variant="outline"] :where(.brick-table__head, .brick-table__cell) + :where(.brick-table__head, .brick-table__cell) { border-inline-start: var(--brick-table-border-width) solid var(--brick-table-border-color); }
+  .brick-table[data-variant="outline"] .brick-table__header:first-of-type .brick-table__row:first-child > :first-child,
+  .brick-table[data-variant="outline"]:not(:has(.brick-table__header)) .brick-table__body:first-of-type .brick-table__row:first-child > :first-child { border-start-start-radius: calc(var(--brick-table-radius) - var(--brick-table-border-width)); }
+  .brick-table[data-variant="outline"] .brick-table__header:first-of-type .brick-table__row:first-child > :last-child,
+  .brick-table[data-variant="outline"]:not(:has(.brick-table__header)) .brick-table__body:first-of-type .brick-table__row:first-child > :last-child { border-start-end-radius: calc(var(--brick-table-radius) - var(--brick-table-border-width)); }
   .brick-table[data-variant="outline"] .brick-table__footer .brick-table__row:last-child :where(.brick-table__head, .brick-table__cell),
   .brick-table[data-variant="outline"] .brick-table__body:last-child .brick-table__row:last-child :where(.brick-table__head, .brick-table__cell) { border-block-end: 0; }
   .brick-table[data-variant="outline"] .brick-table__footer .brick-table__row:last-child > :first-child { border-end-start-radius: calc(var(--brick-table-radius) - var(--brick-table-border-width)); }
   .brick-table[data-variant="outline"] .brick-table__footer .brick-table__row:last-child > :last-child { border-end-end-radius: calc(var(--brick-table-radius) - var(--brick-table-border-width)); }
+  .brick-table[data-variant="outline"]:not(:has(.brick-table__footer)) .brick-table__body:last-child .brick-table__row:last-child > :first-child { border-end-start-radius: calc(var(--brick-table-radius) - var(--brick-table-border-width)); }
+  .brick-table[data-variant="outline"]:not(:has(.brick-table__footer)) .brick-table__body:last-child .brick-table__row:last-child > :last-child { border-end-end-radius: calc(var(--brick-table-radius) - var(--brick-table-border-width)); }
 
   .brick-table[data-sticky-header] .brick-table__header .brick-table__head { position: sticky; inset-block-start: var(--brick-table-sticky-offset); z-index: var(--brick-table-sticky-z-index); }
 

@@ -8,7 +8,16 @@ import {
   type ImageLoadingStatus,
 } from "@flowstack-ui/atom/avatar";
 
-export type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl";
+export type AvatarSize =
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "2xl"
+  | "3xl"
+  | "4xl"
+  | "5xl";
 export type AvatarShape = "circle" | "rounded";
 export type AvatarStatus = "online" | "away" | "busy" | "offline";
 

@@ -7,7 +7,7 @@ import {
   type AvatarStatus,
 } from "../../../src/avatar.js";
 
-const sizes: AvatarSize[] = ["xs", "sm", "md", "lg", "xl"];
+const sizes: AvatarSize[] = ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"];
 const shapes: AvatarShape[] = ["circle", "rounded"];
 const statuses: AvatarStatus[] = ["online", "away", "busy", "offline"];
 const informative: AvatarProps = {
@@ -45,7 +45,7 @@ const invalidMissingAlt: AvatarProps = { fallback: "AL" };
 // @ts-expect-error fallback is required.
 const invalidMissingFallback: AvatarProps = { alt: "Ada Lovelace" };
 // @ts-expect-error Sizes are closed.
-const invalidSize: AvatarSize = "2xl";
+const invalidSize: AvatarSize = "6xl";
 // @ts-expect-error Shapes are closed.
 const invalidShape: AvatarShape = "square";
 // @ts-expect-error Statuses are closed.

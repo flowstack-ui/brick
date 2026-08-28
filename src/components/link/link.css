@@ -1,8 +1,5 @@
 @layer brick.components {
   .brick-link {
-    --brick-link-foreground: var(--brick-color-accent-text);
-    --brick-link-foreground-hover: var(--brick-color-accent-solid-hover);
-    --brick-link-foreground-active: var(--brick-color-accent-solid-pressed);
     --brick-link-focus-ring: var(--brick-color-focus-ring);
     --brick-link-decoration-color: currentColor;
     --brick-link-decoration-thickness: 0.08em;
@@ -11,7 +8,6 @@
     --brick-link-icon-size: 1em;
     --brick-link-font-family: inherit;
     --brick-link-font-size: inherit;
-    --brick-link-font-weight: inherit;
     --brick-link-line-height: inherit;
     --brick-link-letter-spacing: inherit;
 
@@ -20,26 +16,26 @@
     max-inline-size: 100%;
     align-items: baseline;
     gap: var(--brick-link-gap);
-    color: var(--brick-link-foreground);
+    color: var(--brick-link-foreground, var(--brick-color-link-text));
     font-family: var(--brick-link-font-family);
     font-size: var(--brick-link-font-size);
-    font-weight: var(--brick-link-font-weight);
+    font-weight: var(--brick-link-font-weight, var(--brick-link-theme-font-weight, inherit));
     letter-spacing: var(--brick-link-letter-spacing);
     line-height: var(--brick-link-line-height);
     overflow-wrap: anywhere;
     text-decoration-color: var(--brick-link-decoration-color);
-    text-decoration-line: underline;
+    text-decoration-line: var(--brick-link-decoration, underline);
     text-decoration-thickness: var(--brick-link-decoration-thickness);
     text-underline-offset: var(--brick-link-decoration-offset);
     vertical-align: baseline;
   }
 
   .brick-link:hover {
-    color: var(--brick-link-foreground-hover);
+    color: var(--brick-link-foreground-hover, var(--brick-color-link-text-hover));
   }
 
   .brick-link:active {
-    color: var(--brick-link-foreground-active);
+    color: var(--brick-link-foreground-active, var(--brick-color-link-text-pressed));
   }
 
   .brick-link:focus-visible {
@@ -48,18 +44,23 @@
     outline-offset: var(--brick-border-focus-offset);
   }
 
+  .brick-link[data-variant="underline"] {
+    text-decoration-line: underline;
+  }
+
   .brick-link[data-variant="plain"] {
+    --brick-link-font-weight: var(--brick-typography-body-md-font-weight);
     text-decoration-line: none;
   }
 
-  .brick-link[data-variant="plain"]:is(:hover, :focus-visible, :active) {
+  .brick-link[data-variant="theme"]:is(:hover, :focus-visible, :active) {
     text-decoration-line: underline;
   }
 
   .brick-link[data-tone="neutral"] {
     --brick-link-foreground: var(--brick-color-text-primary);
-    --brick-link-foreground-hover: var(--brick-color-text-secondary);
-    --brick-link-foreground-active: var(--brick-color-text-primary);
+    --brick-link-foreground-hover: var(--brick-color-link-text-hover);
+    --brick-link-foreground-active: var(--brick-color-link-text-pressed);
   }
 
   .brick-link[data-tone="inherit"] {
@@ -71,7 +72,6 @@
   .brick-link[data-size="sm"] {
     --brick-link-font-family: var(--brick-typography-body-sm-font-family);
     --brick-link-font-size: var(--brick-typography-body-sm-font-size);
-    --brick-link-font-weight: var(--brick-typography-body-sm-font-weight);
     --brick-link-line-height: var(--brick-typography-body-sm-line-height);
     --brick-link-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
   }
@@ -79,7 +79,6 @@
   .brick-link[data-size="md"] {
     --brick-link-font-family: var(--brick-typography-body-md-font-family);
     --brick-link-font-size: var(--brick-typography-body-md-font-size);
-    --brick-link-font-weight: var(--brick-typography-body-md-font-weight);
     --brick-link-line-height: var(--brick-typography-body-md-line-height);
     --brick-link-letter-spacing: var(--brick-typography-body-md-letter-spacing);
   }
@@ -87,13 +86,12 @@
   .brick-link[data-size="lg"] {
     --brick-link-font-family: var(--brick-typography-body-lg-font-family);
     --brick-link-font-size: var(--brick-typography-body-lg-font-size);
-    --brick-link-font-weight: var(--brick-typography-body-lg-font-weight);
     --brick-link-line-height: var(--brick-typography-body-lg-line-height);
     --brick-link-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
   }
 
   .brick-link[aria-current]:not([aria-current="false"]) {
-    --brick-link-font-weight: var(--brick-font-weight-medium);
+    --brick-link-font-weight: var(--brick-typography-label-md-font-weight);
   }
 
   .brick-link__content {

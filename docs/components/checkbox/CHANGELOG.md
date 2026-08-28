@@ -13,6 +13,8 @@ Checkbox follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Checkbox hover, press, and focus-visible feedback now stays on the visual
+  square while the complete label row remains a comfortable clickable target.
 - Required Checkbox validation now remains neutral until interaction, presents
   inline or native errors at the visible control, moves focus and scrolling to
   that control, and clears after correction or reset.

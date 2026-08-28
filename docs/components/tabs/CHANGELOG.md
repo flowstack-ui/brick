@@ -6,6 +6,11 @@ Tabs follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Kept line-tab labels and icons on primary text in the selected state so the
+  accent remains reserved for the indicator and authored metadata such as a
+  Badge.
+- Applied `Tabs.List triggerRadius="none"` consistently to line and enclosed
+  Triggers as well as solid and soft recipes.
 - Reserved the complete focus-ring reach inside solid and soft Lists so edge
   Triggers remain fully visible inside clipped Cards and Surfaces.
 

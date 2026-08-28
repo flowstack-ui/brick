@@ -1,6 +1,6 @@
 @layer brick.components {
   .brick-divider {
-    --brick-divider-color: var(--brick-color-border-subtle);
+    --brick-divider-color: var(--brick-color-border-default);
     --brick-divider-thickness: var(--brick-border-width);
     --brick-divider-style: solid;
     --brick-divider-inset: var(--brick-space-4);
@@ -94,12 +94,14 @@
   }
 
   .brick-divider[data-label-align="start"] {
-    grid-template-columns: minmax(0, var(--brick-divider-label-short-segment))
+    grid-template-columns:
+      minmax(0, var(--brick-divider-label-short-segment))
       minmax(0, auto) minmax(0, 1fr);
   }
 
   .brick-divider[data-label-align="end"] {
-    grid-template-columns: minmax(0, 1fr) minmax(0, auto)
+    grid-template-columns:
+      minmax(0, 1fr) minmax(0, auto)
       minmax(0, var(--brick-divider-label-short-segment));
   }
 

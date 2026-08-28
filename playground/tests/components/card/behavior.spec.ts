@@ -154,6 +154,47 @@ test("Card renders only the anatomy authored by the consumer", async ({
   }
 });
 
+test("Card reserves a trailing header column only when Action is authored", async ({ page }) => {
+  await page.goto("/card");
+  const headerOnly = page.getByTestId("card-anatomy-header").locator(".brick-card-header");
+  const withAction = page.getByTestId("card-anatomy-action").locator(".brick-card-header");
+
+  const headerOnlyGeometry = await headerOnly.evaluate((header) => {
+    const description = header.querySelector(".brick-card-description");
+    if (!(description instanceof HTMLElement)) throw new Error("Card description is missing");
+    const style = getComputedStyle(header);
+    return {
+      available: header.getBoundingClientRect().width
+        - Number.parseFloat(style.paddingLeft)
+        - Number.parseFloat(style.paddingRight),
+      description: description.getBoundingClientRect().width,
+    };
+  });
+  const actionGeometry = await withAction.evaluate((header) => {
+    const description = header.querySelector(".brick-card-description");
+    const action = header.querySelector(".brick-card-action");
+    if (!(description instanceof HTMLElement) || !(action instanceof HTMLElement)) {
+      throw new Error("Card action anatomy is incomplete");
+    }
+    const style = getComputedStyle(header);
+    return {
+      available: header.getBoundingClientRect().width
+        - Number.parseFloat(style.paddingLeft)
+        - Number.parseFloat(style.paddingRight),
+      columnGap: Number.parseFloat(style.columnGap),
+      description: description.getBoundingClientRect().width,
+      action: action.getBoundingClientRect().width,
+    };
+  });
+
+  expect(headerOnlyGeometry.description).toBeCloseTo(headerOnlyGeometry.available, 1);
+  expect(actionGeometry.columnGap).toBeGreaterThan(0);
+  expect(actionGeometry.description + actionGeometry.action + actionGeometry.columnGap).toBeCloseTo(
+    actionGeometry.available,
+    1,
+  );
+});
+
 test("Card exposes every restricted Root and Title element", async ({ page }) => {
   await page.goto("/card");
 

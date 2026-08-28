@@ -4,6 +4,7 @@ export {
   VStack,
   type HStackProps,
   type ResponsiveValue,
+  type SpacingValue,
   type StackAlign,
   type StackBreakpoint,
   type StackDirection,

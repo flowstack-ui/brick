@@ -4,6 +4,18 @@ Grid follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Expanded uniform, row, and column gaps to accept numeric base-unit factors,
+  explicit CSS values, and responsive mixtures while preserving existing
+  string-token geometry.
+
+### Fixed
+
+- Normalized native margin, padding, and markers when Grid uses its supported
+  `ul` or `ol` semantic hosts, preventing semantic peer grids from drifting
+  away from surrounding Container alignment.
+
 ### Added
 
 - Added focused responsive values for explicit Root columns, gaps, alignment,

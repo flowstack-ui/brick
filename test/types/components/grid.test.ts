@@ -15,6 +15,7 @@ import {
   type GridSelfAlign,
   type GridSelfJustify,
   type GridSpan,
+  type SpacingValue,
 } from "../../../src/grid.js";
 import { Grid as RootGrid } from "../../../src/index.js";
 
@@ -31,6 +32,7 @@ const lines: GridLine[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 const spans: GridSpan[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 const columnSpans: GridColumnSpan[] = [...spans, "full"];
 const gaps: GridGap[] = ["0", "1", "2", "3", "4", "5", "6"];
+const spacingValues: SpacingValue[] = [8, "2rem", "var(--section-gap)"];
 const sizes: GridMinItemSize[] = ["xs", "sm", "md", "lg", "xl"];
 const aligns: GridAlign[] = ["stretch", "start", "center", "end", "baseline"];
 const justifies: GridJustify[] = ["stretch", "start", "center", "end"];
@@ -71,6 +73,12 @@ createElement(Grid.Root, {
   gap: { initial: "2", md: "4" },
   align: { initial: "stretch", lg: "center" },
 });
+createElement(Grid.Root, {
+  columns: 2,
+  gap: 8,
+  rowGap: "2rem",
+  columnGap: { initial: 3, md: "var(--column-gap)" },
+});
 createElement(Grid.Item, {
   columnSpan: { initial: "full", lg: 4 },
   rowSpan: { initial: 1, md: 2 },
@@ -87,8 +95,6 @@ createElement(Grid.Root, { columns: 3, minItemSize: "md" });
 createElement(Grid.Root, { columns: 13 });
 // @ts-expect-error Arbitrary minimum sizes are excluded.
 createElement(Grid.Root, { minItemSize: "18rem" });
-// @ts-expect-error Arbitrary gaps are excluded.
-createElement(Grid.Root, { gap: "8" });
 // @ts-expect-error Responsive objects are excluded.
 createElement(Grid.Root, { columns: { base: 1, md: 3 } });
 // @ts-expect-error Responsive objects require an initial value.
@@ -125,6 +131,7 @@ void lines;
 void spans;
 void columnSpans;
 void gaps;
+void spacingValues;
 void sizes;
 void aligns;
 void justifies;

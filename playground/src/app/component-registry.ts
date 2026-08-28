@@ -65,6 +65,13 @@ export const componentEntries = [
   },
   {
     category: "Navigation",
+    description: "One native destination expanded across a containing region.",
+    id: "link-box",
+    route: "/link-box",
+    title: "Link Box",
+  },
+  {
+    category: "Navigation",
     description: "Hierarchical page location and ancestor navigation.",
     id: "breadcrumb",
     route: "/breadcrumb",
@@ -176,6 +183,13 @@ export const componentEntries = [
     title: "List",
   },
   {
+    category: "Actions",
+    description: "Manual linear ordering with drag, keyboard, touch, and direct movement.",
+    id: "reorderable-list",
+    route: "/reorderable-list",
+    title: "Reorderable List",
+  },
+  {
     category: "Data display",
     description: "Native static tabular data with responsive containment.",
     id: "table",
@@ -261,6 +275,20 @@ export const componentEntries = [
   },
   {
     category: "Layout",
+    description: "Compact inline clusters with optional attached borders and logical corners.",
+    id: "group",
+    route: "/group",
+    title: "Group",
+  },
+  {
+    category: "Data display",
+    description: "Native term-and-value facts with responsive alignment.",
+    id: "data-list",
+    route: "/data-list",
+    title: "Data List",
+  },
+  {
+    category: "Layout",
     description: "Source-ordered depth layout and nine-position placement.",
     id: "z-stack",
     route: "/z-stack",
@@ -293,6 +321,13 @@ export const componentEntries = [
     id: "frame",
     route: "/frame",
     title: "Frame",
+  },
+  {
+    category: "Layout",
+    description: "Responsive logical negative margins for deliberate edge media.",
+    id: "bleed",
+    route: "/bleed",
+    title: "Bleed",
   },
   {
     category: "Layout",
@@ -428,6 +463,13 @@ export const componentEntries = [
     title: "Avatar",
   },
   {
+    category: "Data display",
+    description: "Passive semantic state with a dot and visible label.",
+    id: "status",
+    route: "/status",
+    title: "Status",
+  },
+  {
     category: "Actions",
     description: "Standalone pressed-state actions.",
     id: "toggle",
@@ -559,6 +601,13 @@ export const componentEntries = [
     id: "radio-group",
     route: "/radio-group",
     title: "Radio Group",
+  },
+  {
+    category: "Controls",
+    description: "Compact radio-semantic mode choices with a moving indicator.",
+    id: "segment-group",
+    route: "/segment-group",
+    title: "Segment Group",
   },
   {
     category: "Forms",

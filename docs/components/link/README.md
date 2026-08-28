@@ -7,9 +7,10 @@ browser navigation behavior, native attributes, and router composition.
 ## When and where to use
 
 Use Link for an inline or standalone destination that should look like a
-hyperlink. Its underlined default is appropriate inside prose. The plain
-variant is for clear navigation contexts where layout already communicates
-that the item is a link.
+hyperlink. Its default follows the active theme's approved Link decoration,
+with an underline as Brick's accessible fallback. The plain variant is for
+clear navigation contexts where layout already communicates that the item is
+a link.
 
 ## When not to use
 
@@ -67,7 +68,7 @@ spans:
   data-size="inherit"
   data-slot="link"
   data-tone="accent"
-  data-variant="underline"
+  data-variant="theme"
   href="/guides"
 >
   <span class="brick-link__content">Read the component guides</span>
@@ -95,7 +96,7 @@ content or icon spans. The ref targets the final `HTMLAnchorElement`.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `underline`, `plain` | `underline` |
+| `variant` | `theme`, `underline`, `plain` | `theme` |
 | `tone` | `accent`, `neutral`, `inherit` | `accent` |
 | `size` | `inherit`, `sm`, `md`, `lg` | `inherit` |
 | `startIcon` | `ReactNode` | none |
@@ -112,11 +113,16 @@ no `disabled`, `loading`, action, shape, width, or filled-variant prop.
 
 ## Visual recipes and states
 
-- `underline` keeps a visible underline at rest.
-- `plain` removes the resting underline and restores it for hover,
-  focus-visible, and active interaction. Use it only in clear navigation.
+- `theme` follows `--brick-link-decoration`, which falls back to `underline`.
+- `underline` keeps a visible underline at rest regardless of the theme.
+- `plain` removes decoration in every interaction state. Use it only where a
+  navigation container, placement, current state, hover/pressed treatment,
+  and focus ring make the destination affordance clear without an underline.
+  It uses the regular system weight instead of applying the theme Link emphasis;
+  native `aria-current` still raises the current destination to medium weight.
 - `accent` is the default navigational foreground. `neutral` uses primary
-  content color. `inherit` follows the surrounding current color.
+  content color at rest and the semantic accent interaction foreground on
+  hover and press. `inherit` follows the surrounding current color.
 - `inherit` follows all surrounding typography. `sm`, `md`, and `lg` use the
   Brick body-sm, body-md, and body-lg recipes.
 - Native `aria-current` uses medium weight without adding a custom selected
@@ -141,6 +147,7 @@ Public component variables:
 - `--brick-link-foreground-hover`
 - `--brick-link-foreground-active`
 - `--brick-link-focus-ring`
+- `--brick-link-decoration`
 - `--brick-link-decoration-color`
 - `--brick-link-decoration-thickness`
 - `--brick-link-decoration-offset`
@@ -157,6 +164,13 @@ Public component variables:
 Choose public props first, customize global semantic tokens for system-wide
 policy, then override Link variables in a scoped class. `className` and
 `style` remain final escape hatches.
+
+A compiled theme may set `components.link.decoration` to `underline` or
+`none`. `none` removes the resting underline only for `variant="theme"` links;
+hover, focus-visible, and active interaction restore it. Explicit
+`variant="underline"` and `variant="plain"` always win locally. Themes using
+`none` must satisfy Brick's declared 3:1 accent-link/primary-text distinction
+in every supported appearance.
 
 ```tsx
 <Link
@@ -189,8 +203,10 @@ horizontal scrolling.
 - Use destination-specific link text rather than repeated labels such as
   “click here.”
 - Keep a real final `a[href]`; do not use Link for an action.
-- The underlined default provides a non-color affordance. Plain requires
-  unmistakable navigational context.
+- The Brick fallback underline provides a non-color affordance. Plain requires
+  unmistakable navigational context plus visible current, hover/pressed, and
+  focus treatment. A theme that removes resting underlines
+  must pass the declared link/text distinction check.
 - Decorative icon wrappers are hidden from assistive technology. Visible text
   or an explicit native ARIA label must name the destination.
 - Browser Enter activation, modifier keys, context menus, target, download,

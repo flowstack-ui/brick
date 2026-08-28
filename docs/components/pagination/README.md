@@ -1,14 +1,15 @@
 # Pagination
 
-Pagination navigates a finite, known set of numbered pages with native buttons.
+Pagination navigates a finite, known set of numbered pages with native buttons
+or real URL destinations.
 
 ## When and where to use
 
-Use Pagination when an application knows the total page count and people benefit from direct movement to nearby or boundary pages. Keep result data, page size, loading, routing, and post-load focus in the application.
+Use Pagination when an application knows the total page count and people benefit from direct movement to nearby or boundary pages. When each page has a URL, provide `getPageHref` and control `page` from the current route. Keep result data, page size, loading, routing, and post-load focus in the application.
 
 ## When not to use
 
-Do not use Pagination for unknown totals, load-more flows, tabs, steps, carousels, or URL navigation. Version 1 is button-based; it does not provide an anchor or router contract.
+Do not use Pagination for unknown totals, load-more flows, tabs, steps, or carousels. Do not render URL-backed results as state-only buttons.
 
 ## Installation and imports
 
@@ -41,7 +42,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ## Anatomy and DOM ownership
 
-The frozen namespace contains `Root`, `List`, `Previous`, `Items`, `Item`, `Ellipsis`, and `Next`. Root renders `nav`; List renders `ol`; every control or gap receives an Atom-owned `li`; Previous, Item, and Next render native `button type="button"`; Ellipsis renders an assistive-hidden span. Items has no host and renders Atom's calculated Item/Ellipsis sequence.
+The frozen namespace contains `Root`, `List`, `Previous`, `Items`, `Item`, `Ellipsis`, and `Next`. Root renders `nav`; List renders `ol`; every control or gap receives an Atom-owned `li`; Previous, Item, and Next render native `button type="button"` by default or anchors when Root provides `getPageHref`; Ellipsis renders an assistive-hidden span. Items has no host and renders Atom's calculated Item/Ellipsis sequence.
 
 ## API
 
@@ -51,7 +52,7 @@ The frozen namespace contains `Root`, `List`, `Previous`, `Items`, `Item`, `Elli
 `PaginationItems`, `PaginationItem`, `PaginationEllipsis`, `PaginationNext`,
 `PaginationRootProps`, `PaginationListProps`, `PaginationPreviousProps`,
 `PaginationItemsProps`, `PaginationItemProps`, `PaginationEllipsisProps`,
-`PaginationNextProps`, `PaginationVariant`, and `PaginationSize` are available
+`PaginationNextProps`, `PaginationVariant`, `PaginationBoundaryVariant`, and `PaginationSize` are available
 from root and subpath imports.
 
 ### Root recipes
@@ -59,9 +60,22 @@ from root and subpath imports.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `plain`, `soft`, `outline` | `plain` |
+| `boundaryVariant` | `plain`, `outline` | `plain` |
 | `size` | `sm`, `md`, `lg` | `md` |
 
-Root preserves Atom's `totalPages`, controlled `page`, `defaultPage`, `onPageChange`, `siblingCount`, `boundaryCount`, `disabled`, `previousAriaLabel`, `nextAriaLabel`, and `getItemAriaLabel`. Previous and Next use logical chevrons when children are omitted. Authored children replace that visible content.
+Root preserves Atom's `totalPages`, controlled `page`, `defaultPage`, `onPageChange`, `siblingCount`, `boundaryCount`, `disabled`, `previousAriaLabel`, `nextAriaLabel`, `getItemAriaLabel`, and `getPageHref`. Previous and Next use logical chevrons when children are omitted. Authored children replace that visible content.
+
+`boundaryVariant="outline"` gives only Previous and Next a bounded control
+treatment while generated page numbers retain the Root recipe. Use it instead
+of styling the two boundary parts independently.
+
+`getPageHref` receives `page`, `currentPage`, `totalPages`, and `isCurrent`.
+When present, the application route owns the current page and activation does
+not call `onPageChange`. Ordinary anchors preserve reload, copy/share,
+Back/Forward, and modified clicks. A router may progressively enhance ordinary
+clicks through the control `onClick` prop, but must preserve the generated
+destination and modified-click behavior. Disabled and boundary links have no
+`href`, expose `aria-disabled="true"`, and leave sequential focus order.
 
 `Items` accepts shared `itemProps` and `ellipsisProps`. Explicit Item and Ellipsis composition remains supported when an application intentionally authors the complete range.
 
@@ -92,6 +106,8 @@ Public variables:
 - `--brick-pagination-current-background`
 - `--brick-pagination-current-foreground`
 - `--brick-pagination-current-border-color`
+- `--brick-pagination-current-hover-background`
+- `--brick-pagination-current-pressed-background`
 - `--brick-pagination-disabled-foreground`
 - `--brick-pagination-focus-ring`
 - `--brick-pagination-ellipsis-foreground`
@@ -113,13 +129,15 @@ Pagination remains one no-wrap row. When constrained, its ordered list scrolls a
 
 ## Accessibility
 
-Give Root a purpose-specific `aria-label` when more than one navigation landmark exists. Every generated page receives a destination label, the current page receives `aria-current="page"`, boundary buttons disable natively, and Ellipsis is not focusable. Tab reaches each enabled button in DOM order; there is no roving focus or arrow-key model. Use Root localization props instead of rebuilding Items.
+Give Root a purpose-specific `aria-label` when more than one navigation landmark exists. Every generated page receives a destination label, the current page receives `aria-current="page"`, boundary buttons disable natively, and boundary links become inert without a destination. Ellipsis is not focusable. Tab reaches each enabled control in DOM order; there is no roving focus or arrow-key model. Use Root localization props instead of rebuilding Items.
 
 ## Composition, native props, and refs
 
-Refs target the Root nav, List ol, control buttons, and Ellipsis span. Parts preserve native props, `render`, `asChild`, custom classes, styles, and slots, but link-shaped final hosts are outside the supported v1 contract. Pagination composes beside Table, List, Select, and result summaries without owning them.
+Refs target the Root nav, List ol, inner button or anchor controls, and Ellipsis span. Parts preserve native props, `render`, `asChild`, custom classes, styles, and slots. Select link mode through Root `getPageHref`; do not compose an anchor while Root remains in button mode. Pagination composes beside Table, List, Select, and result summaries without owning them.
 
 ## Examples
+
+### In-place state
 
 ```tsx
 <Pagination.Root
@@ -129,6 +147,23 @@ Refs target the Root nav, List ol, control buttons, and Ellipsis span. Parts pre
   variant="outline"
   previousAriaLabel="Earlier results"
   nextAriaLabel="Later results"
+>
+  <Pagination.List>
+    <Pagination.Previous />
+    <Pagination.Items />
+    <Pagination.Next />
+  </Pagination.List>
+</Pagination.Root>
+```
+
+### URL-backed results
+
+```tsx
+<Pagination.Root
+  aria-label="Incident result pages"
+  page={pageFromRoute}
+  totalPages={totalPages}
+  getPageHref={({ page }) => `/incidents?status=open&page=${page}`}
 >
   <Pagination.List>
     <Pagination.Previous />

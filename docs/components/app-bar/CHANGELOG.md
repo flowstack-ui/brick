@@ -4,6 +4,11 @@ App Bar follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Kept authored blur CSS standards-first and moved the required WebKit prefix
+  to the package's target-driven CSS build without changing the fallback.
+
 ### Changed
 
 - Clarified that Root defaults to a semantic `header`, that non-banner chrome

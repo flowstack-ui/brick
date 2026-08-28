@@ -130,6 +130,46 @@ test("review controls remain content-sized in a stacked header", async ({
   expect(Math.max(...itemBoxes.map(({ width }) => width))).toBeLessThan(panelBox!.width);
 });
 
+test("review controls contain their overflow on narrow viewports", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/text");
+  await page
+    .getByText("واجهة موثوقة تحافظ على وضوح المحتوى في المساحات الضيقة.")
+    .scrollIntoViewIfNeeded();
+
+  const reviewHeader = page.locator(".evidence-review-header");
+  const stickyPosition = await reviewHeader.evaluate((element) => ({
+    inset: Number.parseFloat(getComputedStyle(element).insetBlockStart),
+    top: element.getBoundingClientRect().top,
+  }));
+  expect(stickyPosition.top).toBeCloseTo(stickyPosition.inset, 0);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  const panel = page.locator(".review-controls");
+  await expect.poll(() => page.locator("html").evaluate((element) => element.scrollWidth))
+    .toBeLessThanOrEqual(390);
+  const sizes = await panel.evaluate((element) => ({
+    clientWidth: element.clientWidth,
+    scrollWidth: element.scrollWidth,
+  }));
+
+  expect(sizes.clientWidth).toBeLessThanOrEqual(390);
+  expect(sizes.scrollWidth).toBeGreaterThan(sizes.clientWidth);
+
+  await page
+    .getByRole("button", { name: "Qualification", exact: true })
+    .scrollIntoViewIfNeeded();
+  expect(await panel.evaluate((element) => element.scrollLeft)).not.toBe(0);
+  await page.getByRole("button", { name: "Qualification", exact: true }).click();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flowstack-theme",
+    "qualification",
+  );
+});
+
 test("wide scenario navigation aligns, scrolls without overlap, and sticks with its header", async ({
   page,
 }) => {

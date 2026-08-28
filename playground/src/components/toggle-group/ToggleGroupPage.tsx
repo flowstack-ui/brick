@@ -7,6 +7,7 @@ import {
   ToggleGroup,
   type ToggleShape,
   type ToggleSize,
+  type ToggleTone,
   type ToggleVariant,
 } from "@flowstack-ui/brick";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
@@ -15,6 +16,7 @@ import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./toggle-group.playground.css";
 
 const variants: ToggleVariant[] = ["solid", "soft", "outline", "ghost"];
+const tones: ToggleTone[] = ["accent", "neutral"];
 const sizes: ToggleSize[] = ["sm", "md", "lg"];
 const shapes: ToggleShape[] = ["rounded", "pill"];
 function GridIcon() {
@@ -29,9 +31,9 @@ function Cell({ children, label }: { children: ReactNode; label: string }) {
   return <EvidenceSurface className="toggle-group-specimen-cell"><SpecimenLabel>{label}</SpecimenLabel><div className="toggle-group-specimen-cell__preview">{children}</div></EvidenceSurface>;
 }
 
-function StandardGroup({ label = "Project view", variant, size, shape }: { label?: string; variant?: ToggleVariant; size?: ToggleSize; shape?: ToggleShape }) {
+function StandardGroup({ label = "Project view", variant, tone, size, shape }: { label?: string; variant?: ToggleVariant; tone?: ToggleTone; size?: ToggleSize; shape?: ToggleShape }) {
   return (
-    <ToggleGroup.Root ariaLabel={label} defaultValue="cards" size={size} shape={shape} variant={variant}>
+    <ToggleGroup.Root ariaLabel={label} defaultValue="cards" size={size} shape={shape} tone={tone} variant={variant}>
       <ToggleGroup.Item value="cards">Cards</ToggleGroup.Item>
       <ToggleGroup.Item value="list">List</ToggleGroup.Item>
       <ToggleGroup.Item value="timeline">Timeline</ToggleGroup.Item>
@@ -86,9 +88,14 @@ export function ToggleGroupPage() {
       </Scenario>
 
       <Scenario {...toggleGroupScenarios[2]}>
-        <Grid.Root columns={4} className="toggle-group-specimen-grid toggle-group-specimen-grid--four" data-testid="toggle-group-variants">
-          {variants.map((variant) => <Cell key={variant} label={variant}><StandardGroup label={`${variant} project view`} variant={variant} /></Cell>)}
-        </Grid.Root>
+        <VStack className="toggle-group-evidence-stack">
+          <Grid.Root columns={4} className="toggle-group-specimen-grid toggle-group-specimen-grid--four" data-testid="toggle-group-variants">
+            {variants.map((variant) => <Cell key={variant} label={variant}><StandardGroup label={`${variant} project view`} variant={variant} /></Cell>)}
+          </Grid.Root>
+          <Grid.Root columns={2} className="toggle-group-specimen-grid toggle-group-specimen-grid--two" data-testid="toggle-group-tones">
+            {tones.map((tone) => <Cell key={tone} label={tone}><StandardGroup label={`${tone} project view`} tone={tone} variant="solid" /></Cell>)}
+          </Grid.Root>
+        </VStack>
       </Scenario>
 
       <Scenario {...toggleGroupScenarios[3]}>

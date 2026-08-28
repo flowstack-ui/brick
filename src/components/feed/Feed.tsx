@@ -7,10 +7,12 @@ import {
 
 export type FeedVariant = "plain" | "divided" | "outline";
 export type FeedDensity = "compact" | "comfortable";
+export type FeedDividerStrength = "subtle" | "default";
 
 export interface FeedRootProps extends AtomFeedRootProps {
   variant?: FeedVariant;
   density?: FeedDensity;
+  dividerStrength?: FeedDividerStrength;
 }
 
 export interface FeedItemProps extends AtomFeedItemProps {}
@@ -23,6 +25,7 @@ const FeedRoot = forwardRef<HTMLElement, FeedRootProps>(function FeedRoot(
   {
     className,
     density = "comfortable",
+    dividerStrength = "subtle",
     variant = "divided",
     "data-slot": dataSlot,
     ...props
@@ -34,6 +37,7 @@ const FeedRoot = forwardRef<HTMLElement, FeedRootProps>(function FeedRoot(
       {...props}
       className={mergeClassName("brick-feed", className)}
       data-density={density}
+      data-divider-strength={dividerStrength}
       data-slot={dataSlot ?? "feed"}
       data-variant={variant}
       ref={ref}

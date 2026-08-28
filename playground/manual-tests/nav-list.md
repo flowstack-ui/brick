@@ -30,7 +30,9 @@ through every link with Tab.
 
 Expected: Overview looks like the canonical soft accent medium list. Only the
 named variant, tone, or size changes in each comparison. The current
-destination is unmistakable, rows align, and keyboard focus is visible.
+destination is unmistakable, rows align, and keyboard focus is visible. In the
+neutral soft specimen, the current row remains distinct from its parent
+surface in both appearances and gains a separate hover treatment.
 
 Result:
 Notes or issue:

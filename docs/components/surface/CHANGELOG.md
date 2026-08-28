@@ -6,6 +6,9 @@ Surface follows the package version of `@flowstack-ui/brick`.
 
 ### Changed
 
+- Expanded `inset` with page-panel `xl` and `2xl` recipes and Brick's shared
+  responsive value grammar while keeping paint, radius, border, and elevation
+  nonresponsive.
 - Clarified in public and Agent Knowledge guidance that the Surface root's
   `inset` recipe owns four-sided content spacing, while `Surface.Content` owns
   foreground layering and Stack edge spacing remains axis-specific.

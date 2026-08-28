@@ -1,6 +1,6 @@
 # Surface
 
-Surface paints a semantic region with a controlled background level, optional
+Surface paints a semantic region with a controlled tone and background level, optional
 border, elevation, radius, and inset. Ordinary Surface renders one native
 element. Optional Media, Scrim, and Content parts layer decorative authored
 media behind foreground content without adding interaction or runtime color
@@ -44,7 +44,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 Public exports are `Surface`, `SurfaceRoot`, `SurfaceMedia`, `SurfaceScrim`,
 `SurfaceContent`, their prop types, `SurfaceScrimStrength`,
 `SurfaceScrimDirection`, `SurfaceProps`, `SurfaceElement`, `SurfaceLevel`,
-`SurfaceElevation`, `SurfaceRadius`, and `SurfaceInset`.
+`SurfaceElevation`, `SurfaceRadius`, `SurfaceInset`, and `SurfaceTone`.
 
 ## Quick start
 
@@ -101,10 +101,11 @@ import from React Server Components.
 | `as` | `div`, `section`, `article`, `aside`, `nav`, `main`, `header`, `footer`, `form`, `li` | `div` |
 | `asChild` | `boolean` | `false` |
 | `level` | `canvas`, `base`, `subtle`, `raised` | `base` |
+| `tone` | `neutral`, `accent` | `neutral` |
 | `bordered` | `boolean` | `false` |
 | `elevation` | `none`, `low`, `medium`, `high` | `none` |
 | `radius` | `none`, `subtle`, `surface` | `surface` |
-| `inset` | `none`, `sm`, `md`, `lg` | `none` |
+| `inset` | `none`, `sm`, `md`, `lg`, `xl`, `2xl`, or a responsive value | `none` |
 | `slot` | `string` | `surface` |
 | `children` | `ReactNode` | optional |
 
@@ -134,7 +135,9 @@ class, style, handlers, and ref while composing the forwarded Surface ref.
 
 ## Visual recipes and states
 
-`level` selects a semantic background layer. Border, elevation, radius, and
+`tone="neutral"` lets `level` select a semantic background layer.
+`tone="accent"` selects the paired accent-solid background and foreground for
+branded or conversion planes, not status messaging. Border, elevation, radius, and
 inset remain independent so consumers can change only the visual dimension
 they intend to demonstrate. Surface has no hover, focus, selected, disabled,
 loading, validation, typography, or motion state.
@@ -147,8 +150,10 @@ surfaces use a system border instead of relying on shadow alone.
 ## Tokens and CSS hooks
 
 Stable hooks are `.brick-surface`, `[data-slot="surface"]`, `data-slot`,
-`data-level`, `data-bordered`, `data-elevation`, `data-radius`, and
-`data-inset`.
+`data-tone`, `data-level`, `data-bordered`, `data-elevation`, `data-radius`, and
+`data-inset`. Responsive inset adds only the authored
+`data-inset-sm`, `data-inset-md`, `data-inset-lg`, and `data-inset-xl`
+overrides.
 
 Public variables:
 
@@ -163,6 +168,12 @@ Public variables:
 - `--brick-surface-shadow`
 - `--brick-surface-radius`
 - `--brick-surface-padding`
+- `--brick-surface-inset-none`
+- `--brick-surface-inset-sm`
+- `--brick-surface-inset-md`
+- `--brick-surface-inset-lg`
+- `--brick-surface-inset-xl`
+- `--brick-surface-inset-2xl`
 - `--brick-surface-scrim-color`
 - `--brick-surface-scrim-soft`
 - `--brick-surface-scrim-medium`
@@ -193,10 +204,20 @@ This escape hatch does not make arbitrary values part of the recipe API.
 
 ## Responsive behavior
 
-Surface follows the size of its parent and uses logical padding. It has no
-responsive props, viewport-height policy, safe-area behavior, or breakpoint
-logic. Application composition decides how Surface participates in responsive
-layout.
+Surface follows the size of its parent and uses logical padding. `inset`
+accepts Brick's mobile-first responsive value shape with required `initial`
+and optional `sm`, `md`, `lg`, and `xl` overrides:
+
+```tsx
+<Surface inset={{ initial: "lg", xl: "2xl" }}>
+  Wide promo-panel content
+</Surface>
+```
+
+Use `xl` and `2xl` for page-sized panels, heroes, and split layouts. Ordinary
+cards and local panels should normally stay within `sm` through `lg`. Surface
+does not own viewport height, safe areas, columns, content measure, or the
+choice of when a product changes layout.
 
 ## Accessibility
 
@@ -211,10 +232,10 @@ Surface paints; Container constrains; Stack and Grid arrange; Card represents a
 self-contained content object. Native props and refs target the one authored
 host.
 
-Surface does not expose `render`, custom-component hosts, tones,
+Surface does not expose `render`, custom-component hosts, status tones,
 translucency, generic clipping props, style-system props, runtime context,
-responsive objects, or arbitrary recipe values. Media clipping is limited to
-its own decorative layer.
+broad responsive paint objects, or arbitrary recipe values. Media clipping is
+limited to its own decorative layer.
 
 When another Brick component already owns the semantic or layout host, use
 the narrow wrapper-free composition path:

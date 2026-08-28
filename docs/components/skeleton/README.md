@@ -67,7 +67,9 @@ Native span attributes, children, class, style, slot, and ref are supported.
 Text is one font-height line, circular is square and round, rectangular has
 sharp corners, and rounded uses the surface radius. Pulse changes opacity,
 wave moves a highlight, and none is static. Multi-line text shortens its last
-line. Loaded content has no placeholder paint.
+line. Loaded content has no placeholder paint. Default placeholder paint is a
+contextual primary-text tint, so it remains distinct on base, raised, overlay,
+light, and dark surfaces without selecting a literal color.
 
 ## Tokens and CSS hooks
 

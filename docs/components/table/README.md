@@ -94,10 +94,12 @@ intentionally replaced by logical values.
 
 ## Visual recipes and states
 
-Line separates rows; outline adds the outer and column boundaries. Size owns
-typography and row metrics, density owns block padding, stripe affects only
-alternating body rows, and sticky affects only header positioning. Table adds
-no hover, selected, focus, loading, empty, or error state.
+Line separates rows; outline adds the outer and column boundaries while cell
+corner geometry keeps section paint inside the softened outline without
+clipping Caption. Size owns typography and row metrics, density owns block
+padding, stripe affects only alternating body rows, and sticky affects only
+header positioning. Table adds no hover, selected, focus, loading, empty, or
+error state.
 
 ### Sorting
 
@@ -184,6 +186,12 @@ elements and do not expose Atom composition.
 See sorting above. For wide content, wrap Root explicitly in Container and set
 `--brick-table-min-inline-size` to the smallest honest comparison width. For a
 summary, author Footer with row headers and numeric Cells exactly like Body.
+
+For a bounded Table that also scrolls vertically, put the visible border and
+radius on a stable Scroll Area viewport, use `variant="line"` on the moving
+Table, and keep the visible table name outside the moving viewport with
+`aria-labelledby`. A Table outline moves with its rows, so its bottom corners
+cannot represent the fixed viewport edge until the final row is visible.
 
 ## Evidence
 

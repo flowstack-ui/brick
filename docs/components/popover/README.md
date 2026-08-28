@@ -64,11 +64,12 @@ Public exports are the `Popover` namespace; named `PopoverRoot`,
 `PopoverPortalProps`, `PopoverContentProps`, `PopoverHeaderProps`,
 `PopoverTitleProps`, `PopoverDescriptionProps`, `PopoverBodyProps`,
 `PopoverFooterProps`, `PopoverCloseProps`, `PopoverArrowProps`,
-`PopoverStructureProps`, and `PopoverSize`.
+`PopoverStructureProps`, `PopoverSize`, and `PopoverDensity`.
 
 | Content prop | Values | Default |
 | --- | --- | --- |
 | `size` | `sm`, `md`, `lg` | `md` |
+| `density` | `comfortable`, `compact` | `comfortable` |
 | `sideOffset` | `number` | `8` |
 
 | Header/Body/Footer prop | Values | Default |
@@ -81,14 +82,17 @@ Header/Body/Footer add native attributes, `asChild`, and `render`.
 
 ## Visual recipes and states
 
-Size controls maximum inline width. Atom owns controlled/uncontrolled state,
+Size controls maximum inline width. Density controls internal panel rhythm;
+compact is intended for concise menus and utility panels. Atom owns controlled/uncontrolled state,
 click interaction, dismissal, focus, placement, collision handling, presence,
-portal, and Arrow position.
+portal, and Arrow position. The finished overlay uses a structural border, and
+the Arrow inherits the same border and background so it reads as one continuous
+surface at every supported radius.
 
 ## Tokens and CSS hooks
 
 Stable classes and overridable `data-slot` values cover every styled part.
-Content reflects `data-size`. Public tokens are
+Content reflects `data-size` and `data-density`. Public tokens are
 `--brick-popover-background`, `--brick-popover-foreground`,
 `--brick-popover-muted-foreground`, `--brick-popover-border`,
 `--brick-popover-radius`, `--brick-popover-shadow`,
@@ -104,8 +108,10 @@ public structure parts. Part `className` and `style` are escape hatches.
 
 ## Responsive behavior
 
-Content respects viewport constraints and Atom may flip or shift it. The
-application owns responsive content layout; logical placement supports RTL.
+Content respects viewport constraints. Center-aligned content shifts into the
+viewport without changing its authored alignment; edge-aligned content may
+resolve an alternate alignment before shifting. The application owns responsive
+content layout; logical placement supports RTL.
 
 ## Accessibility
 
@@ -121,7 +127,7 @@ one `asChild` child or a `render` element and merge refs, class, and style.
 ## Examples
 
 ```tsx
-<Popover.Content size="lg" side="bottom">
+<Popover.Content density="compact" size="lg" side="bottom">
   <Popover.Header><Popover.Title>Filters</Popover.Title></Popover.Header>
   <Popover.Body>…</Popover.Body>
   <Popover.Footer><Popover.Close>Done</Popover.Close></Popover.Footer>

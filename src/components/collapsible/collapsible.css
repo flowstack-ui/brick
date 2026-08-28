@@ -23,7 +23,7 @@
     box-sizing: border-box;
     inline-size: 100%;
     min-inline-size: 0;
-    overflow: clip;
+    overflow: visible;
     border: var(--brick-border-width) solid var(--brick-collapsible-border-color);
     border-radius: var(--brick-collapsible-radius);
     background: var(--brick-collapsible-background);
@@ -77,6 +77,10 @@
     flex: 0 0 auto;
   }
 
+  .brick-collapsible[data-orientation="horizontal"] .brick-collapsible-trigger:focus-visible {
+    outline-offset: calc(-1 * var(--brick-border-focus-width));
+  }
+
   .brick-collapsible-trigger {
     display: flex;
     box-sizing: border-box;
@@ -107,6 +111,17 @@
   .brick-collapsible-trigger:focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-collapsible-focus-ring); outline-offset: var(--brick-border-focus-offset); }
   .brick-collapsible-trigger:is(:disabled, [data-disabled]) { opacity: 0.55; cursor: not-allowed; }
 
+  .brick-collapsible-trigger[data-icon-only] {
+    inline-size: var(--brick-collapsible-trigger-height);
+    min-inline-size: var(--brick-collapsible-trigger-height);
+    block-size: var(--brick-collapsible-trigger-height);
+    min-block-size: var(--brick-collapsible-trigger-height);
+    flex: 0 0 var(--brick-collapsible-trigger-height);
+    justify-content: center;
+    padding: 0;
+    text-align: center;
+  }
+
   .brick-collapsible-indicator {
     display: inline-flex;
     inline-size: var(--brick-collapsible-indicator-size);
@@ -121,9 +136,7 @@
     transition: transform var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
   }
   .brick-collapsible-indicator > svg { display: block; inline-size: 100%; block-size: 100%; }
-  .brick-collapsible-trigger[data-state="open"] .brick-collapsible-indicator { transform: rotate(90deg); }
-  [dir="rtl"] .brick-collapsible-trigger[data-state="closed"] .brick-collapsible-indicator { transform: scaleX(-1); }
-  [dir="rtl"] .brick-collapsible-trigger[data-state="open"] .brick-collapsible-indicator { transform: rotate(90deg); }
+  .brick-collapsible-trigger[data-state="open"] .brick-collapsible-indicator { transform: rotate(180deg); }
 
   .brick-collapsible-content {
     box-sizing: border-box;

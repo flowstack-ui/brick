@@ -1,0 +1,40 @@
+.group-page,
+.group-cell,
+.group-cell__preview {
+  min-inline-size: 0;
+}
+
+.group-overview,
+.group-cell__preview,
+.group-customization__preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.group-cell {
+  display: grid;
+  gap: var(--brick-space-4);
+  padding: var(--brick-space-4);
+}
+
+.group-cell__preview {
+  min-block-size: 7rem;
+}
+
+.group-customization__preview {
+  min-block-size: 14rem;
+  padding: var(--brick-space-6);
+}
+
+.group-narrow {
+  max-inline-size: 17rem;
+  overflow: auto;
+  padding: var(--brick-space-2);
+}
+
+@media (width < 48rem) {
+  .group-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

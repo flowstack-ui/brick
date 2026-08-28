@@ -8,6 +8,7 @@ import {
 
 export type AppBarVariant = "solid" | "surface" | "transparent";
 export type AppBarTone = "neutral" | "accent";
+export type AppBarToolbarInset = "default" | "none";
 
 export interface AppBarRootProps extends AtomAppBarRootProps {
   /** Surface treatment. @default "surface" */
@@ -22,7 +23,10 @@ export interface AppBarRootProps extends AtomAppBarRootProps {
   blurred?: boolean;
 }
 
-export type AppBarToolbarProps = AtomAppBarToolbarProps;
+export interface AppBarToolbarProps extends AtomAppBarToolbarProps {
+  /** Logical inline content inset. Use none when Container owns the gutter. @default "default" */
+  inset?: AppBarToolbarInset;
+}
 export type AppBarSectionProps = AtomAppBarSectionProps;
 
 function mergeClassName(base: string, className: string | undefined) {
@@ -58,11 +62,12 @@ export const AppBarRoot = forwardRef<HTMLElement, AppBarRootProps>(
 );
 
 export const AppBarToolbar = forwardRef<HTMLDivElement, AppBarToolbarProps>(
-  function AppBarToolbar({ className, ...props }, ref) {
+  function AppBarToolbar({ className, inset = "default", ...props }, ref) {
     return (
       <AtomAppBar.Toolbar
         {...props}
         className={mergeClassName("brick-app-bar-toolbar", className)}
+        data-inset={inset}
         ref={ref}
       />
     );

@@ -86,7 +86,6 @@
   .brick-code-block-pre {
     min-inline-size: max-content;
     margin: 0;
-    -webkit-text-size-adjust: none;
     text-size-adjust: none;
     font-family: var(--brick-code-block-font-family);
     font-size: var(--brick-code-block-font-size);

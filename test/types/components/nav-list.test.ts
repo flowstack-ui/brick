@@ -7,7 +7,7 @@ import {
   type NavListVariant,
 } from "../../../src/nav-list.js";
 
-const variant: NavListVariant = "soft";
+const variant: NavListVariant = "ghost";
 const tone: NavListTone = "accent";
 const size: NavListSize = "md";
 const root: NavListRootProps = { children: null, variant, tone, size };
@@ -17,7 +17,7 @@ void root;
 void link;
 
 // @ts-expect-error unsupported recipe
-const badVariant: NavListVariant = "ghost";
+const badVariant: NavListVariant = "plain";
 // @ts-expect-error asChild delegates anatomy
 const badChild: NavListLinkProps = { asChild: true, children: {} as JSX.Element, startIcon: "x" };
 void badVariant;

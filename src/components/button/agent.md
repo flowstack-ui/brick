@@ -29,7 +29,7 @@ Render a finished accessible action or emphasized native link with Brick size, t
 ## Validation checklist
 
 - Confirm an accessible name and action semantics.
-- Test focus, keyboard activation, disabled/loading behavior, and contrast in every supported appearance.
+- Test focus, keyboard activation, disabled/loading behavior, and contrast in every supported appearance; disabled labels must remain readable while ghost and outline controls stay transparent.
 
 ## Related guidance
 

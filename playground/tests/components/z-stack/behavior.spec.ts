@@ -9,7 +9,16 @@ test("ZStack overlaps children in source order with logical placement", async ({
   await expect(overview.locator(":scope > *")).toHaveCount(2);
   for (const child of await overview.locator(":scope > *").all()) {
     await expect(child).toHaveCSS("grid-area", "1 / 1");
+    await expect(child).toHaveCSS("z-index", "0");
   }
+  await expect(overview).toHaveCSS("isolation", "isolate");
+  const topLayer = await overview.evaluate((root) => {
+    const overlay = root.children[1] as HTMLElement;
+    const box = overlay.getBoundingClientRect();
+    const element = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+    return element?.closest('[data-slot="z-stack-item"]') === overlay;
+  });
+  expect(topLayer).toBe(true);
   const placement = page.getByTestId("z-stack-placement");
   await expect(placement.getByText("Top start").locator("xpath=parent::*")).toHaveCSS("align-self", "start");
   await expect(placement.getByText("Center").locator("xpath=parent::*")).toHaveCSS("justify-self", "center");
@@ -17,7 +26,12 @@ test("ZStack overlaps children in source order with logical placement", async ({
 });
 
 test("composition, focus order, reflow, and accessibility remain authored", async ({ page }) => {
-  await expect(page.getByText("Composed label")).toHaveClass(/brick-z-stack-item/);
+  const composedRoot = page.getByTestId("z-stack-composition");
+  const composedAction = composedRoot.getByRole("button", { name: "Composed action" });
+  await expect(composedRoot).toHaveCSS("isolation", "auto");
+  await expect(composedAction).toHaveClass(/brick-z-stack-item/);
+  await expect(composedAction).toHaveCSS("z-index", "2");
+  await expect(composedAction).toHaveCSS("margin", "12px");
   const actions = page.getByTestId("z-stack-stress").getByRole("button");
   await actions.first().focus();
   await page.keyboard.press("Tab");

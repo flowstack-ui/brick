@@ -36,7 +36,6 @@ import "@flowstack-ui/brick/styles/divider.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 Public exports are `Divider`, `DividerProps`, `DividerLineProps`,
 `DividerLabelProps`, `DividerComposedProps`, `DividerElement`,
 `DividerOrientation`, `DividerVariant`, `DividerThickness`,
@@ -60,16 +59,16 @@ span. The root is the forwarded `HTMLHRElement | HTMLDivElement` ref target.
 
 ## API
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `orientation` | `horizontal`, `vertical` | `horizontal` |
-| `decorative` | `boolean` | `true` |
-| `variant` | `solid`, `dashed`, `dotted` | `solid` |
-| `thickness` | `subtle`, `regular`, `strong` | `subtle` |
-| `inset` | `none`, `start`, `both` | `none` |
-| `labelAlign` | `start`, `center`, `end` | `center` |
-| `stretch` | `boolean` | `false` |
-| `slot` | `string` | `divider` |
+| Prop          | Values                        | Default      |
+| ------------- | ----------------------------- | ------------ |
+| `orientation` | `horizontal`, `vertical`      | `horizontal` |
+| `decorative`  | `boolean`                     | `true`       |
+| `variant`     | `solid`, `dashed`, `dotted`   | `solid`      |
+| `thickness`   | `subtle`, `regular`, `strong` | `subtle`     |
+| `inset`       | `none`, `start`, `both`       | `none`       |
+| `labelAlign`  | `start`, `center`, `end`      | `center`     |
+| `stretch`     | `boolean`                     | `false`      |
+| `slot`        | `string`                      | `divider`    |
 
 Labels are horizontal only. `asChild` is a distinct composed-root mode and
 cannot also use `labelAlign`. Native attributes, `render`, events,
@@ -78,7 +77,9 @@ cannot also use `labelAlign`. Native attributes, `render`, events,
 ## Visual recipes and states
 
 Variant changes only border style; thickness changes only line weight; inset
-changes only logical extent. Vertical Divider has no invented height: provide
+changes only logical extent. The default line uses Brick's ordinary structural
+border role so it stays perceptible beside canvas and panel boundaries in
+light and dark appearances. Vertical Divider has no invented height: provide
 context height or use `stretch` in a row. Divider has no interaction, status,
 focus, disabled, loading, or motion state.
 

@@ -40,6 +40,14 @@ describe("Slider", () => {
     expect(markers[2]).toHaveAttribute("data-edge", "end");
   });
 
+  it("identifies markers inside the selected range", () => {
+    render(<Slider.Root aria-label="Scale" defaultValue={[50]}><Slider.Track><Slider.Marker value={0} /><Slider.Marker value={50} /><Slider.Marker value={100} /><Slider.Range /><Slider.Thumb /></Slider.Track></Slider.Root>);
+    const markers = document.querySelectorAll(".brick-slider__marker");
+    expect(markers[0]).toHaveAttribute("data-selected");
+    expect(markers[1]).toHaveAttribute("data-selected");
+    expect(markers[2]).not.toHaveAttribute("data-selected");
+  });
+
   it("inherits Field state and participates in form submission and reset", () => {
     const onChange = vi.fn();
     render(<form onChange={onChange}><Field.Root invalid disabled><Field.Label>Brightness</Field.Label><Example name="brightness" /></Field.Root><button type="reset">Reset</button></form>);

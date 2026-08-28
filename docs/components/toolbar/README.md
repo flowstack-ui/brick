@@ -44,21 +44,40 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 | `variant` | `plain`, `soft`, `outline` | `soft` |
 | `size` | `sm`, `md`, `lg` | `md` |
 
+`Toolbar.ToggleGroup` configures every direct ToggleItem while preserving
+Toolbar keyboard behavior.
+
+| ToggleGroup prop | Values | Default |
+| --- | --- | --- |
+| `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
+| `tone` | `accent`, `neutral` | `accent` |
+
 Root inherits Atom `orientation`, `dir`, `loop`, and `ariaLabel`. The other
 five parts preserve their Atom props, including controlled/uncontrolled single
 or multiple toggle values. Named exports are `Toolbar`, `ToolbarRoot`,
 `ToolbarButton`, `ToolbarLink`, `ToolbarSeparator`, `ToolbarToggleGroup`, and
 `ToolbarToggleItem`. Public types are `ToolbarRootProps`, `ToolbarButtonProps`,
 `ToolbarLinkProps`, `ToolbarSeparatorProps`, `ToolbarToggleGroupProps`,
-`ToolbarToggleItemProps`, `ToolbarSize`, and `ToolbarVariant`.
+`ToolbarToggleItemProps`, `ToolbarToggleTone`, `ToolbarToggleVariant`,
+`ToolbarSize`, and `ToolbarVariant`.
+
+Neutral solid ToggleItems use a layered selected surface: raised and white-ish
+over a light Toolbar, and a stronger raised neutral over a dark Toolbar. Hover
+and pressed stay between the selected surface and the Toolbar surface instead
+of collapsing into the container. This Toolbar recipe intentionally
+differs from a neutral solid Button while retaining the same non-accent intent.
 
 ## Visual recipes and states
 
-Variants change the root surface; sizes coordinate target and typography geometry. Hover, focus-visible, disabled, and pressed states do not change layout.
+Variants change the root surface; sizes coordinate target and typography geometry. Hover, focus-visible, disabled, and pressed states do not change layout. Focus-visible uses an inward ring so first, middle, and last controls remain fully visible inside the scrolling root.
+
+Disabled commands and ToggleItems remove selected/outlined emphasis, use the
+disabled foreground, and fade as a whole without acquiring hover or pressed
+paint.
 
 ## Tokens and CSS hooks
 
-Stable classes are `.brick-toolbar`, `.brick-toolbar__button`, `.brick-toolbar__link`, `.brick-toolbar__separator`, `.brick-toolbar__toggle-group`, and `.brick-toolbar__toggle-item`. Root exposes `data-variant`, `data-size`, and Atom orientation; toggle items expose Atom pressed state.
+Stable classes are `.brick-toolbar`, `.brick-toolbar__button`, `.brick-toolbar__link`, `.brick-toolbar__separator`, `.brick-toolbar__toggle-group`, and `.brick-toolbar__toggle-item`. Root exposes `data-variant`, `data-size`, and Atom orientation; ToggleGroup exposes `data-variant` and `data-tone`; toggle items expose Atom pressed state.
 
 Public variables are `--brick-toolbar-surface`,
 `--brick-toolbar-border-color`, `--brick-toolbar-radius`,
@@ -74,7 +93,7 @@ Prefer recipes, then semantic tokens and `--brick-toolbar-*` variables. Every pa
 
 ## Responsive behavior
 
-Toolbar never wraps. It stays content-sized up to its container and scrolls on its main axis when constrained. Consumers own placement, item priority, overflow menus, and orientation changes.
+Toolbar never wraps. It stays content-sized up to its container and scrolls on its main axis when constrained. Its focus treatment remains inside that scrolling boundary in both orientations. Consumers own placement, item priority, overflow menus, and orientation changes.
 
 ## Accessibility
 
@@ -87,7 +106,7 @@ Parts preserve Atom `render`/`asChild`, native props, slots, and exact host refs
 ## Examples
 
 ```tsx
-<Toolbar.Root ariaLabel="Formatting" variant="outline"><Toolbar.ToggleGroup ariaLabel="Text style" type="multiple"><Toolbar.ToggleItem value="bold">Bold</Toolbar.ToggleItem><Toolbar.ToggleItem value="italic">Italic</Toolbar.ToggleItem></Toolbar.ToggleGroup><Toolbar.Separator orientation="vertical" /><Toolbar.Button>Clear</Toolbar.Button></Toolbar.Root>
+<Toolbar.Root ariaLabel="Formatting" variant="outline"><Toolbar.ToggleGroup ariaLabel="Text style" tone="neutral" type="multiple" variant="solid"><Toolbar.ToggleItem value="bold">Bold</Toolbar.ToggleItem><Toolbar.ToggleItem value="italic">Italic</Toolbar.ToggleItem></Toolbar.ToggleGroup><Toolbar.Separator orientation="vertical" /><Toolbar.Button>Clear</Toolbar.Button></Toolbar.Root>
 ```
 
 ## Evidence

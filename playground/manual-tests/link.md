@@ -25,10 +25,14 @@ Setup: Open `/link`; review `01`–`04` top to bottom.
 
 Action: Tab to Overview, press Enter, then compare each controlled row.
 
-Expected: Default is an underlined accent link inside the sentence with a
-clear focus ring and native fragment navigation. Plain gains an underline on
-hover/focus. Tone or size changes only its named property; inherit matches its
-surrounding copy. No example looks like a button or shifts on interaction.
+Expected: Default follows the theme and remains an underlined accent link with
+Brick's fallback, a clear focus ring, and native fragment navigation. Plain
+remains decoration-free on hover/focus while its navigation context and focus
+ring preserve the affordance. Explicit underline remains underlined even
+inside the scoped resting-plain example. Tone or size changes only its named
+property; neutral changes from primary text to semantic accent on hover and
+press, while inherit matches its surrounding copy. No example looks like a
+button or shifts on interaction.
 
 Result:
 Notes or issue:

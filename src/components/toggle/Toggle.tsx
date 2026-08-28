@@ -5,12 +5,15 @@ import {
 } from "@flowstack-ui/atom/toggle";
 
 export type ToggleVariant = "solid" | "soft" | "outline" | "ghost";
+export type ToggleTone = "accent" | "neutral";
 export type ToggleSize = "sm" | "md" | "lg";
 export type ToggleShape = "rounded" | "pill";
 
 export type ToggleProps = Omit<AtomToggleRootProps, "color" | "value"> & {
   /** Resting and selected visual treatment. @default "soft" */
   variant?: ToggleVariant;
+  /** Selected-state color treatment. @default "accent" */
+  tone?: ToggleTone;
   /** Complete control size. @default "md" */
   size?: ToggleSize;
   /** Control geometry. @default "rounded" */
@@ -26,6 +29,7 @@ function mergeClassName(base: string, className: string | undefined) {
 export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(function Toggle(
   {
     variant = "soft",
+    tone = "accent",
     size = "md",
     shape = "rounded",
     iconOnly = false,
@@ -41,6 +45,7 @@ export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(function Toggle
       data-icon-only={iconOnly ? "" : undefined}
       data-shape={shape}
       data-size={size}
+      data-tone={tone}
       data-variant={variant}
       ref={ref}
     />

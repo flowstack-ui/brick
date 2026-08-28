@@ -6,6 +6,9 @@ Dropdown Menu follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Normalized direct Brick Icon, SVG, and image artwork to the density-aware
+  Leading slot so menu icons remain centered with their labels.
+
 - Default `md` command rows now use Brick's shared 44px comfortable target;
   explicit `sm` and `lg` densities remain 32px and 48px.
 - Inherited Atom's document-only scroll lock so sticky application chrome

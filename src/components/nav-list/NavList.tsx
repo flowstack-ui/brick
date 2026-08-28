@@ -13,7 +13,7 @@ import {
   type NavListSectionTriggerProps as AtomSectionTriggerProps,
 } from "@flowstack-ui/atom/nav-list";
 
-export type NavListVariant = "soft" | "solid" | "outline";
+export type NavListVariant = "soft" | "solid" | "outline" | "ghost";
 export type NavListTone = "accent" | "neutral";
 export type NavListSize = "sm" | "md" | "lg";
 
@@ -35,8 +35,25 @@ export type NavListListProps = ComposedProps<AtomListProps>;
 export type NavListItemProps = ComposedProps<AtomItemProps>;
 export type NavListSectionProps = ComposedProps<AtomSectionProps>;
 export type NavListSectionLabelProps = ComposedProps<AtomSectionLabelProps>;
-export type NavListSectionTriggerProps = ComposedProps<AtomSectionTriggerProps>;
 export type NavListSectionContentProps = ComposedProps<AtomSectionContentProps>;
+
+type SectionTriggerBase = Omit<
+  AtomSectionTriggerProps,
+  "asChild" | "children" | "render"
+>;
+export type NavListSectionTriggerProps =
+  | (SectionTriggerBase & {
+      asChild: true;
+      children: ReactElement<{ children?: ReactNode }>;
+      render?: never;
+      startIcon?: never;
+    })
+  | (SectionTriggerBase & {
+      asChild?: false;
+      children?: ReactNode;
+      render?: AtomSectionTriggerProps["render"];
+      startIcon?: ReactNode;
+    });
 
 type LinkBase = Omit<AtomLinkProps, "asChild" | "children" | "render">;
 export type NavListLinkProps =
@@ -88,7 +105,7 @@ export const NavListLink = forwardRef<HTMLAnchorElement, NavListLinkProps>(
       </span>
       {endIcon !== undefined ? <span aria-hidden="true" className="brick-nav-list__link-end" data-position="end">{endIcon}</span> : null}
     </>;
-    return <AtomNavList.Link {...props} asChild={asChild} className={merge("brick-nav-list__link", className)} data-slot={slot(dataSlot, "nav-list-link")} ref={ref} render={render}>{content}</AtomNavList.Link>;
+    return <AtomNavList.Link {...props} asChild={asChild} className={merge("brick-nav-list__link", className)} data-has-description={!asChild && description !== undefined ? "" : undefined} data-slot={slot(dataSlot, "nav-list-link")} ref={ref} render={render}>{content}</AtomNavList.Link>;
   },
 );
 
@@ -105,8 +122,12 @@ export const NavListSectionLabel = forwardRef<HTMLElement, NavListSectionLabelPr
 );
 
 export const NavListSectionTrigger = forwardRef<HTMLElement, NavListSectionTriggerProps>(
-  function NavListSectionTrigger({ asChild = false, children, className, render, "data-slot": dataSlot, ...props }, ref) {
-    return <AtomNavList.SectionTrigger {...props} asChild={asChild} className={merge("brick-nav-list__section-trigger", className)} data-slot={slot(dataSlot, "nav-list-section-trigger")} ref={ref} render={render}>{children}</AtomNavList.SectionTrigger>;
+  function NavListSectionTrigger({ asChild = false, children, className, render, startIcon, "data-slot": dataSlot, ...props }, ref) {
+    const content = asChild ? children : <>
+      {startIcon !== undefined ? <span aria-hidden="true" className="brick-nav-list__link-start" data-position="start">{startIcon}</span> : null}
+      {children}
+    </>;
+    return <AtomNavList.SectionTrigger {...props} asChild={asChild} className={merge("brick-nav-list__section-trigger", className)} data-slot={slot(dataSlot, "nav-list-section-trigger")} ref={ref} render={render}>{content}</AtomNavList.SectionTrigger>;
   },
 );
 

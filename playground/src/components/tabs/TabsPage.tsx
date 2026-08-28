@@ -14,8 +14,8 @@ const customStyle = { "--brick-tabs-indicator-color": "#7c3aed", "--brick-tabs-s
 
 function Star() { return <svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.8" /></svg>; }
 
-function DemoTabs({ ariaLabel, defaultValue = "overview", fullWidth, orientation = "horizontal", size = "md", variant = "line", indicator = true }: { ariaLabel: string; defaultValue?: string; fullWidth?: boolean; orientation?: "horizontal" | "vertical"; size?: TabsSize; variant?: TabsVariant; indicator?: boolean }) {
-  return <Tabs.Root defaultValue={defaultValue} fullWidth={fullWidth} orientation={orientation} size={size} variant={variant}><Tabs.List ariaLabel={ariaLabel}><Tabs.Trigger value="overview">Overview</Tabs.Trigger><Tabs.Trigger value="activity">Activity</Tabs.Trigger><Tabs.Trigger value="settings">Settings</Tabs.Trigger>{indicator ? <Tabs.Indicator /> : null}</Tabs.List><Tabs.Content value="overview"><Text>Overview panel content.</Text></Tabs.Content><Tabs.Content value="activity"><Text>Activity panel content.</Text></Tabs.Content><Tabs.Content value="settings"><Text>Settings panel content.</Text></Tabs.Content></Tabs.Root>;
+function DemoTabs({ ariaLabel, defaultValue = "overview", fullWidth, orientation = "horizontal", size = "md", squareTriggers = false, variant = "line", indicator = true }: { ariaLabel: string; defaultValue?: string; fullWidth?: boolean; orientation?: "horizontal" | "vertical"; size?: TabsSize; squareTriggers?: boolean; variant?: TabsVariant; indicator?: boolean }) {
+  return <Tabs.Root defaultValue={defaultValue} fullWidth={fullWidth} orientation={orientation} size={size} variant={variant}><Tabs.List ariaLabel={ariaLabel} triggerRadius={squareTriggers ? "none" : undefined}><Tabs.Trigger value="overview">Overview</Tabs.Trigger><Tabs.Trigger value="activity">Activity</Tabs.Trigger><Tabs.Trigger value="settings">Settings</Tabs.Trigger>{indicator ? <Tabs.Indicator /> : null}</Tabs.List><Tabs.Content value="overview"><Text>Overview panel content.</Text></Tabs.Content><Tabs.Content value="activity"><Text>Activity panel content.</Text></Tabs.Content><Tabs.Content value="settings"><Text>Settings panel content.</Text></Tabs.Content></Tabs.Root>;
 }
 
 export const tabsScenarios = [
@@ -34,7 +34,7 @@ export function TabsPage() {
   const [manual, setManual] = useState("one");
   return <VStack className="forms-page tabs-page" data-component-page="tabs" data-testid="tabs-workbench">
     <Scenario {...tabsScenarios[0]}><EvidenceSurface inset="lg" data-testid="tabs-overview"><DemoTabs ariaLabel="Overview sections" /></EvidenceSurface></Scenario>
-    <Scenario {...tabsScenarios[1]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="tabs-variants">{variants.map((variant) => <Cell key={variant} label={variant}><DemoTabs ariaLabel={`${variant} sections`} variant={variant} /></Cell>)}</Grid.Root></Scenario>
+    <Scenario {...tabsScenarios[1]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="tabs-variants">{variants.map((variant) => <Cell key={variant} label={variant}><DemoTabs ariaLabel={`${variant} sections`} squareTriggers={variant === "line"} variant={variant} /></Cell>)}</Grid.Root></Scenario>
     <Scenario {...tabsScenarios[2]}><Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="tabs-sizes">{sizes.map((size) => <Cell key={size} label={size}><DemoTabs ariaLabel={`${size} sections`} size={size} /></Cell>)}</Grid.Root></Scenario>
     <Scenario {...tabsScenarios[3]}>
       <VStack gap="4" data-testid="tabs-layout">

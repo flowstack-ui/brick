@@ -6,6 +6,17 @@ Text follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added themeable `display-sm`, `display-md`, and `display-lg` recipes plus
+  responsive visual-variant and logical-alignment values that keep the
+  semantic host unchanged.
+
+- Added direct `Heading`, `Paragraph`, `Caption`, and `Eyebrow` exports over
+  the same Text implementation. Heading requires an explicit semantic level;
+  Heading and Paragraph keep constrained visual-variant families.
+- Added the explicit `transform` recipe with `none`, `uppercase`, `lowercase`,
+  and `capitalize` values without treating CSS capitalization as authored
+  title case.
+
 - Expanded Agent Knowledge for parent-owned foreground inheritance, semantic
   eyebrow selection, and gap-based alignment of separately meaningful inline
   text.

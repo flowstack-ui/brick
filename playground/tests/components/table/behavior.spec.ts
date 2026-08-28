@@ -18,6 +18,15 @@ test("Table defaults and native anatomy are deterministic", async ({ page }) => 
 test("Table recipes, numeric alignment, and sorting remain independent", async ({ page }) => {
   const outlines = page.locator("#scenario-table-variants .brick-table");
   await expect(outlines.nth(1)).not.toHaveCSS("border-top-width", "0px");
+  await expect(outlines.nth(1)).toHaveCSS("overflow", "visible");
+  await expect(outlines.nth(1).locator("caption")).toBeVisible();
+  await expect(outlines.nth(1).locator("thead th").first()).not.toHaveCSS("border-top-left-radius", "0px");
+  await expect(outlines.nth(1).locator("thead th").last()).not.toHaveCSS("border-top-right-radius", "0px");
+  const bodyOnlyOutline = page.locator("#scenario-table-alignment .brick-table[data-variant='outline']").first();
+  await expect(bodyOnlyOutline.locator("tbody td").first()).not.toHaveCSS("border-top-left-radius", "0px");
+  await expect(bodyOnlyOutline.locator("tbody td").last()).not.toHaveCSS("border-top-right-radius", "0px");
+  await expect(bodyOnlyOutline.locator("tbody tr").last().locator("td").first()).not.toHaveCSS("border-bottom-left-radius", "0px");
+  await expect(bodyOnlyOutline.locator("tbody tr").last().locator("td").last()).not.toHaveCSS("border-bottom-right-radius", "0px");
   await expect(outlines.nth(2)).toHaveAttribute("data-striped", "");
   const sizes = await page.locator("#scenario-table-sizing .table-grid").first().locator(".brick-table").evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).fontSize));
   expect(new Set(sizes).size).toBe(3);

@@ -1,7 +1,15 @@
 @layer brick.components {
   .brick-skeleton {
-    --brick-skeleton-background: var(--brick-color-surface-subtle);
-    --brick-skeleton-highlight: var(--brick-color-surface-raised);
+    --brick-skeleton-background: color-mix(
+      in srgb,
+      var(--brick-color-surface-base),
+      var(--brick-color-text-primary) 16%
+    );
+    --brick-skeleton-highlight: color-mix(
+      in srgb,
+      var(--brick-color-surface-base),
+      var(--brick-color-text-primary) 28%
+    );
     --brick-skeleton-width: 100%;
     --brick-skeleton-height: 1em;
     --brick-skeleton-radius: var(--brick-radius-subtle);

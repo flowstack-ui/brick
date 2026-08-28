@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { DropdownMenu } from "../../../src/dropdown-menu.js";
+import { Link } from "../../../src/link.js";
 
 Element.prototype.scrollIntoView = vi.fn();
 
@@ -41,5 +42,28 @@ describe("DropdownMenu", () => {
     expect(item).toHaveAttribute("data-owner", "consumer");
     await user.click(item);
     expect(onSelect).toHaveBeenCalledOnce();
+  });
+
+  it("preserves destination semantics and row anatomy when composed with Link", () => {
+    render(
+      <DropdownMenu.Root defaultOpen>
+        <DropdownMenu.Trigger>Navigate</DropdownMenu.Trigger>
+        <DropdownMenu.Content>
+          <DropdownMenu.Item asChild value="projects">
+            <Link href="/projects" tone="inherit" variant="plain">
+              <DropdownMenu.Leading>P</DropdownMenu.Leading>
+              <DropdownMenu.ItemLabel>Projects</DropdownMenu.ItemLabel>
+            </Link>
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>,
+    );
+
+    const destination = screen.getByRole("menuitem", { name: /Projects/ });
+    expect(destination).toHaveAttribute("href", "/projects");
+    expect(destination).toHaveClass("brick-link", "brick-dropdown-menu__item");
+    expect(destination.querySelector(".brick-link__content")).toContainElement(
+      destination.querySelector(".brick-dropdown-menu__item-label"),
+    );
   });
 });

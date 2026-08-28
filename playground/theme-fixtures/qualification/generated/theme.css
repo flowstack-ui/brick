@@ -37,6 +37,9 @@
     --brick-color-info-solid-pressed: #005da9;
     --brick-color-info-surface: #ecf6ff;
     --brick-color-info-text: #105da9;
+    --brick-color-link-text: #3a3a8f;
+    --brick-color-link-text-hover: #333185;
+    --brick-color-link-text-pressed: #2a2579;
     --brick-color-scrim: #1413128c;
     --brick-color-shadow: #1413122e;
     --brick-color-success-border: #7bd1ad;
@@ -73,9 +76,14 @@
     --brick-color-warning-text: #714904;
     --brick-drawer-background: var(--brick-color-surface-overlay);
     --brick-drawer-radius: 1.5rem;
+    --brick-link-decoration: none;
+    --brick-link-decoration-policy: interaction;
+    --brick-link-theme-font-weight: var(--brick-font-weight-medium);
     --brick-radius-control: 0.625rem;
     --brick-radius-overlay: 1.25rem;
     --brick-radius-surface: 1rem;
+    --brick-shadow-floating: 0rem 0.75rem 2rem 0rem #14131218;
+    --brick-shadow-modal: 0rem 1.5rem 4.5rem 0rem #1413122c;
     --brick-shadow-raised: 0rem 0.5rem 1.5rem -0.25rem #1413122e;
     --brick-shadow-sm: 0rem 0.125rem 0.375rem 0rem #1413122e;
     --flowstack-theme-extensions-flowstack-dev-qualification-chart-revenue: #0ea5e9;
@@ -140,6 +148,9 @@
       --brick-color-info-solid-pressed: #075fa9;
       --brick-color-info-surface: #102840;
       --brick-color-info-text: #95c9f6;
+      --brick-color-link-text: #abb5ff;
+      --brick-color-link-text-hover: #b7c1ff;
+      --brick-color-link-text-pressed: #c6cfff;
       --brick-color-scrim: #000000b8;
       --brick-color-shadow: #00000080;
       --brick-color-success-border: #237350;
@@ -174,6 +185,8 @@
       --brick-color-warning-solid-pressed: #cf7d08;
       --brick-color-warning-surface: #3d2707;
       --brick-color-warning-text: #f2bd59;
+      --brick-shadow-floating: 0rem 0.75rem 2rem 0rem #00000042;
+      --brick-shadow-modal: 0rem 1.5rem 4.5rem 0rem #0000007a;
       --brick-shadow-raised: 0rem 0.5rem 1.5rem -0.25rem #00000080;
       --brick-shadow-sm: 0rem 0.125rem 0.375rem 0rem #00000080;
     }
@@ -218,6 +231,9 @@
     --brick-color-info-solid-pressed: #005da9;
     --brick-color-info-surface: #ecf6ff;
     --brick-color-info-text: #105da9;
+    --brick-color-link-text: #3a3a8f;
+    --brick-color-link-text-hover: #333185;
+    --brick-color-link-text-pressed: #2a2579;
     --brick-color-scrim: #1413128c;
     --brick-color-shadow: #1413122e;
     --brick-color-success-border: #7bd1ad;
@@ -252,6 +268,8 @@
     --brick-color-warning-solid-pressed: #d87d00;
     --brick-color-warning-surface: #fff7e3;
     --brick-color-warning-text: #714904;
+    --brick-shadow-floating: 0rem 0.75rem 2rem 0rem #14131218;
+    --brick-shadow-modal: 0rem 1.5rem 4.5rem 0rem #1413122c;
     --brick-shadow-raised: 0rem 0.5rem 1.5rem -0.25rem #1413122e;
     --brick-shadow-sm: 0rem 0.125rem 0.375rem 0rem #1413122e;
   }
@@ -295,6 +313,9 @@
     --brick-color-info-solid-pressed: #075fa9;
     --brick-color-info-surface: #102840;
     --brick-color-info-text: #95c9f6;
+    --brick-color-link-text: #abb5ff;
+    --brick-color-link-text-hover: #b7c1ff;
+    --brick-color-link-text-pressed: #c6cfff;
     --brick-color-scrim: #000000b8;
     --brick-color-shadow: #00000080;
     --brick-color-success-border: #237350;
@@ -329,6 +350,8 @@
     --brick-color-warning-solid-pressed: #cf7d08;
     --brick-color-warning-surface: #3d2707;
     --brick-color-warning-text: #f2bd59;
+    --brick-shadow-floating: 0rem 0.75rem 2rem 0rem #00000042;
+    --brick-shadow-modal: 0rem 1.5rem 4.5rem 0rem #0000007a;
     --brick-shadow-raised: 0rem 0.5rem 1.5rem -0.25rem #00000080;
     --brick-shadow-sm: 0rem 0.125rem 0.375rem 0rem #00000080;
   }

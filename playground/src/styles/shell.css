@@ -132,6 +132,7 @@
   inline-size: max-content;
   max-inline-size: 100%;
   justify-self: end;
+  overflow-x: auto;
 }
 
 .review-controls > .brick-toolbar__separator {
@@ -276,5 +277,6 @@
 
   .review-controls {
     position: static;
+    inline-size: 100%;
   }
 }

@@ -20,6 +20,7 @@ describe("ToggleGroup", () => {
     expect(group).toHaveAttribute("data-attached", "false");
     expect(group).toHaveAttribute("data-orientation", "horizontal");
     expect(group).toHaveAttribute("data-variant", "soft");
+    expect(group).toHaveAttribute("data-tone", "accent");
     expect(group).toHaveAttribute("data-size", "md");
     expect(group).toHaveAttribute("data-shape", "rounded");
     expect(screen.getByRole("button", { name: "Bold" })).toHaveClass(
@@ -33,7 +34,7 @@ describe("ToggleGroup", () => {
 
   it("applies group recipes and item-only icon geometry", () => {
     render(
-      <ToggleGroup.Root ariaLabel="View" attached fullWidth orientation="vertical" shape="pill" size="lg" variant="outline">
+      <ToggleGroup.Root ariaLabel="View" attached fullWidth orientation="vertical" shape="pill" size="lg" tone="neutral" variant="outline">
         <ToggleGroup.Item ariaLabel="Cards" iconOnly value="cards"><svg /></ToggleGroup.Item>
         <ToggleGroup.Item value="list">List</ToggleGroup.Item>
       </ToggleGroup.Root>,
@@ -45,6 +46,7 @@ describe("ToggleGroup", () => {
     expect(group).toHaveAttribute("data-shape", "pill");
     expect(group).toHaveAttribute("data-size", "lg");
     expect(group).toHaveAttribute("data-variant", "outline");
+    expect(group).toHaveAttribute("data-tone", "neutral");
     expect(screen.getByRole("button", { name: "Cards" })).toHaveAttribute(
       "data-icon-only",
       "",

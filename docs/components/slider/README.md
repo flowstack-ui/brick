@@ -69,23 +69,42 @@ Recipes change paint and geometry only. Atom state attributes drive disabled, re
 
 ## Tokens and CSS hooks
 
-Stable classes are `.brick-slider` and its `__track`, `__range`, `__thumb`, `__marker`, and `__value-label` parts. Root exposes `data-size`, `data-variant`, and `data-slot`; Marker exposes `data-edge`, `data-orientation`, `data-value`, and `data-slot`.
+Stable classes are `.brick-slider` and its `__track`, `__range`, `__thumb`, `__marker`, and `__value-label` parts. Root exposes `data-size`, `data-variant`, and `data-slot`; Marker exposes `data-edge`, `data-orientation`, `data-selected`, `data-value`, and `data-slot`.
 
 Public variables are `--brick-slider-track-background`,
 `--brick-slider-track-border`, `--brick-slider-track-size`,
-`--brick-slider-track-length`, `--brick-slider-range-background`,
+`--brick-slider-track-length`, `--brick-slider-track-inset`,
+`--brick-slider-range-background`,
 `--brick-slider-thumb-background`, `--brick-slider-thumb-border`,
 `--brick-slider-thumb-shadow`, `--brick-slider-thumb-size`,
-`--brick-slider-marker-color`, `--brick-slider-value-label-background`, and
+`--brick-slider-marker-color`, `--brick-slider-marker-selected-color`,
+`--brick-slider-marker-border`,
+`--brick-slider-marker-size`,
+`--brick-slider-value-label-background`, and
 `--brick-slider-value-label-foreground`.
 
 ## Customization
 
 Prefer recipes, then scope public variables: `<Slider.Root style={{ "--brick-slider-range-background": "var(--brick-color-accent-background)" }} />`.
+`--brick-slider-track-inset` defaults to half the complete Thumb target. Set
+it to `0px` only when the surrounding composition provides enough space for
+the endpoint target and focus ring to extend beyond the visual Track.
 
 ## Responsive behavior
 
-Brick preserves 44px thumb targets, logical RTL geometry, vertical layout, narrow containment, zoom, forced colors, and reduced motion. Endpoint markers remain inside Track. Horizontal ValueLabel receives dedicated space; for dense ranges or long values, use an external application-owned output to avoid collisions.
+Brick preserves 44px thumb targets, logical RTL geometry, vertical layout,
+narrow containment, zoom, forced colors, and reduced motion. Horizontal
+and vertical Tracks reserve half a target at each endpoint so the complete
+Thumb hit area and focus treatment remain inside the Slider boundary, even
+when a surrounding disclosure or scrolling region clips overflow. Horizontal
+endpoint marker dots remain visibly inset within the rounded Track caps while
+optional endpoint labels remain contained. The neutral Track keeps a clear
+appearance-aware contrast from its surrounding surface. Unselected dots use
+the primary foreground while selected dots use the active canvas surface with
+a subtle derived border. Every dot is centered on its Track axis. Both adapt to the active
+appearance, accent, and solid or soft recipe. Horizontal ValueLabel receives
+dedicated space; for dense ranges or long values, use an external
+application-owned output to avoid collisions.
 
 ## Accessibility
 

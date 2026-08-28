@@ -9,6 +9,9 @@ const tokenSource = JSON.parse(
 
 const recipes = [
   "display",
+  "display-sm",
+  "display-md",
+  "display-lg",
   "title-lg",
   "title-md",
   "title-sm",
@@ -69,6 +72,10 @@ const allowedGeometryDeclarations = new Map([
     "--brick-avatar-fallback-font-size: 0.75rem;",
     "--brick-avatar-fallback-font-size: 1rem;",
     "--brick-avatar-fallback-font-size: 1.25rem;",
+    "--brick-avatar-fallback-font-size: 1.5rem;",
+    "--brick-avatar-fallback-font-size: 1.75rem;",
+    "--brick-avatar-fallback-font-size: 2rem;",
+    "--brick-avatar-fallback-font-size: 2.25rem;",
     "font-family: var(--brick-font-family-body);",
     "font-weight: var(--brick-font-weight-semibold);",
     "line-height: 1;",

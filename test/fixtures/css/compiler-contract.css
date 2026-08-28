@@ -11,7 +11,12 @@
     margin-inline: 1rem;
     border-start-start-radius: 0.75rem;
     color: color-mix(in oklch, var(--prototype-accent), white 20%);
+    backdrop-filter: blur(0.75rem) saturate(1.15);
     animation: prototype-enter 180ms ease-out;
+  }
+
+  .prototype-code {
+    text-size-adjust: none;
   }
 
   @container (min-width: 30rem) {

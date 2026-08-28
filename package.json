@@ -91,6 +91,10 @@
       "types": "./dist/avatar.d.ts",
       "default": "./dist/avatar.js"
     },
+    "./status": {
+      "types": "./dist/status.d.ts",
+      "default": "./dist/status.js"
+    },
     "./toggle": {
       "types": "./dist/toggle.d.ts",
       "default": "./dist/toggle.js"
@@ -134,6 +138,10 @@
     "./radio-group": {
       "types": "./dist/radio-group.d.ts",
       "default": "./dist/radio-group.js"
+    },
+    "./segment-group": {
+      "types": "./dist/segment-group.d.ts",
+      "default": "./dist/segment-group.js"
     },
     "./switch": {
       "types": "./dist/switch.d.ts",
@@ -267,9 +275,17 @@
       "types": "./dist/link.d.ts",
       "default": "./dist/link.js"
     },
+    "./link-box": {
+      "types": "./dist/link-box.d.ts",
+      "default": "./dist/link-box.js"
+    },
     "./list": {
       "types": "./dist/list.d.ts",
       "default": "./dist/list.js"
+    },
+    "./reorderable-list": {
+      "types": "./dist/reorderable-list.d.ts",
+      "default": "./dist/reorderable-list.js"
     },
     "./table": {
       "types": "./dist/table.d.ts",
@@ -299,6 +315,14 @@
       "types": "./dist/stack.d.ts",
       "default": "./dist/stack.js"
     },
+    "./group": {
+      "types": "./dist/group.d.ts",
+      "default": "./dist/group.js"
+    },
+    "./data-list": {
+      "types": "./dist/data-list.d.ts",
+      "default": "./dist/data-list.js"
+    },
     "./z-stack": {
       "types": "./dist/z-stack.d.ts",
       "default": "./dist/z-stack.js"
@@ -318,6 +342,10 @@
     "./frame": {
       "types": "./dist/frame.d.ts",
       "default": "./dist/frame.js"
+    },
+    "./bleed": {
+      "types": "./dist/bleed.d.ts",
+      "default": "./dist/bleed.js"
     },
     "./surface": {
       "types": "./dist/surface.d.ts",
@@ -361,7 +389,9 @@
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/theme-contract.md",
-    "docs/guides/agent-knowledge.md"
+    "docs/guides/control-sizing.md",
+    "docs/guides/agent-knowledge.md",
+    "docs/guides/browser-support.md"
   ],
   "scripts": {
     "clean": "node scripts/clean.mjs",
@@ -443,8 +473,7 @@
     "prepublishOnly": "npm run build"
   },
   "browserslist": [
-    "defaults and supports es6-module",
-    "not IE 11"
+    "baseline 2023 with downstream"
   ],
   "overrides": {
     "brace-expansion": "5.0.9",
@@ -455,7 +484,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.22.6"
+    "@flowstack-ui/atom": "0.24.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
@@ -471,6 +500,7 @@
     "browserslist": "^4.28.6",
     "jsdom": "^26.1.0",
     "lightningcss": "^1.32.0",
+    "lucide-react": "^0.468.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "typescript": "^5.9.3",

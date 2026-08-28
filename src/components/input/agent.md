@@ -14,7 +14,7 @@ Render finished native single-line text entry with Brick sizing, states, and Ato
 
 ## Required composition
 
-- Place Input inside one Field.Root after Field.Label; provide name, type, and autocomplete appropriate to the data.
+- Place Input inside one Field.Root after Field.Label; provide name, type, and autocomplete appropriate to the data. Use outline when the containing surface should remain visible and soft when Input should own a filled plane.
 
 ## Rules
 

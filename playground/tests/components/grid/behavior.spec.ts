@@ -89,6 +89,20 @@ test("uniform and axis gaps map to exact geometry", async ({ page }) => {
   await expect(column).toHaveCSS("column-gap", "32px");
 });
 
+test("numeric, explicit, and responsive Grid gaps share one resolver", async ({ page }) => {
+  const factor = page.locator('[data-spacing-example="factor"]');
+  const explicit = page.locator('[data-spacing-example="explicit"]');
+  const responsive = page.locator('[data-spacing-example="responsive"]');
+
+  await expect(factor).toHaveCSS("gap", "32px");
+  await expect(explicit).toHaveCSS("row-gap", "20px");
+  await expect(explicit).toHaveCSS("column-gap", "36px");
+  await expect(responsive).toHaveCSS("gap", "32px");
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(responsive).toHaveCSS("gap", "8px");
+});
+
 test("Root and Item alignment map to native Grid geometry", async ({ page }) => {
   for (const value of ["stretch", "start", "center", "end", "baseline"]) {
     await expect(page.locator(`[data-align-example="${value}"]`)).toHaveCSS(
@@ -169,6 +183,14 @@ test("semantic output, native attributes, ref, and customization are real", asyn
   await expect(custom).toHaveCSS("row-gap", "8px");
   await expect(custom).toHaveCSS("border-top-width", "2px");
   await expect(custom).toHaveCSS("padding-top", "16px");
+
+  const semanticList = page.getByRole("list", { name: "Semantic peer collection" });
+  await expect(semanticList).toHaveJSProperty("tagName", "UL");
+  await expect(semanticList).toHaveCSS("margin-top", "0px");
+  await expect(semanticList).toHaveCSS("margin-left", "0px");
+  await expect(semanticList).toHaveCSS("padding-left", "0px");
+  await expect(semanticList).toHaveCSS("list-style-type", "none");
+  await expect(semanticList.locator(":scope > li")).toHaveCount(2);
 });
 
 test("RTL, focus order, reflow, and accessibility remain source ordered", async ({

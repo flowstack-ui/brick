@@ -19,7 +19,14 @@ export interface ToolbarRootProps extends AtomToolbarRootProps {
 export type ToolbarButtonProps = AtomToolbarButtonProps;
 export type ToolbarLinkProps = AtomToolbarLinkProps;
 export type ToolbarSeparatorProps = AtomToolbarSeparatorProps;
-export type ToolbarToggleGroupProps = AtomToolbarToggleGroupProps;
+export type ToolbarToggleVariant = "solid" | "soft" | "outline" | "ghost";
+export type ToolbarToggleTone = "accent" | "neutral";
+export type ToolbarToggleGroupProps = Omit<AtomToolbarToggleGroupProps, "color"> & {
+  /** Shared ToggleItem visual treatment. @default "soft" */
+  variant?: ToolbarToggleVariant;
+  /** Shared ToggleItem selected-state color treatment. @default "accent" */
+  tone?: ToolbarToggleTone;
+};
 export type ToolbarToggleItemProps = AtomToolbarToggleItemProps;
 
 function classes(base: string, className?: string) {
@@ -44,8 +51,8 @@ export const ToolbarLink = forwardRef<HTMLAnchorElement, ToolbarLinkProps>(
 export function ToolbarSeparator({ className, ...props }: ToolbarSeparatorProps) {
   return <AtomToolbar.Separator {...props} className={classes("brick-toolbar__separator", className)} />;
 }
-export function ToolbarToggleGroup({ className, ...props }: ToolbarToggleGroupProps) {
-  return <AtomToolbar.ToggleGroup {...props} className={classes("brick-toolbar__toggle-group", className)} />;
+export function ToolbarToggleGroup({ className, tone = "accent", variant = "soft", ...props }: ToolbarToggleGroupProps) {
+  return <AtomToolbar.ToggleGroup {...props} className={classes("brick-toolbar__toggle-group", className)} data-tone={tone} data-variant={variant} />;
 }
 export const ToolbarToggleItem = forwardRef<HTMLButtonElement, ToolbarToggleItemProps>(
   function ToolbarToggleItem({ className, ...props }, ref) {

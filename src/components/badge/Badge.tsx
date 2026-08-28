@@ -14,8 +14,8 @@ export type BadgeTone =
   | "warning"
   | "danger";
 
-export type BadgeSize = "sm" | "md" | "lg";
-export type BadgeShape = "rounded" | "pill";
+export type BadgeSize = "sm" | "md" | "lg" | "xl";
+export type BadgeShape = "rounded" | "pill" | "circle";
 
 export type BadgeProps = Omit<AtomBadgeRootProps, "color"> & {
   variant?: BadgeVariant;

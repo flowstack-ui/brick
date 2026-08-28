@@ -39,12 +39,15 @@ Notes or issue:
 
 Setup: Continue through `05` and `06`.
 
-Action: Compare uniform gaps, axis overrides, item alignment, and
+Action: Compare uniform gaps, axis overrides, numeric factor 8, explicit row
+and column values, the responsive 2-to-8 example, item alignment, and
 justification from left to right and top to bottom.
 
 Expected: Only the named dimension changes. Gaps increase consistently without
-outer spacing. Row and column overrides affect only their axis. Identical items
-occupy the labeled alignment without accidental size or paint changes.
+outer spacing. Factor 8 is 2rem; explicit row and column values remain exact;
+the responsive example changes at 48rem without stale geometry. Row and column
+overrides affect only their axis. Identical items occupy the labeled alignment
+without accidental size or paint changes.
 
 Result:
 Notes or issue:

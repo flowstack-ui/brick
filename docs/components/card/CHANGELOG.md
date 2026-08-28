@@ -4,6 +4,12 @@ Card follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Clarified that `Card.Action` reserves the trailing Header column across title
+  and description rows, and documented `HStack` composition for title-only
+  metadata that must not narrow the description.
+
 ### Added
 
 - Added optional `bordered={false}` so edge-to-edge media can retain Card's
