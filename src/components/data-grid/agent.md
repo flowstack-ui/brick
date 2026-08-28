@@ -31,6 +31,7 @@ Present flat interactive tabular data with Atom-owned active-cell navigation and
 - **MUST:** Let the outline Root own its border, radius, and exposed cell corners; do not add a second framed or clipping wrapper to repair the outline recipe.
 - **MUST:** Use stable row IDs as selection values, keep active cell and row selection as independent states, and do not derive identity from the current visual index.
 - **MUST:** Give an actionable sortable ColumnHeader pointer and Enter parity, expose sortDirection only on the active sorted header, and treat SortIndicator as decorative.
+- **MUST:** If an application windows rows, preserve full logical one-based indexes and totals and keep the active cell mounted or move active state before it leaves the DOM; geometry utilities do not own grid semantics or focus.
 - **MUST:** Load styles.css or core.css plus data-grid.css.
 
 ## Common mistakes
@@ -53,6 +54,7 @@ Present flat interactive tabular data with Atom-owned active-cell navigation and
 
 - `@flowstack-ui/atom/agents/data-grid`
 - `table`
+- `tree-grid`
 - `toolbar`
 - `pagination`
 - `badge`

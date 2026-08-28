@@ -40,6 +40,16 @@
       "statement": "Preserve Atom-owned native button semantics, aria-pressed state, activation, disabled behavior, and composition."
     },
     {
+      "id": "toggle-state",
+      "level": "must",
+      "statement": "Use pressed with onPressedChange for controlled state or defaultPressed for uncontrolled state, and keep one stable command name across both aria-pressed states."
+    },
+    {
+      "id": "toggle-composition",
+      "level": "must",
+      "statement": "When using asChild or render, preserve one element with Atom props, handlers, refs, tab stop, Enter and Space activation, button semantics, and disabled exposure."
+    },
+    {
       "id": "toggle-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus toggle.css."
@@ -56,6 +66,7 @@
     "Check every adopted variant and accent/neutral tone in light, dark, forced colors, narrow layouts, zoom, and RTL."
   ],
   "related": [
+    { "kind": "package", "package": "@flowstack-ui/atom", "id": "toggle", "versionPolicy": "installed-exact" },
     "toggle-group",
     "toolbar",
     "button",

@@ -4,6 +4,8 @@ Collapsible follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Fixed
 
 - Preserved the complete outward Trigger focus ring in vertical compositions,
@@ -12,6 +14,9 @@ Collapsible follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Expanded public Collapsible Agent Knowledge with exact Atom guidance,
+  retained-content safety, live two-axis measurement, responsive reflow, exit
+  presence, initial-open behavior, and validation.
 - Added `iconOnly` to Trigger so compact disclosure controls use the Root's
   square size target and center their artwork without consumer wrappers.
 

@@ -4,6 +4,8 @@ Menubar follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Fixed
 
 - Switching between open top-level menus now hides the previous popup
@@ -19,4 +21,7 @@ Menubar follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for persistent application-command selection,
+  named and uniquely valued menu composition, orientation, responsive
+  ownership, and exact installed Atom Menubar and Menu references.
 - Added the complete styled Menubar family with a persistent command rail, three sizes, adjacent-menu keyboard behavior, complete popup anatomy, and composition.

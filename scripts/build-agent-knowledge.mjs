@@ -1,6 +1,7 @@
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import { assertCompleteAgentCoverage, createAgentCoverage } from "./agent-catalog.mjs";
 
 const packageRoot = fileURLToPath(new URL("..", import.meta.url));
 const packageJson = JSON.parse(await readFile(join(packageRoot, "package.json"), "utf8"));
@@ -27,11 +28,17 @@ function list(items) {
   return items.length ? items.map((item) => `- ${item}`).join("\n") : "- None.";
 }
 
+function renderRelated(item) {
+  return typeof item === "string"
+    ? `\`${item}\``
+    : `\`${item.package}/agents/${item.id}\``;
+}
+
 function render(data) {
   const avoid = data.avoidWhen.map(({ condition, useInstead }) => `${condition} Use ${useInstead}.`);
   const rules = data.rules.map(({ level, statement }) => `**${level.toUpperCase()}:** ${statement}`);
   const mistakes = data.commonMistakes.map(({ mistake, correction }) => `**Avoid:** ${mistake} **Instead:** ${correction}`);
-  return `# ${data.name} agent guide\n\n## Purpose\n\n${data.purpose}\n\n## Use when\n\n${list(data.useWhen)}\n\n## Choose something else when\n\n${list(avoid)}\n\n## Required composition\n\n${list(data.composition)}\n\n## Rules\n\n${list(rules)}\n\n## Common mistakes\n\n${list(mistakes)}\n\n## Validation checklist\n\n${list(data.validation)}\n\n## Related guidance\n\n${list(data.related.map((item) => `\`${item}\``))}\n`;
+  return `# ${data.name} agent guide\n\n## Purpose\n\n${data.purpose}\n\n## Use when\n\n${list(data.useWhen)}\n\n## Choose something else when\n\n${list(avoid)}\n\n## Required composition\n\n${list(data.composition)}\n\n## Rules\n\n${list(rules)}\n\n## Common mistakes\n\n${list(mistakes)}\n\n## Validation checklist\n\n${list(data.validation)}\n\n## Related guidance\n\n${list(data.related.map(renderRelated))}\n`;
 }
 
 function renderGuide(data) {
@@ -42,7 +49,7 @@ function renderGuide(data) {
     ? `\n\n## Customization order\n\n${data.customization.order.map(({ owner, instruction }, index) => `${index + 1}. **${owner}:** ${instruction}`).join("\n")}\n\n**Class name policy:** ${data.customization.classNamePolicy}\n\n**Direct CSS policy:** ${data.customization.directCssPolicy}\n\n### Required gap report\n\n${data.customization.gapReport.requiredWhen}\n\n${list(data.customization.gapReport.fields.map((field) => `\`${field}\``))}`
     : "";
   const fallback = `1. ${data.nativeFallback.check}\n2. ${data.nativeFallback.use}\n3. ${data.nativeFallback.report}`;
-  return `# ${data.name}\n\n## Purpose\n\n${data.purpose}\n\n## Decision order\n\n${decisionOrder}\n\n## Selection map\n\n${selection}\n\n## Rules\n\n${rules}${customization}\n\n## Native fallback\n\n${fallback}\n\n## Validation checklist\n\n${list(data.validation)}\n\n## Related guidance\n\n${list(data.related.map((item) => `\`${item}\``))}\n`;
+  return `# ${data.name}\n\n## Purpose\n\n${data.purpose}\n\n## Decision order\n\n${decisionOrder}\n\n## Selection map\n\n${selection}\n\n## Rules\n\n${rules}${customization}\n\n## Native fallback\n\n${fallback}\n\n## Validation checklist\n\n${list(data.validation)}\n\n## Related guidance\n\n${list(data.related.map(renderRelated))}\n`;
 }
 
 function validate(data, file) {
@@ -69,7 +76,10 @@ function validateGuide(data, file) {
   if (data.id !== basename(dirname(file))) failures.push("id must match its guide folder");
   for (const key of ["id", "name", "purpose"]) if (typeof data[key] !== "string" || !data[key].trim()) failures.push(`${key} must be a non-empty string`);
   for (const key of requiredGuideArrays) if (!Array.isArray(data[key]) || data[key].length === 0) failures.push(`${key} must be a non-empty array`);
-  for (const item of data.selection ?? []) if (!item.intent || !item.use) failures.push("every selection item needs intent and use");
+  for (const item of data.selection ?? []) {
+    if (!item.intent || !item.use) failures.push("every selection item needs intent and use");
+    if (!Array.isArray(item.destinations) || item.destinations.length === 0) failures.push("every selection item needs structured destinations");
+  }
   for (const rule of data.rules ?? []) if (!rule.id || !["must", "should"].includes(rule.level) || !rule.statement) failures.push("every rule needs id, must/should level, and statement");
   for (const key of ["check", "use", "report"]) if (!data.nativeFallback?.[key]) failures.push(`nativeFallback.${key} must be a non-empty string`);
   if (data.customization !== undefined) {
@@ -123,35 +133,48 @@ const duplicateIds = [...artifacts, ...guides]
   .filter((id, index, ids) => ids.indexOf(id) !== index);
 if (duplicateIds.length) throw new Error(`Agent guide IDs must be unique: ${[...new Set(duplicateIds)].join(", ")}`);
 
-if (!checkOnly) {
+const manifest = {
+  schema: "flowstack.agent-manifest.v1",
+  package: packageJson.name,
+  packageVersion: packageJson.version,
+  components: artifacts.map(({ data }) => ({
+    id: data.id,
+    name: data.name,
+    json: `./${data.id}.json`,
+    markdown: `./${data.id}.md`,
+  })),
+  guides: guides.map(({ data }) => ({
+    id: data.id,
+    name: data.name,
+    json: `./${data.id}.json`,
+    markdown: `./${data.id}.md`,
+  })),
+  coverage: "./coverage.json",
+};
+const coverage = await createAgentCoverage();
+const expected = new Map([
+  ...artifacts.flatMap(({ data, raw, markdown }) => [[`${data.id}.json`, raw], [`${data.id}.md`, markdown]]),
+  ...guides.flatMap(({ data, raw, markdown }) => [[`${data.id}.json`, raw], [`${data.id}.md`, markdown]]),
+  ["manifest.json", `${JSON.stringify(manifest, null, 2)}\n`],
+  ["coverage.json", `${JSON.stringify(coverage, null, 2)}\n`],
+]);
+
+if (checkOnly) {
+  const existing = await readdir(outputRoot).catch(() => []);
+  const expectedNames = [...expected.keys()].sort();
+  if (JSON.stringify(existing.sort()) !== JSON.stringify(expectedNames)) {
+    throw new Error("dist/agents contains missing or extra generated artifacts; run npm run agents:build.");
+  }
+  for (const [name, source] of expected) {
+    const current = await readFile(join(outputRoot, name), "utf8").catch(() => "");
+    if (current !== source) throw new Error(`dist/agents/${name} is stale; rebuild Agent Knowledge.`);
+  }
+} else {
   await rm(outputRoot, { recursive: true, force: true });
   await mkdir(outputRoot, { recursive: true });
-  for (const { data, raw, markdown } of artifacts) {
-    await writeFile(join(outputRoot, `${data.id}.json`), raw);
-    await writeFile(join(outputRoot, `${data.id}.md`), markdown);
-  }
-  for (const { data, raw, markdown } of guides) {
-    await writeFile(join(outputRoot, `${data.id}.json`), raw);
-    await writeFile(join(outputRoot, `${data.id}.md`), markdown);
-  }
-  const manifest = {
-    schema: "flowstack.agent-manifest.v1",
-    package: packageJson.name,
-    packageVersion: packageJson.version,
-    components: artifacts.map(({ data }) => ({
-      id: data.id,
-      name: data.name,
-      json: `./${data.id}.json`,
-      markdown: `./${data.id}.md`,
-    })),
-    guides: guides.map(({ data }) => ({
-      id: data.id,
-      name: data.name,
-      json: `./${data.id}.json`,
-      markdown: `./${data.id}.md`,
-    })),
-  };
-  await writeFile(join(outputRoot, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
+  for (const [name, source] of expected) await writeFile(join(outputRoot, name), source);
 }
 
-console.log(`${checkOnly ? "Verified" : "Built"} ${artifacts.length} component and ${guides.length} package ${packageJson.name} agent guides.`);
+assertCompleteAgentCoverage(coverage);
+
+console.log(`${checkOnly ? "Verified" : "Built"} ${artifacts.length} component and ${guides.length} package ${packageJson.name} agent guides; catalog coverage is ${coverage.summary.guidedComponentOwners}/${coverage.summary.componentOwners} component owners.`);

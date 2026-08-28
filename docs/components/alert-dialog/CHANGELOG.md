@@ -4,6 +4,8 @@ Alert Dialog follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Fixed
 
 - Inherited Atom's document-only scroll lock so sticky application chrome
@@ -18,6 +20,9 @@ Alert Dialog follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added public Agent Knowledge for consequential-decision selection, safe
+  response composition, accessible labeling, asynchronous actions, and the
+  exact installed Atom AlertDialog behavioral reference.
 - Added logical Footer `justify` values for start, center, end, and
   space-between response distribution; end remains the default.
 - Initial twelve-part `AlertDialog` compound namespace with Root, Trigger,

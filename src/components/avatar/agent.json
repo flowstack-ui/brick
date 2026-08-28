@@ -35,6 +35,11 @@
       "statement": "Decide alt from context: preserve meaningful identity when Avatar adds it, and use alt=\"\" only when adjacent text or the owning control already supplies the same identity."
     },
     {
+      "id": "avatar-source-state",
+      "level": "must",
+      "statement": "Pass the same source to the Atom-backed Root and Image path, preserve idle/loading/loaded/error state, and keep explicit fallback content durable through missing, changed, delayed, and failed images."
+    },
+    {
       "id": "avatar-explicit-fallback",
       "level": "must",
       "statement": "Supply explicit localized fallback content; do not generate initials or infer identity from a filename."
@@ -67,8 +72,8 @@
     }
   ],
   "validation": [
-    "Check fixed square size, crop, fallback, informative and decorative naming, passive semantics, nearby identity/status text, light/dark/forced colors, zoom, and RTL.",
+    "Check missing, idle, loading, loaded, changed-source, and error paths; delayed fallback timing; fixed square size; crop; informative and decorative naming; passive semantics; nearby identity/status text; light/dark/forced colors; zoom; and RTL.",
     "Confirm a named Avatar size is used, CSS is loaded, and any owning Button, Link, or NotificationBadge preserves its own public contract."
   ],
-  "related": ["image", "button", "link", "notification-badge", "badge", "status"]
+  "related": [{"kind": "package", "package": "@flowstack-ui/atom", "id": "avatar", "versionPolicy": "installed-exact"}, "image", "button", "link", "notification-badge", "badge", "status"]
 }

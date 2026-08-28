@@ -1,6 +1,6 @@
 {
   "name": "@flowstack-ui/brick",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Opinionated styled React components built on @flowstack-ui/atom.",
   "type": "module",
   "license": "MIT",
@@ -32,6 +32,7 @@
       "default": "./dist/index.js"
     },
     "./agents/manifest.json": "./dist/agents/manifest.json",
+    "./agents/coverage.json": "./dist/agents/coverage.json",
     "./agents/*.json": "./dist/agents/*.json",
     "./agents/*.md": "./dist/agents/*.md",
     "./theme-contract.json": "./dist/theme-contract.json",

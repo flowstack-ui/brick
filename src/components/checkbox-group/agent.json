@@ -60,6 +60,11 @@
       "statement": "Keep required or invalid messaging at group scope when any eligible option can satisfy the requirement; do not paint every Item as individually invalid."
     },
     {
+      "id": "checkbox-group-state-form",
+      "level": "must",
+      "statement": "Preserve disabled and read-only Items, one-or-more required validity, first-enabled validation focus, Fieldset relationships, named repeated-value submission, external form association, and uncontrolled reset."
+    },
+    {
       "id": "checkbox-group-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus checkbox-group.css and any Fieldset styles used."
@@ -86,10 +91,13 @@
     "Confirm application-owned filtering, persistence, URL state, counts, and asynchronous results remain outside Checkbox Group."
   ],
   "related": [
-    "@flowstack-ui/atom/agents/checkbox-group",
+    { "kind": "package", "package": "@flowstack-ui/atom", "id": "checkbox-group", "versionPolicy": "installed-exact" },
     "checkbox",
     "fieldset",
     "radio-group",
-    "combobox"
+    "toggle-group",
+    "select",
+    "combobox",
+    "form"
   ]
 }

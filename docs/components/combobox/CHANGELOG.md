@@ -4,8 +4,13 @@ Combobox follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Added
 
+- Added expanded public Combobox Agent Knowledge for its independent committed
+  value, input text, and open state; semantic popup owners; filtering and form
+  validity; application effects; appearance; and validation.
 - Added Atom-backed Control and Trigger parts so the chevron opens the popup,
   popup width follows the full visible control, and inherited Field state paints
   the complete control.

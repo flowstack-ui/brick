@@ -2,52 +2,50 @@
 
 ## Purpose
 
-Present one compact, accessible choice from a predefined list while Atom owns selection, keyboard behavior, popup positioning, and native form participation.
+Present one compact finished choice from a predefined list while Atom owns selection, trigger and listbox semantics, keyboard behavior, positioning, dismissal, validation, and native select form behavior.
 
 ## Use when
 
-- A person must choose exactly one value from a predefined list that should remain compact until opened.
+- A person chooses exactly one value from a predefined list whose options should stay collapsed until opened.
 
 ## Choose something else when
 
-- A short set of choices should remain visible. Use Radio Group.
-- The person must filter or enter a value. Use Combobox.
-- The popup contains actions or destinations rather than values. Use Dropdown Menu for actions or Link navigation for destinations.
+- A short set should remain visible, several values may be selected, editable filtering or free-form entry is required, or rows are commands or destinations. Use RadioGroup, MultiSelect, Combobox, DropdownMenu, or Link.
 
 ## Required composition
 
-- Compose Select.Root -> Select.Trigger with Select.Value and Select.Icon -> Select.Content -> Select.Viewport -> Select.Group -> Select.Item with Select.ItemText and Select.ItemIndicator.
-- Give every Select an accessible name through Field.Label or an explicit aria-label on Select.Trigger; placeholder text is never the label.
-- Use controlled value and onValueChange when an application-owned choice immediately changes locale, theme, routing, or another external system; Select does not implement that side effect.
+- Compose Select.Root with a named Select.Trigger containing Select.Value and optional Select.Icon, then exactly one Select.Content or Select.Listbox. Place stable uniquely valued Items with ItemText inside optional Viewport and Group with Label; add indicators, separators, scroll buttons, Portal, and a direct popup Arrow only when required.
+- Use the same sm, md, or lg size as adjacent button-like controls. Keep locale loading, routing, persistence, analytics, and every other effect in onValueChange at the application boundary.
 
 ## Rules
 
-- **MUST:** Use Select only for one value from a predefined select-only collection; keep actions, destinations, editable filtering, and multiple selection in their owning components.
-- **MUST:** Wrap every option's primary visible and accessible label in Select.ItemText and keep interactive descendants out of options.
-- **MUST:** Keep translation loading, locale detection, persistence, URL changes, analytics, and other effects in the application callback rather than inside Select.
-- **MUST:** Use the same named size as adjacent Button, Toggle, ToggleGroup, or other button-like controls; Select Trigger consumes shared control typography and 36/44/52px geometry rather than editable-field typography.
-- **MUST:** Load styles.css or core.css plus select.css.
+- **MUST:** Use Select only for one predefined value and keep controlled value and open state aligned with their matching callbacks.
+- **MUST:** Give Trigger a visible Field label or equivalent accessible name; placeholder and selected value are not the control name, and Trigger must retain combobox, expanded, controls, active-descendant, required, read-only, invalid, and disabled relationships.
+- **MUST:** Give every Item a stable unique value and ItemText or label, keep interactive descendants out, and preserve that text for closed display, option naming, typeahead, and the hidden native select.
+- **MUST:** Preserve Trigger-owned opening, Arrow/Home/End, typeahead, Enter/Space selection, Tab, Escape, disabled skipping, focus restoration, native select options and submission, required validity, external form association, and reset.
+- **MUST:** Render Content or Listbox once, keep Arrow directly inside it, and keep scroll buttons outside the registered Viewport so Atom owns positioning, collision, dismissal, and overflow state.
+- **MUST:** Keep translation loading, locale detection, persistence, navigation, analytics, and other effects in the application callback rather than inside Select.
+- **MUST:** Load styles.css or core.css plus select.css and Field CSS when composed.
 
 ## Common mistakes
 
-- **Avoid:** Using placeholder or the currently selected short code as the only accessible name. **Instead:** Add Field.Label or aria-label to the Trigger and keep the value as the selected value.
-- **Avoid:** Using Select as a language-navigation implementation that detects, stores, or routes locales internally. **Instead:** Let Select report the chosen value and connect those application responsibilities through onValueChange.
-- **Avoid:** Replacing the compound option anatomy with clickable custom rows. **Instead:** Map data into Select.Item, Select.ItemText, and Select.ItemIndicator so Atom retains collection and accessibility ownership.
+- **Avoid:** Using placeholder or a selected code as the only name, omitting ItemText, rendering both popup owners, or rebuilding options as clickable rows. **Instead:** Name Trigger separately and preserve one Atom-owned popup with registered stable Items and ItemText.
+- **Avoid:** Using Select for multiple or editable choice, commands, navigation rows, or hidden application state and effects. **Instead:** Choose MultiSelect, Combobox, DropdownMenu, or Link and connect legitimate value effects through onValueChange.
 
 ## Validation checklist
 
-- Confirm the Trigger has an accessible name distinct from its current value and exposes the expected combobox state.
-- Test keyboard opening, typeahead, selection, Escape dismissal, focus return, and disabled-option skipping.
-- Confirm a controlled onValueChange reports the selected value once without embedding application side effects in the component.
-- Check long localized option labels, narrow viewports, zoom, RTL, dark appearance, and forced colors.
-- Compare Trigger height, typography, icon scale, radius, and baseline with adjacent button-like controls at the same size.
+- Verify Trigger naming and Field relationships, controlled and uncontrolled value and open state, placeholder and closed selected label, pointer/touch and keyboard opening, active descendant, Home/End, typeahead, selection, disabled Items, Tab, Escape, outside activation, and focus return.
+- Verify hidden native options and submission, required inline/native validity, external form, reset, groups and labels, Viewport and scroll buttons, Portal and non-Portal paths, Arrow placement, direction, collision handling, and nested modal ownership.
+- Verify all sizes, long localized labels, narrow widths, zoom, RTL, touch targets, light and dark appearance, forced colors, and alignment with adjacent button-like controls.
 
 ## Related guidance
 
 - `@flowstack-ui/atom/agents/select`
+- `@flowstack-ui/atom/agents/listbox`
 - `field`
 - `form`
 - `radio-group`
 - `combobox`
 - `multi-select`
 - `dropdown-menu`
+- `link`

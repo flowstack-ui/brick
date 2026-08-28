@@ -2,39 +2,47 @@
 
 ## Purpose
 
-Present one brief supplemental description for an already named focusable or hoverable trigger while Atom owns timing, relationships, dismissal, presence, portal, and positioning.
+Present a finished brief supplemental text description for an already named trigger while Atom owns the description relationship, hover, focus-visible, touch hold, dismissal, portal, and positioning behavior.
 
 ## Use when
 
-- An icon-only control, abbreviation, or unfamiliar compact trigger benefits from a short hint on hover and keyboard focus.
+- A control, especially an unfamiliar IconButton, abbreviation, or compact trigger, needs a short non-interactive hint in addition to its complete accessible name.
 
 ## Choose something else when
 
-- The content is required, interactive, lengthy, or a preview with richer context. Use Visible text, Popover, or HoverCard according to the interface job.
+- The information is required or lengthy, is a richer passive preview, or contains links, buttons, inputs, settings, or other interaction. Use Visible text, HoverCard, or Popover.
 
 ## Required composition
 
-- Compose Root > Trigger asChild around one already named focusable control plus Portal > Content, with optional Arrow. Use Title and Description only for short non-interactive rich content, and use Provider when a coherent region shares delay policy.
+- Compose Tooltip.Root with Tooltip.Trigger asChild around one already named focusable control, plus Tooltip.Portal and Tooltip.Content; add Tooltip.Arrow only when the styled hint needs a pointer. Use Tooltip.Provider when a coherent region shares timing policy.
+- Use plain Content for one short hint or Root variant=rich with presentational Tooltip.Title and Tooltip.Description for a concise title and supporting text. Both recipes remain non-interactive descriptions. Reproduce any local Appearance scope on portalled Content.
 
 ## Rules
 
-- **MUST:** Keep Tooltip supplemental: the trigger retains its own complete accessible name and required instructions, warnings, errors, and recovery remain visible.
-- **MUST:** Keep Content non-interactive and concise; use Popover or another owning component for links, buttons, fields, or lengthy help.
-- **MUST:** Use Trigger, Portal, and Content with Root so Atom owns hover/focus relationships, Escape dismissal, presence, collision handling, and logical placement.
-- **MUST:** When a local Appearance scope is intended, portal into that scope or apply Appearance to the portalled visual root; do not assume trigger ancestry crosses the portal.
+- **MUST:** Give Trigger a complete accessible name independently; Tooltip supplies only a supplemental aria-describedby description while open and never replaces the control name.
+- **MUST:** Keep plain and rich Content free of links, buttons, inputs, and every other focusable control; use Popover for interaction.
+- **SHOULD:** Keep plain Content to one short hint and rich Content to a concise Title and Description; render essential instructions, errors, warnings, recovery, and full truncated text visibly.
+- **MUST:** Preserve Atom's hover, focus-visible, Escape, shared delay, and stationary 700 ms touch long-press behavior, including movement, scroll, second-touch, cancellation, disabled, unmount, compatibility-event, and finite dismissal handling.
+- **MUST:** When Trigger uses asChild or render, preserve its native semantics, action, complete name, Atom handlers and refs, and generated description relationship.
+- **SHOULD:** Use one Provider around a coherent region when tooltips should share open, close, and skip-delay timing; nest providers only for an intentional timing boundary.
+- **MUST:** Use rounded by default and pill only for deliberately compact labels; keep optional Arrow decorative and aligned to the collision-resolved side without independently recoloring its surface seam.
+- **MUST:** When Portal leaves a local Appearance scope, reproduce that scope on Content or target a portal container inside it.
 - **MUST:** Load styles.css or core.css plus tooltip.css and every composed trigger component stylesheet.
 
 ## Common mistakes
 
-- **Avoid:** Using Tooltip as an icon-only control's sole name, placing interactive help inside Content, or hand-positioning a text bubble. **Instead:** Name the trigger directly, keep the description supplemental and non-interactive, and use the complete Tooltip anatomy.
+- **Avoid:** Using Tooltip as an IconButton's only name, placing interactive or essential help in rich Content, or hand-positioning a text bubble. **Instead:** Name Trigger directly, keep Content supplemental and non-interactive, show required information visibly, and use complete Tooltip anatomy.
+- **Avoid:** Adding another touch-hold timer, assuming portalled Content inherits Appearance, or using Tooltip for a resource preview. **Instead:** Rely on Atom input handling, make the portal scope explicit, and choose HoverCard for a redundant passive preview.
 
 ## Validation checklist
 
-- Check hover and keyboard-focus discovery, trigger naming, generated description relationships, delay behavior, Escape and scroll dismissal, pointer travel, touch non-blocking behavior, collision placement, and focus stability.
-- Verify concise wrapping, light/dark and nested appearance, forced colors, reduced motion, RTL, portal behavior, and complete CSS delivery.
+- Verify Trigger's independent name, role=tooltip Content, aria-describedby only while open, controlled and disabled state, Provider and local delays, pointer hover, focus-visible opening, Trigger-to-Content hover bridge, focus leave, top-layer Escape, and stable focus.
+- Verify stationary touch hold, early release, movement tolerance, scrolling, outside touch, second touch, touchcancel, compatibility events, disabled changes, unmount cleanup, and plain and rich finite dismissal without blocking ordinary activation or scrolling.
+- Verify plain and rich brevity with no interactive descendants, rounded and pill shapes, optional Arrow on every resolved side, collision placement, narrow wrapping, zoom, LTR and RTL, reduced motion, forced colors, portalled appearance, and complete CSS.
 
 ## Related guidance
 
+- `@flowstack-ui/atom/agents/tooltip`
 - `icon-button`
 - `hover-card`
 - `popover`

@@ -19,6 +19,7 @@ Present a short passive category, status, metadata label, or compact circular pa
 ## Rules
 
 - **MUST:** Keep Badge passive; do not add click, press, selection, or disclosure behavior to it.
+- **MUST:** Keep every count or status understandable from visible text or its owning control without relying on color, shape, or placement, and never assume Badge announces changes or joins a sibling control name automatically.
 - **MUST:** When composing Text inside Badge, use tone=inherit unless that Text intentionally communicates a separate semantic tone, so the Badge recipe continues to own foreground contrast.
 - **MUST:** Rely on Badge's gap for an icon and label instead of literal whitespace, wrapper margins, or positional offsets.
 - **MUST:** Keep the label short and atomic; Badge stays on one line, so use ordinary Text for explanatory or prose-length content.
@@ -36,6 +37,7 @@ Present a short passive category, status, metadata label, or compact circular pa
 
 ## Related guidance
 
+- `@flowstack-ui/atom/agents/badge`
 - `text`
 - `icon`
 - `notification-badge`

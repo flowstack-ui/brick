@@ -23,6 +23,8 @@ Present one persistent pressed or unpressed command with Brick recipes and Atom-
 - **MUST:** Use Toggle only when the same command meaning remains valid in pressed and unpressed states.
 - **MUST:** Use accent or neutral tone for selection emphasis; do not use semantic status colors to imply error, success, warning, or danger.
 - **MUST:** Preserve Atom-owned native button semantics, aria-pressed state, activation, disabled behavior, and composition.
+- **MUST:** Use pressed with onPressedChange for controlled state or defaultPressed for uncontrolled state, and keep one stable command name across both aria-pressed states.
+- **MUST:** When using asChild or render, preserve one element with Atom props, handlers, refs, tab stop, Enter and Space activation, button semantics, and disabled exposure.
 - **MUST:** Load styles.css or core.css plus toggle.css.
 
 ## Common mistakes
@@ -36,6 +38,7 @@ Present one persistent pressed or unpressed command with Brick recipes and Atom-
 
 ## Related guidance
 
+- `@flowstack-ui/atom/agents/toggle`
 - `toggle-group`
 - `toolbar`
 - `button`

@@ -25,6 +25,7 @@ Present a styled dynamic stream of rich focusable articles while Atom owns feed 
 - **MUST:** Set busy only while adding or replacing Feed DOM; do not make a passive feed a live region or treat busy paint as an announcement.
 - **MUST:** Keep links, buttons, and menus as independently named descendants; do not make the entire Feed Item a hover or activation target.
 - **MUST:** When the stream is bounded, let Frame own the definite size and ScrollArea own overflow outside Feed.Root.
+- **MUST:** When an application windows articles, preserve stable identities and full logical positions, keep the focused and next keyboard target articles mounted or materialize them before focus moves, and remember that geometry utilities do not own feed loading or semantics.
 - **MUST:** Load styles.css or core.css plus feed.css and every composed child stylesheet.
 
 ## Common mistakes
@@ -35,9 +36,11 @@ Present a styled dynamic stream of rich focusable articles while Atom owns feed 
 
 - Check Root naming, Item headings, direct article children, positions and totals, busy state, PageUp/PageDown, Control/Command+Home/End, nested control focus, and scroll reveal.
 - Check divided, plain, and outline boundaries at narrow widths, zoom, RTL, forced colors, reduced motion, and light/dark appearance.
+- For paged or windowed feeds, verify stable keys and full logical metadata and ensure the focused and next PageUp/PageDown target articles exist before focus moves.
 
 ## Related guidance
 
+- `@flowstack-ui/atom/agents/feed`
 - `list`
 - `scroll-area`
 - `frame`

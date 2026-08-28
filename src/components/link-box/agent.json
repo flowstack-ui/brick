@@ -83,7 +83,7 @@
     "Check the whole-region hover and focus ring in light, dark, forced colors, narrow layouts, and zoom."
   ],
   "related": [
-    "@flowstack-ui/atom/agents/link",
+    { "kind": "package", "package": "@flowstack-ui/atom", "id": "link", "versionPolicy": "installed-exact" },
     "link",
     "card",
     "button",

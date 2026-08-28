@@ -36,7 +36,9 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ```tsx
 <HoverCard.Root>
-  <HoverCard.Trigger href="/ada">Ada Lovelace</HoverCard.Trigger>
+  <HoverCard.Trigger asChild>
+    <a href="/ada">Ada Lovelace</a>
+  </HoverCard.Trigger>
   <HoverCard.Portal>
     <HoverCard.Content>Profile preview</HoverCard.Content>
   </HoverCard.Portal>

@@ -4,8 +4,13 @@ Popover follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Added
 
+- Expanded public Agent Knowledge for component selection, modal and non-modal
+  composition, accessible naming, dismissal, portal appearance, responsive
+  validation, and the exact installed Atom Popover behavioral reference.
 - Added `density="compact"` for concise utility panels while preserving the
   comfortable default.
 

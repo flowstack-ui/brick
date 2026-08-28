@@ -4,8 +4,12 @@ Badge follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Added
 
+- Expanded public Agent Knowledge for passive context, live-update boundaries,
+  exact Atom ownership, composition, CSS delivery, and validation.
 - Added `size="xl"` for deliberate passive icon wells used by empty states and
   similar noninteractive illustrations.
 

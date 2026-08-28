@@ -7,5 +7,5 @@
   "rules": [{ "id": "form-native", "level": "must", "statement": "Keep native submission available and give submitted controls names." }, { "id": "form-css", "level": "must", "statement": "Load styles.css or core.css plus form.css and every rendered child component stylesheet." }],
   "commonMistakes": [{ "mistake": "Treating Form as a complete login or contact workflow.", "correction": "Keep business workflow in the application or a future Block; Form owns the generic visual boundary." }, { "mistake": "Wrapping the entire form in Fieldset only to obtain spacing, then repeating the page heading as its legend.", "correction": "Let Form own ordinary field rhythm and reserve Fieldset for a real labelled subgroup." }],
   "validation": ["Submit with keyboard and pointer.", "Inspect submitted values, invalid relationships, spacing, and narrow-layout behavior."],
-  "related": ["@flowstack-ui/atom/agents/form", "field", "fieldset", "button"]
+  "related": [{ "kind": "package", "package": "@flowstack-ui/atom", "id": "form", "versionPolicy": "installed-exact" }, "field", "fieldset", "button"]
 }

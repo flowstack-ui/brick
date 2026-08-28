@@ -4,7 +4,12 @@ Password Toggle Field follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Added
+- Added public PasswordToggleField Agent Knowledge covering reveal-policy
+  selection, native input ownership, localized next-action labels, focus,
+  reset and submission safety, application boundaries, and appearance checks.
 - Initial four-part Atom-backed Password Toggle Field with three variants, sizes, and applicable shapes; localized state-aware visibility actions; Field, Fieldset, and Form composition; reset and submission safety; responsive RTL; forced colors; and public CSS hooks.
 
 ### Fixed

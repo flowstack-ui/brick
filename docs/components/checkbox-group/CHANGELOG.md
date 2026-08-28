@@ -4,8 +4,13 @@ Checkbox Group follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Added
 
+- Expanded public Agent Knowledge for multi-choice selection, item and group
+  naming, deterministic Parent state, validation and form behavior, and the
+  exact installed Atom CheckboxGroup reference.
 - Initial `Root`, `Item`, `ItemLabel`, `ItemDescription`, and `Parent` compound
   API with controlled and uncontrolled selection.
 - Plain and structured items, deterministic parent aggregation, vertical and

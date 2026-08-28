@@ -22,6 +22,8 @@ Coordinate a related set of single- or multiple-selection pressed commands with 
 - **MUST:** Choose single or multiple mode from the command model and keep the value and onValueChange types consistent with that choice.
 - **MUST:** Do not use ToggleGroup for a form choice that requires radio semantics, validation, or ordinary form submission.
 - **MUST:** Give Root an accessible name when surrounding context is insufficient and give every Item a stable complete name.
+- **MUST:** Give every Item a stable unique value, route controlled changes through onValueChange, and keep string values for single mode and string-array values for multiple mode.
+- **MUST:** Preserve one roving Tab stop, DOM-order registration, disabled-item skipping, looping policy, orientation-specific Arrow keys, Home/End, and horizontal RTL mirroring.
 - **MUST:** Use accent or neutral tone for selection emphasis; do not use semantic status colors to imply error, success, warning, or danger.
 - **MUST:** Choose wrapping, orientation, or an alternative narrow layout without changing DOM order or clipping focus; attached groups do not wrap.
 - **MUST:** Load styles.css or core.css plus toggle-group.css.
@@ -37,8 +39,11 @@ Coordinate a related set of single- or multiple-selection pressed commands with 
 
 ## Related guidance
 
+- `@flowstack-ui/atom/agents/toggle-group`
 - `toggle`
 - `radio-group`
+- `checkbox-group`
+- `switch`
 - `tabs`
 - `toolbar`
 - `icon`

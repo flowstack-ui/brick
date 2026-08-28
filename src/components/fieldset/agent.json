@@ -7,5 +7,5 @@
   "rules": [{ "id": "fieldset-legend", "level": "must", "statement": "Give the related group a meaningful legend." }, { "id": "fieldset-css", "level": "must", "statement": "Load styles.css or core.css plus fieldset.css and child component styles." }],
   "commonMistakes": [{ "mistake": "Using visual heading and div wrappers for a related choice group.", "correction": "Use Fieldset so the group label and state remain semantic." }],
   "validation": ["Inspect fieldset and legend semantics.", "Check group messaging, state propagation, spacing, and responsive layout."],
-  "related": ["@flowstack-ui/atom/agents/fieldset", "form", "field", "checkbox"]
+  "related": [{ "kind": "package", "package": "@flowstack-ui/atom", "id": "fieldset", "versionPolicy": "installed-exact" }, "form", "field", "checkbox"]
 }

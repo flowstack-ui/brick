@@ -4,8 +4,12 @@ Avatar follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Changed
 
+- Expanded public Agent Knowledge for source loading and error state, fallback
+  equivalence, decorative use, status treatment, and exact Atom ownership.
 - Clarified that Avatar owns compact fixed-square identity tokens while Image
   owns larger editorial/profile portraits whose authored aspect ratio, crop,
   focal position, or available measure communicates identity.

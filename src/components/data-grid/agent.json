@@ -71,6 +71,11 @@
       "statement": "Give an actionable sortable ColumnHeader pointer and Enter parity, expose sortDirection only on the active sorted header, and treat SortIndicator as decorative."
     },
     {
+      "id": "data-grid-virtualization",
+      "level": "must",
+      "statement": "If an application windows rows, preserve full logical one-based indexes and totals and keep the active cell mounted or move active state before it leaves the DOM; geometry utilities do not own grid semantics or focus."
+    },
+    {
       "id": "data-grid-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus data-grid.css."
@@ -106,8 +111,9 @@
     "Confirm editing, arbitrary cell controls, virtualization, schemas, fetching, filtering, pagination, and persistence remain excluded."
   ],
   "related": [
-    "@flowstack-ui/atom/agents/data-grid",
+    { "kind": "package", "package": "@flowstack-ui/atom", "id": "data-grid", "versionPolicy": "installed-exact" },
     "table",
+    "tree-grid",
     "toolbar",
     "pagination",
     "badge",

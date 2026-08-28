@@ -22,6 +22,7 @@ Present one compact person or entity identity with a finished fixed-square image
 
 - **MUST:** Use Avatar for compact fixed-square identity presentation, not generic media or larger editorial portraits.
 - **MUST:** Decide alt from context: preserve meaningful identity when Avatar adds it, and use alt="" only when adjacent text or the owning control already supplies the same identity.
+- **MUST:** Pass the same source to the Atom-backed Root and Image path, preserve idle/loading/loaded/error state, and keep explicit fallback content durable through missing, changed, delayed, and failed images.
 - **MUST:** Supply explicit localized fallback content; do not generate initials or infer identity from a filename.
 - **MUST:** Keep Avatar passive; wrap it with the public Button or Link that owns any action or destination.
 - **MUST:** Provide separate accessible status text when a status ring communicates meaningful availability.
@@ -34,11 +35,12 @@ Present one compact person or entity identity with a finished fixed-square image
 
 ## Validation checklist
 
-- Check fixed square size, crop, fallback, informative and decorative naming, passive semantics, nearby identity/status text, light/dark/forced colors, zoom, and RTL.
+- Check missing, idle, loading, loaded, changed-source, and error paths; delayed fallback timing; fixed square size; crop; informative and decorative naming; passive semantics; nearby identity/status text; light/dark/forced colors; zoom; and RTL.
 - Confirm a named Avatar size is used, CSS is loaded, and any owning Button, Link, or NotificationBadge preserves its own public contract.
 
 ## Related guidance
 
+- `@flowstack-ui/atom/agents/avatar`
 - `image`
 - `button`
 - `link`

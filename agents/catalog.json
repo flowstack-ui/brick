@@ -1,0 +1,144 @@
+{
+  "schema": "flowstack.agent-catalog.v1",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "packageGuideIds": [
+    "interface-composition",
+    "layer-selection"
+  ],
+  "classifications": [
+    {
+      "surface": ".",
+      "classification": "aggregate",
+      "documentation": "README.md#components",
+      "reason": "The root export aggregates the public component subpaths and is not a separate component owner."
+    },
+    {
+      "surface": "./agents/manifest.json",
+      "classification": "metadata",
+      "documentation": "docs/guides/agent-knowledge.md",
+      "reason": "The manifest is the public Agent Knowledge discovery record."
+    },
+    {
+      "surface": "./agents/coverage.json",
+      "classification": "metadata",
+      "documentation": "docs/guides/agent-knowledge.md",
+      "reason": "The coverage report reconciles the released catalog with its Agent Knowledge."
+    },
+    {
+      "surface": "./agents/*.json",
+      "classification": "metadata",
+      "documentation": "docs/guides/agent-knowledge.md",
+      "reason": "The wildcard publishes machine-readable component and package guidance."
+    },
+    {
+      "surface": "./agents/*.md",
+      "classification": "metadata",
+      "documentation": "docs/guides/agent-knowledge.md",
+      "reason": "The wildcard publishes human-readable component and package guidance."
+    },
+    {
+      "surface": "./theme-contract.json",
+      "classification": "metadata",
+      "documentation": "docs/guides/theme-contract.md",
+      "reason": "The generated theme contract describes Brick's public styling boundary."
+    },
+    {
+      "surface": "./styles.css",
+      "classification": "metadata",
+      "documentation": "docs/guides/installation.md",
+      "reason": "The complete static stylesheet is a delivery surface, not a component owner."
+    },
+    {
+      "surface": "./styles/*.css",
+      "classification": "metadata",
+      "documentation": "docs/guides/installation.md",
+      "reason": "The wildcard publishes modular static stylesheets."
+    },
+    {
+      "surface": "./tokens.css",
+      "classification": "metadata",
+      "documentation": "docs/guides/appearance-and-tokens.md",
+      "reason": "The compatibility token stylesheet is a delivery surface, not a component owner."
+    },
+    {
+      "surface": "./reset.css",
+      "classification": "metadata",
+      "documentation": "docs/guides/installation.md",
+      "reason": "The optional reset stylesheet is a delivery surface, not a component owner."
+    },
+    {
+      "surface": "./badge#NotificationBadge",
+      "classification": "component",
+      "ownerId": "notification-badge",
+      "sourceOwner": "badge",
+      "documentation": "docs/components/notification-badge/README.md",
+      "reason": "NotificationBadge has an independently selectable contract while sharing Badge's implementation module and subpath."
+    },
+    {
+      "surface": "./badge#NotificationBadgeProps",
+      "classification": "compound-part",
+      "ownerId": "notification-badge",
+      "reason": "Public props for the Notification Badge owner."
+    },
+    {
+      "surface": "./badge#NotificationBadgePlacement",
+      "classification": "compound-part",
+      "ownerId": "notification-badge",
+      "reason": "Public placement type for the Notification Badge owner."
+    },
+    {
+      "surface": "./badge#NotificationBadgeOverlap",
+      "classification": "compound-part",
+      "ownerId": "notification-badge",
+      "reason": "Public overlap type for the Notification Badge owner."
+    },
+    {
+      "surface": "./badge#NotificationBadgeSize",
+      "classification": "compound-part",
+      "ownerId": "notification-badge",
+      "reason": "Public size type for the Notification Badge owner."
+    },
+    {
+      "surface": ".#SpacingValue",
+      "classification": "utility",
+      "sourceOwner": "src/components/_spacing-value",
+      "documentation": "docs/components/stack/README.md#api",
+      "reason": "The shared public spacing input type supports Brick layout owners and is not independently rendered."
+    }
+  ],
+  "exclusions": [
+    {
+      "pattern": "src/components/_action-menu/**",
+      "visibility": "source-only",
+      "reason": "Shared visual recipe for public menu owners; it exports no JavaScript surface."
+    },
+    {
+      "pattern": "src/components/_action-spinner/**",
+      "visibility": "source-only",
+      "reason": "Shared visual recipe for action controls; it exports no JavaScript surface."
+    },
+    {
+      "pattern": "src/components/_internal/**",
+      "visibility": "source-only",
+      "reason": "Shared implementation-only React helpers with no public export."
+    },
+    {
+      "pattern": "src/components/_responsive-value/**",
+      "visibility": "source-only",
+      "reason": "Internal responsive value normalization used by public layout owners."
+    },
+    {
+      "pattern": "src/components/_responsive-visibility/**",
+      "visibility": "source-only",
+      "reason": "Internal responsive visibility implementation shared by Show and Hide."
+    }
+  ],
+  "nativeApplicationDestinations": [
+    {
+      "id": "native-quotation",
+      "kind": "native",
+      "reason": "Native figure, blockquote, and figcaption own extended quotation semantics when Brick adds no dedicated owner."
+    }
+  ]
+}

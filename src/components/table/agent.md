@@ -49,7 +49,9 @@ Present finished static row-and-column relationships with native table semantics
 
 ## Related guidance
 
+- `@flowstack-ui/atom/agents/table`
 - `data-grid`
+- `tree-grid`
 - `scroll-area`
 - `button`
 - `badge`

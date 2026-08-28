@@ -1,38 +1,19 @@
 {
-  "schema": "flowstack.agent-component.v1",
-  "id": "multi-select",
-  "name": "MultiSelect",
-  "package": "@flowstack-ui/brick",
-  "layer": "brick",
-  "kind": "component",
-  "purpose": "Present several selected values from a predefined list while Atom owns selection, keyboard behavior, popup positioning, and repeated-value form participation.",
-  "useWhen": [
-    "A person must choose zero or more values from one predefined select-only collection."
-  ],
-  "avoidWhen": [
-    { "condition": "Only one value may be selected.", "useInstead": "Select or Radio Group" },
-    { "condition": "The person must filter, create tags, or enter arbitrary values.", "useInstead": "An editable multi-value Combobox pattern when one is available" },
-    { "condition": "The popup contains actions rather than values.", "useInstead": "Dropdown Menu" }
-  ],
-  "composition": [
-    "Compose MultiSelect.Root -> MultiSelect.Trigger with MultiSelect.Value and MultiSelect.Icon -> MultiSelect.Content -> MultiSelect.Viewport -> MultiSelect.Group -> MultiSelect.Item with MultiSelect.ItemText and MultiSelect.ItemIndicator.",
-    "Give every MultiSelect an accessible name through Field.Label or an explicit aria-label on MultiSelect.Trigger; placeholder and selected summaries are never the label.",
-    "Keep selected values, form handling, persistence, and application effects in the application boundary rather than adding hidden Block state."
-  ],
+  "schema": "flowstack.agent-component.v1", "id": "multi-select", "name": "MultiSelect", "package": "@flowstack-ui/brick", "layer": "brick", "kind": "component",
+  "purpose": "Present several selected predefined values in a compact finished control while Atom owns array state, popup listbox focus, persistent toggling, positioning, validation, and native multiple-select submission.",
+  "useWhen": ["A person chooses zero or more values from a predefined moderate collection that should remain collapsed until requested."],
+  "avoidWhen": [{"condition": "A short choice set should stay visible, only one value is allowed, or editable filtering, arbitrary tags, creation, range selection, or virtualization is required.", "useInstead": "CheckboxGroup, Select, Combobox, or a documented Brick gap or higher-layer specialized control"}],
+  "composition": ["Compose MultiSelect.Root with a named button Trigger containing Value and optional Icon, then exactly one Content or Listbox with stable uniquely valued Items and ItemText. Add Portal, Viewport, groups and labels, separators, scroll buttons, indicators, and a direct Arrow only as required.", "Use sm, md, or lg consistently with adjacent button-like controls. Keep selected values, persistence, remote data, and application effects at the application boundary."],
   "rules": [
-    { "id": "multi-select-predefined-values", "level": "must", "statement": "Use MultiSelect only for multiple values from a predefined select-only collection; do not add editable filtering, arbitrary tags, actions, or destinations to its option list." },
-    { "id": "multi-select-item-text", "level": "must", "statement": "Wrap every option's primary visible and accessible label in MultiSelect.ItemText and keep interactive descendants out of options." },
-    { "id": "multi-select-control-size-alignment", "level": "must", "statement": "Use the same named size as adjacent Button, Toggle, ToggleGroup, or other button-like controls; MultiSelect Trigger consumes shared control typography and 36/44/52px geometry rather than editable-field typography." },
-    { "id": "multi-select-css", "level": "must", "statement": "Load styles.css or core.css plus multi-select.css." }
+    {"id": "multi-select-predefined-values", "level": "must", "statement": "Use MultiSelect only for several predefined values; do not add editable filtering, arbitrary tags, commands, destinations, range selection, or virtualization."},
+    {"id": "multi-select-semantics", "level": "must", "statement": "Keep Trigger a separately named button rather than role=combobox and keep Content or Listbox as the focusable aria-multiselectable owner of required and read-only semantics."},
+    {"id": "multi-select-array-state", "level": "must", "statement": "Use deduplicated arrays for value and defaultValue, route controlled changes through onValueChange, and keep the popup open while Items toggle."},
+    {"id": "multi-select-item-text", "level": "must", "statement": "Give every Item a stable unique value and ItemText or label so summaries, option names, typeahead, and native options remain complete while the popup is closed."},
+    {"id": "multi-select-keyboard-form", "level": "must", "statement": "Preserve popup focus, Arrow/Home/End, typeahead, Space/Enter toggling without close, Escape focus restoration, Tab dismissal, disabled skipping, native repeated-value submission, required validity, external form, and reset."},
+    {"id": "multi-select-responsive", "level": "must", "statement": "Keep Trigger, summaries, and collision-aware popup contained under long localization, narrow widths, zoom, and RTL; do not place removal buttons inside the v1 button Trigger."},
+    {"id": "multi-select-css", "level": "must", "statement": "Load styles.css or core.css plus multi-select.css and Field CSS when composed."}
   ],
-  "commonMistakes": [
-    { "mistake": "Treating the selected summary as the control's accessible name or placing removal buttons inside the Trigger.", "correction": "Use Field.Label or aria-label for naming and keep the v1 Trigger as one button-owned summary." },
-    { "mistake": "Rebuilding options as clickable custom rows or adding text entry to the select-only Trigger.", "correction": "Preserve the compound Item anatomy and choose an editable multi-value pattern for filtering or tag creation." }
-  ],
-  "validation": [
-    "Test keyboard opening, typeahead, multiple selection, Escape dismissal, focus return, disabled-option skipping, form submission, and reset.",
-    "Compare Trigger height, typography, icon scale, radius, and baseline with adjacent button-like controls at the same size.",
-    "Check long selected summaries and options, narrow viewports, zoom, RTL, dark appearance, and forced colors."
-  ],
-  "related": ["@flowstack-ui/atom/agents/multi-select", "field", "form", "select", "combobox", "checkbox-group"]
+  "commonMistakes": [{"mistake": "Giving Trigger combobox semantics, using selected summary as its name, closing after each toggle, or deriving native options only from an open popup.", "correction": "Preserve the named button/listbox model, persistent toggling, static Item registration, and complete native option contract."}, {"mistake": "Adding text entry, arbitrary tag creation, interactive descendants, or application persistence inside the component.", "correction": "Keep predefined noninteractive Items and choose an approved editable higher-layer pattern or record the missing Brick capability."}],
+  "validation": ["Verify Trigger and listbox names, controlled and uncontrolled arrays and open state, deduplication, zero/one/many summaries and renderValue, popup focus, Arrow/Home/End, typeahead, Space/Enter without close, disabled Items, Escape, Tab, outside activation, and focus restoration.", "Verify read-only on the listbox, Field relationships, hidden multiple-select options and repeated submission, required inline/native validation, external form, reset, groups, indicators, Viewport, scroll buttons, Portal, direction, collision placement, and nested modal behavior.", "Verify all sizes, long summaries and option labels, narrow widths, zoom, RTL, touch targets, light and dark appearance, forced colors, and button-like control alignment."],
+  "related": [{"kind": "package", "package": "@flowstack-ui/atom", "id": "multi-select", "versionPolicy": "installed-exact"}, {"kind": "package", "package": "@flowstack-ui/atom", "id": "listbox", "versionPolicy": "installed-exact"}, "field", "form", "select", "combobox", "checkbox-group"]
 }

@@ -4,6 +4,8 @@ Dropdown Menu follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Fixed
 
 - Normalized direct Brick Icon, SVG, and image artwork to the density-aware
@@ -22,4 +24,7 @@ Dropdown Menu follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Expanded public Agent Knowledge for visible-trigger selection, command and
+  settings composition, item roles, close policy, submenus, destination links,
+  responsive validation, and exact installed Atom DropdownMenu and Menu references.
 - Added the complete styled Dropdown Menu family with three sizes, structured rows, choices, danger emphasis, nested menus, composition, and Atom-owned behavior.

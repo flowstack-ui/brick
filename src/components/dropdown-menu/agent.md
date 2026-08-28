@@ -2,48 +2,55 @@
 
 ## Purpose
 
-Present a compact button-triggered set of commands, persistent choices, or secondary destinations while Atom owns menu semantics, focus, keyboard navigation, dismissal, and floating placement.
+Present a finished compact command or settings menu from a visible button while Atom owns menu semantics, real item focus, keyboard navigation, selection, dismissal, portals, and collision-aware placement.
 
 ## Use when
 
-- An explicit button opens a compact set of commands, selection rows, or secondary destinations that benefit from menu keyboard behavior.
+- A visible named button should reveal a short list of commands, independent settings, exclusive settings, secondary destinations, or nested commands.
 
 ## Choose something else when
 
-- The content is primary site navigation, persistent navigation, a right-click-only surface, or a form selection field. Use NavigationMenu or NavList, ContextMenu, or Select according to the interface job.
+- Commands belong to a contextual gesture, several persistent application command categories, a form value, or ordinary site navigation. Use ContextMenu, Menubar, Select, or NavigationMenu or NavList.
 
 ## Required composition
 
-- Compose Root > Trigger plus Portal > Content; use Item, CheckboxItem, RadioGroup/RadioItem, Separator, and Sub parts according to the menu job, and use Leading, ItemLabel, Description, and Shortcut for stable row anatomy.
-- Use Trigger asChild around a finished Brick Button or IconButton so the trigger retains a complete accessible name and finished control paint.
-- When a menu row is a destination, compose Item asChild around one real Brick Link and keep the visible item label destination-specific; commands remain action items with onSelect.
-- Place a direct Brick Icon, SVG, or image inside Leading and let the density-aware slot normalize and center its geometry.
+- Compose DropdownMenu.Root with DropdownMenu.Trigger asChild around a finished named Button or IconButton, plus DropdownMenu.Portal and DropdownMenu.Content. Build Content from uniquely valued Item, CheckboxItem, RadioGroup and RadioItem, Group and Label, Separator, and paired Sub, SubTrigger, and SubContent parts; use Leading, ItemLabel, Description, Shortcut, and ItemIndicator for finished rows.
+- For a genuine secondary destination, compose Item asChild around one Brick Link and preserve its href; command rows use onSelect. Reproduce any local Appearance scope on portalled Content and SubContent.
 
 ## Rules
 
-- **MUST:** Use Root, Trigger, Portal, and Content together and let Atom own focus, roving keyboard behavior, Escape, outside dismissal, focus return, and collision-aware placement.
-- **MUST:** Compose Trigger asChild around a finished, named Brick Button or IconButton rather than styling the behavior trigger as an unfinished control.
-- **MUST:** Preserve real anchor semantics for destination rows by composing Item asChild around Link; do not attach route navigation to a command-only div or button row.
-- **MUST:** Use Leading, ItemLabel, Description, Shortcut, and ItemIndicator for row content instead of application wrapper spans and alignment CSS.
-- **MUST:** Use tone=danger only for genuinely destructive commands and do not use danger paint as decorative emphasis.
+- **MUST:** Use DropdownMenu for commands or settings opened by a visible button; use Select for a form value, ContextMenu for contextual invocation, Menubar for persistent command categories, and navigation owners for route lists.
+- **MUST:** Compose Trigger around a visible finished Button or IconButton with a complete accessible name and preserve Atom's button, popup, expanded, controls, disabled, and input-aware opening semantics.
+- **MUST:** Use uniquely valued Item, CheckboxItem, and RadioItem for their matching roles, provide textValue when rendered children are not searchable text, and preserve real focus, typeahead, and disabled-item navigation without activation.
+- **MUST:** Choose closeOnSelect by job: commands normally close while checkbox and radio settings normally remain open; do not close the tree with competing handlers or document listeners.
+- **MUST:** Keep SubTrigger and SubContent inside one Sub and preserve direction-aware cascade keys, hover intent, whole-tree dismissal, and collision-resolved placement instead of inventing responsive drill-in behavior.
+- **MUST:** Compose a genuine destination Item around one Brick Link so href and menuitem semantics share the same interactive owner; do not attach routing to a command-only div.
+- **MUST:** Use Leading, ItemLabel, Description, Shortcut, ItemIndicator, and tone=danger for their documented jobs instead of rebuilding columns, selection glyphs, icon sizing, or destructive emphasis.
+- **SHOULD:** Let Content use its collision-aware available height and native internal scrolling; verify three densities, long labels, zoom, narrow viewports, LTR and RTL, and reachable nested commands without semantic transformation.
+- **MUST:** When Portal leaves a local Appearance scope, reproduce that scope on Content and SubContent or target a portal container inside it.
 - **MUST:** Load styles.css or core.css plus dropdown-menu.css and every composed child component stylesheet.
 
 ## Common mistakes
 
-- **Avoid:** Hand-positioning a menu-like Surface, using Popover for command rows, nesting buttons inside menu items, or treating primary application navigation as a Dropdown Menu. **Instead:** Use complete DropdownMenu anatomy for compact secondary actions or destinations, preserve one interactive owner per row, and choose NavigationMenu, NavList, or Drawer for primary navigation.
-- **Avoid:** Using an unlabeled icon as Trigger or rebuilding row icon/label/description alignment with custom spans and CSS. **Instead:** Use a named Brick IconButton or Button as Trigger and compose the public DropdownMenu row anatomy.
+- **Avoid:** Using an unlabeled icon trigger, Popover for menu commands, DropdownMenu for form selection or primary navigation, or custom key and document dismissal handlers. **Instead:** Use a named Button or IconButton, choose the semantic owner, and rely on DropdownMenu and shared Menu behavior.
+- **Avoid:** Nesting a Button inside Item, rebuilding row columns, or treating Shortcut text as registered keyboard behavior. **Instead:** Keep one interactive owner, compose the public row anatomy, and register application shortcuts outside DropdownMenu.
 
 ## Validation checklist
 
-- Test trigger naming, click and keyboard opening, arrow-key movement, Home/End where supported, selection, disabled rows, Escape and outside dismissal, focus return, submenus, density-aware Leading icon alignment, zoom, narrow viewports, and RTL.
-- Confirm command versus destination semantics, real anchor href values, danger meaning, collision-aware placement, light/dark appearance, forced colors, and complete CSS delivery.
+- Verify Trigger name and semantics, click, tap, Enter, Space, ArrowDown, and ArrowUp opening, initial real item focus, Home/End, typeahead, controlled and disabled state, Tab exit, Escape, outside dismissal, and focus return.
+- Verify command, destination-link, checkbox mixed, radio, group, indicator, separator, and submenu behavior; unique values and textValue; close policies; modal and parent-modal ownership; and LTR and RTL cascade keys.
+- Verify three densities, Leading geometry, danger meaning, constrained scrolling, collision placement, zoom, narrow viewports, reduced motion, forced colors, light and dark portalled appearance, and complete CSS.
 
 ## Related guidance
 
+- `@flowstack-ui/atom/agents/dropdown-menu`
+- `@flowstack-ui/atom/agents/menu`
+- `context-menu`
+- `menubar`
+- `select`
 - `navigation-menu`
 - `nav-list`
-- `context-menu`
-- `select`
 - `button`
 - `icon-button`
 - `link`
+- `appearance`

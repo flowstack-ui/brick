@@ -4,7 +4,13 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.1.10 - 2026-08-28
+
 ### Added
+
+- Added a versioned, export-led Agent Knowledge catalog and generated coverage
+  report with public-surface reconciliation, explicit helper classifications,
+  structured package-guide destinations, and packed-consumer verification.
 
 - Added `Bleed`, a responsive logical-edge layout primitive for deliberate
   edge media and cross-plane editorial compositions.

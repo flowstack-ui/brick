@@ -4,6 +4,8 @@ Slider follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.1.10
+
 ### Fixed
 
 - Balanced the neutral Track in light and dark appearances, increased its
@@ -31,4 +33,7 @@ Slider follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Expanded public Agent Knowledge for approximate numeric selection, scalar and
+  range anatomy, change versus commit effects, pointer cancellation, input
+  direction, and the exact installed Atom Slider reference.
 - Added the Atom-backed six-part Slider with single/range values, horizontal and vertical axes, RTL, markers, value labels, three sizes, two variants, Field/form integration, accessibility, responsive and preference styling, and independent automated/manual evidence.

@@ -2,45 +2,47 @@
 
 ## Purpose
 
-Present one short verification, recovery, or pairing code as accessible segmented entry while Atom owns filtering, focus, paste, completion, validation, reset, and one-value form participation.
+Present one short verification, recovery, or pairing code as finished segmented entry while Atom owns filtering, paste distribution, roving focus, completion, validation, reset, and combined-value submission.
 
 ## Use when
 
-- A person enters a short fixed-length code supplied through another channel.
+- A person enters or pastes a short one-time code supplied through another channel into visually separated cells.
 
 ## Choose something else when
 
-- The value is a password, permanent PIN, arbitrary identifier, or variable-length text. Use PasswordToggleField or Input according to the credential and text-entry job.
+- The value is a reusable password, permanent PIN, numeric quantity, arbitrary identifier, or ordinary variable-length text. Use PasswordToggleField, NumberInput, or Input according to the actual entry job.
 
 ## Required composition
 
-- Compose Field.Root > Field.Label plus OTPField.Root > one or more ordered Groups containing Inputs; add decorative Separators only between deliberate groups, then use Field.Description and Field.Error through the ordinary Field contract.
-- Give Root one name and the intended length and character type; keep every Input in logical source order and localize its position-aware accessible name with getInputLabel when the application language is not English.
+- Compose one visibly labelled Field with OTPField.Root, then render exactly one OTPField.Input for each normalized length position in stable logical source order. Add aria-hidden Separator only for deliberate visual grouping; layout wrappers may group cells without creating separate values.
+- Give Root one accessible group name, character type, length, and submission name. Localize getInputLabel for every position and treat autoSubmit and autoFocus as explicit application workflow decisions.
 
 ## Rules
 
-- **MUST:** Place OTPField inside one visibly labelled Field unless a standalone composition supplies an equivalent accessible group name.
-- **MUST:** Treat the cells as one logical code, provide one Root name for form submission, and do not create independent application state or validation for each cell.
-- **MUST:** Preserve typing, deletion, arrow navigation, complete-code paste, and one-time-code autofill behavior; do not block paste or replace the system keyboard.
-- **MUST:** Keep cell and group source order equal to logical code order in every layout and writing direction.
-- **SHOULD:** Keep autoSubmit off unless the product explicitly owns and verifies completion-driven submission, pending behavior, errors, and focus recovery.
-- **SHOULD:** Keep autoFocus off unless the product deliberately moves focus into an already-explained code challenge and verifies keyboard, screen-reader, error, and recovery behavior.
-- **MUST:** Keep code generation, delivery, verification, expiry, resend, attempt limits, rate limiting, result state, and security policy in the application or service.
-- **MUST:** Load styles.css or core.css plus otp-field.css.
+- **MUST:** Treat all cells as one logical code, match visible Input count and order to Root length, and never create independent application state, validation, or submission names for each cell.
+- **MUST:** Choose numeric, alphabetic, alphanumeric, or a safe custom pattern that accepts exactly the intended characters and preserve the same filtering for typing and paste.
+- **MUST:** Name Root through Field or native ARIA, localize every generated position label, keep Separator decorative, and do not add unsupported aria-required to role=group.
+- **MUST:** Preserve one roving Tab stop, render-order registration, replacement and advance, Arrow/Home/End, Backspace/Delete, complete-code paste, disabled/read-only state, and logical source order in RTL.
+- **MUST:** Enable autoSubmit only when a complete accepted code should intentionally submit the associated form, with application-owned pending, verification, error, retry, and focus recovery behavior; choose autoFocus just as deliberately.
+- **MUST:** Keep required validity on the first visible cell and Root's named combined value submission-only, including Field invalid mirroring, external form association, and uncontrolled reset.
+- **MUST:** Load styles.css or core.css plus otp-field.css and Field CSS when composed.
 
 ## Common mistakes
 
-- **Avoid:** Building unrelated single-character inputs, blocking paste, reversing cells in RTL, auto-submitting by habit, or adding delivery and retry policy to the component. **Instead:** Use the complete OTPField anatomy as one named value, preserve Atom entry behavior and logical order, and connect workflow policy at the application boundary.
+- **Avoid:** Building unrelated character inputs, rendering a different cell count than length, blocking paste, reversing cells in RTL, leaving generated labels unlocalized, or auto-submitting by habit. **Instead:** Use one named OTPField value, align cells to length and logical order, preserve Atom entry behavior, localize labels, and make submission an explicit application decision.
+- **Avoid:** Putting code delivery, expiry, resend, attempt limits, rate limiting, or verification inside the component. **Instead:** Keep security and workflow policy in the application or service and let OTPField report value and completion only.
 
 ## Validation checklist
 
-- Check the visible Field label or equivalent standalone accessible group name, localized cell names, one submitted value, required and invalid relationships, reset, typing, filtering, deletion, arrow navigation, complete-code paste, and user-agent autofill.
-- Check deliberate group wrapping, 320 CSS pixels, 400% zoom, RTL, long localized labels, forced colors, focus visibility, and every supported appearance.
+- Verify controlled and uncontrolled full value, length, render-order and explicit indices, all filters, typing replacement, accepted paste distribution, Backspace/Delete, Arrow/Home/End, one roving Tab stop, deliberate autoFocus, mask display, disabled/read-only behavior, and localized cell labels.
+- Verify onComplete timing, intentional autoSubmit, Root and Field naming/descriptions, required validity on the first cell, invalid state across cells, inline/native validation focus, combined named value, external form, reset, separators, native props, render composition, and refs.
+- Verify deliberate wrapping and grouping, 320 CSS pixels, 200% text, 400% zoom, RTL logical order, touch targets, long localized labels, focus visibility, forced colors, and every supported appearance.
 
 ## Related guidance
 
 - `@flowstack-ui/atom/agents/otp-field`
+- `password-toggle-field`
+- `number-input`
+- `input`
 - `field`
 - `form`
-- `input`
-- `button`

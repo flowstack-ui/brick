@@ -96,7 +96,9 @@
     "Check that sorting, selection, filtering, pagination, data services, and responsive alternate-view policy remain application owned."
   ],
   "related": [
+    { "kind": "package", "package": "@flowstack-ui/atom", "id": "table", "versionPolicy": "installed-exact" },
     "data-grid",
+    "tree-grid",
     "scroll-area",
     "button",
     "badge",

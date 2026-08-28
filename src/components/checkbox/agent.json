@@ -7,5 +7,5 @@
   "rules": [{ "id": "checkbox-label", "level": "must", "statement": "Give every checkbox a visible associated label unless context is genuinely redundant and an accessible name remains." }, { "id": "checkbox-css", "level": "must", "statement": "Load styles.css or core.css plus checkbox.css and any Field/Fieldset styles used." }],
   "commonMistakes": [{ "mistake": "Using Checkbox for a one-of-many choice.", "correction": "Use RadioGroup for mutually exclusive options." }],
   "validation": ["Toggle with Space, pointer, and touch.", "Inspect checked/mixed and disabled states, label hit target, submitted value, focus, and contrast."],
-  "related": ["@flowstack-ui/atom/agents/checkbox", "field", "fieldset", "radio-group"]
+  "related": [{ "kind": "package", "package": "@flowstack-ui/atom", "id": "checkbox", "versionPolicy": "installed-exact" }, "field", "fieldset", "radio-group"]
 }
