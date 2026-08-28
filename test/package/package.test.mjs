@@ -84,6 +84,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/status.d.ts",
       default: "./dist/status.js",
     },
+    "./color-swatch": {
+      types: "./dist/color-swatch.d.ts",
+      default: "./dist/color-swatch.js",
+    },
     "./toggle": {
       types: "./dist/toggle.d.ts",
       default: "./dist/toggle.js",
@@ -421,6 +425,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const chip = await import(new URL("../../dist/chip.js", import.meta.url));
   const avatar = await import(new URL("../../dist/avatar.js", import.meta.url));
   const status = await import(new URL("../../dist/status.js", import.meta.url));
+  const colorSwatch = await import(new URL("../../dist/color-swatch.js", import.meta.url));
   const toggle = await import(new URL("../../dist/toggle.js", import.meta.url));
   const toggleGroup = await import(new URL("../../dist/toggle-group.js", import.meta.url));
   const tooltip = await import(new URL("../../dist/tooltip.js", import.meta.url));
@@ -568,6 +573,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "CollapsibleIndicator",
       "CollapsibleRoot",
       "CollapsibleTrigger",
+      "ColorSwatch",
+      "ColorSwatchMix",
+      "ColorSwatchRoot",
       "Combobox",
       "ComboboxClear",
       "ComboboxContent",
@@ -1018,6 +1026,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(status.StatusRoot, brick.Status.Root);
   assert.equal(status.StatusIndicator, brick.Status.Indicator);
   assert.equal(status.StatusLabel, brick.Status.Label);
+  assert.equal(colorSwatch.ColorSwatch, brick.ColorSwatch);
+  assert.equal(colorSwatch.ColorSwatchRoot, brick.ColorSwatch.Root);
+  assert.equal(colorSwatch.ColorSwatchMix, brick.ColorSwatch.Mix);
   assert.equal(toggle.Toggle, brick.Toggle);
   assert.equal(toggleGroup.ToggleGroup, brick.ToggleGroup);
   assert.equal(toggleGroup.ToggleGroupRoot, brick.ToggleGroup.Root);
@@ -1386,7 +1397,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 86);
+  assert.equal(componentStyleNames.length, 87);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);

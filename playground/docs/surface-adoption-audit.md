@@ -96,6 +96,7 @@ different owner.
 | Drawer | overview/action/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Drawer and overlay roots; static branch reconstruction; edge/positioning stages; code block |
 | Badge | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Badge recipes and inline-flow geometry; code block |
 | Status | overview, comparison cells, appearance scopes, customization shell, and stress panels | Status indicator/label recipes, passive semantics, tones, and exact output |
+| Color Swatch | overview, size, mixed-color, and semantic panels | Color Swatch footprint, alpha checker, mixed paint, passive semantics, and public customization properties |
 | Notification Badge | overview/semantics/stress panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Notification Badge anchor, overlap, placement, and owning-control paint; code block |
 | Avatar | overview/control/image-state/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Avatar image/fallback/status paint and media crop diagnostics; code block |
 | Toggle | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Toggle recipes and selected-state customization; code block |

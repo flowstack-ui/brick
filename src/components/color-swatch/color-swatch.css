@@ -1,0 +1,43 @@
+@layer brick.components {
+  .brick-color-swatch {
+    --brick-color-swatch-size: 1.5rem;
+    --brick-color-swatch-value: transparent;
+    --brick-color-swatch-border-color: var(--brick-color-border-default);
+    --brick-color-swatch-radius: var(--brick-radius-subtle);
+
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    inline-size: var(--brick-color-swatch-size);
+    block-size: var(--brick-color-swatch-size);
+    flex: none;
+    overflow: hidden;
+    border: var(--brick-border-width) solid var(--brick-color-swatch-border-color);
+    border-radius: var(--brick-color-swatch-radius);
+    background-color: var(--brick-color-surface-base);
+    background-image: repeating-conic-gradient(
+      var(--brick-color-surface-subtle) 0 25%,
+      var(--brick-color-surface-raised) 0 50%
+    );
+    background-position: 0 0;
+    background-size: 0.5rem 0.5rem;
+    vertical-align: middle;
+  }
+
+  .brick-color-swatch::after {
+    position: absolute;
+    inset: 0;
+    background: var(--brick-color-swatch-value);
+    content: "";
+  }
+
+  .brick-color-swatch[data-size="sm"] { --brick-color-swatch-size: 1rem; }
+  .brick-color-swatch[data-size="lg"] { --brick-color-swatch-size: 2rem; }
+
+  @media (forced-colors: active) {
+    .brick-color-swatch {
+      border-color: CanvasText;
+      forced-color-adjust: none;
+    }
+  }
+}

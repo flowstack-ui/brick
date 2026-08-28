@@ -12,6 +12,14 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
+test("renders the release palette through the public Color Swatch subpath", async ({ page }) => {
+  const palette = page.getByTestId("consumer-color-swatch");
+  await expect(palette).toBeVisible();
+  await expect(palette.getByRole("img", { name: "Release violet" })).toBeVisible();
+  await expect(palette.getByRole("img", { name: "Review rose" })).toBeVisible();
+  await expect(palette.getByRole("img", { name: "Release and review mix" })).toBeVisible();
+});
+
 test("composes Skip Link before repeated application chrome", async ({ page }) => {
   const root = page.getByRole("link", { name: "Skip to workspace content" });
   const target = page.getByRole("main");

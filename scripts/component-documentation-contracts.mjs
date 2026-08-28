@@ -2540,6 +2540,23 @@ componentDocumentationContracts.status = {
   ],
 };
 
+componentDocumentationContracts["color-swatch"] = {
+  source: "src/components/color-swatch/ColorSwatch.tsx",
+  exportSource: "src/components/color-swatch/index.ts",
+  css: "src/components/color-swatch/color-swatch.css",
+  exports: [
+    "ColorSwatch", "ColorSwatchMix", "ColorSwatchMixProps",
+    "ColorSwatchRoot", "ColorSwatchRootProps", "ColorSwatchSize",
+  ],
+  unions: { ColorSwatchSize: ["sm", "md", "lg"] },
+  defaults: { size: "md" },
+  dataAttributes: ["data-size", "data-slot"],
+  publicTokens: [
+    "--brick-color-swatch-size", "--brick-color-swatch-value",
+    "--brick-color-swatch-border-color", "--brick-color-swatch-radius",
+  ],
+};
+
 componentDocumentationContracts.slider = {
   source: "src/components/slider/Slider.tsx",
   exportSource: "src/components/slider/index.ts",
