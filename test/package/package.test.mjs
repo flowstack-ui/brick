@@ -11,7 +11,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.version, "0.1.10");
+  assert.equal(packageJson.version, "0.1.11");
   assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.24.0");
   assert.deepEqual(packageJson.publishConfig, { access: "public" });
   assert.equal(
