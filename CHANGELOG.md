@@ -4,6 +4,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Added `ColorSwatch` with Root and Mix parts for passive solid, alpha-aware, and mixed color previews.
+
 ## 0.1.10 - 2026-08-28
 
 ### Added

@@ -102,6 +102,7 @@ This directory is the public documentation authority for
   status
 - [Badge](components/badge/README.md) — passive inline labels
 - [Status](components/status/README.md) — passive semantic dot and label
+- [Color Swatch](components/color-swatch/README.md) — passive solid, alpha-aware, and mixed color preview
 - [Chip](components/chip/README.md) — compact authored values with optional
   explicit removal
 - [Notification Badge](components/notification-badge/README.md) — attached

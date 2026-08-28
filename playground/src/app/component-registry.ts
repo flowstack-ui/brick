@@ -470,6 +470,13 @@ export const componentEntries = [
     title: "Status",
   },
   {
+    category: "Data display",
+    description: "Passive solid, alpha-aware, and mixed color previews.",
+    id: "color-swatch",
+    route: "/color-swatch",
+    title: "Color Swatch",
+  },
+  {
     category: "Actions",
     description: "Standalone pressed-state actions.",
     id: "toggle",

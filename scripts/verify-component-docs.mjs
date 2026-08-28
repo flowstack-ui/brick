@@ -133,6 +133,7 @@ const componentSymbols = {
   popover: "Popover",
   stack: "Stack",
   status: "Status",
+  "color-swatch": "ColorSwatch",
   group: "Group",
   "z-stack": "ZStack",
   text: "Text",

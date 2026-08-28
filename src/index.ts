@@ -162,6 +162,14 @@ export {
   type StatusTone,
 } from "./components/status/index.js";
 export {
+  ColorSwatch,
+  ColorSwatchMix,
+  ColorSwatchRoot,
+  type ColorSwatchMixProps,
+  type ColorSwatchRootProps,
+  type ColorSwatchSize,
+} from "./components/color-swatch/index.js";
+export {
   Toggle,
   type ToggleProps,
   type ToggleShape,

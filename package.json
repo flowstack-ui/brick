@@ -96,6 +96,10 @@
       "types": "./dist/status.d.ts",
       "default": "./dist/status.js"
     },
+    "./color-swatch": {
+      "types": "./dist/color-swatch.d.ts",
+      "default": "./dist/color-swatch.js"
+    },
     "./toggle": {
       "types": "./dist/toggle.d.ts",
       "default": "./dist/toggle.js"

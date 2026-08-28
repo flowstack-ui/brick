@@ -158,6 +158,7 @@ import { ProgressCirclePage, progressCircleScenarios } from "../components/progr
 import { SliderPage, sliderScenarios } from "../components/slider/SliderPage.js";
 import { RatingPage, ratingScenarios } from "../components/rating/RatingPage.js";
 import { StatusPage, statusScenarios } from "../components/status/StatusPage.js";
+import { ColorSwatchPage, colorSwatchScenarios } from "../components/color-swatch/ColorSwatchPage.js";
 import { FileUploadPage, fileUploadScenarios } from "../components/file-upload/FileUploadPage.js";
 import { ToastPage, toastScenarios } from "../components/toast/ToastPage.js";
 import { CollapsiblePage, collapsibleScenarios } from "../components/collapsible/CollapsiblePage.js";
@@ -368,6 +369,14 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={statusScenarios}>
         <StatusPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "color-swatch") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={colorSwatchScenarios}>
+        <ColorSwatchPage />
       </PlaygroundShell>
     );
   }

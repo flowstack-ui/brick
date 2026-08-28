@@ -6,6 +6,7 @@ import { Badge, NotificationBadge } from "@flowstack-ui/brick/badge";
 import { Chip } from "@flowstack-ui/brick/chip";
 import { Button } from "@flowstack-ui/brick/button";
 import { Card } from "@flowstack-ui/brick/card";
+import { ColorSwatch } from "@flowstack-ui/brick/color-swatch";
 import { Dialog } from "@flowstack-ui/brick/dialog";
 import { Drawer } from "@flowstack-ui/brick/drawer";
 import { IconButton } from "@flowstack-ui/brick/icon-button";
@@ -247,6 +248,11 @@ export function App() {
             This small application consumes Brick exactly through its public package
             exports. Application layout stays here; finished component styling stays in Brick.
           </Text>
+          <HStack aria-label="Release palette" data-testid="consumer-color-swatch" gap="2">
+            <ColorSwatch.Root label="Release violet" value="#6d5bd0" />
+            <ColorSwatch.Root label="Review rose" value="rgb(216 111 133 / 70%)" />
+            <ColorSwatch.Mix label="Release and review mix" values={["#6d5bd0", "#d86f85"]} />
+          </HStack>
           <Toolbar.Root ariaLabel="Document view tools" size="sm" variant="outline">
             <Toolbar.Button>Refresh</Toolbar.Button>
             <Toolbar.Separator orientation="vertical" />
