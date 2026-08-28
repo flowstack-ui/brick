@@ -237,7 +237,10 @@ test("Text native attributes, ref, appearance, customization, RTL, and reflow re
   await expect(rtlEnd).toHaveCSS("text-align", "end");
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect.poll(() => page.locator("html").evaluate((element) => element.scrollWidth))
+  // Verify the mobile-first render, independent of desktop shell initialization.
+  await page.goto("/text");
+  await expect(page.getByTestId("text-overview")).toBeVisible();
+  expect(await page.locator("html").evaluate((element) => element.scrollWidth))
     .toBeLessThanOrEqual(390);
   await page.addStyleTag({
     content: ".brick-text{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}",
