@@ -130,6 +130,34 @@ test("review controls remain content-sized in a stacked header", async ({
   expect(Math.max(...itemBoxes.map(({ width }) => width))).toBeLessThan(panelBox!.width);
 });
 
+test("review controls contain their overflow on narrow viewports", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/button");
+
+  const panel = page.locator(".review-controls");
+  const sizes = await panel.evaluate((element) => ({
+    clientWidth: element.clientWidth,
+    scrollWidth: element.scrollWidth,
+  }));
+
+  expect(await page.locator("html").evaluate((element) => element.scrollWidth))
+    .toBeLessThanOrEqual(390);
+  expect(sizes.clientWidth).toBeLessThanOrEqual(390);
+  expect(sizes.scrollWidth).toBeGreaterThan(sizes.clientWidth);
+
+  await page
+    .getByRole("button", { name: "Qualification", exact: true })
+    .scrollIntoViewIfNeeded();
+  expect(await panel.evaluate((element) => element.scrollLeft)).not.toBe(0);
+  await page.getByRole("button", { name: "Qualification", exact: true }).click();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-flowstack-theme",
+    "qualification",
+  );
+});
+
 test("wide scenario navigation aligns, scrolls without overlap, and sticks with its header", async ({
   page,
 }) => {
