@@ -239,6 +239,20 @@ test("Text native attributes, ref, appearance, customization, RTL, and reflow re
   await page.setViewportSize({ width: 390, height: 844 });
   await expect.poll(() => page.locator("html").evaluate((element) => element.scrollWidth))
     .toBeLessThanOrEqual(390);
+  const variantGrid = page.getByTestId("text-variants");
+  const variantCell = variantGrid.locator(".text-cell").first();
+  const variantText = variantCell.locator(".brick-text");
+  const [gridWidths, cellBox, textBox] = await Promise.all([
+    variantGrid.evaluate((element) => ({
+      clientWidth: element.clientWidth,
+      scrollWidth: element.scrollWidth,
+    })),
+    box(variantCell),
+    box(variantText),
+  ]);
+  expect(gridWidths.scrollWidth).toBeLessThanOrEqual(gridWidths.clientWidth);
+  expect(textBox.x).toBeGreaterThanOrEqual(cellBox.x);
+  expect(textBox.x + textBox.width).toBeLessThanOrEqual(cellBox.x + cellBox.width + 1);
   await page.addStyleTag({
     content: ".brick-text{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}",
   });
