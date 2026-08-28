@@ -78,26 +78,53 @@ jobs:
           retention-days: 3
 
   browser:
+    name: browser (${{ matrix.label }})
     needs: repository
     runs-on: ubuntu-latest
-    # WebKit is intentionally restarted across 12 one-worker shards. The full
-    # release corpus takes longer than the Chromium/Firefox profiles, so this
-    # boundary must cover the complete healthy shard sequence.
-    timeout-minutes: 50
+    # WebKit keeps its 12 one-worker browser restarts, distributed across three
+    # independent job groups so a release retry can target only the failed
+    # group while the other exact-tag evidence remains green.
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
         include:
           - project: chromium
             engine: chromium
+            label: chromium
+            shard_group: ""
           - project: firefox
             engine: firefox
-          - project: webkit
-            engine: webkit
+            label: firefox
+            shard_group: ""
           - project: mobile-chromium
             engine: chromium
+            label: mobile-chromium
+            shard_group: ""
+          - project: webkit
+            engine: webkit
+            label: webkit, group 1/3
+            shard_group: 1/3
+          - project: webkit
+            engine: webkit
+            label: webkit, group 2/3
+            shard_group: 2/3
+          - project: webkit
+            engine: webkit
+            label: webkit, group 3/3
+            shard_group: 3/3
           - project: mobile-webkit
             engine: webkit
+            label: mobile-webkit, group 1/3
+            shard_group: 1/3
+          - project: mobile-webkit
+            engine: webkit
+            label: mobile-webkit, group 2/3
+            shard_group: 2/3
+          - project: mobile-webkit
+            engine: webkit
+            label: mobile-webkit, group 3/3
+            shard_group: 3/3
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -113,6 +140,8 @@ jobs:
           path: playground/dist
       - run: npx playwright install --with-deps ${{ matrix.engine }}
       - run: npm run test:browser:release:project:built -- ${{ matrix.project }}
+        env:
+          FLOWSTACK_RELEASE_SHARD_GROUP: ${{ matrix.shard_group }}
 
   package-consumers:
     needs: repository
