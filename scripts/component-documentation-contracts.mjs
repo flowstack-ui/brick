@@ -2557,6 +2557,35 @@ componentDocumentationContracts["color-swatch"] = {
   ],
 };
 
+componentDocumentationContracts["color-picker"] = {
+  source: "src/components/color-picker/ColorPicker.tsx",
+  exportSource: "src/components/color-picker/index.ts",
+  css: "src/components/color-picker/color-picker.css",
+  exports: [
+    "ColorPicker", "ColorPickerContent", "ColorPickerContentProps",
+    "ColorPickerControl", "ColorPickerControlProps", "ColorPickerHiddenInput",
+    "ColorPickerHiddenInputProps", "ColorPickerInput", "ColorPickerInputProps",
+    "ColorPickerLabel", "ColorPickerLabelProps", "ColorPickerNativeInput",
+    "ColorPickerNativeInputProps", "ColorPickerRoot", "ColorPickerRootProps",
+    "ColorPickerSize", "ColorPickerSwatchTrigger",
+    "ColorPickerSwatchTriggerProps", "ColorPickerTrigger",
+    "ColorPickerTriggerProps", "ColorPickerVariant",
+  ],
+  unions: {
+    ColorPickerSize: ["sm", "md", "lg"],
+    ColorPickerVariant: ["outline", "soft"],
+  },
+  defaults: { size: "md", variant: "outline" },
+  dataAttributes: ["data-size", "data-variant"],
+  publicTokens: [
+    "--brick-color-picker-control-size", "--brick-color-picker-gap",
+    "--brick-color-picker-background", "--brick-color-picker-border-color",
+    "--brick-color-picker-focus-ring", "--brick-color-picker-content-background",
+    "--brick-color-picker-content-border-color", "--brick-color-picker-content-radius",
+    "--brick-color-picker-content-shadow",
+  ],
+};
+
 componentDocumentationContracts.slider = {
   source: "src/components/slider/Slider.tsx",
   exportSource: "src/components/slider/index.ts",

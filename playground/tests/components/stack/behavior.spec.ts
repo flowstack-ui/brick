@@ -55,6 +55,7 @@ test("Stack gaps and axes produce exact controlled geometry", async ({ page }) =
 });
 
 test("Stack calculates numeric, explicit, and responsive spacing", async ({ page }) => {
+  await page.setViewportSize({ width: 1120, height: 900 });
   const factor = page.locator('[data-spacing-example="factor"]');
   const explicit = page.locator('[data-spacing-example="explicit"]');
   const responsive = page.locator('[data-spacing-example="responsive"]');

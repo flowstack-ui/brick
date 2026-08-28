@@ -8,6 +8,7 @@ export const componentIds = [
   "bleed",
   "status",
   "color-swatch",
+  "color-picker",
   "button",
   "card",
   "chip",

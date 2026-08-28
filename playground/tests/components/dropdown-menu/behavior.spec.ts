@@ -45,21 +45,41 @@ test("leading normalizes and centers Brick Icon geometry at the active density",
   await page.getByRole("button", { name: "Inspect project menu" }).click();
   const icon = page.getByTestId("dropdown-leading-icon");
   const leading = icon.locator("xpath=..");
-  const label = page.getByRole("menuitem", { name: /Rename project/ }).locator(".brick-dropdown-menu__item-label");
-  const [iconBox, leadingBox, labelBox] = await Promise.all([
+  const item = page.getByRole("menuitem", { name: /Rename project/ });
+  const [iconBox, leadingBox, itemFirstRowGeometry] = await Promise.all([
     icon.boundingBox(),
     leading.boundingBox(),
-    label.boundingBox(),
+    item.evaluate((element) => {
+      const bounds = element.getBoundingClientRect();
+      const style = getComputedStyle(element);
+      const firstTrackSize = Number.parseFloat(style.gridTemplateRows.split(" ")[0]);
+      return {
+        centerY: bounds.y + Number.parseFloat(style.paddingTop) + firstTrackSize / 2,
+        physicalPixel: 1 / window.devicePixelRatio,
+      };
+    }),
   ]);
   expect(iconBox).not.toBeNull();
   expect(leadingBox).not.toBeNull();
-  expect(labelBox).not.toBeNull();
-  expect(iconBox!.width).toBeCloseTo(leadingBox!.width, 1);
-  expect(iconBox!.height).toBeCloseTo(leadingBox!.height, 1);
-  expect(iconBox!.x + iconBox!.width / 2).toBeCloseTo(leadingBox!.x + leadingBox!.width / 2, 1);
+  expect(Math.abs(iconBox!.width - leadingBox!.width)).toBeLessThanOrEqual(
+    itemFirstRowGeometry.physicalPixel,
+  );
+  expect(Math.abs(iconBox!.height - leadingBox!.height)).toBeLessThanOrEqual(
+    itemFirstRowGeometry.physicalPixel,
+  );
+  const iconCenterX = iconBox!.x + iconBox!.width / 2;
+  const leadingCenterX = leadingBox!.x + leadingBox!.width / 2;
   const iconCenterY = iconBox!.y + iconBox!.height / 2;
-  const labelCenterY = labelBox!.y + labelBox!.height / 2;
-  expect(Math.abs(iconCenterY - labelCenterY)).toBeLessThanOrEqual(0.5);
+  const leadingCenterY = leadingBox!.y + leadingBox!.height / 2;
+  expect(Math.abs(iconCenterX - leadingCenterX)).toBeLessThanOrEqual(
+    itemFirstRowGeometry.physicalPixel,
+  );
+  expect(Math.abs(iconCenterY - leadingCenterY)).toBeLessThanOrEqual(
+    itemFirstRowGeometry.physicalPixel,
+  );
+  expect(Math.abs(leadingCenterY - itemFirstRowGeometry.centerY)).toBeLessThanOrEqual(
+    itemFirstRowGeometry.physicalPixel,
+  );
 });
 
 test("keyboard, RTL, mobile geometry, and accessibility work", async ({ page }) => {

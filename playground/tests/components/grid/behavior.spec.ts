@@ -90,6 +90,7 @@ test("uniform and axis gaps map to exact geometry", async ({ page }) => {
 });
 
 test("numeric, explicit, and responsive Grid gaps share one resolver", async ({ page }) => {
+  await page.setViewportSize({ width: 1120, height: 900 });
   const factor = page.locator('[data-spacing-example="factor"]');
   const explicit = page.locator('[data-spacing-example="explicit"]');
   const responsive = page.locator('[data-spacing-example="responsive"]');

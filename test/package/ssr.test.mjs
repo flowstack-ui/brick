@@ -12,6 +12,7 @@ import { AppBar } from "../../dist/app-bar.js";
 import { Appearance } from "../../dist/appearance.js";
 import { HoverCard } from "../../dist/hover-card.js";
 import { Popover } from "../../dist/popover.js";
+import { ColorPicker } from "../../dist/color-picker.js";
 import { Form } from "../../dist/form.js";
 import { Field } from "../../dist/field.js";
 import { Fieldset } from "../../dist/fieldset.js";
@@ -65,6 +66,30 @@ import { AspectRatio } from "../../dist/aspect-ratio.js";
 import { Show } from "../../dist/show.js";
 import { Hide } from "../../dist/hide.js";
 import { Input as AtomInput } from "@flowstack-ui/atom/input";
+
+test("Color Picker renders deterministic Atom-backed form anatomy during SSR", () => {
+  const markup = renderToString(
+    React.createElement(
+      ColorPicker.Root,
+      { defaultValue: "#5B5", name: "accent", size: "lg", variant: "soft" },
+      React.createElement(ColorPicker.Label, null, "Accent color"),
+      React.createElement(
+        ColorPicker.Control,
+        null,
+        React.createElement(ColorPicker.Input),
+        React.createElement(ColorPicker.NativeInput),
+      ),
+      React.createElement(ColorPicker.SwatchTrigger, { value: "#55bb55" }, "Indigo"),
+      React.createElement(ColorPicker.HiddenInput),
+    ),
+  );
+  assert.match(markup, /class="brick-color-picker"/u);
+  assert.match(markup, /data-size="lg"/u);
+  assert.match(markup, /data-variant="soft"/u);
+  assert.match(markup, /class="brick-color-picker__input"/u);
+  assert.match(markup, /aria-pressed="true"/u);
+  assert.match(markup, /<input(?=[^>]*type="hidden")(?=[^>]*name="accent")(?=[^>]*value="#55bb55")[^>]*>/u);
+});
 
 test("Appearance renders deterministic nested and wrapper-free server scopes", () => {
   const markup = renderToString(

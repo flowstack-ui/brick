@@ -7,6 +7,7 @@ import { Chip } from "@flowstack-ui/brick/chip";
 import { Button } from "@flowstack-ui/brick/button";
 import { Card } from "@flowstack-ui/brick/card";
 import { ColorSwatch } from "@flowstack-ui/brick/color-swatch";
+import { ColorPicker } from "@flowstack-ui/brick/color-picker";
 import { Dialog } from "@flowstack-ui/brick/dialog";
 import { Drawer } from "@flowstack-ui/brick/drawer";
 import { IconButton } from "@flowstack-ui/brick/icon-button";
@@ -124,6 +125,7 @@ export function App() {
   const [workspaceView, setWorkspaceView] = useState("cards");
   const [compactWorkspace, setCompactWorkspace] = useState(false);
   const [preferenceStatus, setPreferenceStatus] = useState("Publishing preferences have not been saved.");
+  const [releaseAccent, setReleaseAccent] = useState("#6d5bd0");
   const [planStatus, setPlanStatus] = useState("No billing plan submitted.");
   const [skillsStatus, setSkillsStatus] = useState("No team skills submitted.");
   const [channelStatus, setChannelStatus] = useState("No delivery channel submitted.");
@@ -1079,7 +1081,10 @@ export function App() {
             <Form
               aria-label="Publishing preferences"
               className="publishing-preferences-form"
-              onReset={() => setPreferenceStatus("Publishing preferences reset.")}
+              onReset={() => {
+                setPreferenceStatus("Publishing preferences reset.");
+                setReleaseAccent("#6d5bd0");
+              }}
               onSubmit={(event) => {
                 const data = new FormData(event.currentTarget);
                 setPreferenceStatus(`Preferences saved for ${data.getAll("publish-channel").join(", ")}.`);
@@ -1120,6 +1125,21 @@ export function App() {
                   {[1, 2, 3, 4, 5].map((value) => <Rating.Item key={value} value={value} />)}
                 </Rating.Root>
               </Field.Root>
+              <ColorPicker.Root name="release-accent" onValueChange={setReleaseAccent} value={releaseAccent}>
+                <ColorPicker.Label>Release accent color</ColorPicker.Label>
+                <ColorPicker.Control>
+                  <ColorPicker.Input />
+                  <ColorPicker.NativeInput aria-label="Release accent native chooser" />
+                  <ColorPicker.Trigger aria-label="Choose release accent preset">
+                    <ColorSwatch.Root value={releaseAccent} />
+                  </ColorPicker.Trigger>
+                </ColorPicker.Control>
+                <ColorPicker.Content align="start" aria-label="Release accent presets">
+                  <ColorPicker.SwatchTrigger aria-label="Use release violet" value="#6d5bd0"><ColorSwatch.Root value="#6d5bd0" /> Violet</ColorPicker.SwatchTrigger>
+                  <ColorPicker.SwatchTrigger aria-label="Use review rose" value="#d86f85"><ColorSwatch.Root value="#d86f85" /> Rose</ColorPicker.SwatchTrigger>
+                </ColorPicker.Content>
+                <ColorPicker.HiddenInput />
+              </ColorPicker.Root>
               <div className="publishing-preferences-actions">
                 <Button type="submit">Save publishing preferences</Button>
                 <Button tone="neutral" type="reset" variant="outline">Reset preferences</Button>

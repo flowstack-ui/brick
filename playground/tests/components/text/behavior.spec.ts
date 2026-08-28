@@ -31,6 +31,7 @@ test("Text overview preserves the canonical semantic and visual defaults", async
 test("Text controlled comparisons change only variant, tone, weight, or alignment", async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 1120, height: 900 });
   const variantTexts = page
     .getByTestId("text-variants")
     .locator(".brick-text");

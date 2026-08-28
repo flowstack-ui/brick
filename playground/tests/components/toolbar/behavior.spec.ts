@@ -77,15 +77,20 @@ test("Toolbar ToggleGroup applies shared variant and tone without leaving Toolba
   expect(lightPaint.background).toBe(lightPaint.raised);
   expect(lightPaint.foreground).toBe(lightPaint.primary);
 
-  await preview.hover();
-  const toolbarBackground = await root.evaluate(
-    (element) => getComputedStyle(element).backgroundColor,
+  const supportsHover = await page.evaluate(() =>
+    matchMedia("(hover: hover) and (pointer: fine)").matches
   );
-  const hoverBackground = await preview.evaluate(
-    (element) => getComputedStyle(element).backgroundColor,
-  );
-  expect(hoverBackground).not.toBe(lightPaint.background);
-  expect(hoverBackground).not.toBe(toolbarBackground);
+  if (supportsHover) {
+    await preview.hover();
+    const toolbarBackground = await root.evaluate(
+      (element) => getComputedStyle(element).backgroundColor,
+    );
+    const hoverBackground = await preview.evaluate(
+      (element) => getComputedStyle(element).backgroundColor,
+    );
+    expect(hoverBackground).not.toBe(lightPaint.background);
+    expect(hoverBackground).not.toBe(toolbarBackground);
+  }
 
   await page.locator("html").evaluate((element) => {
     element.setAttribute("data-brick-appearance", "dark");

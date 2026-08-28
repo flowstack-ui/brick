@@ -159,6 +159,7 @@ import { SliderPage, sliderScenarios } from "../components/slider/SliderPage.js"
 import { RatingPage, ratingScenarios } from "../components/rating/RatingPage.js";
 import { StatusPage, statusScenarios } from "../components/status/StatusPage.js";
 import { ColorSwatchPage, colorSwatchScenarios } from "../components/color-swatch/ColorSwatchPage.js";
+import { ColorPickerPage, colorPickerScenarios } from "../components/color-picker/ColorPickerPage.js";
 import { FileUploadPage, fileUploadScenarios } from "../components/file-upload/FileUploadPage.js";
 import { ToastPage, toastScenarios } from "../components/toast/ToastPage.js";
 import { CollapsiblePage, collapsibleScenarios } from "../components/collapsible/CollapsiblePage.js";
@@ -377,6 +378,14 @@ export function PlaygroundApp() {
     return (
       <PlaygroundShell entry={entry} scenarios={colorSwatchScenarios}>
         <ColorSwatchPage />
+      </PlaygroundShell>
+    );
+  }
+
+  if (entry.id === "color-picker") {
+    return (
+      <PlaygroundShell entry={entry} scenarios={colorPickerScenarios}>
+        <ColorPickerPage />
       </PlaygroundShell>
     );
   }

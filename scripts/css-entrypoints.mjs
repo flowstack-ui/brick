@@ -15,6 +15,7 @@ export const componentStyleEntries = [
   ["avatar", ["components/avatar/avatar.css"]],
   ["status", ["components/status/status.css"]],
   ["color-swatch", ["components/color-swatch/color-swatch.css"]],
+  ["color-picker", ["components/color-swatch/color-swatch.css", "components/color-picker/color-picker.css"]],
   ["toggle", ["components/toggle/toggle.css"]],
   ["toggle-group", ["components/toggle/toggle.css", "components/toggle-group/toggle-group.css"]],
   ["tooltip", ["styles/floating-arrow.css", "components/tooltip/tooltip.css"]],

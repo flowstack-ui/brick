@@ -134,6 +134,7 @@ const componentSymbols = {
   stack: "Stack",
   status: "Status",
   "color-swatch": "ColorSwatch",
+  "color-picker": "ColorPicker",
   group: "Group",
   "z-stack": "ZStack",
   text: "Text",

@@ -4,12 +4,14 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
-- Added `ColorSwatch` with Root and Mix parts for passive solid, alpha-aware, and mixed color previews.
+- No unreleased changes.
 
 ## 0.1.10 - 2026-08-28
 
 ### Added
 
+- Added `ColorPicker`, a finished Atom 0.24.0-backed opaque hexadecimal control with editable and native inputs, named presets, optional floating content, form submission, three sizes, and outline/soft variants.
+- Added `ColorSwatch` with Root and Mix parts for passive solid, alpha-aware, and mixed color previews.
 - Added a versioned, export-led Agent Knowledge catalog and generated coverage
   report with public-surface reconciliation, explicit helper classifications,
   structured package-guide destinations, and packed-consumer verification.
