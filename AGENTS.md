@@ -2,6 +2,23 @@
 
 This repository contains the public `@flowstack-ui/brick` package.
 
+## FLOWSTACK Agent Workflows
+
+Choose the primary workflow before doing task work. Review-only or diagnostic
+requests use `$flowstack-ui-review`. Package source, component API, Agent
+Knowledge, dependency, qualification, or release work uses
+`$flowstack-ui-maintainer`. A supplied application-plan composition in the
+Consumer or playground uses `$flowstack-ui-compose` only when it does not
+change package-owned behavior. Other consumer-style implementation uses
+`$flowstack-ui-builder` under the same boundary. The more specific route wins;
+all public component changes use Maintainer.
+
+If the matching skill is not discoverable, read its canonical `SKILL.md` from
+an installed or checked-out `flowstack-ui/agent-tools` repository and follow
+that workflow manually. If neither is available, preserve the mapping, resolve
+exact-version package Agent Knowledge directly, and report the missing skill
+instead of substituting remembered guidance.
+
 ## Boundary
 
 - Use public `@flowstack-ui/atom` entrypoints only.
