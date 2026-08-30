@@ -19,7 +19,7 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   three compact sizes.
 - Added `Blockquote` with semantic quotation, source, attribution, cited-work,
   decorative icon, logical alignment, and three finished visual recipes.
-- Added `Highlight`, backed by exact Atom 0.25.0 matching, for styled semantic
+- Added `Highlight`, backed by exact Atom 0.25.1 matching, for styled semantic
   plain-text query results without duplicated segmentation behavior.
 - Added `Prose` for trusted React editorial content with descendant typography,
   coherent rhythm, closed sizes, and readable measures without parsing or raw

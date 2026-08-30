@@ -1,4 +1,4 @@
-import { createRef } from "react";
+import { createElement, createRef } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { CodeBlock } from "../../../src/code-block.js";
@@ -102,6 +102,28 @@ describe("CodeBlock", () => {
     expect(lines[1]).toHaveAttribute("data-change", "added");
     expect(lines[1]).toHaveAttribute("data-highlighted", "");
     expect(lines[1].querySelector("[data-slot='code-block-line-content']")).toHaveTextContent("const second = 2;");
+  });
+
+  it("rejects injected HTML on Root, Content, and Line for untyped consumers", () => {
+    const injected = { __html: "<img data-unsafe src=x>" };
+    const line = createElement(
+      CodeBlock.Line as never,
+      { dangerouslySetInnerHTML: injected },
+      "safe line",
+    );
+    const content = createElement(
+      CodeBlock.Content as never,
+      { "aria-label": "Safe source", dangerouslySetInnerHTML: injected },
+      line,
+    );
+    const { container } = render(createElement(
+      CodeBlock.Root as never,
+      { dangerouslySetInnerHTML: injected, value: "safe line" },
+      content,
+    ));
+
+    expect(container.querySelector("[data-unsafe]")).toBeNull();
+    expect(screen.getByRole("region", { name: "Safe source" })).toHaveTextContent("safe line");
   });
 
   it("lets explicit Content children override the optional adapter", () => {

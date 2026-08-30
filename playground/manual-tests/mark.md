@@ -1,30 +1,58 @@
-# Mark Manual Test Guide
-
-Status: implementation complete; human run pending
+# Mark manual-test protocol
 
 | Environment | Record before testing |
 | --- | --- |
-| Browser and version | |
-| Operating system | |
-| Viewport and zoom | |
-| Assistive technology | |
+| Component | Mark |
+| Version or commit | Brick 0.1.12 candidate |
+| Reviewer | Codex visual and accessibility review |
+| Date | 2026-08-30 |
+| Browser and version | Safari 26.5 |
+| Operating system | macOS 26.5.1 |
+| Viewport and zoom | 320, 390, 1440 CSS px; 100%, 200%, 400% |
+| Physical device | Not applicable; Mark has no interaction or touch contract |
+| Assistive technology | macOS VoiceOver 26.5.1 |
 | Playground route | `/mark` |
 
-Scenario order: Overview → Variants and tones → Responsive and native output.
+Scenario order: `01 Overview`, `02 Variants and tones`, `03 Responsive and native output`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 
-1. Confirm Overview contains one native `mark` inside a sentence.
-2. Compare variants and tones; only the named recipe should change.
-3. Select and copy marked copy; visible and copied content must agree.
-4. Inspect native attributes, custom slot/class/style, and ref output.
-5. Repeat at 320/390 pixels, dark, forced colors, 200% text, 400% zoom,
-   text spacing, and RTL; confirm wrapping and contrast remain usable.
-6. Confirm Mark adds no tab stop or interactive state.
+## Step 1 — Semantics, recipes, and copy
+
+Setup: Open `/mark` in system appearance and review 01–03 top to bottom.
+
+Action: Inspect native output, compare every variant/tone, then select and copy the marked sentence.
+
+Expected: One native `mark` preserves authored text; only named recipe paint changes; forwarded attributes, class, style, ref, and slot remain truthful.
+
+Result:
+Notes or issue:
+
+## Step 2 — Reflow, appearance, and direction
+
+Setup: Repeat at 320/390 px, 200% text, 400% zoom, text-spacing override, dark appearance, forced colors, and RTL.
+
+Action: Inspect wrapping, selection, copy, contrast, and page containment.
+
+Expected: Mark remains readable and visibly distinct without clipping, overflow, hidden text, or direction error.
+
+Result:
+Notes or issue:
+
+## Step 3 — Assistive technology
+
+Setup: Enable the recorded screen reader on `/mark`.
+
+Action: Read the complete examples in browse mode.
+
+Expected: Authored content and reading order remain natural, with no added tab stop, duplicate speech, or fabricated interactive state.
+
+Result:
+Notes or issue:
 
 ## Completion
 
-Overall result:
+Overall result: pending recorded run
 
 Follow-up issues:
 

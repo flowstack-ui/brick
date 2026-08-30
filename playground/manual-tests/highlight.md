@@ -1,30 +1,58 @@
-# Highlight Manual Test Guide
-
-Status: implementation complete; human run pending
+# Highlight manual-test protocol
 
 | Environment | Record before testing |
 | --- | --- |
-| Browser and version | |
-| Operating system | |
-| Viewport and zoom | |
-| Assistive technology | |
+| Component | Highlight |
+| Version or commit | Brick 0.1.12 candidate with Atom 0.25.1 |
+| Reviewer | Codex visual and accessibility review |
+| Date | 2026-08-30 |
+| Browser and version | Safari 26.5 |
+| Operating system | macOS 26.5.1 |
+| Viewport and zoom | 320, 390, 1440 CSS px; 100%, 200%, 400% |
+| Physical device | Not applicable; Highlight has no interaction or touch contract |
+| Assistive technology | macOS VoiceOver 26.5.1 |
 | Playground route | `/highlight` |
 
-Scenario order: Overview → Matching and recipes → Adaptation and exact output.
+Scenario order: `01 Overview`, `02 Matching and recipes`, `03 Adaptation and exact output`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 
-1. Confirm Overview preserves the complete original sentence and native span/mark output.
-2. Confirm overlapping queries prefer the longest match at one offset; literal punctuation is escaped rather than executed.
-3. Compare subtle, solid, and underline plus accent and neutral; recipes must not imply focus or active-result navigation.
-4. Confirm case-sensitive, first-only, and Unicode whole-word matching agree with exact Atom 0.25.0 behavior.
-5. Select and copy the full text; copied content must equal the original string without inserted separators.
-6. Repeat at 320/390 pixels, dark, forced colors, 200% text, 400% zoom, text spacing, localization, and RTL; confirm readable wrap and visible matches.
-7. Confirm Highlight adds no tab stop, keyboard command, live region, or result counter.
+## Step 1 — Exact matching, recipes, and copy
+
+Setup: Open `/highlight` in system appearance and review 01–03 top to bottom.
+
+Action: Compare longest-overlap, literal punctuation, case-sensitive, first-only, and Unicode whole-word examples; compare every variant/tone; select and copy full strings.
+
+Expected: Native span/mark output preserves original strings and Atom 0.25.1 matching; copied text contains no generated separators; recipes never imply focus or current-result state.
+
+Result:
+Notes or issue:
+
+## Step 2 — Reflow, appearance, localization, and direction
+
+Setup: Repeat at 320/390 px, 200% text, 400% zoom, text-spacing override, dark appearance, forced colors, localization stress, and RTL.
+
+Action: Inspect wrapping, visible matches, selection, copy, and page containment.
+
+Expected: Every match remains perceivable and readable without clipping, overflow, hidden original text, color-only meaning, or direction error.
+
+Result:
+Notes or issue:
+
+## Step 3 — Assistive technology
+
+Setup: Enable the recorded screen reader on `/highlight`.
+
+Action: Read the complete examples and traverse focusable content.
+
+Expected: Original text is announced once in source order; Highlight adds no tab stop, keyboard command, live region, counter, or selected-result claim.
+
+Result:
+Notes or issue:
 
 ## Completion
 
-Overall result:
+Overall result: pending recorded run
 
 Follow-up issues:
 

@@ -47,7 +47,9 @@ test("the consumer uses public package exports without source aliases", async ()
   assert.match(source, /@flowstack-ui\/brick\/combobox/);
   assert.match(source, /@flowstack-ui\/brick\/multi-select/);
   assert.match(source, /@flowstack-ui\/brick\/text/);
+  assert.match(source, /import \{ Heading, Text \} from "@flowstack-ui\/brick\/text"/);
   assert.match(source, /@flowstack-ui\/brick\/link/);
+  assert.match(source, /@flowstack-ui\/brick\/link-box/);
   assert.match(source, /@flowstack-ui\/brick\/grid/);
   assert.match(source, /@flowstack-ui\/brick\/container/);
   assert.match(source, /@flowstack-ui\/brick\/surface/);

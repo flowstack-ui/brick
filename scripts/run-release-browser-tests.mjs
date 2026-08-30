@@ -52,7 +52,11 @@ for (const project of projects) {
 }
 
 for (const project of projects) {
-  const shardCount = project.includes("webkit") ? 12 : 1;
+  // Keep WebKit workers below the observed macOS context-lifecycle ceiling.
+  // Desktop WebKit stalls after roughly 55 isolated contexts and Mobile
+  // WebKit after roughly 34 on the release host. Keep both below their
+  // measured ceilings without adding retries or inflating test timeouts.
+  const shardCount = project === "mobile-webkit" ? 32 : project === "webkit" ? 16 : 1;
   if (selectedShardGroup && shardCount === 1) {
     console.error(
       `FLOWSTACK_RELEASE_SHARD_GROUP is only valid for WebKit projects; received ${project}`,

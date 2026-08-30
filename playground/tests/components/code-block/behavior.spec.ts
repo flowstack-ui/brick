@@ -40,6 +40,16 @@ test("Code Block bounded content stays reachable and disclosure expands", async 
   const preview = page.getByRole("region", { name: "Expandable source preview" });
   const trigger = page.getByRole("button", { name: "Show full source" });
   expect(await bounded.evaluate((node) => node.scrollHeight)).toBeGreaterThan(await bounded.evaluate((node) => node.clientHeight));
+  const visibleLines = await bounded.evaluate((node) => {
+    node.style.setProperty("--brick-code-block-line-height", "2");
+    const viewport = getComputedStyle(node);
+    const pre = getComputedStyle(node.querySelector("pre")!);
+    const contentHeight = node.clientHeight
+      - Number.parseFloat(viewport.paddingBlockStart)
+      - Number.parseFloat(viewport.paddingBlockEnd);
+    return contentHeight / Number.parseFloat(pre.lineHeight);
+  });
+  expect(visibleLines).toBeCloseTo(5, 2);
   expect(await preview.evaluate((node) => node.scrollHeight)).toBeGreaterThan(await preview.evaluate((node) => node.clientHeight));
   await expect(trigger).toHaveAttribute("aria-expanded", "false");
   await trigger.click();

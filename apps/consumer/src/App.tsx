@@ -34,8 +34,9 @@ import { Textarea } from "@flowstack-ui/brick/textarea";
 import { Select } from "@flowstack-ui/brick/select";
 import { Combobox } from "@flowstack-ui/brick/combobox";
 import { MultiSelect } from "@flowstack-ui/brick/multi-select";
-import { Text } from "@flowstack-ui/brick/text";
+import { Heading, Text } from "@flowstack-ui/brick/text";
 import { Link } from "@flowstack-ui/brick/link";
+import { LinkBox } from "@flowstack-ui/brick/link-box";
 import { List } from "@flowstack-ui/brick/list";
 import { Table } from "@flowstack-ui/brick/table";
 import { DataGrid } from "@flowstack-ui/brick/data-grid";
@@ -146,6 +147,7 @@ export function App() {
   const [reviewers, setReviewers] = useState(["Riley Chen", "Morgan Lee"]);
   const [attachmentStatus, setAttachmentStatus] = useState("No release files selected.");
   const [swipeableStatus, setSwipeableStatus] = useState("No message action selected.");
+  const [checklistStatus, setChecklistStatus] = useState("Release checklist is not pinned.");
   const [activityUpdates, setActivityUpdates] = useState([
     { id: "publish", title: "Atom package published", summary: "Version 0.19.8 is available from npm.", status: "Published" },
     { id: "review", title: "Brick review ready", summary: "The Feed component is ready for consumer verification.", status: "Review" },
@@ -248,10 +250,10 @@ export function App() {
           <Text as="p" className="eyebrow" tone="accent" variant="caption" weight="semibold">
             Independent package integration
           </Text>
-          <Text as="h1" className="hero-title" id="hero-title" variant="display">
+          <Heading level={1} className="hero-title" id="hero-title" variant="display">
             Build useful interfaces
             <span>with clear boundaries.</span>
-          </Text>
+          </Heading>
           <Text as="p" className="hero-copy" tone="secondary" variant="body-lg">
             This small application consumes Brick <Em>exactly</Em> through its public package
             exports. Application layout stays here; <Mark>finished component styling stays in Brick</Mark>.
@@ -331,10 +333,33 @@ export function App() {
           </HStack>
         </VStack>
 
+        <LinkBox.Root as="article" data-testid="consumer-link-box">
+          <VStack gap="3">
+            <Heading level={2} variant="title-md">
+              <LinkBox.Link href="#install-title">Release checklist</LinkBox.Link>
+            </Heading>
+            <Text tone="secondary">
+              Review the exact package install before publishing the workspace release.
+            </Text>
+            <LinkBox.Action>
+              <Button
+                onPress={() => setChecklistStatus("Release checklist pinned independently.")}
+                size="sm"
+                variant="outline"
+              >
+                Pin checklist
+              </Button>
+            </LinkBox.Action>
+            <Text aria-live="polite" data-testid="consumer-link-box-status" tone="muted" variant="body-sm">
+              {checklistStatus}
+            </Text>
+          </VStack>
+        </LinkBox.Root>
+
         <Surface as="section" bordered inset="lg" aria-labelledby="reviewers-title">
           <VStack gap="3">
             <VStack gap="1">
-              <Text as="h2" id="reviewers-title" variant="title-lg">Release reviewers</Text>
+              <Heading level={2} id="reviewers-title" variant="title-lg">Release reviewers</Heading>
               <Text tone="secondary">Authored values compose through the packed Chip subpath; this application owns their removal.</Text>
             </VStack>
             <HStack aria-label="Assigned release reviewers" gap="2" wrap>
@@ -357,7 +382,7 @@ export function App() {
         <Surface as="section" bordered inset="lg" aria-labelledby="release-files-title">
           <VStack gap="3">
             <VStack gap="1">
-              <Text as="h2" id="release-files-title" variant="title-lg">Release attachments</Text>
+              <Heading level={2} id="release-files-title" variant="title-lg">Release attachments</Heading>
               <Text tone="secondary">Add local supporting files for review; this Consumer intentionally performs no network upload.</Text>
             </VStack>
             <Field.Root id="consumer-release-files">
@@ -396,7 +421,7 @@ export function App() {
         <Surface as="section" bordered inset="lg" aria-labelledby="activity-title">
           <VStack gap="4">
             <VStack gap="1">
-              <Text as="h2" id="activity-title" variant="title-lg">Recent activity</Text>
+              <Heading level={2} id="activity-title" variant="title-lg">Recent activity</Heading>
               <Text tone="secondary">Latest changes across the workspace.</Text>
             </VStack>
             <ScrollArea.Root className="recent-activity-scroll" scrollbarGutter="stable" scrollbarVisibility="interaction">
@@ -415,7 +440,7 @@ export function App() {
 
         <Surface as="section" bordered inset="lg" aria-labelledby="install-title">
           <VStack gap="3">
-            <Text as="h2" id="install-title" variant="title-lg">Install the workspace package</Text>
+            <Heading level={2} id="install-title" variant="title-lg">Install the workspace package</Heading>
             <Text tone="secondary">Run <Code>npm install</Code> from your application.</Text>
             <CodeBlock.Root language="sh" value="npm install @flowstack-ui/brick">
               <CodeBlock.Header>
@@ -444,7 +469,7 @@ export function App() {
           >
             <VStack gap="3">
               <VStack gap="1">
-                <Text as="h2" id="plan-title" variant="title-lg">Choose a billing plan</Text>
+                <Heading level={2} id="plan-title" variant="title-lg">Choose a billing plan</Heading>
                 <Text tone="secondary">One realistic packed-package Select with native submission and reset.</Text>
               </VStack>
               <Field.Root id="consumer-billing-plan" required>
@@ -476,7 +501,7 @@ export function App() {
 
         <Surface as="section" bordered inset="lg" aria-labelledby="city-title">
           <VStack gap="3">
-            <VStack gap="1"><Text as="h2" id="city-title" variant="title-lg">Find a release city</Text><Text tone="secondary">A searchable choice composed through the packed Combobox subpath.</Text></VStack>
+            <VStack gap="1"><Heading level={2} id="city-title" variant="title-lg">Find a release city</Heading><Text tone="secondary">A searchable choice composed through the packed Combobox subpath.</Text></VStack>
             <Combobox.Root defaultValue="chicago" options={[{ value: "boston", label: "Boston" }, { value: "chicago", label: "Chicago" }, { value: "lisbon", label: "Lisbon" }]}>
               <Combobox.Label>Release city</Combobox.Label>
               <Combobox.Control><Combobox.Input placeholder="Search cities" /><Combobox.Clear aria-label="Clear release city" /><Combobox.Trigger aria-label="Toggle release city options" /></Combobox.Control>
@@ -488,7 +513,7 @@ export function App() {
         <Surface as="section" bordered inset="lg" aria-labelledby="account-security-title">
           <VStack gap="3">
             <VStack gap="1">
-              <Text as="h2" id="account-security-title" variant="title-lg">Account security details</Text>
+              <Heading level={2} id="account-security-title" variant="title-lg">Account security details</Heading>
               <Text tone="secondary">Specialized fields composed with the same Field relationships and validation state as the rest of the form.</Text>
             </VStack>
             <Field.Root id="consumer-seat-count" required>
@@ -539,7 +564,7 @@ export function App() {
           >
             <VStack gap="3">
               <VStack gap="1">
-                <Text as="h2" id="skills-title" variant="title-lg">Choose team skills</Text>
+                <Heading level={2} id="skills-title" variant="title-lg">Choose team skills</Heading>
                 <Text tone="secondary">One realistic packed-package Multi Select with repeated-value submission and reset.</Text>
               </VStack>
               <Field.Root id="consumer-team-skills" required>
@@ -911,7 +936,7 @@ export function App() {
                   </TreeGrid.Body>
                 </TreeGrid.Root>
               </TreeGrid.Container>
-              <Surface inset="md" level="subtle"><Text as="h3" variant="title-sm">Selected release record</Text><Text tone="secondary" variant="body-sm">{treeGridSelection ? `${treeGridSelection} is ready for package review.` : "Select a release file."}</Text></Surface>
+              <Surface inset="md" level="subtle"><Heading level={3} variant="title-sm">Selected release record</Heading><Text tone="secondary" variant="body-sm">{treeGridSelection ? `${treeGridSelection} is ready for package review.` : "Select a release file."}</Text></Surface>
             </VStack>
           </Card.Content>
         </Card.Root>
@@ -952,7 +977,7 @@ export function App() {
                   <ReorderableList.Handle aria-label={`Reorder ${item.title}`}>⋮⋮</ReorderableList.Handle>
                   <ReorderableList.Content>
                     <VStack gap="1">
-                      <Text as="h3" variant="title-sm">{item.title}</Text>
+                      <Heading level={3} variant="title-sm">{item.title}</Heading>
                       <Text tone="secondary" variant="body-sm">{item.owner}</Text>
                     </VStack>
                   </ReorderableList.Content>
@@ -991,7 +1016,7 @@ export function App() {
           <Card.Content>
             <VStack gap="3">
               <Feed.Root aria-label="Release activity updates" setSize={activityUpdates.length} variant="outline">
-                {activityUpdates.map((update, index) => <Feed.Item aria-describedby={`consumer-feed-${update.id}-summary`} aria-labelledby={`consumer-feed-${update.id}-title`} index={index} key={update.id}><VStack gap="2"><HStack gap="2" wrap><Badge size="sm" tone={update.status === "Published" ? "success" : "neutral"}>{update.status}</Badge><Text as="h3" id={`consumer-feed-${update.id}-title`} variant="title-sm">{update.title}</Text></HStack><Text as="p" id={`consumer-feed-${update.id}-summary`} tone="secondary" variant="body-sm">{update.summary}</Text><Button size="sm" variant="ghost">Open {update.title}</Button></VStack></Feed.Item>)}
+                {activityUpdates.map((update, index) => <Feed.Item aria-describedby={`consumer-feed-${update.id}-summary`} aria-labelledby={`consumer-feed-${update.id}-title`} index={index} key={update.id}><VStack gap="2"><HStack gap="2" wrap><Badge size="sm" tone={update.status === "Published" ? "success" : "neutral"}>{update.status}</Badge><Heading level={3} id={`consumer-feed-${update.id}-title`} variant="title-sm">{update.title}</Heading></HStack><Text as="p" id={`consumer-feed-${update.id}-summary`} tone="secondary" variant="body-sm">{update.summary}</Text><Button size="sm" variant="ghost">Open {update.title}</Button></VStack></Feed.Item>)}
               </Feed.Root>
               <HStack gap="3" wrap>
                 <Button disabled={activityUpdates.some(update => update.id === "research")} onClick={() => setActivityUpdates(current => [...current, { id: "research", title: "Feed contract approved", summary: "Research established the two-part article-stream boundary.", status: "Approved" }])} size="sm" variant="outline">Load older activity</Button>
@@ -1010,7 +1035,7 @@ export function App() {
             <VStack gap="3">
               <SwipeableItem.Root data-testid="consumer-swipeable-item" variant="outline">
                 <SwipeableItem.Actions aria-label="Archive message actions" side="start"><Button onClick={() => setSwipeableStatus("Message archived from swipe actions.")} size="sm" variant="ghost">Archive</Button></SwipeableItem.Actions>
-                <SwipeableItem.Content className="consumer-swipeable-content"><VStack gap="1"><Text as="h3" variant="title-sm">Design review requested</Text><Text as="p" tone="secondary" variant="body-sm">Morgan requested feedback on the responsive interaction.</Text></VStack><DropdownMenu.Root><DropdownMenu.Trigger asChild><Button size="sm" variant="ghost">More message actions</Button></DropdownMenu.Trigger><DropdownMenu.Portal><DropdownMenu.Content ariaLabel="Message actions"><DropdownMenu.Item onSelect={() => setSwipeableStatus("Message archived from menu.")} value="archive"><DropdownMenu.ItemLabel>Archive message</DropdownMenu.ItemLabel></DropdownMenu.Item><DropdownMenu.Item onSelect={() => setSwipeableStatus("Message deleted from menu.")} tone="danger" value="delete"><DropdownMenu.ItemLabel>Delete message</DropdownMenu.ItemLabel></DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Portal></DropdownMenu.Root></SwipeableItem.Content>
+                <SwipeableItem.Content className="consumer-swipeable-content"><VStack gap="1"><Heading level={3} variant="title-sm">Design review requested</Heading><Text as="p" tone="secondary" variant="body-sm">Morgan requested feedback on the responsive interaction.</Text></VStack><DropdownMenu.Root><DropdownMenu.Trigger asChild><Button size="sm" variant="ghost">More message actions</Button></DropdownMenu.Trigger><DropdownMenu.Portal><DropdownMenu.Content ariaLabel="Message actions"><DropdownMenu.Item onSelect={() => setSwipeableStatus("Message archived from menu.")} value="archive"><DropdownMenu.ItemLabel>Archive message</DropdownMenu.ItemLabel></DropdownMenu.Item><DropdownMenu.Item onSelect={() => setSwipeableStatus("Message deleted from menu.")} tone="danger" value="delete"><DropdownMenu.ItemLabel>Delete message</DropdownMenu.ItemLabel></DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Portal></DropdownMenu.Root></SwipeableItem.Content>
                 <SwipeableItem.Actions aria-label="Delete message actions" side="end"><Button onClick={() => setSwipeableStatus("Message deleted from swipe actions.")} size="sm" tone="danger" variant="ghost">Delete</Button></SwipeableItem.Actions>
               </SwipeableItem.Root>
               <Text aria-live="polite" as="p" tone="secondary" variant="body-sm">{swipeableStatus}</Text>
@@ -1167,7 +1192,7 @@ export function App() {
         </Card.Root>
         <Surface as="section" bordered inset="lg" aria-labelledby="component-preview-title">
           <VStack gap="4">
-            <Text as="h2" id="component-preview-title" variant="title-lg">Workspace preview</Text>
+            <Heading level={2} id="component-preview-title" variant="title-lg">Workspace preview</Heading>
             <Tabs.Root defaultValue="summary" variant="soft">
               <Tabs.List ariaLabel="Workspace preview sections">
                 <Tabs.Trigger value="summary">Summary</Tabs.Trigger>
@@ -1180,7 +1205,7 @@ export function App() {
         </Surface>
         <Surface as="section" bordered inset="lg" aria-labelledby="progress-proof-title">
           <VStack gap="4">
-            <Text as="h2" id="progress-proof-title" variant="title-lg">Publishing progress</Text>
+            <Heading level={2} id="progress-proof-title" variant="title-lg">Publishing progress</Heading>
             <Grid.Root minItemSize="lg" gap="5">
               <Progress.Root value={68} bufferValue={84}>
                 <Progress.Label>Upload release assets</Progress.Label>
@@ -1202,7 +1227,7 @@ export function App() {
         </Surface>
         <Surface as="section" bordered inset="lg" aria-labelledby="collapsible-proof-title">
           <VStack gap="3">
-            <Text as="h2" id="collapsible-proof-title" variant="title-lg">Advanced workspace details</Text>
+            <Heading level={2} id="collapsible-proof-title" variant="title-lg">Advanced workspace details</Heading>
             <Collapsible.Root variant="outline">
               <Collapsible.Trigger>Release notifications<Collapsible.Indicator /></Collapsible.Trigger>
               <Collapsible.Content>
@@ -1213,7 +1238,7 @@ export function App() {
         </Surface>
         <Surface as="section" bordered inset="lg" aria-labelledby="accordion-proof-title">
           <VStack gap="3">
-            <Text as="h2" id="accordion-proof-title" variant="title-lg">Workspace preferences</Text>
+            <Heading level={2} id="accordion-proof-title" variant="title-lg">Workspace preferences</Heading>
             <Accordion.Root variant="outline" collapsible={false} defaultValue="account">
               <Accordion.Item value="account"><Accordion.Header><Accordion.Trigger>Account settings<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner><Text tone="secondary">Update your profile and sign-in preferences.</Text></Accordion.ContentInner></Accordion.Content></Accordion.Item>
               <Accordion.Item value="billing"><Accordion.Header><Accordion.Trigger>Billing details<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner><Text tone="secondary">Review invoices and payment methods.</Text></Accordion.ContentInner></Accordion.Content></Accordion.Item>
@@ -1222,7 +1247,7 @@ export function App() {
         </Surface>
         <Surface as="section" bordered inset="lg" aria-labelledby="menu-family-title">
           <VStack gap="4">
-            <Text as="h2" id="menu-family-title" variant="title-lg">Workspace menus</Text>
+            <Heading level={2} id="menu-family-title" variant="title-lg">Workspace menus</Heading>
             <Show as="aside" from="md" aria-label="Wide workspace guidance">
               <Text tone="secondary">Use the complete navigation menu on wider workspaces.</Text>
             </Show>

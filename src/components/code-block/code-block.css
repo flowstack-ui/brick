@@ -94,6 +94,8 @@
   .brick-code-block-content {
     max-inline-size: 100%;
     padding: var(--brick-code-block-content-padding);
+    font-size: var(--brick-code-block-font-size);
+    line-height: var(--brick-code-block-line-height);
   }
 
   .brick-code-block-content[data-max-lines] {

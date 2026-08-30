@@ -9,4 +9,6 @@ const invalidChildren: HighlightProps = { text: "Text", query: "Text", children:
 const invalidActive: HighlightProps = { text: "Text", query: "Text", activeIndex: 0 };
 // @ts-expect-error Brick fixes the semantic root to native span.
 const invalidRender: HighlightProps = { text: "Text", query: "Text", render: () => null };
-void invalidChildren; void invalidActive; void invalidRender;
+// @ts-expect-error Highlight never accepts injected HTML in place of its plain-text source.
+const invalidDangerousHtml: HighlightProps = { text: "Text", query: "Text", dangerouslySetInnerHTML: { __html: "<mark>Unsafe</mark>" } };
+void invalidChildren; void invalidActive; void invalidRender; void invalidDangerousHtml;

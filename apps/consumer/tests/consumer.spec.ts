@@ -265,6 +265,15 @@ test("renders and operates Brick through its public package", async ({ page }) =
   await expect(page.getByRole("link", { name: "View workspace" })).toHaveClass(/brick-link/);
   await expect(page.getByRole("link", { name: "View workspace" })).toHaveAttribute("data-size", "md");
 
+  const linkBox = page.getByTestId("consumer-link-box");
+  await expect(linkBox).toHaveClass(/brick-link-box/);
+  await expect(linkBox.getByRole("link", { name: "Release checklist" })).toHaveAttribute("href", "#install-title");
+  await linkBox.getByRole("button", { name: "Pin checklist" }).click();
+  await expect(linkBox.getByTestId("consumer-link-box-status")).toHaveText(
+    "Release checklist pinned independently.",
+  );
+  await expect(page).not.toHaveURL(/#install-title$/);
+
   const publishTrigger = page.getByRole("button", { name: "Publish project" });
   await publishTrigger.click();
   const dialog = page.getByRole("dialog", { name: "Publish project?" });
