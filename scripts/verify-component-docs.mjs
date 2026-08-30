@@ -92,6 +92,7 @@ const componentSymbols = {
   code: "Code",
   em: "Em",
   mark: "Mark",
+  kbd: "Kbd",
   "code-block": "CodeBlock",
   "nav-list": "NavList",
   sidebar: "Sidebar",

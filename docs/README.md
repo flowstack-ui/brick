@@ -100,6 +100,8 @@ This directory is the public documentation authority for
   surrounding typography
 - [Mark](components/mark/README.md) — static native relevance with restrained,
   theme-aware visual recipes
+- [Kbd](components/kbd/README.md) — native keyboard-input notation with compact
+  finished variants and sizes
 - [Code](components/code/README.md) — short inline technical literals
 - [Code Block](components/code-block/README.md) — structured multi-line source,
   overflow, language metadata, and copy feedback

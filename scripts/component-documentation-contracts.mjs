@@ -2323,6 +2323,16 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-slot", "data-tone", "data-variant"],
     publicTokens: ["--brick-mark-background", "--brick-mark-foreground", "--brick-mark-radius", "--brick-mark-padding-inline"],
   },
+  kbd: {
+    source: "src/components/kbd/Kbd.tsx",
+    exportSource: "src/components/kbd/index.ts",
+    css: "src/components/kbd/kbd.css",
+    exports: ["Kbd", "KbdProps", "KbdSize", "KbdVariant"],
+    unions: { KbdVariant: ["raised", "outline", "subtle", "plain"], KbdSize: ["sm", "md", "lg"] },
+    defaults: { variant: "raised", size: "md", slot: "kbd" },
+    dataAttributes: ["data-size", "data-slot", "data-variant"],
+    publicTokens: ["--brick-kbd-background", "--brick-kbd-foreground", "--brick-kbd-border-color", "--brick-kbd-border-block-end-color", "--brick-kbd-radius", "--brick-kbd-font-family", "--brick-kbd-font-size", "--brick-kbd-font-weight", "--brick-kbd-line-height", "--brick-kbd-letter-spacing", "--brick-kbd-min-block-size", "--brick-kbd-padding-inline", "--brick-kbd-shadow"],
+  },
   "code-block": {
     source: "src/components/code-block/CodeBlock.tsx",
     exportSource: "src/components/code-block/index.ts",

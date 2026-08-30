@@ -274,6 +274,13 @@ export const componentEntries = [
     title: "Mark",
   },
   {
+    category: "Content and status",
+    description: "Native keyboard-input notation with compact finished recipes.",
+    id: "kbd",
+    route: "/kbd",
+    title: "Kbd",
+  },
+  {
     category: "Data display",
     description: "Structured source, overflow, language, and copy.",
     id: "code-block",
