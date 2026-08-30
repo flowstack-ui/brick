@@ -23,6 +23,8 @@ Blockquote proves semantic quotation, source, and attribution composition throug
 its public subpath.
 Highlight proves exact Atom-backed matching and finished query paint through its
 public subpath.
+Prose proves trusted native editorial descendants, reading measure, and package
+CSS delivery through its public subpath without a parser or HTML injection API.
 
 ## Commands
 

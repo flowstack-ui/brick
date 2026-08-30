@@ -295,6 +295,13 @@ export const componentEntries = [
     title: "Highlight",
   },
   {
+    category: "Content and status",
+    description: "Editorial descendant typography, rhythm, and readable measure for trusted React content.",
+    id: "prose",
+    route: "/prose",
+    title: "Prose",
+  },
+  {
     category: "Data display",
     description: "Structured source, overflow, language, and copy.",
     id: "code-block",

@@ -102,6 +102,8 @@ This directory is the public documentation authority for
   theme-aware visual recipes
 - [Highlight](components/highlight/README.md) — exact Atom-backed plain-text
   query matching with finished semantic relevance paint
+- [Prose](components/prose/README.md) — descendant typography, rhythm, and
+  readable measure for trusted React content
 - [Kbd](components/kbd/README.md) — native keyboard-input notation with compact
   finished variants and sizes
 - [Blockquote](components/blockquote/README.md) — extended quotations with

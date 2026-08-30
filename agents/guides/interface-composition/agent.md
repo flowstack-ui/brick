@@ -50,6 +50,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **MUST:** Do not use Stack, Surface, Button, or another convenient component when a more specific Brick navigation, media, content, or interaction component owns the job.
 - **MUST:** Preserve document landmarks and semantic elements when Brick does not provide an owner; Brick-first is not permission to erase HTML meaning.
 - **MUST:** For an extended quotation, use Blockquote and preserve its figure Root, blockquote Content, sibling figcaption Caption, source URL, and cited-work semantics.
+- **MUST:** Use Prose only after external content has been sanitized and parsed into trusted React children; keep heading hierarchy, landmarks, link destinations, media alternatives, table semantics, and trust policy application-owned.
 - **MUST:** When desktop and mobile require distinct navigation components, share application-owned destination labels, hrefs, values, and ordering while preserving each pattern's correct Brick anatomy; do not duplicate navigation content or force one interaction tree across breakpoints.
 - **MUST:** Use Show and Hide for first-paint visibility; when a controlled interactive overlay may remain open across a breakpoint, synchronize its application state at that boundary so a hidden modal cannot retain focus, scroll lock, or isolation.
 - **SHOULD:** Express reusable brand values through semantic Brick tokens and a theme rather than repeating literal application values.

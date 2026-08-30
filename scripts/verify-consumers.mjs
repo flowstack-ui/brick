@@ -85,7 +85,7 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, Blockquote, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, Grid, Hide, Highlight, HoverCard, IconButton, Input, Kbd, Link, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, Blockquote, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, Grid, Hide, Highlight, HoverCard, IconButton, Input, Kbd, Link, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, Prose, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -117,6 +117,7 @@ import { Mark as SubpathMark } from "@flowstack-ui/brick/mark";
 import { Kbd as SubpathKbd } from "@flowstack-ui/brick/kbd";
 import { Blockquote as SubpathBlockquote } from "@flowstack-ui/brick/blockquote";
 import { Highlight as SubpathHighlight } from "@flowstack-ui/brick/highlight";
+import { Prose as SubpathProse } from "@flowstack-ui/brick/prose";
 import { Grid as SubpathGrid } from "@flowstack-ui/brick/grid";
 import { Container as SubpathContainer } from "@flowstack-ui/brick/container";
 import { Surface as SubpathSurface } from "@flowstack-ui/brick/surface";
@@ -181,6 +182,7 @@ if (Show !== SubpathShow || Hide !== SubpathHide) throw new Error("Responsive vi
 if (SwipeableItem !== SubpathSwipeableItem || Object.keys(SubpathSwipeableItem).length !== 3) throw new Error("Swipeable Item subpath smoke failed");
 if (Blockquote !== SubpathBlockquote || Object.keys(SubpathBlockquote).length !== 5) throw new Error("Blockquote subpath smoke failed");
 if (Highlight !== SubpathHighlight) throw new Error("Highlight subpath export mismatch");
+if (Prose !== SubpathProse) throw new Error("Prose subpath export mismatch");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
 const iconButtonMarkup = renderToString(React.createElement(IconButton, { "aria-label": "Search" }, React.createElement("svg")));
@@ -233,6 +235,8 @@ const blockquoteMarkup = renderToString(React.createElement(Blockquote.Root, nul
 if (!blockquoteMarkup.includes("<figure") || !blockquoteMarkup.includes("<blockquote") || !blockquoteMarkup.includes("<figcaption") || !blockquoteMarkup.includes('cite="https://example.com"')) throw new Error("Blockquote SSR smoke failed");
 const highlightMarkup = renderToString(React.createElement(Highlight, { query: ["design", "design system"], text: "A design system." }));
 if (!highlightMarkup.includes("brick-highlight") || !highlightMarkup.includes("<mark") || !highlightMarkup.includes("design system")) throw new Error("Highlight SSR smoke failed");
+const proseMarkup = renderToString(React.createElement(Prose, { as: "article", measure: "narrow" }, React.createElement("h2", null, "Guide"), React.createElement("p", null, "Trusted content")));
+if (!proseMarkup.includes("<article") || !proseMarkup.includes("brick-prose") || !proseMarkup.includes('data-measure="narrow"')) throw new Error("Prose SSR smoke failed");
 const gridMarkup = renderToString(React.createElement(Grid.Root, { columns: 2, gap: "2" }, React.createElement("span", null, "One"), React.createElement(Grid.Item, { columnSpan: "full" }, "Summary")));
 if (!gridMarkup.includes("brick-grid") || !gridMarkup.includes("brick-grid-item") || !gridMarkup.includes('data-column-span="full"')) throw new Error("Grid SSR smoke failed");
 const containerMarkup = renderToString(React.createElement(Container, { as: "main", measure: "max", gutter: "lg" }, "Measured"));
@@ -311,12 +315,13 @@ if (!css.includes(".brick-show") || !css.includes(".brick-hide") || !css.include
 if (!css.includes(".brick-swipeable-item") || !css.includes("--brick-swipeable-item-background")) throw new Error("Swipeable Item CSS export missing");
 if (!css.includes(".brick-blockquote") || !css.includes("--brick-blockquote-background")) throw new Error("Blockquote CSS export missing");
 if (!css.includes(".brick-highlight") || !css.includes("--brick-highlight-background")) throw new Error("Highlight CSS export missing");
+if (!css.includes(".brick-prose") || !css.includes("--brick-prose-measure")) throw new Error("Prose CSS export missing");
 `,
     );
     await writeFile(
       join(consumer, "verify.ts"),
 	`import { createElement } from "react";
-import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HideProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type OTPFieldRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type RadioGroupRootProps, type ShowProps, type SkeletonProps, type SurfaceProps, type SwipeableItemRootProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
+import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, Prose, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HideProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type OTPFieldRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type ProseProps, type RadioGroupRootProps, type ShowProps, type SkeletonProps, type SurfaceProps, type SwipeableItemRootProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -340,6 +345,7 @@ import { OTPField as SubpathOTPField } from "@flowstack-ui/brick/otp-field";
 import { PasswordToggleField as SubpathPasswordToggleField } from "@flowstack-ui/brick/password-toggle-field";
 import { Show as SubpathShow } from "@flowstack-ui/brick/show";
 import { Hide as SubpathHide } from "@flowstack-ui/brick/hide";
+import { Prose as SubpathProse } from "@flowstack-ui/brick/prose";
 import { SwipeableItem as SubpathSwipeableItem } from "@flowstack-ui/brick/swipeable-item";
 import * as NavigationMenuModule from "@flowstack-ui/brick/navigation-menu";
 const props: ButtonProps = { children: "Consumer" };
@@ -366,6 +372,7 @@ const passwordProps: PasswordToggleFieldRootProps = { children: createElement(Pa
 const textareaProps: TextareaRootProps = { "aria-label": "Notes", autoResize: true, maxRows: 8 };
 const linkProps: LinkProps = { children: "Read guides", href: "/guides", tone: "neutral" };
 const textProps: TextProps = { as: "h2", children: "Consumer", variant: "title-sm" };
+const proseProps: ProseProps = { as: "article", children: createElement("p", null, "Trusted"), measure: "narrow", size: "sm" };
 const gridProps: GridRootProps = { columns: 2, gap: "2", children: createElement(Grid.Item, { columnSpan: "full" }, "Summary") };
 const containerProps: ContainerProps = { as: "main", children: "Measured", gutter: "lg", measure: "max" };
 const surfaceProps: SurfaceProps = { as: "section", bordered: true, children: "Painted", inset: "md", level: "subtle" };
@@ -462,6 +469,7 @@ void SubpathLink;
 void linkProps;
 void Text;
 void textProps;
+void Prose; void SubpathProse; void proseProps;
 `,
     );
     await writeFile(

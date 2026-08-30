@@ -56,6 +56,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/highlight.d.ts",
       default: "./dist/highlight.js",
     },
+    "./prose": {
+      types: "./dist/prose.d.ts",
+      default: "./dist/prose.js",
+    },
     "./icon-button": {
       types: "./dist/icon-button.d.ts",
       default: "./dist/icon-button.js",
@@ -516,6 +520,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const kbd = await import(new URL("../../dist/kbd.js", import.meta.url));
   const blockquote = await import(new URL("../../dist/blockquote.js", import.meta.url));
   const highlight = await import(new URL("../../dist/highlight.js", import.meta.url));
+  const prose = await import(new URL("../../dist/prose.js", import.meta.url));
   const codeBlock = await import(new URL("../../dist/code-block.js", import.meta.url));
   const dropdownMenu = await import(new URL("../../dist/dropdown-menu.js", import.meta.url));
   const contextMenu = await import(new URL("../../dist/context-menu.js", import.meta.url));
@@ -850,6 +855,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ProgressRoot",
       "ProgressTrack",
       "ProgressValue",
+      "Prose",
       "RadioGroup",
       "RadioGroupItem",
       "RadioGroupRoot",
@@ -1013,6 +1019,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(blockquote.Blockquote, brick.Blockquote);
   assert.equal(blockquote.BlockquoteRoot, brick.Blockquote.Root);
   assert.equal(highlight.Highlight, brick.Highlight);
+  assert.equal(prose.Prose, brick.Prose);
   assert.equal(button.Button, brick.Button);
   assert.equal(iconButton.IconButton, brick.IconButton);
   assert.equal(icon.Icon, brick.Icon);
@@ -1442,6 +1449,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-sidebar-panel-width/);
   assert.match(styles, /--brick-code-font-family/);
   assert.match(styles, /--brick-code-block-background/);
+  assert.match(styles, /--brick-prose-measure/);
   assert.match(styles, /--brick-control-min-block-size-xl/);
   assert.match(tokens, /data-brick-appearance/);
   assert.match(reset, /brick\.reset/);
@@ -1463,7 +1471,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 93);
+  assert.equal(componentStyleNames.length, 94);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);

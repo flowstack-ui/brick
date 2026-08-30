@@ -13,7 +13,7 @@ test("Agent Knowledge catalog reconciles every public Brick surface", async () =
   assert.equal(report.schema, "flowstack.agent-coverage.v1");
   assert.equal(report.package, "@flowstack-ui/brick");
   assert.equal(report.layer, "brick");
-  assert.equal(report.summary.componentOwners, 94);
+  assert.equal(report.summary.componentOwners, 95);
   assert.equal(report.summary.packageGuides, 2);
   assert.equal(report.summary.unclassified, 0);
   assert.equal(report.summary.invalidExclusions, 0);

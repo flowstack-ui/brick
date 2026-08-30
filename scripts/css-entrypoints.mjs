@@ -89,6 +89,7 @@ export const componentStyleEntries = [
   ["kbd", ["components/kbd/kbd.css"]],
   ["blockquote", ["components/blockquote/blockquote.css"]],
   ["highlight", ["components/highlight/highlight.css"]],
+  ["prose", ["components/prose/prose.css"]],
   ["code-block", [
     "components/_action-spinner/action-spinner.css",
     "components/button/button.css",
