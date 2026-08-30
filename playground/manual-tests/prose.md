@@ -1,38 +1,69 @@
-# Prose Manual Test Guide
-
-Status: implementation complete; human run pending
+# Prose manual-test protocol
 
 | Environment | Record before testing |
 | --- | --- |
-| Browser and version | |
-| Operating system | |
-| Viewport and zoom | |
-| Assistive technology | |
+| Component | Prose |
+| Version or commit | Brick 0.1.12 candidate |
+| Reviewer | Codex visual review; VoiceOver run pending |
+| Date | 2026-08-30 |
+| Browser and version | Chrome stable; exact version recorded at run |
+| Operating system | macOS |
+| Viewport and zoom | 320, 390, 1440 CSS px; 100%, 200%, 400% |
+| Physical device | Not applicable; Prose owns no touch interaction |
+| Assistive technology | macOS VoiceOver pending |
 | Playground route | `/prose` |
 
-Scenario order: Overview → Size and measure → Editorial descendants →
-Responsive and RTL.
+Scenario order: `01 Overview`, `02 Size and measure`, `03 Editorial descendants`, `04 Responsive and RTL`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 
-1. Confirm native heading, paragraph, link, list, quote, code, table, rule,
-   figure, image, and caption semantics remain unchanged.
-2. Compare sm/md/lg and narrow/default/wide reading measures; rhythm should
-   remain coherent rather than simply scaling every value.
-3. Confirm native tables and preformatted code wrap within the reading region
-   and never widen the page at 320 and 390 pixels. Use the direct Table or Code
-   Block owner when preserved horizontal scrolling is required.
-4. Confirm direct Brick Text keeps its own typography inside Prose.
-5. Navigate links by keyboard and confirm visible focus, underline, and real
-   destinations without extra Prose tab stops.
-6. Repeat in light, dark, forced colors, 200% text, 400% zoom, text spacing,
-   long localization, and RTL. Confirm logical alignment, readable wrap, and
-   preserved source order.
-7. Confirm copied text contains only authored content and no generated labels.
+## Step 1 — Editorial hierarchy, rhythm, and native descendants
+
+Setup: Open `/prose` in system appearance and review 01–03 top to bottom.
+
+Action: Inspect heading, paragraph, link, list, quote, code, table, rule, figure, image, caption, and direct Brick Text; compare sm/md/lg and narrow/default/wide measures; select and copy the article.
+
+Expected: Native semantics remain unchanged, direct Brick Text keeps its own typography, rhythm remains coherent across sizes/measures, and copied output contains only authored text.
+
+Result:
+Notes or issue:
+
+## Step 2 — Keyboard and focus
+
+Setup: Start before the first Prose link.
+
+Action: Navigate every real destination by keyboard and inspect focus/underline treatment.
+
+Expected: Every link has visible focus and a real destination; Prose adds no extra tab stops or navigation behavior.
+
+Result:
+Notes or issue:
+
+## Step 3 — Reflow, appearance, localization, and direction
+
+Setup: Review 04 at 320/390 px, 200% text, 400% zoom, text-spacing override, dark appearance, forced colors, long localization, and RTL.
+
+Action: Inspect tables, preformatted code, media, wrapping, logical alignment, and page containment.
+
+Expected: Descendants remain readable in source order; tables and pre wrap rather than widening the page; no clipping, overflow, hidden content, or direction error appears.
+
+Result:
+Notes or issue:
+
+## Step 4 — Assistive technology
+
+Setup: Enable the recorded screen reader on `/prose`.
+
+Action: Read landmarks and editorial descendants in browse mode, then navigate links.
+
+Expected: Native roles, heading levels, list structure, quotation, table relationships, media alternatives, caption, and destinations are announced without duplicate generated content.
+
+Result:
+Notes or issue:
 
 ## Completion
 
-Overall result:
+Overall result: pending recorded run
 
 Follow-up issues:
 

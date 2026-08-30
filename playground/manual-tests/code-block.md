@@ -1,13 +1,16 @@
-# Code Block Manual Test Guide
-
-Status: implementation complete; human run pending
+# Code Block manual-test protocol
 
 | Environment | Record before testing |
 | --- | --- |
-| Browser and version | |
-| Operating system | |
-| Viewport and zoom | |
-| Assistive technology | |
+| Component | Code Block |
+| Version or commit | Brick 0.1.12 candidate |
+| Reviewer | Codex visual review; VoiceOver run pending |
+| Date | 2026-08-30 |
+| Browser and version | Chrome stable; exact version recorded at run |
+| Operating system | macOS |
+| Viewport and zoom | 320, 390, 1440 CSS px; 100%, 200%, 400% |
+| Physical device | Mac; no physical touch contract |
+| Assistive technology | macOS VoiceOver pending |
 | Playground route | `/code-block` |
 
 Scenario order: Overview → Variants → Sizes → Optional anatomy → Content and
@@ -16,39 +19,23 @@ language → Wrapping and overflow → Copy states → Appearance and customizat
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 
-1. Confirm Overview has no header/action/status, one named focusable viewport,
-   and exact `pre > code` source.
-2. Test Variants then Sizes top down. Confirm only the named surface or density
-   changes and every block retains identical source and behavior.
-3. In Optional anatomy, confirm title, `tsx`, Copy source, Content, and Status
-   appear in logical focus order. Copy once; expect pending then copied.
-4. In Content and language, confirm raw markup displays as text and highlighted
-   React output shows a colored `import` without unsafe rendered markup.
-5. In Wrapping and overflow, keyboard-focus Scroll and use horizontal keys;
-   expect preserved lines. Wrap must reflow the same long line without a second
-   scroll owner.
-6. In Line metadata, confirm authored numbers align through wrapped and
-   preserved lines, the focused line remains distinct without lowering sibling
-   contrast, highlight remains distinct, and additions/removals stay readable.
-7. In Bounded and collapsible source, keyboard-scroll the standalone bounded
-   viewport, then activate Show full source on the expandable example. Confirm
-   `aria-expanded` changes, the bounded preview leaves the accessibility tree,
-   real Collapsible Content becomes the controlled region, and every line is
-   visible without a second disclosure implementation.
-8. In Copy states, run Success, Error, and Disabled once each. Expect truthful
-   copied/error wording, reset after about 1.5 seconds, no copy while disabled,
-   and Trigger focus retained.
-9. Compare light/dark defaults and the customized dark block. Confirm the
-   customized result matches its shown surface, text, border, and radius.
-10. At mobile width, 200% text, and 400% zoom, move through the final section.
-   Confirm no page overflow, many lines remain reachable, RTL header follows
-   the page, and source remains LTR.
-11. Repeat with keyboard, forced colors, and a screen reader. Each focusable
-   viewport has its authored name; copy status is announced politely once.
+| Step | Setup and action | Expected | Result | Notes or issue |
+| --- | --- | --- | --- | --- |
+| 1 | Open Overview and inspect the live structure. | No header/action/status; one named focusable viewport; exact `pre > code` source. | | |
+| 2 | Review Variants then Sizes top to bottom. | Only named surface/density changes; source and behavior remain identical. | | |
+| 3 | Traverse Optional anatomy by keyboard and copy once. | Title, `tsx`, Copy source, Content, and Status follow logical focus order; status moves pending to copied and focus stays on Trigger. | | |
+| 4 | Review raw markup and trusted pre-tokenized React output. | Raw markup displays as text; the tokenized `import` is styled without unsafe markup execution. | | |
+| 5 | Focus Scroll, use horizontal keys, then compare Wrap. | Preserved lines remain reachable through one scroll owner; Wrap reflows the same source without a second scroll region. | | |
+| 6 | Inspect every Line metadata state in preserved and wrapped examples. | Authored numbers align; focus/highlight remain distinct; additions/removals stay readable without reducing sibling contrast. | | |
+| 7 | Keyboard-scroll bounded source, then activate Show full source. | `aria-expanded` changes; bounded preview leaves the accessibility tree; Collapsible Content becomes the controlled region and reveals every line. | | |
+| 8 | Run Success, Error, and Disabled copy states. | Truthful copied/error wording resets after about 1.5 seconds; disabled never copies; Trigger focus is retained. | | |
+| 9 | Compare light/dark defaults and the customized dark block. | Customized surface, text, border, and radius match the visible contract while focus and source remain readable. | | |
+| 10 | Repeat at 320/390 px, 200% text, 400% zoom, text-spacing override, long content, and RTL. | No page overflow; all lines remain reachable; logical header mirrors while source remains LTR. | | |
+| 11 | Repeat the primary path with keyboard, forced colors, and the recorded screen reader. | Every viewport has its authored name, focus remains visible, and copy status is announced politely once without duplicate content. | | |
 
 ## Completion
 
-Overall result:
+Overall result: pending recorded run
 
 Follow-up issues:
 
