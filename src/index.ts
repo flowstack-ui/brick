@@ -706,6 +706,13 @@ export {
   type HighlightVariant,
 } from "./components/highlight/index.js";
 export {
+  Prose,
+  type ProseElement,
+  type ProseMeasure,
+  type ProseProps,
+  type ProseSize,
+} from "./components/prose/index.js";
+export {
   CodeBlock,
   CodeBlockActions,
   CodeBlockContent,

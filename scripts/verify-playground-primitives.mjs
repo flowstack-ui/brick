@@ -8,6 +8,7 @@ const allowedRawHosts = new Map([
   ["components/checkbox-group/CheckboxGroupPage.tsx", [/<strong data-adapter=/, /<small data-adapter=/]],
   ["components/field/FieldPage.tsx", [/<p data-adapter=/]],
   ["components/fieldset/FieldsetPage.tsx", [/<p data-adapter=/]],
+  ["components/prose/ProsePage.tsx", [/<(?:h[1-6]|p)\b/]],
   ["components/text/TextPage.tsx", [/^<strong>$/]],
   ["components/visually-hidden/VisuallyHiddenPage.tsx", [/<strong \{\.\.\.props\} data-adapter=/]],
 ]);

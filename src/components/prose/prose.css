@@ -1,0 +1,224 @@
+@layer brick.components {
+  .brick-prose {
+    --brick-prose-measure: 48rem;
+    --brick-prose-flow-space: var(--brick-space-4);
+    --brick-prose-section-space: var(--brick-space-6);
+    --brick-prose-foreground: var(--brick-color-text-primary);
+    --brick-prose-muted-foreground: var(--brick-color-text-secondary);
+    --brick-prose-link-foreground: var(--brick-color-link-text);
+    --brick-prose-accent: var(--brick-color-accent-border);
+    --brick-prose-border-color: var(--brick-color-border-subtle);
+    --brick-prose-surface: var(--brick-color-surface-subtle);
+    --brick-prose-body-font-family: var(--brick-typography-body-md-font-family);
+    --brick-prose-body-font-size: var(--brick-typography-body-md-font-size);
+    --brick-prose-body-font-weight: var(--brick-typography-body-md-font-weight);
+    --brick-prose-body-line-height: var(--brick-typography-body-md-line-height);
+    --brick-prose-body-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    --brick-prose-heading-font-family: var(--brick-typography-title-md-font-family);
+    --brick-prose-heading-font-weight: var(--brick-typography-title-md-font-weight);
+    --brick-prose-heading-letter-spacing: var(--brick-typography-title-md-letter-spacing);
+    --brick-prose-code-font-family: var(--brick-typography-code-inline-font-family);
+    --brick-prose-code-font-size: var(--brick-typography-code-inline-font-size);
+    --brick-prose-code-radius: var(--brick-radius-subtle);
+    --brick-prose-media-radius: var(--brick-radius-surface);
+    --brick-prose-table-cell-padding-block: var(--brick-space-3);
+    --brick-prose-table-cell-padding-inline: var(--brick-space-4);
+    --_brick-prose-h1-font-size: var(--brick-typography-title-lg-font-size);
+    --_brick-prose-h1-line-height: var(--brick-typography-title-lg-line-height);
+    --_brick-prose-h2-font-size: var(--brick-typography-title-md-font-size);
+    --_brick-prose-h2-line-height: var(--brick-typography-title-md-line-height);
+    --_brick-prose-h3-font-size: var(--brick-typography-title-sm-font-size);
+    --_brick-prose-h3-line-height: var(--brick-typography-title-sm-line-height);
+
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: var(--brick-prose-measure);
+    margin: 0;
+    color: var(--brick-prose-foreground);
+    font-family: var(--brick-prose-body-font-family);
+    font-size: var(--brick-prose-body-font-size);
+    font-weight: var(--brick-prose-body-font-weight);
+    letter-spacing: var(--brick-prose-body-letter-spacing);
+    line-height: var(--brick-prose-body-line-height);
+    overflow-wrap: break-word;
+    text-align: start;
+  }
+
+  .brick-prose[data-measure="narrow"] { --brick-prose-measure: 40rem; }
+  .brick-prose[data-measure="wide"] { --brick-prose-measure: 64rem; }
+  .brick-prose[data-measure="none"] { --brick-prose-measure: none; }
+
+  .brick-prose[data-size="sm"] {
+    --brick-prose-body-font-family: var(--brick-typography-body-sm-font-family);
+    --brick-prose-body-font-size: var(--brick-typography-body-sm-font-size);
+    --brick-prose-body-font-weight: var(--brick-typography-body-sm-font-weight);
+    --brick-prose-body-line-height: var(--brick-typography-body-sm-line-height);
+    --brick-prose-body-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    --brick-prose-flow-space: var(--brick-space-3);
+    --_brick-prose-h1-font-size: var(--brick-typography-title-md-font-size);
+    --_brick-prose-h1-line-height: var(--brick-typography-title-md-line-height);
+    --_brick-prose-h2-font-size: var(--brick-typography-title-sm-font-size);
+    --_brick-prose-h2-line-height: var(--brick-typography-title-sm-line-height);
+    --_brick-prose-h3-font-size: var(--brick-typography-body-lg-font-size);
+    --_brick-prose-h3-line-height: var(--brick-typography-body-lg-line-height);
+  }
+
+  .brick-prose[data-size="lg"] {
+    --brick-prose-body-font-family: var(--brick-typography-body-lg-font-family);
+    --brick-prose-body-font-size: var(--brick-typography-body-lg-font-size);
+    --brick-prose-body-font-weight: var(--brick-typography-body-lg-font-weight);
+    --brick-prose-body-line-height: var(--brick-typography-body-lg-line-height);
+    --brick-prose-body-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+    --brick-prose-flow-space: var(--brick-space-5);
+    --_brick-prose-h1-font-size: var(--brick-typography-display-sm-font-size);
+    --_brick-prose-h1-line-height: var(--brick-typography-display-sm-line-height);
+    --_brick-prose-h2-font-size: var(--brick-typography-title-lg-font-size);
+    --_brick-prose-h2-line-height: var(--brick-typography-title-lg-line-height);
+    --_brick-prose-h3-font-size: var(--brick-typography-title-md-font-size);
+    --_brick-prose-h3-line-height: var(--brick-typography-title-md-line-height);
+  }
+
+  :where(.brick-prose) :where(h1, h2, h3, h4, h5, h6) {
+    margin: var(--brick-prose-section-space) 0 0;
+    color: var(--brick-prose-foreground);
+    font-family: var(--brick-prose-heading-font-family);
+    font-weight: var(--brick-prose-heading-font-weight);
+    letter-spacing: var(--brick-prose-heading-letter-spacing);
+    line-height: var(--brick-typography-title-md-line-height);
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
+
+  :where(.brick-prose) :where(h1) {
+    font-size: var(--_brick-prose-h1-font-size);
+    line-height: var(--_brick-prose-h1-line-height);
+  }
+  :where(.brick-prose) :where(h2) {
+    font-size: var(--_brick-prose-h2-font-size);
+    line-height: var(--_brick-prose-h2-line-height);
+  }
+  :where(.brick-prose) :where(h3) {
+    font-size: var(--_brick-prose-h3-font-size);
+    line-height: var(--_brick-prose-h3-line-height);
+  }
+  :where(.brick-prose) :where(h4, h5, h6) {
+    font-size: var(--brick-prose-body-font-size);
+    line-height: var(--brick-prose-body-line-height);
+  }
+
+  :where(.brick-prose) :where(p, ul, ol, blockquote, pre, table, figure, hr) {
+    margin: var(--brick-prose-flow-space) 0 0;
+  }
+
+  :where(.brick-prose) > :where(:first-child) { margin-block-start: 0; }
+
+  :where(.brick-prose) :where(ul, ol) {
+    padding-inline-start: 1.5em;
+  }
+  :where(.brick-prose) :where(li + li) { margin-block-start: calc(var(--brick-prose-flow-space) / 2); }
+  :where(.brick-prose) :where(li > ul, li > ol) { margin-block-start: calc(var(--brick-prose-flow-space) / 2); }
+
+  :where(.brick-prose) :where(a) {
+    color: var(--brick-prose-link-foreground);
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+  }
+  :where(.brick-prose) :where(a:hover) { text-decoration-thickness: 0.14em; }
+  :where(.brick-prose) :where(a:focus-visible) {
+    border-radius: var(--brick-radius-subtle);
+    outline: 0.125rem solid var(--brick-color-focus-ring);
+    outline-offset: 0.125rem;
+  }
+
+  :where(.brick-prose) :where(blockquote) {
+    padding-block: var(--brick-space-3);
+    padding-inline: var(--brick-space-5);
+    border-inline-start: 0.25rem solid var(--brick-prose-accent);
+    color: var(--brick-prose-foreground);
+    font-size: var(--brick-typography-body-lg-font-size);
+  }
+  :where(.brick-prose) :where(blockquote > :first-child) { margin-block-start: 0; }
+  :where(.brick-prose) :where(blockquote > :last-child) { margin-block-end: 0; }
+  :where(.brick-prose) :where(cite, figcaption) {
+    color: var(--brick-prose-muted-foreground);
+    font-size: var(--brick-typography-caption-font-size);
+    line-height: var(--brick-typography-caption-line-height);
+  }
+
+  :where(.brick-prose) :where(code, kbd) {
+    padding: 0.0625em 0.3em;
+    border: var(--brick-border-width) solid var(--brick-prose-border-color);
+    border-radius: var(--brick-prose-code-radius);
+    background: var(--brick-prose-surface);
+    font-family: var(--brick-prose-code-font-family);
+    font-size: var(--brick-prose-code-font-size);
+    overflow-wrap: anywhere;
+  }
+  :where(.brick-prose) :where(pre) {
+    box-sizing: border-box;
+    max-inline-size: 100%;
+    padding: var(--brick-space-4);
+    border: var(--brick-border-width) solid var(--brick-prose-border-color);
+    border-radius: var(--brick-radius-surface);
+    background: var(--brick-prose-surface);
+    overflow: hidden;
+  }
+  :where(.brick-prose) :where(pre code) {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  :where(.brick-prose) :where(table) {
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  :where(.brick-prose) :where(th, td) {
+    padding-block: var(--brick-prose-table-cell-padding-block);
+    padding-inline: var(--brick-prose-table-cell-padding-inline);
+    border-block-end: var(--brick-border-width) solid var(--brick-prose-border-color);
+    text-align: start;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+  }
+  :where(.brick-prose) :where(th) {
+    background: var(--brick-prose-surface);
+    font-weight: var(--brick-typography-label-strong-font-weight);
+  }
+
+  :where(.brick-prose) :where(hr) {
+    border: 0;
+    border-block-start: var(--brick-border-width) solid var(--brick-prose-border-color);
+  }
+  :where(.brick-prose) :where(img, video, svg) {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+    border-radius: var(--brick-prose-media-radius);
+  }
+  :where(.brick-prose) :where(strong, b) { font-weight: var(--brick-typography-label-strong-font-weight); }
+  :where(.brick-prose) :where(mark) {
+    padding-inline: 0.12em;
+    border-radius: var(--brick-radius-subtle);
+    background: var(--brick-color-accent-soft);
+    color: var(--brick-color-text-primary);
+  }
+
+  @media (forced-colors: active) {
+    .brick-prose {
+      --brick-prose-foreground: CanvasText;
+      --brick-prose-muted-foreground: CanvasText;
+      --brick-prose-link-foreground: LinkText;
+      --brick-prose-accent: Highlight;
+      --brick-prose-border-color: CanvasText;
+      --brick-prose-surface: Canvas;
+    }
+  }
+}

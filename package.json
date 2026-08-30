@@ -392,6 +392,10 @@
       "types": "./dist/highlight.d.ts",
       "default": "./dist/highlight.js"
     },
+    "./prose": {
+      "types": "./dist/prose.d.ts",
+      "default": "./dist/prose.js"
+    },
     "./code-block": {
       "types": "./dist/code-block.d.ts",
       "default": "./dist/code-block.js"

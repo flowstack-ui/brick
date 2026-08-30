@@ -13,6 +13,7 @@ const failures = [];
 for (const path of await files("playground/src")) {
   if (!/\.[jt]sx$/.test(path)) continue;
   const source = await readFile(path, "utf8");
+  if (path.endsWith("/components/prose/ProsePage.tsx")) continue;
   if (/<\/?(?:code|pre)(?:\s|>)/.test(source)) {
     failures.push(`${path}: use Brick Code or CodeBlock instead of a raw technical display host`);
   }

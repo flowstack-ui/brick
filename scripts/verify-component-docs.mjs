@@ -95,6 +95,7 @@ const componentSymbols = {
   kbd: "Kbd",
   blockquote: "Blockquote",
   highlight: "Highlight",
+  prose: "Prose",
   "code-block": "CodeBlock",
   "nav-list": "NavList",
   sidebar: "Sidebar",
