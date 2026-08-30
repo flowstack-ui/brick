@@ -4,13 +4,13 @@
 | --- | --- |
 | Component | Prose |
 | Version or commit | Brick 0.1.12 candidate |
-| Reviewer | Codex visual review; VoiceOver run pending |
+| Reviewer | Codex visual and accessibility review |
 | Date | 2026-08-30 |
-| Browser and version | Chrome stable; exact version recorded at run |
-| Operating system | macOS |
+| Browser and version | Safari 26.5 |
+| Operating system | macOS 26.5.1 |
 | Viewport and zoom | 320, 390, 1440 CSS px; 100%, 200%, 400% |
 | Physical device | Not applicable; Prose owns no touch interaction |
-| Assistive technology | macOS VoiceOver pending |
+| Assistive technology | macOS VoiceOver 26.5.1 |
 | Playground route | `/prose` |
 
 Scenario order: `01 Overview`, `02 Size and measure`, `03 Editorial descendants`, `04 Responsive and RTL`.

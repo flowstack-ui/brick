@@ -4,13 +4,13 @@
 | --- | --- |
 | Component | Kbd |
 | Version or commit | Brick 0.1.12 candidate |
-| Reviewer | Codex visual review; VoiceOver run pending |
+| Reviewer | Codex visual and accessibility review |
 | Date | 2026-08-30 |
-| Browser and version | Chrome stable; exact version recorded at run |
-| Operating system | macOS |
+| Browser and version | Safari 26.5 |
+| Operating system | macOS 26.5.1 |
 | Viewport and zoom | 320, 390, 1440 CSS px; 100%, 200%, 400% |
 | Physical device | Not applicable; Kbd has no interaction or touch contract |
-| Assistive technology | macOS VoiceOver pending |
+| Assistive technology | macOS VoiceOver 26.5.1 |
 | Playground route | `/kbd` |
 
 Scenario order: `01 Overview`, `02 Variants and sizes`, `03 Sequences and native output`.
