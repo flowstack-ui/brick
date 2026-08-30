@@ -25,6 +25,35 @@ test("Code Block content and copy stay truthful", async ({ page }) => {
   await expect(copy.getByText("Copied command")).toHaveCount(0);
 });
 
+test("Code Block line metadata and adapter output stay explicit", async ({ page }) => {
+  const lines = page.getByTestId("code-block-lines").locator("[data-slot='code-block-line']");
+  await expect(lines).toHaveCount(5);
+  await expect(lines.nth(0)).toHaveAttribute("data-line-number", "1");
+  await expect(lines.nth(0)).toHaveAttribute("data-highlighted", "");
+  await expect(lines.nth(1)).toHaveAttribute("data-change", "removed");
+  await expect(lines.nth(2)).toHaveAttribute("data-focused", "");
+  await expect(lines.nth(3)).toHaveAttribute("data-change", "added");
+});
+
+test("Code Block bounded content stays reachable and disclosure expands", async ({ page }) => {
+  const bounded = page.getByRole("region", { name: "Bounded scroll source" });
+  const preview = page.getByRole("region", { name: "Expandable source preview" });
+  const trigger = page.getByRole("button", { name: "Show full source" });
+  expect(await bounded.evaluate((node) => node.scrollHeight)).toBeGreaterThan(await bounded.evaluate((node) => node.clientHeight));
+  expect(await preview.evaluate((node) => node.scrollHeight)).toBeGreaterThan(await preview.evaluate((node) => node.clientHeight));
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await trigger.click();
+  await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  const controlledId = await trigger.getAttribute("aria-controls");
+  await expect(page.locator(`#${controlledId}`)).toHaveAttribute("data-slot", "code-block-collapse-content");
+  await expect(preview).toBeHidden();
+  await expect(page.getByRole("region", { name: "Expandable full source" })).toBeVisible();
+  await trigger.click();
+  await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  await expect(preview).toBeVisible();
+  await expect(page.getByRole("region", { name: "Expandable full source" })).toHaveCount(0);
+});
+
 test("Code Block overflow, stress, and accessibility remain contained", async ({ page }) => {
   const scroll = page.getByRole("region", { name: "Scrollable endpoint source" });
   await expect(scroll).toHaveAttribute("tabindex", "0");

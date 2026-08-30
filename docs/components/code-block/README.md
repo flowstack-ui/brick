@@ -54,7 +54,11 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 Root owns Atom Clipboard state and the outer `div`. Header groups optional
 Title, Language, and Actions. Content owns the one focusable Scroll Area
-viewport and renders canonical `pre > code` markup. CopyTrigger is an Atom
+viewport and renders canonical `pre > code` markup. Line optionally carries
+authored visual metadata. CollapsePreview, CollapseContent, and CollapseTrigger
+compose Brick Collapsible around bounded and full Content views without adding
+a second state model.
+CopyTrigger is an Atom
 Clipboard Trigger rendered through Brick Button. CopyIndicator and CopyStatus
 expose authored progress and live-result wording. Optional parts render only
 when authored.
@@ -69,17 +73,30 @@ when authored.
 | `Root.language` | explicit string | none |
 | `wrap` | `scroll`, `wrap` | `scroll` |
 | `focusable` | `boolean` | `true` |
+| `Content.maxLines` | positive whole number | unbounded |
+| `Root.adapter` | synchronous trusted-node adapter | none |
+| `Line.lineNumber` | positive whole number | none |
+| `Line.highlighted`, `Line.focused` | `boolean` | `false` |
+| `Line.change` | `added`, `removed` | none |
 | Clipboard behavior | `disabled`, `timeout`, `writeValue`, `onStatusChange` | Atom defaults |
 
 Public parts are `Root`, `Header`, `Title`, `Language`, `Actions`, `Content`,
-`CopyTrigger`, `CopyIndicator`, and `CopyStatus`. Direct exports are
+`Line`, `Collapse`, `CollapsePreview`, `CollapseContent`, `CollapseTrigger`,
+`CopyTrigger`, `CopyIndicator`, and
+`CopyStatus`. Direct exports are
 `CodeBlockRoot`, `CodeBlockHeader`, `CodeBlockTitle`, `CodeBlockLanguage`,
-`CodeBlockActions`, `CodeBlockContent`, `CodeBlockCopyTrigger`,
+`CodeBlockActions`, `CodeBlockContent`, `CodeBlockLine`, `CodeBlockCollapse`,
+`CodeBlockCollapsePreview`, `CodeBlockCollapseContent`,
+`CodeBlockCollapseTrigger`, `CodeBlockCopyTrigger`,
 `CodeBlockCopyIndicator`, and `CodeBlockCopyStatus`. Their prop types are
 `CodeBlockRootProps`, `CodeBlockHeaderProps`, `CodeBlockTitleProps`,
 `CodeBlockLanguageProps`, `CodeBlockActionsProps`, `CodeBlockContentProps`,
+`CodeBlockLineProps`, `CodeBlockCollapseProps`,
+`CodeBlockCollapsePreviewProps`, `CodeBlockCollapseContentProps`,
+`CodeBlockCollapseTriggerProps`,
 `CodeBlockCopyTriggerProps`, `CodeBlockCopyIndicatorProps`, and
-`CodeBlockCopyStatusProps`. Type exports also include `CodeBlockVariant`,
+`CodeBlockCopyStatusProps`. Type exports also include `CodeBlockAdapter`,
+`CodeBlockAdapterContext`, `CodeBlockLineChange`, `CodeBlockVariant`,
 `CodeBlockSize`, and `CodeBlockWrap`.
 
 ## Visual recipes and states
@@ -88,21 +105,37 @@ Public parts are `Root`, `Header`, `Title`, `Language`, `Actions`, `Content`,
 surface, and `plain` removes surrounding paint. Size changes only component
 rhythm and technical typography. Atom supplies `idle`, `copying`, `copied`,
 and `error` copy states; the trigger is disabled when the clipboard contract
-is disabled. Scroll and wrap differ only in long-line handling.
+is disabled. Scroll and wrap differ only in long-line handling. Line metadata
+can combine highlighting or focus with an added/removed state. Bounded Content
+scrolls independently. An expandable composition swaps its bounded preview for
+real Collapsible Content, so only one source view is exposed at a time.
 
 ## Tokens and CSS hooks
 
 Hooks include `.brick-code-block` and its part classes, Atom `data-state`, plus
-`data-slot`, `data-language`, `data-size`, `data-variant`, and `data-wrap`.
+`data-slot`, `data-language`, `data-size`, `data-variant`, `data-wrap`,
+`data-max-lines`, `data-line-number`, `data-highlighted`, `data-focused`, and
+`data-change`.
 Public variables are `--brick-code-block-background`,
 `--brick-code-block-foreground`, `--brick-code-block-border-color`,
 `--brick-code-block-border-width`, `--brick-code-block-radius`,
 `--brick-code-block-header-padding`, `--brick-code-block-content-padding`,
-`--brick-code-block-gap`, `--brick-code-block-font-family`,
+`--brick-code-block-content-padding-block`,
+`--brick-code-block-content-padding-inline`, `--brick-code-block-gap`,
+`--brick-code-block-font-family`,
 `--brick-code-block-font-size`, `--brick-code-block-font-weight`,
 `--brick-code-block-line-height`, `--brick-code-block-letter-spacing`,
-`--brick-code-block-selection-background`, and
-`--brick-code-block-selection-foreground`.
+`--brick-code-block-selection-background`,
+`--brick-code-block-selection-foreground`, and
+`--brick-code-block-max-block-size`. Line variables are
+`--brick-code-block-line-number-foreground`,
+`--brick-code-block-line-number-width`,
+`--brick-code-block-line-highlight-background`,
+`--brick-code-block-line-focus-background`,
+`--brick-code-block-line-added-background`,
+`--brick-code-block-line-added-border`,
+`--brick-code-block-line-removed-background`, and
+`--brick-code-block-line-removed-border`.
 
 ## Customization
 
@@ -116,14 +149,21 @@ Public variables are `--brick-code-block-background`,
 ```
 
 Language highlighting is consumer-owned. Pass trusted highlighted React nodes
-to Content while keeping Root `value` as the matching plain text. Unsafe HTML
-is not accepted and Brick does not bundle a tokenizer.
+to Content, or provide a synchronous adapter that receives Root's exact
+`value` and `language`. Keep Root `value` as the matching plain text. Explicit
+Content children override the adapter. Unsafe HTML is not accepted and Brick
+does not bundle or load a tokenizer. Keep the adapter pure; Root evaluates it
+lazily at most once per source/language/adapter identity and reuses its result
+across views. Explicit children do not invoke it.
 
 ## Responsive behavior
 
 The root fills available inline space but owns no external dimensions or
 breakpoints. `scroll` preserves long lines in the horizontal viewport; `wrap`
-reflows them. Scrollable source normalizes mobile browser text adjustment so
+reflows them. `maxLines` bounds the same named viewport and remains vertically
+scrollable when used alone. CollapsePreview deliberately clips that bounded
+view because CollapseContent provides the full source through its native
+disclosure lifecycle. Scrollable source normalizes mobile browser text adjustment so
 short and long examples retain the selected Code Block size. Code defaults to
 LTR inside an RTL page while Header follows page direction.
 
@@ -132,7 +172,11 @@ LTR inside an RTL page while Header follows page direction.
 Give focusable Content a specific `aria-label` or `aria-labelledby`; it is the
 only scroll-region keyboard stop. CopyTrigger retains focus. Author concise
 CopyStatus text for copying, success, and failure so Atom can announce truthful
-results. Do not add `role="application"`.
+results. When initially clipping bounded source, pair CollapsePreview and
+CollapseContent with CollapseTrigger so the full source has a keyboard and
+screen-reader path. The real Collapsible Content owns `aria-controls`, labeling,
+mounting, and hidden state. Do not add
+`role="application"`.
 
 ## Composition, native props, and refs
 
@@ -140,7 +184,8 @@ Root forwards Atom Clipboard props and its `HTMLDivElement` ref. Structural
 parts forward their native attributes and refs. Content's ref targets the
 native Scroll Area viewport. Root `value` is authoritative for copying even
 when Content receives highlighted nodes. The component composes Brick Code,
-Scroll Area, and Button; consumers do not need to recreate those internals.
+Scroll Area, Button, and optional Collapsible; consumers do not need to
+recreate those internals.
 
 ## Examples
 
@@ -160,6 +205,42 @@ Scroll Area, and Button; consumers do not need to recreate those internals.
 <CodeBlock.Root value={longLine} language="text">
   <CodeBlock.Content wrap="wrap" aria-label="Wrapped example" />
 </CodeBlock.Root>
+```
+
+### Trusted adapter and line metadata
+
+```tsx
+const adapter: CodeBlockAdapter = ({ value }) =>
+  value.split("\n").map((line, index) => (
+    <CodeBlock.Line
+      key={index}
+      lineNumber={index + 1}
+      highlighted={index === 2}
+      change={index === 4 ? "added" : undefined}
+    >
+      {line}
+    </CodeBlock.Line>
+  ));
+
+<CodeBlock.Root adapter={adapter} value={source} language="tsx">
+  <CodeBlock.Content aria-label="Adapted TypeScript source" />
+</CodeBlock.Root>
+```
+
+### Bounded source with expansion
+
+```tsx
+<CodeBlock.Collapse>
+  <CodeBlock.Root value={source}>
+    <CodeBlock.CollapsePreview>
+      <CodeBlock.Content aria-label="Configuration source preview" maxLines={8} />
+    </CodeBlock.CollapsePreview>
+    <CodeBlock.CollapseContent>
+      <CodeBlock.Content aria-label="Full configuration source" />
+    </CodeBlock.CollapseContent>
+    <CodeBlock.CollapseTrigger>Show full source</CodeBlock.CollapseTrigger>
+  </CodeBlock.Root>
+</CodeBlock.Collapse>
 ```
 
 ## Evidence

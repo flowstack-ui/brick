@@ -7,6 +7,8 @@
     --brick-code-block-radius: var(--brick-radius-surface);
     --brick-code-block-header-padding: var(--brick-space-3) var(--brick-space-4);
     --brick-code-block-content-padding: var(--brick-space-4);
+    --brick-code-block-content-padding-block: var(--brick-space-4);
+    --brick-code-block-content-padding-inline: var(--brick-space-4);
     --brick-code-block-gap: var(--brick-space-2);
     --brick-code-block-font-family: var(--brick-typography-code-block-md-font-family);
     --brick-code-block-font-size: var(--brick-typography-code-block-md-font-size);
@@ -15,6 +17,15 @@
     --brick-code-block-letter-spacing: var(--brick-typography-code-block-md-letter-spacing);
     --brick-code-block-selection-background: var(--brick-color-accent-soft);
     --brick-code-block-selection-foreground: var(--brick-color-accent-text);
+    --brick-code-block-line-number-foreground: var(--brick-color-text-secondary);
+    --brick-code-block-line-number-width: 3ch;
+    --brick-code-block-line-highlight-background: var(--brick-color-accent-soft);
+    --brick-code-block-line-focus-background: var(--brick-color-surface-raised);
+    --brick-code-block-line-added-background: var(--brick-color-success-soft);
+    --brick-code-block-line-added-border: var(--brick-color-success-border);
+    --brick-code-block-line-removed-background: var(--brick-color-danger-soft);
+    --brick-code-block-line-removed-border: var(--brick-color-danger-border);
+    --brick-code-block-max-block-size: none;
 
     box-sizing: border-box;
     min-inline-size: 0;
@@ -39,6 +50,8 @@
   .brick-code-block[data-size="sm"] {
     --brick-code-block-header-padding: var(--brick-space-2) var(--brick-space-3);
     --brick-code-block-content-padding: var(--brick-space-3);
+    --brick-code-block-content-padding-block: var(--brick-space-3);
+    --brick-code-block-content-padding-inline: var(--brick-space-3);
     --brick-code-block-font-family: var(--brick-typography-code-block-sm-font-family);
     --brick-code-block-font-size: var(--brick-typography-code-block-sm-font-size);
     --brick-code-block-font-weight: var(--brick-typography-code-block-sm-font-weight);
@@ -83,6 +96,14 @@
     padding: var(--brick-code-block-content-padding);
   }
 
+  .brick-code-block-content[data-max-lines] {
+    max-block-size: calc(
+      var(--brick-code-block-max-block-size) +
+      2 * var(--brick-code-block-content-padding-block)
+    );
+    overflow-y: auto;
+  }
+
   .brick-code-block-pre {
     min-inline-size: max-content;
     margin: 0;
@@ -108,6 +129,64 @@
     white-space: inherit;
   }
 
+  .brick-code-block-line {
+    display: block;
+    position: relative;
+    min-inline-size: 100%;
+    padding-inline: var(--brick-code-block-content-padding-inline);
+    margin-inline: calc(-1 * var(--brick-code-block-content-padding-inline));
+    border-inline-start: var(--brick-border-width) solid transparent;
+  }
+
+  .brick-code-block-line[data-line-number] {
+    display: grid;
+    grid-template-columns: var(--brick-code-block-line-number-width) minmax(0, 1fr);
+    column-gap: var(--brick-space-3);
+  }
+
+  .brick-code-block-line[data-line-number]::before {
+    content: attr(data-line-number);
+    color: var(--brick-code-block-line-number-foreground);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+    user-select: none;
+  }
+
+  .brick-code-block-line-content { min-inline-size: 0; }
+  .brick-code-block-line[data-highlighted] { background: var(--brick-code-block-line-highlight-background); }
+  .brick-code-block-line[data-focused] { background: var(--brick-code-block-line-focus-background); }
+  .brick-code-block-line[data-change="added"] {
+    border-inline-start-color: var(--brick-code-block-line-added-border);
+    background: var(--brick-code-block-line-added-background);
+  }
+  .brick-code-block-line[data-change="removed"] {
+    border-inline-start-color: var(--brick-code-block-line-removed-border);
+    background: var(--brick-code-block-line-removed-background);
+  }
+
+  .brick-code-block-content[data-wrap="wrap"] .brick-code-block-line-content {
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .brick-code-block-collapse-preview
+    .brick-code-block-content[data-max-lines] {
+    overflow-y: clip;
+  }
+
+  .brick-code-block-collapse[data-state="open"] .brick-code-block-collapse-preview { display: none; }
+  .brick-code-block-collapse[data-state="closed"] .brick-code-block-collapse-content { display: none; }
+  .brick-code-block-collapse-content { color: inherit; }
+  .brick-code-block-collapse-content-inner { padding: 0; }
+
+  .brick-code-block-collapse-trigger {
+    justify-content: center;
+    border-block-start: var(--brick-border-width) solid var(--brick-code-block-border-color);
+    border-radius: 0;
+    background: transparent;
+    color: var(--brick-color-text-secondary);
+  }
+
   .brick-code-block-pre ::selection {
     background: var(--brick-code-block-selection-background);
     color: var(--brick-code-block-selection-foreground);
@@ -130,6 +209,12 @@
       --brick-code-block-border-width: var(--brick-border-width);
       --brick-code-block-selection-background: Highlight;
       --brick-code-block-selection-foreground: HighlightText;
+      --brick-code-block-line-highlight-background: Mark;
+      --brick-code-block-line-focus-background: Canvas;
+      --brick-code-block-line-added-background: Canvas;
+      --brick-code-block-line-added-border: Highlight;
+      --brick-code-block-line-removed-background: Canvas;
+      --brick-code-block-line-removed-border: Highlight;
     }
   }
 }

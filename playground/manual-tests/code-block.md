@@ -12,7 +12,7 @@ Status: implementation complete; human run pending
 
 Scenario order: Overview → Variants → Sizes → Optional anatomy → Content and
 language → Wrapping and overflow → Copy states → Appearance and customization
-→ Responsive and RTL.
+→ Line metadata → Bounded and collapsible source → Responsive and RTL.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 
@@ -27,15 +27,23 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 5. In Wrapping and overflow, keyboard-focus Scroll and use horizontal keys;
    expect preserved lines. Wrap must reflow the same long line without a second
    scroll owner.
-6. In Copy states, run Success, Error, and Disabled once each. Expect truthful
+6. In Line metadata, confirm authored numbers align through wrapped and
+   preserved lines, the focused line remains distinct without lowering sibling
+   contrast, highlight remains distinct, and additions/removals stay readable.
+7. In Bounded and collapsible source, keyboard-scroll the standalone bounded
+   viewport, then activate Show full source on the expandable example. Confirm
+   `aria-expanded` changes, the bounded preview leaves the accessibility tree,
+   real Collapsible Content becomes the controlled region, and every line is
+   visible without a second disclosure implementation.
+8. In Copy states, run Success, Error, and Disabled once each. Expect truthful
    copied/error wording, reset after about 1.5 seconds, no copy while disabled,
    and Trigger focus retained.
-7. Compare light/dark defaults and the customized dark block. Confirm the
+9. Compare light/dark defaults and the customized dark block. Confirm the
    customized result matches its shown surface, text, border, and radius.
-8. At mobile width, 200% text, and 400% zoom, move through the final section.
+10. At mobile width, 200% text, and 400% zoom, move through the final section.
    Confirm no page overflow, many lines remain reachable, RTL header follows
    the page, and source remains LTR.
-9. Repeat with keyboard, forced colors, and a screen reader. Each focusable
+11. Repeat with keyboard, forced colors, and a screen reader. Each focusable
    viewport has its authored name; copy status is announced politely once.
 
 ## Completion

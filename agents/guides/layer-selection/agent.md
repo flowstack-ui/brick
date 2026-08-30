@@ -28,7 +28,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - **responsive presence:** use Show or Hide. Use CSS media visibility rather than rendering two JavaScript-controlled trees.
 - **image with resilient loading:** use Image. Use an adapter only when a framework image optimizer provides a measured capability Brick lacks.
 - **stable media or embed geometry before its content loads:** use AspectRatio. Choose Image when the asset owns resilient loading, Surface for a general visual boundary, and Skeleton for a temporary loading placeholder.
-- **preserved multi-line technical source:** use Code Block. Keep syntax tokenization in a consumer adapter and pass the exact plain source separately for copy behavior.
+- **preserved multi-line technical source:** use Code Block. Keep syntax tokenization in a consumer adapter, pass the exact plain source separately for copy behavior, author line metadata explicitly, and use the bounded/collapse contract for long source.
 - **navigation destination:** use Link or Button with href. Use Link for ordinary navigation and Button only for an emphasized destination.
 - **grouped disclosure sections:** use Accordion. Choose Collapsible for one independent disclosure and Tabs for one shared switching panel.
 - **ordinary blocking task, form, settings flow, or focused information:** use Dialog. Choose AlertDialog for one urgent consequential decision and Drawer when the temporary task belongs at a screen edge.
