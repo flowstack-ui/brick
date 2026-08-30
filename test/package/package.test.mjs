@@ -600,12 +600,17 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Code",
       "CodeBlock",
       "CodeBlockActions",
+      "CodeBlockCollapse",
+      "CodeBlockCollapseContent",
+      "CodeBlockCollapsePreview",
+      "CodeBlockCollapseTrigger",
       "CodeBlockContent",
       "CodeBlockCopyIndicator",
       "CodeBlockCopyStatus",
       "CodeBlockCopyTrigger",
       "CodeBlockHeader",
       "CodeBlockLanguage",
+      "CodeBlockLine",
       "CodeBlockRoot",
       "CodeBlockTitle",
       "Collapsible",
@@ -1310,6 +1315,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(codeBlock.CodeBlock, brick.CodeBlock);
   assert.equal(codeBlock.CodeBlockRoot, brick.CodeBlock.Root);
   assert.equal(codeBlock.CodeBlockContent, brick.CodeBlock.Content);
+  assert.equal(codeBlock.CodeBlockLine, brick.CodeBlock.Line);
+  assert.equal(codeBlock.CodeBlockCollapse, brick.CodeBlock.Collapse);
+  assert.equal(codeBlock.CodeBlockCollapsePreview, brick.CodeBlock.CollapsePreview);
+  assert.equal(codeBlock.CodeBlockCollapseContent, brick.CodeBlock.CollapseContent);
+  assert.equal(codeBlock.CodeBlockCollapseTrigger, brick.CodeBlock.CollapseTrigger);
 });
 
 test("published CSS entrypoints are complete browser CSS", async () => {

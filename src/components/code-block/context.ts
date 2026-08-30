@@ -1,9 +1,10 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import type { CodeBlockSize, CodeBlockVariant } from "./CodeBlock.js";
 
 export interface CodeBlockContextValue {
   value: string;
   language?: string;
+  getAdaptedContent: () => ReactNode;
   size: CodeBlockSize;
   variant: CodeBlockVariant;
 }

@@ -24,6 +24,9 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 - Added `Prose` for trusted React editorial content with descendant typography,
   coherent rhythm, closed sizes, and readable measures without parsing or raw
   HTML injection.
+- Extended `CodeBlock` with trusted synchronous adapters, authored line
+  metadata, bounded line presentation, and an accessible expansion path
+  composed from Brick Collapsible.
 
 ## 0.1.11 - 2026-08-28
 

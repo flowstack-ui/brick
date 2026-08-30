@@ -76,4 +76,70 @@ describe("CodeBlock", () => {
     expect(contentRef.current).not.toHaveAttribute("tabindex");
     expect(contentRef.current).toHaveStyle({ maxBlockSize: "200px" });
   });
+
+  it("renders trusted adapter output and independent line metadata", () => {
+    const adapter = vi.fn(({ value }: { value: string }) => value.split("\n").map((line, index) => (
+      <CodeBlock.Line
+        change={index === 1 ? "added" : undefined}
+        focused={index === 0}
+        highlighted={index === 1}
+        key={index}
+        lineNumber={index + 1}
+      >
+        {line}
+      </CodeBlock.Line>
+    )));
+    render(
+      <CodeBlock.Root adapter={adapter} language="ts" value={"const first = 1;\nconst second = 2;"}>
+        <CodeBlock.Content aria-label="Adapted source" />
+      </CodeBlock.Root>,
+    );
+    expect(adapter).toHaveBeenCalledWith({ language: "ts", value: "const first = 1;\nconst second = 2;" });
+    const lines = screen.getByRole("region", { name: "Adapted source" }).querySelectorAll("[data-slot='code-block-line']");
+    expect(lines).toHaveLength(2);
+    expect(lines[0]).toHaveAttribute("data-focused", "");
+    expect(lines[0]).toHaveAttribute("data-line-number", "1");
+    expect(lines[1]).toHaveAttribute("data-change", "added");
+    expect(lines[1]).toHaveAttribute("data-highlighted", "");
+    expect(lines[1].querySelector("[data-slot='code-block-line-content']")).toHaveTextContent("const second = 2;");
+  });
+
+  it("lets explicit Content children override the optional adapter", () => {
+    const adapter = vi.fn(() => "adapter output");
+    render(
+      <CodeBlock.Root adapter={adapter} value={source}>
+        <CodeBlock.Content aria-label="Explicit source">explicit output</CodeBlock.Content>
+      </CodeBlock.Root>,
+    );
+    expect(screen.getByRole("region", { name: "Explicit source" })).toHaveTextContent("explicit output");
+    expect(adapter).not.toHaveBeenCalled();
+  });
+
+  it("bounds positive whole line counts and composes Collapsible disclosure state", () => {
+    const adapter = vi.fn(({ value }: { value: string }) => value);
+    render(
+      <CodeBlock.Collapse>
+        <CodeBlock.Root adapter={adapter} value={source}>
+          <CodeBlock.CollapsePreview>
+            <CodeBlock.Content aria-label="Bounded source preview" maxLines={4} />
+          </CodeBlock.CollapsePreview>
+          <CodeBlock.CollapseContent>
+            <CodeBlock.Content aria-label="Full bounded source" />
+          </CodeBlock.CollapseContent>
+          <CodeBlock.CollapseTrigger>Show full source</CodeBlock.CollapseTrigger>
+        </CodeBlock.Root>
+      </CodeBlock.Collapse>,
+    );
+    const region = screen.getByRole("region", { name: "Bounded source preview" });
+    const trigger = screen.getByRole("button", { name: "Show full source" });
+    expect(region).toHaveAttribute("data-max-lines", "4");
+    expect(region.style.getPropertyValue("--brick-code-block-max-block-size")).toBe("4lh");
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(document.getElementById(trigger.getAttribute("aria-controls")!)).toBeNull();
+    fireEvent.click(trigger);
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(document.getElementById(trigger.getAttribute("aria-controls")!)).toHaveAttribute("data-slot", "code-block-collapse-content");
+    expect(screen.getByRole("region", { name: "Full bounded source" })).toBeVisible();
+    expect(adapter).toHaveBeenCalledTimes(1);
+  });
 });

@@ -8,21 +8,37 @@ import {
 import {
   forwardRef,
   useMemo,
+  type CSSProperties,
   type HTMLAttributes,
   type ReactNode,
 } from "react";
 import { Button, type ButtonProps } from "../button/index.js";
 import { Code } from "../code/index.js";
+import {
+  Collapsible,
+  type CollapsibleContentProps,
+  type CollapsibleRootProps,
+  type CollapsibleTriggerProps,
+} from "../collapsible/index.js";
 import { ScrollArea } from "../scroll-area/index.js";
 import { CodeBlockContext, useCodeBlockContext } from "./context.js";
 
 export type CodeBlockVariant = "subtle" | "bordered" | "plain";
 export type CodeBlockSize = "sm" | "md";
 export type CodeBlockWrap = "scroll" | "wrap";
+export type CodeBlockLineChange = "added" | "removed";
+
+export interface CodeBlockAdapterContext {
+  value: string;
+  language?: string;
+}
+
+export type CodeBlockAdapter = (context: CodeBlockAdapterContext) => ReactNode;
 
 export interface CodeBlockRootProps extends Omit<AtomClipboardRootProps, "dangerouslySetInnerHTML" | "defaultValue" | "value"> {
   value: string;
   language?: string;
+  adapter?: CodeBlockAdapter;
   variant?: CodeBlockVariant;
   size?: CodeBlockSize;
 }
@@ -39,7 +55,18 @@ export interface CodeBlockContentProps extends Omit<SlottedProps<HTMLAttributes<
   children?: ReactNode;
   wrap?: CodeBlockWrap;
   focusable?: boolean;
+  maxLines?: number;
 }
+export interface CodeBlockLineProps extends Omit<SlottedProps<HTMLAttributes<HTMLSpanElement>>, "dangerouslySetInnerHTML"> {
+  lineNumber?: number;
+  highlighted?: boolean;
+  focused?: boolean;
+  change?: CodeBlockLineChange;
+}
+export type CodeBlockCollapseProps = Omit<CollapsibleRootProps, "variant">;
+export type CodeBlockCollapsePreviewProps = SlottedProps<HTMLAttributes<HTMLDivElement>>;
+export type CodeBlockCollapseContentProps = CollapsibleContentProps;
+export type CodeBlockCollapseTriggerProps = Omit<CollapsibleTriggerProps, "asChild" | "render">;
 export type CodeBlockCopyTriggerProps = Omit<AtomClipboardTriggerProps, "asChild" | "render"> &
   Pick<ButtonProps, "variant" | "tone" | "size" | "shape" | "startIcon" | "endIcon">;
 export type CodeBlockCopyIndicatorProps = AtomClipboardIndicatorProps;
@@ -64,6 +91,7 @@ export const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockRootProps>(
     {
       value,
       language,
+      adapter,
       variant = "subtle",
       size = "md",
       className,
@@ -73,9 +101,20 @@ export const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockRootProps>(
     },
     ref,
   ) {
+    const getAdaptedContent = useMemo(() => {
+      let resolved = false;
+      let adaptedContent: ReactNode;
+      return () => {
+        if (!resolved) {
+          adaptedContent = adapter?.({ value, language });
+          resolved = true;
+        }
+        return adaptedContent;
+      };
+    }, [adapter, language, value]);
     const context = useMemo(
-      () => ({ value, language, variant, size }),
-      [language, size, value, variant],
+      () => ({ value, language, getAdaptedContent, variant, size }),
+      [getAdaptedContent, language, size, value, variant],
     );
     return (
       <CodeBlockContext.Provider value={context}>
@@ -123,22 +162,31 @@ export const CodeBlockActions = forwardRef<HTMLDivElement, CodeBlockActionsProps
 
 export const CodeBlockContent = forwardRef<HTMLDivElement, CodeBlockContentProps>(
   function CodeBlockContent(
-    { className, children, wrap = "scroll", focusable = true, dir = "ltr", "data-slot": dataSlot, ...props },
+    { className, children, wrap = "scroll", focusable = true, maxLines, dir = "ltr", style, "data-slot": dataSlot, ...props },
     ref,
   ) {
-    const { value, language, size } = useCodeBlockContext();
+    const { value, language, getAdaptedContent, size } = useCodeBlockContext();
     const syntaxClass = languageClass(language);
+    const boundedLines = Number.isInteger(maxLines) && Number(maxLines) > 0
+      ? Number(maxLines)
+      : undefined;
+    const content = children ?? getAdaptedContent() ?? value;
+    const contentStyle = boundedLines
+      ? ({ ...style, "--brick-code-block-max-block-size": `${boundedLines}lh` } as CSSProperties)
+      : style;
     return (
       <ScrollArea.Root className="brick-code-block-scroll-area" orientation="horizontal" scrollbarVisibility="interaction">
         <ScrollArea.Viewport
           {...props}
           className={classes("brick-code-block-content", className)}
           data-language={language}
+          data-max-lines={boundedLines}
           data-slot={slot(dataSlot, "code-block-content")}
           data-wrap={wrap}
           dir={dir}
           focusable={focusable}
           ref={ref}
+          style={contentStyle}
         >
           <pre className="brick-code-block-pre" data-slot="code-block-pre">
             <Code
@@ -149,11 +197,104 @@ export const CodeBlockContent = forwardRef<HTMLDivElement, CodeBlockContentProps
               tone="inherit"
               variant="plain"
             >
-              {children ?? value}
+              {content}
             </Code>
           </pre>
         </ScrollArea.Viewport>
       </ScrollArea.Root>
+    );
+  },
+);
+
+export const CodeBlockLine = forwardRef<HTMLSpanElement, CodeBlockLineProps>(
+  function CodeBlockLine(
+    {
+      change,
+      children,
+      className,
+      focused = false,
+      highlighted = false,
+      lineNumber,
+      "data-slot": dataSlot,
+      ...props
+    },
+    ref,
+  ) {
+    const visibleLineNumber = Number.isInteger(lineNumber) && Number(lineNumber) > 0
+      ? Number(lineNumber)
+      : undefined;
+    return (
+      <span
+        {...props}
+        className={classes("brick-code-block-line", className)}
+        data-change={change}
+        data-focused={focused ? "" : undefined}
+        data-highlighted={highlighted ? "" : undefined}
+        data-line-number={visibleLineNumber}
+        data-slot={slot(dataSlot, "code-block-line")}
+        ref={ref}
+      >
+        <span className="brick-code-block-line-content" data-slot="code-block-line-content">
+          {children}
+        </span>
+      </span>
+    );
+  },
+);
+
+export const CodeBlockCollapse = forwardRef<HTMLDivElement, CodeBlockCollapseProps>(
+  function CodeBlockCollapse({ className, "data-slot": dataSlot, ...props }, ref) {
+    return (
+      <Collapsible.Root
+        {...props}
+        className={classes("brick-code-block-collapse", className)}
+        data-slot={slot(dataSlot, "code-block-collapse")}
+        ref={ref}
+        variant="plain"
+      />
+    );
+  },
+);
+
+export const CodeBlockCollapsePreview = forwardRef<HTMLDivElement, CodeBlockCollapsePreviewProps>(
+  function CodeBlockCollapsePreview({ className, "data-slot": dataSlot, ...props }, ref) {
+    return (
+      <div
+        {...props}
+        className={classes("brick-code-block-collapse-preview", className)}
+        data-slot={slot(dataSlot, "code-block-collapse-preview")}
+        ref={ref}
+      />
+    );
+  },
+);
+
+export const CodeBlockCollapseContent = forwardRef<HTMLDivElement, CodeBlockCollapseContentProps>(
+  function CodeBlockCollapseContent({ children, className, "data-slot": dataSlot, ...props }, ref) {
+    return (
+      <Collapsible.Content
+        {...props}
+        className={classes("brick-code-block-collapse-content", className)}
+        data-slot={slot(dataSlot, "code-block-collapse-content")}
+        ref={ref}
+      >
+        <Collapsible.ContentInner className="brick-code-block-collapse-content-inner">
+          {children}
+        </Collapsible.ContentInner>
+      </Collapsible.Content>
+    );
+  },
+);
+
+export const CodeBlockCollapseTrigger = forwardRef<HTMLButtonElement, CodeBlockCollapseTriggerProps>(
+  function CodeBlockCollapseTrigger({ className, "data-slot": dataSlot, ...props }, ref) {
+    return (
+      <Collapsible.Trigger
+        {...props}
+        className={classes("brick-code-block-collapse-trigger", className)}
+        data-slot={slot(dataSlot, "code-block-collapse-trigger")}
+        ref={ref}
+      />
     );
   },
 );
@@ -191,6 +332,11 @@ CodeBlockTitle.displayName = "CodeBlock.Title";
 CodeBlockLanguage.displayName = "CodeBlock.Language";
 CodeBlockActions.displayName = "CodeBlock.Actions";
 CodeBlockContent.displayName = "CodeBlock.Content";
+CodeBlockLine.displayName = "CodeBlock.Line";
+CodeBlockCollapse.displayName = "CodeBlock.Collapse";
+CodeBlockCollapsePreview.displayName = "CodeBlock.CollapsePreview";
+CodeBlockCollapseContent.displayName = "CodeBlock.CollapseContent";
+CodeBlockCollapseTrigger.displayName = "CodeBlock.CollapseTrigger";
 CodeBlockCopyTrigger.displayName = "CodeBlock.CopyTrigger";
 CodeBlockCopyIndicator.displayName = "CodeBlock.CopyIndicator";
 CodeBlockCopyStatus.displayName = "CodeBlock.CopyStatus";
@@ -202,6 +348,11 @@ export const CodeBlock = Object.freeze({
   Language: CodeBlockLanguage,
   Actions: CodeBlockActions,
   Content: CodeBlockContent,
+  Line: CodeBlockLine,
+  Collapse: CodeBlockCollapse,
+  CollapsePreview: CodeBlockCollapsePreview,
+  CollapseContent: CodeBlockCollapseContent,
+  CollapseTrigger: CodeBlockCollapseTrigger,
   CopyTrigger: CodeBlockCopyTrigger,
   CopyIndicator: CodeBlockCopyIndicator,
   CopyStatus: CodeBlockCopyStatus,

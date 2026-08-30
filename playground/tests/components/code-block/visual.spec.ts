@@ -7,6 +7,8 @@ test("Code Block defaults, recipes, and anatomy", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.locator('[data-scenario="code-block.variants"]'), "variants-light.png");
   await expectEvidenceScreenshot(page, page.locator('[data-scenario="code-block.anatomy"]'), "anatomy-light.png");
   await expectEvidenceScreenshot(page, page.locator('[data-scenario="code-block.overflow"]'), "overflow-light.png");
+  await expectEvidenceScreenshot(page, page.locator('[data-scenario="code-block.lines"]'), "lines-light.png");
+  await expectEvidenceScreenshot(page, page.locator('[data-scenario="code-block.bounded"]'), "bounded-light.png");
 });
 
 test("Code Block appearance, stress, and forced colors", async ({ page }) => {

@@ -13,6 +13,9 @@ Code Block follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added adapter-neutral trusted token rendering, authored line numbers,
+  highlighted/focused/add/remove line metadata, bounded line presentation, and
+  an accessible expansion path composed from Brick Collapsible.
 - Added public Agent Knowledge for selecting Code Block, preserving canonical
   copied source, composing optional anatomy, and keeping syntax tokenization in
   a safe consumer adapter.
