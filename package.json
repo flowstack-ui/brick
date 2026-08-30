@@ -384,6 +384,10 @@
       "types": "./dist/kbd.d.ts",
       "default": "./dist/kbd.js"
     },
+    "./blockquote": {
+      "types": "./dist/blockquote.d.ts",
+      "default": "./dist/blockquote.js"
+    },
     "./code-block": {
       "types": "./dist/code-block.d.ts",
       "default": "./dist/code-block.js"

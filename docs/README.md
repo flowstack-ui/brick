@@ -102,6 +102,8 @@ This directory is the public documentation authority for
   theme-aware visual recipes
 - [Kbd](components/kbd/README.md) — native keyboard-input notation with compact
   finished variants and sizes
+- [Blockquote](components/blockquote/README.md) — extended quotations with
+  semantic source and attribution structure
 - [Code](components/code/README.md) — short inline technical literals
 - [Code Block](components/code-block/README.md) — structured multi-line source,
   overflow, language metadata, and copy feedback

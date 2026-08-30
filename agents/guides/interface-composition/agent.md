@@ -32,7 +32,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **grouped application actions:** use Toolbar. Do not use AppBar.Toolbar as an ARIA toolbar.
 - **several related disclosure sections:** use Accordion. Preserve Header, Trigger, Content, and ContentInner ownership; use Collapsible for one disclosure.
 - **semantic item or sequence content:** use List. Use structured row parts only when needed and keep Trailing compact on narrow screens.
-- **extended quotation and attribution:** use native figure, blockquote, and figcaption with Brick text content. Keep blockquote and figcaption as direct figure children when they form one self-contained unit, keep attribution outside the quoted content, and use cite only for the title of a referenced work.
+- **extended quotation and attribution:** use Blockquote. Keep Content and Caption as siblings in Root, put the source URL on Content, and use Cite only for a referenced work or source.
 
 ## Rules
 
@@ -49,7 +49,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **MUST:** Keep a real layout-item wrapper when it establishes flex or grid participation or the definite parent size required by ScrollArea, Carousel fill, or Image fill; asChild is not a wrapper-removal goal by itself.
 - **MUST:** Do not use Stack, Surface, Button, or another convenient component when a more specific Brick navigation, media, content, or interaction component owns the job.
 - **MUST:** Preserve document landmarks and semantic elements when Brick does not provide an owner; Brick-first is not permission to erase HTML meaning.
-- **MUST:** For an extended quotation, preserve native blockquote semantics and keep attribution outside the quoted content; when figure and figcaption associate the pair, keep blockquote and figcaption as direct figure children, use Brick content components inside them, and add narrow Block or application CSS only after supported composition cannot express the remaining relationship.
+- **MUST:** For an extended quotation, use Blockquote and preserve its figure Root, blockquote Content, sibling figcaption Caption, source URL, and cited-work semantics.
 - **MUST:** When desktop and mobile require distinct navigation components, share application-owned destination labels, hrefs, values, and ordering while preserving each pattern's correct Brick anatomy; do not duplicate navigation content or force one interaction tree across breakpoints.
 - **MUST:** Use Show and Hide for first-paint visibility; when a controlled interactive overlay may remain open across a breakpoint, synchronize its application state at that boundary so a hidden modal cannot retain focus, scroll lock, or isolation.
 - **SHOULD:** Express reusable brand values through semantic Brick tokens and a theme rather than repeating literal application values.
@@ -132,3 +132,4 @@ Emit this record for every native/framework fallback or direct stable-hook decla
 - `hide`
 - `accordion`
 - `list`
+- `blockquote`

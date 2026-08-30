@@ -685,6 +685,21 @@ export { Em, type EmProps } from "./components/em/index.js";
 export { Mark, type MarkProps, type MarkTone, type MarkVariant } from "./components/mark/index.js";
 export { Kbd, type KbdProps, type KbdSize, type KbdVariant } from "./components/kbd/index.js";
 export {
+  Blockquote,
+  BlockquoteCaption,
+  BlockquoteCite,
+  BlockquoteContent,
+  BlockquoteIcon,
+  BlockquoteRoot,
+  type BlockquoteAlign,
+  type BlockquoteCaptionProps,
+  type BlockquoteCiteProps,
+  type BlockquoteContentProps,
+  type BlockquoteIconProps,
+  type BlockquoteRootProps,
+  type BlockquoteVariant,
+} from "./components/blockquote/index.js";
+export {
   CodeBlock,
   CodeBlockActions,
   CodeBlockContent,

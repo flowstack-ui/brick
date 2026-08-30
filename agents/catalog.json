@@ -134,11 +134,5 @@
       "reason": "Internal responsive visibility implementation shared by Show and Hide."
     }
   ],
-  "nativeApplicationDestinations": [
-    {
-      "id": "native-quotation",
-      "kind": "native",
-      "reason": "Native figure, blockquote, and figcaption own extended quotation semantics when Brick adds no dedicated owner."
-    }
-  ]
+  "nativeApplicationDestinations": []
 }

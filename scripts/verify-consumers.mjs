@@ -85,7 +85,7 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, Grid, Hide, HoverCard, IconButton, Input, Kbd, Link, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, Blockquote, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, Grid, Hide, HoverCard, IconButton, Input, Kbd, Link, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -115,6 +115,7 @@ import { Text as SubpathText } from "@flowstack-ui/brick/text";
 import { Em as SubpathEm } from "@flowstack-ui/brick/em";
 import { Mark as SubpathMark } from "@flowstack-ui/brick/mark";
 import { Kbd as SubpathKbd } from "@flowstack-ui/brick/kbd";
+import { Blockquote as SubpathBlockquote } from "@flowstack-ui/brick/blockquote";
 import { Grid as SubpathGrid } from "@flowstack-ui/brick/grid";
 import { Container as SubpathContainer } from "@flowstack-ui/brick/container";
 import { Surface as SubpathSurface } from "@flowstack-ui/brick/surface";
@@ -177,6 +178,7 @@ if (BottomNavigation !== SubpathBottomNavigation || Object.keys(SubpathBottomNav
 if (VisuallyHidden !== SubpathVisuallyHidden || Object.keys(SubpathVisuallyHidden).length !== 1) throw new Error("Visually Hidden subpath smoke failed");
 if (Show !== SubpathShow || Hide !== SubpathHide) throw new Error("Responsive visibility subpath export mismatch");
 if (SwipeableItem !== SubpathSwipeableItem || Object.keys(SubpathSwipeableItem).length !== 3) throw new Error("Swipeable Item subpath smoke failed");
+if (Blockquote !== SubpathBlockquote || Object.keys(SubpathBlockquote).length !== 5) throw new Error("Blockquote subpath smoke failed");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
 const iconButtonMarkup = renderToString(React.createElement(IconButton, { "aria-label": "Search" }, React.createElement("svg")));
@@ -225,6 +227,8 @@ const inlineTypographyMarkup = renderToString(React.createElement(Text, { as: "p
 if (!inlineTypographyMarkup.includes("brick-em") || !inlineTypographyMarkup.includes("brick-mark") || !inlineTypographyMarkup.includes('data-tone="neutral"')) throw new Error("Inline typography SSR smoke failed");
 const kbdMarkup = renderToString(React.createElement(Text, { as: "p" }, "Press ", React.createElement(Kbd, null, "Ctrl"), " + ", React.createElement(Kbd, { variant: "outline" }, "P"), "."));
 if ((kbdMarkup.match(/brick-kbd/g) ?? []).length !== 2 || !kbdMarkup.includes('data-variant="outline"')) throw new Error("Kbd SSR smoke failed");
+const blockquoteMarkup = renderToString(React.createElement(Blockquote.Root, null, React.createElement(Blockquote.Content, { cite: "https://example.com" }, "Clarity"), React.createElement(Blockquote.Caption, null, "Source")));
+if (!blockquoteMarkup.includes("<figure") || !blockquoteMarkup.includes("<blockquote") || !blockquoteMarkup.includes("<figcaption") || !blockquoteMarkup.includes('cite="https://example.com"')) throw new Error("Blockquote SSR smoke failed");
 const gridMarkup = renderToString(React.createElement(Grid.Root, { columns: 2, gap: "2" }, React.createElement("span", null, "One"), React.createElement(Grid.Item, { columnSpan: "full" }, "Summary")));
 if (!gridMarkup.includes("brick-grid") || !gridMarkup.includes("brick-grid-item") || !gridMarkup.includes('data-column-span="full"')) throw new Error("Grid SSR smoke failed");
 const containerMarkup = renderToString(React.createElement(Container, { as: "main", measure: "max", gutter: "lg" }, "Measured"));
@@ -301,6 +305,7 @@ if (!css.includes(".brick-otp-field") || !css.includes("--brick-otp-size")) thro
 if (!css.includes(".brick-password-toggle-field") || !css.includes("--brick-password-height")) throw new Error("Password Toggle Field CSS export missing");
 if (!css.includes(".brick-show") || !css.includes(".brick-hide") || !css.includes("@media (width<48rem)") || !css.includes("@media (width>=48rem)")) throw new Error("Responsive visibility CSS export missing");
 if (!css.includes(".brick-swipeable-item") || !css.includes("--brick-swipeable-item-background")) throw new Error("Swipeable Item CSS export missing");
+if (!css.includes(".brick-blockquote") || !css.includes("--brick-blockquote-background")) throw new Error("Blockquote CSS export missing");
 `,
     );
     await writeFile(

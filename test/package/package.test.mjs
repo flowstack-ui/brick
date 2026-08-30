@@ -48,6 +48,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/kbd.d.ts",
       default: "./dist/kbd.js",
     },
+    "./blockquote": {
+      types: "./dist/blockquote.d.ts",
+      default: "./dist/blockquote.js",
+    },
     "./icon-button": {
       types: "./dist/icon-button.d.ts",
       default: "./dist/icon-button.js",
@@ -506,6 +510,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const em = await import(new URL("../../dist/em.js", import.meta.url));
   const mark = await import(new URL("../../dist/mark.js", import.meta.url));
   const kbd = await import(new URL("../../dist/kbd.js", import.meta.url));
+  const blockquote = await import(new URL("../../dist/blockquote.js", import.meta.url));
   const codeBlock = await import(new URL("../../dist/code-block.js", import.meta.url));
   const dropdownMenu = await import(new URL("../../dist/dropdown-menu.js", import.meta.url));
   const contextMenu = await import(new URL("../../dist/context-menu.js", import.meta.url));
@@ -542,6 +547,12 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Avatar",
       "Badge",
       "Bleed",
+      "Blockquote",
+      "BlockquoteCaption",
+      "BlockquoteCite",
+      "BlockquoteContent",
+      "BlockquoteIcon",
+      "BlockquoteRoot",
       "BottomNavigation",
       "BottomNavigationIcon",
       "BottomNavigationItem",
@@ -993,6 +1004,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(em.Em, brick.Em);
   assert.equal(mark.Mark, brick.Mark);
   assert.equal(kbd.Kbd, brick.Kbd);
+  assert.equal(blockquote.Blockquote, brick.Blockquote);
+  assert.equal(blockquote.BlockquoteRoot, brick.Blockquote.Root);
   assert.equal(button.Button, brick.Button);
   assert.equal(iconButton.IconButton, brick.IconButton);
   assert.equal(icon.Icon, brick.Icon);
@@ -1443,7 +1456,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 91);
+  assert.equal(componentStyleNames.length, 92);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);

@@ -1,0 +1,108 @@
+@layer brick.components {
+  .brick-blockquote {
+    --brick-blockquote-background: transparent;
+    --brick-blockquote-foreground: var(--brick-color-text-primary);
+    --brick-blockquote-muted-foreground: var(--brick-color-text-secondary);
+    --brick-blockquote-accent: var(--brick-color-accent-border);
+    --brick-blockquote-border-color: transparent;
+    --brick-blockquote-border-width: 0rem;
+    --brick-blockquote-radius: var(--brick-radius-surface);
+    --brick-blockquote-padding-block: var(--brick-space-4);
+    --brick-blockquote-padding-inline: var(--brick-space-5);
+    --brick-blockquote-gap: var(--brick-space-3);
+    --brick-blockquote-icon-font-family: var(--brick-typography-display-font-family);
+    --brick-blockquote-icon-size: 2.5rem;
+    --brick-blockquote-icon-font-weight: var(--brick-typography-display-font-weight);
+    --brick-blockquote-icon-line-height: var(--brick-typography-display-line-height);
+    --brick-blockquote-content-font-family: var(--brick-typography-body-lg-font-family);
+    --brick-blockquote-content-font-size: var(--brick-typography-body-lg-font-size);
+    --brick-blockquote-content-font-weight: var(--brick-typography-body-lg-font-weight);
+    --brick-blockquote-content-line-height: var(--brick-typography-body-lg-line-height);
+    --brick-blockquote-content-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+    --brick-blockquote-caption-font-family: var(--brick-typography-caption-font-family);
+    --brick-blockquote-caption-font-size: var(--brick-typography-caption-font-size);
+    --brick-blockquote-caption-font-weight: var(--brick-typography-caption-font-weight);
+    --brick-blockquote-caption-line-height: var(--brick-typography-caption-line-height);
+    --brick-blockquote-caption-letter-spacing: var(--brick-typography-caption-letter-spacing);
+
+    display: grid;
+    box-sizing: border-box;
+    gap: var(--brick-blockquote-gap);
+    margin: 0;
+    padding-block: var(--brick-blockquote-padding-block);
+    padding-inline: var(--brick-blockquote-padding-inline);
+    border: var(--brick-blockquote-border-width) solid var(--brick-blockquote-border-color);
+    border-inline-start: 0.25rem solid var(--brick-blockquote-accent);
+    border-radius: var(--brick-blockquote-radius);
+    background: var(--brick-blockquote-background);
+    color: var(--brick-blockquote-foreground);
+    text-align: start;
+  }
+
+  .brick-blockquote[data-variant="surface"] {
+    --brick-blockquote-background: var(--brick-color-surface-subtle);
+    --brick-blockquote-border-color: var(--brick-color-border-subtle);
+    --brick-blockquote-border-width: var(--brick-border-width);
+  }
+
+  .brick-blockquote[data-variant="plain"] {
+    --brick-blockquote-padding-block: 0rem;
+    --brick-blockquote-padding-inline: 0rem;
+
+    border-inline-start: 0;
+  }
+
+  .brick-blockquote[data-align="center"] {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .brick-blockquote[data-align="end"] {
+    justify-items: end;
+    text-align: end;
+  }
+
+  .brick-blockquote__icon {
+    display: block;
+    block-size: 0.65em;
+    color: var(--brick-blockquote-accent);
+    font-family: var(--brick-blockquote-icon-font-family);
+    font-size: var(--brick-blockquote-icon-size);
+    font-weight: var(--brick-blockquote-icon-font-weight);
+    line-height: var(--brick-blockquote-icon-line-height);
+    user-select: none;
+  }
+
+  .brick-blockquote__content {
+    margin: 0;
+    color: var(--brick-blockquote-foreground);
+    font-family: var(--brick-blockquote-content-font-family);
+    font-size: var(--brick-blockquote-content-font-size);
+    font-weight: var(--brick-blockquote-content-font-weight);
+    letter-spacing: var(--brick-blockquote-content-letter-spacing);
+    line-height: var(--brick-blockquote-content-line-height);
+  }
+
+  .brick-blockquote__caption {
+    color: var(--brick-blockquote-muted-foreground);
+    font-family: var(--brick-blockquote-caption-font-family);
+    font-size: var(--brick-blockquote-caption-font-size);
+    font-weight: var(--brick-blockquote-caption-font-weight);
+    letter-spacing: var(--brick-blockquote-caption-letter-spacing);
+    line-height: var(--brick-blockquote-caption-line-height);
+  }
+
+  .brick-blockquote__cite {
+    font-style: normal;
+  }
+
+  @media (forced-colors: active) {
+    .brick-blockquote {
+      --brick-blockquote-background: Canvas;
+      --brick-blockquote-foreground: CanvasText;
+      --brick-blockquote-muted-foreground: CanvasText;
+      --brick-blockquote-accent: Highlight;
+      --brick-blockquote-border-color: CanvasText;
+    }
+  }
+}
