@@ -19,7 +19,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - **stress emphasis inside meaningful copy:** use Em. Keep Em inside the surrounding Text or component content owner and do not use it only for decorative italics.
 - **static authored relevance inside meaningful copy:** use Mark. Choose Highlight when a query must discover and segment matches; use Mark only when the author already knows the relevant passage.
 - **keyboard-input notation inside meaningful copy:** use Kbd. Repeat one Kbd per authored key and keep visible separators outside; shortcut behavior and platform-label policy remain application-owned.
-- **extended quotation with visible attribution:** use native blockquote with Brick text content. Keep attribution outside blockquote; when the quotation and attribution form one self-contained unit, use native figure with direct blockquote and figcaption children. Cite names a referenced work, not the person quoted.
+- **extended quotation with visible attribution:** use Blockquote. Keep Content and Caption as siblings in Root, put the source URL on Content, and use Cite for a referenced work or source rather than merely a person's name.
 - **one-dimensional alignment:** use Stack, HStack, or VStack. Use Grid for two-dimensional track relationships.
 - **bounded page width:** use Container. Use Surface or Card when the region also needs a visual boundary.
 - **top application or page bar:** use AppBar. Compose navigation and action components inside its sections.
@@ -103,6 +103,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - `em`
 - `mark`
 - `kbd`
+- `blockquote`
 - `image`
 - `aspect-ratio`
 - `code-block`

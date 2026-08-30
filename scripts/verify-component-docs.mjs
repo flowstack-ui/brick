@@ -93,6 +93,7 @@ const componentSymbols = {
   em: "Em",
   mark: "Mark",
   kbd: "Kbd",
+  blockquote: "Blockquote",
   "code-block": "CodeBlock",
   "nav-list": "NavList",
   sidebar: "Sidebar",

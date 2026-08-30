@@ -19,6 +19,8 @@ keyboard, pointer, and direct movement paths through its public subpath.
 Em and Mark prove native inline typography semantics through their public
 subpaths inside realistic sentence-level copy.
 Kbd proves compact native keyboard-input notation and authored key sequences.
+Blockquote proves semantic quotation, source, and attribution composition through
+its public subpath.
 
 ## Commands
 

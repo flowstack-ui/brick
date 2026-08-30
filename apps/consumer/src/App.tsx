@@ -57,6 +57,7 @@ import { Code } from "@flowstack-ui/brick/code";
 import { Em } from "@flowstack-ui/brick/em";
 import { Mark } from "@flowstack-ui/brick/mark";
 import { Kbd } from "@flowstack-ui/brick/kbd";
+import { Blockquote } from "@flowstack-ui/brick/blockquote";
 import { CodeBlock } from "@flowstack-ui/brick/code-block";
 import { NavList } from "@flowstack-ui/brick/nav-list";
 import { Sidebar } from "@flowstack-ui/brick/sidebar";
@@ -254,6 +255,10 @@ export function App() {
             exports. Application layout stays here; <Mark>finished component styling stays in Brick</Mark>.
           </Text>
           <Text as="p" tone="secondary">Open commands with <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>.</Text>
+          <Blockquote.Root variant="surface">
+            <Blockquote.Content cite="https://example.com/release-notes">Clear ownership makes durable releases possible.</Blockquote.Content>
+            <Blockquote.Caption>Release principle, <Blockquote.Cite>FLOWSTACK Notes</Blockquote.Cite></Blockquote.Caption>
+          </Blockquote.Root>
           <HStack aria-label="Release palette" data-testid="consumer-color-swatch" gap="2">
             <ColorSwatch.Root label="Release violet" value="#6d5bd0" />
             <ColorSwatch.Root label="Review rose" value="rgb(216 111 133 / 70%)" />

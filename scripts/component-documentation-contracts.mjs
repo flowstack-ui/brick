@@ -2333,6 +2333,16 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-size", "data-slot", "data-variant"],
     publicTokens: ["--brick-kbd-background", "--brick-kbd-foreground", "--brick-kbd-border-color", "--brick-kbd-border-block-end-color", "--brick-kbd-radius", "--brick-kbd-font-family", "--brick-kbd-font-size", "--brick-kbd-font-weight", "--brick-kbd-line-height", "--brick-kbd-letter-spacing", "--brick-kbd-min-block-size", "--brick-kbd-padding-inline", "--brick-kbd-shadow"],
   },
+  blockquote: {
+    source: "src/components/blockquote/Blockquote.tsx",
+    exportSource: "src/components/blockquote/index.ts",
+    css: "src/components/blockquote/blockquote.css",
+    exports: ["Blockquote", "BlockquoteAlign", "BlockquoteCaption", "BlockquoteCaptionProps", "BlockquoteCite", "BlockquoteCiteProps", "BlockquoteContent", "BlockquoteContentProps", "BlockquoteIcon", "BlockquoteIconProps", "BlockquoteRoot", "BlockquoteRootProps", "BlockquoteVariant"],
+    unions: { BlockquoteVariant: ["accent", "surface", "plain"], BlockquoteAlign: ["start", "center", "end"] },
+    defaults: { variant: "accent", align: "start" },
+    dataAttributes: ["data-align", "data-slot", "data-variant"],
+    publicTokens: ["--brick-blockquote-background", "--brick-blockquote-foreground", "--brick-blockquote-muted-foreground", "--brick-blockquote-accent", "--brick-blockquote-border-color", "--brick-blockquote-border-width", "--brick-blockquote-radius", "--brick-blockquote-padding-block", "--brick-blockquote-padding-inline", "--brick-blockquote-gap", "--brick-blockquote-icon-font-family", "--brick-blockquote-icon-size", "--brick-blockquote-icon-font-weight", "--brick-blockquote-icon-line-height", "--brick-blockquote-content-font-family", "--brick-blockquote-content-font-size", "--brick-blockquote-content-font-weight", "--brick-blockquote-content-line-height", "--brick-blockquote-content-letter-spacing", "--brick-blockquote-caption-font-family", "--brick-blockquote-caption-font-size", "--brick-blockquote-caption-font-weight", "--brick-blockquote-caption-line-height", "--brick-blockquote-caption-letter-spacing"],
+  },
   "code-block": {
     source: "src/components/code-block/CodeBlock.tsx",
     exportSource: "src/components/code-block/index.ts",

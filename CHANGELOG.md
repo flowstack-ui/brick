@@ -17,6 +17,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 - Added `Mark` for static native relevance with theme-aware visual recipes.
 - Added `Kbd` for native keyboard-input notation with four visual recipes and
   three compact sizes.
+- Added `Blockquote` with semantic quotation, source, attribution, cited-work,
+  decorative icon, logical alignment, and three finished visual recipes.
 
 ## 0.1.11 - 2026-08-28
 

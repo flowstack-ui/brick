@@ -281,6 +281,13 @@ export const componentEntries = [
     title: "Kbd",
   },
   {
+    category: "Content and status",
+    description: "Extended quotations with semantic source and attribution structure.",
+    id: "blockquote",
+    route: "/blockquote",
+    title: "Blockquote",
+  },
+  {
     category: "Data display",
     description: "Structured source, overflow, language, and copy.",
     id: "code-block",

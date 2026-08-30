@@ -15,7 +15,7 @@ async function collect(directory, extension) {
 }
 
 const expectedRouteIds = [
-  "accordion", "alert-dialog", "app-bar", "appearance", "aspect-ratio", "avatar", "badge", "bottom-navigation", "breadcrumb", "button", "card", "carousel",
+  "accordion", "alert-dialog", "app-bar", "appearance", "aspect-ratio", "avatar", "badge", "blockquote", "bottom-navigation", "breadcrumb", "button", "card", "carousel",
   "checkbox", "checkbox-group", "chip", "code", "code-block", "collapsible", "combobox", "container",
   "context-menu", "data-grid", "data-list", "dialog", "divider", "drawer", "dropdown-menu", "em", "feed", "field", "fieldset", "form", "grid", "group",
   "hide", "hover-card", "icon", "icon-button", "image", "input", "kbd", "textarea", "link", "link-box", "list", "multi-select", "bleed",

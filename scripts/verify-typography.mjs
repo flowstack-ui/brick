@@ -140,6 +140,7 @@ for (const directory of componentDirectories) {
         declaration.includes("var(--brick-tabs-") ||
         declaration.includes("var(--brick-code-") ||
         declaration.includes("var(--brick-kbd-") ||
+        declaration.includes("var(--brick-blockquote-") ||
         declaration.includes("var(--brick-badge-") ||
         declaration.includes("var(--brick-chip-") ||
         declaration.includes("var(--brick-avatar-") ||
