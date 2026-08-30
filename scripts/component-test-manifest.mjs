@@ -45,6 +45,7 @@ export const componentIds = [
   "mark",
   "kbd",
   "blockquote",
+  "highlight",
   "code-block",
   "nav-list",
   "sidebar",

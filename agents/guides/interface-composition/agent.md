@@ -133,3 +133,4 @@ Emit this record for every native/framework fallback or direct stable-hook decla
 - `accordion`
 - `list`
 - `blockquote`
+- `highlight`

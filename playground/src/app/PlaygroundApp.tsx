@@ -97,6 +97,7 @@ import { EmPage, emScenarios } from "../components/em/EmPage.js";
 import { MarkPage, markScenarios } from "../components/mark/MarkPage.js";
 import { KbdPage, kbdScenarios } from "../components/kbd/KbdPage.js";
 import { BlockquotePage, blockquoteScenarios } from "../components/blockquote/BlockquotePage.js";
+import { HighlightPage, highlightScenarios } from "../components/highlight/HighlightPage.js";
 import { CodeBlockPage, codeBlockScenarios } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
 import { GroupPage, groupScenarios } from "../components/group/GroupPage.js";
@@ -519,6 +520,10 @@ export function PlaygroundApp() {
 
   if (entry.id === "blockquote") {
     return <PlaygroundShell entry={entry} scenarios={blockquoteScenarios}><BlockquotePage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "highlight") {
+    return <PlaygroundShell entry={entry} scenarios={highlightScenarios}><HighlightPage /></PlaygroundShell>;
   }
 
   if (entry.id === "code-block") {

@@ -121,5 +121,5 @@
     "Confirm source order follows rendered ownership, static content is separate from interaction assembly when it obscures the component tree, and comments explain why a constraint exists rather than what an obvious line does.",
     "Run the package's CSS-delivery check and the application's accessibility, browser, and performance checks."
   ],
-  "related": ["layer-selection", "appearance", "app-bar", "section", "container", "stack", "z-stack", "grid", "frame", "surface", "card", "navigation-menu", "show", "hide", "accordion", "list", "blockquote"]
+  "related": ["layer-selection", "appearance", "app-bar", "section", "container", "stack", "z-stack", "grid", "frame", "surface", "card", "navigation-menu", "show", "hide", "accordion", "list", "blockquote", "highlight"]
 }
