@@ -1,6 +1,6 @@
 {
   "name": "@flowstack-ui/brick",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Opinionated styled React components built on @flowstack-ui/atom.",
   "type": "module",
   "license": "MIT",
@@ -372,6 +372,10 @@
       "types": "./dist/code.d.ts",
       "default": "./dist/code.js"
     },
+    "./em": {
+      "types": "./dist/em.d.ts",
+      "default": "./dist/em.js"
+    },
     "./code-block": {
       "types": "./dist/code-block.d.ts",
       "default": "./dist/code-block.js"
@@ -493,7 +497,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.24.0"
+    "@flowstack-ui/atom": "0.25.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

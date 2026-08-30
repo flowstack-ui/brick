@@ -260,6 +260,13 @@ export const componentEntries = [
     title: "Code",
   },
   {
+    category: "Content and status",
+    description: "Native stress emphasis that inherits surrounding typography.",
+    id: "em",
+    route: "/em",
+    title: "Em",
+  },
+  {
     category: "Data display",
     description: "Structured source, overflow, language, and copy.",
     id: "code-block",

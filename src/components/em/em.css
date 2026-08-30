@@ -1,0 +1,13 @@
+@layer brick.components {
+  .brick-em {
+    --brick-em-font-style: italic;
+
+    color: inherit;
+    font: inherit;
+    font-style: var(--brick-em-font-style);
+  }
+
+  @media (forced-colors: active) {
+    .brick-em { color: currentColor; }
+  }
+}

@@ -11,8 +11,8 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.version, "0.1.11");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.24.0");
+  assert.equal(packageJson.version, "0.1.12");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.25.0");
   assert.deepEqual(packageJson.publishConfig, { access: "public" });
   assert.equal(
     packageJson.repository.url,
@@ -35,6 +35,10 @@ test("package metadata defines the public Brick boundary", async () => {
     "./button": {
       types: "./dist/button.d.ts",
       default: "./dist/button.js",
+    },
+    "./em": {
+      types: "./dist/em.d.ts",
+      default: "./dist/em.js",
     },
     "./icon-button": {
       types: "./dist/icon-button.d.ts",
@@ -409,7 +413,7 @@ test("release identity, changelog, dependency lock, and provenance stay aligned"
   assert.equal(lockedRoot.version, packageJson.version);
   assert.equal(lockedRoot.dependencies["@flowstack-ui/atom"], packageJson.dependencies["@flowstack-ui/atom"]);
   assert.equal(lockedAtom.version, packageJson.dependencies["@flowstack-ui/atom"]);
-  assert.match(changelog, new RegExp(`^## ${packageJson.version} - 2026-08-28$`, "m"));
+  assert.match(changelog, new RegExp(`^## ${packageJson.version} - 2026-08-30$`, "m"));
   assert.match(workflow, /npm publish[^\n]+--provenance/u);
 });
 
@@ -491,6 +495,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const navList = await import(new URL("../../dist/nav-list.js", import.meta.url));
   const sidebar = await import(new URL("../../dist/sidebar.js", import.meta.url));
   const code = await import(new URL("../../dist/code.js", import.meta.url));
+  const em = await import(new URL("../../dist/em.js", import.meta.url));
   const codeBlock = await import(new URL("../../dist/code-block.js", import.meta.url));
   const dropdownMenu = await import(new URL("../../dist/dropdown-menu.js", import.meta.url));
   const contextMenu = await import(new URL("../../dist/context-menu.js", import.meta.url));
@@ -668,6 +673,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "DropdownMenuSubContent",
       "DropdownMenuSubTrigger",
       "DropdownMenuTrigger",
+      "Em",
       "Eyebrow",
       "Feed",
       "Field",
@@ -972,6 +978,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
     ],
   );
   assert.equal(appearance.Appearance, brick.Appearance);
+  assert.equal(em.Em, brick.Em);
   assert.equal(button.Button, brick.Button);
   assert.equal(iconButton.IconButton, brick.IconButton);
   assert.equal(icon.Icon, brick.Icon);
@@ -1422,7 +1429,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 88);
+  assert.equal(componentStyleNames.length, 89);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);

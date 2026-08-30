@@ -2304,6 +2304,15 @@ export const componentDocumentationContracts = {
       "--brick-code-line-height", "--brick-code-letter-spacing",
     ],
   },
+  em: {
+    source: "src/components/em/Em.tsx",
+    exportSource: "src/components/em/index.ts",
+    css: "src/components/em/em.css",
+    exports: ["Em", "EmProps"],
+    defaults: { slot: "em" },
+    dataAttributes: ["data-slot"],
+    publicTokens: ["--brick-em-font-style"],
+  },
   "code-block": {
     source: "src/components/code-block/CodeBlock.tsx",
     exportSource: "src/components/code-block/index.ts",

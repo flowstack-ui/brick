@@ -16,6 +16,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 
 - **headings, paragraphs, captions, and eyebrows:** use Heading, Paragraph, Caption, or Eyebrow. Give Heading an explicit semantic level and choose its visual variant independently.
 - **other text with Brick typography:** use Text. Choose the semantic rendered element through its public API and author the intended letter case in content.
+- **stress emphasis inside meaningful copy:** use Em. Keep Em inside the surrounding Text or component content owner and do not use it only for decorative italics.
 - **extended quotation with visible attribution:** use native blockquote with Brick text content. Keep attribution outside blockquote; when the quotation and attribution form one self-contained unit, use native figure with direct blockquote and figcaption children. Cite names a referenced work, not the person quoted.
 - **one-dimensional alignment:** use Stack, HStack, or VStack. Use Grid for two-dimensional track relationships.
 - **bounded page width:** use Container. Use Surface or Card when the region also needs a visual boundary.
@@ -97,6 +98,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - `stack`
 - `grid`
 - `text`
+- `em`
 - `image`
 - `aspect-ratio`
 - `code-block`

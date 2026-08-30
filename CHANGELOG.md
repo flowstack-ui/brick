@@ -4,7 +4,16 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Added
+
 - No unreleased changes.
+
+## 0.1.12 - 2026-08-30
+
+### Added
+
+- Added `Em` for native stress emphasis that inherits surrounding Brick
+  typography and foreground.
 
 ## 0.1.11 - 2026-08-28
 

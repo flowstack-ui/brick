@@ -84,6 +84,7 @@ export const componentStyleEntries = [
   ["divider", ["components/divider/divider.css"]],
   ["scroll-area", ["components/scroll-area/scroll-area.css"]],
   ["code", ["components/code/code.css"]],
+  ["em", ["components/em/em.css"]],
   ["code-block", [
     "components/_action-spinner/action-spinner.css",
     "components/button/button.css",
