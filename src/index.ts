@@ -681,6 +681,7 @@ export {
   type CodeTone,
   type CodeVariant,
 } from "./components/code/index.js";
+export { Em, type EmProps } from "./components/em/index.js";
 export {
   CodeBlock,
   CodeBlockActions,

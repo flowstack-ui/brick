@@ -90,6 +90,7 @@ const componentSymbols = {
   collapsible: "Collapsible",
   accordion: "Accordion",
   code: "Code",
+  em: "Em",
   "code-block": "CodeBlock",
   "nav-list": "NavList",
   sidebar: "Sidebar",

@@ -41,6 +41,7 @@ export const componentIds = [
   "combobox",
   "accordion",
   "code",
+  "em",
   "code-block",
   "nav-list",
   "sidebar",
