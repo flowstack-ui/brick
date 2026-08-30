@@ -9,7 +9,7 @@ export type ProseElement = "div" | "article" | "section";
 export type ProseSize = "sm" | "md" | "lg";
 export type ProseMeasure = "narrow" | "default" | "wide" | "none";
 
-export interface ProseProps extends Omit<HTMLAttributes<HTMLElement>, "children"> {
+export interface ProseProps extends Omit<HTMLAttributes<HTMLElement>, "children" | "dangerouslySetInnerHTML"> {
   as?: ProseElement;
   children?: ReactNode;
   size?: ProseSize;
@@ -32,10 +32,14 @@ export const Prose = forwardRef<HTMLElement, ProseProps>(function Prose(
   },
   ref,
 ) {
+  // Keep the documented React-children-only boundary true for untyped
+  // JavaScript consumers as well as TypeScript callers.
+  const { dangerouslySetInnerHTML: _blockedHtml, ...safeProps } = props as HTMLAttributes<HTMLElement>;
+
   return createElement(
     as,
     {
-      ...props,
+      ...safeProps,
       className: mergeClassName(className),
       "data-measure": measure,
       "data-size": size,

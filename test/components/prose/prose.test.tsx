@@ -1,4 +1,4 @@
-import { createRef } from "react";
+import { createElement, createRef } from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Prose, type ProseMeasure, type ProseSize } from "../../../src/prose.js";
@@ -32,5 +32,14 @@ describe("Prose", () => {
     expect(root).toHaveClass("brick-prose", "consumer-prose");
     expect(root).toHaveAttribute("data-owner", "docs");
     expect(screen.getByRole("link")).toHaveAttribute("href", "/guide");
+  });
+
+  it("rejects injected HTML at runtime for untyped consumers", () => {
+    const { container } = render(createElement(Prose as never, {
+      dangerouslySetInnerHTML: { __html: "<p data-unsafe>Injected</p>" },
+    }));
+
+    expect(container.querySelector(".brick-prose")).toBeEmptyDOMElement();
+    expect(container.querySelector("[data-unsafe]")).toBeNull();
   });
 });

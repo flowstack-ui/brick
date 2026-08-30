@@ -80,6 +80,12 @@ function slot(value: string | undefined, fallback: string) {
   return value ?? fallback;
 }
 
+function withoutInjectedHtml<T extends object>(props: T): Omit<T, "dangerouslySetInnerHTML"> {
+  const { dangerouslySetInnerHTML: _blockedHtml, ...safeProps } = props as
+    T & { dangerouslySetInnerHTML?: unknown };
+  return safeProps;
+}
+
 function languageClass(language: string | undefined) {
   return language && /^[A-Za-z0-9_+-]+$/.test(language)
     ? `language-${language.toLowerCase()}`
@@ -101,6 +107,7 @@ export const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockRootProps>(
     },
     ref,
   ) {
+    const safeProps = withoutInjectedHtml(props);
     const getAdaptedContent = useMemo(() => {
       let resolved = false;
       let adaptedContent: ReactNode;
@@ -119,7 +126,7 @@ export const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockRootProps>(
     return (
       <CodeBlockContext.Provider value={context}>
         <AtomClipboard.Root
-          {...props}
+          {...safeProps}
           className={classes("brick-code-block", className)}
           data-language={language}
           data-size={size}
@@ -165,6 +172,7 @@ export const CodeBlockContent = forwardRef<HTMLDivElement, CodeBlockContentProps
     { className, children, wrap = "scroll", focusable = true, maxLines, dir = "ltr", style, "data-slot": dataSlot, ...props },
     ref,
   ) {
+    const safeProps = withoutInjectedHtml(props);
     const { value, language, getAdaptedContent, size } = useCodeBlockContext();
     const syntaxClass = languageClass(language);
     const boundedLines = Number.isInteger(maxLines) && Number(maxLines) > 0
@@ -177,7 +185,7 @@ export const CodeBlockContent = forwardRef<HTMLDivElement, CodeBlockContentProps
     return (
       <ScrollArea.Root className="brick-code-block-scroll-area" orientation="horizontal" scrollbarVisibility="interaction">
         <ScrollArea.Viewport
-          {...props}
+          {...safeProps}
           className={classes("brick-code-block-content", className)}
           data-language={language}
           data-max-lines={boundedLines}
@@ -220,12 +228,13 @@ export const CodeBlockLine = forwardRef<HTMLSpanElement, CodeBlockLineProps>(
     },
     ref,
   ) {
+    const safeProps = withoutInjectedHtml(props);
     const visibleLineNumber = Number.isInteger(lineNumber) && Number(lineNumber) > 0
       ? Number(lineNumber)
       : undefined;
     return (
       <span
-        {...props}
+        {...safeProps}
         className={classes("brick-code-block-line", className)}
         data-change={change}
         data-focused={focused ? "" : undefined}

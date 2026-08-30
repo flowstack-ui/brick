@@ -36,4 +36,13 @@ describe("Highlight", () => {
     expect(root.querySelector("mark")?.textContent).toBe("Flow");
     expect(root.textContent).toBe("flow Flow Flowstack");
   });
+
+  it("rejects injected HTML from untyped consumers", () => {
+    const unsafeProps = {
+      dangerouslySetInnerHTML: { __html: "<mark data-unsafe>Injected</mark>" },
+    } as unknown as Record<string, unknown>;
+    const { container } = render(<Highlight {...unsafeProps} query="safe" text="safe text" />);
+    expect(container.querySelector("[data-unsafe]")).toBeNull();
+    expect(container.textContent).toBe("safe text");
+  });
 });

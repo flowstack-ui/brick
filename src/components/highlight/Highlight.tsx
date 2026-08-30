@@ -7,7 +7,7 @@ import {
 export type HighlightVariant = "subtle" | "solid" | "underline";
 export type HighlightTone = "accent" | "neutral";
 
-export interface HighlightProps extends Omit<AtomHighlightRootProps, "render"> {
+export interface HighlightProps extends Omit<AtomHighlightRootProps, "dangerouslySetInnerHTML" | "render"> {
   variant?: HighlightVariant;
   tone?: HighlightTone;
 }
@@ -18,7 +18,10 @@ export const Highlight = forwardRef<HTMLSpanElement, HighlightProps>(function Hi
   { variant = "subtle", tone = "accent", className, "data-slot": dataSlot = "highlight", ...props },
   ref,
 ) {
-  return <AtomHighlight.Root {...props} className={classes(className)} data-slot={dataSlot} data-tone={tone} data-variant={variant} ref={ref} />;
+  const { dangerouslySetInnerHTML: _blockedHtml, ...safeProps } = props as AtomHighlightRootProps & {
+    dangerouslySetInnerHTML?: unknown;
+  };
+  return <AtomHighlight.Root {...safeProps} className={classes(className)} data-slot={dataSlot} data-tone={tone} data-variant={variant} ref={ref} />;
 });
 
 Highlight.displayName = "Highlight";

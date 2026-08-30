@@ -22,26 +22,48 @@ function plannedShards(output) {
   }));
 }
 
-test("the complete WebKit plan preserves all 12 one-worker restarts", () => {
+test("the complete WebKit plan preserves all 16 one-worker restarts", () => {
   const result = plan("webkit");
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(
     plannedShards(result.stdout),
-    Array.from({ length: 12 }, (_, index) => ({ shard: index + 1, total: 12 })),
+    Array.from({ length: 16 }, (_, index) => ({ shard: index + 1, total: 16 })),
   );
 });
 
-test("three CI groups partition every WebKit shard exactly once", () => {
+test("three CI groups partition every Desktop WebKit shard exactly once", () => {
+  const groups = ["1/3", "2/3", "3/3"].map((group) => plan("webkit", group));
+  for (const result of groups) assert.equal(result.status, 0, result.stderr);
+
+  const shards = groups.flatMap((result) => plannedShards(result.stdout));
+  assert.equal(shards.length, 16);
+  assert.deepEqual(
+    shards.map(({ shard }) => shard).sort((left, right) => left - right),
+    Array.from({ length: 16 }, (_, index) => index + 1),
+  );
+  assert.ok(shards.every(({ total }) => total === 16));
+});
+
+test("the complete Mobile WebKit plan preserves all 32 one-worker restarts", () => {
+  const result = plan("mobile-webkit");
+  assert.equal(result.status, 0, result.stderr);
+  assert.deepEqual(
+    plannedShards(result.stdout),
+    Array.from({ length: 32 }, (_, index) => ({ shard: index + 1, total: 32 })),
+  );
+});
+
+test("three CI groups partition every Mobile WebKit shard exactly once", () => {
   const groups = ["1/3", "2/3", "3/3"].map((group) => plan("mobile-webkit", group));
   for (const result of groups) assert.equal(result.status, 0, result.stderr);
 
   const shards = groups.flatMap((result) => plannedShards(result.stdout));
-  assert.equal(shards.length, 12);
+  assert.equal(shards.length, 32);
   assert.deepEqual(
     shards.map(({ shard }) => shard).sort((left, right) => left - right),
-    Array.from({ length: 12 }, (_, index) => index + 1),
+    Array.from({ length: 32 }, (_, index) => index + 1),
   );
-  assert.ok(shards.every(({ total }) => total === 12));
+  assert.ok(shards.every(({ total }) => total === 32));
 });
 
 test("non-WebKit projects reject a WebKit shard group", () => {

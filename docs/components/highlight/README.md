@@ -34,7 +34,7 @@ import "@flowstack-ui/brick/styles/highlight.css";
 
 ## Anatomy and DOM ownership
 
-Highlight wraps exact Atom Highlight 0.25.0. It owns one native `span`; Atom creates one native `mark` with `data-slot="highlight-match"` for every selected segment. Original text order remains intact.
+Highlight wraps exact Atom Highlight 0.25.1. It owns one native `span`; Atom creates one native `mark` with `data-slot="highlight-match"` for every selected segment. Original text order remains intact.
 
 ## API
 

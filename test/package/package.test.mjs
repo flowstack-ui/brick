@@ -12,7 +12,7 @@ test("package metadata defines the public Brick boundary", async () => {
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
   assert.equal(packageJson.version, "0.1.12");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.25.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.25.1");
   assert.deepEqual(packageJson.publishConfig, { access: "public" });
   assert.equal(
     packageJson.repository.url,
@@ -1513,6 +1513,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   assert.match(pagination, /\.brick-pagination/);
   assert.match(codeBlock, /\.brick-button/);
   assert.match(codeBlock, /\.brick-code(?:\W|$)/);
+  assert.match(codeBlock, /\.brick-collapsible-trigger/);
   assert.match(codeBlock, /\.brick-scroll-area/);
   assert.match(codeBlock, /\.brick-code-block/);
   assert.match(codeBlock, /\.brick-code-block-pre\{[^}]*text-size-adjust:\s*none/);

@@ -85,9 +85,8 @@ jobs:
     needs: package
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    # WebKit keeps its 12 one-worker browser restarts, distributed across three
-    # independent job groups so one failed group can be rerun without repeating
-    # the other eight healthy shards.
+    # Resource-aware WebKit restarts are distributed across three independent
+    # groups so one failed group can be rerun without repeating healthy shards.
     timeout-minutes: 20
     strategy:
       fail-fast: false

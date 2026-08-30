@@ -12,4 +12,4 @@ Highlight follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
-- Added the exact Atom 0.25.0-backed plain-text Highlight adapter with subtle, solid, and underline recipes plus accent and neutral tones.
+- Added the exact Atom 0.25.1-backed plain-text Highlight adapter with subtle, solid, and underline recipes plus accent and neutral tones.

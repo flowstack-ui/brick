@@ -4,6 +4,12 @@ Code Block follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Added
+
+- No unreleased changes.
+
+## 0.1.12 — 2026-08-30
+
 ### Fixed
 
 - Moved the historical WebKit text-size-adjustment declaration to Brick's

@@ -94,6 +94,7 @@ export const componentStyleEntries = [
     "components/_action-spinner/action-spinner.css",
     "components/button/button.css",
     "components/code/code.css",
+    "components/collapsible/collapsible.css",
     "components/scroll-area/scroll-area.css",
     "components/code-block/code-block.css",
   ]],

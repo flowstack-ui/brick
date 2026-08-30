@@ -3,7 +3,7 @@
 | Environment | Record before testing |
 | --- | --- |
 | Component | Highlight |
-| Version or commit | Brick 0.1.12 candidate with Atom 0.25.0 |
+| Version or commit | Brick 0.1.12 candidate with Atom 0.25.1 |
 | Reviewer | Codex visual review; VoiceOver run pending |
 | Date | 2026-08-30 |
 | Browser and version | Chrome stable; exact version recorded at run |
@@ -23,7 +23,7 @@ Setup: Open `/highlight` in system appearance and review 01–03 top to bottom.
 
 Action: Compare longest-overlap, literal punctuation, case-sensitive, first-only, and Unicode whole-word examples; compare every variant/tone; select and copy full strings.
 
-Expected: Native span/mark output preserves original strings and Atom 0.25.0 matching; copied text contains no generated separators; recipes never imply focus or current-result state.
+Expected: Native span/mark output preserves original strings and Atom 0.25.1 matching; copied text contains no generated separators; recipes never imply focus or current-result state.
 
 Result:
 Notes or issue:
