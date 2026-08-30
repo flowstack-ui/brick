@@ -85,7 +85,7 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, Grid, Hide, HoverCard, IconButton, Input, Link, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, Grid, Hide, HoverCard, IconButton, Input, Kbd, Link, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -114,6 +114,7 @@ import { Link as SubpathLink } from "@flowstack-ui/brick/link";
 import { Text as SubpathText } from "@flowstack-ui/brick/text";
 import { Em as SubpathEm } from "@flowstack-ui/brick/em";
 import { Mark as SubpathMark } from "@flowstack-ui/brick/mark";
+import { Kbd as SubpathKbd } from "@flowstack-ui/brick/kbd";
 import { Grid as SubpathGrid } from "@flowstack-ui/brick/grid";
 import { Container as SubpathContainer } from "@flowstack-ui/brick/container";
 import { Surface as SubpathSurface } from "@flowstack-ui/brick/surface";
@@ -160,6 +161,7 @@ if (Textarea !== SubpathTextarea || Object.keys(SubpathTextarea).length !== 2) t
 if (Link !== SubpathLink) throw new Error("Link subpath export mismatch");
 if (Text !== SubpathText) throw new Error("Text subpath export mismatch");
 if (Em !== SubpathEm || Mark !== SubpathMark) throw new Error("Inline typography subpath export mismatch");
+if (Kbd !== SubpathKbd) throw new Error("Kbd subpath export mismatch");
 if (Grid !== SubpathGrid || Object.keys(SubpathGrid).length !== 2) throw new Error("Grid subpath smoke failed");
 if (Container !== SubpathContainer) throw new Error("Container subpath export mismatch");
 if (Surface !== SubpathSurface) throw new Error("Surface subpath export mismatch");
@@ -221,6 +223,8 @@ const textMarkup = renderToString(React.createElement(Text, { as: "h2", variant:
 if (!textMarkup.includes("brick-text") || !textMarkup.includes('data-variant="title-sm"')) throw new Error("Text SSR smoke failed");
 const inlineTypographyMarkup = renderToString(React.createElement(Text, { as: "p" }, "Review ", React.createElement(Em, null, "before"), " the ", React.createElement(Mark, { tone: "neutral" }, "approved window"), "."));
 if (!inlineTypographyMarkup.includes("brick-em") || !inlineTypographyMarkup.includes("brick-mark") || !inlineTypographyMarkup.includes('data-tone="neutral"')) throw new Error("Inline typography SSR smoke failed");
+const kbdMarkup = renderToString(React.createElement(Text, { as: "p" }, "Press ", React.createElement(Kbd, null, "Ctrl"), " + ", React.createElement(Kbd, { variant: "outline" }, "P"), "."));
+if ((kbdMarkup.match(/brick-kbd/g) ?? []).length !== 2 || !kbdMarkup.includes('data-variant="outline"')) throw new Error("Kbd SSR smoke failed");
 const gridMarkup = renderToString(React.createElement(Grid.Root, { columns: 2, gap: "2" }, React.createElement("span", null, "One"), React.createElement(Grid.Item, { columnSpan: "full" }, "Summary")));
 if (!gridMarkup.includes("brick-grid") || !gridMarkup.includes("brick-grid-item") || !gridMarkup.includes('data-column-span="full"')) throw new Error("Grid SSR smoke failed");
 const containerMarkup = renderToString(React.createElement(Container, { as: "main", measure: "max", gutter: "lg" }, "Measured"));

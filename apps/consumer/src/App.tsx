@@ -56,6 +56,7 @@ import { ScrollArea } from "@flowstack-ui/brick/scroll-area";
 import { Code } from "@flowstack-ui/brick/code";
 import { Em } from "@flowstack-ui/brick/em";
 import { Mark } from "@flowstack-ui/brick/mark";
+import { Kbd } from "@flowstack-ui/brick/kbd";
 import { CodeBlock } from "@flowstack-ui/brick/code-block";
 import { NavList } from "@flowstack-ui/brick/nav-list";
 import { Sidebar } from "@flowstack-ui/brick/sidebar";
@@ -252,6 +253,7 @@ export function App() {
             This small application consumes Brick <Em>exactly</Em> through its public package
             exports. Application layout stays here; <Mark>finished component styling stays in Brick</Mark>.
           </Text>
+          <Text as="p" tone="secondary">Open commands with <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>.</Text>
           <HStack aria-label="Release palette" data-testid="consumer-color-swatch" gap="2">
             <ColorSwatch.Root label="Release violet" value="#6d5bd0" />
             <ColorSwatch.Root label="Review rose" value="rgb(216 111 133 / 70%)" />

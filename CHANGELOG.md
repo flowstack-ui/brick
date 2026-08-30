@@ -15,6 +15,8 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 - Added `Em` for native stress emphasis that inherits surrounding Brick
   typography and foreground.
 - Added `Mark` for static native relevance with theme-aware visual recipes.
+- Added `Kbd` for native keyboard-input notation with four visual recipes and
+  three compact sizes.
 
 ## 0.1.11 - 2026-08-28
 

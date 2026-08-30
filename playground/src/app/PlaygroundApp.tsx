@@ -95,6 +95,7 @@ import { CarouselPage, carouselScenarios } from "../components/carousel/Carousel
 import { CodePage, codeScenarios } from "../components/code/CodePage.js";
 import { EmPage, emScenarios } from "../components/em/EmPage.js";
 import { MarkPage, markScenarios } from "../components/mark/MarkPage.js";
+import { KbdPage, kbdScenarios } from "../components/kbd/KbdPage.js";
 import { CodeBlockPage, codeBlockScenarios } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
 import { GroupPage, groupScenarios } from "../components/group/GroupPage.js";
@@ -509,6 +510,10 @@ export function PlaygroundApp() {
 
   if (entry.id === "mark") {
     return <PlaygroundShell entry={entry} scenarios={markScenarios}><MarkPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "kbd") {
+    return <PlaygroundShell entry={entry} scenarios={kbdScenarios}><KbdPage /></PlaygroundShell>;
   }
 
   if (entry.id === "code-block") {

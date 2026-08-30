@@ -86,6 +86,7 @@ export const componentStyleEntries = [
   ["code", ["components/code/code.css"]],
   ["em", ["components/em/em.css"]],
   ["mark", ["components/mark/mark.css"]],
+  ["kbd", ["components/kbd/kbd.css"]],
   ["code-block", [
     "components/_action-spinner/action-spinner.css",
     "components/button/button.css",
