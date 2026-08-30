@@ -40,6 +40,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/em.d.ts",
       default: "./dist/em.js",
     },
+    "./mark": {
+      types: "./dist/mark.d.ts",
+      default: "./dist/mark.js",
+    },
     "./icon-button": {
       types: "./dist/icon-button.d.ts",
       default: "./dist/icon-button.js",
@@ -496,6 +500,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const sidebar = await import(new URL("../../dist/sidebar.js", import.meta.url));
   const code = await import(new URL("../../dist/code.js", import.meta.url));
   const em = await import(new URL("../../dist/em.js", import.meta.url));
+  const mark = await import(new URL("../../dist/mark.js", import.meta.url));
   const codeBlock = await import(new URL("../../dist/code-block.js", import.meta.url));
   const dropdownMenu = await import(new URL("../../dist/dropdown-menu.js", import.meta.url));
   const contextMenu = await import(new URL("../../dist/context-menu.js", import.meta.url));
@@ -709,6 +714,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "LinkBoxLink",
       "LinkBoxRoot",
       "List",
+      "Mark",
       "Menubar",
       "MenubarArrow",
       "MenubarCheckboxItem",
@@ -979,6 +985,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   );
   assert.equal(appearance.Appearance, brick.Appearance);
   assert.equal(em.Em, brick.Em);
+  assert.equal(mark.Mark, brick.Mark);
   assert.equal(button.Button, brick.Button);
   assert.equal(iconButton.IconButton, brick.IconButton);
   assert.equal(icon.Icon, brick.Icon);
@@ -1429,7 +1436,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 89);
+  assert.equal(componentStyleNames.length, 90);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);

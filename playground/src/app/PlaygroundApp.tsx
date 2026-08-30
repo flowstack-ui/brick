@@ -94,6 +94,7 @@ import { PaginationPage, paginationScenarios } from "../components/pagination/Pa
 import { CarouselPage, carouselScenarios } from "../components/carousel/CarouselPage.js";
 import { CodePage, codeScenarios } from "../components/code/CodePage.js";
 import { EmPage, emScenarios } from "../components/em/EmPage.js";
+import { MarkPage, markScenarios } from "../components/mark/MarkPage.js";
 import { CodeBlockPage, codeBlockScenarios } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
 import { GroupPage, groupScenarios } from "../components/group/GroupPage.js";
@@ -504,6 +505,10 @@ export function PlaygroundApp() {
 
   if (entry.id === "em") {
     return <PlaygroundShell entry={entry} scenarios={emScenarios}><EmPage /></PlaygroundShell>;
+  }
+
+  if (entry.id === "mark") {
+    return <PlaygroundShell entry={entry} scenarios={markScenarios}><MarkPage /></PlaygroundShell>;
   }
 
   if (entry.id === "code-block") {

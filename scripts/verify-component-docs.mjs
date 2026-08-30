@@ -91,6 +91,7 @@ const componentSymbols = {
   accordion: "Accordion",
   code: "Code",
   em: "Em",
+  mark: "Mark",
   "code-block": "CodeBlock",
   "nav-list": "NavList",
   sidebar: "Sidebar",

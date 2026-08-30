@@ -16,6 +16,8 @@ identity and presence, and NotificationBadge for
 a clearly named task control through their public package subpaths.
 Reorderable List is composed as a realistic release-order workflow with
 keyboard, pointer, and direct movement paths through its public subpath.
+Em and Mark prove native inline typography semantics through their public
+subpaths inside realistic sentence-level copy.
 
 ## Commands
 

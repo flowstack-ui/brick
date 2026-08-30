@@ -376,6 +376,10 @@
       "types": "./dist/em.d.ts",
       "default": "./dist/em.js"
     },
+    "./mark": {
+      "types": "./dist/mark.d.ts",
+      "default": "./dist/mark.js"
+    },
     "./code-block": {
       "types": "./dist/code-block.d.ts",
       "default": "./dist/code-block.js"

@@ -54,6 +54,8 @@ import { Surface } from "@flowstack-ui/brick/surface";
 import { Divider } from "@flowstack-ui/brick/divider";
 import { ScrollArea } from "@flowstack-ui/brick/scroll-area";
 import { Code } from "@flowstack-ui/brick/code";
+import { Em } from "@flowstack-ui/brick/em";
+import { Mark } from "@flowstack-ui/brick/mark";
 import { CodeBlock } from "@flowstack-ui/brick/code-block";
 import { NavList } from "@flowstack-ui/brick/nav-list";
 import { Sidebar } from "@flowstack-ui/brick/sidebar";
@@ -247,8 +249,8 @@ export function App() {
             <span>with clear boundaries.</span>
           </Text>
           <Text as="p" className="hero-copy" tone="secondary" variant="body-lg">
-            This small application consumes Brick exactly through its public package
-            exports. Application layout stays here; finished component styling stays in Brick.
+            This small application consumes Brick <Em>exactly</Em> through its public package
+            exports. Application layout stays here; <Mark>finished component styling stays in Brick</Mark>.
           </Text>
           <HStack aria-label="Release palette" data-testid="consumer-color-swatch" gap="2">
             <ColorSwatch.Root label="Release violet" value="#6d5bd0" />

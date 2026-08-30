@@ -98,6 +98,8 @@ This directory is the public documentation authority for
   typography
 - [Em](components/em/README.md) — native stress emphasis that inherits its
   surrounding typography
+- [Mark](components/mark/README.md) — static native relevance with restrained,
+  theme-aware visual recipes
 - [Code](components/code/README.md) — short inline technical literals
 - [Code Block](components/code-block/README.md) — structured multi-line source,
   overflow, language metadata, and copy feedback
