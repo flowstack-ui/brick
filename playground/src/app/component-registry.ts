@@ -288,6 +288,13 @@ export const componentEntries = [
     title: "Blockquote",
   },
   {
+    category: "Content and status",
+    description: "Exact plain-text query matching with finished semantic relevance paint.",
+    id: "highlight",
+    route: "/highlight",
+    title: "Highlight",
+  },
+  {
     category: "Data display",
     description: "Structured source, overflow, language, and copy.",
     id: "code-block",

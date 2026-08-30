@@ -100,6 +100,8 @@ This directory is the public documentation authority for
   surrounding typography
 - [Mark](components/mark/README.md) — static native relevance with restrained,
   theme-aware visual recipes
+- [Highlight](components/highlight/README.md) — exact Atom-backed plain-text
+  query matching with finished semantic relevance paint
 - [Kbd](components/kbd/README.md) — native keyboard-input notation with compact
   finished variants and sizes
 - [Blockquote](components/blockquote/README.md) — extended quotations with

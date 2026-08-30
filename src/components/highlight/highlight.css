@@ -1,0 +1,66 @@
+@layer brick.components {
+  .brick-highlight {
+    --brick-highlight-background: var(--brick-color-accent-soft);
+    --brick-highlight-foreground: var(--brick-color-accent-text);
+    --brick-highlight-radius: var(--brick-radius-subtle);
+    --brick-highlight-padding-inline: 0.125em;
+    --brick-highlight-decoration-color: var(--brick-color-accent-border);
+    --brick-highlight-decoration-thickness: 0.125em;
+    --brick-highlight-decoration-offset: 0.125em;
+  }
+
+  .brick-highlight[data-tone="neutral"] {
+    --brick-highlight-background: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 28%
+    );
+    --brick-highlight-foreground: var(--brick-color-text-primary);
+    --brick-highlight-decoration-color: var(--brick-color-border-strong);
+  }
+
+  .brick-highlight[data-variant="solid"] {
+    --brick-highlight-background: var(--brick-color-accent-solid);
+    --brick-highlight-foreground: var(--brick-color-accent-on-solid);
+  }
+
+  .brick-highlight[data-variant="solid"][data-tone="neutral"] {
+    --brick-highlight-background: var(--brick-color-text-primary);
+    --brick-highlight-foreground: var(--brick-color-surface-canvas);
+  }
+
+  .brick-highlight [data-slot="highlight-match"] {
+    box-decoration-break: clone;
+    padding-inline: var(--brick-highlight-padding-inline);
+    border-radius: var(--brick-highlight-radius);
+    background: var(--brick-highlight-background);
+    color: var(--brick-highlight-foreground);
+    font: inherit;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .brick-highlight[data-variant="underline"] [data-slot="highlight-match"] {
+    --brick-highlight-background: transparent;
+    --brick-highlight-foreground: currentColor;
+    --brick-highlight-padding-inline: 0em;
+
+    text-decoration-color: var(--brick-highlight-decoration-color);
+    text-decoration-line: underline;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: var(--brick-highlight-decoration-thickness);
+    text-underline-offset: var(--brick-highlight-decoration-offset);
+  }
+
+  @media (forced-colors: active) {
+    .brick-highlight {
+      --brick-highlight-background: Highlight;
+      --brick-highlight-foreground: HighlightText;
+      --brick-highlight-decoration-color: Highlight;
+    }
+
+    .brick-highlight[data-variant="underline"] [data-slot="highlight-match"] {
+      --brick-highlight-background: transparent;
+      --brick-highlight-foreground: CanvasText;
+    }
+  }
+}

@@ -2343,6 +2343,22 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-align", "data-slot", "data-variant"],
     publicTokens: ["--brick-blockquote-background", "--brick-blockquote-foreground", "--brick-blockquote-muted-foreground", "--brick-blockquote-accent", "--brick-blockquote-border-color", "--brick-blockquote-border-width", "--brick-blockquote-radius", "--brick-blockquote-padding-block", "--brick-blockquote-padding-inline", "--brick-blockquote-gap", "--brick-blockquote-icon-font-family", "--brick-blockquote-icon-size", "--brick-blockquote-icon-font-weight", "--brick-blockquote-icon-line-height", "--brick-blockquote-content-font-family", "--brick-blockquote-content-font-size", "--brick-blockquote-content-font-weight", "--brick-blockquote-content-line-height", "--brick-blockquote-content-letter-spacing", "--brick-blockquote-caption-font-family", "--brick-blockquote-caption-font-size", "--brick-blockquote-caption-font-weight", "--brick-blockquote-caption-line-height", "--brick-blockquote-caption-letter-spacing"],
   },
+  highlight: {
+    source: "src/components/highlight/Highlight.tsx",
+    exportSource: "src/components/highlight/index.ts",
+    css: "src/components/highlight/highlight.css",
+    exports: ["Highlight", "HighlightProps", "HighlightTone", "HighlightVariant"],
+    unions: { HighlightVariant: ["subtle", "solid", "underline"], HighlightTone: ["accent", "neutral"] },
+    defaults: { variant: "subtle", tone: "accent" },
+    dataAttributes: ["data-slot", "data-tone", "data-variant"],
+    publicTokens: ["--brick-highlight-background", "--brick-highlight-foreground", "--brick-highlight-radius", "--brick-highlight-padding-inline", "--brick-highlight-decoration-color", "--brick-highlight-decoration-thickness", "--brick-highlight-decoration-offset"],
+    dependencyClaims: [
+      {
+        path: "node_modules/@flowstack-ui/atom/dist/_internal/primitives/highlight/HighlightRoot.js",
+        claims: ["findHighlightSegments", 'ignoreCase = true', 'matchAll = true', 'exactMatch = false'],
+      },
+    ],
+  },
   "code-block": {
     source: "src/components/code-block/CodeBlock.tsx",
     exportSource: "src/components/code-block/index.ts",

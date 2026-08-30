@@ -73,6 +73,7 @@ different owner.
 | Mark | overview, recipe, and native evidence stages | Mark's inline relevance paint, native semantic output, and wrapping |
 | Kbd | overview, recipe, and sequence evidence stages | Kbd's compact key paint, native semantic output, and authored separators |
 | Blockquote | overview, recipe, and adaptation evidence stages | Blockquote's quotation boundary, native semantic output, attribution, and logical alignment |
+| Highlight | overview, recipe, and adaptation evidence stages | Highlight's inline match paint, native semantic output, and exact Atom segmentation |
 | Code Block | generic outer evidence cells and appearance stages | Code Block recipes, technical surface paint, overflow, selection, and source anatomy |
 | List | overview, specimen cells, appearance scopes, customization shell, and stress panel | List markers, dividers, borders, anatomy, nesting, and exact output |
 | Data List | overview, comparison cells, appearance scopes, customization shell, and stress panels | Data List label/value semantics, orientation, dividers, and logical label-measure evidence |

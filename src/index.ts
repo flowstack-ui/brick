@@ -700,6 +700,12 @@ export {
   type BlockquoteVariant,
 } from "./components/blockquote/index.js";
 export {
+  Highlight,
+  type HighlightProps,
+  type HighlightTone,
+  type HighlightVariant,
+} from "./components/highlight/index.js";
+export {
   CodeBlock,
   CodeBlockActions,
   CodeBlockContent,

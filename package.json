@@ -388,6 +388,10 @@
       "types": "./dist/blockquote.d.ts",
       "default": "./dist/blockquote.js"
     },
+    "./highlight": {
+      "types": "./dist/highlight.d.ts",
+      "default": "./dist/highlight.js"
+    },
     "./code-block": {
       "types": "./dist/code-block.d.ts",
       "default": "./dist/code-block.js"
@@ -531,5 +535,14 @@
     "typescript": "^5.9.3",
     "vite": "^6.4.3",
     "vitest": "^3.2.7"
-  }
+  },
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/flowstack-ui/brick/issues"
+  },
+  "homepage": "https://github.com/flowstack-ui/brick#readme"
 }

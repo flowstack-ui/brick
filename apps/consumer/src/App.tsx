@@ -58,6 +58,7 @@ import { Em } from "@flowstack-ui/brick/em";
 import { Mark } from "@flowstack-ui/brick/mark";
 import { Kbd } from "@flowstack-ui/brick/kbd";
 import { Blockquote } from "@flowstack-ui/brick/blockquote";
+import { Highlight } from "@flowstack-ui/brick/highlight";
 import { CodeBlock } from "@flowstack-ui/brick/code-block";
 import { NavList } from "@flowstack-ui/brick/nav-list";
 import { Sidebar } from "@flowstack-ui/brick/sidebar";
@@ -259,6 +260,7 @@ export function App() {
             <Blockquote.Content cite="https://example.com/release-notes">Clear ownership makes durable releases possible.</Blockquote.Content>
             <Blockquote.Caption>Release principle, <Blockquote.Cite>FLOWSTACK Notes</Blockquote.Cite></Blockquote.Caption>
           </Blockquote.Root>
+          <Text as="p" tone="secondary"><Highlight query="published" text="Published guidance is the only release authority." variant="underline" /></Text>
           <HStack aria-label="Release palette" data-testid="consumer-color-swatch" gap="2">
             <ColorSwatch.Root label="Release violet" value="#6d5bd0" />
             <ColorSwatch.Root label="Review rose" value="rgb(216 111 133 / 70%)" />

@@ -21,6 +21,8 @@ subpaths inside realistic sentence-level copy.
 Kbd proves compact native keyboard-input notation and authored key sequences.
 Blockquote proves semantic quotation, source, and attribution composition through
 its public subpath.
+Highlight proves exact Atom-backed matching and finished query paint through its
+public subpath.
 
 ## Commands
 
