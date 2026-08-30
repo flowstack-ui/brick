@@ -42,6 +42,7 @@ export const componentIds = [
   "accordion",
   "code",
   "em",
+  "mark",
   "code-block",
   "nav-list",
   "sidebar",

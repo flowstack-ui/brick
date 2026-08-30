@@ -2313,6 +2313,16 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-slot"],
     publicTokens: ["--brick-em-font-style"],
   },
+  mark: {
+    source: "src/components/mark/Mark.tsx",
+    exportSource: "src/components/mark/index.ts",
+    css: "src/components/mark/mark.css",
+    exports: ["Mark", "MarkProps", "MarkTone", "MarkVariant"],
+    unions: { MarkVariant: ["subtle", "solid", "plain"], MarkTone: ["accent", "neutral"] },
+    defaults: { variant: "subtle", tone: "accent", slot: "mark" },
+    dataAttributes: ["data-slot", "data-tone", "data-variant"],
+    publicTokens: ["--brick-mark-background", "--brick-mark-foreground", "--brick-mark-radius", "--brick-mark-padding-inline"],
+  },
   "code-block": {
     source: "src/components/code-block/CodeBlock.tsx",
     exportSource: "src/components/code-block/index.ts",

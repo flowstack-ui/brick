@@ -682,6 +682,7 @@ export {
   type CodeVariant,
 } from "./components/code/index.js";
 export { Em, type EmProps } from "./components/em/index.js";
+export { Mark, type MarkProps, type MarkTone, type MarkVariant } from "./components/mark/index.js";
 export {
   CodeBlock,
   CodeBlockActions,

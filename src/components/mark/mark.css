@@ -1,0 +1,51 @@
+@layer brick.components {
+  .brick-mark {
+    --brick-mark-background: var(--brick-color-accent-soft);
+    --brick-mark-foreground: var(--brick-color-accent-text);
+    --brick-mark-radius: var(--brick-radius-subtle);
+    --brick-mark-padding-inline: 0.125em;
+
+    box-decoration-break: clone;
+    padding-inline: var(--brick-mark-padding-inline);
+    border-radius: var(--brick-mark-radius);
+    background: var(--brick-mark-background);
+    color: var(--brick-mark-foreground);
+    font: inherit;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .brick-mark[data-tone="neutral"] {
+    --brick-mark-background: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 28%
+    );
+    --brick-mark-foreground: var(--brick-color-text-primary);
+  }
+
+  .brick-mark[data-variant="solid"] {
+    --brick-mark-background: var(--brick-color-accent-solid);
+    --brick-mark-foreground: var(--brick-color-accent-on-solid);
+  }
+  .brick-mark[data-variant="solid"][data-tone="neutral"] {
+    --brick-mark-background: var(--brick-color-text-primary);
+    --brick-mark-foreground: var(--brick-color-surface-canvas);
+  }
+  .brick-mark[data-variant="plain"] {
+    --brick-mark-background: transparent;
+    --brick-mark-foreground: currentColor;
+    --brick-mark-padding-inline: 0em;
+  }
+
+  @media (forced-colors: active) {
+    .brick-mark {
+      --brick-mark-background: Highlight;
+      --brick-mark-foreground: HighlightText;
+    }
+    .brick-mark[data-variant="plain"] {
+      --brick-mark-background: transparent;
+      --brick-mark-foreground: CanvasText;
+      text-decoration: underline;
+    }
+  }
+}

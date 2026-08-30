@@ -267,6 +267,13 @@ export const componentEntries = [
     title: "Em",
   },
   {
+    category: "Content and status",
+    description: "Static native relevance with closed theme-aware recipes.",
+    id: "mark",
+    route: "/mark",
+    title: "Mark",
+  },
+  {
     category: "Data display",
     description: "Structured source, overflow, language, and copy.",
     id: "code-block",

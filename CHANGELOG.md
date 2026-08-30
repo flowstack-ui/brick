@@ -14,6 +14,7 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 - Added `Em` for native stress emphasis that inherits surrounding Brick
   typography and foreground.
+- Added `Mark` for static native relevance with theme-aware visual recipes.
 
 ## 0.1.11 - 2026-08-28
 
