@@ -270,9 +270,9 @@ export function App() {
             <ul><li>Verify the public archive.</li><li>Adopt the exact published version.</li></ul>
           </Prose>
           <HStack aria-label="Release palette" data-testid="consumer-color-swatch" gap="2">
-            <ColorSwatch.Root label="Release violet" value="#6d5bd0" />
-            <ColorSwatch.Root label="Review rose" value="rgb(216 111 133 / 70%)" />
-            <ColorSwatch.Mix label="Release and review mix" values={["#6d5bd0", "#d86f85"]} />
+            <ColorSwatch.Root label="Release violet" shape="sharp" value="#6d5bd0" />
+            <ColorSwatch.Root label="Review rose" shape="circle" value="rgb(216 111 133 / 70%)" />
+            <ColorSwatch.Mix label="Release and review mix" shape="rounded" values={["#6d5bd0", "#d86f85"]} />
           </HStack>
           <Toolbar.Root ariaLabel="Document view tools" size="sm" variant="outline">
             <Toolbar.Button>Refresh</Toolbar.Button>
@@ -1167,19 +1167,44 @@ export function App() {
                   {[1, 2, 3, 4, 5].map((value) => <Rating.Item key={value} value={value} />)}
                 </Rating.Root>
               </Field.Root>
-              <ColorPicker.Root name="release-accent" onValueChange={setReleaseAccent} value={releaseAccent}>
+              <ColorPicker.Root name="release-accent" onValueChange={(details) => setReleaseAccent(details.valueAsString)} value={releaseAccent}>
                 <ColorPicker.Label>Release accent color</ColorPicker.Label>
                 <ColorPicker.Control>
                   <ColorPicker.Input />
                   <ColorPicker.NativeInput aria-label="Release accent native chooser" />
-                  <ColorPicker.Trigger aria-label="Choose release accent preset">
-                    <ColorSwatch.Root value={releaseAccent} />
+                  <ColorPicker.Trigger aria-label="Open release accent editor">
+                    <ColorPicker.ValueSwatch><ColorPicker.SwatchIndicator value={releaseAccent} /></ColorPicker.ValueSwatch>
                   </ColorPicker.Trigger>
                 </ColorPicker.Control>
-                <ColorPicker.Content align="start" aria-label="Release accent presets">
-                  <ColorPicker.SwatchTrigger aria-label="Use release violet" value="#6d5bd0"><ColorSwatch.Root value="#6d5bd0" /> Violet</ColorPicker.SwatchTrigger>
-                  <ColorPicker.SwatchTrigger aria-label="Use review rose" value="#d86f85"><ColorSwatch.Root value="#d86f85" /> Rose</ColorPicker.SwatchTrigger>
-                </ColorPicker.Content>
+                <ColorPicker.Positioner>
+                  <ColorPicker.Content aria-label="Release accent editor">
+                    <ColorPicker.Area aria-label="Release accent saturation and brightness">
+                      <ColorPicker.AreaBackground />
+                      <ColorPicker.AreaThumb />
+                    </ColorPicker.Area>
+                    <ColorPicker.ChannelSlider channel="hue">
+                      <ColorPicker.ChannelSliderLabel>Hue</ColorPicker.ChannelSliderLabel>
+                      <ColorPicker.ChannelSliderValueText />
+                      <ColorPicker.ChannelSliderTrack />
+                      <ColorPicker.ChannelSliderThumb />
+                    </ColorPicker.ChannelSlider>
+                    <ColorPicker.ChannelSlider channel="alpha">
+                      <ColorPicker.ChannelSliderLabel>Opacity</ColorPicker.ChannelSliderLabel>
+                      <ColorPicker.ChannelSliderValueText />
+                      <ColorPicker.ChannelSliderTrack><ColorPicker.TransparencyGrid size="8px" /></ColorPicker.ChannelSliderTrack>
+                      <ColorPicker.ChannelSliderThumb />
+                    </ColorPicker.ChannelSlider>
+                    <HStack gap="2" wrap>
+                      <ColorPicker.FormatSelect aria-label="Release accent format" />
+                      <ColorPicker.Input aria-label="Release accent hex value" />
+                      <ColorPicker.ChannelInput aria-label="Release accent opacity" channel="alpha" />
+                    </HStack>
+                    <ColorPicker.SwatchGroup aria-label="Release accent presets">
+                      <ColorPicker.SwatchTrigger aria-label="Use release violet" value="#6d5bd0"><ColorPicker.Swatch value="#6d5bd0"><ColorPicker.SwatchIndicator /></ColorPicker.Swatch></ColorPicker.SwatchTrigger>
+                      <ColorPicker.SwatchTrigger aria-label="Use review rose" value="#d86f85"><ColorPicker.Swatch value="#d86f85"><ColorPicker.SwatchIndicator /></ColorPicker.Swatch></ColorPicker.SwatchTrigger>
+                    </ColorPicker.SwatchGroup>
+                  </ColorPicker.Content>
+                </ColorPicker.Positioner>
                 <ColorPicker.HiddenInput />
               </ColorPicker.Root>
               <div className="publishing-preferences-actions">

@@ -87,8 +87,11 @@ test("Color Picker renders deterministic Atom-backed form anatomy during SSR", (
   assert.match(markup, /data-size="lg"/u);
   assert.match(markup, /data-variant="soft"/u);
   assert.match(markup, /class="brick-color-picker__input"/u);
-  assert.match(markup, /aria-pressed="true"/u);
-  assert.match(markup, /<input(?=[^>]*type="hidden")(?=[^>]*name="accent")(?=[^>]*value="#55bb55")[^>]*>/u);
+  assert.match(markup, /data-state="checked"/u);
+  assert.match(
+    markup,
+    /<input(?=[^>]*data-slot="color-picker-hidden-input")(?=[^>]*name="accent")(?=[^>]*value="rgba\(85, 187, 85, 1\)")[^>]*>/u,
+  );
 });
 
 test("Appearance renders deterministic nested and wrapper-free server scopes", () => {

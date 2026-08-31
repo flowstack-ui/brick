@@ -559,7 +559,7 @@ export const componentEntries = [
   {
     category: "Forms",
     description:
-      "Opaque hexadecimal editing, native chooser, presets, and submission.",
+      "Area, channel, alpha, format, preset, platform, and form color editing.",
     id: "color-picker",
     route: "/color-picker",
     title: "Color Picker",

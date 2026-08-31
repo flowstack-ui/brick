@@ -18,17 +18,21 @@ test("renders the release palette through the public Color Swatch subpath", asyn
   await expect(palette.getByRole("img", { name: "Release violet" })).toBeVisible();
   await expect(palette.getByRole("img", { name: "Review rose" })).toBeVisible();
   await expect(palette.getByRole("img", { name: "Release and review mix" })).toBeVisible();
+  await expect(palette.getByRole("img", { name: "Release violet" })).toHaveAttribute("data-shape", "sharp");
+  await expect(palette.getByRole("img", { name: "Review rose" })).toHaveAttribute("data-shape", "circle");
 });
 
 test("edits a release accent through the packed Color Picker subpath", async ({ page }) => {
   const form = page.getByRole("form", { name: "Publishing preferences" });
-  const input = form.getByRole("textbox", { name: "Release accent color" });
-  await form.getByRole("button", { name: "Choose release accent preset" }).click();
-  await page.getByRole("dialog", { name: "Release accent presets" }).getByRole("button", { name: "Use review rose" }).click();
-  await expect(input).toHaveValue("#d86f85");
-  await expect(form.locator("input[name='release-accent']")).toHaveValue("#d86f85");
+  const input = form.locator("[data-slot='color-picker-control'] [data-slot='color-picker-input']");
+  await form.locator("[data-slot='color-picker-trigger']").click();
+  const editor = form.locator("[data-slot='color-picker-content']");
+  await expect(editor.locator("[data-slot='color-picker-area-background']")).toBeVisible();
+  await editor.getByRole("button", { name: "Use review rose" }).click();
+  await expect(input).toHaveValue("#D86F85");
+  await expect(form.locator("input[name='release-accent']")).toHaveValue(/216, 111, 133/);
   await form.getByRole("button", { name: "Reset preferences" }).click();
-  await expect(input).toHaveValue("#6d5bd0");
+  await expect(input).toHaveValue("#6D5BD0");
 });
 
 test("composes Skip Link before repeated application chrome", async ({ page }) => {

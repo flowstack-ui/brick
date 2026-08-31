@@ -1,14 +1,14 @@
 # Color Swatch
 
-Color Swatch provides a finished passive preview for one CSS color or a compact mix of colors. Its checkerboard reveals alpha without requiring application CSS.
+Color Swatch provides a finished passive preview for one CSS color or a compact mix. Its checkerboard reveals alpha, and its closed shape recipes cover sharp, rounded, and circular presentations without application CSS.
 
 ## When and where to use
 
-Use Color Swatch beside color names and values, inside a semantic preset control, or in palettes and design-token documentation. Use Color Picker when the user must edit or select the value.
+Use Color Swatch beside names and values, inside a semantic preset control, or in palettes and token documentation. Use Color Picker when the user must edit or select the value.
 
 ## When not to use
 
-Do not use Color Swatch as a color input, selection owner, contrast validator, or the only carrier of meaning. Use the appropriate semantic control and keep visible text for color names and states.
+Do not use Color Swatch as an input, selection owner, contrast validator, or the only carrier of meaning. Keep interaction and state on a semantic owning control.
 
 ## Installation and imports
 
@@ -17,17 +17,20 @@ import { ColorSwatch } from "@flowstack-ui/brick/color-swatch";
 import "@flowstack-ui/brick/styles.css";
 ```
 
-For modular CSS, load the foundation once and the component stylesheet:
+For modular styles, load the foundation once and this component stylesheet:
 
 ```tsx
 import "@flowstack-ui/brick/styles/core.css";
 import "@flowstack-ui/brick/styles/color-swatch.css";
 ```
 
+Do not combine modular styles with `styles.css` or `tokens.css`.
+
 ## Quick start
 
 ```tsx
-<ColorSwatch.Root value="#5b5bd6" />
+<ColorSwatch.Root shape="circle" value="rgb(91 91 214 / 65%)" />
+<ColorSwatch.Mix shape="rounded" values={["#5b5bd6", "#e5484d"]} />
 ```
 
 ## Anatomy and DOM ownership
@@ -38,43 +41,51 @@ import "@flowstack-ui/brick/styles/color-swatch.css";
 
 | Part | Prop | Values | Default |
 | --- | --- | --- | --- |
-| `Root` | `value` | Any valid CSS color | required |
-| `Mix` | `values` | Two or more valid CSS colors | required |
-| both | `size` | `sm`, `md`, `lg` | `md` |
-| both | `label` | localized string | - |
-| `size` | `ColorSwatchSize` | `sm`, `md`, `lg` | `md` |
+| `Root` | `value` | valid CSS color | required |
+| `Mix` | `values` | two or more valid CSS colors | required |
+| `size` | both | `sm`, `md`, `lg` | `md` |
+| `shape` | both | `sharp`, `rounded`, `circle` | `rounded` |
+| both | `label` | localized string | none |
 
-Public exports are `ColorSwatch`, `ColorSwatchRoot`, `ColorSwatchMix`, `ColorSwatchRootProps`, `ColorSwatchMixProps`, and `ColorSwatchSize`.
+Public exports are `ColorSwatch`, `ColorSwatchRoot`, `ColorSwatchMix`, `ColorSwatchRootProps`, `ColorSwatchMixProps`, `ColorSwatchSize`, and `ColorSwatchShape`.
 
 ## Visual recipes and states
 
-Small, medium, and large sizes are 1rem, 1.5rem, and 2rem. The checkerboard stays visible beneath alpha colors. Mix divides one swatch evenly into conic segments. Color Swatch owns no interactive states.
+Sizes are 1rem, 1.5rem, and 2rem. Sharp removes radius, rounded uses the public radius token, and circle uses a full radius. Mix divides its footprint evenly into conic segments. Alpha remains visible through the checkerboard.
 
 ## Tokens and CSS hooks
 
-Stable hooks are `.brick-color-swatch`, `.brick-color-swatch--mix`, `data-slot`, and `data-size`. Public variables are `--brick-color-swatch-size`, `--brick-color-swatch-value`, `--brick-color-swatch-border-color`, and `--brick-color-swatch-radius`.
+Both parts expose `data-slot`, `data-size`, and `data-shape`. Stable classes are `.brick-color-swatch` and `.brick-color-swatch--mix`. Public properties are `--brick-color-swatch-size`, `--brick-color-swatch-value`, `--brick-color-swatch-border-color`, and `--brick-color-swatch-radius`.
 
 ## Customization
 
-Prefer `size` before overriding the size variable. Set semantic color strings through `value` or `values`; do not replace the checkerboard or use custom CSS merely to create a standard swatch.
+Prefer `size` and `shape`, then public component properties. Preserve a visible boundary against neighboring surfaces and keep alpha perceivable. Do not add interaction directly to the passive span.
 
 ## Responsive behavior
 
-The swatch is content-sized, uses logical dimensions, and does not change across breakpoints. The owning Stack, Grid, control, palette, or Block owns responsive arrangement.
+The swatch remains content-sized across breakpoints. The owning Stack, Grid, picker, control, palette, or Block owns responsive arrangement.
 
 ## Accessibility
 
-Without `label`, a swatch is `aria-hidden` because adjacent text or its owning control must carry meaning. With `label`, it becomes `role="img"` with that accessible name. Color alone must never communicate selection, validation, or action.
+Without `label`, the swatch is `aria-hidden` because adjacent text or its owning control carries meaning. With `label`, it becomes `role="img"` with that accessible name. Color alone must never communicate selection, validation, or action.
 
 ## Composition, native props, and refs
 
-Native span attributes, `className`, `style`, events, and refs pass through. Keep interaction on a semantic Button or Atom-owned Color Picker preset; Color Swatch remains passive.
+Native span attributes, class, style, events, and refs pass through. Put interaction on Button or `ColorPicker.SwatchTrigger`. Use `shape` for standard geometry before overriding radius.
 
 ## Examples
 
 ```tsx
-<ColorSwatch.Root value="rgb(91 91 214 / 60%)" />
-<ColorSwatch.Mix values={["#5b5bd6", "#e5484d", "#30a46c"]} label="Brand palette" />
+<button type="button">
+  <ColorSwatch.Root aria-hidden value="#5b5bd6" />
+  Select iris
+</button>
+
+<ColorSwatch.Mix
+  label="Iris and tomato mix"
+  shape="circle"
+  values={["#5b5bd6", "#e5484d"]}
+/>
 ```
 
 ## Evidence
@@ -88,4 +99,4 @@ Native span attributes, `className`, `style`, events, and refs pass through. Kee
 
 ## Changelog
 
-See [`CHANGELOG.md`](CHANGELOG.md).
+See the [Color Swatch changelog](CHANGELOG.md).
