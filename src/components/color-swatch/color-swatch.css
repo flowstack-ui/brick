@@ -33,6 +33,8 @@
 
   .brick-color-swatch[data-size="sm"] { --brick-color-swatch-size: 1rem; }
   .brick-color-swatch[data-size="lg"] { --brick-color-swatch-size: 2rem; }
+  .brick-color-swatch[data-shape="sharp"] { --brick-color-swatch-radius: 0; }
+  .brick-color-swatch[data-shape="circle"] { --brick-color-swatch-radius: var(--brick-radius-full); }
 
   @media (forced-colors: active) {
     .brick-color-swatch {

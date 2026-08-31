@@ -34,15 +34,22 @@ export const colorSwatchScenarios = [
       "The complete sm, md, and lg size vocabulary aligns previews with nearby values.",
   },
   {
-    id: "color-swatch.mix",
+    id: "color-swatch.shapes",
     number: 3,
+    title: "Shapes",
+    description:
+      "Sharp, rounded, and circular recipes cover palettes, fields, and compact selection controls without application CSS.",
+  },
+  {
+    id: "color-swatch.mix",
+    number: 4,
     title: "Mixed colors",
     description:
       "Two or more colors share one swatch footprint with equal visual weight.",
   },
   {
     id: "color-swatch.semantics",
-    number: 4,
+    number: 5,
     title: "Semantics, appearance, and customization",
     navigationTitle: "Semantics",
     description:
@@ -92,6 +99,22 @@ export function ColorSwatchPage() {
         </Grid.Root>
       </Scenario>
       <Scenario {...colorSwatchScenarios[2]}>
+        <Grid.Root columns={{ initial: 1, md: 3 }} gap="4">
+          {(["sharp", "rounded", "circle"] as const).map((shape) => (
+            <Specimen key={shape} label={shape}>
+              <HStack gap="3">
+                <ColorSwatch.Root
+                  data-testid={`color-swatch-${shape}`}
+                  shape={shape}
+                  value="#0090ff"
+                />
+                <Text>{shape} swatch</Text>
+              </HStack>
+            </Specimen>
+          ))}
+        </Grid.Root>
+      </Scenario>
+      <Scenario {...colorSwatchScenarios[3]}>
         <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
           <Specimen label="two colors">
             <HStack gap="3">
@@ -115,7 +138,7 @@ export function ColorSwatchPage() {
           </Specimen>
         </Grid.Root>
       </Scenario>
-      <Scenario {...colorSwatchScenarios[3]}>
+      <Scenario {...colorSwatchScenarios[4]}>
         <VStack gap="5">
           <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
             <Specimen label="decorative preview">

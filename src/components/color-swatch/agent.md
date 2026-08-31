@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Preview one color or a compact mix of colors with a finished alpha-aware visual treatment.
+Preview one color or a compact mix of colors with a finished alpha-aware visual treatment and closed shape recipes.
 
 ## Use when
 
@@ -14,23 +14,28 @@ Preview one color or a compact mix of colors with a finished alpha-aware visual 
 
 ## Required composition
 
-- Render Root for one color and Mix for two or more colors; place the swatch inside the owning control when it represents a selectable option.
+- Render Root for one color and Mix for two or more colors.
+- Choose sharp, rounded, or circle through shape rather than application border-radius CSS.
+- Place the passive swatch inside its owning control when it represents a selectable option.
 
 ## Rules
 
 - **MUST:** Do not use the swatch as the only carrier of a color name, selection state, validation state, or action.
 - **MUST:** Leave decorative swatches unlabeled, or provide label when the swatch itself must be exposed as an image.
+- **SHOULD:** Use the closed shape prop for sharp, rounded, or circle geometry before overriding the public radius variable.
 - **MUST:** Load styles.css or core.css plus color-swatch.css.
 
 ## Common mistakes
 
-- **Avoid:** Adding click handlers directly to ColorSwatch. **Instead:** Place the passive swatch inside Button, Color Picker preset behavior, or another semantic control.
+- **Avoid:** Adding click handlers directly to ColorSwatch. **Instead:** Place the passive swatch inside Button, Color Picker SwatchTrigger, or another semantic control.
+- **Avoid:** Using custom border-radius CSS for a standard square or circle. **Instead:** Use shape=sharp, rounded, or circle.
 
 ## Validation checklist
 
-- Check solid, alpha, mixed, size, light/dark, forced-color, zoom, RTL, and decorative versus labeled semantics.
+- Check solid, alpha, mixed, size, all three shapes, light/dark, forced colors, zoom, RTL, and decorative versus labeled semantics.
 
 ## Related guidance
 
+- `color-picker`
 - `badge`
-- `input`
+- `button`

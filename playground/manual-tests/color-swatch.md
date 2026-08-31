@@ -13,13 +13,13 @@
 | Assistive technology | |
 | Playground route | `/color-swatch` |
 
-Scenario order: `01 Overview`, `02 Sizes`, `03 Mixed colors`, `04 Semantics`
+Scenario order: `01 Overview`, `02 Sizes`, `03 Shapes`, `04 Mixed colors`, `05 Semantics, appearance, and customization`
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
-## Step 1 — Solid, alpha, mix, and sizes
+## Step 1 — Solid, alpha, mix, sizes, and shapes
 
-Expected: Every preview is square and crisply bounded; alpha reveals the checker; mix segments are even; sm/md/lg remain 16/24/32 px and align with adjacent text.
+Expected: Every preview is crisply bounded; alpha reveals the checker; mix segments are even; sm/md/lg remain 16/24/32 px; sharp has no radius, rounded uses the default radius, and circle is fully round.
 
 Result:
 Notes or issue:

@@ -1,6 +1,6 @@
 {
   "$schema": "flowstack.theme-report.v1",
-  "brickVersion": "0.1.12",
+  "brickVersion": "0.2.0",
   "contrast": {
     "algorithm": "wcag2-relative-luminance",
     "colorSpace": "srgb",
@@ -14,7 +14,7 @@
         "id": "accent-on-soft/accent-soft",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.505055547597568,
+        "ratio": 8.5050555476,
         "valid": true
       },
       {
@@ -26,7 +26,7 @@
         "id": "accent-on-soft/accent-soft-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.6928839581849155,
+        "ratio": 7.69288395818,
         "valid": true
       },
       {
@@ -38,7 +38,7 @@
         "id": "accent-on-soft/accent-soft-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.912537485728859,
+        "ratio": 6.91253748573,
         "valid": true
       },
       {
@@ -50,7 +50,7 @@
         "id": "accent-on-solid/accent-solid",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.399847450379261,
+        "ratio": 7.39984745038,
         "valid": true
       },
       {
@@ -62,7 +62,7 @@
         "id": "accent-on-solid/accent-solid-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.261686005770835,
+        "ratio": 8.26168600577,
         "valid": true
       },
       {
@@ -74,7 +74,7 @@
         "id": "accent-on-solid/accent-solid-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.506712696418582,
+        "ratio": 10.5067126964,
         "valid": true
       },
       {
@@ -86,7 +86,7 @@
         "id": "accent-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.399847450379261,
+        "ratio": 7.39984745038,
         "valid": true
       },
       {
@@ -98,7 +98,7 @@
         "id": "accent-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.993977851547496,
+        "ratio": 6.99397785155,
         "valid": true
       },
       {
@@ -110,7 +110,7 @@
         "id": "accent-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.399847450379261,
+        "ratio": 7.39984745038,
         "valid": true
       },
       {
@@ -122,7 +122,7 @@
         "id": "accent-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.399847450379261,
+        "ratio": 7.39984745038,
         "valid": true
       },
       {
@@ -134,7 +134,7 @@
         "id": "accent-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.582127635994375,
+        "ratio": 6.58212763599,
         "valid": true
       },
       {
@@ -146,7 +146,7 @@
         "id": "danger-on-soft/danger-soft",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.070498095332093,
+        "ratio": 6.07049809533,
         "valid": true
       },
       {
@@ -158,7 +158,7 @@
         "id": "danger-on-soft/danger-soft-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.407443995424672,
+        "ratio": 5.40744399542,
         "valid": true
       },
       {
@@ -170,7 +170,7 @@
         "id": "danger-on-soft/danger-soft-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 4.776633286625561,
+        "ratio": 4.77663328663,
         "valid": true
       },
       {
@@ -182,7 +182,7 @@
         "id": "danger-on-solid/danger-solid",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.798236707024789,
+        "ratio": 6.79823670702,
         "valid": true
       },
       {
@@ -194,7 +194,7 @@
         "id": "danger-on-solid/danger-solid-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.699965329631549,
+        "ratio": 7.69996532963,
         "valid": true
       },
       {
@@ -206,7 +206,7 @@
         "id": "danger-on-solid/danger-solid-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.818270018243252,
+        "ratio": 8.81827001824,
         "valid": true
       },
       {
@@ -218,7 +218,7 @@
         "id": "danger-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.798236707024789,
+        "ratio": 6.79823670702,
         "valid": true
       },
       {
@@ -230,7 +230,7 @@
         "id": "danger-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.42536447911121,
+        "ratio": 6.42536447911,
         "valid": true
       },
       {
@@ -242,7 +242,7 @@
         "id": "danger-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.798236707024789,
+        "ratio": 6.79823670702,
         "valid": true
       },
       {
@@ -254,7 +254,7 @@
         "id": "danger-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.798236707024789,
+        "ratio": 6.79823670702,
         "valid": true
       },
       {
@@ -266,7 +266,7 @@
         "id": "danger-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.046997861158053,
+        "ratio": 6.04699786116,
         "valid": true
       },
       {
@@ -278,7 +278,7 @@
         "id": "focus-ring-on-surface/surface-base",
         "kind": "non-text",
         "minimumRatio": 3,
-        "ratio": 3.7828130820536305,
+        "ratio": 3.78281308205,
         "valid": true
       },
       {
@@ -290,7 +290,7 @@
         "id": "focus-ring-on-surface/surface-canvas",
         "kind": "non-text",
         "minimumRatio": 3,
-        "ratio": 3.575331936210554,
+        "ratio": 3.57533193621,
         "valid": true
       },
       {
@@ -302,7 +302,7 @@
         "id": "focus-ring-on-surface/surface-overlay",
         "kind": "non-text",
         "minimumRatio": 3,
-        "ratio": 3.7828130820536305,
+        "ratio": 3.78281308205,
         "valid": true
       },
       {
@@ -314,7 +314,7 @@
         "id": "focus-ring-on-surface/surface-raised",
         "kind": "non-text",
         "minimumRatio": 3,
-        "ratio": 3.7828130820536305,
+        "ratio": 3.78281308205,
         "valid": true
       },
       {
@@ -326,7 +326,7 @@
         "id": "focus-ring-on-surface/surface-subtle",
         "kind": "non-text",
         "minimumRatio": 3,
-        "ratio": 3.364793490156358,
+        "ratio": 3.36479349016,
         "valid": true
       },
       {
@@ -338,7 +338,7 @@
         "id": "info-on-soft/info-soft",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.072376750628612,
+        "ratio": 6.07237675063,
         "valid": true
       },
       {
@@ -350,7 +350,7 @@
         "id": "info-on-soft/info-soft-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.605409476750013,
+        "ratio": 5.60540947675,
         "valid": true
       },
       {
@@ -362,7 +362,7 @@
         "id": "info-on-soft/info-soft-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.193070135065374,
+        "ratio": 5.19307013507,
         "valid": true
       },
       {
@@ -374,7 +374,7 @@
         "id": "info-on-solid/info-solid",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 4.813084097092191,
+        "ratio": 4.81308409709,
         "valid": true
       },
       {
@@ -386,7 +386,7 @@
         "id": "info-on-solid/info-solid-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.652834483197436,
+        "ratio": 5.6528344832,
         "valid": true
       },
       {
@@ -398,7 +398,7 @@
         "id": "info-on-solid/info-solid-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.690764327077438,
+        "ratio": 6.69076432708,
         "valid": true
       },
       {
@@ -410,7 +410,7 @@
         "id": "info-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.644125840860903,
+        "ratio": 6.64412584086,
         "valid": true
       },
       {
@@ -422,7 +422,7 @@
         "id": "info-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.279706343337374,
+        "ratio": 6.27970634334,
         "valid": true
       },
       {
@@ -434,7 +434,7 @@
         "id": "info-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.644125840860903,
+        "ratio": 6.64412584086,
         "valid": true
       },
       {
@@ -446,7 +446,7 @@
         "id": "info-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.644125840860903,
+        "ratio": 6.64412584086,
         "valid": true
       },
       {
@@ -458,7 +458,7 @@
         "id": "info-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.909917009426122,
+        "ratio": 5.90991700943,
         "valid": true
       },
       {
@@ -470,7 +470,7 @@
         "id": "link-text-hover-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.944467936555014,
+        "ratio": 10.9444679366,
         "valid": true
       },
       {
@@ -482,7 +482,7 @@
         "id": "link-text-hover-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.34418166840917,
+        "ratio": 10.3441816684,
         "valid": true
       },
       {
@@ -494,7 +494,7 @@
         "id": "link-text-hover-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.944467936555014,
+        "ratio": 10.9444679366,
         "valid": true
       },
       {
@@ -506,7 +506,7 @@
         "id": "link-text-hover-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.944467936555014,
+        "ratio": 10.9444679366,
         "valid": true
       },
       {
@@ -518,7 +518,7 @@
         "id": "link-text-hover-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.735049992518556,
+        "ratio": 9.73504999252,
         "valid": true
       },
       {
@@ -530,7 +530,7 @@
         "id": "link-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.625236494048135,
+        "ratio": 9.62523649405,
         "valid": true
       },
       {
@@ -542,7 +542,7 @@
         "id": "link-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.097307925155818,
+        "ratio": 9.09730792516,
         "valid": true
       },
       {
@@ -554,7 +554,7 @@
         "id": "link-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.625236494048135,
+        "ratio": 9.62523649405,
         "valid": true
       },
       {
@@ -566,7 +566,7 @@
         "id": "link-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.625236494048135,
+        "ratio": 9.62523649405,
         "valid": true
       },
       {
@@ -578,7 +578,7 @@
         "id": "link-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.56160016206939,
+        "ratio": 8.56160016207,
         "valid": true
       },
       {
@@ -590,7 +590,7 @@
         "id": "link-text-pressed-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 12.81135800566716,
+        "ratio": 12.8113580057,
         "valid": true
       },
       {
@@ -602,7 +602,7 @@
         "id": "link-text-pressed-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 12.108675853214983,
+        "ratio": 12.1086758532,
         "valid": true
       },
       {
@@ -614,7 +614,7 @@
         "id": "link-text-pressed-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 12.81135800566716,
+        "ratio": 12.8113580057,
         "valid": true
       },
       {
@@ -626,7 +626,7 @@
         "id": "link-text-pressed-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 12.81135800566716,
+        "ratio": 12.8113580057,
         "valid": true
       },
       {
@@ -638,7 +638,7 @@
         "id": "link-text-pressed-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 11.395639457323902,
+        "ratio": 11.3956394573,
         "valid": true
       },
       {
@@ -650,7 +650,7 @@
         "id": "success-on-soft/success-soft",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.806601746924829,
+        "ratio": 5.80660174692,
         "valid": true
       },
       {
@@ -662,7 +662,7 @@
         "id": "success-on-soft/success-soft-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.427147265979336,
+        "ratio": 5.42714726598,
         "valid": true
       },
       {
@@ -674,7 +674,7 @@
         "id": "success-on-soft/success-soft-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 4.985916470024783,
+        "ratio": 4.98591647002,
         "valid": true
       },
       {
@@ -686,7 +686,7 @@
         "id": "success-on-solid/success-solid",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.407077523760699,
+        "ratio": 5.40707752376,
         "valid": true
       },
       {
@@ -698,7 +698,7 @@
         "id": "success-on-solid/success-solid-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.1911115270036525,
+        "ratio": 6.191111527,
         "valid": true
       },
       {
@@ -710,7 +710,7 @@
         "id": "success-on-solid/success-solid-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.205450192264525,
+        "ratio": 7.20545019226,
         "valid": true
       },
       {
@@ -722,7 +722,7 @@
         "id": "success-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.2454978523654185,
+        "ratio": 6.24549785237,
         "valid": true
       },
       {
@@ -734,7 +734,7 @@
         "id": "success-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.902942451751818,
+        "ratio": 5.90294245175,
         "valid": true
       },
       {
@@ -746,7 +746,7 @@
         "id": "success-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.2454978523654185,
+        "ratio": 6.24549785237,
         "valid": true
       },
       {
@@ -758,7 +758,7 @@
         "id": "success-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.2454978523654185,
+        "ratio": 6.24549785237,
         "valid": true
       },
       {
@@ -770,7 +770,7 @@
         "id": "success-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.555339389123625,
+        "ratio": 5.55533938912,
         "valid": true
       },
       {
@@ -782,7 +782,7 @@
         "id": "text-inverse-on-neutral-solid/text-primary",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 16.403863737951347,
+        "ratio": 16.403863738,
         "valid": true
       },
       {
@@ -794,7 +794,7 @@
         "id": "text-inverse-on-neutral-solid/text-secondary",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.423454166953114,
+        "ratio": 8.42345416695,
         "valid": true
       },
       {
@@ -806,7 +806,7 @@
         "id": "text-muted-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 4.993388474405561,
+        "ratio": 4.99338847441,
         "valid": true
       },
       {
@@ -818,7 +818,7 @@
         "id": "text-muted-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 4.719509236960704,
+        "ratio": 4.71950923696,
         "valid": true
       },
       {
@@ -830,7 +830,7 @@
         "id": "text-muted-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 4.993388474405561,
+        "ratio": 4.99338847441,
         "valid": true
       },
       {
@@ -842,7 +842,7 @@
         "id": "text-muted-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 4.993388474405561,
+        "ratio": 4.99338847441,
         "valid": true
       },
       {
@@ -854,7 +854,7 @@
         "id": "text-primary-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 16.403863737951347,
+        "ratio": 16.403863738,
         "valid": true
       },
       {
@@ -866,7 +866,7 @@
         "id": "text-primary-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 15.504138488308259,
+        "ratio": 15.5041384883,
         "valid": true
       },
       {
@@ -878,7 +878,7 @@
         "id": "text-primary-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 16.403863737951347,
+        "ratio": 16.403863738,
         "valid": true
       },
       {
@@ -890,7 +890,7 @@
         "id": "text-primary-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 16.403863737951347,
+        "ratio": 16.403863738,
         "valid": true
       },
       {
@@ -902,7 +902,7 @@
         "id": "text-primary-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 14.591155502958605,
+        "ratio": 14.591155503,
         "valid": true
       },
       {
@@ -914,7 +914,7 @@
         "id": "text-secondary-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.423454166953114,
+        "ratio": 8.42345416695,
         "valid": true
       },
       {
@@ -926,7 +926,7 @@
         "id": "text-secondary-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.961441404332744,
+        "ratio": 7.96144140433,
         "valid": true
       },
       {
@@ -938,7 +938,7 @@
         "id": "text-secondary-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.423454166953114,
+        "ratio": 8.42345416695,
         "valid": true
       },
       {
@@ -950,7 +950,7 @@
         "id": "text-secondary-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.423454166953114,
+        "ratio": 8.42345416695,
         "valid": true
       },
       {
@@ -962,7 +962,7 @@
         "id": "text-secondary-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.492620737741344,
+        "ratio": 7.49262073774,
         "valid": true
       },
       {
@@ -974,7 +974,7 @@
         "id": "warning-on-soft/warning-soft",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.401641783141583,
+        "ratio": 7.40164178314,
         "valid": true
       },
       {
@@ -986,7 +986,7 @@
         "id": "warning-on-soft/warning-soft-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.829235736327601,
+        "ratio": 6.82923573633,
         "valid": true
       },
       {
@@ -998,7 +998,7 @@
         "id": "warning-on-soft/warning-soft-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.305918853199664,
+        "ratio": 6.3059188532,
         "valid": true
       },
       {
@@ -1010,7 +1010,7 @@
         "id": "warning-on-solid/warning-solid",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.637733968671125,
+        "ratio": 7.63773396867,
         "valid": true
       },
       {
@@ -1022,7 +1022,7 @@
         "id": "warning-on-solid/warning-solid-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.332387597305895,
+        "ratio": 6.33238759731,
         "valid": true
       },
       {
@@ -1034,7 +1034,7 @@
         "id": "warning-on-solid/warning-solid-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.364862301391826,
+        "ratio": 5.36486230139,
         "valid": true
       },
       {
@@ -1046,7 +1046,7 @@
         "id": "warning-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.903910461588434,
+        "ratio": 7.90391046159,
         "valid": true
       },
       {
@@ -1058,7 +1058,7 @@
         "id": "warning-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.47039382631203,
+        "ratio": 7.47039382631,
         "valid": true
       },
       {
@@ -1070,7 +1070,7 @@
         "id": "warning-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.903910461588434,
+        "ratio": 7.90391046159,
         "valid": true
       },
       {
@@ -1082,7 +1082,7 @@
         "id": "warning-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.903910461588434,
+        "ratio": 7.90391046159,
         "valid": true
       },
       {
@@ -1094,7 +1094,7 @@
         "id": "warning-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.0304891865007155,
+        "ratio": 7.0304891865,
         "valid": true
       },
       {
@@ -1106,7 +1106,7 @@
         "id": "accent-on-soft/accent-soft",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.394309376057054,
+        "ratio": 8.39430937606,
         "valid": true
       },
       {
@@ -1118,7 +1118,7 @@
         "id": "accent-on-soft/accent-soft-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.9227891332889335,
+        "ratio": 6.92278913329,
         "valid": true
       },
       {
@@ -1130,7 +1130,7 @@
         "id": "accent-on-soft/accent-soft-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.674835682053381,
+        "ratio": 5.67483568205,
         "valid": true
       },
       {
@@ -1142,7 +1142,7 @@
         "id": "accent-on-solid/accent-solid",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.091916483568058,
+        "ratio": 9.09191648357,
         "valid": true
       },
       {
@@ -1154,7 +1154,7 @@
         "id": "accent-on-solid/accent-solid-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.07811802976713,
+        "ratio": 10.0781180298,
         "valid": true
       },
       {
@@ -1166,7 +1166,7 @@
         "id": "accent-on-solid/accent-solid-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.347915913323178,
+        "ratio": 7.34791591332,
         "valid": true
       },
       {
@@ -1178,7 +1178,7 @@
         "id": "accent-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 11.183444504473538,
+        "ratio": 11.1834445045,
         "valid": true
       },
       {
@@ -1190,7 +1190,7 @@
         "id": "accent-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 11.98183888325954,
+        "ratio": 11.9818388833,
         "valid": true
       },
       {
@@ -1202,7 +1202,7 @@
         "id": "accent-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.14434171336565,
+        "ratio": 8.14434171337,
         "valid": true
       },
       {
@@ -1214,7 +1214,7 @@
         "id": "accent-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.160811187830351,
+        "ratio": 9.16081118783,
         "valid": true
       },
       {
@@ -1226,7 +1226,7 @@
         "id": "accent-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.967561565137007,
+        "ratio": 9.96756156514,
         "valid": true
       },
       {
@@ -1238,7 +1238,7 @@
         "id": "danger-on-soft/danger-soft",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.3533186916179325,
+        "ratio": 7.35331869162,
         "valid": true
       },
       {
@@ -1250,7 +1250,7 @@
         "id": "danger-on-soft/danger-soft-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.428293927628069,
+        "ratio": 6.42829392763,
         "valid": true
       },
       {
@@ -1262,7 +1262,7 @@
         "id": "danger-on-soft/danger-soft-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.539461424556108,
+        "ratio": 5.53946142456,
         "valid": true
       },
       {
@@ -1274,7 +1274,7 @@
         "id": "danger-on-solid/danger-solid",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.606460208082212,
+        "ratio": 6.60646020808,
         "valid": true
       },
       {
@@ -1286,7 +1286,7 @@
         "id": "danger-on-solid/danger-solid-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.800713870000659,
+        "ratio": 5.80071387,
         "valid": true
       },
       {
@@ -1298,7 +1298,7 @@
         "id": "danger-on-solid/danger-solid-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.670125716382935,
+        "ratio": 7.67012571638,
         "valid": true
       },
       {
@@ -1310,7 +1310,7 @@
         "id": "danger-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.2778516716073,
+        "ratio": 8.27785167161,
         "valid": true
       },
       {
@@ -1322,7 +1322,7 @@
         "id": "danger-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.868813627951956,
+        "ratio": 8.86881362795,
         "valid": true
       },
       {
@@ -1334,7 +1334,7 @@
         "id": "danger-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.028344186726807,
+        "ratio": 6.02834418673,
         "valid": true
       },
       {
@@ -1346,7 +1346,7 @@
         "id": "danger-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.780722716880877,
+        "ratio": 6.78072271688,
         "valid": true
       },
       {
@@ -1358,7 +1358,7 @@
         "id": "danger-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.37786968324588,
+        "ratio": 7.37786968325,
         "valid": true
       },
       {
@@ -1370,7 +1370,7 @@
         "id": "focus-ring-on-surface/surface-base",
         "kind": "non-text",
         "minimumRatio": 3,
-        "ratio": 8.288289256933423,
+        "ratio": 8.28828925693,
         "valid": true
       },
       {
@@ -1382,7 +1382,7 @@
         "id": "focus-ring-on-surface/surface-canvas",
         "kind": "non-text",
         "minimumRatio": 3,
-        "ratio": 8.879996360218195,
+        "ratio": 8.87999636022,
         "valid": true
       },
       {
@@ -1394,7 +1394,7 @@
         "id": "focus-ring-on-surface/surface-overlay",
         "kind": "non-text",
         "minimumRatio": 3,
-        "ratio": 6.0359453566100525,
+        "ratio": 6.03594535661,
         "valid": true
       },
       {
@@ -1406,7 +1406,7 @@
         "id": "focus-ring-on-surface/surface-raised",
         "kind": "non-text",
         "minimumRatio": 3,
-        "ratio": 6.78927256468414,
+        "ratio": 6.78927256468,
         "valid": true
       },
       {
@@ -1418,7 +1418,7 @@
         "id": "focus-ring-on-surface/surface-subtle",
         "kind": "non-text",
         "minimumRatio": 3,
-        "ratio": 7.38717247669989,
+        "ratio": 7.3871724767,
         "valid": true
       },
       {
@@ -1430,7 +1430,7 @@
         "id": "info-on-soft/info-soft",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.547793023317304,
+        "ratio": 8.54779302332,
         "valid": true
       },
       {
@@ -1442,7 +1442,7 @@
         "id": "info-on-soft/info-soft-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.098090798117374,
+        "ratio": 7.09809079812,
         "valid": true
       },
       {
@@ -1454,7 +1454,7 @@
         "id": "info-on-soft/info-soft-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.940150095891789,
+        "ratio": 5.94015009589,
         "valid": true
       },
       {
@@ -1466,7 +1466,7 @@
         "id": "info-on-solid/info-solid",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.209232253494969,
+        "ratio": 5.20923225349,
         "valid": true
       },
       {
@@ -1478,7 +1478,7 @@
         "id": "info-on-solid/info-solid-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 4.553910568176745,
+        "ratio": 4.55391056818,
         "valid": true
       },
       {
@@ -1490,7 +1490,7 @@
         "id": "info-on-solid/info-solid-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.524104994737006,
+        "ratio": 6.52410499474,
         "valid": true
       },
       {
@@ -1502,7 +1502,7 @@
         "id": "info-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.919446060912037,
+        "ratio": 9.91944606091,
         "valid": true
       },
       {
@@ -1514,7 +1514,7 @@
         "id": "info-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.627602655468852,
+        "ratio": 10.6276026555,
         "valid": true
       },
       {
@@ -1526,7 +1526,7 @@
         "id": "info-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.223835044296986,
+        "ratio": 7.2238350443,
         "valid": true
       },
       {
@@ -1538,7 +1538,7 @@
         "id": "info-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.125418999086849,
+        "ratio": 8.12541899909,
         "valid": true
       },
       {
@@ -1550,7 +1550,7 @@
         "id": "info-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.840987163180898,
+        "ratio": 8.84098716318,
         "valid": true
       },
       {
@@ -1562,7 +1562,7 @@
         "id": "link-text-hover-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.020691980889719,
+        "ratio": 10.0206919809,
         "valid": true
       },
       {
@@ -1574,7 +1574,7 @@
         "id": "link-text-hover-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.73607659659448,
+        "ratio": 10.7360765966,
         "valid": true
       },
       {
@@ -1586,7 +1586,7 @@
         "id": "link-text-hover-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.297567369704644,
+        "ratio": 7.2975673697,
         "valid": true
       },
       {
@@ -1598,7 +1598,7 @@
         "id": "link-text-hover-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.208353622322358,
+        "ratio": 8.20835362232,
         "valid": true
       },
       {
@@ -1610,7 +1610,7 @@
         "id": "link-text-hover-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.931225456060414,
+        "ratio": 8.93122545606,
         "valid": true
       },
       {
@@ -1622,7 +1622,7 @@
         "id": "link-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.942537408186084,
+        "ratio": 8.94253740819,
         "valid": true
       },
       {
@@ -1634,7 +1634,7 @@
         "id": "link-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.580951771124385,
+        "ratio": 9.58095177112,
         "valid": true
       },
       {
@@ -1646,7 +1646,7 @@
         "id": "link-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.512401470556696,
+        "ratio": 6.51240147056,
         "valid": true
       },
       {
@@ -1658,7 +1658,7 @@
         "id": "link-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.325193656009379,
+        "ratio": 7.32519365601,
         "valid": true
       },
       {
@@ -1670,7 +1670,7 @@
         "id": "link-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.970289666030903,
+        "ratio": 7.97028966603,
         "valid": true
       },
       {
@@ -1682,7 +1682,7 @@
         "id": "link-text-pressed-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 11.417684730958568,
+        "ratio": 11.417684731,
         "valid": true
       },
       {
@@ -1694,7 +1694,7 @@
         "id": "link-text-pressed-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 12.232801692848227,
+        "ratio": 12.2328016928,
         "valid": true
       },
       {
@@ -1706,7 +1706,7 @@
         "id": "link-text-pressed-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.314927121711632,
+        "ratio": 8.31492712171,
         "valid": true
       },
       {
@@ -1718,7 +1718,7 @@
         "id": "link-text-pressed-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.352686820294537,
+        "ratio": 9.35268682029,
         "valid": true
       },
       {
@@ -1730,7 +1730,7 @@
         "id": "link-text-pressed-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.17633479932145,
+        "ratio": 10.1763347993,
         "valid": true
       },
       {
@@ -1742,7 +1742,7 @@
         "id": "success-on-soft/success-soft",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.897160582173916,
+        "ratio": 7.89716058217,
         "valid": true
       },
       {
@@ -1754,7 +1754,7 @@
         "id": "success-on-soft/success-soft-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.692782880651849,
+        "ratio": 6.69278288065,
         "valid": true
       },
       {
@@ -1766,7 +1766,7 @@
         "id": "success-on-soft/success-soft-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.52259172887526,
+        "ratio": 5.52259172888,
         "valid": true
       },
       {
@@ -1778,7 +1778,7 @@
         "id": "success-on-solid/success-solid",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.407077523760699,
+        "ratio": 5.40707752376,
         "valid": true
       },
       {
@@ -1790,7 +1790,7 @@
         "id": "success-on-solid/success-solid-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 4.7304247079357875,
+        "ratio": 4.73042470794,
         "valid": true
       },
       {
@@ -1802,7 +1802,7 @@
         "id": "success-on-solid/success-solid-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.004566064612469,
+        "ratio": 7.00456606461,
         "valid": true
       },
       {
@@ -1814,7 +1814,7 @@
         "id": "success-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.58983112926785,
+        "ratio": 9.58983112927,
         "valid": true
       },
       {
@@ -1826,7 +1826,7 @@
         "id": "success-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.274456269943585,
+        "ratio": 10.2744562699,
         "valid": true
       },
       {
@@ -1838,7 +1838,7 @@
         "id": "success-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.983793021817769,
+        "ratio": 6.98379302182,
         "valid": true
       },
       {
@@ -1850,7 +1850,7 @@
         "id": "success-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.855418092633195,
+        "ratio": 7.85541809263,
         "valid": true
       },
       {
@@ -1862,7 +1862,7 @@
         "id": "success-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.54720852256283,
+        "ratio": 8.54720852256,
         "valid": true
       },
       {
@@ -1874,7 +1874,7 @@
         "id": "text-inverse-on-neutral-solid/text-primary",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 15.066360650790905,
+        "ratio": 15.0663606508,
         "valid": true
       },
       {
@@ -1886,7 +1886,7 @@
         "id": "text-inverse-on-neutral-solid/text-secondary",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 11.367075271800765,
+        "ratio": 11.3670752718,
         "valid": true
       },
       {
@@ -1898,7 +1898,7 @@
         "id": "text-muted-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.4944579628482195,
+        "ratio": 7.49445796285,
         "valid": true
       },
       {
@@ -1910,7 +1910,7 @@
         "id": "text-muted-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.029492862622838,
+        "ratio": 8.02949286262,
         "valid": true
       },
       {
@@ -1922,7 +1922,7 @@
         "id": "text-muted-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.457837840700534,
+        "ratio": 5.4578378407,
         "valid": true
       },
       {
@@ -1934,7 +1934,7 @@
         "id": "text-muted-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.139013282117252,
+        "ratio": 6.13901328212,
         "valid": true
       },
       {
@@ -1946,7 +1946,7 @@
         "id": "text-primary-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 15.992512152770928,
+        "ratio": 15.9925121528,
         "valid": true
       },
       {
@@ -1958,7 +1958,7 @@
         "id": "text-primary-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 17.1342294296199,
+        "ratio": 17.1342294296,
         "valid": true
       },
       {
@@ -1970,7 +1970,7 @@
         "id": "text-primary-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 11.646544476991691,
+        "ratio": 11.646544477,
         "valid": true
       },
       {
@@ -1982,7 +1982,7 @@
         "id": "text-primary-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 13.100112777598433,
+        "ratio": 13.1001127776,
         "valid": true
       },
       {
@@ -1994,7 +1994,7 @@
         "id": "text-primary-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 14.253779271688718,
+        "ratio": 14.2537792717,
         "valid": true
       },
       {
@@ -2006,7 +2006,7 @@
         "id": "text-secondary-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 12.065826223016419,
+        "ratio": 12.065826223,
         "valid": true
       },
       {
@@ -2018,7 +2018,7 @@
         "id": "text-secondary-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 12.927214485640837,
+        "ratio": 12.9272144856,
         "valid": true
       },
       {
@@ -2030,7 +2030,7 @@
         "id": "text-secondary-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.786936062053606,
+        "ratio": 8.78693606205,
         "valid": true
       },
       {
@@ -2042,7 +2042,7 @@
         "id": "text-secondary-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.883605700373527,
+        "ratio": 9.88360570037,
         "valid": true
       },
       {
@@ -2054,7 +2054,7 @@
         "id": "text-secondary-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.754009255739788,
+        "ratio": 10.7540092557,
         "valid": true
       },
       {
@@ -2066,7 +2066,7 @@
         "id": "warning-on-soft/warning-soft",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.177768469064079,
+        "ratio": 8.17776846906,
         "valid": true
       },
       {
@@ -2078,7 +2078,7 @@
         "id": "warning-on-soft/warning-soft-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.937458908914095,
+        "ratio": 6.93745890891,
         "valid": true
       },
       {
@@ -2090,7 +2090,7 @@
         "id": "warning-on-soft/warning-soft-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.822894679200491,
+        "ratio": 5.8228946792,
         "valid": true
       },
       {
@@ -2102,7 +2102,7 @@
         "id": "warning-on-solid/warning-solid",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 6.473563571699611,
+        "ratio": 6.4735635717,
         "valid": true
       },
       {
@@ -2114,7 +2114,7 @@
         "id": "warning-on-solid/warning-solid-hover",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.5588854452028835,
+        "ratio": 7.5588854452,
         "valid": true
       },
       {
@@ -2126,7 +2126,7 @@
         "id": "warning-on-solid/warning-solid-pressed",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 5.158823483261684,
+        "ratio": 5.15882348326,
         "valid": true
       },
       {
@@ -2138,7 +2138,7 @@
         "id": "warning-text-on-surface/surface-base",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.114634852750806,
+        "ratio": 10.1146348528,
         "valid": true
       },
       {
@@ -2150,7 +2150,7 @@
         "id": "warning-text-on-surface/surface-canvas",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 10.8367261195943,
+        "ratio": 10.8367261196,
         "valid": true
       },
       {
@@ -2162,7 +2162,7 @@
         "id": "warning-text-on-surface/surface-overlay",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 7.365981251462232,
+        "ratio": 7.36598125146,
         "valid": true
       },
       {
@@ -2174,7 +2174,7 @@
         "id": "warning-text-on-surface/surface-raised",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 8.285306023813481,
+        "ratio": 8.28530602381,
         "valid": true
       },
       {
@@ -2186,12 +2186,14 @@
         "id": "warning-text-on-surface/surface-subtle",
         "kind": "text",
         "minimumRatio": 4.5,
-        "ratio": 9.01495470052589,
+        "ratio": 9.01495470053,
         "valid": true
       }
-    ]
+    ],
+    "projectPairs": []
   },
   "counts": {
+    "brickContrastPairs": 182,
     "brickInherited": 106,
     "brickOverridden": 48,
     "brickRequired": 154,
@@ -2199,6 +2201,7 @@
     "contrastPairs": 182,
     "emitted": 184,
     "foundations": 3,
+    "projectContrastPairs": 0,
     "projectTokens": 22
   },
   "themeId": "qualification",

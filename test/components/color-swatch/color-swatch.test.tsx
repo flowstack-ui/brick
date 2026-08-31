@@ -12,6 +12,7 @@ describe("ColorSwatch", () => {
     expect(swatch).toHaveClass("brick-color-swatch");
     expect(swatch).toHaveAttribute("aria-hidden", "true");
     expect(swatch).toHaveAttribute("data-size", "md");
+    expect(swatch).toHaveAttribute("data-shape", "rounded");
     expect(swatch.style.getPropertyValue("--brick-color-swatch-value")).toBe("rgb(91 91 214 / 60%)");
   });
 
@@ -30,5 +31,14 @@ describe("ColorSwatch", () => {
       rerender(<ColorSwatch.Mix data-testid="mix" size={size} values={["red", "blue"]} />);
       expect(screen.getByTestId("mix")).toHaveAttribute("data-size", size);
     }
+  });
+
+  it("supports sharp, rounded, and circle shapes for solid and mixed values", () => {
+    const { rerender } = render(<ColorSwatch.Root data-testid="swatch" shape="sharp" value="red" />);
+    expect(screen.getByTestId("swatch")).toHaveAttribute("data-shape", "sharp");
+    rerender(<ColorSwatch.Root data-testid="swatch" shape="circle" value="red" />);
+    expect(screen.getByTestId("swatch")).toHaveAttribute("data-shape", "circle");
+    rerender(<ColorSwatch.Mix data-testid="swatch" shape="rounded" values={["red", "blue"]} />);
+    expect(screen.getByTestId("swatch")).toHaveAttribute("data-shape", "rounded");
   });
 });

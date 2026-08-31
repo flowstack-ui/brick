@@ -17,6 +17,11 @@ test("Color Swatch colors, sizes, and mixtures", async ({ page }) => {
   await setAppearance(page, "dark");
   await expectEvidenceScreenshot(
     page,
+    page.locator('[data-scenario="color-swatch.shapes"]'),
+    "shapes-dark.png",
+  );
+  await expectEvidenceScreenshot(
+    page,
     page.locator('[data-scenario="color-swatch.mix"]'),
     "mix-dark.png",
   );

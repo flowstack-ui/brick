@@ -167,31 +167,10 @@ export {
   ColorSwatchRoot,
   type ColorSwatchMixProps,
   type ColorSwatchRootProps,
+  type ColorSwatchShape,
   type ColorSwatchSize,
 } from "./components/color-swatch/index.js";
-export {
-  ColorPicker,
-  ColorPickerContent,
-  ColorPickerControl,
-  ColorPickerHiddenInput,
-  ColorPickerInput,
-  ColorPickerLabel,
-  ColorPickerNativeInput,
-  ColorPickerRoot,
-  ColorPickerSwatchTrigger,
-  ColorPickerTrigger,
-  type ColorPickerContentProps,
-  type ColorPickerControlProps,
-  type ColorPickerHiddenInputProps,
-  type ColorPickerInputProps,
-  type ColorPickerLabelProps,
-  type ColorPickerNativeInputProps,
-  type ColorPickerRootProps,
-  type ColorPickerSize,
-  type ColorPickerSwatchTriggerProps,
-  type ColorPickerTriggerProps,
-  type ColorPickerVariant,
-} from "./components/color-picker/index.js";
+export * from "./components/color-picker/index.js";
 export {
   Toggle,
   type ToggleProps,

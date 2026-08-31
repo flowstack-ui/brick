@@ -66,7 +66,7 @@ This directory is the public documentation authority for
 
 ### Forms and choices
 
-- [Color Picker](components/color-picker/README.md) — Atom-backed hexadecimal editing, presets, native chooser, floating content, and form submission
+- [Color Picker](components/color-picker/README.md) — Atom-backed area, channel, alpha, format, preset, native, EyeDropper, popup, and form editing
 - [Form](components/form/README.md) — native submission boundary and form
   rhythm
 - [Field](components/field/README.md) — one labeled control and its
@@ -115,7 +115,7 @@ This directory is the public documentation authority for
   status
 - [Badge](components/badge/README.md) — passive inline labels
 - [Status](components/status/README.md) — passive semantic dot and label
-- [Color Swatch](components/color-swatch/README.md) — passive solid, alpha-aware, and mixed color preview
+- [Color Swatch](components/color-swatch/README.md) — passive solid, alpha-aware, mixed, sharp, rounded, and circular color preview
 - [Chip](components/chip/README.md) — compact authored values with optional
   explicit removal
 - [Notification Badge](components/notification-badge/README.md) — attached

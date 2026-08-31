@@ -332,45 +332,67 @@ function workbookEvidenceFromArchive() {
       .replace(/&lt;/g, "<")
       .replace(/&gt;/g, ">");
   const sharedStrings = [
-    ...sharedStringsResult.stdout.matchAll(/<si\b[^>]*>([\s\S]*?)<\/si>/g),
+    ...sharedStringsResult.stdout.matchAll(
+      /<(?:[\w.-]+:)?si\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?si>/g,
+    ),
   ].map((match) =>
-    [...match[1].matchAll(/<t\b[^>]*>([\s\S]*?)<\/t>/g)]
+    [
+      ...match[1].matchAll(
+        /<(?:[\w.-]+:)?t\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?t>/g,
+      ),
+    ]
       .map((textMatch) => decodeXml(textMatch[1]))
       .join(""),
   );
   const relationshipTargets = new Map(
     [
-      ...relationshipsResult.stdout.matchAll(
-        /<Relationship\b[^>]*\bId="([^"]+)"[^>]*\bTarget="([^"]+)"/g,
-      ),
-    ].map((match) => [match[1], match[2]]),
+      ...relationshipsResult.stdout.matchAll(/<(?:[\w.-]+:)?Relationship\b[^>]*>/g),
+    ].flatMap((match) => {
+      const id = match[0].match(/\bId="([^"]+)"/)?.[1];
+      const target = match[0].match(/\bTarget="([^"]+)"/)?.[1];
+      return id && target ? [[id, target]] : [];
+    }),
   );
   const sheets = [
-    ...workbookResult.stdout.matchAll(
-      /<sheet\b[^>]*\bname="([^"]+)"[^>]*\br:id="([^"]+)"/g,
-    ),
-  ].map((match) => ({
-    name: decodeXml(match[1]),
-    target: relationshipTargets.get(match[2]),
-  }));
+    ...workbookResult.stdout.matchAll(/<(?:[\w.-]+:)?sheet\b[^>]*>/g),
+  ].flatMap((match) => {
+    const name = match[0].match(/\bname="([^"]+)"/)?.[1];
+    const relationshipId = match[0].match(/\b(?:[\w.-]+:)?id="([^"]+)"/)?.[1];
+    return name && relationshipId
+      ? [{
+          name: decodeXml(name),
+          target: relationshipTargets.get(relationshipId),
+        }]
+      : [];
+  });
   const rowsBySheet = new Map();
   for (const sheet of sheets) {
     if (!sheet.target) continue;
     const worksheetResult = spawnSync(
       "unzip",
-      ["-p", workbookPath, `xl/${sheet.target}`],
+      [
+        "-p",
+        workbookPath,
+        sheet.target.startsWith("/")
+          ? sheet.target.slice(1)
+          : path.posix.join("xl", sheet.target),
+      ],
       { encoding: "utf8" },
     );
     if (worksheetResult.status !== 0) continue;
     const rows = new Map();
     for (const cell of worksheetResult.stdout.matchAll(
-      /<c\b([^>]*)>([\s\S]*?)<\/c>/g,
+      /<(?:[\w.-]+:)?c\b([^>]*)>([\s\S]*?)<\/(?:[\w.-]+:)?c>/g,
     )) {
       const address = cell[1].match(/\br="([A-Z]+)(\d+)"/) ?? [];
       if (!address[1] || !address[2]) continue;
       const type = cell[1].match(/\bt="([^"]+)"/)?.[1];
-      const raw = cell[2].match(/<v>([\s\S]*?)<\/v>/)?.[1];
-      const inline = cell[2].match(/<t\b[^>]*>([\s\S]*?)<\/t>/)?.[1];
+      const raw = cell[2].match(
+        /<(?:[\w.-]+:)?v>([\s\S]*?)<\/(?:[\w.-]+:)?v>/,
+      )?.[1];
+      const inline = cell[2].match(
+        /<(?:[\w.-]+:)?t\b[^>]*>([\s\S]*?)<\/(?:[\w.-]+:)?t>/,
+      )?.[1];
       const value =
         type === "s" && raw !== undefined
           ? sharedStrings[Number(raw)]

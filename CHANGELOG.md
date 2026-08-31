@@ -4,9 +4,18 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.2.0 - 2026-08-31
+
 ### Added
 
 - Added state-specific open and closed labels to Code Block collapse triggers.
+- Added closed sharp, rounded, and circle Color Swatch recipes.
+
+### Changed
+
+- Expanded Color Picker on exact Atom 0.26.0 with finished area and channel
+  editing, alpha, RGBA/HSLA/HSBA formats, selected preset indicators, complete
+  popup anatomy, native chooser, and progressive EyeDropper support.
 
 ### Fixed
 

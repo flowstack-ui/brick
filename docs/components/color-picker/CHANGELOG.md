@@ -4,7 +4,14 @@ Color Picker follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
-- No unreleased changes.
+## 0.2.0 - 2026-08-31
+
+### Changed
+
+- Expanded Color Picker on exact Atom 0.26.0 with area and channel editing,
+  alpha, RGBA/HSLA/HSBA views, channel inputs, selected indicators, finished
+  popup positioning, ValueText/ValueSwatch, TransparencyGrid, and progressive
+  native chooser and EyeDropper paths.
 
 ## 0.1.10 - 2026-08-28
 

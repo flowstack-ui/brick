@@ -4,7 +4,11 @@ Color Swatch follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
-- No unreleased changes.
+## 0.2.0 - 2026-08-31
+
+### Added
+
+- Added closed `sharp`, `rounded`, and `circle` shapes to Root and Mix.
 
 ## 0.1.10 - 2026-08-28
 

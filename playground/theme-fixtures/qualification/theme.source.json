@@ -6,7 +6,7 @@
     "description": "High-contrast teal and orange instrument theme for Brick browser qualification."
   },
   "compatibility": {
-    "brick": "^0.1.0"
+    "brick": "^0.2.0"
   },
   "appearances": {
     "supported": [

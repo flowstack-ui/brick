@@ -37,3 +37,12 @@ test("keeps the closed size geometry", async ({ page }) => {
   await expect(page.getByTestId("color-swatch-md")).toHaveCSS("width", "24px");
   await expect(page.getByTestId("color-swatch-lg")).toHaveCSS("width", "32px");
 });
+
+test("keeps the closed sharp, rounded, and circle geometry", async ({ page }) => {
+  await expect(page.getByTestId("color-swatch-sharp")).toHaveCSS("border-radius", "0px");
+  const roundedRadius = await page.getByTestId("color-swatch-rounded").evaluate((node) => parseFloat(getComputedStyle(node).borderRadius));
+  expect(roundedRadius).toBeGreaterThan(0);
+  const circle = page.getByTestId("color-swatch-circle");
+  await expect(circle).toHaveCSS("border-radius", "9999px");
+  await expect(circle).toHaveAttribute("data-shape", "circle");
+});

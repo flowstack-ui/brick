@@ -11,8 +11,8 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.version, "0.1.12");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.25.1");
+  assert.equal(packageJson.version, "0.2.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.26.0");
   assert.deepEqual(packageJson.publishConfig, { access: "public" });
   assert.equal(
     packageJson.repository.url,
@@ -433,7 +433,7 @@ test("release identity, changelog, dependency lock, and provenance stay aligned"
   assert.equal(lockedRoot.version, packageJson.version);
   assert.equal(lockedRoot.dependencies["@flowstack-ui/atom"], packageJson.dependencies["@flowstack-ui/atom"]);
   assert.equal(lockedAtom.version, packageJson.dependencies["@flowstack-ui/atom"]);
-  assert.match(changelog, new RegExp(`^## ${packageJson.version} - 2026-08-30$`, "m"));
+  assert.match(changelog, new RegExp(`^## ${packageJson.version} - 2026-08-31$`, "m"));
   assert.match(workflow, /npm publish[^\n]+--provenance/u);
 });
 
@@ -620,15 +620,36 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "CollapsibleRoot",
       "CollapsibleTrigger",
       "ColorPicker",
+      "ColorPickerArea",
+      "ColorPickerAreaBackground",
+      "ColorPickerAreaThumb",
+      "ColorPickerChannelInput",
+      "ColorPickerChannelSlider",
+      "ColorPickerChannelSliderLabel",
+      "ColorPickerChannelSliderThumb",
+      "ColorPickerChannelSliderTrack",
+      "ColorPickerChannelSliderValueText",
       "ColorPickerContent",
+      "ColorPickerContext",
       "ColorPickerControl",
+      "ColorPickerEyeDropperTrigger",
+      "ColorPickerFormatSelect",
+      "ColorPickerFormatTrigger",
       "ColorPickerHiddenInput",
       "ColorPickerInput",
       "ColorPickerLabel",
       "ColorPickerNativeInput",
+      "ColorPickerPositioner",
       "ColorPickerRoot",
+      "ColorPickerSwatch",
+      "ColorPickerSwatchGroup",
+      "ColorPickerSwatchIndicator",
       "ColorPickerSwatchTrigger",
+      "ColorPickerTransparencyGrid",
       "ColorPickerTrigger",
+      "ColorPickerValueSwatch",
+      "ColorPickerValueText",
+      "ColorPickerView",
       "ColorSwatch",
       "ColorSwatchMix",
       "ColorSwatchRoot",
@@ -1098,15 +1119,21 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(colorSwatch.ColorSwatchRoot, brick.ColorSwatch.Root);
   assert.equal(colorSwatch.ColorSwatchMix, brick.ColorSwatch.Mix);
   assert.equal(colorPicker.ColorPicker, brick.ColorPicker);
-  assert.equal(colorPicker.ColorPickerRoot, brick.ColorPicker.Root);
-  assert.equal(colorPicker.ColorPickerLabel, brick.ColorPicker.Label);
-  assert.equal(colorPicker.ColorPickerControl, brick.ColorPicker.Control);
-  assert.equal(colorPicker.ColorPickerInput, brick.ColorPicker.Input);
-  assert.equal(colorPicker.ColorPickerNativeInput, brick.ColorPicker.NativeInput);
-  assert.equal(colorPicker.ColorPickerHiddenInput, brick.ColorPicker.HiddenInput);
-  assert.equal(colorPicker.ColorPickerTrigger, brick.ColorPicker.Trigger);
-  assert.equal(colorPicker.ColorPickerContent, brick.ColorPicker.Content);
-  assert.equal(colorPicker.ColorPickerSwatchTrigger, brick.ColorPicker.SwatchTrigger);
+  for (const part of [
+    "Root", "Context", "Label", "Control", "Input", "ChannelInput",
+    "NativeInput", "HiddenInput", "Trigger", "Positioner", "Content",
+    "ValueText", "ValueSwatch", "Area", "AreaBackground", "AreaThumb",
+    "ChannelSlider", "ChannelSliderLabel", "ChannelSliderTrack",
+    "ChannelSliderThumb", "ChannelSliderValueText", "TransparencyGrid",
+    "EyeDropperTrigger", "SwatchGroup", "SwatchTrigger", "Swatch",
+    "SwatchIndicator", "FormatSelect", "FormatTrigger", "View",
+  ]) {
+    assert.equal(
+      colorPicker[`ColorPicker${part}`],
+      brick.ColorPicker[part],
+      `ColorPicker.${part} must match its named subpath export`,
+    );
+  }
   assert.equal(toggle.Toggle, brick.Toggle);
   assert.equal(toggleGroup.ToggleGroup, brick.ToggleGroup);
   assert.equal(toggleGroup.ToggleGroupRoot, brick.ToggleGroup.Root);

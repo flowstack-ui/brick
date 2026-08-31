@@ -4,5 +4,6 @@ export {
   ColorSwatchRoot,
   type ColorSwatchMixProps,
   type ColorSwatchRootProps,
+  type ColorSwatchShape,
   type ColorSwatchSize,
 } from "./ColorSwatch.js";
