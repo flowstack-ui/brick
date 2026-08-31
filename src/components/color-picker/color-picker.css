@@ -1,15 +1,19 @@
 @layer brick.components {
   .brick-color-picker {
     --brick-color-picker-control-size: 2.5rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-md-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-md-line-height);
     --brick-color-picker-gap: var(--brick-space-2);
     --brick-color-picker-input-width: 9rem;
-    --brick-color-picker-area-block-size: 10rem;
-    --brick-color-picker-slider-block-size: 0.75rem;
-    --brick-color-picker-thumb-size: 1.125rem;
-    --brick-color-picker-swatch-size: 2rem;
+    --brick-color-picker-area-block-size: 11.25rem;
+    --brick-color-picker-slider-block-size: 0.875rem;
+    --brick-color-picker-thumb-size: 0.875rem;
+    --brick-color-picker-swatch-size: 1.75rem;
     --brick-color-picker-swatch-gap: var(--brick-space-2);
     --brick-color-picker-swatch-radius: var(--brick-radius-full);
     --brick-color-picker-checker-size: 0.5rem;
+    --brick-color-picker-checker-base: var(--brick-color-surface-base);
+    --brick-color-picker-checker-contrast: var(--brick-color-surface-raised);
     --brick-color-picker-background: transparent;
     --brick-color-picker-border-color: var(--brick-color-border-default);
     --brick-color-picker-focus-ring: var(--brick-color-focus-ring);
@@ -26,17 +30,52 @@
     color: var(--brick-color-text-primary);
   }
 
-  .brick-color-picker[data-size="sm"] {
-    --brick-color-picker-control-size: 2rem;
+  .brick-color-picker[data-size="2xs"] {
+    --brick-color-picker-control-size: 1.75rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
     --brick-color-picker-area-block-size: 8rem;
-    --brick-color-picker-thumb-size: 1rem;
-    --brick-color-picker-swatch-size: 1.75rem;
+    --brick-color-picker-slider-block-size: 0.75rem;
+    --brick-color-picker-thumb-size: 0.75rem;
+    --brick-color-picker-swatch-size: 1.125rem;
+  }
+
+  .brick-color-picker[data-size="xs"] {
+    --brick-color-picker-control-size: 2rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+    --brick-color-picker-area-block-size: 9rem;
+    --brick-color-picker-swatch-size: 1.25rem;
+  }
+
+  .brick-color-picker[data-size="sm"] {
+    --brick-color-picker-control-size: 2.25rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+    --brick-color-picker-area-block-size: 10rem;
+    --brick-color-picker-swatch-size: 1.5rem;
   }
 
   .brick-color-picker[data-size="lg"] {
+    --brick-color-picker-control-size: 2.75rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+
+  .brick-color-picker[data-size="xl"] {
     --brick-color-picker-control-size: 3rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+    --brick-color-picker-area-block-size: 12rem;
+    --brick-color-picker-swatch-size: 2rem;
+  }
+
+  .brick-color-picker[data-size="2xl"] {
+    --brick-color-picker-control-size: 4rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
     --brick-color-picker-area-block-size: 14rem;
-    --brick-color-picker-thumb-size: 1.25rem;
+    --brick-color-picker-thumb-size: 1rem;
     --brick-color-picker-swatch-size: 2.5rem;
   }
 
@@ -62,6 +101,51 @@
     gap: var(--brick-color-picker-gap);
   }
 
+  .brick-color-picker__control[data-layout="integrated"] {
+    box-sizing: border-box;
+    min-block-size: var(--brick-color-picker-control-size);
+    align-items: center;
+    gap: var(--brick-space-1);
+    padding-inline: var(--brick-space-2);
+    border: var(--brick-border-width) solid var(--brick-color-picker-border-color);
+    border-radius: var(--brick-radius-control);
+    background: var(--brick-color-picker-background);
+    transition:
+      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
+      box-shadow var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
+      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+  }
+
+  .brick-color-picker__control[data-layout="integrated"]:hover {
+    border-color: var(--brick-color-border-strong);
+  }
+
+  .brick-color-picker__control[data-layout="integrated"]:focus-within {
+    outline: var(--brick-border-focus-width) solid var(--brick-color-picker-focus-ring);
+    outline-offset: var(--brick-border-focus-offset);
+  }
+
+  .brick-color-picker__control[data-layout="integrated"]
+    > :where(.brick-color-picker__input, .brick-color-picker__trigger, .brick-color-picker__eye-dropper-trigger) {
+    block-size: calc(var(--brick-color-picker-control-size) - 2 * var(--brick-border-width));
+    min-block-size: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    outline: 0;
+  }
+
+  .brick-color-picker__control[data-layout="integrated"] > .brick-color-picker__input {
+    padding-inline: var(--brick-space-2);
+  }
+
+  .brick-color-picker__control[data-layout="integrated"]
+    > :where(.brick-color-picker__trigger, .brick-color-picker__eye-dropper-trigger) {
+    min-inline-size: calc(var(--brick-color-picker-control-size) - 2 * var(--brick-border-width));
+    padding-inline: var(--brick-space-1);
+  }
+
   :where(
     .brick-color-picker__input,
     .brick-color-picker__channel-input,
@@ -72,12 +156,17 @@
     .brick-color-picker__format-select
   ) {
     box-sizing: border-box;
+    block-size: var(--brick-color-picker-control-size);
     min-block-size: var(--brick-color-picker-control-size);
     border: var(--brick-border-width) solid var(--brick-color-picker-border-color);
     border-radius: var(--brick-radius-control);
     background: var(--brick-color-picker-background);
     color: var(--brick-color-text-primary);
-    font: inherit;
+    font-family: var(--brick-typography-field-value-md-font-family);
+    font-size: var(--brick-color-picker-control-font-size);
+    font-weight: var(--brick-typography-field-value-md-font-weight);
+    letter-spacing: var(--brick-typography-field-value-md-letter-spacing);
+    line-height: var(--brick-color-picker-control-line-height);
     transition:
       border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
       box-shadow var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
@@ -98,6 +187,13 @@
     padding-inline: var(--brick-space-2);
     text-align: center;
     font-variant-numeric: tabular-nums;
+    appearance: textfield;
+  }
+
+  .brick-color-picker__channel-input::-webkit-inner-spin-button,
+  .brick-color-picker__channel-input::-webkit-outer-spin-button {
+    margin: 0;
+    appearance: none;
   }
 
   .brick-color-picker__native-input {
@@ -105,6 +201,22 @@
     flex: none;
     padding: var(--brick-space-1);
     cursor: pointer;
+  }
+
+  .brick-color-picker__trigger[data-fit-content] {
+    block-size: auto;
+    min-block-size: 0;
+    min-inline-size: 0;
+    padding: 0;
+    border-color: transparent;
+    background: transparent;
+  }
+
+  /* A swatch-only trigger is an icon-sized square. Generic button padding
+     remains available when ValueText or other authored content is present. */
+  .brick-color-picker__trigger:has(> .brick-color-picker__value-swatch:only-child) {
+    inline-size: var(--brick-color-picker-control-size);
+    padding-inline: 0;
   }
 
   :where(
@@ -123,7 +235,10 @@
   }
 
   .brick-color-picker__format-select {
-    padding-inline: var(--brick-space-2);
+    block-size: var(--brick-color-picker-control-size);
+    padding-block: 0;
+    padding-inline: var(--brick-space-2) var(--brick-space-5);
+    text-transform: uppercase;
     cursor: pointer;
   }
 
@@ -135,9 +250,16 @@
     .brick-color-picker__eye-dropper-trigger,
     .brick-color-picker__format-trigger,
     .brick-color-picker__format-select
-  ):hover {
+  ):not(:disabled):hover {
     border-color: var(--brick-color-border-strong);
     background-color: var(--brick-color-surface-hover, var(--brick-color-surface-subtle));
+  }
+
+  .brick-color-picker__control[data-layout="integrated"]
+    > :where(.brick-color-picker__trigger, .brick-color-picker__eye-dropper-trigger):not(:disabled):hover {
+    border-color: transparent;
+    border-radius: var(--brick-radius-control);
+    background-color: var(--brick-color-surface-subtle);
   }
 
   :where(
@@ -181,6 +303,21 @@
     background-size: var(--brick-color-picker-checker-size) var(--brick-color-picker-checker-size);
   }
 
+  :where(.brick-color-picker__value-swatch, .brick-color-picker__swatch)[data-shape="sharp"],
+  .brick-color-picker__swatch-trigger[data-shape="sharp"] {
+    --brick-color-picker-swatch-radius: 0;
+  }
+
+  :where(.brick-color-picker__value-swatch, .brick-color-picker__swatch)[data-shape="rounded"],
+  .brick-color-picker__swatch-trigger[data-shape="rounded"] {
+    --brick-color-picker-swatch-radius: var(--brick-radius-subtle);
+  }
+
+  :where(.brick-color-picker__value-swatch, .brick-color-picker__swatch)[data-shape="circle"],
+  .brick-color-picker__swatch-trigger[data-shape="circle"] {
+    --brick-color-picker-swatch-radius: var(--brick-radius-full);
+  }
+
   .brick-color-picker__area {
     position: relative;
     box-sizing: border-box;
@@ -208,9 +345,6 @@
     border-radius: var(--brick-radius-full);
     background: currentColor;
     box-shadow: 0 0 0 1px rgb(0 0 0 / 40%), var(--brick-shadow-floating);
-  }
-
-  .brick-color-picker__channel-slider-thumb {
     translate: -50% -50%;
   }
 
@@ -227,16 +361,57 @@
   .brick-color-picker__channel-slider-track {
     position: relative;
     grid-column: 1 / -1;
+    grid-row: 1;
+    z-index: 1;
     block-size: var(--brick-color-picker-slider-block-size);
     overflow: hidden;
     border: var(--brick-border-width) solid var(--brick-color-border-default);
     border-radius: var(--brick-radius-full);
   }
 
+  /* Label and value text add a first grid row. Atom positions the thumb at
+     50% of the whole slider root, so anchor labelled thumbs to the track row
+     at the root's block end instead. */
+  .brick-color-picker__channel-slider:has(> .brick-color-picker__channel-slider-label)
+    > .brick-color-picker__channel-slider-thumb {
+    top: auto !important;
+    bottom: calc(var(--brick-color-picker-slider-block-size) / 2);
+    translate: -50% 50%;
+  }
+
+
+  .brick-color-picker__channel-slider:has(> .brick-color-picker__channel-slider-label)
+    > .brick-color-picker__channel-slider-track {
+    grid-row: 2;
+  }
+
   .brick-color-picker__transparency-grid {
-    position: absolute;
-    inset: 0;
+    background-color: var(--brick-color-picker-checker-base) !important;
+    background-image: conic-gradient(
+      var(--brick-color-picker-checker-contrast) 0 25%,
+      transparent 0 50%,
+      var(--brick-color-picker-checker-contrast) 0 75%,
+      transparent 0
+    ) !important;
     border-radius: inherit;
+  }
+
+  /* TransparencyGrid and Track are siblings: the checker paints below the
+     channel gradient instead of replacing half of it from inside the Track. */
+  .brick-color-picker__channel-slider > .brick-color-picker__transparency-grid {
+    position: relative !important;
+    inset: auto !important;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    inline-size: 100% !important;
+    block-size: var(--brick-color-picker-slider-block-size) !important;
+    z-index: 0 !important;
+    border-radius: var(--brick-radius-full);
+  }
+
+  .brick-color-picker__channel-slider:has(> .brick-color-picker__channel-slider-label)
+    > .brick-color-picker__transparency-grid {
+    grid-row: 2;
   }
 
   .brick-color-picker__positioner {
@@ -248,10 +423,10 @@
   .brick-color-picker__content {
     box-sizing: border-box;
     display: grid;
-    inline-size: min(21rem, calc(100dvi - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right)));
+    inline-size: min(16rem, calc(100dvi - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right)));
     max-block-size: min(32rem, calc(100dvb - 2rem));
     gap: var(--brick-space-3);
-    padding: var(--brick-space-3);
+    padding: var(--brick-space-4);
     overflow: auto;
     border: var(--brick-border-width) solid var(--brick-color-picker-content-border-color);
     border-radius: var(--brick-color-picker-content-radius);
@@ -261,10 +436,26 @@
     overscroll-behavior: contain;
   }
 
+  .brick-color-picker:is([data-size="2xs"], [data-size="xs"]) .brick-color-picker__content {
+    inline-size: min(15rem, calc(100dvi - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right)));
+    gap: var(--brick-space-2);
+    padding: var(--brick-space-3);
+  }
+
   /* Inline Content participates in its authored container instead of the
      viewport-owned Positioner used by popup compositions. */
   .brick-color-picker > .brick-color-picker__content {
-    inline-size: min(18rem, 100%);
+    inline-size: min(16rem, calc(100dvi - 2rem));
+    max-block-size: none;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .brick-color-picker:has(> .brick-color-picker__content) {
+    inline-size: min(16rem, 100%);
   }
 
   .brick-color-picker__view:not([hidden]) {
@@ -278,6 +469,10 @@
     gap: var(--brick-color-picker-swatch-gap);
   }
 
+  .brick-color-picker__content .brick-color-picker__swatch-group {
+    gap: var(--brick-space-1);
+  }
+
   .brick-color-picker__swatch-trigger {
     position: relative;
     display: inline-grid;
@@ -287,15 +482,16 @@
     place-items: center;
     padding: var(--brick-space-1);
     border: var(--brick-border-width) solid transparent;
-    border-radius: var(--brick-radius-full);
+    border-radius: var(--brick-color-picker-swatch-radius);
     background: transparent;
     color: var(--brick-color-text-primary);
     cursor: pointer;
   }
 
   .brick-color-picker__content .brick-color-picker__swatch-trigger {
-    min-inline-size: 2.25rem;
-    min-block-size: 2.25rem;
+    min-inline-size: var(--brick-color-picker-control-size);
+    min-block-size: var(--brick-color-picker-control-size);
+    padding: 2px;
   }
 
   .brick-color-picker__swatch-trigger:hover {
@@ -306,6 +502,20 @@
   .brick-color-picker__swatch-trigger[data-state="checked"],
   .brick-color-picker__swatch-trigger[aria-pressed="true"] {
     border-color: var(--brick-color-accent-border);
+  }
+
+  .brick-color-picker__swatch-trigger[data-frame="none"] {
+    border-color: transparent;
+  }
+
+  .brick-color-picker__swatch-trigger[data-frame="none"]:hover {
+    border-color: transparent;
+    background: transparent;
+  }
+
+  .brick-color-picker__swatch-trigger[data-frame="none"][data-state="checked"],
+  .brick-color-picker__swatch-trigger[data-frame="none"][aria-pressed="true"] {
+    border-color: transparent;
   }
 
   .brick-color-picker__swatch-indicator {
@@ -358,13 +568,7 @@
 
   @media (max-width: 30rem) {
     .brick-color-picker__control { flex-wrap: wrap; }
-    .brick-color-picker__input { inline-size: 100%; flex-basis: 100%; }
-    .brick-color-picker__content { inline-size: min(21rem, calc(100dvi - 1rem)); }
-    .brick-color-picker__content .brick-color-picker__swatch-trigger,
-    .brick-color-picker__swatch-trigger {
-      min-inline-size: 2.75rem;
-      min-block-size: 2.75rem;
-    }
+    .brick-color-picker__content { inline-size: min(16rem, calc(100dvi - 1rem)); }
   }
 
   @media (prefers-reduced-motion: reduce) {

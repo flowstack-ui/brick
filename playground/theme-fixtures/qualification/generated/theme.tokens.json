@@ -1,7 +1,7 @@
 {
   "$extensions": {
     "flowstack.theme": {
-      "brickVersion": "0.2.1",
+      "brickVersion": "0.2.2",
       "id": "qualification",
       "schema": "flowstack.theme-tokens.v1"
     }

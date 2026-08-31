@@ -7,3 +7,28 @@
 .color-picker-compact-sliders {
   flex: 1 1 auto;
 }
+
+.color-picker-value-row {
+  inline-size: 100%;
+  align-items: stretch;
+}
+
+.color-picker-value-row > :where(select, input) {
+  min-inline-size: 0;
+}
+
+.color-picker-value-row > .brick-color-picker__input {
+  flex: 1 1 7rem;
+}
+
+.color-picker-value-row > .brick-color-picker__format-select {
+  inline-size: 4.5rem;
+}
+
+.color-picker-value-row > .brick-color-picker__channel-input {
+  inline-size: 4rem;
+}
+
+.color-picker-channel-sliders {
+  inline-size: min(24rem, 100%);
+}

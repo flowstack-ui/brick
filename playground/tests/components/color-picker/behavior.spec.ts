@@ -22,6 +22,13 @@ test("popup editor is layered, aligned, and keeps presets synchronized", async (
   const editorBox = await editor.boundingBox();
   expect(editorBox!.x).toBeGreaterThanOrEqual(0);
   expect(editorBox!.x + editorBox!.width).toBeLessThanOrEqual(page.viewportSize()!.width);
+  expect(editorBox!.width).toBeLessThanOrEqual(240);
+  const triggerBox = await overview.locator("[data-slot='color-picker-trigger']").boundingBox();
+  expect(editorBox!.x).toBeCloseTo(triggerBox!.x, 0);
+  const popupSwatchBoxes = await editor.locator("[data-slot='color-picker-swatch']").evaluateAll((elements) =>
+    elements.map((element) => ({ height: element.getBoundingClientRect().height, width: element.getBoundingClientRect().width })),
+  );
+  expect(popupSwatchBoxes.every((box) => box.width <= 18 && box.height <= 18)).toBe(true);
   const presetRows = await editor.locator("[data-slot='color-picker-swatch-trigger']").evaluateAll((elements) =>
     elements.map((element) => Math.round(element.getBoundingClientRect().y)),
   );
@@ -33,6 +40,108 @@ test("popup editor is layered, aligned, and keeps presets synchronized", async (
     ]);
     expect(thumbBox!.y + thumbBox!.height / 2).toBeCloseTo(trackBox!.y + trackBox!.height / 2, 0);
   }
+
+  const inlineEditor = page.locator('[data-scenario="color-picker.inline"]');
+  const rowControls = await Promise.all([
+    inlineEditor.getByLabel("Color format").boundingBox(),
+    inlineEditor.getByLabel("Hex color").boundingBox(),
+    inlineEditor.getByLabel("Opacity channel").boundingBox(),
+  ]);
+  const heights = rowControls.map((box) => box!.height);
+  expect(Math.max(...heights) - Math.min(...heights)).toBeLessThanOrEqual(1);
+});
+
+test("finished field, slider, and swatch recipes keep exact geometry", async ({ page }) => {
+  const integrated = page.getByTestId("color-picker-input-only").locator("[data-slot='color-picker-control']");
+  const geometry = await integrated.evaluate((control) => {
+    const style = getComputedStyle(control);
+    const children = Array.from(control.children).map((child) => {
+      const childStyle = getComputedStyle(child);
+      return {
+        borderWidth: childStyle.borderTopWidth,
+        height: child.getBoundingClientRect().height,
+        slot: child.getAttribute("data-slot"),
+      };
+    });
+    return { borderWidth: style.borderTopWidth, height: control.getBoundingClientRect().height, children };
+  });
+  expect(geometry.borderWidth).toBe("1px");
+  expect(geometry.children.filter((child) => child.slot !== "color-picker-value-swatch").every((child) => child.borderWidth === "0px")).toBe(true);
+  expect(geometry.children.filter((child) => child.slot !== "color-picker-value-swatch").every((child) => Math.abs(child.height - (geometry.height - 2)) <= 1)).toBe(true);
+
+  const sizeTriggers = page.locator('[data-scenario="color-picker.recipes"] [data-slot="color-picker-trigger"]');
+  for (const trigger of await sizeTriggers.all()) {
+    const box = await trigger.boundingBox();
+    expect(Math.abs(box!.width - box!.height)).toBeLessThanOrEqual(1);
+  }
+
+  const formatInputs = page.locator('[data-scenario="color-picker.formats"] [data-slot="color-picker"]').filter({ hasText: "Channel color" }).first();
+  const formatControls = formatInputs.locator(':is([data-slot="color-picker-format-trigger"], [data-slot="color-picker-format-select"], [data-slot="color-picker-channel-input"]):visible');
+  const formatControlHeights = await formatControls.evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect().height));
+  expect(Math.max(...formatControlHeights) - Math.min(...formatControlHeights)).toBeLessThanOrEqual(1);
+
+  const labelledSliders = page.locator("[data-slot='color-picker-channel-slider']").filter({ has: page.locator("[data-slot='color-picker-channel-slider-label']") });
+  for (const slider of await labelledSliders.all()) {
+    if (!(await slider.isVisible())) continue;
+    const [trackBox, thumbBox] = await Promise.all([
+      slider.locator("[data-slot='color-picker-channel-slider-track']").boundingBox(),
+      slider.locator("[data-slot='color-picker-channel-slider-thumb']").boundingBox(),
+    ]);
+    expect(thumbBox!.y + thumbBox!.height / 2).toBeCloseTo(trackBox!.y + trackBox!.height / 2, 0);
+  }
+
+  const alphaSlider = page.locator('[data-scenario="color-picker.inline"] [data-slot="color-picker-channel-slider"]').filter({ hasText: "Opacity" });
+  const transparencyLayer = alphaSlider.locator(":scope > [data-slot='color-picker-transparency-grid']");
+  const alphaTrack = alphaSlider.locator(":scope > [data-slot='color-picker-channel-slider-track']");
+  await expect(transparencyLayer).toHaveCount(1);
+  const checkerGeometry = await Promise.all([transparencyLayer.evaluate((element) => ({
+    background: getComputedStyle(element).backgroundColor,
+    row: getComputedStyle(element).gridRowStart,
+    zIndex: getComputedStyle(element).zIndex,
+  })), alphaTrack.evaluate((element) => ({ row: getComputedStyle(element).gridRowStart, zIndex: getComputedStyle(element).zIndex }))]);
+  expect(checkerGeometry[0].background).not.toBe("rgb(255, 255, 255)");
+  expect(checkerGeometry[0].row).toBe(checkerGeometry[1].row);
+  expect(Number(checkerGeometry[0].zIndex)).toBeLessThan(Number(checkerGeometry[1].zIndex));
+
+  const applicationFields = page.locator('[data-scenario="color-picker.presets"] [data-layout="integrated"]');
+  await expect(applicationFields).toHaveCount(2);
+
+  const integratedTrigger = page.getByTestId("color-picker-integrated-trigger");
+  const integratedControl = integratedTrigger.locator("[data-layout='integrated']");
+  const popupAction = integratedTrigger.locator("[data-slot='color-picker-trigger']");
+  const controlBackground = await integratedControl.evaluate((element) => getComputedStyle(element).backgroundColor);
+  await popupAction.hover();
+  await expect.poll(() => popupAction.evaluate((element) => getComputedStyle(element).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
+  await expect.poll(() => integratedControl.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(controlBackground);
+
+  for (const recipe of ["sharp", "rounded", "circle"] as const) {
+    const trigger = page.getByTestId(`color-picker-swatches-${recipe}`).locator("[data-slot='color-picker-swatch-trigger']").first();
+    const radii = await trigger.evaluate((button) => ({
+      frame: getComputedStyle(button).borderRadius,
+      swatch: getComputedStyle(button.querySelector("[data-slot='color-picker-swatch']")!).borderRadius,
+    }));
+    expect(radii.frame).toBe(radii.swatch);
+  }
+  const frameless = page.getByTestId("color-picker-swatches-frameless").locator("[data-slot='color-picker-swatch-trigger']").first();
+  await expect(frameless).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
+});
+
+test("area, sliders, and integrated popup trigger change the real picker machine", async ({ page }) => {
+  const inline = page.locator('[data-scenario="color-picker.inline"]');
+  const valueInput = inline.getByLabel("Hex color");
+  const beforeArea = await valueInput.inputValue();
+  const area = inline.locator("[data-slot='color-picker-area']");
+  await area.click({ position: { x: 80, y: 80 } });
+  await expect(valueInput).not.toHaveValue(beforeArea);
+
+  const beforeHue = await valueInput.inputValue();
+  const hueSlider = inline.locator("[data-slot='color-picker-channel-slider']").filter({ hasText: "Hue" });
+  await hueSlider.click({ position: { x: 32, y: 30 } });
+  await expect(valueInput).not.toHaveValue(beforeHue);
+
+  const integratedTrigger = page.getByTestId("color-picker-integrated-trigger");
+  await integratedTrigger.locator("[data-slot='color-picker-trigger']").click();
+  await expect(integratedTrigger.locator("[data-slot='color-picker-content']")).toBeVisible();
 });
 
 test("EyeDropper reports platform availability instead of presenting a broken action", async ({ page }) => {
@@ -57,6 +166,29 @@ test("format views expose the correct channels without changing the represented 
   await expect(picker.locator("[data-slot='color-picker-value-text']")).toContainText(/hsba|hsb|rgba|#/i);
 });
 
+test("production compositions remain functional rather than decorative examples", async ({ page }) => {
+  const events = page.locator('[data-scenario="color-picker.events"]');
+  await events.getByRole("button", { name: "Set grass" }).click();
+  await expect(events.getByText("#30a46c")).toBeVisible();
+
+  const closePicker = events.locator("[data-slot='color-picker']").filter({ hasText: "Quick preset" });
+  await closePicker.getByRole("button", { name: "Quick preset" }).click();
+  await closePicker.getByRole("button", { name: "Use Grass" }).click();
+  await expect(closePicker.locator("[data-slot='color-picker-content']")).toBeHidden();
+
+  const formats = page.locator('[data-scenario="color-picker.formats"]');
+  const sliderFormat = formats.getByLabel("Slider format");
+  await sliderFormat.selectOption("hsla");
+  await expect(formats.getByRole("slider", { name: "lightness" })).toBeVisible();
+
+  const swatches = page.locator('[data-scenario="color-picker.presets"]');
+  await swatches.getByRole("button", { name: "Save current color" }).click();
+  await expect(swatches.getByRole("button", { name: "Use Saved 1" })).toBeVisible();
+
+  await page.locator('[data-scenario="color-picker.integration"]').getByRole("button", { name: "Open color editor" }).click();
+  await expect(page.getByRole("dialog", { name: "Brand color" })).toContainText("Accent color");
+});
+
 test("native chooser, form submission, reset, and state guards remain Atom-owned", async ({ page }) => {
   const nativeInput = page.getByLabel("Open native color chooser").first();
   await nativeInput.evaluate((element) => {
@@ -68,7 +200,7 @@ test("native chooser, form submission, reset, and state guards remain Atom-owned
   await expect(nativeInput).toHaveValue("#e5484d");
 
   const form = page.getByRole("form", { name: "Brand color form" });
-  await form.getByRole("button", { name: "Select Sky" }).click();
+  await form.getByRole("button", { name: "Use Sky" }).click();
   await form.getByRole("button", { name: "Save color" }).click();
   await expect(page.getByTestId("color-picker-form-status")).toContainText("0, 144, 255");
   await expect(form.locator("[data-slot='color-picker-hidden-input']")).toHaveCount(1);

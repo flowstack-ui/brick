@@ -96,4 +96,37 @@ describe("ColorPicker", () => {
     expect(document.querySelector("[data-slot='color-picker-input']")).toBeDisabled();
     expect(document.querySelector("[data-slot='color-picker-hidden-input']")).toBeRequired();
   });
+
+  it("exposes every closed density recipe without changing Atom behavior", () => {
+    const { rerender } = render(<ColorPicker.Root size="2xs"><ColorPicker.Input /></ColorPicker.Root>);
+    for (const size of ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"] as const) {
+      rerender(<ColorPicker.Root size={size}><ColorPicker.Input /></ColorPicker.Root>);
+      expect(document.querySelector("[data-slot='color-picker']")).toHaveAttribute("data-size", size);
+    }
+  });
+
+  it("exposes integrated controls and matching swatch frame recipes", () => {
+    render(
+      <ColorPicker.Root inline>
+        <ColorPicker.Control data-testid="control" layout="integrated">
+          <ColorPicker.ValueSwatch shape="rounded" />
+          <ColorPicker.Input aria-label="Color" />
+        </ColorPicker.Control>
+        <ColorPicker.SwatchGroup>
+          <ColorPicker.SwatchTrigger aria-label="Square" frame="outline" shape="sharp" value="#e5484d">
+            <ColorPicker.Swatch shape="sharp" value="#e5484d" />
+          </ColorPicker.SwatchTrigger>
+          <ColorPicker.SwatchTrigger aria-label="Frameless" frame="none" shape="circle" value="#30a46c">
+            <ColorPicker.Swatch shape="circle" value="#30a46c" />
+          </ColorPicker.SwatchTrigger>
+        </ColorPicker.SwatchGroup>
+      </ColorPicker.Root>,
+    );
+    expect(screen.getByTestId("control")).toHaveAttribute("data-layout", "integrated");
+    expect(document.querySelector("[data-slot='color-picker-value-swatch']")).toHaveAttribute("data-shape", "rounded");
+    expect(screen.getByRole("button", { name: "Square" })).toHaveAttribute("data-frame", "outline");
+    expect(screen.getByRole("button", { name: "Square" })).toHaveAttribute("data-shape", "sharp");
+    expect(screen.getByRole("button", { name: "Frameless" })).toHaveAttribute("data-frame", "none");
+    expect(screen.getByRole("button", { name: "Frameless" })).toHaveAttribute("data-shape", "circle");
+  });
 });

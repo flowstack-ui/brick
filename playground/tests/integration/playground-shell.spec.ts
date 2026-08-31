@@ -1,5 +1,26 @@
 import { expect, test } from "@playwright/test";
 
+test("playground loads the Brick reset and token-driven text selection", async ({ page }) => {
+  await page.goto("/button");
+  const colors = await page.locator("h1").evaluate((heading) => {
+    const reference = document.createElement("span");
+    reference.style.backgroundColor = "var(--brick-color-accent-solid)";
+    reference.style.color = "var(--brick-color-accent-on-solid)";
+    document.body.append(reference);
+    const selection = getComputedStyle(heading, "::selection");
+    const result = {
+      background: selection.backgroundColor,
+      color: selection.color,
+      expectedBackground: getComputedStyle(reference).backgroundColor,
+      expectedColor: getComputedStyle(reference).color,
+    };
+    reference.remove();
+    return result;
+  });
+  expect(colors.background).toBe(colors.expectedBackground);
+  expect(colors.color).toBe(colors.expectedColor);
+});
+
 test("Button route exposes component and scenario navigation", async ({
   page,
 }) => {
