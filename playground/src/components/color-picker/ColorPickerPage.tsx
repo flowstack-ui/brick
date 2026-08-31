@@ -48,7 +48,7 @@ export const colorPickerScenarios = [
 
 type PickerSize = "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 
-function CompactPickerPanel() {
+function CompactPickerPanel({ showPresets = false }: { showPresets?: boolean }) {
   return (
     <>
       <ColorPicker.Area aria-label="Saturation and brightness">
@@ -63,20 +63,21 @@ function CompactPickerPanel() {
             <ColorPicker.ChannelSliderThumb />
           </ColorPicker.ChannelSlider>
           <ColorPicker.ChannelSlider aria-label="Opacity" channel="alpha">
-            <ColorPicker.ChannelSliderTrack><ColorPicker.TransparencyGrid size="8px" /></ColorPicker.ChannelSliderTrack>
+            <ColorPicker.TransparencyGrid size="8px" />
+            <ColorPicker.ChannelSliderTrack />
             <ColorPicker.ChannelSliderThumb />
           </ColorPicker.ChannelSlider>
         </VStack>
       </HStack>
-      <ColorPicker.SwatchGroup aria-label="Color presets">
+      {showPresets ? <ColorPicker.SwatchGroup aria-label="Optional color presets">
         {presets.map((preset) => (
-          <ColorPicker.SwatchTrigger aria-label={`Use ${preset.label}`} key={preset.value} value={preset.value}>
-            <ColorPicker.Swatch value={preset.value}>
+          <ColorPicker.SwatchTrigger aria-label={`Use ${preset.label}`} frame="none" key={preset.value} shape="rounded" value={preset.value}>
+            <ColorPicker.Swatch shape="rounded" value={preset.value}>
               <ColorPicker.SwatchIndicator />
             </ColorPicker.Swatch>
           </ColorPicker.SwatchTrigger>
         ))}
-      </ColorPicker.SwatchGroup>
+      </ColorPicker.SwatchGroup> : null}
     </>
   );
 }
@@ -97,7 +98,8 @@ function DetailedPickerPanel() {
       <ColorPicker.ChannelSlider channel="alpha">
         <ColorPicker.ChannelSliderLabel>Opacity</ColorPicker.ChannelSliderLabel>
         <ColorPicker.ChannelSliderValueText />
-        <ColorPicker.ChannelSliderTrack><ColorPicker.TransparencyGrid size="8px" /></ColorPicker.ChannelSliderTrack>
+        <ColorPicker.TransparencyGrid size="8px" />
+        <ColorPicker.ChannelSliderTrack />
         <ColorPicker.ChannelSliderThumb />
       </ColorPicker.ChannelSlider>
       <HStack className="color-picker-value-row" gap="1">
@@ -121,6 +123,7 @@ function CompactPicker({
   label,
   size = "md",
   variant = "outline",
+  showPresets = false,
   style,
   ...rootProps
 }: Pick<ComponentProps<typeof ColorPicker.Root>, "closeOnSelect" | "disabled" | "invalid" | "readOnly" | "required"> & {
@@ -128,6 +131,7 @@ function CompactPicker({
   label: string;
   size?: PickerSize;
   variant?: "outline" | "soft";
+  showPresets?: boolean;
   style?: CSSProperties;
 }) {
   const [value, setValue] = useState(defaultValue);
@@ -135,6 +139,7 @@ function CompactPicker({
     <ColorPicker.Root
       {...rootProps}
       onValueChange={(details) => setValue(details.valueAsString)}
+      positioning={{ placement: "bottom-start", gutter: 8 }}
       size={size}
       style={style}
       value={value}
@@ -149,7 +154,7 @@ function CompactPicker({
       </ColorPicker.Control>
       <ColorPicker.Positioner>
         <ColorPicker.Content aria-label={`${label} editor`}>
-          <CompactPickerPanel />
+          <CompactPickerPanel showPresets={showPresets} />
         </ColorPicker.Content>
       </ColorPicker.Positioner>
     </ColorPicker.Root>
@@ -256,7 +261,7 @@ function InputOnlyPicker() {
 
 function TriggerOnlyPicker({ fitContent = false }: { fitContent?: boolean }) {
   return (
-    <ColorPicker.Root defaultValue="#e5484d" size="xs">
+    <ColorPicker.Root defaultValue="#e5484d" positioning={{ placement: "bottom-start", gutter: 8 }} size="xs">
       <ColorPicker.Label>Color</ColorPicker.Label>
       <ColorPicker.Trigger aria-label="Open color editor" data-fit-content={fitContent ? "" : undefined}>
         <ColorPicker.ValueSwatch />
@@ -269,7 +274,7 @@ function TriggerOnlyPicker({ fitContent = false }: { fitContent?: boolean }) {
 
 function TriggerInsideInputPicker() {
   return (
-    <ColorPicker.Root data-testid="color-picker-integrated-trigger" defaultValue="#e5484d" size="xs">
+    <ColorPicker.Root data-testid="color-picker-integrated-trigger" defaultValue="#e5484d" positioning={{ placement: "bottom-start", gutter: 8 }} size="xs">
       <ColorPicker.Label>Color</ColorPicker.Label>
       <ColorPicker.Control layout="integrated">
         <ColorPicker.Input />
@@ -294,7 +299,8 @@ function ChannelSlidersOnly() {
         <ColorPicker.ChannelSlider channel={channel} format={format} key={channel}>
           <ColorPicker.ChannelSliderLabel>{channel}</ColorPicker.ChannelSliderLabel>
           <ColorPicker.ChannelSliderValueText />
-          <ColorPicker.ChannelSliderTrack>{channel === "alpha" ? <ColorPicker.TransparencyGrid size="8px" /> : null}</ColorPicker.ChannelSliderTrack>
+          {channel === "alpha" ? <ColorPicker.TransparencyGrid size="8px" /> : null}
+          <ColorPicker.ChannelSliderTrack />
           <ColorPicker.ChannelSliderThumb />
         </ColorPicker.ChannelSlider>
       ))}
@@ -306,7 +312,7 @@ function ControlledPicker() {
   const [value, setValue] = useState("#5b5bd6");
   return (
     <VStack align="start" gap="3">
-      <ColorPicker.Root onValueChange={(details) => setValue(details.value.toString("hex"))} size="xs" value={value}>
+      <ColorPicker.Root onValueChange={(details) => setValue(details.value.toString("hex"))} positioning={{ placement: "bottom-start", gutter: 8 }} size="xs" value={value}>
         <ColorPicker.Label>Controlled color</ColorPicker.Label>
         <ColorPicker.Control><ColorPicker.Trigger aria-label="Open controlled color"><ColorPicker.ValueSwatch /></ColorPicker.Trigger><ColorPicker.Input /></ColorPicker.Control>
         <ColorPicker.Positioner><ColorPicker.Content><CompactPickerPanel /></ColorPicker.Content></ColorPicker.Positioner>
@@ -348,7 +354,7 @@ function SavedSwatchesPicker() {
     <VStack align="start" gap="3">
       <ColorPicker.Root inline onValueChange={(details) => setValue(details.value.toString("hex"))} size="xs" value={value}>
         <ColorPicker.Label>Saved palette</ColorPicker.Label>
-        <ColorPicker.Control><ColorPicker.Input /><ColorPicker.ValueSwatch /></ColorPicker.Control>
+        <ColorPicker.Control layout="integrated"><ColorPicker.Input /><ColorPicker.ValueSwatch /></ColorPicker.Control>
         <PresetSwatches values={presets.slice(0, 4)} />
         {saved.length ? <PresetSwatches values={saved} /> : <Text tone="secondary" variant="body-sm">No saved colors yet.</Text>}
       </ColorPicker.Root>
@@ -384,7 +390,7 @@ export function ColorPickerPage() {
     <VStack data-component-page="color-picker" gap="6">
       <Scenario {...colorPickerScenarios[0]}>
         <Specimen data-testid="color-picker-overview" label="popup editor">
-          <CompactPicker label="Brand color" size="xs" />
+          <CompactPicker label="Brand color" showPresets size="2xs" />
         </Specimen>
       </Scenario>
 
@@ -461,7 +467,7 @@ export function ColorPickerPage() {
           <EvidenceGroup description="Context exposes the same machine, while close-on-select is a Root policy." title="Machine access">
             <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
               <Specimen label="context access"><ContextPicker /></Specimen>
-              <Specimen label="close after swatch selection"><CompactPicker closeOnSelect label="Quick preset" size="xs" /></Specimen>
+              <Specimen label="close after swatch selection"><CompactPicker closeOnSelect label="Quick preset" showPresets size="xs" /></Specimen>
             </Grid.Root>
           </EvidenceGroup>
         </VStack>
@@ -472,13 +478,13 @@ export function ColorPickerPage() {
           <EvidenceGroup description="Presets expose a visible selected indicator and may close the popup after selection." title="Predefined colors">
             <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
               <Specimen label="six named presets"><ColorPicker.Root defaultValue="#30a46c" inline size="xs"><ColorPicker.Label>Brand preset</ColorPicker.Label><PresetSwatches /><HStack gap="2"><ColorPicker.ValueSwatch /><ColorPicker.ValueText /></HStack></ColorPicker.Root></Specimen>
-              <Specimen label="swatches and popup trigger"><CompactPicker label="Palette color" size="xs" /></Specimen>
+              <Specimen label="swatches and popup trigger"><CompactPicker label="Palette color" showPresets size="xs" /></Specimen>
             </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup description="Saving and arranging palettes is application state composed around the picker." title="Application-owned palettes">
             <Grid.Root columns={{ initial: 1, md: 3 }} gap="4">
               <Specimen label="save current swatch"><SavedSwatchesPicker /></Specimen>
-              <Specimen label="swatch beside input"><ColorPicker.Root defaultValue="#e5484d" inline size="xs"><ColorPicker.Label>Input color</ColorPicker.Label><ColorPicker.Control><ColorPicker.Input /><ColorPicker.ValueSwatch /></ColorPicker.Control></ColorPicker.Root></Specimen>
+              <Specimen label="swatch beside input"><ColorPicker.Root defaultValue="#e5484d" inline size="xs"><ColorPicker.Label>Input color</ColorPicker.Label><ColorPicker.Control layout="integrated"><ColorPicker.Input /><ColorPicker.ValueSwatch /></ColorPicker.Control></ColorPicker.Root></Specimen>
               <Specimen label="swatch inside trigger"><TriggerOnlyPicker /></Specimen>
             </Grid.Root>
           </EvidenceGroup>
@@ -493,7 +499,7 @@ export function ColorPickerPage() {
               <VStack gap="4">
                 <ColorPicker.Root defaultValue="#5b5bd6" inline name="brandColor" size="xs">
                   <ColorPicker.Label>Submitted brand color</ColorPicker.Label>
-                  <HStack gap="2"><ColorPicker.Input /><ColorPicker.ValueSwatch /></HStack>
+                  <ColorPicker.Control layout="integrated"><ColorPicker.Input /><ColorPicker.ValueSwatch /></ColorPicker.Control>
                   <PresetSwatches values={presets.slice(0, 3)} />
                   <ColorPicker.HiddenInput />
                 </ColorPicker.Root>

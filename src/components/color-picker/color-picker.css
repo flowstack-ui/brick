@@ -12,6 +12,8 @@
     --brick-color-picker-swatch-gap: var(--brick-space-2);
     --brick-color-picker-swatch-radius: var(--brick-radius-full);
     --brick-color-picker-checker-size: 0.5rem;
+    --brick-color-picker-checker-base: var(--brick-color-surface-base);
+    --brick-color-picker-checker-contrast: var(--brick-color-surface-raised);
     --brick-color-picker-background: transparent;
     --brick-color-picker-border-color: var(--brick-color-border-default);
     --brick-color-picker-focus-ring: var(--brick-color-focus-ring);
@@ -116,7 +118,6 @@
 
   .brick-color-picker__control[data-layout="integrated"]:hover {
     border-color: var(--brick-color-border-strong);
-    background-color: var(--brick-color-surface-hover, var(--brick-color-surface-subtle));
   }
 
   .brick-color-picker__control[data-layout="integrated"]:focus-within {
@@ -211,6 +212,13 @@
     background: transparent;
   }
 
+  /* A swatch-only trigger is an icon-sized square. Generic button padding
+     remains available when ValueText or other authored content is present. */
+  .brick-color-picker__trigger:has(> .brick-color-picker__value-swatch:only-child) {
+    inline-size: var(--brick-color-picker-control-size);
+    padding-inline: 0;
+  }
+
   :where(
     .brick-color-picker__trigger,
     .brick-color-picker__eye-dropper-trigger,
@@ -242,9 +250,16 @@
     .brick-color-picker__eye-dropper-trigger,
     .brick-color-picker__format-trigger,
     .brick-color-picker__format-select
-  ):hover {
+  ):not(:disabled):hover {
     border-color: var(--brick-color-border-strong);
     background-color: var(--brick-color-surface-hover, var(--brick-color-surface-subtle));
+  }
+
+  .brick-color-picker__control[data-layout="integrated"]
+    > :where(.brick-color-picker__trigger, .brick-color-picker__eye-dropper-trigger):not(:disabled):hover {
+    border-color: transparent;
+    border-radius: var(--brick-radius-control);
+    background-color: var(--brick-color-surface-subtle);
   }
 
   :where(
@@ -346,6 +361,8 @@
   .brick-color-picker__channel-slider-track {
     position: relative;
     grid-column: 1 / -1;
+    grid-row: 1;
+    z-index: 1;
     block-size: var(--brick-color-picker-slider-block-size);
     overflow: hidden;
     border: var(--brick-border-width) solid var(--brick-color-border-default);
@@ -362,10 +379,39 @@
     translate: -50% 50%;
   }
 
+
+  .brick-color-picker__channel-slider:has(> .brick-color-picker__channel-slider-label)
+    > .brick-color-picker__channel-slider-track {
+    grid-row: 2;
+  }
+
   .brick-color-picker__transparency-grid {
-    position: absolute;
-    inset: 0;
+    background-color: var(--brick-color-picker-checker-base) !important;
+    background-image: conic-gradient(
+      var(--brick-color-picker-checker-contrast) 0 25%,
+      transparent 0 50%,
+      var(--brick-color-picker-checker-contrast) 0 75%,
+      transparent 0
+    ) !important;
     border-radius: inherit;
+  }
+
+  /* TransparencyGrid and Track are siblings: the checker paints below the
+     channel gradient instead of replacing half of it from inside the Track. */
+  .brick-color-picker__channel-slider > .brick-color-picker__transparency-grid {
+    position: relative !important;
+    inset: auto !important;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    inline-size: 100% !important;
+    block-size: var(--brick-color-picker-slider-block-size) !important;
+    z-index: 0 !important;
+    border-radius: var(--brick-radius-full);
+  }
+
+  .brick-color-picker__channel-slider:has(> .brick-color-picker__channel-slider-label)
+    > .brick-color-picker__transparency-grid {
+    grid-row: 2;
   }
 
   .brick-color-picker__positioner {
@@ -388,6 +434,12 @@
     box-shadow: var(--brick-color-picker-content-shadow);
     color: var(--brick-color-text-primary);
     overscroll-behavior: contain;
+  }
+
+  .brick-color-picker:is([data-size="2xs"], [data-size="xs"]) .brick-color-picker__content {
+    inline-size: min(15rem, calc(100dvi - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right)));
+    gap: var(--brick-space-2);
+    padding: var(--brick-space-3);
   }
 
   /* Inline Content participates in its authored container instead of the

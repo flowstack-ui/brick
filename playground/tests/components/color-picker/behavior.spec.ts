@@ -22,6 +22,13 @@ test("popup editor is layered, aligned, and keeps presets synchronized", async (
   const editorBox = await editor.boundingBox();
   expect(editorBox!.x).toBeGreaterThanOrEqual(0);
   expect(editorBox!.x + editorBox!.width).toBeLessThanOrEqual(page.viewportSize()!.width);
+  expect(editorBox!.width).toBeLessThanOrEqual(240);
+  const triggerBox = await overview.locator("[data-slot='color-picker-trigger']").boundingBox();
+  expect(editorBox!.x).toBeCloseTo(triggerBox!.x, 0);
+  const popupSwatchBoxes = await editor.locator("[data-slot='color-picker-swatch']").evaluateAll((elements) =>
+    elements.map((element) => ({ height: element.getBoundingClientRect().height, width: element.getBoundingClientRect().width })),
+  );
+  expect(popupSwatchBoxes.every((box) => box.width <= 18 && box.height <= 18)).toBe(true);
   const presetRows = await editor.locator("[data-slot='color-picker-swatch-trigger']").evaluateAll((elements) =>
     elements.map((element) => Math.round(element.getBoundingClientRect().y)),
   );
@@ -62,6 +69,12 @@ test("finished field, slider, and swatch recipes keep exact geometry", async ({ 
   expect(geometry.children.filter((child) => child.slot !== "color-picker-value-swatch").every((child) => child.borderWidth === "0px")).toBe(true);
   expect(geometry.children.filter((child) => child.slot !== "color-picker-value-swatch").every((child) => Math.abs(child.height - (geometry.height - 2)) <= 1)).toBe(true);
 
+  const sizeTriggers = page.locator('[data-scenario="color-picker.recipes"] [data-slot="color-picker-trigger"]');
+  for (const trigger of await sizeTriggers.all()) {
+    const box = await trigger.boundingBox();
+    expect(Math.abs(box!.width - box!.height)).toBeLessThanOrEqual(1);
+  }
+
   const formatInputs = page.locator('[data-scenario="color-picker.formats"] [data-slot="color-picker"]').filter({ hasText: "Channel color" }).first();
   const formatControls = formatInputs.locator(':is([data-slot="color-picker-format-trigger"], [data-slot="color-picker-format-select"], [data-slot="color-picker-channel-input"]):visible');
   const formatControlHeights = await formatControls.evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect().height));
@@ -76,6 +89,30 @@ test("finished field, slider, and swatch recipes keep exact geometry", async ({ 
     ]);
     expect(thumbBox!.y + thumbBox!.height / 2).toBeCloseTo(trackBox!.y + trackBox!.height / 2, 0);
   }
+
+  const alphaSlider = page.locator('[data-scenario="color-picker.inline"] [data-slot="color-picker-channel-slider"]').filter({ hasText: "Opacity" });
+  const transparencyLayer = alphaSlider.locator(":scope > [data-slot='color-picker-transparency-grid']");
+  const alphaTrack = alphaSlider.locator(":scope > [data-slot='color-picker-channel-slider-track']");
+  await expect(transparencyLayer).toHaveCount(1);
+  const checkerGeometry = await Promise.all([transparencyLayer.evaluate((element) => ({
+    background: getComputedStyle(element).backgroundColor,
+    row: getComputedStyle(element).gridRowStart,
+    zIndex: getComputedStyle(element).zIndex,
+  })), alphaTrack.evaluate((element) => ({ row: getComputedStyle(element).gridRowStart, zIndex: getComputedStyle(element).zIndex }))]);
+  expect(checkerGeometry[0].background).not.toBe("rgb(255, 255, 255)");
+  expect(checkerGeometry[0].row).toBe(checkerGeometry[1].row);
+  expect(Number(checkerGeometry[0].zIndex)).toBeLessThan(Number(checkerGeometry[1].zIndex));
+
+  const applicationFields = page.locator('[data-scenario="color-picker.presets"] [data-layout="integrated"]');
+  await expect(applicationFields).toHaveCount(2);
+
+  const integratedTrigger = page.getByTestId("color-picker-integrated-trigger");
+  const integratedControl = integratedTrigger.locator("[data-layout='integrated']");
+  const popupAction = integratedTrigger.locator("[data-slot='color-picker-trigger']");
+  const controlBackground = await integratedControl.evaluate((element) => getComputedStyle(element).backgroundColor);
+  await popupAction.hover();
+  await expect.poll(() => popupAction.evaluate((element) => getComputedStyle(element).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
+  await expect.poll(() => integratedControl.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(controlBackground);
 
   for (const recipe of ["sharp", "rounded", "circle"] as const) {
     const trigger = page.getByTestId(`color-picker-swatches-${recipe}`).locator("[data-slot='color-picker-swatch-trigger']").first();

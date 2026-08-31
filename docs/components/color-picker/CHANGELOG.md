@@ -15,10 +15,13 @@ Color Picker follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
-- Reduced the finished editor footprint to 16rem, removed popup chrome from
-  inline content, unified format and channel
+- Reduced the finished editor footprint to 16rem with a 15rem `2xs`/`xs`
+  popup, removed popup chrome from inline content, unified format and channel
   control heights, centered labelled and unlabelled slider geometry, and made compact preset layout
   deliberate at each supported size.
+- Made swatch-only triggers square, kept integrated field actions locally
+  ghosted, placed a theme-aware checker beneath alpha gradients, and documented
+  saved and predefined palettes as optional application composition.
 
 ## 0.2.1 - 2026-08-31
 
