@@ -22,6 +22,9 @@ the repository `AGENTS.md`, exact-version Brick and Atom Agent Knowledge, and
 - Use `SpecimenLabel` for controlled comparison cells. Put it at the logical
   top-left and place the example after it through `VStack` or another explicit
   Brick layout owner.
+- Use `EvidenceGroup` when one scenario demonstrates independent dimensions
+  such as sizes and variants. Give each group a heading and description, then
+  place one value per `Specimen` in a responsive row.
 - Use `Grid` for repeated two-dimensional comparisons and `Stack` for one
   primary axis. Use `Frame` for local size constraints and `ScrollArea` only
   when a named ancestor gives it a definite size.

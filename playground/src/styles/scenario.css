@@ -62,6 +62,16 @@ body {
   justify-self: start;
 }
 
+.playground-evidence-group,
+.playground-evidence-group__content {
+  min-inline-size: 0;
+  inline-size: 100%;
+}
+
+.playground-evidence-group__heading :where(h3, p) {
+  margin: 0;
+}
+
 .evidence-app .scenario {
   padding-block: var(--brick-space-2);
   scroll-margin-block-start: var(--evidence-scenario-scroll-margin);

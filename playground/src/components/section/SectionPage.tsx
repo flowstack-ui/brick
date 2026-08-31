@@ -1,6 +1,7 @@
 import { type CSSProperties } from "react";
 import {
   Container,
+  Frame,
   Grid,
   Section,
   Surface,
@@ -222,12 +223,14 @@ export function SectionPage() {
             </Section>
           </Specimen>
           <Specimen
-            className="section-boundary section-vertical"
+            className="section-boundary"
             label="vertical writing"
           >
-            <Section as="div" endSpacing="lg" spacing="sm">
-              <Text>Logical block rhythm</Text>
-            </Section>
+            <Frame className="section-vertical">
+              <Section as="div" endSpacing="lg" spacing="sm">
+                <Text>Logical block rhythm</Text>
+              </Section>
+            </Frame>
           </Specimen>
         </Grid.Root>
       </Scenario>

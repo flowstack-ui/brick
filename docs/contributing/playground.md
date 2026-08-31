@@ -64,6 +64,14 @@ recreate that relationship with a raw `Surface`, a full-width Badge, margins,
 or source-order tricks. Use `CustomizationEvidence` for code-and-live pairs;
 its two columns collapse to one on narrow screens.
 
+When one scenario contains more than one independent review dimension, wrap
+each dimension in `EvidenceGroup` with its own short heading and explanation.
+For example, `Sizes` and `Variants` are separate groups, each containing a
+responsive row of labeled `Specimen` cells. Do not present multiple dimensions
+as one uninterrupted pile of surfaces or combine several values into one
+specimen just to shorten the page. Owners listed under
+`reviewStandards.groupedEvidenceOwners` are verified for this structure.
+
 Use Brick `Text` for playground-authored headings, paragraphs, supporting
 copy, status copy, and inline emphasis. Select the correct native host with
 `as`; visual hierarchy comes from `variant`. Use Brick `Input` for ordinary

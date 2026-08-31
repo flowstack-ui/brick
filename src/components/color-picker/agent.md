@@ -29,7 +29,7 @@ Edit, inspect, choose, and submit one color through a finished popup or inline e
 - **MUST:** Wrap popup Content in Positioner; do not recreate positioning, focus restoration, or outside dismissal.
 - **MUST:** Name every SwatchTrigger and render SwatchIndicator or an equivalent visible non-color selected cue.
 - **MUST:** Load styles.css, or core.css plus color-picker.css for modular delivery.
-- **SHOULD:** Treat NativeInput and EyeDropperTrigger as optional platform enhancements, not the only way to edit the color.
+- **MUST:** Treat NativeInput and EyeDropperTrigger as optional platform enhancements, not the only way to edit the color; unsupported EyeDropper triggers are disabled with data-unsupported.
 
 ## Common mistakes
 

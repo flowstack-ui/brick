@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type ReactNode } from "react";
+import { useState, type CSSProperties } from "react";
 import { Grid2X2, List } from "lucide-react";
 import { Frame } from "@flowstack-ui/brick/frame";
 import { Grid } from "@flowstack-ui/brick/grid";
@@ -10,7 +10,7 @@ import {
 import { VStack } from "@flowstack-ui/brick/stack";
 import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
-import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
+import { Specimen } from "../../shared/Specimen.js";
 import { CustomizationEvidence } from "../../shared/CustomizationEvidence.js";
 
 const customStyle = {
@@ -42,17 +42,6 @@ function Example({
       <SegmentGroup.Item value="grid">Grid</SegmentGroup.Item>
       <SegmentGroup.Item value="board">Board</SegmentGroup.Item>
     </SegmentGroup.Root>
-  );
-}
-
-function Specimen({ children, label }: { children: ReactNode; label: string }) {
-  return (
-    <EvidenceSurface>
-      <VStack align="start" gap="4">
-        <SpecimenLabel>{label}</SpecimenLabel>
-        {children}
-      </VStack>
-    </EvidenceSurface>
   );
 }
 
@@ -240,18 +229,12 @@ export function SegmentGroupPage() {
             data-testid="segment-group-appearance"
             gap="4"
           >
-            <EvidenceSurface data-brick-appearance="light">
-              <VStack align="start" gap="4">
-                <SpecimenLabel>Light</SpecimenLabel>
-                <Example label="Light project view" />
-              </VStack>
-            </EvidenceSurface>
-            <EvidenceSurface data-brick-appearance="dark">
-              <VStack align="start" gap="4">
-                <SpecimenLabel>Dark</SpecimenLabel>
-                <Example label="Dark project view" />
-              </VStack>
-            </EvidenceSurface>
+            <Specimen data-brick-appearance="light" label="light">
+              <Example label="Light project view" />
+            </Specimen>
+            <Specimen data-brick-appearance="dark" label="dark">
+              <Example label="Dark project view" />
+            </Specimen>
           </Grid.Root>
           <CustomizationEvidence
             code={`--brick-segment-group-background: var(--brick-color-accent-soft);\n--brick-segment-group-indicator-border: var(--brick-color-accent-border);\n--brick-segment-group-inset: 0.25rem;`}
@@ -295,12 +278,9 @@ export function SegmentGroupPage() {
               </SegmentGroup.Item>
             </SegmentGroup.Root>
           </Specimen>
-          <EvidenceSurface dir="rtl">
-            <VStack align="start" gap="4">
-              <SpecimenLabel>RTL</SpecimenLabel>
-              <Example dir="rtl" label="عرض المشروع" />
-            </VStack>
-          </EvidenceSurface>
+          <Specimen dir="rtl" label="RTL">
+            <Example dir="rtl" label="عرض المشروع" />
+          </Specimen>
         </Grid.Root>
       </Scenario>
     </VStack>

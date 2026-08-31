@@ -109,9 +109,26 @@ test("full-width, RTL, reduced motion, and forced colors preserve the contract",
   const rtl = page.getByRole("radiogroup", { name: "عرض المشروع" });
   await expect(rtl).toHaveCSS("direction", "rtl");
   const list = rtl.getByRole("radio", { name: "List" });
+  const rtlIndicator = rtl.locator("[data-slot='segment-group-indicator']");
+  await expect.poll(async () => {
+    const [selectedBox, indicatorBox] = await Promise.all([
+      list.boundingBox(),
+      rtlIndicator.boundingBox(),
+    ]);
+    return Math.abs(indicatorBox!.x - selectedBox!.x) +
+      Math.abs(indicatorBox!.width - selectedBox!.width);
+  }).toBeLessThan(1);
   await list.focus();
   await page.keyboard.press("ArrowLeft");
-  await expect(rtl.getByRole("radio", { name: "Grid" })).toBeFocused();
+  const rtlGrid = rtl.getByRole("radio", { name: "Grid" });
+  await expect(rtlGrid).toBeFocused();
+  await expect.poll(async () => {
+    const [selectedBox, indicatorBox] = await Promise.all([
+      rtlGrid.boundingBox(),
+      rtlIndicator.boundingBox(),
+    ]);
+    return Math.abs(indicatorBox!.x - selectedBox!.x);
+  }).toBeLessThan(1);
 
   await page.setViewportSize({ width: 390, height: 844 });
   const longItems = page

@@ -177,6 +177,11 @@
       "kbd",
       "mark",
       "prose"
+    ],
+    "groupedEvidenceOwners": [
+      "color-swatch",
+      "color-picker",
+      "kbd"
     ]
   },
   "featureOwners": {

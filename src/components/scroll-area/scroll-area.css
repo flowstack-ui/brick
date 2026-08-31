@@ -3,8 +3,12 @@
     --brick-scroll-area-scrollbar-thumb: var(--brick-color-border-strong);
     --brick-scroll-area-scrollbar-track: transparent;
 
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
     min-inline-size: 0;
     min-block-size: 0;
+    overflow: hidden;
   }
 
   .brick-scroll-area-viewport {

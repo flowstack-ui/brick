@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { Grid, Kbd, Text, VStack } from "@flowstack-ui/brick";
 import { CustomizationEvidence } from "../../shared/CustomizationEvidence.js";
+import { EvidenceGroup } from "../../shared/EvidenceGroup.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { Specimen } from "../../shared/Specimen.js";
 
@@ -45,32 +46,31 @@ export function KbdPage() {
         </Specimen>
       </Scenario>
       <Scenario {...kbdScenarios[1]}>
-        <VStack data-testid="kbd-recipes" gap="4">
-          <Specimen label="raised">
-            <Text as="p">
-              Press <Kbd>Enter</Kbd>
-            </Text>
-          </Specimen>
-          <Specimen label="outline">
-            <Text as="p">
-              Press <Kbd variant="outline">Enter</Kbd>
-            </Text>
-          </Specimen>
-          <Specimen label="subtle">
-            <Text as="p">
-              Press <Kbd variant="subtle">Enter</Kbd>
-            </Text>
-          </Specimen>
-          <Specimen label="plain">
-            <Text as="p">
-              Press <Kbd variant="plain">Enter</Kbd>
-            </Text>
-          </Specimen>
-          <Specimen label="sm · md · lg">
-            <Text as="p">
-              <Kbd size="sm">Esc</Kbd> <Kbd>Tab</Kbd> <Kbd size="lg">Enter</Kbd>
-            </Text>
-          </Specimen>
+        <VStack data-testid="kbd-recipes" gap="6">
+          <EvidenceGroup
+            description="Each appearance is shown separately with the same key and copy."
+            title="Variants"
+          >
+            <Grid.Root columns={{ initial: 1, md: 2, xl: 4 }} gap="4">
+              {(["raised", "outline", "subtle", "plain"] as const).map((variant) => (
+                <Specimen key={variant} label={variant}>
+                  <Text as="p">Press <Kbd variant={variant}>Enter</Kbd></Text>
+                </Specimen>
+              ))}
+            </Grid.Root>
+          </EvidenceGroup>
+          <EvidenceGroup
+            description="Each size gets its own surface so its footprint and alignment can be compared."
+            title="Sizes"
+          >
+            <Grid.Root columns={{ initial: 1, md: 3 }} gap="4">
+              {(["sm", "md", "lg"] as const).map((size) => (
+                <Specimen key={size} label={size}>
+                  <Text as="p">Press <Kbd size={size}>Enter</Kbd></Text>
+                </Specimen>
+              ))}
+            </Grid.Root>
+          </EvidenceGroup>
         </VStack>
       </Scenario>
       <Scenario {...kbdScenarios[2]}>

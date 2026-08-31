@@ -4,7 +4,12 @@ Segment Group follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.2.1 - 2026-08-31
+
 ### Fixed
+
+- Kept the measured Indicator on the selected physical item in RTL instead of
+  applying its left-coordinate offset from the logical end edge.
 
 - Added the `ItemText` containment recipe for long labels so they wrap within
   their measured segment instead of overlapping adjacent choices at narrow
