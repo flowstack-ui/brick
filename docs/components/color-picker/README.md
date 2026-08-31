@@ -114,9 +114,22 @@ while the shared Control keeps the one field boundary.
 
 Popup editors use `Trigger`, `Positioner`, and elevated `Content`. Inline editors set `inline` on Root and render Content directly; direct inline Content removes popup border, background, shadow, and padding so the owning application surface controls containment. Sizes are `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, and `2xl`; variants are `outline` and `soft`. The default editor is 16rem wide, while `2xs` and `xs` use a compact 15rem popup for dense toolbars and creative controls. Choose a larger recipe when the surrounding form or touch context needs it. A Trigger whose only child is ValueSwatch is automatically square; a Trigger containing ValueText or other authored content retains content-driven width.
 
+`ValueSwatch` and `Swatch` paint an appearance-aware surface checker below the
+represented color, so translucent swatches remain integrated with light and
+dark application surfaces. The alpha channel's `TransparencyGrid` instead uses
+a stable white and light-neutral canvas so its zero-opacity end stays visibly
+neutral in every appearance. Channel-slider
+thumbs are the top visual layer and remain fully visible at middle and endpoint
+values. The area and channel tracks use borderless color planes; each channel
+track and its transparency check inherit one subtle semantic radius. Thumbs keep
+a white contrast ring and the small Theme shadow without an additional hard
+outline. The alpha thumb always previews the selected color opaquely; its
+position communicates the current alpha, so the thumb does not become a split
+checker-and-surface window at zero opacity.
+
 For alpha, render `TransparencyGrid` as a direct sibling immediately before
 `ChannelSliderTrack`. The checker and channel gradient then occupy the same
-grid row, with the semantic checker below the translucent gradient:
+grid row, with the stable neutral checker below the translucent gradient:
 
 ```tsx
 <ColorPicker.ChannelSlider channel="alpha">
@@ -138,7 +151,7 @@ and are not required by Color Picker.
 
 Every part exposes `.brick-color-picker__*` plus its `data-slot`. Root exposes `data-size`, `data-variant`, and Atom state attributes such as `data-disabled`, `data-readonly`, `data-invalid`, and open state. Control exposes `data-layout`; ValueSwatch and swatch parts expose `data-shape`; SwatchTrigger exposes `data-frame` plus Atom `data-state="checked|unchecked"`.
 
-Public properties are `--brick-color-picker-control-size`, `--brick-color-picker-gap`, `--brick-color-picker-background`, `--brick-color-picker-border-color`, `--brick-color-picker-focus-ring`, `--brick-color-picker-content-background`, `--brick-color-picker-content-border-color`, `--brick-color-picker-content-radius`, `--brick-color-picker-content-shadow`, `--brick-color-picker-area-block-size`, `--brick-color-picker-checker-size`, `--brick-color-picker-checker-base`, `--brick-color-picker-checker-contrast`, `--brick-color-picker-indicator-color`, `--brick-color-picker-indicator-shadow`, `--brick-color-picker-input-width`, `--brick-color-picker-slider-block-size`, `--brick-color-picker-swatch-gap`, `--brick-color-picker-swatch-radius`, `--brick-color-picker-swatch-size`, and `--brick-color-picker-thumb-size`.
+Public properties are `--brick-color-picker-control-size`, `--brick-color-picker-gap`, `--brick-color-picker-background`, `--brick-color-picker-border-color`, `--brick-color-picker-focus-ring`, `--brick-color-picker-content-background`, `--brick-color-picker-content-border-color`, `--brick-color-picker-content-radius`, `--brick-color-picker-content-shadow`, `--brick-color-picker-area-block-size`, `--brick-color-picker-checker-size`, `--brick-color-picker-checker-base`, `--brick-color-picker-checker-contrast`, `--brick-color-picker-transparency-grid-base`, `--brick-color-picker-transparency-grid-contrast`, `--brick-color-picker-indicator-color`, `--brick-color-picker-indicator-shadow`, `--brick-color-picker-input-width`, `--brick-color-picker-slider-block-size`, `--brick-color-picker-swatch-gap`, `--brick-color-picker-swatch-radius`, `--brick-color-picker-swatch-size`, and `--brick-color-picker-thumb-size`.
 
 ## Customization
 

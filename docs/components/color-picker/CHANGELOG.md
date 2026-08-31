@@ -4,6 +4,20 @@ Color Picker follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Kept channel-slider thumbs above their tracks across the full value range and
+  kept semantic checkerboards visible beneath translucent `ValueSwatch` and
+  `Swatch` colors supplied by Atom.
+- Removed hard area and track borders, made channel tracks and transparency
+  checks share one semantic radius, and replaced the thumb's dark outline with
+  the small Theme shadow while retaining its white contrast ring.
+- Made alpha-track transparency checks appearance-independent white and
+  light-neutral canvases while keeping swatch checks appearance-aware, so the
+  opacity ramp stays legible without turning dark-mode swatches white.
+- Made the alpha thumb preview the selected color at full opacity across the
+  complete range, including the zero-opacity endpoint.
+
 ## 0.2.2 - 2026-08-31
 
 ### Added

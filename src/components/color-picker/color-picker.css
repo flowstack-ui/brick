@@ -12,8 +12,12 @@
     --brick-color-picker-swatch-gap: var(--brick-space-2);
     --brick-color-picker-swatch-radius: var(--brick-radius-full);
     --brick-color-picker-checker-size: 0.5rem;
+    /* Swatches use the surrounding appearance while the alpha track keeps a
+       neutral transparency canvas, matching their different visual jobs. */
     --brick-color-picker-checker-base: var(--brick-color-surface-base);
     --brick-color-picker-checker-contrast: var(--brick-color-surface-raised);
+    --brick-color-picker-transparency-grid-base: #fff;
+    --brick-color-picker-transparency-grid-contrast: #eee;
     --brick-color-picker-background: transparent;
     --brick-color-picker-border-color: var(--brick-color-border-default);
     --brick-color-picker-focus-ring: var(--brick-color-focus-ring);
@@ -295,12 +299,23 @@
     overflow: hidden;
     border: var(--brick-border-width) solid var(--brick-color-border-default);
     border-radius: var(--brick-color-picker-swatch-radius);
-    background-color: var(--brick-color-surface-base);
-    background-image: repeating-conic-gradient(
-      var(--brick-color-surface-subtle) 0 25%,
-      var(--brick-color-surface-raised) 0 50%
-    );
-    background-size: var(--brick-color-picker-checker-size) var(--brick-color-picker-checker-size);
+    /* Atom supplies the represented color through an inline background and
+       --color. Rebuild that paint as a top layer so the neutral checker stays
+       visible through alpha instead of being erased by the inline shorthand. */
+    background-color: var(--brick-color-picker-checker-base) !important;
+    background-image:
+      linear-gradient(var(--color, transparent), var(--color, transparent)),
+      conic-gradient(
+        var(--brick-color-picker-checker-contrast) 0 25%,
+        transparent 0 50%,
+        var(--brick-color-picker-checker-contrast) 0 75%,
+        transparent 0
+      ) !important;
+    background-position: 0 0, 0 0 !important;
+    background-repeat: no-repeat, repeat !important;
+    background-size:
+      100% 100%,
+      var(--brick-color-picker-checker-size) var(--brick-color-picker-checker-size) !important;
   }
 
   :where(.brick-color-picker__value-swatch, .brick-color-picker__swatch)[data-shape="sharp"],
@@ -324,7 +339,7 @@
     inline-size: 100%;
     block-size: var(--brick-color-picker-area-block-size);
     overflow: hidden;
-    border: var(--brick-border-width) solid var(--brick-color-border-default);
+    border: 0;
     border-radius: var(--brick-radius-surface);
     touch-action: none;
   }
@@ -344,8 +359,13 @@
     border: 2px solid white;
     border-radius: var(--brick-radius-full);
     background: currentColor;
-    box-shadow: 0 0 0 1px rgb(0 0 0 / 40%), var(--brick-shadow-floating);
+    box-shadow: var(--brick-shadow-sm);
     translate: -50% -50%;
+  }
+
+  .brick-color-picker__channel-slider-thumb {
+    /* Track sits above the alpha checker; thumb must remain the top layer. */
+    z-index: 2;
   }
 
   .brick-color-picker__channel-slider {
@@ -355,6 +375,7 @@
     min-inline-size: 0;
     align-items: center;
     gap: var(--brick-space-1) var(--brick-space-2);
+    border-radius: var(--brick-radius-subtle);
     touch-action: none;
   }
 
@@ -365,8 +386,10 @@
     z-index: 1;
     block-size: var(--brick-color-picker-slider-block-size);
     overflow: hidden;
-    border: var(--brick-border-width) solid var(--brick-color-border-default);
-    border-radius: var(--brick-radius-full);
+    border: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 var(--brick-border-width)
+      color-mix(in srgb, var(--brick-color-shadow), transparent 82%);
   }
 
   /* Label and value text add a first grid row. Atom positions the thumb at
@@ -379,18 +402,17 @@
     translate: -50% 50%;
   }
 
-
   .brick-color-picker__channel-slider:has(> .brick-color-picker__channel-slider-label)
     > .brick-color-picker__channel-slider-track {
     grid-row: 2;
   }
 
   .brick-color-picker__transparency-grid {
-    background-color: var(--brick-color-picker-checker-base) !important;
+    background-color: var(--brick-color-picker-transparency-grid-base) !important;
     background-image: conic-gradient(
-      var(--brick-color-picker-checker-contrast) 0 25%,
+      var(--brick-color-picker-transparency-grid-contrast) 0 25%,
       transparent 0 50%,
-      var(--brick-color-picker-checker-contrast) 0 75%,
+      var(--brick-color-picker-transparency-grid-contrast) 0 75%,
       transparent 0
     ) !important;
     border-radius: inherit;
@@ -406,7 +428,7 @@
     inline-size: 100% !important;
     block-size: var(--brick-color-picker-slider-block-size) !important;
     z-index: 0 !important;
-    border-radius: var(--brick-radius-full);
+    border-radius: inherit;
   }
 
   .brick-color-picker__channel-slider:has(> .brick-color-picker__channel-slider-label)
@@ -586,12 +608,16 @@
       --brick-color-picker-indicator-shadow: transparent;
     }
 
-    :where(
-      .brick-color-picker__area,
-      .brick-color-picker__channel-slider-track,
-      .brick-color-picker__value-swatch,
-      .brick-color-picker__swatch
-    ) { border-color: CanvasText; forced-color-adjust: none; }
+    :where(.brick-color-picker__area, .brick-color-picker__channel-slider-track) {
+      border: var(--brick-border-width) solid CanvasText;
+      box-shadow: none;
+      forced-color-adjust: none;
+    }
+
+    :where(.brick-color-picker__value-swatch, .brick-color-picker__swatch) {
+      border-color: CanvasText;
+      forced-color-adjust: none;
+    }
 
     .brick-color-picker__swatch-trigger[data-state="checked"],
     .brick-color-picker__swatch-trigger[aria-pressed="true"] { border-width: 2px; }

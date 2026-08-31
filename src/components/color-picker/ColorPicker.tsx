@@ -1,10 +1,12 @@
 "use client";
 
 import {
+  createContext,
   forwardRef,
   type ForwardRefExoticComponent,
   type ReactNode,
   type RefAttributes,
+  useContext,
 } from "react";
 import {
   ColorPicker as AtomColorPicker,
@@ -38,6 +40,7 @@ import {
   type ColorPickerValueSwatchProps as AtomValueSwatchProps,
   type ColorPickerValueTextProps as AtomValueTextProps,
   type ColorPickerViewProps as AtomViewProps,
+  useColorPickerContext,
 } from "@flowstack-ui/atom/color-picker";
 
 export type ColorPickerSize = "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
@@ -97,6 +100,8 @@ function classes(base: string, className?: string) {
 }
 
 type Forward<Element, Props> = ForwardRefExoticComponent<Props & RefAttributes<Element>>;
+
+const ColorPickerChannelContext = createContext<ColorPickerChannelSliderProps["channel"] | null>(null);
 
 export const ColorPickerRoot: Forward<HTMLDivElement, ColorPickerRootProps> = forwardRef<HTMLDivElement, ColorPickerRootProps>(
   function ColorPickerRoot({ className, size = "md", variant = "outline", ...props }, ref) {
@@ -179,8 +184,17 @@ export const ColorPickerAreaThumb: Forward<HTMLDivElement, ColorPickerAreaThumbP
   },
 );
 export const ColorPickerChannelSlider: Forward<HTMLDivElement, ColorPickerChannelSliderProps> = forwardRef<HTMLDivElement, ColorPickerChannelSliderProps>(
-  function ColorPickerChannelSlider({ className, ...props }, ref) {
-    return <AtomColorPicker.ChannelSlider {...props} className={classes("brick-color-picker__channel-slider", className)} ref={ref} />;
+  function ColorPickerChannelSlider({ channel, className, ...props }, ref) {
+    return (
+      <ColorPickerChannelContext.Provider value={channel}>
+        <AtomColorPicker.ChannelSlider
+          {...props}
+          channel={channel}
+          className={classes("brick-color-picker__channel-slider", className)}
+          ref={ref}
+        />
+      </ColorPickerChannelContext.Provider>
+    );
   },
 );
 export const ColorPickerChannelSliderLabel: Forward<HTMLLabelElement, ColorPickerChannelSliderLabelProps> = forwardRef<HTMLLabelElement, ColorPickerChannelSliderLabelProps>(
@@ -194,8 +208,21 @@ export const ColorPickerChannelSliderTrack: Forward<HTMLDivElement, ColorPickerC
   },
 );
 export const ColorPickerChannelSliderThumb: Forward<HTMLDivElement, ColorPickerChannelSliderThumbProps> = forwardRef<HTMLDivElement, ColorPickerChannelSliderThumbProps>(
-  function ColorPickerChannelSliderThumb({ className, ...props }, ref) {
-    return <AtomColorPicker.ChannelSliderThumb {...props} className={classes("brick-color-picker__channel-slider-thumb", className)} ref={ref} />;
+  function ColorPickerChannelSliderThumb({ className, style, ...props }, ref) {
+    const channel = useContext(ColorPickerChannelContext);
+    const colorPicker = useColorPickerContext();
+    const thumbStyle = channel === "alpha"
+      ? { ...style, background: colorPicker.value.withChannelValue("alpha", 1).toString("css") }
+      : style;
+
+    return (
+      <AtomColorPicker.ChannelSliderThumb
+        {...props}
+        className={classes("brick-color-picker__channel-slider-thumb", className)}
+        ref={ref}
+        style={thumbStyle}
+      />
+    );
   },
 );
 export const ColorPickerChannelSliderValueText: Forward<HTMLSpanElement, ColorPickerChannelSliderValueTextProps> = forwardRef<HTMLSpanElement, ColorPickerChannelSliderValueTextProps>(

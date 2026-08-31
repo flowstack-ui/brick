@@ -83,12 +83,58 @@ test("finished field, slider, and swatch recipes keep exact geometry", async ({ 
   const labelledSliders = page.locator("[data-slot='color-picker-channel-slider']").filter({ has: page.locator("[data-slot='color-picker-channel-slider-label']") });
   for (const slider of await labelledSliders.all()) {
     if (!(await slider.isVisible())) continue;
-    const [trackBox, thumbBox] = await Promise.all([
+    const [trackBox, thumbBox, stacking, visualTreatment] = await Promise.all([
       slider.locator("[data-slot='color-picker-channel-slider-track']").boundingBox(),
       slider.locator("[data-slot='color-picker-channel-slider-thumb']").boundingBox(),
+      slider.evaluate((element) => {
+        const track = element.querySelector("[data-slot='color-picker-channel-slider-track']")!;
+        const thumb = element.querySelector("[data-slot='color-picker-channel-slider-thumb']")!;
+        return {
+          thumb: Number(getComputedStyle(thumb).zIndex),
+          track: Number(getComputedStyle(track).zIndex),
+        };
+      }),
+      slider.evaluate((element) => {
+        const sliderStyle = getComputedStyle(element);
+        const trackStyle = getComputedStyle(element.querySelector("[data-slot='color-picker-channel-slider-track']")!);
+        const thumbStyle = getComputedStyle(element.querySelector("[data-slot='color-picker-channel-slider-thumb']")!);
+        const transparencyGrid = element.querySelector("[data-slot='color-picker-transparency-grid']");
+        return {
+          checkerRadius: transparencyGrid ? getComputedStyle(transparencyGrid).borderRadius : null,
+          sliderRadius: sliderStyle.borderRadius,
+          thumbBorderColor: thumbStyle.borderTopColor,
+          thumbBorderWidth: thumbStyle.borderTopWidth,
+          thumbShadow: thumbStyle.boxShadow,
+          trackBorderWidth: trackStyle.borderTopWidth,
+          trackRadius: trackStyle.borderRadius,
+        };
+      }),
     ]);
     expect(thumbBox!.y + thumbBox!.height / 2).toBeCloseTo(trackBox!.y + trackBox!.height / 2, 0);
+    expect(stacking.thumb).toBeGreaterThan(stacking.track);
+    expect(visualTreatment.trackBorderWidth).toBe("0px");
+    expect(visualTreatment.trackRadius).toBe(visualTreatment.sliderRadius);
+    if (visualTreatment.checkerRadius) expect(visualTreatment.checkerRadius).toBe(visualTreatment.sliderRadius);
+    expect(visualTreatment.thumbBorderWidth).toBe("2px");
+    expect(visualTreatment.thumbBorderColor).toBe("rgb(255, 255, 255)");
+    expect(visualTreatment.thumbShadow).not.toBe("none");
+    expect(visualTreatment.thumbShadow).not.toContain("0px 0px 0px 1px");
   }
+
+  const areaBorderWidth = await page
+    .locator('[data-scenario="color-picker.inline"] [data-slot="color-picker-area"]')
+    .evaluate((element) => getComputedStyle(element).borderTopWidth);
+  expect(areaBorderWidth).toBe("0px");
+
+  const alphaValueSwatch = page.locator('[data-scenario="color-picker.inline"] [data-slot="color-picker-value-swatch"]');
+  const valueSwatchPaint = await alphaValueSwatch.evaluate((element) => ({
+    background: getComputedStyle(element).backgroundColor,
+    backgroundImage: getComputedStyle(element).backgroundImage,
+    color: getComputedStyle(element).getPropertyValue("--color"),
+  }));
+  expect(valueSwatchPaint.color).toContain("rgba");
+  expect(valueSwatchPaint.backgroundImage).toContain("linear-gradient");
+  expect(valueSwatchPaint.backgroundImage).toContain("conic-gradient");
 
   const alphaSlider = page.locator('[data-scenario="color-picker.inline"] [data-slot="color-picker-channel-slider"]').filter({ hasText: "Opacity" });
   const transparencyLayer = alphaSlider.locator(":scope > [data-slot='color-picker-transparency-grid']");
@@ -96,12 +142,63 @@ test("finished field, slider, and swatch recipes keep exact geometry", async ({ 
   await expect(transparencyLayer).toHaveCount(1);
   const checkerGeometry = await Promise.all([transparencyLayer.evaluate((element) => ({
     background: getComputedStyle(element).backgroundColor,
+    backgroundImage: getComputedStyle(element).backgroundImage,
     row: getComputedStyle(element).gridRowStart,
     zIndex: getComputedStyle(element).zIndex,
   })), alphaTrack.evaluate((element) => ({ row: getComputedStyle(element).gridRowStart, zIndex: getComputedStyle(element).zIndex }))]);
-  expect(checkerGeometry[0].background).not.toBe("rgb(255, 255, 255)");
+  expect(checkerGeometry[0].background).toBe("rgb(255, 255, 255)");
+  expect(checkerGeometry[0].backgroundImage).toContain("rgb(238, 238, 238)");
   expect(checkerGeometry[0].row).toBe(checkerGeometry[1].row);
   expect(Number(checkerGeometry[0].zIndex)).toBeLessThan(Number(checkerGeometry[1].zIndex));
+
+  await page.getByRole("button", { name: "dark", exact: true }).click();
+  const darkCheckerPaint = await transparencyLayer.evaluate((element) => ({
+    background: getComputedStyle(element).backgroundColor,
+    backgroundImage: getComputedStyle(element).backgroundImage,
+  }));
+  const darkValueSwatchPaint = await alphaValueSwatch.evaluate((element) => ({
+    background: getComputedStyle(element).backgroundColor,
+    backgroundImage: getComputedStyle(element).backgroundImage,
+  }));
+  expect(darkCheckerPaint.background).toBe("rgb(255, 255, 255)");
+  expect(darkCheckerPaint.backgroundImage).toContain("rgb(238, 238, 238)");
+  expect(darkValueSwatchPaint.background).not.toBe(valueSwatchPaint.background);
+  expect(darkValueSwatchPaint.backgroundImage).toContain("conic-gradient");
+  await page.getByRole("button", { name: "system", exact: true }).click();
+
+  const alphaChannelInput = page.locator('[data-scenario="color-picker.inline"] [data-slot="color-picker-channel-input"]').last();
+  await alphaChannelInput.fill("1");
+  await alphaChannelInput.press("Tab");
+  const endpointThumb = await alphaSlider.evaluate((element) => {
+    const root = element.getBoundingClientRect();
+    const thumb = element.querySelector("[data-slot='color-picker-channel-slider-thumb']")!;
+    const thumbRect = thumb.getBoundingClientRect();
+    const thumbStyle = getComputedStyle(thumb);
+    return {
+      background: thumbStyle.backgroundColor,
+      center: thumbRect.left + thumbRect.width / 2,
+      rootEnd: root.right,
+      width: thumbRect.width,
+    };
+  });
+  expect(Math.abs(endpointThumb.center - endpointThumb.rootEnd)).toBeLessThanOrEqual(1);
+  expect(endpointThumb.width).toBeGreaterThan(0);
+  expect(endpointThumb.background).toBe("rgb(0, 144, 255)");
+
+  await alphaChannelInput.fill("0");
+  await alphaChannelInput.press("Tab");
+  const transparentEndpointThumb = await alphaSlider.evaluate((element) => {
+    const root = element.getBoundingClientRect();
+    const thumb = element.querySelector("[data-slot='color-picker-channel-slider-thumb']")!;
+    const thumbRect = thumb.getBoundingClientRect();
+    return {
+      background: getComputedStyle(thumb).backgroundColor,
+      center: thumbRect.left + thumbRect.width / 2,
+      rootStart: root.left,
+    };
+  });
+  expect(Math.abs(transparentEndpointThumb.center - transparentEndpointThumb.rootStart)).toBeLessThanOrEqual(1);
+  expect(transparentEndpointThumb.background).toBe("rgb(0, 144, 255)");
 
   const applicationFields = page.locator('[data-scenario="color-picker.presets"] [data-layout="integrated"]');
   await expect(applicationFields).toHaveCount(2);

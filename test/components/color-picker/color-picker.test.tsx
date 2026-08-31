@@ -105,6 +105,21 @@ describe("ColorPicker", () => {
     }
   });
 
+  it("keeps the alpha thumb preview opaque at the transparent endpoint", () => {
+    render(
+      <ColorPicker.Root defaultValue="rgba(0, 144, 255, 0)" inline>
+        <ColorPicker.ChannelSlider channel="alpha">
+          <ColorPicker.TransparencyGrid />
+          <ColorPicker.ChannelSliderTrack />
+          <ColorPicker.ChannelSliderThumb />
+        </ColorPicker.ChannelSlider>
+      </ColorPicker.Root>,
+    );
+
+    expect(document.querySelector("[data-slot='color-picker-channel-slider-thumb']"))
+      .toHaveStyle({ background: "rgb(0, 144, 255)" });
+  });
+
   it("exposes integrated controls and matching swatch frame recipes", () => {
     render(
       <ColorPicker.Root inline>

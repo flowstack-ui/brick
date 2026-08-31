@@ -20,7 +20,10 @@
     "Build the visual editor from Area, ChannelSlider, format controls, channel inputs, and SwatchGroup; ValueSwatch and ValueText expose the current value.",
     "Choose one of the seven closed sizes from 2xs through 2xl; prefer xs or sm for dense creative tooling and md or larger for ordinary form and touch contexts.",
     "Use Control layout=integrated when swatch, editable input, and optional EyeDropper or popup Trigger must share one finished field boundary.",
-    "For alpha, render TransparencyGrid as a direct sibling immediately before ChannelSliderTrack so the semantic checker sits beneath the channel gradient.",
+    "For alpha, render TransparencyGrid as a direct sibling immediately before ChannelSliderTrack so the stable white and light-neutral checker sits beneath the channel gradient.",
+    "Keep ValueSwatch and Swatch transparency previews intact; Brick paints an appearance-aware surface checker beneath Atom's represented color, including when alpha is below one.",
+    "Keep area and channel color planes free of decorative hard borders, make each channel track and transparency check inherit one semantic radius, and use the finished white thumb ring with the small Theme shadow.",
+    "Keep the alpha thumb's color preview opaque across the full range; slider position and value text communicate alpha, while the underlying color value remains Atom-owned.",
     "Choose SwatchTrigger shape=sharp|rounded|circle so frame and swatch match; choose frame=none only when a frameless visual is intended.",
     "Place SwatchIndicator inside Swatch or ValueSwatch whenever selection needs a visible non-color cue.",
     "Add curated presets only when the product needs them; saved and recent palettes are optional application-owned state, not required popup anatomy."
@@ -34,7 +37,10 @@
     { "id": "color-picker-css", "level": "must", "statement": "Load styles.css, or core.css plus color-picker.css for modular delivery." },
     { "id": "color-picker-platform", "level": "must", "statement": "Treat NativeInput and EyeDropperTrigger as optional platform enhancements, not the only way to edit the color; unsupported EyeDropper triggers are disabled with data-unsupported." },
     { "id": "color-picker-popup-distinction", "level": "must", "statement": "Use Trigger with Positioner and Content for the Brick popup; EyeDropperTrigger invokes only the optional browser-native EyeDropper API." },
-    { "id": "color-picker-platform-fallback", "level": "must", "statement": "Keep the area and channel editor or NativeInput available when EyeDropper is unsupported; do not simulate privileged operating-system screen sampling in application code." }
+    { "id": "color-picker-platform-fallback", "level": "must", "statement": "Keep the area and channel editor or NativeInput available when EyeDropper is unsupported; do not simulate privileged operating-system screen sampling in application code." },
+    { "id": "color-picker-transparency-layers", "level": "must", "statement": "Keep every channel-slider thumb above its track, keep the alpha track's stable white and light-neutral checker appearance-independent, and keep translucent ValueSwatch and Swatch checkers appearance-aware." },
+    { "id": "color-picker-color-plane-treatment", "level": "must", "statement": "Preserve the finished borderless area and track treatment, inherited subtle channel radius, and white-ring-plus-small-shadow thumb treatment outside forced-colors mode." },
+    { "id": "color-picker-alpha-thumb-preview", "level": "must", "statement": "Render the alpha thumb as one opaque selected-color preview even at zero opacity; do not expose different surfaces through a transparent thumb." }
   ],
   "commonMistakes": [
     { "mistake": "Reimplementing color conversion, pointer math, keyboard state, or popup behavior in Brick or application code.", "correction": "Compose the released ColorPicker anatomy and controlled callbacks." },
@@ -46,7 +52,7 @@
     { "mistake": "Adding saved or preset palettes to every popup.", "correction": "Keep the base popup compact and add those optional application compositions only where the product requires them." }
   ],
   "validation": [
-    "Test all seven sizes, square swatch-only triggers, compact and default popup widths, integrated one-border and ghost-action geometry, equal format/input control geometry, centered labelled and unlabelled slider thumbs, a theme-aware checker below the alpha gradient, area and channel synchronization, alpha, RGB/HSL/HSB format changes, matching square, rounded, and circle frames, optional and frameless presets, text, native, and EyeDropper fallback paths, controlled state, popup focus and dismissal, disabled, read-only, invalid, form submit and reset, light and dark, forced colors, reduced motion, narrow and zoom layouts, RTL, and non-color selection cues."
+    "Test all seven sizes, square swatch-only triggers, compact and default popup widths, integrated one-border and ghost-action geometry, equal format/input control geometry, borderless area and tracks, one inherited subtle track/checker radius, centered labelled and unlabelled slider thumbs above their tracks at middle and endpoint values, an opaque alpha-thumb color preview at zero and one, a white thumb ring with the small Theme shadow and no hard dark outline, an appearance-independent white and light-neutral checker below the alpha gradient, appearance-aware checkers beneath translucent ValueSwatch and Swatch colors, area and channel synchronization, alpha, RGB/HSL/HSB format changes, matching square, rounded, and circle frames, optional and frameless presets, text, native, and EyeDropper fallback paths, controlled state, popup focus and dismissal, disabled, read-only, invalid, form submit and reset, light and dark, forced colors, reduced motion, narrow and zoom layouts, RTL, and non-color selection cues."
   ],
   "related": ["color-swatch", "field", "form", "input", "popover"]
 }

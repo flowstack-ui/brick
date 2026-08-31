@@ -4,6 +4,20 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+### Fixed
+
+- Kept Color Picker channel thumbs above their tracks at middle and endpoint
+  values, and preserved semantic checkerboards beneath translucent current-value
+  and preset swatches even when Atom supplies the represented color inline.
+- Refined Color Picker area and channel presentation with borderless color
+  planes, one inherited semantic radius for tracks and transparency checks, and
+  a white thumb ring with the small Theme shadow instead of a hard dark outline.
+- Kept Color Picker alpha tracks on a stable white and light-neutral canvas so
+  the zero-opacity end does not turn black, while current-value and preset
+  swatches retain an appearance-aware checker in dark mode.
+- Kept the alpha-channel thumb's color preview opaque at every slider value so
+  the zero-opacity endpoint does not split between the checker and its surface.
+
 ## 0.2.2 - 2026-08-31
 
 ### Added
