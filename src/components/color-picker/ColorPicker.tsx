@@ -196,7 +196,11 @@ export const ColorPickerEyeDropperTrigger: Forward<HTMLButtonElement, ColorPicke
   function ColorPickerEyeDropperTrigger({ className, children, ...props }, ref) {
     return (
       <AtomColorPicker.EyeDropperTrigger {...props} className={classes("brick-color-picker__eye-dropper-trigger", className)} ref={ref}>
-        {children ?? <span aria-hidden="true">⌖</span>}
+        {children ?? (
+          <svg aria-hidden="true" fill="none" height="18" viewBox="0 0 24 24" width="18">
+            <path d="m19 3 2 2-5.1 5.1 1 1-2.1 2.1-1-1-6.7 6.7-3.1 1 1-3.1 6.7-6.7-1-1 2.1-2.1 1 1L19 3Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" />
+          </svg>
+        )}
       </AtomColorPicker.EyeDropperTrigger>
     );
   },

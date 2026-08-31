@@ -25,6 +25,23 @@ test("the four qualified constraint families resolve without prop leakage", asyn
     "height",
     "256px",
   );
+  const scrollRoot = cases.nth(3).locator(".brick-scroll-area");
+  const viewport = scrollRoot.locator(".brick-scroll-area-viewport");
+  const metrics = await viewport.evaluate((element) => ({
+    clientHeight: element.clientHeight,
+    scrollHeight: element.scrollHeight,
+  }));
+  expect(metrics.clientHeight).toBeLessThanOrEqual(256);
+  expect(metrics.scrollHeight).toBeGreaterThan(metrics.clientHeight);
+  await viewport.evaluate((element) => { element.scrollTop = 120; });
+  expect(await viewport.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+  const [rootBox, viewportBox] = await Promise.all([
+    scrollRoot.boundingBox(),
+    viewport.boundingBox(),
+  ]);
+  expect(viewportBox!.y + viewportBox!.height).toBeLessThanOrEqual(
+    rootBox!.y + rootBox!.height + 0.5,
+  );
 });
 
 test("responsive constraints carry forward through standard breakpoints", async ({

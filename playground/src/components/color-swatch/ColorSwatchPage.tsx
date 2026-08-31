@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import {
+  Badge,
   Button,
   ColorSwatch,
   Grid,
@@ -7,11 +8,10 @@ import {
   Text,
   VStack,
 } from "@flowstack-ui/brick";
-import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
-import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
+import { CustomizationEvidence } from "../../shared/CustomizationEvidence.js";
+import { EvidenceGroup } from "../../shared/EvidenceGroup.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { Specimen } from "../../shared/Specimen.js";
-import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 
 const customStyle = {
   "--brick-color-swatch-border-color": "var(--brick-color-accent-border)",
@@ -139,74 +139,68 @@ export function ColorSwatchPage() {
         </Grid.Root>
       </Scenario>
       <Scenario {...colorSwatchScenarios[4]}>
-        <VStack gap="5">
-          <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
-            <Specimen label="decorative preview">
-              <HStack gap="3">
-                <ColorSwatch.Root
-                  data-testid="color-swatch-decorative"
-                  value="#f5d90a"
-                />
-                <Text>Yellow · #f5d90a (text owns the name)</Text>
-              </HStack>
-            </Specimen>
-            <Specimen label="named image">
-              <HStack gap="3">
-                <ColorSwatch.Root
-                  data-testid="color-swatch-labeled"
-                  label="Ocean blue color"
-                  value="#0090ff"
-                />
-                <Text>Ocean blue · #0090ff</Text>
-              </HStack>
-            </Specimen>
-            <Specimen data-brick-appearance="light" label="light">
-              <HStack gap="3">
-                <ColorSwatch.Root value="#8e4ec6" />
-                <Text>Plum</Text>
-              </HStack>
-            </Specimen>
-            <Specimen data-brick-appearance="dark" label="dark">
-              <HStack gap="3">
-                <ColorSwatch.Root value="#8e4ec6" />
-                <Text>Plum</Text>
-              </HStack>
-            </Specimen>
-          </Grid.Root>
-          <Specimen label="inside an owning control">
-            <Button tone="neutral" variant="outline">
-              <ColorSwatch.Root value="#e5484d" /> Coral preset
-            </Button>
-          </Specimen>
-          <EvidenceSurface
-            className="playground-customization-evidence"
-            inset="none"
+        <VStack gap="6">
+          <EvidenceGroup
+            description="Decorative swatches rely on nearby text; named swatches expose their own image label."
+            title="Semantics"
           >
-            <Grid.Root
-              className="playground-customization-layout"
-              columns={2}
-              gap="0"
+            <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
+              <Specimen label="decorative preview">
+                <HStack gap="3">
+                  <ColorSwatch.Root data-testid="color-swatch-decorative" value="#f5d90a" />
+                  <Text>Yellow · #f5d90a (text owns the name)</Text>
+                </HStack>
+              </Specimen>
+              <Specimen label="named image">
+                <HStack gap="3">
+                  <ColorSwatch.Root data-testid="color-swatch-labeled" label="Ocean blue color" value="#0090ff" />
+                  <Text>Ocean blue · #0090ff</Text>
+                </HStack>
+              </Specimen>
+            </Grid.Root>
+          </EvidenceGroup>
+          <EvidenceGroup
+            description="The same semantic colors stay legible in both appearance scopes."
+            title="Appearance"
+          >
+            <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
+              <Specimen data-brick-appearance="light" label="light">
+                <HStack gap="3"><ColorSwatch.Root value="#8e4ec6" /><Text>Plum</Text></HStack>
+              </Specimen>
+              <Specimen data-brick-appearance="dark" label="dark">
+                <HStack gap="3"><ColorSwatch.Root value="#8e4ec6" /><Text>Plum</Text></HStack>
+              </Specimen>
+            </Grid.Root>
+          </EvidenceGroup>
+          <EvidenceGroup
+            description="An owning component supplies meaning and interaction; the swatch remains visual evidence."
+            title="Compositions"
+          >
+            <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
+              <Specimen label="inside a badge">
+                <Badge><ColorSwatch.Root size="sm" value="#0090ff" /> Ocean blue</Badge>
+              </Specimen>
+              <Specimen label="inside a button">
+                <Button tone="neutral" variant="outline"><ColorSwatch.Root value="#e5484d" /> Coral preset</Button>
+              </Specimen>
+            </Grid.Root>
+          </EvidenceGroup>
+          <EvidenceGroup
+            description="Only the documented size, radius, and border properties change the live preview."
+            title="Customization"
+          >
+            <CustomizationEvidence
+              code={`--brick-color-swatch-size: 2.5rem;\n--brick-color-swatch-radius: var(--brick-radius-full);\n--brick-color-swatch-border-color: var(--brick-color-accent-border);`}
+              description="The preview uses the same size, border, and radius shown in code."
+              title="Color Swatch CSS properties"
             >
-              <VStack gap="2">
-                <SpecimenLabel>customized</SpecimenLabel>
-                <Text as="h3" variant="title-sm">
-                  Color Swatch CSS properties
-                </Text>
-                <Text tone="secondary" variant="body-sm">
-                  The preview uses the same size, border, and radius shown in
-                  code.
-                </Text>
-                <PlaygroundCodeBlock>{`--brick-color-swatch-size: 2.5rem;\n--brick-color-swatch-radius: var(--brick-radius-full);\n--brick-color-swatch-border-color: var(--brick-color-accent-border);`}</PlaygroundCodeBlock>
-              </VStack>
-              <VStack className="playground-customization-preview" gap="3">
                 <ColorSwatch.Root
                   label="Customized cyan color"
                   style={customStyle}
                   value="#12a594"
                 />
-              </VStack>
-            </Grid.Root>
-          </EvidenceSurface>
+            </CustomizationEvidence>
+          </EvidenceGroup>
         </VStack>
       </Scenario>
     </VStack>

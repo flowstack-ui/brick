@@ -56,7 +56,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ## Anatomy and DOM ownership
 
-Brick directly styles the matching public Atom 0.26.0 parts. Atom owns parsing, format conversion, pointer and keyboard behavior, focus, popup positioning and dismissal, selected state, Field inheritance, and form reset. Brick owns finished sizes, surfaces, spacing, focus visuals, and responsive containment.
+Brick directly styles the matching public Atom 0.26.1 parts. Atom owns parsing, format conversion, pointer and keyboard behavior, focus, popup positioning and dismissal, selected state, Field inheritance, form reset, and platform-capability detection. Brick owns finished sizes, surfaces, spacing, focus visuals, and responsive containment.
 
 The namespace contains `Root`, `Context`, `Label`, `Control`, `Input`, `ChannelInput`, `NativeInput`, `HiddenInput`, `Trigger`, `Positioner`, `Content`, `ValueText`, `ValueSwatch`, `Area`, `AreaBackground`, `AreaThumb`, `ChannelSlider`, `ChannelSliderLabel`, `ChannelSliderTrack`, `ChannelSliderThumb`, `ChannelSliderValueText`, `TransparencyGrid`, `EyeDropperTrigger`, `SwatchGroup`, `SwatchTrigger`, `Swatch`, `SwatchIndicator`, `FormatSelect`, `FormatTrigger`, and `View`.
 

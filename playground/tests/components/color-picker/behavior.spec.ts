@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => { await page.goto("/color-picker"); });
 
-test("popup text, presets, and alpha controls keep one value synchronized", async ({ page }) => {
+test("popup editor is layered, aligned, and keeps presets synchronized", async ({ page }) => {
   const overview = page.getByTestId("color-picker-overview");
   const input = overview.locator("[data-slot='color-picker-control'] [data-slot='color-picker-input']");
   await overview.locator("[data-slot='color-picker-trigger']").click();
@@ -14,12 +14,34 @@ test("popup text, presets, and alpha controls keep one value synchronized", asyn
   await expect(input).toHaveValue("#30A46C");
   await expect(editor.getByRole("button", { name: "Use Grass" })).toHaveAttribute("data-state", "checked");
   await expect(editor.getByRole("button", { name: "Use Grass" }).locator("[data-slot='color-picker-swatch-indicator']")).toBeVisible();
+  const uncheckedIndicators = editor.locator("[data-state='unchecked'] [data-slot='color-picker-swatch-indicator']");
+  await expect(uncheckedIndicators.first()).toBeHidden();
 
-  const alpha = editor.getByLabel("Opacity channel");
-  await alpha.fill("0.5");
-  await alpha.blur();
-  await expect(alpha).toHaveValue("0.5");
-  await expect(input).toHaveValue("#30A46C");
+  const zIndex = await editor.locator("xpath=parent::*").evaluate((element) => getComputedStyle(element).zIndex);
+  expect(Number(zIndex)).toBeGreaterThan(0);
+  const editorBox = await editor.boundingBox();
+  expect(editorBox!.x).toBeGreaterThanOrEqual(0);
+  expect(editorBox!.x + editorBox!.width).toBeLessThanOrEqual(page.viewportSize()!.width);
+  const presetRows = await editor.locator("[data-slot='color-picker-swatch-trigger']").evaluateAll((elements) =>
+    elements.map((element) => Math.round(element.getBoundingClientRect().y)),
+  );
+  expect(new Set(presetRows).size).toBe(1);
+  for (const slider of await editor.locator("[data-slot='color-picker-channel-slider']").all()) {
+    const [trackBox, thumbBox] = await Promise.all([
+      slider.locator("[data-slot='color-picker-channel-slider-track']").boundingBox(),
+      slider.locator("[data-slot='color-picker-channel-slider-thumb']").boundingBox(),
+    ]);
+    expect(thumbBox!.y + thumbBox!.height / 2).toBeCloseTo(trackBox!.y + trackBox!.height / 2, 0);
+  }
+});
+
+test("EyeDropper reports platform availability instead of presenting a broken action", async ({ page }) => {
+  const scenario = page.locator('[data-scenario="color-picker.platform"]');
+  const trigger = scenario.locator("[data-slot='color-picker-eye-dropper-trigger']");
+  const supported = await page.evaluate(() => window.isSecureContext !== false && "EyeDropper" in window);
+  if (supported) await expect(trigger).toBeEnabled();
+  else await expect(trigger).toBeDisabled();
+  await expect(scenario).toContainText(supported ? "Available in this browser" : "Unavailable in this browser");
 });
 
 test("format views expose the correct channels without changing the represented color", async ({ page }) => {

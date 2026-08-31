@@ -52,8 +52,11 @@
   .brick-segment-group__indicator {
     position: absolute;
     z-index: 0;
-    inset-block-start: 0;
-    inset-inline-start: 0;
+    /* Indicator geometry is measured in physical viewport coordinates. Keep
+       the positioning origin physical as well so RTL does not apply the
+       measured left offset from the opposite edge. */
+    top: 0;
+    left: 0;
     inline-size: var(--brick-segment-group-indicator-inline-size, 0);
     block-size: var(--brick-segment-group-indicator-block-size, 0);
     border: var(--brick-border-width) solid

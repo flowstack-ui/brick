@@ -4,6 +4,17 @@ Color Picker follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.2.1 - 2026-08-31
+
+### Fixed
+
+- Kept popup content above surrounding application content, centered channel
+  thumbs on their tracks, hid unchecked swatch indicators, fitted compact
+  presets without an orphan row, and replaced the placeholder EyeDropper mark
+  with finished icon artwork.
+- Exposed unsupported EyeDropper behavior as a disabled Atom-owned action with
+  a normal editor and native chooser still available.
+
 ## 0.2.0 - 2026-08-31
 
 ### Changed

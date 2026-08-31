@@ -1,4 +1,4 @@
-import { useState, type ComponentProps, type CSSProperties, type FormEvent } from "react";
+import { useEffect, useState, type ComponentProps, type CSSProperties, type FormEvent } from "react";
 import {
   Button,
   ColorPicker,
@@ -10,8 +10,10 @@ import {
   VStack,
 } from "@flowstack-ui/brick";
 import { CustomizationEvidence } from "../../shared/CustomizationEvidence.js";
+import { EvidenceGroup } from "../../shared/EvidenceGroup.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { Specimen } from "../../shared/Specimen.js";
+import "./color-picker.playground.css";
 
 const presets = [
   { label: "Indigo", value: "#5b5bd6" },
@@ -30,7 +32,7 @@ const customStyle = {
 } as CSSProperties;
 
 export const colorPickerScenarios = [
-  { id: "color-picker.overview", number: 1, title: "Compact popup", description: "A finished trigger opens the full editor while one value stays synchronized everywhere." },
+  { id: "color-picker.overview", number: 1, title: "Overview", description: "A compact finished field opens a focused editor while one value stays synchronized everywhere." },
   { id: "color-picker.inline", number: 2, title: "Inline editor", description: "Area, hue, opacity, value, and format controls compose as one visible editor." },
   { id: "color-picker.recipes", number: 3, title: "Sizes and variants", description: "The complete sm, md, and lg sizes pair with outline and soft recipes." },
   { id: "color-picker.formats", number: 4, title: "Formats and channel inputs", navigationTitle: "Formats", description: "RGBA, HSLA, and HSBA views preserve the same color while exposing appropriate channels." },
@@ -40,7 +42,40 @@ export const colorPickerScenarios = [
   { id: "color-picker.adaptation", number: 8, title: "Appearance, customization, and RTL", navigationTitle: "Adaptation", description: "Light/dark scopes, public properties, narrow width, and RTL keep the complete editor usable." },
 ] as const satisfies readonly ScenarioDefinition[];
 
-function PickerPanel() {
+function CompactPickerPanel() {
+  return (
+    <>
+      <ColorPicker.Area aria-label="Saturation and brightness">
+        <ColorPicker.AreaBackground />
+        <ColorPicker.AreaThumb />
+      </ColorPicker.Area>
+      <HStack align="center" className="color-picker-compact-tools" gap="2">
+        <ColorPicker.EyeDropperTrigger aria-label="Pick color from screen" title="Pick color from screen" />
+        <VStack className="color-picker-compact-sliders" gap="2">
+          <ColorPicker.ChannelSlider aria-label="Hue" channel="hue">
+            <ColorPicker.ChannelSliderTrack />
+            <ColorPicker.ChannelSliderThumb />
+          </ColorPicker.ChannelSlider>
+          <ColorPicker.ChannelSlider aria-label="Opacity" channel="alpha">
+            <ColorPicker.ChannelSliderTrack><ColorPicker.TransparencyGrid size="8px" /></ColorPicker.ChannelSliderTrack>
+            <ColorPicker.ChannelSliderThumb />
+          </ColorPicker.ChannelSlider>
+        </VStack>
+      </HStack>
+      <ColorPicker.SwatchGroup aria-label="Color presets">
+        {presets.map((preset) => (
+          <ColorPicker.SwatchTrigger aria-label={`Use ${preset.label}`} key={preset.value} value={preset.value}>
+            <ColorPicker.Swatch value={preset.value}>
+              <ColorPicker.SwatchIndicator />
+            </ColorPicker.Swatch>
+          </ColorPicker.SwatchTrigger>
+        ))}
+      </ColorPicker.SwatchGroup>
+    </>
+  );
+}
+
+function DetailedPickerPanel() {
   return (
     <>
       <ColorPicker.Area aria-label="Saturation and brightness">
@@ -56,23 +91,18 @@ function PickerPanel() {
       <ColorPicker.ChannelSlider channel="alpha">
         <ColorPicker.ChannelSliderLabel>Opacity</ColorPicker.ChannelSliderLabel>
         <ColorPicker.ChannelSliderValueText />
-        <ColorPicker.ChannelSliderTrack>
-          <ColorPicker.TransparencyGrid size="8px" />
-        </ColorPicker.ChannelSliderTrack>
+        <ColorPicker.ChannelSliderTrack><ColorPicker.TransparencyGrid size="8px" /></ColorPicker.ChannelSliderTrack>
         <ColorPicker.ChannelSliderThumb />
       </ColorPicker.ChannelSlider>
       <HStack gap="2" wrap>
         <ColorPicker.FormatSelect aria-label="Color format" />
         <ColorPicker.Input aria-label="Hex color" />
         <ColorPicker.ChannelInput aria-label="Opacity channel" channel="alpha" />
-        <ColorPicker.EyeDropperTrigger aria-label="Pick color from screen" />
       </HStack>
       <ColorPicker.SwatchGroup aria-label="Color presets">
         {presets.map((preset) => (
           <ColorPicker.SwatchTrigger aria-label={`Use ${preset.label}`} key={preset.value} value={preset.value}>
-            <ColorPicker.Swatch value={preset.value}>
-              <ColorPicker.SwatchIndicator />
-            </ColorPicker.Swatch>
+            <ColorPicker.Swatch value={preset.value}><ColorPicker.SwatchIndicator /></ColorPicker.Swatch>
           </ColorPicker.SwatchTrigger>
         ))}
       </ColorPicker.SwatchGroup>
@@ -107,13 +137,13 @@ function CompactPicker({
       <ColorPicker.Label>{label}</ColorPicker.Label>
       <ColorPicker.Control>
         <ColorPicker.Trigger aria-label={`Open ${label.toLowerCase()} editor`}>
-          <ColorPicker.ValueSwatch><ColorPicker.SwatchIndicator value={value} /></ColorPicker.ValueSwatch>
+          <ColorPicker.ValueSwatch />
         </ColorPicker.Trigger>
         <ColorPicker.Input />
       </ColorPicker.Control>
       <ColorPicker.Positioner>
         <ColorPicker.Content aria-label={`${label} editor`}>
-          <PickerPanel />
+          <CompactPickerPanel />
         </ColorPicker.Content>
       </ColorPicker.Positioner>
     </ColorPicker.Root>
@@ -129,8 +159,28 @@ function InlinePicker({ label, style, dir }: { label: string; style?: CSSPropert
         <ColorPicker.ValueText />
       </HStack>
       <ColorPicker.Content aria-label={`${label} inline editor`}>
-        <PickerPanel />
+        <DetailedPickerPanel />
       </ColorPicker.Content>
+    </ColorPicker.Root>
+  );
+}
+
+function EyeDropperExample() {
+  const [available, setAvailable] = useState(false);
+  useEffect(() => {
+    setAvailable(window.isSecureContext !== false && "EyeDropper" in window);
+  }, []);
+  return (
+    <ColorPicker.Root defaultValue="#0090ff" inline>
+      <ColorPicker.Label>Screen color</ColorPicker.Label>
+      <HStack align="center" gap="2">
+        <ColorPicker.EyeDropperTrigger aria-label="Pick a screen color" />
+        <ColorPicker.ValueSwatch />
+        <ColorPicker.ValueText />
+      </HStack>
+      <Text tone="secondary" variant="body-sm">
+        {available ? "Available in this browser." : "Unavailable in this browser; use the editor or native chooser."}
+      </Text>
     </ColorPicker.Root>
   );
 }
@@ -189,12 +239,21 @@ export function ColorPickerPage() {
       </Scenario>
 
       <Scenario {...colorPickerScenarios[2]}>
-        <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
-          {(["sm", "md", "lg"] as const).map((size) => (
-            <Specimen key={size} label={`${size} outline`}><CompactPicker label={`${size.toUpperCase()} color`} size={size} /></Specimen>
-          ))}
-          <Specimen label="md soft"><CompactPicker label="Soft color" variant="soft" /></Specimen>
-        </Grid.Root>
+        <VStack gap="6">
+          <EvidenceGroup description="Each control size is isolated so its footprint can be compared." title="Sizes">
+            <Grid.Root columns={{ initial: 1, md: 3 }} gap="4">
+              {(["sm", "md", "lg"] as const).map((size) => (
+                <Specimen key={size} label={size}><CompactPicker label={`${size.toUpperCase()} color`} size={size} /></Specimen>
+              ))}
+            </Grid.Root>
+          </EvidenceGroup>
+          <EvidenceGroup description="Variants change paint without changing the control anatomy." title="Variants">
+            <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
+              <Specimen label="outline"><CompactPicker label="Outline color" /></Specimen>
+              <Specimen label="soft"><CompactPicker label="Soft color" variant="soft" /></Specimen>
+            </Grid.Root>
+          </EvidenceGroup>
+        </VStack>
       </Scenario>
 
       <Scenario {...colorPickerScenarios[3]}>
@@ -229,10 +288,7 @@ export function ColorPickerPage() {
             </ColorPicker.Root>
           </Specimen>
           <Specimen label="progressive EyeDropper">
-            <ColorPicker.Root defaultValue="#0090ff" inline>
-              <ColorPicker.Label>Screen color</ColorPicker.Label>
-              <HStack gap="2"><ColorPicker.EyeDropperTrigger aria-label="Pick a screen color" /><ColorPicker.ValueSwatch /><ColorPicker.ValueText /></HStack>
-            </ColorPicker.Root>
+            <EyeDropperExample />
           </Specimen>
         </Grid.Root>
       </Scenario>

@@ -4,6 +4,21 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.2.1 - 2026-08-31
+
+### Changed
+
+- Adopted exact Atom 0.26.1 so the Color Picker exposes unsupported
+  EyeDropper capability as a disabled, testable platform state.
+
+### Fixed
+
+- Kept the Segment Group indicator aligned with the selected item in RTL.
+- Made a bounded Scroll Area create a real shrinking viewport so content
+  scrolls instead of escaping a Frame maximum block size.
+- Corrected Color Picker popup layering, channel-thumb centering, hidden swatch
+  indicators, compact preset layout, and unsupported EyeDropper presentation.
+
 ## 0.2.0 - 2026-08-31
 
 ### Added

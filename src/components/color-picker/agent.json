@@ -27,7 +27,7 @@
     { "id": "color-picker-popup", "level": "must", "statement": "Wrap popup Content in Positioner; do not recreate positioning, focus restoration, or outside dismissal." },
     { "id": "color-picker-selection", "level": "must", "statement": "Name every SwatchTrigger and render SwatchIndicator or an equivalent visible non-color selected cue." },
     { "id": "color-picker-css", "level": "must", "statement": "Load styles.css, or core.css plus color-picker.css for modular delivery." },
-    { "id": "color-picker-platform", "level": "should", "statement": "Treat NativeInput and EyeDropperTrigger as optional platform enhancements, not the only way to edit the color." }
+    { "id": "color-picker-platform", "level": "must", "statement": "Treat NativeInput and EyeDropperTrigger as optional platform enhancements, not the only way to edit the color; unsupported EyeDropper triggers are disabled with data-unsupported." }
   ],
   "commonMistakes": [
     { "mistake": "Reimplementing color conversion, pointer math, keyboard state, or popup behavior in Brick or application code.", "correction": "Compose the released ColorPicker anatomy and controlled callbacks." },

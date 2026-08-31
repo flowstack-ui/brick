@@ -13,7 +13,7 @@
 | Assistive technology | |
 | Playground route | `/color-picker` |
 
-Scenario order: `01 Compact popup`, `02 Inline editor`, `03 Sizes and variants`, `04 Formats and channel inputs`, `05 Presets and selected indicator`, `06 Native chooser and EyeDropper`, `07 States and form`, `08 Appearance, customization, and RTL`
+Scenario order: `01 Overview`, `02 Inline editor`, `03 Sizes and variants`, `04 Formats and channel inputs`, `05 Presets and selected indicator`, `06 Native chooser and EyeDropper`, `07 States and form`, `08 Appearance, customization, and RTL`
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 

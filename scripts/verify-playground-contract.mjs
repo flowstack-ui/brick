@@ -149,6 +149,14 @@ for (const entry of registryEntries) {
     if (!/data-brick-appearance="dark"/.test(reviewSource))
       failures.push(`${id} review page has no explicit dark specimen`);
   }
+  if (
+    contract.reviewStandards?.groupedEvidenceOwners?.includes(id) &&
+    !/\bEvidenceGroup\b/.test(reviewSource)
+  ) {
+    failures.push(
+      `${id} review page does not separate independent evidence dimensions with EvidenceGroup`,
+    );
+  }
 
   const owners = {
     behavior: `playground/tests/components/${id}/behavior.spec.ts`,

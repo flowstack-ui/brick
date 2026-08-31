@@ -14,8 +14,9 @@
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
-Scenario order: `01 Overview`, `02 Spacing scale`, `03 Asymmetric rhythm`,
-`04 Responsive rhythm`, `05 Surface composition`, `06 Stress`.
+Scenario order: `01 Overview`, `02 Rhythm scale`, `03 Responsive rhythm`,
+`04 Independent edges`, `05 Semantic hosts`, `06 Surface and Container`,
+`07 Theme and escape hatch`, `08 Responsive and logical stress`.
 
 ## Step 1 — Scale and responsive rhythm
 
