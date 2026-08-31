@@ -11,8 +11,12 @@
     --brick-checkbox-description-foreground: var(--brick-color-text-secondary);
     --brick-checkbox-control-background: var(--brick-color-surface-raised);
     --brick-checkbox-control-border: var(--brick-color-border-strong);
-    --brick-checkbox-control-checked-background: var(--brick-color-accent-solid);
-    --brick-checkbox-control-checked-foreground: var(--brick-color-accent-on-solid);
+    --brick-checkbox-control-checked-background: var(
+      --brick-color-accent-solid
+    );
+    --brick-checkbox-control-checked-foreground: var(
+      --brick-color-accent-on-solid
+    );
     --brick-checkbox-invalid-foreground: var(--brick-color-danger-text);
   }
 
@@ -50,9 +54,12 @@
     user-select: none;
     vertical-align: middle;
     transition:
-      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      box-shadow var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+      background-color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      box-shadow var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard);
   }
 
   :where(
@@ -80,10 +87,11 @@
   }
 
   :where(
-    .brick-checkbox,
-    .brick-checkbox-group-item,
-    .brick-checkbox-group-parent
-  ):is(:focus-visible, [data-focus-visible]) .brick-checkbox-control {
+      .brick-checkbox,
+      .brick-checkbox-group-item,
+      .brick-checkbox-group-parent
+    ):is(:focus-visible, [data-focus-visible])
+    .brick-checkbox-control {
     border-color: var(--brick-color-focus-ring);
     outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
     outline-offset: var(--brick-border-focus-offset);
@@ -98,16 +106,27 @@
     grid-row: 1 / span 2;
     place-items: center;
     align-self: start;
-    margin-block-start: calc((var(--brick-font-size-md) * var(--brick-font-line-height-body) - var(--brick-checkbox-control-size)) / 2);
-    border: var(--brick-checkbox-border-width) solid var(--brick-checkbox-control-border);
+    margin-block-start: calc(
+      (
+          var(--brick-font-size-md) * var(--brick-font-line-height-body) -
+            var(--brick-checkbox-control-size)
+        ) /
+        2
+    );
+    border: var(--brick-checkbox-border-width) solid
+      var(--brick-checkbox-control-border);
     border-radius: var(--brick-checkbox-radius);
     background: var(--brick-checkbox-control-background);
     color: transparent;
     transition:
-      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      transform var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+      background-color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      border-color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      transform var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard);
   }
 
   .brick-checkbox-indicator {
@@ -137,49 +156,55 @@
   }
 
   :where(
-    .brick-checkbox,
-    .brick-checkbox-group-item,
-    .brick-checkbox-group-parent
-  )[data-state="checked"] .brick-checkbox-control,
+      .brick-checkbox,
+      .brick-checkbox-group-item,
+      .brick-checkbox-group-parent
+    )[data-state="checked"]
+    .brick-checkbox-control,
   :where(
-    .brick-checkbox,
-    .brick-checkbox-group-item,
-    .brick-checkbox-group-parent
-  )[data-state="indeterminate"] .brick-checkbox-control {
+      .brick-checkbox,
+      .brick-checkbox-group-item,
+      .brick-checkbox-group-parent
+    )[data-state="indeterminate"]
+    .brick-checkbox-control {
     border-color: var(--brick-checkbox-control-checked-background);
     background: var(--brick-checkbox-control-checked-background);
     color: var(--brick-checkbox-control-checked-foreground);
   }
 
   :where(
-    .brick-checkbox,
-    .brick-checkbox-group-item,
-    .brick-checkbox-group-parent
-  )[data-state="indeterminate"] .brick-checkbox-check {
+      .brick-checkbox,
+      .brick-checkbox-group-item,
+      .brick-checkbox-group-parent
+    )[data-state="indeterminate"]
+    .brick-checkbox-check {
     display: none;
   }
 
   :where(
-    .brick-checkbox,
-    .brick-checkbox-group-item,
-    .brick-checkbox-group-parent
-  )[data-state="indeterminate"] .brick-checkbox-mixed {
+      .brick-checkbox,
+      .brick-checkbox-group-item,
+      .brick-checkbox-group-parent
+    )[data-state="indeterminate"]
+    .brick-checkbox-mixed {
     display: block;
   }
 
   :where(
-    .brick-checkbox,
-    .brick-checkbox-group-item,
-    .brick-checkbox-group-parent
-  )[data-state="unchecked"] .brick-checkbox-mark {
+      .brick-checkbox,
+      .brick-checkbox-group-item,
+      .brick-checkbox-group-parent
+    )[data-state="unchecked"]
+    .brick-checkbox-mark {
     visibility: hidden;
   }
 
   :where(
-    .brick-checkbox,
-    .brick-checkbox-group-item,
-    .brick-checkbox-group-parent
-  ):not([data-disabled], [data-readonly]):active .brick-checkbox-control {
+      .brick-checkbox,
+      .brick-checkbox-group-item,
+      .brick-checkbox-group-parent
+    ):not([data-disabled], [data-readonly]):active
+    .brick-checkbox-control {
     transform: scale(0.94);
   }
 
@@ -194,10 +219,11 @@
   }
 
   :where(
-    .brick-checkbox,
-    .brick-checkbox-group-item,
-    .brick-checkbox-group-parent
-  )[data-disabled] .brick-checkbox-control {
+      .brick-checkbox,
+      .brick-checkbox-group-item,
+      .brick-checkbox-group-parent
+    )[data-disabled]
+    .brick-checkbox-control {
     border-color: var(--brick-color-border-subtle);
     background: var(--brick-color-surface-subtle);
   }
@@ -212,7 +238,10 @@
 
   .brick-checkbox[data-invalid],
   .brick-checkbox-group:not([data-invalid])
-    > :where(.brick-checkbox-group-item, .brick-checkbox-group-parent)[data-invalid] {
+    > :where(
+      .brick-checkbox-group-item,
+      .brick-checkbox-group-parent
+    )[data-invalid] {
     border-inline-start: var(--brick-border-focus-width) solid
       var(--brick-checkbox-invalid-foreground);
     box-shadow: none;
@@ -220,7 +249,10 @@
 
   .brick-checkbox[data-invalid] .brick-checkbox-control,
   .brick-checkbox-group:not([data-invalid])
-    > :where(.brick-checkbox-group-item, .brick-checkbox-group-parent)[data-invalid]
+    > :where(
+      .brick-checkbox-group-item,
+      .brick-checkbox-group-parent
+    )[data-invalid]
     .brick-checkbox-control {
     border-color: var(--brick-checkbox-invalid-foreground);
   }
@@ -245,10 +277,11 @@
 
   @media (hover: hover) and (pointer: fine) {
     :where(
-      .brick-checkbox,
-      .brick-checkbox-group-item,
-      .brick-checkbox-group-parent
-    ):not([data-disabled], [data-readonly], [data-invalid]):hover .brick-checkbox-control {
+        .brick-checkbox,
+        .brick-checkbox-group-item,
+        .brick-checkbox-group-parent
+      ):not([data-disabled], [data-readonly], [data-invalid]):hover
+      .brick-checkbox-control {
       border-color: var(--brick-color-accent-border);
     }
 
@@ -266,9 +299,9 @@
     :where(
       .brick-checkbox,
       .brick-checkbox-group-item,
-      .brick-checkbox-group-parent,
-      .brick-checkbox-control
-    ) {
+      .brick-checkbox-group-parent
+    ),
+    .brick-checkbox-control {
       transition-duration: 0ms;
     }
   }
@@ -289,24 +322,27 @@
     }
 
     :where(
-      .brick-checkbox,
-      .brick-checkbox-group-item,
-      .brick-checkbox-group-parent
-    ):is(:focus-visible, [data-focus-visible]) .brick-checkbox-control {
+        .brick-checkbox,
+        .brick-checkbox-group-item,
+        .brick-checkbox-group-parent
+      ):is(:focus-visible, [data-focus-visible])
+      .brick-checkbox-control {
       border-color: Highlight;
       outline-color: Highlight;
     }
 
     :where(
-      .brick-checkbox,
-      .brick-checkbox-group-item,
-      .brick-checkbox-group-parent
-    )[data-state="checked"] .brick-checkbox-control,
+        .brick-checkbox,
+        .brick-checkbox-group-item,
+        .brick-checkbox-group-parent
+      )[data-state="checked"]
+      .brick-checkbox-control,
     :where(
-      .brick-checkbox,
-      .brick-checkbox-group-item,
-      .brick-checkbox-group-parent
-    )[data-state="indeterminate"] .brick-checkbox-control {
+        .brick-checkbox,
+        .brick-checkbox-group-item,
+        .brick-checkbox-group-parent
+      )[data-state="indeterminate"]
+      .brick-checkbox-control {
       border-color: Highlight;
       background: Highlight;
       color: HighlightText;
@@ -314,14 +350,20 @@
 
     .brick-checkbox[data-invalid],
     .brick-checkbox-group:not([data-invalid])
-      > :where(.brick-checkbox-group-item, .brick-checkbox-group-parent)[data-invalid] {
+      > :where(
+        .brick-checkbox-group-item,
+        .brick-checkbox-group-parent
+      )[data-invalid] {
       border-inline-start: var(--brick-border-focus-width) solid Mark;
       box-shadow: none;
     }
 
     .brick-checkbox[data-invalid] .brick-checkbox-control,
     .brick-checkbox-group:not([data-invalid])
-      > :where(.brick-checkbox-group-item, .brick-checkbox-group-parent)[data-invalid]
+      > :where(
+        .brick-checkbox-group-item,
+        .brick-checkbox-group-parent
+      )[data-invalid]
       .brick-checkbox-control {
       border-color: Mark;
     }

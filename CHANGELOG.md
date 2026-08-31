@@ -6,7 +6,15 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ### Added
 
-- No unreleased changes.
+- Added state-specific open and closed labels to Code Block collapse triggers.
+
+### Fixed
+
+- Kept physical Sidebar placement stable in RTL layouts.
+- Removed Checkbox control transitions when reduced motion is requested.
+- Contained long Segment Group labels through the public ItemText recipe.
+- Smoothed Code Block collapse motion and prevented partial trailing lines in
+  bounded previews.
 
 ## 0.1.12 - 2026-08-30
 

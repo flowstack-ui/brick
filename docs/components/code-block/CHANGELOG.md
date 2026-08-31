@@ -6,7 +6,14 @@ Code Block follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
-- No unreleased changes.
+- Added optional state-specific `closedLabel` and `openLabel` wording to
+  `CollapseTrigger`.
+
+### Fixed
+
+- Kept collapsible source at its preview height while the full region opens,
+  eliminating the collapse-to-zero visual glitch.
+- Prevented bounded source from revealing a clipped fragment of the next line.
 
 ## 0.1.12 — 2026-08-30
 

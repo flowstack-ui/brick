@@ -1,9 +1,13 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test.beforeEach(async ({ page }) => { await page.goto("/data-list"); });
+test.beforeEach(async ({ page }) => {
+  await page.goto("/data-list");
+});
 
-test("keeps native facts and changes only responsive presentation", async ({ page }) => {
+test("keeps native facts and changes only responsive presentation", async ({
+  page,
+}) => {
   const root = page.getByTestId("data-list-responsive");
   await expect(root).toHaveJSProperty("tagName", "DL");
   await expect(root.locator("dt")).toHaveCount(2);

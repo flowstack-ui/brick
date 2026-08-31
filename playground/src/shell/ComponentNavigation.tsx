@@ -20,28 +20,25 @@ export function ComponentNavigation({
       className="evidence-navigation"
     >
       {categories.map((category) => (
-        <NavList.Section
-          className="evidence-navigation__group"
-          key={category}
-        >
+        <NavList.Section className="evidence-navigation__group" key={category}>
           <NavList.SectionLabel>{category}</NavList.SectionLabel>
           <NavList.SectionContent>
-          <NavList.List>
-            {entries
-              .filter((entry) => entry.category === category)
-              .sort((left, right) => left.title.localeCompare(right.title))
-              .map((entry) => (
-                <NavList.Item key={entry.id}>
-                  <NavList.Link
-                    active={currentRoute === entry.route}
-                    href={entry.route}
-                    onClick={onNavigate}
-                  >
-                    {entry.title}
-                  </NavList.Link>
-                </NavList.Item>
-              ))}
-          </NavList.List>
+            <NavList.List>
+              {entries
+                .filter((entry) => entry.category === category)
+                .sort((left, right) => left.title.localeCompare(right.title))
+                .map((entry) => (
+                  <NavList.Item key={entry.id}>
+                    <NavList.Link
+                      active={currentRoute === entry.route}
+                      href={entry.route}
+                      onClick={onNavigate}
+                    >
+                      {entry.title}
+                    </NavList.Link>
+                  </NavList.Item>
+                ))}
+            </NavList.List>
           </NavList.SectionContent>
         </NavList.Section>
       ))}

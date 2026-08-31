@@ -54,10 +54,7 @@ test("Button route exposes component and scenario navigation", async ({
   await scenarioNavigation.getByRole("link", { name: /links/i }).click();
   await expect(page).toHaveURL(/#scenario-button-composition$/);
   const target = page.locator("#scenario-button-composition");
-  await expect(target).toHaveCSS(
-    "outline-style",
-    "none",
-  );
+  await expect(target).toHaveCSS("outline-style", "none");
   await expect(target.locator(":scope > .scenario-heading")).toHaveCSS(
     "border-left-style",
     "solid",
@@ -68,16 +65,24 @@ test("review controls update the document environment", async ({ page }) => {
   await page.goto("/button");
 
   await expect(page.locator(".review-controls.brick-toolbar")).toHaveCount(1);
-  await expect(page.locator(".review-controls .brick-toolbar__toggle-group")).toHaveCount(3);
+  await expect(
+    page.locator(".review-controls .brick-toolbar__toggle-group"),
+  ).toHaveCount(3);
   await expect(
     page.locator(".review-controls .brick-toolbar__toggle-item"),
   ).toHaveCount(7);
-  await expect(page.locator(".review-controls .brick-toolbar__separator")).toHaveCount(2);
-  await expect(page.getByRole("toolbar", { name: "Review controls" })).toBeVisible();
+  await expect(
+    page.locator(".review-controls .brick-toolbar__separator"),
+  ).toHaveCount(2);
+  await expect(
+    page.getByRole("toolbar", { name: "Review controls" }),
+  ).toBeVisible();
   await expect(page.getByRole("group", { name: "Direction" })).toBeAttached();
   await expect(page.getByRole("group", { name: "Theme" })).toBeAttached();
 
-  await page.getByRole("button", { name: "Qualification", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Qualification", exact: true })
+    .click();
   await expect(page.locator("html")).toHaveAttribute(
     "data-flowstack-theme",
     "qualification",
@@ -117,17 +122,25 @@ test("review controls remain content-sized in a stacked header", async ({
   const [panelBox, contentBox, itemBoxes] = await Promise.all([
     panel.boundingBox(),
     content.boundingBox(),
-    items.evaluateAll((elements) => elements.map((element) => {
-      const box = element.getBoundingClientRect();
-      return { left: box.left, right: box.right, width: box.width };
-    })),
+    items.evaluateAll((elements) =>
+      elements.map((element) => {
+        const box = element.getBoundingClientRect();
+        return { left: box.left, right: box.right, width: box.width };
+      }),
+    ),
   ]);
 
   expect(panelBox!.width).toBeLessThan(contentBox!.width);
   expect(itemBoxes).toHaveLength(7);
-  expect(Math.min(...itemBoxes.map(({ left }) => left))).toBeGreaterThanOrEqual(panelBox!.x);
-  expect(Math.max(...itemBoxes.map(({ right }) => right))).toBeLessThanOrEqual(panelBox!.x + panelBox!.width);
-  expect(Math.max(...itemBoxes.map(({ width }) => width))).toBeLessThan(panelBox!.width);
+  expect(Math.min(...itemBoxes.map(({ left }) => left))).toBeGreaterThanOrEqual(
+    panelBox!.x,
+  );
+  expect(Math.max(...itemBoxes.map(({ right }) => right))).toBeLessThanOrEqual(
+    panelBox!.x + panelBox!.width,
+  );
+  expect(Math.max(...itemBoxes.map(({ width }) => width))).toBeLessThan(
+    panelBox!.width,
+  );
 });
 
 test("review controls contain their overflow on narrow viewports", async ({
@@ -146,24 +159,38 @@ test("review controls contain their overflow on narrow viewports", async ({
   }));
   expect(stickyPosition.top).toBeCloseTo(stickyPosition.inset, 0);
 
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ width: 320, height: 844 });
 
   const panel = page.locator(".review-controls");
-  await expect.poll(() => page.locator("html").evaluate((element) => element.scrollWidth))
-    .toBeLessThanOrEqual(390);
-  const sizes = await panel.evaluate((element) => ({
-    clientWidth: element.clientWidth,
-    scrollWidth: element.scrollWidth,
-  }));
+  const heading = page.locator(".evidence-page-heading");
+  const scenarioNavigation = page.getByRole("navigation", {
+    name: "Text scenarios",
+  });
+  await expect
+    .poll(() => page.locator("html").evaluate((element) => element.scrollWidth))
+    .toBeLessThanOrEqual(320);
+  const [sizes, headingBox, panelBox, navigationBox] = await Promise.all([
+    panel.evaluate((element) => ({
+      clientWidth: element.clientWidth,
+      scrollWidth: element.scrollWidth,
+    })),
+    heading.boundingBox(),
+    panel.boundingBox(),
+    scenarioNavigation.boundingBox(),
+  ]);
 
-  expect(sizes.clientWidth).toBeLessThanOrEqual(390);
+  expect(sizes.clientWidth).toBeLessThanOrEqual(320);
   expect(sizes.scrollWidth).toBeGreaterThan(sizes.clientWidth);
+  expect(headingBox!.y + headingBox!.height).toBeLessThanOrEqual(panelBox!.y);
+  expect(panelBox!.y + panelBox!.height).toBeLessThanOrEqual(navigationBox!.y);
 
   await page
     .getByRole("button", { name: "Qualification", exact: true })
     .scrollIntoViewIfNeeded();
   expect(await panel.evaluate((element) => element.scrollLeft)).not.toBe(0);
-  await page.getByRole("button", { name: "Qualification", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Qualification", exact: true })
+    .click();
   await expect(page.locator("html")).toHaveAttribute(
     "data-flowstack-theme",
     "qualification",
@@ -193,18 +220,29 @@ test("wide scenario navigation aligns, scrolls without overlap, and sticks with 
       return { left: rect.left, right: rect.right };
     }),
   );
-  expect(itemRects.every((rect, index) =>
-    index === itemRects.length - 1 || rect.right <= itemRects[index + 1]!.left + 0.5,
-  )).toBe(true);
-  const overflowingLinks = await navigation.locator("a").evaluateAll((links) =>
-    links.filter((link) => link.scrollWidth > link.clientWidth).length,
-  );
+  expect(
+    itemRects.every(
+      (rect, index) =>
+        index === itemRects.length - 1 ||
+        rect.right <= itemRects[index + 1]!.left + 0.5,
+    ),
+  ).toBe(true);
+  const overflowingLinks = await navigation
+    .locator("a")
+    .evaluateAll(
+      (links) =>
+        links.filter((link) => link.scrollWidth > link.clientWidth).length,
+    );
   expect(overflowingLinks).toBe(0);
-  const scrollGeometry = await navigation.locator(".scenario-nav-scroll").evaluate((root) => ({
-    clientWidth: root.clientWidth,
-    scrollWidth: root.scrollWidth,
-  }));
-  expect(scrollGeometry.scrollWidth).toBeGreaterThanOrEqual(scrollGeometry.clientWidth);
+  const scrollGeometry = await navigation
+    .locator(".scenario-nav-scroll")
+    .evaluate((root) => ({
+      clientWidth: root.clientWidth,
+      scrollWidth: root.scrollWidth,
+    }));
+  expect(scrollGeometry.scrollWidth).toBeGreaterThanOrEqual(
+    scrollGeometry.clientWidth,
+  );
 
   const appBar = page.getByRole("banner", { name: "Brick playground" });
   const kicker = page.getByText("@flowstack-ui/brick", { exact: true });
@@ -285,9 +323,11 @@ test("mobile component navigation opens, closes, and restores focus", async ({
     "min-height",
     "44px",
   );
-  await page.getByRole("button", {
-    name: "Close component navigation",
-  }).click();
+  await page
+    .getByRole("button", {
+      name: "Close component navigation",
+    })
+    .click();
   await expect(drawer).toBeHidden();
   await expect(trigger).toBeFocused();
   await expect(page.locator("html")).toHaveJSProperty("scrollWidth", 390);
@@ -306,18 +346,30 @@ test("component navigation uses responsive visibility and alphabetical ordering"
 
   await page.getByRole("button", { name: "Open component navigation" }).click();
   const drawer = page.getByRole("dialog", { name: "Brick components" });
-  const sectionLabels = await drawer.locator(".brick-nav-list__section-label").allTextContents();
-  expect(sectionLabels).toEqual([...sectionLabels].sort((left, right) => left.localeCompare(right)));
-  for (const section of await drawer.locator(".brick-nav-list__section").all()) {
-    const labels = await section.locator(".brick-nav-list__link").allTextContents();
-    expect(labels).toEqual([...labels].sort((left, right) => left.localeCompare(right)));
+  const sectionLabels = await drawer
+    .locator(".brick-nav-list__section-label")
+    .allTextContents();
+  expect(sectionLabels).toEqual(
+    [...sectionLabels].sort((left, right) => left.localeCompare(right)),
+  );
+  for (const section of await drawer
+    .locator(".brick-nav-list__section")
+    .all()) {
+    const labels = await section
+      .locator(".brick-nav-list__link")
+      .allTextContents();
+    expect(labels).toEqual(
+      [...labels].sort((left, right) => left.localeCompare(right)),
+    );
   }
 
   await page.setViewportSize({ width: 1280, height: 900 });
   await expect(drawer).toBeHidden();
   await expect(compactNavigation).toBeHidden();
   await expect(desktopNavigation).toBeVisible();
-  await expect(page.locator('button[aria-label="Open component navigation"]')).not.toBeFocused();
+  await expect(
+    page.locator('button[aria-label="Open component navigation"]'),
+  ).not.toBeFocused();
 });
 
 test("component navigation keeps the shell and sidebar mounted while starting the page at the top", async ({
@@ -329,12 +381,26 @@ test("component navigation keeps the shell and sidebar mounted while starting th
   const sidebarViewport = page.locator(
     ".evidence-sidebar-scroll > .brick-scroll-area-viewport",
   );
-  await sidebarViewport.evaluate((viewport) => { viewport.scrollTop = 480; });
+  const sidebarGeometry = await sidebarViewport.evaluate((viewport) => ({
+    clientHeight: viewport.clientHeight,
+    scrollHeight: viewport.scrollHeight,
+  }));
+  expect(sidebarGeometry.scrollHeight).toBeGreaterThan(
+    sidebarGeometry.clientHeight,
+  );
+  await sidebarViewport.evaluate((viewport) => {
+    viewport.scrollTop = 480;
+  });
   await page.evaluate(() => {
     window.scrollTo(0, 700);
-    (window as typeof window & { playgroundShellMarker?: string }).playgroundShellMarker = "preserved";
+    (
+      window as typeof window & { playgroundShellMarker?: string }
+    ).playgroundShellMarker = "preserved";
   });
-  const sidebarScrollTop = await sidebarViewport.evaluate((viewport) => viewport.scrollTop);
+  const sidebarScrollTop = await sidebarViewport.evaluate(
+    (viewport) => viewport.scrollTop,
+  );
+  expect(sidebarScrollTop).toBeGreaterThan(0);
   expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
 
   await page
@@ -343,10 +409,18 @@ test("component navigation keeps the shell and sidebar mounted while starting th
     .evaluate((link) => (link as HTMLAnchorElement).click());
 
   await expect(page).toHaveURL(/\/icon$/);
-  await expect(page.getByRole("heading", { level: 1, name: "Icon" })).toBeVisible();
-  await expect.poll(() => sidebarViewport.evaluate((viewport) => viewport.scrollTop)).toBe(sidebarScrollTop);
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Icon" }),
+  ).toBeVisible();
+  await expect
+    .poll(() => sidebarViewport.evaluate((viewport) => viewport.scrollTop))
+    .toBe(sidebarScrollTop);
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
-  expect(await page.evaluate(() =>
-    (window as typeof window & { playgroundShellMarker?: string }).playgroundShellMarker,
-  )).toBe("preserved");
+  expect(
+    await page.evaluate(
+      () =>
+        (window as typeof window & { playgroundShellMarker?: string })
+          .playgroundShellMarker,
+    ),
+  ).toBe("preserved");
 });

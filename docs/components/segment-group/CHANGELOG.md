@@ -6,6 +6,9 @@ Segment Group follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Added the `ItemText` containment recipe for long labels so they wrap within
+  their measured segment instead of overlapping adjacent choices at narrow
+  widths and high zoom.
 - Let the selected Indicator occupy and align to the complete segmented item
   area, including the Root border offset, and keep icon-only content visually
   centered without shifting the selected Item.

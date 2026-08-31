@@ -1,4 +1,11 @@
-import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
+import {
+  expect,
+  expectEvidenceScreenshot,
+  installVisualDefaults,
+  setAppearance,
+  test,
+  useForcedColors,
+} from "../../visual-harness.js";
 
 installVisualDefaults("/popover");
 
@@ -6,8 +13,15 @@ test("Popover default and anatomy surfaces", async ({ page }) => {
   await page.getByRole("button", { name: "Project settings" }).click();
   await expect(page).toHaveScreenshot("overview-light.png");
   await page.keyboard.press("Escape");
-  await page.addStyleTag({ content: ".evidence-app-bar, .evidence-review-header, .scenario-nav { display: none !important; }" });
-  await expectEvidenceScreenshot(page, page.getByTestId("popover-appearance"), "appearance-light.png");
+  await page.addStyleTag({
+    content:
+      ".evidence-app-bar, .evidence-review-header, .scenario-nav { display: none !important; }",
+  });
+  await expectEvidenceScreenshot(
+    page,
+    page.getByTestId("popover-appearance"),
+    "appearance-light.png",
+  );
   await setAppearance(page, "dark");
   await page.getByRole("button", { name: "Inspect anatomy" }).click();
   await expect(page).toHaveScreenshot("anatomy-dark.png");

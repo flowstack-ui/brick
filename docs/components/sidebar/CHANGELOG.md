@@ -4,6 +4,11 @@ Sidebar follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Kept the physical left/right panel track and its inner divider on the
+  requested side when the containing document uses RTL direction.
+
 ### Changed
 
 - Documented that Sidebar.Content is a flexible region rather than an
