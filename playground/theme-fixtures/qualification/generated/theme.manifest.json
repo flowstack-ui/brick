@@ -21,7 +21,7 @@
   "brickContract": {
     "package": {
       "name": "@flowstack-ui/brick",
-      "version": "0.2.1"
+      "version": "0.2.2"
     },
     "schema": "flowstack.brick-theme-contract.v1",
     "version": 4

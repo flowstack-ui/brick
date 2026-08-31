@@ -4,6 +4,23 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+## 0.2.2 - 2026-08-31
+
+### Added
+
+- Expanded Color Picker to seven closed sizes from `2xs` through `2xl` and
+  documented the complete entry-point, format, event, swatch, form, dialog,
+  state, and platform composition catalog.
+- Added a finished one-border Color Picker control layout plus public outlined
+  or frameless square, rounded, and circle swatch recipes.
+
+### Fixed
+
+- Made popup and inline editors use a compact 16rem footprint, removed popup
+  chrome from inline content, aligned the
+  format select and channel inputs to one control height, centered area and
+  labelled or unlabelled channel thumbs, and kept compact preset rows intentional.
+
 ## 0.2.1 - 2026-08-31
 
 ### Changed

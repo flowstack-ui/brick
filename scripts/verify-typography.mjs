@@ -105,6 +105,10 @@ const allowedGeometryDeclarations = new Map([
     "--brick-text-font-weight: var(--brick-font-weight-semibold);",
   ]],
   ["code-block/code-block.css", ["letter-spacing: inherit;"]],
+  ["color-picker/color-picker.css", [
+    "font-size: var(--brick-color-picker-control-font-size);",
+    "line-height: var(--brick-color-picker-control-line-height);",
+  ]],
 ]);
 
 const componentDirectories = await readdir(componentRoot, { withFileTypes: true });

@@ -4,6 +4,22 @@ Color Picker follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+## 0.2.2 - 2026-08-31
+
+### Added
+
+- Added `2xs`, `xs`, `xl`, and `2xl` to the existing `sm`, `md`, and `lg`
+  size recipes and documented the full application-composition catalog.
+- Added `Control layout="integrated"` plus outlined or frameless `sharp`,
+  `rounded`, and `circle` swatch-frame recipes.
+
+### Fixed
+
+- Reduced the finished editor footprint to 16rem, removed popup chrome from
+  inline content, unified format and channel
+  control heights, centered labelled and unlabelled slider geometry, and made compact preset layout
+  deliberate at each supported size.
+
 ## 0.2.1 - 2026-08-31
 
 ### Fixed

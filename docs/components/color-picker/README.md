@@ -64,15 +64,18 @@ The namespace contains `Root`, `Context`, `Label`, `Control`, `Input`, `ChannelI
 
 | Prop or part | Values or important props | Default or purpose |
 | --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` |
 | `variant` | `outline`, `soft` | `outline` |
 | `Root` | Atom root props plus the Brick recipes | Supports popup or `inline` |
+| `Control.layout` | `separate`, `integrated` | `separate`; `integrated` paints one shared field border |
 | `Area` | `xChannel`, `yChannel` | Two-dimensional color editing |
 | `ChannelSlider` | `channel` | Hue, alpha, and supported format channels |
 | `ChannelInput` | `channel` | Numeric channel editing in the active format |
 | `FormatSelect` / `FormatTrigger` | native select/button props | Switch between RGBA, HSLA, and HSBA views |
 | `View` | `format` | Shows children only for its active format |
-| `SwatchTrigger` | required `value` | Atom-owned preset selection |
+| `ValueSwatch.shape` | `sharp`, `rounded`, `circle` | `rounded` |
+| `SwatchTrigger` | required `value`; `frame` is `none` or `outline`; `shape` is `sharp`, `rounded`, or `circle` | Atom-owned preset selection with an outline frame by default |
+| `Swatch.shape` | `sharp`, `rounded`, `circle` | Inherits the trigger frame recipe when omitted |
 | `SwatchIndicator` | optional `value`, `respectAlpha` | Inherits from a Swatch or ValueSwatch parent |
 | `NativeInput` | native input props | Browser or operating-system color chooser |
 | `EyeDropperTrigger` | native button props | Progressive enhancement; disabled when unsupported |
@@ -82,17 +85,38 @@ The namespace contains `Root`, `Context`, `Label`, `Control`, `Input`, `ChannelI
 
 Named part exports are `ColorPickerRoot`, `ColorPickerContext`, `ColorPickerLabel`, `ColorPickerControl`, `ColorPickerInput`, `ColorPickerChannelInput`, `ColorPickerNativeInput`, `ColorPickerHiddenInput`, `ColorPickerTrigger`, `ColorPickerPositioner`, `ColorPickerContent`, `ColorPickerValueText`, `ColorPickerValueSwatch`, `ColorPickerArea`, `ColorPickerAreaBackground`, `ColorPickerAreaThumb`, `ColorPickerChannelSlider`, `ColorPickerChannelSliderLabel`, `ColorPickerChannelSliderTrack`, `ColorPickerChannelSliderThumb`, `ColorPickerChannelSliderValueText`, `ColorPickerTransparencyGrid`, `ColorPickerEyeDropperTrigger`, `ColorPickerSwatchGroup`, `ColorPickerSwatchTrigger`, `ColorPickerSwatch`, `ColorPickerSwatchIndicator`, `ColorPickerFormatSelect`, `ColorPickerFormatTrigger`, and `ColorPickerView`.
 
-Their public prop types are `ColorPickerRootProps`, `ColorPickerContextProps`, `ColorPickerLabelProps`, `ColorPickerControlProps`, `ColorPickerInputProps`, `ColorPickerChannelInputProps`, `ColorPickerNativeInputProps`, `ColorPickerHiddenInputProps`, `ColorPickerTriggerProps`, `ColorPickerPositionerProps`, `ColorPickerContentProps`, `ColorPickerValueTextProps`, `ColorPickerValueSwatchProps`, `ColorPickerAreaProps`, `ColorPickerAreaBackgroundProps`, `ColorPickerAreaThumbProps`, `ColorPickerChannelSliderProps`, `ColorPickerChannelSliderLabelProps`, `ColorPickerChannelSliderTrackProps`, `ColorPickerChannelSliderThumbProps`, `ColorPickerChannelSliderValueTextProps`, `ColorPickerTransparencyGridProps`, `ColorPickerEyeDropperTriggerProps`, `ColorPickerSwatchGroupProps`, `ColorPickerSwatchTriggerProps`, `ColorPickerSwatchProps`, `ColorPickerSwatchIndicatorProps`, `ColorPickerFormatSelectProps`, `ColorPickerFormatTriggerProps`, and `ColorPickerViewProps`. Recipe types are `ColorPickerSize` and `ColorPickerVariant`; the frozen namespace is `ColorPicker`.
+Their public prop types are `ColorPickerRootProps`, `ColorPickerContextProps`, `ColorPickerLabelProps`, `ColorPickerControlProps`, `ColorPickerInputProps`, `ColorPickerChannelInputProps`, `ColorPickerNativeInputProps`, `ColorPickerHiddenInputProps`, `ColorPickerTriggerProps`, `ColorPickerPositionerProps`, `ColorPickerContentProps`, `ColorPickerValueTextProps`, `ColorPickerValueSwatchProps`, `ColorPickerAreaProps`, `ColorPickerAreaBackgroundProps`, `ColorPickerAreaThumbProps`, `ColorPickerChannelSliderProps`, `ColorPickerChannelSliderLabelProps`, `ColorPickerChannelSliderTrackProps`, `ColorPickerChannelSliderThumbProps`, `ColorPickerChannelSliderValueTextProps`, `ColorPickerTransparencyGridProps`, `ColorPickerEyeDropperTriggerProps`, `ColorPickerSwatchGroupProps`, `ColorPickerSwatchTriggerProps`, `ColorPickerSwatchProps`, `ColorPickerSwatchIndicatorProps`, `ColorPickerFormatSelectProps`, `ColorPickerFormatTriggerProps`, and `ColorPickerViewProps`. Recipe types are `ColorPickerSize`, `ColorPickerVariant`, `ColorPickerControlLayout`, `ColorPickerSwatchFrame`, and `ColorPickerSwatchShape`; the frozen namespace is `ColorPicker`.
+
+### Integrated input composition
+
+`Control layout="integrated"` is the finished one-border field recipe. Compose the
+parts the task needs inside it; no application CSS is required:
+
+```tsx
+<ColorPicker.Root defaultValue="#e5484d" inline size="xs">
+  <ColorPicker.Label>Color</ColorPicker.Label>
+  <ColorPicker.Control layout="integrated">
+    <ColorPicker.ValueSwatch shape="rounded" />
+    <ColorPicker.Input />
+    <ColorPicker.EyeDropperTrigger aria-label="Pick color from screen" />
+  </ColorPicker.Control>
+</ColorPicker.Root>
+```
+
+The EyeDropper action uses the browser's native EyeDropper API and is disabled
+when that API is unavailable. It does not open Brick's popup editor. Use
+`Trigger`, `Positioner`, and `Content` when the field must always open the Brick
+editor; the integrated Control can contain that Trigger too.
 
 ## Visual recipes and states
 
-Popup editors use `Trigger`, `Positioner`, and `Content`. Inline editors set `inline` on Root and render Content directly. Sizes are `sm`, `md`, and `lg`; variants are `outline` and `soft`.
+Popup editors use `Trigger`, `Positioner`, and elevated `Content`. Inline editors set `inline` on Root and render Content directly; direct inline Content removes popup border, background, shadow, and padding so the owning application surface controls containment. Sizes are `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, and `2xl`; variants are `outline` and `soft`. The default editor is 16rem wide, while the smaller recipes are appropriate for dense toolbars and creative controls. Choose a larger recipe when the surrounding form or touch context needs it.
 
-Put each `Swatch` inside a named `SwatchTrigger`, then put `SwatchIndicator` inside the Swatch. This produces a visible checkmark in addition to color and exposes Atom's checked state. Disabled prevents opening and mutation. Read-only blocks mutating popup controls; use an inline composition when the value must remain visually inspectable. Invalid supplies the finished danger boundary.
+Put each `Swatch` inside a named `SwatchTrigger`, then put `SwatchIndicator` inside the Swatch. This produces a visible checkmark in addition to color and exposes Atom's checked state. Choose `shape="sharp|rounded|circle"` on the trigger so its interactive frame and swatch share one silhouette. Use `frame="none"` for a visually frameless preset while retaining the accessible button and focus cue. Disabled prevents opening and mutation. Read-only blocks mutating popup controls; use an inline composition when the value must remain visually inspectable. Invalid supplies the finished danger boundary.
 
 ## Tokens and CSS hooks
 
-Every part exposes `.brick-color-picker__*` plus its `data-slot`. Root exposes `data-size`, `data-variant`, and Atom state attributes such as `data-disabled`, `data-readonly`, `data-invalid`, and open state. Swatch triggers expose Atom `data-state="checked|unchecked"`.
+Every part exposes `.brick-color-picker__*` plus its `data-slot`. Root exposes `data-size`, `data-variant`, and Atom state attributes such as `data-disabled`, `data-readonly`, `data-invalid`, and open state. Control exposes `data-layout`; ValueSwatch and swatch parts expose `data-shape`; SwatchTrigger exposes `data-frame` plus Atom `data-state="checked|unchecked"`.
 
 Public properties are `--brick-color-picker-control-size`, `--brick-color-picker-gap`, `--brick-color-picker-background`, `--brick-color-picker-border-color`, `--brick-color-picker-focus-ring`, `--brick-color-picker-content-background`, `--brick-color-picker-content-border-color`, `--brick-color-picker-content-radius`, `--brick-color-picker-content-shadow`, `--brick-color-picker-area-block-size`, `--brick-color-picker-checker-size`, `--brick-color-picker-indicator-color`, `--brick-color-picker-indicator-shadow`, `--brick-color-picker-input-width`, `--brick-color-picker-slider-block-size`, `--brick-color-picker-swatch-gap`, `--brick-color-picker-swatch-radius`, `--brick-color-picker-swatch-size`, and `--brick-color-picker-thumb-size`.
 
@@ -113,6 +137,17 @@ Give the editable or native input a clear name. Name every preset. Never communi
 Put `name` on Root and render exactly one `HiddenInput` for form submission and reset. Field owns descriptions and error messages. Native attributes and refs pass through each matching Atom-backed part. Do not reproduce floating placement, color conversion, hidden form state, or focus management in application code.
 
 ## Examples
+
+The playground covers the full composition catalog: basic popup, inline,
+seven sizes, two variants, integrated input-only, swatch-only, trigger-only,
+trigger in an integrated input row, fit-content trigger, outlined square,
+rounded, and circle swatches, frameless swatches, controlled value, change-end handling,
+context access, close-on-select, format inputs, format-aware channel sliders,
+saved swatches, swatch-plus-input, swatch-plus-trigger, form submission/reset,
+Dialog containment, native chooser, EyeDropper, disabled, read-only, invalid,
+light/dark, customization, narrow layout, and RTL. These are compositions of
+the released public anatomy; saved palettes and form-library adapters remain
+application state rather than new Color Picker behavior.
 
 An inline format editor can expose the same color through multiple views:
 

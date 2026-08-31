@@ -13,7 +13,7 @@
 | Assistive technology | |
 | Playground route | `/color-picker` |
 
-Scenario order: `01 Overview`, `02 Inline editor`, `03 Sizes and variants`, `04 Formats and channel inputs`, `05 Presets and selected indicator`, `06 Native chooser and EyeDropper`, `07 States and form`, `08 Appearance, customization, and RTL`
+Scenario order: `01 Overview`, `02 Inline editor`, `03 Sizes and variants`, `04 Entry points`, `05 Formats`, `06 State`, `07 Swatches`, `08 Integration`, `09 Platform`, `10 States`, `11 Adaptation`
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
@@ -24,9 +24,22 @@ Expected: Area pointer/keyboard changes, hue and alpha sliders, text, channel in
 Result:
 Notes or issue:
 
+## Step 1a — Density and control geometry
+
+Expected: All seven sizes remain distinct and usable. In each finished editor,
+the format select, value input, and alpha input share one block size; every
+slider thumb is centered on its track; the 16rem editor contains its controls
+and presets without clipping or an accidental orphan row. The integrated
+input has one outer border with aligned inner parts. Square, rounded, and
+circle swatch frames match their swatches, and the frameless recipe has no
+visible frame while retaining focus and selection cues.
+
+Result:
+Notes or issue:
+
 ## Step 2 — Formats, popup, keyboard, and focus
 
-Expected: RGBA, HSLA, and HSBA switch without changing the represented color. Trigger opens the editor; Tab reaches controls in order; arrows operate the area/sliders; Escape closes and restores focus; outside interaction dismisses without losing the committed value.
+Expected: RGBA, HSLA, and HSBA switch without changing the represented color. Pointer and keyboard interaction visibly change the area and sliders. Trigger opens the Brick editor; EyeDropper opens only the native platform tool where supported. Tab reaches controls in order; arrows operate the area/sliders; Escape closes and restores focus; outside interaction dismisses without losing the committed value.
 
 Result:
 Notes or issue:
