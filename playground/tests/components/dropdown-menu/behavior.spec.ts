@@ -53,9 +53,13 @@ test("leading normalizes and centers Brick Icon geometry at the active density",
       const bounds = element.getBoundingClientRect();
       const style = getComputedStyle(element);
       const firstTrackSize = Number.parseFloat(style.gridTemplateRows.split(" ")[0]);
+      const physicalPixel = 1 / window.devicePixelRatio;
       return {
         centerY: bounds.y + Number.parseFloat(style.paddingTop) + firstTrackSize / 2,
-        physicalPixel: 1 / window.devicePixelRatio,
+        physicalPixel,
+        // Text-track and element rectangles can round in opposite directions;
+        // keep the combined envelope within one CSS pixel on every DPR.
+        centerTolerance: Math.ceil(window.devicePixelRatio) * physicalPixel,
       };
     }),
   ]);
@@ -72,13 +76,13 @@ test("leading normalizes and centers Brick Icon geometry at the active density",
   const iconCenterY = iconBox!.y + iconBox!.height / 2;
   const leadingCenterY = leadingBox!.y + leadingBox!.height / 2;
   expect(Math.abs(iconCenterX - leadingCenterX)).toBeLessThanOrEqual(
-    itemFirstRowGeometry.physicalPixel,
+    itemFirstRowGeometry.centerTolerance,
   );
   expect(Math.abs(iconCenterY - leadingCenterY)).toBeLessThanOrEqual(
-    itemFirstRowGeometry.physicalPixel,
+    itemFirstRowGeometry.centerTolerance,
   );
   expect(Math.abs(leadingCenterY - itemFirstRowGeometry.centerY)).toBeLessThanOrEqual(
-    itemFirstRowGeometry.physicalPixel,
+    itemFirstRowGeometry.centerTolerance,
   );
 });
 
