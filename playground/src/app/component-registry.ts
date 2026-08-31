@@ -1,10 +1,21 @@
 export interface PlaygroundEntry {
-  category: string;
+  category: PlaygroundCategory;
   description: string;
   id: string;
   route: string;
   title: string;
 }
+
+export type PlaygroundCategory =
+  | "Accessibility"
+  | "Actions"
+  | "Data display"
+  | "Feedback"
+  | "Forms"
+  | "Layout"
+  | "Navigation"
+  | "Overlays"
+  | "Typography";
 
 export const componentEntries = [
   {
@@ -30,7 +41,8 @@ export const componentEntries = [
   },
   {
     category: "Layout",
-    description: "Stable ratio geometry and restrained framing for authored content.",
+    description:
+      "Stable ratio geometry and restrained framing for authored content.",
     id: "aspect-ratio",
     route: "/aspect-ratio",
     title: "Aspect Ratio",
@@ -93,7 +105,8 @@ export const componentEntries = [
   },
   {
     category: "Actions",
-    description: "Supplemental target commands for pointer, keyboard, and touch.",
+    description:
+      "Supplemental target commands for pointer, keyboard, and touch.",
     id: "context-menu",
     route: "/context-menu",
     title: "Context Menu",
@@ -114,7 +127,8 @@ export const componentEntries = [
   },
   {
     category: "Navigation",
-    description: "Compact, persistent top-level destinations for narrow layouts.",
+    description:
+      "Compact, persistent top-level destinations for narrow layouts.",
     id: "bottom-navigation",
     route: "/bottom-navigation",
     title: "Bottom Navigation",
@@ -134,7 +148,7 @@ export const componentEntries = [
     title: "Sidebar",
   },
   {
-    category: "Data display",
+    category: "Typography",
     description: "Semantic text with finished visual typography.",
     id: "text",
     route: "/text",
@@ -142,7 +156,8 @@ export const componentEntries = [
   },
   {
     category: "Data display",
-    description: "Compact authored values with an optional explicit remove action.",
+    description:
+      "Compact authored values with an optional explicit remove action.",
     id: "chip",
     route: "/chip",
     title: "Chip",
@@ -163,14 +178,16 @@ export const componentEntries = [
   },
   {
     category: "Accessibility",
-    description: "Visible-on-focus bypass navigation with a paired content target.",
+    description:
+      "Visible-on-focus bypass navigation with a paired content target.",
     id: "skip-link",
     route: "/skip-link",
     title: "Skip Link",
   },
   {
     category: "Data display",
-    description: "Responsive media with authored fallback and finished framing.",
+    description:
+      "Responsive media with authored fallback and finished framing.",
     id: "image",
     route: "/image",
     title: "Image",
@@ -184,7 +201,8 @@ export const componentEntries = [
   },
   {
     category: "Actions",
-    description: "Manual linear ordering with drag, keyboard, touch, and direct movement.",
+    description:
+      "Manual linear ordering with drag, keyboard, touch, and direct movement.",
     id: "reorderable-list",
     route: "/reorderable-list",
     title: "Reorderable List",
@@ -198,14 +216,16 @@ export const componentEntries = [
   },
   {
     category: "Data display",
-    description: "Navigable tabular data with row selection and sortable headers.",
+    description:
+      "Navigable tabular data with row selection and sortable headers.",
     id: "data-grid",
     route: "/data-grid",
     title: "Data Grid",
   },
   {
     category: "Data display",
-    description: "Navigable hierarchical rows with independently focusable cells.",
+    description:
+      "Navigable hierarchical rows with independently focusable cells.",
     id: "tree-grid",
     route: "/tree-grid",
     title: "Tree Grid",
@@ -219,14 +239,16 @@ export const componentEntries = [
   },
   {
     category: "Data display",
-    description: "Dynamic rich article streams with article-by-article keyboard navigation.",
+    description:
+      "Dynamic rich article streams with article-by-article keyboard navigation.",
     id: "feed",
     route: "/feed",
     title: "Feed",
   },
   {
     category: "Actions",
-    description: "Item-level quick actions revealed by swipe with a visible alternative.",
+    description:
+      "Item-level quick actions revealed by swipe with a visible alternative.",
     id: "swipeable-item",
     route: "/swipeable-item",
     title: "Swipeable Item",
@@ -253,56 +275,60 @@ export const componentEntries = [
     title: "Carousel",
   },
   {
-    category: "Data display",
+    category: "Typography",
     description: "Inline technical literals with native code semantics.",
     id: "code",
     route: "/code",
     title: "Code",
   },
   {
-    category: "Content and status",
+    category: "Typography",
     description: "Native stress emphasis that inherits surrounding typography.",
     id: "em",
     route: "/em",
     title: "Em",
   },
   {
-    category: "Content and status",
+    category: "Typography",
     description: "Static native relevance with closed theme-aware recipes.",
     id: "mark",
     route: "/mark",
     title: "Mark",
   },
   {
-    category: "Content and status",
-    description: "Native keyboard-input notation with compact finished recipes.",
+    category: "Typography",
+    description:
+      "Native keyboard-input notation with compact finished recipes.",
     id: "kbd",
     route: "/kbd",
     title: "Kbd",
   },
   {
-    category: "Content and status",
-    description: "Extended quotations with semantic source and attribution structure.",
+    category: "Typography",
+    description:
+      "Extended quotations with semantic source and attribution structure.",
     id: "blockquote",
     route: "/blockquote",
     title: "Blockquote",
   },
   {
-    category: "Content and status",
-    description: "Exact plain-text query matching with finished semantic relevance paint.",
+    category: "Typography",
+    description:
+      "Exact plain-text query matching with finished semantic relevance paint.",
     id: "highlight",
     route: "/highlight",
     title: "Highlight",
   },
   {
-    category: "Content and status",
-    description: "Editorial descendant typography, rhythm, and readable measure for trusted React content.",
+    category: "Typography",
+    description:
+      "Editorial descendant typography, rhythm, and readable measure for trusted React content.",
     id: "prose",
     route: "/prose",
     title: "Prose",
   },
   {
-    category: "Data display",
+    category: "Typography",
     description: "Structured source, overflow, language, and copy.",
     id: "code-block",
     route: "/code-block",
@@ -317,7 +343,8 @@ export const componentEntries = [
   },
   {
     category: "Layout",
-    description: "Compact inline clusters with optional attached borders and logical corners.",
+    description:
+      "Compact inline clusters with optional attached borders and logical corners.",
     id: "group",
     route: "/group",
     title: "Group",
@@ -366,20 +393,22 @@ export const componentEntries = [
   },
   {
     category: "Layout",
-    description: "Responsive logical negative margins for deliberate edge media.",
+    description:
+      "Responsive logical negative margins for deliberate edge media.",
     id: "bleed",
     route: "/bleed",
     title: "Bleed",
   },
   {
     category: "Layout",
-    description: "Neutral surface levels, borders, elevation, radius, and inset.",
+    description:
+      "Neutral surface levels, borders, elevation, radius, and inset.",
     id: "surface",
     route: "/surface",
     title: "Surface",
   },
   {
-    category: "Data display",
+    category: "Layout",
     description: "Decorative and semantic structural separators.",
     id: "divider",
     route: "/divider",
@@ -387,7 +416,8 @@ export const componentEntries = [
   },
   {
     category: "Layout",
-    description: "Constrained native scrolling with explicit axes and visibility.",
+    description:
+      "Constrained native scrolling with explicit axes and visibility.",
     id: "scroll-area",
     route: "/scroll-area",
     title: "Scroll Area",
@@ -408,56 +438,64 @@ export const componentEntries = [
   },
   {
     category: "Feedback",
-    description: "Determinate, indeterminate, and buffered linear task progress.",
+    description:
+      "Determinate, indeterminate, and buffered linear task progress.",
     id: "progress",
     route: "/progress",
     title: "Progress",
   },
   {
     category: "Feedback",
-    description: "Compact determinate and indeterminate circular task progress.",
+    description:
+      "Compact determinate and indeterminate circular task progress.",
     id: "progress-circle",
     route: "/progress-circle",
     title: "Progress Circle",
   },
   {
     category: "Forms",
-    description: "Single-value and range input with markers, formatting, and directional geometry.",
+    description:
+      "Single-value and range input with markers, formatting, and directional geometry.",
     id: "slider",
     route: "/slider",
     title: "Slider",
   },
   {
     category: "Forms",
-    description: "Single-slider rating input with proportional decorative artwork.",
+    description:
+      "Single-slider rating input with proportional decorative artwork.",
     id: "rating",
     route: "/rating",
     title: "Rating",
   },
   {
     category: "Forms",
-    description: "File picker and drop target with validation and removable selected-file items.",
+    description:
+      "File picker and drop target with validation and removable selected-file items.",
     id: "file-upload",
     route: "/file-upload",
     title: "File Upload",
   },
   {
     category: "Feedback",
-    description: "Temporary non-blocking application outcomes and process updates.",
+    description:
+      "Temporary non-blocking application outcomes and process updates.",
     id: "toast",
     route: "/toast",
     title: "Toast",
   },
   {
     category: "Data display",
-    description: "One independent in-flow disclosure with finished motion and surfaces.",
+    description:
+      "One independent in-flow disclosure with finished motion and surfaces.",
     id: "collapsible",
     route: "/collapsible",
     title: "Collapsible",
   },
   {
     category: "Data display",
-    description: "A coordinated set of accessible disclosure items in one or multiple selection modes.",
+    description:
+      "A coordinated set of accessible disclosure items in one or multiple selection modes.",
     id: "accordion",
     route: "/accordion",
     title: "Accordion",
@@ -505,7 +543,7 @@ export const componentEntries = [
     title: "Avatar",
   },
   {
-    category: "Data display",
+    category: "Feedback",
     description: "Passive semantic state with a dot and visible label.",
     id: "status",
     route: "/status",
@@ -520,7 +558,8 @@ export const componentEntries = [
   },
   {
     category: "Forms",
-    description: "Opaque hexadecimal editing, native chooser, presets, and submission.",
+    description:
+      "Opaque hexadecimal editing, native chooser, presets, and submission.",
     id: "color-picker",
     route: "/color-picker",
     title: "Color Picker",
@@ -569,14 +608,16 @@ export const componentEntries = [
   },
   {
     category: "Forms",
-    description: "Numeric entry with bounded stepping and native form participation.",
+    description:
+      "Numeric entry with bounded stepping and native form participation.",
     id: "number-input",
     route: "/number-input",
     title: "Number Input",
   },
   {
     category: "Forms",
-    description: "Segmented one-time-code entry with paste and completion behavior.",
+    description:
+      "Segmented one-time-code entry with paste and completion behavior.",
     id: "otp-field",
     route: "/otp-field",
     title: "OTP Field",
@@ -659,7 +700,7 @@ export const componentEntries = [
     title: "Radio Group",
   },
   {
-    category: "Controls",
+    category: "Forms",
     description: "Compact radio-semantic mode choices with a moving indicator.",
     id: "segment-group",
     route: "/segment-group",
@@ -676,9 +717,12 @@ export const componentEntries = [
 
 export const playgroundEntries: readonly PlaygroundEntry[] = componentEntries;
 
+export type PlaygroundComponentId = (typeof componentEntries)[number]["id"];
+
 export function resolvePlaygroundEntry(path: string): PlaygroundEntry {
   return (
-    componentEntries.find((entry) => entry.route === (path === "/components/feed" ? "/feed" : path)) ??
-    componentEntries[0]
+    componentEntries.find(
+      (entry) => entry.route === (path === "/components/feed" ? "/feed" : path),
+    ) ?? componentEntries[0]
   );
 }

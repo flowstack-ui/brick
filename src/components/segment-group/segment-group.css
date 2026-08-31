@@ -1,6 +1,8 @@
 @layer brick.components {
   .brick-segment-group {
-    --brick-segment-group-min-block-size: var(--brick-control-min-block-size-md);
+    --brick-segment-group-min-block-size: var(
+      --brick-control-min-block-size-md
+    );
     --brick-segment-group-item-padding-inline: var(--brick-space-3);
     --brick-segment-group-item-gap: var(--brick-space-2);
     --brick-segment-group-icon-size: 1rem;
@@ -9,14 +11,12 @@
     --brick-segment-group-border: var(--brick-color-border-default);
     --brick-segment-group-root-shadow: inset 0 0 0 var(--brick-border-width)
       var(--brick-segment-group-border);
-    --brick-segment-group-indicator-background: var(--brick-color-surface-raised);
+    --brick-segment-group-indicator-background: var(
+      --brick-color-surface-raised
+    );
     --brick-segment-group-indicator-border: var(--brick-color-border-default);
-    --brick-segment-group-indicator-shadow:
-      0 0.0625rem 0.125rem color-mix(
-        in srgb,
-        var(--brick-color-text-primary),
-        transparent 82%
-      );
+    --brick-segment-group-indicator-shadow: 0 0.0625rem 0.125rem
+      color-mix(in srgb, var(--brick-color-text-primary), transparent 82%);
     --brick-segment-group-foreground: var(--brick-color-text-secondary);
     --brick-segment-group-selected-foreground: var(--brick-color-text-primary);
     --brick-segment-group-focus-ring: var(--brick-color-focus-ring);
@@ -56,20 +56,26 @@
     inset-inline-start: 0;
     inline-size: var(--brick-segment-group-indicator-inline-size, 0);
     block-size: var(--brick-segment-group-indicator-block-size, 0);
-    border: var(--brick-border-width) solid var(--brick-segment-group-indicator-border);
-    border-radius: calc(var(--brick-radius-control) - var(--brick-segment-group-inset));
+    border: var(--brick-border-width) solid
+      var(--brick-segment-group-indicator-border);
+    border-radius: calc(
+      var(--brick-radius-control) - var(--brick-segment-group-inset)
+    );
     background: var(--brick-segment-group-indicator-background);
     box-shadow: var(--brick-segment-group-indicator-shadow);
     opacity: 0;
     pointer-events: none;
-    translate:
-      var(--brick-segment-group-indicator-x, 0)
+    translate: var(--brick-segment-group-indicator-x, 0)
       var(--brick-segment-group-indicator-y, 0);
     transition:
-      translate var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      inline-size var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      block-size var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      opacity var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+      translate var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      inline-size var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      block-size var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      opacity var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard);
   }
 
   .brick-segment-group__indicator[data-ready] {
@@ -84,8 +90,7 @@
     min-inline-size: 0;
     min-block-size: calc(
       var(--brick-segment-group-min-block-size) -
-      (2 * var(--brick-segment-group-inset)) -
-      0px
+        (2 * var(--brick-segment-group-inset)) - 0px
     );
     align-items: center;
     justify-content: center;
@@ -93,7 +98,9 @@
     padding-block: var(--brick-space-1);
     padding-inline: var(--brick-segment-group-item-padding-inline);
     border: 0;
-    border-radius: calc(var(--brick-radius-control) - var(--brick-segment-group-inset));
+    border-radius: calc(
+      var(--brick-radius-control) - var(--brick-segment-group-inset)
+    );
     appearance: none;
     background: transparent;
     color: var(--brick-segment-group-foreground);
@@ -101,10 +108,11 @@
     font-size: var(--brick-typography-control-md-font-size);
     font-weight: var(--brick-typography-control-md-font-weight);
     line-height: var(--brick-typography-control-md-line-height);
-    white-space: nowrap;
+    text-align: center;
+    white-space: normal;
     cursor: pointer;
-    transition:
-      color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+    transition: color var(--brick-motion-duration-fast)
+      var(--brick-motion-easing-standard);
   }
 
   .brick-segment-group__item > :where(svg, img, .brick-icon) {
@@ -113,12 +121,18 @@
     block-size: var(--brick-segment-group-icon-size);
   }
 
+  .brick-segment-group__item-text {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
   .brick-segment-group__item[data-state="checked"] {
     color: var(--brick-segment-group-selected-foreground);
   }
 
   .brick-segment-group__item:focus-visible {
-    outline: var(--brick-border-focus-width) solid var(--brick-segment-group-focus-ring);
+    outline: var(--brick-border-focus-width) solid
+      var(--brick-segment-group-focus-ring);
     outline-offset: var(--brick-border-focus-offset);
   }
 
@@ -133,7 +147,9 @@
   }
 
   .brick-segment-group[data-size="sm"] {
-    --brick-segment-group-min-block-size: var(--brick-control-min-block-size-sm);
+    --brick-segment-group-min-block-size: var(
+      --brick-control-min-block-size-sm
+    );
     --brick-segment-group-item-padding-inline: var(--brick-space-2);
     --brick-segment-group-item-gap: var(--brick-space-1);
     --brick-segment-group-icon-size: 0.875rem;
@@ -147,7 +163,9 @@
   }
 
   .brick-segment-group[data-size="lg"] {
-    --brick-segment-group-min-block-size: var(--brick-control-min-block-size-lg);
+    --brick-segment-group-min-block-size: var(
+      --brick-control-min-block-size-lg
+    );
     --brick-segment-group-item-padding-inline: var(--brick-space-4);
     --brick-segment-group-item-gap: var(--brick-space-2);
     --brick-segment-group-icon-size: 1.125rem;

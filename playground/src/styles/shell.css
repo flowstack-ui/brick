@@ -42,11 +42,6 @@
   z-index: 20;
 }
 
-.evidence-app-bar .brick-app-bar-toolbar {
-  max-inline-size: none;
-  padding-inline: clamp(var(--brick-space-3), 3vw, var(--brick-space-6));
-}
-
 .evidence-brand {
   color: inherit;
   font-size: var(--brick-font-size-sm);
@@ -104,10 +99,6 @@
 }
 
 .evidence-page-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: var(--brick-space-6);
   padding-block: var(--brick-space-5);
 }
 
@@ -128,11 +119,12 @@
   line-height: var(--brick-font-line-height-body);
 }
 
+.review-controls-frame {
+  max-inline-size: 100%;
+}
+
 .review-controls {
   inline-size: max-content;
-  max-inline-size: 100%;
-  justify-self: end;
-  overflow-x: auto;
 }
 
 .review-controls > .brick-toolbar__separator {
@@ -141,8 +133,7 @@
 
 .scenario-nav {
   container-type: inline-size;
-  border-block: var(--brick-border-width) solid
-    var(--brick-color-border-subtle);
+  border-block: var(--brick-border-width) solid var(--brick-color-border-subtle);
 }
 
 .scenario-nav-scroll {
@@ -205,10 +196,6 @@
   margin: 0;
 }
 
-.evidence-footer > .brick-stack {
-  align-items: center;
-}
-
 .evidence-mobile-drawer .brick-drawer-header {
   display: flex;
   align-items: start;
@@ -224,6 +211,10 @@
   .evidence-layout {
     display: block;
     padding: 0;
+  }
+
+  .evidence-sidebar {
+    display: none;
   }
 }
 
@@ -241,22 +232,6 @@
   }
 }
 
-@media (max-width: 48rem) {
-  .evidence-page-header {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-  }
-
-  .review-controls {
-    justify-self: start;
-  }
-
-  .evidence-footer > .brick-stack {
-    align-items: start;
-    flex-direction: column;
-  }
-}
-
 @media (max-width: 30rem), (max-height: 30rem) {
   .evidence-app {
     --evidence-scenario-scroll-margin: var(--brick-space-4);
@@ -265,10 +240,6 @@
   .evidence-app-bar {
     position: static;
     inset-block-start: auto;
-  }
-
-  .evidence-app-bar .brick-app-bar-toolbar {
-    padding-inline: var(--brick-space-2);
   }
 
   .evidence-page-heading h1 {

@@ -1,6 +1,32 @@
-import { expect, test } from "@playwright/test";
+import {
+  expectEvidenceScreenshot,
+  installVisualDefaults,
+  setAppearance,
+  test,
+  useForcedColors,
+} from "../../visual-harness.js";
 
-test("Status route renders its complete evidence", async ({ page }) => {
-  await page.goto("/status");
-  await expect(page.locator("[data-component-page='status']")).toBeVisible();
+installVisualDefaults("/status");
+
+test("Status overview, tones, and sizes", async ({ page }) => {
+  await expectEvidenceScreenshot(
+    page,
+    page.locator('[data-scenario="status.overview"]'),
+    "overview-light.png",
+  );
+  await setAppearance(page, "dark");
+  await expectEvidenceScreenshot(
+    page,
+    page.locator('[data-scenario="status.tones"]'),
+    "tones-dark.png",
+  );
+});
+
+test("Status indicators remain distinct in forced colors", async ({ page }) => {
+  await useForcedColors(page);
+  await expectEvidenceScreenshot(
+    page,
+    page.locator('[data-scenario="status.sizes"]'),
+    "sizes-forced-colors.png",
+  );
 });

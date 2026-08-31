@@ -1,37 +1,190 @@
-import { ColorSwatch, Grid, HStack, Surface, Text, VStack } from "@flowstack-ui/brick";
+import type { CSSProperties } from "react";
+import {
+  Button,
+  ColorSwatch,
+  Grid,
+  HStack,
+  Text,
+  VStack,
+} from "@flowstack-ui/brick";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
+import { Specimen } from "../../shared/Specimen.js";
+import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 
+const customStyle = {
+  "--brick-color-swatch-border-color": "var(--brick-color-accent-border)",
+  "--brick-color-swatch-radius": "var(--brick-radius-full)",
+  "--brick-color-swatch-size": "2.5rem",
+} as CSSProperties;
 export const colorSwatchScenarios = [
-  { id: "color-swatch.overview", number: 1, title: "Overview", description: "Solid and alpha colors keep one finished footprint while the checker reveals transparency." },
-  { id: "color-swatch.sizes", number: 2, title: "Sizes", description: "The closed size vocabulary aligns previews with nearby color values." },
-  { id: "color-swatch.mix", number: 3, title: "Mixed colors", description: "Two or more colors share one swatch footprint with equal visual weight." },
-  { id: "color-swatch.semantics", number: 4, title: "Semantics", description: "Decorative previews stay hidden while an explicitly labeled preview becomes a named image." },
+  {
+    id: "color-swatch.overview",
+    number: 1,
+    title: "Overview",
+    description:
+      "Solid and alpha colors keep one finished footprint while the checker reveals transparency.",
+  },
+  {
+    id: "color-swatch.sizes",
+    number: 2,
+    title: "Sizes",
+    description:
+      "The complete sm, md, and lg size vocabulary aligns previews with nearby values.",
+  },
+  {
+    id: "color-swatch.mix",
+    number: 3,
+    title: "Mixed colors",
+    description:
+      "Two or more colors share one swatch footprint with equal visual weight.",
+  },
+  {
+    id: "color-swatch.semantics",
+    number: 4,
+    title: "Semantics, appearance, and customization",
+    navigationTitle: "Semantics",
+    description:
+      "Decorative and named previews remain explicit across themes, owner compositions, and public CSS properties.",
+  },
 ] as const satisfies readonly ScenarioDefinition[];
 
 export function ColorSwatchPage() {
   return (
     <VStack data-component-page="color-swatch" gap="6">
       <Scenario {...colorSwatchScenarios[0]}>
-        <Surface inset="lg"><HStack gap="4">
-          <ColorSwatch.Root data-testid="color-swatch-solid" value="#5b5bd6" />
-          <Text>Indigo #5b5bd6</Text>
-          <ColorSwatch.Root data-testid="color-swatch-alpha" value="rgb(229 72 77 / 45%)" />
-          <Text>Ruby at 45%</Text>
-        </HStack></Surface>
+        <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
+          <Specimen label="solid color">
+            <HStack gap="3">
+              <ColorSwatch.Root
+                data-testid="color-swatch-solid"
+                value="#5b5bd6"
+              />
+              <Text>Indigo · #5b5bd6</Text>
+            </HStack>
+          </Specimen>
+          <Specimen label="45% alpha">
+            <HStack gap="3">
+              <ColorSwatch.Root
+                data-testid="color-swatch-alpha"
+                value="rgb(229 72 77 / 45%)"
+              />
+              <Text>Ruby · 45% alpha</Text>
+            </HStack>
+          </Specimen>
+        </Grid.Root>
       </Scenario>
       <Scenario {...colorSwatchScenarios[1]}>
-        <Surface inset="lg"><HStack gap="4">
-          {(["sm", "md", "lg"] as const).map((size) => <VStack align="center" gap="2" key={size}><ColorSwatch.Root data-testid={`color-swatch-${size}`} size={size} value="#30a46c" /><Text variant="caption">{size}</Text></VStack>)}
-        </HStack></Surface>
+        <Grid.Root columns={{ initial: 1, md: 3 }} gap="4">
+          {(["sm", "md", "lg"] as const).map((size) => (
+            <Specimen key={size} label={size}>
+              <HStack align="center" gap="3">
+                <ColorSwatch.Root
+                  data-testid={`color-swatch-${size}`}
+                  size={size}
+                  value="#30a46c"
+                />
+                <Text>{size.toUpperCase()} swatch</Text>
+              </HStack>
+            </Specimen>
+          ))}
+        </Grid.Root>
       </Scenario>
       <Scenario {...colorSwatchScenarios[2]}>
         <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
-          <Surface inset="lg"><HStack gap="3"><ColorSwatch.Mix data-testid="color-swatch-mix-two" values={["#5b5bd6", "#e5484d"]} /><Text>Campaign pair</Text></HStack></Surface>
-          <Surface inset="lg"><HStack gap="3"><ColorSwatch.Mix data-testid="color-swatch-mix-three" values={["#5b5bd6", "#e5484d", "#30a46c"]} /><Text>Product palette</Text></HStack></Surface>
+          <Specimen label="two colors">
+            <HStack gap="3">
+              <ColorSwatch.Mix
+                data-testid="color-swatch-mix-two"
+                label="Indigo and ruby campaign colors"
+                values={["#5b5bd6", "#e5484d"]}
+              />
+              <Text>Campaign pair</Text>
+            </HStack>
+          </Specimen>
+          <Specimen label="three colors">
+            <HStack gap="3">
+              <ColorSwatch.Mix
+                data-testid="color-swatch-mix-three"
+                label="Indigo, ruby, and grass product palette"
+                values={["#5b5bd6", "#e5484d", "#30a46c"]}
+              />
+              <Text>Product palette</Text>
+            </HStack>
+          </Specimen>
         </Grid.Root>
       </Scenario>
       <Scenario {...colorSwatchScenarios[3]}>
-        <Surface inset="lg"><HStack gap="4"><ColorSwatch.Root data-testid="color-swatch-decorative" value="#f5d90a" /><Text>Yellow #f5d90a</Text><ColorSwatch.Root data-testid="color-swatch-labeled" label="Ocean blue color" value="#0090ff" /></HStack></Surface>
+        <VStack gap="5">
+          <Grid.Root columns={{ initial: 1, md: 2 }} gap="4">
+            <Specimen label="decorative preview">
+              <HStack gap="3">
+                <ColorSwatch.Root
+                  data-testid="color-swatch-decorative"
+                  value="#f5d90a"
+                />
+                <Text>Yellow · #f5d90a (text owns the name)</Text>
+              </HStack>
+            </Specimen>
+            <Specimen label="named image">
+              <HStack gap="3">
+                <ColorSwatch.Root
+                  data-testid="color-swatch-labeled"
+                  label="Ocean blue color"
+                  value="#0090ff"
+                />
+                <Text>Ocean blue · #0090ff</Text>
+              </HStack>
+            </Specimen>
+            <Specimen data-brick-appearance="light" label="light">
+              <HStack gap="3">
+                <ColorSwatch.Root value="#8e4ec6" />
+                <Text>Plum</Text>
+              </HStack>
+            </Specimen>
+            <Specimen data-brick-appearance="dark" label="dark">
+              <HStack gap="3">
+                <ColorSwatch.Root value="#8e4ec6" />
+                <Text>Plum</Text>
+              </HStack>
+            </Specimen>
+          </Grid.Root>
+          <Specimen label="inside an owning control">
+            <Button tone="neutral" variant="outline">
+              <ColorSwatch.Root value="#e5484d" /> Coral preset
+            </Button>
+          </Specimen>
+          <EvidenceSurface
+            className="playground-customization-evidence"
+            inset="none"
+          >
+            <Grid.Root
+              className="playground-customization-layout"
+              columns={2}
+              gap="0"
+            >
+              <VStack gap="2">
+                <SpecimenLabel>customized</SpecimenLabel>
+                <Text as="h3" variant="title-sm">
+                  Color Swatch CSS properties
+                </Text>
+                <Text tone="secondary" variant="body-sm">
+                  The preview uses the same size, border, and radius shown in
+                  code.
+                </Text>
+                <PlaygroundCodeBlock>{`--brick-color-swatch-size: 2.5rem;\n--brick-color-swatch-radius: var(--brick-radius-full);\n--brick-color-swatch-border-color: var(--brick-color-accent-border);`}</PlaygroundCodeBlock>
+              </VStack>
+              <VStack className="playground-customization-preview" gap="3">
+                <ColorSwatch.Root
+                  label="Customized cyan color"
+                  style={customStyle}
+                  value="#12a594"
+                />
+              </VStack>
+            </Grid.Root>
+          </EvidenceSurface>
+        </VStack>
       </Scenario>
     </VStack>
   );

@@ -8,6 +8,16 @@
   color: var(--brick-surface-foreground);
 }
 
+.playground-specimen,
+.playground-specimen__preview {
+  min-inline-size: 0;
+  inline-size: 100%;
+}
+
+.playground-specimen__preview {
+  align-self: stretch;
+}
+
 /* Shared code-and-preview evidence uses one clipped surface and a true divider. */
 .playground-customization-evidence {
   min-inline-size: 0;
@@ -43,61 +53,6 @@
 /* Legacy route layouts retain their component-specific geometry while using
    the same single-surface divider contract as new customization evidence. */
 .brick-surface[data-playground-evidence]:is(
-  .hover-card-customization,
-  .popover-customization,
-  .tooltip-customization,
-  .badge-customization,
-  .card-customization,
-  .notification-badge-customization,
-  .text-customization,
-  .dialog-customization,
-  .alert-dialog-customization,
-  .drawer-customization
-) {
-  gap: var(--brick-border-width);
-  padding: 0;
-  overflow: clip;
-  background: var(--brick-color-border-subtle);
-}
-
-.brick-surface[data-playground-evidence]:is(
-  .hover-card-customization,
-  .popover-customization,
-  .tooltip-customization,
-  .badge-customization,
-  .card-customization,
-  .notification-badge-customization,
-  .text-customization,
-  .dialog-customization,
-  .alert-dialog-customization,
-  .drawer-customization
-) > * {
-  min-inline-size: 0;
-  block-size: 100%;
-  padding: var(--brick-space-5);
-  border: 0;
-  border-radius: 0;
-  background: var(--brick-color-surface-raised);
-}
-
-.brick-surface[data-playground-evidence] :is(
-  .hover-card-customization__preview,
-  .popover-customization__preview,
-  .tooltip-customization__preview,
-  .badge-customization__preview,
-  .card-customization__preview
-) {
-  border: 0;
-  border-radius: 0;
-  background: var(--brick-color-surface-raised);
-}
-
-@media (max-width: 28rem) {
-  .playground-customization-layout > * {
-    padding: var(--brick-space-4);
-  }
-
-  .brick-surface[data-playground-evidence]:is(
     .hover-card-customization,
     .popover-customization,
     .tooltip-customization,
@@ -108,53 +63,116 @@
     .dialog-customization,
     .alert-dialog-customization,
     .drawer-customization
-  ) > * {
+  ) {
+  gap: var(--brick-border-width);
+  padding: 0;
+  overflow: clip;
+  background: var(--brick-color-border-subtle);
+}
+
+.brick-surface[data-playground-evidence]:is(
+    .hover-card-customization,
+    .popover-customization,
+    .tooltip-customization,
+    .badge-customization,
+    .card-customization,
+    .notification-badge-customization,
+    .text-customization,
+    .dialog-customization,
+    .alert-dialog-customization,
+    .drawer-customization
+  )
+  > * {
+  min-inline-size: 0;
+  block-size: 100%;
+  padding: var(--brick-space-5);
+  border: 0;
+  border-radius: 0;
+  background: var(--brick-color-surface-raised);
+}
+
+.brick-surface[data-playground-evidence]
+  :is(
+    .hover-card-customization__preview,
+    .popover-customization__preview,
+    .tooltip-customization__preview,
+    .badge-customization__preview,
+    .card-customization__preview
+  ) {
+  border: 0;
+  border-radius: 0;
+  background: var(--brick-color-surface-raised);
+}
+
+@media (max-width: 28rem) {
+  .playground-customization-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .playground-customization-layout > * {
+    padding: var(--brick-space-4);
+  }
+
+  .brick-surface[data-playground-evidence]:is(
+      .hover-card-customization,
+      .popover-customization,
+      .tooltip-customization,
+      .badge-customization,
+      .card-customization,
+      .notification-badge-customization,
+      .text-customization,
+      .dialog-customization,
+      .alert-dialog-customization,
+      .drawer-customization
+    )
+    > * {
     padding: var(--brick-space-4);
   }
 }
 
-[data-component-page] :is(
-  .button-specimen-grid,
-  .button-appearance-grid,
-  .icon-button-specimen-grid,
-  .icon-button-appearance-grid,
-  .app-bar-specimen-grid,
-  .app-bar-appearance-grid,
-  .avatar-specimen-grid,
-  .avatar-scoped-appearance-grid,
-  .badge-specimen-grid,
-  .badge-scoped-appearance-grid,
-  .notification-badge-specimen-grid,
-  .notification-badge-scoped-appearance-grid,
-  .card-specimen-grid,
-  .card-scoped-appearance-grid,
-  .dialog-specimen-grid,
-  .dialog-scoped-appearance-grid,
-  .alert-dialog-specimen-grid,
-  .alert-dialog-scoped-appearance-grid,
-  .drawer-specimen-grid,
-  .drawer-scoped-appearance-grid,
-  .toggle-specimen-grid,
-  .toggle-scoped-grid,
-  .toggle-group-specimen-grid,
-  .toggle-group-scoped-grid,
-  .tooltip-specimen-grid,
-  .tooltip-scoped-grid,
-  .hover-card-specimen-grid,
-  .hover-card-scoped-grid,
-  .popover-specimen-grid,
-  .popover-scoped-grid,
-  .text-grid,
-  .text-scoped-grid,
-  .stack-grid,
-  .stack-scoped-grid,
-  .bottom-navigation-grid,
-  .bottom-navigation-scoped-grid,
-  .menu-grid,
-  .menu-scoped-grid,
-  .forms-grid,
-  .forms-scoped-grid
-) {
+[data-component-page]
+  :is(
+    .button-specimen-grid,
+    .button-appearance-grid,
+    .icon-button-specimen-grid,
+    .icon-button-appearance-grid,
+    .app-bar-specimen-grid,
+    .app-bar-appearance-grid,
+    .avatar-specimen-grid,
+    .avatar-scoped-appearance-grid,
+    .badge-specimen-grid,
+    .badge-scoped-appearance-grid,
+    .notification-badge-specimen-grid,
+    .notification-badge-scoped-appearance-grid,
+    .card-specimen-grid,
+    .card-scoped-appearance-grid,
+    .dialog-specimen-grid,
+    .dialog-scoped-appearance-grid,
+    .alert-dialog-specimen-grid,
+    .alert-dialog-scoped-appearance-grid,
+    .drawer-specimen-grid,
+    .drawer-scoped-appearance-grid,
+    .toggle-specimen-grid,
+    .toggle-scoped-grid,
+    .toggle-group-specimen-grid,
+    .toggle-group-scoped-grid,
+    .tooltip-specimen-grid,
+    .tooltip-scoped-grid,
+    .hover-card-specimen-grid,
+    .hover-card-scoped-grid,
+    .popover-specimen-grid,
+    .popover-scoped-grid,
+    .text-grid,
+    .text-scoped-grid,
+    .stack-grid,
+    .stack-scoped-grid,
+    .bottom-navigation-grid,
+    .bottom-navigation-scoped-grid,
+    .menu-grid,
+    .menu-scoped-grid,
+    .forms-grid,
+    .forms-scoped-grid
+  ) {
   overflow: visible;
   border: 0;
   border-radius: 0;
@@ -177,26 +195,27 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
-[data-component-page] :is(
-  .button-customization__preview,
-  .icon-button-customization__preview,
-  .app-bar-customization__preview,
-  .avatar-customization__preview,
-  .badge-customization__preview,
-  .notification-badge-customization__preview,
-  .card-customization__preview,
-  .dialog-customization__preview,
-  .alert-dialog-customization__preview,
-  .drawer-customization__preview,
-  .toggle-customization__preview,
-  .toggle-group-customization__preview,
-  .tooltip-customization__preview,
-  .hover-card-customization__preview,
-  .popover-customization__preview,
-  .text-customization__preview,
-  .stack-customization__preview,
-  .forms-customization__preview
-) {
+[data-component-page]
+  :is(
+    .button-customization__preview,
+    .icon-button-customization__preview,
+    .app-bar-customization__preview,
+    .avatar-customization__preview,
+    .badge-customization__preview,
+    .notification-badge-customization__preview,
+    .card-customization__preview,
+    .dialog-customization__preview,
+    .alert-dialog-customization__preview,
+    .drawer-customization__preview,
+    .toggle-customization__preview,
+    .toggle-group-customization__preview,
+    .tooltip-customization__preview,
+    .hover-card-customization__preview,
+    .popover-customization__preview,
+    .text-customization__preview,
+    .stack-customization__preview,
+    .forms-customization__preview
+  ) {
   padding: 0;
   border: 0;
   border-radius: 0;

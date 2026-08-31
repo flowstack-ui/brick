@@ -32,7 +32,6 @@ import "@flowstack-ui/brick/styles/code-block.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 `CodeBlock` and every direct part are also available from the package root.
 
 ## Quick start
@@ -65,20 +64,21 @@ when authored.
 
 ## API
 
-| Part or prop | Values | Default |
-| --- | --- | --- |
-| `Root.value` | copied plain-text source | required |
-| `variant` | `subtle`, `bordered`, `plain` | `subtle` |
-| `size` | `sm`, `md` | `md` |
-| `Root.language` | explicit string | none |
-| `wrap` | `scroll`, `wrap` | `scroll` |
-| `focusable` | `boolean` | `true` |
-| `Content.maxLines` | positive whole number | unbounded |
-| `Root.adapter` | synchronous trusted-node adapter | none |
-| `Line.lineNumber` | positive whole number | none |
-| `Line.highlighted`, `Line.focused` | `boolean` | `false` |
-| `Line.change` | `added`, `removed` | none |
-| Clipboard behavior | `disabled`, `timeout`, `writeValue`, `onStatusChange` | Atom defaults |
+| Part or prop                               | Values                                                | Default         |
+| ------------------------------------------ | ----------------------------------------------------- | --------------- |
+| `Root.value`                               | copied plain-text source                              | required        |
+| `variant`                                  | `subtle`, `bordered`, `plain`                         | `subtle`        |
+| `size`                                     | `sm`, `md`                                            | `md`            |
+| `Root.language`                            | explicit string                                       | none            |
+| `wrap`                                     | `scroll`, `wrap`                                      | `scroll`        |
+| `focusable`                                | `boolean`                                             | `true`          |
+| `Content.maxLines`                         | positive whole number                                 | unbounded       |
+| `Root.adapter`                             | synchronous trusted-node adapter                      | none            |
+| `Line.lineNumber`                          | positive whole number                                 | none            |
+| `Line.highlighted`, `Line.focused`         | `boolean`                                             | `false`         |
+| `Line.change`                              | `added`, `removed`                                    | none            |
+| `CollapseTrigger.closedLabel`, `openLabel` | state-specific React nodes                            | static children |
+| Clipboard behavior                         | `disabled`, `timeout`, `writeValue`, `onStatusChange` | Atom defaults   |
 
 Public parts are `Root`, `Header`, `Title`, `Language`, `Actions`, `Content`,
 `Line`, `Collapse`, `CollapsePreview`, `CollapseContent`, `CollapseTrigger`,
@@ -167,6 +167,11 @@ disclosure lifecycle. Scrollable source normalizes mobile browser text adjustmen
 short and long examples retain the selected Code Block size. Code defaults to
 LTR inside an RTL page while Header follows page direction.
 
+For expandable source, the preview establishes the opening height floor while
+Collapsible Content grows to its measured full height. This avoids a transient
+collapse-to-zero frame. Author `closedLabel` and `openLabel` when the control
+must change from an expansion action to a collapse action.
+
 ## Accessibility
 
 Give focusable Content a specific `aria-label` or `aria-labelledby`; it is the
@@ -224,7 +229,7 @@ const adapter: CodeBlockAdapter = ({ value }) =>
 
 <CodeBlock.Root adapter={adapter} value={source} language="tsx">
   <CodeBlock.Content aria-label="Adapted TypeScript source" />
-</CodeBlock.Root>
+</CodeBlock.Root>;
 ```
 
 ### Bounded source with expansion
@@ -233,12 +238,20 @@ const adapter: CodeBlockAdapter = ({ value }) =>
 <CodeBlock.Collapse>
   <CodeBlock.Root value={source}>
     <CodeBlock.CollapsePreview>
-      <CodeBlock.Content aria-label="Configuration source preview" maxLines={8} />
+      <CodeBlock.Content
+        aria-label="Configuration source preview"
+        maxLines={8}
+      />
     </CodeBlock.CollapsePreview>
     <CodeBlock.CollapseContent>
       <CodeBlock.Content aria-label="Full configuration source" />
     </CodeBlock.CollapseContent>
-    <CodeBlock.CollapseTrigger>Show full source</CodeBlock.CollapseTrigger>
+    <CodeBlock.CollapseTrigger
+      closedLabel="Show full source"
+      openLabel="Hide full source"
+    >
+      Show full source
+    </CodeBlock.CollapseTrigger>
   </CodeBlock.Root>
 </CodeBlock.Collapse>
 ```

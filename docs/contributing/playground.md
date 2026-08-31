@@ -57,6 +57,13 @@ labels remain consistent without competing with the component under review.
 Headings, code output, and appearance identifiers retain their own semantics
 and must not be converted into specimen badges.
 
+Prefer the shared `Specimen` wrapper for ordinary comparison cells. It owns one
+`EvidenceSurface`, places `SpecimenLabel` at the logical top-start, reserves a
+real `gap="4"`, and keeps the preview in a shrinkable full-width region. Do not
+recreate that relationship with a raw `Surface`, a full-width Badge, margins,
+or source-order tricks. Use `CustomizationEvidence` for code-and-live pairs;
+its two columns collapse to one on narrow screens.
+
 Use Brick `Text` for playground-authored headings, paragraphs, supporting
 copy, status copy, and inline emphasis. Select the correct native host with
 `as`; visual hierarchy comes from `variant`. Use Brick `Input` for ordinary
@@ -128,6 +135,11 @@ impression. Add browser geometry assertions for regressions such as unequal
 vertical starts, clipped or overflowing parts, misplaced logical adornments,
 or content touching a focus/border edge. Review the resulting screenshots
 after the assertions pass.
+
+For pages listed under `reviewStandards` in the machine contract, the verifier
+also requires shared labeled specimens, paired code-and-live customization,
+and explicit light/dark specimens where those dimensions belong to the
+component. Adding a route or snapshot alone is not completion.
 
 ## Division of responsibility
 

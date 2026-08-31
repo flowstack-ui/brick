@@ -63,12 +63,12 @@ Public exports are `SegmentGroup`, `SegmentGroupRoot`, `SegmentGroupItem`,
 Public prop types are `SegmentGroupRootProps`, `SegmentGroupItemProps`,
 `SegmentGroupItemTextProps`, and `SegmentGroupIndicatorProps`.
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
+| Prop          | Values                   | Default      |
+| ------------- | ------------------------ | ------------ |
+| `size`        | `sm`, `md`, `lg`         | `md`         |
 | `orientation` | `horizontal`, `vertical` | `horizontal` |
-| `fullWidth` | `boolean` | `false` |
-| `iconOnly` | `boolean` | `false` |
+| `fullWidth`   | `boolean`                | `false`      |
+| `iconOnly`    | `boolean`                | `false`      |
 
 ## Visual recipes and states
 
@@ -110,7 +110,9 @@ on Indicator.
 Root stays intrinsic by default and can fill its allocated width with
 `fullWidth`. Items remain ordered at narrow widths and zoom. Indicator
 remeasures after layout and font changes. Logical geometry and Atom keyboard
-direction support RTL.
+direction support RTL. Wrap long labels in `SegmentGroup.ItemText` so the
+finished text can break within its measured segment instead of painting into a
+neighbor.
 
 ## Accessibility
 

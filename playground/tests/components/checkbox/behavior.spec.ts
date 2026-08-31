@@ -12,7 +12,9 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/checkbox");
 });
 
-test("Checkbox overview preserves the default medium unchecked state", async ({ page }) => {
+test("Checkbox overview preserves the default medium unchecked state", async ({
+  page,
+}) => {
   const checkbox = page
     .getByTestId("checkbox-overview")
     .getByRole("checkbox", { name: "Ready to publish" });
@@ -24,7 +26,9 @@ test("Checkbox overview preserves the default medium unchecked state", async ({ 
   await expect(checkbox).toHaveAttribute("aria-checked", "true");
 });
 
-test("Checkbox keeps the row clickable while control feedback stays on the square", async ({ page }) => {
+test("Checkbox keeps the row clickable while control feedback stays on the square", async ({
+  page,
+}) => {
   const checkbox = page
     .getByTestId("checkbox-overview")
     .getByRole("checkbox", { name: "Ready to publish" });
@@ -38,7 +42,25 @@ test("Checkbox keeps the row clickable while control feedback stays on the squar
   expect((await checkbox.boundingBox())!.height).toBeGreaterThanOrEqual(44);
 });
 
-test("Checkbox state and size comparisons change only their named dimension", async ({ page }) => {
+test("Checkbox removes authored motion when reduced motion is requested", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  const checkbox = page
+    .getByTestId("checkbox-overview")
+    .getByRole("checkbox", { name: "Ready to publish" });
+  const durations = await checkbox
+    .locator(".brick-checkbox-control")
+    .evaluate((element) => getComputedStyle(element).transitionDuration);
+  expect(
+    durations.split(",").every((value) => Number.parseFloat(value) <= 0.001),
+  ).toBe(true);
+});
+
+test("Checkbox state and size comparisons change only their named dimension", async ({
+  page,
+}) => {
   const states = page.getByTestId("checkbox-states").getByRole("checkbox");
   await expect(states).toHaveCount(3);
   const expectedStates = ["false", "true", "mixed"];
@@ -64,7 +86,9 @@ test("Checkbox state and size comparisons change only their named dimension", as
   expect(measurements[1]).toBeLessThan(measurements[2]);
 });
 
-test("Checkbox ownership examples begin identically and retain their ownership behavior", async ({ page }) => {
+test("Checkbox ownership examples begin identically and retain their ownership behavior", async ({
+  page,
+}) => {
   const ownership = page.getByTestId("checkbox-ownership");
   const checkboxes = ownership.getByRole("checkbox", { name: "Preview" });
   await expect(checkboxes).toHaveCount(3);
@@ -82,7 +106,9 @@ test("Checkbox ownership examples begin identically and retain their ownership b
   await expect(checkboxes.nth(2)).toHaveAttribute("data-readonly", "");
 });
 
-test("Disabled Checkbox artwork preserves default medium geometry", async ({ page }) => {
+test("Disabled Checkbox artwork preserves default medium geometry", async ({
+  page,
+}) => {
   const disabled = page
     .getByTestId("checkbox-disabled-artwork")
     .getByRole("checkbox", { name: "Preview" });
@@ -119,7 +145,9 @@ test("Disabled Checkbox artwork preserves default medium geometry", async ({ pag
   await expect(validity.nth(2)).toHaveAttribute("aria-required", "true");
 });
 
-test("Checkbox participates in Field, FormData, reset, and external form ownership", async ({ page }) => {
+test("Checkbox participates in Field, FormData, reset, and external form ownership", async ({
+  page,
+}) => {
   const form = page.getByRole("form", { name: "Release acknowledgement" });
   const acknowledgement = form.getByRole("checkbox", {
     name: "Release acknowledgement",
@@ -139,13 +167,17 @@ test("Checkbox participates in Field, FormData, reset, and external form ownersh
   });
   await external.click();
   expect(
-    await page.locator("#checkbox-form-example").evaluate((element) =>
-      new FormData(element as HTMLFormElement).get("external-consent"),
-    ),
+    await page
+      .locator("#checkbox-form-example")
+      .evaluate((element) =>
+        new FormData(element as HTMLFormElement).get("external-consent"),
+      ),
   ).toBe("yes");
 });
 
-test("Checkbox composition and appearances preserve identical defaults", async ({ page }) => {
+test("Checkbox composition and appearances preserve identical defaults", async ({
+  page,
+}) => {
   const rendered = page.getByTestId("checkbox-render");
   const composed = page.getByTestId("checkbox-as-child");
   await expect(rendered).toHaveAttribute("data-adapter", "rendered-checkbox");
@@ -165,9 +197,7 @@ test("Checkbox composition and appearances preserve identical defaults", async (
   await expect(output.first()).toContainText(
     'data-adapter="rendered-checkbox"',
   );
-  await expect(output.last()).toContainText(
-    'data-adapter="composed-checkbox"',
-  );
+  await expect(output.last()).toContainText('data-adapter="composed-checkbox"');
 
   const appearances = page
     .getByTestId("checkbox-appearance")
@@ -179,7 +209,9 @@ test("Checkbox composition and appearances preserve identical defaults", async (
   }
 });
 
-test("Checkbox customization, anchor navigation, accessibility, and narrow containment remain stable", async ({ page }) => {
+test("Checkbox customization, anchor navigation, accessibility, and narrow containment remain stable", async ({
+  page,
+}) => {
   const custom = page.locator("[data-slot='custom-checkbox']");
   await expect(custom).toHaveCSS("border-radius", "8px");
   await expect(custom.locator(".brick-checkbox-control")).toHaveCSS(
@@ -202,5 +234,7 @@ test("Checkbox customization, anchor navigation, accessibility, and narrow conta
 
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.setViewportSize({ width: 390, height: 844 });
-  expect(await page.locator("html").evaluate((node) => node.scrollWidth)).toBeLessThanOrEqual(390);
+  expect(
+    await page.locator("html").evaluate((node) => node.scrollWidth),
+  ).toBeLessThanOrEqual(390);
 });

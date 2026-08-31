@@ -16,7 +16,9 @@ async function readShellViewportOffsets(page: Page) {
   });
 }
 
-test("the persistent customization preview stays below the sticky header", async ({ page }) => {
+test("the persistent customization preview stays below the sticky header", async ({
+  page,
+}) => {
   await page.goto("/popover");
   const previews = page.locator(".popover-persistent-preview");
   await expect(previews).toHaveCount(1);
@@ -25,12 +27,16 @@ test("the persistent customization preview stays below the sticky header", async
     .evaluate((element) => Number(getComputedStyle(element).zIndex));
   for (const preview of await previews.all()) {
     expect(
-      await preview.evaluate((element) => Number(getComputedStyle(element).zIndex)),
+      await preview.evaluate((element) =>
+        Number(getComputedStyle(element).zIndex),
+      ),
     ).toBeLessThan(headerLayer);
   }
 });
 
-test("Popover opens intentionally with generated name and description, then restores focus", async ({ page }) => {
+test("Popover opens intentionally with generated name and description, then restores focus", async ({
+  page,
+}) => {
   await page.goto("/popover");
   const trigger = page.getByRole("button", { name: "Project settings" });
   await trigger.focus();
@@ -47,9 +53,9 @@ test("Popover opens intentionally with generated name and description, then rest
   await expect(popover).toHaveAttribute("aria-describedby", /.+/);
   await expect(trigger).toHaveAttribute("aria-expanded", "true");
   expect(
-    await popover.locator("[data-slot='popover-viewport']").evaluate(
-      (element) => getComputedStyle(element).boxShadow,
-    ),
+    await popover
+      .locator("[data-slot='popover-viewport']")
+      .evaluate((element) => getComputedStyle(element).boxShadow),
   ).not.toBe("none");
   const arrow = popover.locator("[data-slot='popover-arrow']");
   await expect(arrow).toBeVisible();
@@ -57,19 +63,40 @@ test("Popover opens intentionally with generated name and description, then rest
   expect(arrowBox).not.toBeNull();
   expect(arrowBox!.width).toBeGreaterThan(0);
   expect(arrowBox!.height).toBeGreaterThan(0);
-  await expect(popover.getByRole("button", { name: "Reset" })).toHaveAttribute("data-variant", "outline");
+  await expect(popover.getByRole("button", { name: "Reset" })).toHaveAttribute(
+    "data-variant",
+    "outline",
+  );
   const input = popover.getByRole("textbox", { name: "Project name" });
   await input.focus();
   await expect(input).toHaveCSS("outline-style", "none");
   expect(
-    await input.locator("xpath=..").evaluate((element) => getComputedStyle(element).boxShadow),
+    await input
+      .locator("xpath=..")
+      .evaluate((element) => getComputedStyle(element).boxShadow),
   ).not.toBe("none");
   await page.keyboard.press("Escape");
   await expect(popover).toBeHidden();
   await expect(trigger).toBeFocused();
 });
 
-test("Popover exposes three bounded sizes, shared Arrow, and disabled state", async ({ page }) => {
+test("Popover removes authored motion when reduced motion is requested", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/popover");
+  await page.getByRole("button", { name: "Project settings" }).click();
+  const durations = await page
+    .getByRole("dialog", { name: "Project settings" })
+    .evaluate((element) => getComputedStyle(element).transitionDuration);
+  expect(
+    durations.split(",").every((value) => Number.parseFloat(value) <= 0.001),
+  ).toBe(true);
+});
+
+test("Popover exposes three bounded sizes, shared Arrow, and disabled state", async ({
+  page,
+}) => {
   await page.goto("/popover");
   for (const size of ["sm", "md", "lg"] as const) {
     await page.getByRole("button", { name: `Open ${size} settings` }).click();
@@ -80,7 +107,9 @@ test("Popover exposes three bounded sizes, shared Arrow, and disabled state", as
     await expect(popover.locator("[data-slot='popover-arrow']")).toBeVisible();
     await popover.getByRole("button", { name: "Done" }).click();
   }
-  await expect(page.getByRole("button", { name: "Unavailable settings" })).toBeDisabled();
+  await expect(
+    page.getByRole("button", { name: "Unavailable settings" }),
+  ).toBeDisabled();
 
   await page.getByRole("button", { name: "Inspect anatomy" }).click();
   const anatomy = page.getByRole("dialog", { name: "Custom workspace panel" });
@@ -93,10 +122,14 @@ test("Popover exposes three bounded sizes, shared Arrow, and disabled state", as
   await expect(anatomy).toHaveAttribute("data-state", "closed");
 });
 
-test("Popover respects explicit dismissal policy and nested top-layer order", async ({ page }) => {
+test("Popover respects explicit dismissal policy and nested top-layer order", async ({
+  page,
+}) => {
   await page.goto("/popover");
   await page.getByRole("button", { name: "Explicit close only" }).click();
-  const explicit = page.getByRole("dialog", { name: "Explicit close settings" });
+  const explicit = page.getByRole("dialog", {
+    name: "Explicit close settings",
+  });
   await page.keyboard.press("Escape");
   await expect(explicit).toBeVisible();
   await explicit
@@ -118,7 +151,9 @@ test("Popover respects explicit dismissal policy and nested top-layer order", as
   await expect(parent).toBeHidden();
 });
 
-test("Popover modal mode traps focus and closes through its visible action", async ({ page }) => {
+test("Popover modal mode traps focus and closes through its visible action", async ({
+  page,
+}) => {
   await page.goto("/popover");
   const appBar = page.locator(".evidence-app-bar");
   const sidebar = page.locator(".evidence-sidebar");
@@ -135,37 +170,66 @@ test("Popover modal mode traps focus and closes through its visible action", asy
   await expect(popover).toHaveAttribute("aria-modal", "true");
   await expect(popover).toHaveCSS("opacity", "1");
   await expect.poll(() => readShellViewportOffsets(page)).toEqual(shellOffsets);
-  await expect.poll(() => page.evaluate(() => document.documentElement.style.overflow)).toBe("hidden");
-  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).not.toBe("hidden");
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.style.overflow))
+    .toBe("hidden");
+  await expect
+    .poll(() => page.evaluate(() => document.body.style.overflow))
+    .not.toBe("hidden");
   if (shellOffsets.appBar === 0) await expect(appBar).toBeVisible();
   if (shellOffsets.sidebar !== null) await expect(sidebar).toBeVisible();
   for (let index = 0; index < 6; index += 1) {
     await page.keyboard.press("Tab");
-    expect(await popover.evaluate((element) => element.contains(document.activeElement))).toBe(true);
+    expect(
+      await popover.evaluate((element) =>
+        element.contains(document.activeElement),
+      ),
+    ).toBe(true);
   }
   await popover.getByRole("button", { name: "Done" }).click();
   await expect(trigger).toBeFocused();
   await expect.poll(() => readShellViewportOffsets(page)).toEqual(shellOffsets);
 });
 
-test("Popover remains contained at 256 px, supports RTL, and passes focused axe", async ({ page }) => {
+test("Popover remains contained at 256 px, supports RTL, and passes focused axe", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 256, height: 640 });
   await page.goto("/popover");
   await page.getByRole("button", { name: "فتح إعدادات المشروع" }).click();
   const popover = page.getByRole("dialog", { name: "إعدادات المشروع" });
   await expect(popover).toBeVisible();
   await expect(popover).toHaveAttribute("dir", "rtl");
-  await expect.poll(() => popover.evaluate((element) => getComputedStyle(element).direction)).toBe("rtl");
+  await expect
+    .poll(() =>
+      popover.evaluate((element) => getComputedStyle(element).direction),
+    )
+    .toBe("rtl");
   const box = await popover.boundingBox();
   expect(box).not.toBeNull();
   expect(box!.x).toBeGreaterThanOrEqual(0);
   expect(box!.x + box!.width).toBeLessThanOrEqual(256);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
-  await expect.poll(() => popover.evaluate((element) => getComputedStyle(element).opacity)).toBe("1");
-  expect((await new AxeBuilder({ page }).disableRules(["region"]).analyze()).violations).toEqual([]);
+  expect(
+    await page.evaluate(
+      () =>
+        document.documentElement.scrollWidth <=
+        document.documentElement.clientWidth,
+    ),
+  ).toBe(true);
+  await expect
+    .poll(() =>
+      popover.evaluate((element) => getComputedStyle(element).opacity),
+    )
+    .toBe("1");
+  expect(
+    (await new AxeBuilder({ page }).disableRules(["region"]).analyze())
+      .violations,
+  ).toEqual([]);
 });
 
-test("Popover stays open during outside touch scrolling and closes on an outside touch tap", async ({ page }) => {
+test("Popover stays open during outside touch scrolling and closes on an outside touch tap", async ({
+  page,
+}) => {
   await page.goto("/popover");
   await page.getByRole("button", { name: "Project settings" }).click();
   const popover = page.getByRole("dialog", { name: "Project settings" });
@@ -212,7 +276,9 @@ test("Popover stays open during outside touch scrolling and closes on an outside
   await expect(popover).toBeHidden();
 });
 
-test("Popover stacks long Footer actions inside an extreme narrow viewport", async ({ page }) => {
+test("Popover stacks long Footer actions inside an extreme narrow viewport", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 150, height: 200 });
   await page.goto("/popover");
   const trigger = page.getByRole("button", { name: "Open long settings" });
@@ -230,17 +296,29 @@ test("Popover stacks long Footer actions inside an extreme narrow viewport", asy
   const viewport = popover.locator("[data-slot='popover-viewport']");
   await expect(popover.locator("[data-slot='popover-arrow']")).toBeVisible();
   await expect(popover).toHaveCSS("opacity", "1");
-  expect(await viewport.evaluate((element) => element.scrollHeight > element.clientHeight)).toBe(true);
+  expect(
+    await viewport.evaluate(
+      (element) => element.scrollHeight > element.clientHeight,
+    ),
+  ).toBe(true);
 
   for (const action of actions) {
-    await action.evaluate((element) => element.scrollIntoView({ block: "nearest" }));
-    const [actionBox, popoverBox] = await Promise.all([action.boundingBox(), viewport.boundingBox()]);
+    await action.evaluate((element) =>
+      element.scrollIntoView({ block: "nearest" }),
+    );
+    const [actionBox, popoverBox] = await Promise.all([
+      action.boundingBox(),
+      viewport.boundingBox(),
+    ]);
     expect(actionBox).not.toBeNull();
     expect(popoverBox).not.toBeNull();
     expect(actionBox!.x).toBeGreaterThanOrEqual(popoverBox!.x);
-    expect(actionBox!.x + actionBox!.width).toBeLessThanOrEqual(popoverBox!.x + popoverBox!.width);
+    expect(actionBox!.x + actionBox!.width).toBeLessThanOrEqual(
+      popoverBox!.x + popoverBox!.width,
+    );
     expect(actionBox!.y).toBeGreaterThanOrEqual(popoverBox!.y);
-    expect(actionBox!.y + actionBox!.height).toBeLessThanOrEqual(popoverBox!.y + popoverBox!.height);
+    expect(actionBox!.y + actionBox!.height).toBeLessThanOrEqual(
+      popoverBox!.y + popoverBox!.height,
+    );
   }
-
 });
