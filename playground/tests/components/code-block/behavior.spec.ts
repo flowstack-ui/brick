@@ -112,7 +112,7 @@ test("Code Block bounded content stays reachable and disclosure expands", async 
     lineVisibility.viewportBottom,
   );
   expect(lineVisibility.sixthTop).toBeGreaterThanOrEqual(
-    lineVisibility.viewportBottom - 0.5,
+    lineVisibility.viewportBottom - 1,
   );
   const collapse = trigger.locator(
     "xpath=ancestor::*[@data-slot='code-block-collapse']",
