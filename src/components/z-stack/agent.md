@@ -12,6 +12,7 @@ Overlap authored children in one depth-aware layout while preserving source, rea
 
 - Content follows one row or column. Use Stack.
 - Content is an ordinary image-backed card or hero. Use Surface.Media, Surface.Scrim, and Surface.Content.
+- One in-flow region only needs two-axis centering or equal square/circle geometry. Use Center, Square, or Circle.
 
 ## Required composition
 
@@ -44,3 +45,4 @@ Overlap authored children in one depth-aware layout while preserving source, rea
 - `grid`
 - `surface`
 - `image`
+- `center`

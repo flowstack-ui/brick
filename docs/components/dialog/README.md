@@ -93,7 +93,7 @@ the dialog inside an accessibility-hidden subtree and is rejected by Atom.
 | `Description` | `p` | Optional accessible description |
 | `Body` | `div` | Primary bounded scroll region |
 | `Footer` | `div` | Wrapping action region in source order |
-| `Close` | `button` | Closes with Atom's `closeClick` reason |
+| `Close` | `button` | Closes with Atom's `closeClick` reason; optionally anchors an authored control to Content's logical top-end corner |
 | `Branch` | `div` | Registers a third-party portalled subtree |
 
 All DOM-rendering parts accept their relevant native props, refs, `className`,
@@ -106,7 +106,8 @@ Public exports are the `Dialog` namespace; named `DialogRoot`,
 `DialogTrigger`, `DialogPortal`, `DialogOverlay`, `DialogContent`,
 `DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogBody`,
 `DialogFooter`, `DialogClose`, and `DialogBranch` parts; and their
-corresponding prop types plus `DialogSize` and `DialogFooterJustify`.
+corresponding prop types plus `DialogSize`, `DialogFooterJustify`, and
+`DialogClosePlacement`.
 
 ```ts
 DialogRootProps
@@ -120,6 +121,7 @@ DialogDescriptionProps
 DialogBodyProps
 DialogFooterProps
 DialogCloseProps
+DialogClosePlacement
 DialogBranchProps
 ```
 
@@ -160,6 +162,11 @@ value through `data-justify`.
 These parts forward Atom's `asChild` and `render` composition. The composed
 element must accept the merged props and ref and retain valid semantics.
 
+Close additionally supports `placement="inline" | "corner"`, defaulting to
+`inline`. Use `corner` only as a direct descendant of Content; Brick anchors
+the consumer-authored control one space-2 inset from Content's logical
+top-end corner. Brick does not generate the icon or accessible name.
+
 ### Title
 
 Title defaults to `h2`; `as` accepts `h1` through `h6`. A visible Title supplies
@@ -170,8 +177,9 @@ an explicit native `aria-label` or `aria-labelledby` to Content.
 
 Content supports `sm`, `md`, and `lg`; `md` is the default. Atom's public
 `data-state`, `data-positioned`, and disabled outputs drive open, closed,
-positioned, and unavailable styling. Dialog intentionally has no tone, variant,
-placement, fullscreen, or arbitrary-width prop.
+positioned, and unavailable styling. Dialog Content intentionally has no tone,
+variant, placement, fullscreen, or arbitrary-width prop. Close has the
+independent inline/corner visual placement described above.
 
 ## Tokens and CSS hooks
 
@@ -198,9 +206,10 @@ Content exposes these component tokens:
 - `--brick-dialog-radius`
 - `--brick-dialog-shadow`
 
-Atom owns `data-state` and `data-positioned`; Content adds `data-size`. Brick
-honors reduced motion and forced colors. Consumers own accessibility and layout
-verification after arbitrary class, style, or token overrides.
+Atom owns `data-state` and `data-positioned`; Content adds `data-size`, and
+Close adds `data-placement`. Brick honors reduced motion and forced colors.
+Consumers own accessibility and layout verification after arbitrary class,
+style, or token overrides.
 
 ## Customization
 
@@ -244,6 +253,25 @@ All DOM-rendering parts forward their documented native props and refs. Root
 and Portal render no element and therefore expose no DOM ref.
 
 ## Examples
+
+### Corner close control
+
+```tsx
+<Dialog.Content>
+  <Dialog.Header>
+    <Dialog.Title>Contact us</Dialog.Title>
+    <Dialog.Description>Tell us how we can help.</Dialog.Description>
+  </Dialog.Header>
+  <Dialog.Body>{/* form */}</Dialog.Body>
+  <Dialog.Close placement="corner" asChild>
+    <IconButton aria-label="Close dialog" size="sm" variant="ghost">
+      <CloseIcon />
+    </IconButton>
+  </Dialog.Close>
+</Dialog.Content>
+```
+
+Use the default `inline` placement for a Close-wrapped footer Cancel button.
 
 ### Portals, scopes, and Branch
 

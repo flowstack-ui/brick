@@ -41,6 +41,8 @@ describe("Field", () => {
     const field = screen.getByText("Email").closest(".brick-field");
     const input = screen.getByRole("textbox", { name: "Email" });
     expect(field).toHaveAttribute("data-orientation", "vertical");
+    expect(field).toHaveAttribute("data-size", "md");
+    expect(field).toHaveAttribute("data-tone", "primary");
     expect(field).toHaveAttribute("data-disabled");
     expect(field).toHaveAttribute("data-required");
     expect(field).toHaveAttribute("data-readonly");
@@ -53,6 +55,18 @@ describe("Field", () => {
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toBeDisabled();
     expect(field?.querySelector('[data-slot="field-required-indicator"]')).toHaveTextContent("*");
+  });
+
+  it("exposes compact secondary labels for dense application forms", () => {
+    render(
+      <Field.Root id="dense" size="xs" tone="secondary">
+        <Field.Label>Width</Field.Label>
+        <Input.Root />
+      </Field.Root>,
+    );
+    const field = screen.getByText("Width").closest(".brick-field");
+    expect(field).toHaveAttribute("data-size", "xs");
+    expect(field).toHaveAttribute("data-tone", "secondary");
   });
 
   it("owns optional, required, conditional, and forced messages", () => {

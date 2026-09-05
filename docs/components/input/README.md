@@ -45,7 +45,6 @@ import "@flowstack-ui/brick/styles/input.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 Public exports are `Input`, `InputProps`, `InputVariant`, `InputSize`,
 `InputShape`, and `InputType`.
 
@@ -79,15 +78,11 @@ Representative output:
   class="brick-input"
   data-full-width=""
   data-shape="rounded"
-  data-size="md"
+  data-size="lg"
   data-slot="input"
   data-variant="outline"
 >
-  <input
-    class="brick-input-control"
-    data-slot="input-control"
-    type="text"
-  />
+  <input class="brick-input-control" data-slot="input-control" type="text" />
 </span>
 ```
 
@@ -96,13 +91,13 @@ native `input`, which remains the role, value, focus, form, and ref target.
 
 Optional anatomy appears in logical order:
 
-| Part | Element/owner | Stable class | Default slot |
-| --- | --- | --- | --- |
-| Visual root | Brick `span` | `.brick-input` | `input` |
-| Native control | Atom/native `input` | `.brick-input-control` | `input-control` |
-| Start adornment | Brick `span` | `.brick-input-start` | `input-start` |
-| End adornment | Brick `span` | `.brick-input-end` | `input-end` |
-| Clear action | Atom Clear `button` | `.brick-input-clear` | `input-clear` |
+| Part            | Element/owner       | Stable class           | Default slot    |
+| --------------- | ------------------- | ---------------------- | --------------- |
+| Visual root     | Brick `span`        | `.brick-input`         | `input`         |
+| Native control  | Atom/native `input` | `.brick-input-control` | `input-control` |
+| Start adornment | Brick `span`        | `.brick-input-start`   | `input-start`   |
+| End adornment   | Brick `span`        | `.brick-input-end`     | `input-end`     |
+| Clear action    | Atom Clear `button` | `.brick-input-clear`   | `input-clear`   |
 
 Clear artwork is private decorative anatomy. The forwarded ref always targets
 `HTMLInputElement`, not the wrapper.
@@ -111,20 +106,20 @@ Clear artwork is private decorative anatomy. The forwarded ref always targets
 
 ### Brick visual and content props
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `type` | `text`, `email`, `password`, `search`, `tel`, `url` | `text` |
-| `variant` | `outline`, `soft`, `underline` | `outline` |
-| `size` | `sm`, `md`, `lg` | `md` |
-| `shape` | `sharp`, `rounded`, `pill` | `rounded` |
-| `fullWidth` | `boolean` | `true` |
+| Prop        | Values                                              | Default   |
+| ----------- | --------------------------------------------------- | --------- |
+| `type`      | `text`, `email`, `password`, `search`, `tel`, `url` | `text`    |
+| `variant`   | `outline`, `soft`, `underline`                      | `outline` |
+| `size`      | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`; or a responsive value | `lg` |
+| `shape`     | `sharp`, `rounded`, `pill`                          | `rounded` |
+| `fullWidth` | `boolean`                                           | `true`    |
 
 Outline uses a transparent resting and hover surface so it can blend into a
 Sidebar or other containing surface; Soft intentionally owns a filled surface.
 | `startAdornment` | `ReactNode` | none |
 | `endAdornment` | `ReactNode` | none |
 | `clearable` | `boolean` | `false` |
-| `clearLabel` | `string` | `"Clear input"` |
+| `clearLabel` | `string` | `LocaleProvider.localeText.clearInput` |
 | `onClear` | `() => void` | none |
 | `inputClassName` | `string` | none |
 | `inputStyle` | `CSSProperties` | none |
@@ -157,8 +152,9 @@ attribute.
 - `soft` uses a subtle filled surface and restrained border.
 - `underline` uses a transparent surface and one bottom indicator.
 
-`sm`, `md`, and `lg` use 36px, 44px, and 52px minimum block sizes. Input text
-does not fall below 16 CSS pixels.
+The shared `2xs`–`2xl` scale uses 28, 32, 36, 40, 44, 48, and 64px minimum
+block sizes. The `lg` default keeps general-purpose entry at 16px text and a
+44px target; compact sizes are deliberate dense-UI choices.
 
 `sharp`, `rounded`, and `pill` change geometry only. Input is full width by
 default; `fullWidth={false}` uses intrinsic fit-content sizing within the
@@ -167,7 +163,8 @@ available container.
 Atom attributes drive filled, focused, disabled, required, read-only, and
 invalid state. Brick adds hover-capable pointer treatment, `:focus-within`
 focus paint, semantic invalid/disabled/read-only colors, autofill-safe text,
-dark appearance, reduced-motion, and forced-color treatment.
+dark appearance, reduced-motion, and a system-color outline fallback in
+forced-colors mode.
 
 ## Tokens and CSS hooks
 
@@ -257,7 +254,9 @@ and Clear focus restoration.
 
 Clear is intentionally outside sequential Tab order because keyboard users can
 edit and delete with native input commands. Pointer activation clears once and
-restores input focus. Use `clearLabel` for localized accessible text.
+restores input focus. It inherits Brick's generic localized label from
+`LocaleProvider`; use `clearLabel` when product context needs more specific
+accessible text.
 
 Adornment content does not become the accessible name. Mark decorative icons
 appropriately and repeat meaningful prefix/suffix information in the visible
@@ -295,11 +294,7 @@ precedence.
 ```tsx
 const [value, setValue] = useState("");
 
-<Input
-  aria-label="Project name"
-  onValueChange={setValue}
-  value={value}
-/>;
+<Input aria-label="Project name" onValueChange={setValue} value={value} />;
 ```
 
 ### External form ownership

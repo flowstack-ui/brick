@@ -21,6 +21,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **child flex allocation:** use Stack.Item. Choose content-sized, fixed, automatic, or proportional growth before writing flex CSS.
 - **child grid participation:** use Grid.Item. Use spans, placement, or self-alignment; keep a real wrapper when it establishes the participation box and use asChild only when the child should be that box.
 - **local logical size constraint:** use Frame. Use only for inline/block size or min/max constraints; keep parent participation on the owning layout Item and overflow in ScrollArea.
+- **two-axis centering or equal geometry:** use Center, Square, or Circle. Choose Square or Circle for one explicit equal size that must not shrink under flex pressure; compose Surface for paint and Icon for authored SVG sizing.
 - **overlapping depth relationship:** use ZStack. Prefer Surface media anatomy for ordinary media, scrim, and foreground compositions.
 - **track-based responsive layout:** use Grid. Use Stack when only one axis matters.
 - **visual region:** use Surface or Card. Use Card for titled or actionable contained content and Surface for a general visual boundary.
@@ -46,6 +47,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **MUST:** Separate component internal geometry from parent participation; configure the finished component for its anatomy and the owning layout or Item part for its relationship to siblings.
 - **MUST:** Give controls that share a row the same named size so button-like peers share height, control typography, icon scale, and radius; keep editable Input, Textarea, and Combobox text at least 16px while preserving the same outer geometry, and never repair mismatches with per-component heights, transforms, margins, or literal radii.
 - **MUST:** Use Frame for a qualified local logical size constraint instead of repeating width/height CSS or adding size props to a finished component; do not use Frame when Container measure, layout participation, AspectRatio, or ScrollArea owns the actual job.
+- **MUST:** Use Center for arbitrary two-axis centering and Square or Circle for invariant equal-size geometry instead of repeating paired Frame constraints or shrinkable wrapper composition; keep paint on Surface, SVG presentation on Icon, and positioned overlap on ZStack.
 - **MUST:** Keep a real layout-item wrapper when it establishes flex or grid participation or the definite parent size required by ScrollArea, Carousel fill, or Image fill; asChild is not a wrapper-removal goal by itself.
 - **MUST:** Do not use Stack, Surface, Button, or another convenient component when a more specific Brick navigation, media, content, or interaction component owns the job.
 - **MUST:** Preserve document landmarks and semantic elements when Brick does not provide an owner; Brick-first is not permission to erase HTML meaning.
@@ -126,6 +128,7 @@ Emit this record for every native/framework fallback or direct stable-hook decla
 - `z-stack`
 - `grid`
 - `frame`
+- `center`
 - `surface`
 - `card`
 - `navigation-menu`

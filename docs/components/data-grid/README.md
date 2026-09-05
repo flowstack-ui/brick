@@ -42,6 +42,10 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ```tsx
 <DataGrid.Container>
   <DataGrid.Root aria-label="Projects" columnCount={2} rowCount={2}>
+    <DataGrid.ColumnGroup>
+      <DataGrid.Column htmlWidth="50%" />
+      <DataGrid.Column />
+    </DataGrid.ColumnGroup>
     <DataGrid.Caption>Current projects</DataGrid.Caption>
     <DataGrid.Header>
       <DataGrid.Row rowIndex={1}>
@@ -63,22 +67,27 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ## Anatomy and DOM ownership
 
 Container is an explicit overflow `div`; Root remains a native `table` with
-`role="grid"`. The remaining parts render `caption`, `thead`, `tbody`, `tfoot`,
-`tr`, `th`, and `td`, and refs target those exact elements. Indices are
-one-based and counts describe the complete logical data set.
+`role="grid"`. ColumnGroup and Column render native `colgroup` and `col`; the
+remaining parts render `caption`, `thead`, `tbody`, `tfoot`, `tr`, `th`, and
+`td`, and refs target those exact elements. Indices are one-based and counts
+describe the complete logical data set. `Column.htmlWidth` is only a native
+CSS-pixel number or percentage sizing hint and does not accept CSS-unit values
+or define indexes, counts, navigation, or resizing.
 
 ## API
 
 ### Exports
 
-`DataGrid`, `DataGridContainer`, `DataGridRoot`, `DataGridCaption`,
+`DataGrid`, `DataGridContainer`, `DataGridRoot`, `DataGridColumnGroup`, `DataGridColumn`, `DataGridCaption`,
 `DataGridHeader`, `DataGridBody`, `DataGridFooter`, `DataGridRow`,
 `DataGridColumnHeader`, `DataGridCell`, `DataGridSortIndicator`,
-`DataGridContainerProps`, `DataGridRootProps`, `DataGridCaptionProps`,
+`DataGridContainerProps`, `DataGridRootProps`, `DataGridColumnGroupProps`, `DataGridColumnProps`, `DataGridCaptionProps`,
 `DataGridHeaderProps`, `DataGridBodyProps`, `DataGridFooterProps`,
 `DataGridRowProps`, `DataGridColumnHeaderProps`, `DataGridCellProps`,
 `DataGridSortIndicatorProps`, `DataGridVariant`, `DataGridSize`,
-`DataGridDensity`, `DataGridCaptionSide`, and `DataGridCellAlign` are available
+`DataGridDensity`, `DataGridCaptionSide`, `DataGridCellAlign`,
+`DataGridCellVerticalAlign`, `DataGridSurface`, `DataGridBorderTone`, and
+`DataGridLayout` are available
 from root and subpath imports.
 
 ### Root recipes
@@ -88,8 +97,15 @@ from root and subpath imports.
 | `variant` | `line`, `outline` | defaults to `"line"` |
 | `size` | `sm`, `md`, `lg` | defaults to `"md"` |
 | `density` | `compact`, `comfortable`, `spacious` | defaults to `"comfortable"` |
+| `surface` | `transparent`, `base` | defaults to `"transparent"` |
+| `borderTone` | `subtle`, `default`, `strong` | defaults to `"default"` |
+| `showColumnBorder` | boolean | `false` |
+| `layout` | `auto`, `fixed` | defaults to `"auto"` |
+| `striped` | boolean | `false` |
+| `stickyHeader` | boolean | `false` |
 | `side` (Caption) | `top`, `bottom` | `bottom` |
 | Cell/header `align` | `start`, `center`, `end` | `start`, or `end` when numeric |
+| Cell/header `verticalAlign` | `top`, `middle`, `bottom` | `middle` |
 | Cell/header `numeric` | boolean | `false` |
 
 Atom props remain available, including selection state, active-cell state,
@@ -99,8 +115,10 @@ are deliberately replaced by logical values.
 
 ## Visual recipes and states
 
-Line separates rows; outline adds outer and column boundaries. Size changes
-typography and row metrics, while density changes block padding. Hover,
+Line separates rows; outline adds the outer boundary, and
+`showColumnBorder` independently adds logical column separators. Surface,
+border tone, native table layout, striping, and sticky header are closed Root
+recipes. Size changes typography and row metrics, while density changes block padding. Hover,
 selected, active, disabled, and sorted paint is driven by Atom state attributes
 without moving cell geometry.
 
@@ -135,8 +153,10 @@ surfaces, cell spacing, row size, caption, active outline, selected/hover
 surfaces, disabled opacity, and sort-indicator geometry. Prefer recipes before
 scoped variable overrides.
 
-Public state hooks are `data-variant`, `data-size`, `data-density`, `data-side`,
-`data-align`, `data-numeric`, and `data-slot`. Atom additionally exposes its
+Public state hooks are `data-variant`, `data-size`, `data-density`,
+`data-surface`, `data-border-tone`, `data-column-border`, `data-layout`,
+`data-striped`, `data-sticky-header`, `data-side`, `data-align`,
+`data-vertical-align`, `data-numeric`, and `data-slot`. Atom additionally exposes its
 behavioral state attributes.
 
 Public variables:
@@ -149,6 +169,7 @@ Public variables:
 - `--brick-data-grid-header-background`
 - `--brick-data-grid-header-foreground`
 - `--brick-data-grid-body-background`
+- `--brick-data-grid-row-stripe-background`
 - `--brick-data-grid-footer-background`
 - `--brick-data-grid-cell-foreground`
 - `--brick-data-grid-cell-padding-inline`
@@ -164,6 +185,8 @@ Public variables:
 - `--brick-data-grid-disabled-opacity`
 - `--brick-data-grid-sort-indicator-size`
 - `--brick-data-grid-sort-indicator-color`
+- `--brick-data-grid-sticky-offset`
+- `--brick-data-grid-sticky-z-index`
 
 ## Customization
 

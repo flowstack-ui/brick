@@ -15,6 +15,7 @@ export {
   type DialogBodyProps,
   type DialogBranchProps,
   type DialogCloseProps,
+  type DialogClosePlacement,
   type DialogContentProps,
   type DialogDescriptionProps,
   type DialogFooterProps,

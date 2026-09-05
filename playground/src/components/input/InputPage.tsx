@@ -26,7 +26,7 @@ import "../../shared/forms-evidence.playground.css";
 import "./input.playground.css";
 
 const variants: InputVariant[] = ["outline", "soft", "underline"];
-const sizes: InputSize[] = ["sm", "md", "lg"];
+const sizes: InputSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: InputShape[] = ["sharp", "rounded", "pill"];
 
 const customInputTokens = {
@@ -55,7 +55,7 @@ function PreviewField({
 export const inputScenarios = [
   {
     description:
-      "Input’s canonical rendering is a full-width medium outline control with a rounded shape. Field supplies the visible label while Atom owns native input behavior and relationships.",
+      "Input’s canonical rendering is a full-width 44px lg outline control with a rounded shape. Field supplies the visible label while Atom owns native input behavior and relationships.",
     id: "input.overview",
     number: 1,
     title: "Overview",

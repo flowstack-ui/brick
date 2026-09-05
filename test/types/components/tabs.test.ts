@@ -23,7 +23,6 @@ createElement(Tabs.Root, { size: "xl" });
 createElement(Tabs.Root, { variant: "ghost" });
 // @ts-expect-error closed content inset
 createElement(Tabs.Content, { inset: "xl", value: "one" });
-// @ts-expect-error responsive layout needs initial
 createElement(Tabs.Root, { layout: { lg: "side" } });
 // @ts-expect-error closed list column count
 createElement(Tabs.List, { columns: 5 });

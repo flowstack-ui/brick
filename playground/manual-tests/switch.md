@@ -4,16 +4,16 @@
 | --- | --- |
 | Component | Switch |
 | Version or commit | Unreleased 0.1.0 |
-| Reviewer |  |
-| Date |  |
-| Browser and version |  |
-| Operating system |  |
-| Viewport and zoom |  |
-| Physical device |  |
-| Assistive technology |  |
+| Reviewer | |
+| Date | |
+| Browser and version | |
+| Operating system | |
+| Viewport and zoom | |
+| Physical device | |
+| Assistive technology | |
 | Playground route | `/switch` |
 
-Scenario order: `01 Overview`, `02 States`, `03 Sizes`, `04 Ownership`,
+Scenario order: `01 Overview`, `02 States`, `03 Sizes and variants`, `04 Ownership`,
 `05 Availability`, `06 Form`, `07 Compose`, `08 Theme`, `09 Stress`.
 Use `pass`, `fail`, `blocked`, or `not applicable`; leave results blank until
 the named environment is actually tested.
@@ -21,9 +21,12 @@ the named environment is actually tested.
 ## Step 1 — Default, states, and sizes
 
 Setup: Open `/switch`; review scenarios 01–03 top to bottom.
-Action: Toggle every enabled control and compare `sm`, `md`, and `lg`.
-Expected: State is obvious, names remain stable, and only complete track/thumb
-geometry changes across sizes.
+Action: Toggle every enabled control and compare `xs`, `sm`, `md`, and `lg`,
+then compare the solid and raised treatments.
+Expected: State is obvious, names remain stable, the unchecked track remains
+visible and gains contrast through hover and pressed interaction in both
+appearances, solid is borderless, raised separates rail and thumb, and only
+complete track/thumb geometry changes across sizes.
 Result:
 Notes or issue:
 

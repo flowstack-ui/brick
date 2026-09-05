@@ -43,7 +43,7 @@ Notes or issue:
 
 ## Step 3 — Appearance and content quality
 
-Inspect plain/soft/outline, sm/md, guides, leading content, trailing metadata,
+Inspect plain/soft/outline, subtle/default/strong outline borders, sm/md, guides, leading content, trailing metadata,
 hover, active, selected, expanded, disabled, light/dark, customized tokens,
 long text, and deep nesting. Confirm outline clipping retains rounded corners
 and no row or guide paint overflows the root.

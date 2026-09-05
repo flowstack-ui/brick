@@ -12,10 +12,12 @@ import {
   Dialog,
   Field,
   Form,
+  IconButton,
   Input,
   Text,
   type DialogSize,
 } from "@flowstack-ui/brick";
+import { X } from "lucide-react";
 import {
   Scenario,
   type ScenarioDefinition,
@@ -344,6 +346,15 @@ export function DialogPage() {
                     <Button>Save changes</Button>
                   </Dialog.Close>
                 </Dialog.Footer>
+                <Dialog.Close placement="corner" asChild>
+                  <IconButton
+                    aria-label="Close profile dialog"
+                    size="sm"
+                    variant="ghost"
+                  >
+                    <X aria-hidden="true" />
+                  </IconButton>
+                </Dialog.Close>
               </Dialog.Content>
             </Dialog.Portal>
           </Dialog.Root>

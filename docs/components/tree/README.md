@@ -73,7 +73,7 @@ with stable space and default chevron artwork. Nest Items only inside Group.
 `Tree`, `TreeRoot`, `TreeItem`, `TreeItemContent`, `TreeIndicator`,
 `TreeItemText`, `TreeGroup`, `TreeRootProps`, `TreeItemProps`,
 `TreeItemContentProps`, `TreeIndicatorProps`, `TreeItemTextProps`,
-`TreeGroupProps`, `TreeVariant`, and `TreeSize` are available from root and
+`TreeGroupProps`, `TreeVariant`, `TreeSize`, and `TreeBorderTone` are available from root and
 subpath imports.
 
 ### Root recipes
@@ -83,6 +83,7 @@ subpath imports.
 | `variant` | `plain`, `soft`, `outline` | defaults to `"plain"` |
 | `size` | `sm`, `md` | defaults to `"md"` |
 | `showGuide` | boolean | defaults to `false` |
+| `borderTone` | `subtle`, `default`, `strong` | defaults to `"default"` |
 
 Atom selection, expansion, `multiple`, disabled/read-only, required/invalid,
 `loop`, name/form, direction, composition, native props, events, and refs are
@@ -112,7 +113,7 @@ Stable classes are `.brick-tree`, `.brick-tree__item`,
 `.brick-tree__item-text`, and `.brick-tree__group`; matching slots are `tree`,
 `tree-item`, `tree-item-content`, `tree-indicator`, `tree-item-text`, and
 `tree-group`. Public state hooks include `data-variant`, `data-size`,
-`data-guide`, `data-slot`, and Atom state attributes.
+`data-guide`, `data-border-tone`, `data-slot`, and Atom state attributes.
 
 Public variables:
 

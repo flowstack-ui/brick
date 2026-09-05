@@ -26,7 +26,9 @@
   "composition": [
     "Compose Root > Item; for structured rows use Leading, Content with Title and Description, then Trailing in that order.",
     "Use ordered only when sequence changes meaning and preserve native list hosts when composing with asChild or render.",
-    "Keep Trailing for compact metadata or controls; when a long action would narrow supporting copy, place the action with the title inside Content using Brick layout instead."
+    "Keep Trailing for compact metadata or controls; when a long action would narrow supporting copy, place the action with the title inside Content using Brick layout instead.",
+    "Use Root align=\"center\" when a compact leading visual and one-line content should share a visual center; keep the default start for multi-line rows whose leading and trailing parts belong with the first line.",
+    "Use Root inset=\"none\" when an ordinary List's leading content must share a logical start with adjacent sibling content; keep the default inset for standalone List rhythm."
   ],
   "rules": [
     {
@@ -53,6 +55,16 @@
       "id": "list-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus list.css."
+    },
+    {
+      "id": "list-structured-alignment",
+      "level": "must",
+      "statement": "Use the closed Root align recipe before overriding --brick-list-part-align or adding consumer CSS for structured row alignment."
+    },
+    {
+      "id": "list-row-inset",
+      "level": "must",
+      "statement": "Use the closed Root inset recipe before overriding --brick-list-row-padding-inline or adding consumer CSS for ordinary row inset."
     }
   ],
   "commonMistakes": [
@@ -63,11 +75,15 @@
     {
       "mistake": "Assuming an Item's disabled presentation disables controls inside it.",
       "correction": "Apply the proper disabled contract to every interactive descendant; List's disabled state is descriptive and visual only."
+    },
+    {
+      "mistake": "Overriding item padding merely to align a feature list with a sibling heading.",
+      "correction": "Use Root inset=\"none\" for the flush relationship."
     }
   ],
   "validation": [
     "Inspect ul or ol and li output, ordered meaning, marker behavior, structured-part order, nesting, roles, and CSS delivery.",
-    "Test long titles and descriptions, compact and comfortable density, all variants and markers, first-line marker alignment in bordered simple and structured rows, 320 CSS px, 200 and 400 percent zoom, RTL, and forced colors.",
+    "Test long titles and descriptions, compact and comfortable density, both inset recipes, all variants, markers, and structured alignments, first-line marker alignment in bordered simple and structured rows, 320 CSS px, 200 and 400 percent zoom, RTL, and forced colors.",
     "Confirm Trailing content does not squeeze Content, controls have names and touch targets, disabled descendants are handled explicitly, and List adds no keyboard model."
   ],
   "related": [

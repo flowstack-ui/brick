@@ -14,7 +14,7 @@ Present several selected predefined values in a compact finished control while A
 
 ## Required composition
 
-- Compose MultiSelect.Root with a named button Trigger containing Value and optional Icon, then exactly one Content or Listbox with stable uniquely valued Items and ItemText. Add Portal, Viewport, groups and labels, separators, scroll buttons, indicators, and a direct Arrow only as required.
+- Compose MultiSelect.Root with a named button Trigger containing Value and optional Icon, then exactly one Content or Listbox with stable uniquely valued Items and ItemText. Add Portal, Viewport, groups and labels, separators, scroll buttons, indicators, and a direct Arrow only as required. Brick For may own repeated Items while MultiSelect preserves its opaque render callback.
 - Use sm, md, or lg consistently with adjacent button-like controls. Keep selected values, persistence, remote data, and application effects at the application boundary.
 
 ## Rules
@@ -47,3 +47,4 @@ Present several selected predefined values in a compact finished control while A
 - `select`
 - `combobox`
 - `checkbox-group`
+- `for`

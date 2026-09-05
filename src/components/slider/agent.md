@@ -14,8 +14,9 @@ Provide a styled approximate numeric single-value or range input while Atom owns
 
 ## Required composition
 
-- Compose Root > Track > Range plus one indexed Thumb for every value; place optional Marker parts in Track and optional ValueLabel inside its Thumb.
+- Compose Root > Track > Range plus one indexed Thumb for every value; Thumb may contain decorative Icon or authored artwork, Marker belongs in Track, and optional ValueLabel belongs inside its Thumb.
 - Use Slider as the sole control in one Field when a visible label, description, error, or required state is needed; otherwise name every standalone Thumb explicitly.
+- Use frame=outline when the Slider must share the same complete control boundary as adjacent inputs in a property row.
 
 ## Rules
 
@@ -26,6 +27,8 @@ Provide a styled approximate numeric single-value or range input while Atom owns
 - **MUST:** Use onValueChange for live updates and onValueCommit for completed interactions; true pointer cancellation restores the pointer-down value without commit while lost capture commits the latest value.
 - **MUST:** Preserve one active pointer session, non-slider-axis page scrolling, orientation-aware keys, and horizontal LTR and RTL pointer and Arrow behavior.
 - **SHOULD:** Keep the default Track inset when a parent clips overflow; set the public Track-inset token to zero only when the surrounding composition preserves complete endpoint target and focus paint.
+- **SHOULD:** Use the optional outline frame for form-aligned property rows rather than recreating a Slider boundary with consumer CSS.
+- **SHOULD:** Place only compact decorative artwork in Thumb, keep the Thumb's accessible name on the slider itself, and use ValueLabel rather than authored artwork for persistent value output.
 - **MUST:** Load styles.css or core.css plus slider.css.
 
 ## Common mistakes

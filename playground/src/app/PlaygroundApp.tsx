@@ -8,6 +8,27 @@ import {
   buttonScenarios,
 } from "../components/button/ButtonPage.js";
 import {
+  LocaleProviderPage,
+  localeProviderScenarios,
+} from "../components/locale-provider/LocaleProviderPage.js";
+import {
+  FormatNumberPage,
+  formatNumberScenarios,
+} from "../components/format-number/FormatNumberPage.js";
+import {
+  FormatBytePage,
+  formatByteScenarios,
+} from "../components/format-byte/FormatBytePage.js";
+import { ForPage, forScenarios } from "../components/for/ForPage.js";
+import {
+  CheckmarkPage,
+  checkmarkScenarios,
+} from "../components/checkmark/CheckmarkPage.js";
+import {
+  RadiomarkPage,
+  radiomarkScenarios,
+} from "../components/radiomark/RadiomarkPage.js";
+import {
   IconButtonPage,
   iconButtonScenarios,
 } from "../components/icon-button/IconButtonPage.js";
@@ -50,6 +71,10 @@ import {
   AvatarPage,
   avatarScenarios,
 } from "../components/avatar/AvatarPage.js";
+import {
+  AvatarGroupPage,
+  avatarGroupScenarios,
+} from "../components/avatar-group/AvatarGroupPage.js";
 import {
   TogglePage,
   toggleScenarios,
@@ -177,6 +202,7 @@ import {
   sectionScenarios,
 } from "../components/section/SectionPage.js";
 import { FramePage, frameScenarios } from "../components/frame/FramePage.js";
+import { CenterPage, centerScenarios } from "../components/center/CenterPage.js";
 import { BleedPage, bleedScenarios } from "../components/bleed/BleedPage.js";
 import {
   SurfacePage,
@@ -210,6 +236,10 @@ import {
   RadioGroupPage,
   radioGroupScenarios,
 } from "../components/radio-group/RadioGroupPage.js";
+import {
+  RadioCardPage,
+  radioCardScenarios,
+} from "../components/radio-card/RadioCardPage.js";
 import {
   SegmentGroupPage,
   segmentGroupScenarios,
@@ -317,8 +347,15 @@ const playgroundModules = {
   "alert-dialog": { Page: AlertDialogPage, scenarios: alertDialogScenarios },
   "app-bar": { Page: AppBarPage, scenarios: appBarScenarios },
   appearance: { Page: AppearancePage, scenarios: appearanceScenarios },
+  "locale-provider": { Page: LocaleProviderPage, scenarios: localeProviderScenarios },
+  "format-number": { Page: FormatNumberPage, scenarios: formatNumberScenarios },
+  "format-byte": { Page: FormatBytePage, scenarios: formatByteScenarios },
+  for: { Page: ForPage, scenarios: forScenarios },
+  checkmark: { Page: CheckmarkPage, scenarios: checkmarkScenarios },
+  radiomark: { Page: RadiomarkPage, scenarios: radiomarkScenarios },
   "aspect-ratio": { Page: AspectRatioPage, scenarios: aspectRatioScenarios },
   avatar: { Page: AvatarPage, scenarios: avatarScenarios },
+  "avatar-group": { Page: AvatarGroupPage, scenarios: avatarGroupScenarios },
   badge: { Page: BadgePage, scenarios: badgeScenarios },
   bleed: { Page: BleedPage, scenarios: bleedScenarios },
   blockquote: { Page: BlockquotePage, scenarios: blockquoteScenarios },
@@ -357,6 +394,7 @@ const playgroundModules = {
   "file-upload": { Page: FileUploadPage, scenarios: fileUploadScenarios },
   form: { Page: FormPage, scenarios: formScenarios },
   frame: { Page: FramePage, scenarios: frameScenarios },
+  center: { Page: CenterPage, scenarios: centerScenarios },
   grid: { Page: GridPage, scenarios: gridScenarios },
   group: { Page: GroupPage, scenarios: groupScenarios },
   hide: { Page: HidePage, scenarios: hideScenarios },
@@ -397,6 +435,7 @@ const playgroundModules = {
   progress: { Page: ProgressPage, scenarios: progressScenarios },
   prose: { Page: ProsePage, scenarios: proseScenarios },
   "radio-group": { Page: RadioGroupPage, scenarios: radioGroupScenarios },
+  "radio-card": { Page: RadioCardPage, scenarios: radioCardScenarios },
   rating: { Page: RatingPage, scenarios: ratingScenarios },
   "reorderable-list": {
     Page: ReorderableListPage,

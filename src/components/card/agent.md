@@ -15,6 +15,8 @@ Group content about one subject in a finished static compound surface with heade
 ## Required composition
 
 - Compose Card.Root with only the Header, Title, Description, Action, Content, and Footer parts the subject needs.
+- Use the default outline recipe for base-surface grouping with a structural boundary and no elevation.
+- Use variant="elevated" for a borderless raised panel with layered medium elevation; do not reproduce that treatment with consumer shadow CSS.
 - Card.Action reserves a trailing Header column across the title and description rows; when compact metadata belongs beside only the title, compose that title row with HStack and omit Card.Action so the description retains the full measure.
 
 ## Rules

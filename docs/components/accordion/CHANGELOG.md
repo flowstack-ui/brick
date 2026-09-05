@@ -4,10 +4,23 @@ Accordion follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Added
+
+- Added the surface-blended `ghost` variant and logical start/end indicator
+  placement for inspector-style disclosure sections.
+- Added the coordinated `xl` size for spacious marketing disclosures with a
+  60px trigger, 18px label, and 22px indicator.
+
 ### Fixed
 
-- Changed the default Indicator to point down when closed and up when open,
-  and kept horizontal scrolling boundaries from clipping Trigger focus.
+- Removed item separators from the surface-blended `ghost` recipe so inspector
+  disclosures do not draw an unintended nested section boundary.
+- Restored the approved default disclosure Indicator to point down while
+  closed and up while open in both LTR and RTL, and kept horizontal scrolling
+  boundaries from clipping Trigger focus.
+- Kept the divided `plain` recipe transparent when an Item is open, restored a
+  full-width hover target with logically inset content, strengthened
+  structural dividers, and retained the final Item's closing edge.
 - Kept vertical group interiors square, rounded only exposed outer Trigger
   corners, and stopped Root paint containment from clipping the first or last
   Trigger focus ring.

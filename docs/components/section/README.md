@@ -81,7 +81,9 @@ order. The selected host is the `HTMLElement` ref target.
 | `slot` | `string` | `section` |
 | `children` | `ReactNode` | optional |
 
-A responsive value uses `{ initial, sm?, md?, lg?, xl? }`. Native global,
+A responsive value uses a non-empty `{ initial?, sm?, md?, lg?, xl? }` object.
+Without `initial`, the normal Section recipe applies below the first supplied
+breakpoint. Native global,
 ARIA, and data attributes, events, `className`, `style`, and an `HTMLElement`
 ref pass through.
 

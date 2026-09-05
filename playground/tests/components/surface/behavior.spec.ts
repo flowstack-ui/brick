@@ -61,6 +61,29 @@ test("levels change only background and labels remain default badges", async ({
   expect((await box(label)).width).toBeLessThan(
     (await box(label.locator(".."))).width / 2,
   );
+
+  const accentSubtle = page.getByTestId("surface-accent-subtle");
+  await expect(accentSubtle).toHaveAttribute("data-level", "subtle");
+  await expect(accentSubtle).toHaveAttribute("data-tone", "accent");
+  const accentSubtleRecipe = await accentSubtle.evaluate((element) => {
+    const style = getComputedStyle(element);
+    const probe = document.createElement("span");
+    probe.style.backgroundColor = "var(--brick-color-accent-soft)";
+    probe.style.color = "var(--brick-color-accent-on-soft)";
+    element.append(probe);
+    const probeStyle = getComputedStyle(probe);
+    const expectedBackground = probeStyle.backgroundColor;
+    const expectedColor = probeStyle.color;
+    probe.remove();
+    return {
+      background: style.backgroundColor,
+      expectedBackground,
+      color: style.color,
+      expectedColor,
+    };
+  });
+  expect(accentSubtleRecipe.background).toBe(accentSubtleRecipe.expectedBackground);
+  expect(accentSubtleRecipe.color).toBe(accentSubtleRecipe.expectedColor);
 });
 
 test("border, elevation, radius, and inset remain independent", async ({
@@ -70,6 +93,21 @@ test("border, elevation, radius, and inset remain independent", async ({
     .locator(".surface-cell > .brick-surface");
   await expect(borders.first()).toHaveCSS("border-left-width", "0px");
   await expect(borders.nth(1)).toHaveCSS("border-left-width", "1px");
+  for (const appearance of ["light", "dark"]) {
+    await page.locator("html").evaluate((element, value) => {
+      element.setAttribute("data-brick-appearance", value);
+    }, appearance);
+    const borderedRecipe = await borders.nth(1).evaluate((element) => {
+      const actual = getComputedStyle(element).borderInlineStartColor;
+      const probe = document.createElement("span");
+      probe.style.borderColor = "var(--brick-color-border-default)";
+      element.append(probe);
+      const expected = getComputedStyle(probe).borderTopColor;
+      probe.remove();
+      return { actual, expected };
+    });
+    expect(borderedRecipe.actual).toBe(borderedRecipe.expected);
+  }
   expect((await box(borders.first())).width).toBeCloseTo(
     (await box(borders.nth(1))).width,
     0,

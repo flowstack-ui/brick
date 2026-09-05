@@ -5,32 +5,21 @@ import {
   HStack,
   VStack,
   IconButton,
+  Surface,
   Text,
   type IconButtonShape,
   type IconButtonSize,
   type IconButtonTone,
   type IconButtonVariant,
 } from "@flowstack-ui/brick";
-import {
-  Scenario,
-  type ScenarioDefinition,
-} from "../../shared/Scenario.js";
+import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
-import {
-  ArrowIcon,
-  MenuIcon,
-  SearchIcon,
-} from "../../shared/icons.js";
+import { ArrowIcon, MenuIcon, SearchIcon } from "../../shared/icons.js";
 import "./icon-button.playground.css";
 
-const variants: IconButtonVariant[] = [
-  "solid",
-  "soft",
-  "outline",
-  "ghost",
-];
+const variants: IconButtonVariant[] = ["solid", "soft", "outline", "ghost"];
 const tones: IconButtonTone[] = [
   "neutral",
   "accent",
@@ -39,7 +28,7 @@ const tones: IconButtonTone[] = [
   "warning",
   "danger",
 ];
-const sizes: IconButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
+const sizes: IconButtonSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: IconButtonShape[] = ["rounded", "circle"];
 
 const tokenCustomization = {
@@ -64,8 +53,12 @@ function EvidenceGroup({
   return (
     <VStack as="section" className="icon-button-evidence-group">
       <VStack className="icon-button-evidence-group__heading">
-        <Text as="h3" variant="title-sm">{title}</Text>
-        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
+        <Text as="h3" variant="title-sm">
+          {title}
+        </Text>
+        <Text as="p" tone="secondary" variant="body-sm">
+          {description}
+        </Text>
       </VStack>
       {children}
     </VStack>
@@ -90,7 +83,7 @@ function SpecimenCell({
 export const iconButtonScenarios = [
   {
     description:
-      "IconButton’s canonical rendering is a neutral ghost action at the medium size with a rounded shape. Activate it to confirm the default native interaction and status feedback.",
+      "IconButton’s canonical rendering is a neutral ghost action at the comfortable large size with a rounded shape. Activate it to confirm the default native interaction and status feedback.",
     id: "icon-button.overview",
     number: 1,
     title: "Overview",
@@ -111,7 +104,7 @@ export const iconButtonScenarios = [
   },
   {
     description:
-      "The five-size scale supports dense interfaces through prominent controls. Compare target size, icon scale, and visual weight.",
+      "The seven-size scale supports dense interfaces through prominent controls. Compare target size, icon scale, visual weight, and the sparse responsive default-inheritance example.",
     id: "icon-button.sizes",
     number: 4,
     title: "Sizes",
@@ -167,27 +160,36 @@ export function IconButtonPage() {
       data-testid="icon-button-workbench"
     >
       <Scenario {...iconButtonScenarios[0]}>
-        <EvidenceSurface className="icon-button-hero" data-testid="icon-button-overview" inset="lg">
+        <EvidenceSurface
+          className="icon-button-hero"
+          data-testid="icon-button-overview"
+          inset="lg"
+        >
           <IconButton
             aria-label="Search workspace"
             onPress={() => setPressCount((count) => count + 1)}
           >
             <SearchIcon />
           </IconButton>
-          <Text aria-atomic="true" aria-live="polite" role="status" variant="body-sm">
+          <Text
+            aria-atomic="true"
+            aria-live="polite"
+            role="status"
+            variant="body-sm"
+          >
             Activated {pressCount} {pressCount === 1 ? "time" : "times"}
           </Text>
         </EvidenceSurface>
       </Scenario>
 
       <Scenario {...iconButtonScenarios[1]}>
-        <Grid.Root className="icon-button-specimen-grid" data-testid="icon-button-variants">
+        <Grid.Root
+          className="icon-button-specimen-grid"
+          data-testid="icon-button-variants"
+        >
           {variants.map((variant) => (
             <SpecimenCell key={variant} label={variant}>
-              <IconButton
-                aria-label={`${variant} menu`}
-                variant={variant}
-              >
+              <IconButton aria-label={`${variant} menu`} variant={variant}>
                 <MenuIcon />
               </IconButton>
             </SpecimenCell>
@@ -196,14 +198,20 @@ export function IconButtonPage() {
       </Scenario>
 
       <Scenario {...iconButtonScenarios[2]}>
-        <VStack className="icon-button-evidence-stack" data-testid="icon-button-tones">
+        <VStack
+          className="icon-button-evidence-stack"
+          data-testid="icon-button-tones"
+        >
           {variants.map((variant) => (
             <EvidenceGroup
               description={`All semantic tones using the ${variant} treatment.`}
               key={variant}
               title={`${variant[0].toUpperCase()}${variant.slice(1)} tones`}
             >
-              <Grid.Root columns={6} className="icon-button-specimen-grid icon-button-specimen-grid--six">
+              <Grid.Root
+                columns={6}
+                className="icon-button-specimen-grid icon-button-specimen-grid--six"
+              >
                 {tones.map((tone) => (
                   <SpecimenCell key={tone} label={tone}>
                     <IconButton
@@ -222,34 +230,46 @@ export function IconButtonPage() {
       </Scenario>
 
       <Scenario {...iconButtonScenarios[3]}>
-        <Grid.Root columns={5}
-          className="icon-button-row icon-button-specimen-grid icon-button-specimen-grid--five"
-          data-testid="icon-button-sizes"
-        >
-          {sizes.map((size) => (
-            <SpecimenCell key={size} label={size}>
+        <VStack gap="6">
+          <Grid.Root
+            columns={7}
+            className="icon-button-row icon-button-specimen-grid icon-button-specimen-grid--seven"
+            data-testid="icon-button-sizes"
+          >
+            {sizes.map((size) => (
+              <SpecimenCell key={size} label={size}>
+                <IconButton aria-label={`${size} action`} size={size}>
+                  <MenuIcon />
+                </IconButton>
+              </SpecimenCell>
+            ))}
+          </Grid.Root>
+          <EvidenceGroup
+            description="One IconButton inherits the comfortable default below lg, then changes its complete square recipe without a second tree."
+            title="Sparse responsive size"
+          >
+            <SpecimenCell label="default lg → md at lg">
               <IconButton
-                aria-label={`${size} action`}
-                size={size}
+                aria-label="Responsive menu"
+                data-testid="icon-button-responsive-size"
+                size={{ lg: "md" }}
               >
                 <MenuIcon />
               </IconButton>
             </SpecimenCell>
-          ))}
-        </Grid.Root>
+          </EvidenceGroup>
+        </VStack>
       </Scenario>
 
       <Scenario {...iconButtonScenarios[4]}>
-        <Grid.Root columns={2}
+        <Grid.Root
+          columns={2}
           className="icon-button-row icon-button-specimen-grid icon-button-specimen-grid--two"
           data-testid="icon-button-shapes"
         >
           {shapes.map((shape) => (
             <SpecimenCell key={shape} label={shape}>
-              <IconButton
-                aria-label={`${shape} action`}
-                shape={shape}
-              >
+              <IconButton aria-label={`${shape} action`} shape={shape}>
                 <SearchIcon />
               </IconButton>
             </SpecimenCell>
@@ -304,7 +324,8 @@ export function IconButtonPage() {
       </Scenario>
 
       <Scenario {...iconButtonScenarios[6]}>
-        <Grid.Root columns={5}
+        <Grid.Root
+          columns={5}
           className="icon-button-specimen-grid icon-button-specimen-grid--five"
           data-testid="icon-button-states"
         >
@@ -314,12 +335,13 @@ export function IconButtonPage() {
             </IconButton>
           </SpecimenCell>
           <SpecimenCell label="image icon">
-            <IconButton
-              aria-labelledby="icon-button-image-label"
-            >
+            <IconButton aria-labelledby="icon-button-image-label">
               <img alt="" src={imageIconSource} />
             </IconButton>
-            <span className="icon-button-visually-named" id="icon-button-image-label">
+            <span
+              className="icon-button-visually-named"
+              id="icon-button-image-label"
+            >
               Open Brick resources
             </span>
           </SpecimenCell>
@@ -329,10 +351,7 @@ export function IconButtonPage() {
             </IconButton>
           </SpecimenCell>
           <SpecimenCell label="loading">
-            <IconButton
-              aria-label="Loading search"
-              loading
-            >
+            <IconButton aria-label="Loading search" loading>
               <SearchIcon />
             </IconButton>
           </SpecimenCell>
@@ -354,24 +373,42 @@ export function IconButtonPage() {
             description="Adjacent light and dark scopes preserve the selected recipe."
             title="Scoped appearances"
           >
-            <Grid.Root columns={2} className="icon-button-appearance-grid" data-testid="icon-button-appearance">
-              <EvidenceSurface className="icon-button-appearance-panel" data-brick-appearance="light">
+            <Grid.Root
+              columns={2}
+              className="icon-button-appearance-grid"
+              data-testid="icon-button-appearance"
+            >
+              <EvidenceSurface
+                className="icon-button-appearance-panel"
+                data-brick-appearance="light"
+              >
                 <SpecimenLabel>Light</SpecimenLabel>
-                <div className="icon-button-appearance-panel__preview"><IconButton
-                  aria-label="Search"
-                  data-testid="icon-button-appearance-light"
-                >
-                  <SearchIcon />
-                </IconButton></div>
+                <Surface asChild level="raised" radius="surface">
+                  <div className="icon-button-appearance-panel__preview">
+                    <IconButton
+                      aria-label="Search"
+                      data-testid="icon-button-appearance-light"
+                    >
+                      <SearchIcon />
+                    </IconButton>
+                  </div>
+                </Surface>
               </EvidenceSurface>
-              <EvidenceSurface className="icon-button-appearance-panel" data-brick-appearance="dark">
+              <EvidenceSurface
+                className="icon-button-appearance-panel"
+                data-brick-appearance="dark"
+              >
                 <SpecimenLabel>Dark</SpecimenLabel>
-                <div className="icon-button-appearance-panel__preview"><IconButton
-                  aria-label="Search"
-                  data-testid="icon-button-appearance-dark"
-                >
-                  <SearchIcon />
-                </IconButton></div>
+                <Surface asChild level="raised" radius="surface">
+                  <div className="icon-button-appearance-panel__preview">
+                    <IconButton
+                      aria-label="Search"
+                      data-testid="icon-button-appearance-dark"
+                    >
+                      <SearchIcon />
+                    </IconButton>
+                  </div>
+                </Surface>
               </EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>
@@ -380,11 +417,23 @@ export function IconButtonPage() {
             title="Consumer customization"
           >
             <div className="icon-button-customization-list">
-              <EvidenceSurface as="article" className="icon-button-customization" inset="lg">
+              <EvidenceSurface
+                as="article"
+                className="icon-button-customization"
+                inset="lg"
+              >
                 <div>
-                  <Text as="h4" variant="title-sm">Component CSS properties</Text>
-                  <Text as="p" tone="secondary" variant="body-sm">Public IconButton tokens replace the complete solid recipe within this instance only.</Text>
-                  <PlaygroundCodeBlock aria-label="IconButton component token example" tabIndex={0}>{`style={{
+                  <Text as="h4" variant="title-sm">
+                    Component CSS properties
+                  </Text>
+                  <Text as="p" tone="secondary" variant="body-sm">
+                    Public IconButton tokens replace the complete solid recipe
+                    within this instance only.
+                  </Text>
+                  <PlaygroundCodeBlock
+                    aria-label="IconButton component token example"
+                    tabIndex={0}
+                  >{`style={{
   "--brick-icon-button-background": "#6b2f88",
   "--brick-icon-button-background-hover": "#7d3b9c",
   "--brick-icon-button-background-pressed": "#58266f",
@@ -403,11 +452,23 @@ export function IconButtonPage() {
                   </IconButton>
                 </div>
               </EvidenceSurface>
-              <EvidenceSurface as="article" className="icon-button-customization" inset="lg">
+              <EvidenceSurface
+                as="article"
+                className="icon-button-customization"
+                inset="lg"
+              >
                 <div>
-                  <Text as="h4" variant="title-sm">Consumer hooks</Text>
-                  <Text as="p" tone="secondary" variant="body-sm">className, style, and data-slot pass through for local targeting without changing the IconButton API.</Text>
-                  <PlaygroundCodeBlock aria-label="IconButton consumer hook example" tabIndex={0}>{`.icon-button-page .dashed-icon-action {
+                  <Text as="h4" variant="title-sm">
+                    Consumer hooks
+                  </Text>
+                  <Text as="p" tone="secondary" variant="body-sm">
+                    className, style, and data-slot pass through for local
+                    targeting without changing the IconButton API.
+                  </Text>
+                  <PlaygroundCodeBlock
+                    aria-label="IconButton consumer hook example"
+                    tabIndex={0}
+                  >{`.icon-button-page .dashed-icon-action {
   --brick-icon-button-background: transparent;
   --brick-icon-button-background-hover: var(--brick-color-accent-soft);
   --brick-icon-button-background-pressed: var(--brick-color-accent-soft-pressed);
@@ -442,14 +503,19 @@ export function IconButtonPage() {
       </Scenario>
 
       <Scenario {...iconButtonScenarios[8]}>
-        <VStack className="icon-button-evidence-stack" data-testid="icon-button-stress">
+        <VStack
+          className="icon-button-evidence-stack"
+          data-testid="icon-button-stress"
+        >
           <EvidenceGroup
             description="Long accessible names remain semantic while two controls stay square inside a narrow frame."
             title="Constrained-width stress"
           >
             <EvidenceSurface className="icon-button-stress-panel">
               <div className="phone-frame">
-                <Text as="p" variant="body-sm">Dense application actions</Text>
+                <Text as="p" variant="body-sm">
+                  Dense application actions
+                </Text>
                 <HStack className="icon-button-row" wrap>
                   <IconButton aria-label="Open a very detailed workspace navigation menu">
                     <MenuIcon />
@@ -467,7 +533,9 @@ export function IconButtonPage() {
           >
             <EvidenceSurface className="icon-button-stress-panel">
               <div className="phone-frame" dir="rtl">
-                <Text as="p" variant="body-sm">إجراءات مساحة العمل</Text>
+                <Text as="p" variant="body-sm">
+                  إجراءات مساحة العمل
+                </Text>
                 <HStack className="icon-button-row" wrap>
                   <IconButton aria-label="فتح القائمة">
                     <MenuIcon />

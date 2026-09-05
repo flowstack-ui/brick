@@ -62,10 +62,17 @@ different owner.
 | Container | generic appearance/customization stage only when Container remains the measured child | measure boundaries, dashed width guides, nesting, full-bleed, vertical-writing geometry |
 | Section | contained paint examples where Surface remains the visual owner | page-region rhythm, semantic region choice, logical start/end spacing, and wrapper-free Surface composition |
 | Frame | generic evidence surfaces around bounded content | logical size constraints, definite-parent percentage sizing, nested-variable isolation, and Scroll Area bounds |
+| Center | centered evidence surfaces and the paint around Square/Circle icon wells | centering, equal inline/block geometry, responsive sizing, flex resistance, and inline/RTL behavior |
 | Bleed | generic evidence stages around inset parents | negative logical margin geometry, responsive edge ownership, nested-variable isolation, and overflow diagnostics |
 | Surface | none of the recipe specimens; they intentionally isolate Surface against raw contrasting stages | all Surface recipe stages, inset marker, nesting and elevation contrast; code block |
 | ZStack | overview, placement, composition, and stress evidence stages | ZStack overlap and placement geometry; the stage layer being positioned; source-order evidence |
 | Appearance | overview, nested-scope, portal-action, and semantic-host evidence surfaces | Appearance boundaries themselves; explicit semantic-token scope and wrapper-free host composition |
+| Locale Provider | generic specimen and comparison surfaces | provider context, inherited locale/direction output, and wrapper-free ownership |
+| Format Number | generic specimen surface | locale-formatted inline output and inherited typography |
+| Format Byte | generic specimen surface | locale-formatted inline output, unit scaling, and inherited typography |
+| For | generic specimen and fallback surfaces | wrapper-free item output, semantic collection host, and fallback content |
+| Checkmark | generic specimen and appearance surfaces | passive state recipes, SVG geometry, and forced-color output |
+| Radiomark | generic specimen and appearance surfaces | passive state recipes, circular geometry, and forced-color output |
 | Divider | overview, appearance, customization, and generic specimen cells | Divider line recipes, measured inset/axis stages, and forced-color evidence |
 | Scroll Area | generic specimen cells, appearance scopes, and customization shell | Scroll Area viewport boundaries, axis constraints, native scrollbar paint, and code sample |
 | Code | generic overview/cell/appearance/customization stages | Code recipes, inline wrapping, native output, and technical literal paint |
@@ -106,6 +113,7 @@ different owner.
 | Color Picker | overview, recipe, form, state, and responsive evidence panels | Color Picker controls, inputs, preset triggers, floating content, swatches, form behavior, and state paint |
 | Notification Badge | overview/semantics/stress panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Notification Badge anchor, overlap, placement, and owning-control paint; code block |
 | Avatar | overview/control/image-state/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Avatar image/fallback/status paint and media crop diagnostics; code block |
+| Avatar Group | overview, recipe, overflow, composition, and stress evidence stages | Avatar overlap, stacking, overflow identity, descendant geometry, and constrained-width behavior |
 | Toggle | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Toggle recipes and selected-state customization; code block |
 | Toggle Group | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Toggle Group recipes, attachment geometry, and selected-state customization; code block |
 | Segment Group | overview, size/layout cells, appearance scopes, customization shell/preview, and stress panel | Segment Group root/item/indicator recipes, measured selection geometry, and radio-state evidence; code block |
@@ -122,6 +130,7 @@ different owner.
 | Checkbox | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | Checkbox control/state paint and native form evidence; code block |
 | Checkbox Group | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | group aggregation, parent state, Fieldset relationships and attribute readouts; code block |
 | Radio Group | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | radio control/state paint, roving-focus evidence, Fieldset relationships, native form output, and composition output; code block |
+| Radio Card | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | Radio Card item boundary, checked state, orientation, control placement, and native form evidence; code block |
 | Switch | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | Switch track/thumb/state paint, Field relationships, native form output, and composition output; code block |
 | Select | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Select trigger/content/item recipes, portal positioning, option scrolling, native form evidence, and composition output; code block |
 | Combobox | overview, comparison cells, appearance scopes, customization shell, and stress panel | Combobox control/content/item recipes, portal positioning, filtering, narrow and RTL geometry, and rendered output |

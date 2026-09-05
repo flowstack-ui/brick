@@ -99,7 +99,9 @@ hosts without consumer reset CSS.
 | `children` | `ReactNode` | optional |
 
 Direction, gap, align, justify, wrap, and logical edge spacing accept either a
-plain value or `{ initial, sm?, md?, lg?, xl? }`. The breakpoint thresholds
+plain value or a non-empty `{ initial?, sm?, md?, lg?, xl? }` object. Without
+`initial`, the normal Stack default applies below the first supplied
+breakpoint. The breakpoint thresholds
 are 30rem, 48rem, 64rem, and 80rem, matching Show and Hide.
 
 Use numeric factors for ordinary new layout work: `gap={8}` calculates eight

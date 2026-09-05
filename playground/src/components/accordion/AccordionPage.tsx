@@ -10,7 +10,7 @@ import "../../shared/forms-evidence.playground.css";
 import "./accordion.playground.css";
 
 const variants: AccordionVariant[] = ["plain", "soft", "outline"];
-const sizes: AccordionSize[] = ["sm", "md", "lg"];
+const sizes: AccordionSize[] = ["sm", "md", "lg", "xl"];
 const customStyle = { "--brick-accordion-background": "#ecfeff", "--brick-accordion-border-color": "#0891b2", "--brick-accordion-radius": "1rem" } as CSSProperties;
 
 function Items() {
@@ -26,7 +26,7 @@ function SemanticExample() {
 export const accordionScenarios = [
   { id: "accordion.overview", number: 1, title: "Overview", description: "Accordion defaults to one closed, vertical, single-selection group with plain medium styling and labelled panel landmarks." },
   { id: "accordion.variants", number: 2, title: "Variants", description: "Plain, soft, and outline change only the group surface while the same default content, size, orientation, and state remain." },
-  { id: "accordion.sizes", number: 3, title: "Sizes", description: "Small, medium, and large coordinate trigger height, typography, indicator size, and panel padding." },
+  { id: "accordion.sizes", number: 3, title: "Sizes", description: "Small through extra large coordinate trigger height, typography, indicator size, and panel padding." },
   { id: "accordion.selection", number: 4, title: "Selection models", navigationTitle: "Selection", description: "Single, collapsible single, controlled, and multiple models expose their distinct state rules without changing recipes." },
   { id: "accordion.states", number: 5, title: "Content and states", navigationTitle: "States", description: "Default-open, item-disabled, root-disabled, mounted, and landmark-free panels preserve the expected Atom behavior." },
   { id: "accordion.orientation", number: 6, title: "Orientation and keyboard", navigationTitle: "Orientation", description: "Vertical groups navigate with up and down; horizontal groups reveal width and use direction-aware left and right navigation." },
@@ -40,7 +40,7 @@ export function AccordionPage() {
   return <VStack className="forms-page accordion-page" data-component-page="accordion" data-testid="accordion-workbench">
     <Scenario {...accordionScenarios[0]}><EvidenceSurface inset="lg" data-testid="accordion-overview"><Example /></EvidenceSurface></Scenario>
     <Scenario {...accordionScenarios[1]}><Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="accordion-variants">{variants.map((variant) => <Cell key={variant} label={variant}><Example variant={variant} /></Cell>)}</Grid.Root></Scenario>
-    <Scenario {...accordionScenarios[2]}><Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="accordion-sizes">{sizes.map((size) => <Cell key={size} label={size}><Example size={size} variant="outline" /></Cell>)}</Grid.Root></Scenario>
+    <Scenario {...accordionScenarios[2]}><Grid.Root columns={{ initial: 1, md: 2 }} className="forms-grid forms-grid--two" data-testid="accordion-sizes">{sizes.map((size) => <Cell key={size} label={size}><Example size={size} variant="outline" /></Cell>)}</Grid.Root></Scenario>
     <Scenario {...accordionScenarios[3]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="accordion-selection"><Cell label="single locked open"><Example collapsible={false} defaultValue="account" /></Cell><Cell label="single collapsible"><Example collapsible defaultValue="account" /></Cell><Cell label="controlled"><VStack gap="2"><Example collapsible value={controlled} onValueChange={setControlled} /><Text variant="caption" tone="secondary">Value: {controlled || "none"}</Text></VStack></Cell><Cell label="multiple"><Example type="multiple" defaultValue={["account", "billing"]} /></Cell></Grid.Root></Scenario>
     <Scenario {...accordionScenarios[4]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="accordion-states"><Cell label="default open"><Example defaultValue="account" /></Cell><Cell label="disabled item"><Accordion.Root><Accordion.Item disabled value="account"><Accordion.Header><Accordion.Trigger>Account settings<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner>Unavailable</Accordion.ContentInner></Accordion.Content></Accordion.Item><Accordion.Item value="billing"><Accordion.Header><Accordion.Trigger>Billing details<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner>Available</Accordion.ContentInner></Accordion.Content></Accordion.Item></Accordion.Root></Cell><Cell label="root disabled"><Example disabled /></Cell><Cell label="keep mounted, no landmark"><Accordion.Root><Accordion.Item value="account"><Accordion.Header><Accordion.Trigger>Account settings<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content keepMounted landmark={false}><Accordion.ContentInner>Mounted without a region landmark.</Accordion.ContentInner></Accordion.Content></Accordion.Item></Accordion.Root></Cell></Grid.Root></Scenario>
     <Scenario {...accordionScenarios[5]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="accordion-orientation"><Cell label="vertical"><Example defaultValue="account" /></Cell><Cell label="horizontal"><Example orientation="horizontal" defaultValue="account" /></Cell></Grid.Root></Scenario>

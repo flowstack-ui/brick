@@ -15,11 +15,13 @@ Render finished native multi-line text entry with Brick sizing, states, resize p
 ## Required composition
 
 - Place Textarea inside one Field.Root after Field.Label and add description or character guidance when useful.
+- Use the default outline recipe beside outline Input when both controls should blend into the same owning surface.
 
 ## Rules
 
 - **MUST:** Use a persistent accessible label.
 - **MUST:** Load styles.css or core.css plus textarea.css and field.css when composed with Field.
+- **SHOULD:** Keep outline Textarea and outline Input on the same transparent surface recipe within one form.
 
 ## Common mistakes
 

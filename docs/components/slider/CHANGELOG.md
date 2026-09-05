@@ -4,6 +4,23 @@ Slider follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Added
+
+- Added supported decorative content inside `Slider.Thumb`, including a
+  public foreground hook and size-aware containment that does not affect
+  `Slider.ValueLabel`.
+
+- Added the opt-in `frame="outline"` control shell for form-aligned slider
+  compositions.
+
+### Changed
+
+- Completed the `sm`/`md`/`lg` Thumb and Track progression at 16/6px, 20/8px,
+  and 24/10px; Thumb artwork can now use `Icon size="inherit"` for the owned
+  14px content scale.
+- Refined the default neutral Track and outlined Thumb to use translucent
+  emphasized paint, a canvas Thumb surface, and no incidental elevation.
+
 ## 0.1.10
 
 ### Fixed

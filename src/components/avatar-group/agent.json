@@ -1,0 +1,64 @@
+{
+  "schema": "flowstack.agent-component.v1",
+  "id": "avatar-group",
+  "name": "AvatarGroup",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "kind": "component",
+  "purpose": "Present several compact Avatar identities in one overlapping inline stack with optional explicit overflow.",
+  "useWhen": [
+    "Several people or entities need one compact identity footprint, shared Avatar presentation, or an explicit overflow summary."
+  ],
+  "avoidWhen": [
+    {
+      "condition": "Identities should remain separated, wrap, or carry profile facts.",
+      "useInstead": "HStack, Stack, List, or DataList"
+    },
+    {
+      "condition": "The overflow item must disclose participant actions or destinations.",
+      "useInstead": "Compose renderOverflow with the owning Button, Link, Menu, or Popover"
+    }
+  ],
+  "composition": [
+    "Place explicit Avatar children directly inside AvatarGroup and make each Avatar alt/fallback decision from its context.",
+    "Use max only when hiding identities is deliberate; provide a localized overflowLabel or a complete custom renderOverflow node."
+  ],
+  "rules": [
+    {
+      "id": "avatar-group-direct-avatars",
+      "level": "must",
+      "statement": "Use direct Avatar children so one group size, shape, overlap, stacking, and count model remains coherent."
+    },
+    {
+      "id": "avatar-group-explicit-overflow",
+      "level": "must",
+      "statement": "Keep all identities visible by default; use max only for an intentional bounded presentation and provide localized built-in overflow or a custom semantic renderer."
+    },
+    {
+      "id": "avatar-group-passive",
+      "level": "must",
+      "statement": "Keep AvatarGroup passive; application-owned Button, Link, Menu, or Popover composition owns overflow interaction."
+    },
+    {
+      "id": "avatar-group-source-order",
+      "level": "must",
+      "statement": "Preserve child DOM order and use stacking only for paint order; do not use CSS or data order to change accessible reading order."
+    },
+    {
+      "id": "avatar-group-css",
+      "level": "must",
+      "statement": "Load styles.css or core.css plus avatar-group.css; the modular AvatarGroup stylesheet already includes Avatar CSS."
+    }
+  ],
+  "commonMistakes": [
+    {
+      "mistake": "Recreating overlap with HStack negative margins, using attached Group, silently hiding after five identities, or using an English-only overflow label.",
+      "correction": "Use AvatarGroup, opt into max explicitly, and provide localized or custom overflow semantics."
+    }
+  ],
+  "validation": [
+    "Check direct-child identity semantics, source order, size/shape context, overlap, both stacking recipes, max/total arithmetic, localized/custom overflow, light/dark/forced colors, narrow widths, zoom, and RTL.",
+    "Confirm the group adds no role, keyboard behavior, focus management, or live announcement unless supplied by the application composition."
+  ],
+  "related": ["avatar", "group", "stack", "list", "data-list", "button", "link", "popover"]
+}

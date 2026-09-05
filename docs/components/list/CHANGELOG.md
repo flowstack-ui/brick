@@ -12,6 +12,12 @@ List follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added `inset="default | none"` so ordinary List rows can retain their
+  size-owned inline padding or align flush with adjacent content without
+  consumer CSS.
+- Added `align="start | center | end"` so structured Leading, Content, and
+  Trailing parts can share a deliberate cross-axis relationship without
+  consumer CSS.
 - Added public Agent Knowledge for native list meaning, structured row anatomy,
   compact trailing content, narrow-screen reading, CSS delivery, and choosing
   navigation, interaction, or data owners instead.

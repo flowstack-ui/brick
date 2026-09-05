@@ -26,9 +26,21 @@ editing, copying controls, or rich-text policy.
 Import from the root or stable subpath and load Brick styles once:
 
 ```tsx
-import { Caption, Eyebrow, Heading, Paragraph, Text } from "@flowstack-ui/brick";
+import {
+  Caption,
+  Eyebrow,
+  Heading,
+  Paragraph,
+  Text,
+} from "@flowstack-ui/brick";
 // or
-import { Caption, Eyebrow, Heading, Paragraph, Text } from "@flowstack-ui/brick/text";
+import {
+  Caption,
+  Eyebrow,
+  Heading,
+  Paragraph,
+  Text,
+} from "@flowstack-ui/brick/text";
 
 import "@flowstack-ui/brick/styles.css";
 ```
@@ -44,7 +56,6 @@ import "@flowstack-ui/brick/styles/text.css";
 
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
-
 
 Public exports include `Text`, `Heading`, `Paragraph`, `Caption`, `Eyebrow`,
 `TextProps`, `HeadingProps`, `ParagraphProps`, `CaptionProps`, `EyebrowProps`,
@@ -93,19 +104,19 @@ recipe metadata, and documented variables are stable public hooks.
 
 ### Core props
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `as` | `span`, `p`, `div`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6` | `span` |
-| `variant` | `display`, `display-sm`, `display-md`, `display-lg`, `title-lg`, `title-md`, `title-sm`, `body-lg`, `body-md`, `body-sm`, `caption`, `eyebrow`; or a responsive value | `body-md` |
-| `tone` | `inherit`, `primary`, `secondary`, `muted`, `accent`, `info`, `success`, `warning`, `danger` | `primary` |
-| `weight` | `inherit`, `regular`, `medium`, `semibold` | recipe default |
-| `align` | `start`, `center`, `end`; or a responsive value | natural/start |
-| `wrap` | `wrap`, `nowrap`, `balance`, `pretty` | `wrap` |
-| `transform` | `none`, `uppercase`, `lowercase`, `capitalize` | variant recipe |
-| `truncate` | `boolean` | `false` |
-| `lineClamp` | `2`, `3`, `4`, `5`, `6` | none |
-| `slot` | `string` | `text` |
-| `children` | `ReactNode` | required |
+| Prop        | Values                                                                                                                                                                            | Default        |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| `as`        | `span`, `p`, `div`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6`                                                                                                                            | `span`         |
+| `variant`   | `display`, `display-sm`, `display-md`, `display-lg`, `display-xl`, `title-xl`, `title-lg`, `title-md`, `title-sm`, `title-xs`, `title-2xs`, `body-xl`, `body-lg`, `body-md`, `body-sm`, `caption`, `eyebrow`; or a responsive value | `body-md` |
+| `tone`      | `inherit`, `primary`, `secondary`, `muted`, `accent`, `info`, `success`, `warning`, `danger`                                                                                      | `primary`      |
+| `weight`    | `inherit`, `regular`, `medium`, `semibold`                                                                                                                                        | recipe default |
+| `align`     | `start`, `center`, `end`; or a responsive value                                                                                                                                   | natural/start  |
+| `wrap`      | `wrap`, `nowrap`, `balance`, `pretty`                                                                                                                                             | `wrap`         |
+| `transform` | `none`, `uppercase`, `lowercase`, `capitalize`                                                                                                                                    | variant recipe |
+| `truncate`  | `boolean`                                                                                                                                                                         | `false`        |
+| `lineClamp` | `2`, `3`, `4`, `5`, `6`                                                                                                                                                           | none           |
+| `slot`      | `string`                                                                                                                                                                          | `text`         |
+| `children`  | `ReactNode`                                                                                                                                                                       | required       |
 
 `truncate` and `lineClamp` are mutually exclusive. `slot` controls the
 component's `data-slot` hook; it is not forwarded as the native HTML `slot`
@@ -114,12 +125,12 @@ data attributes pass to the selected host. The ref type is `HTMLElement`.
 
 ### Named semantic exports
 
-| Export | Native host | Visual variants | Default |
-| --- | --- | --- | --- |
-| `Heading` | required `level={1..6}` | `display`, `display-sm`, `display-md`, `display-lg`, `title-lg`, `title-md`, `title-sm`; or a responsive value | `title-lg` |
-| `Paragraph` | `p` | `body-lg`, `body-md`, `body-sm` | `body-md` |
-| `Caption` | `span` | fixed | `caption` |
-| `Eyebrow` | `span` | fixed | `eyebrow` |
+| Export      | Native host             | Visual variants                                                                                                            | Default    |
+| ----------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| `Heading`   | required `level={1..6}` | `display`, `display-sm`, `display-md`, `display-lg`, `display-xl`, `title-xl`, `title-lg`, `title-md`, `title-sm`, `title-xs`, `title-2xs`; or a responsive value | `title-md` |
+| `Paragraph` | `p`                     | `body-xl`, `body-lg`, `body-md`, `body-sm` | `body-md` |
+| `Caption`   | `span`                  | fixed                                                                                                                      | `caption`  |
+| `Eyebrow`   | `span`                  | fixed                                                                                                                      | `eyebrow`  |
 
 All four render through Text and add no wrapper. Use Text directly when a
 different valid host/recipe combination is intentional.
@@ -127,10 +138,14 @@ different valid host/recipe combination is intentional.
 ## Visual recipes and states
 
 - `display` preserves Brick's original restrained product headline.
-- `display-sm`, `display-md`, and `display-lg` provide an explicit authored
+- `display-sm`, `display-md`, `display-lg`, and `display-xl` provide an explicit authored
   display scale without coupling size to heading level.
-- `title-lg`, `title-md`, and `title-sm` create heading hierarchy.
-- `body-lg`, `body-md`, and `body-sm` cover prose and supporting copy.
+- `title-xl`, `title-lg`, `title-md`, and `title-sm` create the primary heading hierarchy.
+- `title-xs` is the 16px small structural heading for feature titles and other
+  places where a heading and body copy intentionally share a size.
+- `title-2xs` is the 14px compact structural heading for dense navigation
+  groups, table regions, side panels, and similar labelled interface sections.
+- `body-xl`, `body-lg`, `body-md`, and `body-sm` cover prose and supporting copy.
 - `caption` covers compact metadata without replacing accessible labels.
 - `eyebrow` covers a short uppercase editorial label placed before a heading;
   it is not body copy, status, or category semantics.
@@ -138,9 +153,16 @@ different valid host/recipe combination is intentional.
   text. CSS `capitalize` is not language-aware title case; author names and
   product titles with their correct casing instead.
 
-Display/title recipes use the heading family, semibold weight, tight leading,
-and restrained negative tracking. Body/caption recipes use the body family,
-regular weight, and readable leading.
+Display and primary title recipes use the heading family, semibold weight,
+tight leading, and restrained negative tracking. `title-xs` and `title-2xs`
+keep the heading family and semibold weight with body-scale leading.
+Body/caption recipes use the body family, regular weight, and readable leading.
+
+The maintained authored scale resolves `display-sm` to 36/44,
+`display-md` to 48/60, `body-lg` to 18/27, `title-sm` to 18/28,
+`title-xs` to 16/24, and `title-2xs` to 14/21. Prefer
+these recipes over local font-size overrides; component-owned titles such as
+Card titles keep their own surface recipe.
 
 `primary` means normal high-emphasis text, not brand color. `accent` is the
 brand-colored role. Secondary and muted reduce emphasis; info, success,

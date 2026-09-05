@@ -108,7 +108,8 @@ for (const componentId of requested) {
     if (
       !source.includes(`${attribute}=`) &&
       !source.includes(`"${attribute}":`) &&
-      !source.includes(`responsiveDataAttributes("${attribute}"`)
+      !source.includes(`responsiveDataAttributes("${attribute}"`) &&
+      !(attribute === "data-size" && source.includes("controlSizeDataAttributes("))
     ) {
       failures.push(`${componentId}: source no longer emits ${attribute}`);
     }

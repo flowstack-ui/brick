@@ -8,6 +8,7 @@ export {
   TreeRoot,
 } from "./components/tree/index.js";
 export type {
+  TreeBorderTone,
   TreeGroupProps,
   TreeIndicatorProps,
   TreeItemContentProps,

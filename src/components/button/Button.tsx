@@ -3,25 +3,24 @@ import {
   ButtonRoot as AtomButtonRoot,
   type ButtonRootProps as AtomButtonRootProps,
 } from "@flowstack-ui/atom/button";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
 
 export type ButtonVariant = "solid" | "soft" | "outline" | "ghost";
 
 export type ButtonTone =
-  | "neutral"
-  | "accent"
-  | "info"
-  | "success"
-  | "warning"
-  | "danger";
+  "neutral" | "contrast" | "accent" | "info" | "success" | "warning" | "danger";
 
-export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
+export type ButtonSize = "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 
 export type ButtonShape = "sharp" | "rounded" | "pill";
 
 interface ButtonVisualProps {
   variant?: ButtonVariant;
   tone?: ButtonTone;
-  size?: ButtonSize;
+  size?: ResponsiveValue<ButtonSize>;
   shape?: ButtonShape;
   fullWidth?: boolean;
   startIcon?: ReactNode;
@@ -57,7 +56,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
   {
     variant = "solid",
     tone = "accent",
-    size = "md",
+    size = "lg",
     shape = "rounded",
     fullWidth = false,
     startIcon,
@@ -75,13 +74,21 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
   ) : (
     <>
       {startIcon !== undefined ? (
-        <span aria-hidden="true" className="brick-button__icon" data-position="start">
+        <span
+          aria-hidden="true"
+          className="brick-button__icon"
+          data-position="start"
+        >
           {startIcon}
         </span>
       ) : null}
       <span className="brick-button__content">{children}</span>
       {endIcon !== undefined ? (
-        <span aria-hidden="true" className="brick-button__icon" data-position="end">
+        <span
+          aria-hidden="true"
+          className="brick-button__icon"
+          data-position="end"
+        >
           {endIcon}
         </span>
       ) : null}
@@ -95,11 +102,14 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
       className={mergeClassName(className)}
       data-full-width={fullWidth ? "" : undefined}
       data-shape={shape}
-      data-size={size}
       data-tone={tone}
       data-variant={variant}
       ref={ref}
       render={render}
+      {...responsiveDataAttributes("data-size", size, {
+        alwaysInitial: true,
+        defaultValue: "lg",
+      })}
     >
       {content}
     </AtomButtonRoot>

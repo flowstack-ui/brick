@@ -1,6 +1,6 @@
 {
   "name": "@flowstack-ui/brick",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Opinionated styled React components built on @flowstack-ui/atom.",
   "type": "module",
   "license": "MIT",
@@ -39,6 +39,30 @@
     "./appearance": {
       "types": "./dist/appearance.d.ts",
       "default": "./dist/appearance.js"
+    },
+    "./locale-provider": {
+      "types": "./dist/locale-provider.d.ts",
+      "default": "./dist/locale-provider.js"
+    },
+    "./format-number": {
+      "types": "./dist/format-number.d.ts",
+      "default": "./dist/format-number.js"
+    },
+    "./format-byte": {
+      "types": "./dist/format-byte.d.ts",
+      "default": "./dist/format-byte.js"
+    },
+    "./for": {
+      "types": "./dist/for.d.ts",
+      "default": "./dist/for.js"
+    },
+    "./checkmark": {
+      "types": "./dist/checkmark.d.ts",
+      "default": "./dist/checkmark.js"
+    },
+    "./radiomark": {
+      "types": "./dist/radiomark.d.ts",
+      "default": "./dist/radiomark.js"
     },
     "./button": {
       "types": "./dist/button.d.ts",
@@ -91,6 +115,10 @@
     "./avatar": {
       "types": "./dist/avatar.d.ts",
       "default": "./dist/avatar.js"
+    },
+    "./avatar-group": {
+      "types": "./dist/avatar-group.d.ts",
+      "default": "./dist/avatar-group.js"
     },
     "./status": {
       "types": "./dist/status.d.ts",
@@ -147,6 +175,10 @@
     "./radio-group": {
       "types": "./dist/radio-group.d.ts",
       "default": "./dist/radio-group.js"
+    },
+    "./radio-card": {
+      "types": "./dist/radio-card.d.ts",
+      "default": "./dist/radio-card.js"
     },
     "./segment-group": {
       "types": "./dist/segment-group.d.ts",
@@ -324,6 +356,10 @@
       "types": "./dist/stack.d.ts",
       "default": "./dist/stack.js"
     },
+    "./center": {
+      "types": "./dist/center.d.ts",
+      "default": "./dist/center.js"
+    },
     "./group": {
       "types": "./dist/group.d.ts",
       "default": "./dist/group.js"
@@ -432,8 +468,12 @@
     "agents:build": "node scripts/build-agent-knowledge.mjs",
     "agents:check": "node scripts/build-agent-knowledge.mjs --check",
     "build:js": "tsc -p tsconfig.build.json",
-    "build:css": "node scripts/build-styles.mjs --mode production",
-    "build:css:dev": "node scripts/build-styles.mjs --mode development",
+    "build:css": "node scripts/generate-action-size-css.mjs --check && node scripts/generate-form-control-size-css.mjs --check && node scripts/build-styles.mjs --mode production",
+    "build:css:dev": "node scripts/generate-action-size-css.mjs --check && node scripts/generate-form-control-size-css.mjs --check && node scripts/build-styles.mjs --mode development",
+    "generate:action-sizes": "node scripts/generate-action-size-css.mjs",
+    "generate:action-sizes:check": "node scripts/generate-action-size-css.mjs --check",
+    "generate:form-control-sizes": "node scripts/generate-form-control-size-css.mjs",
+    "generate:form-control-sizes:check": "node scripts/generate-form-control-size-css.mjs --check",
     "build:theme-contract": "node scripts/build-theme-contract.mjs",
     "build:playground": "npm run build && npm run build:playground:built",
     "build:playground:built": "vite build --config playground/vite.config.ts",

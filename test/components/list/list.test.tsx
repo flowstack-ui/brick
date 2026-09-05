@@ -3,7 +3,9 @@ import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import {
   List,
+  type ListAlign,
   type ListDensity,
+  type ListInset,
   type ListMarker,
   type ListSize,
   type ListVariant,
@@ -30,8 +32,10 @@ describe("List", () => {
     expect(root.tagName).toBe("UL");
     expect(root).toHaveClass("brick-list");
     expect(root).toHaveAttribute("data-variant", "plain");
+    expect(root).toHaveAttribute("data-align", "start");
     expect(root).toHaveAttribute("data-size", "md");
     expect(root).toHaveAttribute("data-density", "comfortable");
+    expect(root).toHaveAttribute("data-inset", "default");
     expect(root).toHaveAttribute("data-marker", "auto");
     expect(itemRef.current).toHaveClass("brick-list__item");
     expect(itemRef.current?.firstElementChild).toHaveClass("brick-list__row");
@@ -63,16 +67,22 @@ describe("List", () => {
     const variants: ListVariant[] = ["plain", "divided", "bordered"];
     const sizes: ListSize[] = ["sm", "md", "lg"];
     const densities: ListDensity[] = ["compact", "comfortable"];
+    const alignments: ListAlign[] = ["start", "center", "end"];
+    const insets: ListInset[] = ["default", "none"];
     const markers: ListMarker[] = ["auto", "disc", "circle", "square", "decimal", "lower-alpha", "upper-alpha", "lower-roman", "upper-roman", "none"];
     const { getByTestId, rerender } = render(<List.Root data-testid="root"><List.Item>One</List.Item></List.Root>);
     for (const variant of variants) { rerender(<List.Root data-testid="root" variant={variant}><List.Item>One</List.Item></List.Root>); expect(getByTestId("root")).toHaveAttribute("data-variant", variant); }
     for (const size of sizes) { rerender(<List.Root data-testid="root" size={size}><List.Item>One</List.Item></List.Root>); expect(getByTestId("root")).toHaveAttribute("data-size", size); }
     for (const density of densities) { rerender(<List.Root data-testid="root" density={density}><List.Item>One</List.Item></List.Root>); expect(getByTestId("root")).toHaveAttribute("data-density", density); }
+    for (const align of alignments) { rerender(<List.Root align={align} data-testid="root"><List.Item>One</List.Item></List.Root>); expect(getByTestId("root")).toHaveAttribute("data-align", align); }
+    for (const inset of insets) { rerender(<List.Root data-testid="root" inset={inset}><List.Item>One</List.Item></List.Root>); expect(getByTestId("root")).toHaveAttribute("data-inset", inset); }
     for (const marker of markers) { rerender(<List.Root data-testid="root" marker={marker}><List.Item>One</List.Item></List.Root>); expect(getByTestId("root")).toHaveAttribute("data-marker", marker); }
     const root = getByTestId("root");
     expect(root).not.toHaveAttribute("variant");
     expect(root).not.toHaveAttribute("size");
     expect(root).not.toHaveAttribute("density");
+    expect(root).not.toHaveAttribute("align");
+    expect(root).not.toHaveAttribute("inset");
     expect(root).not.toHaveAttribute("marker");
   });
 

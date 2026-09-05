@@ -26,9 +26,10 @@ Normalize one consumer-authored SVG with Brick sizing, semantic foreground, alig
 - **MUST:** Keep the decorative default when meaning is redundant, or provide exactly one nonempty label or aria-labelledby reference when the standalone graphic is informative.
 - **MUST:** Give an icon-only Button, IconButton, Toggle, or other control its accessible name on the control, not on its nested Icon.
 - **SHOULD:** Use currentColor for single-color SVG fills or strokes so Brick tone and inherited control state can apply.
+- **MUST:** Choose the semantic palette with tone and choose readable text paint versus stronger solid paint with emphasis; do not encode a compound palette name or use paint as the only carrier of meaning.
 - **MUST:** Enable directional only for glyphs whose meaning reverses in RTL, such as arrows and forward/back controls.
 - **MUST:** Use asChild only with one direct non-interactive SVG; never compose Icon onto a button, anchor, input, or other interactive host.
-- **MUST:** Use Brick Stack, layout components, or an owning component icon slot for sibling alignment instead of wrapper spans or application offsets.
+- **MUST:** Use Center, Square, or Circle when an icon needs two-axis centering or invariant equal-size geometry; compose Surface for its paint. Use Stack or an owning component icon slot for sibling alignment instead of wrapper spans or application offsets.
 - **MUST:** Load styles.css or core.css plus icon.css.
 
 ## Common mistakes
@@ -39,7 +40,7 @@ Normalize one consumer-authored SVG with Brick sizing, semantic foreground, alig
 
 ## Validation checklist
 
-- Check decorative and informative accessibility trees, icon-only control naming, all sizes and tones, currentColor adoption, flex shrinking, and RTL directional mirroring.
+- Check decorative and informative accessibility trees, icon-only control naming, all sizes, tones, and emphases, currentColor adoption, flex shrinking, and RTL directional mirroring.
 - Confirm asChild targets only one SVG and that CSS is present.
 
 ## Related guidance
@@ -48,4 +49,5 @@ Normalize one consumer-authored SVG with Brick sizing, semantic foreground, alig
 - `image`
 - `button`
 - `stack`
+- `center`
 - `text`

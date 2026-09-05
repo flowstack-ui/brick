@@ -82,7 +82,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 | `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` |
 | `shape` | `"square" \| "rounded" \| "pill"` | `"rounded"` |
 | `tone` | `"neutral" \| "accent" \| "info" \| "success" \| "warning" \| "danger"` | `"accent"` |
-| `locale` | `Intl.LocalesArgument` | runtime locale |
+| `locale` | `Intl.LocalesArgument` | `LocaleProvider.locale` |
 | `formatOptions` | `Intl.NumberFormatOptions` | percent, 0 fraction digits |
 
 Root retains released Atom Progress props including `aria-valuetext`,

@@ -17,7 +17,7 @@ import {
   type RadioRootProps as AtomItemProps,
 } from "@flowstack-ui/atom/radio-group";
 
-export type SegmentGroupSize = "sm" | "md" | "lg";
+export type SegmentGroupSize = "2xs" | "xs" | "sm" | "md" | "lg";
 
 export interface SegmentGroupRootProps extends AtomRootProps {
   /** Shared item and indicator geometry. @default "md" */

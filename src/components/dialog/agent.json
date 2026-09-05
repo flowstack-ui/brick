@@ -12,7 +12,7 @@
     {"condition": "The content is an in-page disclosure, a command menu, or passive transient feedback.", "useInstead": "Collapsible or Accordion, Menu, or Toast"}
   ],
   "composition": [
-    "Compose Dialog.Root with Dialog.Trigger and Dialog.Portal; inside Portal keep Dialog.Overlay and Dialog.Content as siblings. Inside Content, arrange Dialog.Header with Dialog.Title and an optional Dialog.Description, put scrollable task content in Dialog.Body, and place actions and Dialog.Close in Dialog.Footer as the workflow requires.",
+    "Compose Dialog.Root with Dialog.Trigger and Dialog.Portal; inside Portal keep Dialog.Overlay and Dialog.Content as siblings. Inside Content, arrange Dialog.Header with Dialog.Title and an optional Dialog.Description, put scrollable task content in Dialog.Body, place inline close actions in Dialog.Footer, and use Dialog.Close placement=\"corner\" as a direct Content child only for an authored top-end dismiss control.",
     "Use Dialog.Branch only for an unavoidable consumer-owned third-party portal that cannot mount inside Content. When a local Appearance scope owns the trigger, portal into that scope or apply the same Appearance to the portalled visual root."
   ],
   "rules": [
@@ -22,6 +22,7 @@
     {"id": "dialog-atom-behavior", "level": "must", "statement": "Use Dialog-owned focus containment and restoration, background isolation, scroll locking, Escape handling, direct-target backdrop dismissal, and nested top-layer behavior instead of recreating them."},
     {"id": "dialog-body-scroll", "level": "must", "statement": "Put long or variable task content in Body so the header and footer remain available while the body owns overflow within the safe viewport bounds."},
     {"id": "dialog-footer-actions", "level": "must", "statement": "Use Footer justify for simple action distribution and Brick layout components for complex grouping; preserve a clear primary action and a visible close or cancellation path when the workflow requires one."},
+    {"id": "dialog-corner-close", "level": "must", "statement": "Use Close placement=\"corner\" only as a direct Content child with a completely named authored IconButton; keep footer Cancel actions on the default inline placement."},
     {"id": "dialog-branch-scope", "level": "must", "statement": "Mount descendant interactive portals inside Content when possible; otherwise wrap only the unavoidable same-document third-party portal owner with Branch."},
     {"id": "dialog-size-responsive", "level": "should", "statement": "Choose sm, md, or lg from the content measure rather than importance, and verify safe-area bounds, Body overflow, footer reflow, zoom, and narrow or short effective viewports."},
     {"id": "dialog-theme-scope", "level": "must", "statement": "When Portal leaves a local Appearance scope, reproduce that scope on the portalled visual root or target a portal container inside it."},
@@ -29,7 +30,8 @@
   ],
   "commonMistakes": [
     {"mistake": "Nesting Content inside Overlay, hand-building focus or document listeners, or using Dialog for an anchored utility panel.", "correction": "Keep Overlay and Content siblings, rely on Dialog and Atom Modal behavior, and choose Popover for compact anchored work."},
-    {"mistake": "Letting long content scroll the whole surface or assuming an unrelated third-party portal is automatically inside the modal.", "correction": "Put overflow in Body and mount the descendant portal inside Content or register its owner with Branch."}
+    {"mistake": "Letting long content scroll the whole surface or assuming an unrelated third-party portal is automatically inside the modal.", "correction": "Put overflow in Body and mount the descendant portal inside Content or register its owner with Branch."},
+    {"mistake": "Rebuilding a corner close inset inside Header with overlap utilities or local CSS.", "correction": "Compose a named IconButton through Dialog.Close placement=\"corner\" as a direct child of Content."}
   ],
   "validation": [
     "Verify trigger semantics, accessible name and optional description, keyboard, pointer, touch, and programmatic initial focus, Tab containment, Close, top-layer Escape, direct-target backdrop dismissal, and focus restoration.",
@@ -39,6 +41,6 @@
   "related": [
     {"kind": "package", "package": "@flowstack-ui/atom", "id": "dialog", "versionPolicy": "installed-exact"},
     {"kind": "package", "package": "@flowstack-ui/atom", "id": "modal", "versionPolicy": "installed-exact"},
-    "alert-dialog", "drawer", "popover", "button", "appearance"
+    "alert-dialog", "drawer", "popover", "button", "icon-button", "appearance"
   ]
 }

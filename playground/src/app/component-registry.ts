@@ -19,6 +19,48 @@ export type PlaygroundCategory =
 
 export const componentEntries = [
   {
+    category: "Typography",
+    description: "Inherited locale, direction, and Brick-owned interface text.",
+    id: "locale-provider",
+    route: "/locale-provider",
+    title: "Locale Provider",
+  },
+  {
+    category: "Typography",
+    description: "Locale-aware numeric, currency, and percentage output.",
+    id: "format-number",
+    route: "/format-number",
+    title: "Format Number",
+  },
+  {
+    category: "Typography",
+    description: "Locale-aware bit and byte quantities.",
+    id: "format-byte",
+    route: "/format-byte",
+    title: "Format Byte",
+  },
+  {
+    category: "Layout",
+    description: "Typed wrapper-free collection rendering with a fallback.",
+    id: "for",
+    route: "/for",
+    title: "For",
+  },
+  {
+    category: "Data display",
+    description: "Passive checked and indeterminate visual state.",
+    id: "checkmark",
+    route: "/checkmark",
+    title: "Checkmark",
+  },
+  {
+    category: "Data display",
+    description: "Passive circular selected-state visual.",
+    id: "radiomark",
+    route: "/radiomark",
+    title: "Radiomark",
+  },
+  {
     category: "Layout",
     description: "Explicit light, dark, and inherited semantic-token scopes.",
     id: "appearance",
@@ -393,6 +435,13 @@ export const componentEntries = [
   },
   {
     category: "Layout",
+    description: "Two-axis centering and invariant square or circle geometry.",
+    id: "center",
+    route: "/center",
+    title: "Center",
+  },
+  {
+    category: "Layout",
     description:
       "Responsive logical negative margins for deliberate edge media.",
     id: "bleed",
@@ -541,6 +590,13 @@ export const componentEntries = [
     id: "avatar",
     route: "/avatar",
     title: "Avatar",
+  },
+  {
+    category: "Data display",
+    description: "Overlapping identity stacks with explicit overflow.",
+    id: "avatar-group",
+    route: "/avatar-group",
+    title: "Avatar Group",
   },
   {
     category: "Feedback",
@@ -698,6 +754,13 @@ export const componentEntries = [
     id: "radio-group",
     route: "/radio-group",
     title: "Radio Group",
+  },
+  {
+    category: "Forms",
+    description: "Rich whole-card single-selection choices.",
+    id: "radio-card",
+    route: "/radio-card",
+    title: "Radio Card",
   },
   {
     category: "Forms",

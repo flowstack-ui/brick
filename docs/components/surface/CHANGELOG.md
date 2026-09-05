@@ -6,6 +6,12 @@ Surface follows the package version of `@flowstack-ui/brick`.
 
 ### Changed
 
+- Strengthened the neutral `bordered` recipe to the shared default structural
+  boundary used by Card, Divider, and preview canvases, without changing the
+  closed boolean API or accent-border behavior.
+- Added a paired accent-subtle plane through
+  `tone="accent" level="subtle"`, while preserving accent-solid as the default
+  accent/base result.
 - Expanded `inset` with page-panel `xl` and `2xl` recipes and Brick's shared
   responsive value grammar while keeping paint, radius, border, and elevation
   nonresponsive.

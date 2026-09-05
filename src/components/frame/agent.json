@@ -10,7 +10,8 @@
     "A rail, copy region, media canvas, or scroll boundary needs an explicit inline or block size constraint."
   ],
   "avoidWhen": [
-    { "condition": "The need is shared page measure, child arrangement, paint, aspect ratio, or scrolling.", "useInstead": "Container, Stack/Grid, Surface, AspectRatio, or ScrollArea" }
+    { "condition": "The need is shared page measure, child arrangement, paint, aspect ratio, or scrolling.", "useInstead": "Container, Stack/Grid, Surface, AspectRatio, or ScrollArea" },
+    { "condition": "The need is one equal-size centered square or circle.", "useInstead": "Square or Circle" }
   ],
   "composition": [
     "Use Frame inside a layout Item, or let Stack.Item/Grid.Item compose asChild around Frame when one host must own both parent participation and internal constraints.",
@@ -31,5 +32,5 @@
     "Check responsive carry-forward, zoom/reflow, long content, RTL, vertical writing, and focus visibility.",
     "Confirm every constrained node has one clear job and that ScrollArea owns any required overflow."
   ],
-  "related": ["stack", "grid", "container", "section", "surface", "aspect-ratio", "scroll-area", "interface-composition"]
+  "related": ["stack", "grid", "center", "container", "section", "surface", "aspect-ratio", "scroll-area", "interface-composition"]
 }

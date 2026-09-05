@@ -4,6 +4,9 @@ MultiSelect follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Expanded MultiSelect triggers and portalled options to the responsive shared
+  2xs–2xl control-size scale and made the 44px `lg` recipe the default.
+
 ## 0.1.10
 
 ### Fixed

@@ -1,0 +1,97 @@
+@layer brick.components {
+  .brick-checkmark {
+    --brick-checkmark-size: 1.25rem;
+    --brick-checkmark-solid: var(--brick-color-accent-solid);
+    --brick-checkmark-on-solid: var(--brick-color-accent-on-solid);
+    --brick-checkmark-soft: var(--brick-color-accent-soft);
+    --brick-checkmark-text: var(--brick-color-accent-text);
+
+    display: inline-block;
+    box-sizing: border-box;
+    inline-size: var(--brick-checkmark-size);
+    block-size: var(--brick-checkmark-size);
+    flex: 0 0 var(--brick-checkmark-size);
+    overflow: visible;
+    border: var(--brick-border-width) solid var(--brick-color-border-strong);
+    border-radius: var(--brick-radius-subtle);
+    background: var(--brick-color-surface-raised);
+    color: transparent;
+    vertical-align: middle;
+  }
+
+  .brick-checkmark path {
+    fill: none;
+    stroke: currentcolor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  .brick-checkmark[data-size="xs"] { --brick-checkmark-size: 0.75rem; }
+  .brick-checkmark[data-size="sm"] { --brick-checkmark-size: 1rem; }
+  .brick-checkmark[data-size="lg"] { --brick-checkmark-size: 1.5rem; }
+
+  .brick-checkmark[data-tone="neutral"] {
+    --brick-checkmark-solid: var(--brick-color-text-primary);
+    --brick-checkmark-on-solid: var(--brick-color-surface-canvas);
+    --brick-checkmark-soft: var(--brick-color-surface-subtle);
+    --brick-checkmark-text: var(--brick-color-text-primary);
+  }
+  .brick-checkmark[data-tone="info"] {
+    --brick-checkmark-solid: var(--brick-color-info-solid);
+    --brick-checkmark-on-solid: var(--brick-color-info-on-solid);
+    --brick-checkmark-soft: var(--brick-color-info-soft);
+    --brick-checkmark-text: var(--brick-color-info-text);
+  }
+  .brick-checkmark[data-tone="success"] {
+    --brick-checkmark-solid: var(--brick-color-success-solid);
+    --brick-checkmark-on-solid: var(--brick-color-success-on-solid);
+    --brick-checkmark-soft: var(--brick-color-success-soft);
+    --brick-checkmark-text: var(--brick-color-success-text);
+  }
+  .brick-checkmark[data-tone="warning"] {
+    --brick-checkmark-solid: var(--brick-color-warning-solid);
+    --brick-checkmark-on-solid: var(--brick-color-warning-on-solid);
+    --brick-checkmark-soft: var(--brick-color-warning-soft);
+    --brick-checkmark-text: var(--brick-color-warning-text);
+  }
+  .brick-checkmark[data-tone="danger"] {
+    --brick-checkmark-solid: var(--brick-color-danger-solid);
+    --brick-checkmark-on-solid: var(--brick-color-danger-on-solid);
+    --brick-checkmark-soft: var(--brick-color-danger-soft);
+    --brick-checkmark-text: var(--brick-color-danger-text);
+  }
+
+  .brick-checkmark[data-state]:not([data-state="unchecked"])[data-variant="solid"] {
+    border-color: var(--brick-checkmark-solid);
+    background: var(--brick-checkmark-solid);
+    color: var(--brick-checkmark-on-solid);
+  }
+  .brick-checkmark[data-state]:not([data-state="unchecked"])[data-variant="outline"] {
+    border-color: var(--brick-checkmark-solid);
+    color: var(--brick-checkmark-text);
+  }
+  .brick-checkmark[data-variant="soft"] {
+    border-color: var(--brick-checkmark-soft);
+    background: var(--brick-checkmark-soft);
+  }
+  .brick-checkmark[data-state]:not([data-state="unchecked"])[data-variant="soft"],
+  .brick-checkmark[data-state]:not([data-state="unchecked"])[data-variant="plain"] {
+    color: var(--brick-checkmark-text);
+  }
+  .brick-checkmark[data-variant="plain"] {
+    border-color: transparent;
+    background: transparent;
+  }
+  .brick-checkmark[data-disabled] { opacity: 0.5; }
+
+  @media (forced-colors: active) {
+    .brick-checkmark { border-color: CanvasText; background: Canvas; }
+    .brick-checkmark[data-state]:not([data-state="unchecked"]) {
+      border-color: Highlight;
+      background: Highlight;
+      color: HighlightText;
+    }
+    .brick-checkmark[data-disabled] { color: GrayText; opacity: 1; }
+  }
+}

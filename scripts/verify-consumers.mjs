@@ -85,7 +85,13 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, Blockquote, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, Grid, Hide, Highlight, HoverCard, IconButton, Input, Kbd, Link, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, Prose, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, Blockquote, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Checkmark, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, For, FormatByte, FormatNumber, Grid, Hide, Highlight, HoverCard, IconButton, Input, Kbd, Link, LocaleProvider, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, Prose, RadioGroup, Radiomark, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+import { LocaleProvider as SubpathLocaleProvider } from "@flowstack-ui/brick/locale-provider";
+import { FormatNumber as SubpathFormatNumber } from "@flowstack-ui/brick/format-number";
+import { FormatByte as SubpathFormatByte } from "@flowstack-ui/brick/format-byte";
+import { For as SubpathFor } from "@flowstack-ui/brick/for";
+import { Checkmark as SubpathCheckmark } from "@flowstack-ui/brick/checkmark";
+import { Radiomark as SubpathRadiomark } from "@flowstack-ui/brick/radiomark";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -96,6 +102,8 @@ import * as DrawerModule from "@flowstack-ui/brick/drawer";
 import { Badge as SubpathBadge, NotificationBadge as SubpathNotificationBadge } from "@flowstack-ui/brick/badge";
 import { Chip as SubpathChip } from "@flowstack-ui/brick/chip";
 import { Avatar as SubpathAvatar } from "@flowstack-ui/brick/avatar";
+import { AvatarGroup } from "@flowstack-ui/brick";
+import { AvatarGroup as SubpathAvatarGroup } from "@flowstack-ui/brick/avatar-group";
 import { Toggle as SubpathToggle } from "@flowstack-ui/brick/toggle";
 import { ToggleGroup as SubpathToggleGroup } from "@flowstack-ui/brick/toggle-group";
 import { Tooltip as SubpathTooltip } from "@flowstack-ui/brick/tooltip";
@@ -104,6 +112,7 @@ import { Popover as SubpathPopover } from "@flowstack-ui/brick/popover";
 import { Checkbox as SubpathCheckbox } from "@flowstack-ui/brick/checkbox";
 import { CheckboxGroup as SubpathCheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 import { RadioGroup as SubpathRadioGroup } from "@flowstack-ui/brick/radio-group";
+import { RadioCard as SubpathRadioCard } from "@flowstack-ui/brick/radio-card";
 import { Switch as SubpathSwitch } from "@flowstack-ui/brick/switch";
 import { Input as SubpathInput } from "@flowstack-ui/brick/input";
 import { NumberInput as SubpathNumberInput } from "@flowstack-ui/brick/number-input";
@@ -139,6 +148,7 @@ import { renderToString } from "react-dom/server";
 import { readFile } from "node:fs/promises";
 
 if (Button !== SubpathButton) throw new Error("Button subpath export mismatch");
+if (LocaleProvider !== SubpathLocaleProvider || FormatNumber !== SubpathFormatNumber || FormatByte !== SubpathFormatByte || For !== SubpathFor || Checkmark !== SubpathCheckmark || Radiomark !== SubpathRadiomark) throw new Error("Locale helper subpath export mismatch");
 if (IconButton !== SubpathIconButton) throw new Error("IconButton subpath export mismatch");
 if (AppBar !== SubpathAppBar) throw new Error("AppBar subpath export mismatch");
 if (Card !== SubpathCard) throw new Error("Card subpath export mismatch");
@@ -148,6 +158,7 @@ if (AlertDialog !== SubpathAlertDialog) throw new Error("AlertDialog subpath exp
 if (Badge !== SubpathBadge || NotificationBadge !== SubpathNotificationBadge) throw new Error("Badge subpath export mismatch");
 if (Chip !== SubpathChip || Object.keys(SubpathChip).length !== 3) throw new Error("Chip subpath smoke failed");
 if (Avatar !== SubpathAvatar) throw new Error("Avatar subpath export mismatch");
+if (AvatarGroup !== SubpathAvatarGroup) throw new Error("AvatarGroup subpath export mismatch");
 if (Toggle !== SubpathToggle) throw new Error("Toggle subpath export mismatch");
 if (ToggleGroup !== SubpathToggleGroup) throw new Error("ToggleGroup subpath export mismatch");
 if (HoverCard !== SubpathHoverCard || Object.keys(SubpathHoverCard).length !== 5) throw new Error("HoverCard subpath smoke failed");
@@ -157,7 +168,7 @@ if (CheckboxGroup !== SubpathCheckboxGroup || Object.keys(SubpathCheckboxGroup).
 if (RadioGroup !== SubpathRadioGroup || Object.keys(SubpathRadioGroup).length !== 2) throw new Error("RadioGroup subpath smoke failed");
 if (Switch !== SubpathSwitch || Object.keys(SubpathSwitch).length !== 2) throw new Error("Switch subpath smoke failed");
 if (Input !== SubpathInput) throw new Error("Input subpath export mismatch");
-if (NumberInput !== SubpathNumberInput || Object.keys(SubpathNumberInput).length !== 4) throw new Error("Number Input subpath smoke failed");
+if (NumberInput !== SubpathNumberInput || Object.keys(SubpathNumberInput).length !== 6) throw new Error("Number Input subpath smoke failed");
 if (OTPField !== SubpathOTPField || Object.keys(SubpathOTPField).length !== 4) throw new Error("OTP Field subpath smoke failed");
 if (PasswordToggleField !== SubpathPasswordToggleField || Object.keys(SubpathPasswordToggleField).length !== 4) throw new Error("Password Toggle Field subpath smoke failed");
 if (Textarea !== SubpathTextarea || Object.keys(SubpathTextarea).length !== 2) throw new Error("Textarea subpath export mismatch");
@@ -185,6 +196,8 @@ if (Highlight !== SubpathHighlight) throw new Error("Highlight subpath export mi
 if (Prose !== SubpathProse) throw new Error("Prose subpath export mismatch");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
+const localeMarkup = renderToString(React.createElement(LocaleProvider, { locale: "de-DE" }, React.createElement(React.Fragment, null, React.createElement(FormatNumber, { value: 1234.5 }), React.createElement(FormatByte, { value: 2048 }), React.createElement(For, { each: ["A"] }, (value) => React.createElement("span", null, value)), React.createElement(Checkmark, { checked: true }), React.createElement(Radiomark, { checked: true }))));
+if (!localeMarkup.includes("1.234,5") || !localeMarkup.includes("2,05") || !localeMarkup.includes("brick-checkmark") || !localeMarkup.includes("brick-radiomark")) throw new Error("Locale helper SSR smoke failed");
 const iconButtonMarkup = renderToString(React.createElement(IconButton, { "aria-label": "Search" }, React.createElement("svg")));
 if (!iconButtonMarkup.includes("brick-icon-button") || !iconButtonMarkup.includes('aria-label="Search"')) throw new Error("IconButton SSR smoke failed");
 const appBarMarkup = renderToString(React.createElement(AppBar.Root, { position: "sticky" }, React.createElement(AppBar.Toolbar, null, "Workspace")));
@@ -201,6 +214,8 @@ const notificationMarkup = renderToString(React.createElement(NotificationBadge,
 if (!notificationMarkup.includes("brick-notification-badge") || !notificationMarkup.includes('aria-hidden="true"')) throw new Error("NotificationBadge SSR smoke failed");
 const avatarMarkup = renderToString(React.createElement(Avatar, { alt: "Ada Lovelace", fallback: "AL", shape: "rounded", status: "online" }));
 if (!avatarMarkup.includes("brick-avatar") || !avatarMarkup.includes('data-status="online"') || !avatarMarkup.includes("Ada Lovelace")) throw new Error("Avatar SSR smoke failed");
+const avatarGroupMarkup = renderToString(React.createElement(AvatarGroup, { max: 2, overflowLabel: (count) => count + " more", total: 4 }, React.createElement(Avatar, { alt: "Ada Lovelace", fallback: "AL" }), React.createElement(Avatar, { alt: "Grace Hopper", fallback: "GH" })));
+if (!avatarGroupMarkup.includes("brick-avatar-group") || !avatarGroupMarkup.includes('data-count="3"') || !avatarGroupMarkup.includes("3 more")) throw new Error("AvatarGroup SSR smoke failed");
 const toggleMarkup = renderToString(React.createElement(Toggle, { pressed: true }, "Favorite"));
 if (!toggleMarkup.includes("brick-toggle") || !toggleMarkup.includes('aria-pressed="true"')) throw new Error("Toggle SSR smoke failed");
 const toggleGroupMarkup = renderToString(React.createElement(ToggleGroup.Root, { value: "cards" }, React.createElement(ToggleGroup.Item, { value: "cards" }, "Cards")));
@@ -211,6 +226,8 @@ const checkboxGroupMarkup = renderToString(React.createElement(CheckboxGroup.Roo
 if (!checkboxGroupMarkup.includes("brick-checkbox-group") || !checkboxGroupMarkup.includes("brick-checkbox-group-item")) throw new Error("CheckboxGroup SSR smoke failed");
 const radioGroupMarkup = renderToString(React.createElement(RadioGroup.Root, { "aria-label": "Channel", defaultValue: "email" }, React.createElement(RadioGroup.Item, { value: "email" }, "Email")));
 if (!radioGroupMarkup.includes("brick-radio-group") || !radioGroupMarkup.includes("brick-radio-group-item") || !radioGroupMarkup.includes('aria-checked="true"')) throw new Error("RadioGroup SSR smoke failed");
+const radioCardMarkup = renderToString(React.createElement(SubpathRadioCard.Root, { "aria-label": "Plan", defaultValue: "team" }, React.createElement(SubpathRadioCard.Item, { value: "team" }, React.createElement(SubpathRadioCard.Control, null, React.createElement(SubpathRadioCard.Content, null, React.createElement(SubpathRadioCard.Title, null, "Team")), React.createElement(SubpathRadioCard.Indicator)))));
+if (!radioCardMarkup.includes("brick-radio-card") || !radioCardMarkup.includes('role="radio"') || !radioCardMarkup.includes('aria-checked="true"')) throw new Error("RadioCard SSR smoke failed");
 const switchMarkup = renderToString(React.createElement(Switch.Root, { "aria-label": "Reports", defaultChecked: true }, React.createElement(Switch.Thumb)));
 if (!switchMarkup.includes("brick-switch") || !switchMarkup.includes("brick-switch-thumb") || !switchMarkup.includes('aria-checked="true"')) throw new Error("Switch SSR smoke failed");
 const inputMarkup = renderToString(React.createElement(Input, { "aria-label": "Search", defaultValue: "Brick", clearable: true }));
@@ -299,6 +316,7 @@ const buttonCss = await readFile(new URL("./node_modules/@flowstack-ui/brick/dis
 if (!coreCss.includes("--brick-color-accent-solid") || !coreCss.includes("brick.foundations") || !coreCss.includes(":where(body)") || coreCss.includes(".brick-button")) throw new Error("Modular core CSS export is invalid");
 if (!buttonCss.includes(".brick-button") || buttonCss.includes("--brick-color-accent-solid:")) throw new Error("Modular Button CSS export is invalid");
 if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-chip") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover") || !css.includes(".brick-checkbox") || !css.includes(".brick-checkbox-group") || !css.includes(".brick-radio-group") || !css.includes(".brick-input") || !css.includes(".brick-textarea") || !css.includes(".brick-link") || !css.includes(".brick-text") || !css.includes(".brick-grid") || !css.includes(".brick-container") || !css.includes(".brick-surface")) throw new Error("CSS export missing");
+if (!css.includes(".brick-avatar-group") || !css.includes("--brick-avatar-group-overlap")) throw new Error("AvatarGroup CSS export missing");
 if (!css.includes(".brick-switch") || !css.includes("--brick-switch-track-inline-size")) throw new Error("Switch CSS export missing");
 if (!css.includes(".brick-breadcrumb") || !css.includes("--brick-breadcrumb-foreground")) throw new Error("Breadcrumb CSS export missing");
 if (!css.includes(".brick-tabs") || !css.includes("--brick-tabs-indicator-color")) throw new Error("Tabs CSS export missing");
@@ -308,7 +326,7 @@ if (!css.includes(".brick-context-menu__content") || !css.includes("--brick-cont
 if (!css.includes(".brick-menubar") || !css.includes("--brick-menubar-background")) throw new Error("Menubar CSS export missing");
 if (!css.includes(".brick-navigation-menu") || !css.includes("--brick-navigation-menu-viewport-background")) throw new Error("Navigation Menu CSS export missing");
 if (!css.includes(".brick-bottom-navigation") || !css.includes("--brick-bottom-navigation-selection-background")) throw new Error("Bottom Navigation CSS export missing");
-if (!css.includes(".brick-number-input") || !css.includes("--brick-number-input-height")) throw new Error("Number Input CSS export missing");
+if (!css.includes(".brick-number-input") || !css.includes("--brick-number-input-height") || !css.includes(".brick-radio-card")) throw new Error("Number Input or Radio Card CSS export missing");
 if (!css.includes(".brick-otp-field") || !css.includes("--brick-otp-size")) throw new Error("OTP Field CSS export missing");
 if (!css.includes(".brick-password-toggle-field") || !css.includes("--brick-password-height")) throw new Error("Password Toggle Field CSS export missing");
 if (!css.includes(".brick-show") || !css.includes(".brick-hide") || !css.includes("@media (width<48rem)") || !css.includes("@media (width>=48rem)")) throw new Error("Responsive visibility CSS export missing");
@@ -348,6 +366,7 @@ import { Hide as SubpathHide } from "@flowstack-ui/brick/hide";
 import { Prose as SubpathProse } from "@flowstack-ui/brick/prose";
 import { SwipeableItem as SubpathSwipeableItem } from "@flowstack-ui/brick/swipeable-item";
 import * as NavigationMenuModule from "@flowstack-ui/brick/navigation-menu";
+import { AvatarGroup, type AvatarGroupProps } from "@flowstack-ui/brick/avatar-group";
 const props: ButtonProps = { children: "Consumer" };
 const iconButtonProps: IconButtonProps = { "aria-label": "Search", children: createElement("svg"), href: "/search" };
 const appBarProps: AppBarRootProps = { children: createElement(AppBar.Toolbar, null, "Workspace"), position: "sticky" };
@@ -357,6 +376,7 @@ const alertDialogProps: AlertDialogContentProps = { size: "sm", children: "Consu
 const badgeProps: BadgeProps = { children: "Published", tone: "success" };
 const notificationBadgeProps: NotificationBadgeProps = { count: 4, children: createElement("button", null, "Inbox") };
 const avatarProps: AvatarProps = { alt: "Ada Lovelace", fallback: "AL", status: "online" };
+const avatarGroupProps: AvatarGroupProps = { children: createElement(Avatar, { alt: "Ada Lovelace", fallback: "AL" }), max: 3, overflowLabel: (count) => count + " more" };
 const toggleProps: ToggleProps = { children: "Favorite", pressed: true };
 const toggleGroupProps: ToggleGroupRootProps = { children: createElement(ToggleGroup.Item, { value: "cards" }, "Cards"), value: "cards" };
 const hoverCardProps: HoverCardContentProps = { children: "Preview", size: "md" };
@@ -438,6 +458,8 @@ void badgeProps;
 void notificationBadgeProps;
 void Avatar;
 void avatarProps;
+void AvatarGroup;
+void avatarGroupProps;
 void Toggle;
 void ToggleGroup;
 void toggleProps;

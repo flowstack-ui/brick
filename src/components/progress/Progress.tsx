@@ -14,6 +14,7 @@ import {
   type ProgressIndicatorProps as AtomProgressIndicatorProps,
   type ProgressRootProps as AtomProgressRootProps,
 } from "@flowstack-ui/atom/progress";
+import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
 
 export type ProgressOrientation = "horizontal" | "vertical";
 export type ProgressSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -87,6 +88,7 @@ export const ProgressRoot = forwardRef<HTMLDivElement, ProgressRootProps>(
     },
     ref,
   ) {
+    const localeContext = useLocaleContext();
     const generatedId = useId();
     const labelId = `${generatedId}-label`;
     const bufferState =
@@ -100,7 +102,7 @@ export const ProgressRoot = forwardRef<HTMLDivElement, ProgressRootProps>(
           bufferPercent: bufferState?.percent ?? null,
           formatOptions,
           labelId,
-          locale,
+          locale: locale ?? localeContext.locale,
         }}
       >
         <AtomProgress.Root

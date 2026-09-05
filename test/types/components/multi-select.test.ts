@@ -5,6 +5,7 @@ const valid: MultiSelectRootProps = { children: null, size: "md", variant: "outl
 createElement(MultiSelect.Root, valid);
 createElement(MultiSelect.Root, { children: null, value: ["design"], onValueChange: (value) => value.join(",") });
 createElement(MultiSelect.Root, { children: null, variant: "underline" });
+createElement(MultiSelect.Root, { children: null, size: { lg: "xl" } });
 createElement(MultiSelect.Trigger, { ref: null }, null);
 createElement(MultiSelect.Arrow, null, createElement("span"));
 

@@ -4,6 +4,9 @@ Tree follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Added semantic border tones shared by the outline boundary and optional
+  hierarchy guides.
+
 ## 0.1.10
 
 ### Added

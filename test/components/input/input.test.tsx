@@ -24,14 +24,14 @@ describe("Input", () => {
     expect(root).toHaveClass("brick-input");
     expect(root).toHaveAttribute("data-slot", "input");
     expect(root).toHaveAttribute("data-variant", "outline");
-    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size", "lg");
     expect(root).toHaveAttribute("data-shape", "rounded");
     expect(root).toHaveAttribute("data-full-width", "");
   });
 
   it("exposes every closed visual recipe without leaking props", () => {
     const variants: InputVariant[] = ["outline", "soft", "underline"];
-    const sizes: InputSize[] = ["sm", "md", "lg"];
+    const sizes: InputSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
     const shapes: InputShape[] = ["sharp", "rounded", "pill"];
     const { rerender } = render(<Input aria-label="Recipe" />);
     const control = screen.getByRole("textbox", { name: "Recipe" });
@@ -62,6 +62,16 @@ describe("Input", () => {
     expect(root).not.toHaveAttribute("shape");
     expect(control).not.toHaveAttribute("clearable");
     expect(control).not.toHaveAttribute("inputclassname");
+  });
+
+  it("supports explicit and sparse responsive sizes", () => {
+    const { rerender } = render(<Input aria-label="Responsive" size={{ initial: "sm", lg: "xl" }} />);
+    const root = screen.getByRole("textbox").closest(".brick-input");
+    expect(root).toHaveAttribute("data-size", "sm");
+    expect(root).toHaveAttribute("data-size-lg", "xl");
+    rerender(<Input aria-label="Responsive" size={{ lg: "2xl" }} />);
+    expect(root).toHaveAttribute("data-size", "lg");
+    expect(root).toHaveAttribute("data-size-lg", "2xl");
   });
 
   it("routes native props and wrapper/input customization deliberately", () => {

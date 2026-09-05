@@ -4,11 +4,19 @@
     --brick-input-padding-inline: var(--brick-space-3);
     --brick-input-gap: var(--brick-space-2);
     --brick-input-radius: var(--brick-radius-control);
-    --brick-input-font-family: var(--brick-typography-field-value-md-font-family);
+    --brick-input-font-family: var(
+      --brick-typography-field-value-md-font-family
+    );
     --brick-input-font-size: var(--brick-typography-field-value-md-font-size);
-    --brick-input-font-weight: var(--brick-typography-field-value-md-font-weight);
-    --brick-input-line-height: var(--brick-typography-field-value-md-line-height);
-    --brick-input-letter-spacing: var(--brick-typography-field-value-md-letter-spacing);
+    --brick-input-font-weight: var(
+      --brick-typography-field-value-md-font-weight
+    );
+    --brick-input-line-height: var(
+      --brick-typography-field-value-md-line-height
+    );
+    --brick-input-letter-spacing: var(
+      --brick-typography-field-value-md-letter-spacing
+    );
     --brick-input-background: var(--brick-color-surface-raised);
     --brick-input-foreground: var(--brick-color-text-primary);
     --brick-input-placeholder-foreground: var(--brick-color-text-muted);
@@ -42,9 +50,12 @@
     color: var(--brick-input-foreground);
     vertical-align: middle;
     transition:
-      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      box-shadow var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+      background-color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      border-color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      box-shadow var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard);
   }
 
   .brick-input[data-full-width] {
@@ -220,11 +231,11 @@
 
   @media (hover: hover) and (pointer: fine) {
     .brick-input:not(
-      :focus-within,
-      :has(.brick-input-control[data-disabled]),
-      :has(.brick-input-control[data-readonly]),
-      :has(.brick-input-control[data-invalid])
-    ):hover {
+        :focus-within,
+        :has(.brick-input-control[data-disabled]),
+        :has(.brick-input-control[data-readonly]),
+        :has(.brick-input-control[data-invalid])
+      ):hover {
       border-color: var(--brick-input-hover-border);
       background: var(--brick-input-hover-background);
     }
@@ -249,8 +260,9 @@
     }
 
     .brick-input:focus-within {
-      border-color: Highlight;
-      box-shadow: 0 0 0 var(--brick-border-focus-width) Highlight;
+      outline: var(--brick-border-focus-width) solid Highlight;
+      outline-offset: 0;
+      box-shadow: none;
     }
 
     .brick-input:has(.brick-input-control[data-invalid]) {

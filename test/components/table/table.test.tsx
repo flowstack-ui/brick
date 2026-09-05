@@ -1,7 +1,7 @@
 import { createRef } from "react";
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { Table, type TableDensity, type TableSize, type TableVariant } from "../../../src/table.js";
+import { Table, type TableBorderTone, type TableDensity, type TableLayout, type TableSize, type TableSurface, type TableVariant } from "../../../src/table.js";
 
 function Example(props: React.ComponentProps<typeof Table.Root> = {}) {
   return <Table.Container data-testid="container"><Table.Root {...props} data-testid="root"><Table.Caption>Quarterly revenue</Table.Caption><Table.Header><Table.Row><Table.Head>Region</Table.Head><Table.Head numeric>Revenue</Table.Head></Table.Row></Table.Header><Table.Body><Table.Row><Table.Head scope="row">North</Table.Head><Table.Cell numeric>$42,000</Table.Cell></Table.Row></Table.Body><Table.Footer><Table.Row><Table.Head scope="row">Total</Table.Head><Table.Cell numeric>$42,000</Table.Cell></Table.Row></Table.Footer></Table.Root></Table.Container>;
@@ -11,29 +11,62 @@ describe("Table", () => {
   it("renders native anatomy, defaults, slots, and exact refs", () => {
     const containerRef = createRef<HTMLDivElement>();
     const rootRef = createRef<HTMLTableElement>();
+    const columnGroupRef = createRef<HTMLTableColElement>();
+    const columnRef = createRef<HTMLTableColElement>();
     const headRef = createRef<HTMLTableCellElement>();
-    const { getByTestId, getByText } = render(<Table.Container ref={containerRef} data-testid="container"><Table.Root ref={rootRef} data-testid="root"><Table.Caption>Revenue</Table.Caption><Table.Header><Table.Row><Table.Head ref={headRef}>Region</Table.Head></Table.Row></Table.Header><Table.Body><Table.Row><Table.Cell>North</Table.Cell></Table.Row></Table.Body></Table.Root></Table.Container>);
+    const { getByTestId, getByText } = render(<Table.Container ref={containerRef} data-testid="container"><Table.Root ref={rootRef} data-testid="root"><Table.ColumnGroup ref={columnGroupRef} data-testid="column-group"><Table.Column ref={columnRef} htmlWidth="35%" data-testid="column" /></Table.ColumnGroup><Table.Caption>Revenue</Table.Caption><Table.Header><Table.Row><Table.Head ref={headRef}>Region</Table.Head></Table.Row></Table.Header><Table.Body><Table.Row><Table.Cell>North</Table.Cell></Table.Row></Table.Body></Table.Root></Table.Container>);
     expect(getByTestId("container")).toBe(containerRef.current);
     expect(rootRef.current?.tagName).toBe("TABLE");
+    expect(columnGroupRef.current?.tagName).toBe("COLGROUP");
+    expect(columnRef.current?.tagName).toBe("COL");
+    expect(getByTestId("column-group")).toHaveClass("brick-table__column-group");
+    expect(getByTestId("column")).toHaveAttribute("width", "35%");
+    expect(getByTestId("column")).not.toHaveAttribute("htmlWidth");
     expect(headRef.current?.tagName).toBe("TH");
     expect(headRef.current).toHaveAttribute("scope", "col");
     expect(getByTestId("root")).toHaveAttribute("data-variant", "line");
     expect(getByTestId("root")).toHaveAttribute("data-size", "md");
     expect(getByTestId("root")).toHaveAttribute("data-density", "comfortable");
+    expect(getByTestId("root")).toHaveAttribute("data-surface", "transparent");
+    expect(getByTestId("root")).toHaveAttribute("data-border-tone", "default");
+    expect(getByTestId("root")).toHaveAttribute("data-layout", "auto");
+    expect(getByTestId("root")).not.toHaveAttribute("data-column-border");
     expect(getByText("Revenue").tagName).toBe("CAPTION");
+  });
+
+  it("owns an explicit minimum comparison width and section-row treatment", () => {
+    const { getByTestId } = render(
+      <Table.Root data-testid="root" minInlineSize={1088}>
+        <Table.Body>
+          <Table.Row data-testid="section" variant="section">
+            <Table.Head scope="rowgroup">Authentication</Table.Head>
+          </Table.Row>
+        </Table.Body>
+      </Table.Root>,
+    );
+    expect(getByTestId("root").style.getPropertyValue("--brick-table-min-inline-size")).toBe("1088px");
+    expect(getByTestId("section")).toHaveAttribute("data-variant", "section");
+    expect(getByTestId("section")).not.toHaveAttribute("variant");
   });
 
   it("exposes recipes without leaking visual props", () => {
     const variants: TableVariant[] = ["line", "outline"];
     const sizes: TableSize[] = ["sm", "md", "lg"];
     const densities: TableDensity[] = ["compact", "comfortable"];
+    const surfaces: TableSurface[] = ["transparent", "base"];
+    const borderTones: TableBorderTone[] = ["subtle", "default", "strong"];
+    const layouts: TableLayout[] = ["auto", "fixed"];
     const { getByTestId, rerender } = render(<Example />);
     for (const variant of variants) { rerender(<Example variant={variant} />); expect(getByTestId("root")).toHaveAttribute("data-variant", variant); }
     for (const size of sizes) { rerender(<Example size={size} />); expect(getByTestId("root")).toHaveAttribute("data-size", size); }
     for (const density of densities) { rerender(<Example density={density} />); expect(getByTestId("root")).toHaveAttribute("data-density", density); }
-    rerender(<Example striped stickyHeader />);
+    for (const surface of surfaces) { rerender(<Example surface={surface} />); expect(getByTestId("root")).toHaveAttribute("data-surface", surface); }
+    for (const borderTone of borderTones) { rerender(<Example borderTone={borderTone} />); expect(getByTestId("root")).toHaveAttribute("data-border-tone", borderTone); }
+    for (const layout of layouts) { rerender(<Example layout={layout} />); expect(getByTestId("root")).toHaveAttribute("data-layout", layout); }
+    rerender(<Example striped stickyHeader showColumnBorder />);
     expect(getByTestId("root")).toHaveAttribute("data-striped", "");
     expect(getByTestId("root")).toHaveAttribute("data-sticky-header", "");
+    expect(getByTestId("root")).toHaveAttribute("data-column-border", "");
     expect(getByTestId("root")).not.toHaveAttribute("variant");
   });
 
@@ -48,11 +81,14 @@ describe("Table", () => {
   });
 
   it("uses logical alignment and lets explicit align override numeric default", () => {
-    const { getByTestId } = render(<Table.Root><Table.Body><Table.Row><Table.Cell numeric data-testid="numeric">42</Table.Cell><Table.Cell numeric align="center" data-testid="override">43</Table.Cell><Table.Cell data-testid="ordinary">Text</Table.Cell></Table.Row></Table.Body></Table.Root>);
+    const { getByTestId } = render(<Table.Root><Table.Body><Table.Row><Table.Cell numeric verticalAlign="top" data-testid="numeric">42</Table.Cell><Table.Cell numeric align="center" verticalAlign="bottom" data-testid="override">43</Table.Cell><Table.Cell data-testid="ordinary">Text</Table.Cell></Table.Row></Table.Body></Table.Root>);
     expect(getByTestId("numeric")).toHaveAttribute("data-align", "end");
     expect(getByTestId("numeric")).toHaveAttribute("data-numeric", "");
     expect(getByTestId("override")).toHaveAttribute("data-align", "center");
     expect(getByTestId("ordinary")).toHaveAttribute("data-align", "start");
+    expect(getByTestId("numeric")).toHaveAttribute("data-vertical-align", "top");
+    expect(getByTestId("override")).toHaveAttribute("data-vertical-align", "bottom");
+    expect(getByTestId("ordinary")).toHaveAttribute("data-vertical-align", "middle");
     expect(getByTestId("numeric")).not.toHaveAttribute("numeric");
     expect(getByTestId("numeric")).not.toHaveAttribute("align");
   });

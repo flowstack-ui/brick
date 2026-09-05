@@ -1,0 +1,90 @@
+@layer brick.components {
+  .brick-radiomark {
+    --brick-radiomark-size: 1.25rem;
+    --brick-radiomark-solid: var(--brick-color-accent-solid);
+    --brick-radiomark-on-solid: var(--brick-color-accent-on-solid);
+    --brick-radiomark-soft: var(--brick-color-accent-soft);
+    --brick-radiomark-text: var(--brick-color-accent-text);
+
+    display: inline-grid;
+    box-sizing: border-box;
+    inline-size: var(--brick-radiomark-size);
+    block-size: var(--brick-radiomark-size);
+    flex: 0 0 var(--brick-radiomark-size);
+    place-items: center;
+    border: var(--brick-border-width) solid var(--brick-color-border-strong);
+    border-radius: var(--brick-radius-full);
+    background: var(--brick-color-surface-raised);
+    color: transparent;
+    vertical-align: middle;
+  }
+  .brick-radiomark__dot {
+    inline-size: 100%;
+    block-size: 100%;
+    border-radius: inherit;
+    background: currentcolor;
+    transform: scale(0.4);
+  }
+  .brick-radiomark[data-size="xs"] { --brick-radiomark-size: 0.75rem; }
+  .brick-radiomark[data-size="sm"] { --brick-radiomark-size: 1rem; }
+  .brick-radiomark[data-size="lg"] { --brick-radiomark-size: 1.5rem; }
+
+  .brick-radiomark[data-tone="neutral"] {
+    --brick-radiomark-solid: var(--brick-color-text-primary);
+    --brick-radiomark-on-solid: var(--brick-color-surface-canvas);
+    --brick-radiomark-soft: var(--brick-color-surface-subtle);
+    --brick-radiomark-text: var(--brick-color-text-primary);
+  }
+  .brick-radiomark[data-tone="info"] {
+    --brick-radiomark-solid: var(--brick-color-info-solid);
+    --brick-radiomark-on-solid: var(--brick-color-info-on-solid);
+    --brick-radiomark-soft: var(--brick-color-info-soft);
+    --brick-radiomark-text: var(--brick-color-info-text);
+  }
+  .brick-radiomark[data-tone="success"] {
+    --brick-radiomark-solid: var(--brick-color-success-solid);
+    --brick-radiomark-on-solid: var(--brick-color-success-on-solid);
+    --brick-radiomark-soft: var(--brick-color-success-soft);
+    --brick-radiomark-text: var(--brick-color-success-text);
+  }
+  .brick-radiomark[data-tone="warning"] {
+    --brick-radiomark-solid: var(--brick-color-warning-solid);
+    --brick-radiomark-on-solid: var(--brick-color-warning-on-solid);
+    --brick-radiomark-soft: var(--brick-color-warning-soft);
+    --brick-radiomark-text: var(--brick-color-warning-text);
+  }
+  .brick-radiomark[data-tone="danger"] {
+    --brick-radiomark-solid: var(--brick-color-danger-solid);
+    --brick-radiomark-on-solid: var(--brick-color-danger-on-solid);
+    --brick-radiomark-soft: var(--brick-color-danger-soft);
+    --brick-radiomark-text: var(--brick-color-danger-text);
+  }
+
+  .brick-radiomark[data-state="checked"][data-variant="solid"] {
+    border-color: var(--brick-radiomark-solid);
+    background: var(--brick-radiomark-solid);
+    color: var(--brick-radiomark-on-solid);
+  }
+  .brick-radiomark[data-state="checked"][data-variant="outline"] {
+    border-color: var(--brick-radiomark-solid);
+    color: var(--brick-radiomark-text);
+  }
+  .brick-radiomark[data-variant="soft"] {
+    border-color: var(--brick-radiomark-soft);
+    background: var(--brick-radiomark-soft);
+  }
+  .brick-radiomark[data-state="checked"][data-variant="soft"] {
+    color: var(--brick-radiomark-text);
+  }
+  .brick-radiomark[data-disabled] { opacity: 0.5; }
+
+  @media (forced-colors: active) {
+    .brick-radiomark { border-color: CanvasText; background: Canvas; }
+    .brick-radiomark[data-state="checked"] {
+      border-color: Highlight;
+      background: Highlight;
+      color: HighlightText;
+    }
+    .brick-radiomark[data-disabled] { color: GrayText; opacity: 1; }
+  }
+}

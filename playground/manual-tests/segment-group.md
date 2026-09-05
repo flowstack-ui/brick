@@ -37,14 +37,19 @@ Notes or issue:
 
 Setup: Review `02 Sizes` and `03 Layout`.
 
-Action: Compare `sm`, `md`, and `lg`; resize full-width and intrinsic groups.
+Action: Compare `2xs`, `xs`, `sm`, `md`, and `lg`; resize full-width and intrinsic groups.
 
-Expected: Size changes shared control geometry consistently. Full-width Items
+Expected: Size changes shared control geometry consistently, including the 28px compact `2xs` and 32px `xs` recipes. Full-width Items
 share available space; intrinsic groups remain content-sized. The Indicator
 fills the selected Item rather than appearing as a smaller inset tile. Icon-only
 artwork stays centered on both axes. The inset Root boundary does not add to
 the shared control size, and the shallow Indicator elevation does not obscure
-its visible boundary. The Indicator introduces no layout space.
+its visible boundary. In light appearance the subtle unselected rail has
+short inset default-boundary separator rules and the selected segment matches
+the base surface; each rule leaves visible space above and below instead of
+closing the complete Item edge;
+in dark appearance the selected segment uses the raised surface. The Indicator
+introduces no layout space.
 
 Result:
 Notes or issue:

@@ -28,10 +28,14 @@ Action: Compare levels, border, elevation, radius, and inset without changing
 the page controls.
 
 Expected: The default is a quiet base surface. Each scenario changes only its
-labelled dimension. Shadows form four clear but restrained levels, corners
-progress from square to surface radius, and inset increases evenly through the
-six recipes. The responsive specimen moves from compact to spacious to
-expansive inset without changing its content or paint.
+labelled dimension. The accent-subtle specimen uses the paired accent-soft
+background and foreground while remaining quieter than accent-solid. The
+bordered neutral specimen has the same visible structural-boundary strength as
+Card, Divider, and the preview canvas in both appearances. Shadows form four
+clear but restrained levels, corners progress from square to surface radius,
+and inset increases evenly through the six recipes. The responsive specimen
+moves from compact to spacious to expansive inset without changing its content
+or paint.
 
 Result:
 Notes or issue:

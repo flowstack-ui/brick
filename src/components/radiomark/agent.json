@@ -1,0 +1,20 @@
+{
+  "schema": "flowstack.agent-component.v1",
+  "id": "radiomark",
+  "name": "Radiomark",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "kind": "component",
+  "purpose": "Show passive selected or unselected circular state without creating radio behavior.",
+  "useWhen": ["A choice card or read-only summary already owns selection behavior and needs a theme-aware radio visual."],
+  "avoidWhen": [{"condition": "The visual must provide radio focus, keyboard behavior, or form participation.", "useInstead": "Radio Group or Radio Card"}],
+  "composition": ["Place Radiomark inside an existing choice owner and let that owner expose selected state and its accessible name."],
+  "rules": [
+    {"id": "radiomark-passive", "level": "must", "statement": "Keep Radiomark passive and aria-hidden; the parent control owns semantics."},
+    {"id": "radiomark-state", "level": "must", "statement": "Use checked only to mirror state owned elsewhere."},
+    {"id": "radiomark-css", "level": "must", "statement": "Load styles.css or core.css plus radiomark.css."}
+  ],
+  "commonMistakes": [{"mistake": "Building a radio control from a clickable Radiomark.", "correction": "Use Radio Group or Radio Card and reserve Radiomark for passive presentation."}],
+  "validation": ["Verify circular geometry, checked and unchecked states, sizes, tones, variants, dark mode, forced colors, and absence of focus or role."],
+  "related": ["radio-group", "radio-card", "icon"]
+}

@@ -28,7 +28,7 @@
     {
       "id": "appearance-complete-theme",
       "level": "must",
-      "statement": "Use Appearance only with a theme that supplies a complete appearance-dependent color and shadow assignment for the requested explicit appearance."
+      "statement": "Use Appearance only with a theme that supplies a complete appearance-dependent color and shadow assignment for the requested explicit appearance, including both paired native selection roles."
     },
     {
       "id": "appearance-no-recoloring",
@@ -73,7 +73,8 @@
   "validation": [
     "Inspect the DOM and confirm Appearance adds no wrapper while preserving child classes, styles, native props, handlers, component slot, and refs.",
     "Test light to dark to light and dark to light to dark with representative controls and interaction states.",
-    "Test every used portalled family, native controls, contrast, forced colors, SSR, and hydration."
+    "Test every used portalled family, native controls, contrast, forced colors, SSR, and hydration.",
+    "Drag-select text over neutral, accent, status, and image-backed content in light and dark; confirm the opaque selection background and foreground change together and remain readable."
   ],
   "related": ["surface", "app-bar", "drawer", "tabs"]
 }

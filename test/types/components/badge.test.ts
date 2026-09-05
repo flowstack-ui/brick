@@ -8,7 +8,7 @@ import {
   type BadgeVariant,
 } from "../../../src/badge.js";
 
-const variants: BadgeVariant[] = ["soft", "solid", "outline"];
+const variants: BadgeVariant[] = ["soft", "solid", "outline", "surface"];
 const tones: BadgeTone[] = [
   "neutral",
   "accent",
@@ -17,7 +17,7 @@ const tones: BadgeTone[] = [
   "warning",
   "danger",
 ];
-const sizes: BadgeSize[] = ["sm", "md", "lg", "xl"];
+const sizes: BadgeSize[] = ["xs", "sm", "md", "lg", "xl"];
 const shapes: BadgeShape[] = ["rounded", "pill", "circle"];
 const ref = createRef<HTMLSpanElement>();
 const nativeProps: BadgeProps = {

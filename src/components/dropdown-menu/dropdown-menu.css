@@ -2,7 +2,7 @@
   :where(.brick-dropdown-menu__content, .brick-dropdown-menu__sub-content) {
     --brick-dropdown-menu-content-background: var(--brick-color-surface-overlay);
     --brick-dropdown-menu-content-foreground: var(--brick-color-text-primary);
-    --brick-dropdown-menu-content-border: var(--brick-color-border-subtle);
+    --brick-dropdown-menu-content-border: var(--brick-color-border-default);
     --brick-dropdown-menu-content-radius: var(--brick-radius-overlay);
     --brick-dropdown-menu-content-shadow: var(--brick-shadow-floating);
     --brick-dropdown-menu-content-padding: var(--brick-space-1);

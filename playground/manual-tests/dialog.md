@@ -41,8 +41,10 @@ Action: Open every size and anatomy example; inspect optional parts and every
 Title heading level.
 
 Expected: Sizes change preferred measure and inset only. Only authored Header,
-Body, Footer, Close, Title, and Description parts appear. Title uses the
-labeled heading level and relationships remain correct.
+Body, Footer, Close, Title, and Description parts appear. The Overview corner
+Close remains one space-2 inset from Content's logical top-end edge, while
+footer Close actions stay in normal flow. Title uses the labeled heading level
+and relationships remain correct.
 
 Result:
 Notes or issue:

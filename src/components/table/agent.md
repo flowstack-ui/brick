@@ -16,11 +16,12 @@ Present finished static row-and-column relationships with native table semantics
 
 ## Required composition
 
-- Compose optional Container > Root > Caption, Header, Body, and optional Footer; place Row inside each section and Head or Cell inside Row according to native table content rules.
+- Compose optional Container > Root > optional ColumnGroup with Column sizing hints, Caption, Header, Body, and optional Footer; place Row inside each section and Head or Cell inside Row according to native table content rules.
 - Use Head with scope="row" for body row labels and keep the default column scope for header cells; use id and headers for complex associations.
-- Author Container explicitly when honest comparison needs horizontal overflow, and set the public minimum-inline-size token to the smallest width that preserves the column relationships.
+- Author Container explicitly when honest comparison needs horizontal overflow, and set Root minInlineSize to the smallest width that preserves the column relationships.
 - When Table moves vertically, put the visible border and radius on the stable labelled Scroll Area viewport, use Table variant=line inside it, and keep persistent naming outside the moving viewport with aria-labelledby.
 - Put an independently named Button and optional decorative SortIndicator inside the active Head when the application owns sorting.
+- Choose surface and border tone independently, opt into column borders only when they improve comparison, use fixed layout only with deliberate column widths, set verticalAlign on cells whose contents need top or bottom alignment, and use Row variant=section for authored row-group headings.
 
 ## Rules
 
@@ -31,6 +32,9 @@ Present finished static row-and-column relationships with native table semantics
 - **MUST:** For bounded vertical scrolling, let the stable Scroll Area viewport own the visible border and radius; do not use a moving Table outline as the scroll-frame boundary.
 - **MUST:** Let the application sort data and pass sortDirection only to the active header; SortIndicator is decorative and never supplies the control, name, or behavior.
 - **MUST:** Load styles.css or core.css plus table.css.
+- **MUST:** Use surface, borderTone, showColumnBorder, layout, align, and verticalAlign as independent presentation decisions; outline does not imply vertical column rules.
+- **MUST:** Place Column only inside ColumnGroup and ColumnGroup directly inside Root before row groups; use htmlWidth only as a native CSS-pixel number or percentage sizing hint, not as a CSS-unit value, schema, measurement, or resizing API.
+- **MUST:** Use Root minInlineSize and Row variant=section for reusable comparison geometry; do not target Table internals from Block CSS for those relationships.
 
 ## Common mistakes
 
@@ -43,7 +47,7 @@ Present finished static row-and-column relationships with native table semantics
 ## Validation checklist
 
 - Check caption or surrounding naming, header scope, cell associations, source order, plan or record labels, and independently named controls.
-- Check Container overflow, the authored minimum comparison width, stable viewport corners during vertical scrolling, sticky header boundaries when used, 320 CSS pixels, zoom, long content, RTL, and no page-level horizontal overflow.
+- Check Container overflow, Root minInlineSize, section-row boundaries, stable viewport corners during vertical scrolling, sticky header boundaries when used, 320 CSS pixels, zoom, long content, RTL, and no page-level horizontal overflow.
 - Check light and dark themes, forced colors, row and column boundaries, recommendation meaning without color, focus visibility for interactive descendants, and CSS delivery.
 - Check that sorting, selection, filtering, pagination, data services, and responsive alternate-view policy remain application owned.
 

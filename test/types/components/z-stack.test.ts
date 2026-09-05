@@ -16,7 +16,6 @@ createElement(ZStack.Root, { align: { initial: "stretch", md: "center" }, justif
 createElement(ZStack.Item, { align: { initial: "auto", md: "end" }, justify: { initial: "start", lg: "center" } });
 createElement(ZStack.Root, { isolation: "open" });
 createElement(ZStack.Item, { edgeSpacing: { initial: "3", md: 5 }, layer: "action" });
-// @ts-expect-error responsive placement requires initial
 createElement(ZStack.Root, { align: { md: "center" } });
 // @ts-expect-error closed placement
 createElement(ZStack.Root, { align: "baseline" });

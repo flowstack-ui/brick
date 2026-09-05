@@ -101,7 +101,7 @@ export const surfaceScenarios = [
   },
   {
     description:
-      "Identical content isolates the canvas, base, subtle, and raised neutral levels; no other recipe changes.",
+      "Identical content isolates the canvas, base, subtle, and raised neutral levels plus the paired accent-subtle plane; no other recipe changes.",
     id: "surface.levels", number: 2, title: "Levels",
   },
   {
@@ -161,18 +161,28 @@ export function SurfacePage() {
       </Scenario>
 
       <Scenario {...surfaceScenarios[1]}>
-        <Grid.Root
-          className="surface-grid surface-grid--four"
-          columns={4}
-          data-testid="surface-levels"
-          gap="4"
-        >
-          {levels.map((level) => (
-            <Cell key={level} label={level}>
-              <Surface level={level}><Content /></Surface>
-            </Cell>
-          ))}
-        </Grid.Root>
+        <VStack gap="4">
+          <Grid.Root
+            className="surface-grid surface-grid--four"
+            columns={4}
+            data-testid="surface-levels"
+            gap="4"
+          >
+            {levels.map((level) => (
+              <Cell key={level} label={level}>
+                <Surface level={level}><Content /></Surface>
+              </Cell>
+            ))}
+          </Grid.Root>
+          <Surface
+            data-testid="surface-accent-subtle"
+            inset="sm"
+            level="subtle"
+            tone="accent"
+          >
+            <Content>Accent-subtle conversion plane</Content>
+          </Surface>
+        </VStack>
       </Scenario>
 
       <Scenario {...surfaceScenarios[2]}>

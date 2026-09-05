@@ -13,7 +13,7 @@ test("default IconButton remains readable on a solid accent AppBar", async ({
 
   await expect(iconButton).toHaveAttribute("data-variant", "ghost");
   await expect(iconButton).toHaveAttribute("data-tone", "neutral");
-  await expect(iconButton).toHaveAttribute("data-size", "md");
+  await expect(iconButton).toHaveAttribute("data-size", "lg");
   await expect(iconButton).toHaveAttribute("data-shape", "rounded");
   await expect(iconButton).toHaveCSS(
     "color",

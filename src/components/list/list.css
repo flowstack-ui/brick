@@ -33,6 +33,9 @@
   }
 
   .brick-list[data-ordered] { --brick-list-marker-style: decimal; }
+  .brick-list[data-align="start"] { --brick-list-part-align: start; }
+  .brick-list[data-align="center"] { --brick-list-part-align: center; }
+  .brick-list[data-align="end"] { --brick-list-part-align: end; }
   .brick-list[data-marker="disc"] { --brick-list-marker-style: disc; }
   .brick-list[data-marker="circle"] { --brick-list-marker-style: circle; }
   .brick-list[data-marker="square"] { --brick-list-marker-style: square; }
@@ -63,6 +66,10 @@
     --brick-list-title-line-height: var(--brick-typography-body-lg-line-height);
     --brick-list-description-font-size: var(--brick-typography-body-md-font-size);
     --brick-list-description-line-height: var(--brick-typography-body-md-line-height);
+  }
+
+  .brick-list[data-inset="none"] {
+    --brick-list-row-padding-inline: 0;
   }
 
   .brick-list[data-density="compact"] {

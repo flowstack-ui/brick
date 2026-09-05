@@ -136,11 +136,20 @@ class, style, handlers, and ref while composing the forwarded Surface ref.
 ## Visual recipes and states
 
 `tone="neutral"` lets `level` select a semantic background layer.
-`tone="accent"` selects the paired accent-solid background and foreground for
-branded or conversion planes, not status messaging. Border, elevation, radius, and
-inset remain independent so consumers can change only the visual dimension
-they intend to demonstrate. Surface has no hover, focus, selected, disabled,
-loading, validation, typography, or motion state.
+`tone="accent"` selects the paired accent-solid background and foreground by
+default. Combine it with `level="subtle"` for the paired accent-soft background
+and foreground when a quiet branded or conversion plane must contain a
+distinct accent-solid action. Neither accent recipe communicates status.
+Border, elevation, radius, and inset remain independent so consumers can
+change only the visual dimension they intend to demonstrate. Surface has no
+hover, focus, selected, disabled, loading, validation, typography, or motion
+state.
+
+`bordered` uses Brick's default structural boundary so a deliberate Surface
+edge remains as visible as Card, Divider, and preview-canvas boundaries in
+light and dark appearances. Accent Surface keeps its paired accent border.
+Use the public border-color variable only for a deliberate one-off treatment,
+not to repair a weak shared edge in consumer CSS.
 
 Elevations are deliberately restrained: `low` separates nearby content,
 `medium` separates a stronger floating region, and `high` is reserved for the
@@ -205,8 +214,9 @@ This escape hatch does not make arbitrary values part of the recipe API.
 ## Responsive behavior
 
 Surface follows the size of its parent and uses logical padding. `inset`
-accepts Brick's mobile-first responsive value shape with required `initial`
-and optional `sm`, `md`, `lg`, and `xl` overrides:
+accepts Brick's non-empty mobile-first responsive value shape with optional
+`initial`, `sm`, `md`, `lg`, and `xl` values. Without `initial`, the normal
+inset default applies below the first supplied breakpoint:
 
 ```tsx
 <Surface inset={{ initial: "lg", xl: "2xl" }}>
@@ -259,6 +269,16 @@ child's semantics or turn Surface into a generic render-prop API.
 <Surface as="section" level="subtle">
   <Container>
     <VStack gap="4">Measured section content</VStack>
+  </Container>
+</Surface>
+```
+
+### Accent-subtle announcement plane
+
+```tsx
+<Surface as="section" level="subtle" radius="none" tone="accent">
+  <Container measure="full">
+    <HStack justify="center">Trial announcement and action</HStack>
   </Container>
 </Surface>
 ```

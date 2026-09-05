@@ -37,6 +37,7 @@ test("Textarea comparisons isolate variant, size, and shape", async ({ page }) =
     await expect(root).toHaveAttribute("data-variant", ["outline", "soft", "underline"][index]);
     await expect(root).toHaveAttribute("data-size", "md");
   }
+  await expect(variantControls.nth(0).locator("..")).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
   await expect(variantControls.nth(2).locator("..")).not.toHaveAttribute("data-shape");
 
   const sizeControls = page.getByTestId("textarea-sizes").getByRole("textbox", { name: "Project summary" });

@@ -19,7 +19,7 @@ if (unresolved.length) {
 
 const contract = await createThemeContract(packageRoot);
 if (contract.$schema !== themeContractSchema) throw new Error("Unexpected theme contract schema");
-if (contract.contractVersion !== 4) throw new Error("Component policy recipes require theme contract revision 4");
+if (contract.contractVersion !== 5) throw new Error("Selection pair and component policy recipes require theme contract revision 5");
 if (!contract.componentThemeInputs.length) throw new Error("No component theme inputs were published");
 if (contract.tokens.some((token) => !token.classification)) {
   throw new Error("Every contract token must have a classification");

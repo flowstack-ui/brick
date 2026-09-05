@@ -2,7 +2,7 @@
   .brick-surface {
     --brick-surface-background: var(--brick-color-surface-base);
     --brick-surface-foreground: var(--brick-color-text-primary);
-    --brick-surface-border-color: var(--brick-color-border-subtle);
+    --brick-surface-border-color: var(--brick-color-border-default);
     --brick-surface-border-width: 0rem;
     --brick-surface-elevation-none: none;
     --brick-surface-elevation-low: 0 0.25rem 0.75rem
@@ -185,6 +185,11 @@
     --brick-surface-background: var(--brick-color-accent-solid);
     --brick-surface-foreground: var(--brick-color-accent-on-solid);
     --brick-surface-border-color: var(--brick-color-accent-border);
+  }
+
+  .brick-surface[data-tone="accent"][data-level="subtle"] {
+    --brick-surface-background: var(--brick-color-accent-soft);
+    --brick-surface-foreground: var(--brick-color-accent-on-soft);
   }
 
   .brick-surface[data-bordered] {

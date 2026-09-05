@@ -17,6 +17,7 @@ Present one compact person or entity identity with a finished fixed-square image
 
 - Provide explicit alt and fallback; keep Avatar passive and let an owning Button or Link provide interaction, focus, and the functional accessible name.
 - Keep visible identity or status text nearby when the image or status ring alone would be ambiguous or consequential.
+- Use AvatarGroup when multiple Avatars need one overlap, stacking, size, shape, or overflow contract.
 
 ## Rules
 
@@ -41,6 +42,7 @@ Present one compact person or entity identity with a finished fixed-square image
 ## Related guidance
 
 - `@flowstack-ui/atom/agents/avatar`
+- `avatar-group`
 - `image`
 - `button`
 - `link`

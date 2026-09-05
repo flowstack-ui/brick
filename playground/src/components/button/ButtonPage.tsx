@@ -13,10 +13,7 @@ import {
   type ButtonTone,
   type ButtonVariant,
 } from "@flowstack-ui/brick";
-import {
-  Scenario,
-  type ScenarioDefinition,
-} from "../../shared/Scenario.js";
+import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
@@ -26,13 +23,14 @@ import "./button.playground.css";
 const variants: ButtonVariant[] = ["solid", "soft", "outline", "ghost"];
 const tones: ButtonTone[] = [
   "neutral",
+  "contrast",
   "accent",
   "info",
   "success",
   "warning",
   "danger",
 ];
-const sizes: ButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
+const sizes: ButtonSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: ButtonShape[] = ["sharp", "rounded", "pill"];
 
 const tokenCustomization = {
@@ -54,8 +52,12 @@ function EvidenceGroup({
   return (
     <VStack as="section" className="button-evidence-group">
       <VStack className="button-evidence-group__heading">
-        <Text as="h3" variant="title-sm">{title}</Text>
-        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
+        <Text as="h3" variant="title-sm">
+          {title}
+        </Text>
+        <Text as="p" tone="secondary" variant="body-sm">
+          {description}
+        </Text>
       </VStack>
       {children}
     </VStack>
@@ -80,7 +82,7 @@ function SpecimenCell({
 export const buttonScenarios = [
   {
     description:
-      "Button’s canonical rendering is a solid accent action at the medium size with a rounded shape. Activate it to confirm the default native interaction and status feedback.",
+      "Button’s canonical rendering is a solid accent action at the comfortable large size with a rounded shape. Activate it to confirm the default native interaction and status feedback.",
     id: "button.overview",
     number: 1,
     title: "Overview",
@@ -101,7 +103,7 @@ export const buttonScenarios = [
   },
   {
     description:
-      "The five-size scale supports dense interfaces through prominent calls to action. Compare control height, spacing, label treatment, and visual weight.",
+      "The seven-size scale supports dense interfaces through prominent calls to action. Compare control height, spacing, label treatment, visual weight, and one sparse mobile-first responsive recipe change.",
     id: "button.sizes",
     number: 4,
     title: "Sizes",
@@ -176,7 +178,8 @@ export function ButtonPage() {
       </Scenario>
 
       <Scenario {...buttonScenarios[1]}>
-        <Grid.Root columns={4}
+        <Grid.Root
+          columns={4}
           className="button-specimen-grid button-specimen-grid--four"
           data-testid="button-variants"
         >
@@ -196,7 +199,10 @@ export function ButtonPage() {
               key={variant}
               title={`${variant[0].toUpperCase()}${variant.slice(1)} tones`}
             >
-              <Grid.Root columns={6} className="button-specimen-grid button-specimen-grid--six">
+              <Grid.Root
+                columns={6}
+                className="button-specimen-grid button-specimen-grid--six"
+              >
                 {tones.map((tone) => (
                   <SpecimenCell key={tone} label={tone}>
                     <Button tone={tone} variant={variant}>
@@ -211,16 +217,33 @@ export function ButtonPage() {
       </Scenario>
 
       <Scenario {...buttonScenarios[3]}>
-        <Grid.Root columns={5}
-          className="button-specimen-grid button-specimen-grid--five"
-          data-testid="button-sizes"
-        >
-          {sizes.map((size) => (
-            <SpecimenCell key={size} label={size}>
-              <Button size={size}>Action</Button>
+        <VStack align="stretch" gap="6">
+          <Grid.Root
+            columns={7}
+            className="button-specimen-grid button-specimen-grid--seven"
+            data-testid="button-sizes"
+          >
+            {sizes.map((size) => (
+              <SpecimenCell key={size} label={size}>
+                <Button size={size}>Action</Button>
+              </SpecimenCell>
+            ))}
+          </Grid.Root>
+
+          <EvidenceGroup
+            description="One semantic Button changes its complete size recipe at the shared lg breakpoint."
+            title="Responsive size"
+          >
+            <SpecimenCell label="default lg → md at lg">
+              <Button
+                data-testid="button-responsive-size"
+                size={{ lg: "md" }}
+              >
+                Responsive action
+              </Button>
             </SpecimenCell>
-          ))}
-        </Grid.Root>
+          </EvidenceGroup>
+        </VStack>
       </Scenario>
 
       <Scenario {...buttonScenarios[4]}>
@@ -228,7 +251,8 @@ export function ButtonPage() {
           description="Shape changes corner geometry without changing the Button’s size, tone, or semantic role."
           title="Shape recipes"
         >
-          <Grid.Root columns={3}
+          <Grid.Root
+            columns={3}
             className="button-specimen-grid button-specimen-grid--three"
             data-testid="button-shapes"
           >
@@ -292,7 +316,8 @@ export function ButtonPage() {
           description="Optional content and unavailable states retain intrinsic Button dimensions and expose the expected accessible state."
           title="Content and state specimens"
         >
-          <Grid.Root columns={5}
+          <Grid.Root
+            columns={5}
             className="button-specimen-grid button-specimen-grid--five"
             data-testid="button-states"
           >
@@ -355,7 +380,12 @@ export function ButtonPage() {
             <Button tone="neutral" type="reset">
               Reset
             </Button>
-            <Text aria-live="polite" className="button-form-status" role="status" variant="body-sm">
+            <Text
+              aria-live="polite"
+              className="button-form-status"
+              role="status"
+              variant="body-sm"
+            >
               {formStatus}
             </Text>
           </Form>
@@ -368,11 +398,17 @@ export function ButtonPage() {
           title="Scoped appearances"
         >
           <Grid.Root columns={2} className="button-appearance-grid">
-            <EvidenceSurface className="button-appearance-panel" data-brick-appearance="light">
+            <EvidenceSurface
+              className="button-appearance-panel"
+              data-brick-appearance="light"
+            >
               <span>Light scope</span>
               <Button>Action</Button>
             </EvidenceSurface>
-            <EvidenceSurface className="button-appearance-panel" data-brick-appearance="dark">
+            <EvidenceSurface
+              className="button-appearance-panel"
+              data-brick-appearance="dark"
+            >
               <span>Dark scope</span>
               <Button>Action</Button>
             </EvidenceSurface>
@@ -384,9 +420,15 @@ export function ButtonPage() {
           title="Consumer customization"
         >
           <div className="button-customization-list">
-            <EvidenceSurface as="article" className="button-customization" inset="lg">
+            <EvidenceSurface
+              as="article"
+              className="button-customization"
+              inset="lg"
+            >
               <div>
-                <Text as="h4" variant="title-sm">Component CSS properties</Text>
+                <Text as="h4" variant="title-sm">
+                  Component CSS properties
+                </Text>
                 <Text as="p" tone="secondary" variant="body-sm">
                   Public Button tokens replace the solid recipe colors within
                   this instance only.
@@ -411,14 +453,23 @@ export function ButtonPage() {
               </div>
             </EvidenceSurface>
 
-            <EvidenceSurface as="article" className="button-customization" inset="lg">
+            <EvidenceSurface
+              as="article"
+              className="button-customization"
+              inset="lg"
+            >
               <div>
-                <Text as="h4" variant="title-sm">Consumer hooks</Text>
+                <Text as="h4" variant="title-sm">
+                  Consumer hooks
+                </Text>
                 <Text as="p" tone="secondary" variant="body-sm">
                   className, style, and data-slot pass through for local
                   targeting without changing the Button API.
                 </Text>
-                <PlaygroundCodeBlock aria-label="Button consumer hook example" tabIndex={0}>{`.button-page .dashed-action {
+                <PlaygroundCodeBlock
+                  aria-label="Button consumer hook example"
+                  tabIndex={0}
+                >{`.button-page .dashed-action {
   --brick-button-background: transparent;
   --brick-button-background-hover: var(--brick-color-accent-soft);
   --brick-button-background-pressed: var(--brick-color-accent-soft-pressed);
@@ -457,7 +508,9 @@ export function ButtonPage() {
           >
             <EvidenceSurface className="button-stress-panel">
               <div className="phone-frame">
-                <Text as="p" variant="body-sm">20rem constrained canvas</Text>
+                <Text as="p" variant="body-sm">
+                  20rem constrained canvas
+                </Text>
                 <Button fullWidth>
                   Continue with the carefully selected delivery preferences
                 </Button>
@@ -471,10 +524,10 @@ export function ButtonPage() {
           >
             <EvidenceSurface className="button-stress-panel">
               <div className="phone-frame" dir="rtl">
-                <Text as="p" variant="body-sm">Genuine right-to-left content</Text>
-                <Button
-                  endIcon={<ArrowIcon />}
-                >
+                <Text as="p" variant="body-sm">
+                  Genuine right-to-left content
+                </Text>
+                <Button endIcon={<ArrowIcon />}>
                   متابعة إعداد مساحة العمل
                 </Button>
               </div>

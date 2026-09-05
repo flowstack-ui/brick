@@ -2,14 +2,10 @@
   .brick-card {
     --brick-card-space: var(--brick-space-5);
     --brick-card-radius: var(--brick-radius-surface);
-    --brick-card-shadow: 0 0.75rem 2rem color-mix(
-      in srgb,
-      var(--brick-color-shadow),
-      transparent 18%
-    );
-    --brick-card-background: var(--brick-color-surface-raised);
+    --brick-card-shadow: var(--brick-shadow-md);
+    --brick-card-background: var(--brick-color-surface-base);
     --brick-card-border-color: var(--brick-color-border-default);
-    --brick-card-border-width: var(--brick-border-width);
+    --brick-card-border-width: 0px;
     --brick-card-title-size: var(--brick-typography-surface-title-md-font-size);
 
     display: flex;
@@ -27,18 +23,13 @@
   }
 
   .brick-card[data-variant="elevated"] {
-    --brick-card-background: color-mix(
-      in srgb,
-      var(--brick-color-surface-raised),
-      white 6%
-    );
-    --brick-card-border-color: color-mix(
-      in srgb,
-      var(--brick-color-border-subtle),
-      transparent 45%
-    );
+    --brick-card-background: var(--brick-color-surface-raised);
 
     box-shadow: var(--brick-card-shadow);
+  }
+
+  .brick-card[data-variant="outline"] {
+    --brick-card-border-width: var(--brick-border-width);
   }
 
   .brick-card[data-variant="subtle"] {
@@ -48,6 +39,10 @@
 
   .brick-card[data-bordered="false"] {
     --brick-card-border-width: 0;
+  }
+
+  .brick-card[data-bordered="true"] {
+    --brick-card-border-width: var(--brick-border-width);
   }
 
   .brick-card[data-size="sm"] {
@@ -151,6 +146,7 @@
     .brick-card,
     .brick-card[data-variant="elevated"],
     .brick-card[data-variant="subtle"] {
+      --brick-card-border-width: var(--brick-border-width);
       border-color: CanvasText;
       box-shadow: none;
     }

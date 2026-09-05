@@ -95,6 +95,13 @@
     line-height: var(--brick-typography-supporting-sm-line-height);
   }
 
+  .brick-dialog-close[data-placement="corner"] {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: calc(var(--brick-space-2) - var(--brick-border-width));
+    inset-inline-end: calc(var(--brick-space-2) - var(--brick-border-width));
+  }
+
   .brick-dialog-body {
     min-block-size: 0;
     min-inline-size: 0;

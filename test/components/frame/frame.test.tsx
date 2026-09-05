@@ -40,6 +40,15 @@ describe("Frame", () => {
     expect(style.getPropertyValue("--brick-frame-max-block-size-md")).toBe("24rem");
   });
 
+  it("leaves the intrinsic baseline intact for sparse constraints", () => {
+    render(<Frame data-testid="frame" maxInlineSize={{ lg: "40rem" }} />);
+    const style = screen.getByTestId("frame").style;
+    expect(style.getPropertyValue("--brick-frame-max-inline-size")).toBe("");
+    expect(style.getPropertyValue("--brick-frame-max-inline-size-lg")).toBe(
+      "40rem",
+    );
+  });
+
   it("enhances one child while preserving its props, style, and ref", () => {
     const ref = createRef<HTMLElement>();
     render(

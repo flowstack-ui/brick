@@ -1,6 +1,8 @@
 import { createElement } from "react";
 import {
   Dialog,
+  type DialogClosePlacement,
+  type DialogCloseProps,
   type DialogContentProps,
   type DialogFooterProps,
   type DialogRootProps,
@@ -27,12 +29,18 @@ const titleProps: DialogTitleProps = {
   children: "Project settings",
 };
 const footerProps: DialogFooterProps = { children: "Actions", justify: "start" };
+const closePlacement: DialogClosePlacement = "corner";
+const closeProps: DialogCloseProps = {
+  children: "Close",
+  placement: closePlacement,
+};
 
 void Dialog;
 void rootProps;
 void contentProps;
 void titleProps;
 void footerProps;
+void closeProps;
 
 // @ts-expect-error Dialog sizes are a closed set.
 const invalidSize: DialogSize = "xl";
@@ -50,6 +58,8 @@ const invalidFullscreen: DialogContentProps = { fullscreen: true };
 const invalidTitle: DialogTitleProps = { as: "div", children: "Settings" };
 // @ts-expect-error Dialog Footer distribution is a closed set.
 const invalidFooter: DialogFooterProps = { justify: "stretch" };
+// @ts-expect-error Dialog Close placement is a closed set.
+const invalidClosePlacement: DialogCloseProps = { placement: "header" };
 
 void invalidSize;
 void invalidFlatDialog;
@@ -59,3 +69,4 @@ void invalidPlacement;
 void invalidFullscreen;
 void invalidTitle;
 void invalidFooter;
+void invalidClosePlacement;

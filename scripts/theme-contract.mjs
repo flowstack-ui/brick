@@ -309,7 +309,9 @@ export async function createThemeContract(packageRoot) {
     token.classification === "required" || token.classification === "derived");
   const families = new Map();
   for (const token of semanticTokens.filter((entry) => entry.name.startsWith("--brick-color-"))) {
-    const family = token.name.slice("--brick-color-".length).split("-", 1)[0];
+    const family = token.name.startsWith("--brick-color-selection-")
+      ? "accent"
+      : token.name.slice("--brick-color-".length).split("-", 1)[0];
     const names = families.get(family) ?? [];
     names.push(token.name);
     families.set(family, names);
@@ -317,7 +319,7 @@ export async function createThemeContract(packageRoot) {
 
   return {
     $schema: themeContractSchema,
-    contractVersion: 4,
+    contractVersion: 5,
     package: { name: packageJson.name, version: packageJson.version },
     sources: {
       tokens: "src/styles/tokens.tokens.json",

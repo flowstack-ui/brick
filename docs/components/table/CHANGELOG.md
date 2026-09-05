@@ -4,6 +4,15 @@ Table follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Added Atom-backed `ColumnGroup` and `Column` parts with native `htmlWidth`
+  sizing hints.
+- Added transparent/base surfaces, semantic border tones, independent column
+  borders, auto/fixed table layout, and top/middle/bottom cell alignment.
+- Changed outline so it owns only the outer boundary; opt into vertical rules
+  with `showColumnBorder`.
+- Added `Root minInlineSize` for an explicit honest comparison width and
+  `Row variant="section"` for row-group heading cadence without Block CSS.
+
 ## 0.1.10
 
 ### Fixed

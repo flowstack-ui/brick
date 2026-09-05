@@ -8,15 +8,15 @@
     --brick-button-focus-ring: var(--brick-color-focus-ring);
     --brick-button-min-block-size: var(--brick-control-min-block-size-md);
     --brick-button-padding-block: 0.5rem;
-    --brick-button-padding-inline: 1rem;
-    --brick-button-gap: 0.5rem;
+    --brick-button-padding-inline: 1.25rem;
+    --brick-button-gap: 0.75rem;
     --brick-button-radius: var(--brick-radius-control);
     --brick-button-font-family: var(--brick-typography-control-md-font-family);
-    --brick-button-font-size: var(--brick-typography-control-md-font-size);
+    --brick-button-font-size: var(--brick-typography-body-md-font-size);
     --brick-button-font-weight: var(--brick-typography-control-md-font-weight);
-    --brick-button-line-height: var(--brick-typography-control-md-line-height);
+    --brick-button-line-height: var(--brick-typography-body-md-line-height);
     --brick-button-letter-spacing: var(--brick-typography-control-md-letter-spacing);
-    --brick-button-icon-size: 1.125rem;
+    --brick-button-icon-size: 1.25rem;
     --brick-action-spinner-size: 1em;
     --brick-action-spinner-color: var(
       --brick-button-spinner-color,
@@ -50,9 +50,12 @@
     user-select: none;
     vertical-align: middle;
     transition:
-      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+      background-color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      border-color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard);
   }
 
   .brick-button:not([data-disabled], [data-loading]) {
@@ -60,7 +63,8 @@
   }
 
   .brick-button:focus-visible {
-    outline: var(--brick-border-focus-width) solid var(--brick-button-focus-ring);
+    outline: var(--brick-border-focus-width) solid
+      var(--brick-button-focus-ring);
     outline-offset: var(--brick-border-focus-offset);
   }
 
@@ -69,12 +73,21 @@
     border-color: var(--brick-button-background-pressed);
   }
 
-  .brick-button[data-variant="soft"]:not([data-disabled], [data-loading]):active,
-  .brick-button[data-variant="outline"]:not([data-disabled], [data-loading]):active {
+  .brick-button[data-variant="soft"]:not(
+      [data-disabled],
+      [data-loading]
+    ):active,
+  .brick-button[data-variant="outline"]:not(
+      [data-disabled],
+      [data-loading]
+    ):active {
     border-color: var(--brick-button-tone-border);
   }
 
-  .brick-button[data-variant="ghost"]:not([data-disabled], [data-loading]):active {
+  .brick-button[data-variant="ghost"]:not(
+      [data-disabled],
+      [data-loading]
+    ):active {
     border-color: transparent;
   }
 
@@ -84,7 +97,10 @@
     opacity: 1;
   }
 
-  .brick-button[data-disabled]:is([data-variant="solid"], [data-variant="soft"]) {
+  .brick-button[data-disabled]:is(
+      [data-variant="solid"],
+      [data-variant="soft"]
+    ) {
     border-color: var(--brick-color-border-subtle);
     background: var(--brick-color-surface-subtle);
   }
@@ -140,41 +156,365 @@
     --brick-button-radius: var(--brick-radius-full);
   }
 
-  .brick-button[data-size="xs"] {
-    --brick-button-min-block-size: var(--brick-control-min-block-size-xs);
-    --brick-button-padding-block: 0.25rem;
-    --brick-button-padding-inline: 0.625rem;
-    --brick-button-gap: 0.375rem;
+  /* action-size-recipes:start */
+  .brick-button[data-size="2xs"] {
+    --brick-button-min-block-size: 1.5rem;
+    --brick-button-padding-block: 0.125rem;
+    --brick-button-padding-inline: 0.5rem;
+    --brick-button-gap: 0.25rem;
     --brick-button-font-size: var(--brick-typography-control-xs-font-size);
+    --brick-button-line-height: var(--brick-typography-control-xs-line-height);
     --brick-button-icon-size: 0.875rem;
   }
 
-  .brick-button[data-size="sm"] {
-    --brick-button-min-block-size: var(--brick-control-min-block-size-sm);
-    --brick-button-padding-block: 0.375rem;
-    --brick-button-padding-inline: 0.75rem;
-    --brick-button-gap: 0.375rem;
-    --brick-button-font-size: var(--brick-typography-control-sm-font-size);
+  .brick-button[data-size="xs"] {
+    --brick-button-min-block-size: 2rem;
+    --brick-button-padding-block: 0.25rem;
+    --brick-button-padding-inline: 0.625rem;
+    --brick-button-gap: 0.25rem;
+    --brick-button-font-size: var(--brick-typography-control-xs-font-size);
+    --brick-button-line-height: var(--brick-typography-control-xs-line-height);
     --brick-button-icon-size: 1rem;
   }
 
+  .brick-button[data-size="sm"] {
+    --brick-button-min-block-size: 2.25rem;
+    --brick-button-padding-block: 0.375rem;
+    --brick-button-padding-inline: 0.875rem;
+    --brick-button-gap: 0.5rem;
+    --brick-button-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-button-line-height: var(--brick-typography-control-sm-line-height);
+    --brick-button-icon-size: 1rem;
+  }
+
+  .brick-button[data-size="md"] {
+    --brick-button-min-block-size: 2.5rem;
+    --brick-button-padding-block: 0.5rem;
+    --brick-button-padding-inline: 1rem;
+    --brick-button-gap: 0.5rem;
+    --brick-button-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-button-line-height: var(--brick-typography-control-sm-line-height);
+    --brick-button-icon-size: 1.25rem;
+  }
+
   .brick-button[data-size="lg"] {
-    --brick-button-min-block-size: var(--brick-control-min-block-size-lg);
-    --brick-button-padding-block: 0.625rem;
+    --brick-button-min-block-size: 2.75rem;
+    --brick-button-padding-block: 0.5rem;
     --brick-button-padding-inline: 1.25rem;
-    --brick-button-gap: 0.625rem;
-    --brick-button-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-button-gap: 0.75rem;
+    --brick-button-font-size: var(--brick-typography-body-md-font-size);
+    --brick-button-line-height: var(--brick-typography-body-md-line-height);
     --brick-button-icon-size: 1.25rem;
   }
 
   .brick-button[data-size="xl"] {
-    --brick-button-min-block-size: var(--brick-control-min-block-size-xl);
+    --brick-button-min-block-size: 3rem;
+    --brick-button-padding-block: 0.625rem;
+    --brick-button-padding-inline: 1.25rem;
+    --brick-button-gap: 0.625rem;
+    --brick-button-font-size: var(--brick-typography-body-md-font-size);
+    --brick-button-line-height: var(--brick-typography-body-md-line-height);
+    --brick-button-icon-size: 1.25rem;
+  }
+
+  .brick-button[data-size="2xl"] {
+    --brick-button-min-block-size: 4rem;
     --brick-button-padding-block: 0.75rem;
-    --brick-button-padding-inline: 1.5rem;
+    --brick-button-padding-inline: 1.75rem;
     --brick-button-gap: 0.75rem;
     --brick-button-font-size: var(--brick-typography-control-xl-font-size);
+    --brick-button-line-height: var(--brick-typography-control-xl-line-height);
     --brick-button-icon-size: 1.5rem;
   }
+
+  @media (width >= 30rem) {
+    .brick-button[data-size-sm="2xs"] {
+      --brick-button-min-block-size: 1.5rem;
+      --brick-button-padding-block: 0.125rem;
+      --brick-button-padding-inline: 0.5rem;
+      --brick-button-gap: 0.25rem;
+      --brick-button-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-button-icon-size: 0.875rem;
+    }
+
+    .brick-button[data-size-sm="xs"] {
+      --brick-button-min-block-size: 2rem;
+      --brick-button-padding-block: 0.25rem;
+      --brick-button-padding-inline: 0.625rem;
+      --brick-button-gap: 0.25rem;
+      --brick-button-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-button-icon-size: 1rem;
+    }
+
+    .brick-button[data-size-sm="sm"] {
+      --brick-button-min-block-size: 2.25rem;
+      --brick-button-padding-block: 0.375rem;
+      --brick-button-padding-inline: 0.875rem;
+      --brick-button-gap: 0.5rem;
+      --brick-button-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-button-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-button-icon-size: 1rem;
+    }
+
+    .brick-button[data-size-sm="md"] {
+      --brick-button-min-block-size: 2.5rem;
+      --brick-button-padding-block: 0.5rem;
+      --brick-button-padding-inline: 1rem;
+      --brick-button-gap: 0.5rem;
+      --brick-button-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-button-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-sm="lg"] {
+      --brick-button-min-block-size: 2.75rem;
+      --brick-button-padding-block: 0.5rem;
+      --brick-button-padding-inline: 1.25rem;
+      --brick-button-gap: 0.75rem;
+      --brick-button-font-size: var(--brick-typography-body-md-font-size);
+      --brick-button-line-height: var(--brick-typography-body-md-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-sm="xl"] {
+      --brick-button-min-block-size: 3rem;
+      --brick-button-padding-block: 0.625rem;
+      --brick-button-padding-inline: 1.25rem;
+      --brick-button-gap: 0.625rem;
+      --brick-button-font-size: var(--brick-typography-body-md-font-size);
+      --brick-button-line-height: var(--brick-typography-body-md-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-sm="2xl"] {
+      --brick-button-min-block-size: 4rem;
+      --brick-button-padding-block: 0.75rem;
+      --brick-button-padding-inline: 1.75rem;
+      --brick-button-gap: 0.75rem;
+      --brick-button-font-size: var(--brick-typography-control-xl-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xl-line-height);
+      --brick-button-icon-size: 1.5rem;
+    }
+  }
+
+  @media (width >= 48rem) {
+    .brick-button[data-size-md="2xs"] {
+      --brick-button-min-block-size: 1.5rem;
+      --brick-button-padding-block: 0.125rem;
+      --brick-button-padding-inline: 0.5rem;
+      --brick-button-gap: 0.25rem;
+      --brick-button-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-button-icon-size: 0.875rem;
+    }
+
+    .brick-button[data-size-md="xs"] {
+      --brick-button-min-block-size: 2rem;
+      --brick-button-padding-block: 0.25rem;
+      --brick-button-padding-inline: 0.625rem;
+      --brick-button-gap: 0.25rem;
+      --brick-button-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-button-icon-size: 1rem;
+    }
+
+    .brick-button[data-size-md="sm"] {
+      --brick-button-min-block-size: 2.25rem;
+      --brick-button-padding-block: 0.375rem;
+      --brick-button-padding-inline: 0.875rem;
+      --brick-button-gap: 0.5rem;
+      --brick-button-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-button-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-button-icon-size: 1rem;
+    }
+
+    .brick-button[data-size-md="md"] {
+      --brick-button-min-block-size: 2.5rem;
+      --brick-button-padding-block: 0.5rem;
+      --brick-button-padding-inline: 1rem;
+      --brick-button-gap: 0.5rem;
+      --brick-button-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-button-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-md="lg"] {
+      --brick-button-min-block-size: 2.75rem;
+      --brick-button-padding-block: 0.5rem;
+      --brick-button-padding-inline: 1.25rem;
+      --brick-button-gap: 0.75rem;
+      --brick-button-font-size: var(--brick-typography-body-md-font-size);
+      --brick-button-line-height: var(--brick-typography-body-md-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-md="xl"] {
+      --brick-button-min-block-size: 3rem;
+      --brick-button-padding-block: 0.625rem;
+      --brick-button-padding-inline: 1.25rem;
+      --brick-button-gap: 0.625rem;
+      --brick-button-font-size: var(--brick-typography-body-md-font-size);
+      --brick-button-line-height: var(--brick-typography-body-md-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-md="2xl"] {
+      --brick-button-min-block-size: 4rem;
+      --brick-button-padding-block: 0.75rem;
+      --brick-button-padding-inline: 1.75rem;
+      --brick-button-gap: 0.75rem;
+      --brick-button-font-size: var(--brick-typography-control-xl-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xl-line-height);
+      --brick-button-icon-size: 1.5rem;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .brick-button[data-size-lg="2xs"] {
+      --brick-button-min-block-size: 1.5rem;
+      --brick-button-padding-block: 0.125rem;
+      --brick-button-padding-inline: 0.5rem;
+      --brick-button-gap: 0.25rem;
+      --brick-button-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-button-icon-size: 0.875rem;
+    }
+
+    .brick-button[data-size-lg="xs"] {
+      --brick-button-min-block-size: 2rem;
+      --brick-button-padding-block: 0.25rem;
+      --brick-button-padding-inline: 0.625rem;
+      --brick-button-gap: 0.25rem;
+      --brick-button-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-button-icon-size: 1rem;
+    }
+
+    .brick-button[data-size-lg="sm"] {
+      --brick-button-min-block-size: 2.25rem;
+      --brick-button-padding-block: 0.375rem;
+      --brick-button-padding-inline: 0.875rem;
+      --brick-button-gap: 0.5rem;
+      --brick-button-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-button-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-button-icon-size: 1rem;
+    }
+
+    .brick-button[data-size-lg="md"] {
+      --brick-button-min-block-size: 2.5rem;
+      --brick-button-padding-block: 0.5rem;
+      --brick-button-padding-inline: 1rem;
+      --brick-button-gap: 0.5rem;
+      --brick-button-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-button-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-lg="lg"] {
+      --brick-button-min-block-size: 2.75rem;
+      --brick-button-padding-block: 0.5rem;
+      --brick-button-padding-inline: 1.25rem;
+      --brick-button-gap: 0.75rem;
+      --brick-button-font-size: var(--brick-typography-body-md-font-size);
+      --brick-button-line-height: var(--brick-typography-body-md-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-lg="xl"] {
+      --brick-button-min-block-size: 3rem;
+      --brick-button-padding-block: 0.625rem;
+      --brick-button-padding-inline: 1.25rem;
+      --brick-button-gap: 0.625rem;
+      --brick-button-font-size: var(--brick-typography-body-md-font-size);
+      --brick-button-line-height: var(--brick-typography-body-md-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-lg="2xl"] {
+      --brick-button-min-block-size: 4rem;
+      --brick-button-padding-block: 0.75rem;
+      --brick-button-padding-inline: 1.75rem;
+      --brick-button-gap: 0.75rem;
+      --brick-button-font-size: var(--brick-typography-control-xl-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xl-line-height);
+      --brick-button-icon-size: 1.5rem;
+    }
+  }
+
+  @media (width >= 80rem) {
+    .brick-button[data-size-xl="2xs"] {
+      --brick-button-min-block-size: 1.5rem;
+      --brick-button-padding-block: 0.125rem;
+      --brick-button-padding-inline: 0.5rem;
+      --brick-button-gap: 0.25rem;
+      --brick-button-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-button-icon-size: 0.875rem;
+    }
+
+    .brick-button[data-size-xl="xs"] {
+      --brick-button-min-block-size: 2rem;
+      --brick-button-padding-block: 0.25rem;
+      --brick-button-padding-inline: 0.625rem;
+      --brick-button-gap: 0.25rem;
+      --brick-button-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-button-icon-size: 1rem;
+    }
+
+    .brick-button[data-size-xl="sm"] {
+      --brick-button-min-block-size: 2.25rem;
+      --brick-button-padding-block: 0.375rem;
+      --brick-button-padding-inline: 0.875rem;
+      --brick-button-gap: 0.5rem;
+      --brick-button-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-button-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-button-icon-size: 1rem;
+    }
+
+    .brick-button[data-size-xl="md"] {
+      --brick-button-min-block-size: 2.5rem;
+      --brick-button-padding-block: 0.5rem;
+      --brick-button-padding-inline: 1rem;
+      --brick-button-gap: 0.5rem;
+      --brick-button-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-button-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-xl="lg"] {
+      --brick-button-min-block-size: 2.75rem;
+      --brick-button-padding-block: 0.5rem;
+      --brick-button-padding-inline: 1.25rem;
+      --brick-button-gap: 0.75rem;
+      --brick-button-font-size: var(--brick-typography-body-md-font-size);
+      --brick-button-line-height: var(--brick-typography-body-md-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-xl="xl"] {
+      --brick-button-min-block-size: 3rem;
+      --brick-button-padding-block: 0.625rem;
+      --brick-button-padding-inline: 1.25rem;
+      --brick-button-gap: 0.625rem;
+      --brick-button-font-size: var(--brick-typography-body-md-font-size);
+      --brick-button-line-height: var(--brick-typography-body-md-line-height);
+      --brick-button-icon-size: 1.25rem;
+    }
+
+    .brick-button[data-size-xl="2xl"] {
+      --brick-button-min-block-size: 4rem;
+      --brick-button-padding-block: 0.75rem;
+      --brick-button-padding-inline: 1.75rem;
+      --brick-button-gap: 0.75rem;
+      --brick-button-font-size: var(--brick-typography-control-xl-font-size);
+      --brick-button-line-height: var(--brick-typography-control-xl-line-height);
+      --brick-button-icon-size: 1.5rem;
+    }
+  }
+  /* action-size-recipes:end */
 
   .brick-button[data-tone="neutral"] {
     --brick-button-tone-solid: color-mix(
@@ -193,6 +533,27 @@
       var(--brick-color-text-primary) 28%
     );
     --brick-button-tone-on-solid: var(--brick-color-text-primary);
+    --brick-button-tone-soft: var(--brick-color-surface-subtle);
+    --brick-button-tone-soft-hover: var(--brick-color-surface-base);
+    --brick-button-tone-soft-pressed: var(--brick-color-border-subtle);
+    --brick-button-tone-on-soft: var(--brick-color-text-primary);
+    --brick-button-tone-border: var(--brick-color-border-strong);
+    --brick-button-tone-text: var(--brick-color-text-primary);
+  }
+
+  .brick-button[data-tone="contrast"] {
+    --brick-button-tone-solid: var(--brick-color-text-primary);
+    --brick-button-tone-solid-hover: color-mix(
+      in srgb,
+      var(--brick-color-text-primary),
+      var(--brick-color-surface-base) 12%
+    );
+    --brick-button-tone-solid-pressed: color-mix(
+      in srgb,
+      var(--brick-color-text-primary),
+      var(--brick-color-surface-base) 20%
+    );
+    --brick-button-tone-on-solid: var(--brick-color-surface-base);
     --brick-button-tone-soft: var(--brick-color-surface-subtle);
     --brick-button-tone-soft-hover: var(--brick-color-surface-base);
     --brick-button-tone-soft-pressed: var(--brick-color-border-subtle);
@@ -296,12 +657,21 @@
       border-color: var(--brick-button-background-hover);
     }
 
-    .brick-button[data-variant="soft"]:not([data-disabled], [data-loading]):hover,
-    .brick-button[data-variant="outline"]:not([data-disabled], [data-loading]):hover {
+    .brick-button[data-variant="soft"]:not(
+        [data-disabled],
+        [data-loading]
+      ):hover,
+    .brick-button[data-variant="outline"]:not(
+        [data-disabled],
+        [data-loading]
+      ):hover {
       border-color: var(--brick-button-tone-border);
     }
 
-    .brick-button[data-variant="ghost"]:not([data-disabled], [data-loading]):hover {
+    .brick-button[data-variant="ghost"]:not(
+        [data-disabled],
+        [data-loading]
+      ):hover {
       border-color: transparent;
     }
   }

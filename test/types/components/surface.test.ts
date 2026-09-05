@@ -65,7 +65,7 @@ createElement(Surface, { elevation: 8 });
 createElement(Surface, { radius: "full" });
 // @ts-expect-error Inset uses a closed recipe.
 createElement(Surface, { inset: "3xl" });
-// @ts-expect-error Responsive inset requires the shared initial key.
+// @ts-expect-error Responsive breakpoints are deliberately closed.
 createElement(Surface, { inset: { base: "sm", lg: "lg" } });
 // @ts-expect-error Historical runtime color scope is excluded.
 createElement(Surface, { surfaceColor: "accent" });

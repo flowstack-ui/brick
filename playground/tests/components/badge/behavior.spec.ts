@@ -1,8 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const specimenBadge =
-  ".brick-badge:not([data-playground-specimen-label])";
+const specimenBadge = ".brick-badge:not([data-playground-specimen-label])";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/badge");
@@ -24,26 +23,31 @@ test("Badge overview exposes only canonical defaults and passive semantics", asy
 
 test("variants change only variant metadata", async ({ page }) => {
   const badges = page.getByTestId("badge-variants").locator(specimenBadge);
-  await expect(badges).toHaveCount(3);
-  await expect(badges).toHaveText(["Status", "Status", "Status"]);
+  await expect(badges).toHaveCount(4);
+  await expect(badges).toHaveText(["Status", "Status", "Status", "Status"]);
   await expect
-    .poll(() => badges.evaluateAll((items) => items.map((item) => ({
-      shape: item.getAttribute("data-shape"),
-      size: item.getAttribute("data-size"),
-      tone: item.getAttribute("data-tone"),
-      variant: item.getAttribute("data-variant"),
-    }))))
+    .poll(() =>
+      badges.evaluateAll((items) =>
+        items.map((item) => ({
+          shape: item.getAttribute("data-shape"),
+          size: item.getAttribute("data-size"),
+          tone: item.getAttribute("data-tone"),
+          variant: item.getAttribute("data-variant"),
+        })),
+      ),
+    )
     .toEqual([
       { shape: "rounded", size: "md", tone: "neutral", variant: "soft" },
       { shape: "rounded", size: "md", tone: "neutral", variant: "solid" },
       { shape: "rounded", size: "md", tone: "neutral", variant: "outline" },
+      { shape: "rounded", size: "md", tone: "neutral", variant: "surface" },
     ]);
 });
 
 test("tone matrix covers every variant and semantic tone", async ({ page }) => {
   const region = page.getByTestId("badge-tones");
-  await expect(region.locator(specimenBadge)).toHaveCount(18);
-  for (const variant of ["soft", "solid", "outline"]) {
+  await expect(region.locator(specimenBadge)).toHaveCount(24);
+  for (const variant of ["soft", "solid", "outline", "surface"]) {
     for (const tone of [
       "neutral",
       "accent",
@@ -59,25 +63,47 @@ test("tone matrix covers every variant and semantic tone", async ({ page }) => {
       ).toHaveCount(1);
     }
   }
-  expect(await region.locator(`${specimenBadge}[data-variant="solid"][data-tone="neutral"]`).evaluate((element) => {
-    const probe = document.createElement("span");
-    probe.style.color = "var(--brick-color-text-primary)";
-    document.body.append(probe);
-    const primary = getComputedStyle(probe).color;
-    probe.remove();
-    const style = getComputedStyle(element);
-    return style.backgroundColor !== primary && style.color === primary;
-  })).toBe(true);
+  expect(
+    await region
+      .locator(`${specimenBadge}[data-variant="solid"][data-tone="neutral"]`)
+      .evaluate((element) => {
+        const probe = document.createElement("span");
+        probe.style.color = "var(--brick-color-text-primary)";
+        document.body.append(probe);
+        const primary = getComputedStyle(probe).color;
+        probe.remove();
+        const style = getComputedStyle(element);
+        return style.backgroundColor !== primary && style.color === primary;
+      }),
+  ).toBe(true);
+  expect(
+    await region
+      .locator(`${specimenBadge}[data-variant="surface"][data-tone="accent"]`)
+      .evaluate((element) => {
+        const style = getComputedStyle(element);
+        return (
+          style.backgroundColor !== "rgba(0, 0, 0, 0)" &&
+          style.borderTopColor !== "rgba(0, 0, 0, 0)"
+        );
+      }),
+  ).toBe(true);
 });
 
 test("sizes and shapes remain controlled comparisons", async ({ page }) => {
   const sizes = page.getByTestId("badge-sizes").locator(specimenBadge);
-  await expect(sizes).toHaveCount(3);
-  const heights = await sizes.evaluateAll((items) =>
-    items.map((item) => item.getBoundingClientRect().height),
+  await expect(sizes).toHaveCount(4);
+  const metrics = await sizes.evaluateAll((items) =>
+    items.map((item) => ({
+      fontSize: getComputedStyle(item).fontSize,
+      height: item.getBoundingClientRect().height,
+    })),
   );
+  const heights = metrics.map(({ height }) => height);
   expect(heights[0]).toBeLessThan(heights[1]);
   expect(heights[1]).toBeLessThan(heights[2]);
+  expect(metrics[0]).toMatchObject({ fontSize: "10px", height: 16 });
+  expect(metrics[3]).toMatchObject({ fontSize: "14px", height: 28 });
+  expect(metrics[2].fontSize).toBe("14px");
 
   const shapes = page.getByTestId("badge-shapes").locator(specimenBadge);
   const radii = await shapes.evaluateAll((items) =>
@@ -101,7 +127,9 @@ test("native composition preserves the finished passive root", async ({
     await expect(badge).toHaveAttribute("data-variant", "soft");
     await expect(badge).not.toHaveAttribute("role");
   }
-  await expect(region.getByRole("button", { name: "Clear filters" })).toBeVisible();
+  await expect(
+    region.getByRole("button", { name: "Clear filters" }),
+  ).toBeVisible();
   const output = region.locator("[data-rendered-output]");
   await expect(output).toHaveCount(3);
   await expect(output.nth(1)).toContainText('data-testid="badge-render"');

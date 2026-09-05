@@ -7,9 +7,15 @@ import {
   Input as AtomInput,
   type InputRootProps as AtomInputRootProps,
 } from "@flowstack-ui/atom/input";
+import {
+  controlSizeDataAttributes,
+  type ControlSize,
+  type ResponsiveControlSize,
+} from "../_control-size/ControlSize.js";
+import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
 
 export type InputVariant = "outline" | "soft" | "underline";
-export type InputSize = "sm" | "md" | "lg";
+export type InputSize = ControlSize;
 export type InputShape = "sharp" | "rounded" | "pill";
 export type InputType =
   | "text"
@@ -25,8 +31,8 @@ type InputSharedProps = Omit<
 > & {
   /** Native text-like input type. @default "text" */
   type?: InputType;
-  /** Complete control size. @default "md" */
-  size?: InputSize;
+  /** Complete responsive control size. @default "lg" */
+  size?: ResponsiveControlSize;
   /** Stretch to the available inline size. @default true */
   fullWidth?: boolean;
   /** Consumer-owned content at the logical start. */
@@ -84,7 +90,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   function Input(
     {
       clearable = false,
-      clearLabel = "Clear input",
+      clearLabel,
       className,
       endAdornment,
       fullWidth = true,
@@ -92,7 +98,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       inputStyle,
       onClear,
       shape = "rounded",
-      size = "md",
+      size = "lg",
       startAdornment,
       style,
       type = "text",
@@ -102,17 +108,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) {
+    const { localeText } = useLocaleContext();
     const resolvedShape = variant === "underline" ? undefined : shape;
 
     return (
       <span
-        className={mergeClassName("brick-input", className)}
+        className={mergeClassName("brick-input brick-control-size", className)}
         data-full-width={fullWidth ? "" : undefined}
         data-shape={resolvedShape}
-        data-size={size}
         data-slot={dataSlot ?? "input"}
         data-variant={variant}
         style={style}
+        {...controlSizeDataAttributes(size)}
       >
         {startAdornment !== undefined ? (
           <span className="brick-input-start" data-slot="input-start">
@@ -134,7 +141,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ) : null}
           {clearable ? (
             <AtomInput.Clear
-              aria-label={clearLabel}
+              aria-label={clearLabel ?? localeText.clearInput}
               className="brick-input-clear"
               data-slot="input-clear"
               onClear={onClear}

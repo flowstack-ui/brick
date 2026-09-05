@@ -15,11 +15,11 @@ async function collect(directory, extension) {
 }
 
 const expectedRouteIds = [
-  "accordion", "alert-dialog", "app-bar", "appearance", "aspect-ratio", "avatar", "badge", "blockquote", "bottom-navigation", "breadcrumb", "button", "card", "carousel",
-  "checkbox", "checkbox-group", "chip", "code", "code-block", "collapsible", "combobox", "container",
+  "accordion", "alert-dialog", "app-bar", "appearance", "aspect-ratio", "avatar", "avatar-group", "badge", "blockquote", "bottom-navigation", "breadcrumb", "button", "card", "carousel",
+  "center", "checkbox", "checkbox-group", "checkmark", "chip", "code", "code-block", "collapsible", "combobox", "container",
   "context-menu", "data-grid", "data-list", "dialog", "divider", "drawer", "dropdown-menu", "em", "feed", "field", "fieldset", "form", "grid", "group",
   "hide", "highlight", "hover-card", "icon", "icon-button", "image", "input", "kbd", "textarea", "link", "link-box", "list", "multi-select", "bleed", "prose",
-  "file-upload", "menubar", "nav-list", "navigation-menu", "notification-badge", "number-input", "otp-field", "popover", "progress", "progress-circle", "radio-group", "rating", "scroll-area", "select", "sidebar", "slider",
+  "file-upload", "for", "format-byte", "format-number", "locale-provider", "menubar", "nav-list", "navigation-menu", "notification-badge", "number-input", "otp-field", "popover", "progress", "progress-circle", "radio-group", "radio-card", "radiomark", "rating", "scroll-area", "select", "sidebar", "slider",
   "mark", "pagination", "password-toggle-field", "reorderable-list", "segment-group", "show", "skeleton", "skip-link", "stack", "status", "color-swatch", "color-picker", "section", "frame", "surface", "swipeable-item", "switch", "table", "tabs", "text", "toast", "toggle", "toggle-group", "toolbar", "tooltip", "tree", "tree-grid",
   "visually-hidden", "z-stack",
 ];

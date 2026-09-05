@@ -25,7 +25,7 @@ describe("Textarea", () => {
     expect(control).toHaveAttribute("rows", "3");
     expect(root).toHaveAttribute("data-slot", "textarea");
     expect(root).toHaveAttribute("data-variant", "outline");
-    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size", "lg");
     expect(root).toHaveAttribute("data-shape", "rounded");
     expect(root).toHaveAttribute("data-resize", "vertical");
     expect(root).toHaveAttribute("data-full-width", "");
@@ -34,7 +34,7 @@ describe("Textarea", () => {
 
   it("exposes every closed visual recipe without leaking Brick props", () => {
     const variants: TextareaVariant[] = ["outline", "soft", "underline"];
-    const sizes: TextareaSize[] = ["sm", "md", "lg"];
+    const sizes: TextareaSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
     const shapes: TextareaShape[] = ["sharp", "rounded"];
     const resizeModes: TextareaResize[] = ["none", "vertical", "horizontal", "both"];
     const { rerender } = render(<Textarea.Root aria-label="Recipe" />);

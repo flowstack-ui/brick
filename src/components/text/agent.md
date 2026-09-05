@@ -14,7 +14,7 @@ Apply Brick typography roles, tones, weight, alignment, wrapping, and deliberate
 
 ## Required composition
 
-- Choose the named semantic export when it fits. Heading requires an explicit level and keeps that level independent from its visual variant. Otherwise choose Text's semantic element first, then its closest visual variant and tone. Keep inline components that complete the same sentence inside that text owner, and use Stack only for separately meaningful text peers.
+- Choose the named semantic export when it fits. Heading requires an explicit level and keeps that level independent from its visual variant; use title-2xs for a compact 14px structural heading and title-xs for a small 16px structural heading instead of spelling a heading as generic Text plus a body recipe. Otherwise choose Text's semantic element first, then its closest visual variant and tone. Keep inline components that complete the same sentence inside that text owner, and use Stack only for separately meaningful text peers.
 
 ## Rules
 
@@ -31,7 +31,7 @@ Apply Brick typography roles, tones, weight, alignment, wrapping, and deliberate
 
 ## Common mistakes
 
-- **Avoid:** Using five spans to build brand text, repeatedly spelling ordinary headings and paragraphs as Text plus as, using capitalize to repair authored titles, selecting all-caps eyebrow styling for paragraph descriptions, allowing nested Text to override a parent's foreground, splitting one sentence into layout siblings, or aligning independent peer labels with literal whitespace. **Instead:** Use the named semantic exports where they fit, author correct casing, reserve transforms and display treatments for their intended roles, inherit the owning foreground, keep one sentence in one text flow, and use HStack gap only between separate peers.
+- **Avoid:** Using five spans to build brand text, repeatedly spelling ordinary headings and paragraphs as Text plus as, using Text as a heading with body-sm only to obtain compact sizing, using capitalize to repair authored titles, selecting all-caps eyebrow styling for paragraph descriptions, allowing nested Text to override a parent's foreground, splitting one sentence into layout siblings, or aligning independent peer labels with literal whitespace. **Instead:** Use the named semantic exports where they fit, choose Heading title-2xs for compact structural headings or title-xs for small 16px headings, author correct casing, reserve transforms and display treatments for their intended roles, inherit the owning foreground, keep one sentence in one text flow, and use HStack gap only between separate peers.
 
 ## Validation checklist
 

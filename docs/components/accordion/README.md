@@ -32,14 +32,15 @@ import "@flowstack-ui/brick/styles/accordion.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 ## Quick start
 
 ```tsx
 <Accordion.Root defaultValue="account">
   <Accordion.Item value="account">
     <Accordion.Header>
-      <Accordion.Trigger>Account <Accordion.Indicator /></Accordion.Trigger>
+      <Accordion.Trigger>
+        Account <Accordion.Indicator />
+      </Accordion.Trigger>
     </Accordion.Header>
     <Accordion.Content>
       <Accordion.ContentInner>Account settings</Accordion.ContentInner>
@@ -63,18 +64,20 @@ Named exports are `AccordionRoot`, `AccordionItem`, `AccordionHeader`,
 `AccordionContentInner`. Their types are `AccordionRootProps`,
 `AccordionItemProps`, `AccordionHeaderProps`, `AccordionTriggerProps`,
 `AccordionIndicatorProps`, `AccordionContentProps`,
-`AccordionContentInnerProps`, `AccordionVariant`, and `AccordionSize`.
+`AccordionContentInnerProps`, `AccordionVariant`, `AccordionSize`, and
+`AccordionIndicatorPlacement`.
 
-| Root prop | Values | Default |
-| --- | --- | --- |
-| `type` | `single`, `multiple` | `single` |
-| `value` / `defaultValue` | string or string array matching `type` | none |
-| `collapsible` | `boolean` | `true` |
-| `disabled` | `boolean` | `false` |
-| `orientation` | `vertical`, `horizontal` | `vertical` |
-| `dir` | `ltr`, `rtl` | direction context |
-| `variant` | `plain`, `soft`, `outline` | `plain` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| Root prop                | Values                                 | Default           |
+| ------------------------ | -------------------------------------- | ----------------- |
+| `type`                   | `single`, `multiple`                   | `single`          |
+| `value` / `defaultValue` | string or string array matching `type` | none              |
+| `collapsible`            | `boolean`                              | `true`            |
+| `disabled`               | `boolean`                              | `false`           |
+| `orientation`            | `vertical`, `horizontal`               | `vertical`        |
+| `dir`                    | `ltr`, `rtl`                           | direction context |
+| `variant`                | `plain`, `ghost`, `soft`, `outline`    | `plain`           |
+| `size`                   | `sm`, `md`, `lg`, `xl`                 | `md`              |
+| `indicatorPlacement`     | `start`, `end`                         | `end`             |
 
 Item requires a unique `value` and supports `disabled`. Header supports `h1`
 through `h6`. Content supports `keepMounted` and `landmark`; landmark defaults
@@ -84,13 +87,17 @@ replace its default artwork.
 
 ## Visual recipes and states
 
-Plain uses dividers without containing paint, soft adds a subtle group surface,
-and outline adds one containing border. Sizes coordinate trigger height,
-typography, indicator, and panel padding. A locked-open single trigger remains
-focusable with `aria-disabled="true"` and `data-locked-open`.
+Plain keeps transparent open-state paint, full-row hover feedback with
+logically inset content, and one structural divider below every Item,
+including the final row. Ghost removes item separators and blends triggers
+into the owning surface, soft adds a subtle group surface, and outline adds one
+containing border. Sizes coordinate trigger height, typography, indicator, and
+panel padding. A locked-open single trigger remains focusable with
+`aria-disabled="true"` and `data-locked-open`.
 
 The default decorative Indicator points down while its Item is closed and up
-while it is open. This vertical state cue stays the same in LTR and RTL.
+while it is open. This vertical disclosure language remains the same in LTR
+and RTL.
 
 Grouped vertical recipes use the Root as the outer silhouette: interior Trigger
 edges stay square, only the exposed first and last corners follow the Root
@@ -100,7 +107,7 @@ inside the control rather than clipped by the scroll boundary.
 
 ## Tokens and CSS hooks
 
-Stable classes use `.brick-accordion*`. Root exposes `data-variant`,
+Stable classes use `.brick-accordion*`. Root exposes `data-indicator-placement`, `data-variant`,
 `data-size`, and `data-orientation`; Atom parts expose `data-state`,
 `data-disabled`, orientation, and `data-slot` hooks. Supported variables are
 `--brick-accordion-background`, `--brick-accordion-border-color`,

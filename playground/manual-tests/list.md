@@ -13,8 +13,8 @@
 | Assistive technology | |
 | Playground route | `/list` |
 
-Scenario order: `01 Overview`, `02 Semantics`, `03 Variants`, `04 Sizes and
-density`, `05 Markers and nesting`, `06 Structured anatomy`, `07 Native output
+Scenario order: `01 Overview`, `02 Semantics`, `03 Variants`, `04 Sizes,
+density, and inset`, `05 Markers and nesting`, `06 Structured anatomy`, `07 Native output
 and state`, `08 Appearance and customization`, `09 Responsive and stress`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
@@ -23,12 +23,14 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 Setup: Open `/list`; review `01`–`05` from top to bottom.
 
-Action: Compare unordered/ordered output, boundaries, sizes, densities, all
-marker labels, and the nested sequence.
+Action: Compare unordered/ordered output, boundaries, sizes, densities, both
+inset recipes, all marker labels, and the nested sequence.
 
 Expected: Overview uses native disc markers and defaults. Each comparison
-changes only its labelled property. Ordered markers count correctly, all rows
-align, nested content indents once, and no marker or border is clipped.
+changes only its labelled property. The `none` inset removes ordinary inline
+row padding while preserving the leading-to-content gap. Ordered markers count
+correctly, all rows align, nested content indents once, and no marker or border
+is clipped.
 
 Result:
 Notes or issue:
@@ -40,7 +42,9 @@ Setup: Continue through `06` and `07`.
 Action: Compare complete and content-only rows, inspect both rendered HTML
 panels, then tab through the page and activate **Review**.
 
-Expected: Leading, content, and trailing columns align without overlap. Output
+Expected: Leading, content, and trailing columns align without overlap. The
+center-aligned structured example centers its compact visuals with its content,
+while the default structured row remains start aligned. Output
 shows native `ul`/`ol` and `li`, including `start`, `reversed`, `value`, and the
 composed elements. Disabled is passive metadata; only authored controls enter
 the tab order and activate normally.

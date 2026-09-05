@@ -44,6 +44,10 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ```tsx
 <TreeGrid.Container>
   <TreeGrid.Root aria-label="Release files" columnCount={2} rowCount={2} defaultExpandedValue={["src"]}>
+    <TreeGrid.ColumnGroup>
+      <TreeGrid.Column htmlWidth="50%" />
+      <TreeGrid.Column />
+    </TreeGrid.ColumnGroup>
     <TreeGrid.Caption>Release files</TreeGrid.Caption>
     <TreeGrid.Header>
       <TreeGrid.Row value="header" rowIndex={1} selectable={false}>
@@ -64,7 +68,8 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ## Anatomy and DOM ownership
 
 Container is an overflow `div`. Root is Atom TreeGrid rendered as a native
-`table` with `role="treegrid"`. Caption, Header, Body, Footer, Row,
+`table` with `role="treegrid"`. ColumnGroup and Column render native `colgroup`
+and `col`; Caption, Header, Body, Footer, Row,
 ColumnHeader, RowHeader, and Cell render `caption`, `thead`, `tbody`, `tfoot`,
 `tr`, `th`, `th`, and `td`. Indicator and SortIndicator are Brick-authored,
 decorative `span` elements. Refs target those exact elements.
@@ -73,21 +78,25 @@ Header/Body/Footer directly contain Rows. Data Rows use a column-1 RowHeader,
 then Cells. Indicator belongs at the logical start of that RowHeader and keeps
 leaf and branch text aligned. Consumers author stable row values, parent
 values, levels, one-based row and column indexes, and truthful counts.
+`Column.htmlWidth` is only a native CSS-pixel number or percentage sizing hint
+and does not accept CSS-unit values or define indexes, counts, hierarchy,
+navigation, or resizing.
 
 ## API
 
 ### Exports
 
-`TreeGrid`, `TreeGridContainer`, `TreeGridRoot`, `TreeGridCaption`,
+`TreeGrid`, `TreeGridContainer`, `TreeGridRoot`, `TreeGridColumnGroup`, `TreeGridColumn`, `TreeGridCaption`,
 `TreeGridHeader`, `TreeGridBody`, `TreeGridFooter`, `TreeGridRow`,
 `TreeGridColumnHeader`, `TreeGridRowHeader`, `TreeGridCell`,
-`TreeGridIndicator`, `TreeGridSortIndicator`, `TreeGridContainerProps`,
+`TreeGridIndicator`, `TreeGridSortIndicator`, `TreeGridContainerProps`, `TreeGridColumnGroupProps`, `TreeGridColumnProps`,
 `TreeGridRootProps`, `TreeGridCaptionProps`, `TreeGridHeaderProps`,
 `TreeGridBodyProps`, `TreeGridFooterProps`, `TreeGridRowProps`,
 `TreeGridColumnHeaderProps`, `TreeGridRowHeaderProps`, `TreeGridCellProps`,
 `TreeGridIndicatorProps`, `TreeGridSortIndicatorProps`, and `TreeGridVariant`,
 `TreeGridSize`, `TreeGridDensity`,
-`TreeGridCaptionSide`, and `TreeGridCellAlign` are available from root and
+`TreeGridCaptionSide`, `TreeGridCellAlign`, `TreeGridCellVerticalAlign`,
+`TreeGridSurface`, `TreeGridBorderTone`, and `TreeGridLayout` are available from root and
 `@flowstack-ui/brick/tree-grid` imports.
 
 ### Recipes
@@ -97,8 +106,15 @@ values, levels, one-based row and column indexes, and truthful counts.
 | `variant` | `line`, `outline` | defaults to `"line"` |
 | `size` | `sm`, `md`, `lg` | defaults to `"md"` |
 | `density` | `compact`, `comfortable`, `spacious` | defaults to `"comfortable"` |
+| `surface` | `transparent`, `base` | defaults to `"transparent"` |
+| `borderTone` | `subtle`, `default`, `strong` | defaults to `"default"` |
+| `showColumnBorder` | boolean | `false` |
+| `layout` | `auto`, `fixed` | defaults to `"auto"` |
+| `striped` | boolean | `false` |
+| `stickyHeader` | boolean | `false` |
 | `side` (Caption) | `top`, `bottom` | defaults to `"bottom"` |
 | Cell/header `align` | `start`, `center`, `end` | `start`, or `end` when numeric |
+| Cell/header `verticalAlign` | `top`, `middle`, `bottom` | `middle` |
 | Cell/header `numeric` | boolean | `false` |
 
 Root forwards Atom selection, expansion and active-cell control, disabled and
@@ -109,8 +125,9 @@ selection, disabled, parent, level, and coordinate props. Physical native
 
 ## Visual recipes and states
 
-Line provides row separators; outline adds a clipped rounded outer boundary
-and column separators. Size changes typography, row metrics, and hierarchy
+Line provides row separators; outline adds a clipped rounded outer boundary,
+and `showColumnBorder` independently adds column separators. Surface, border
+tone, layout, striping, and sticky header are closed Root recipes. Size changes typography, row metrics, and hierarchy
 indent. Density changes only block padding. Active cell, selected row, hover,
 disabled, expanded, and sorted states are painted from Atom attributes without
 changing semantics or authored coordinates. Outline clips header, footer, and
@@ -134,8 +151,10 @@ Pointer and active-header Enter invoke the same action.
 
 Stable classes are `.brick-tree-grid`, `.brick-tree-grid-container`, and
 `.brick-tree-grid__*`; slots use matching `tree-grid-*` values. Public state
-hooks are `data-variant`, `data-size`, `data-density`, `data-side`,
-`data-align`, `data-numeric`, and `data-slot`, plus Atom hierarchy, expansion,
+hooks are `data-variant`, `data-size`, `data-density`, `data-surface`,
+`data-border-tone`, `data-column-border`, `data-layout`, `data-striped`,
+`data-sticky-header`, `data-side`, `data-align`, `data-vertical-align`,
+`data-numeric`, and `data-slot`, plus Atom hierarchy, expansion,
 selection, action, sort, active, disabled, and hidden attributes.
 
 Public variables:
@@ -148,6 +167,7 @@ Public variables:
 - `--brick-tree-grid-header-background`
 - `--brick-tree-grid-header-foreground`
 - `--brick-tree-grid-body-background`
+- `--brick-tree-grid-row-stripe-background`
 - `--brick-tree-grid-footer-background`
 - `--brick-tree-grid-cell-foreground`
 - `--brick-tree-grid-cell-padding-inline`
@@ -168,6 +188,8 @@ Public variables:
 - `--brick-tree-grid-sort-indicator-color`
 - `--brick-tree-grid-motion-duration`
 - `--brick-tree-grid-motion-easing`
+- `--brick-tree-grid-sticky-offset`
+- `--brick-tree-grid-sticky-z-index`
 
 ## Customization
 

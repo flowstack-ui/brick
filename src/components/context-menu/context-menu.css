@@ -2,7 +2,7 @@
   :where(.brick-context-menu__content, .brick-context-menu__sub-content) {
     --brick-context-menu-content-background: var(--brick-color-surface-overlay);
     --brick-context-menu-content-foreground: var(--brick-color-text-primary);
-    --brick-context-menu-content-border: var(--brick-color-border-subtle);
+    --brick-context-menu-content-border: var(--brick-color-border-default);
     --brick-context-menu-content-radius: var(--brick-radius-overlay);
     --brick-context-menu-content-shadow: var(--brick-shadow-floating);
     --brick-context-menu-content-padding: var(--brick-space-1);

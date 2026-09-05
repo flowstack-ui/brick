@@ -19,7 +19,7 @@ const customStyle = {
   "--brick-segment-group-inset": "0.25rem",
 } as CSSProperties;
 
-const sizes: SegmentGroupSize[] = ["sm", "md", "lg"];
+const sizes: SegmentGroupSize[] = ["2xs", "xs", "sm", "md", "lg"];
 
 function Example({
   dir,
@@ -58,7 +58,7 @@ export const segmentGroupScenarios = [
     number: 2,
     title: "Sizes",
     description:
-      "Small, medium, and large align with Brick's shared named control geometry.",
+      "Two-extra-small through large retain shared outer heights while segmented labels use their own regular typography, padding, and gaps.",
   },
   {
     id: "segment-group.layout",
@@ -105,7 +105,7 @@ export function SegmentGroupPage() {
       </Scenario>
       <Scenario {...segmentGroupScenarios[1]}>
         <Grid.Root
-          columns={{ initial: 1, md: 3 }}
+          columns={{ initial: 2, md: 5 }}
           data-testid="segment-group-sizes"
           gap="4"
         >

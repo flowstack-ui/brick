@@ -11,24 +11,21 @@ import {
 } from "../_responsive-value/ResponsiveValue.js";
 
 export type TextElement =
-  | "span"
-  | "p"
-  | "div"
-  | "h1"
-  | "h2"
-  | "h3"
-  | "h4"
-  | "h5"
-  | "h6";
+  "span" | "p" | "div" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 export type TextVariant =
   | "display"
   | "display-sm"
   | "display-md"
   | "display-lg"
+  | "display-xl"
+  | "title-xl"
   | "title-lg"
   | "title-md"
   | "title-sm"
+  | "title-xs"
+  | "title-2xs"
+  | "body-xl"
   | "body-lg"
   | "body-md"
   | "body-sm"
@@ -57,10 +54,14 @@ export type HeadingVariant =
   | "display-sm"
   | "display-md"
   | "display-lg"
+  | "display-xl"
+  | "title-xl"
   | "title-lg"
   | "title-md"
-  | "title-sm";
-export type ParagraphVariant = "body-lg" | "body-md" | "body-sm";
+  | "title-sm"
+  | "title-xs"
+  | "title-2xs";
+export type ParagraphVariant = "body-xl" | "body-lg" | "body-md" | "body-sm";
 
 type TextNativeProps = Omit<
   HTMLAttributes<HTMLElement>,
@@ -78,18 +79,18 @@ type TextOverflowProps =
     };
 
 type TextVisualProps = {
-    as?: TextElement;
-    children: ReactNode;
-    variant?: ResponsiveValue<TextVariant>;
-    tone?: TextTone;
-    weight?: TextWeight;
-    align?: ResponsiveValue<TextAlign>;
-    wrap?: TextWrap;
-    transform?: TextTransform;
-    className?: string;
-    style?: CSSProperties;
-    slot?: string;
-  };
+  as?: TextElement;
+  children: ReactNode;
+  variant?: ResponsiveValue<TextVariant>;
+  tone?: TextTone;
+  weight?: TextWeight;
+  align?: ResponsiveValue<TextAlign>;
+  wrap?: TextWrap;
+  transform?: TextTransform;
+  className?: string;
+  style?: CSSProperties;
+  slot?: string;
+};
 
 export type TextProps = TextNativeProps & TextOverflowProps & TextVisualProps;
 
@@ -126,7 +127,9 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
       "data-tone": tone,
       "data-transform": transform,
       "data-truncate": truncate ? "" : undefined,
-      ...responsiveDataAttributes("data-variant", variant, { alwaysInitial: true }),
+      ...responsiveDataAttributes("data-variant", variant, {
+        alwaysInitial: true,
+      }),
       "data-weight": weight,
       "data-wrap": wrap !== "wrap" ? wrap : undefined,
       ref,
@@ -147,7 +150,7 @@ export type HeadingProps = NamedTextProps & {
 };
 
 export const Heading = forwardRef<HTMLElement, HeadingProps>(function Heading(
-  { level, variant = "title-lg", ...props },
+  { level, variant = "title-md", ...props },
   ref,
 ) {
   return <Text {...props} as={`h${level}`} ref={ref} variant={variant} />;
@@ -159,27 +162,30 @@ export type ParagraphProps = NamedTextProps & {
   variant?: ResponsiveValue<ParagraphVariant>;
 };
 
-export const Paragraph = forwardRef<HTMLElement, ParagraphProps>(function Paragraph(
-  { variant = "body-md", ...props },
-  ref,
-) {
-  return <Text {...props} as="p" ref={ref} variant={variant} />;
-});
+export const Paragraph = forwardRef<HTMLElement, ParagraphProps>(
+  function Paragraph({ variant = "body-md", ...props }, ref) {
+    return <Text {...props} as="p" ref={ref} variant={variant} />;
+  },
+);
 
 Paragraph.displayName = "Paragraph";
 
 export type CaptionProps = NamedTextProps;
 
-export const Caption = forwardRef<HTMLElement, CaptionProps>(function Caption(props, ref) {
-  return <Text {...props} as="span" ref={ref} variant="caption" />;
-});
+export const Caption = forwardRef<HTMLElement, CaptionProps>(
+  function Caption(props, ref) {
+    return <Text {...props} as="span" ref={ref} variant="caption" />;
+  },
+);
 
 Caption.displayName = "Caption";
 
 export type EyebrowProps = NamedTextProps;
 
-export const Eyebrow = forwardRef<HTMLElement, EyebrowProps>(function Eyebrow(props, ref) {
-  return <Text {...props} as="span" ref={ref} variant="eyebrow" />;
-});
+export const Eyebrow = forwardRef<HTMLElement, EyebrowProps>(
+  function Eyebrow(props, ref) {
+    return <Text {...props} as="span" ref={ref} variant="eyebrow" />;
+  },
+);
 
 Eyebrow.displayName = "Eyebrow";

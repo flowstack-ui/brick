@@ -6,6 +6,9 @@ Color Picker follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Separated the compact current-value preview from selectable preset sizing so
+  integrated color fields use a polished 16px `xs` or 18px `sm` ValueSwatch
+  without shrinking the popup palette.
 - Kept channel-slider thumbs above their tracks across the full value range and
   kept semantic checkerboards visible beneath translucent `ValueSwatch` and
   `Swatch` colors supplied by Atom.

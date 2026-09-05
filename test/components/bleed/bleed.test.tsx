@@ -31,6 +31,17 @@ describe("Bleed", () => {
     expect(bleed).not.toHaveAttribute("blockStart");
   });
 
+  it("uses zero bleed below the first sparse responsive edge", () => {
+    render(<Bleed data-testid="bleed" inline={{ lg: 6 }}>Media</Bleed>);
+    const style = screen.getByTestId("bleed").style;
+    expect(style.getPropertyValue("--brick-bleed-inline-start")).toBe(
+      "var(--brick-space-0)",
+    );
+    expect(style.getPropertyValue("--brick-bleed-inline-start-lg")).toBe(
+      "calc(var(--brick-space-1) * 6)",
+    );
+  });
+
   it("composes onto one existing semantic host without a wrapper", () => {
     const ref = createRef<HTMLElement>();
     const { container } = render(

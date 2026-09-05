@@ -4,6 +4,18 @@ Input follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Clear actions now inherit their generic accessible label from
+  `LocaleProvider` when `clearLabel` is omitted.
+- Expanded Input to the responsive shared 2xs–2xl control-size scale and made
+  the 44px `lg` recipe the default.
+
+### Fixed
+
+- Use an explicit system-color outline for focused controls in forced-colors
+  mode so Input and Textarea expose the same unclipped focus affordance.
+
 ### Added
 
 - Initial Input API with outline, soft, and underline recipes; small, medium,

@@ -68,6 +68,9 @@ test("finished field, slider, and swatch recipes keep exact geometry", async ({ 
   expect(geometry.borderWidth).toBe("1px");
   expect(geometry.children.filter((child) => child.slot !== "color-picker-value-swatch").every((child) => child.borderWidth === "0px")).toBe(true);
   expect(geometry.children.filter((child) => child.slot !== "color-picker-value-swatch").every((child) => Math.abs(child.height - (geometry.height - 2)) <= 1)).toBe(true);
+  const valueSwatchBox = await integrated.locator("[data-slot='color-picker-value-swatch']").boundingBox();
+  expect(valueSwatchBox!.width).toBe(16);
+  expect(valueSwatchBox!.height).toBe(16);
 
   const sizeTriggers = page.locator('[data-scenario="color-picker.recipes"] [data-slot="color-picker-trigger"]');
   for (const trigger of await sizeTriggers.all()) {

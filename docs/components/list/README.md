@@ -42,7 +42,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 Public exports include `List`, `ListRootProps`, `ListItemProps`,
 `ListLeadingProps`, `ListContentProps`, `ListTitleProps`,
 `ListDescriptionProps`, `ListTrailingProps`, `ListVariant`, `ListSize`,
-`ListDensity`, and `ListMarker`.
+`ListDensity`, `ListAlign`, `ListInset`, and `ListMarker`.
 
 ## Quick start
 
@@ -92,6 +92,8 @@ layout can coexist. It is not a public part or customization hook.
 | `variant` | `plain`, `divided`, `bordered` | `plain` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `density` | `compact`, `comfortable` | `comfortable` |
+| `align` | `start`, `center`, `end` | `start` |
+| `inset` | `default`, `none` | `default` |
 | `marker` | `auto`, `disc`, `circle`, `square`, `decimal`, `lower-alpha`, `upper-alpha`, `lower-roman`, `upper-roman`, `none` | `auto` |
 
 Root preserves Atom `render`, `asChild`, slots, refs, and native attributes.
@@ -110,7 +112,12 @@ native attributes, data/ARIA attributes, classes, styles, slots, and refs.
 Plain has no component border. Divided adds boundaries between peer Items.
 Bordered adds an outer rounded boundary and peer dividers. Size changes shared
 typography and leading metrics. Density changes only vertical row space.
-Marker changes only marker presentation.
+Marker changes only marker presentation. `align` changes the cross-axis
+alignment shared by Leading, Content, and Trailing in structured rows; it has
+no effect on simple text Items. `inset="none"` removes ordinary item inline
+padding so leading content can share a logical start with adjacent content;
+the default preserves size-owned List rhythm, while bordered marker geometry
+remains controlled by the bordered recipe.
 
 Items support simple direct content or a three-column structured row. Long
 Title and Description content wraps rather than truncates. Disabled changes
@@ -126,8 +133,8 @@ Stable classes are `.brick-list`, `.brick-list__item`,
 `list`, `list-item`, `list-leading`, `list-content`, `list-title`,
 `list-description`, and `list-trailing` names.
 
-Root exposes `data-variant`, `data-size`, `data-density`, `data-marker`, and
-Atom `data-ordered`. Every part exposes `data-slot`; Item exposes Atom
+Root exposes `data-variant`, `data-size`, `data-density`, `data-align`,
+`data-inset`, `data-marker`, and Atom `data-ordered`. Every part exposes `data-slot`; Item exposes Atom
 `data-disabled` when applicable.
 
 Public variables:
@@ -214,7 +221,7 @@ Button, Card, Surface, or other composed components.
 ### Structured status rows
 
 ```tsx
-<List.Root marker="none" variant="divided">
+<List.Root align="center" marker="none" variant="divided">
   <List.Item>
     <List.Leading><Icon aria-hidden="true">{/* SVG */}</Icon></List.Leading>
     <List.Content>

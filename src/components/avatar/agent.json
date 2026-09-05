@@ -21,7 +21,8 @@
   ],
   "composition": [
     "Provide explicit alt and fallback; keep Avatar passive and let an owning Button or Link provide interaction, focus, and the functional accessible name.",
-    "Keep visible identity or status text nearby when the image or status ring alone would be ambiguous or consequential."
+    "Keep visible identity or status text nearby when the image or status ring alone would be ambiguous or consequential.",
+    "Use AvatarGroup when multiple Avatars need one overlap, stacking, size, shape, or overflow contract."
   ],
   "rules": [
     {
@@ -75,5 +76,5 @@
     "Check missing, idle, loading, loaded, changed-source, and error paths; delayed fallback timing; fixed square size; crop; informative and decorative naming; passive semantics; nearby identity/status text; light/dark/forced colors; zoom; and RTL.",
     "Confirm a named Avatar size is used, CSS is loaded, and any owning Button, Link, or NotificationBadge preserves its own public contract."
   ],
-  "related": [{"kind": "package", "package": "@flowstack-ui/atom", "id": "avatar", "versionPolicy": "installed-exact"}, "image", "button", "link", "notification-badge", "badge", "status"]
+  "related": [{"kind": "package", "package": "@flowstack-ui/atom", "id": "avatar", "versionPolicy": "installed-exact"}, "avatar-group", "image", "button", "link", "notification-badge", "badge", "status"]
 }

@@ -1,5 +1,5 @@
 @layer brick.components {
- .brick-otp-field{--brick-otp-size:var(--brick-control-min-block-size-md);--brick-otp-radius:var(--brick-radius-control);display:flex;flex-wrap:wrap;align-items:center;gap:var(--brick-space-2)}
+ .brick-otp-field{--brick-otp-size:var(--brick-control-min-block-size-md);--brick-otp-radius:var(--brick-radius-control);display:flex;flex-wrap:wrap;align-items:center;gap:var(--brick-space-2);font-family:var(--brick-otp-font-family);font-size:var(--brick-otp-font-size);font-weight:var(--brick-otp-font-weight);line-height:var(--brick-otp-line-height)}
  .brick-otp-field[data-size="sm"]{--brick-otp-size:var(--brick-control-min-block-size-sm)} .brick-otp-field[data-size="lg"]{--brick-otp-size:var(--brick-control-min-block-size-lg)} .brick-otp-field[data-shape="sharp"]{--brick-otp-radius:0}
  .brick-otp-field-group{display:inline-flex;gap:var(--brick-space-2)} .brick-otp-field[data-layout="attached"] .brick-otp-field-group{gap:0}
  .brick-otp-field-input{box-sizing:border-box;inline-size:var(--brick-otp-size);block-size:var(--brick-otp-size);padding:0;border:var(--brick-border-width) solid var(--brick-color-border-strong);border-radius:var(--brick-otp-radius);outline:0;background:var(--brick-color-surface-raised);color:var(--brick-color-text-primary);font:inherit;text-align:center}

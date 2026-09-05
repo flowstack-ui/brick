@@ -28,20 +28,25 @@ import {
   type SelectValueProps as AtomSelectValueProps,
   type SelectViewportProps as AtomSelectViewportProps,
 } from "@flowstack-ui/atom/select";
+import {
+  controlSizeDataAttributes,
+  type ControlSize,
+  type ResponsiveControlSize,
+} from "../_control-size/ControlSize.js";
 
-export type SelectVariant = "outline" | "soft" | "underline";
-export type SelectSize = "sm" | "md" | "lg";
+export type SelectVariant = "outline" | "soft" | "ghost" | "underline";
+export type SelectSize = ControlSize;
 export type SelectShape = "sharp" | "rounded" | "pill";
 
 type SelectRootSharedProps = Omit<AtomSelectRootProps, "children"> & {
   children: ReactNode;
-  size?: SelectSize;
+  size?: ResponsiveControlSize;
   fullWidth?: boolean;
 };
 
 export type SelectRootProps = SelectRootSharedProps &
   (
-    | { variant?: "outline" | "soft"; shape?: SelectShape }
+    | { variant?: "outline" | "soft" | "ghost"; shape?: SelectShape }
     | { variant: "underline"; shape?: never }
   );
 export type SelectTriggerProps = AtomSelectTriggerProps;
@@ -63,14 +68,14 @@ export type SelectArrowProps = Omit<AtomSelectArrowProps, "children"> & { childr
 
 interface SelectVisualContextValue {
   variant: SelectVariant;
-  size: SelectSize;
+  size: ResponsiveControlSize;
   shape?: SelectShape;
   fullWidth: boolean;
 }
 
 const SelectVisualContext = createContext<SelectVisualContextValue>({
   variant: "outline",
-  size: "md",
+  size: "lg",
   shape: "rounded",
   fullWidth: true,
 });
@@ -119,6 +124,7 @@ function selectItemText(children: ReactNode): string | undefined {
 function supplyStaticItemLabels(children: ReactNode): ReactNode {
   const mapped = Children.map(children, (child) => {
     if (!isValidElement<{ children?: ReactNode; label?: string }>(child)) return child;
+    if (typeof child.props.children === "function") return child;
     const nested = supplyStaticItemLabels(child.props.children);
     if (child.type === SelectItem && child.props.label === undefined) {
       return cloneElement(child, { label: selectItemText(child.props.children) }, nested);
@@ -133,7 +139,7 @@ export function SelectRoot({
   children,
   fullWidth = true,
   shape = "rounded",
-  size = "md",
+  size = "lg",
   variant = "outline",
   ...props
 }: SelectRootProps) {
@@ -151,13 +157,13 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(
     return (
       <AtomSelect.Trigger
         {...props}
-        className={mergeClassName("brick-select-trigger", className)}
+        className={mergeClassName("brick-select-trigger brick-control-size", className)}
         data-full-width={visual.fullWidth ? "" : undefined}
         data-shape={visual.shape}
-        data-size={visual.size}
         data-slot={slotOrDefault(dataSlot, "select-trigger")}
         data-variant={visual.variant}
         ref={ref}
+        {...controlSizeDataAttributes(visual.size)}
       />
     );
   },
@@ -180,7 +186,7 @@ export const SelectPortal = AtomSelect.Portal;
 export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
   function SelectContent({ className, "data-slot": dataSlot, ...props }, ref) {
     const visual = useContext(SelectVisualContext);
-    return <AtomSelect.Content {...props} className={mergeClassName("brick-select-content", className)} data-size={visual.size} data-slot={slotOrDefault(dataSlot, "select-listbox")} ref={ref} />;
+    return <AtomSelect.Content {...props} className={mergeClassName("brick-select-content brick-control-size", className)} data-slot={slotOrDefault(dataSlot, "select-listbox")} ref={ref} {...controlSizeDataAttributes(visual.size)} />;
   },
 );
 

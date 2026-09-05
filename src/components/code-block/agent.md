@@ -29,6 +29,7 @@ Present preserved multi-line technical source with native scrolling, explicit me
 - **MUST:** Give every focusable Content region a specific aria-label or aria-labelledby, especially when several examples share one page.
 - **MUST:** Author Line metadata from the authoritative source or trusted adapter output; do not infer diffs, focus, or highlighting from visual tokens.
 - **MUST:** Keep standalone maxLines content reachable through its focusable viewport; for expansion, pair CollapsePreview and CollapseContent with an accessible CollapseTrigger so only the current source view is exposed.
+- **MUST:** Inherit Brick's shared selection background and foreground by default; when a syntax palette needs local selection paint, override both public Code Block selection variables together and verify their text contrast.
 - **MUST:** Load styles.css or core.css plus code-block.css and its documented component dependencies.
 
 ## Common mistakes

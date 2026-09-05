@@ -26,6 +26,11 @@ const action: IconButtonProps = {
   type: "submit",
   variant,
 };
+const responsiveAction: IconButtonProps = {
+  "aria-label": "Responsive search",
+  children: createElement("svg"),
+  size: { md: "md", xl: "2xl" },
+};
 const actionWithRef = createElement(IconButton, {
   ...action,
   ref: createRef<HTMLElement>(),
@@ -53,6 +58,7 @@ const composed: IconButtonProps = {
 
 void IconButton;
 void action;
+void responsiveAction;
 void actionWithRef;
 void link;
 void rendered;
@@ -76,7 +82,7 @@ const invalidSize: IconButtonProps = {
   "aria-label": "Invalid",
   children: createElement("svg"),
   // @ts-expect-error IconButton sizes are a closed recipe set.
-  size: "2xl",
+  size: "3xl",
 };
 
 const invalidShape: IconButtonProps = {

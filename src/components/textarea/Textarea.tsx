@@ -7,9 +7,14 @@ import {
   type TextareaCountProps as AtomTextareaCountProps,
   type TextareaRootProps as AtomTextareaRootProps,
 } from "@flowstack-ui/atom/textarea";
+import {
+  controlSizeDataAttributes,
+  type ControlSize,
+  type ResponsiveControlSize,
+} from "../_control-size/ControlSize.js";
 
 export type TextareaVariant = "outline" | "soft" | "underline";
-export type TextareaSize = "sm" | "md" | "lg";
+export type TextareaSize = ControlSize;
 export type TextareaShape = "sharp" | "rounded";
 export type TextareaResize = "none" | "vertical" | "horizontal" | "both";
 
@@ -22,8 +27,8 @@ type TextareaRootSharedProps = Omit<
   | "size"
   | "style"
 > & {
-  /** Complete control size. @default "md" */
-  size?: TextareaSize;
+  /** Complete responsive control size. @default "lg" */
+  size?: ResponsiveControlSize;
   /** Stretch to the available inline size. @default true */
   fullWidth?: boolean;
   /** Class applied to the visual wrapper. */
@@ -84,7 +89,7 @@ export const TextareaRoot = forwardRef<HTMLTextAreaElement, TextareaRootProps>(
       minRows = 3,
       resize = "vertical",
       shape = "rounded",
-      size = "md",
+      size = "lg",
       style,
       textareaClassName,
       textareaStyle,
@@ -99,15 +104,15 @@ export const TextareaRoot = forwardRef<HTMLTextAreaElement, TextareaRootProps>(
 
     return (
       <span
-        className={mergeClassName("brick-textarea", className)}
+        className={mergeClassName("brick-textarea brick-control-size", className)}
         data-autoresize={autoResize ? "" : undefined}
         data-full-width={fullWidth ? "" : undefined}
         data-resize={resolvedResize}
         data-shape={resolvedShape}
-        data-size={size}
         data-slot={dataSlot ?? "textarea"}
         data-variant={variant}
         style={style}
+        {...controlSizeDataAttributes(size)}
       >
         <AtomTextarea.Root
           {...props}

@@ -14,6 +14,7 @@ import type {
   ResponsiveBreakpoint,
   ResponsiveValue,
 } from "../_responsive-value/ResponsiveValue.js";
+import { normalizeResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 
 export type { ResponsiveValue };
 export type FrameLength = string | number;
@@ -50,12 +51,11 @@ function serializeLength(value: FrameLength) {
 
 function constraintVariables(property: FrameProperty, value: ResponsiveValue<FrameLength> | undefined) {
   if (value === undefined) return {};
-  const values = typeof value === "object" && value !== null && "initial" in value
-    ? value
-    : { initial: value };
-  const variables: FrameStyle = {
-    [`--brick-frame-${property}`]: serializeLength(values.initial),
-  };
+  const values = normalizeResponsiveValue(value);
+  const variables: FrameStyle = {};
+  if (values.initial !== undefined) {
+    variables[`--brick-frame-${property}`] = serializeLength(values.initial);
+  }
   for (const breakpoint of breakpoints) {
     const next = (values as Partial<Record<ResponsiveBreakpoint, FrameLength>>)[breakpoint];
     if (next !== undefined) {

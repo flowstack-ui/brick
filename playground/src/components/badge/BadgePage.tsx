@@ -13,16 +13,13 @@ import {
   type BadgeTone,
   type BadgeVariant,
 } from "@flowstack-ui/brick";
-import {
-  Scenario,
-  type ScenarioDefinition,
-} from "../../shared/Scenario.js";
+import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import "./badge.playground.css";
 
-const variants: BadgeVariant[] = ["soft", "solid", "outline"];
+const variants: BadgeVariant[] = ["soft", "solid", "outline", "surface"];
 const tones: BadgeTone[] = [
   "neutral",
   "accent",
@@ -31,7 +28,7 @@ const tones: BadgeTone[] = [
   "warning",
   "danger",
 ];
-const sizes: BadgeSize[] = ["sm", "md", "lg"];
+const sizes: BadgeSize[] = ["xs", "sm", "md", "lg"];
 const shapes: BadgeShape[] = ["rounded", "pill"];
 
 const tokenCustomization = {
@@ -53,8 +50,12 @@ function EvidenceGroup({
   return (
     <VStack as="section" className="badge-evidence-group">
       <VStack className="badge-evidence-group__heading">
-        <Text as="h3" variant="title-sm">{title}</Text>
-        <Text as="p" tone="secondary" variant="body-sm">{description}</Text>
+        <Text as="h3" variant="title-sm">
+          {title}
+        </Text>
+        <Text as="p" tone="secondary" variant="body-sm">
+          {description}
+        </Text>
       </VStack>
       {children}
     </VStack>
@@ -100,7 +101,7 @@ export const badgeScenarios = [
   },
   {
     description:
-      "Size changes only text scale, minimum block size, and padding. Every specimen retains the default soft neutral rounded recipe and identical content.",
+      "Size changes container density from a 16px micro label through the 28px large label. Large retains 14px text while increasing minimum block size and padding.",
     id: "badge.sizes",
     number: 4,
     title: "Sizes",
@@ -146,14 +147,19 @@ export function BadgePage() {
       data-testid="badge-workbench"
     >
       <Scenario {...badgeScenarios[0]}>
-        <EvidenceSurface className="badge-overview" data-testid="badge-overview" inset="lg">
+        <EvidenceSurface
+          className="badge-overview"
+          data-testid="badge-overview"
+          inset="lg"
+        >
           <Badge>Published</Badge>
         </EvidenceSurface>
       </Scenario>
 
       <Scenario {...badgeScenarios[1]}>
-        <Grid.Root columns={3}
-          className="badge-specimen-grid badge-specimen-grid--three"
+        <Grid.Root
+          columns={4}
+          className="badge-specimen-grid badge-specimen-grid--four"
           data-testid="badge-variants"
         >
           {variants.map((variant) => (
@@ -172,7 +178,10 @@ export function BadgePage() {
               key={variant}
               title={`${variant[0].toUpperCase()}${variant.slice(1)} tones`}
             >
-              <Grid.Root columns={6} className="badge-specimen-grid badge-specimen-grid--six">
+              <Grid.Root
+                columns={6}
+                className="badge-specimen-grid badge-specimen-grid--six"
+              >
                 {tones.map((tone) => (
                   <SpecimenCell key={tone} label={tone}>
                     <Badge tone={tone} variant={variant}>
@@ -187,8 +196,9 @@ export function BadgePage() {
       </Scenario>
 
       <Scenario {...badgeScenarios[3]}>
-        <Grid.Root columns={3}
-          className="badge-specimen-grid badge-specimen-grid--three"
+        <Grid.Root
+          columns={4}
+          className="badge-specimen-grid badge-specimen-grid--four"
           data-testid="badge-sizes"
         >
           {sizes.map((size) => (
@@ -200,7 +210,8 @@ export function BadgePage() {
       </Scenario>
 
       <Scenario {...badgeScenarios[4]}>
-        <Grid.Root columns={2}
+        <Grid.Root
+          columns={2}
           className="badge-specimen-grid badge-specimen-grid--two"
           data-testid="badge-shapes"
         >
@@ -213,14 +224,24 @@ export function BadgePage() {
       </Scenario>
 
       <Scenario {...badgeScenarios[5]}>
-        <VStack className="badge-evidence-stack" data-testid="badge-composition">
+        <VStack
+          className="badge-evidence-stack"
+          data-testid="badge-composition"
+        >
           <EvidenceGroup
             description="Visible text supplies meaning in headings, prose, and metadata; tone only reinforces that authored copy."
             title="Semantic contexts"
           >
-            <Grid.Root columns={3} className="badge-specimen-grid badge-specimen-grid--three">
+            <Grid.Root
+              columns={3}
+              className="badge-specimen-grid badge-specimen-grid--three"
+            >
               <SpecimenCell label="heading">
-                <Text as="h3" className="badge-inline-context" variant="title-sm">
+                <Text
+                  as="h3"
+                  className="badge-inline-context"
+                  variant="title-sm"
+                >
                   Deployments <Badge>Healthy</Badge>
                 </Text>
               </SpecimenCell>
@@ -235,10 +256,21 @@ export function BadgePage() {
                 </Text>
               </SpecimenCell>
               <SpecimenCell label="icon and label">
-                <Badge data-testid="badge-icon-label" shape="pill" tone="accent">
+                <Badge
+                  data-testid="badge-icon-label"
+                  shape="pill"
+                  tone="accent"
+                >
                   <Icon size="xs">
                     <svg viewBox="0 0 24 24">
-                      <path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                      <path
+                        d="M5 12h14m-5-5 5 5-5 5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                      />
                     </svg>
                   </Icon>
                   Built for business
@@ -270,7 +302,10 @@ export function BadgePage() {
             description="A passive label and an interactive command are different components even when both use compact geometry."
             title="Component routing"
           >
-            <Grid.Root columns={2} className="badge-specimen-grid badge-specimen-grid--two">
+            <Grid.Root
+              columns={2}
+              className="badge-specimen-grid badge-specimen-grid--two"
+            >
               <SpecimenCell label="Badge · passive">
                 <Badge>TypeScript</Badge>
               </SpecimenCell>
@@ -288,17 +323,22 @@ export function BadgePage() {
             description="Adjacent light and dark scopes preserve Badge’s default recipe."
             title="Scoped appearances"
           >
-            <Grid.Root columns={2}
+            <Grid.Root
+              columns={2}
               className="badge-scoped-appearance-grid"
               data-testid="badge-appearance"
             >
               <EvidenceSurface data-brick-appearance="light">
                 <SpecimenLabel>Light</SpecimenLabel>
-                <div className="badge-appearance-preview"><Badge>Status</Badge></div>
+                <div className="badge-appearance-preview">
+                  <Badge>Status</Badge>
+                </div>
               </EvidenceSurface>
               <EvidenceSurface data-brick-appearance="dark">
                 <SpecimenLabel>Dark</SpecimenLabel>
-                <div className="badge-appearance-preview"><Badge>Status</Badge></div>
+                <div className="badge-appearance-preview">
+                  <Badge>Status</Badge>
+                </div>
               </EvidenceSurface>
             </Grid.Root>
           </EvidenceGroup>
@@ -306,10 +346,16 @@ export function BadgePage() {
             description="The code names the supported mechanism and exactly matches the rendered result."
             title="Consumer customization"
           >
-            <EvidenceSurface as="article" className="badge-customization" inset="none">
+            <EvidenceSurface
+              as="article"
+              className="badge-customization"
+              inset="none"
+            >
               <div>
                 <SpecimenLabel>Customized</SpecimenLabel>
-                <Text as="h4" variant="title-sm">Component CSS properties</Text>
+                <Text as="h4" variant="title-sm">
+                  Component CSS properties
+                </Text>
                 <Text as="p" tone="secondary" variant="body-sm">
                   Public Badge tokens replace the complete color recipe and
                   radius for this instance only.
@@ -333,10 +379,7 @@ export function BadgePage() {
 </Badge>`}</PlaygroundCodeBlock>
               </div>
               <div className="badge-customization__preview">
-                <Badge
-                  data-slot="custom-status"
-                  style={tokenCustomization}
-                >
+                <Badge data-slot="custom-status" style={tokenCustomization}>
                   Status
                 </Badge>
               </div>

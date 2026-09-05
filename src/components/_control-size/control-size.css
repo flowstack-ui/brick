@@ -1,0 +1,798 @@
+@layer brick.components {
+  .brick-control-size[data-size="2xs"] {
+    --brick-control-size-block: var(--brick-control-min-block-size-2xs);
+    --brick-control-size-padding-inline: 0.5rem;
+    --brick-control-size-padding-block: 0.25rem;
+    --brick-control-size-gap: 0.25rem;
+    --brick-control-size-icon: 0.75rem;
+    --brick-control-size-target: 1.5rem;
+    --brick-control-size-value-font-family: var(--brick-typography-caption-font-family);
+    --brick-control-size-value-font-size: var(--brick-typography-caption-font-size);
+    --brick-control-size-value-font-weight: var(--brick-typography-caption-font-weight);
+    --brick-control-size-value-line-height: var(--brick-typography-caption-line-height);
+    --brick-control-size-value-letter-spacing: var(--brick-typography-caption-letter-spacing);
+    --brick-control-size-font-family: var(--brick-typography-control-xs-font-family);
+    --brick-control-size-font-size: var(--brick-typography-control-xs-font-size);
+    --brick-control-size-font-weight: var(--brick-typography-control-xs-font-weight);
+    --brick-control-size-line-height: var(--brick-typography-control-xs-line-height);
+    --brick-control-size-letter-spacing: var(--brick-typography-control-xs-letter-spacing);
+  }
+
+  .brick-control-size[data-size="xs"] {
+    --brick-control-size-block: var(--brick-control-min-block-size-xs);
+    --brick-control-size-padding-inline: 0.625rem;
+    --brick-control-size-padding-block: 0.375rem;
+    --brick-control-size-gap: 0.25rem;
+    --brick-control-size-icon: 0.875rem;
+    --brick-control-size-target: 1.75rem;
+    --brick-control-size-value-font-family: var(--brick-typography-caption-font-family);
+    --brick-control-size-value-font-size: var(--brick-typography-caption-font-size);
+    --brick-control-size-value-font-weight: var(--brick-typography-caption-font-weight);
+    --brick-control-size-value-line-height: var(--brick-typography-caption-line-height);
+    --brick-control-size-value-letter-spacing: var(--brick-typography-caption-letter-spacing);
+    --brick-control-size-font-family: var(--brick-typography-control-xs-font-family);
+    --brick-control-size-font-size: var(--brick-typography-control-xs-font-size);
+    --brick-control-size-font-weight: var(--brick-typography-control-xs-font-weight);
+    --brick-control-size-line-height: var(--brick-typography-control-xs-line-height);
+    --brick-control-size-letter-spacing: var(--brick-typography-control-xs-letter-spacing);
+  }
+
+  .brick-control-size[data-size="sm"] {
+    --brick-control-size-block: var(--brick-control-min-block-size-sm);
+    --brick-control-size-padding-inline: 0.75rem;
+    --brick-control-size-padding-block: 0.5rem;
+    --brick-control-size-gap: 0.375rem;
+    --brick-control-size-icon: 1rem;
+    --brick-control-size-target: 2rem;
+    --brick-control-size-value-font-family: var(--brick-typography-body-sm-font-family);
+    --brick-control-size-value-font-size: var(--brick-typography-body-sm-font-size);
+    --brick-control-size-value-font-weight: var(--brick-typography-body-sm-font-weight);
+    --brick-control-size-value-line-height: var(--brick-typography-body-sm-line-height);
+    --brick-control-size-value-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    --brick-control-size-font-family: var(--brick-typography-control-sm-font-family);
+    --brick-control-size-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-control-size-font-weight: var(--brick-typography-control-sm-font-weight);
+    --brick-control-size-line-height: var(--brick-typography-control-sm-line-height);
+    --brick-control-size-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+  }
+
+  .brick-control-size[data-size="md"] {
+    --brick-control-size-block: var(--brick-control-min-block-size-md);
+    --brick-control-size-padding-inline: 0.75rem;
+    --brick-control-size-padding-block: 0.5rem;
+    --brick-control-size-gap: 0.5rem;
+    --brick-control-size-icon: 1rem;
+    --brick-control-size-target: 2rem;
+    --brick-control-size-value-font-family: var(--brick-typography-body-sm-font-family);
+    --brick-control-size-value-font-size: var(--brick-typography-body-sm-font-size);
+    --brick-control-size-value-font-weight: var(--brick-typography-body-sm-font-weight);
+    --brick-control-size-value-line-height: var(--brick-typography-body-sm-line-height);
+    --brick-control-size-value-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    --brick-control-size-font-family: var(--brick-typography-control-sm-font-family);
+    --brick-control-size-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-control-size-font-weight: var(--brick-typography-control-sm-font-weight);
+    --brick-control-size-line-height: var(--brick-typography-control-sm-line-height);
+    --brick-control-size-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+  }
+
+  .brick-control-size[data-size="lg"] {
+    --brick-control-size-block: var(--brick-control-min-block-size-lg);
+    --brick-control-size-padding-inline: 1rem;
+    --brick-control-size-padding-block: 0.625rem;
+    --brick-control-size-gap: 0.5rem;
+    --brick-control-size-icon: 1.125rem;
+    --brick-control-size-target: 2.25rem;
+    --brick-control-size-value-font-family: var(--brick-typography-body-md-font-family);
+    --brick-control-size-value-font-size: var(--brick-typography-body-md-font-size);
+    --brick-control-size-value-font-weight: var(--brick-typography-body-md-font-weight);
+    --brick-control-size-value-line-height: var(--brick-typography-body-md-line-height);
+    --brick-control-size-value-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    --brick-control-size-font-family: var(--brick-typography-control-lg-font-family);
+    --brick-control-size-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-control-size-font-weight: var(--brick-typography-control-lg-font-weight);
+    --brick-control-size-line-height: var(--brick-typography-control-lg-line-height);
+    --brick-control-size-letter-spacing: var(--brick-typography-control-lg-letter-spacing);
+  }
+
+  .brick-control-size[data-size="xl"] {
+    --brick-control-size-block: var(--brick-control-min-block-size-xl);
+    --brick-control-size-padding-inline: 1rem;
+    --brick-control-size-padding-block: 0.75rem;
+    --brick-control-size-gap: 0.625rem;
+    --brick-control-size-icon: 1.25rem;
+    --brick-control-size-target: 2.5rem;
+    --brick-control-size-value-font-family: var(--brick-typography-body-md-font-family);
+    --brick-control-size-value-font-size: var(--brick-typography-body-md-font-size);
+    --brick-control-size-value-font-weight: var(--brick-typography-body-md-font-weight);
+    --brick-control-size-value-line-height: var(--brick-typography-body-md-line-height);
+    --brick-control-size-value-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    --brick-control-size-font-family: var(--brick-typography-control-lg-font-family);
+    --brick-control-size-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-control-size-font-weight: var(--brick-typography-control-lg-font-weight);
+    --brick-control-size-line-height: var(--brick-typography-control-lg-line-height);
+    --brick-control-size-letter-spacing: var(--brick-typography-control-lg-letter-spacing);
+  }
+
+  .brick-control-size[data-size="2xl"] {
+    --brick-control-size-block: var(--brick-control-min-block-size-2xl);
+    --brick-control-size-padding-inline: 1.5rem;
+    --brick-control-size-padding-block: 1rem;
+    --brick-control-size-gap: 0.75rem;
+    --brick-control-size-icon: 1.5rem;
+    --brick-control-size-target: 3rem;
+    --brick-control-size-value-font-family: var(--brick-typography-body-lg-font-family);
+    --brick-control-size-value-font-size: var(--brick-typography-body-lg-font-size);
+    --brick-control-size-value-font-weight: var(--brick-typography-body-lg-font-weight);
+    --brick-control-size-value-line-height: var(--brick-typography-body-lg-line-height);
+    --brick-control-size-value-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+    --brick-control-size-font-family: var(--brick-typography-control-xl-font-family);
+    --brick-control-size-font-size: var(--brick-typography-control-xl-font-size);
+    --brick-control-size-font-weight: var(--brick-typography-control-xl-font-weight);
+    --brick-control-size-line-height: var(--brick-typography-control-xl-line-height);
+    --brick-control-size-letter-spacing: var(--brick-typography-control-xl-letter-spacing);
+  }
+
+  @media (width >= 30rem) {
+    .brick-control-size[data-size-sm="2xs"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-2xs);
+      --brick-control-size-padding-inline: 0.5rem;
+      --brick-control-size-padding-block: 0.25rem;
+      --brick-control-size-gap: 0.25rem;
+      --brick-control-size-icon: 0.75rem;
+      --brick-control-size-target: 1.5rem;
+      --brick-control-size-value-font-family: var(--brick-typography-caption-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-caption-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-caption-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-caption-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xs-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xs-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xs-letter-spacing);
+    }
+
+    .brick-control-size[data-size-sm="xs"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-xs);
+      --brick-control-size-padding-inline: 0.625rem;
+      --brick-control-size-padding-block: 0.375rem;
+      --brick-control-size-gap: 0.25rem;
+      --brick-control-size-icon: 0.875rem;
+      --brick-control-size-target: 1.75rem;
+      --brick-control-size-value-font-family: var(--brick-typography-caption-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-caption-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-caption-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-caption-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xs-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xs-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xs-letter-spacing);
+    }
+
+    .brick-control-size[data-size-sm="sm"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-sm);
+      --brick-control-size-padding-inline: 0.75rem;
+      --brick-control-size-padding-block: 0.5rem;
+      --brick-control-size-gap: 0.375rem;
+      --brick-control-size-icon: 1rem;
+      --brick-control-size-target: 2rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-sm-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-sm-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+    }
+
+    .brick-control-size[data-size-sm="md"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-md);
+      --brick-control-size-padding-inline: 0.75rem;
+      --brick-control-size-padding-block: 0.5rem;
+      --brick-control-size-gap: 0.5rem;
+      --brick-control-size-icon: 1rem;
+      --brick-control-size-target: 2rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-sm-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-sm-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+    }
+
+    .brick-control-size[data-size-sm="lg"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-lg);
+      --brick-control-size-padding-inline: 1rem;
+      --brick-control-size-padding-block: 0.625rem;
+      --brick-control-size-gap: 0.5rem;
+      --brick-control-size-icon: 1.125rem;
+      --brick-control-size-target: 2.25rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-md-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-md-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-md-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-lg-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-lg-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-lg-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-lg-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-lg-letter-spacing);
+    }
+
+    .brick-control-size[data-size-sm="xl"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-xl);
+      --brick-control-size-padding-inline: 1rem;
+      --brick-control-size-padding-block: 0.75rem;
+      --brick-control-size-gap: 0.625rem;
+      --brick-control-size-icon: 1.25rem;
+      --brick-control-size-target: 2.5rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-md-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-md-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-md-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-lg-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-lg-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-lg-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-lg-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-lg-letter-spacing);
+    }
+
+    .brick-control-size[data-size-sm="2xl"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-2xl);
+      --brick-control-size-padding-inline: 1.5rem;
+      --brick-control-size-padding-block: 1rem;
+      --brick-control-size-gap: 0.75rem;
+      --brick-control-size-icon: 1.5rem;
+      --brick-control-size-target: 3rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-lg-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-lg-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-lg-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-lg-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xl-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xl-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xl-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xl-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xl-letter-spacing);
+    }
+  }
+
+  @media (width >= 48rem) {
+    .brick-control-size[data-size-md="2xs"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-2xs);
+      --brick-control-size-padding-inline: 0.5rem;
+      --brick-control-size-padding-block: 0.25rem;
+      --brick-control-size-gap: 0.25rem;
+      --brick-control-size-icon: 0.75rem;
+      --brick-control-size-target: 1.5rem;
+      --brick-control-size-value-font-family: var(--brick-typography-caption-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-caption-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-caption-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-caption-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xs-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xs-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xs-letter-spacing);
+    }
+
+    .brick-control-size[data-size-md="xs"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-xs);
+      --brick-control-size-padding-inline: 0.625rem;
+      --brick-control-size-padding-block: 0.375rem;
+      --brick-control-size-gap: 0.25rem;
+      --brick-control-size-icon: 0.875rem;
+      --brick-control-size-target: 1.75rem;
+      --brick-control-size-value-font-family: var(--brick-typography-caption-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-caption-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-caption-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-caption-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xs-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xs-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xs-letter-spacing);
+    }
+
+    .brick-control-size[data-size-md="sm"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-sm);
+      --brick-control-size-padding-inline: 0.75rem;
+      --brick-control-size-padding-block: 0.5rem;
+      --brick-control-size-gap: 0.375rem;
+      --brick-control-size-icon: 1rem;
+      --brick-control-size-target: 2rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-sm-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-sm-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+    }
+
+    .brick-control-size[data-size-md="md"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-md);
+      --brick-control-size-padding-inline: 0.75rem;
+      --brick-control-size-padding-block: 0.5rem;
+      --brick-control-size-gap: 0.5rem;
+      --brick-control-size-icon: 1rem;
+      --brick-control-size-target: 2rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-sm-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-sm-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+    }
+
+    .brick-control-size[data-size-md="lg"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-lg);
+      --brick-control-size-padding-inline: 1rem;
+      --brick-control-size-padding-block: 0.625rem;
+      --brick-control-size-gap: 0.5rem;
+      --brick-control-size-icon: 1.125rem;
+      --brick-control-size-target: 2.25rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-md-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-md-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-md-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-lg-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-lg-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-lg-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-lg-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-lg-letter-spacing);
+    }
+
+    .brick-control-size[data-size-md="xl"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-xl);
+      --brick-control-size-padding-inline: 1rem;
+      --brick-control-size-padding-block: 0.75rem;
+      --brick-control-size-gap: 0.625rem;
+      --brick-control-size-icon: 1.25rem;
+      --brick-control-size-target: 2.5rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-md-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-md-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-md-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-lg-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-lg-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-lg-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-lg-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-lg-letter-spacing);
+    }
+
+    .brick-control-size[data-size-md="2xl"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-2xl);
+      --brick-control-size-padding-inline: 1.5rem;
+      --brick-control-size-padding-block: 1rem;
+      --brick-control-size-gap: 0.75rem;
+      --brick-control-size-icon: 1.5rem;
+      --brick-control-size-target: 3rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-lg-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-lg-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-lg-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-lg-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xl-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xl-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xl-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xl-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xl-letter-spacing);
+    }
+  }
+
+  @media (width >= 64rem) {
+    .brick-control-size[data-size-lg="2xs"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-2xs);
+      --brick-control-size-padding-inline: 0.5rem;
+      --brick-control-size-padding-block: 0.25rem;
+      --brick-control-size-gap: 0.25rem;
+      --brick-control-size-icon: 0.75rem;
+      --brick-control-size-target: 1.5rem;
+      --brick-control-size-value-font-family: var(--brick-typography-caption-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-caption-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-caption-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-caption-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xs-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xs-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xs-letter-spacing);
+    }
+
+    .brick-control-size[data-size-lg="xs"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-xs);
+      --brick-control-size-padding-inline: 0.625rem;
+      --brick-control-size-padding-block: 0.375rem;
+      --brick-control-size-gap: 0.25rem;
+      --brick-control-size-icon: 0.875rem;
+      --brick-control-size-target: 1.75rem;
+      --brick-control-size-value-font-family: var(--brick-typography-caption-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-caption-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-caption-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-caption-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xs-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xs-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xs-letter-spacing);
+    }
+
+    .brick-control-size[data-size-lg="sm"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-sm);
+      --brick-control-size-padding-inline: 0.75rem;
+      --brick-control-size-padding-block: 0.5rem;
+      --brick-control-size-gap: 0.375rem;
+      --brick-control-size-icon: 1rem;
+      --brick-control-size-target: 2rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-sm-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-sm-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+    }
+
+    .brick-control-size[data-size-lg="md"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-md);
+      --brick-control-size-padding-inline: 0.75rem;
+      --brick-control-size-padding-block: 0.5rem;
+      --brick-control-size-gap: 0.5rem;
+      --brick-control-size-icon: 1rem;
+      --brick-control-size-target: 2rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-sm-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-sm-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+    }
+
+    .brick-control-size[data-size-lg="lg"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-lg);
+      --brick-control-size-padding-inline: 1rem;
+      --brick-control-size-padding-block: 0.625rem;
+      --brick-control-size-gap: 0.5rem;
+      --brick-control-size-icon: 1.125rem;
+      --brick-control-size-target: 2.25rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-md-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-md-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-md-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-lg-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-lg-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-lg-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-lg-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-lg-letter-spacing);
+    }
+
+    .brick-control-size[data-size-lg="xl"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-xl);
+      --brick-control-size-padding-inline: 1rem;
+      --brick-control-size-padding-block: 0.75rem;
+      --brick-control-size-gap: 0.625rem;
+      --brick-control-size-icon: 1.25rem;
+      --brick-control-size-target: 2.5rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-md-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-md-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-md-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-lg-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-lg-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-lg-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-lg-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-lg-letter-spacing);
+    }
+
+    .brick-control-size[data-size-lg="2xl"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-2xl);
+      --brick-control-size-padding-inline: 1.5rem;
+      --brick-control-size-padding-block: 1rem;
+      --brick-control-size-gap: 0.75rem;
+      --brick-control-size-icon: 1.5rem;
+      --brick-control-size-target: 3rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-lg-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-lg-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-lg-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-lg-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xl-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xl-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xl-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xl-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xl-letter-spacing);
+    }
+  }
+
+  @media (width >= 80rem) {
+    .brick-control-size[data-size-xl="2xs"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-2xs);
+      --brick-control-size-padding-inline: 0.5rem;
+      --brick-control-size-padding-block: 0.25rem;
+      --brick-control-size-gap: 0.25rem;
+      --brick-control-size-icon: 0.75rem;
+      --brick-control-size-target: 1.5rem;
+      --brick-control-size-value-font-family: var(--brick-typography-caption-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-caption-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-caption-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-caption-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xs-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xs-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xs-letter-spacing);
+    }
+
+    .brick-control-size[data-size-xl="xs"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-xs);
+      --brick-control-size-padding-inline: 0.625rem;
+      --brick-control-size-padding-block: 0.375rem;
+      --brick-control-size-gap: 0.25rem;
+      --brick-control-size-icon: 0.875rem;
+      --brick-control-size-target: 1.75rem;
+      --brick-control-size-value-font-family: var(--brick-typography-caption-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-caption-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-caption-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-caption-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xs-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xs-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xs-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xs-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xs-letter-spacing);
+    }
+
+    .brick-control-size[data-size-xl="sm"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-sm);
+      --brick-control-size-padding-inline: 0.75rem;
+      --brick-control-size-padding-block: 0.5rem;
+      --brick-control-size-gap: 0.375rem;
+      --brick-control-size-icon: 1rem;
+      --brick-control-size-target: 2rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-sm-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-sm-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+    }
+
+    .brick-control-size[data-size-xl="md"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-md);
+      --brick-control-size-padding-inline: 0.75rem;
+      --brick-control-size-padding-block: 0.5rem;
+      --brick-control-size-gap: 0.5rem;
+      --brick-control-size-icon: 1rem;
+      --brick-control-size-target: 2rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-sm-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-sm-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-sm-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-sm-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+    }
+
+    .brick-control-size[data-size-xl="lg"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-lg);
+      --brick-control-size-padding-inline: 1rem;
+      --brick-control-size-padding-block: 0.625rem;
+      --brick-control-size-gap: 0.5rem;
+      --brick-control-size-icon: 1.125rem;
+      --brick-control-size-target: 2.25rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-md-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-md-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-md-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-lg-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-lg-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-lg-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-lg-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-lg-letter-spacing);
+    }
+
+    .brick-control-size[data-size-xl="xl"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-xl);
+      --brick-control-size-padding-inline: 1rem;
+      --brick-control-size-padding-block: 0.75rem;
+      --brick-control-size-gap: 0.625rem;
+      --brick-control-size-icon: 1.25rem;
+      --brick-control-size-target: 2.5rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-md-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-md-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-md-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-lg-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-lg-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-lg-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-lg-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-lg-letter-spacing);
+    }
+
+    .brick-control-size[data-size-xl="2xl"] {
+      --brick-control-size-block: var(--brick-control-min-block-size-2xl);
+      --brick-control-size-padding-inline: 1.5rem;
+      --brick-control-size-padding-block: 1rem;
+      --brick-control-size-gap: 0.75rem;
+      --brick-control-size-icon: 1.5rem;
+      --brick-control-size-target: 3rem;
+      --brick-control-size-value-font-family: var(--brick-typography-body-lg-font-family);
+      --brick-control-size-value-font-size: var(--brick-typography-body-lg-font-size);
+      --brick-control-size-value-font-weight: var(--brick-typography-body-lg-font-weight);
+      --brick-control-size-value-line-height: var(--brick-typography-body-lg-line-height);
+      --brick-control-size-value-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+      --brick-control-size-font-family: var(--brick-typography-control-xl-font-family);
+      --brick-control-size-font-size: var(--brick-typography-control-xl-font-size);
+      --brick-control-size-font-weight: var(--brick-typography-control-xl-font-weight);
+      --brick-control-size-line-height: var(--brick-typography-control-xl-line-height);
+      --brick-control-size-letter-spacing: var(--brick-typography-control-xl-letter-spacing);
+    }
+  }
+
+  .brick-input.brick-control-size {
+    --brick-input-min-block-size: var(--brick-control-size-block);
+    --brick-input-padding-inline: var(--brick-control-size-padding-inline);
+    --brick-input-gap: var(--brick-control-size-gap);
+    --brick-input-font-family: var(--brick-control-size-value-font-family);
+    --brick-input-font-size: var(--brick-control-size-value-font-size);
+    --brick-input-font-weight: var(--brick-control-size-value-font-weight);
+    --brick-input-line-height: var(--brick-control-size-value-line-height);
+    --brick-input-letter-spacing: var(--brick-control-size-value-letter-spacing);
+    --brick-input-adornment-size: var(--brick-control-size-icon);
+    --brick-input-clear-target-size: var(--brick-control-size-target);
+    --brick-input-clear-icon-size: var(--brick-control-size-icon);
+  }
+
+  .brick-textarea.brick-control-size {
+    --brick-textarea-padding-inline: var(--brick-control-size-padding-inline);
+    --brick-textarea-padding-block: var(--brick-control-size-padding-block);
+    --brick-textarea-gap: var(--brick-control-size-gap);
+    --brick-textarea-font-family: var(--brick-control-size-value-font-family);
+    --brick-textarea-font-size: var(--brick-control-size-value-font-size);
+    --brick-textarea-font-weight: var(--brick-control-size-value-font-weight);
+    --brick-textarea-line-height: var(--brick-control-size-value-line-height);
+    --brick-textarea-letter-spacing: var(--brick-control-size-value-letter-spacing);
+  }
+
+  .brick-select-trigger.brick-control-size {
+    --brick-select-trigger-min-block-size: var(--brick-control-size-block);
+    --brick-select-trigger-padding-inline: var(--brick-control-size-padding-inline);
+    --brick-select-trigger-gap: var(--brick-control-size-gap);
+    --brick-select-trigger-font-family: var(--brick-control-size-font-family);
+    --brick-select-trigger-font-size: var(--brick-control-size-font-size);
+    --brick-select-trigger-font-weight: var(--brick-control-size-font-weight);
+    --brick-select-trigger-line-height: var(--brick-control-size-line-height);
+    --brick-select-trigger-letter-spacing: var(--brick-control-size-letter-spacing);
+    --brick-select-icon-size: var(--brick-control-size-icon);
+  }
+
+  .brick-select-content.brick-control-size {
+    --brick-select-item-min-block-size: var(--brick-control-size-block);
+    --brick-select-item-padding-inline: var(--brick-control-size-padding-inline);
+    --brick-select-item-gap: var(--brick-control-size-gap);
+    --brick-select-item-font-family: var(--brick-control-size-font-family);
+    --brick-select-item-font-size: var(--brick-control-size-font-size);
+    --brick-select-item-font-weight: var(--brick-control-size-font-weight);
+    --brick-select-item-line-height: var(--brick-control-size-line-height);
+    --brick-select-indicator-size: var(--brick-control-size-icon);
+  }
+
+  .brick-multi-select-trigger.brick-control-size {
+    --brick-multi-select-trigger-min-block-size: var(--brick-control-size-block);
+    --brick-multi-select-trigger-padding-inline: var(--brick-control-size-padding-inline);
+    --brick-multi-select-trigger-gap: var(--brick-control-size-gap);
+    --brick-multi-select-trigger-font-family: var(--brick-control-size-font-family);
+    --brick-multi-select-trigger-font-size: var(--brick-control-size-font-size);
+    --brick-multi-select-trigger-font-weight: var(--brick-control-size-font-weight);
+    --brick-multi-select-trigger-line-height: var(--brick-control-size-line-height);
+    --brick-multi-select-trigger-letter-spacing: var(--brick-control-size-letter-spacing);
+    --brick-multi-select-icon-size: var(--brick-control-size-icon);
+  }
+
+  .brick-multi-select-content.brick-control-size {
+    --brick-multi-select-item-min-block-size: var(--brick-control-size-block);
+    --brick-multi-select-item-padding-inline: var(--brick-control-size-padding-inline);
+    --brick-multi-select-item-gap: var(--brick-control-size-gap);
+    --brick-multi-select-item-font-family: var(--brick-control-size-font-family);
+    --brick-multi-select-item-font-size: var(--brick-control-size-font-size);
+    --brick-multi-select-item-font-weight: var(--brick-control-size-font-weight);
+    --brick-multi-select-item-line-height: var(--brick-control-size-line-height);
+    --brick-multi-select-indicator-size: var(--brick-control-size-icon);
+  }
+
+  .brick-combobox-control.brick-control-size {
+    --brick-combobox-min-block-size: var(--brick-control-size-block);
+    --brick-combobox-padding-inline: var(--brick-control-size-padding-inline);
+    --brick-combobox-gap: var(--brick-control-size-gap);
+    --brick-combobox-font-family: var(--brick-control-size-value-font-family);
+    --brick-combobox-font-size: var(--brick-control-size-value-font-size);
+    --brick-combobox-font-weight: var(--brick-control-size-value-font-weight);
+    --brick-combobox-line-height: var(--brick-control-size-value-line-height);
+    --brick-combobox-letter-spacing: var(--brick-control-size-value-letter-spacing);
+    --brick-combobox-action-size: var(--brick-control-size-target);
+    --brick-combobox-icon-size: var(--brick-control-size-icon);
+  }
+
+  .brick-combobox-content.brick-control-size {
+    --brick-combobox-item-min-block-size: var(--brick-control-size-block);
+    --brick-combobox-item-padding-inline: var(--brick-control-size-padding-inline);
+    --brick-combobox-item-gap: var(--brick-control-size-gap);
+    --brick-combobox-item-font-family: var(--brick-control-size-font-family);
+    --brick-combobox-item-font-size: var(--brick-control-size-font-size);
+    --brick-combobox-item-font-weight: var(--brick-control-size-font-weight);
+    --brick-combobox-item-line-height: var(--brick-control-size-line-height);
+  }
+
+  .brick-number-input.brick-control-size {
+    --brick-number-input-height: var(--brick-control-size-block);
+    --brick-number-input-padding-inline: var(--brick-control-size-padding-inline);
+    --brick-number-input-stepper-inline-size: calc(var(--brick-control-size-block) / 2);
+    --brick-number-input-step-icon-size: var(--brick-control-size-icon);
+    --brick-number-input-font-family: var(--brick-control-size-font-family);
+    --brick-number-input-font-size: var(--brick-control-size-font-size);
+    --brick-number-input-font-weight: var(--brick-control-size-font-weight);
+    --brick-number-input-line-height: var(--brick-control-size-line-height);
+  }
+
+  .brick-password-toggle-field.brick-control-size {
+    --brick-password-height: var(--brick-control-size-block);
+    --brick-password-padding-inline: var(--brick-control-size-padding-inline);
+    --brick-password-icon-size: var(--brick-control-size-icon);
+    --brick-password-font-family: var(--brick-control-size-value-font-family);
+    --brick-password-font-size: var(--brick-control-size-value-font-size);
+    --brick-password-font-weight: var(--brick-control-size-value-font-weight);
+    --brick-password-line-height: var(--brick-control-size-value-line-height);
+    --brick-password-letter-spacing: var(--brick-control-size-value-letter-spacing);
+  }
+
+  .brick-otp-field.brick-control-size {
+    --brick-otp-size: var(--brick-control-size-block);
+    --brick-otp-font-family: var(--brick-control-size-value-font-family);
+    --brick-otp-font-size: var(--brick-control-size-value-font-size);
+    --brick-otp-font-weight: var(--brick-control-size-value-font-weight);
+    --brick-otp-line-height: var(--brick-control-size-value-line-height);
+  }
+}

@@ -19,6 +19,8 @@ Render finished ordered or unordered content with native list semantics, optiona
 - Compose Root > Item; for structured rows use Leading, Content with Title and Description, then Trailing in that order.
 - Use ordered only when sequence changes meaning and preserve native list hosts when composing with asChild or render.
 - Keep Trailing for compact metadata or controls; when a long action would narrow supporting copy, place the action with the title inside Content using Brick layout instead.
+- Use Root align="center" when a compact leading visual and one-line content should share a visual center; keep the default start for multi-line rows whose leading and trailing parts belong with the first line.
+- Use Root inset="none" when an ordinary List's leading content must share a logical start with adjacent sibling content; keep the default inset for standalone List rhythm.
 
 ## Rules
 
@@ -27,16 +29,19 @@ Render finished ordered or unordered content with native list semantics, optiona
 - **MUST:** Keep Trailing compact; move long actions into a Content-owned layout when a fixed trailing column would damage narrow-screen reading.
 - **MUST:** Do not add row selection, activation, focus movement, or navigation behavior to List; choose the component that owns that interaction.
 - **MUST:** Load styles.css or core.css plus list.css.
+- **MUST:** Use the closed Root align recipe before overriding --brick-list-part-align or adding consumer CSS for structured row alignment.
+- **MUST:** Use the closed Root inset recipe before overriding --brick-list-row-padding-inline or adding consumer CSS for ordinary row inset.
 
 ## Common mistakes
 
 - **Avoid:** Using List as a generic row layout, making an Item itself clickable, or placing a long action in Trailing until supporting text becomes a narrow column. **Instead:** Use Stack or Grid for non-list layout, NavList or another interaction owner for clickable rows, and move long actions into Content's own layout.
 - **Avoid:** Assuming an Item's disabled presentation disables controls inside it. **Instead:** Apply the proper disabled contract to every interactive descendant; List's disabled state is descriptive and visual only.
+- **Avoid:** Overriding item padding merely to align a feature list with a sibling heading. **Instead:** Use Root inset="none" for the flush relationship.
 
 ## Validation checklist
 
 - Inspect ul or ol and li output, ordered meaning, marker behavior, structured-part order, nesting, roles, and CSS delivery.
-- Test long titles and descriptions, compact and comfortable density, all variants and markers, first-line marker alignment in bordered simple and structured rows, 320 CSS px, 200 and 400 percent zoom, RTL, and forced colors.
+- Test long titles and descriptions, compact and comfortable density, both inset recipes, all variants, markers, and structured alignments, first-line marker alignment in bordered simple and structured rows, 320 CSS px, 200 and 400 percent zoom, RTL, and forced colors.
 - Confirm Trailing content does not squeeze Content, controls have names and touch targets, disabled descendants are handled explicitly, and List adds no keyboard model.
 
 ## Related guidance

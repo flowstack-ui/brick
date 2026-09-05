@@ -12,11 +12,13 @@ import {
 
 export type TreeVariant = "plain" | "soft" | "outline";
 export type TreeSize = "sm" | "md";
+export type TreeBorderTone = "subtle" | "default" | "strong";
 
 export interface TreeRootProps extends Omit<AtomTreeRootProps, "orientation"> {
   variant?: TreeVariant;
   size?: TreeSize;
   showGuide?: boolean;
+  borderTone?: TreeBorderTone;
 }
 
 export interface TreeItemProps extends AtomTreeItemProps {}
@@ -42,6 +44,7 @@ export const TreeRoot = forwardRef<HTMLDivElement, TreeRootProps>(function TreeR
     variant = "plain",
     size = "md",
     showGuide = false,
+    borderTone = "default",
     className,
     "data-slot": dataSlot,
     ...props
@@ -52,6 +55,7 @@ export const TreeRoot = forwardRef<HTMLDivElement, TreeRootProps>(function TreeR
     <AtomTree.Root
       {...props}
       className={mergeClassName("brick-tree", className)}
+      data-border-tone={borderTone}
       data-guide={showGuide ? "" : undefined}
       data-size={size}
       data-slot={slot(dataSlot, "tree")}

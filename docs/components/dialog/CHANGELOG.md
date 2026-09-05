@@ -4,6 +4,11 @@ Dialog follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Added
+
+- Added `Dialog.Close placement="corner"` for a reusable, logical top-end
+  dismiss-control inset while preserving inline Close actions by default.
+
 ## 0.1.10
 
 ### Fixed

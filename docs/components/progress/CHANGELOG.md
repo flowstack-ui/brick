@@ -4,6 +4,8 @@ Progress follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Formatted values now inherit `LocaleProvider.locale` unless Root supplies an
+  explicit locale.
 ## 0.1.10
 
 ### Added

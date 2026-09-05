@@ -8,19 +8,24 @@ import {
   type AccordionTriggerProps as AtomAccordionTriggerProps,
 } from "@flowstack-ui/atom/accordion";
 
-export type AccordionVariant = "plain" | "soft" | "outline";
-export type AccordionSize = "sm" | "md" | "lg";
+export type AccordionVariant = "plain" | "ghost" | "soft" | "outline";
+export type AccordionSize = "sm" | "md" | "lg" | "xl";
+export type AccordionIndicatorPlacement = "start" | "end";
 
 export type AccordionRootProps = AtomAccordionRootProps & {
   variant?: AccordionVariant;
   size?: AccordionSize;
+  indicatorPlacement?: AccordionIndicatorPlacement;
 };
 export type AccordionItemProps = AtomAccordionItemProps;
 export type AccordionHeaderProps = AtomAccordionHeaderProps;
 export type AccordionTriggerProps = AtomAccordionTriggerProps;
 export type AccordionContentProps = AtomAccordionContentProps;
 
-export interface AccordionIndicatorProps extends Omit<HTMLAttributes<HTMLSpanElement>, "children" | "aria-hidden"> {
+export interface AccordionIndicatorProps extends Omit<
+  HTMLAttributes<HTMLSpanElement>,
+  "children" | "aria-hidden"
+> {
   children?: ReactNode;
   "data-slot"?: string;
 }
@@ -33,53 +38,132 @@ function classes(base: string, className?: string) {
   return className ? `${base} ${className}` : base;
 }
 
-export const AccordionRoot = forwardRef<HTMLDivElement, AccordionRootProps>(function AccordionRoot(
-  { className, size = "md", variant = "plain", "data-slot": slot, ...props },
-  ref,
-) {
-  return <AtomAccordion.Root {...props} className={classes("brick-accordion", className)} data-size={size} data-slot={slot ?? "accordion-root"} data-variant={variant} ref={ref} />;
+export const AccordionRoot = forwardRef<HTMLDivElement, AccordionRootProps>(
+  function AccordionRoot(
+    {
+      className,
+      indicatorPlacement = "end",
+      size = "md",
+      variant = "plain",
+      "data-slot": slot,
+      ...props
+    },
+    ref,
+  ) {
+    return (
+      <AtomAccordion.Root
+        {...props}
+        className={classes("brick-accordion", className)}
+        data-indicator-placement={indicatorPlacement}
+        data-size={size}
+        data-slot={slot ?? "accordion-root"}
+        data-variant={variant}
+        ref={ref}
+      />
+    );
+  },
+);
+
+export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
+  function AccordionItem({ className, "data-slot": slot, ...props }, ref) {
+    return (
+      <AtomAccordion.Item
+        {...props}
+        className={classes("brick-accordion-item", className)}
+        data-slot={slot ?? "accordion-item"}
+        ref={ref}
+      />
+    );
+  },
+);
+
+export const AccordionHeader = forwardRef<
+  HTMLHeadingElement,
+  AccordionHeaderProps
+>(function AccordionHeader({ className, "data-slot": slot, ...props }, ref) {
+  return (
+    <AtomAccordion.Header
+      {...props}
+      className={classes("brick-accordion-header", className)}
+      data-slot={slot ?? "accordion-header"}
+      ref={ref}
+    />
+  );
 });
 
-export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(function AccordionItem(
-  { className, "data-slot": slot, ...props },
-  ref,
-) {
-  return <AtomAccordion.Item {...props} className={classes("brick-accordion-item", className)} data-slot={slot ?? "accordion-item"} ref={ref} />;
+export const AccordionTrigger = forwardRef<
+  HTMLButtonElement,
+  AccordionTriggerProps
+>(function AccordionTrigger({ className, "data-slot": slot, ...props }, ref) {
+  return (
+    <AtomAccordion.Trigger
+      {...props}
+      className={classes("brick-accordion-trigger", className)}
+      data-slot={slot ?? "accordion-trigger"}
+      ref={ref}
+    />
+  );
 });
 
-export const AccordionHeader = forwardRef<HTMLHeadingElement, AccordionHeaderProps>(function AccordionHeader(
-  { className, "data-slot": slot, ...props },
-  ref,
-) {
-  return <AtomAccordion.Header {...props} className={classes("brick-accordion-header", className)} data-slot={slot ?? "accordion-header"} ref={ref} />;
-});
-
-export const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(function AccordionTrigger(
-  { className, "data-slot": slot, ...props },
-  ref,
-) {
-  return <AtomAccordion.Trigger {...props} className={classes("brick-accordion-trigger", className)} data-slot={slot ?? "accordion-trigger"} ref={ref} />;
-});
-
-export const AccordionIndicator = forwardRef<HTMLSpanElement, AccordionIndicatorProps>(function AccordionIndicator(
+export const AccordionIndicator = forwardRef<
+  HTMLSpanElement,
+  AccordionIndicatorProps
+>(function AccordionIndicator(
   { children, className, "data-slot": slot, ...props },
   ref,
 ) {
-  return <span {...props} aria-hidden="true" className={classes("brick-accordion-indicator", className)} data-slot={slot ?? "accordion-indicator"} ref={ref}>{children ?? <svg fill="none" viewBox="0 0 16 16"><path d="m3.5 6 4.5 4.5L12.5 6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" /></svg>}</span>;
+  return (
+    <span
+      {...props}
+      aria-hidden="true"
+      className={classes("brick-accordion-indicator", className)}
+      data-slot={slot ?? "accordion-indicator"}
+      ref={ref}
+    >
+      {children ?? (
+        <svg fill="none" viewBox="0 0 16 16">
+          <path
+            d="m3.5 6 4.5 4.5L12.5 6"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
+          />
+        </svg>
+      )}
+    </span>
+  );
 });
 
-export const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(function AccordionContent(
+export const AccordionContent = forwardRef<
+  HTMLDivElement,
+  AccordionContentProps
+>(function AccordionContent({ className, "data-slot": slot, ...props }, ref) {
+  return (
+    <AtomAccordion.Content
+      {...props}
+      className={classes("brick-accordion-content", className)}
+      data-slot={slot ?? "accordion-content"}
+      ref={ref}
+    />
+  );
+});
+
+export const AccordionContentInner = forwardRef<
+  HTMLDivElement,
+  AccordionContentInnerProps
+>(function AccordionContentInner(
   { className, "data-slot": slot, ...props },
   ref,
 ) {
-  return <AtomAccordion.Content {...props} className={classes("brick-accordion-content", className)} data-slot={slot ?? "accordion-content"} ref={ref} />;
-});
-
-export const AccordionContentInner = forwardRef<HTMLDivElement, AccordionContentInnerProps>(function AccordionContentInner(
-  { className, "data-slot": slot, ...props },
-  ref,
-) {
-  return <div {...props} className={classes("brick-accordion-content-inner", className)} data-slot={slot ?? "accordion-content-inner"} ref={ref} />;
+  return (
+    <div
+      {...props}
+      className={classes("brick-accordion-content-inner", className)}
+      data-slot={slot ?? "accordion-content-inner"}
+      ref={ref}
+    />
+  );
 });
 
 AccordionRoot.displayName = "Accordion.Root";

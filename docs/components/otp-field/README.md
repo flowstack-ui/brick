@@ -51,7 +51,7 @@ Public exports are `OTPField`, `OTPFieldRoot`, `OTPFieldGroup`, `OTPFieldInput`,
 | Root prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `outline`, `soft`, `underline` | `outline` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`; or a responsive value | `lg` |
 | `shape` | `sharp`, `rounded` | `rounded` |
 | `layout` | `separated`, `attached` | `separated` |
 

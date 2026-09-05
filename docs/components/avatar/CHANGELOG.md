@@ -4,6 +4,11 @@ Avatar follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Avatar now accepts AvatarGroup presentation context so a reusable identity
+  stack can own consistent size and shape without cloning child elements.
+
 ## 0.1.10
 
 ### Changed

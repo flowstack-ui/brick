@@ -119,8 +119,8 @@ Brick wrapper. Refs target each Atom-owned element listed above.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `outline`, `soft`, `underline` | `outline` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `variant` | `outline`, `soft`, `ghost`, `underline` | `outline` |
+| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`; or a responsive value | `lg` |
 | `shape` | `sharp`, `rounded`, `pill` | `rounded` |
 | `fullWidth` | `boolean` | `true` |
 
@@ -143,13 +143,16 @@ decorative content, but never nested controls.
 
 ## Visual recipes and states
 
-- `outline` uses a raised surface and strong complete border.
+- `outline` uses a transparent surface and strong complete border so it blends with its owning panel.
 - `soft` uses a subtle fill and restrained border.
+- `ghost` has no resting fill or border, gains a restrained hover surface, and
+  keeps the standard focus-visible ring.
 - `underline` uses a transparent surface and bottom line.
-- `sm`, `md`, and `lg` use 36px, 44px, and 52px minimum trigger and option-row heights plus the shared `control-sm`, `control-md`, and `control-lg` typography used by button-like peers.
+- `2xs` through `2xl` use 28, 32, 36, 40, 44, 48, and 64px minimum trigger and
+  option-row heights plus the shared control typography used by button-like peers.
 - `sharp`, `rounded`, and `pill` change Trigger geometry only.
 
-The popup and options do not change with Trigger variant. Atom's data state
+The popup and options do not change with Trigger variant. Its default boundary uses the standard overlay border token, matching Popover and action-menu surfaces. Atom's data state
 drives open, highlighted, selected, disabled, read-only, and invalid paint.
 State changes never alter control or item geometry. Value text truncates before
 it can displace Icon; ItemIndicator owns one fixed logical-end column.

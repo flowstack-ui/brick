@@ -1,0 +1,20 @@
+{
+  "schema": "flowstack.agent-component.v1",
+  "id": "checkmark",
+  "name": "Checkmark",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "kind": "component",
+  "purpose": "Show passive checked, unchecked, or indeterminate visual state without creating selection behavior.",
+  "useWhen": ["A card, plan, summary, or existing interaction owner needs a theme-aware visual check mark."],
+  "avoidWhen": [{"condition": "The mark itself must be focusable, toggleable, or submit a form value.", "useInstead": "Checkbox or Checkbox Group"}],
+  "composition": ["Pair Checkmark with visible text or place it inside a parent that already exposes the state accessibly."],
+  "rules": [
+    {"id": "checkmark-passive", "level": "must", "statement": "Keep Checkmark passive and aria-hidden; the parent control or text owns semantics."},
+    {"id": "checkmark-state", "level": "must", "statement": "Use checked or indeterminate only to mirror state owned elsewhere."},
+    {"id": "checkmark-css", "level": "must", "statement": "Load styles.css or core.css plus checkmark.css."}
+  ],
+  "commonMistakes": [{"mistake": "Attaching click behavior to Checkmark.", "correction": "Use Checkbox or an existing parent control and render Checkmark only as its visual."}],
+  "validation": ["Verify square geometry, all states, sizes, tones, variants, dark mode, forced colors, and absence of focus or role."],
+  "related": ["checkbox", "checkbox-group", "icon"]
+}

@@ -32,7 +32,9 @@ slider thumb is centered above its track and remains fully visible at middle and
 endpoint values; the 15rem 2xs/xs popup and 16rem default
 editor contain their controls without clipping. A swatch-only Trigger is
 square. The integrated input has one outer border with aligned inner parts and
-local ghost-action hover. Square, rounded, and circle swatch frames match their
+local ghost-action hover. Its current-value preview stays compact (16px at
+`xs`, 18px at `sm`) while selectable preset swatches retain their larger size.
+Square, rounded, and circle swatch frames match their
 swatches, and the frameless recipe has no visible frame while retaining focus
 and selection cues. Area and channel color planes have no decorative hard
 border; the track and transparency check share one subtle radius, and thumbs

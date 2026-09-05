@@ -4,17 +4,12 @@ import {
   type BadgeRootProps as AtomBadgeRootProps,
 } from "@flowstack-ui/atom/badge";
 
-export type BadgeVariant = "soft" | "solid" | "outline";
+export type BadgeVariant = "soft" | "solid" | "outline" | "surface";
 
 export type BadgeTone =
-  | "neutral"
-  | "accent"
-  | "info"
-  | "success"
-  | "warning"
-  | "danger";
+  "neutral" | "accent" | "info" | "success" | "warning" | "danger";
 
-export type BadgeSize = "sm" | "md" | "lg" | "xl";
+export type BadgeSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type BadgeShape = "rounded" | "pill" | "circle";
 
 export type BadgeProps = Omit<AtomBadgeRootProps, "color"> & {
@@ -25,10 +20,7 @@ export type BadgeProps = Omit<AtomBadgeRootProps, "color"> & {
 };
 
 export type NotificationBadgePlacement =
-  | "top-start"
-  | "top-end"
-  | "bottom-start"
-  | "bottom-end";
+  "top-start" | "top-end" | "bottom-start" | "bottom-end";
 
 export type NotificationBadgeOverlap = "rectangular" | "circular";
 export type NotificationBadgeSize = "sm" | "md" | "lg";
@@ -71,7 +63,10 @@ function isValidCount(count: number) {
 }
 
 function resolveMaximum(max: number | undefined) {
-  return max !== undefined && Number.isFinite(max) && Number.isInteger(max) && max > 0
+  return max !== undefined &&
+    Number.isFinite(max) &&
+    Number.isInteger(max) &&
+    max > 0
     ? max
     : 99;
 }
@@ -131,7 +126,8 @@ export const NotificationBadge = forwardRef<
         (count !== 0 || showZero)));
   const content =
     !isDot && count !== undefined && count > maximum ? `${maximum}+` : count;
-  const shape = isDot || (typeof content === "number" && content < 10) ? "circle" : "pill";
+  const shape =
+    isDot || (typeof content === "number" && content < 10) ? "circle" : "pill";
 
   return (
     <AtomBadge.Root

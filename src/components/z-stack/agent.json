@@ -15,6 +15,10 @@
     {
       "condition": "Content is an ordinary image-backed card or hero.",
       "useInstead": "Surface.Media, Surface.Scrim, and Surface.Content"
+    },
+    {
+      "condition": "One in-flow region only needs two-axis centering or equal square/circle geometry.",
+      "useInstead": "Center, Square, or Circle"
     }
   ],
   "composition": [
@@ -75,5 +79,5 @@
   "validation": [
     "Check natural sizing, responsive logical placement, focus order, zoom, RTL, and pointer access."
   ],
-  "related": ["stack", "grid", "surface", "image"]
+  "related": ["stack", "grid", "surface", "image", "center"]
 }

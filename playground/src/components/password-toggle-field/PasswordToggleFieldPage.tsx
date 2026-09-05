@@ -9,7 +9,7 @@ import "../../shared/forms-evidence.playground.css";
 import "./password-toggle-field.playground.css";
 
 const variants: PasswordToggleFieldVariant[] = ["outline", "soft", "underline"];
-const sizes: PasswordToggleFieldSize[] = ["sm", "md", "lg"];
+const sizes: PasswordToggleFieldSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: PasswordToggleFieldShape[] = ["sharp", "rounded", "pill"];
 const definitions = [
   [1, "Overview", "Canonical hidden password composed with Field."],

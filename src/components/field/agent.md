@@ -15,6 +15,7 @@ Visually arrange one control with its label, description, error, and inherited A
 ## Required composition
 
 - Compose Field.Root -> Field.Label -> one control -> optional Field.Description -> optional Field.Error.
+- Use size=xs or sm with tone=secondary for dense property rows; keep the default md/primary hierarchy for ordinary forms.
 
 ## Rules
 
@@ -30,6 +31,7 @@ Visually arrange one control with its label, description, error, and inherited A
 
 - Confirm label, description, and error relationships.
 - Confirm exactly one required marker.
+- Check xs, sm, and md label density plus primary and secondary hierarchy.
 - Check vertical and horizontal layouts at narrow widths.
 
 ## Related guidance

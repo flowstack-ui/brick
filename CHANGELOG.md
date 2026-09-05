@@ -4,8 +4,98 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Refined NumberInput's split stepper with proper minus/plus artwork and a
+  readable numeric value scale; added Switch `xs`, `solid`, and `raised`
+  recipes with polished 2:1 geometry; and updated elevated Card to a
+  borderless raised surface with layered medium elevation.
+
+- Expanded the semantic radius ladder through `4xl` while preserving legacy
+  aliases, and expanded Text/Heading across the complete 2xs–9xl type scale
+  with named body, title, and display recipes. Heading now defaults to the
+  explicit 20px `title-md` recipe.
+- Normalized Input, Textarea, Select, MultiSelect, Combobox, NumberInput,
+  PasswordToggleField, and OTPField on one responsive 2xs–2xl control-size
+  contract. Their 44px `lg` recipe is now the shared default and sparse
+  breakpoint objects inherit that default below their first override.
+- Added Select `variant="ghost"` for a borderless, transparent resting trigger
+  with a restrained hover surface and the standard focus-visible ring.
+- Added Atom-backed `ColumnGroup` and `Column` parts across Table, DataGrid,
+  and TreeGrid so native column sizing hints no longer require block CSS.
+- Added transparent/base surface, semantic border tone, independent column
+  borders, native table layout, and vertical cell alignment recipes across
+  Table, DataGrid, and TreeGrid; DataGrid and TreeGrid also gained striping
+  and sticky-header parity, while Tree gained semantic border tones.
+- Added Table `Root minInlineSize` and `Row variant="section"` so comparison
+  widths and row-group headings no longer require Block selectors.
+
+- Expanded Button and IconButton to the seven-step `2xs`–`2xl` action scale,
+  preserved their visible 44px default as `lg`, and added sparse responsive
+  size values that inherit the component default without a required `initial`.
+- Expanded the shared `ResponsiveValue` contract so every existing responsive
+  Brick owner accepts a non-empty sparse breakpoint object while preserving
+  CSS-only deterministic rendering.
+
+### Added
+
+- Added `LocaleProvider` with locale-derived logical direction and overridable
+  Brick-authored accessibility text; added `FormatNumber` and `FormatByte`
+  components plus string helpers that inherit its locale.
+- Added the wrapper-free `For` collection helper with an explicit fallback.
+- Fixed `For` inference for heterogeneous readonly collection unions by making
+  `each` authoritative for the callback item type.
+- Added passive `Checkmark` and `Radiomark` visuals for compositions whose
+  existing parent already owns selection behavior and accessible state.
+- Added a 16px `xs` Badge recipe with 10px text for compact percentage and
+  metadata labels.
+- Added orthogonal Icon `emphasis="text" | "solid"` paint selection and
+  expanded the closed Icon scale with inherited, 28px, and 40px recipes.
+- Added a closed `inset` recipe to List so ordinary rows can retain the
+  existing size-owned inline padding or align flush with sibling content.
+- Added a closed `align` recipe to List for start-, center-, or end-aligned
+  structured rows without consumer CSS.
+- Added `RadioCard` for rich single-choice cards, a reusable Number Input
+  `Control` and square `stepper` layout, and supported decorative content in
+  Slider thumbs.
+
+- Added `Center`, `Square`, and `Circle` as one responsive layout family for
+  explicit two-axis centering and non-shrinking equal geometry.
+- Added Badge `variant="surface"` for soft semantic fill with a visible
+  tone-specific boundary.
+- Added `AvatarGroup` for reusable overlapping identity stacks with explicit,
+  accessible overflow composition.
+- Added `Dialog.Close placement="corner"` for authored icon-only dismiss
+  controls that need the standard logical top-end Content inset.
+- Added mobile-first responsive Button sizes so one semantic action can change
+  its complete recipe at shared Brick breakpoints.
+
+### Changed
+
+- Refined Segment Group with component-owned label sizing and inline padding,
+  inset item separators, and a borderless selected indicator with a shallow
+  appearance-aware elevation shadow.
+- Kept semantic Icon palettes independent from paint strength by replacing the
+  compound `accent-solid` tone with `tone="accent" emphasis="solid"`.
+- Refined Button's `md` and `xl` recipes to use the intended control typography,
+  padding, icon geometry, and 44px/64px targets.
+- Expanded Text and Heading with a compact 14px `title-2xs` recipe and a
+  small 16px `title-xs` recipe.
+- Made the optional reset use consistent grayscale font smoothing on macOS
+  browsers without changing authored typography values.
+
+- Added a contrast-paired accent-subtle Surface recipe through
+  `tone="accent" level="subtle"` for quiet branded and conversion planes.
+- Added an opaque, appearance-aware native text-selection background and
+  foreground pair to the atomic accent theme contract. Selection now keeps
+  predictable contrast over neutral, accent, status, and image-backed content,
+  while forced-colors mode retains system Highlight colors.
+
 ### Fixed
 
+- Preserved opaque render-function descendants such as `For` while Select and
+  MultiSelect derive static option labels, so closing a collection popup no
+  longer replaces the helper's required child callback.
+- Kept large Badge labels at the compact 14px scale while preserving the
+  recipe's 28px container and padding.
 - Kept Color Picker channel thumbs above their tracks at middle and endpoint
   values, and preserved semantic checkerboards beneath translucent current-value
   and preset swatches even when Atom supplies the represented color inline.
@@ -17,6 +107,11 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   swatches retain an appearance-aware checker in dark mode.
 - Kept the alpha-channel thumb's color preview opaque at every slider value so
   the zero-opacity endpoint does not split between the checker and its surface.
+
+## 0.2.3 - 2026-08-31
+
+- Recorded the published package identity; subsequent local-candidate work
+  remains under Unreleased until an explicitly authorized release.
 
 ## 0.2.2 - 2026-08-31
 

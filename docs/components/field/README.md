@@ -53,11 +53,14 @@ All parts wrap public Atom Field parts; Brick adds no private DOM.
 Public exports are `Field`, `FieldRoot`, `FieldLabel`, `FieldDescription`,
 `FieldError`, `FieldRequiredIndicator`, their corresponding
 `FieldRootProps`, `FieldLabelProps`, `FieldDescriptionProps`,
-`FieldErrorProps`, `FieldRequiredIndicatorProps`, and `FieldOrientation`.
+`FieldErrorProps`, `FieldRequiredIndicatorProps`, `FieldOrientation`,
+`FieldSize`, and `FieldTone`.
 
 | Root prop | Values | Default |
 | --- | --- | --- |
 | `orientation` | `vertical`, `horizontal` | `vertical` |
+| `size` | `xs`, `sm`, `md` | `md` |
+| `tone` | `primary`, `secondary` | `primary` |
 | `asChild` | `boolean` | `false` |
 
 Root inherits Atom relationship, generated-id, required, disabled, invalid,
@@ -73,11 +76,13 @@ Atom `render`, never both.
 
 Vertical layout stacks relationships; horizontal aligns label and control
 regions and can fall back under constraint. Atom ownership marks Description
-and Error for generated `aria-describedby` and state propagation.
+and Error for generated `aria-describedby` and state propagation. `size`
+coordinates label density; `tone="secondary"` provides the quieter label
+hierarchy used by compact property and inspector panels.
 
 ## Tokens and CSS hooks
 
-Stable classes/slots are `brick-field`, `brick-field-label`,
+Stable Root attributes are `data-size` and `data-tone`. Stable classes/slots are `brick-field`, `brick-field-label`,
 `brick-field-description`, `brick-field-error`, and
 `brick-field-required-indicator` with their matching slots and Atom state/
 orientation attributes. Every part forwards its overridable `data-slot`.

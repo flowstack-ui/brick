@@ -15,8 +15,12 @@
     --brick-code-block-font-weight: var(--brick-typography-code-block-md-font-weight);
     --brick-code-block-line-height: var(--brick-typography-code-block-md-line-height);
     --brick-code-block-letter-spacing: var(--brick-typography-code-block-md-letter-spacing);
-    --brick-code-block-selection-background: var(--brick-color-accent-soft);
-    --brick-code-block-selection-foreground: var(--brick-color-accent-text);
+    --brick-code-block-selection-background: var(
+      --brick-color-selection-background
+    );
+    --brick-code-block-selection-foreground: var(
+      --brick-color-selection-foreground
+    );
     --brick-code-block-line-number-foreground: var(
       --brick-color-text-secondary
     );

@@ -16,8 +16,9 @@
     }
   ],
   "composition": [
-    "Compose Root > Track > Range plus one indexed Thumb for every value; place optional Marker parts in Track and optional ValueLabel inside its Thumb.",
+    "Compose Root > Track > Range plus one indexed Thumb for every value; Thumb may contain decorative Icon or authored artwork, Marker belongs in Track, and optional ValueLabel belongs inside its Thumb.",
     "Use Slider as the sole control in one Field when a visible label, description, error, or required state is needed; otherwise name every standalone Thumb explicitly."
+    ,"Use frame=outline when the Slider must share the same complete control boundary as adjacent inputs in a property row."
   ],
   "rules": [
     {
@@ -54,6 +55,16 @@
       "id": "slider-track-inset",
       "level": "should",
       "statement": "Keep the default Track inset when a parent clips overflow; set the public Track-inset token to zero only when the surrounding composition preserves complete endpoint target and focus paint."
+    },
+    {
+      "id": "slider-frame",
+      "level": "should",
+      "statement": "Use the optional outline frame for form-aligned property rows rather than recreating a Slider boundary with consumer CSS."
+    },
+    {
+      "id": "slider-thumb-content",
+      "level": "should",
+      "statement": "Place only compact decorative artwork in Thumb, keep the Thumb's accessible name on the slider itself, and use ValueLabel rather than authored artwork for persistent value output."
     },
     {
       "id": "slider-css",

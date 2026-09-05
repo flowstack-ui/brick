@@ -4,6 +4,9 @@ Password Toggle Field follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Expanded PasswordToggleField to the responsive shared 2xs–2xl control-size
+  scale and made the 44px `lg` recipe the default.
+
 ## 0.1.10
 
 ### Added

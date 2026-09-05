@@ -1,12 +1,17 @@
 "use client";
 
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import {
+  forwardRef,
+  type HTMLAttributes,
+  type ReactNode,
+} from "react";
 import {
   AvatarFallback as AtomAvatarFallback,
   AvatarImage as AtomAvatarImage,
   AvatarRoot as AtomAvatarRoot,
   type ImageLoadingStatus,
 } from "@flowstack-ui/atom/avatar";
+import { useAvatarGroupPresentation } from "../avatar-group/AvatarGroupContext.js";
 
 export type AvatarSize =
   | "xs"
@@ -54,6 +59,9 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
   },
   ref,
 ) {
+  const groupPresentation = useAvatarGroupPresentation();
+  const resolvedSize = groupPresentation?.size ?? size;
+  const resolvedShape = groupPresentation?.shape ?? shape;
   const fallbackSemantics =
     alt === ""
       ? ({ "aria-hidden": true } as const)
@@ -63,8 +71,8 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
     <AtomAvatarRoot
       {...props}
       className={mergeClassName("brick-avatar", className)}
-      data-shape={shape}
-      data-size={size}
+      data-shape={resolvedShape}
+      data-size={resolvedSize}
       data-slot={dataSlot}
       data-status={status}
       onLoadingStatusChange={onLoadingStatusChange}

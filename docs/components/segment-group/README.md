@@ -52,7 +52,7 @@ Refs target those rendered elements; Indicator never owns selection or naming.
 
 ## API
 
-Root accepts Atom Radio Group props and adds `size: "sm" | "md" | "lg"`
+Root accepts Atom Radio Group props and adds `size: "2xs" | "xs" | "sm" | "md" | "lg"`
 (default `"md"`) and `fullWidth` (default `false`). Orientation defaults to
 `"horizontal"`. Item accepts Atom Radio props and `iconOnly` (default false).
 
@@ -63,20 +63,30 @@ Public exports are `SegmentGroup`, `SegmentGroupRoot`, `SegmentGroupItem`,
 Public prop types are `SegmentGroupRootProps`, `SegmentGroupItemProps`,
 `SegmentGroupItemTextProps`, and `SegmentGroupIndicatorProps`.
 
-| Prop          | Values                   | Default      |
-| ------------- | ------------------------ | ------------ |
-| `size`        | `sm`, `md`, `lg`         | `md`         |
-| `orientation` | `horizontal`, `vertical` | `horizontal` |
-| `fullWidth`   | `boolean`                | `false`      |
-| `iconOnly`    | `boolean`                | `false`      |
+| Prop          | Values                        | Default      |
+| ------------- | ----------------------------- | ------------ |
+| `size`        | `2xs`, `xs`, `sm`, `md`, `lg` | `md`         |
+| `orientation` | `horizontal`, `vertical`      | `horizontal` |
+| `fullWidth`   | `boolean`                     | `false`      |
+| `iconOnly`    | `boolean`                     | `false`      |
 
 ## Visual recipes and states
 
-All sizes align with Brick's shared named control geometry. Resting Items use
-secondary text and the selected Item uses primary text. Indicator fills the
-selected Item's complete segmented area with a quiet border and shallow
-elevation, while the Root uses an inset boundary that does not enlarge the
-shared control size. Indicator moves and resizes without layout changes.
+All sizes retain Brick's shared named outer control heights. `2xs` is the 28px
+compact application-control recipe intended for dense property and editor
+panels; `xs` is the polished 32px marketing and compact-form recipe, and
+ordinary touch-first choices should continue to use `sm` or larger. Segment
+labels use regular-weight content typography rather than button-label weight,
+with component-owned horizontal padding and gaps. Resting Items use secondary
+text and the selected Item uses primary text. Indicator fills the selected
+Item's complete segmented area with a borderless shallow elevation, while the
+Root uses an inset boundary that does not enlarge the shared control size. The
+unselected rail uses the subtle surface, the selected
+segment uses the base surface in light appearance and raised surface in dark
+appearance, and short inset default-boundary rules keep every adjacent option
+distinct without drawing a full-height boxed edge. Dividers touching the
+selected item are hidden so they do not double its visual edge.
+Indicator moves and resizes without layout changes.
 Disabled state stays visible but unavailable;
 read-only selection remains focusable and stable.
 
@@ -93,8 +103,9 @@ Stable classes and slots are `segment-group`, `segment-group-indicator`,
 `--brick-segment-group-indicator-border`,
 `--brick-segment-group-indicator-shadow`,
 `--brick-segment-group-foreground`,
-`--brick-segment-group-selected-foreground`, and
-`--brick-segment-group-focus-ring`.
+`--brick-segment-group-selected-foreground`,
+`--brick-segment-group-focus-ring`, `--brick-segment-group-divider`, and
+`--brick-segment-group-divider-inset`.
 
 Root exposes `data-size` and `data-full-width`; Item exposes
 `data-icon-only` alongside Atom's state and value attributes.

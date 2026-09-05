@@ -13,7 +13,7 @@
 | Assistive technology | |
 | Playground route | `/tree-grid` |
 
-Scenario order: `01 Overview`, `02 Anatomy and semantics`, `03 Variants`,
+Scenario order: `01 Overview`, `02 Anatomy and semantics`, `03 Structure and paint`,
 `04 Sizes and density`, `05 Hierarchy and selection`, `06 Sorting and
 controlled behavior`, `07 Caption, alignment, numeric, header, and footer`,
 `08 Appearance and customization`, `09 Responsive, localization, RTL, and
@@ -55,8 +55,9 @@ Notes or issue:
 
 ## Step 4 — Visual finish, appearance, and preferences
 
-Inspect line/outline, all sizes and densities, top/bottom captions, deep
-indentation, total footer, selection, focus, disabled state, light/dark badges,
+Inspect line/outline, transparent/base surface, border tones, optional column
+dividers, striping, sticky headers, all sizes and densities, top/bottom captions,
+deep indentation, total footer, selection, focus, disabled state, light/dark badges,
 the titled accent customization, reduced motion, and forced colors. Confirm
 header, footer, hover, and selected fills remain clipped inside every rounded
 outline edge without sharp-corner overflow.

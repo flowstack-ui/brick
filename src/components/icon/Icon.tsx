@@ -8,7 +8,8 @@ import {
   type Ref,
 } from "react";
 
-export type IconSize = "2xs" | "xs" | "sm" | "md" | "lg" | "xl";
+export type IconSize =
+  "inherit" | "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 export type IconTone =
   | "inherit"
   | "primary"
@@ -19,6 +20,7 @@ export type IconTone =
   | "success"
   | "warning"
   | "danger";
+export type IconEmphasis = "text" | "solid";
 
 type DecorativeIconProps = {
   label?: never;
@@ -47,6 +49,7 @@ type IconNativeProps = Omit<
 
 type IconCommonProps = IconNativeProps & {
   children: ReactElement;
+  emphasis?: IconEmphasis;
   size?: IconSize;
   tone?: IconTone;
   directional?: boolean;
@@ -55,9 +58,7 @@ type IconCommonProps = IconNativeProps & {
   slot?: string;
 };
 
-type IconCompositionProps =
-  | { asChild: true }
-  | { asChild?: false };
+type IconCompositionProps = { asChild: true } | { asChild?: false };
 
 export type IconProps = IconCommonProps &
   IconCompositionProps &
@@ -111,6 +112,7 @@ export const Icon = forwardRef<HTMLElement | SVGSVGElement, IconProps>(
       children,
       className,
       directional = false,
+      emphasis = "text",
       label,
       size = "md",
       slot = "icon",
@@ -129,6 +131,7 @@ export const Icon = forwardRef<HTMLElement | SVGSVGElement, IconProps>(
       "aria-labelledby": ariaLabelledby,
       className: mergeClassName("brick-icon", className),
       "data-directional": directional ? "" : undefined,
+      "data-emphasis": emphasis,
       "data-size": size,
       "data-slot": slot,
       "data-tone": tone,

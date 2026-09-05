@@ -9,8 +9,10 @@ test.beforeEach(async ({ page }) => {
 test("List defaults and native semantic output are deterministic", async ({ page }) => {
   const root = page.locator("#scenario-list-overview .brick-list");
   await expect(root).toHaveAttribute("data-variant", "plain");
+  await expect(root).toHaveAttribute("data-align", "start");
   await expect(root).toHaveAttribute("data-size", "md");
   await expect(root).toHaveAttribute("data-density", "comfortable");
+  await expect(root).toHaveAttribute("data-inset", "default");
   await expect(root).toHaveAttribute("data-marker", "auto");
   await expect(root).toHaveCSS("list-style-type", "disc");
   await expect(root.locator("li")).toHaveCount(3);
@@ -30,6 +32,10 @@ test("List variants, sizes, densities, markers, and nesting remain independent",
   expect(new Set(sizeValues).size).toBe(3);
   const densityHeights = await page.locator("#scenario-list-sizing .list-grid--two .brick-list__item").evaluateAll((nodes) => nodes.slice(0, 4).map((node) => node.getBoundingClientRect().height));
   expect(densityHeights[0]).toBeLessThan(densityHeights[3]);
+  const insetItems = page.locator("#scenario-list-sizing [data-list-insets] .brick-list__item").first();
+  const flushItem = page.locator("#scenario-list-sizing [data-list-insets] .brick-list").nth(1).locator(".brick-list__item").first();
+  expect(parseFloat(await insetItems.evaluate((node) => getComputedStyle(node).paddingInlineStart))).toBeGreaterThan(0);
+  await expect(flushItem).toHaveCSS("padding-inline-start", "0px");
   const markerValues = await page.locator("#scenario-list-markers .list-grid--markers .brick-list").evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).listStyleType));
   expect(markerValues).toEqual(["disc", "disc", "circle", "square", "decimal", "lower-alpha", "upper-alpha", "lower-roman", "upper-roman", "none"]);
   const nested = page.locator("#scenario-list-markers .brick-list .brick-list");
@@ -37,6 +43,8 @@ test("List variants, sizes, densities, markers, and nesting remain independent",
 });
 
 test("Structured anatomy aligns columns, wraps content, and mirrors logical placement", async ({ page }) => {
+  const centeredRoot = page.locator("#scenario-list-anatomy .brick-list").first();
+  await expect(centeredRoot).toHaveAttribute("data-align", "center");
   const first = page.locator("#scenario-list-anatomy .brick-list__item").first();
   const leading = first.locator(".brick-list__leading");
   const content = first.locator(".brick-list__content");
@@ -44,6 +52,11 @@ test("Structured anatomy aligns columns, wraps content, and mirrors logical plac
   const [leadingBox, contentBox, trailingBox] = await Promise.all([leading.boundingBox(), content.boundingBox(), trailing.boundingBox()]);
   expect(leadingBox!.x).toBeLessThan(contentBox!.x);
   expect(contentBox!.x).toBeLessThan(trailingBox!.x);
+  const leadingCenter = leadingBox!.y + leadingBox!.height / 2;
+  const contentCenter = contentBox!.y + contentBox!.height / 2;
+  const trailingCenter = trailingBox!.y + trailingBox!.height / 2;
+  expect(Math.abs(leadingCenter - contentCenter)).toBeLessThanOrEqual(1);
+  expect(Math.abs(trailingCenter - contentCenter)).toBeLessThanOrEqual(1);
   const rtl = page.locator("#scenario-list-stress [dir=rtl] .brick-list__item").first();
   const [rtlLeading, rtlContent, rtlTrailing] = await Promise.all([
     rtl.locator(".brick-list__leading").boundingBox(),

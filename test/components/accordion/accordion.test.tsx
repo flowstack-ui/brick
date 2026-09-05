@@ -27,7 +27,7 @@ describe("Accordion", () => {
 
   it("supports every variant and size without leaking recipe props", () => {
     const { rerender } = render(<Accordion.Root><Item /></Accordion.Root>);
-    for (const variant of ["plain", "soft", "outline"] as const) for (const size of ["sm", "md", "lg"] as const) {
+    for (const variant of ["plain", "ghost", "soft", "outline"] as const) for (const size of ["sm", "md", "lg", "xl"] as const) {
       rerender(<Accordion.Root variant={variant} size={size}><Item /></Accordion.Root>);
       const root = screen.getByText("Account").closest(".brick-accordion");
       expect(root).toHaveAttribute("data-variant", variant);
@@ -35,6 +35,13 @@ describe("Accordion", () => {
       expect(root).not.toHaveAttribute("variant");
       expect(root).not.toHaveAttribute("size");
     }
+  });
+
+  it("supports a start indicator in a surface-blended disclosure", () => {
+    render(<Accordion.Root indicatorPlacement="start" variant="ghost"><Item /></Accordion.Root>);
+    const root = screen.getByText("Account").closest(".brick-accordion");
+    expect(root).toHaveAttribute("data-indicator-placement", "start");
+    expect(root).toHaveAttribute("data-variant", "ghost");
   });
 
   it("supports single and multiple selection models", () => {

@@ -10,12 +10,13 @@ import contract from "@flowstack-ui/brick/theme-contract.json" with { type: "jso
 The artifact uses the `flowstack.brick-theme-contract.v1` schema identifier.
 It is generated from Brick's token source, component documentation contracts,
 and cascade declaration, so theme tooling does not need a copied token list.
-Contract revision 2 added the required contrast declaration. Revision 3 adds
-closed categorical component inputs and conditional contrast pairs. The
-schema identifier remains version 1 because both revisions are additive for
-existing contract readers. Theme accepts revision 2 and newer, while tooling
-that needs categorical inputs and conditional validation must feature-detect
-the revision 3 fields.
+Contract revision 2 added the required contrast declaration. Revision 3 added
+closed categorical component inputs and conditional contrast pairs. Revision
+4 added component policy recipes. Revision 5 adds the native text-selection
+foreground/background pair and folds both roles into the atomic accent family.
+The schema identifier remains version 1 because these revisions are additive
+for existing contract readers. Theme accepts revision 2 and newer, while
+tooling that needs later fields must feature-detect their contract revision.
 
 The contract records:
 
@@ -56,6 +57,14 @@ gradients, images, and composition-specific adjacency.
 The public contract uses `wcag2-relative-luminance` over opaque sRGB values.
 Theme owns the calculation and generated report; Brick owns the declared pair
 semantics and thresholds.
+
+Native selection is one opaque text pair:
+`--brick-color-selection-foreground` on
+`--brick-color-selection-background`. Both tokens are required in light and
+dark appearance maps, belong to the `accent` atomic family, and require at
+least `4.5:1`. Because the selection background is opaque, the declared ratio
+does not change when selection crosses a neutral, accent, status, or image
+surface.
 
 Brick currently approves Drawer background and radius plus Link resting
 decoration as inherited component inputs. `components.link.decoration` accepts

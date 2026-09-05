@@ -137,6 +137,10 @@ Public variables are `--brick-code-block-background`,
 `--brick-code-block-line-removed-background`, and
 `--brick-code-block-line-removed-border`.
 
+The two Code Block selection variables default to Brick's shared opaque
+selection pair. Override both together when a syntax surface needs a distinct
+selection palette; never replace only the foreground or background.
+
 ## Customization
 
 ```tsx

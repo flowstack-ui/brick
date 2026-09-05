@@ -12,6 +12,7 @@ export type {
   AccordionContentInnerProps,
   AccordionContentProps,
   AccordionHeaderProps,
+  AccordionIndicatorPlacement,
   AccordionIndicatorProps,
   AccordionItemProps,
   AccordionRootProps,

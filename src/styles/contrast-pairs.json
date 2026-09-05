@@ -159,6 +159,13 @@
       "minimumRatio": 4.5
     },
     {
+      "id": "selection-foreground-on-background",
+      "kind": "text",
+      "foreground": "--brick-color-selection-foreground",
+      "backgrounds": ["--brick-color-selection-background"],
+      "minimumRatio": 4.5
+    },
+    {
       "id": "focus-ring-on-surface",
       "kind": "non-text",
       "foreground": "--brick-color-focus-ring",

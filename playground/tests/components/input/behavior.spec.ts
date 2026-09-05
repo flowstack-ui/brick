@@ -86,9 +86,10 @@ test("Input controlled comparisons change only variant, size, or shape", async (
   );
   expect(
     Number.parseFloat(
-      await shapeInputs.nth(2).locator("..").evaluate(
-        (element) => getComputedStyle(element).borderRadius,
-      ),
+      await shapeInputs
+        .nth(2)
+        .locator("..")
+        .evaluate((element) => getComputedStyle(element).borderRadius),
     ),
   ).toBeGreaterThan(100);
 });
@@ -131,7 +132,9 @@ test("Input adornments remain logical and Clear delegates value and focus", asyn
   await expect(clear).toBeHidden();
 });
 
-test("Input state ownership and availability remain native", async ({ page }) => {
+test("Input state ownership and availability remain native", async ({
+  page,
+}) => {
   const states = page.getByTestId("input-states");
   const namedInputs = states.getByRole("textbox", { name: "Project name" });
   const uncontrolled = namedInputs.nth(0);
@@ -139,7 +142,9 @@ test("Input state ownership and availability remain native", async ({ page }) =>
   const uncontrolledRoot = await box(uncontrolled.locator(".."));
   const controlledRoot = await box(controlled.locator(".."));
   const uncontrolledCell = await box(
-    uncontrolled.locator("xpath=ancestor::*[contains(@class, 'forms-cell')][1]"),
+    uncontrolled.locator(
+      "xpath=ancestor::*[contains(@class, 'forms-cell')][1]",
+    ),
   );
   const controlledCell = await box(
     controlled.locator("xpath=ancestor::*[contains(@class, 'forms-cell')][1]"),
@@ -169,9 +174,9 @@ test("Input state ownership and availability remain native", async ({ page }) =>
   );
   await expect(invalid.locator("..")).toHaveCSS(
     "background-color",
-    await required.locator("..").evaluate(
-      (element) => getComputedStyle(element).backgroundColor,
-    ),
+    await required
+      .locator("..")
+      .evaluate((element) => getComputedStyle(element).backgroundColor),
   );
 });
 
@@ -187,16 +192,16 @@ test("Input composes with inline validation, reset, and external ownership", asy
 
   await email.fill("ada@example.com");
   await form.getByRole("button", { name: "Save email" }).click();
-  await expect(form.locator("output")).toHaveText(
-    "Submitted: ada@example.com",
-  );
+  await expect(form.locator("output")).toHaveText("Submitted: ada@example.com");
   await expect(email).not.toHaveAttribute("data-invalid");
 
   const external = page.getByRole("textbox", { name: "External project" });
   expect(
-    await page.locator("#input-form-example").evaluate((element) =>
-      new FormData(element as HTMLFormElement).get("project"),
-    ),
+    await page
+      .locator("#input-form-example")
+      .evaluate((element) =>
+        new FormData(element as HTMLFormElement).get("project"),
+      ),
   ).toBe("Brick");
 
   await form.getByRole("button", { name: "Reset" }).click();
@@ -252,18 +257,26 @@ test("Input appearance, customization, RTL, and narrow containment remain stable
   const rtlRoot = rtl.locator("..");
   await expect(rtlRoot).toHaveCSS("direction", "rtl");
   const startBox = await box(rtlRoot.locator("[data-slot='input-start']"));
-  const clearBox = await box(
-    page.getByRole("button", { name: "مسح البحث" }),
-  );
+  const clearBox = await box(page.getByRole("button", { name: "مسح البحث" }));
   expect(startBox.x).toBeGreaterThan(clearBox.x);
 
   await page.setViewportSize({ width: 390, height: 844 });
   expect(
     await page.locator("html").evaluate((element) => element.scrollWidth),
   ).toBeLessThanOrEqual(390);
-  expect((await box(page.getByTestId("input-stress"))).width).toBeLessThanOrEqual(
-    390,
-  );
+  expect(
+    (await box(page.getByTestId("input-stress"))).width,
+  ).toBeLessThanOrEqual(390);
 
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+
+  await page.emulateMedia({ forcedColors: "active" });
+  const forcedColorsInput = page
+    .getByTestId("input-states")
+    .getByRole("textbox")
+    .first();
+  await forcedColorsInput.focus();
+  const forcedColorsRoot = forcedColorsInput.locator("..");
+  await expect(forcedColorsRoot).toHaveCSS("outline-style", "solid");
+  await expect(forcedColorsRoot).toHaveCSS("box-shadow", "none");
 });

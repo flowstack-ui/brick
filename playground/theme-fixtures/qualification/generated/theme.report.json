@@ -1,6 +1,6 @@
 {
   "$schema": "flowstack.theme-report.v1",
-  "brickVersion": "0.2.2",
+  "brickVersion": "0.2.3",
   "contrast": {
     "algorithm": "wcag2-relative-luminance",
     "colorSpace": "srgb",
@@ -639,6 +639,18 @@
         "kind": "text",
         "minimumRatio": 4.5,
         "ratio": 11.3956394573,
+        "valid": true
+      },
+      {
+        "appearance": "light",
+        "background": "--brick-color-selection-background",
+        "backgroundValue": "#006154",
+        "foreground": "--brick-color-selection-foreground",
+        "foregroundValue": "#ffffff",
+        "id": "selection-foreground-on-background/selection-background",
+        "kind": "text",
+        "minimumRatio": 4.5,
+        "ratio": 7.39984745038,
         "valid": true
       },
       {
@@ -1735,6 +1747,18 @@
       },
       {
         "appearance": "dark",
+        "background": "--brick-color-selection-background",
+        "backgroundValue": "#7dd1bd",
+        "foreground": "--brick-color-selection-foreground",
+        "foregroundValue": "#05251e",
+        "id": "selection-foreground-on-background/selection-background",
+        "kind": "text",
+        "minimumRatio": 4.5,
+        "ratio": 9.09191648357,
+        "valid": true
+      },
+      {
+        "appearance": "dark",
         "background": "--brick-color-success-soft",
         "backgroundValue": "#0e3022",
         "foreground": "--brick-color-success-on-soft",
@@ -2193,13 +2217,13 @@
     "projectPairs": []
   },
   "counts": {
-    "brickContrastPairs": 182,
-    "brickInherited": 106,
-    "brickOverridden": 48,
-    "brickRequired": 154,
+    "brickContrastPairs": 184,
+    "brickInherited": 108,
+    "brickOverridden": 52,
+    "brickRequired": 160,
     "componentInputs": 3,
-    "contrastPairs": 182,
-    "emitted": 184,
+    "contrastPairs": 184,
+    "emitted": 190,
     "foundations": 3,
     "projectContrastPairs": 0,
     "projectTokens": 22

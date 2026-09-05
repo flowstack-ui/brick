@@ -33,7 +33,7 @@ horizontal with Left/Right, then repeat horizontal in RTL at 09. Activate with
 Enter and Space. Inspect 07 output. Expected: focus follows enabled Triggers in
 visual reading order; disabled items are skipped; activation happens once;
 expanded, controls, IDs, labels, headings, and optional region role match. The
-default Indicator points down while closed and up while open.
+default Indicator points toward inline-end while closed and down while open.
 
 ## Step 3 — Appearance, responsive overflow, and motion
 

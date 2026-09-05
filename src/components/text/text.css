@@ -34,7 +34,9 @@
     --brick-text-font-size: var(--brick-typography-display-sm-font-size);
     --brick-text-font-weight: var(--brick-typography-display-sm-font-weight);
     --brick-text-line-height: var(--brick-typography-display-sm-line-height);
-    --brick-text-letter-spacing: var(--brick-typography-display-sm-letter-spacing);
+    --brick-text-letter-spacing: var(
+      --brick-typography-display-sm-letter-spacing
+    );
   }
 
   .brick-text[data-variant="display-md"] {
@@ -42,7 +44,9 @@
     --brick-text-font-size: var(--brick-typography-display-md-font-size);
     --brick-text-font-weight: var(--brick-typography-display-md-font-weight);
     --brick-text-line-height: var(--brick-typography-display-md-line-height);
-    --brick-text-letter-spacing: var(--brick-typography-display-md-letter-spacing);
+    --brick-text-letter-spacing: var(
+      --brick-typography-display-md-letter-spacing
+    );
   }
 
   .brick-text[data-variant="display-lg"] {
@@ -50,7 +54,29 @@
     --brick-text-font-size: var(--brick-typography-display-lg-font-size);
     --brick-text-font-weight: var(--brick-typography-display-lg-font-weight);
     --brick-text-line-height: var(--brick-typography-display-lg-line-height);
-    --brick-text-letter-spacing: var(--brick-typography-display-lg-letter-spacing);
+    --brick-text-letter-spacing: var(
+      --brick-typography-display-lg-letter-spacing
+    );
+  }
+
+  .brick-text[data-variant="display-xl"] {
+    --brick-text-font-family: var(--brick-typography-display-xl-font-family);
+    --brick-text-font-size: var(--brick-typography-display-xl-font-size);
+    --brick-text-font-weight: var(--brick-typography-display-xl-font-weight);
+    --brick-text-line-height: var(--brick-typography-display-xl-line-height);
+    --brick-text-letter-spacing: var(
+      --brick-typography-display-xl-letter-spacing
+    );
+  }
+
+  .brick-text[data-variant="title-xl"] {
+    --brick-text-font-family: var(--brick-typography-title-xl-font-family);
+    --brick-text-font-size: var(--brick-typography-title-xl-font-size);
+    --brick-text-font-weight: var(--brick-typography-title-xl-font-weight);
+    --brick-text-line-height: var(--brick-typography-title-xl-line-height);
+    --brick-text-letter-spacing: var(
+      --brick-typography-title-xl-letter-spacing
+    );
   }
 
   .brick-text[data-variant="title-lg"] {
@@ -58,7 +84,9 @@
     --brick-text-font-size: var(--brick-typography-title-lg-font-size);
     --brick-text-font-weight: var(--brick-typography-title-lg-font-weight);
     --brick-text-line-height: var(--brick-typography-title-lg-line-height);
-    --brick-text-letter-spacing: var(--brick-typography-title-lg-letter-spacing);
+    --brick-text-letter-spacing: var(
+      --brick-typography-title-lg-letter-spacing
+    );
   }
 
   .brick-text[data-variant="title-md"] {
@@ -66,7 +94,9 @@
     --brick-text-font-size: var(--brick-typography-title-md-font-size);
     --brick-text-font-weight: var(--brick-typography-title-md-font-weight);
     --brick-text-line-height: var(--brick-typography-title-md-line-height);
-    --brick-text-letter-spacing: var(--brick-typography-title-md-letter-spacing);
+    --brick-text-letter-spacing: var(
+      --brick-typography-title-md-letter-spacing
+    );
   }
 
   .brick-text[data-variant="title-sm"] {
@@ -74,7 +104,39 @@
     --brick-text-font-size: var(--brick-typography-title-sm-font-size);
     --brick-text-font-weight: var(--brick-typography-title-sm-font-weight);
     --brick-text-line-height: var(--brick-typography-title-sm-line-height);
-    --brick-text-letter-spacing: var(--brick-typography-title-sm-letter-spacing);
+    --brick-text-letter-spacing: var(
+      --brick-typography-title-sm-letter-spacing
+    );
+  }
+
+  .brick-text[data-variant="title-2xs"] {
+    --brick-text-font-family: var(--brick-typography-title-2xs-font-family);
+    --brick-text-font-size: var(--brick-typography-title-2xs-font-size);
+    --brick-text-font-weight: var(--brick-typography-title-2xs-font-weight);
+    --brick-text-line-height: var(--brick-typography-title-2xs-line-height);
+    --brick-text-letter-spacing: var(
+      --brick-typography-title-2xs-letter-spacing
+    );
+  }
+
+  .brick-text[data-variant="title-xs"] {
+    --brick-text-font-family: var(--brick-typography-title-xs-font-family);
+    --brick-text-font-size: var(--brick-typography-title-xs-font-size);
+    --brick-text-font-weight: var(--brick-typography-title-xs-font-weight);
+    --brick-text-line-height: var(--brick-typography-title-xs-line-height);
+    --brick-text-letter-spacing: var(
+      --brick-typography-title-xs-letter-spacing
+    );
+  }
+
+  .brick-text[data-variant="body-xl"] {
+    --brick-text-font-family: var(--brick-typography-body-xl-font-family);
+    --brick-text-font-size: var(--brick-typography-body-xl-font-size);
+    --brick-text-font-weight: var(--brick-typography-body-xl-font-weight);
+    --brick-text-line-height: var(--brick-typography-body-xl-line-height);
+    --brick-text-letter-spacing: var(
+      --brick-typography-body-xl-letter-spacing
+    );
   }
 
   .brick-text[data-variant="body-lg"] {
@@ -116,7 +178,9 @@
       --brick-text-font-size: var(--brick-typography-display-font-size);
       --brick-text-font-weight: var(--brick-typography-display-font-weight);
       --brick-text-line-height: var(--brick-typography-display-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-letter-spacing
+      );
     }
 
     .brick-text[data-variant-sm="display-sm"] {
@@ -124,7 +188,9 @@
       --brick-text-font-size: var(--brick-typography-display-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-display-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-display-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-sm-letter-spacing
+      );
     }
 
     .brick-text[data-variant-sm="display-md"] {
@@ -132,7 +198,9 @@
       --brick-text-font-size: var(--brick-typography-display-md-font-size);
       --brick-text-font-weight: var(--brick-typography-display-md-font-weight);
       --brick-text-line-height: var(--brick-typography-display-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-sm="display-lg"] {
@@ -140,7 +208,29 @@
       --brick-text-font-size: var(--brick-typography-display-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-display-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-display-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-lg-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-sm="display-xl"] {
+      --brick-text-font-family: var(--brick-typography-display-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-display-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-display-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-display-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-xl-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-sm="title-xl"] {
+      --brick-text-font-family: var(--brick-typography-title-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-title-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-xl-letter-spacing
+      );
     }
 
     .brick-text[data-variant-sm="title-lg"] {
@@ -148,7 +238,9 @@
       --brick-text-font-size: var(--brick-typography-title-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-title-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-title-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-lg-letter-spacing
+      );
     }
 
     .brick-text[data-variant-sm="title-md"] {
@@ -156,7 +248,9 @@
       --brick-text-font-size: var(--brick-typography-title-md-font-size);
       --brick-text-font-weight: var(--brick-typography-title-md-font-weight);
       --brick-text-line-height: var(--brick-typography-title-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-sm="title-sm"] {
@@ -164,7 +258,39 @@
       --brick-text-font-size: var(--brick-typography-title-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-title-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-title-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-sm-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-sm="title-2xs"] {
+      --brick-text-font-family: var(--brick-typography-title-2xs-font-family);
+      --brick-text-font-size: var(--brick-typography-title-2xs-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-2xs-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-2xs-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-2xs-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-sm="title-xs"] {
+      --brick-text-font-family: var(--brick-typography-title-xs-font-family);
+      --brick-text-font-size: var(--brick-typography-title-xs-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-xs-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-xs-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-xs-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-sm="body-xl"] {
+      --brick-text-font-family: var(--brick-typography-body-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-body-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-body-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-body-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-xl-letter-spacing
+      );
     }
 
     .brick-text[data-variant-sm="body-lg"] {
@@ -172,7 +298,9 @@
       --brick-text-font-size: var(--brick-typography-body-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-body-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-body-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-lg-letter-spacing
+      );
     }
 
     .brick-text[data-variant-sm="body-md"] {
@@ -180,7 +308,9 @@
       --brick-text-font-size: var(--brick-typography-body-md-font-size);
       --brick-text-font-weight: var(--brick-typography-body-md-font-weight);
       --brick-text-line-height: var(--brick-typography-body-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-sm="body-sm"] {
@@ -188,7 +318,9 @@
       --brick-text-font-size: var(--brick-typography-body-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-body-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-body-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-sm-letter-spacing
+      );
     }
 
     .brick-text[data-variant-sm="caption"] {
@@ -196,7 +328,9 @@
       --brick-text-font-size: var(--brick-typography-caption-font-size);
       --brick-text-font-weight: var(--brick-typography-caption-font-weight);
       --brick-text-line-height: var(--brick-typography-caption-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-caption-letter-spacing
+      );
     }
 
     .brick-text[data-variant-sm="eyebrow"] {
@@ -204,7 +338,9 @@
       --brick-text-font-size: var(--brick-typography-eyebrow-font-size);
       --brick-text-font-weight: var(--brick-typography-eyebrow-font-weight);
       --brick-text-line-height: var(--brick-typography-eyebrow-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-eyebrow-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-eyebrow-letter-spacing
+      );
       --brick-text-text-transform: uppercase;
     }
   }
@@ -215,7 +351,9 @@
       --brick-text-font-size: var(--brick-typography-display-font-size);
       --brick-text-font-weight: var(--brick-typography-display-font-weight);
       --brick-text-line-height: var(--brick-typography-display-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-letter-spacing
+      );
     }
 
     .brick-text[data-variant-md="display-sm"] {
@@ -223,7 +361,9 @@
       --brick-text-font-size: var(--brick-typography-display-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-display-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-display-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-sm-letter-spacing
+      );
     }
 
     .brick-text[data-variant-md="display-md"] {
@@ -231,7 +371,9 @@
       --brick-text-font-size: var(--brick-typography-display-md-font-size);
       --brick-text-font-weight: var(--brick-typography-display-md-font-weight);
       --brick-text-line-height: var(--brick-typography-display-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-md="display-lg"] {
@@ -239,7 +381,29 @@
       --brick-text-font-size: var(--brick-typography-display-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-display-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-display-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-lg-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-md="display-xl"] {
+      --brick-text-font-family: var(--brick-typography-display-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-display-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-display-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-display-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-xl-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-md="title-xl"] {
+      --brick-text-font-family: var(--brick-typography-title-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-title-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-xl-letter-spacing
+      );
     }
 
     .brick-text[data-variant-md="title-lg"] {
@@ -247,7 +411,9 @@
       --brick-text-font-size: var(--brick-typography-title-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-title-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-title-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-lg-letter-spacing
+      );
     }
 
     .brick-text[data-variant-md="title-md"] {
@@ -255,7 +421,9 @@
       --brick-text-font-size: var(--brick-typography-title-md-font-size);
       --brick-text-font-weight: var(--brick-typography-title-md-font-weight);
       --brick-text-line-height: var(--brick-typography-title-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-md="title-sm"] {
@@ -263,7 +431,39 @@
       --brick-text-font-size: var(--brick-typography-title-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-title-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-title-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-sm-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-md="title-2xs"] {
+      --brick-text-font-family: var(--brick-typography-title-2xs-font-family);
+      --brick-text-font-size: var(--brick-typography-title-2xs-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-2xs-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-2xs-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-2xs-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-md="title-xs"] {
+      --brick-text-font-family: var(--brick-typography-title-xs-font-family);
+      --brick-text-font-size: var(--brick-typography-title-xs-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-xs-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-xs-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-xs-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-md="body-xl"] {
+      --brick-text-font-family: var(--brick-typography-body-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-body-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-body-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-body-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-xl-letter-spacing
+      );
     }
 
     .brick-text[data-variant-md="body-lg"] {
@@ -271,7 +471,9 @@
       --brick-text-font-size: var(--brick-typography-body-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-body-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-body-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-lg-letter-spacing
+      );
     }
 
     .brick-text[data-variant-md="body-md"] {
@@ -279,7 +481,9 @@
       --brick-text-font-size: var(--brick-typography-body-md-font-size);
       --brick-text-font-weight: var(--brick-typography-body-md-font-weight);
       --brick-text-line-height: var(--brick-typography-body-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-md="body-sm"] {
@@ -287,7 +491,9 @@
       --brick-text-font-size: var(--brick-typography-body-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-body-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-body-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-sm-letter-spacing
+      );
     }
 
     .brick-text[data-variant-md="caption"] {
@@ -295,7 +501,9 @@
       --brick-text-font-size: var(--brick-typography-caption-font-size);
       --brick-text-font-weight: var(--brick-typography-caption-font-weight);
       --brick-text-line-height: var(--brick-typography-caption-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-caption-letter-spacing
+      );
     }
 
     .brick-text[data-variant-md="eyebrow"] {
@@ -303,7 +511,9 @@
       --brick-text-font-size: var(--brick-typography-eyebrow-font-size);
       --brick-text-font-weight: var(--brick-typography-eyebrow-font-weight);
       --brick-text-line-height: var(--brick-typography-eyebrow-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-eyebrow-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-eyebrow-letter-spacing
+      );
       --brick-text-text-transform: uppercase;
     }
   }
@@ -314,7 +524,9 @@
       --brick-text-font-size: var(--brick-typography-display-font-size);
       --brick-text-font-weight: var(--brick-typography-display-font-weight);
       --brick-text-line-height: var(--brick-typography-display-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-letter-spacing
+      );
     }
 
     .brick-text[data-variant-lg="display-sm"] {
@@ -322,7 +534,9 @@
       --brick-text-font-size: var(--brick-typography-display-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-display-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-display-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-sm-letter-spacing
+      );
     }
 
     .brick-text[data-variant-lg="display-md"] {
@@ -330,7 +544,9 @@
       --brick-text-font-size: var(--brick-typography-display-md-font-size);
       --brick-text-font-weight: var(--brick-typography-display-md-font-weight);
       --brick-text-line-height: var(--brick-typography-display-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-lg="display-lg"] {
@@ -338,7 +554,29 @@
       --brick-text-font-size: var(--brick-typography-display-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-display-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-display-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-lg-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-lg="display-xl"] {
+      --brick-text-font-family: var(--brick-typography-display-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-display-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-display-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-display-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-xl-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-lg="title-xl"] {
+      --brick-text-font-family: var(--brick-typography-title-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-title-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-xl-letter-spacing
+      );
     }
 
     .brick-text[data-variant-lg="title-lg"] {
@@ -346,7 +584,9 @@
       --brick-text-font-size: var(--brick-typography-title-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-title-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-title-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-lg-letter-spacing
+      );
     }
 
     .brick-text[data-variant-lg="title-md"] {
@@ -354,7 +594,9 @@
       --brick-text-font-size: var(--brick-typography-title-md-font-size);
       --brick-text-font-weight: var(--brick-typography-title-md-font-weight);
       --brick-text-line-height: var(--brick-typography-title-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-lg="title-sm"] {
@@ -362,7 +604,39 @@
       --brick-text-font-size: var(--brick-typography-title-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-title-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-title-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-sm-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-lg="title-2xs"] {
+      --brick-text-font-family: var(--brick-typography-title-2xs-font-family);
+      --brick-text-font-size: var(--brick-typography-title-2xs-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-2xs-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-2xs-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-2xs-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-lg="title-xs"] {
+      --brick-text-font-family: var(--brick-typography-title-xs-font-family);
+      --brick-text-font-size: var(--brick-typography-title-xs-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-xs-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-xs-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-xs-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-lg="body-xl"] {
+      --brick-text-font-family: var(--brick-typography-body-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-body-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-body-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-body-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-xl-letter-spacing
+      );
     }
 
     .brick-text[data-variant-lg="body-lg"] {
@@ -370,7 +644,9 @@
       --brick-text-font-size: var(--brick-typography-body-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-body-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-body-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-lg-letter-spacing
+      );
     }
 
     .brick-text[data-variant-lg="body-md"] {
@@ -378,7 +654,9 @@
       --brick-text-font-size: var(--brick-typography-body-md-font-size);
       --brick-text-font-weight: var(--brick-typography-body-md-font-weight);
       --brick-text-line-height: var(--brick-typography-body-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-lg="body-sm"] {
@@ -386,7 +664,9 @@
       --brick-text-font-size: var(--brick-typography-body-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-body-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-body-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-sm-letter-spacing
+      );
     }
 
     .brick-text[data-variant-lg="caption"] {
@@ -394,7 +674,9 @@
       --brick-text-font-size: var(--brick-typography-caption-font-size);
       --brick-text-font-weight: var(--brick-typography-caption-font-weight);
       --brick-text-line-height: var(--brick-typography-caption-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-caption-letter-spacing
+      );
     }
 
     .brick-text[data-variant-lg="eyebrow"] {
@@ -402,7 +684,9 @@
       --brick-text-font-size: var(--brick-typography-eyebrow-font-size);
       --brick-text-font-weight: var(--brick-typography-eyebrow-font-weight);
       --brick-text-line-height: var(--brick-typography-eyebrow-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-eyebrow-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-eyebrow-letter-spacing
+      );
       --brick-text-text-transform: uppercase;
     }
   }
@@ -413,7 +697,9 @@
       --brick-text-font-size: var(--brick-typography-display-font-size);
       --brick-text-font-weight: var(--brick-typography-display-font-weight);
       --brick-text-line-height: var(--brick-typography-display-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-letter-spacing
+      );
     }
 
     .brick-text[data-variant-xl="display-sm"] {
@@ -421,7 +707,9 @@
       --brick-text-font-size: var(--brick-typography-display-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-display-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-display-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-sm-letter-spacing
+      );
     }
 
     .brick-text[data-variant-xl="display-md"] {
@@ -429,7 +717,9 @@
       --brick-text-font-size: var(--brick-typography-display-md-font-size);
       --brick-text-font-weight: var(--brick-typography-display-md-font-weight);
       --brick-text-line-height: var(--brick-typography-display-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-xl="display-lg"] {
@@ -437,7 +727,29 @@
       --brick-text-font-size: var(--brick-typography-display-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-display-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-display-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-display-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-lg-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-xl="display-xl"] {
+      --brick-text-font-family: var(--brick-typography-display-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-display-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-display-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-display-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-display-xl-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-xl="title-xl"] {
+      --brick-text-font-family: var(--brick-typography-title-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-title-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-xl-letter-spacing
+      );
     }
 
     .brick-text[data-variant-xl="title-lg"] {
@@ -445,7 +757,9 @@
       --brick-text-font-size: var(--brick-typography-title-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-title-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-title-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-lg-letter-spacing
+      );
     }
 
     .brick-text[data-variant-xl="title-md"] {
@@ -453,7 +767,9 @@
       --brick-text-font-size: var(--brick-typography-title-md-font-size);
       --brick-text-font-weight: var(--brick-typography-title-md-font-weight);
       --brick-text-line-height: var(--brick-typography-title-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-xl="title-sm"] {
@@ -461,7 +777,39 @@
       --brick-text-font-size: var(--brick-typography-title-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-title-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-title-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-title-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-sm-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-xl="title-2xs"] {
+      --brick-text-font-family: var(--brick-typography-title-2xs-font-family);
+      --brick-text-font-size: var(--brick-typography-title-2xs-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-2xs-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-2xs-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-2xs-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-xl="title-xs"] {
+      --brick-text-font-family: var(--brick-typography-title-xs-font-family);
+      --brick-text-font-size: var(--brick-typography-title-xs-font-size);
+      --brick-text-font-weight: var(--brick-typography-title-xs-font-weight);
+      --brick-text-line-height: var(--brick-typography-title-xs-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-title-xs-letter-spacing
+      );
+    }
+
+    .brick-text[data-variant-xl="body-xl"] {
+      --brick-text-font-family: var(--brick-typography-body-xl-font-family);
+      --brick-text-font-size: var(--brick-typography-body-xl-font-size);
+      --brick-text-font-weight: var(--brick-typography-body-xl-font-weight);
+      --brick-text-line-height: var(--brick-typography-body-xl-line-height);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-xl-letter-spacing
+      );
     }
 
     .brick-text[data-variant-xl="body-lg"] {
@@ -469,7 +817,9 @@
       --brick-text-font-size: var(--brick-typography-body-lg-font-size);
       --brick-text-font-weight: var(--brick-typography-body-lg-font-weight);
       --brick-text-line-height: var(--brick-typography-body-lg-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-lg-letter-spacing
+      );
     }
 
     .brick-text[data-variant-xl="body-md"] {
@@ -477,7 +827,9 @@
       --brick-text-font-size: var(--brick-typography-body-md-font-size);
       --brick-text-font-weight: var(--brick-typography-body-md-font-weight);
       --brick-text-line-height: var(--brick-typography-body-md-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-md-letter-spacing
+      );
     }
 
     .brick-text[data-variant-xl="body-sm"] {
@@ -485,7 +837,9 @@
       --brick-text-font-size: var(--brick-typography-body-sm-font-size);
       --brick-text-font-weight: var(--brick-typography-body-sm-font-weight);
       --brick-text-line-height: var(--brick-typography-body-sm-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-body-sm-letter-spacing
+      );
     }
 
     .brick-text[data-variant-xl="caption"] {
@@ -493,7 +847,9 @@
       --brick-text-font-size: var(--brick-typography-caption-font-size);
       --brick-text-font-weight: var(--brick-typography-caption-font-weight);
       --brick-text-line-height: var(--brick-typography-caption-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-caption-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-caption-letter-spacing
+      );
     }
 
     .brick-text[data-variant-xl="eyebrow"] {
@@ -501,31 +857,101 @@
       --brick-text-font-size: var(--brick-typography-eyebrow-font-size);
       --brick-text-font-weight: var(--brick-typography-eyebrow-font-weight);
       --brick-text-line-height: var(--brick-typography-eyebrow-line-height);
-      --brick-text-letter-spacing: var(--brick-typography-eyebrow-letter-spacing);
+      --brick-text-letter-spacing: var(
+        --brick-typography-eyebrow-letter-spacing
+      );
       --brick-text-text-transform: uppercase;
     }
   }
 
   @media (width >= 30rem) {
-    .brick-text:is([data-variant-sm="display"], [data-variant-sm="display-sm"], [data-variant-sm="display-md"], [data-variant-sm="display-lg"], [data-variant-sm="title-lg"], [data-variant-sm="title-md"], [data-variant-sm="title-sm"], [data-variant-sm="body-lg"], [data-variant-sm="body-md"], [data-variant-sm="body-sm"], [data-variant-sm="caption"]) {
+    .brick-text:is(
+      [data-variant-sm="display"],
+      [data-variant-sm="display-sm"],
+      [data-variant-sm="display-md"],
+      [data-variant-sm="display-lg"],
+      [data-variant-sm="display-xl"],
+      [data-variant-sm="title-xl"],
+      [data-variant-sm="title-lg"],
+      [data-variant-sm="title-md"],
+      [data-variant-sm="title-sm"],
+      [data-variant-sm="title-2xs"],
+      [data-variant-sm="title-xs"],
+      [data-variant-sm="body-xl"],
+      [data-variant-sm="body-lg"],
+      [data-variant-sm="body-md"],
+      [data-variant-sm="body-sm"],
+      [data-variant-sm="caption"]
+    ) {
       --brick-text-text-transform: none;
     }
   }
 
   @media (width >= 48rem) {
-    .brick-text:is([data-variant-md="display"], [data-variant-md="display-sm"], [data-variant-md="display-md"], [data-variant-md="display-lg"], [data-variant-md="title-lg"], [data-variant-md="title-md"], [data-variant-md="title-sm"], [data-variant-md="body-lg"], [data-variant-md="body-md"], [data-variant-md="body-sm"], [data-variant-md="caption"]) {
+    .brick-text:is(
+      [data-variant-md="display"],
+      [data-variant-md="display-sm"],
+      [data-variant-md="display-md"],
+      [data-variant-md="display-lg"],
+      [data-variant-md="display-xl"],
+      [data-variant-md="title-xl"],
+      [data-variant-md="title-lg"],
+      [data-variant-md="title-md"],
+      [data-variant-md="title-sm"],
+      [data-variant-md="title-2xs"],
+      [data-variant-md="title-xs"],
+      [data-variant-md="body-xl"],
+      [data-variant-md="body-lg"],
+      [data-variant-md="body-md"],
+      [data-variant-md="body-sm"],
+      [data-variant-md="caption"]
+    ) {
       --brick-text-text-transform: none;
     }
   }
 
   @media (width >= 64rem) {
-    .brick-text:is([data-variant-lg="display"], [data-variant-lg="display-sm"], [data-variant-lg="display-md"], [data-variant-lg="display-lg"], [data-variant-lg="title-lg"], [data-variant-lg="title-md"], [data-variant-lg="title-sm"], [data-variant-lg="body-lg"], [data-variant-lg="body-md"], [data-variant-lg="body-sm"], [data-variant-lg="caption"]) {
+    .brick-text:is(
+      [data-variant-lg="display"],
+      [data-variant-lg="display-sm"],
+      [data-variant-lg="display-md"],
+      [data-variant-lg="display-lg"],
+      [data-variant-lg="display-xl"],
+      [data-variant-lg="title-xl"],
+      [data-variant-lg="title-lg"],
+      [data-variant-lg="title-md"],
+      [data-variant-lg="title-sm"],
+      [data-variant-lg="title-2xs"],
+      [data-variant-lg="title-xs"],
+      [data-variant-lg="body-xl"],
+      [data-variant-lg="body-lg"],
+      [data-variant-lg="body-md"],
+      [data-variant-lg="body-sm"],
+      [data-variant-lg="caption"]
+    ) {
       --brick-text-text-transform: none;
     }
   }
 
   @media (width >= 80rem) {
-    .brick-text:is([data-variant-xl="display"], [data-variant-xl="display-sm"], [data-variant-xl="display-md"], [data-variant-xl="display-lg"], [data-variant-xl="title-lg"], [data-variant-xl="title-md"], [data-variant-xl="title-sm"], [data-variant-xl="body-lg"], [data-variant-xl="body-md"], [data-variant-xl="body-sm"], [data-variant-xl="caption"]) {
+    .brick-text:is(
+      [data-variant-xl="display"],
+      [data-variant-xl="display-sm"],
+      [data-variant-xl="display-md"],
+      [data-variant-xl="display-lg"],
+      [data-variant-xl="display-xl"],
+      [data-variant-xl="title-xl"],
+      [data-variant-xl="title-lg"],
+      [data-variant-xl="title-md"],
+      [data-variant-xl="title-sm"],
+      [data-variant-xl="title-2xs"],
+      [data-variant-xl="title-xs"],
+      [data-variant-xl="body-xl"],
+      [data-variant-xl="body-lg"],
+      [data-variant-xl="body-md"],
+      [data-variant-xl="body-sm"],
+      [data-variant-xl="caption"]
+    ) {
       --brick-text-text-transform: none;
     }
   }
@@ -607,27 +1033,51 @@
   }
 
   @media (width >= 30rem) {
-    .brick-text[data-align-sm="start"] { text-align: start; }
-    .brick-text[data-align-sm="center"] { text-align: center; }
-    .brick-text[data-align-sm="end"] { text-align: end; }
+    .brick-text[data-align-sm="start"] {
+      text-align: start;
+    }
+    .brick-text[data-align-sm="center"] {
+      text-align: center;
+    }
+    .brick-text[data-align-sm="end"] {
+      text-align: end;
+    }
   }
 
   @media (width >= 48rem) {
-    .brick-text[data-align-md="start"] { text-align: start; }
-    .brick-text[data-align-md="center"] { text-align: center; }
-    .brick-text[data-align-md="end"] { text-align: end; }
+    .brick-text[data-align-md="start"] {
+      text-align: start;
+    }
+    .brick-text[data-align-md="center"] {
+      text-align: center;
+    }
+    .brick-text[data-align-md="end"] {
+      text-align: end;
+    }
   }
 
   @media (width >= 64rem) {
-    .brick-text[data-align-lg="start"] { text-align: start; }
-    .brick-text[data-align-lg="center"] { text-align: center; }
-    .brick-text[data-align-lg="end"] { text-align: end; }
+    .brick-text[data-align-lg="start"] {
+      text-align: start;
+    }
+    .brick-text[data-align-lg="center"] {
+      text-align: center;
+    }
+    .brick-text[data-align-lg="end"] {
+      text-align: end;
+    }
   }
 
   @media (width >= 80rem) {
-    .brick-text[data-align-xl="start"] { text-align: start; }
-    .brick-text[data-align-xl="center"] { text-align: center; }
-    .brick-text[data-align-xl="end"] { text-align: end; }
+    .brick-text[data-align-xl="start"] {
+      text-align: start;
+    }
+    .brick-text[data-align-xl="center"] {
+      text-align: center;
+    }
+    .brick-text[data-align-xl="end"] {
+      text-align: end;
+    }
   }
 
   .brick-text[data-wrap="nowrap"] {

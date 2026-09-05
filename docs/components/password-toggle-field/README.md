@@ -54,7 +54,7 @@ Public exports are `PasswordToggleField`, `PasswordToggleFieldRoot`,
 | Root prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `outline`, `soft`, `underline` | `outline` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`; or a responsive value | `lg` |
 | `shape` | `sharp`, `rounded`, `pill` | `rounded` |
 | `fullWidth` | boolean | `true` |
 | `showLabel` | string | `Show password` |

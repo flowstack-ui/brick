@@ -17,6 +17,7 @@ import {
 
 export type DialogSize = "sm" | "md" | "lg";
 export type DialogFooterJustify = "start" | "center" | "end" | "between";
+export type DialogClosePlacement = "inline" | "corner";
 export type DialogRootProps = AtomModalRootProps;
 export type DialogTriggerProps = AtomDialogTriggerProps;
 export type DialogPortalProps = AtomDialogPortalProps;
@@ -33,7 +34,10 @@ export type DialogFooterProps = HTMLAttributes<HTMLDivElement> & {
 };
 export type DialogTitleProps = AtomDialogTitleProps;
 export type DialogDescriptionProps = AtomDialogDescriptionProps;
-export type DialogCloseProps = AtomDialogCloseProps;
+export type DialogCloseProps = AtomDialogCloseProps & {
+  /** Place the authored close control in normal flow or at Content's logical top-end corner. @default "inline" */
+  placement?: DialogClosePlacement;
+};
 export type DialogBranchProps = AtomModalBranchProps;
 
 function mergeClassName(base: string, className: string | undefined) {
@@ -160,11 +164,20 @@ export const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(
 );
 
 export const DialogClose = forwardRef<HTMLElement, DialogCloseProps>(
-  function DialogClose({ className, "data-slot": dataSlot, ...props }, ref) {
+  function DialogClose(
+    {
+      className,
+      placement = "inline",
+      "data-slot": dataSlot,
+      ...props
+    },
+    ref,
+  ) {
     return (
       <AtomDialog.Close
         {...props}
         className={mergeClassName("brick-dialog-close", className)}
+        data-placement={placement}
         data-slot={slotOrDefault(dataSlot, "dialog-close")}
         ref={ref}
       />

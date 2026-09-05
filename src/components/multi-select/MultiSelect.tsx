@@ -28,14 +28,19 @@ import {
   type MultiSelectValueProps as AtomMultiSelectValueProps,
   type MultiSelectViewportProps as AtomMultiSelectViewportProps,
 } from "@flowstack-ui/atom/multi-select";
+import {
+  controlSizeDataAttributes,
+  type ControlSize,
+  type ResponsiveControlSize,
+} from "../_control-size/ControlSize.js";
 
 export type MultiSelectVariant = "outline" | "soft" | "underline";
-export type MultiSelectSize = "sm" | "md" | "lg";
+export type MultiSelectSize = ControlSize;
 export type MultiSelectShape = "sharp" | "rounded" | "pill";
 
 type MultiSelectRootSharedProps = Omit<AtomMultiSelectRootProps, "children"> & {
   children: ReactNode;
-  size?: MultiSelectSize;
+  size?: ResponsiveControlSize;
   fullWidth?: boolean;
 };
 
@@ -63,14 +68,14 @@ export type MultiSelectArrowProps = Omit<AtomMultiSelectArrowProps, "children"> 
 
 interface MultiSelectVisualContextValue {
   variant: MultiSelectVariant;
-  size: MultiSelectSize;
+  size: ResponsiveControlSize;
   shape?: MultiSelectShape;
   fullWidth: boolean;
 }
 
 const MultiSelectVisualContext = createContext<MultiSelectVisualContextValue>({
   variant: "outline",
-  size: "md",
+  size: "lg",
   shape: "rounded",
   fullWidth: true,
 });
@@ -119,6 +124,7 @@ function multiSelectItemText(children: ReactNode): string | undefined {
 function supplyStaticItemLabels(children: ReactNode): ReactNode {
   const mapped = Children.map(children, (child) => {
     if (!isValidElement<{ children?: ReactNode; label?: string }>(child)) return child;
+    if (typeof child.props.children === "function") return child;
     const nested = supplyStaticItemLabels(child.props.children);
     if (child.type === MultiSelectItem && child.props.label === undefined) {
       return cloneElement(child, { label: multiSelectItemText(child.props.children) }, nested);
@@ -133,7 +139,7 @@ export function MultiSelectRoot({
   children,
   fullWidth = true,
   shape = "rounded",
-  size = "md",
+  size = "lg",
   variant = "outline",
   ...props
 }: MultiSelectRootProps) {
@@ -151,13 +157,13 @@ export const MultiSelectTrigger = forwardRef<HTMLButtonElement, MultiSelectTrigg
     return (
       <AtomMultiSelect.Trigger
         {...props}
-        className={mergeClassName("brick-multi-select-trigger", className)}
+        className={mergeClassName("brick-multi-select-trigger brick-control-size", className)}
         data-full-width={visual.fullWidth ? "" : undefined}
         data-shape={visual.shape}
-        data-size={visual.size}
         data-slot={slotOrDefault(dataSlot, "multi-select-trigger")}
         data-variant={visual.variant}
         ref={ref}
+        {...controlSizeDataAttributes(visual.size)}
       />
     );
   },
@@ -180,7 +186,7 @@ export const MultiSelectPortal = AtomMultiSelect.Portal;
 export const MultiSelectContent = forwardRef<HTMLDivElement, MultiSelectContentProps>(
   function MultiSelectContent({ className, "data-slot": dataSlot, ...props }, ref) {
     const visual = useContext(MultiSelectVisualContext);
-    return <AtomMultiSelect.Content {...props} className={mergeClassName("brick-multi-select-content", className)} data-size={visual.size} data-slot={slotOrDefault(dataSlot, "multi-select-listbox")} ref={ref} />;
+    return <AtomMultiSelect.Content {...props} className={mergeClassName("brick-multi-select-content brick-control-size", className)} data-slot={slotOrDefault(dataSlot, "multi-select-listbox")} ref={ref} {...controlSizeDataAttributes(visual.size)} />;
   },
 );
 

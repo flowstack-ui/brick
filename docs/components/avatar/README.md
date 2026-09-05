@@ -9,8 +9,9 @@ square frame with explicit fallback content.
 
 ## When not to use
 
-Do not use it as a generic image, upload control, avatar editor, group, or
-presence system. A status ring is visual metadata, not a live announcement.
+Do not use it as a generic image, upload control, avatar editor, or presence
+system. Compose multiple identities through AvatarGroup rather than hand-built
+negative margins. A status ring is visual metadata, not a live announcement.
 Use Image for a larger editorial or profile portrait when authored aspect
 ratio, crop, focal position, or available measure communicates identity.
 
@@ -70,6 +71,9 @@ Sizes change frame and fallback type together. Shape controls circle or rounded
 geometry. Status adds a non-interactive ring. Failed, absent, or delayed images
 resolve through Atom fallback behavior.
 
+Inside AvatarGroup, the group `size` and `shape` recipe intentionally controls
+each descendant Avatar so one stack cannot drift into mixed geometry.
+
 ## Tokens and CSS hooks
 
 Stable hooks are `.brick-avatar`, `.brick-avatar__image`,
@@ -111,7 +115,8 @@ the owning control's accessible name.
 ## Composition, native props, and refs
 
 Avatar has no `asChild` or `render` path. Native span props are forwarded and
-the ref targets the root span.
+the ref targets the root span. Use AvatarGroup for overlap, paint order, and
+explicit overflow representation.
 
 ## Examples
 

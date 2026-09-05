@@ -172,6 +172,28 @@ describe("Stack", () => {
     expect(stack).toHaveAttribute("data-end-spacing-md", "4");
   });
 
+  it("keeps component defaults below sparse responsive overrides", () => {
+    render(
+      <Stack
+        align={{ lg: "center" }}
+        data-testid="sparse"
+        direction={{ lg: "row" }}
+        gap={{ lg: 6 }}
+      />,
+    );
+    const stack = screen.getByTestId("sparse");
+    expect(stack).not.toHaveAttribute("data-direction");
+    expect(stack).toHaveAttribute("data-direction-lg", "row");
+    expect(stack).not.toHaveAttribute("data-gap");
+    expect(stack).toHaveAttribute("data-gap-lg", "6");
+    expect(stack).not.toHaveAttribute("data-align");
+    expect(stack).toHaveAttribute("data-align-lg", "center");
+    expect(stack.style.getPropertyValue("--brick-stack-gap-input")).toBe("");
+    expect(stack.style.getPropertyValue("--brick-stack-gap-lg-input")).toBe(
+      "calc(var(--brick-space-1) * 6)",
+    );
+  });
+
   it("resolves numeric factors, explicit CSS values, and responsive mixtures", () => {
     render(
       <Stack

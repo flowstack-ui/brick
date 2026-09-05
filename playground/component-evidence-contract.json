@@ -1,6 +1,6 @@
 {
   "schema": "flowstack.brick-playground-evidence.v1",
-  "componentCount": 95,
+  "componentCount": 104,
   "requiredEvidence": [
     "page",
     "unit",
@@ -37,9 +37,11 @@
     "Data display": [
       "accordion",
       "avatar",
+      "avatar-group",
       "badge",
       "card",
       "carousel",
+      "checkmark",
       "chip",
       "collapsible",
       "color-swatch",
@@ -50,6 +52,7 @@
       "image",
       "list",
       "notification-badge",
+      "radiomark",
       "table",
       "tree",
       "tree-grid"
@@ -69,6 +72,7 @@
       "number-input",
       "otp-field",
       "password-toggle-field",
+      "radio-card",
       "radio-group",
       "rating",
       "segment-group",
@@ -81,8 +85,10 @@
       "appearance",
       "aspect-ratio",
       "bleed",
+      "center",
       "container",
       "divider",
+      "for",
       "frame",
       "grid",
       "group",
@@ -119,8 +125,11 @@
       "code",
       "code-block",
       "em",
+      "format-byte",
+      "format-number",
       "highlight",
       "kbd",
+      "locale-provider",
       "mark",
       "prose",
       "text"

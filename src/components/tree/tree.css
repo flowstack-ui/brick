@@ -1,7 +1,7 @@
 @layer brick.components {
   .brick-tree {
     --brick-tree-background: transparent;
-    --brick-tree-border-color: var(--brick-color-border-subtle);
+    --brick-tree-border-color: var(--brick-color-border-default);
     --brick-tree-border-width: var(--brick-border-width);
     --brick-tree-radius: var(--brick-radius-surface);
     --brick-tree-padding: var(--brick-space-1);
@@ -11,7 +11,7 @@
     --brick-tree-row-padding-block: var(--brick-space-2);
     --brick-tree-row-padding-inline: var(--brick-space-3);
     --brick-tree-depth-indent: var(--brick-space-5);
-    --brick-tree-guide-color: var(--brick-color-border-subtle);
+    --brick-tree-guide-color: var(--brick-tree-border-color);
     --brick-tree-guide-offset: calc(var(--brick-tree-padding) + var(--brick-tree-row-padding-inline) + .4375rem);
     --brick-tree-foreground: var(--brick-color-text-primary);
     --brick-tree-indicator-color: var(--brick-color-text-secondary);
@@ -41,6 +41,9 @@
   .brick-tree[data-variant="soft"] {
     --brick-tree-background: var(--brick-color-surface-subtle);
   }
+
+  .brick-tree[data-border-tone="subtle"] { --brick-tree-border-color: var(--brick-color-border-subtle); }
+  .brick-tree[data-border-tone="strong"] { --brick-tree-border-color: var(--brick-color-border-strong); }
 
   .brick-tree[data-variant="outline"] {
     border: var(--brick-tree-border-width) solid var(--brick-tree-border-color);

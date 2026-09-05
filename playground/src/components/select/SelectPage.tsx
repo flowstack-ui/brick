@@ -20,8 +20,8 @@ import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "../../shared/forms-evidence.playground.css";
 import "./select.playground.css";
 
-const variants: SelectVariant[] = ["outline", "soft", "underline"];
-const sizes: SelectSize[] = ["sm", "md", "lg"];
+const variants: SelectVariant[] = ["outline", "soft", "ghost", "underline"];
+const sizes: SelectSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: SelectShape[] = ["sharp", "rounded", "pill"];
 
 const customTokens = {
@@ -80,8 +80,8 @@ function Tile({ label, children, testId }: { label: string; children: ReactNode;
 }
 
 export const selectScenarios = [
-  { id: "select.overview", number: 1, title: "Overview", description: "Select’s canonical rendering is full-width, medium, outline, and rounded. Field supplies the visible label; the selected value and default artwork demonstrate the complete default control." },
-  { id: "select.variants", number: 2, title: "Variants", description: "Outline, soft, and underline change trigger paint only. Value, options, size, and all other defaults remain identical." },
+  { id: "select.overview", number: 1, title: "Overview", description: "Select’s canonical rendering is full-width, 44px lg, outline, and rounded. Field supplies the visible label; the selected value and default artwork demonstrate the complete default control." },
+  { id: "select.variants", number: 2, title: "Variants", description: "Outline, soft, ghost, and underline change trigger paint only. Value, options, size, and all other defaults remain identical." },
   { id: "select.sizes", number: 3, title: "Sizes", description: "Small, medium, and large change complete control geometry only. Every example stays outline and rounded with identical content." },
   { id: "select.shapes", number: 4, title: "Shapes and width", description: "Sharp, rounded, and pill change trigger geometry only. Separate examples prove the default full width and opt-in intrinsic width." },
   { id: "select.options", number: 5, title: "Options and scrolling", navigationTitle: "Options", description: "Groups, labels, separator, disabled options, scrolling controls, Viewport, and collision-aware Arrow appear together in one long-list example." },
@@ -99,7 +99,7 @@ export function SelectPage() {
     <VStack className="forms-page select-page" data-component-page="select" data-testid="select-workbench">
       <Scenario {...selectScenarios[0]}><EvidenceSurface data-testid="select-overview" inset="lg"><PlanSelect id="select-overview-field" /></EvidenceSurface></Scenario>
       <Scenario {...selectScenarios[1]}>
-        <Grid.Root columns={3} gap="4" className="select-grid" data-testid="select-variants">
+        <Grid.Root columns={4} gap="4" className="select-grid" data-testid="select-variants">
           {variants.map((variant) => <Tile key={variant} label={variant}><PlanSelect id={`select-variant-${variant}`} rootProps={{ variant }} /></Tile>)}
         </Grid.Root>
       </Scenario>

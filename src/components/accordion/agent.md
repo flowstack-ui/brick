@@ -20,6 +20,8 @@ Present a finished group of related disclosure sections while Atom owns expanded
 - Put visible panel padding and ordinary Brick layout in ContentInner so Content remains Atom's measured motion boundary.
 - Choose Header levels from the host document and use Content landmark=false when many regions would make landmark navigation noisy.
 - Use the default decorative Indicator when the standard down-when-closed and up-when-open state cue fits; authored Indicator children may replace only the artwork.
+- Use size=xl for spacious marketing disclosures that need a 60px trigger and 18px label.
+- Use variant=ghost with indicatorPlacement=start for disclosure sections that should blend into an owning inspector surface.
 
 ## Rules
 
@@ -29,7 +31,9 @@ Present a finished group of related disclosure sections while Atom owns expanded
 - **MUST:** Choose Header level from the page outline and opt out of optional Content landmarks when the resulting region count would be noisy.
 - **MUST:** Load styles.css or core.css plus accordion.css.
 - **MUST:** Keep grouped trigger corners continuous with the enclosing Root and verify that the complete focus ring remains visible at the first and last group edges.
-- **MUST:** Keep the default Indicator pointing down while closed and up while open in both LTR and RTL; use custom decorative artwork only for a deliberate alternate state language.
+- **MUST:** Keep the default Indicator pointing down while closed and up while open in both LTR and RTL. Use custom decorative artwork only for a deliberate alternate state language.
+- **SHOULD:** Use the divided plain recipe when the open Item must remain transparent while every row, including the last, retains a visible structural edge and full-row hover feedback with logically inset content.
+- **SHOULD:** Use the ghost recipe and logical start indicator when an inspector panel needs disclosure semantics without a second nested surface.
 
 ## Common mistakes
 

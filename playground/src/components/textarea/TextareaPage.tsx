@@ -25,7 +25,7 @@ import "../../shared/forms-evidence.playground.css";
 import "./textarea.playground.css";
 
 const variants: TextareaVariant[] = ["outline", "soft", "underline"];
-const sizes: TextareaSize[] = ["sm", "md", "lg"];
+const sizes: TextareaSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: TextareaShape[] = ["sharp", "rounded"];
 const sample = "Describe the workspace goals and expected result.";
 
@@ -47,7 +47,7 @@ function PreviewField({ children, id }: { children: ReactNode; id: string }) {
 }
 
 export const textareaScenarios = [
-  { number: 1, id: "textarea.overview", title: "Overview", description: "Textarea’s canonical rendering is a full-width medium outline control with a rounded shape, three visible rows, and vertical manual resize. Field supplies its visible label." },
+  { number: 1, id: "textarea.overview", title: "Overview", description: "Textarea’s canonical rendering is a full-width 44px lg outline control with a rounded shape, three visible rows, and vertical manual resize. Field supplies its visible label." },
   { number: 2, id: "textarea.variants", title: "Variants", description: "Outline, soft, and underline change paint only. Content, size, row count, Field relationship, and behavior remain at their defaults." },
   { number: 3, id: "textarea.sizes", title: "Sizes", description: "Small, medium, and large change padding and typography only. Every specimen uses the default outline, rounded shape, three rows, and identical content." },
   { number: 4, id: "textarea.shapes", title: "Shapes", description: "Sharp and rounded change outline geometry only. Underline has intentionally fixed sharp geometry and Textarea excludes pill geometry." },

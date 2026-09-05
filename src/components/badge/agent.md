@@ -14,7 +14,7 @@ Present a short passive category, status, metadata label, or compact circular pa
 
 ## Required composition
 
-- Place the short label directly in Badge; when an icon or separately styled Text is necessary, keep those children passive and let Badge own their spacing and foreground. Use size=xl with shape=circle only for a deliberate passive empty-state icon well.
+- Place the short label directly in Badge; when an icon or separately styled Text is necessary, keep those children passive and let Badge own their spacing and foreground. Use variant=surface when a soft fill needs a visible semantic boundary. Combine tone=accent with variant=solid for solid accent paint instead of inventing a compound tone. Use size=xl with shape=circle only for a deliberate passive empty-state icon well.
 
 ## Rules
 
@@ -23,7 +23,11 @@ Present a short passive category, status, metadata label, or compact circular pa
 - **MUST:** When composing Text inside Badge, use tone=inherit unless that Text intentionally communicates a separate semantic tone, so the Badge recipe continues to own foreground contrast.
 - **MUST:** Rely on Badge's gap for an icon and label instead of literal whitespace, wrapper margins, or positional offsets.
 - **MUST:** Keep the label short and atomic; Badge stays on one line, so use ordinary Text for explanatory or prose-length content.
+- **MUST:** Use variant=surface for soft fill plus a tone-specific visible boundary; keep soft borderless and outline transparent.
+- **MUST:** Keep tone and variant independent: tone selects the semantic family and variant selects its paint treatment; never encode solid, soft, outline, or surface into a tone name.
+- **MUST:** Use xs only for a genuinely compact 16px micro label such as a short percentage or metadata token; keep ordinary labels at sm or larger.
 - **MUST:** Use shape=circle only for one compact passive icon or single character with nearby context; use IconButton for an action and Status for a dot-and-label state.
+- **MUST:** Treat Badge size as container density, not editorial hierarchy; lg keeps compact 14px label text inside its 28px minimum block size.
 - **MUST:** Load styles.css or core.css plus badge.css.
 
 ## Common mistakes
@@ -32,7 +36,7 @@ Present a short passive category, status, metadata label, or compact circular pa
 
 ## Validation checklist
 
-- Check label brevity, one-line atomic sizing, passive semantics, child spacing, foreground contrast for every variant and tone, zoom, forced colors, and RTL.
+- Check label brevity, one-line atomic sizing, passive semantics, child spacing, foreground contrast and boundary visibility for every variant and tone, zoom, forced colors, and RTL.
 - Confirm nested Text inherits the Badge foreground, circle geometry remains exactly square, and CSS is loaded.
 
 ## Related guidance

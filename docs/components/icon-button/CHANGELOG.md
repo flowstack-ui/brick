@@ -4,17 +4,24 @@ Icon Button follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Expanded IconButton to the responsive seven-step `2xs`–`2xl` action scale,
+  including sparse responsive values, while preserving its visible 44px
+  default as `lg`.
+
 ### Added
 
 - Added public Agent Knowledge for component selection, composition,
   CSS-delivery, recurring mistakes, and validation.
 
 - Added the Atom-backed Icon Button action and genuine link paths.
-- Added four variants, six tones, five square sizes, rounded/circle geometry,
+- Added four variants, six tones, seven square sizes, rounded/circle geometry,
   loading, disabled, forced-colors, dark, and reduced-motion presentation.
 
 ### Fixed
 
+- Kept neutral and semantic ghost hover/pressed feedback perceptible on every
+  finished surface, including overlays whose background equals the neutral
+  subtle token.
 - Disabled Icon Buttons now use the disabled foreground and stronger fading so
   they do not resemble enabled neutral outline actions.
 - Icon Buttons composed as disclosure triggers now retain their pressed recipe

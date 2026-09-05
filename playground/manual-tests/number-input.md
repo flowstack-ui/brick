@@ -18,7 +18,7 @@ Scenario order: `01 Overview`, `02 Variants`, `03 Sizes`, `04 Shapes`, `05 Stepp
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Recipes and stepping
-Setup: Review 01–05. Action: Compare recipes, focus the spinbutton, and step by pointer and keyboard through both bounds. Expected: Geometry is even, focus remains visible, formatting is stable, and unavailable actions remain understandable. Result:
+Setup: Review 01–05. Action: Compare recipes, focus the spinbutton, and step by pointer and keyboard through both bounds. Expected: Geometry is even, focus remains visible, formatting is stable, and unavailable actions remain understandable. The field layout keeps its compact logical-end actions; the stepper layout shows separated square actions around a centered value. In the hover-stepper example, actions appear on hover or focus without changing the field width and remain visible on a coarse pointer. Result:
 Notes or issue:
 
 ## Step 2 — States and form composition

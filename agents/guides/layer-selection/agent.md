@@ -23,6 +23,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - **keyboard-input notation inside meaningful copy:** use Kbd. Repeat one Kbd per authored key and keep visible separators outside; shortcut behavior and platform-label policy remain application-owned.
 - **extended quotation with visible attribution:** use Blockquote. Keep Content and Caption as siblings in Root, put the source URL on Content, and use Cite for a referenced work or source rather than merely a person's name.
 - **one-dimensional alignment:** use Stack, HStack, or VStack. Use Grid for two-dimensional track relationships.
+- **two-axis centering or an invariant square/circle:** use Center, Square, or Circle. Compose Surface for paint and Icon for SVG presentation; use ZStack for positioned overlap.
 - **bounded page width:** use Container. Use Surface or Card when the region also needs a visual boundary.
 - **top application or page bar:** use AppBar. Compose navigation and action components inside its sections.
 - **responsive presence:** use Show or Hide. Use CSS media visibility rather than rendering two JavaScript-controlled trees.
@@ -64,7 +65,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - **compact circular read-only task completion or indeterminate work:** use ProgressCircle. Choose Progress for linear completion, Slider for editable values, and Skeleton for unknown content loading.
 - **visual count or presence dot over one owning element:** use NotificationBadge. Choose Badge for an in-flow passive label or count, Status for a named state, Button for an actionable count, and visible Text when the value must be announced or understood without the owner; NotificationBadge does not announce changes.
 - **compact identity for a named person, organization, or entity:** use Avatar. Choose Image for a larger editorial portrait and NotificationBadge only when the owning Avatar needs a separate visual count or presence indicator.
-- **short passive in-flow label, category, status, or count:** use Badge. Choose NotificationBadge for an overlaid count or dot, Status for richer named state semantics, and Button when the label is actionable.
+- **short passive in-flow label, category, status, or count:** use Badge. Choose surface when a soft fill also needs a visible semantic boundary; choose NotificationBadge for an overlaid count or dot, Status for richer named state semantics, and Button when the label is actionable.
 - **editable, selectable, or submitted opaque hexadecimal color:** use ColorPicker. Choose ColorSwatch for a passive preview; richer alpha, gradient, channel, eyedropper, and color-space editing remains an Atom-first gap.
 - **passive preview of one color or a compact color mix:** use ColorSwatch. Choose ColorPicker when the user must edit, select, or submit the value; keep interaction on a semantic owner.
 - **short assistive-only equivalent for meaning already conveyed visually:** use VisuallyHidden. Choose visible Text for essential instructions, state, errors, or announcements, and keep an IconButton or Button itself visible while placing the hidden equivalent inside it.
@@ -100,6 +101,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - `app-bar`
 - `container`
 - `stack`
+- `center`
 - `grid`
 - `text`
 - `em`

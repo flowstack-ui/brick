@@ -6,6 +6,9 @@ Field follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Added `size="xs|sm|md"` and `tone="primary|secondary"` for coherent dense
+  property-form labels without consumer CSS.
+
 - Initial complete `Field.Root`, `Label`, `Description`, `Error`, and
   `RequiredIndicator` namespace and direct exports.
 - Generated server/hydration relationships, complete state inheritance,

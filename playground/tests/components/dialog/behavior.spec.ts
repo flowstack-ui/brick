@@ -65,6 +65,38 @@ test("Dialog exposes its default modal anatomy, relationships, and focus lifecyc
   await expect(dialog.locator("[data-slot='dialog-header']")).toHaveCount(1);
   await expect(dialog.locator("[data-slot='dialog-body']")).toHaveCount(1);
   await expect(dialog.locator("[data-slot='dialog-footer']")).toHaveCount(1);
+  const cornerClose = dialog.getByRole("button", {
+    name: "Close profile dialog",
+  });
+  await expect(cornerClose).toHaveAttribute("data-placement", "corner");
+  await expect.poll(async () => dialog.evaluate((element) => {
+    const close = element.querySelector<HTMLElement>(
+      '[data-slot="dialog-close"][data-placement="corner"]',
+    );
+    if (!close) throw new Error("Missing corner close control");
+    const dialogRect = element.getBoundingClientRect();
+    const closeRect = close.getBoundingClientRect();
+    return {
+      blockStartInset: Math.round((closeRect.top - dialogRect.top) * 10) / 10,
+      inlineEndInset: Math.round((dialogRect.right - closeRect.right) * 10) / 10,
+      position: getComputedStyle(close).position,
+    };
+  })).toEqual({
+    blockStartInset: 8,
+    inlineEndInset: 8,
+    position: "absolute",
+  });
+  await dialog.evaluate((element) => element.setAttribute("dir", "rtl"));
+  await expect.poll(async () => dialog.evaluate((element) => {
+    const close = element.querySelector<HTMLElement>(
+      '[data-slot="dialog-close"][data-placement="corner"]',
+    );
+    if (!close) throw new Error("Missing RTL corner close control");
+    const dialogRect = element.getBoundingClientRect();
+    const closeRect = close.getBoundingClientRect();
+    return Math.round((closeRect.left - dialogRect.left) * 10) / 10;
+  })).toBe(8);
+  await dialog.evaluate((element) => element.removeAttribute("dir"));
   const overlay = page.locator(".brick-dialog-overlay");
   await expect(overlay).toBeVisible();
   await expect(dialog).toHaveCSS("opacity", "1");

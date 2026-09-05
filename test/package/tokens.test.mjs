@@ -27,6 +27,8 @@ test("explicit scopes emit matching complete appearance-dependent contracts", as
   assert.ok(!light.has("--brick-font-family-body"));
   assert.ok(!light.has("--brick-space-4"));
   assert.ok(!light.has("--brick-radius-surface"));
+  assert.ok(light.has("--brick-color-selection-background"));
+  assert.ok(light.has("--brick-color-selection-foreground"));
   assert.match(css, /\[data-brick-appearance="light"\]\s*\{\s*color-scheme: light/);
   assert.match(css, /\[data-brick-appearance="dark"\]\s*\{\s*color-scheme: dark/);
 });

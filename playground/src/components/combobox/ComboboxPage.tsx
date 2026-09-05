@@ -37,7 +37,7 @@ export const comboboxScenarios = [
 ] as const satisfies readonly ScenarioDefinition[];
 
 export function ComboboxPage() {
-  const variants: ComboboxVariant[] = ["outline", "soft", "underline"]; const sizes: ComboboxSize[] = ["sm", "md", "lg"]; const shapes: ComboboxShape[] = ["sharp", "rounded", "pill"];
+  const variants: ComboboxVariant[] = ["outline", "soft", "underline"]; const sizes: ComboboxSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"]; const shapes: ComboboxShape[] = ["sharp", "rounded", "pill"];
   return <VStack className="combobox-page" data-component-page="combobox" gap="6">
     <Scenario {...comboboxScenarios[0]}><EvidenceSurface inset="lg"><Example defaultValue="chicago" /></EvidenceSurface></Scenario>
     <Scenario {...comboboxScenarios[1]}><RenderedOutput label="Rendered Combobox HTML"><Example /></RenderedOutput></Scenario>

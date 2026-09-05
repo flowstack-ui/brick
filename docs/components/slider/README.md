@@ -1,6 +1,6 @@
 # Slider
 
-Slider is Brick's styled numeric single-value and range input, backed by Atom 0.19.6. It works alone or as the sole control in `Field`; it is not a grouped choice collection and does not require `Fieldset`.
+Slider is Brick's styled numeric single-value and range input, backed by the installed exact Atom dependency. It works alone or as the sole control in `Field`; it is not a grouped choice collection and does not require `Fieldset`.
 
 ## When and where to use
 
@@ -46,7 +46,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ## Anatomy and DOM ownership
 
-`Slider` exposes `Root`, `Track`, `Range`, `Thumb`, `Marker`, and `ValueLabel`. Root and Track forward `HTMLDivElement`; Range, Thumb, Marker, and ValueLabel forward `HTMLSpanElement`. Each range value requires one indexed Thumb. Marker belongs inside Track. ValueLabel is optional and belongs inside Thumb.
+`Slider` exposes `Root`, `Track`, `Range`, `Thumb`, `Marker`, and `ValueLabel`. Root and Track forward `HTMLDivElement`; Range, Thumb, Marker, and ValueLabel forward `HTMLSpanElement`. Each range value requires one indexed Thumb. Marker belongs inside Track. Thumb accepts decorative Icon or other authored content. ValueLabel is optional and belongs inside Thumb without inheriting the decorative thumb-content sizing.
 
 ## API
 
@@ -54,6 +54,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 | --- | --- | --- |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `variant` | `solid`, `soft` | `solid` |
+| `frame` | `none`, `outline` | `none` |
 
 Root forwards Atom's controlled and uncontrolled values, `min`, `max`, `step`, `largeStep`, `orientation`, `dir`, form, and validation props. Marker requires numeric `value`; ValueLabel may render its `index`, `percent`, and `value`.
 
@@ -61,22 +62,32 @@ Named exports are `Slider`, `SliderRoot`, `SliderTrack`, `SliderRange`,
 `SliderThumb`, `SliderMarker`, and `SliderValueLabel`. Public types are
 `SliderRootProps`, `SliderTrackProps`, `SliderRangeProps`, `SliderThumbProps`,
 `SliderMarkerProps`, `SliderValueLabelProps`, `SliderValueLabelDetails`,
-`SliderSize`, and `SliderVariant`.
+`SliderSize`, `SliderVariant`, and `SliderFrame`.
 
 ## Visual recipes and states
 
-Recipes change paint and geometry only. Atom state attributes drive disabled, read-only, invalid, orientation, and direction presentation. Slider does not show a number by default; author ValueLabel only when persistent thumb-adjacent output is useful.
+Recipes change paint and geometry only. Visible Thumb/Track sizes are 16/6px,
+20/8px, and 24/10px for `sm`, `md`, and `lg`. The neutral Track uses a
+translucent emphasized boundary role; the outlined Thumb uses the canvas
+surface without extra elevation. Atom state attributes drive disabled,
+read-only, invalid, orientation, and direction presentation. Slider does not
+show a number by default; author ValueLabel only when persistent
+thumb-adjacent output is useful.
+Use `frame="outline"` when the slider must align with adjacent outlined inputs
+inside a compact property row; the frame owns the control boundary while the
+Track remains the interactive value visualization.
 
 ## Tokens and CSS hooks
 
-Stable classes are `.brick-slider` and its `__track`, `__range`, `__thumb`, `__marker`, and `__value-label` parts. Root exposes `data-size`, `data-variant`, and `data-slot`; Marker exposes `data-edge`, `data-orientation`, `data-selected`, `data-value`, and `data-slot`.
+Stable classes are `.brick-slider` and its `__track`, `__range`, `__thumb`, `__marker`, and `__value-label` parts. Root exposes `data-frame`, `data-size`, `data-variant`, and `data-slot`; Marker exposes `data-edge`, `data-orientation`, `data-selected`, `data-value`, and `data-slot`.
 
 Public variables are `--brick-slider-track-background`,
-`--brick-slider-track-border`, `--brick-slider-track-size`,
+`--brick-slider-track-border`, `--brick-slider-track-border-width`,
+`--brick-slider-track-size`,
 `--brick-slider-track-length`, `--brick-slider-track-inset`,
 `--brick-slider-range-background`,
 `--brick-slider-thumb-background`, `--brick-slider-thumb-border`,
-`--brick-slider-thumb-shadow`, `--brick-slider-thumb-size`,
+`--brick-slider-thumb-foreground`, `--brick-slider-thumb-shadow`, `--brick-slider-thumb-size`,
 `--brick-slider-marker-color`, `--brick-slider-marker-selected-color`,
 `--brick-slider-marker-border`,
 `--brick-slider-marker-size`,
@@ -123,6 +134,19 @@ DOM parts preserve native props, ARIA, events, `className`, `style`, data attrib
     <Slider.Marker value={0}>0</Slider.Marker>
     <Slider.Marker value={100}>100</Slider.Marker>
     <Slider.Thumb /><Slider.Thumb />
+  </Slider.Track>
+</Slider.Root>
+```
+
+Authored thumb artwork composes directly alongside an optional value label:
+
+```tsx
+<Slider.Root aria-label="Seats" defaultValue={[40]} size="lg">
+  <Slider.Track>
+    <Slider.Range />
+    <Slider.Thumb>
+      <Icon size="inherit"><ChevronsLeftRight aria-hidden="true" /></Icon>
+    </Slider.Thumb>
   </Slider.Track>
 </Slider.Root>
 ```

@@ -16,10 +16,11 @@ Present flat interactive tabular data with Atom-owned active-cell navigation and
 
 ## Required composition
 
-- Compose explicit Container when wide content needs horizontal overflow, then Root with Caption or another stable accessible name, Header, Body, optional Footer, indexed Rows, indexed ColumnHeaders, and Cells.
+- Compose explicit Container when wide content needs horizontal overflow, then Root with optional ColumnGroup and Column sizing hints before Caption or another stable accessible name, Header, Body, optional Footer, indexed Rows, indexed ColumnHeaders, and Cells.
 - Keep all row and column indexes one-based and provide truthful logical rowCount and columnCount, including when only one page or window is rendered.
 - Place external Toolbar, filtering controls, result count, and Pagination around the grid; Data Grid never creates or executes those systems.
 - For application-controlled sorting, give the ColumnHeader onAction, update the data and sortDirection outside Data Grid, and keep SortIndicator decorative.
+- Choose surface, border tone, optional column borders, layout, striping, sticky header, and cell alignment independently; state paint must remain stronger than stripe paint.
 
 ## Rules
 
@@ -33,6 +34,8 @@ Present flat interactive tabular data with Atom-owned active-cell navigation and
 - **MUST:** Give an actionable sortable ColumnHeader pointer and Enter parity, expose sortDirection only on the active sorted header, and treat SortIndicator as decorative.
 - **MUST:** If an application windows rows, preserve full logical one-based indexes and totals and keep the active cell mounted or move active state before it leaves the DOM; geometry utilities do not own grid semantics or focus.
 - **MUST:** Load styles.css or core.css plus data-grid.css.
+- **MUST:** Keep selected paint above hover, hover above stripes, and sticky headers opaque; do not use stripe or transparent surface choices to obscure interactive state.
+- **MUST:** Treat Column.htmlWidth as a native CSS-pixel number or percentage sizing hint only; do not pass CSS-unit values, and never use it to define logical indexes, columnCount, navigation, measurement, or resizing behavior.
 
 ## Common mistakes
 

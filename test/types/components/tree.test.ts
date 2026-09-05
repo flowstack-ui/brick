@@ -1,12 +1,14 @@
 import {
   Tree,
   type TreeRootProps,
+  type TreeBorderTone,
   type TreeSize,
   type TreeVariant,
 } from "../../../src/tree.js";
 
 const size: TreeSize = "sm";
 const variant: TreeVariant = "outline";
+const borderTone: TreeBorderTone = "strong";
 const props: TreeRootProps = {
   "aria-label": "Repository",
   children: null,
@@ -14,6 +16,7 @@ const props: TreeRootProps = {
   showGuide: true,
   size,
   variant,
+  borderTone,
 };
 void Tree;
 void props;

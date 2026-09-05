@@ -16,10 +16,23 @@ describe("Slider", () => {
     expect(root).toHaveClass("brick-slider");
     expect(root).toHaveAttribute("data-size", "md");
     expect(root).toHaveAttribute("data-variant", "solid");
+    expect(root).toHaveAttribute("data-frame", "none");
     expect(thumb).toHaveAttribute("aria-valuenow", "40");
     expect(root.querySelector(".brick-slider__range")).toBeInTheDocument();
     expect(root.querySelector(".brick-slider__marker")).toHaveStyle({ "--brick-slider-marker-percent": "25" });
     expect(root.querySelector(".brick-slider__value-label")).toHaveTextContent("40");
+  });
+
+  it("can own an outline frame for compact property rows", () => {
+    render(<Example frame="outline" size="sm" />);
+    const root = document.querySelector(".brick-slider")!;
+    expect(root).toHaveAttribute("data-frame", "outline");
+    expect(root).toHaveAttribute("data-size", "sm");
+  });
+
+  it("supports decorative thumb content without replacing the slider semantics", () => {
+    render(<Slider.Root aria-label="Seats" defaultValue={[25]}><Slider.Track><Slider.Range/><Slider.Thumb><svg aria-hidden="true" data-testid="thumb-icon"/></Slider.Thumb></Slider.Track></Slider.Root>);
+    expect(screen.getByRole("slider", { name: "Seats" })).toContainElement(screen.getByTestId("thumb-icon"));
   });
 
   it("supports range values, vertical orientation, soft styling, and formatted labels", () => {

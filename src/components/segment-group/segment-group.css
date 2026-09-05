@@ -3,23 +3,38 @@
     --brick-segment-group-min-block-size: var(
       --brick-control-min-block-size-md
     );
-    --brick-segment-group-item-padding-inline: var(--brick-space-3);
+    --brick-segment-group-item-padding-inline: var(--brick-space-4);
     --brick-segment-group-item-gap: var(--brick-space-2);
     --brick-segment-group-icon-size: 1rem;
+    --brick-segment-group-font-family: var(
+      --brick-typography-body-sm-font-family
+    );
+    --brick-segment-group-font-size: var(--brick-typography-body-sm-font-size);
+    --brick-segment-group-font-weight: var(
+      --brick-typography-body-sm-font-weight
+    );
+    --brick-segment-group-line-height: var(
+      --brick-typography-body-sm-line-height
+    );
     --brick-segment-group-inset: 0px;
     --brick-segment-group-background: var(--brick-color-surface-subtle);
     --brick-segment-group-border: var(--brick-color-border-default);
     --brick-segment-group-root-shadow: inset 0 0 0 var(--brick-border-width)
       var(--brick-segment-group-border);
-    --brick-segment-group-indicator-background: var(
-      --brick-color-surface-raised
+    --brick-segment-group-indicator-background: light-dark(
+      var(--brick-color-surface-base),
+      var(--brick-color-surface-raised)
     );
-    --brick-segment-group-indicator-border: var(--brick-color-border-default);
-    --brick-segment-group-indicator-shadow: 0 0.0625rem 0.125rem
-      color-mix(in srgb, var(--brick-color-text-primary), transparent 82%);
+    --brick-segment-group-indicator-border: transparent;
+    --brick-segment-group-indicator-shadow:
+      0 0.125rem 0.25rem
+        color-mix(in srgb, var(--brick-color-shadow), transparent 45%),
+      0 0 0.0625rem var(--brick-color-shadow);
     --brick-segment-group-foreground: var(--brick-color-text-secondary);
     --brick-segment-group-selected-foreground: var(--brick-color-text-primary);
     --brick-segment-group-focus-ring: var(--brick-color-focus-ring);
+    --brick-segment-group-divider: var(--brick-color-border-default);
+    --brick-segment-group-divider-inset: 0.375rem;
 
     position: relative;
     display: inline-flex;
@@ -107,10 +122,10 @@
     appearance: none;
     background: transparent;
     color: var(--brick-segment-group-foreground);
-    font-family: var(--brick-typography-control-md-font-family);
-    font-size: var(--brick-typography-control-md-font-size);
-    font-weight: var(--brick-typography-control-md-font-weight);
-    line-height: var(--brick-typography-control-md-line-height);
+    font-family: var(--brick-segment-group-font-family);
+    font-size: var(--brick-segment-group-font-size);
+    font-weight: var(--brick-segment-group-font-weight);
+    line-height: var(--brick-segment-group-line-height);
     text-align: center;
     white-space: normal;
     cursor: pointer;
@@ -133,6 +148,40 @@
     color: var(--brick-segment-group-selected-foreground);
   }
 
+  .brick-segment-group[data-orientation="horizontal"]
+    > .brick-segment-group__item
+    + .brick-segment-group__item::before {
+    position: absolute;
+    inset-block: var(--brick-segment-group-divider-inset);
+    inset-inline-start: 0;
+    inline-size: var(--brick-border-width);
+    background: var(--brick-segment-group-divider);
+    content: "";
+    opacity: 1;
+    pointer-events: none;
+  }
+
+  .brick-segment-group[data-orientation="vertical"]
+    > .brick-segment-group__item
+    + .brick-segment-group__item::before {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: var(--brick-segment-group-divider-inset);
+    block-size: var(--brick-border-width);
+    background: var(--brick-segment-group-divider);
+    content: "";
+    opacity: 1;
+    pointer-events: none;
+  }
+
+  .brick-segment-group[data-orientation]
+    > .brick-segment-group__item[data-state="checked"]::before,
+  .brick-segment-group[data-orientation]
+    > .brick-segment-group__item[data-state="checked"]
+    + .brick-segment-group__item::before {
+    opacity: 0;
+  }
+
   .brick-segment-group__item:focus-visible {
     outline: var(--brick-border-focus-width) solid
       var(--brick-segment-group-focus-ring);
@@ -149,20 +198,43 @@
     padding-inline: 0;
   }
 
+  .brick-segment-group[data-full-width]
+    > .brick-segment-group__item[data-icon-only] {
+    aspect-ratio: auto;
+  }
+
+  .brick-segment-group[data-size="2xs"] {
+    --brick-segment-group-min-block-size: var(
+      --brick-control-min-block-size-2xs
+    );
+    --brick-segment-group-item-padding-inline: var(--brick-space-2);
+    --brick-segment-group-item-gap: var(--brick-space-1);
+    --brick-segment-group-icon-size: 0.75rem;
+    --brick-segment-group-font-family: var(
+      --brick-typography-caption-font-family
+    );
+    --brick-segment-group-font-size: var(--brick-typography-caption-font-size);
+    --brick-segment-group-line-height: var(
+      --brick-typography-caption-line-height
+    );
+  }
+
   .brick-segment-group[data-size="sm"] {
     --brick-segment-group-min-block-size: var(
       --brick-control-min-block-size-sm
     );
-    --brick-segment-group-item-padding-inline: var(--brick-space-2);
-    --brick-segment-group-item-gap: var(--brick-space-1);
-    --brick-segment-group-icon-size: 0.875rem;
+    --brick-segment-group-item-padding-inline: var(--brick-space-4);
+    --brick-segment-group-item-gap: var(--brick-space-2);
+    --brick-segment-group-icon-size: 1rem;
   }
 
-  .brick-segment-group[data-size="sm"] > .brick-segment-group__item {
-    font-family: var(--brick-typography-control-sm-font-family);
-    font-size: var(--brick-typography-control-sm-font-size);
-    font-weight: var(--brick-typography-control-sm-font-weight);
-    line-height: var(--brick-typography-control-sm-line-height);
+  .brick-segment-group[data-size="xs"] {
+    --brick-segment-group-min-block-size: var(
+      --brick-control-min-block-size-xs
+    );
+    --brick-segment-group-item-padding-inline: var(--brick-space-4);
+    --brick-segment-group-item-gap: var(--brick-space-2);
+    --brick-segment-group-icon-size: 1rem;
   }
 
   .brick-segment-group[data-size="lg"] {
@@ -170,15 +242,15 @@
       --brick-control-min-block-size-lg
     );
     --brick-segment-group-item-padding-inline: var(--brick-space-4);
-    --brick-segment-group-item-gap: var(--brick-space-2);
-    --brick-segment-group-icon-size: 1.125rem;
-  }
-
-  .brick-segment-group[data-size="lg"] > .brick-segment-group__item {
-    font-family: var(--brick-typography-control-lg-font-family);
-    font-size: var(--brick-typography-control-lg-font-size);
-    font-weight: var(--brick-typography-control-lg-font-weight);
-    line-height: var(--brick-typography-control-lg-line-height);
+    --brick-segment-group-item-gap: var(--brick-space-3);
+    --brick-segment-group-icon-size: 1.25rem;
+    --brick-segment-group-font-family: var(
+      --brick-typography-body-md-font-family
+    );
+    --brick-segment-group-font-size: var(--brick-typography-body-md-font-size);
+    --brick-segment-group-line-height: var(
+      --brick-typography-body-md-line-height
+    );
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -212,6 +284,9 @@
     }
     .brick-segment-group__item:focus-visible {
       outline-color: Highlight;
+    }
+    .brick-segment-group__item::before {
+      background: ButtonText;
     }
   }
 }

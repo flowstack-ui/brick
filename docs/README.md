@@ -27,6 +27,8 @@ This directory is the public documentation authority for
 
 - [Appearance](components/appearance/README.md) — explicit light, dark, and
   inherited semantic-token scopes without a provider or required wrapper
+- [Locale Provider](components/locale-provider/README.md) — inherited locale,
+  logical direction, and overridable Brick-authored accessibility text
 
 ### Actions and selection
 
@@ -43,6 +45,10 @@ This directory is the public documentation authority for
   navigation for bounded result sets
 - [Carousel](components/carousel/README.md) — one-slide sequences with optional
   navigation, picker dots, touch scrolling, and controlled rotation
+- [Checkmark](components/checkmark/README.md) — passive checked and
+  indeterminate visual state
+- [Radiomark](components/radiomark/README.md) — passive circular selected-state
+  visual
 
 ### Accessibility
 
@@ -63,6 +69,10 @@ This directory is the public documentation authority for
   article-by-article keyboard navigation
 - [Swipeable Item](components/swipeable-item/README.md) — item-level quick
   actions with logical reveal panels and a required visible alternative
+- [Format Number](components/format-number/README.md) — provider-aware
+  locale-sensitive numbers, currencies, percentages, and measurements
+- [Format Byte](components/format-byte/README.md) — provider-aware bit and byte
+  quantities with localized units
 
 ### Forms and choices
 
@@ -78,6 +88,7 @@ This directory is the public documentation authority for
 - [Password Toggle Field](components/password-toggle-field/README.md) — password entry with visibility control
 - [Textarea](components/textarea/README.md) — finished native multi-line text
 - [Radio Group](components/radio-group/README.md) — finished visible single-selection choices
+- [Radio Card](components/radio-card/README.md) — rich whole-card single-selection choices
 - [Segment Group](components/segment-group/README.md) — compact one-of-many modes with a moving indicator
 - [Switch](components/switch/README.md) — immediate binary settings
   entry with manual or bounded automatic sizing and optional character count
@@ -113,6 +124,8 @@ This directory is the public documentation authority for
   overflow, language metadata, and copy feedback
 - [Avatar](components/avatar/README.md) — identity image, fallback, and visual
   status
+- [AvatarGroup](components/avatar-group/README.md) — overlapping identity stacks
+  with explicit accessible overflow
 - [Badge](components/badge/README.md) — passive inline labels
 - [Status](components/status/README.md) — passive semantic dot and label
 - [Color Swatch](components/color-swatch/README.md) — passive solid, alpha-aware, mixed, sharp, rounded, and circular color preview
@@ -174,6 +187,8 @@ This directory is the public documentation authority for
   and decorative or informative accessibility
 - [Image](components/image/README.md) — responsive media, authored fallback,
   fit, focal position, ratio, and finished framing
+- [For](components/for/README.md) — typed wrapper-free collection rendering
+  with an explicit fallback
 
 ### Navigation and layout
 
@@ -196,6 +211,8 @@ This directory is the public documentation authority for
   structure
 - [Stack](components/stack/README.md) — tokenized one-dimensional rows and
   columns
+- [Center](components/center/README.md) — two-axis centering and invariant
+  square or circular geometry
 - [Group](components/group/README.md) — compact inline clusters with optional
   attached borders and logical corners
 - [ZStack](components/z-stack/README.md) — source-ordered overlapping layers

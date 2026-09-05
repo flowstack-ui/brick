@@ -49,6 +49,7 @@ describe("Tree", () => {
     expect(root).toHaveAttribute("aria-orientation", "vertical");
     expect(root).toHaveAttribute("data-size", "md");
     expect(root).toHaveAttribute("data-variant", "plain");
+    expect(root).toHaveAttribute("data-border-tone", "default");
     expect(root).not.toHaveAttribute("data-guide");
     expect(screen.getByRole("treeitem", { name: "src" })).toHaveClass("brick-tree__item");
     expect(root.querySelector(".brick-tree__item-content")).toBeInstanceOf(HTMLDivElement);
@@ -62,13 +63,14 @@ describe("Tree", () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();
     const ref = createRef<HTMLDivElement>();
-    render(<Standard className="custom-root" data-testid="tree" onValueChange={onValueChange} ref={ref} showGuide size="sm" variant="outline" />);
+    render(<Standard borderTone="strong" className="custom-root" data-testid="tree" onValueChange={onValueChange} ref={ref} showGuide size="sm" variant="outline" />);
     const root = screen.getByTestId("tree");
     expect(ref.current).toBe(root);
     expect(root).toHaveClass("brick-tree", "custom-root");
     expect(root).toHaveAttribute("data-guide", "");
     expect(root).toHaveAttribute("data-size", "sm");
     expect(root).toHaveAttribute("data-variant", "outline");
+    expect(root).toHaveAttribute("data-border-tone", "strong");
     expect(root).not.toHaveAttribute("showGuide");
     await user.click(screen.getByRole("treeitem", { name: "README.md" }));
     expect(onValueChange).toHaveBeenCalledWith("readme");

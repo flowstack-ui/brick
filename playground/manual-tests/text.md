@@ -24,12 +24,13 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 Setup: Open `/text`; review `01` through `03` top to bottom.
 
-Action: Compare repeated copy across the default, twelve variants, and nine
+Action: Compare repeated copy across the default, fourteen variants, and nine
 tones.
 
 Expected: The default is ordinary primary body text. Type recipes form a clear,
-restrained hierarchy without changing content or host; eyebrow is a short,
-uppercase, tracked label. Primary is neutral
+restrained hierarchy without changing content or host; title-2xs is a compact
+14px structural heading, title-xs is a small 16px structural heading, and
+eyebrow is a short, uppercase, tracked label. Primary is neutral
 high-emphasis text; accent is brand-colored. Every tone remains readable and
 does not change size, weight, or spacing.
 

@@ -78,7 +78,6 @@ createElement(HStack, { direction: "column" });
 createElement(VStack, { direction: "row" });
 // @ts-expect-error Root has no asChild composition API.
 createElement(Stack, { asChild: true });
-// @ts-expect-error Responsive values require an initial value.
 createElement(Stack, { direction: { lg: "row" } });
 // @ts-expect-error Item visual ordering is excluded.
 createElement(Stack.Item, { order: 2 });

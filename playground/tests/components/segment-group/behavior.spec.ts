@@ -16,6 +16,51 @@ test("selection, keyboard, sizes, and indicator remain coordinated", async ({
   const grid = group.getByRole("radio", { name: "Grid" });
   await expect(list).toBeChecked();
   const indicator = group.locator("[data-slot='segment-group-indicator']");
+  const paint = await group.evaluate((element) => {
+    const probe = document.createElement("span");
+    probe.style.background = "var(--brick-color-surface-subtle)";
+    element.append(probe);
+    const expectedRoot = getComputedStyle(probe).backgroundColor;
+    probe.style.background =
+      "light-dark(var(--brick-color-surface-base), var(--brick-color-surface-raised))";
+    const expectedIndicator = getComputedStyle(probe).backgroundColor;
+    probe.remove();
+    const selectedIndicator = element.querySelector<HTMLElement>(
+      "[data-slot='segment-group-indicator']",
+    )!;
+    const items = element.querySelectorAll<HTMLElement>(
+      "[data-slot='segment-group-item']",
+    );
+    const secondItem = items[1]!;
+    const thirdItem = items[2]!;
+    return {
+      divider: getComputedStyle(secondItem, "::before").backgroundColor,
+      dividerBottom: getComputedStyle(secondItem, "::before").bottom,
+      dividerContent: getComputedStyle(secondItem, "::before").content,
+      dividerNextToSelection: getComputedStyle(secondItem, "::before").opacity,
+      dividerPastSelection: getComputedStyle(thirdItem, "::before").opacity,
+      dividerTop: getComputedStyle(secondItem, "::before").top,
+      expectedIndicator,
+      expectedRoot,
+      indicator: getComputedStyle(selectedIndicator).backgroundColor,
+      root: getComputedStyle(element).backgroundColor,
+    };
+  });
+  expect(paint.root).toBe(paint.expectedRoot);
+  expect(paint.indicator).toBe(paint.expectedIndicator);
+  expect(paint.divider).not.toBe(paint.root);
+  expect(paint.dividerContent).toBe('""');
+  expect(paint.dividerNextToSelection).toBe("0");
+  expect(paint.dividerPastSelection).toBe("1");
+  expect(paint.dividerTop).toBe("6px");
+  expect(paint.dividerBottom).toBe("6px");
+  await expect(grid).toHaveCSS("border-inline-start-style", "none");
+  const indicatorShadow = await indicator.evaluate(
+    (element) => getComputedStyle(element).boxShadow,
+  );
+  expect(indicatorShadow).toContain("0px 2px 4px");
+  expect(indicatorShadow).toContain("0px 0px 1px");
+  expect(indicatorShadow).not.toContain("inset");
   await expect(indicator).toHaveAttribute("data-ready", "");
   const [groupBox, listBox] = await Promise.all([
     group.boundingBox(),
@@ -63,9 +108,12 @@ test("selection, keyboard, sizes, and indicator remain coordinated", async ({
   await expect(group.getByRole("radio", { name: "Board" })).toBeFocused();
   await page.keyboard.press("Home");
   await expect(list).toBeFocused();
-  for (const size of ["sm", "md", "lg"]) {
+  for (const size of ["2xs", "xs", "sm", "md", "lg"]) {
     await expect(
-      page.getByRole("radiogroup", { name: `${size} project view` }),
+      page.getByRole("radiogroup", {
+        exact: true,
+        name: `${size} project view`,
+      }),
     ).toHaveAttribute("data-size", size);
   }
 });
@@ -110,25 +158,31 @@ test("full-width, RTL, reduced motion, and forced colors preserve the contract",
   await expect(rtl).toHaveCSS("direction", "rtl");
   const list = rtl.getByRole("radio", { name: "List" });
   const rtlIndicator = rtl.locator("[data-slot='segment-group-indicator']");
-  await expect.poll(async () => {
-    const [selectedBox, indicatorBox] = await Promise.all([
-      list.boundingBox(),
-      rtlIndicator.boundingBox(),
-    ]);
-    return Math.abs(indicatorBox!.x - selectedBox!.x) +
-      Math.abs(indicatorBox!.width - selectedBox!.width);
-  }).toBeLessThan(1);
+  await expect
+    .poll(async () => {
+      const [selectedBox, indicatorBox] = await Promise.all([
+        list.boundingBox(),
+        rtlIndicator.boundingBox(),
+      ]);
+      return (
+        Math.abs(indicatorBox!.x - selectedBox!.x) +
+        Math.abs(indicatorBox!.width - selectedBox!.width)
+      );
+    })
+    .toBeLessThan(1);
   await list.focus();
   await page.keyboard.press("ArrowLeft");
   const rtlGrid = rtl.getByRole("radio", { name: "Grid" });
   await expect(rtlGrid).toBeFocused();
-  await expect.poll(async () => {
-    const [selectedBox, indicatorBox] = await Promise.all([
-      rtlGrid.boundingBox(),
-      rtlIndicator.boundingBox(),
-    ]);
-    return Math.abs(indicatorBox!.x - selectedBox!.x);
-  }).toBeLessThan(1);
+  await expect
+    .poll(async () => {
+      const [selectedBox, indicatorBox] = await Promise.all([
+        rtlGrid.boundingBox(),
+        rtlIndicator.boundingBox(),
+      ]);
+      return Math.abs(indicatorBox!.x - selectedBox!.x);
+    })
+    .toBeLessThan(1);
 
   await page.setViewportSize({ width: 390, height: 844 });
   const longItems = page

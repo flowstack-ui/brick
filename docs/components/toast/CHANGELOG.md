@@ -4,6 +4,8 @@ Toast follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Toaster region and close-action defaults now inherit generic accessible text
+  from `LocaleProvider` when explicit labels are omitted.
 ## 0.1.10
 
 ### Added

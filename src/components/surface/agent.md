@@ -15,17 +15,19 @@ Apply semantic background tones and layers, boundaries, elevation, radius, inset
 
 ## Required composition
 
-- Choose Surface level and boundary by hierarchy, then compose public layout and content components inside. Use asChild around Section when paint must cover the Section rhythm without another host. For background media, author Media, optional Scrim, and Content in that order. When layered foreground content needs four-sided breathing room, set inset on the Surface root; Content owns foreground layering, not padding. Use xl and 2xl for page-sized panels or heroes, and the responsive value shape when that inset should grow with the viewport.
+- Choose Surface level and boundary by hierarchy, then compose public layout and content components inside. Combine tone accent with level subtle only when a quiet branded or conversion plane must retain a distinct accent-solid action. Use asChild around Section when paint must cover the Section rhythm without another host. For background media, author Media, optional Scrim, and Content in that order. When layered foreground content needs four-sided breathing room, set inset on the Surface root; Content owns foreground layering, not padding. Use xl and 2xl for page-sized panels or heroes, and the responsive value shape when that inset should grow with the viewport.
 
 ## Rules
 
 - **SHOULD:** Choose surface level by information hierarchy, not decoration alone.
+- **MUST:** Use bordered for a deliberate visible structural edge and rely on its shared default boundary; do not add consumer CSS merely to strengthen the neutral border.
 - **SHOULD:** Use accent tone only for a branded or conversion plane, never as a generic status surface.
+- **MUST:** Combine accent tone with subtle level for the paired accent-soft plane; omit subtle when the conversion plane itself should remain accent-solid.
 - **MUST:** Use asChild only with one existing non-Fragment host that already owns the required semantics or layout; preserve that child's meaning and keep Surface responsible only for paint.
 - **MUST:** Load styles.css or core.css plus surface.css.
 - **MUST:** Use the Surface inset recipe for four-sided internal spacing; Surface.Content provides z-order only, and Stack startSpacing/endSpacing remain axis-specific.
 - **SHOULD:** Use sm through lg for local panels and reserve xl or 2xl for page-sized panels, heroes, and split layouts.
-- **MUST:** Write responsive inset mobile first with a required initial value and only the breakpoint overrides that change; omit a scalar inset none because none is already the default.
+- **MUST:** Write responsive inset mobile first; omit initial to inherit the normal inset default, or supply it to replace that baseline, and include only the breakpoint overrides that change; omit a scalar inset none because none is already the default.
 - **MUST:** Change a centered child's Frame or Container measure when the visible issue is line length or available width; Surface inset moves every child edge and does not replace content measure.
 - **MUST:** Treat Surface.Media as decorative and noninteractive; keep meaningful media and controls in Content or ordinary document flow.
 - **MUST:** Give Brick Image explicit fill inside Surface.Media so its actual Content and Fallback consume the complete media layer.
@@ -44,6 +46,7 @@ Apply semantic background tones and layers, boundaries, elevation, radius, inset
 ## Validation checklist
 
 - Check foreground contrast against the selected surface in every appearance.
+- Confirm a neutral bordered Surface resolves to the shared default structural boundary and remains visible in light and dark appearances.
 - Confirm nested surfaces communicate hierarchy without excessive borders or elevation.
 - Confirm Media and Scrim fill the root, remain hidden from assistive technology and pointer input, and Content stays above both.
 - Check that layered foreground content has intentional spacing on all four logical edges at narrow and wide sizes.

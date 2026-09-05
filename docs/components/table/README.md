@@ -39,13 +39,14 @@ Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
 
-Public exports include `Table`, `TableContainer`, `TableRoot`, `TableCaption`,
+Public exports include `Table`, `TableContainer`, `TableRoot`, `TableColumnGroup`, `TableColumn`, `TableCaption`,
 `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`,
-`TableSortIndicator`, `TableContainerProps`, `TableRootProps`,
+`TableSortIndicator`, `TableContainerProps`, `TableRootProps`, `TableColumnGroupProps`, `TableColumnProps`,
 `TableCaptionProps`, `TableHeaderProps`, `TableBodyProps`, `TableFooterProps`,
 `TableRowProps`, `TableHeadProps`, `TableCellProps`,
 `TableSortIndicatorProps`, `TableVariant`, `TableSize`, `TableDensity`,
-`TableCaptionSide`, and `TableCellAlign`.
+`TableCaptionSide`, `TableCellAlign`, `TableCellVerticalAlign`, `TableSurface`,
+`TableBorderTone`, `TableLayout`, `TableLength`, and `TableRowVariant`.
 
 ## Quick start
 
@@ -61,6 +62,10 @@ Public exports include `Table`, `TableContainer`, `TableRoot`, `TableCaption`,
 ```tsx
 <Table.Container>
   <Table.Root>
+    <Table.ColumnGroup>
+      <Table.Column htmlWidth="35%" />
+      <Table.Column />
+    </Table.ColumnGroup>
     <Table.Caption>Release results</Table.Caption>
     <Table.Header><Table.Row><Table.Head>Package</Table.Head></Table.Row></Table.Header>
     <Table.Body><Table.Row><Table.Head scope="row">Atom</Table.Head></Table.Row></Table.Body>
@@ -70,9 +75,12 @@ Public exports include `Table`, `TableContainer`, `TableRoot`, `TableCaption`,
 ```
 
 Container is an optional `div`; Root is always a native `table` unless Atom
-composition is used. Caption, Header, Body, Footer, Row, Head, and Cell render
-`caption`, `thead`, `tbody`, `tfoot`, `tr`, `th`, and `td`. Refs target those
-exact elements. Root never inserts Container automatically.
+composition is used. ColumnGroup and Column render native `colgroup` and `col`;
+Caption, Header, Body, Footer, Row, Head, and Cell render `caption`, `thead`,
+`tbody`, `tfoot`, `tr`, `th`, and `td`. Refs target those exact elements. Root
+never inserts Container automatically. Place Column only inside ColumnGroup and
+use `htmlWidth` as a native CSS-pixel number or percentage sizing hint, not as
+a CSS-unit value, column schema, or resizing API.
 
 ## API
 
@@ -81,10 +89,17 @@ exact elements. Root never inserts Container automatically.
 | `variant` | `line`, `outline` | defaults to `"line"` |
 | `size` | `sm`, `md`, `lg` | defaults to `"md"` |
 | `density` | `compact`, `comfortable` | defaults to `"comfortable"` |
+| `surface` | `transparent`, `base` | defaults to `"transparent"` |
+| `borderTone` | `subtle`, `default`, `strong` | defaults to `"default"` |
+| `showColumnBorder` | boolean | `false` |
+| `layout` | `auto`, `fixed` | defaults to `"auto"` |
+| `minInlineSize` | CSS length string or pixel number | unset; recipe baseline is `0` |
 | `striped` | boolean | `false` |
 | `stickyHeader` | boolean | `false` |
 | `side` | `top`, `bottom` | defaults to `"top"` |
 | `align` | `start`, `center`, `end` | `start`, or `end` when numeric |
+| `verticalAlign` | `top`, `middle`, `bottom` | `middle` |
+| `Table.Row variant` | `default`, `section` | defaults to `"default"` |
 | `numeric` | boolean | `false` |
 
 All Atom and native props remain available, including `scope`, `headers`,
@@ -94,12 +109,15 @@ intentionally replaced by logical values.
 
 ## Visual recipes and states
 
-Line separates rows; outline adds the outer and column boundaries while cell
+Line separates rows; outline adds the outer boundary while cell
 corner geometry keeps section paint inside the softened outline without
-clipping Caption. Size owns typography and row metrics, density owns block
+clipping Caption. `showColumnBorder` independently adds logical column
+separators. Surface chooses transparent parent blending or a base body with
+subtle header/footer paint. Size owns typography and row metrics, density owns block
 padding, stripe affects only alternating body rows, and sticky affects only
-header positioning. Table adds no hover, selected, focus, loading, empty, or
-error state.
+header positioning. A section Row adds stronger row-group heading cadence and
+a structural separator without inventing new table semantics. Table adds no
+hover, selected, focus, loading, empty, or error state.
 
 ### Sorting
 
@@ -125,8 +143,9 @@ borders, radius, section colors, cell padding, row minimum size, caption gap,
 sticky offset/z-index, and sort-indicator size/color.
 
 Public state attributes are `data-variant`, `data-size`, `data-density`,
-`data-striped`, `data-sticky-header`, `data-side`, `data-align`, `data-numeric`,
-and `data-slot`.
+`data-surface`, `data-border-tone`, `data-column-border`, `data-layout`,
+`data-striped`, `data-sticky-header`, `data-side`, `data-align`,
+`data-vertical-align`, `data-numeric`, and `data-slot`.
 
 Public variables:
 
@@ -144,6 +163,8 @@ Public variables:
 - `--brick-table-cell-foreground`
 - `--brick-table-cell-padding-inline`
 - `--brick-table-cell-padding-block`
+- `--brick-table-section-padding-block-start`
+- `--brick-table-section-padding-block-end`
 - `--brick-table-row-min-block-size`
 - `--brick-table-caption-foreground`
 - `--brick-table-caption-gap`
@@ -159,7 +180,8 @@ exception. Container accepts ordinary div classes and styles independently.
 
 ## Responsive behavior
 
-Author `Table.Container` when wide data needs native horizontal overflow. It
+Author `Table.Container` when wide data needs native horizontal overflow. Set
+`Root minInlineSize` to the smallest honest comparison width. It
 contains overflow without hiding columns, cloning labels, or changing table
 semantics. For a labelled, focusable custom scrollbar region, compose Scroll
 Area instead. Sticky Header is presentation only: the application supplies the
@@ -184,8 +206,10 @@ elements and do not expose Atom composition.
 ## Examples
 
 See sorting above. For wide content, wrap Root explicitly in Container and set
-`--brick-table-min-inline-size` to the smallest honest comparison width. For a
-summary, author Footer with row headers and numeric Cells exactly like Body.
+`Root minInlineSize` to the smallest honest comparison width. For a summary,
+author Footer with row headers and numeric Cells exactly like Body. Use
+`Row variant="section"` for an authored row-group heading rather than targeting
+internal cells from Block CSS.
 
 For a bounded Table that also scrolls vertically, put the visible border and
 radius on a stable Scroll Area viewport, use `variant="line"` on the moving

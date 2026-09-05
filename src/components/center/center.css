@@ -1,0 +1,58 @@
+@layer brick.components {
+  .brick-center {
+    box-sizing: border-box;
+    display: flex;
+    min-inline-size: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .brick-center[data-inline] {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  .brick-square {
+    --brick-center-size: auto;
+    --brick-center-size-sm: initial;
+    --brick-center-size-md: initial;
+    --brick-center-size-lg: initial;
+    --brick-center-size-xl: initial;
+
+    inline-size: var(--brick-center-size);
+    block-size: var(--brick-center-size);
+    flex: 0 0 auto;
+  }
+
+  .brick-center.brick-circle {
+    border-radius: var(--brick-radius-full);
+  }
+
+  @media (width >= 30rem) {
+    .brick-square {
+      inline-size: var(--brick-center-size-sm, var(--brick-center-size));
+      block-size: var(--brick-center-size-sm, var(--brick-center-size));
+    }
+  }
+
+  @media (width >= 48rem) {
+    .brick-square {
+      inline-size: var(--brick-center-size-md, var(--brick-center-size-sm, var(--brick-center-size)));
+      block-size: var(--brick-center-size-md, var(--brick-center-size-sm, var(--brick-center-size)));
+    }
+  }
+
+  @media (width >= 64rem) {
+    .brick-square {
+      inline-size: var(--brick-center-size-lg, var(--brick-center-size-md, var(--brick-center-size-sm, var(--brick-center-size))));
+      block-size: var(--brick-center-size-lg, var(--brick-center-size-md, var(--brick-center-size-sm, var(--brick-center-size))));
+    }
+  }
+
+  @media (width >= 80rem) {
+    .brick-square {
+      inline-size: var(--brick-center-size-xl, var(--brick-center-size-lg, var(--brick-center-size-md, var(--brick-center-size-sm, var(--brick-center-size)))));
+      block-size: var(--brick-center-size-xl, var(--brick-center-size-lg, var(--brick-center-size-md, var(--brick-center-size-sm, var(--brick-center-size)))));
+    }
+  }
+}

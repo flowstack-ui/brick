@@ -68,7 +68,9 @@ existing element and preserves that element's props, style, events, and ref.
 | `maxBlockSize` | responsive `string \| number` | native `none` |
 | `slot` | `string` | `frame` |
 
-A responsive value is `{ initial, sm?, md?, lg?, xl? }`. A nonzero number is
+A responsive value is any non-empty subset of
+`{ initial?, sm?, md?, lg?, xl? }`. Without `initial`, native intrinsic sizing
+remains active below the first supplied breakpoint. A nonzero number is
 serialized as pixels; strings accept valid CSS values such as `rem`, `ch`,
 percentages, `min()`, `max()`, and `clamp()`.
 

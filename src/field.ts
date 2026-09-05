@@ -11,4 +11,6 @@ export {
   type FieldOrientation,
   type FieldRequiredIndicatorProps,
   type FieldRootProps,
+  type FieldSize,
+  type FieldTone,
 } from "./components/field/index.js";

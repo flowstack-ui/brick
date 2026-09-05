@@ -16,6 +16,7 @@ import {
   type ToastTitleProps as AtomToastTitleProps,
   type ToastSwipeDirection,
 } from "@flowstack-ui/atom/toast";
+import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
 
 export type { ToastId, ToastSwipeDirection };
 
@@ -325,8 +326,8 @@ export const Toaster = forwardRef<HTMLDivElement, ToasterProps>(function Toaster
     pauseOnFocus = true,
     pauseOnFocusLoss = true,
     hotkey = ["F8"],
-    label = "Notifications",
-    closeLabel = "Dismiss notification",
+    label,
+    closeLabel,
     width = "responsive",
     stacking = "separated",
     swipeDirection,
@@ -338,12 +339,15 @@ export const Toaster = forwardRef<HTMLDivElement, ToasterProps>(function Toaster
   },
   ref,
 ) {
+  const { localeText } = useLocaleContext();
+  const resolvedLabel = label ?? localeText.notifications;
+  const resolvedCloseLabel = closeLabel ?? localeText.closeNotification;
   return (
     <AtomToast.Provider
       closeButton={closeButton}
       expandOnHover={stacking === "overlap"}
       hotkey={hotkey}
-      label={label}
+      label={resolvedLabel}
       maxVisible={maxVisible}
       pauseOnFocus={pauseOnFocus}
       pauseOnFocusLoss={pauseOnFocusLoss}
@@ -361,7 +365,7 @@ export const Toaster = forwardRef<HTMLDivElement, ToasterProps>(function Toaster
         width={width}
         renderToast={(atomState) => {
           const state = atomState as ToastRenderState;
-          return renderToast ? renderToast(state) : <DefaultToast closeLabel={closeLabel} state={state} />;
+          return renderToast ? renderToast(state) : <DefaultToast closeLabel={resolvedCloseLabel} state={state} />;
         }}
       />
     </AtomToast.Provider>

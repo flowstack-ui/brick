@@ -4,7 +4,19 @@ Text follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Refined the authored display and large-copy scale to 36/44, 48/60, 18/27,
+  and 18/28 so marketing and application compositions no longer require local
+  typography overrides; component-owned Card title recipes remain unchanged.
+- Moved `title-xs` from 14px to 16px so small structural headings can align
+  with `body-md` copy while retaining independent weight and semantic level.
+
 ### Added
+
+- Added `title-2xs` as the 14px Text and Heading recipe for compact structural
+  headings in dense navigation, table, and side-panel compositions.
+- Added the `title-xs` Text and Heading recipe for small structural headings.
 
 - Added themeable `display-sm`, `display-md`, and `display-lg` recipes plus
   responsive visual-variant and logical-alignment values that keep the

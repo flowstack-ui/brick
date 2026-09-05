@@ -54,6 +54,8 @@ describe("Dialog", () => {
       .toHaveClass("brick-dialog-footer");
     expect(screen.getByRole("button", { name: "Cancel" }).parentElement)
       .toHaveAttribute("data-justify", "end");
+    expect(screen.getByRole("button", { name: "Cancel" }))
+      .toHaveAttribute("data-placement", "inline");
     expect(document.querySelector(".brick-dialog-overlay")).toHaveAttribute(
       "data-slot",
       "dialog-overlay",
@@ -134,6 +136,23 @@ describe("Dialog", () => {
     expect(close).toHaveClass("brick-dialog-close", "close-child");
     await user.click(close);
     expect(onOpenChange).toHaveBeenLastCalledWith(false, "closeClick");
+  });
+
+  it("reflects the visual-only corner placement on a composed Close control", () => {
+    render(
+      <Dialog.Root defaultOpen>
+        <Dialog.Portal disabled>
+          <Dialog.Content aria-label="Corner close dialog">
+            <Dialog.Close placement="corner" asChild>
+              <button>Close corner dialog</button>
+            </Dialog.Close>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>,
+    );
+
+    expect(screen.getByRole("button", { name: "Close corner dialog" }))
+      .toHaveAttribute("data-placement", "corner");
   });
 
   it("preserves disabled Root behavior through native and composed triggers", async () => {

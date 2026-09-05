@@ -15,7 +15,7 @@ test("generated theme contract stays aligned with Brick authority", async () => 
   const packed = await readFile(new URL("../../dist/theme-contract.json", import.meta.url), "utf8");
 
   assert.equal(generated.$schema, themeContractSchema);
-  assert.equal(generated.contractVersion, 4);
+  assert.equal(generated.contractVersion, 5);
   assert.equal(packed, serializeThemeContract(generated));
   assert.deepEqual(generated.css.themeLayerPosition, {
     after: "brick.tokens",
@@ -35,7 +35,14 @@ test("generated theme contract stays aligned with Brick authority", async () => 
   );
   assert.equal(generated.contrast.algorithm, "wcag2-relative-luminance");
   assert.equal(generated.contrast.colorSpace, "srgb");
-  assert.equal(generated.contrast.pairs.length, 91);
+  assert.equal(generated.contrast.pairs.length, 92);
+  assert.deepEqual(
+    generated.atomicColorFamilies.find(({ id }) => id === "accent")?.tokens.filter((name) =>
+      name.startsWith("--brick-color-selection-")),
+    ["--brick-color-selection-background", "--brick-color-selection-foreground"],
+  );
+  assert.ok(generated.contrast.pairs.some(({ id }) =>
+    id.startsWith("selection-foreground-on-background/")));
   assert.deepEqual(
     [...new Set(generated.contrast.pairs.map(({ kind }) => kind))].sort(),
     ["non-text", "text"],

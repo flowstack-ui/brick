@@ -14,8 +14,8 @@ Present one compact finished choice from a predefined list while Atom owns selec
 
 ## Required composition
 
-- Compose Select.Root with a named Select.Trigger containing Select.Value and optional Select.Icon, then exactly one Select.Content or Select.Listbox. Place stable uniquely valued Items with ItemText inside optional Viewport and Group with Label; add indicators, separators, scroll buttons, Portal, and a direct popup Arrow only when required.
-- Use the same sm, md, or lg size as adjacent button-like controls. Keep locale loading, routing, persistence, analytics, and every other effect in onValueChange at the application boundary.
+- Compose Select.Root with a named Select.Trigger containing Select.Value and optional Select.Icon, then exactly one Select.Content or Select.Listbox. Place stable uniquely valued Items with ItemText inside optional Viewport and Group with Label; add indicators, separators, scroll buttons, Portal, and a direct popup Arrow only when required. Brick For may own repeated Items while Select preserves its opaque render callback.
+- Use the same xs, sm, md, or lg size as adjacent controls. Popup items inherit that density so the open and closed Select stay aligned. Keep locale loading, routing, persistence, analytics, and every other effect in onValueChange at the application boundary.
 
 ## Rules
 
@@ -49,3 +49,4 @@ Present one compact finished choice from a predefined list while Atom owns selec
 - `multi-select`
 - `dropdown-menu`
 - `link`
+- `for`

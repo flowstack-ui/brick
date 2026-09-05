@@ -14,11 +14,13 @@
   body {
     min-block-size: 100%;
     margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    background: var(--brick-color-accent-solid);
-    color: var(--brick-color-accent-on-solid);
+    background: var(--brick-color-selection-background);
+    color: var(--brick-color-selection-foreground);
   }
 
   blockquote,

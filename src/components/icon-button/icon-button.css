@@ -1,11 +1,13 @@
 @layer brick.components {
   .brick-icon-button {
     --brick-icon-button-size: var(--brick-control-min-block-size-md);
-    --brick-icon-button-icon-size: 1.125rem;
+    --brick-icon-button-icon-size: 1.25rem;
     --brick-icon-button-radius: var(--brick-radius-control);
     --brick-icon-button-background: transparent;
     --brick-icon-button-background-hover: var(--brick-icon-button-tone-soft);
-    --brick-icon-button-background-pressed: var(--brick-icon-button-tone-soft-pressed);
+    --brick-icon-button-background-pressed: var(
+      --brick-icon-button-tone-soft-pressed
+    );
     --brick-icon-button-border-color: transparent;
     --brick-icon-button-foreground: var(--brick-icon-button-tone-text);
     --brick-icon-button-spinner-color: var(--brick-icon-button-foreground);
@@ -23,7 +25,8 @@
     align-items: center;
     justify-content: center;
     padding: 0;
-    border: var(--brick-border-width) solid var(--brick-icon-button-border-color);
+    border: var(--brick-border-width) solid
+      var(--brick-icon-button-border-color);
     border-radius: var(--brick-icon-button-radius);
     appearance: none;
     background: var(--brick-icon-button-background);
@@ -34,9 +37,12 @@
     user-select: none;
     vertical-align: middle;
     transition:
-      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+      background-color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      border-color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard);
   }
 
   .brick-icon-button__icon {
@@ -73,16 +79,24 @@
 
   .brick-icon-button[data-variant="solid"] {
     --brick-icon-button-background: var(--brick-icon-button-tone-solid);
-    --brick-icon-button-background-hover: var(--brick-icon-button-tone-solid-hover);
-    --brick-icon-button-background-pressed: var(--brick-icon-button-tone-solid-pressed);
+    --brick-icon-button-background-hover: var(
+      --brick-icon-button-tone-solid-hover
+    );
+    --brick-icon-button-background-pressed: var(
+      --brick-icon-button-tone-solid-pressed
+    );
     --brick-icon-button-border-color: var(--brick-icon-button-tone-solid);
     --brick-icon-button-foreground: var(--brick-icon-button-tone-on-solid);
   }
 
   .brick-icon-button[data-variant="soft"] {
     --brick-icon-button-background: var(--brick-icon-button-tone-soft);
-    --brick-icon-button-background-hover: var(--brick-icon-button-tone-soft-hover);
-    --brick-icon-button-background-pressed: var(--brick-icon-button-tone-soft-pressed);
+    --brick-icon-button-background-hover: var(
+      --brick-icon-button-tone-soft-hover
+    );
+    --brick-icon-button-background-pressed: var(
+      --brick-icon-button-tone-soft-pressed
+    );
     --brick-icon-button-border-color: var(--brick-icon-button-tone-border);
     --brick-icon-button-foreground: var(--brick-icon-button-tone-on-soft);
   }
@@ -95,6 +109,16 @@
 
   .brick-icon-button[data-variant="ghost"] {
     --brick-icon-button-background: transparent;
+    --brick-icon-button-background-hover: color-mix(
+      in srgb,
+      currentColor 10%,
+      transparent
+    );
+    --brick-icon-button-background-pressed: color-mix(
+      in srgb,
+      currentColor 16%,
+      transparent
+    );
     --brick-icon-button-border-color: transparent;
     --brick-icon-button-foreground: var(--brick-icon-button-tone-text);
   }
@@ -127,11 +151,15 @@
   .brick-icon-button[data-tone="accent"] {
     --brick-icon-button-tone-solid: var(--brick-color-accent-solid);
     --brick-icon-button-tone-solid-hover: var(--brick-color-accent-solid-hover);
-    --brick-icon-button-tone-solid-pressed: var(--brick-color-accent-solid-pressed);
+    --brick-icon-button-tone-solid-pressed: var(
+      --brick-color-accent-solid-pressed
+    );
     --brick-icon-button-tone-on-solid: var(--brick-color-accent-on-solid);
     --brick-icon-button-tone-soft: var(--brick-color-accent-soft);
     --brick-icon-button-tone-soft-hover: var(--brick-color-accent-soft-hover);
-    --brick-icon-button-tone-soft-pressed: var(--brick-color-accent-soft-pressed);
+    --brick-icon-button-tone-soft-pressed: var(
+      --brick-color-accent-soft-pressed
+    );
     --brick-icon-button-tone-on-soft: var(--brick-color-accent-on-soft);
     --brick-icon-button-tone-border: var(--brick-color-accent-border);
     --brick-icon-button-tone-text: var(--brick-color-accent-text);
@@ -140,7 +168,9 @@
   .brick-icon-button[data-tone="info"] {
     --brick-icon-button-tone-solid: var(--brick-color-info-solid);
     --brick-icon-button-tone-solid-hover: var(--brick-color-info-solid-hover);
-    --brick-icon-button-tone-solid-pressed: var(--brick-color-info-solid-pressed);
+    --brick-icon-button-tone-solid-pressed: var(
+      --brick-color-info-solid-pressed
+    );
     --brick-icon-button-tone-on-solid: var(--brick-color-info-on-solid);
     --brick-icon-button-tone-soft: var(--brick-color-info-soft);
     --brick-icon-button-tone-soft-hover: var(--brick-color-info-soft-hover);
@@ -152,12 +182,18 @@
 
   .brick-icon-button[data-tone="success"] {
     --brick-icon-button-tone-solid: var(--brick-color-success-solid);
-    --brick-icon-button-tone-solid-hover: var(--brick-color-success-solid-hover);
-    --brick-icon-button-tone-solid-pressed: var(--brick-color-success-solid-pressed);
+    --brick-icon-button-tone-solid-hover: var(
+      --brick-color-success-solid-hover
+    );
+    --brick-icon-button-tone-solid-pressed: var(
+      --brick-color-success-solid-pressed
+    );
     --brick-icon-button-tone-on-solid: var(--brick-color-success-on-solid);
     --brick-icon-button-tone-soft: var(--brick-color-success-soft);
     --brick-icon-button-tone-soft-hover: var(--brick-color-success-soft-hover);
-    --brick-icon-button-tone-soft-pressed: var(--brick-color-success-soft-pressed);
+    --brick-icon-button-tone-soft-pressed: var(
+      --brick-color-success-soft-pressed
+    );
     --brick-icon-button-tone-on-soft: var(--brick-color-success-on-soft);
     --brick-icon-button-tone-border: var(--brick-color-success-border);
     --brick-icon-button-tone-text: var(--brick-color-success-text);
@@ -165,12 +201,18 @@
 
   .brick-icon-button[data-tone="warning"] {
     --brick-icon-button-tone-solid: var(--brick-color-warning-solid);
-    --brick-icon-button-tone-solid-hover: var(--brick-color-warning-solid-hover);
-    --brick-icon-button-tone-solid-pressed: var(--brick-color-warning-solid-pressed);
+    --brick-icon-button-tone-solid-hover: var(
+      --brick-color-warning-solid-hover
+    );
+    --brick-icon-button-tone-solid-pressed: var(
+      --brick-color-warning-solid-pressed
+    );
     --brick-icon-button-tone-on-solid: var(--brick-color-warning-on-solid);
     --brick-icon-button-tone-soft: var(--brick-color-warning-soft);
     --brick-icon-button-tone-soft-hover: var(--brick-color-warning-soft-hover);
-    --brick-icon-button-tone-soft-pressed: var(--brick-color-warning-soft-pressed);
+    --brick-icon-button-tone-soft-pressed: var(
+      --brick-color-warning-soft-pressed
+    );
     --brick-icon-button-tone-on-soft: var(--brick-color-warning-on-soft);
     --brick-icon-button-tone-border: var(--brick-color-warning-border);
     --brick-icon-button-tone-text: var(--brick-color-warning-text);
@@ -179,35 +221,204 @@
   .brick-icon-button[data-tone="danger"] {
     --brick-icon-button-tone-solid: var(--brick-color-danger-solid);
     --brick-icon-button-tone-solid-hover: var(--brick-color-danger-solid-hover);
-    --brick-icon-button-tone-solid-pressed: var(--brick-color-danger-solid-pressed);
+    --brick-icon-button-tone-solid-pressed: var(
+      --brick-color-danger-solid-pressed
+    );
     --brick-icon-button-tone-on-solid: var(--brick-color-danger-on-solid);
     --brick-icon-button-tone-soft: var(--brick-color-danger-soft);
     --brick-icon-button-tone-soft-hover: var(--brick-color-danger-soft-hover);
-    --brick-icon-button-tone-soft-pressed: var(--brick-color-danger-soft-pressed);
+    --brick-icon-button-tone-soft-pressed: var(
+      --brick-color-danger-soft-pressed
+    );
     --brick-icon-button-tone-on-soft: var(--brick-color-danger-on-soft);
     --brick-icon-button-tone-border: var(--brick-color-danger-border);
     --brick-icon-button-tone-text: var(--brick-color-danger-text);
   }
 
-  .brick-icon-button[data-size="xs"] {
-    --brick-icon-button-size: var(--brick-control-min-block-size-xs);
+  /* action-size-recipes:start */
+  .brick-icon-button[data-size="2xs"] {
+    --brick-icon-button-size: 1.5rem;
     --brick-icon-button-icon-size: 0.875rem;
   }
 
-  .brick-icon-button[data-size="sm"] {
-    --brick-icon-button-size: var(--brick-control-min-block-size-sm);
+  .brick-icon-button[data-size="xs"] {
+    --brick-icon-button-size: 2rem;
     --brick-icon-button-icon-size: 1rem;
   }
 
+  .brick-icon-button[data-size="sm"] {
+    --brick-icon-button-size: 2.25rem;
+    --brick-icon-button-icon-size: 1rem;
+  }
+
+  .brick-icon-button[data-size="md"] {
+    --brick-icon-button-size: 2.5rem;
+    --brick-icon-button-icon-size: 1.25rem;
+  }
+
   .brick-icon-button[data-size="lg"] {
-    --brick-icon-button-size: var(--brick-control-min-block-size-lg);
+    --brick-icon-button-size: 2.75rem;
     --brick-icon-button-icon-size: 1.25rem;
   }
 
   .brick-icon-button[data-size="xl"] {
-    --brick-icon-button-size: var(--brick-control-min-block-size-xl);
+    --brick-icon-button-size: 3rem;
+    --brick-icon-button-icon-size: 1.25rem;
+  }
+
+  .brick-icon-button[data-size="2xl"] {
+    --brick-icon-button-size: 4rem;
     --brick-icon-button-icon-size: 1.5rem;
   }
+
+  @media (width >= 30rem) {
+    .brick-icon-button[data-size-sm="2xs"] {
+      --brick-icon-button-size: 1.5rem;
+      --brick-icon-button-icon-size: 0.875rem;
+    }
+
+    .brick-icon-button[data-size-sm="xs"] {
+      --brick-icon-button-size: 2rem;
+      --brick-icon-button-icon-size: 1rem;
+    }
+
+    .brick-icon-button[data-size-sm="sm"] {
+      --brick-icon-button-size: 2.25rem;
+      --brick-icon-button-icon-size: 1rem;
+    }
+
+    .brick-icon-button[data-size-sm="md"] {
+      --brick-icon-button-size: 2.5rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-sm="lg"] {
+      --brick-icon-button-size: 2.75rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-sm="xl"] {
+      --brick-icon-button-size: 3rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-sm="2xl"] {
+      --brick-icon-button-size: 4rem;
+      --brick-icon-button-icon-size: 1.5rem;
+    }
+  }
+
+  @media (width >= 48rem) {
+    .brick-icon-button[data-size-md="2xs"] {
+      --brick-icon-button-size: 1.5rem;
+      --brick-icon-button-icon-size: 0.875rem;
+    }
+
+    .brick-icon-button[data-size-md="xs"] {
+      --brick-icon-button-size: 2rem;
+      --brick-icon-button-icon-size: 1rem;
+    }
+
+    .brick-icon-button[data-size-md="sm"] {
+      --brick-icon-button-size: 2.25rem;
+      --brick-icon-button-icon-size: 1rem;
+    }
+
+    .brick-icon-button[data-size-md="md"] {
+      --brick-icon-button-size: 2.5rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-md="lg"] {
+      --brick-icon-button-size: 2.75rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-md="xl"] {
+      --brick-icon-button-size: 3rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-md="2xl"] {
+      --brick-icon-button-size: 4rem;
+      --brick-icon-button-icon-size: 1.5rem;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .brick-icon-button[data-size-lg="2xs"] {
+      --brick-icon-button-size: 1.5rem;
+      --brick-icon-button-icon-size: 0.875rem;
+    }
+
+    .brick-icon-button[data-size-lg="xs"] {
+      --brick-icon-button-size: 2rem;
+      --brick-icon-button-icon-size: 1rem;
+    }
+
+    .brick-icon-button[data-size-lg="sm"] {
+      --brick-icon-button-size: 2.25rem;
+      --brick-icon-button-icon-size: 1rem;
+    }
+
+    .brick-icon-button[data-size-lg="md"] {
+      --brick-icon-button-size: 2.5rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-lg="lg"] {
+      --brick-icon-button-size: 2.75rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-lg="xl"] {
+      --brick-icon-button-size: 3rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-lg="2xl"] {
+      --brick-icon-button-size: 4rem;
+      --brick-icon-button-icon-size: 1.5rem;
+    }
+  }
+
+  @media (width >= 80rem) {
+    .brick-icon-button[data-size-xl="2xs"] {
+      --brick-icon-button-size: 1.5rem;
+      --brick-icon-button-icon-size: 0.875rem;
+    }
+
+    .brick-icon-button[data-size-xl="xs"] {
+      --brick-icon-button-size: 2rem;
+      --brick-icon-button-icon-size: 1rem;
+    }
+
+    .brick-icon-button[data-size-xl="sm"] {
+      --brick-icon-button-size: 2.25rem;
+      --brick-icon-button-icon-size: 1rem;
+    }
+
+    .brick-icon-button[data-size-xl="md"] {
+      --brick-icon-button-size: 2.5rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-xl="lg"] {
+      --brick-icon-button-size: 2.75rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-xl="xl"] {
+      --brick-icon-button-size: 3rem;
+      --brick-icon-button-icon-size: 1.25rem;
+    }
+
+    .brick-icon-button[data-size-xl="2xl"] {
+      --brick-icon-button-size: 4rem;
+      --brick-icon-button-icon-size: 1.5rem;
+    }
+  }
+  /* action-size-recipes:end */
 
   .brick-icon-button[data-shape="circle"] {
     --brick-icon-button-radius: var(--brick-radius-full);
@@ -237,7 +448,10 @@
     }
   }
 
-  .brick-icon-button[aria-expanded="true"]:not([data-disabled], [data-loading]) {
+  .brick-icon-button[aria-expanded="true"]:not(
+      [data-disabled],
+      [data-loading]
+    ) {
     border-color: var(--brick-icon-button-border-color);
     background: var(--brick-icon-button-background-pressed);
   }

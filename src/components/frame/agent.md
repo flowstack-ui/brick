@@ -11,6 +11,7 @@ Own responsive logical size constraints for one local element without taking ove
 ## Choose something else when
 
 - The need is shared page measure, child arrangement, paint, aspect ratio, or scrolling. Use Container, Stack/Grid, Surface, AspectRatio, or ScrollArea.
+- The need is one equal-size centered square or circle. Use Square or Circle.
 
 ## Required composition
 
@@ -39,6 +40,7 @@ Own responsive logical size constraints for one local element without taking ove
 
 - `stack`
 - `grid`
+- `center`
 - `container`
 - `section`
 - `surface`

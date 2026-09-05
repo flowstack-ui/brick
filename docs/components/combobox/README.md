@@ -56,7 +56,7 @@ Root and Portal add no Brick DOM. Label, Control, Input, Clear, Trigger, Content
 | Prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `outline`, `soft`, `underline` | `outline` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`; or a responsive value | `lg` |
 | `shape` | `sharp`, `rounded`, `pill` | `rounded` |
 | `fullWidth` | boolean | `true` |
 
@@ -100,7 +100,7 @@ Use `Field.Root`, `Field.Label`, `Field.Description`, and `Field.Error` for ordi
 
 ## Composition, native props, and refs
 
-DOM parts preserve native props, ARIA, events, `className`, `style`, data attributes, slots, and exact refs. Trigger toggles from pointer activation and defaults to an accessible English label; localized applications should provide `aria-label`. Clear, Trigger, and Indicator children replace default artwork/content.
+DOM parts preserve native props, ARIA, events, `className`, `style`, data attributes, slots, and exact refs. Trigger toggles from pointer activation and inherits its generic accessible label from `LocaleProvider`; an explicit `aria-label` remains authoritative. Clear, Trigger, and Indicator children replace default artwork/content.
 
 ## Examples
 

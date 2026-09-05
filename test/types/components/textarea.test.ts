@@ -13,7 +13,7 @@ import { Textarea as RootTextarea } from "../../../src/index.js";
 
 const ref = createRef<HTMLTextAreaElement>();
 const variants: TextareaVariant[] = ["outline", "soft", "underline"];
-const sizes: TextareaSize[] = ["sm", "md", "lg"];
+const sizes: TextareaSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: TextareaShape[] = ["sharp", "rounded"];
 const resizeModes: TextareaResize[] = ["none", "vertical", "horizontal", "both"];
 const props: TextareaRootProps = {
@@ -28,6 +28,7 @@ const props: TextareaRootProps = {
 };
 
 createElement(Textarea.Root, { ...props, ref }, createElement(Textarea.Count));
+createElement(Textarea.Root, { "aria-label": "Responsive", size: { md: "sm", xl: "2xl" } });
 createElement(RootTextarea.Root, { ...props, ref });
 createElement(TextareaRoot, { "aria-label": "Auto", autoResize: true, maxRows: 8, minRows: 3 });
 createElement(TextareaCount, { "aria-live": "off" });

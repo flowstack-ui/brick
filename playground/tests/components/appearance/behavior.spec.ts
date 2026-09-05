@@ -5,6 +5,22 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/appearance");
 });
 
+function relativeLuminance(rgb: string) {
+  const channels = rgb.match(/[\d.]+/gu)?.slice(0, 3).map(Number) ?? [];
+  expect(channels).toHaveLength(3);
+  const linear = channels.map((channel) => {
+    const value = channel / 255;
+    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+}
+
+function contrastRatio(first: string, second: string) {
+  const a = relativeLuminance(first);
+  const b = relativeLuminance(second);
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+}
+
 test("Appearance restores complete nested scopes and adds no wrapper", async ({ page }) => {
   const lightOuter = page.getByTestId("appearance-light-outer");
   const lightInner = page.getByTestId("appearance-light-inner");
@@ -30,6 +46,46 @@ test("Appearance restores complete nested scopes and adds no wrapper", async ({ 
   await expect(appBar).toHaveAttribute("data-slot", "appbar");
   await expect(appBar).toHaveClass(/brick-app-bar/);
   await expect(appBar).toHaveClass(/brick-appearance/);
+});
+
+test("native selection uses one opaque contrast pair in each appearance", async ({ page }) => {
+  const lightSurface = page.getByTestId("appearance-light");
+  const darkSurface = page.getByTestId("appearance-dark");
+
+  const selectionPaint = async (testId: string) => page.getByTestId(testId).evaluate((element) => {
+    const selection = getComputedStyle(element, "::selection");
+    const probe = document.createElement("span");
+    probe.style.backgroundColor = "var(--brick-color-selection-background)";
+    probe.style.color = "var(--brick-color-selection-foreground)";
+    element.append(probe);
+    const resolved = getComputedStyle(probe);
+    const result = {
+      background: selection.backgroundColor,
+      foreground: selection.color,
+      backgroundToken: resolved.backgroundColor,
+      foregroundToken: resolved.color,
+    };
+    probe.remove();
+    return result;
+  });
+
+  const light = await selectionPaint("appearance-light");
+  const dark = await selectionPaint("appearance-dark");
+
+  expect(light.background).toBe(light.backgroundToken);
+  expect(light.foreground).toBe(light.foregroundToken);
+  expect(dark.background).toBe(dark.backgroundToken);
+  expect(dark.foreground).toBe(dark.foregroundToken);
+  expect(light.background).not.toBe(dark.background);
+  expect(contrastRatio(light.foreground, light.background)).toBeGreaterThanOrEqual(4.5);
+  expect(contrastRatio(dark.foreground, dark.background)).toBeGreaterThanOrEqual(4.5);
+
+  const lightAction = lightSurface.getByRole("button", { name: "Continue" });
+  const darkAction = darkSurface.getByRole("button", { name: "Continue" });
+  await expect.poll(() => lightAction.evaluate((element) =>
+    getComputedStyle(element, "::selection").backgroundColor)).toBe(light.background);
+  await expect.poll(() => darkAction.evaluate((element) =>
+    getComputedStyle(element, "::selection").backgroundColor)).toBe(dark.background);
 });
 
 test("Appearance explicitly scopes portalled visual roots without changing Drawer behavior", async ({ page }) => {

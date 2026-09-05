@@ -4,6 +4,19 @@ Select follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Added
+
+- Added the borderless `ghost` trigger recipe.
+
+### Changed
+
+- Expanded Select and its portalled options to the responsive shared 2xs–2xl
+  control-size scale and made the 44px `lg` recipe the default.
+- Outline Select triggers now use a transparent surface so they blend with
+  their owning panel while retaining the strong complete boundary.
+- Select popups now use the standard overlay boundary token shared with other
+  floating surfaces.
+
 ## 0.1.10
 
 ### Fixed
@@ -18,6 +31,9 @@ Select follows the package version of `@flowstack-ui/brick`.
   logical `start` placement follow an RTL trigger.
 
 ### Added
+
+- Added `size="xs"`; popup items now inherit the Root density so open and
+  closed Select presentation remains aligned.
 
 - Added public Select Agent Knowledge covering component selection, required
   compound anatomy, accessible naming, controlled application effects, common

@@ -35,10 +35,10 @@ test("Text controlled comparisons change only variant, tone, weight, or alignmen
   const variantTexts = page
     .getByTestId("text-variants")
     .locator(".brick-text");
-  await expect(variantTexts).toHaveCount(12);
+  await expect(variantTexts).toHaveCount(14);
   const expectedVariants = [
     "display", "display-sm", "display-md", "display-lg",
-    "title-lg", "title-md", "title-sm",
+    "title-lg", "title-md", "title-sm", "title-xs", "title-2xs",
     "body-lg", "body-md", "body-sm", "caption", "eyebrow",
   ];
   const sizes: number[] = [];
@@ -50,10 +50,12 @@ test("Text controlled comparisons change only variant, tone, weight, or alignmen
     await expect(text).toHaveText("Build dependable interfaces.");
     sizes.push(Number.parseFloat(await text.evaluate((node) => getComputedStyle(node).fontSize)));
   }
-  expect(sizes).toEqual([40, 40, 52, 64, 32, 24, 20, 20, 16, 14, 12, 12]);
-  await expect(variantTexts.nth(11)).toHaveCSS("font-weight", "600");
-  await expect(variantTexts.nth(11)).toHaveCSS("letter-spacing", "0.96px");
-  await expect(variantTexts.nth(11)).toHaveCSS("text-transform", "uppercase");
+  expect(sizes).toEqual([36, 36, 48, 64, 32, 24, 18, 16, 14, 18, 16, 14, 12, 12]);
+  await expect(variantTexts.nth(7)).toHaveCSS("font-weight", "600");
+  await expect(variantTexts.nth(8)).toHaveCSS("font-weight", "600");
+  await expect(variantTexts.nth(13)).toHaveCSS("font-weight", "600");
+  await expect(variantTexts.nth(13)).toHaveCSS("letter-spacing", "0.96px");
+  await expect(variantTexts.nth(13)).toHaveCSS("text-transform", "uppercase");
 
   const responsiveHeading = page.getByTestId("text-responsive-variant");
   await expect(responsiveHeading).toHaveAttribute("data-variant", "display-sm");

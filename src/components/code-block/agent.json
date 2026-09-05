@@ -58,6 +58,11 @@
       "statement": "Keep standalone maxLines content reachable through its focusable viewport; for expansion, pair CollapsePreview and CollapseContent with an accessible CollapseTrigger so only the current source view is exposed."
     },
     {
+      "id": "code-block-selection-pair",
+      "level": "must",
+      "statement": "Inherit Brick's shared selection background and foreground by default; when a syntax palette needs local selection paint, override both public Code Block selection variables together and verify their text contrast."
+    },
+    {
       "id": "code-block-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus code-block.css and its documented component dependencies."

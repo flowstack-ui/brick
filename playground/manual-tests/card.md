@@ -26,8 +26,9 @@ Action: Inspect `01 Overview`; compare outline, elevated, and subtle in
 `02 Variants`, then the complete scale in `03 Sizes`.
 
 Expected: The Card surface is clearly distinguishable from the specimen
-background. Variants change prominence only. Sizes change coordinated padding
-and title scale without changing content order or semantics.
+background. Variants change prominence only; outline owns a structural border,
+while elevated uses a borderless raised panel and layered medium shadow. Sizes change coordinated
+padding and title scale without changing content order or semantics.
 
 Result:
 Notes or issue:

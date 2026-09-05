@@ -22,6 +22,25 @@ test("renders the release palette through the public Color Swatch subpath", asyn
   await expect(palette.getByRole("img", { name: "Review rose" })).toHaveAttribute("data-shape", "circle");
 });
 
+test("composes Center, Square, Circle, and the Badge surface recipe through public subpaths", async ({ page }) => {
+  const center = page.getByTestId("consumer-center-family");
+  await expect(center).toHaveCSS("align-items", "center");
+  await expect(center).toHaveCSS("justify-content", "center");
+  for (const testId of ["consumer-square", "consumer-circle"]) {
+    const holder = page.getByTestId(testId);
+    await expect(holder).toHaveCSS("width", "32px");
+    await expect(holder).toHaveCSS("height", "32px");
+    await expect(holder).toHaveCSS("flex-shrink", "0");
+    await expect(holder).toHaveClass(/brick-surface/);
+  }
+  const badge = center.getByText("Surface badge");
+  await expect(badge).toHaveAttribute("data-variant", "surface");
+  expect(await badge.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return style.backgroundColor !== "rgba(0, 0, 0, 0)" && style.borderTopColor !== "rgba(0, 0, 0, 0)";
+  })).toBe(true);
+});
+
 test("edits a release accent through the packed Color Picker subpath", async ({ page }) => {
   const form = page.getByRole("form", { name: "Publishing preferences" });
   const input = form.locator("[data-slot='color-picker-control'] [data-slot='color-picker-input']");
@@ -671,8 +690,10 @@ test("composes Badge and NotificationBadge through their public subpath", async 
 });
 
 test("composes Avatar status and fallback states through its public subpath", async ({ page }) => {
-  const adaImage = page.getByRole("img", { name: "Ada Lovelace" });
-  const ada = adaImage.locator("..");
+  const ada = page.locator("[data-slot='avatar'][data-size='lg']").filter({
+    has: page.getByRole("img", { name: "Ada Lovelace" }),
+  });
+  const adaImage = ada.getByRole("img", { name: "Ada Lovelace" });
   await expect(ada).toHaveAttribute("data-slot", "avatar");
   await expect(ada).toHaveAttribute("data-size", "lg");
   await expect(ada).toHaveAttribute("data-shape", "circle");
@@ -685,8 +706,10 @@ test("composes Avatar status and fallback states through its public subpath", as
   await expect(adaWrapper).toHaveClass(/brick-notification-badge/);
   await expect(adaWrapper.locator("[data-slot='notification-badge-indicator']")).toHaveText("2");
 
-  const graceFallback = page.getByRole("img", { name: "Grace Hopper" });
-  const grace = graceFallback.locator("..");
+  const grace = page.locator("[data-slot='avatar'][data-size='lg']").filter({
+    has: page.getByRole("img", { name: "Grace Hopper" }),
+  });
+  const graceFallback = grace.getByRole("img", { name: "Grace Hopper" });
   await expect(grace).toHaveAttribute("data-shape", "rounded");
   await expect(grace).toHaveAttribute("data-status", "busy");
   await expect(graceFallback).toContainText("GH");

@@ -4,6 +4,28 @@ Segment Group follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Matched compact segmented-control rhythm with regular-weight labels,
+  component-owned inline padding and gaps, a borderless dark-semantic
+  indicator shadow, and dividers that disappear beside the selected item.
+- Balanced the selected indicator elevation with a lighter downward shadow
+  and a fine neutral perimeter shadow instead of a bottom-heavy shadow plus
+  inset light edge.
+- Restored the unselected rail to the subtle surface, promoted the selected
+  segment to the base surface in light appearance and the raised surface in
+  dark appearance, and kept short inset default-boundary separator rules
+  between adjacent options without boxing their complete edges.
+- Full-width icon-only groups now keep the Root's selected control height
+  instead of making every flexible item square.
+
+### Added
+
+- Added the `2xs` 28px compact recipe so dense Segment Groups continue to
+  align with the normalized shared control-size ladder.
+- Added the `xs` compact application-control size for dense property and
+  editor panels without changing the default medium recipe.
+
 ## 0.2.1 - 2026-08-31
 
 ### Fixed

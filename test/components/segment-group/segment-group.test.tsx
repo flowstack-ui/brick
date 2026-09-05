@@ -49,7 +49,7 @@ describe("SegmentGroup", () => {
   });
 
   it("routes shared sizes, full width, and icon-only geometry to data", () => {
-    const sizes: SegmentGroupSize[] = ["sm", "md", "lg"];
+    const sizes: SegmentGroupSize[] = ["2xs", "xs", "sm", "md", "lg"];
     const { rerender } = render(<Example />);
     for (const size of sizes) {
       rerender(<SegmentGroup.Root aria-label="View" defaultValue="list" size={size}><SegmentGroup.Item value="list">List</SegmentGroup.Item></SegmentGroup.Root>);

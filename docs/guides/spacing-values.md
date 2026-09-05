@@ -63,9 +63,10 @@ breakpoint may independently use a token, numeric factor, or explicit value:
 </Grid.Root>
 ```
 
-Objects require `initial` and may add `sm`, `md`, `lg`, and `xl`. Brick emits
-one source tree and CSS media-query values; it does not measure the viewport
-in JavaScript.
+Objects must contain at least one of `initial`, `sm`, `md`, `lg`, or `xl`.
+When `initial` is omitted, the owning layout component keeps its normal default
+below the first supplied breakpoint. Brick emits one source tree and CSS
+media-query values; it does not measure the viewport in JavaScript.
 
 ## Invalid values
 

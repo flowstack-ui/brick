@@ -16,7 +16,14 @@ type ComposedRequiredProps<T> = Omit<T, "asChild" | "children" | "render"> &
     | { asChild?: false; render?: T extends { render?: infer R } ? R : never; children: ReactNode }
   );
 
-export type FieldRootProps = ComposedRequiredProps<AtomFieldRootProps>;
+export type FieldSize = "xs" | "sm" | "md";
+export type FieldTone = "primary" | "secondary";
+export type FieldRootProps = ComposedRequiredProps<AtomFieldRootProps> & {
+  /** Label density used by compact and ordinary form layouts. @default "md" */
+  size?: FieldSize;
+  /** Label emphasis. @default "primary" */
+  tone?: FieldTone;
+};
 export type FieldLabelProps = ComposedRequiredProps<AtomFieldLabelProps>;
 export type FieldDescriptionProps = ComposedRequiredProps<AtomFieldDescriptionProps>;
 export type FieldErrorProps = ComposedRequiredProps<AtomFieldErrorProps>;
@@ -57,6 +64,8 @@ export const FieldRoot = forwardRef<HTMLDivElement, FieldRootProps>(
       children,
       className,
       orientation = "vertical",
+      size = "md",
+      tone = "primary",
       render,
       "data-slot": dataSlot,
       ...props
@@ -69,6 +78,8 @@ export const FieldRoot = forwardRef<HTMLDivElement, FieldRootProps>(
         asChild={asChild}
         className={mergeClassName("brick-field", className)}
         data-slot={slotOrDefault(dataSlot, "field")}
+        data-size={size}
+        data-tone={tone}
         orientation={orientation}
         ref={ref}
         render={render}

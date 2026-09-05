@@ -41,17 +41,23 @@ import "@flowstack-ui/brick/styles/icon.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
-Public exports are `Icon`, `IconProps`, `IconSize`, and `IconTone`.
+Public exports are `Icon`, `IconProps`, `IconSize`, `IconTone`, and
+`IconEmphasis`.
 
 ## Quick start
 
 ```tsx
 function CheckIcon() {
-  return <svg fill="none" viewBox="0 0 20 20"><path d="m4 10 4 4 8-8" stroke="currentColor" /></svg>;
+  return (
+    <svg fill="none" viewBox="0 0 20 20">
+      <path d="m4 10 4 4 8-8" stroke="currentColor" />
+    </svg>
+  );
 }
 
-<Icon tone="success"><CheckIcon /></Icon>
+<Icon tone="success">
+  <CheckIcon />
+</Icon>;
 ```
 
 The SVG uses `currentColor`, so the semantic success tone controls its stroke.
@@ -61,8 +67,14 @@ The SVG uses `currentColor`, so the semantic success tone controls its stroke.
 Decorative output is the default:
 
 ```html
-<span aria-hidden="true" class="brick-icon" data-size="md"
-  data-slot="icon" data-tone="inherit">
+<span
+  aria-hidden="true"
+  class="brick-icon"
+  data-size="md"
+  data-emphasis="text"
+  data-slot="icon"
+  data-tone="inherit"
+>
   <svg>…</svg>
 </span>
 ```
@@ -70,8 +82,15 @@ Decorative output is the default:
 An informative icon supplies one contextual name:
 
 ```html
-<span class="brick-icon" data-size="md" data-slot="icon"
-  data-tone="warning" role="img" aria-label="Warning">
+<span
+  class="brick-icon"
+  data-size="md"
+  data-emphasis="text"
+  data-slot="icon"
+  data-tone="warning"
+  role="img"
+  aria-label="Warning"
+>
   <svg>…</svg>
 </span>
 ```
@@ -81,16 +100,17 @@ rewrite path data, viewBox, stroke, or fill construction.
 
 ## API
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `children` | one SVG element/component | required |
-| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl` | `md` |
-| `tone` | `inherit`, `primary`, `secondary`, `muted`, `accent`, `info`, `success`, `warning`, `danger` | `inherit` |
-| `directional` | `boolean` | `false` |
-| `label` | nonempty contextual string | decorative when absent |
-| `aria-labelledby` | ID reference | decorative when absent |
-| `asChild` | direct SVG composition | `false` |
-| `slot` | `string` | `icon` |
+| Prop              | Values                                                                                       | Default                |
+| ----------------- | -------------------------------------------------------------------------------------------- | ---------------------- |
+| `children`        | one SVG element/component                                                                    | required               |
+| `size`            | `inherit`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`                                        | `md`                   |
+| `tone`            | `inherit`, `primary`, `secondary`, `muted`, `accent`, `info`, `success`, `warning`, `danger` | `inherit`              |
+| `emphasis`        | `text`, `solid`                                                                              | `text`                 |
+| `directional`     | `boolean`                                                                                    | `false`                |
+| `label`           | nonempty contextual string                                                                   | decorative when absent |
+| `aria-labelledby` | ID reference                                                                                 | decorative when absent |
+| `asChild`         | direct SVG composition                                                                       | `false`                |
+| `slot`            | `string`                                                                                     | `icon`                 |
 
 `label` and `aria-labelledby` are mutually exclusive. Icon controls `role`,
 `aria-label`, and `aria-hidden`; contradictory native props are not accepted.
@@ -99,11 +119,15 @@ Native global/data attributes, `className`, `style`, and an
 
 ## Visual recipes and states
 
-Sizes resolve to 12, 16, 20, 24, 32, and 40 pixels. Icon has no padding,
-background, border, radius, shadow, touch target, or interaction state.
+Sizes resolve to the inherited font size, 12, 16, 20, 24, 28, 32, and 40
+pixels. Icon has no padding, background, border, radius, shadow, touch target,
+or interaction state.
 
 `tone="inherit"` follows the parent's `currentColor`. Other tones resolve to
-Brick semantic foreground tokens. A single-color SVG must use
+Brick semantic foreground tokens. Tone identifies the semantic palette;
+`emphasis="text"` uses its readable text foreground and `emphasis="solid"`
+uses its stronger solid paint. Keep semantic meaning in labels or adjacent
+text rather than color alone. A single-color SVG must use
 `fill="currentColor"` or `stroke="currentColor"` to consume the tone. Fixed
 authored fills remain unchanged, which preserves multicolor artwork.
 
@@ -114,18 +138,23 @@ in.
 
 ## Tokens and CSS hooks
 
-Stable hooks are `.brick-icon`, `data-slot` (`[data-slot="icon"]`), `data-size`, `data-tone`,
-and the presence-only `data-directional` attribute.
+Stable hooks are `.brick-icon`, `data-slot` (`[data-slot="icon"]`), `data-size`,
+`data-tone`, `data-emphasis`, and the presence-only `data-directional`
+attribute.
 
 Public variables:
 
+- `--brick-icon-size-inherit`
 - `--brick-icon-size-2xs`
 - `--brick-icon-size-xs`
 - `--brick-icon-size-sm`
 - `--brick-icon-size-md`
 - `--brick-icon-size-lg`
 - `--brick-icon-size-xl`
+- `--brick-icon-size-2xl`
 - `--brick-icon-size`
+- `--brick-icon-tone-text`
+- `--brick-icon-tone-solid`
 - `--brick-icon-color`
 - `--brick-icon-vertical-align`
 - `--brick-icon-direction-scale`
@@ -167,7 +196,9 @@ Icon decorative:
 
 ```tsx
 <IconButton aria-label="Search">
-  <Icon size="sm"><SearchIcon /></Icon>
+  <Icon size="sm">
+    <SearchIcon />
+  </Icon>
 </IconButton>
 ```
 
@@ -196,7 +227,9 @@ preserved before Icon's authoritative recipe/accessibility props.
 
 ```tsx
 <HStack gap="2">
-  <Icon tone="success"><CheckIcon /></Icon>
+  <Icon tone="success">
+    <CheckIcon />
+  </Icon>
   <Text>Published</Text>
 </HStack>
 ```
@@ -211,7 +244,9 @@ preserved before Icon's authoritative recipe/accessibility props.
 ### Directional navigation glyph
 
 ```tsx
-<Icon directional><ArrowForwardIcon /></Icon>
+<Icon directional>
+  <ArrowForwardIcon />
+</Icon>
 ```
 
 ## Evidence

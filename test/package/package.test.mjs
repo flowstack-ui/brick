@@ -11,7 +11,7 @@ test("package metadata defines the public Brick boundary", async () => {
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.version, "0.2.2");
+  assert.equal(packageJson.version, "0.2.3");
   assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.26.1");
   assert.deepEqual(packageJson.publishConfig, { access: "public" });
   assert.equal(
@@ -31,6 +31,30 @@ test("package metadata defines the public Brick boundary", async () => {
     "./appearance": {
       types: "./dist/appearance.d.ts",
       default: "./dist/appearance.js",
+    },
+    "./locale-provider": {
+      types: "./dist/locale-provider.d.ts",
+      default: "./dist/locale-provider.js",
+    },
+    "./format-number": {
+      types: "./dist/format-number.d.ts",
+      default: "./dist/format-number.js",
+    },
+    "./format-byte": {
+      types: "./dist/format-byte.d.ts",
+      default: "./dist/format-byte.js",
+    },
+    "./for": {
+      types: "./dist/for.d.ts",
+      default: "./dist/for.js",
+    },
+    "./checkmark": {
+      types: "./dist/checkmark.d.ts",
+      default: "./dist/checkmark.js",
+    },
+    "./radiomark": {
+      types: "./dist/radiomark.d.ts",
+      default: "./dist/radiomark.js",
     },
     "./button": {
       types: "./dist/button.d.ts",
@@ -104,6 +128,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/avatar.d.ts",
       default: "./dist/avatar.js",
     },
+    "./avatar-group": {
+      types: "./dist/avatar-group.d.ts",
+      default: "./dist/avatar-group.js",
+    },
     "./status": {
       types: "./dist/status.d.ts",
       default: "./dist/status.js",
@@ -159,6 +187,10 @@ test("package metadata defines the public Brick boundary", async () => {
     "./radio-group": {
       types: "./dist/radio-group.d.ts",
       default: "./dist/radio-group.js",
+    },
+    "./radio-card": {
+      types: "./dist/radio-card.d.ts",
+      default: "./dist/radio-card.js",
     },
     "./segment-group": {
       types: "./dist/segment-group.d.ts",
@@ -356,6 +388,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/frame.d.ts",
       default: "./dist/frame.js",
     },
+    "./center": {
+      types: "./dist/center.d.ts",
+      default: "./dist/center.js",
+    },
     "./bleed": {
       types: "./dist/bleed.d.ts",
       default: "./dist/bleed.js",
@@ -440,6 +476,12 @@ test("release identity, changelog, dependency lock, and provenance stay aligned"
 test("built package entrypoint can be imported without a CSS loader", async () => {
   const brick = await import(new URL("../../dist/index.js", import.meta.url));
   const appearance = await import(new URL("../../dist/appearance.js", import.meta.url));
+  const localeProvider = await import(new URL("../../dist/locale-provider.js", import.meta.url));
+  const formatNumber = await import(new URL("../../dist/format-number.js", import.meta.url));
+  const formatByte = await import(new URL("../../dist/format-byte.js", import.meta.url));
+  const forModule = await import(new URL("../../dist/for.js", import.meta.url));
+  const checkmark = await import(new URL("../../dist/checkmark.js", import.meta.url));
+  const radiomark = await import(new URL("../../dist/radiomark.js", import.meta.url));
   const button = await import(new URL("../../dist/button.js", import.meta.url));
   const iconButton = await import(new URL("../../dist/icon-button.js", import.meta.url));
   const icon = await import(new URL("../../dist/icon.js", import.meta.url));
@@ -452,6 +494,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const badge = await import(new URL("../../dist/badge.js", import.meta.url));
   const chip = await import(new URL("../../dist/chip.js", import.meta.url));
   const avatar = await import(new URL("../../dist/avatar.js", import.meta.url));
+  const avatarGroup = await import(new URL("../../dist/avatar-group.js", import.meta.url));
   const status = await import(new URL("../../dist/status.js", import.meta.url));
   const colorSwatch = await import(new URL("../../dist/color-swatch.js", import.meta.url));
   const colorPicker = await import(new URL("../../dist/color-picker.js", import.meta.url));
@@ -466,6 +509,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const checkbox = await import(new URL("../../dist/checkbox.js", import.meta.url));
   const checkboxGroup = await import(new URL("../../dist/checkbox-group.js", import.meta.url));
   const radioGroup = await import(new URL("../../dist/radio-group.js", import.meta.url));
+  const radioCard = await import(new URL("../../dist/radio-card.js", import.meta.url));
   const segmentGroup = await import(new URL("../../dist/segment-group.js", import.meta.url));
   const switchModule = await import(new URL("../../dist/switch.js", import.meta.url));
   const breadcrumb = await import(new URL("../../dist/breadcrumb.js", import.meta.url));
@@ -505,6 +549,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const container = await import(new URL("../../dist/container.js", import.meta.url));
   const section = await import(new URL("../../dist/section.js", import.meta.url));
   const frame = await import(new URL("../../dist/frame.js", import.meta.url));
+  const center = await import(new URL("../../dist/center.js", import.meta.url));
   const bleed = await import(new URL("../../dist/bleed.js", import.meta.url));
   const surface = await import(new URL("../../dist/surface.js", import.meta.url));
   const divider = await import(new URL("../../dist/divider.js", import.meta.url));
@@ -555,6 +600,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "AspectRatio",
       "AspectRatioRoot",
       "Avatar",
+      "AvatarGroup",
       "Badge",
       "Bleed",
       "Blockquote",
@@ -591,12 +637,15 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "CarouselSlide",
       "CarouselTrack",
       "CarouselViewport",
+      "Center",
       "Checkbox",
       "CheckboxGroup",
+      "Checkmark",
       "Chip",
       "ChipLabel",
       "ChipRemoveTrigger",
       "ChipRoot",
+      "Circle",
       "Code",
       "CodeBlock",
       "CodeBlockActions",
@@ -694,6 +743,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "DataGridBody",
       "DataGridCaption",
       "DataGridCell",
+      "DataGridColumn",
+      "DataGridColumnGroup",
       "DataGridColumnHeader",
       "DataGridContainer",
       "DataGridFooter",
@@ -745,7 +796,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "FileUploadItemSize",
       "FileUploadRoot",
       "FileUploadTrigger",
+      "For",
       "Form",
+      "FormatByte",
+      "FormatNumber",
       "Frame",
       "Grid",
       "Group",
@@ -768,6 +822,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "LinkBoxLink",
       "LinkBoxRoot",
       "List",
+      "LocaleProvider",
       "Mark",
       "Menubar",
       "MenubarArrow",
@@ -831,10 +886,12 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "NavigationMenuViewport",
       "NotificationBadge",
       "NumberInput",
+      "NumberInputControl",
       "NumberInputDecrement",
       "NumberInputIncrement",
       "NumberInputInput",
       "NumberInputRoot",
+      "NumberInputUnit",
       "OTPField",
       "OTPFieldGroup",
       "OTPFieldInput",
@@ -882,9 +939,19 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ProgressTrack",
       "ProgressValue",
       "Prose",
+      "RadioCard",
+      "RadioCardAddon",
+      "RadioCardContent",
+      "RadioCardControl",
+      "RadioCardDescription",
+      "RadioCardIndicator",
+      "RadioCardItem",
+      "RadioCardRoot",
+      "RadioCardTitle",
       "RadioGroup",
       "RadioGroupItem",
       "RadioGroupRoot",
+      "Radiomark",
       "Rating",
       "RatingDisplay",
       "RatingItem",
@@ -948,6 +1015,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "SliderThumb",
       "SliderTrack",
       "SliderValueLabel",
+      "Square",
       "Stack",
       "Status",
       "StatusIndicator",
@@ -969,6 +1037,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "TableBody",
       "TableCaption",
       "TableCell",
+      "TableColumn",
+      "TableColumnGroup",
       "TableContainer",
       "TableFooter",
       "TableHead",
@@ -1014,6 +1084,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "TreeGridBody",
       "TreeGridCaption",
       "TreeGridCell",
+      "TreeGridColumn",
+      "TreeGridColumnGroup",
       "TreeGridColumnHeader",
       "TreeGridContainer",
       "TreeGridFooter",
@@ -1035,10 +1107,25 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ZStack",
       "ZStackItem",
       "ZStackRoot",
-      "toast"
+      "defaultLocale",
+      "defaultLocaleText",
+      "formatByte",
+      "formatNumber",
+      "getLocaleDirection",
+      "toast",
+      "useLocaleContext"
     ],
   );
   assert.equal(appearance.Appearance, brick.Appearance);
+  assert.equal(localeProvider.LocaleProvider, brick.LocaleProvider);
+  assert.equal(localeProvider.useLocaleContext, brick.useLocaleContext);
+  assert.equal(formatNumber.FormatNumber, brick.FormatNumber);
+  assert.equal(formatNumber.formatNumber, brick.formatNumber);
+  assert.equal(formatByte.FormatByte, brick.FormatByte);
+  assert.equal(formatByte.formatByte, brick.formatByte);
+  assert.equal(forModule.For, brick.For);
+  assert.equal(checkmark.Checkmark, brick.Checkmark);
+  assert.equal(radiomark.Radiomark, brick.Radiomark);
   assert.equal(em.Em, brick.Em);
   assert.equal(mark.Mark, brick.Mark);
   assert.equal(kbd.Kbd, brick.Kbd);
@@ -1055,12 +1142,18 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(list.List, brick.List);
   assert.equal(table.Table, brick.Table);
   assert.equal(table.TableRoot, brick.Table.Root);
+  assert.equal(table.TableColumnGroup, brick.Table.ColumnGroup);
+  assert.equal(table.TableColumn, brick.Table.Column);
   assert.equal(table.TableCell, brick.Table.Cell);
   assert.equal(dataGrid.DataGrid, brick.DataGrid);
   assert.equal(dataGrid.DataGridRoot, brick.DataGrid.Root);
+  assert.equal(dataGrid.DataGridColumnGroup, brick.DataGrid.ColumnGroup);
+  assert.equal(dataGrid.DataGridColumn, brick.DataGrid.Column);
   assert.equal(dataGrid.DataGridColumnHeader, brick.DataGrid.ColumnHeader);
   assert.equal(treeGrid.TreeGrid, brick.TreeGrid);
   assert.equal(treeGrid.TreeGridRoot, brick.TreeGrid.Root);
+  assert.equal(treeGrid.TreeGridColumnGroup, brick.TreeGrid.ColumnGroup);
+  assert.equal(treeGrid.TreeGridColumn, brick.TreeGrid.Column);
   assert.equal(treeGrid.TreeGridRowHeader, brick.TreeGrid.RowHeader);
   assert.equal(treeGrid.TreeGridIndicator, brick.TreeGrid.Indicator);
   assert.equal(tree.Tree, brick.Tree);
@@ -1111,6 +1204,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(chip.ChipLabel, brick.Chip.Label);
   assert.equal(chip.ChipRemoveTrigger, brick.Chip.RemoveTrigger);
   assert.equal(avatar.Avatar, brick.Avatar);
+  assert.equal(avatarGroup.AvatarGroup, brick.AvatarGroup);
   assert.equal(status.Status, brick.Status);
   assert.equal(status.StatusRoot, brick.Status.Root);
   assert.equal(status.StatusIndicator, brick.Status.Indicator);
@@ -1205,6 +1299,15 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(slider.SliderThumb, brick.Slider.Thumb);
   assert.equal(slider.SliderMarker, brick.Slider.Marker);
   assert.equal(slider.SliderValueLabel, brick.Slider.ValueLabel);
+  assert.equal(radioCard.RadioCard, brick.RadioCard);
+  assert.equal(radioCard.RadioCardRoot, brick.RadioCard.Root);
+  assert.equal(radioCard.RadioCardItem, brick.RadioCard.Item);
+  assert.equal(radioCard.RadioCardControl, brick.RadioCard.Control);
+  assert.equal(radioCard.RadioCardContent, brick.RadioCard.Content);
+  assert.equal(radioCard.RadioCardTitle, brick.RadioCard.Title);
+  assert.equal(radioCard.RadioCardDescription, brick.RadioCard.Description);
+  assert.equal(radioCard.RadioCardIndicator, brick.RadioCard.Indicator);
+  assert.equal(radioCard.RadioCardAddon, brick.RadioCard.Addon);
   assert.equal(rating.Rating, brick.Rating);
   assert.equal(rating.RatingDisplay, brick.Rating.Display);
   assert.equal(rating.RatingRoot, brick.Rating.Root);
@@ -1308,6 +1411,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(container.Container, brick.Container);
   assert.equal(section.Section, brick.Section);
   assert.equal(frame.Frame, brick.Frame);
+  assert.equal(center.Center, brick.Center);
+  assert.equal(center.Square, brick.Square);
+  assert.equal(center.Circle, brick.Circle);
   assert.equal(bleed.Bleed, brick.Bleed);
   assert.equal(surface.Surface, brick.Surface);
   assert.equal(surface.SurfaceRoot, brick.Surface.Root);
@@ -1374,6 +1480,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-badge/);
   assert.match(styles, /\.brick-notification-badge/);
   assert.match(styles, /\.brick-avatar/);
+  assert.match(styles, /\.brick-avatar-group/);
   assert.match(styles, /\.brick-toggle/);
   assert.match(styles, /\.brick-toggle-group/);
   assert.match(styles, /\.brick-tooltip/);
@@ -1450,6 +1557,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-badge-min-block-size/);
   assert.match(styles, /--brick-badge-gap/);
   assert.match(styles, /--brick-avatar-status-ring-color/);
+  assert.match(styles, /--brick-avatar-group-overlap/);
   assert.match(styles, /--brick-toggle-min-block-size/);
   assert.match(styles, /--brick-tooltip-background/);
   assert.match(styles, /--brick-hover-card-background/);
@@ -1491,8 +1599,11 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(tokens, /data-brick-appearance/);
   assert.match(reset, /brick\.reset/);
   assert.match(reset, /blockquote,figure\{margin:0\}/);
-  assert.match(reset, /::selection\{background:var\(--brick-color-accent-solid\);color:var\(--brick-color-accent-on-solid\)\}/);
+  assert.match(reset, /-webkit-font-smoothing:antialiased/);
+  assert.match(reset, /-moz-osx-font-smoothing:grayscale/);
+  assert.match(reset, /::selection\{background:var\(--brick-color-selection-background\);color:var\(--brick-color-selection-foreground\)\}/);
   assert.match(reset, /@media \(forced-colors:active\)\{::selection\{color:highlighttext;background:highlight\}\}/);
+  assert.doesNotMatch(styles, /font-smoothing/);
   assert.doesNotMatch(styles, /@(?:tailwind|source|theme|utility|custom-variant)/);
   assert.doesNotMatch(styles, /\.\.\//);
   assert.doesNotMatch(styles, /body\s*\{[^}]*margin:/);
@@ -1508,11 +1619,12 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 94);
+  assert.equal(componentStyleNames.length, 103);
+  const stylelessComponentNames = new Set(["locale-provider", "format-number", "format-byte", "for"]);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
     assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);
-    if (name === "visually-hidden") {
+    if (name === "visually-hidden" || stylelessComponentNames.has(name)) {
       assert.match(css, /brick\.components,brick\.utilities,brick\.effects/);
       assert.doesNotMatch(css, /\.brick-/);
     } else {

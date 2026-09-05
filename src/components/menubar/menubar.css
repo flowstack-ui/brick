@@ -57,7 +57,7 @@
   :where(.brick-menubar__content, .brick-menubar__sub-content) {
     --brick-action-menu-content-background: var(--brick-menubar-content-background, var(--brick-color-surface-overlay));
     --brick-action-menu-content-foreground: var(--brick-menubar-content-foreground, var(--brick-color-text-primary));
-    --brick-action-menu-content-border: var(--brick-menubar-content-border, var(--brick-color-border-subtle));
+    --brick-action-menu-content-border: var(--brick-menubar-content-border, var(--brick-color-border-default));
     --brick-action-menu-content-radius: var(--brick-menubar-content-radius, var(--brick-radius-overlay));
     --brick-action-menu-content-shadow: var(--brick-menubar-content-shadow, var(--brick-shadow-floating));
     --brick-action-menu-content-padding: var(--brick-menubar-content-padding, var(--brick-space-1));

@@ -6,10 +6,17 @@ import { Card } from "../../dist/card.js";
 import { Badge, NotificationBadge } from "../../dist/badge.js";
 import { Chip } from "../../dist/chip.js";
 import { Avatar } from "../../dist/avatar.js";
+import { AvatarGroup } from "../../dist/avatar-group.js";
 import { Toggle } from "../../dist/toggle.js";
 import { ToggleGroup } from "../../dist/toggle-group.js";
 import { AppBar } from "../../dist/app-bar.js";
 import { Appearance } from "../../dist/appearance.js";
+import { LocaleProvider } from "../../dist/locale-provider.js";
+import { FormatNumber } from "../../dist/format-number.js";
+import { FormatByte } from "../../dist/format-byte.js";
+import { For } from "../../dist/for.js";
+import { Checkmark } from "../../dist/checkmark.js";
+import { Radiomark } from "../../dist/radiomark.js";
 import { HoverCard } from "../../dist/hover-card.js";
 import { Popover } from "../../dist/popover.js";
 import { ColorPicker } from "../../dist/color-picker.js";
@@ -19,6 +26,7 @@ import { Fieldset } from "../../dist/fieldset.js";
 import { Checkbox } from "../../dist/checkbox.js";
 import { CheckboxGroup } from "../../dist/checkbox-group.js";
 import { RadioGroup } from "../../dist/radio-group.js";
+import { RadioCard } from "../../dist/radio-card.js";
 import { Switch } from "../../dist/switch.js";
 import { Breadcrumb } from "../../dist/breadcrumb.js";
 import { Tabs } from "../../dist/tabs.js";
@@ -48,6 +56,7 @@ import { Grid } from "../../dist/grid.js";
 import { Container } from "../../dist/container.js";
 import { Section } from "../../dist/section.js";
 import { Frame } from "../../dist/frame.js";
+import { Center, Circle, Square } from "../../dist/center.js";
 import {
   Surface,
   SurfaceContent,
@@ -116,6 +125,38 @@ test("Appearance renders deterministic nested and wrapper-free server scopes", (
   assert.match(markup, /<header[^>]*brick-app-bar brick-appearance/);
   assert.match(markup, /data-brick-appearance="light"/);
   assert.doesNotMatch(markup, /<div[^>]*brick-appearance/);
+});
+
+test("locale helpers and passive marks render deterministic server output", () => {
+  const markup = renderToString(
+    React.createElement(
+      LocaleProvider,
+      { locale: "de-DE" },
+      React.createElement(
+        React.Fragment,
+        null,
+        React.createElement(FormatNumber, {
+          value: 2499,
+          formatOptions: { style: "currency", currency: "EUR" },
+        }),
+        React.createElement(FormatByte, { value: 1450 }),
+        React.createElement(
+          "ul",
+          null,
+          React.createElement(For, { each: ["A", "B"] }, (item) =>
+            React.createElement("li", { key: item }, item),
+          ),
+        ),
+        React.createElement(Checkmark, { checked: true }),
+        React.createElement(Radiomark, { checked: true }),
+      ),
+    ),
+  );
+  assert.match(markup, /2\.499,00[^<]*€/u);
+  assert.match(markup, /1,45[^<]*kB/u);
+  assert.match(markup, /<li>A<\/li><li>B<\/li>/u);
+  assert.match(markup, /class="brick-checkmark"/u);
+  assert.match(markup, /class="brick-radiomark"/u);
 });
 
 test("Show and Hide render deterministic always-mounted responsive hosts", () => {
@@ -522,6 +563,27 @@ test("Avatar emits deterministic fallback and status metadata during SSR", () =>
   assert.match(markup, />AL<\/span>/);
 });
 
+test("AvatarGroup preserves source order and emits localized overflow during SSR", () => {
+  const markup = renderToString(
+    React.createElement(
+      AvatarGroup,
+      {
+        max: 2,
+        overflowLabel: (count) => `${count} more collaborators`,
+        total: 4,
+      },
+      React.createElement(Avatar, { alt: "Ada Lovelace", fallback: "AL" }),
+      React.createElement(Avatar, { alt: "Grace Hopper", fallback: "GH" }),
+    ),
+  );
+
+  assert.match(markup, /class="brick-avatar-group"/);
+  assert.match(markup, /data-count="3"/);
+  assert.match(markup, /aria-label="3 more collaborators"/);
+  assert.match(markup, />AL</);
+  assert.doesNotMatch(markup, />GH</);
+});
+
 test("Toggle family emits deterministic pressed semantics during SSR", () => {
   const toggleMarkup = renderToString(
     React.createElement(Toggle, { pressed: true, variant: "outline" }, "Pinned"),
@@ -668,9 +730,9 @@ test("Input renders styled native semantics and adornment order during SSR", () 
   );
 
   assert.match(markup, /^<span/);
-  assert.match(markup, /class="brick-input"/);
+  assert.match(markup, /class="brick-input brick-control-size"/);
   assert.match(markup, /data-variant="outline"/);
-  assert.match(markup, /data-size="md"/);
+  assert.match(markup, /data-size="lg"/);
   assert.match(markup, /data-shape="rounded"/);
   assert.match(markup, /<input[^>]*aria-label="Search"[^>]*value="Brick"/);
   assert.match(markup, /aria-label="Clear input"/);
@@ -693,9 +755,9 @@ test("Textarea renders styled native semantics and Count during SSR", () => {
   );
 
   assert.match(markup, /^<span/);
-  assert.match(markup, /class="brick-textarea"/);
+  assert.match(markup, /class="brick-textarea brick-control-size"/);
   assert.match(markup, /data-variant="outline"/);
-  assert.match(markup, /data-size="md"/);
+  assert.match(markup, /data-size="lg"/);
   assert.match(markup, /data-shape="rounded"/);
   assert.match(markup, /data-resize="vertical"/);
   assert.match(markup, /<textarea[^>]*aria-label="Project summary"/);
@@ -715,6 +777,17 @@ test("Radio Group renders complete styled radio semantics during SSR", () => {
   assert.match(markup, /data-slot="radio-group-control"/);
   assert.match(markup, /data-slot="radio-group-dot"/);
   assert.match(markup, /data-slot="radio-group-label"/);
+});
+
+test("Radio Card renders complete rich radio semantics during SSR", () => {
+  const markup = renderToString(React.createElement(RadioCard.Root, { "aria-label": "Plan", defaultValue: "team" }, React.createElement(RadioCard.Item, { value: "team" }, React.createElement(RadioCard.Control, null, React.createElement(RadioCard.Content, null, React.createElement(RadioCard.Title, null, "Team"), React.createElement(RadioCard.Description, null, "For product teams")), React.createElement(RadioCard.Indicator)), React.createElement(RadioCard.Addon, null, "Popular"))));
+  assert.match(markup, /class="brick-radio-card"/);
+  assert.match(markup, /role="radiogroup"/);
+  assert.match(markup, /class="brick-radio-card__item"/);
+  assert.match(markup, /role="radio"/);
+  assert.match(markup, /data-state="checked"/);
+  assert.match(markup, /data-slot="radio-card-indicator"/);
+  assert.match(markup, />Popular<\/span>/);
 });
 
 test("Switch renders complete styled binary semantics during SSR", () => {
@@ -952,6 +1025,26 @@ test("Frame renders deterministic responsive logical constraints without behavio
   assert.match(markup, /--brick-frame-max-block-size:320px/);
   assert.match(markup, /--brick-frame-max-block-size-lg:24rem/);
   assert.match(markup, /id="server-frame"/);
+  assert.doesNotMatch(markup, /role=|tabindex/i);
+});
+
+test("Center family renders deterministic one-host equal geometry without behavior", () => {
+  const markup = renderToString(
+    React.createElement(
+      Center,
+      { as: "section", id: "server-center" },
+      React.createElement(Square, { size: { initial: 32, md: "2.5rem" } }, "S"),
+      React.createElement(Circle, { inline: true, size: "2rem" }, "C"),
+    ),
+  );
+
+  assert.match(markup, /^<section/);
+  assert.match(markup, /class="brick-center"/);
+  assert.match(markup, /class="brick-center brick-square"/);
+  assert.match(markup, /class="brick-center brick-square brick-circle"/);
+  assert.match(markup, /--brick-center-size:32px/);
+  assert.match(markup, /--brick-center-size-md:2.5rem/);
+  assert.match(markup, /data-inline=""/);
   assert.doesNotMatch(markup, /role=|tabindex/i);
 });
 

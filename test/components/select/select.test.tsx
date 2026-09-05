@@ -20,15 +20,15 @@ describe("Select", () => {
     expect(trigger).toBe(ref.current);
     expect(trigger).toHaveClass("brick-select-trigger");
     expect(trigger).toHaveAttribute("data-variant", "outline");
-    expect(trigger).toHaveAttribute("data-size", "md");
+    expect(trigger).toHaveAttribute("data-size", "lg");
     expect(trigger).toHaveAttribute("data-shape", "rounded");
     expect(trigger).toHaveAttribute("data-full-width", "");
     expect(trigger.querySelector(".brick-select-direction-artwork")).toBeInTheDocument();
   });
 
   it("exposes variants, sizes, shapes, and intrinsic width without prop leakage", () => {
-    const variants: SelectVariant[] = ["outline", "soft", "underline"];
-    const sizes: SelectSize[] = ["sm", "md", "lg"];
+    const variants: SelectVariant[] = ["outline", "soft", "ghost", "underline"];
+    const sizes: SelectSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
     const shapes: SelectShape[] = ["sharp", "rounded", "pill"];
     const { rerender } = render(<Example />);
     for (const variant of variants) { rerender(<Select.Root variant={variant}><Select.Trigger aria-label="Plan" /><Select.Content><Select.Viewport><Select.Item value="a">A</Select.Item></Select.Viewport></Select.Content></Select.Root>); const trigger = screen.getByRole("combobox", { name: "Plan" }); expect(trigger).toHaveAttribute("data-variant", variant); if (variant === "underline") expect(trigger).not.toHaveAttribute("data-shape"); }
@@ -45,7 +45,7 @@ describe("Select", () => {
   it("styles every authored anatomy part and preserves replaceable artwork", () => {
     render(<Example defaultOpen />);
     expect(screen.getByRole("listbox")).toHaveClass("brick-select-content");
-    expect(screen.getByRole("listbox")).toHaveAttribute("data-size", "md");
+    expect(screen.getByRole("listbox")).toHaveAttribute("data-size", "lg");
     expect(document.querySelector(".brick-select-viewport")).toBeInTheDocument();
     expect(document.querySelector(".brick-select-group")).toBeInTheDocument();
     expect(document.querySelector(".brick-select-label")).toBeInTheDocument();
@@ -54,6 +54,13 @@ describe("Select", () => {
     expect(document.querySelector(".brick-select-item-indicator .brick-select-check-artwork")).toBeInTheDocument();
     expect(document.querySelector(".brick-select-separator")).toBeInTheDocument();
     expect(document.querySelector(".brick-select-arrow-artwork")).toBeInTheDocument();
+  });
+
+  it("keeps sparse responsive size metadata on the trigger and portalled content", () => {
+    render(<Select.Root defaultOpen size={{ lg: "xl" }}><Select.Trigger aria-label="Plan" /><Select.Content><Select.Item value="team">Team</Select.Item></Select.Content></Select.Root>);
+    expect(screen.getByRole("combobox")).toHaveAttribute("data-size", "lg");
+    expect(screen.getByRole("combobox")).toHaveAttribute("data-size-lg", "xl");
+    expect(screen.getByRole("listbox")).toHaveAttribute("data-size-lg", "xl");
   });
 
   it("preserves Atom value/open interactions, disabled options, and callbacks", async () => {

@@ -119,9 +119,19 @@
       "reason": "Shared visual recipe for action controls; it exports no JavaScript surface."
     },
     {
+      "pattern": "src/components/_control-size/**",
+      "visibility": "source-only",
+      "reason": "Shared implementation-only responsive size normalization and CSS recipes for public form controls."
+    },
+    {
       "pattern": "src/components/_internal/**",
       "visibility": "source-only",
       "reason": "Shared implementation-only React helpers with no public export."
+    },
+    {
+      "pattern": "src/components/_intl/**",
+      "visibility": "source-only",
+      "reason": "Shared implementation-only cached Intl formatter support for public localization helpers."
     },
     {
       "pattern": "src/components/_responsive-value/**",

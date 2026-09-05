@@ -15,7 +15,7 @@ Present a finished modal task, form, settings flow, or focused information surfa
 
 ## Required composition
 
-- Compose Dialog.Root with Dialog.Trigger and Dialog.Portal; inside Portal keep Dialog.Overlay and Dialog.Content as siblings. Inside Content, arrange Dialog.Header with Dialog.Title and an optional Dialog.Description, put scrollable task content in Dialog.Body, and place actions and Dialog.Close in Dialog.Footer as the workflow requires.
+- Compose Dialog.Root with Dialog.Trigger and Dialog.Portal; inside Portal keep Dialog.Overlay and Dialog.Content as siblings. Inside Content, arrange Dialog.Header with Dialog.Title and an optional Dialog.Description, put scrollable task content in Dialog.Body, place inline close actions in Dialog.Footer, and use Dialog.Close placement="corner" as a direct Content child only for an authored top-end dismiss control.
 - Use Dialog.Branch only for an unavoidable consumer-owned third-party portal that cannot mount inside Content. When a local Appearance scope owns the trigger, portal into that scope or apply the same Appearance to the portalled visual root.
 
 ## Rules
@@ -26,6 +26,7 @@ Present a finished modal task, form, settings flow, or focused information surfa
 - **MUST:** Use Dialog-owned focus containment and restoration, background isolation, scroll locking, Escape handling, direct-target backdrop dismissal, and nested top-layer behavior instead of recreating them.
 - **MUST:** Put long or variable task content in Body so the header and footer remain available while the body owns overflow within the safe viewport bounds.
 - **MUST:** Use Footer justify for simple action distribution and Brick layout components for complex grouping; preserve a clear primary action and a visible close or cancellation path when the workflow requires one.
+- **MUST:** Use Close placement="corner" only as a direct Content child with a completely named authored IconButton; keep footer Cancel actions on the default inline placement.
 - **MUST:** Mount descendant interactive portals inside Content when possible; otherwise wrap only the unavoidable same-document third-party portal owner with Branch.
 - **SHOULD:** Choose sm, md, or lg from the content measure rather than importance, and verify safe-area bounds, Body overflow, footer reflow, zoom, and narrow or short effective viewports.
 - **MUST:** When Portal leaves a local Appearance scope, reproduce that scope on the portalled visual root or target a portal container inside it.
@@ -35,6 +36,7 @@ Present a finished modal task, form, settings flow, or focused information surfa
 
 - **Avoid:** Nesting Content inside Overlay, hand-building focus or document listeners, or using Dialog for an anchored utility panel. **Instead:** Keep Overlay and Content siblings, rely on Dialog and Atom Modal behavior, and choose Popover for compact anchored work.
 - **Avoid:** Letting long content scroll the whole surface or assuming an unrelated third-party portal is automatically inside the modal. **Instead:** Put overflow in Body and mount the descendant portal inside Content or register its owner with Branch.
+- **Avoid:** Rebuilding a corner close inset inside Header with overlap utilities or local CSS. **Instead:** Compose a named IconButton through Dialog.Close placement="corner" as a direct child of Content.
 
 ## Validation checklist
 
@@ -50,4 +52,5 @@ Present a finished modal task, form, settings flow, or focused information surfa
 - `drawer`
 - `popover`
 - `button`
+- `icon-button`
 - `appearance`

@@ -97,7 +97,6 @@ createElement(Grid.Root, { columns: 13 });
 createElement(Grid.Root, { minItemSize: "18rem" });
 // @ts-expect-error Responsive objects are excluded.
 createElement(Grid.Root, { columns: { base: 1, md: 3 } });
-// @ts-expect-error Responsive objects require an initial value.
 createElement(Grid.Root, { columns: { md: 3 } });
 // @ts-expect-error Responsive spans cannot combine with explicit line placement.
 createElement(Grid.Item, { columnSpan: { initial: 1, lg: 3 }, columnStart: 2 });

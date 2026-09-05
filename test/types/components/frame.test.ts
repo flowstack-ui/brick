@@ -17,7 +17,6 @@ const props: FrameProps = {
 createElement(Frame, { ...props, ref });
 createElement(RootFrame, { asChild: true, children: createElement("article"), maxInlineSize: "40rem" });
 
-// @ts-expect-error Responsive values require initial.
 createElement(Frame, { inlineSize: { lg: "40rem" } });
 // @ts-expect-error Breakpoints are deliberately closed.
 createElement(Frame, { maxBlockSize: { initial: "20rem", xxl: "30rem" } });

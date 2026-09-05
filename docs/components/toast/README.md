@@ -99,7 +99,7 @@ Logical placement and anatomy follow direction. Cards wrap localized text and re
 
 Default, success, info, and loading updates announce politely; warning and error announce assertively. Each event has exactly one persistent announcement path. Appearance never steals focus. F8 focuses the region when notifications exist; Tab reaches action and close controls; focus/hover/page focus loss pauses finite timers; Escape dismisses only while focus is in the region and restores the previous focus target when empty. Actions and close are native buttons with 44px close targeting. Reduced motion removes translation and spinner rotation; forced colors preserves boundaries and focus.
 
-Consumers must include meaning in message text, keep essential outcomes and optional actions available elsewhere, localize the Toaster `label`/`closeLabel`, and use assertive types only for genuinely important feedback.
+Consumers must include meaning in message text, keep essential outcomes and optional actions available elsewhere, and use assertive types only for genuinely important feedback. `label` and `closeLabel` inherit Brick's generic localized text from `LocaleProvider`; explicit props remain authoritative.
 
 ## Composition, native props, and refs
 

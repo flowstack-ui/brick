@@ -2,6 +2,7 @@ import { useEffect, useState, type CSSProperties, type FormEvent } from "react";
 import { AlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { AppBar } from "@flowstack-ui/brick/app-bar";
 import { Avatar } from "@flowstack-ui/brick/avatar";
+import { AvatarGroup } from "@flowstack-ui/brick/avatar-group";
 import { Badge, NotificationBadge } from "@flowstack-ui/brick/badge";
 import { Chip } from "@flowstack-ui/brick/chip";
 import { Button } from "@flowstack-ui/brick/button";
@@ -25,6 +26,7 @@ import { Fieldset } from "@flowstack-ui/brick/fieldset";
 import { Checkbox } from "@flowstack-ui/brick/checkbox";
 import { CheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 import { RadioGroup } from "@flowstack-ui/brick/radio-group";
+import { RadioCard } from "@flowstack-ui/brick/radio-card";
 import { Switch } from "@flowstack-ui/brick/switch";
 import { Input } from "@flowstack-ui/brick/input";
 import { NumberInput } from "@flowstack-ui/brick/number-input";
@@ -51,6 +53,7 @@ import { HStack, VStack } from "@flowstack-ui/brick/stack";
 import { Group } from "@flowstack-ui/brick/group";
 import { Grid } from "@flowstack-ui/brick/grid";
 import { Container } from "@flowstack-ui/brick/container";
+import { Center, Circle, Square } from "@flowstack-ui/brick/center";
 import { Surface } from "@flowstack-ui/brick/surface";
 import { Divider } from "@flowstack-ui/brick/divider";
 import { ScrollArea } from "@flowstack-ui/brick/scroll-area";
@@ -274,6 +277,21 @@ export function App() {
             <ColorSwatch.Root label="Review rose" shape="circle" value="rgb(216 111 133 / 70%)" />
             <ColorSwatch.Mix label="Release and review mix" shape="rounded" values={["#6d5bd0", "#d86f85"]} />
           </HStack>
+          <Center data-testid="consumer-center-family">
+            <HStack gap="3">
+              <Surface asChild level="subtle" radius="subtle" tone="accent">
+                <Square data-testid="consumer-square" size="2rem">
+                  <Icon aria-hidden size="xs" tone="accent"><SparkIcon /></Icon>
+                </Square>
+              </Surface>
+              <Surface asChild level="subtle" tone="accent">
+                <Circle data-testid="consumer-circle" size="2rem">
+                  <Icon aria-hidden size="xs" tone="accent"><SettingsIcon /></Icon>
+                </Circle>
+              </Surface>
+              <Badge size="lg" tone="accent" variant="surface">Surface badge</Badge>
+            </HStack>
+          </Center>
           <Toolbar.Root ariaLabel="Document view tools" size="sm" variant="outline">
             <Toolbar.Button>Refresh</Toolbar.Button>
             <Toolbar.Separator orientation="vertical" />
@@ -619,6 +637,16 @@ export function App() {
           </Form>
         </Surface>
 
+        <Surface as="section" bordered inset="lg" aria-labelledby="plan-choice-title">
+          <Fieldset.Root>
+            <Fieldset.Legend><Text as="span" id="plan-choice-title" variant="title-lg">Plan choice</Text></Fieldset.Legend>
+            <RadioCard.Root defaultValue="team" name="plan-choice">
+              <RadioCard.Item value="starter"><RadioCard.Control><RadioCard.Content><RadioCard.Title>Starter</RadioCard.Title><RadioCard.Description>For personal projects</RadioCard.Description></RadioCard.Content><RadioCard.Indicator /></RadioCard.Control></RadioCard.Item>
+              <RadioCard.Item value="team"><RadioCard.Control><RadioCard.Content><RadioCard.Title>Team</RadioCard.Title><RadioCard.Description>For product teams</RadioCard.Description></RadioCard.Content><RadioCard.Indicator /></RadioCard.Control><RadioCard.Addon>Most popular</RadioCard.Addon></RadioCard.Item>
+            </RadioCard.Root>
+          </Fieldset.Root>
+        </Surface>
+
         <Surface
           as="section"
           bordered
@@ -775,6 +803,19 @@ export function App() {
                   Active project · Review the responsive purchase path and prepare the
                   release candidate.
                 </Card.Description>
+                <AvatarGroup
+                  aria-label="Four active project reviewers"
+                  max={4}
+                  overflowLabel={(count) => `${count} more reviewers`}
+                  role="group"
+                  size="sm"
+                  total={5}
+                >
+                  <Avatar alt="Ada Lovelace" fallback="AL" src={adaAvatar} />
+                  <Avatar alt="Grace Hopper" fallback="GH" />
+                  <Avatar alt="Katherine Johnson" fallback="KJ" />
+                  <Avatar alt="Margaret Hamilton" fallback="MH" />
+                </AvatarGroup>
                 <div className="project-collaborators" aria-label="Project collaborators">
                   <div className="collaborator" id="ada-profile">
                     <NotificationBadge count={2} tone="accent" overlap="circular">

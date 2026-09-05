@@ -1,22 +1,339 @@
 @layer brick.components {
-  .brick-number-input { --brick-number-input-height: var(--brick-control-min-block-size-md); --brick-number-input-radius: var(--brick-radius-control); --brick-number-input-background: var(--brick-color-surface-raised); --brick-number-input-border: var(--brick-color-border-strong); display:inline-grid; grid-template-columns:minmax(0,1fr) 2.25rem; grid-template-rows:1fr 1fr; box-sizing:border-box; min-inline-size:0; max-inline-size:100%; min-block-size:var(--brick-number-input-height); align-items:stretch; overflow:hidden; border:var(--brick-border-width) solid var(--brick-number-input-border); border-radius:var(--brick-number-input-radius); background:var(--brick-number-input-background); color:var(--brick-color-text-primary); }
-  .brick-number-input[data-full-width] { inline-size:100%; }
-  .brick-number-input[data-variant="soft"] { --brick-number-input-background:var(--brick-color-surface-subtle); --brick-number-input-border:var(--brick-color-border-subtle); }
-  .brick-number-input[data-variant="underline"] { --brick-number-input-background:transparent; --brick-number-input-radius:0; border-width:0 0 var(--brick-border-width); overflow:visible; }
-  .brick-number-input[data-shape="sharp"] { --brick-number-input-radius:0; } .brick-number-input[data-shape="pill"] { --brick-number-input-radius:var(--brick-radius-full); }
-  .brick-number-input[data-size="sm"] { --brick-number-input-height:var(--brick-control-min-block-size-sm); } .brick-number-input[data-size="lg"] { --brick-number-input-height:var(--brick-control-min-block-size-lg); }
-  .brick-number-input-control { grid-column:1; grid-row:1 / 3; box-sizing:border-box; min-inline-size:0; inline-size:100%; min-block-size:calc(var(--brick-number-input-height) - 2 * var(--brick-border-width)); padding:0 var(--brick-space-3); border:0; outline:0; background:transparent; color:inherit; font:inherit; }
-  .brick-number-input-step { display:grid; grid-column:2; place-items:center; padding:0; border:0; border-inline-start:var(--brick-border-width) solid var(--brick-number-input-border); background:transparent; color:var(--brick-color-text-secondary); cursor:pointer; }
-  .brick-number-input-increment { grid-row:1; } .brick-number-input-decrement { grid-row:2; }
-  .brick-number-input-step + .brick-number-input-step { border-block-start:var(--brick-border-width) solid var(--brick-number-input-border); }
-  .brick-number-input-step-artwork { inline-size:1rem; block-size:1rem; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; stroke-width:1.75; }
-  .brick-number-input:focus-within { border-color:var(--brick-color-focus-ring); box-shadow:0 0 0 var(--brick-border-focus-width) var(--brick-color-focus-ring); }
-  .brick-number-input:has(.brick-number-input-control[data-invalid]) { border-color:var(--brick-color-danger-text); }
-  .brick-number-input:has(.brick-number-input-control[data-disabled]) { background:var(--brick-color-surface-subtle); color:var(--brick-color-text-secondary); opacity:.72; }
-  .brick-number-input-step:disabled { cursor:not-allowed; opacity:.5; }
-  @media (hover:hover) and (pointer:fine) { .brick-number-input-step:not(:disabled):hover { background:var(--brick-color-accent-soft); color:var(--brick-color-text-primary); } }
-  @media (pointer:coarse) {
-    .brick-number-input:is([data-size="sm"], [data-size="md"]) { --brick-number-input-height:3.125rem; }
+  .brick-number-input {
+    --brick-number-input-height: var(--brick-control-min-block-size-md);
+    --brick-number-input-stepper-inline-size: 2.25rem;
+    --brick-number-input-step-icon-size: 1rem;
+    --brick-number-input-font-family: var(
+      --brick-typography-control-md-font-family
+    );
+    --brick-number-input-font-size: var(
+      --brick-typography-control-md-font-size
+    );
+    --brick-number-input-font-weight: var(
+      --brick-typography-control-md-font-weight
+    );
+    --brick-number-input-line-height: var(
+      --brick-typography-control-md-line-height
+    );
+    --brick-number-input-radius: var(--brick-radius-control);
+    --brick-number-input-background: transparent;
+    --brick-number-input-border: var(--brick-color-border-strong);
+    display: inline-grid;
+    grid-template-columns: minmax(0, 1fr) var(
+        --brick-number-input-stepper-inline-size
+      );
+    grid-template-rows: 1fr 1fr;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    min-block-size: var(--brick-number-input-height);
+    align-items: stretch;
+    overflow: hidden;
+    border: var(--brick-border-width) solid var(--brick-number-input-border);
+    border-radius: var(--brick-number-input-radius);
+    background: var(--brick-number-input-background);
+    color: var(--brick-color-text-primary);
+    font-family: var(--brick-number-input-font-family);
+    font-size: var(--brick-number-input-font-size);
+    font-weight: var(--brick-number-input-font-weight);
+    line-height: var(--brick-number-input-line-height);
   }
-  @media (forced-colors:active) { .brick-number-input { border-color:ButtonText; background:Canvas; color:CanvasText; } .brick-number-input:focus-within { border-color:Highlight; box-shadow:0 0 0 var(--brick-border-focus-width) Highlight; } }
+  .brick-number-input[data-full-width] {
+    inline-size: 100%;
+  }
+  .brick-number-input:not(:has(.brick-number-input-step)) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .brick-number-input:has(.brick-number-input-unit) {
+    grid-template-columns: minmax(0, 1fr) max-content var(
+        --brick-number-input-stepper-inline-size
+      );
+  }
+  .brick-number-input:has(.brick-number-input-unit):not(
+      :has(.brick-number-input-step)
+    ) {
+    grid-template-columns: minmax(0, 1fr) max-content;
+  }
+  .brick-number-input-stepper {
+    display: grid;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    grid-template-rows: 1fr 1fr;
+    min-inline-size: 0;
+    border-inline-start: var(--brick-border-width) solid
+      var(--brick-number-input-border);
+  }
+  .brick-number-input:has(.brick-number-input-unit)
+    .brick-number-input-stepper {
+    grid-column: 3;
+  }
+  .brick-number-input[data-variant="soft"] {
+    --brick-number-input-background: var(--brick-color-surface-subtle);
+    --brick-number-input-border: var(--brick-color-border-subtle);
+  }
+  .brick-number-input[data-variant="underline"] {
+    --brick-number-input-background: transparent;
+    --brick-number-input-radius: 0;
+    border-width: 0 0 var(--brick-border-width);
+    overflow: visible;
+  }
+  .brick-number-input[data-shape="sharp"] {
+    --brick-number-input-radius: 0;
+  }
+  .brick-number-input[data-shape="pill"] {
+    --brick-number-input-radius: var(--brick-radius-full);
+  }
+  .brick-number-input[data-size="xs"] {
+    --brick-number-input-height: var(--brick-control-min-block-size-xs);
+    --brick-number-input-stepper-inline-size: 1.125rem;
+    --brick-number-input-step-icon-size: 0.75rem;
+    --brick-number-input-font-family: var(
+      --brick-typography-control-xs-font-family
+    );
+    --brick-number-input-font-size: var(
+      --brick-typography-control-xs-font-size
+    );
+    --brick-number-input-font-weight: var(
+      --brick-typography-control-xs-font-weight
+    );
+    --brick-number-input-line-height: var(
+      --brick-typography-control-xs-line-height
+    );
+  }
+  .brick-number-input[data-size="sm"] {
+    --brick-number-input-height: var(--brick-control-min-block-size-sm);
+    --brick-number-input-stepper-inline-size: 1.25rem;
+    --brick-number-input-step-icon-size: 0.875rem;
+    --brick-number-input-font-family: var(
+      --brick-typography-control-sm-font-family
+    );
+    --brick-number-input-font-size: var(
+      --brick-typography-control-sm-font-size
+    );
+    --brick-number-input-font-weight: var(
+      --brick-typography-control-sm-font-weight
+    );
+    --brick-number-input-line-height: var(
+      --brick-typography-control-sm-line-height
+    );
+  }
+  .brick-number-input[data-size="lg"] {
+    --brick-number-input-height: var(--brick-control-min-block-size-lg);
+  }
+  .brick-number-input-control {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    inline-size: 100%;
+    min-block-size: calc(
+      var(--brick-number-input-height) - 2 * var(--brick-border-width)
+    );
+    padding: 0 var(--brick-number-input-padding-inline, var(--brick-space-3));
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+  }
+  .brick-number-input-step {
+    display: grid;
+    grid-column: 2;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-inline-start: var(--brick-border-width) solid
+      var(--brick-number-input-border);
+    background: transparent;
+    color: var(--brick-color-text-secondary);
+    cursor: pointer;
+    transition:
+      background-color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      color var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard),
+      opacity var(--brick-motion-duration-fast)
+        var(--brick-motion-easing-standard);
+  }
+  .brick-number-input:has(.brick-number-input-unit) .brick-number-input-step {
+    grid-column: 3;
+  }
+  .brick-number-input-stepper .brick-number-input-step {
+    grid-column: 1;
+    border-inline-start: 0;
+  }
+  .brick-number-input-unit {
+    display: inline-flex;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-items: center;
+    padding-inline: var(--brick-space-2);
+    color: var(--brick-color-text-secondary);
+    white-space: nowrap;
+  }
+  .brick-number-input-increment {
+    grid-row: 1;
+  }
+  .brick-number-input-decrement {
+    grid-row: 2;
+  }
+  .brick-number-input-step + .brick-number-input-step {
+    border-block-start: var(--brick-border-width) solid
+      var(--brick-number-input-border);
+  }
+  .brick-number-input[data-layout="stepper"] {
+    --brick-number-input-stepper-value-font-family: var(
+      --brick-typography-body-lg-font-family
+    );
+    --brick-number-input-stepper-value-font-size: var(
+      --brick-typography-body-lg-font-size
+    );
+    --brick-number-input-stepper-value-font-weight: var(
+      --brick-typography-body-lg-font-weight
+    );
+    --brick-number-input-stepper-value-line-height: var(
+      --brick-typography-body-lg-line-height
+    );
+    grid-template-columns: var(--brick-number-input-height) minmax(
+        2.5rem,
+        1fr
+      ) var(--brick-number-input-height);
+    grid-template-rows: 1fr;
+    gap: var(--brick-space-2);
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+  .brick-number-input[data-layout="stepper"]:has(.brick-number-input-unit) {
+    grid-template-columns: var(--brick-number-input-height) minmax(
+        2.5rem,
+        1fr
+      ) max-content var(--brick-number-input-height);
+  }
+  .brick-number-input[data-layout="stepper"] .brick-number-input-control {
+    grid-column: 2;
+    grid-row: 1;
+    padding-inline: var(--brick-space-2);
+    font-family: var(--brick-number-input-stepper-value-font-family);
+    font-size: var(--brick-number-input-stepper-value-font-size);
+    font-weight: var(--brick-number-input-stepper-value-font-weight);
+    line-height: var(--brick-number-input-stepper-value-line-height);
+    text-align: center;
+  }
+  .brick-number-input[data-layout="stepper"] .brick-number-input-stepper {
+    display: contents;
+  }
+  .brick-number-input[data-layout="stepper"] .brick-number-input-unit {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .brick-number-input[data-layout="stepper"] .brick-number-input-step {
+    --brick-number-input-step-icon-size: 1rem;
+    grid-row: 1;
+    border-block-start: 0;
+  }
+  .brick-number-input[data-layout="stepper"] .brick-number-input-step {
+    border: var(--brick-border-width) solid var(--brick-number-input-border);
+    border-radius: var(--brick-radius-control);
+  }
+  .brick-number-input[data-layout="stepper"] .brick-number-input-decrement {
+    grid-column: 1;
+  }
+  .brick-number-input[data-layout="stepper"] .brick-number-input-increment {
+    grid-column: 3;
+  }
+  .brick-number-input[data-layout="stepper"]:has(.brick-number-input-unit)
+    .brick-number-input-increment {
+    grid-column: 4;
+  }
+  .brick-number-input-step-artwork {
+    inline-size: var(--brick-number-input-step-icon-size);
+    block-size: var(--brick-number-input-step-icon-size);
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.75;
+  }
+  .brick-number-input:not([data-layout="stepper"]):focus-within {
+    border-color: var(--brick-color-focus-ring);
+    box-shadow: 0 0 0 var(--brick-border-focus-width)
+      var(--brick-color-focus-ring);
+  }
+  .brick-number-input[data-layout="stepper"]
+    .brick-number-input-control:focus-visible,
+  .brick-number-input[data-layout="stepper"]
+    .brick-number-input-step:focus-visible {
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: var(--brick-border-focus-offset);
+  }
+  .brick-number-input:has(.brick-number-input-control[data-invalid]) {
+    border-color: var(--brick-color-danger-text);
+  }
+  .brick-number-input:has(.brick-number-input-control[data-disabled]) {
+    background: var(--brick-color-surface-subtle);
+    color: var(--brick-color-text-secondary);
+    opacity: 0.72;
+  }
+  .brick-number-input-step:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .brick-number-input-step:not(:disabled):hover {
+      background: var(--brick-color-accent-soft);
+      color: var(--brick-color-text-primary);
+    }
+    .brick-number-input[data-layout="field"][data-stepper-visibility="hover"]
+      .brick-number-input-step {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .brick-number-input[data-layout="field"][data-stepper-visibility="hover"]:is(
+        :hover,
+        :focus-within
+      )
+      .brick-number-input-step {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .brick-number-input[data-layout="field"][data-stepper-visibility="hover"]:is(
+        :hover,
+        :focus-within
+      )
+      .brick-number-input-step:disabled {
+      opacity: 0.5;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brick-number-input-step {
+      transition: none;
+    }
+  }
+  @media (pointer: coarse) {
+    .brick-number-input:is(
+      [data-size="xs"],
+      [data-size="sm"],
+      [data-size="md"]
+    ) {
+      --brick-number-input-height: 3.125rem;
+      --brick-number-input-stepper-inline-size: 2.25rem;
+      --brick-number-input-step-icon-size: 1rem;
+    }
+  }
+  @media (forced-colors: active) {
+    .brick-number-input {
+      color: CanvasText;
+    }
+    .brick-number-input:not([data-layout="stepper"]) {
+      border-color: ButtonText;
+      background: Canvas;
+    }
+    .brick-number-input:not([data-layout="stepper"]):focus-within {
+      border-color: Highlight;
+      box-shadow: 0 0 0 var(--brick-border-focus-width) Highlight;
+    }
+    .brick-number-input[data-layout="stepper"] .brick-number-input-step {
+      border-color: ButtonText;
+    }
+  }
 }

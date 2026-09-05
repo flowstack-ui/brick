@@ -16,6 +16,7 @@ Present a finished one-column hierarchy while Atom owns tree semantics, active-d
 
 - Give Tree.Root a stable accessible name and deliberate selection, expansion, direction, and form state. Compose uniquely valued Items containing required Brick ItemContent with decorative Indicator and reliable ItemText; place each nested Group as a sibling of ItemContent inside its actual parent Item.
 - Choose plain, soft, or outline plus sm or md and optional showGuide on Root. Keep links, commands, loading, filtering, routing, rename, drag and drop, virtualization, and persistence outside Tree.
+- Choose borderTone deliberately for outline boundaries and hierarchy guides; use subtle only when its contrast remains visible on the actual parent surface.
 
 ## Rules
 

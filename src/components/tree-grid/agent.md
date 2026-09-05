@@ -14,8 +14,9 @@ Present finished hierarchical multi-column rows while Atom owns treegrid relatio
 
 ## Required composition
 
-- Compose explicit TreeGrid.Container for horizontal overflow, then one named Root with truthful rowCount and columnCount, optional Caption, Header and Body rowgroups, optional Footer summaries, and uniquely valued indexed Rows. Give every data Row stable parentValue and level metadata, one column-one RowHeader with decorative Indicator, then indexed Cells.
+- Compose explicit TreeGrid.Container for horizontal overflow, then one named Root with truthful rowCount and columnCount, optional ColumnGroup and Column sizing hints before Caption, Header and Body rowgroups, optional Footer summaries, and uniquely valued indexed Rows. Give every data Row stable parentValue and level metadata, one column-one RowHeader with decorative Indicator, then indexed Cells.
 - For application sorting, give an indexed ColumnHeader onAction, update records and sortDirection outside TreeGrid, and keep SortIndicator decorative. Compose Toolbar, filters, Pagination, status, and detail surfaces outside Root.
+- Choose surface, border tone, optional column borders, layout, striping, sticky header, and cell alignment independently while preserving hierarchy and state contrast.
 
 ## Rules
 
@@ -28,6 +29,8 @@ Present finished hierarchical multi-column rows while Atom owns treegrid relatio
 - **MUST:** If an application windows hierarchical rows, preserve logical totals, indexes, levels, parent visibility, and durable identities while keeping the active cell and collapse destination mounted; geometry utilities do not own treegrid focus or semantics.
 - **MUST:** Use Container for honest overflow, preserve the content-aware minimum width and all columns at narrow sizes, let the outline Root own one rounded boundary, and keep logical indentation and alignment correct in RTL.
 - **MUST:** Load styles.css or core.css plus tree-grid.css and every stylesheet for external composed controls.
+- **MUST:** Keep selected paint above hover, hover above stripes, and sticky headers opaque; hierarchy, active focus, selection, and disabled state must remain distinguishable in every surface recipe.
+- **MUST:** Treat Column.htmlWidth as a native CSS-pixel number or percentage sizing hint only; do not pass CSS-unit values, and never use it to define logical indexes, columnCount, hierarchy, navigation, measurement, or resizing behavior.
 
 ## Common mistakes
 

@@ -35,9 +35,13 @@ describe("Card", () => {
     render(
       <Card.Root as="article" aria-labelledby="card-title">
         <Card.Header>
-          <Card.Title as="h1" id="card-title">Page report</Card.Title>
+          <Card.Title as="h1" id="card-title">
+            Page report
+          </Card.Title>
           <Card.Description>Updated now</Card.Description>
-          <Card.Action><button>More</button></Card.Action>
+          <Card.Action>
+            <button>More</button>
+          </Card.Action>
         </Card.Header>
         <Card.Content>Details</Card.Content>
         <Card.Footer>Footer</Card.Footer>
@@ -46,16 +50,21 @@ describe("Card", () => {
 
     const article = screen.getByRole("article");
     expect(article).toHaveAttribute("aria-labelledby", "card-title");
-    expect(screen.getByRole("heading", { level: 1, name: "Page report" })).toHaveClass(
-      "brick-card-title",
+    expect(
+      screen.getByRole("heading", { level: 1, name: "Page report" }),
+    ).toHaveClass("brick-card-title");
+    expect(screen.getByText("Updated now")).toHaveAttribute(
+      "data-slot",
+      "card-description",
     );
-    expect(screen.getByText("Updated now")).toHaveAttribute("data-slot", "card-description");
-    expect(screen.getByRole("button", { name: "More" }).parentElement).toHaveClass(
-      "brick-card-action",
-    );
+    expect(
+      screen.getByRole("button", { name: "More" }).parentElement,
+    ).toHaveClass("brick-card-action");
     expect(screen.getByText("Details")).toHaveClass("brick-card-content");
     expect(screen.getByText("Footer")).toHaveClass("brick-card-footer");
-    expect(article.querySelector("[data-slot='card-header']")).toHaveClass("brick-card-header");
+    expect(article.querySelector("[data-slot='card-header']")).toHaveClass(
+      "brick-card-header",
+    );
   });
 
   it("forwards native props, refs, classes, styles, events, and slot overrides", () => {
@@ -71,7 +80,11 @@ describe("Card", () => {
         ref={rootRef}
         style={{ marginInlineStart: 4 }}
       >
-        <Card.Content className="consumer-content" data-slot="report-body" ref={contentRef}>
+        <Card.Content
+          className="consumer-content"
+          data-slot="report-body"
+          ref={contentRef}
+        >
           Content
         </Card.Content>
       </Card.Root>,
@@ -82,7 +95,10 @@ describe("Card", () => {
     expect(root).toHaveAttribute("data-card-id", "report");
     expect(root).toHaveAttribute("data-slot", "report-card");
     expect(root).toHaveStyle({ marginInlineStart: "4px" });
-    expect(contentRef.current).toHaveClass("brick-card-content", "consumer-content");
+    expect(contentRef.current).toHaveClass(
+      "brick-card-content",
+      "consumer-content",
+    );
     expect(contentRef.current).toHaveAttribute("data-slot", "report-body");
     fireEvent.click(root!);
     expect(onClick).toHaveBeenCalledOnce();
@@ -95,7 +111,10 @@ describe("Card", () => {
 
     for (const variant of variants) {
       rerender(<Card.Root variant={variant}>Recipe</Card.Root>);
-      expect(container.firstElementChild).toHaveAttribute("data-variant", variant);
+      expect(container.firstElementChild).toHaveAttribute(
+        "data-variant",
+        variant,
+      );
     }
     for (const size of sizes) {
       rerender(<Card.Root size={size}>Recipe</Card.Root>);
@@ -105,17 +124,41 @@ describe("Card", () => {
 
   it("can remove recipe border geometry without changing the selected variant", () => {
     const { container } = render(
-      <Card.Root bordered={false} variant="elevated">Borderless media card</Card.Root>,
+      <Card.Root bordered={false} variant="elevated">
+        Borderless media card
+      </Card.Root>,
     );
 
-    expect(container.firstElementChild).toHaveAttribute("data-bordered", "false");
-    expect(container.firstElementChild).toHaveAttribute("data-variant", "elevated");
+    expect(container.firstElementChild).toHaveAttribute(
+      "data-bordered",
+      "false",
+    );
+    expect(container.firstElementChild).toHaveAttribute(
+      "data-variant",
+      "elevated",
+    );
+    expect(container.firstElementChild).not.toHaveAttribute("bordered");
+  });
+
+  it("can explicitly restore recipe border geometry", () => {
+    const { container } = render(
+      <Card.Root bordered variant="elevated">
+        Bordered elevated card
+      </Card.Root>,
+    );
+
+    expect(container.firstElementChild).toHaveAttribute(
+      "data-bordered",
+      "true",
+    );
     expect(container.firstElementChild).not.toHaveAttribute("bordered");
   });
 
   it("supports only the approved Root semantic elements", () => {
     const elements: CardRootElement[] = ["div", "article", "section", "li"];
-    const { container, rerender } = render(<Card.Root>Semantic card</Card.Root>);
+    const { container, rerender } = render(
+      <Card.Root>Semantic card</Card.Root>,
+    );
 
     for (const element of elements) {
       rerender(<Card.Root as={element}>Semantic card</Card.Root>);

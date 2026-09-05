@@ -33,10 +33,13 @@ import "@flowstack-ui/brick/styles.css";
 
 The reset is never included by `styles.css`. It owns neutral normalization such
 as page sizing, body margin removal, and native `figure` and `blockquote`
-margin removal; it does not paint the document. Existing applications can omit
-it and keep their own reset or browser defaults. Higher-level FLOWSTACK packs,
-including Blocks, may require this complete two-import setup so copied
-compositions begin from the same neutral browser foundation.
+margin removal. On macOS browsers it also chooses consistent grayscale text
+antialiasing through the WebKit and Firefox font-smoothing declarations; it
+does not change the authored font family, size, weight, line height, or color.
+Existing applications can omit it and keep their own reset or browser
+defaults. Higher-level FLOWSTACK packs, including Blocks, may require this
+complete two-import setup so copied compositions begin from the same neutral
+browser foundation.
 
 ## Tokens without components
 

@@ -21,7 +21,9 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 Inspect light -> dark -> light and dark -> light -> dark. Expected: every
 surface, text, border, action, focus ring, and native control returns to the
-requested appearance without child-specific recoloring. Result:
+requested appearance without child-specific recoloring. Drag-select text in
+each scope and confirm the opaque selection pair changes with appearance and
+remains readable over neutral and accent paint. Result:
 
 ## Step 2 — Wrapper-free composition
 

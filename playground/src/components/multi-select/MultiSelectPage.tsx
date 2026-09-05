@@ -24,7 +24,7 @@ import "../../shared/forms-evidence.playground.css";
 import "./multi-select.playground.css";
 
 const variants: MultiSelectVariant[] = ["outline", "soft", "underline"];
-const sizes: MultiSelectSize[] = ["sm", "md", "lg"];
+const sizes: MultiSelectSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: MultiSelectShape[] = ["sharp", "rounded", "pill"];
 
 const customTokens = {
@@ -84,7 +84,7 @@ function Tile({ label, children }: { label: string; children: ReactNode }) {
 }
 
 export const multiSelectScenarios = [
-  { id: "multi-select.overview", number: 1, title: "Overview", description: "MultiSelect’s canonical rendering is full-width, medium, outline, and rounded. Field supplies the visible label; the multi-selected value and default artwork demonstrate the complete default control." },
+  { id: "multi-select.overview", number: 1, title: "Overview", description: "MultiSelect’s canonical rendering is full-width, 44px lg, outline, and rounded. Field supplies the visible label; the multi-selected value and default artwork demonstrate the complete default control." },
   { id: "multi-select.variants", number: 2, title: "Variants", description: "Outline, soft, and underline change trigger paint only. Value, options, size, and all other defaults remain identical." },
   { id: "multi-select.sizes", number: 3, title: "Sizes", description: "Small, medium, and large change complete control geometry only. Every example stays outline and rounded with identical content." },
   { id: "multi-select.shapes", number: 4, title: "Shapes and width", description: "Sharp, rounded, and pill change trigger geometry only. Separate examples prove the default full width and opt-in intrinsic width." },

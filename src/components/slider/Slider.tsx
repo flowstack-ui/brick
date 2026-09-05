@@ -19,6 +19,7 @@ import {
 
 export type SliderSize = "sm" | "md" | "lg";
 export type SliderVariant = "solid" | "soft";
+export type SliderFrame = "none" | "outline";
 
 function mergeClassName(base: string, className?: string) {
   return className ? `${base} ${className}` : base;
@@ -31,6 +32,8 @@ export interface SliderRootProps extends AtomSliderRootProps {
   size?: SliderSize;
   /** Selected-range paint recipe. @default "solid" */
   variant?: SliderVariant;
+  /** Optional finished container around the interactive track. @default "none" */
+  frame?: SliderFrame;
 }
 
 export type SliderTrackProps = AtomSliderTrackProps;
@@ -61,6 +64,7 @@ export const SliderRoot = forwardRef<HTMLDivElement, SliderRootProps>(
   function SliderRoot(
     {
       className,
+      frame = "none",
       size = "md",
       variant = "solid",
       "data-slot": dataSlot,
@@ -72,6 +76,7 @@ export const SliderRoot = forwardRef<HTMLDivElement, SliderRootProps>(
       <AtomSlider.Root
         {...props}
         className={mergeClassName("brick-slider", className)}
+        data-frame={frame}
         data-size={size}
         data-slot={dataSlot ?? "slider"}
         data-variant={variant}

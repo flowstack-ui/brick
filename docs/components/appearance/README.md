@@ -58,7 +58,8 @@ author that element explicitly as the child.
 Appearance has no component recipe or state. It applies
 `data-brick-appearance`; the complete token stylesheet assigns `color-scheme`
 and semantic values. Themes must supply complete assignments for every
-appearance they support.
+appearance they support, including the paired native selection background and
+foreground roles.
 
 ## Tokens and CSS hooks
 

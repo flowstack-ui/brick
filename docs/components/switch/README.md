@@ -32,7 +32,6 @@ import "@flowstack-ui/brick/styles/switch.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 ## Quick start
 
 ```tsx
@@ -43,10 +42,10 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ## Anatomy and DOM ownership
 
-| Part | Default element | Ref target |
-| --- | --- | --- |
-| `Root` | `button` with `role="switch"` | `HTMLButtonElement` |
-| `Thumb` | decorative `span` | `HTMLSpanElement` |
+| Part    | Default element               | Ref target          |
+| ------- | ----------------------------- | ------------------- |
+| `Root`  | `button` with `role="switch"` | `HTMLButtonElement` |
+| `Thumb` | decorative `span`             | `HTMLSpanElement`   |
 
 Brick adds no wrapper. Atom may render a transparent checkbox proxy before
 Root when `name` or `required` needs native form behavior.
@@ -56,33 +55,40 @@ Root when `name` or `required` needs native form behavior.
 Root accepts released Atom Switch props, including `checked`, `defaultChecked`,
 `onCheckedChange`, `disabled`, `readOnly`, `invalid`, `required`,
 `validationBehavior`, `name`, `value`, `form`, `render`, and `asChild`. Brick
-adds `size`.
+adds `size` and `variant`.
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
+| Prop      | Values                 | Default |
+| --------- | ---------------------- | ------- |
+| `size`    | `xs`, `sm`, `md`, `lg` | `md`    |
+| `variant` | `solid`, `raised`      | `solid` |
 
 Public exports are `Switch`, `SwitchRoot`, `SwitchThumb`, `SwitchRootProps`,
-`SwitchThumbProps`, and `SwitchSize`.
+`SwitchThumbProps`, `SwitchSize`, and `SwitchVariant`.
 
 ## Visual recipes and states
 
-One canonical recipe uses a neutral unchecked track and accent checked track.
-Three sizes scale track, thumb, and travel together. Focus, hover, active,
+`solid` uses a borderless full-height track and inset thumb. Its unchecked
+track progresses through the adaptive default and strong neutral boundary
+roles so it remains visible in both appearances. `raised` uses a half-height
+rail behind a full-height elevated thumb. Four sizes scale track, thumb, and
+travel together. Focus, hover, active,
 disabled, read-only, required, and invalid states are explicit. Invalid changes
-the border only. There are no variant, tone, color, shape, or loading props.
+the boundary only. There are no tone, color, shape, or loading props.
 
 ## Tokens and CSS hooks
 
 Stable classes/slots are `.brick-switch` / `switch` and
-`.brick-switch-thumb` / `switch-thumb`. Root exposes `data-size`; Atom exposes
+`.brick-switch-thumb` / `switch-thumb`. Root exposes `data-size` and
+`data-variant`; Atom exposes
 state and availability attributes.
 
 Public variables are `--brick-switch-target-size`,
 `--brick-switch-track-inline-size`, `--brick-switch-track-block-size`,
 `--brick-switch-thumb-size`, `--brick-switch-track-inset`,
 `--brick-switch-track-background`, `--brick-switch-track-border`,
+`--brick-switch-track-border-width`, `--brick-switch-track-shadow`,
 `--brick-switch-thumb-background`, `--brick-switch-thumb-border`,
+`--brick-switch-thumb-border-width`, `--brick-switch-thumb-shadow`,
 `--brick-switch-checked-background`, `--brick-switch-checked-border`,
 `--brick-switch-checked-thumb`, `--brick-switch-hover-background`,
 `--brick-switch-pressed-background`, `--brick-switch-focus-ring`,

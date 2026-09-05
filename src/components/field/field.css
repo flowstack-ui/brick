@@ -10,6 +10,7 @@
     --brick-field-label-font-size: var(--brick-typography-label-md-font-size);
     --brick-field-label-font-weight: var(--brick-typography-label-md-font-weight);
     --brick-field-label-line-height: var(--brick-typography-label-md-line-height);
+    --brick-field-label-letter-spacing: var(--brick-typography-label-md-letter-spacing);
     --brick-field-indicator-foreground: var(--brick-color-danger-text);
     --brick-field-indicator-gap: var(--brick-space-1);
     --brick-field-optional-foreground: var(--brick-color-text-secondary);
@@ -44,6 +45,29 @@
     );
   }
 
+  .brick-field[data-tone="secondary"] {
+    --brick-field-label-foreground: var(--brick-color-text-secondary);
+  }
+
+  .brick-field[data-size="sm"] {
+    --brick-field-row-gap: var(--brick-space-2);
+    --brick-field-label-font-family: var(--brick-typography-control-sm-font-family);
+    --brick-field-label-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight);
+    --brick-field-label-line-height: var(--brick-typography-control-sm-line-height);
+    --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
+  }
+
+  .brick-field[data-size="xs"] {
+    --brick-field-row-gap: var(--brick-space-1);
+    --brick-field-column-gap: var(--brick-space-2);
+    --brick-field-label-font-family: var(--brick-typography-caption-font-family);
+    --brick-field-label-font-size: var(--brick-typography-caption-font-size);
+    --brick-field-label-font-weight: var(--brick-typography-caption-font-weight);
+    --brick-field-label-line-height: var(--brick-typography-caption-line-height);
+    --brick-field-label-letter-spacing: var(--brick-typography-caption-letter-spacing);
+  }
+
   .brick-field[data-orientation="horizontal"] > :where(
       .brick-field-description,
       .brick-field-error
@@ -68,7 +92,7 @@
     font-family: var(--brick-field-label-font-family);
     font-size: var(--brick-field-label-font-size);
     font-weight: var(--brick-field-label-font-weight);
-    letter-spacing: var(--brick-typography-label-md-letter-spacing);
+    letter-spacing: var(--brick-field-label-letter-spacing);
     line-height: var(--brick-field-label-line-height);
     overflow-wrap: anywhere;
   }

@@ -71,7 +71,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 | `thickness` | `"thin" \| "regular" \| "thick"` | `"regular"` |
 | `cap` | `"round" \| "butt"` | `"round"` |
 | `tone` | `"neutral" \| "accent" \| "info" \| "success" \| "warning" \| "danger"` | `"accent"` |
-| `locale` | `Intl.LocalesArgument` | runtime locale |
+| `locale` | `Intl.LocalesArgument` | `LocaleProvider.locale` |
 | `formatOptions` | `Intl.NumberFormatOptions` | percent, 0 fraction digits |
 
 Root retains released Atom Progress props. Circle accepts SVG props except

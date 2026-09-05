@@ -15,6 +15,7 @@ import type {
   ResponsiveBreakpoint,
   ResponsiveValue,
 } from "../_responsive-value/ResponsiveValue.js";
+import { normalizeResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 import {
   resolveSpacingValue,
   type SpacingValue,
@@ -47,9 +48,7 @@ const breakpoints: ResponsiveBreakpoint[] = ["sm", "md", "lg", "xl"];
 
 function normalize(value: ResponsiveValue<SpacingValue> | undefined) {
   if (value === undefined) return undefined;
-  return typeof value === "object" && value !== null && "initial" in value
-    ? value
-    : { initial: value };
+  return normalizeResponsiveValue(value);
 }
 
 function edgeVariables(

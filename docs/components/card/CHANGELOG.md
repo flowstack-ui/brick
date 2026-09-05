@@ -6,6 +6,9 @@ Card follows the package version of `@flowstack-ui/brick`.
 
 ### Changed
 
+- Assigned border ownership to Card variants: outline remains bordered while
+  elevated and subtle are borderless by default. Elevated now uses the raised
+  panel surface and a layered medium elevation token.
 - Clarified that `Card.Action` reserves the trailing Header column across title
   and description rows, and documented `HStack` composition for title-only
   metadata that must not narrow the description.
@@ -25,7 +28,8 @@ Card follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Aligned the default outline recipe with its adopted base-surface contract so
+  outlined Cards remain visibly grouped from the ambient canvas in light and
+  dark appearances without elevation.
 - Title typography now uses the shared surface-title recipes and their
   normalized tracking.
-- Elevated Cards use a subtle raised-surface difference so their hierarchy
-  remains visible in dark appearance without depending on shadow alone.

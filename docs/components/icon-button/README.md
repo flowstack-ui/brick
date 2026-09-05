@@ -36,7 +36,6 @@ import "@flowstack-ui/brick/styles/icon-button.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 `IconButton` and its public types are also exported from
 `@flowstack-ui/brick`.
 
@@ -73,17 +72,17 @@ aliases reuse Button's closed variant, tone, and size unions.
 `IconButtonProps` forwards Atom Button props and supported native, global,
 ARIA, and data props except native `color`.
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `variant` | `solid`, `soft`, `outline`, `ghost` | `ghost` |
-| `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
-| `size` | `xs`, `sm`, `md`, `lg`, `xl` | `md` |
-| `shape` | `rounded`, `circle` | `rounded` |
-| `disabled`, `loading` | boolean | `false` |
-| `href` | string | none |
-| `onPress` | Atom press callback | none |
-| `asChild` | boolean | `false` |
-| `render` | Atom render value/callback | none |
+| Prop                  | Values                                                      | Default   |
+| --------------------- | ----------------------------------------------------------- | --------- |
+| `variant`             | `solid`, `soft`, `outline`, `ghost`                         | `ghost`   |
+| `tone`                | `neutral`, `contrast`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
+| `size`                | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, or a non-empty sparse responsive value | `lg` |
+| `shape`               | `rounded`, `circle`                                         | `rounded` |
+| `disabled`, `loading` | boolean                                                     | `false`   |
+| `href`                | string                                                      | none      |
+| `onPress`             | Atom press callback                                         | none      |
+| `asChild`             | boolean                                                     | `false`   |
+| `render`              | Atom render value/callback                                  | none      |
 
 `asChild: true` requires one React element and is mutually exclusive with
 `render`; the ordinary path accepts `ReactNode`. The product contract requires
@@ -98,8 +97,9 @@ pressed-state API.
 - `outline` provides a visible transparent boundary.
 - `ghost` is the default, lowest standalone emphasis.
 
-All four variants support all six tones. Sizes are square 28, 36, 44, 52, and
-60 CSS pixels with 14, 16, 18, 20, and 24 CSS-pixel icon boxes. `rounded` uses
+All four variants support all six tones. Sizes are square 24, 32, 36, 40, 44,
+48, and 64 CSS pixels with 14, 16, 16, 20, 20, 20, and 24 CSS-pixel icon
+boxes. `rounded` uses
 the control radius; `circle` uses the full radius.
 
 Neutral solid controls use a strong neutral surface and the normal foreground,
@@ -108,8 +108,11 @@ not an appearance-inverting black/white treatment.
 Disabled IconButtons use the disabled foreground and reduced opacity so they do
 not resemble an enabled neutral outline action.
 
-Hover is limited to fine hover-capable pointers. Focus-visible uses the global
-focus ring. Disabled uses a subdued surface. Loading hides the visible icon,
+Hover is limited to fine hover-capable pointers. Ghost hover and pressed paint
+derive from the current foreground so the cue remains visible on canvas, base,
+subtle, raised, and overlay surfaces instead of disappearing when two semantic
+surface roles share a value. Focus-visible uses the global focus ring. Disabled
+uses a subdued surface. Loading hides the visible icon,
 retains the square footprint and accessible name, exposes `aria-busy`, and
 centers a CSS spinner in LTR and RTL. Reduced motion removes transitions and
 slows the spinner; forced colors restores system boundaries and focus.
@@ -169,7 +172,7 @@ const customIconButtonStyle = {
   variant="solid"
 >
   <SearchIcon />
-</IconButton>
+</IconButton>;
 ```
 
 Consumers overriding colors must verify rest, hover, pressed, focus, inactive,
@@ -181,8 +184,13 @@ IconButton uses equal logical inline/block sizing and a matching flex basis, so
 it remains square instead of shrinking in constrained flex layouts. It does
 not become full width. Logical positioning preserves geometry in LTR and RTL.
 
-The default 44 CSS-pixel target is the general touch-safe baseline. Dense
-`xs` and `sm` controls require adequate surrounding target spacing and should
+Responsive objects are mobile first and may omit `initial`. For example,
+`size={{ lg: "md" }}` keeps the normal 44px `lg` default below `lg`, then uses
+the complete 40px `md` recipe. An explicit `initial` replaces that baseline;
+an empty object is invalid.
+
+The default `lg` 44 CSS-pixel target is the general touch-safe baseline. Dense
+`2xs`, `xs`, `sm`, and `md` controls require adequate surrounding target spacing and should
 not become the unreviewed mobile default.
 
 ## Accessibility

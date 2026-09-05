@@ -9,7 +9,7 @@ import "../../shared/forms-evidence.playground.css";
 import "./otp-field.playground.css";
 
 const variants: OTPFieldVariant[] = ["outline", "soft", "underline"];
-const sizes: OTPFieldSize[] = ["sm", "md", "lg"];
+const sizes: OTPFieldSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: OTPFieldShape[] = ["sharp", "rounded"];
 const layouts: OTPFieldLayout[] = ["separated", "attached"];
 const definitions = [

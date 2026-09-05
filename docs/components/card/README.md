@@ -44,7 +44,6 @@ import "@flowstack-ui/brick/styles/card.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 `Card` and its public types are also exported from `@flowstack-ui/brick`.
 
 ## Quick start
@@ -52,7 +51,9 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ```tsx
 <Card.Root as="article" aria-labelledby="report-title">
   <Card.Header>
-    <Card.Title as="h2" id="report-title">Quarterly report</Card.Title>
+    <Card.Title as="h2" id="report-title">
+      Quarterly report
+    </Card.Title>
     <Card.Description>Updated five minutes ago</Card.Description>
   </Card.Header>
   <Card.Content>Conversion improved across every checkout step.</Card.Content>
@@ -76,15 +77,15 @@ Card.Root
 
 Every part is optional and owns exactly one native element.
 
-| Part | Default element | Ref target | Purpose |
-|---|---|---|---|
-| `Card.Root` | `div` | `HTMLElement` | Surface, clipping, variant, size, and semantic container |
-| `Card.Header` | `div` | `HTMLDivElement` | Title, description, and compact trailing-action layout |
-| `Card.Title` | `h3` | `HTMLHeadingElement` | Visible subject heading |
-| `Card.Description` | `p` | `HTMLParagraphElement` | Supporting header text |
-| `Card.Action` | `div` | `HTMLDivElement` | Compact trailing content without generated behavior |
-| `Card.Content` | `div` | `HTMLDivElement` | Primary body region |
-| `Card.Footer` | `div` | `HTMLDivElement` | Wrapping actions or secondary content |
+| Part               | Default element | Ref target             | Purpose                                                  |
+| ------------------ | --------------- | ---------------------- | -------------------------------------------------------- |
+| `Card.Root`        | `div`           | `HTMLElement`          | Surface, clipping, variant, size, and semantic container |
+| `Card.Header`      | `div`           | `HTMLDivElement`       | Title, description, and compact trailing-action layout   |
+| `Card.Title`       | `h3`            | `HTMLHeadingElement`   | Visible subject heading                                  |
+| `Card.Description` | `p`             | `HTMLParagraphElement` | Supporting header text                                   |
+| `Card.Action`      | `div`           | `HTMLDivElement`       | Compact trailing content without generated behavior      |
+| `Card.Content`     | `div`           | `HTMLDivElement`       | Primary body region                                      |
+| `Card.Footer`      | `div`           | `HTMLDivElement`       | Wrapping actions or secondary content                    |
 
 Card uses no React context and adds no client boundary. Root recipes reach its
 parts through static CSS.
@@ -98,12 +99,12 @@ Public exports are `Card`, `CardRootProps`, `CardRootElement`,
 
 ### Card.Root
 
-| Prop | Values | Default |
-|---|---|---|
-| `as` | `div`, `article`, `section`, `li` | `div` |
-| `bordered` | boolean | `true` |
-| `variant` | `outline`, `elevated`, `subtle` | `outline` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| Prop       | Values                            | Default        |
+| ---------- | --------------------------------- | -------------- |
+| `as`       | `div`, `article`, `section`, `li` | `div`          |
+| `bordered` | boolean                           | variant recipe |
+| `variant`  | `outline`, `elevated`, `subtle`   | `outline`      |
+| `size`     | `sm`, `md`, `lg`                  | `md`           |
 
 Root also accepts ordinary `HTMLAttributes<HTMLElement>`, including `id`,
 ARIA and data attributes, events, `className`, `style`, and `ref`.
@@ -135,10 +136,14 @@ metadata in a Brick `HStack` and omit `Card.Action`.
 
 ### Variants
 
-- `outline` is the default clear boundary and does not depend on shadow.
-- `elevated` uses a restrained shadow plus a faint boundary for higher
-  prominence.
+- `outline` is the default base-surface grouping with a clear boundary and no
+  shadow dependency.
+- `elevated` uses the raised panel surface and a layered medium shadow without
+  an ordinary border. Forced-colors restores an explicit boundary.
 - `subtle` uses a quiet filled surface without shadow.
+
+Variant recipes own their default boundary. Use `bordered` only as an explicit
+override when a composition must add or remove that boundary.
 
 Card has no hover, pressed, selected, loading, disabled, focus, or tone state.
 Those belong to the explicit components inside it.
@@ -152,24 +157,24 @@ They do not set width, height, grid columns, or viewport breakpoints.
 
 ### Public Card tokens
 
-| Token | Responsibility |
-|---|---|
-| `--brick-card-space` | Section inset and coordinated region spacing |
-| `--brick-card-radius` | Root surface radius |
-| `--brick-card-border-width` | Root border geometry |
-| `--brick-card-shadow` | Elevated surface shadow |
+| Token                       | Responsibility                               |
+| --------------------------- | -------------------------------------------- |
+| `--brick-card-space`        | Section inset and coordinated region spacing |
+| `--brick-card-radius`       | Root surface radius                          |
+| `--brick-card-border-width` | Root border geometry                         |
+| `--brick-card-shadow`       | Elevated surface shadow                      |
 
 ### Stable classes and slots
 
-| Part | Class | Default slot |
-|---|---|---|
-| Root | `.brick-card` | `card` |
-| Header | `.brick-card-header` | `card-header` |
-| Title | `.brick-card-title` | `card-title` |
+| Part        | Class                     | Default slot       |
+| ----------- | ------------------------- | ------------------ |
+| Root        | `.brick-card`             | `card`             |
+| Header      | `.brick-card-header`      | `card-header`      |
+| Title       | `.brick-card-title`       | `card-title`       |
 | Description | `.brick-card-description` | `card-description` |
-| Action | `.brick-card-action` | `card-action` |
-| Content | `.brick-card-content` | `card-content` |
-| Footer | `.brick-card-footer` | `card-footer` |
+| Action      | `.brick-card-action`      | `card-action`      |
+| Content     | `.brick-card-content`     | `card-content`     |
+| Footer      | `.brick-card-footer`      | `card-footer`      |
 
 Root reflects optional `data-bordered` with the value `"false"`, plus
 `data-variant` and `data-size`. Classes, slots, and the public
@@ -182,7 +187,9 @@ layer.
 Choose a tested variant and size first:
 
 ```tsx
-<Card.Root size="lg" variant="elevated">...</Card.Root>
+<Card.Root size="lg" variant="elevated">
+  ...
+</Card.Root>
 ```
 
 Override semantic tokens on an application scope to theme a region. For a
@@ -190,10 +197,12 @@ local Card adjustment, use the public component tokens:
 
 ```tsx
 <Card.Root
-  style={{
-    "--brick-card-radius": "0.25rem",
-    "--brick-card-space": "2rem",
-  } as React.CSSProperties}
+  style={
+    {
+      "--brick-card-radius": "0.25rem",
+      "--brick-card-space": "2rem",
+    } as React.CSSProperties
+  }
 >
   ...
 </Card.Root>
@@ -310,13 +319,17 @@ inset below it; do not substitute Content when that top inset is required.
     <Card.Title>Workspace</Card.Title>
     <Card.Description>Three active collaborators</Card.Description>
     <Card.Action>
-      <Button size="sm" tone="neutral" variant="ghost">Edit</Button>
+      <Button size="sm" tone="neutral" variant="ghost">
+        Edit
+      </Button>
     </Card.Action>
   </Card.Header>
   <Card.Content>Workspace details</Card.Content>
   <Card.Footer>
     <Button size="sm">Open</Button>
-    <Button size="sm" tone="neutral" variant="outline">Archive</Button>
+    <Button size="sm" tone="neutral" variant="outline">
+      Archive
+    </Button>
   </Card.Footer>
 </Card.Root>
 ```

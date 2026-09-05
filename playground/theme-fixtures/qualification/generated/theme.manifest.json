@@ -21,10 +21,10 @@
   "brickContract": {
     "package": {
       "name": "@flowstack-ui/brick",
-      "version": "0.2.2"
+      "version": "0.2.3"
     },
     "schema": "flowstack.brick-theme-contract.v1",
-    "version": 4
+    "version": 5
   },
   "compatibility": {
     "brick": "^0.2.0"

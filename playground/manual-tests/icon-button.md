@@ -28,7 +28,7 @@ Action: Inspect `01 Overview`, activate `Search workspace` once, and observe
 the status message.
 
 Expected: The canonical Icon Button is a neutral ghost, medium, rounded action.
-It is a 44 × 44 CSS-pixel square, contains one centered search icon, has a
+It is a 44 × 44 CSS-pixel square under the default `lg` name, contains one centered search icon, has a
 visible focus treatment, and announces `Activated 1 time` without moving focus.
 
 Result:
@@ -101,9 +101,11 @@ Action: Switch system, light, and dark appearance. Compare each displayed code
 example with its live customized Icon Button.
 
 Expected: Appearance affects only the intended scope. Icons, boundaries, focus,
-disabled, and loading states remain readable. Component tokens produce the
-purple solid result. Consumer hooks produce the dashed result while preserving
-square geometry, `.brick-icon-button`, and the custom slot.
+disabled, and loading states remain readable. Hover each ghost control and
+confirm its feedback remains distinct from both owning surfaces. Component
+tokens produce the purple solid result. Consumer hooks produce the dashed
+result while preserving square geometry, `.brick-icon-button`, and the custom
+slot.
 
 Result:
 Notes or issue:

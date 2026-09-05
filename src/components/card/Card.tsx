@@ -22,7 +22,9 @@ export interface CardTitleProps extends HTMLAttributes<HTMLHeadingElement> {
   "data-slot"?: string;
 }
 
-export type CardDescriptionProps = SlottedProps<HTMLAttributes<HTMLParagraphElement>>;
+export type CardDescriptionProps = SlottedProps<
+  HTMLAttributes<HTMLParagraphElement>
+>;
 export type CardActionProps = SlottedProps<HTMLAttributes<HTMLDivElement>>;
 export type CardContentProps = SlottedProps<HTMLAttributes<HTMLDivElement>>;
 export type CardFooterProps = SlottedProps<HTMLAttributes<HTMLDivElement>>;
@@ -38,7 +40,7 @@ function slotOrDefault(slot: string | undefined, defaultSlot: string) {
 const CardRoot = forwardRef<HTMLElement, CardRootProps>(function CardRoot(
   {
     as = "div",
-    bordered = true,
+    bordered,
     variant = "outline",
     size = "md",
     className,
@@ -53,7 +55,7 @@ const CardRoot = forwardRef<HTMLElement, CardRootProps>(function CardRoot(
     {
       ...rootProps,
       className: mergeClassName("brick-card", className),
-      "data-bordered": bordered ? undefined : "false",
+      "data-bordered": bordered === undefined ? undefined : String(bordered),
       "data-size": size,
       "data-slot": slotOrDefault(dataSlot, "card"),
       "data-variant": variant,
@@ -63,38 +65,42 @@ const CardRoot = forwardRef<HTMLElement, CardRootProps>(function CardRoot(
   );
 });
 
-const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function CardHeader(
-  { className, "data-slot": dataSlot, ...props },
-  ref,
-) {
-  return (
-    <div
-      {...props}
-      className={mergeClassName("brick-card-header", className)}
-      data-slot={slotOrDefault(dataSlot, "card-header")}
-      ref={ref}
-    />
-  );
-});
+const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
+  function CardHeader({ className, "data-slot": dataSlot, ...props }, ref) {
+    return (
+      <div
+        {...props}
+        className={mergeClassName("brick-card-header", className)}
+        data-slot={slotOrDefault(dataSlot, "card-header")}
+        ref={ref}
+      />
+    );
+  },
+);
 
-const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(function CardTitle(
-  { as = "h3", className, children, "data-slot": dataSlot, ...props },
-  ref,
-) {
-  return createElement(
-    as,
-    {
-      ...props,
-      className: mergeClassName("brick-card-title", className),
-      "data-slot": slotOrDefault(dataSlot, "card-title"),
-      ref,
-    },
-    children,
-  );
-});
+const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
+  function CardTitle(
+    { as = "h3", className, children, "data-slot": dataSlot, ...props },
+    ref,
+  ) {
+    return createElement(
+      as,
+      {
+        ...props,
+        className: mergeClassName("brick-card-title", className),
+        "data-slot": slotOrDefault(dataSlot, "card-title"),
+        ref,
+      },
+      children,
+    );
+  },
+);
 
 const CardDescription = forwardRef<HTMLParagraphElement, CardDescriptionProps>(
-  function CardDescription({ className, "data-slot": dataSlot, ...props }, ref) {
+  function CardDescription(
+    { className, "data-slot": dataSlot, ...props },
+    ref,
+  ) {
     return (
       <p
         {...props}
@@ -106,47 +112,44 @@ const CardDescription = forwardRef<HTMLParagraphElement, CardDescriptionProps>(
   },
 );
 
-const CardAction = forwardRef<HTMLDivElement, CardActionProps>(function CardAction(
-  { className, "data-slot": dataSlot, ...props },
-  ref,
-) {
-  return (
-    <div
-      {...props}
-      className={mergeClassName("brick-card-action", className)}
-      data-slot={slotOrDefault(dataSlot, "card-action")}
-      ref={ref}
-    />
-  );
-});
+const CardAction = forwardRef<HTMLDivElement, CardActionProps>(
+  function CardAction({ className, "data-slot": dataSlot, ...props }, ref) {
+    return (
+      <div
+        {...props}
+        className={mergeClassName("brick-card-action", className)}
+        data-slot={slotOrDefault(dataSlot, "card-action")}
+        ref={ref}
+      />
+    );
+  },
+);
 
-const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function CardContent(
-  { className, "data-slot": dataSlot, ...props },
-  ref,
-) {
-  return (
-    <div
-      {...props}
-      className={mergeClassName("brick-card-content", className)}
-      data-slot={slotOrDefault(dataSlot, "card-content")}
-      ref={ref}
-    />
-  );
-});
+const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
+  function CardContent({ className, "data-slot": dataSlot, ...props }, ref) {
+    return (
+      <div
+        {...props}
+        className={mergeClassName("brick-card-content", className)}
+        data-slot={slotOrDefault(dataSlot, "card-content")}
+        ref={ref}
+      />
+    );
+  },
+);
 
-const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(function CardFooter(
-  { className, "data-slot": dataSlot, ...props },
-  ref,
-) {
-  return (
-    <div
-      {...props}
-      className={mergeClassName("brick-card-footer", className)}
-      data-slot={slotOrDefault(dataSlot, "card-footer")}
-      ref={ref}
-    />
-  );
-});
+const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
+  function CardFooter({ className, "data-slot": dataSlot, ...props }, ref) {
+    return (
+      <div
+        {...props}
+        className={mergeClassName("brick-card-footer", className)}
+        data-slot={slotOrDefault(dataSlot, "card-footer")}
+        ref={ref}
+      />
+    );
+  },
+);
 
 CardRoot.displayName = "Card.Root";
 CardHeader.displayName = "Card.Header";

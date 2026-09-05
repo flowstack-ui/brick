@@ -4,6 +4,24 @@ Badge follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Added
+
+- Added the 16px `xs` micro-label recipe with 10px text for compact percentage
+  and metadata badges.
+- Added `variant="surface"` for a soft semantic fill with a visible
+  tone-specific boundary and stable existing Badge geometry.
+
+### Changed
+
+- Clarified that semantic tone and paint variant are independent axes; solid
+  accent badges use `tone="accent" variant="solid"` rather than a compound
+  tone name.
+
+### Fixed
+
+- Kept `size="lg"` label text at the compact 14px scale while retaining its
+  28px minimum block size and roomier padding.
+
 ## 0.1.10
 
 ### Added

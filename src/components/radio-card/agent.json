@@ -1,0 +1,27 @@
+{
+  "schema": "flowstack.agent-component.v1",
+  "id": "radio-card",
+  "name": "RadioCard",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "kind": "component",
+  "purpose": "Present one rich whole-card choice while Atom owns radio semantics, selection, keyboard navigation, focus, forms, validation, direction, and reset.",
+  "useWhen": ["A short single-choice set needs icons, titles, descriptions, prices, badges, or supporting metadata inside large selectable targets."],
+  "avoidWhen": [{"condition": "Choices are concise, multiple, compact, or immediate commands.", "useInstead": "RadioGroup, CheckboxGroup, Select, SegmentGroup, or ToggleGroup"}],
+  "composition": ["Give Root an accessible group name, normally through Fieldset Legend. Give every Item a stable unique value and compose Control, Content, Title, optional Description, optional Indicator, and optional Addon deliberately.", "Use one Root. Put a Brick Grid or Stack inside it when responsive option tracks are needed; do not duplicate the semantic group."],
+  "rules": [
+    {"id": "radio-card-owner", "level": "must", "statement": "Preserve Atom's radio Item as the whole interactive card; do not add a second input or click behavior."},
+    {"id": "radio-card-naming", "level": "must", "statement": "Give Root an accessible group name and every Item a complete visible option name."},
+    {"id": "radio-card-values", "level": "must", "statement": "Keep Item values unique and use controlled or uncontrolled state consistently."},
+    {"id": "radio-card-indicator", "level": "must", "statement": "Treat Indicator as decorative because Atom Item carries the semantic checked state."},
+    {"id": "radio-card-orientation", "level": "should", "statement": "Keep the default horizontal Control anatomy unless the option content and keyboard model intentionally require vertical orientation."},
+    {"id": "radio-card-responsive", "level": "should", "statement": "Use one semantic Root with Brick Grid or Stack for responsive tracks; never duplicate divergent radio-group state."},
+    {"id": "radio-card-css", "level": "must", "statement": "Load styles.css or core.css plus radio-card.css and every composed Brick component stylesheet."}
+  ],
+  "commonMistakes": [
+    {"mistake": "Styling RadioGroup internals into cards.", "correction": "Use RadioCard as the independent finished owner."},
+    {"mistake": "Using RadioCard as a navigation destination or command.", "correction": "Use Card with Link or Button."}
+  ],
+  "validation": ["Verify naming, selection, roving focus, orientation-matched keyboard navigation and Control layout, disabled skipping, read-only, forms, reset, Fieldset validation, sizes, variants, alignment, indicator composition, addon containment, long content, narrow widths, RTL, light/dark, forced colors, and touch targets."],
+  "related": [{"kind": "package", "package": "@flowstack-ui/atom", "id": "radio-group", "versionPolicy": "installed-exact"}, "radio-group", "fieldset", "grid", "stack", "icon", "badge"]
+}

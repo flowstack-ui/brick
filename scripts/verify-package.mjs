@@ -64,6 +64,18 @@ try {
     "README.md",
     "dist/index.js",
     "dist/index.d.ts",
+    "dist/locale-provider.js",
+    "dist/locale-provider.d.ts",
+    "dist/format-number.js",
+    "dist/format-number.d.ts",
+    "dist/format-byte.js",
+    "dist/format-byte.d.ts",
+    "dist/for.js",
+    "dist/for.d.ts",
+    "dist/checkmark.js",
+    "dist/checkmark.d.ts",
+    "dist/radiomark.js",
+    "dist/radiomark.d.ts",
     "dist/button.js",
     "dist/button.d.ts",
     "dist/icon-button.js",
@@ -82,6 +94,8 @@ try {
     "dist/badge.d.ts",
     "dist/avatar.js",
     "dist/avatar.d.ts",
+    "dist/avatar-group.js",
+    "dist/avatar-group.d.ts",
     "dist/styles.css",
     "dist/styles/core.css",
     ...componentStyleNames.map((name) => `dist/styles/${name}.css`),
@@ -128,9 +142,9 @@ try {
   const agentCoverage = JSON.parse(await readPackedFile("dist/agents/coverage.json"));
   const themeContract = JSON.parse(await readPackedFile("dist/theme-contract.json"));
   assert.equal(themeContract.$schema, "flowstack.brick-theme-contract.v1");
-  assert.equal(themeContract.contractVersion, 4);
+  assert.equal(themeContract.contractVersion, 5);
   assert.equal(themeContract.contrast.algorithm, "wcag2-relative-luminance");
-  assert.equal(themeContract.contrast.pairs.length, 91);
+  assert.equal(themeContract.contrast.pairs.length, 92);
   assert.equal(packageJson.exports["./theme-contract.json"], "./dist/theme-contract.json");
   assert.equal(agentManifest.package, packageJson.name);
   assert.equal(agentManifest.packageVersion, packageJson.version);

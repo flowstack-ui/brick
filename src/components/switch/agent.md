@@ -15,7 +15,7 @@ Present a finished immediately applied on/off setting while Atom owns switch sem
 ## Required composition
 
 - Give Switch.Root a stable visible or native accessible setting name and add Switch.Thumb as its decorative movable part. Compose Root in Field when visible Label, Description, Error, required, or invalid context is needed; use name, value, and form when checked state must submit.
-- Choose Root size sm, md, or lg for the finished track, thumb, travel, and target geometry. Keep Thumb decorative and let Atom state attributes drive Brick paint.
+- Choose Root size xs, sm, md, or lg and variant solid or raised for the finished track, thumb, travel, and target geometry. Solid is borderless and compact; raised separates a half-height rail from the thumb. Keep Thumb decorative and let Atom state attributes drive Brick paint.
 
 ## Rules
 
@@ -37,7 +37,7 @@ Present a finished immediately applied on/off setting while Atom owns switch sem
 
 - Verify accessible name, role and aria-checked, controlled and uncontrolled updates, pointer, Enter, and Space activation, disabled and read-only behavior, Thumb state inheritance, and native, asChild, and render semantics.
 - Verify named checked-value submission, required validity with and without name, invalid and Field descriptions, validation focus, external form association, and uncontrolled reset.
-- Verify three sizes, checked and unchecked contrast, focus, disabled, read-only and invalid paint, intrinsic and narrow layout, mobile targets, 200% text and 400% zoom, RTL travel, reduced motion, forced colors, and complete CSS.
+- Verify four sizes and both variants, checked and unchecked contrast, focus, disabled, read-only and invalid paint, intrinsic and narrow layout, mobile targets, 200% text and 400% zoom, RTL travel, reduced motion, forced colors, and complete CSS.
 
 ## Related guidance
 

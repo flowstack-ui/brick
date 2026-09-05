@@ -25,11 +25,12 @@ Setup: Open `/badge` in system appearance.
 Action: Inspect `01 Overview`; compare all specimens in `02 Variants`,
 `03 Tones`, `04 Sizes`, and `05 Shapes`.
 
-Expected: The default passive Badge remains soft neutral, small, and rounded.
+Expected: The default passive Badge remains soft neutral, medium, and rounded.
 Each comparison changes only its named visual dimension. Text stays centered,
 readable, and vertically balanced without implying a control. The xl circle
 specimen forms a balanced passive icon well without implying IconButton
-behavior.
+behavior. Surface retains soft fill while adding the tone's visible semantic
+boundary, without changing size or spacing.
 
 Result:
 Notes or issue:

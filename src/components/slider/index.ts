@@ -7,6 +7,7 @@ export {
   SliderTrack,
   SliderValueLabel,
   type SliderMarkerProps,
+  type SliderFrame,
   type SliderRangeProps,
   type SliderRootProps,
   type SliderSize,

@@ -19,7 +19,7 @@ describe("Button", () => {
     expect(button).toHaveAttribute("data-slot", "button");
     expect(button).toHaveAttribute("data-variant", "solid");
     expect(button).toHaveAttribute("data-tone", "accent");
-    expect(button).toHaveAttribute("data-size", "md");
+    expect(button).toHaveAttribute("data-size", "lg");
     expect(button).toHaveAttribute("data-shape", "rounded");
     expect(button).not.toHaveAttribute("data-full-width");
     expect(button).not.toHaveAttribute("variant");
@@ -67,15 +67,32 @@ describe("Button", () => {
     );
 
     expect(screen.getByRole("button", { name: "Continue" })).toBeVisible();
-    expect(screen.getByTestId("start-icon").parentElement).toHaveAttribute("aria-hidden", "true");
-    expect(screen.getByTestId("start-icon").parentElement).toHaveAttribute("data-position", "start");
-    expect(screen.getByTestId("end-icon").parentElement).toHaveAttribute("data-position", "end");
+    expect(screen.getByTestId("start-icon").parentElement).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+    expect(screen.getByTestId("start-icon").parentElement).toHaveAttribute(
+      "data-position",
+      "start",
+    );
+    expect(screen.getByTestId("end-icon").parentElement).toHaveAttribute(
+      "data-position",
+      "end",
+    );
   });
 
   it("applies every adopted visual recipe as authoritative data", () => {
     const variants: ButtonVariant[] = ["solid", "soft", "outline", "ghost"];
-    const tones: ButtonTone[] = ["neutral", "accent", "info", "success", "warning", "danger"];
-    const sizes: ButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
+    const tones: ButtonTone[] = [
+      "neutral",
+      "contrast",
+      "accent",
+      "info",
+      "success",
+      "warning",
+      "danger",
+    ];
+    const sizes: ButtonSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
     const shapes: ButtonShape[] = ["sharp", "rounded", "pill"];
 
     const { rerender } = render(<Button>Recipe</Button>);
@@ -100,6 +117,29 @@ describe("Button", () => {
 
     rerender(<Button fullWidth>Recipe</Button>);
     expect(button).toHaveAttribute("data-full-width", "");
+  });
+
+  it("emits explicit and sparse mobile-first responsive size attributes", () => {
+    render(
+      <Button size={{ initial: "md", lg: "xl" }}>Responsive recipe</Button>,
+    );
+
+    const button = screen.getByRole("button", { name: "Responsive recipe" });
+    expect(button).toHaveAttribute("data-size", "md");
+    expect(button).toHaveAttribute("data-size-lg", "xl");
+    expect(button).not.toHaveAttribute("data-size-sm");
+    expect(button).not.toHaveAttribute("data-size-md");
+    expect(button).not.toHaveAttribute("data-size-xl");
+    expect(button).not.toHaveAttribute("size");
+
+    render(
+      <Button size={{ lg: "md" }}>Sparse responsive recipe</Button>,
+    );
+    const sparse = screen.getByRole("button", {
+      name: "Sparse responsive recipe",
+    });
+    expect(sparse).toHaveAttribute("data-size", "lg");
+    expect(sparse).toHaveAttribute("data-size-lg", "md");
   });
 
   it("preserves native link semantics and safe new-tab relationships", () => {
@@ -137,7 +177,10 @@ describe("Button", () => {
       <Button render={<a href="/router" />}>Router link</Button>,
     );
 
-    expect(screen.getByRole("link", { name: "Router link" })).toHaveAttribute("href", "/router");
+    expect(screen.getByRole("link", { name: "Router link" })).toHaveAttribute(
+      "href",
+      "/router",
+    );
 
     rerender(
       <Button disabled render={<a href="/router" />}>

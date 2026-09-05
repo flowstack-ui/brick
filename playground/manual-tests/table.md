@@ -13,8 +13,8 @@
 | Assistive technology | |
 | Playground route | `/table` |
 
-Scenario order: `01 Overview`, `02 Anatomy and semantics`, `03 Variants and
-stripe`, `04 Sizes and density`, `05 Alignment and numeric data`, `06 Sorting
+Scenario order: `01 Overview`, `02 Anatomy and semantics`, `03 Structure and
+paint`, `04 Sizes and density`, `05 Alignment and numeric data`, `06 Sorting
 composition`, `07 Caption, footer, and sticky header`, `08 Appearance and
 customization`, `09 Responsive, RTL, and boundary`.
 
@@ -23,7 +23,8 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 ## Step 1 — Native structure and recipes
 
 Review scenarios 01–05. Confirm captions, sections, row/column headers,
-footer, spans, line/outline/stripe, size/density, and logical/numeric alignment
+footer, spans, line/outline, transparent/base surface, stripe, border tone,
+optional column dividers, size/density, and logical/vertical/numeric alignment
 match their labels without accidental hover or focus behavior. Confirm outline
 header and footer paint follows all four softened corners without clipping a
 top or bottom Caption.

@@ -30,7 +30,6 @@ import "@flowstack-ui/brick/styles/badge.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 ## Quick start
 
 ```tsx
@@ -48,12 +47,12 @@ Badge's public exports are `Badge`, `BadgeProps`, `BadgeVariant`, `BadgeTone`,
 `BadgeSize`, and `BadgeShape`. The shared `badge` subpath also exports the
 separately documented Notification Badge family.
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `variant` | `soft`, `solid`, `outline` | `soft` |
-| `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
-| `size` | `sm`, `md`, `lg`, `xl` | `md` |
-| `shape` | `rounded`, `pill`, `circle` | `rounded` |
+| Prop      | Values                                                      | Default   |
+| --------- | ----------------------------------------------------------- | --------- |
+| `variant` | `soft`, `solid`, `outline`, `surface`                       | `soft`    |
+| `tone`    | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
+| `size`    | `xs`, `sm`, `md`, `lg`, `xl`                                | `md`      |
+| `shape`   | `rounded`, `pill`, `circle`                                 | `rounded` |
 
 Atom/native span props are inherited except native `color`.
 
@@ -65,8 +64,21 @@ geometry. Circle is for one passive icon or single character with nearby
 context; use IconButton for actions and Status for dot-and-label state. Badge
 is passive and has no interactive state.
 
+Tone and variant are deliberately orthogonal. Use `tone="accent"` with
+`variant="solid"` for solid accent paint; do not encode paint treatment in a
+compound tone name. The `xs` recipe is a 16px micro badge with 10px text,
+matching compact percentage and metadata labels.
+
+`surface` combines the selected tone's soft fill and on-soft foreground with a
+visible semantic boundary. `soft` keeps that fill borderless, while `outline`
+uses a transparent background and the stronger text foreground.
+
 The `xl` size supplies a deliberate passive icon well for empty states and
 similar noninteractive illustrations. It is not an action target.
+
+`lg` uses a 28px minimum block size and roomier padding while retaining compact
+14px label text. Use `lg` when the label needs more container presence; do not
+switch to `md` only to reduce the type size.
 
 ## Tokens and CSS hooks
 
@@ -107,6 +119,8 @@ rendered span; composed output must remain passive.
 ```tsx
 <Badge variant="outline" tone="success">Ready</Badge>
 
+<Badge variant="surface" tone="accent">Fast and secure</Badge>
+
 <Badge aria-label="Verified" shape="circle" tone="accent">
   <Icon aria-hidden size="xs">{checkIcon}</Icon>
 </Badge>
@@ -127,7 +141,9 @@ foreground so the selected Badge recipe continues to own contrast:
 ```tsx
 <Badge tone="accent" shape="pill">
   <Icon size="xs">{icon}</Icon>
-  <Text tone="inherit" variant="caption">Built for business</Text>
+  <Text tone="inherit" variant="caption">
+    Built for business
+  </Text>
 </Badge>
 ```
 

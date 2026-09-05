@@ -16,13 +16,14 @@ Provide a compact finished icon-only action or deliberate icon-only navigation c
 
 ## Required composition
 
-- Place one decorative Icon or SVG inside IconButton, provide an accessible label through the component's naming API, and supply href when the control is a destination. Tooltip may supplement an unfamiliar icon but never replaces the control name.
+- Place one decorative Icon or SVG inside IconButton, provide an accessible label through the component's naming API, and supply href when the control is a destination. Use the same action size as adjacent Buttons; a sparse responsive size inherits the normal 44px lg default until its first override. Tooltip may supplement an unfamiliar icon but never replaces the control name.
 
 ## Rules
 
 - **MUST:** Give every IconButton a concise discernible accessible name; the icon alone and a portalled Tooltip are not names.
 - **MUST:** Use the default button path for operations and supply href for a deliberate icon-only navigation destination so the final host remains a native anchor.
 - **MUST:** Keep temporary aria-expanded feedback distinct from a persistent pressed selection; use Toggle when the state itself is the user-controlled value.
+- **MUST:** Preserve perceptible ghost hover and pressed feedback on canvas, base, subtle, raised, and overlay surfaces instead of overriding it with a coincident surface color.
 - **MUST:** Load styles.css or core.css plus icon-button.css and icon.css when using Brick Icon.
 
 ## Common mistakes

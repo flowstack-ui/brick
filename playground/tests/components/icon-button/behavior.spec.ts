@@ -1,13 +1,15 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("IconButton exposes its default named-action anatomy", async ({ page }) => {
+test("IconButton exposes its default named-action anatomy", async ({
+  page,
+}) => {
   await page.goto("/icon-button");
   const action = page.getByRole("button", { name: "Search workspace" });
 
   await expect(action).toHaveAttribute("data-variant", "ghost");
   await expect(action).toHaveAttribute("data-tone", "neutral");
-  await expect(action).toHaveAttribute("data-size", "md");
+  await expect(action).toHaveAttribute("data-size", "lg");
   await expect(action).toHaveAttribute("data-shape", "rounded");
   await expect(action.locator(".brick-icon-button__icon")).toHaveAttribute(
     "aria-hidden",
@@ -37,14 +39,14 @@ test("IconButton preserves every supported link composition path", async ({
     await expect(link).toHaveAttribute("aria-label", "Documentation");
     await expect(link).toHaveAttribute("data-variant", "ghost");
     await expect(link).toHaveAttribute("data-tone", "neutral");
-    await expect(link).toHaveAttribute("data-size", "md");
+    await expect(link).toHaveAttribute("data-size", "lg");
     await expect(link).toHaveAttribute("data-shape", "rounded");
     const box = await link.boundingBox();
     expect(box?.height).toBeCloseTo(44, 2);
     expect(box?.width).toBeCloseTo(44, 2);
     expect(await link.locator("svg").boundingBox()).toMatchObject({
-      height: 18,
-      width: 18,
+      height: 20,
+      width: 20,
     });
   }
   await expect(direct.locator(".brick-icon-button__icon")).toHaveCount(1);
@@ -70,7 +72,9 @@ test("IconButton preserves every supported link composition path", async ({
       preview.locator(".playground-output-evidence__subject").boundingBox(),
     ]);
     expect(labelBox!.width).toBeLessThan(previewBox!.width / 2);
-    expect(subjectBox!.y).toBeGreaterThanOrEqual(labelBox!.y + labelBox!.height);
+    expect(subjectBox!.y).toBeGreaterThanOrEqual(
+      labelBox!.y + labelBox!.height,
+    );
   }
   await composed.click();
   await expect(page).toHaveURL(/#scenario-icon-button-states$/);
@@ -88,7 +92,7 @@ test("IconButton exposes every closed visual recipe at the promised geometry", a
   await expect(variants).toHaveCount(4);
   for (const variant of await variants.all()) {
     await expect(variant).toHaveAttribute("data-tone", "neutral");
-    await expect(variant).toHaveAttribute("data-size", "md");
+    await expect(variant).toHaveAttribute("data-size", "lg");
     await expect(variant).toHaveAttribute("data-shape", "rounded");
   }
 
@@ -109,28 +113,38 @@ test("IconButton exposes every closed visual recipe at the promised geometry", a
     new Set(["solid", "soft", "outline", "ghost"]),
   );
   for (const control of await tones.all()) {
-    await expect(control).toHaveAttribute("data-size", "md");
+    await expect(control).toHaveAttribute("data-size", "lg");
     await expect(control).toHaveAttribute("data-shape", "rounded");
   }
-  expect(await page.getByTestId("icon-button-tones").locator('.brick-icon-button[data-variant="solid"][data-tone="neutral"]').evaluate((element) => {
-    const probe = document.createElement("span");
-    probe.style.color = "var(--brick-color-text-primary)";
-    document.body.append(probe);
-    const primary = getComputedStyle(probe).color;
-    probe.remove();
-    const style = getComputedStyle(element);
-    return style.backgroundColor !== primary && style.color === primary;
-  })).toBe(true);
+  expect(
+    await page
+      .getByTestId("icon-button-tones")
+      .locator('.brick-icon-button[data-variant="solid"][data-tone="neutral"]')
+      .evaluate((element) => {
+        const probe = document.createElement("span");
+        probe.style.color = "var(--brick-color-text-primary)";
+        document.body.append(probe);
+        const primary = getComputedStyle(probe).color;
+        probe.remove();
+        const style = getComputedStyle(element);
+        return style.backgroundColor !== primary && style.color === primary;
+      }),
+  ).toBe(true);
 
   const expectedSizes = [
-    { icon: 14, name: "xs action", target: 28 },
+    { icon: 14, name: "2xs action", target: 24 },
+    { icon: 16, name: "xs action", target: 32 },
     { icon: 16, name: "sm action", target: 36 },
-    { icon: 18, name: "md action", target: 44 },
-    { icon: 20, name: "lg action", target: 52 },
-    { icon: 24, name: "xl action", target: 60 },
+    { icon: 20, name: "md action", target: 40 },
+    { icon: 20, name: "lg action", target: 44 },
+    { icon: 20, name: "xl action", target: 48 },
+    { icon: 24, name: "2xl action", target: 64 },
   ];
   for (const expected of expectedSizes) {
-    const control = page.getByRole("button", { name: expected.name });
+    const control = page.getByRole("button", {
+      name: expected.name,
+      exact: true,
+    });
     expect(await control.boundingBox()).toMatchObject({
       height: expected.target,
       width: expected.target,
@@ -149,13 +163,40 @@ test("IconButton exposes every closed visual recipe at the promised geometry", a
   for (const control of [rounded, circle]) {
     await expect(control).toHaveAttribute("data-variant", "ghost");
     await expect(control).toHaveAttribute("data-tone", "neutral");
-    await expect(control).toHaveAttribute("data-size", "md");
+    await expect(control).toHaveAttribute("data-size", "lg");
   }
   const [roundedRadius, circleRadius] = await Promise.all([
-    rounded.evaluate((element) => Number.parseFloat(getComputedStyle(element).borderRadius)),
-    circle.evaluate((element) => Number.parseFloat(getComputedStyle(element).borderRadius)),
+    rounded.evaluate((element) =>
+      Number.parseFloat(getComputedStyle(element).borderRadius),
+    ),
+    circle.evaluate((element) =>
+      Number.parseFloat(getComputedStyle(element).borderRadius),
+    ),
   ]);
   expect(circleRadius).toBeGreaterThan(roundedRadius);
+});
+
+test("IconButton sparse responsive size inherits the default before its first breakpoint", async ({
+  page,
+}) => {
+  const responsive = page.getByTestId("icon-button-responsive-size");
+
+  await page.setViewportSize({ width: 768, height: 900 });
+  await page.goto("/icon-button");
+  await expect(responsive).toHaveAttribute("data-size", "lg");
+  await expect(responsive).toHaveAttribute("data-size-lg", "md");
+  expect(await responsive.boundingBox()).toMatchObject({ height: 44, width: 44 });
+  expect(await responsive.locator("svg").boundingBox()).toMatchObject({
+    height: 20,
+    width: 20,
+  });
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  expect(await responsive.boundingBox()).toMatchObject({ height: 40, width: 40 });
+  expect(await responsive.locator("svg").boundingBox()).toMatchObject({
+    height: 20,
+    width: 20,
+  });
 });
 
 test("IconButton keeps one decorative icon and complete names across states", async ({
@@ -202,10 +243,13 @@ test("IconButton keeps one decorative icon and complete names across states", as
     loading,
     unavailableLoading,
   ]) {
-    expect(await control.boundingBox()).toMatchObject({ height: 44, width: 44 });
+    expect(await control.boundingBox()).toMatchObject({
+      height: 44,
+      width: 44,
+    });
     await expect(control).toHaveAttribute("data-variant", "ghost");
     await expect(control).toHaveAttribute("data-tone", "neutral");
-    await expect(control).toHaveAttribute("data-size", "md");
+    await expect(control).toHaveAttribute("data-size", "lg");
     await expect(control).toHaveAttribute("data-shape", "rounded");
   }
 
@@ -219,10 +263,10 @@ test("IconButton keeps one decorative icon and complete names across states", as
     };
   });
   expect(spinner).toEqual({
-    height: "18px",
+    height: "20px",
     insetBlockStart: "21px",
     insetInlineStart: "21px",
-    width: "18px",
+    width: "20px",
   });
 
   await page.getByRole("button", { name: "RTL", exact: true }).click();
@@ -262,17 +306,25 @@ test("IconButton exposes appearance and supported customization hooks", async ({
   }));
   expect(appearanceGridStyle.borderWidth).toBe("0px");
   expect(appearanceGridStyle.gap).toBeGreaterThanOrEqual(16);
-  const appearancePanels = appearanceGrid.locator(".icon-button-appearance-panel");
+  const appearancePanels = appearanceGrid.locator(
+    ".icon-button-appearance-panel",
+  );
   await expect(appearancePanels).toHaveCount(2);
   for (const panel of await appearancePanels.all()) {
     const layout = await panel.evaluate((element) => {
-      const label = element.querySelector<HTMLElement>(".playground-specimen-label")!;
-      const preview = element.querySelector<HTMLElement>(".icon-button-appearance-panel__preview")!;
+      const label = element.querySelector<HTMLElement>(
+        ".playground-specimen-label",
+      )!;
+      const preview = element.querySelector<HTMLElement>(
+        ".icon-button-appearance-panel__preview",
+      )!;
       return {
         gap: parseFloat(getComputedStyle(element).gap),
         labelWidth: label.getBoundingClientRect().width,
         panelWidth: element.getBoundingClientRect().width,
-        separated: preview.getBoundingClientRect().top > label.getBoundingClientRect().bottom,
+        separated:
+          preview.getBoundingClientRect().top >
+          label.getBoundingClientRect().bottom,
       };
     });
     expect(layout.gap).toBeGreaterThanOrEqual(16);
@@ -304,8 +356,19 @@ test("IconButton exposes appearance and supported customization hooks", async ({
     await expect(control).toHaveAttribute("aria-label", "Search");
     await expect(control).toHaveAttribute("data-variant", "ghost");
     await expect(control).toHaveAttribute("data-tone", "neutral");
-    await expect(control).toHaveAttribute("data-size", "md");
+    await expect(control).toHaveAttribute("data-size", "lg");
     await expect(control).toHaveAttribute("data-shape", "rounded");
+    const surfaceBackground = await control
+      .locator("..")
+      .evaluate((element) => getComputedStyle(element).backgroundColor);
+    await control.hover();
+    await expect
+      .poll(() =>
+        control.evaluate(
+          (element) => getComputedStyle(element).backgroundColor,
+        ),
+      )
+      .not.toBe(surfaceBackground);
   }
 
   const customizationCode = page
@@ -328,7 +391,9 @@ test("IconButton remains square in constrained and RTL content", async ({
 
   expect(
     await page.evaluate(
-      () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+      () =>
+        document.documentElement.scrollWidth <=
+        document.documentElement.clientWidth,
     ),
   ).toBe(true);
 
@@ -371,9 +436,9 @@ test("IconButton honors reduced motion and forced-color boundaries", async ({
     const style = getComputedStyle(element, "::after");
     return [style.borderTopColor, style.borderRightColor];
   });
-  expect(
-    spinnerColors.every((color) => color !== "rgba(0, 0, 0, 0)"),
-  ).toBe(true);
+  expect(spinnerColors.every((color) => color !== "rgba(0, 0, 0, 0)")).toBe(
+    true,
+  );
 
   const outline = page.getByRole("button", { name: "outline menu" });
   expect(

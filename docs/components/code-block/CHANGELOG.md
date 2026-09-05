@@ -11,6 +11,9 @@ Code Block follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Made Code Block selection inherit Brick's shared appearance-aware selection
+  pair while preserving both public component variables as paired local
+  overrides.
 - Kept collapsible source at its preview height while the full region opens,
   eliminating the collapse-to-zero visual glitch.
 - Prevented bounded source from revealing a clipped fragment of the next line.

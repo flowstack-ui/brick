@@ -53,10 +53,13 @@ Notes or issue:
 
 Setup: Open `04 Sizes` and `05 Shape`.
 
-Action: Compare xs, sm, md, lg, and xl. Then compare sharp, rounded, and pill;
-finally resize the browser around the Full-width behavior example.
+Action: Compare xs, sm, md, lg, and xl. Resize across the large breakpoint and
+confirm the responsive example changes from `md` to `xl`. Then compare sharp,
+rounded, and pill; finally resize around the Full-width behavior example.
 
-Expected: Sizes change coordinated control geometry and typography only. Shape
+Expected: Sizes change coordinated control geometry and typography only. The
+responsive example is 44px with 16/24 text and 20px logical padding below the
+large breakpoint, then 40px with 14/20 text and 16px logical padding. Shape
 changes corner geometry only. `fullWidth` fills its specimen container and
 does not overflow or change the Button’s intrinsic height unexpectedly.
 
@@ -87,7 +90,7 @@ disabled-plus-loading specimens. Focus the loading Button and attempt
 activation.
 
 Expected: Icons are decorative unless their surrounding content supplies the
-meaning. Disabled cannot activate, preserves the default medium geometry, and
+meaning. Disabled cannot activate, preserves the default large geometry, and
 uses the readable disabled foreground with a subtle boundary rather than
 resembling an enabled neutral outline. Outline and ghost specimens retain a
 transparent surface rather than adding a disabled fill.

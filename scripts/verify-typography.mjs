@@ -12,9 +12,14 @@ const recipes = [
   "display-sm",
   "display-md",
   "display-lg",
+  "display-xl",
+  "title-xl",
   "title-lg",
   "title-md",
   "title-sm",
+  "title-2xs",
+  "title-xs",
+  "body-xl",
   "body-lg",
   "body-md",
   "body-sm",
@@ -55,63 +60,86 @@ for (const appearance of ["light", "dark"]) {
   for (const recipe of recipes) {
     for (const field of fields) {
       if (!typography?.[recipe]?.[field]?.$value) {
-        failures.push(`semantic.${appearance}.typography.${recipe}.${field} is missing`);
+        failures.push(
+          `semantic.${appearance}.typography.${recipe}.${field} is missing`,
+        );
       }
     }
   }
 }
 
 const allowedGeometryDeclarations = new Map([
-  ["_action-menu/action-menu.css", [
-    "font-size: var(--brick-action-menu-font-size);",
-    "line-height: var(--brick-action-menu-line-height);",
-  ]],
-  ["avatar/avatar.css", [
-    "--brick-avatar-fallback-font-size: 0.875rem;",
-    "--brick-avatar-fallback-font-size: 0.625rem;",
-    "--brick-avatar-fallback-font-size: 0.75rem;",
-    "--brick-avatar-fallback-font-size: 1rem;",
-    "--brick-avatar-fallback-font-size: 1.25rem;",
-    "--brick-avatar-fallback-font-size: 1.5rem;",
-    "--brick-avatar-fallback-font-size: 1.75rem;",
-    "--brick-avatar-fallback-font-size: 2rem;",
-    "--brick-avatar-fallback-font-size: 2.25rem;",
-    "font-family: var(--brick-font-family-body);",
-    "font-weight: var(--brick-font-weight-semibold);",
-    "line-height: 1;",
-  ]],
-  ["badge/badge.css", [
-    "font-family: var(--brick-font-family-body);",
-    "font-size: 0.6875rem;",
-    "font-weight: var(--brick-font-weight-semibold);",
-    "line-height: 1;",
-  ]],
+  [
+    "_action-menu/action-menu.css",
+    [
+      "font-size: var(--brick-action-menu-font-size);",
+      "line-height: var(--brick-action-menu-line-height);",
+    ],
+  ],
+  [
+    "avatar/avatar.css",
+    [
+      "--brick-avatar-fallback-font-size: 0.875rem;",
+      "--brick-avatar-fallback-font-size: 0.625rem;",
+      "--brick-avatar-fallback-font-size: 0.75rem;",
+      "--brick-avatar-fallback-font-size: 1rem;",
+      "--brick-avatar-fallback-font-size: 1.25rem;",
+      "--brick-avatar-fallback-font-size: 1.5rem;",
+      "--brick-avatar-fallback-font-size: 1.75rem;",
+      "--brick-avatar-fallback-font-size: 2rem;",
+      "--brick-avatar-fallback-font-size: 2.25rem;",
+      "font-family: var(--brick-font-family-body);",
+      "font-weight: var(--brick-font-weight-semibold);",
+      "line-height: 1;",
+    ],
+  ],
+  [
+    "badge/badge.css",
+    [
+      "--brick-badge-font-size: var(--brick-font-size-2xs);",
+      "font-family: var(--brick-font-family-body);",
+      "font-size: 0.6875rem;",
+      "font-weight: var(--brick-font-weight-semibold);",
+      "line-height: 1;",
+    ],
+  ],
   ["field/field.css", ["font-weight: var(--brick-font-weight-regular);"]],
   ["fieldset/fieldset.css", ["font-weight: var(--brick-font-weight-regular);"]],
   ["icon-button/icon-button.css", ["line-height: 1;"]],
   ["input/input.css", ["line-height: 1;"]],
-  ["link/link.css", [
-    "--brick-link-font-family: inherit;",
-    "--brick-link-font-size: inherit;",
-    "--brick-link-font-weight: inherit;",
-    "--brick-link-line-height: inherit;",
-    "--brick-link-letter-spacing: inherit;",
-    "--brick-link-font-weight: var(--brick-font-weight-medium);",
-  ]],
-  ["text/text.css", [
-    "--brick-text-font-weight: inherit;",
-    "--brick-text-font-weight: var(--brick-font-weight-regular);",
-    "--brick-text-font-weight: var(--brick-font-weight-medium);",
-    "--brick-text-font-weight: var(--brick-font-weight-semibold);",
-  ]],
+  [
+    "link/link.css",
+    [
+      "--brick-link-font-family: inherit;",
+      "--brick-link-font-size: inherit;",
+      "--brick-link-font-weight: inherit;",
+      "--brick-link-line-height: inherit;",
+      "--brick-link-letter-spacing: inherit;",
+      "--brick-link-font-weight: var(--brick-font-weight-medium);",
+    ],
+  ],
+  [
+    "text/text.css",
+    [
+      "--brick-text-font-weight: inherit;",
+      "--brick-text-font-weight: var(--brick-font-weight-regular);",
+      "--brick-text-font-weight: var(--brick-font-weight-medium);",
+      "--brick-text-font-weight: var(--brick-font-weight-semibold);",
+    ],
+  ],
   ["code-block/code-block.css", ["letter-spacing: inherit;"]],
-  ["color-picker/color-picker.css", [
-    "font-size: var(--brick-color-picker-control-font-size);",
-    "line-height: var(--brick-color-picker-control-line-height);",
-  ]],
+  [
+    "color-picker/color-picker.css",
+    [
+      "font-size: var(--brick-color-picker-control-font-size);",
+      "line-height: var(--brick-color-picker-control-line-height);",
+    ],
+  ],
 ]);
 
-const componentDirectories = await readdir(componentRoot, { withFileTypes: true });
+const componentDirectories = await readdir(componentRoot, {
+  withFileTypes: true,
+});
 for (const directory of componentDirectories) {
   if (!directory.isDirectory()) continue;
   const directoryPath = resolve(componentRoot, directory.name);
@@ -120,18 +148,27 @@ for (const directory of componentDirectories) {
     const relative = `${directory.name}/${entry.name}`;
     const source = await readFile(resolve(directoryPath, entry.name), "utf8");
     const allowed = new Set(allowedGeometryDeclarations.get(relative) ?? []);
-    for (const [index, line] of source.split("\n").entries()) {
-      const declaration = line.trim();
-      if (!/(?:font-family|font-size|font-weight|line-height|letter-spacing)\s*:/.test(declaration)) {
-        continue;
-      }
+    const declarations = source.matchAll(
+      /^[ \t]*(?<property>[-\w]*(?:font-family|font-size|font-weight|line-height|letter-spacing))\s*:\s*(?<value>[^;]+);/gmu,
+    );
+    for (const match of declarations) {
+      const declaration = `${match.groups.property}: ${match.groups.value
+        .trim()
+        .replace(/\s+/gu, " ")
+        .replace(/var\(\s+/gu, "var(")
+        .replace(/\s+\)/gu, ")")};`;
       if (
         declaration.includes("var(--brick-typography-") ||
         declaration.includes("var(--brick-text-") ||
         declaration.includes("var(--brick-field-") ||
         declaration.includes("var(--brick-fieldset-") ||
         declaration.includes("var(--brick-button-") ||
+        declaration.includes("var(--brick-control-size-") ||
         declaration.includes("var(--brick-input-") ||
+        declaration.includes("var(--brick-password-") ||
+        declaration.includes("var(--brick-otp-") ||
+        declaration.includes("var(--brick-number-input-") ||
+        declaration.includes("var(--brick-combobox-") ||
         declaration.includes("var(--brick-textarea-") ||
         declaration.includes("var(--brick-select-") ||
         declaration.includes("var(--brick-multi-select-") ||
@@ -142,6 +179,7 @@ for (const directory of componentDirectories) {
         declaration.includes("var(--brick-collapsible-") ||
         declaration.includes("var(--brick-accordion-") ||
         declaration.includes("var(--brick-tabs-") ||
+        declaration.includes("var(--brick-segment-group-") ||
         declaration.includes("var(--brick-code-") ||
         declaration.includes("var(--brick-kbd-") ||
         declaration.includes("var(--brick-blockquote-") ||
@@ -157,14 +195,21 @@ for (const directory of componentDirectories) {
       ) {
         continue;
       }
-      failures.push(`${relative}:${index + 1} bypasses semantic typography: ${declaration}`);
+      const line = source.slice(0, match.index).split("\n").length;
+      failures.push(
+        `${relative}:${line} bypasses semantic typography: ${declaration}`,
+      );
     }
   }
 }
 
 if (failures.length) {
-  console.error(`Typography verification failed:\n\n${failures.map((failure) => `- ${failure}`).join("\n")}`);
+  console.error(
+    `Typography verification failed:\n\n${failures.map((failure) => `- ${failure}`).join("\n")}`,
+  );
   process.exitCode = 1;
 } else {
-  console.log(`Verified ${recipes.length} semantic typography recipes and component CSS drift boundaries.`);
+  console.log(
+    `Verified ${recipes.length} semantic typography recipes and component CSS drift boundaries.`,
+  );
 }

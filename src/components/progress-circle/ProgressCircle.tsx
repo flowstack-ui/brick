@@ -13,6 +13,7 @@ import {
   useProgressContext,
   type ProgressRootProps as AtomProgressRootProps,
 } from "@flowstack-ui/atom/progress";
+import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
 
 export type ProgressCircleSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type ProgressCircleThickness = "thin" | "regular" | "thick";
@@ -86,10 +87,11 @@ export const ProgressCircleRoot = forwardRef<
   },
   ref,
 ) {
+  const localeContext = useLocaleContext();
   const generatedId = useId();
   const labelId = `${generatedId}-label`;
   return (
-    <ProgressCircleVisualContext.Provider value={{ formatOptions, labelId, locale }}>
+    <ProgressCircleVisualContext.Provider value={{ formatOptions, labelId, locale: locale ?? localeContext.locale }}>
       <AtomProgress.Root
         {...props}
         aria-label={ariaLabel}

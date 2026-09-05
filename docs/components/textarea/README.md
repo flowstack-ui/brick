@@ -38,7 +38,6 @@ import "@flowstack-ui/brick/styles/textarea.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 ## Quick start
 
 ```tsx
@@ -48,7 +47,7 @@ import { Field, Textarea } from "@flowstack-ui/brick";
   <Field.Label>Project summary</Field.Label>
   <Textarea.Root name="summary" />
   <Field.Description>Explain the intended result.</Field.Description>
-</Field.Root>
+</Field.Root>;
 ```
 
 ## Anatomy and DOM ownership
@@ -59,10 +58,10 @@ import { Field, Textarea } from "@flowstack-ui/brick";
 </Textarea.Root>
 ```
 
-| Part | Default element | Owner | Ref target |
-| --- | --- | --- | --- |
-| `Root` | visual `span` containing native `textarea` | Brick wrapper + Atom Textarea Root | native `HTMLTextAreaElement` |
-| `Count` | `span` | Atom count state + Brick styling | `HTMLSpanElement` |
+| Part    | Default element                            | Owner                              | Ref target                   |
+| ------- | ------------------------------------------ | ---------------------------------- | ---------------------------- |
+| `Root`  | visual `span` containing native `textarea` | Brick wrapper + Atom Textarea Root | native `HTMLTextAreaElement` |
+| `Count` | `span`                                     | Atom count state + Brick styling   | `HTMLSpanElement`            |
 
 Root always preserves native textarea semantics. Its wrapper is non-semantic
 and never focusable. Count is optional and follows the current Atom value.
@@ -71,18 +70,18 @@ and never focusable. Count is optional and follows the current Atom value.
 
 ### Root
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `variant` | `"outline" \| "soft" \| "underline"` | `"outline"` |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` |
-| `shape` | `"sharp" \| "rounded"` | `"rounded"` |
-| `fullWidth` | `boolean` | `true` |
-| `minRows` | `number` | `3` |
-| `autoResize` | `boolean` | `false` |
-| `maxRows` | `number` | only with `autoResize` |
-| `resize` | `"none" \| "vertical" \| "horizontal" \| "both"` | `"vertical"` when not auto-resizing |
-| `className`, `style` | wrapper customization | — |
-| `textareaClassName`, `textareaStyle` | native control customization | — |
+| Prop                                 | Type                                             | Default                             |
+| ------------------------------------ | ------------------------------------------------ | ----------------------------------- |
+| `variant`                            | `"outline" \| "soft" \| "underline"`             | `"outline"`                         |
+| `size`                               | `"2xs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl"`; or a responsive value | `"lg"` |
+| `shape`                              | `"sharp" \| "rounded"`                           | `"rounded"`                         |
+| `fullWidth`                          | `boolean`                                        | `true`                              |
+| `minRows`                            | `number`                                         | `3`                                 |
+| `autoResize`                         | `boolean`                                        | `false`                             |
+| `maxRows`                            | `number`                                         | only with `autoResize`              |
+| `resize`                             | `"none" \| "vertical" \| "horizontal" \| "both"` | `"vertical"` when not auto-resizing |
+| `className`, `style`                 | wrapper customization                            | —                                   |
+| `textareaClassName`, `textareaStyle` | native control customization                     | —                                   |
 
 Auto-resize and manual `resize` are intentionally exclusive. Underline has
 fixed sharp geometry and rejects `shape`. Root otherwise accepts released Atom
@@ -93,7 +92,7 @@ uncontrolled values, `name`, `form`, `rows`, `cols`, `wrap`, `placeholder`,
 Closed values are:
 
 - variants: `outline`, `soft`, `underline`;
-- sizes: `sm`, `md`, `lg`;
+- sizes: `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`;
 - shapes: `sharp`, `rounded`;
 - manual resize: `none`, `vertical`, `horizontal`, `both`.
 
@@ -109,7 +108,8 @@ Public exports are `Textarea`, `TextareaRoot`, `TextareaCount`,
 
 ## Visual recipes and states
 
-- `outline` uses a complete border and raised/base control surface.
+- `outline` uses a complete border over a transparent rest and hover surface,
+  matching Input on shared form surfaces.
 - `soft` uses a subtle filled surface and restrained border.
 - `underline` uses a transparent surface and bottom indicator.
 - Sizes change padding and typography while keeping the same native row count.
@@ -169,11 +169,13 @@ the native editing surface.
 ```tsx
 <Textarea.Root
   aria-label="Notes"
-  style={{
-    "--brick-textarea-border": "#18794e",
-    "--brick-textarea-focus-ring": "#18794e",
-    "--brick-textarea-radius": "0.75rem",
-  } as React.CSSProperties}
+  style={
+    {
+      "--brick-textarea-border": "#18794e",
+      "--brick-textarea-focus-ring": "#18794e",
+      "--brick-textarea-radius": "0.75rem",
+    } as React.CSSProperties
+  }
   textareaStyle={{ letterSpacing: "0.04em" }}
 />
 ```
@@ -181,7 +183,8 @@ the native editing surface.
 ## Responsive behavior
 
 Root defaults to full width, keeps `min-inline-size: 0`, and cannot exceed its
-container. Editable text remains at least 16 CSS pixels. Logical alignment
+container. The `lg` default uses 16px editable text; compact recipes are
+deliberate dense-interface choices. Logical alignment
 supports RTL. Applications own surrounding responsive layout and may opt out
 of full width. Horizontal/both manual resize remains constrained by the
 container.
@@ -219,12 +222,7 @@ external `form` ownership, and inline/native validation.
 ### Bounded auto-resize
 
 ```tsx
-<Textarea.Root
-  aria-label="Description"
-  autoResize
-  minRows={3}
-  maxRows={8}
-/>
+<Textarea.Root aria-label="Description" autoResize minRows={3} maxRows={8} />
 ```
 
 ### Manual resize

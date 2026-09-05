@@ -235,8 +235,10 @@ Explicit mode accepts Brick's responsive object grammar:
 </Grid.Root>
 ```
 
-Objects require `initial` and may add `sm`, `md`, `lg`, and `xl`. The same
-grammar applies to Root gaps/alignment and unanchored Item spans/alignment.
+Objects must contain at least one of `initial`, `sm`, `md`, `lg`, or `xl`.
+When `initial` is omitted, Grid keeps the property default below the first
+supplied breakpoint. The same grammar applies to Root gaps/alignment and
+unanchored Item spans/alignment.
 It never changes DOM or focus order. `minItemSize` and explicit line placement
 remain static.
 

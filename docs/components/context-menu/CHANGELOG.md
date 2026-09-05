@@ -4,6 +4,11 @@ Context Menu follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Fixed
+
+- Use the standard overlay boundary token so popup and submenu edges remain
+  visible against raised application surfaces.
+
 ## 0.1.10
 
 ### Fixed

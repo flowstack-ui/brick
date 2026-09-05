@@ -14,8 +14,8 @@ Present finished exact numeric entry with typing and step actions while Atom own
 
 ## Required composition
 
-- Compose a visibly labelled Field with NumberInput.Root containing exactly one NumberInput.Input plus optional NumberInput.Increment and NumberInput.Decrement. Name both step actions because their default artwork is decorative.
-- Choose outline, soft, or underline plus sm, md, or lg and an allowed shape on Root. Keep formatter and parser reversible, use number or null controlled state, and keep units and application quantity policy outside the component.
+- Compose a visibly labelled Field with NumberInput.Root containing exactly one NumberInput.Input, optional NumberInput.Unit, and either NumberInput.Control or explicit NumberInput.Increment and NumberInput.Decrement. Control generates both localized actions when children are omitted.
+- Choose outline, soft, or underline plus the responsive 2xs–2xl size scale and an allowed shape on Root. Keep layout=field for compact chevron actions; use layout=stepper for separated square minus/plus actions around a centered editable value with a larger numeric reading scale. Use hover-only steppers only for dense expert field layouts; they remain visible for touch users. Use Unit for a stable presentational suffix such as px or %, keep formatter and parser reversible, use number or null controlled state, and keep application quantity policy outside the component.
 
 ## Rules
 
@@ -25,6 +25,9 @@ Present finished exact numeric entry with typing and step actions while Atom own
 - **MUST:** Give Input a visible Field label or equivalent accessible name and give Increment and Decrement localized action names while preserving spinbutton ARIA, Arrow/Page/Home/End keys, native validity, and pointer focus retention.
 - **MUST:** Keep the visible Input as validity owner and Root's named parsed value as the submission contract, including external form association, Field reporting, reset, disabled, read-only, required, and invalid state.
 - **MUST:** Keep the shrinkable input and fixed logical-end action column contained at narrow widths and in RTL; preserve coarse-pointer step targets and do not use viewport width as a touch proxy.
+- **MUST:** When using hover-only steppers, preserve focus-triggered discovery and persistent coarse-pointer actions; never make hover the only way to find or operate the step actions.
+- **MUST:** Use NumberInput.Unit only for a presentational suffix; do not include it in the editable numeric value or submission contract.
+- **SHOULD:** Use layout=stepper for quantity, seat, and inventory choices that benefit from separated square actions; keep layout=field for ordinary editable numeric fields and apply hover-only visibility only to that field layout.
 - **MUST:** Load styles.css or core.css plus number-input.css and Field CSS when composed.
 
 ## Common mistakes
@@ -35,8 +38,8 @@ Present finished exact numeric entry with typing and step actions while Atom own
 ## Validation checklist
 
 - Verify controlled number and null state, uncontrolled default, intermediate typing, parsing, formatting, precision, min/max, clampOnBlur, step and largeStep, Arrow/Page/Home/End, empty state, boundary action state, and pointer/touch focus preservation.
-- Verify visible naming, localized step-action names, required and numeric native validity, Field reporting, named parsed submission, external form, reset, disabled/read-only behavior, refs, native props, and custom action children.
-- Verify outline, soft, and underline recipes; all sizes and allowed shapes; full-width and intrinsic layouts; narrow width, coarse pointer, RTL, zoom, forced colors, light and dark appearance, focus, invalid, and disabled paint.
+- Verify visible naming, localized generated Control labels, explicit action names, required and numeric native validity, Field reporting, named parsed submission, external form, reset, disabled/read-only behavior, refs, native props, and custom action children.
+- Verify field and stepper layouts; outline, soft, and underline recipes; all sizes and allowed shapes; full-width and intrinsic layouts; narrow width, coarse pointer, RTL, zoom, forced colors, light and dark appearance, focus, invalid, and disabled paint.
 
 ## Related guidance
 

@@ -68,6 +68,10 @@
           "subtle": "#d8e3de"
         },
         "focus-ring": "{roles.brand.focus}",
+        "selection": {
+          "background": "{roles.brand.primary}",
+          "foreground": "#ffffff"
+        },
         "surface": {
           "base": "#ffffff",
           "canvas": "#f7f9f7",
@@ -104,6 +108,10 @@
           "subtle": "#28483d"
         },
         "focus-ring": "#ff9a52",
+        "selection": {
+          "background": "{roles.brand.primary-dark}",
+          "foreground": "#05251e"
+        },
         "surface": {
           "base": "#0d1d18",
           "canvas": "#081511",

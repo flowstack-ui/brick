@@ -29,9 +29,14 @@ const variants: TextVariant[] = [
   "display-sm",
   "display-md",
   "display-lg",
+  "display-xl",
+  "title-lg",
   "title-lg",
   "title-md",
   "title-sm",
+  "title-xs",
+  "title-2xs",
+  "body-xl",
   "body-lg",
   "body-md",
   "body-sm",
@@ -104,7 +109,7 @@ export const textScenarios = [
   },
   {
     description:
-      "Nine restrained visual recipes change typography only. Every specimen keeps the default span host, primary tone, identical copy, and natural wrapping.",
+      "Fourteen restrained visual recipes change typography only. Every specimen keeps the default span host, primary tone, identical copy, and natural wrapping.",
     id: "text.variants",
     number: 2,
     title: "Type variants",

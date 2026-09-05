@@ -1,0 +1,93 @@
+@layer brick.components {
+  .brick-avatar-group {
+    --brick-avatar-group-avatar-size: 2.5rem;
+    --brick-avatar-group-overlap: calc(
+      var(--brick-avatar-group-avatar-size) * 0.25
+    );
+    --brick-avatar-group-outline-color: var(--brick-color-surface-base);
+
+    display: inline-flex;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    align-items: center;
+    isolation: isolate;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .brick-avatar-group[data-overlap="none"] {
+    --brick-avatar-group-overlap: 0rem;
+  }
+
+  .brick-avatar-group[data-overlap="sm"] {
+    --brick-avatar-group-overlap: calc(
+      var(--brick-avatar-group-avatar-size) * 0.125
+    );
+  }
+
+  .brick-avatar-group[data-overlap="lg"] {
+    --brick-avatar-group-overlap: calc(
+      var(--brick-avatar-group-avatar-size) * 0.375
+    );
+  }
+
+  .brick-avatar-group[data-size="xs"] {
+    --brick-avatar-group-avatar-size: 1.5rem;
+  }
+
+  .brick-avatar-group[data-size="sm"] {
+    --brick-avatar-group-avatar-size: 2rem;
+  }
+
+  .brick-avatar-group[data-size="lg"] {
+    --brick-avatar-group-avatar-size: 3rem;
+  }
+
+  .brick-avatar-group[data-size="xl"] {
+    --brick-avatar-group-avatar-size: 4rem;
+  }
+
+  .brick-avatar-group[data-size="2xl"] {
+    --brick-avatar-group-avatar-size: 5rem;
+  }
+
+  .brick-avatar-group[data-size="3xl"] {
+    --brick-avatar-group-avatar-size: 6rem;
+  }
+
+  .brick-avatar-group[data-size="4xl"] {
+    --brick-avatar-group-avatar-size: 7rem;
+  }
+
+  .brick-avatar-group[data-size="5xl"] {
+    --brick-avatar-group-avatar-size: 8rem;
+  }
+
+  .brick-avatar-group__item {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    min-inline-size: 0;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--brick-avatar-group-item-order);
+  }
+
+  .brick-avatar-group__item:not(:first-child) {
+    margin-inline-start: calc(-1 * var(--brick-avatar-group-overlap));
+  }
+
+  .brick-avatar-group .brick-avatar {
+    --brick-avatar-outline-color: var(--brick-avatar-group-outline-color);
+  }
+
+  .brick-avatar-group__item:is(:hover, :focus-within) {
+    z-index: 100;
+  }
+
+  @media (forced-colors: active) {
+    .brick-avatar-group {
+      --brick-avatar-group-outline-color: Canvas;
+    }
+  }
+}

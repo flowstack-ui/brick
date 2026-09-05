@@ -3,6 +3,10 @@ import {
   ButtonRoot as AtomButtonRoot,
   type ButtonRootProps as AtomButtonRootProps,
 } from "@flowstack-ui/atom/button";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
 import type { ButtonSize, ButtonTone, ButtonVariant } from "../button/Button.js";
 
 export type IconButtonVariant = ButtonVariant;
@@ -15,8 +19,8 @@ interface IconButtonVisualProps {
   variant?: IconButtonVariant;
   /** Semantic color role. @default "neutral" */
   tone?: IconButtonTone;
-  /** Complete square control size. @default "md" */
-  size?: IconButtonSize;
+  /** Complete square control size. @default "lg" */
+  size?: ResponsiveValue<IconButtonSize>;
   /** Corner geometry. @default "rounded" */
   shape?: IconButtonShape;
 }
@@ -49,7 +53,7 @@ export const IconButton = forwardRef<HTMLElement, IconButtonProps>(
     {
       variant = "ghost",
       tone = "neutral",
-      size = "md",
+      size = "lg",
       shape = "rounded",
       className,
       children,
@@ -71,11 +75,14 @@ export const IconButton = forwardRef<HTMLElement, IconButtonProps>(
         asChild={asChild}
         className={mergeClassName(className)}
         data-shape={shape}
-        data-size={size}
         data-tone={tone}
         data-variant={variant}
         ref={ref}
         render={render}
+        {...responsiveDataAttributes("data-size", size, {
+          alwaysInitial: true,
+          defaultValue: "lg",
+        })}
       >
         {content}
       </AtomButtonRoot>
