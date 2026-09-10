@@ -4,6 +4,12 @@ import { describe, expect, it } from "vitest";
 import { Checkmark } from "../../../src/checkmark.js";
 
 describe("Checkmark", () => {
+  it("consumes filled and inverted as passive presentation props", () => {
+    const { container } = render(<Checkmark filled variant="inverted" checked />);
+    expect(container.firstChild).toHaveAttribute("data-filled", "");
+    expect(container.firstChild).not.toHaveAttribute("filled");
+    expect(container.firstChild).toHaveAttribute("data-variant", "inverted");
+  });
   it("renders stable checked, mixed, and unchecked visual states", () => {
     const ref = createRef<SVGSVGElement>();
     const { container, rerender } = render(<Checkmark checked ref={ref} />);

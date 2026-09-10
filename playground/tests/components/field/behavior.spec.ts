@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function expectResponsiveFieldLayout(grid: Locator) {
   const tops = await grid.locator(".brick-field").evaluateAll((fields) =>

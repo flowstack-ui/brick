@@ -14,6 +14,7 @@ import {
 } from "../_control-size/ControlSize.js";
 
 export type TextareaVariant = "outline" | "soft" | "underline";
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
 export type TextareaSize = ControlSize;
 export type TextareaShape = "sharp" | "rounded";
 export type TextareaResize = "none" | "vertical" | "horizontal" | "both";
@@ -42,15 +43,15 @@ type TextareaRootSharedProps = Omit<
 };
 
 type TextareaVariantProps =
-  | {
+  | (RadiusShapeProps<TextareaShape> & {
       /** Visual container recipe. @default "outline" */
       variant?: "outline" | "soft";
       /** Visual container geometry. @default "rounded" */
-      shape?: TextareaShape;
-    }
+    })
   | {
       variant: "underline";
       shape?: never;
+      radius?: never;
     };
 
 type TextareaResizeProps =
@@ -89,6 +90,7 @@ export const TextareaRoot = forwardRef<HTMLTextAreaElement, TextareaRootProps>(
       minRows = 3,
       resize = "vertical",
       shape = "rounded",
+      radius,
       size = "lg",
       style,
       textareaClassName,
@@ -99,7 +101,7 @@ export const TextareaRoot = forwardRef<HTMLTextAreaElement, TextareaRootProps>(
     },
     ref,
   ) {
-    const resolvedShape = variant === "underline" ? undefined : shape;
+    const resolvedShape = variant === "underline" ? undefined : radius === undefined ? shape : "rounded";
     const resolvedResize = autoResize ? "none" : resize;
 
     return (
@@ -111,7 +113,7 @@ export const TextareaRoot = forwardRef<HTMLTextAreaElement, TextareaRootProps>(
         data-shape={resolvedShape}
         data-slot={dataSlot ?? "textarea"}
         data-variant={variant}
-        style={style}
+        style={radiusStyle(variant === "underline" ? undefined : radius, "--brick-textarea-radius", style)}
         {...controlSizeDataAttributes(size)}
       >
         <AtomTextarea.Root

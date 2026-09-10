@@ -9,7 +9,7 @@ test("Progress defaults, recipes, geometry, buffer, and output", async ({ page }
   await expect(page.getByTestId("progress-buffer")).toHaveScreenshot("buffer-light.png");
   await setAppearance(page, "dark");
   await expect(page.getByTestId("progress-appearance")).toHaveScreenshot("appearance-dark.png");
-  await page.addStyleTag({ content: ".evidence-app-bar, .evidence-review-header, .scenario-nav { display: none !important; }" });
+  await page.addStyleTag({ content: "[data-playground-app-bar], .evidence-review-header, .scenario-nav { display: none !important; }" });
   await expectEvidenceScreenshot(page, page.locator("#scenario-progress-appearance"), "theme-dark.png");
 });
 test("Progress mobile and forced colors", async ({ page }) => {

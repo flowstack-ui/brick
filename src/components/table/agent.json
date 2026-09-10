@@ -31,7 +31,7 @@
     "Put an independently named Button and optional decorative SortIndicator inside the active Head when the application owns sorting.",
     "Choose surface and border tone independently, opt into column borders only when they improve comparison, use fixed layout only with deliberate column widths, set verticalAlign on cells whose contents need top or bottom alignment, and use Row variant=section for authored row-group headings."
   ],
-  "rules": [
+  "rules": [{"id":"table-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {
       "id": "table-native-relationships",
       "level": "must",

@@ -4,6 +4,18 @@ Popover follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Document the padded Header/Body/Footer structure, built-in bounded Body scrolling,
+  and the missing-padding/scrolling failure caused by whole-panel layout wrappers.
+- Add an explicit Agent Knowledge rule and a settings-popover inset regression.
+
+- Constrain the scroll viewport to Atom's available placement height, keeping
+  tall anchored panels reachable on short screens without application CSS.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
+- Place anchored popovers above the modal content layer so nested date and
+  editing controls remain visible and pointer-operable.
+
 ## 0.1.10
 
 ### Added

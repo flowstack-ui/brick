@@ -10,7 +10,7 @@
     "Give Menubar.Root an accessible name and compose one or more uniquely valued Menubar.Menu scopes, each containing Menubar.Trigger and portalled Menubar.Content. Build Content from the shared command, selection, grouping, separator, static row, and paired submenu anatomy.",
     "Root owns sm, md, or lg density and horizontal or vertical orientation; Content and SubContent inherit that density. Reproduce any local Appearance scope on each portalled visual root."
   ],
-  "rules": [
+  "rules": [{"id":"menubar-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {"id": "menubar-application-commands", "level": "must", "statement": "Use Menubar only for persistent application command categories, not website navigation, page tabs, route-current state, or a responsive application shell."},
     {"id": "menubar-root-name", "level": "must", "statement": "Give the role=menubar Root an accessible name and keep every top-level Trigger as its role=menuitem child with one Atom-owned roving tab stop."},
     {"id": "menubar-menu-scope", "level": "must", "statement": "Give every top-level Menu a unique value and keep its Trigger and Content within that Menu scope so controlled value and adjacent-menu handoff remain deterministic."},

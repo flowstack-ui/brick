@@ -75,6 +75,15 @@ non-positive or non-finite values are normalized to one visual slot, so an
 invalid dynamic budget still produces one explicit overflow representation.
 A non-finite `total` falls back to the direct-child count.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 One group size and shape apply to every descendant Brick Avatar. Overlap uses

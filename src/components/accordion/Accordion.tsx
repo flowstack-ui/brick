@@ -1,3 +1,4 @@
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import {
   Accordion as AtomAccordion,
@@ -13,6 +14,7 @@ export type AccordionSize = "sm" | "md" | "lg" | "xl";
 export type AccordionIndicatorPlacement = "start" | "end";
 
 export type AccordionRootProps = AtomAccordionRootProps & {
+  radius?: Radius;
   variant?: AccordionVariant;
   size?: AccordionSize;
   indicatorPlacement?: AccordionIndicatorPlacement;
@@ -41,7 +43,7 @@ function classes(base: string, className?: string) {
 export const AccordionRoot = forwardRef<HTMLDivElement, AccordionRootProps>(
   function AccordionRoot(
     {
-      className,
+      className, radius, style,
       indicatorPlacement = "end",
       size = "md",
       variant = "plain",
@@ -53,7 +55,7 @@ export const AccordionRoot = forwardRef<HTMLDivElement, AccordionRootProps>(
     return (
       <AtomAccordion.Root
         {...props}
-        className={classes("brick-accordion", className)}
+        className={classes("brick-accordion", className)} style={radiusStyle(radius, "--brick-accordion-radius", style)}
         data-indicator-placement={indicatorPlacement}
         data-size={size}
         data-slot={slot ?? "accordion-root"}

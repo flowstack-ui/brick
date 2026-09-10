@@ -15,7 +15,7 @@ test("Popover default and anatomy surfaces", async ({ page }) => {
   await page.keyboard.press("Escape");
   await page.addStyleTag({
     content:
-      ".evidence-app-bar, .evidence-review-header, .scenario-nav { display: none !important; }",
+      "[data-playground-app-bar], .evidence-review-header, .scenario-nav { display: none !important; }",
   });
   await expectEvidenceScreenshot(
     page,

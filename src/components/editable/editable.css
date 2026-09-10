@@ -1,0 +1,161 @@
+@layer brick.components {
+  .brick-editable {
+    --brick-editable-font-size: var(--brick-typography-body-md-font-size);
+    --brick-editable-line-height: var(--brick-typography-body-md-line-height);
+    --brick-editable-padding: var(--brick-space-2);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--brick-space-2);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    color: var(--brick-color-text-primary);
+  }
+  .brick-editable[data-size="sm"] {
+    --brick-editable-font-size: var(--brick-typography-body-sm-font-size);
+    --brick-editable-line-height: var(--brick-typography-body-sm-line-height);
+    --brick-editable-padding: var(--brick-space-1);
+  }
+  .brick-editable[data-size="lg"] {
+    --brick-editable-font-size: var(--brick-typography-body-lg-font-size);
+    --brick-editable-line-height: var(--brick-typography-body-lg-line-height);
+    --brick-editable-padding: var(--brick-space-3);
+  }
+  .brick-editable-area {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    flex: 1;
+  }
+  .brick-editable[data-autoresize] .brick-editable-area {
+    flex: 0 1 auto;
+  }
+  .brick-editable-label {
+    flex-basis: 100%;
+    font-family: var(--brick-typography-body-md-font-family);
+    font-size: var(--brick-editable-font-size);
+    font-weight: var(--brick-typography-label-md-font-weight);
+    line-height: var(--brick-editable-line-height);
+  }
+  .brick-editable-preview,
+  .brick-editable-input,
+  .brick-editable-textarea {
+    box-sizing: border-box;
+    display: block;
+    min-inline-size: 0;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    border: var(--brick-border-width) solid transparent;
+    border-radius: var(--brick-radius-control);
+    padding-inline: var(--brick-editable-padding);
+    padding-block: var(--brick-space-1);
+    font-family: var(--brick-typography-body-md-font-family);
+    font-size: var(--brick-editable-font-size);
+    font-weight: var(--brick-typography-body-md-font-weight);
+    line-height: var(--brick-editable-line-height);
+    letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    background: transparent;
+    color: inherit;
+    text-align: start;
+    overflow-wrap: anywhere;
+    min-block-size: calc(
+      1lh + var(--brick-space-1) * 2 + var(--brick-border-width) * 2
+    );
+  }
+  .brick-editable-preview {
+    white-space: pre-wrap;
+    cursor: text;
+  }
+  .brick-editable-input,
+  .brick-editable-textarea {
+    border-color: var(--brick-color-border-default);
+  }
+  .brick-editable-textarea {
+    resize: vertical;
+  }
+  .brick-editable[data-autoresize] .brick-editable-textarea {
+    resize: none;
+  }
+  .brick-editable-preview[hidden],
+  .brick-editable-input[hidden],
+  .brick-editable-textarea[hidden],
+  .brick-editable-trigger[hidden] {
+    display: none;
+  }
+  .brick-editable-preview[data-placeholder-shown],
+  .brick-editable-input::placeholder,
+  .brick-editable-textarea::placeholder {
+    color: var(--brick-color-text-muted);
+  }
+  .brick-editable-control {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--brick-space-1);
+    flex-shrink: 0;
+  }
+  .brick-editable-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--brick-space-1);
+    border: var(--brick-border-width) solid transparent;
+    border-radius: var(--brick-radius-control);
+    padding: var(--brick-space-1) var(--brick-space-2);
+    background: transparent;
+    color: var(--brick-color-text-primary);
+    font: inherit;
+    font-size: var(--brick-editable-font-size);
+    line-height: var(--brick-editable-line-height);
+    cursor: pointer;
+  }
+  .brick-editable-preview:focus-visible,
+  .brick-editable-input:focus-visible,
+  .brick-editable-textarea:focus-visible,
+  .brick-editable-trigger:focus-visible {
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: var(--brick-border-width);
+  }
+  .brick-editable[data-invalid]
+    :is(
+      .brick-editable-preview,
+      .brick-editable-input,
+      .brick-editable-textarea
+    ) {
+    border-color: var(--brick-color-danger-text);
+  }
+  .brick-editable[data-disabled] {
+    color: var(--brick-color-text-muted);
+  }
+  .brick-editable[data-disabled] .brick-editable-preview,
+  .brick-editable-trigger:disabled {
+    cursor: not-allowed;
+  }
+  .brick-editable-trigger:disabled {
+    color: var(--brick-color-text-muted);
+  }
+  .brick-editable[data-readonly] .brick-editable-preview {
+    cursor: default;
+  }
+  @media (hover: hover) {
+    .brick-editable:not([data-disabled], [data-readonly])
+      .brick-editable-preview:hover,
+    .brick-editable-trigger:not(:disabled):hover {
+      background: var(--brick-color-surface-subtle);
+    }
+  }
+  @media (forced-colors: active) {
+    .brick-editable-input,
+    .brick-editable-textarea {
+      border-color: ButtonText;
+    }
+    .brick-editable[data-disabled] {
+      opacity: 1;
+      color: GrayText;
+    }
+    .brick-editable-preview:focus-visible,
+    .brick-editable-input:focus-visible,
+    .brick-editable-textarea:focus-visible,
+    .brick-editable-trigger:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

@@ -13,7 +13,7 @@ test("Reorderable List overview, recipes, movement, and states", async ({ page }
 test("Reorderable List dark, mobile RTL, and forced-color boundaries", async ({ page }) => {
   await page.setViewportSize({ width: 1120, height: 1200 });
   await setAppearance(page, "dark");
-  await page.addStyleTag({ content: ".evidence-app-bar, .evidence-review-header, .scenario-nav { display: none !important; }" });
+  await page.addStyleTag({ content: "[data-playground-app-bar], .evidence-review-header, .scenario-nav { display: none !important; }" });
   await expectEvidenceScreenshot(page, page.locator("#scenario-reorderable-list-theme"), "theme-dark.png");
   await page.setViewportSize({ width: 390, height: 844 });
   await expectEvidenceScreenshot(page, page.locator("#scenario-reorderable-list-direction"), "direction-mobile-dark.png");

@@ -19,6 +19,24 @@ test("package metadata defines the public Brick boundary", async () => {
     "git+https://github.com/flowstack-ui/brick.git",
   );
   assert.deepEqual(packageJson.exports, {
+    "./radius": { types: "./dist/radius.d.ts", default: "./dist/radius.js" },
+    "./qr-code": { types: "./dist/qr-code.d.ts", default: "./dist/qr-code.js" },
+    "./native-select": { types: "./dist/native-select.d.ts", default: "./dist/native-select.js" },
+    "./editable": { types: "./dist/editable.d.ts", default: "./dist/editable.js" },
+    "./tags-input": { types: "./dist/tags-input.d.ts", default: "./dist/tags-input.js" },
+    "./alert": { types: "./dist/alert.d.ts", default: "./dist/alert.js" },
+    "./empty-state": { types: "./dist/empty-state.d.ts", default: "./dist/empty-state.js" },
+    "./stat": { types: "./dist/stat.d.ts", default: "./dist/stat.js" },
+    "./timeline": { types: "./dist/timeline.d.ts", default: "./dist/timeline.js" },
+    "./marquee": { types: "./dist/marquee.d.ts", default: "./dist/marquee.js" },
+    "./spinner": { types: "./dist/spinner.d.ts", default: "./dist/spinner.js" },
+    "./action-bar": { types: "./dist/action-bar.d.ts", default: "./dist/action-bar.js" },
+    "./floating-panel": { types: "./dist/floating-panel.d.ts", default: "./dist/floating-panel.js" },
+    "./overlay-manager": { types: "./dist/overlay-manager.d.ts", default: "./dist/overlay-manager.js" },
+    "./calendar": { types: "./dist/calendar.d.ts", default: "./dist/calendar.js" },
+    "./date-input": { types: "./dist/date-input.d.ts", default: "./dist/date-input.js" },
+    "./date-picker": { types: "./dist/date-picker.d.ts", default: "./dist/date-picker.js" },
+    "./date-value": { types: "./dist/date-value.d.ts", default: "./dist/date-value.js" },
     ".": {
       types: "./dist/index.d.ts",
       default: "./dist/index.js",
@@ -88,6 +106,8 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/icon-button.d.ts",
       default: "./dist/icon-button.js",
     },
+    "./close-button": { types: "./dist/close-button.d.ts", default: "./dist/close-button.js" },
+    "./download-trigger": { types: "./dist/download-trigger.d.ts", default: "./dist/download-trigger.js" },
     "./icon": {
       types: "./dist/icon.d.ts",
       default: "./dist/icon.js",
@@ -167,6 +187,14 @@ test("package metadata defines the public Brick boundary", async () => {
     "./form": {
       types: "./dist/form.d.ts",
       default: "./dist/form.js",
+    },
+    "./steps": {
+      types: "./dist/steps.d.ts",
+      default: "./dist/steps.js",
+    },
+    "./splitter": {
+      types: "./dist/splitter.d.ts",
+      default: "./dist/splitter.js",
     },
     "./field": {
       types: "./dist/field.d.ts",
@@ -296,9 +324,9 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/number-input.d.ts",
       default: "./dist/number-input.js",
     },
-    "./otp-field": {
-      types: "./dist/otp-field.d.ts",
-      default: "./dist/otp-field.js",
+    "./pin-input": {
+      types: "./dist/pin-input.d.ts",
+      default: "./dist/pin-input.js",
     },
     "./password-toggle-field": {
       types: "./dist/password-toggle-field.d.ts",
@@ -331,6 +359,10 @@ test("package metadata defines the public Brick boundary", async () => {
     "./table": {
       types: "./dist/table.d.ts",
       default: "./dist/table.js",
+    },
+    "./table-of-contents": {
+      types: "./dist/table-of-contents.d.ts",
+      default: "./dist/table-of-contents.js",
     },
     "./data-grid": {
       types: "./dist/data-grid.d.ts",
@@ -447,7 +479,7 @@ test("package metadata defines the public Brick boundary", async () => {
   });
   assert.deepEqual(packageJson.sideEffects, ["**/*.css"]);
   const componentSubpaths = Object.entries(packageJson.exports)
-    .filter(([path, target]) => path !== "." && typeof target === "object")
+    .filter(([path, target]) => path !== "." && path !== "./radius" && path !== "./date-value" && path !== "./overlay-manager" && typeof target === "object")
     .map(([path]) => path.slice(2))
     .sort();
   assert.deepEqual([...componentStyleNames].sort(), componentSubpaths);
@@ -539,7 +571,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   const pagination = await import(new URL("../../dist/pagination.js", import.meta.url));
   const carousel = await import(new URL("../../dist/carousel.js", import.meta.url));
   const numberInput = await import(new URL("../../dist/number-input.js", import.meta.url));
-  const otpField = await import(new URL("../../dist/otp-field.js", import.meta.url));
+  const pinInput = await import(new URL("../../dist/pin-input.js", import.meta.url));
   const passwordToggleField = await import(new URL("../../dist/password-toggle-field.js", import.meta.url));
   const stack = await import(new URL("../../dist/stack.js", import.meta.url));
   const group = await import(new URL("../../dist/group.js", import.meta.url));
@@ -581,7 +613,13 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.deepEqual(
     Object.keys(brick),
     [
+      "ActionBar", "ActionBarRoot", "ActionBarRootProvider", "ActionBarContext", "ActionBarPortal", "ActionBarPositioner", "ActionBarContent", "ActionBarSelectionTrigger", "ActionBarCloseTrigger", "ActionBarSeparator", "ActionBarTitle", "ActionBarDescription",
+      "FloatingPanel", "FloatingPanelRoot", "FloatingPanelRootProvider", "FloatingPanelContext", "FloatingPanelPortal", "FloatingPanelTrigger", "FloatingPanelPositioner", "FloatingPanelContent", "FloatingPanelHeader", "FloatingPanelBody", "FloatingPanelTitle", "FloatingPanelDescription", "FloatingPanelControl", "FloatingPanelDragTrigger", "FloatingPanelStageTrigger", "FloatingPanelCloseTrigger", "FloatingPanelResizeTrigger", "FloatingPanelResizeTriggers", "useFloatingPanel", "useFloatingPanelContext", "createOverlay",
       "Accordion",
+      "Calendar", "CalendarRoot", "CalendarHeader", "CalendarPrevTrigger", "CalendarNextTrigger", "CalendarViewTrigger", "CalendarMonthSelect", "CalendarYearSelect", "CalendarGrid", "CalendarContext",
+      "DateInput", "DateInputRoot", "DateInputLabel", "DateInputControl", "DateInputSegmentGroup", "DateInputSegment", "DateInputSegments", "DateInputClearTrigger", "DateInputHiddenInput", "DateInputContext",
+      "DatePicker", "DatePickerRoot", "DatePickerLabel", "DatePickerControl", "DatePickerInput", "DatePickerTrigger", "DatePickerClearTrigger", "DatePickerPortal", "DatePickerContent", "DatePickerCalendar", "DatePickerContext", "DatePickerValueText", "DatePickerHiddenInput",
+      "aspectRatios", "CalendarDate", "CalendarDateTime", "ZonedDateTime", "DateFormatter", "parseDate", "parseDateTime", "parseZonedDateTime", "parseAbsolute", "today", "now", "getLocalTimeZone", "toCalendar", "toCalendarDate", "toZoned", "createCalendar",
       "AccordionContent",
       "AccordionContentInner",
       "AccordionHeader",
@@ -589,6 +627,17 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "AccordionItem",
       "AccordionRoot",
       "AccordionTrigger",
+      "Alert", "AlertRoot", "AlertContent", "AlertTitle", "AlertDescription", "AlertIndicator",
+      "EmptyState", "EmptyStateRoot", "EmptyStateContent", "EmptyStateTitle", "EmptyStateDescription", "EmptyStateIndicator", "Spinner",
+      "Stat", "StatRoot", "StatGroup", "StatLabel", "StatValueText", "StatValueUnit", "StatHelpText", "StatUpIndicator", "StatDownIndicator",
+      "Timeline", "TimelineRoot", "TimelineItem", "TimelineConnector", "TimelineSeparator", "TimelineIndicator", "TimelineContent", "TimelineTitle", "TimelineDescription",
+      "Marquee", "MarqueeRoot", "MarqueeRootProvider", "MarqueeContext", "MarqueeViewport", "MarqueeContent", "MarqueeItem", "MarqueeEdge", "useMarquee", "useMarqueeContext",
+      "ChipActionTrigger", "ChipStartElement", "ChipEndElement",
+      "NativeSelect", "NativeSelectRoot", "NativeSelectField", "NativeSelectIndicator",
+      "Editable", "EditableRoot", "EditableRootProvider", "EditableArea", "EditableLabel", "EditablePreview", "EditableInput", "EditableTextarea", "EditableControl", "EditableEditTrigger", "EditableSubmitTrigger", "EditableCancelTrigger", "EditableContext", "useEditable", "useEditableContext",
+      "TagsInput", "TagsInputRoot", "TagsInputRootProvider", "TagsInputLabel", "TagsInputControl", "TagsInputInput", "TagsInputItemPreview", "TagsInputItemText", "TagsInputItemInput", "TagsInputItem", "TagsInputItemDeleteTrigger", "TagsInputClearTrigger", "TagsInputItems", "TagsInputHiddenInput", "TagsInputContext", "useTagsInput", "useTagsInputContext", "useTagsInputCombobox",
+      "QrCode", "QrCodeRoot", "QrCodeRootProvider", "QrCodeFrame", "QrCodePattern", "QrCodeOverlay", "QrCodeDownloadTrigger", "QrCodeContext", "useQrCode", "useQrCodeContext", "encodeQrCode", "QrCodeError",
+      "PinInputRootProvider", "PinInputLabel", "PinInputControl", "PinInputContext", "usePinInput", "usePinInputContext",
       "AlertDialog",
       "AppBar",
       "AppBarCenter",
@@ -646,6 +695,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ChipRemoveTrigger",
       "ChipRoot",
       "Circle",
+      "CloseButton",
       "Code",
       "CodeBlock",
       "CodeBlockActions",
@@ -759,6 +809,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "DataListValue",
       "Dialog",
       "Divider",
+      "DownloadTrigger",
       "Drawer",
       "DropdownMenu",
       "DropdownMenuArrow",
@@ -892,11 +943,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "NumberInputInput",
       "NumberInputRoot",
       "NumberInputUnit",
-      "OTPField",
-      "OTPFieldGroup",
-      "OTPFieldInput",
-      "OTPFieldRoot",
-      "OTPFieldSeparator",
+      "PinInput",
+      "PinInputGroup",
+      "PinInputInput",
+      "PinInputRoot",
+      "PinInputSeparator",
       "Pagination",
       "PaginationEllipsis",
       "PaginationItem",
@@ -1015,12 +1066,34 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "SliderThumb",
       "SliderTrack",
       "SliderValueLabel",
+      "Splitter",
+      "SplitterContext",
+      "SplitterPanel",
+      "SplitterResizeTrigger",
+      "SplitterResizeTriggerIndicator",
+      "SplitterResizeTriggerSeparator",
+      "SplitterRoot",
       "Square",
       "Stack",
       "Status",
       "StatusIndicator",
       "StatusLabel",
       "StatusRoot",
+      "Steps",
+      "StepsCompletedContent",
+      "StepsContent",
+      "StepsContext",
+      "StepsDescription",
+      "StepsIndicator",
+      "StepsItem",
+      "StepsItemContext",
+      "StepsList",
+      "StepsNextTrigger",
+      "StepsPrevTrigger",
+      "StepsRoot",
+      "StepsSeparator",
+      "StepsTitle",
+      "StepsTrigger",
       "Surface",
       "SurfaceContent",
       "SurfaceMedia",
@@ -1046,6 +1119,17 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "TableRoot",
       "TableRow",
       "TableSortIndicator",
+      "TableOfContents",
+      "TableOfContentsContext",
+      "TableOfContentsIndicator",
+      "TableOfContentsItem",
+      "TableOfContentsLink",
+      "TableOfContentsList",
+      "TableOfContentsNav",
+      "TableOfContentsRoot",
+      "TableOfContentsRootProvider",
+      "TableOfContentsTitle",
+      "useTableOfContents",
       "Tabs",
       "TabsContent",
       "TabsIndicator",
@@ -1114,7 +1198,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "getLocaleDirection",
       "toast",
       "useLocaleContext"
-    ],
+    ].sort(),
   );
   assert.equal(appearance.Appearance, brick.Appearance);
   assert.equal(localeProvider.LocaleProvider, brick.LocaleProvider);
@@ -1179,8 +1263,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(carousel.PickerItem, brick.Carousel.PickerItem);
   assert.equal(numberInput.NumberInput, brick.NumberInput);
   assert.equal(numberInput.NumberInputInput, brick.NumberInput.Input);
-  assert.equal(otpField.OTPField, brick.OTPField);
-  assert.equal(otpField.OTPFieldInput, brick.OTPField.Input);
+  assert.equal(pinInput.PinInput, brick.PinInput);
+  assert.equal(pinInput.PinInputInput, brick.PinInput.Input);
   assert.equal(passwordToggleField.PasswordToggleField, brick.PasswordToggleField);
   assert.equal(passwordToggleField.PasswordToggleFieldToggle, brick.PasswordToggleField.Toggle);
   assert.equal(appBar.AppBar, brick.AppBar);
@@ -1619,7 +1703,7 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 103);
+  assert.equal(componentStyleNames.length, 123);
   const stylelessComponentNames = new Set(["locale-provider", "format-number", "format-byte", "for"]);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");

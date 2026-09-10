@@ -3,6 +3,7 @@ installVisualDefaults("/tabs");
 test("Tabs defaults, recipes, behavior, and appearance", async ({ page }) => {
   await expect(page.getByTestId("tabs-overview")).toHaveScreenshot("overview-light.png");
   await expect(page.getByTestId("tabs-variants")).toHaveScreenshot("variants-light.png");
+  await expect(page.getByTestId("tabs-neutral")).toHaveScreenshot("neutral-light.png");
   await expect(page.getByTestId("tabs-sizes")).toHaveScreenshot("sizes-light.png");
   await expect(page.getByTestId("tabs-layout")).toHaveScreenshot("layout-light.png");
   await expect(page.getByTestId("tabs-content")).toHaveScreenshot("content-light.png");

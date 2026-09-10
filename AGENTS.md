@@ -52,3 +52,27 @@ instead of substituting remembered guidance.
 - Before changing `playground/component-coverage.xlsx`, read
   `playground/docs/coverage-workbook.md` and preserve its formulas, validation,
   formatting, and completion rules.
+
+## Playground infrastructure
+
+- App-bar settings changes do not authorize converting examples into iframes,
+  adding per-example toolbars, viewport boxes or changing page composition.
+  Keep ordinary routes inline. Such a presentation migration requires its own
+  explicit user request, not an inferred testing-infrastructure improvement.
+
+- Before shell, settings or preview work, read
+  `playground/docs/component-evidence-contract.md`,
+  `playground/docs/surface-ownership.md`, and `playground/src/preview/README.md`.
+- Keep infrastructure changes separate from redesigning component examples.
+  Preserve the existing Page source and owner evidence unless the task includes
+  changing that component. Do not invent a new approval checkpoint after the
+  owner has authorized the implementation; report genuine blockers explicitly.
+- Read the exact component anatomy before adding layout/scroll wrappers. Built-in
+  padded and scrolling regions must retain their ownership. For a settings
+  Popover, use direct Header and Body regions, not a whole-panel ScrollArea.
+- Add a regression for the actual failure: measure inner inset, scroll to the
+  final action on a short viewport, and verify focus return. A build, outer-box
+  check or screenshot alone does not establish correct composition.
+- Regenerate preview registry/inventory after changing registered Page source;
+  run the preview contract and inline-shell/standalone tests. Never claim a full
+  component visual/accessibility review from catalog smoke alone.

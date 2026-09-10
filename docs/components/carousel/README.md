@@ -92,10 +92,20 @@ on keyboard or fine-pointer interaction and briefly after touch. Picker's
 
 Each Slide and PickerItem requires the same unique `value`. A Slide's `label` becomes the default accessible PickerItem label. Authored children replace the default direction, rotation, or dot artwork without replacing Atom behavior.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 Small, medium, and large root recipes coordinate control and picker geometry;
-`radius="surface|none"` coordinates Viewport and overlay-focus corners;
+`radius` accepts the shared token-only [Radius](../../guides/radius.md) choices
+and defaults to `surface`. It coordinates Viewport and overlay-focus corners;
 direction and rotation controls may use `xs` through `xl` independently. Circle
 and rounded shapes plus solid, soft, outline, and ghost treatments keep control
 hierarchy themeable without application CSS. Overlay placement floats controls

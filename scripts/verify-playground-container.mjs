@@ -2,10 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import postcss from "postcss";
 
-const shellSource = fs.readFileSync(
-  path.resolve("playground/src/shell/PlaygroundShell.tsx"),
-  "utf8",
-);
+// The shell's Container-owned regions are split into dedicated components.
+const shellSource = ["PlaygroundShell", "PlaygroundPageHeader", "PlaygroundFooter"]
+  .map(name => fs.readFileSync(path.resolve(`playground/src/shell/${name}.tsx`), "utf8"))
+  .join("\n");
 const shellCss = fs.readFileSync(
   path.resolve("playground/src/styles/shell.css"),
   "utf8",

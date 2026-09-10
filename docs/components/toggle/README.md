@@ -54,8 +54,8 @@ Public exports are `Toggle`, `ToggleProps`, `ToggleVariant`, `ToggleTone`,
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
-| `tone` | `accent`, `neutral` | `accent` |
+| `variant` | `solid`, `soft`, `outline`, `ghost` | `ghost` |
+| `tone` | `accent`, `neutral` | `neutral` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `shape` | `rounded`, `pill` | `rounded` |
 | `iconOnly` | `boolean` | `false` |
@@ -64,7 +64,20 @@ Atom supplies `pressed`, `defaultPressed`, `onPressedChange`, `disabled`,
 native button props, `asChild`, and `render`. Native `color` and standalone
 `value` are excluded.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
+
+The default is neutral ghost: transparent when off, a flat soft fill when on.
+Hover strengthens gently; pressed hover remains stronger than unpressed hover.
+Soft uses a uniform border without an inset bottom shadow. Accent is opt-in.
 
 Each variant keeps a distinct resting and pressed treatment. Tone selects an
 accent or neutral pressed-state palette without implying status. Sizes change the

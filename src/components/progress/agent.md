@@ -19,6 +19,7 @@ Present finished linear read-only task progress for known, unknown, or buffered 
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Give Root an accessible name identifying the ongoing task through Progress.Label or native ARIA; visible Value does not name the task.
 - **MUST:** Use a current numeric value only for measurable work and pass null or omit value for unknown work so aria-valuenow is absent rather than pretending unknown progress is zero.
 - **MUST:** Supply truthful min and max, understand Atom clamping and invalid-range normalization, and keep optional bufferValue within the same task and range rather than treating it as a second progressbar.

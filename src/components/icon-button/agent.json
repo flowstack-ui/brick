@@ -25,6 +25,11 @@
   ],
   "rules": [
     {
+      "id": "icon-button-radius",
+      "level": "must",
+      "statement": "Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."
+    },
+    {
       "id": "icon-button-name",
       "level": "must",
       "statement": "Give every IconButton a concise discernible accessible name; the icon alone and a portalled Tooltip are not names."
@@ -48,6 +53,11 @@
       "id": "icon-button-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus icon-button.css and icon.css when using Brick Icon."
+    },
+    {
+      "id": "icon-button-focus-presentation",
+      "level": "must",
+      "statement": "Support scalar focusRing=\"outside\" | \"inside\"; omission stays outside. Inside uses paired foreground and canonical negative-width offset without changing Atom behavior."
     }
   ],
   "commonMistakes": [
@@ -60,5 +70,11 @@
     "Check accessible name, button versus anchor semantics, href, icon alignment, touch target, focus ring, Tooltip discovery when present, expanded disclosure feedback, disabled/loading states, contrast, and forced colors.",
     "Confirm component CSS and every composed Tooltip or Icon stylesheet are loaded."
   ],
-  "related": ["button", "icon", "link", "toolbar", "tooltip"]
+  "related": [
+    "button",
+    "icon",
+    "link",
+    "toolbar",
+    "tooltip"
+  ]
 }

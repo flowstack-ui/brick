@@ -4,6 +4,26 @@ import { compileTokens } from "../../scripts/token-compiler.mjs";
 
 const tokenSource = new URL("../../src/styles/tokens.tokens.json", import.meta.url);
 
+test("standard ratios have matching numeric and appearance-invariant CSS exports", async () => {
+  const { aspectRatios } = await import("../../dist/aspect-ratio.js");
+  const { aspectRatios: rootRatios } = await import("../../dist/index.js");
+  assert.equal(rootRatios, aspectRatios);
+  const css = await compileTokens(tokenSource);
+  for (const [name, ratio] of Object.entries(aspectRatios)) {
+    assert.ok(css.includes(`--brick-aspect-ratio-${name}: ${ratio}`));
+    assert.ok(!declarationsFor(css, '[data-brick-appearance="dark"]').has(`--brick-aspect-ratio-${name}`));
+  }
+});
+
+test("core radius choices and semantic roles are independently addressable", async () => {
+  const css = await compileTokens(tokenSource);
+  assert.match(css, /--brick-radius-core-sm: 0.25rem/);
+  assert.match(css, /--brick-radius-core-md: 0.375rem/);
+  assert.match(css, /--brick-radius-core-4xl: 2rem/);
+  assert.match(css, /--brick-radius-control: 0.5rem/);
+  assert.ok(!declarationsFor(css, '[data-brick-appearance="dark"]').has("--brick-radius-core-sm"));
+});
+
 function declarationsFor(css, selector) {
   const start = css.indexOf(selector);
   assert.notEqual(start, -1, `Missing selector: ${selector}`);

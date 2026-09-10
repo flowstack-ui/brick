@@ -19,6 +19,7 @@ Present several selected predefined values in a compact finished control while A
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use MultiSelect only for several predefined values; do not add editable filtering, arbitrary tags, commands, destinations, range selection, or virtualization.
 - **MUST:** Keep Trigger a separately named button rather than role=combobox and keep Content or Listbox as the focusable aria-multiselectable owner of required and read-only semantics.
 - **MUST:** Use deduplicated arrays for value and defaultValue, route controlled changes through onValueChange, and keep the popup open while Items toggle.

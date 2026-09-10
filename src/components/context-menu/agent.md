@@ -20,6 +20,7 @@ Present finished target-specific commands at a secondary-click, keyboard context
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Provide another visible or keyboard-discoverable route to every important command; ContextMenu is an enhancement, never the only access path.
 - **MUST:** Keep Trigger as a paintless behavior wrapper and preserve the target's native role, name, action, handlers, and composition instead of inventing button semantics or target paint.
 - **MUST:** Rely on Atom for secondary-click coordinates, Shift+F10 and Context Menu key anchoring, cross-target handoff, and the fixed cancel-safe 700 ms touch and pen long press; do not add gesture timers or positioning listeners.

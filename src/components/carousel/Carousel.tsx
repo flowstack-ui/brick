@@ -1,4 +1,5 @@
 "use client";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 
 import {
   forwardRef,
@@ -23,7 +24,7 @@ import {
 import { Icon } from "../icon/index.js";
 
 export type CarouselSize = "sm" | "md" | "lg";
-export type CarouselRadius = "none" | "surface";
+export type CarouselRadius = Radius;
 export type CarouselControlPlacement = "overlay" | "outside";
 export type CarouselControlSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type CarouselControlShape = "rounded" | "circle";
@@ -110,7 +111,8 @@ export const CarouselRoot = forwardRef<HTMLDivElement, CarouselRootProps>(
       controlShape = "circle",
       controlVariant = "soft",
       fill = false,
-      radius = "surface",
+      radius,
+      style,
       size = "md",
       "data-slot": dataSlot,
       onPointerUpCapture,
@@ -144,7 +146,8 @@ export const CarouselRoot = forwardRef<HTMLDivElement, CarouselRootProps>(
         data-control-shape={controlShape}
         data-control-variant={controlVariant}
         data-fill={fill ? "" : undefined}
-        data-radius={radius}
+        data-radius={radius ?? "surface"}
+        style={radiusStyle(radius, "--brick-carousel-radius", style)}
         data-size={size}
         data-slot={dataSlot ?? "carousel"}
         data-touch-navigation={touchNavigationVisible ? "visible" : undefined}

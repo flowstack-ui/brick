@@ -1,10 +1,27 @@
 # Tabs changelog
 
+
 Tabs follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Use the shared semantic focus color independently of Trigger text tone,
+  retaining inside placement and the forced-colors Highlight override.
+
+- Calculate default Trigger corners from the actual List padding, preserving
+  equal individual corners when the soft List has zero inset.
+
+- Focus paints inside Triggers and Content. Soft List has zero protective inset; solid keeps design padding. Scrolling and selection remain unchanged.
+
+- Add `tone="neutral"` with the existing accent default preserved. Remove
+  selected elevation from soft tabs; keep solid elevation and focus geometry.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ### Fixed
+
+- Preserve independent default Trigger corners when List radius is none;
+  the List-only override no longer zeroes the inherited Trigger radius token.
 
 - Kept line-tab labels and icons on primary text in the selected state so the
   accent remains reserved for the indicator and authored metadata such as a

@@ -4,6 +4,12 @@ Toast follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Use canonical focus-width tokens while preserving existing focus ownership and compact placement.
+
+### Changed
+
+- Loading icons use decorative Spinner with a 500ms ring and static reduced-motion arc; announcement ownership is unchanged.
+
 - Toaster region and close-action defaults now inherit generic accessible text
   from `LocaleProvider` when explicit labels are omitted.
 ## 0.1.10

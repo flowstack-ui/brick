@@ -2,6 +2,13 @@ import { expect, installVisualDefaults, test } from "../../visual-harness.js";
 
 installVisualDefaults("/chip");
 
+test("Chip compact anatomy and independent action", async ({ page }) => {
+  await page.setViewportSize({ width: 1120, height: 1200 });
+  await expect(page.locator("#scenario-chip-compact")).toHaveScreenshot("compact-light.png");
+  await expect(page.locator("#scenario-chip-slots")).toHaveScreenshot("slots-light.png");
+  await expect(page.locator("#scenario-chip-actions")).toHaveScreenshot("actions-light.png");
+});
+
 test("Chip overview, recipes, and content", async ({ page }) => {
   await page.setViewportSize({ width: 1120, height: 1200 });
   await expect(page.locator("#scenario-chip-overview")).toHaveScreenshot("overview-light.png");

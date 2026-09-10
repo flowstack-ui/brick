@@ -5,6 +5,10 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRoot = path.join(root, "playground", "src");
 const allowedRawHosts = new Map([
+  // Failure reporting must survive a failed component import/render and cannot
+  // depend on the library whose loading failure it reports. No example copy.
+  ["preview/ExampleEnvironment.tsx", [/^<p role="alert">$/]],
+  ["preview/preview-entry.tsx", [/^<p role="alert">$/]],
   ["components/checkbox-group/CheckboxGroupPage.tsx", [/<strong data-adapter=/, /<small data-adapter=/]],
   ["components/field/FieldPage.tsx", [/<p data-adapter=/]],
   ["components/fieldset/FieldsetPage.tsx", [/<p data-adapter=/]],

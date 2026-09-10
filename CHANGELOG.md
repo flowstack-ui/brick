@@ -4,6 +4,100 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+- Add `TableOfContents` with native document links, scoped reading-position
+  feedback, plain/line recipes and an optional current-location indicator.
+
+- Make AspectRatio outline transparent while retaining its border.
+
+- Add generated standard numeric `aspectRatios` and matching CSS foundation
+  tokens. Migrate Image/AspectRatio to shared Radius; use subtle/control/surface
+  to preserve former sm/md/lg semantics. Omission retains no rounding.
+- Separate AspectRatio documentation from its explicit qualification view;
+  document focused composition, inherited defaults and same-host Frame use in
+  canonical Agent Knowledge.
+
+- AspectRatio supports CSS-only responsive numeric ratios and fills its immediate
+  element child by default. Use `contentLayout="flow"` to retain natural-flow
+  child layout.
+
+- Add `focusRing="inside"` to Button and IconButton, inherited by CloseButton
+  and forwarded by DownloadTrigger; omitted placement remains outside. Repair
+  forced-colors field focus in PasswordToggleField and NumberInput, and use
+  contained focus outlines for Tabs and CodeBlock's collapse action. Add a
+  source-policy guard with explicit focus ownership for every component.
+
+- Add neutral Tabs tone and flatten soft selection without changing focus
+  geometry. Add CodeBlock CopyTrigger asChild for icon-only composition using
+  its existing Clipboard behavior.
+
+- Make Link default to `underline`, add interaction-only `subtle`, preserve
+  decoration-free `plain`, and deprecate explicit `theme` as a compatibility
+  option. Soften theme-adaptive underline paint while retaining high-contrast
+  fallbacks, inherited decoration overrides and native anchor behavior.
+
+- Begin token-only radius normalization: export `Radius`, expose core radius
+  foundations, and add boundary selection to the owners listed in the Radius
+  guide. Preserve omitted defaults, legacy shapes and independent popup radii.
+  Repair attached ToggleGroup corners and clamp nested action radii to zero.
+  Remaining owner migration and coordinated default changes are not complete.
+- Add `QrCode`: scan-safe size recipes, accessible SVG anatomy, logo overlays,
+  shared controllers and SVG/PNG/JPEG/WebP download actions powered by Atom.
+
+- Add `TagsInput` with Atom-owned transactions, optional suggestions, native JSON forms and responsive control recipes.
+
+- Replace `OTPField` with `PinInput` (no alias), array values, opt-in OTP,
+  controller parts and full-code validity. Keep the seven shared form sizes
+  and add transparent outline with native password masking delegated to Atom.
+
+- Add `Editable` inline editing with preview/editor geometry, controlled draft
+  transactions, cancellation, multiline autoresize and native form integration.
+
+### Added
+
+- Add `NativeSelect` with browser-native options and form behavior, seven
+  responsive control sizes and outline, soft, ghost, plain and underline recipes.
+
+- Add `Marquee` with Atom-owned motion, safe replicas and Brick-owned track and fade styling.
+
+- Add `Timeline` static chronology with logical content tracks, fixed marker
+  sizes, semantic tones and stretching decorative connectors.
+
+- `EmptyState` adds consistent empty-content hierarchy, density and authored action composition.
+- `Stat` adds native metric presentation, units, grouped sizes and trend indicators.
+- `Chip` adds compact density, xl, semantic surface/solid recipes and independent action/adornment parts while preserving existing defaults.
+
+- `Alert` adds composable persistent feedback with semantic palettes and explicit announcement policy.
+
+- `Spinner` provides a reusable visual loading ring with semantic colors,
+  sizes, thickness, customization and reduced-motion support.
+
+- Fixed shared Button/IconButton loading spinner centering when animations
+  are disabled, including disabled-loading and RTL presentation.
+
+### Added
+
+- Calendar supports seven scalar sizes with density compatibility. Checkmark
+  and Radiomark add `filled` and `inverted` visual recipes.
+
+### Fixed
+
+- Nested DatePicker content remains above Dialog content; custom triggers
+  preserve their supplied control geometry. DateInput spacing, nested corners
+  and fine-pointer type follow control sizing while touch retains a 16px floor.
+- Vertical Steps place progress beside content and wrap within narrow hosts.
+
+### Added
+
+- `Calendar`, `DateInput` and `DatePicker` provide typed, localized date selection and entry with shared control sizing and one coordinated calendar popup. `date-value` exposes immutable date helpers. `LocaleProvider` adds date-action and endpoint labels.
+
+- `CloseButton` provides a localized standard close action; `DownloadTrigger`
+  combines Atom download behavior with Button presentation.
+
+- `Splitter` presents resizable adjacent panels with a theme-aware grip.
+
+- Added `Steps` for ordered workflows with controlled state, validation gates,
+  semantic progress markers, localized numbers, and solid/subtle recipes.
+
 - Refined NumberInput's split stepper with proper minus/plus artwork and a
   readable numeric value scale; added Switch `xs`, `solid`, and `raised`
   recipes with polished 2:1 geometry; and updated elevated Card to a
@@ -949,3 +1043,5 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   Fields stack before narrow layouts become cramped.
 - Fieldset Legend typography and flow match Field Label while preserving group
   spacing, logical RTL treatment, and Error separation under consumer resets.
+- Add `ActionBar` for detached contextual actions with Atom-owned focus and dismissal.
+- Add `FloatingPanel` for movable and resizable nonmodal tool windows and `OverlayManager` for CSS-free imperative overlay hosting.

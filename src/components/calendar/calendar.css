@@ -1,0 +1,47 @@
+@layer brick.components {
+  .brick-calendar {
+    --brick-calendar-cell-size: var(--brick-control-size-block);
+    --brick-calendar-radius: calc(var(--brick-radius-control) / 2);
+    box-sizing: border-box;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    padding: var(--brick-space-3);
+    color: var(--brick-color-text-primary);
+    font-family: var(--brick-typography-body-sm-font-family);
+    font-size: var(--brick-control-size-value-font-size);
+    font-weight: var(--brick-typography-body-sm-font-weight);
+    line-height: var(--brick-typography-body-sm-line-height);
+    letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+  }
+  .brick-calendar__header { display: flex; align-items: center; justify-content: space-between; gap: var(--brick-space-2); margin-block-end: var(--brick-space-2); }
+  .brick-calendar__months { display: flex; flex-wrap: wrap; gap: var(--brick-space-4); }
+  .brick-calendar__grid { border-collapse: separate; border-spacing: 0; table-layout: fixed; inline-size: 100%; max-inline-size: calc(7 * var(--brick-calendar-cell-size)); min-inline-size: 0; flex-shrink: 1; }
+  .brick-calendar__grid:has(thead th:nth-child(8)) { max-inline-size: calc(8 * var(--brick-calendar-cell-size)); }
+  .brick-calendar__grid th { block-size: var(--brick-calendar-cell-size); color: var(--brick-color-text-secondary); font-weight: var(--brick-typography-body-sm-font-weight); }
+  .brick-calendar__grid td { padding: 0; text-align: center; }
+  .brick-calendar :where(button, select) { box-sizing: border-box; font: inherit; color: inherit; background: transparent; border: var(--brick-border-width) solid transparent; border-radius: var(--brick-calendar-radius); }
+  .brick-calendar :where(button) { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; min-block-size: var(--brick-calendar-cell-size); padding: 0; }
+  .brick-calendar__navigation, .brick-calendar [data-slot="calendar-day"] { inline-size: var(--brick-calendar-cell-size); block-size: var(--brick-calendar-cell-size); flex-shrink: 0; }
+  .brick-calendar [data-slot="calendar-day"] { inline-size: 100%; block-size: auto; min-block-size: 0; aspect-ratio: 1; }
+  .brick-calendar__navigation svg { inline-size: var(--brick-space-4); block-size: var(--brick-space-4); }
+  .brick-calendar[dir="rtl"] .brick-calendar__navigation svg { transform: rotate(180deg); }
+  .brick-calendar__view { padding-inline: var(--brick-space-2); font-weight: var(--brick-typography-control-sm-font-weight); }
+  .brick-calendar [data-slot="calendar-period"] { inline-size: 100%; }
+  .brick-calendar [data-today] { border-color: var(--brick-color-accent-border); }
+  .brick-calendar [data-outside-range] { color: var(--brick-color-text-muted); }
+  .brick-calendar [data-in-range] { background: var(--brick-color-accent-soft); color: var(--brick-color-accent-on-soft); }
+  .brick-calendar button:is([data-selected], [data-range-start], [data-range-end]) { background: var(--brick-color-accent-solid); color: var(--brick-color-accent-on-solid); }
+  .brick-calendar button:is(:disabled, [data-disabled], [data-unavailable]) { opacity: 0.45; cursor: not-allowed; }
+  .brick-calendar button[data-unavailable] { text-decoration: line-through; }
+  .brick-calendar :where(button, select):focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring); outline-offset: 1px; position: relative; z-index: 1; }
+  .brick-calendar__select { min-inline-size: 0; min-block-size: var(--brick-calendar-cell-size); padding-inline: var(--brick-space-2); border-color: var(--brick-color-border-default); cursor: pointer; }
+  @media (hover: hover) and (pointer: fine) {
+    .brick-calendar button:not(:disabled, [data-disabled], [data-unavailable], [data-selected], [data-range-start], [data-range-end]):hover { background: var(--brick-color-surface-subtle); }
+  }
+  @media (forced-colors: active) {
+    .brick-calendar button:is([data-selected], [data-range-start], [data-range-end]) { border-color: Highlight; outline: 1px solid Highlight; }
+    .brick-calendar [data-in-range] { border-block-color: Highlight; }
+    .brick-calendar [data-today] { border-color: ButtonText; }
+    .brick-calendar button:is(:disabled, [data-disabled], [data-unavailable]) { color: GrayText; opacity: 1; }
+  }
+}

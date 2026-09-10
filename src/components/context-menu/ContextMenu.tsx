@@ -1,4 +1,6 @@
 "use client";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+
 
 import { createContext, forwardRef, useContext, type ReactNode } from "react";
 import {
@@ -27,7 +29,7 @@ export type ContextMenuItemTone = "neutral" | "danger";
 export interface ContextMenuRootProps extends AtomContextMenuRootProps { size?: ContextMenuSize }
 export type ContextMenuTriggerProps = AtomContextMenuTriggerProps;
 export type ContextMenuPortalProps = AtomMenuPortalProps;
-export type ContextMenuContentProps = AtomContextMenuContentProps;
+export type ContextMenuContentProps = AtomContextMenuContentProps & { radius?: Radius };
 export type ContextMenuArrowProps = AtomMenuArrowProps;
 export type ContextMenuGroupProps = AtomMenuGroupProps;
 export type ContextMenuLabelProps = AtomMenuLabelProps;
@@ -43,7 +45,7 @@ export type ContextMenuShortcutProps = StaticSpanPartProps;
 export type ContextMenuSeparatorProps = AtomMenuSeparatorProps;
 export type ContextMenuSubProps = AtomMenuSubRootProps;
 export interface ContextMenuSubTriggerProps extends AtomMenuSubTriggerProps { tone?: ContextMenuItemTone }
-export type ContextMenuSubContentProps = AtomMenuSubContentProps;
+export type ContextMenuSubContentProps = AtomMenuSubContentProps & { radius?: Radius };
 
 const SizeContext = createContext<ContextMenuSize>("md");
 const merge = (base: string, className?: string) => className ? `${base} ${className}` : base;
@@ -57,9 +59,9 @@ export const ContextMenuTrigger = forwardRef<HTMLElement, ContextMenuTriggerProp
   return <AtomContextMenu.Trigger {...props} className={merge("brick-context-menu__trigger", className)} data-slot={slot(dataSlot, "context-menu-trigger")} ref={ref} />;
 });
 export const ContextMenuPortal = AtomContextMenu.Portal;
-export const ContextMenuContent = forwardRef<HTMLDivElement, ContextMenuContentProps>(function ContextMenuContent({ className, "data-slot": dataSlot, ...props }, ref) {
+export const ContextMenuContent = forwardRef<HTMLDivElement, ContextMenuContentProps>(function ContextMenuContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) {
   const size = useContext(SizeContext);
-  return <AtomContextMenu.Content {...props} className={merge("brick-context-menu__content", className)} data-size={size} data-slot={slot(dataSlot, "context-menu-content")} ref={ref} />;
+  return <AtomContextMenu.Content {...props} style={radiusStyle(radius, "--brick-context-menu-content-radius", style)} className={merge("brick-context-menu__content", className)} data-size={size} data-slot={slot(dataSlot, "context-menu-content")} ref={ref} />;
 });
 export const ContextMenuArrow = forwardRef<SVGSVGElement, ContextMenuArrowProps>(function ContextMenuArrow({ className, "data-slot": dataSlot, ...props }, ref) {
   return <AtomContextMenu.Arrow {...props} className={merge("brick-context-menu__arrow", className)} data-slot={slot(dataSlot, "context-menu-arrow")} ref={ref} />;
@@ -96,9 +98,9 @@ export const ContextMenuSub = AtomContextMenu.Sub;
 export const ContextMenuSubTrigger = forwardRef<HTMLElement, ContextMenuSubTriggerProps>(function ContextMenuSubTrigger({ className, tone = "neutral", "data-slot": dataSlot, ...props }, ref) {
   return <AtomContextMenu.SubTrigger {...props} className={merge("brick-context-menu__sub-trigger", className)} data-slot={slot(dataSlot, "context-menu-sub-trigger")} data-tone={tone} ref={ref} />;
 });
-export const ContextMenuSubContent = forwardRef<HTMLDivElement, ContextMenuSubContentProps>(function ContextMenuSubContent({ className, "data-slot": dataSlot, ...props }, ref) {
+export const ContextMenuSubContent = forwardRef<HTMLDivElement, ContextMenuSubContentProps>(function ContextMenuSubContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) {
   const size = useContext(SizeContext);
-  return <AtomContextMenu.SubContent {...props} className={merge("brick-context-menu__sub-content", className)} data-size={size} data-slot={slot(dataSlot, "context-menu-sub-content")} ref={ref} />;
+  return <AtomContextMenu.SubContent {...props} style={radiusStyle(radius, "--brick-context-menu-content-radius", style)} className={merge("brick-context-menu__sub-content", className)} data-size={size} data-slot={slot(dataSlot, "context-menu-sub-content")} ref={ref} />;
 });
 
 for (const [component, name] of [

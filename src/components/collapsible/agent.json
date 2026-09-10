@@ -24,7 +24,7 @@
     "Use Indicator inside Trigger for the canonical decorative state cue; the default points down while closed and up while open, and normal Brick layout and content components belong inside ContentInner.",
     "Use Trigger iconOnly for a square, centered disclosure control; give it a complete accessible name and let the Root size own its target."
   ],
-  "rules": [
+  "rules": [{"id":"collapsible-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {
       "id": "collapsible-anatomy",
       "level": "must",

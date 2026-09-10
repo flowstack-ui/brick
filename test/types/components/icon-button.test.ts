@@ -25,6 +25,7 @@ const action: IconButtonProps = {
   tone,
   type: "submit",
   variant,
+  focusRing: "inside",
 };
 const responsiveAction: IconButtonProps = {
   "aria-label": "Responsive search",
@@ -69,6 +70,8 @@ const invalidVariant: IconButtonProps = {
   children: createElement("svg"),
   // @ts-expect-error IconButton variants are a closed recipe set.
   variant: "link",
+  // @ts-expect-error Hiding focus is not an available recipe.
+  focusRing: "none",
 };
 
 const invalidTone: IconButtonProps = {

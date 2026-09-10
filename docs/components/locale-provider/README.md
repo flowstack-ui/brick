@@ -46,7 +46,7 @@ Public exports are `LocaleProvider`, `LocaleProviderProps`, `LocaleContextValue`
 | `localeText` | partial `BrickLocaleText` | inherited English defaults |
 | `children` | `ReactNode` | none |
 
-`BrickLocaleText` contains `clearInput`, `closeNotification`, `decrementValue`, `incrementValue`, `notifications`, and `toggleOptions`.
+`BrickLocaleText` contains `clearInput`, `close`, `closeNotification`, `decrementValue`, `incrementValue`, `notifications`, `toggleOptions`, `chooseDate`, `clearDate`, `invalidDate`, `startDate`, and `endDate`. Date controls inherit these labels; explicit component labels take precedence. Locale selection does not translate this copy automatically: applications supply translations through `localeText`.
 
 ## Visual recipes and states
 

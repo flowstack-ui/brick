@@ -18,6 +18,7 @@ Supply an inherited locale, logical direction, and overridable Brick-authored in
 
 ## Rules
 
+- **MUST:** Translate chooseDate, clearDate, invalidDate, startDate and endDate through localeText when needed; setting locale alone does not translate generic accessibility copy.
 - **MUST:** Mount LocaleProvider at an application boundary rather than inside each Block.
 - **MUST:** Use localeText only for generic Brick-authored accessibility labels; keep product copy in the application message catalog.
 - **MUST:** Load styles.css or core.css plus locale-provider.css.
@@ -37,3 +38,6 @@ Supply an inherited locale, logical direction, and overridable Brick-authored in
 - `text`
 - `progress`
 - `toast`
+- `calendar`
+- `date-input`
+- `date-picker`

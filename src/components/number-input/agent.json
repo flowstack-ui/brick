@@ -21,6 +21,11 @@
   ],
   "rules": [
     {
+      "id": "number-input-radius",
+      "level": "must",
+      "statement": "Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."
+    },
+    {
       "id": "number-input-numeric-domain",
       "level": "must",
       "statement": "Use NumberInput only for values that can be meaningfully stepped and clamped; postal codes, phone numbers, account numbers, and similar identifiers remain Input values."
@@ -69,6 +74,11 @@
       "id": "number-input-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus number-input.css and Field CSS when composed."
+    },
+    {
+      "id": "number-input-focus-presentation",
+      "level": "must",
+      "statement": "Forced colors preserves a real system-color focus outline; shadows are not the sole focus cue."
     }
   ],
   "commonMistakes": [

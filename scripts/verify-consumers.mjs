@@ -85,13 +85,36 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, Blockquote, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Checkmark, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, For, FormatByte, FormatNumber, Grid, Hide, Highlight, HoverCard, IconButton, Input, Kbd, Link, LocaleProvider, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, Prose, RadioGroup, Radiomark, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, Blockquote, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Checkmark, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, For, FormatByte, FormatNumber, Grid, Hide, Highlight, HoverCard, IconButton, Input, Kbd, Link, LocaleProvider, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, PinInput, PasswordToggleField, Popover, Prose, RadioGroup, Radiomark, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
 import { LocaleProvider as SubpathLocaleProvider } from "@flowstack-ui/brick/locale-provider";
+import { Steps } from "@flowstack-ui/brick";
+import { NativeSelect, Editable, TagsInput } from "@flowstack-ui/brick";
+import { NativeSelect as SubpathNativeSelect } from "@flowstack-ui/brick/native-select";
+import { Editable as SubpathEditable } from "@flowstack-ui/brick/editable";
+import { TagsInput as SubpathTagsInput } from "@flowstack-ui/brick/tags-input";
+import { QrCode } from "@flowstack-ui/brick";
+import { QrCode as SubpathQrCode } from "@flowstack-ui/brick/qr-code";
+import { TableOfContents } from "@flowstack-ui/brick";
+import { TableOfContents as SubpathTableOfContents } from "@flowstack-ui/brick/table-of-contents";
+import { Steps as SubpathSteps } from "@flowstack-ui/brick/steps";
+import { Alert, EmptyState, Spinner } from "@flowstack-ui/brick";
+import { Stat, Timeline } from "@flowstack-ui/brick";
+import { Stat as SubpathStat } from "@flowstack-ui/brick/stat";
+import { Marquee } from "@flowstack-ui/brick";
+import { Marquee as SubpathMarquee } from "@flowstack-ui/brick/marquee";
+import { Timeline as SubpathTimeline } from "@flowstack-ui/brick/timeline";
+import { Alert as SubpathAlert } from "@flowstack-ui/brick/alert";
+import { EmptyState as SubpathEmptyState } from "@flowstack-ui/brick/empty-state";
+import { Spinner as SubpathSpinner } from "@flowstack-ui/brick/spinner";
 import { FormatNumber as SubpathFormatNumber } from "@flowstack-ui/brick/format-number";
 import { FormatByte as SubpathFormatByte } from "@flowstack-ui/brick/format-byte";
 import { For as SubpathFor } from "@flowstack-ui/brick/for";
 import { Checkmark as SubpathCheckmark } from "@flowstack-ui/brick/checkmark";
 import { Radiomark as SubpathRadiomark } from "@flowstack-ui/brick/radiomark";
+import { Calendar as DateCalendar } from "@flowstack-ui/brick/calendar";
+import { DateInput } from "@flowstack-ui/brick/date-input";
+import { DatePicker } from "@flowstack-ui/brick/date-picker";
+import { parseDate } from "@flowstack-ui/brick/date-value";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -116,7 +139,7 @@ import { RadioCard as SubpathRadioCard } from "@flowstack-ui/brick/radio-card";
 import { Switch as SubpathSwitch } from "@flowstack-ui/brick/switch";
 import { Input as SubpathInput } from "@flowstack-ui/brick/input";
 import { NumberInput as SubpathNumberInput } from "@flowstack-ui/brick/number-input";
-import { OTPField as SubpathOTPField } from "@flowstack-ui/brick/otp-field";
+import { PinInput as SubpathPinInput } from "@flowstack-ui/brick/pin-input";
 import { PasswordToggleField as SubpathPasswordToggleField } from "@flowstack-ui/brick/password-toggle-field";
 import { Textarea as SubpathTextarea } from "@flowstack-ui/brick/textarea";
 import { Link as SubpathLink } from "@flowstack-ui/brick/link";
@@ -145,9 +168,68 @@ import { Hide as SubpathHide } from "@flowstack-ui/brick/hide";
 import { SwipeableItem as SubpathSwipeableItem } from "@flowstack-ui/brick/swipeable-item";
 import React from "react";
 import { renderToString } from "react-dom/server";
+if (QrCode !== SubpathQrCode) throw new Error("QrCode export mismatch");
+const qrMarkup = renderToString(React.createElement(QrCode.Root, { value: "hello" }, React.createElement(QrCode.Frame, { titleText: "Share hello" })));
+if (!qrMarkup.includes("brick-qr-code-frame") || !qrMarkup.includes("<path") || !qrMarkup.includes("Share hello")) throw new Error("QrCode SSR mismatch");
+const qrCss = await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/styles/qr-code.css")), "utf8");
+if (!qrCss.includes("brick-qr-code") || !qrCss.includes("brick-button")) throw new Error("QrCode modular CSS is incomplete");
+if (TableOfContents !== SubpathTableOfContents) throw new Error("TOC entrypoints differ");
+const tocMarkup = renderToString(React.createElement(TableOfContents.Root, { items: [{id:"usage",depth:2}], defaultActiveId:"usage" },
+  React.createElement(TableOfContents.Nav, {"aria-label":"Guide contents"},
+    React.createElement(TableOfContents.List, null,
+      React.createElement(TableOfContents.Item, {value:"usage"}, React.createElement(TableOfContents.Link,null,"Usage")))),
+  React.createElement("section",{id:"usage"}, React.createElement(Button,null,"Continue"))));
+if (!tocMarkup.includes('aria-current="location"') || !tocMarkup.includes('href="#usage"') || !tocMarkup.includes("brick-table-of-contents__nav")) throw new Error("TOC packed composition failed");
+const tocCss = await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/styles/table-of-contents.css")), "utf8");
+if (!tocCss.includes("brick-table-of-contents__indicator") || !tocCss.includes("focus-visible")) throw new Error("TOC modular CSS incomplete");
+if (NativeSelect !== SubpathNativeSelect || Editable !== SubpathEditable || TagsInput !== SubpathTagsInput) throw new Error("Form entry export mismatch");
+const tagsMarkup = renderToString(React.createElement(TagsInput.Root, { name: "tags", defaultValue: ["Research"] }, React.createElement(TagsInput.Control, null, React.createElement(TagsInput.Items), React.createElement(TagsInput.Input, { "aria-label": "Tags" })), React.createElement(TagsInput.HiddenInput)));
+if (!tagsMarkup.includes("Research") || (tagsMarkup.match(/name="tags"/g) ?? []).length !== 1) throw new Error("TagsInput JSON field SSR mismatch");
+const nativeMarkup = renderToString(React.createElement(NativeSelect.Root, null, React.createElement(NativeSelect.Field, { "aria-label": "Region", defaultValue: "eu" }, React.createElement("option", { value: "eu" }, "Europe")), React.createElement(NativeSelect.Indicator)));
+if (!nativeMarkup.includes("<select") || !nativeMarkup.includes("Europe")) throw new Error("NativeSelect SSR mismatch");
+const editableMarkup = renderToString(React.createElement(Editable.Root, { defaultValue: "Title" }, React.createElement(Editable.Area, null, React.createElement(Editable.Preview), React.createElement(Editable.Input, { "aria-label": "Title" }))));
+if (!editableMarkup.includes("Title")) throw new Error("Editable SSR mismatch");
+import { FloatingPanel, createOverlay, useFloatingPanel } from "@flowstack-ui/brick";
+import { FloatingPanel as PanelSubpath } from "@flowstack-ui/brick/floating-panel";
+import { createOverlay as OverlaySubpath } from "@flowstack-ui/brick/overlay-manager";
+if (FloatingPanel !== PanelSubpath || createOverlay !== OverlaySubpath) throw new Error("Floating overlay subpath mismatch");
+function PanelConsumer() {
+  const value = useFloatingPanel({ defaultOpen: true, hideMode: "display-none" });
+  return React.createElement(FloatingPanel.RootProvider, { value }, React.createElement(FloatingPanel.Positioner, null,
+    React.createElement(FloatingPanel.Content, { "aria-label": "Packed inspector" }, React.createElement(FloatingPanel.Body, null, "Inspector draft"))));
+}
+const panelMarkup = renderToString(React.createElement(PanelConsumer));
+if (!panelMarkup.includes('role="dialog"') || !panelMarkup.includes("brick-floating-panel-content")) throw new Error("FloatingPanel SSR failed");
+const overlayManager = createOverlay(() => null);
+if (renderToString(React.createElement(overlayManager.Viewport)) !== "") throw new Error("OverlayManager SSR must be empty");
+if (!("Activity" in React)) {
+  let rejected = false;
+  try { renderToString(React.createElement(FloatingPanel.Root, { defaultOpen: true, hideMode: "activity" }, React.createElement(FloatingPanel.Content, { "aria-label": "Unsupported Activity" }))); }
+  catch (error) { rejected = /Activity/.test(error.message); }
+  if (!rejected) throw new Error("Unsupported Activity runtime must be diagnosed");
+}
+const dateReference = parseDate("2026-09-05");
+const dateMarkup = renderToString(React.createElement(DateInput.Root, { referenceDate: dateReference, defaultValue: dateReference, name: "date", "aria-label": "Date" }));
+if (!dateMarkup.includes('value="2026-09-05"') || !dateMarkup.includes('role="spinbutton"')) throw new Error("DateInput packed SSR failed");
+const calendarMarkup = renderToString(React.createElement(DateCalendar.Root, { referenceDate: dateReference }));
+if (!calendarMarkup.includes('role="grid"')) throw new Error("Calendar packed SSR failed");
+const pickerMarkup = renderToString(React.createElement(DatePicker.Root, { referenceDate: dateReference }, React.createElement(DatePicker.Control, null, React.createElement(DatePicker.Input, { "aria-label": "Date" }), React.createElement(DatePicker.Trigger))));
+if (!pickerMarkup.includes('aria-haspopup="dialog"')) throw new Error("DatePicker packed SSR failed");
 import { readFile } from "node:fs/promises";
 
 if (Button !== SubpathButton) throw new Error("Button subpath export mismatch");
+if (Alert !== SubpathAlert || EmptyState !== SubpathEmptyState || Spinner !== SubpathSpinner) throw new Error("Feedback subpath export mismatch");
+const feedbackMarkup = renderToString(React.createElement(Alert.Root, null, React.createElement(Alert.Indicator, null, React.createElement(Spinner)), React.createElement(Alert.Content, null, React.createElement(Alert.Title, null, "Preparing"))));
+if (!feedbackMarkup.includes('brick-spinner') || feedbackMarkup.includes('role="alert"')) throw new Error("Feedback SSR semantics failed");
+const emptyMarkup = renderToString(React.createElement(EmptyState.Root, null, React.createElement(EmptyState.Title, { as: "h2" }, "No results")));
+if (!emptyMarkup.includes('<h2')) throw new Error("EmptyState heading SSR failed");
+for (const id of ["alert", "empty-state", "spinner"]) {
+  const modular = await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/styles/" + id + ".css")), "utf8");
+  if (!modular.includes(".brick-" + id)) throw new Error("Feedback modular CSS missing: " + id);
+}
+if (Steps !== SubpathSteps || Object.keys(Steps).length !== 14) throw new Error("Steps subpath export mismatch");
+const stepsMarkup = renderToString(React.createElement(Steps.Root, { count: 1 }, React.createElement(Steps.List, null, React.createElement(Steps.Item, { index: 0 }, React.createElement(Steps.Indicator), React.createElement(Steps.Title, null, "Account"))), React.createElement(Steps.Content, { index: 0 }, "Form")));
+if (!stepsMarkup.includes('aria-current="step"') || !stepsMarkup.includes('brick-steps-indicator') || !stepsMarkup.includes('role="group"')) throw new Error("Steps SSR smoke failed");
 if (LocaleProvider !== SubpathLocaleProvider || FormatNumber !== SubpathFormatNumber || FormatByte !== SubpathFormatByte || For !== SubpathFor || Checkmark !== SubpathCheckmark || Radiomark !== SubpathRadiomark) throw new Error("Locale helper subpath export mismatch");
 if (IconButton !== SubpathIconButton) throw new Error("IconButton subpath export mismatch");
 if (AppBar !== SubpathAppBar) throw new Error("AppBar subpath export mismatch");
@@ -156,7 +238,15 @@ if (Drawer !== SubpathDrawer || Object.keys(SubpathDrawer).length !== 12) throw 
 if (DrawerModule.Root !== Drawer.Root || DrawerModule.Trigger !== Drawer.Trigger || DrawerModule.Content !== Drawer.Content) throw new Error("Drawer module namespace smoke failed");
 if (AlertDialog !== SubpathAlertDialog) throw new Error("AlertDialog subpath export mismatch");
 if (Badge !== SubpathBadge || NotificationBadge !== SubpathNotificationBadge) throw new Error("Badge subpath export mismatch");
-if (Chip !== SubpathChip || Object.keys(SubpathChip).length !== 3) throw new Error("Chip subpath smoke failed");
+if (Chip !== SubpathChip || Object.keys(SubpathChip).sort().join(",") !== "ActionTrigger,EndElement,Label,RemoveTrigger,Root,StartElement") throw new Error("Chip subpath smoke failed");
+if (Stat !== SubpathStat || Timeline !== SubpathTimeline) throw new Error("Data display subpath smoke failed");
+if (Marquee !== SubpathMarquee) throw new Error("Marquee subpath mismatch");
+const marqueeMarkup = renderToString(React.createElement(Marquee.Root, { "aria-label": "Partners" }, React.createElement(Marquee.Viewport, null, React.createElement(Marquee.Content, { renderReplica: () => React.createElement(Marquee.Item, null, "Acme") }, React.createElement(Marquee.Item, null, "Acme")))));
+if (!marqueeMarkup.includes("brick-marquee") || !marqueeMarkup.includes("data-static") || marqueeMarkup.includes("data-replica")) throw new Error("Marquee deterministic stationary SSR failed");
+const metricMarkup = renderToString(React.createElement(Stat.Root, { size: "lg" }, React.createElement(Stat.Label, null, "Revenue"), React.createElement(Stat.ValueText, null, "12450")));
+if (!metricMarkup.includes("<dl") || !metricMarkup.includes("<dt") || !metricMarkup.includes("<dd")) throw new Error("Stat native grammar failed");
+const eventMarkup = renderToString(React.createElement(Timeline.Root, null, React.createElement(Timeline.Item, null, React.createElement(Timeline.Connector, null, React.createElement(Timeline.Indicator, null, "1"), React.createElement(Timeline.Separator)), React.createElement(Timeline.Content, null, React.createElement(Timeline.Title, null, "Created")))));
+if (!eventMarkup.includes("<ol") || !eventMarkup.includes("<li") || !eventMarkup.includes('aria-hidden="true"')) throw new Error("Timeline chronology SSR failed");
 if (Avatar !== SubpathAvatar) throw new Error("Avatar subpath export mismatch");
 if (AvatarGroup !== SubpathAvatarGroup) throw new Error("AvatarGroup subpath export mismatch");
 if (Toggle !== SubpathToggle) throw new Error("Toggle subpath export mismatch");
@@ -169,7 +259,7 @@ if (RadioGroup !== SubpathRadioGroup || Object.keys(SubpathRadioGroup).length !=
 if (Switch !== SubpathSwitch || Object.keys(SubpathSwitch).length !== 2) throw new Error("Switch subpath smoke failed");
 if (Input !== SubpathInput) throw new Error("Input subpath export mismatch");
 if (NumberInput !== SubpathNumberInput || Object.keys(SubpathNumberInput).length !== 6) throw new Error("Number Input subpath smoke failed");
-if (OTPField !== SubpathOTPField || Object.keys(SubpathOTPField).length !== 4) throw new Error("OTP Field subpath smoke failed");
+if (PinInput !== SubpathPinInput || Object.keys(SubpathPinInput).length !== 8) throw new Error("Pin Input subpath smoke failed");
 if (PasswordToggleField !== SubpathPasswordToggleField || Object.keys(SubpathPasswordToggleField).length !== 4) throw new Error("Password Toggle Field subpath smoke failed");
 if (Textarea !== SubpathTextarea || Object.keys(SubpathTextarea).length !== 2) throw new Error("Textarea subpath export mismatch");
 if (Link !== SubpathLink) throw new Error("Link subpath export mismatch");
@@ -234,8 +324,8 @@ const inputMarkup = renderToString(React.createElement(Input, { "aria-label": "S
 if (!inputMarkup.includes("brick-input") || !inputMarkup.includes('aria-label="Clear input"')) throw new Error("Input SSR smoke failed");
 const numberInputMarkup = renderToString(React.createElement(NumberInput.Root, { "aria-label": "Quantity", defaultValue: 3 }, React.createElement(NumberInput.Input), React.createElement(NumberInput.Increment, { "aria-label": "Increase" }), React.createElement(NumberInput.Decrement, { "aria-label": "Decrease" })));
 if (!numberInputMarkup.includes("brick-number-input") || !numberInputMarkup.includes('role="spinbutton"')) throw new Error("Number Input SSR smoke failed");
-const otpMarkup = renderToString(React.createElement(OTPField.Root, { "aria-label": "Code", length: 2 }, React.createElement(OTPField.Group, null, React.createElement(OTPField.Input, { index: 0 }), React.createElement(OTPField.Input, { index: 1 }))));
-if (!otpMarkup.includes("brick-otp-field") || !otpMarkup.includes('aria-label="Digit 1 of 2"')) throw new Error("OTP Field SSR smoke failed");
+const otpMarkup = renderToString(React.createElement(PinInput.Root, { "aria-label": "Code", length: 2 }, React.createElement(PinInput.Group, null, React.createElement(PinInput.Input, { index: 0 }), React.createElement(PinInput.Input, { index: 1 }))));
+if (!otpMarkup.includes("brick-pin-input") || !otpMarkup.includes('aria-label="Digit 1 of 2"')) throw new Error("Pin Input SSR smoke failed");
 const passwordMarkup = renderToString(React.createElement(PasswordToggleField.Root, null, React.createElement(PasswordToggleField.Input, { "aria-label": "Password" }), React.createElement(PasswordToggleField.Toggle)));
 if (!passwordMarkup.includes("brick-password-toggle-field") || !passwordMarkup.includes('aria-label="Show password"')) throw new Error("Password Toggle Field SSR smoke failed");
 const textareaMarkup = renderToString(React.createElement(Textarea.Root, { "aria-label": "Notes", defaultValue: "Brick", maxLength: 20 }, React.createElement(Textarea.Count)));
@@ -327,7 +417,7 @@ if (!css.includes(".brick-menubar") || !css.includes("--brick-menubar-background
 if (!css.includes(".brick-navigation-menu") || !css.includes("--brick-navigation-menu-viewport-background")) throw new Error("Navigation Menu CSS export missing");
 if (!css.includes(".brick-bottom-navigation") || !css.includes("--brick-bottom-navigation-selection-background")) throw new Error("Bottom Navigation CSS export missing");
 if (!css.includes(".brick-number-input") || !css.includes("--brick-number-input-height") || !css.includes(".brick-radio-card")) throw new Error("Number Input or Radio Card CSS export missing");
-if (!css.includes(".brick-otp-field") || !css.includes("--brick-otp-size")) throw new Error("OTP Field CSS export missing");
+if (!css.includes(".brick-pin-input") || !css.includes("--brick-pin-input-size")) throw new Error("Pin Input CSS export missing");
 if (!css.includes(".brick-password-toggle-field") || !css.includes("--brick-password-height")) throw new Error("Password Toggle Field CSS export missing");
 if (!css.includes(".brick-show") || !css.includes(".brick-hide") || !css.includes("@media (width<48rem)") || !css.includes("@media (width>=48rem)")) throw new Error("Responsive visibility CSS export missing");
 if (!css.includes(".brick-swipeable-item") || !css.includes("--brick-swipeable-item-background")) throw new Error("Swipeable Item CSS export missing");
@@ -339,7 +429,14 @@ if (!css.includes(".brick-prose") || !css.includes("--brick-prose-measure")) thr
     await writeFile(
       join(consumer, "verify.ts"),
 	`import { createElement } from "react";
-import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, Prose, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HideProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type OTPFieldRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type ProseProps, type RadioGroupRootProps, type ShowProps, type SkeletonProps, type SurfaceProps, type SwipeableItemRootProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
+import { FloatingPanel, useFloatingPanel, type FloatingPanelOptions } from "@flowstack-ui/brick/floating-panel";
+import { createOverlay, type OverlayLifecycleProps } from "@flowstack-ui/brick/overlay-manager";
+const panelOptions: FloatingPanelOptions = { position: {x: 10, y: 20}, onPositionChange(value, details) { void value.x; void details.reason; }, hideMode: "display-none" };
+function InspectorConsumer() { const value = useFloatingPanel(panelOptions); return createElement(FloatingPanel.RootProvider, {value}, createElement(FloatingPanel.Content, {"aria-label": "Inspector"})); }
+const managed = createOverlay<{title: string}, "accepted">((props: {title: string} & OverlayLifecycleProps) => createElement(FloatingPanel.Root, props));
+const managedResult: Promise<"accepted" | undefined> = managed.open("inspector", {title: "Inspector"});
+void InspectorConsumer; void managedResult;
+import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, PinInput, PasswordToggleField, Popover, Prose, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HideProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type PinInputRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type ProseProps, type RadioGroupRootProps, type ShowProps, type SkeletonProps, type SurfaceProps, type SwipeableItemRootProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -359,7 +456,7 @@ import { Tabs as SubpathTabs } from "@flowstack-ui/brick/tabs";
 import { Skeleton as SubpathSkeleton } from "@flowstack-ui/brick/skeleton";
 import { VisuallyHidden as SubpathVisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
 import { NumberInput as SubpathNumberInput } from "@flowstack-ui/brick/number-input";
-import { OTPField as SubpathOTPField } from "@flowstack-ui/brick/otp-field";
+import { PinInput as SubpathPinInput } from "@flowstack-ui/brick/pin-input";
 import { PasswordToggleField as SubpathPasswordToggleField } from "@flowstack-ui/brick/password-toggle-field";
 import { Show as SubpathShow } from "@flowstack-ui/brick/show";
 import { Hide as SubpathHide } from "@flowstack-ui/brick/hide";
@@ -387,7 +484,7 @@ const radioGroupProps: RadioGroupRootProps = { "aria-label": "Channel", defaultV
 const switchProps: SwitchRootProps = { "aria-label": "Reports", defaultChecked: true, children: createElement(Switch.Thumb) };
 const inputProps: InputProps = { "aria-label": "Search", clearable: true, startAdornment: "Search" };
 const numberInputProps: NumberInputRootProps = { "aria-label": "Quantity", children: createElement(NumberInput.Input), defaultValue: 3 };
-const otpProps: OTPFieldRootProps = { "aria-label": "Code", children: createElement(OTPField.Input), length: 4 };
+const otpProps: PinInputRootProps = { "aria-label": "Code", children: createElement(PinInput.Input), length: 4 };
 const passwordProps: PasswordToggleFieldRootProps = { children: createElement(PasswordToggleField.Input), showLabel: "Reveal password" };
 const textareaProps: TextareaRootProps = { "aria-label": "Notes", autoResize: true, maxRows: 8 };
 const linkProps: LinkProps = { children: "Read guides", href: "/guides", tone: "neutral" };
@@ -481,7 +578,7 @@ void switchProps;
 void Input;
 void inputProps;
 void NumberInput; void SubpathNumberInput; void numberInputProps;
-void OTPField; void SubpathOTPField; void otpProps;
+void PinInput; void SubpathPinInput; void otpProps;
 void PasswordToggleField; void SubpathPasswordToggleField; void passwordProps;
 void Textarea;
 void SubpathTextarea;

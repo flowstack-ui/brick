@@ -1,0 +1,523 @@
+{
+  "schema": "brick.focus-source-policy.v1",
+  "owners": {
+    "table-of-contents": {
+      "kind": "direct",
+      "reason": "Native section links have an inward semantic focus ring without artificial rail gutters."
+    },
+    "qr-code": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    },
+    "tags-input": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "editable": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "native-select": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "marquee": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "timeline": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "stat": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "empty-state": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "alert": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "spinner": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "floating-panel": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "overlay-manager": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    },
+    "action-bar": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "calendar": {
+      "kind": "composite",
+      "reason": "Atom owns active or roving focus; qualify the active presentation part separately."
+    },
+    "date-input": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "date-picker": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    },
+    "close-button": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    },
+    "download-trigger": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    },
+    "splitter": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "steps": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "appearance": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "locale-provider": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "format-number": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "format-byte": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "for": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "checkmark": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "radiomark": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "alert-dialog": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    },
+    "aspect-ratio": {
+      "kind": "clipping",
+      "reason": "Owns containment, not arbitrary descendant focus; verify edge-to-edge compositions."
+    },
+    "app-bar": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "avatar": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "avatar-group": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "badge": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "bleed": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "status": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "color-swatch": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "color-picker": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "button": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "card": {
+      "kind": "clipping",
+      "reason": "Owns containment, not arbitrary descendant focus; verify edge-to-edge compositions."
+    },
+    "chip": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "checkbox": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "checkbox-group": {
+      "kind": "composite",
+      "reason": "Atom owns active or roving focus; qualify the active presentation part separately."
+    },
+    "radio-group": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "radio-card": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "segment-group": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "rating": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "file-upload": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "feed": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "swipeable-item": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "slider": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "switch": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "breadcrumb": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "tabs": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "dropdown-menu": {
+      "kind": "composite",
+      "reason": "Atom owns active or roving focus; qualify the active presentation part separately."
+    },
+    "context-menu": {
+      "kind": "composite",
+      "reason": "Atom owns active or roving focus; qualify the active presentation part separately."
+    },
+    "menubar": {
+      "kind": "composite",
+      "reason": "Atom owns active or roving focus; qualify the active presentation part separately."
+    },
+    "navigation-menu": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "bottom-navigation": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "visually-hidden": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "skip-link": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "show": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "hide": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "skeleton": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "progress": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "progress-circle": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "toast": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "collapsible": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "combobox": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "accordion": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "code": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "em": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "mark": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "kbd": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "blockquote": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "highlight": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "prose": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "code-block": {
+      "kind": "clipping",
+      "reason": "Owns containment, not arbitrary descendant focus; verify edge-to-edge compositions."
+    },
+    "nav-list": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "sidebar": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "dialog": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    },
+    "drawer": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    },
+    "divider": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "scroll-area": {
+      "kind": "clipping",
+      "reason": "Owns containment, not arbitrary descendant focus; verify edge-to-edge compositions."
+    },
+    "select": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "multi-select": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "field": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "fieldset": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "form": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "grid": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "container": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "section": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "frame": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "surface": {
+      "kind": "clipping",
+      "reason": "Owns containment, not arbitrary descendant focus; verify edge-to-edge compositions."
+    },
+    "hover-card": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    },
+    "icon": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "image": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "icon-button": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "input": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "number-input": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "pin-input": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "password-toggle-field": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "textarea": {
+      "kind": "field",
+      "reason": "Field boundary and embedded action paint; preserve native/Atom entry focus."
+    },
+    "link": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "link-box": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "list": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "reorderable-list": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "table": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "data-grid": {
+      "kind": "composite",
+      "reason": "Atom owns active or roving focus; qualify the active presentation part separately."
+    },
+    "tree-grid": {
+      "kind": "composite",
+      "reason": "Atom owns active or roving focus; qualify the active presentation part separately."
+    },
+    "tree": {
+      "kind": "composite",
+      "reason": "Atom owns active or roving focus; qualify the active presentation part separately."
+    },
+    "toolbar": {
+      "kind": "composite",
+      "reason": "Atom owns active or roving focus; qualify the active presentation part separately."
+    },
+    "pagination": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "carousel": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "center": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "notification-badge": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "popover": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    },
+    "stack": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "group": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    },
+    "data-list": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "z-stack": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "text": {
+      "kind": "passive",
+      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "toggle": {
+      "kind": "direct",
+      "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "toggle-group": {
+      "kind": "composite",
+      "reason": "Atom owns active or roving focus; qualify the active presentation part separately."
+    },
+    "tooltip": {
+      "kind": "delegated",
+      "reason": "Uses another public action/focus owner; verify composition and scoped paint."
+    }
+  },
+  "literalExceptions": [
+    {
+      "key": "src/components/calendar/calendar.css|.brick-calendar :where(button, select):focus-visible|outline-offset|1px",
+      "reason": "Retained one-pixel dense field/segment geometry; not the standalone outside focus gap. Owner browser qualification remains required."
+    },
+    {
+      "key": "src/components/combobox/combobox.css|.brick-combobox-clear:focus-visible,.brick-combobox-trigger:focus-visible|outline-offset|1px",
+      "reason": "Retained one-pixel dense field/segment geometry; not the standalone outside focus gap. Owner browser qualification remains required."
+    },
+    {
+      "key": "src/components/date-input/date-input.css|:is(.brick-date-input, .brick-date-picker) [data-slot=\"date-input-segment\"]:focus|outline|1px solid Highlight",
+      "reason": "Retained one-pixel dense field/segment geometry; not the standalone outside focus gap. Owner browser qualification remains required."
+    },
+    {
+      "key": "src/components/tags-input/tags-input.css|.brick-tags-input-control:focus-within|outline-offset|1px",
+      "reason": "Retained one-pixel dense field/segment geometry; not the standalone outside focus gap. Owner browser qualification remains required."
+    }
+  ]
+}

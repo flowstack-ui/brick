@@ -30,7 +30,7 @@ const variants: TextVariant[] = [
   "display-md",
   "display-lg",
   "display-xl",
-  "title-lg",
+  "title-xl",
   "title-lg",
   "title-md",
   "title-sm",
@@ -54,7 +54,7 @@ const tones: TextTone[] = [
   "warning",
   "danger",
 ];
-const weights: TextWeight[] = ["inherit", "regular", "medium", "semibold"];
+const weights: TextWeight[] = ["inherit", "thin", "extralight", "light", "regular", "medium", "semibold", "bold", "extrabold", "black"];
 const aligns: TextAlign[] = ["start", "center", "end"];
 const wraps: TextWrap[] = ["wrap", "nowrap", "balance", "pretty"];
 const transforms: TextTransform[] = ["none", "uppercase", "lowercase", "capitalize"];

@@ -1,3 +1,4 @@
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import { forwardRef } from "react";
 import {
   Feed as AtomFeed,
@@ -10,6 +11,7 @@ export type FeedDensity = "compact" | "comfortable";
 export type FeedDividerStrength = "subtle" | "default";
 
 export interface FeedRootProps extends AtomFeedRootProps {
+  radius?: Radius;
   variant?: FeedVariant;
   density?: FeedDensity;
   dividerStrength?: FeedDividerStrength;
@@ -23,7 +25,7 @@ function mergeClassName(base: string, className?: string) {
 
 const FeedRoot = forwardRef<HTMLElement, FeedRootProps>(function FeedRoot(
   {
-    className,
+    className, radius, style,
     density = "comfortable",
     dividerStrength = "subtle",
     variant = "divided",
@@ -35,7 +37,7 @@ const FeedRoot = forwardRef<HTMLElement, FeedRootProps>(function FeedRoot(
   return (
     <AtomFeed.Root
       {...props}
-      className={mergeClassName("brick-feed", className)}
+      className={mergeClassName("brick-feed", className)} style={radiusStyle(radius, "--brick-feed-radius", style)}
       data-density={density}
       data-divider-strength={dividerStrength}
       data-slot={dataSlot ?? "feed"}

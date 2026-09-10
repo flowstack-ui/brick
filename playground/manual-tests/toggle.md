@@ -25,10 +25,15 @@ Setup: Open `/toggle` in system appearance.
 Action: Activate `01 Overview`; compare every recipe in `02 Variants` and both
 pressed states in `03 States`.
 
-Expected: Default soft accent medium rounded Toggle changes pressed state once
+Expected: Default ghost neutral medium rounded Toggle changes pressed state once
 and retains focus. Variants remain visually distinct when pressed. Accent and
 neutral solid tones remain distinct without implying semantic status. State
 changes do not alter size, label, or geometry.
+
+Compare fine-pointer resting, hover, held-down and selected hover in light and
+dark. Soft has no bottom shadow. Disabled paint must not change on hover. Ghost
+starts transparent and retains a flat pressed fill. Verify forced-color pressed
+and keyboard-focus outlines remain distinguishable.
 
 Result:
 Notes or issue:

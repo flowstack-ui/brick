@@ -20,9 +20,11 @@
     }
   ],
   "composition": [
-    "Compose Root with Label and include RemoveTrigger only when the surrounding application can remove that value; give every RemoveTrigger a value-specific ariaLabel and onPress handler."
+    "Compose Root with Label and include RemoveTrigger only when the surrounding application can remove that value; give every RemoveTrigger a value-specific ariaLabel and onPress handler.",
+    "Use StartElement and EndElement for coordinated adornments. For a primary token action, place Label inside ActionTrigger and keep RemoveTrigger as its sibling.",
+    "Use density=compact for compact passive tokens; interactive targets can increase the actual height. Keep tone and variant separate, such as accent with solid."
   ],
-  "rules": [
+  "rules": [{"id":"chip-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {
       "id": "chip-root-passive",
       "level": "must",

@@ -20,6 +20,7 @@ Present several compact Avatar identities in one overlapping inline stack with o
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use direct Avatar children so one group size, shape, overlap, stacking, and count model remains coherent.
 - **MUST:** Keep all identities visible by default; use max only for an intentional bounded presentation and provide localized built-in overflow or a custom semantic renderer.
 - **MUST:** Keep AvatarGroup passive; application-owned Button, Link, Menu, or Popover composition owns overflow interaction.

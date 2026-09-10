@@ -19,6 +19,7 @@ Present finished exact numeric entry with typing and step actions while Atom own
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use NumberInput only for values that can be meaningfully stepped and clamped; postal codes, phone numbers, account numbers, and similar identifiers remain Input values.
 - **MUST:** Render exactly one NumberInput.Input inside Root and keep Increment and Decrement inside that same Root so Atom retains numeric state, focus, limits, and aria-controls ownership.
 - **MUST:** Use number or null with value and onValueChange for controlled state, preserve intermediate editing, keep formatter and parser reversible, choose positive step and suitable precision, and decide clampOnBlur deliberately.
@@ -29,6 +30,7 @@ Present finished exact numeric entry with typing and step actions while Atom own
 - **MUST:** Use NumberInput.Unit only for a presentational suffix; do not include it in the editable numeric value or submission contract.
 - **SHOULD:** Use layout=stepper for quantity, seat, and inventory choices that benefit from separated square actions; keep layout=field for ordinary editable numeric fields and apply hover-only visibility only to that field layout.
 - **MUST:** Load styles.css or core.css plus number-input.css and Field CSS when composed.
+- **MUST:** Forced colors preserves a real system-color focus outline; shadows are not the sole focus cue.
 
 ## Common mistakes
 

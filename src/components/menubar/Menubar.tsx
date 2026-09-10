@@ -1,4 +1,6 @@
 "use client";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+
 
 import { createContext, forwardRef, useContext } from "react";
 import {
@@ -29,7 +31,7 @@ export interface MenubarRootProps extends AtomMenubarRootProps { size?: MenubarS
 export type MenubarMenuProps = AtomMenubarMenuProps;
 export type MenubarTriggerProps = AtomMenubarTriggerProps;
 export type MenubarPortalProps = AtomMenuPortalProps;
-export interface MenubarContentProps extends AtomMenubarContentProps { "data-slot"?: string }
+export interface MenubarContentProps extends AtomMenubarContentProps { "data-slot"?: string; radius?: Radius }
 export type MenubarArrowProps = AtomMenuArrowProps;
 export type MenubarGroupProps = AtomMenuGroupProps;
 export type MenubarLabelProps = AtomMenuLabelProps;
@@ -45,7 +47,7 @@ export type MenubarShortcutProps = StaticSpanPartProps;
 export type MenubarSeparatorProps = AtomMenuSeparatorProps;
 export type MenubarSubProps = AtomMenuSubRootProps;
 export interface MenubarSubTriggerProps extends AtomMenuSubTriggerProps { tone?: MenubarItemTone }
-export type MenubarSubContentProps = AtomMenuSubContentProps;
+export type MenubarSubContentProps = AtomMenuSubContentProps & { radius?: Radius };
 
 const SizeContext = createContext<MenubarSize>("md");
 const merge = (base: string, className?: string) => className ? `${base} ${className}` : base;
@@ -59,10 +61,10 @@ export const MenubarTrigger = forwardRef<HTMLElement, MenubarTriggerProps>(funct
   return <AtomMenubar.Trigger {...props} className={merge("brick-menubar__trigger", className)} data-slot={slot(dataSlot, "menubar-trigger")} ref={ref} />;
 });
 export const MenubarPortal = AtomMenubar.Portal;
-export const MenubarContent = forwardRef<HTMLDivElement, MenubarContentProps>(function MenubarContent({ className, "data-slot": dataSlot, ...props }, ref) {
+export const MenubarContent = forwardRef<HTMLDivElement, MenubarContentProps>(function MenubarContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) {
   const size = useContext(SizeContext);
   const atomProps = { ...props, className: merge("brick-menubar__content", className), "data-size": size, "data-slot": slot(dataSlot, "menubar-content") };
-  return <AtomMenubar.Content {...atomProps} ref={ref} />;
+  return <AtomMenubar.Content {...atomProps} style={radiusStyle(radius, "--brick-menubar-content-radius", style)} ref={ref} />;
 });
 export const MenubarArrow = forwardRef<SVGSVGElement, MenubarArrowProps>(function MenubarArrow({ className, "data-slot": dataSlot, ...props }, ref) {
   return <AtomMenubar.Arrow {...props} className={merge("brick-menubar__arrow", className)} data-slot={slot(dataSlot, "menubar-arrow")} ref={ref} />;
@@ -99,9 +101,9 @@ export const MenubarSub = AtomMenubar.Sub;
 export const MenubarSubTrigger = forwardRef<HTMLElement, MenubarSubTriggerProps>(function MenubarSubTrigger({ className, tone = "neutral", "data-slot": dataSlot, ...props }, ref) {
   return <AtomMenubar.SubTrigger {...props} className={merge("brick-menubar__sub-trigger", className)} data-slot={slot(dataSlot, "menubar-sub-trigger")} data-tone={tone} ref={ref} />;
 });
-export const MenubarSubContent = forwardRef<HTMLDivElement, MenubarSubContentProps>(function MenubarSubContent({ className, "data-slot": dataSlot, ...props }, ref) {
+export const MenubarSubContent = forwardRef<HTMLDivElement, MenubarSubContentProps>(function MenubarSubContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) {
   const size = useContext(SizeContext);
-  return <AtomMenubar.SubContent {...props} className={merge("brick-menubar__sub-content", className)} data-size={size} data-slot={slot(dataSlot, "menubar-sub-content")} ref={ref} />;
+  return <AtomMenubar.SubContent {...props} style={radiusStyle(radius, "--brick-menubar-content-radius", style)} className={merge("brick-menubar__sub-content", className)} data-size={size} data-slot={slot(dataSlot, "menubar-sub-content")} ref={ref} />;
 });
 
 for (const [component, name] of [[MenubarRoot, "Root"], [MenubarTrigger, "Trigger"], [MenubarContent, "Content"], [MenubarArrow, "Arrow"], [MenubarGroup, "Group"], [MenubarLabel, "Label"], [MenubarItem, "Item"], [MenubarCheckboxItem, "CheckboxItem"], [MenubarRadioGroup, "RadioGroup"], [MenubarRadioItem, "RadioItem"], [MenubarItemIndicator, "ItemIndicator"], [MenubarSeparator, "Separator"], [MenubarSubTrigger, "SubTrigger"], [MenubarSubContent, "SubContent"]] as const) component.displayName = `Menubar.${name}`;

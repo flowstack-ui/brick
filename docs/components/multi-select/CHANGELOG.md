@@ -4,6 +4,8 @@ MultiSelect follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 - Expanded MultiSelect triggers and portalled options to the responsive shared
   2xs–2xl control-size scale and made the 44px `lg` recipe the default.
 

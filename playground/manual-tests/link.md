@@ -25,8 +25,9 @@ Setup: Open `/link`; review `01`–`04` top to bottom.
 
 Action: Tab to Overview, press Enter, then compare each controlled row.
 
-Expected: Default follows the theme and remains an underlined accent link with
-Brick's fallback, a clear focus ring, and native fragment navigation. Plain
+Expected: Default is always an underlined accent link with
+a clear focus ring and native fragment navigation. Subtle underlines on hover,
+keyboard focus and press but not at rest. Plain
 remains decoration-free on hover/focus while its navigation context and focus
 ring preserve the affordance. Explicit underline remains underlined even
 inside the scoped resting-plain example. Tone or size changes only its named
@@ -60,6 +61,11 @@ with its result.
 
 Expected: Foreground, underline, and focus remain perceivable. The customized
 result changes exactly to green text with a thicker, lower underline.
+Check the 20% line on each surface and the complete resting link affordance.
+Where the line alone identifies the link, test a stronger decoration-color
+override rather than assuming a soft line passes contrast requirements.
+In forced colors and increased contrast it uses full text color. Legacy theme
+policy affects only the explicitly deprecated theme example, not the default.
 
 Result:
 Notes or issue:

@@ -1,4 +1,5 @@
 import { forwardRef, type CSSProperties, type HTMLAttributes } from "react";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import {
   Table as AtomTable,
   type TableBodyProps as AtomTableBodyProps,
@@ -29,6 +30,7 @@ export interface TableContainerProps extends HTMLAttributes<HTMLDivElement> {
   "data-slot"?: string;
 }
 export interface TableRootProps extends AtomTableRootProps {
+  radius?: Radius;
   variant?: TableVariant;
   size?: TableSize;
   density?: TableDensity;
@@ -59,8 +61,8 @@ type TableRootStyle = CSSProperties & { "--brick-table-min-inline-size"?: string
 export const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(function TableContainer({ className, "data-slot": dataSlot, ...props }, ref) {
   return <div {...props} className={mergeClassName("brick-table-container", className)} data-slot={slot(dataSlot, "table-container")} ref={ref} />;
 });
-export const TableRoot = forwardRef<HTMLTableElement, TableRootProps>(function TableRoot({ variant = "line", size = "md", density = "comfortable", striped = false, stickyHeader = false, surface = "transparent", borderTone = "default", showColumnBorder = false, layout = "auto", minInlineSize, className, style, "data-slot": dataSlot, ...props }, ref) {
-  const rootStyle: TableRootStyle = { ...style };
+export const TableRoot = forwardRef<HTMLTableElement, TableRootProps>(function TableRoot({ variant = "line", size = "md", density = "comfortable", striped = false, stickyHeader = false, surface = "transparent", borderTone = "default", showColumnBorder = false, layout = "auto", minInlineSize, radius, className, style, "data-slot": dataSlot, ...props }, ref) {
+  const rootStyle: TableRootStyle = { ...radiusStyle(radius, "--brick-table-radius", style) };
   if (minInlineSize !== undefined) rootStyle["--brick-table-min-inline-size"] = serializeLength(minInlineSize);
   return <AtomTable.Root {...props} className={mergeClassName("brick-table", className)} data-border-tone={borderTone} data-column-border={showColumnBorder ? "" : undefined} data-density={density} data-layout={layout} data-size={size} data-slot={slot(dataSlot, "table")} data-sticky-header={stickyHeader ? "" : undefined} data-striped={striped ? "" : undefined} data-surface={surface} data-variant={variant} ref={ref} style={rootStyle} />;
 });

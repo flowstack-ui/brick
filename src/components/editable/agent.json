@@ -1,0 +1,16 @@
+{
+  "schema":"flowstack.agent-component.v1", "id":"editable", "name":"Editable",
+  "package":"@flowstack-ui/brick", "layer":"brick", "kind":"component",
+  "purpose":"Present inline text editing with Atom-owned draft, commit, cancel and focus behavior.",
+  "useWhen":["An existing text value should become an input or textarea on demand."],
+  "avoidWhen":[{"condition":"The field should always be editable.","useInstead":"Input or Textarea"}],
+  "composition":["Use Root or RootProvider, Area, Preview and exactly one Input or Textarea. Provide Label or an accessible name, with optional Control and triggers."],
+  "rules":[
+    {"id":"editable-save","level":"must","statement":"Separate draft changes from commit requests; saving, errors and retries belong to the application."},
+    {"id":"editable-state","level":"must","statement":"Update controlled value and edit in their callbacks. Create an external controller inside the Field scope when it must inherit Field state."},
+    {"id":"editable-css","level":"must","statement":"Load styles.css or core.css plus editable.css and the styles of composed components."}
+  ],
+  "commonMistakes":[{"mistake":"Rendering both Input and Textarea or saving every draft as a completed edit.","correction":"Use one named native editor and save on the explicit commit boundary."}],
+  "validation":["Verify empty and defaultEdit rollback, controlled refusal, keyboard, outside events and IME.","Verify Field/form reset, textarea autoresize, nested Dialog focus, preview/editor geometry, RTL, appearances and forced colors."],
+  "related":[{"kind":"package","package":"@flowstack-ui/atom","id":"editable","versionPolicy":"installed-exact"},"field","form","input","textarea","button","dialog"]
+}

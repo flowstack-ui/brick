@@ -23,6 +23,7 @@ describe("Tabs", () => {
     expect(root).toHaveClass("brick-tabs");
     expect(root).toHaveAttribute("data-size", "md");
     expect(root).toHaveAttribute("data-variant", "line");
+    expect(root).toHaveAttribute("data-tone", "accent");
     expect(list).toHaveAttribute("data-radius", "default");
     expect(screen.getByRole("tab", { name: "One" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByRole("tabpanel")).toHaveAttribute("aria-labelledby", screen.getByRole("tab", { name: "One" }).id);
@@ -31,13 +32,15 @@ describe("Tabs", () => {
   it("supports every recipe without leaking visual props", () => {
     const { rerender } = render(<Tabs.Root><Tabs.List /></Tabs.Root>);
     for (const size of ["sm", "md", "lg"] as const) for (const variant of ["line", "solid", "soft", "enclosed"] as const) {
-      rerender(<Tabs.Root fullWidth size={size} variant={variant}><Tabs.List /></Tabs.Root>);
+      rerender(<Tabs.Root fullWidth size={size} variant={variant} tone="neutral"><Tabs.List /></Tabs.Root>);
       const root = screen.getByRole("tablist").parentElement!;
       expect(root).toHaveAttribute("data-size", size);
       expect(root).toHaveAttribute("data-variant", variant);
       expect(root).toHaveAttribute("data-full-width", "");
       expect(root).not.toHaveAttribute("size");
       expect(root).not.toHaveAttribute("variant");
+      expect(root).toHaveAttribute("data-tone", "neutral");
+      expect(root).not.toHaveAttribute("tone");
     }
   });
 
@@ -71,6 +74,7 @@ describe("Tabs", () => {
     expect(screen.getByTestId("list")).toHaveAttribute("data-trigger-radius", "default");
     expect(screen.getByTestId("list")).not.toHaveAttribute("radius");
     expect(screen.getByTestId("list")).not.toHaveAttribute("triggerRadius");
+    expect(screen.getByTestId("list").style.getPropertyValue("--brick-tabs-radius")).toBe("");
   });
 
   it("exposes the independent trigger radius recipe for line tabs", () => {

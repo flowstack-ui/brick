@@ -20,6 +20,7 @@ Present a finished urgent or consequential decision that requires an explicit re
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Reserve AlertDialog for one urgent or consequential decision; use Dialog for ordinary tasks, forms, or complex workflows.
 - **MUST:** Keep the alertdialog semantics and provide both an accessible name with visible Title or native labeling and an accessible description with Description or native aria-describedby.
 - **MUST:** Place a visible enabled Cancel before Action and make Cancel the safe initial focus target for consequential actions unless an explicitly safer workflow target is supplied.

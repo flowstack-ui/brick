@@ -1,0 +1,313 @@
+/* Generated from contrast-validated Theme compilations. Do not edit. */
+@layer flowstack.theme {
+  :where(:root[data-preview-accent="blue"]) {
+    --brick-color-accent-border: #a1b7e9;
+    --brick-color-accent-on-soft: #243f92;
+    --brick-color-accent-soft: #eff5ff;
+    --brick-color-accent-soft-hover: #dce6fc;
+    --brick-color-accent-soft-pressed: #c8d6f5;
+    --brick-color-accent-solid: #3157d5;
+    --brick-color-accent-solid-hover: #2a4dcb;
+    --brick-color-accent-solid-pressed: #2e4eb5;
+    --brick-color-accent-text: #243f92;
+    --brick-color-focus-ring: #243f92;
+    --brick-color-selection-background: #3157d5;
+    --brick-color-selection-foreground: #ffffff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :where(:root[data-preview-accent="blue"]:not([data-brick-appearance])) {
+      --brick-color-accent-border: #354670;
+      --brick-color-accent-on-soft: #99bbff;
+      --brick-color-accent-soft: #0b0f18;
+      --brick-color-accent-soft-hover: #151b2b;
+      --brick-color-accent-soft-pressed: #202941;
+      --brick-color-accent-solid: #3157d5;
+      --brick-color-accent-solid-hover: #3961df;
+      --brick-color-accent-solid-pressed: #456ad3;
+      --brick-color-accent-text: #99bbff;
+      --brick-color-focus-ring: #99bbff;
+      --brick-color-selection-background: #3157d5;
+      --brick-color-selection-foreground: #ffffff;
+    }
+  }
+
+  :where(:root[data-preview-accent="blue"][data-brick-appearance="light"]),
+  :where(:root[data-preview-accent="blue"] [data-brick-appearance="light"]) {
+    --brick-color-accent-border: #a1b7e9;
+    --brick-color-accent-on-soft: #243f92;
+    --brick-color-accent-soft: #eff5ff;
+    --brick-color-accent-soft-hover: #dce6fc;
+    --brick-color-accent-soft-pressed: #c8d6f5;
+    --brick-color-accent-solid: #3157d5;
+    --brick-color-accent-solid-hover: #2a4dcb;
+    --brick-color-accent-solid-pressed: #2e4eb5;
+    --brick-color-accent-text: #243f92;
+    --brick-color-focus-ring: #243f92;
+    --brick-color-selection-background: #3157d5;
+    --brick-color-selection-foreground: #ffffff;
+  }
+
+  :where(:root[data-preview-accent="blue"][data-brick-appearance="dark"]),
+  :where(:root[data-preview-accent="blue"] [data-brick-appearance="dark"]) {
+    --brick-color-accent-border: #354670;
+    --brick-color-accent-on-soft: #99bbff;
+    --brick-color-accent-soft: #0b0f18;
+    --brick-color-accent-soft-hover: #151b2b;
+    --brick-color-accent-soft-pressed: #202941;
+    --brick-color-accent-solid: #3157d5;
+    --brick-color-accent-solid-hover: #3961df;
+    --brick-color-accent-solid-pressed: #456ad3;
+    --brick-color-accent-text: #99bbff;
+    --brick-color-focus-ring: #99bbff;
+    --brick-color-selection-background: #3157d5;
+    --brick-color-selection-foreground: #ffffff;
+  }
+}
+
+@layer flowstack.theme {
+  :where(:root[data-preview-accent="teal"]) {
+    --brick-color-accent-border: #9cc0ba;
+    --brick-color-accent-on-soft: #00554d;
+    --brick-color-accent-on-solid: #000000;
+    --brick-color-accent-soft: #eef8f6;
+    --brick-color-accent-soft-hover: #dbeae7;
+    --brick-color-accent-soft-pressed: #c5dbd8;
+    --brick-color-accent-solid: #0d9488;
+    --brick-color-accent-solid-hover: #008b7f;
+    --brick-color-accent-solid-pressed: #248379;
+    --brick-color-accent-text: #00554d;
+    --brick-color-focus-ring: #00554d;
+    --brick-color-selection-background: #0d9488;
+    --brick-color-selection-foreground: #000000;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :where(:root[data-preview-accent="teal"]:not([data-brick-appearance])) {
+      --brick-color-accent-border: #2e4f4a;
+      --brick-color-accent-on-soft: #82cfc4;
+      --brick-color-accent-on-solid: #000000;
+      --brick-color-accent-soft: #0a1110;
+      --brick-color-accent-soft-hover: #131e1d;
+      --brick-color-accent-soft-pressed: #1c2e2c;
+      --brick-color-accent-solid: #0d9488;
+      --brick-color-accent-solid-hover: #229d91;
+      --brick-color-accent-solid-pressed: #459f94;
+      --brick-color-accent-text: #82cfc4;
+      --brick-color-focus-ring: #82cfc4;
+      --brick-color-selection-background: #0d9488;
+      --brick-color-selection-foreground: #000000;
+    }
+  }
+
+  :where(:root[data-preview-accent="teal"][data-brick-appearance="light"]),
+  :where(:root[data-preview-accent="teal"] [data-brick-appearance="light"]) {
+    --brick-color-accent-border: #9cc0ba;
+    --brick-color-accent-on-soft: #00554d;
+    --brick-color-accent-on-solid: #000000;
+    --brick-color-accent-soft: #eef8f6;
+    --brick-color-accent-soft-hover: #dbeae7;
+    --brick-color-accent-soft-pressed: #c5dbd8;
+    --brick-color-accent-solid: #0d9488;
+    --brick-color-accent-solid-hover: #008b7f;
+    --brick-color-accent-solid-pressed: #248379;
+    --brick-color-accent-text: #00554d;
+    --brick-color-focus-ring: #00554d;
+    --brick-color-selection-background: #0d9488;
+    --brick-color-selection-foreground: #000000;
+  }
+
+  :where(:root[data-preview-accent="teal"][data-brick-appearance="dark"]),
+  :where(:root[data-preview-accent="teal"] [data-brick-appearance="dark"]) {
+    --brick-color-accent-border: #2e4f4a;
+    --brick-color-accent-on-soft: #82cfc4;
+    --brick-color-accent-on-solid: #000000;
+    --brick-color-accent-soft: #0a1110;
+    --brick-color-accent-soft-hover: #131e1d;
+    --brick-color-accent-soft-pressed: #1c2e2c;
+    --brick-color-accent-solid: #0d9488;
+    --brick-color-accent-solid-hover: #229d91;
+    --brick-color-accent-solid-pressed: #459f94;
+    --brick-color-accent-text: #82cfc4;
+    --brick-color-focus-ring: #82cfc4;
+    --brick-color-selection-background: #0d9488;
+    --brick-color-selection-foreground: #000000;
+  }
+}
+
+@layer flowstack.theme {
+  :where(:root[data-preview-accent="rose"]) {
+    --brick-color-accent-border: #e2a4b2;
+    --brick-color-accent-on-soft: #80183f;
+    --brick-color-accent-soft: #fff0f3;
+    --brick-color-accent-soft-hover: #fadee4;
+    --brick-color-accent-soft-pressed: #f1cad2;
+    --brick-color-accent-solid: #be185d;
+    --brick-color-accent-solid-hover: #b30055;
+    --brick-color-accent-solid-pressed: #a32253;
+    --brick-color-accent-text: #80183f;
+    --brick-color-focus-ring: #80183f;
+    --brick-color-selection-background: #be185d;
+    --brick-color-selection-foreground: #ffffff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :where(:root[data-preview-accent="rose"]:not([data-brick-appearance])) {
+      --brick-color-accent-border: #693543;
+      --brick-color-accent-on-soft: #ff95b3;
+      --brick-color-accent-soft: #170c0e;
+      --brick-color-accent-soft-hover: #28151a;
+      --brick-color-accent-soft-pressed: #3d2027;
+      --brick-color-accent-solid: #be185d;
+      --brick-color-accent-solid-hover: #c92765;
+      --brick-color-accent-solid-pressed: #c2426c;
+      --brick-color-accent-text: #ff95b3;
+      --brick-color-focus-ring: #ff95b3;
+      --brick-color-selection-background: #be185d;
+      --brick-color-selection-foreground: #ffffff;
+    }
+  }
+
+  :where(:root[data-preview-accent="rose"][data-brick-appearance="light"]),
+  :where(:root[data-preview-accent="rose"] [data-brick-appearance="light"]) {
+    --brick-color-accent-border: #e2a4b2;
+    --brick-color-accent-on-soft: #80183f;
+    --brick-color-accent-soft: #fff0f3;
+    --brick-color-accent-soft-hover: #fadee4;
+    --brick-color-accent-soft-pressed: #f1cad2;
+    --brick-color-accent-solid: #be185d;
+    --brick-color-accent-solid-hover: #b30055;
+    --brick-color-accent-solid-pressed: #a32253;
+    --brick-color-accent-text: #80183f;
+    --brick-color-focus-ring: #80183f;
+    --brick-color-selection-background: #be185d;
+    --brick-color-selection-foreground: #ffffff;
+  }
+
+  :where(:root[data-preview-accent="rose"][data-brick-appearance="dark"]),
+  :where(:root[data-preview-accent="rose"] [data-brick-appearance="dark"]) {
+    --brick-color-accent-border: #693543;
+    --brick-color-accent-on-soft: #ff95b3;
+    --brick-color-accent-soft: #170c0e;
+    --brick-color-accent-soft-hover: #28151a;
+    --brick-color-accent-soft-pressed: #3d2027;
+    --brick-color-accent-solid: #be185d;
+    --brick-color-accent-solid-hover: #c92765;
+    --brick-color-accent-solid-pressed: #c2426c;
+    --brick-color-accent-text: #ff95b3;
+    --brick-color-focus-ring: #ff95b3;
+    --brick-color-selection-background: #be185d;
+    --brick-color-selection-foreground: #ffffff;
+  }
+}
+
+@layer flowstack.theme {
+  :where(:root[data-preview-accent="orange"]) {
+    --brick-color-accent-border: #e1a893;
+    --brick-color-accent-on-soft: #812100;
+    --brick-color-accent-on-solid: #000000;
+    --brick-color-accent-soft: #fff1eb;
+    --brick-color-accent-soft-hover: #fae0d7;
+    --brick-color-accent-soft-pressed: #f1cdc0;
+    --brick-color-accent-solid: #ea580c;
+    --brick-color-accent-solid-hover: #df4e00;
+    --brick-color-accent-solid-pressed: #ce5724;
+    --brick-color-accent-text: #812100;
+    --brick-color-focus-ring: #812100;
+    --brick-color-selection-background: #ea580c;
+    --brick-color-selection-foreground: #000000;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :where(:root[data-preview-accent="orange"]:not([data-brick-appearance])) {
+      --brick-color-accent-border: #693927;
+      --brick-color-accent-on-soft: #ff9d75;
+      --brick-color-accent-on-solid: #000000;
+      --brick-color-accent-soft: #170d09;
+      --brick-color-accent-soft-hover: #281710;
+      --brick-color-accent-soft-pressed: #3d2218;
+      --brick-color-accent-solid: #ea580c;
+      --brick-color-accent-solid-hover: #f5621f;
+      --brick-color-accent-solid-pressed: #ed7343;
+      --brick-color-accent-text: #ff9d75;
+      --brick-color-focus-ring: #ff9d75;
+      --brick-color-selection-background: #ea580c;
+      --brick-color-selection-foreground: #000000;
+    }
+  }
+
+  :where(:root[data-preview-accent="orange"][data-brick-appearance="light"]),
+  :where(:root[data-preview-accent="orange"] [data-brick-appearance="light"]) {
+    --brick-color-accent-border: #e1a893;
+    --brick-color-accent-on-soft: #812100;
+    --brick-color-accent-on-solid: #000000;
+    --brick-color-accent-soft: #fff1eb;
+    --brick-color-accent-soft-hover: #fae0d7;
+    --brick-color-accent-soft-pressed: #f1cdc0;
+    --brick-color-accent-solid: #ea580c;
+    --brick-color-accent-solid-hover: #df4e00;
+    --brick-color-accent-solid-pressed: #ce5724;
+    --brick-color-accent-text: #812100;
+    --brick-color-focus-ring: #812100;
+    --brick-color-selection-background: #ea580c;
+    --brick-color-selection-foreground: #000000;
+  }
+
+  :where(:root[data-preview-accent="orange"][data-brick-appearance="dark"]),
+  :where(:root[data-preview-accent="orange"] [data-brick-appearance="dark"]) {
+    --brick-color-accent-border: #693927;
+    --brick-color-accent-on-soft: #ff9d75;
+    --brick-color-accent-on-solid: #000000;
+    --brick-color-accent-soft: #170d09;
+    --brick-color-accent-soft-hover: #281710;
+    --brick-color-accent-soft-pressed: #3d2218;
+    --brick-color-accent-solid: #ea580c;
+    --brick-color-accent-solid-hover: #f5621f;
+    --brick-color-accent-solid-pressed: #ed7343;
+    --brick-color-accent-text: #ff9d75;
+    --brick-color-focus-ring: #ff9d75;
+    --brick-color-selection-background: #ea580c;
+    --brick-color-selection-foreground: #000000;
+  }
+}
+
+@layer flowstack.theme {
+  :where(:root[data-preview-radius="square"]) {
+    --brick-radius-control: 0px;
+    --brick-radius-overlay: 0px;
+    --brick-radius-subtle: 0px;
+    --brick-radius-surface: 0px;
+  }
+}
+
+@layer flowstack.theme {
+  :where(:root[data-preview-radius="small"]) {
+    --brick-radius-control: 0.25rem;
+    --brick-radius-overlay: 0.5rem;
+    --brick-radius-subtle: 0.125rem;
+    --brick-radius-surface: 0.375rem;
+  }
+}
+
+@layer flowstack.theme {
+  :where(:root[data-preview-radius="large"]) {
+    --brick-radius-control: 0.75rem;
+    --brick-radius-overlay: 1.25rem;
+    --brick-radius-subtle: 0.375rem;
+    --brick-radius-surface: 1rem;
+  }
+}
+
+@layer flowstack.theme {
+  :where(:root[data-preview-font="inter"]) {
+    --brick-font-family-body: "Inter Variable", system-ui, sans-serif;
+    --brick-font-family-heading: "Inter Variable", system-ui, sans-serif;
+  }
+}
+
+@layer flowstack.theme {
+  :where(:root[data-preview-font="outfit"]) {
+    --brick-font-family-body: "Outfit Variable", system-ui, sans-serif;
+    --brick-font-family-heading: "Outfit Variable", system-ui, sans-serif;
+  }
+}

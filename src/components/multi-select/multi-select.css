@@ -76,7 +76,7 @@
     --brick-multi-select-content-shadow: var(--brick-shadow-floating);
     --brick-multi-select-content-max-block-size: min(20rem, var(--available-height, 20rem));
     --brick-multi-select-content-padding: var(--brick-space-1);
-    --brick-multi-select-content-z-index: 70;
+    --brick-multi-select-content-z-index: var(--brick-layer-overlay);
     --brick-multi-select-item-min-block-size: var(--brick-control-min-block-size-md);
     --brick-multi-select-item-padding-inline: var(--brick-space-3);
     --brick-multi-select-item-gap: var(--brick-space-2);
@@ -99,7 +99,7 @@
     background: var(--brick-multi-select-content-background);
     box-shadow: var(--brick-multi-select-content-shadow);
     color: var(--brick-multi-select-content-foreground);
-    z-index: var(--brick-multi-select-content-z-index);
+    z-index: calc(var(--brick-multi-select-content-z-index) + var(--atom-overlay-layer, 0) + 1);
   }
 
   .brick-multi-select-content[data-size="sm"] { --brick-multi-select-item-min-block-size: var(--brick-control-min-block-size-sm); }

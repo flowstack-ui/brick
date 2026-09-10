@@ -1,5 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
+import { verifyActionFocus } from "../../helpers/action-focus.js";
+import { setExampleDirection } from "../../helpers/example-direction.js";
+
+test("Button inside focus survives clipping and every action fill", async ({ page }) => {
+  await page.goto("/button");
+  await verifyActionFocus(page, page.getByTestId("button-inside-focus"));
+});
 
 test("Button exposes the approved recipes and native semantics", async ({
   page,
@@ -266,7 +273,7 @@ test("Button responsive size changes the complete recipe at the shared breakpoin
   await page.setViewportSize({ width: 1280, height: 900 });
   await expect(responsive).toHaveCSS("min-height", "40px");
   await expect(responsive).toHaveCSS("font-size", "14px");
-  await expect(responsive).toHaveCSS("line-height", "16.8px");
+  expect(await responsive.evaluate(node => Number.parseFloat(getComputedStyle(node).lineHeight))).toBeCloseTo(16.8, 2);
   await expect(responsive).toHaveCSS("padding-left", "16px");
   await expect(responsive).toHaveCSS("padding-right", "16px");
 });
@@ -305,24 +312,25 @@ test("Button keeps loading centered and directional icons semantic in RTL", asyn
       const pseudo = getComputedStyle(element, "::after");
       const matrix = new DOMMatrixReadOnly(pseudo.transform);
       const spinnerWidth = Number.parseFloat(pseudo.width);
+      const [translateX, translateY] = pseudo.translate.split(" ").map(Number.parseFloat);
       const spinnerX =
         buttonStyle.direction === "rtl"
           ? button.right -
             Number.parseFloat(buttonStyle.borderRightWidth) -
             Number.parseFloat(pseudo.right) -
             spinnerWidth +
-            matrix.e +
+            matrix.e + spinnerWidth * translateX / 100 +
             spinnerWidth / 2
           : button.left +
             Number.parseFloat(buttonStyle.borderLeftWidth) +
             Number.parseFloat(pseudo.left) +
-            matrix.e +
+            matrix.e + spinnerWidth * translateX / 100 +
             spinnerWidth / 2;
       const spinnerY =
         button.top +
         Number.parseFloat(buttonStyle.borderTopWidth) +
         Number.parseFloat(pseudo.top) +
-        matrix.f +
+        matrix.f + Number.parseFloat(pseudo.height) * translateY / 100 +
         Number.parseFloat(pseudo.height) / 2;
       return {
         buttonX: button.left + button.width / 2,
@@ -335,7 +343,7 @@ test("Button keeps loading centered and directional icons semantic in RTL", asyn
   expect(ltrSpinnerCenter.spinnerX).toBeCloseTo(ltrSpinnerCenter.buttonX, 0);
   expect(ltrSpinnerCenter.spinnerY).toBeCloseTo(ltrSpinnerCenter.buttonY, 0);
 
-  await page.getByRole("button", { name: "RTL", exact: true }).click();
+  await setExampleDirection(page, "rtl");
   const rtlSpinnerCenter = await readSpinnerCenter();
   expect(rtlSpinnerCenter.spinnerX).toBeCloseTo(rtlSpinnerCenter.buttonX, 0);
   expect(rtlSpinnerCenter.spinnerY).toBeCloseTo(rtlSpinnerCenter.buttonY, 0);
@@ -468,6 +476,7 @@ test("Button keeps disabled loading presentation centered and unavailable", asyn
     const spinner = getComputedStyle(element, "::after");
     const matrix = new DOMMatrixReadOnly(spinner.transform);
     const spinnerWidth = Number.parseFloat(spinner.width);
+    const [translateX, translateY] = spinner.translate.split(" ").map(Number.parseFloat);
     return {
       rootX: root.left + root.width / 2,
       rootY: root.top + root.height / 2,
@@ -475,13 +484,13 @@ test("Button keeps disabled loading presentation centered and unavailable", asyn
         root.left +
         Number.parseFloat(style.borderLeftWidth) +
         Number.parseFloat(spinner.left) +
-        matrix.e +
+        matrix.e + spinnerWidth * translateX / 100 +
         spinnerWidth / 2,
       spinnerY:
         root.top +
         Number.parseFloat(style.borderTopWidth) +
         Number.parseFloat(spinner.top) +
-        matrix.f +
+        matrix.f + Number.parseFloat(spinner.height) * translateY / 100 +
         Number.parseFloat(spinner.height) / 2,
     };
   });

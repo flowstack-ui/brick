@@ -1,10 +1,27 @@
 # Brick documentation
 
+- [QrCode](components/qr-code/README.md) — local QR sharing and image export.
+- [Table of Contents](components/table-of-contents/README.md) — document navigation and reading position.
+
+- [EmptyState](components/empty-state/README.md) — empty content and next steps.
+- [Stat](components/stat/README.md) — labeled metrics, units and comparisons.
+- [NativeSelect](components/native-select/README.md) — browser-native option selection.
+- [Editable](components/editable/README.md) — inline text editing with commit and cancellation.
+- [Timeline](components/timeline/README.md) — static chronological events.
+
+- [Alert](components/alert/README.md) — persistent inline feedback.
+
+- [Spinner](components/spinner/README.md) — visual loading feedback.
+
 This directory is the public documentation authority for
 `@flowstack-ui/brick`.
 
 ## Start here
 
+- [Focus presentation](guides/focus-presentation.md) — placement, clipping,
+  semantic paint, forced colors and composite ownership
+- [Radius](guides/radius.md) — core and semantic choices, migrated owners,
+  legacy shape compatibility and nested corners
 - [Installation](guides/installation.md) — package, peer dependency, and CSS
   setup
 - [Appearance and tokens](guides/appearance-and-tokens.md) — light, dark,
@@ -31,6 +48,9 @@ This directory is the public documentation authority for
   logical direction, and overridable Brick-authored accessibility text
 
 ### Actions and selection
+
+- [CloseButton](components/close-button/README.md) — localized close action
+- [DownloadTrigger](components/download-trigger/README.md) — generated file downloads
 
 - [Button](components/button/README.md) — styled actions and button-like
   navigation
@@ -76,6 +96,10 @@ This directory is the public documentation authority for
 
 ### Forms and choices
 
+- [Calendar](components/calendar/README.md)
+- [DateInput](components/date-input/README.md)
+- [DatePicker](components/date-picker/README.md)
+
 - [Color Picker](components/color-picker/README.md) — Atom-backed area, channel, alpha, format, preset, native, EyeDropper, popup, and form editing
 - [Form](components/form/README.md) — native submission boundary and form
   rhythm
@@ -84,7 +108,7 @@ This directory is the public documentation authority for
 - [Fieldset](components/fieldset/README.md) — native related-control grouping
 - [Input](components/input/README.md) — finished native single-line text entry
 - [Number Input](components/number-input/README.md) — numeric entry with bounded stepping
-- [OTP Field](components/otp-field/README.md) — segmented one-time-code entry
+- [Pin Input](components/pin-input/README.md) — segmented one-time-code entry
 - [Password Toggle Field](components/password-toggle-field/README.md) — password entry with visibility control
 - [Textarea](components/textarea/README.md) — finished native multi-line text
 - [Radio Group](components/radio-group/README.md) — finished visible single-selection choices
@@ -194,6 +218,8 @@ This directory is the public documentation authority for
 
 - [Breadcrumb](components/breadcrumb/README.md) — hierarchical page location
   and ancestor navigation
+- [Steps](components/steps/README.md) — ordered workflow progression and validation.
+- [Splitter](components/splitter/README.md) — adjacent resizable regions.
 - [Tabs](components/tabs/README.md) — related peer panels with complete keyboard
   navigation
 - [Navigation Menu](components/navigation-menu/README.md) — destination
@@ -237,3 +263,8 @@ This directory is the public documentation authority for
 
 Every released component owns one folder containing its public `README.md` and
 `CHANGELOG.md`.
+- [ActionBar](components/action-bar/README.md) — detached contextual actions.
+- [FloatingPanel](components/floating-panel/README.md) — movable, resizable nonmodal tools.
+- [OverlayManager](components/overlay-manager/README.md) — keyed imperative overlay orchestration.
+- [Marquee](./components/marquee/README.md) — continuous motion, safe replicas and pause controls.
+- [TagsInput](components/tags-input/README.md) — multi-value entry with validation and suggestions.

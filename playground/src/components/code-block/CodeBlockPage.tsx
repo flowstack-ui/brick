@@ -12,6 +12,7 @@ import {
   type CodeBlockVariant,
 } from "@flowstack-ui/brick";
 import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
+import { ExampleSource } from "../../shared/ExampleSource.js";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
@@ -194,6 +195,10 @@ export function CodeBlockPage() {
         </Grid.Root>
       </Scenario>
       <Scenario {...codeBlockScenarios[3]}>
+        <VStack data-testid="code-block-icon-copy">
+          <SpecimenLabel>Headerless source with an icon copy action</SpecimenLabel>
+          <ExampleSource source={source} label="Icon copy example" />
+        </VStack>
         <EvidenceSurface data-testid="code-block-anatomy">
           <CodeBlock.Root language="tsx" value={source} writeValue={writer}>
             <CodeBlock.Header>

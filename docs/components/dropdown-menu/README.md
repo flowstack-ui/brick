@@ -58,6 +58,15 @@ Public exports are `DropdownMenu`, `DropdownMenuRoot`, `DropdownMenuTrigger`, `D
 
 Action-like rows accept the `neutral` or `danger` tone when exposed; `neutral` is the default. Behavioral props come from the matching Atom parts.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 The overlay uses a raised surface, 32/44/48px `sm`/`md`/`lg` minimum rows, accent highlighting, visible disabled and danger states, selection indicators, and collision-aware nested content.

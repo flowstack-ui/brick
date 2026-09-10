@@ -1,5 +1,6 @@
 # Number Input
 
+
 Number Input is a finished numeric entry control backed by Atom Number Input. Atom owns numeric value, parsing, formatting, bounds, stepping, validation, and form behavior; Brick owns the visual recipes and fixed step artwork.
 
 ## When and where to use
@@ -87,6 +88,15 @@ not English.
 
 `underline` rejects `shape`. Root also preserves Atom's `value`, `defaultValue`, `onValueChange`, `min`, `max`, `step`, `largeStep`, `precision`, `clampOnBlur`, `formatter`, `parser`, `placeholder`, state, validation, name, form, and ARIA props. Step children replace Brick artwork; name custom actions explicitly.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 Recipes align with Input: outline has a transparent surface and complete boundary, soft uses a subtle surface, and underline uses a single indicator. Sizes change the complete control; shapes change geometry. `field` keeps stacked logical-end steppers; `stepper` uses equal square actions around the value. Focus, invalid, disabled, read-only, and boundary-unavailable state derive from Atom attributes and native state. `stepperVisibility="hover"` applies to `field`, keeps action space stable, reveals the buttons on hover or focus for fine pointers, and keeps them visible on touch/coarse-pointer devices.
@@ -104,6 +114,11 @@ Prefer recipe props, then semantic tokens, then component variables. Classes and
 The grid uses logical sizing, a shrinkable input column, and a fixed action column. Full width remains contained at narrow widths and the action column moves to the logical end in RTL. On coarse-pointer devices, `sm` and `md` become tall enough to keep each stacked step action at least 24 CSS px; this applies to touch screens at any viewport width.
 
 ## Accessibility
+
+### Focus presentation
+
+Forced colors preserves a real system-color focus outline; shadows are not the sole focus cue.
+See [Focus presentation](../../guides/focus-presentation.md).
 
 Provide a visible Field label or an explicit accessible name. The input exposes spinbutton semantics, values, bounds, and Field relationships. Increment and Decrement require accessible names because their artwork is decorative. Atom owns keyboard stepping, focus retention, boundary availability, validation, and form reset.
 

@@ -20,6 +20,7 @@ Present a styled dynamic stream of rich focusable articles while Atom owns feed 
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Feed only for a dynamic rich article stream where feed semantics and article keyboard movement improve the experience.
 - **MUST:** Keep Feed.Item articles as direct Root children with useful accessible names and accurate positions and totals.
 - **MUST:** Set busy only while adding or replacing Feed DOM; do not make a passive feed a live region or treat busy paint as an announcement.

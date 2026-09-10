@@ -66,12 +66,13 @@ least `4.5:1`. Because the selection background is opaque, the declared ratio
 does not change when selection crosses a neutral, accent, status, or image
 surface.
 
-Brick currently approves Drawer background and radius plus Link resting
+Brick approves Drawer background and radius plus legacy Link resting
 decoration as inherited component inputs. `components.link.decoration` accepts
-only `"underline"` or `"none"`. When `"none"` is active, Theme validates the
-accent Link text against adjacent primary text at `3:1`; Link restores its
-underline on hover, focus, and active interaction. An explicit
-`variant="underline"` or `variant="plain"` remains a local exception.
+`"always"` or `"interaction"`. Actual inline text distinction remains a
+composition-level check when decoration is removed; Link restores its
+underline on hover, focus, and active interaction. This policy applies only
+to the deprecated explicit `variant="theme"`. The default `underline`, opt-in
+`subtle`, and `plain` recipes own their decoration behavior independently.
 
 Other documented component variables remain available for local instance
 customization but are intentionally not accepted as global Theme inputs until

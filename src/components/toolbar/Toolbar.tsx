@@ -1,4 +1,6 @@
 import { forwardRef } from "react";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+import type { ToggleTone, ToggleVariant } from "../toggle/Toggle.js";
 import {
   Toolbar as AtomToolbar,
   type ToolbarButtonProps as AtomToolbarButtonProps,
@@ -13,18 +15,19 @@ export type ToolbarVariant = "plain" | "soft" | "outline";
 export type ToolbarSize = "sm" | "md" | "lg";
 
 export interface ToolbarRootProps extends AtomToolbarRootProps {
+  radius?: Radius;
   variant?: ToolbarVariant;
   size?: ToolbarSize;
 }
 export type ToolbarButtonProps = AtomToolbarButtonProps;
 export type ToolbarLinkProps = AtomToolbarLinkProps;
 export type ToolbarSeparatorProps = AtomToolbarSeparatorProps;
-export type ToolbarToggleVariant = "solid" | "soft" | "outline" | "ghost";
-export type ToolbarToggleTone = "accent" | "neutral";
+export type ToolbarToggleVariant = ToggleVariant;
+export type ToolbarToggleTone = ToggleTone;
 export type ToolbarToggleGroupProps = Omit<AtomToolbarToggleGroupProps, "color"> & {
-  /** Shared ToggleItem visual treatment. @default "soft" */
+  /** Shared ToggleItem visual treatment. @default "ghost" */
   variant?: ToolbarToggleVariant;
-  /** Shared ToggleItem selected-state color treatment. @default "accent" */
+  /** Shared ToggleItem selected-state color treatment. @default "neutral" */
   tone?: ToolbarToggleTone;
 };
 export type ToolbarToggleItemProps = AtomToolbarToggleItemProps;
@@ -34,8 +37,8 @@ function classes(base: string, className?: string) {
 }
 
 export const ToolbarRoot = forwardRef<HTMLDivElement, ToolbarRootProps>(
-  function ToolbarRoot({ className, size = "md", variant = "soft", ...props }, ref) {
-    return <AtomToolbar.Root {...props} className={classes("brick-toolbar", className)} data-size={size} data-variant={variant} ref={ref} />;
+  function ToolbarRoot({ className, size = "md", variant = "soft", radius, style, ...props }, ref) {
+    return <AtomToolbar.Root {...props} style={radiusStyle(radius, "--brick-toolbar-radius", style)} className={classes("brick-toolbar", className)} data-size={size} data-variant={variant} ref={ref} />;
   },
 );
 export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
@@ -51,7 +54,7 @@ export const ToolbarLink = forwardRef<HTMLAnchorElement, ToolbarLinkProps>(
 export function ToolbarSeparator({ className, ...props }: ToolbarSeparatorProps) {
   return <AtomToolbar.Separator {...props} className={classes("brick-toolbar__separator", className)} />;
 }
-export function ToolbarToggleGroup({ className, tone = "accent", variant = "soft", ...props }: ToolbarToggleGroupProps) {
+export function ToolbarToggleGroup({ className, tone = "neutral", variant = "ghost", ...props }: ToolbarToggleGroupProps) {
   return <AtomToolbar.ToggleGroup {...props} className={classes("brick-toolbar__toggle-group", className)} data-tone={tone} data-variant={variant} />;
 }
 export const ToolbarToggleItem = forwardRef<HTMLButtonElement, ToolbarToggleItemProps>(

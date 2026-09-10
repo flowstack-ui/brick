@@ -21,6 +21,7 @@ Reveal one independent in-flow region while Atom owns disclosure state, relation
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Root, Trigger, Content, and ContentInner rather than rebuilding disclosure state, ARIA relationships, measurement, or animation lifecycle.
 - **MUST:** Let Collapsible Trigger own its finished control recipe; do not compose Button or Icon Button into Trigger because competing visual recipes would own one element.
 - **MUST:** Keep visible padding in ContentInner rather than Content so Atom can measure and animate the region accurately.

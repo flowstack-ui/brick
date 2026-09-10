@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function expectRootDefaults(root: Locator) {
   await expect(root).toHaveAttribute("data-position", "static");

@@ -109,7 +109,7 @@ recipe metadata, and documented variables are stable public hooks.
 | `as`        | `span`, `p`, `div`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6`                                                                                                                            | `span`         |
 | `variant`   | `display`, `display-sm`, `display-md`, `display-lg`, `display-xl`, `title-xl`, `title-lg`, `title-md`, `title-sm`, `title-xs`, `title-2xs`, `body-xl`, `body-lg`, `body-md`, `body-sm`, `caption`, `eyebrow`; or a responsive value | `body-md` |
 | `tone`      | `inherit`, `primary`, `secondary`, `muted`, `accent`, `info`, `success`, `warning`, `danger`                                                                                      | `primary`      |
-| `weight`    | `inherit`, `regular`, `medium`, `semibold`                                                                                                                                        | recipe default |
+| `weight` | `inherit`, `thin`, `extralight`, `light`, `regular`, `medium`, `semibold`, `bold`, `extrabold`, `black` | recipe default |
 | `align`     | `start`, `center`, `end`; or a responsive value                                                                                                                                   | natural/start  |
 | `wrap`      | `wrap`, `nowrap`, `balance`, `pretty`                                                                                                                                             | `wrap`         |
 | `transform` | `none`, `uppercase`, `lowercase`, `capitalize`                                                                                                                                    | variant recipe |

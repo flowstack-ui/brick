@@ -19,6 +19,7 @@ Apply semantic background tones and layers, boundaries, elevation, radius, inset
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **SHOULD:** Choose surface level by information hierarchy, not decoration alone.
 - **MUST:** Use bordered for a deliberate visible structural edge and rely on its shared default boundary; do not add consumer CSS merely to strengthen the neutral border.
 - **SHOULD:** Use accent tone only for a branded or conversion plane, never as a generic status surface.

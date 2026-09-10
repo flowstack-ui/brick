@@ -58,6 +58,15 @@ Public exports are `ContextMenu`, `ContextMenuRoot`, `ContextMenuTrigger`, `Cont
 
 Action-like rows accept the `neutral` or `danger` tone when exposed; `neutral` is the default. Behavioral props come from the matching Atom parts.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 The trigger receives no Brick surface. The overlay uses collision-aware 32/44/48px `sm`/`md`/`lg` minimum rows with accent highlighting and visible disabled, danger, and selection states.

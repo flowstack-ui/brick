@@ -2,6 +2,15 @@
   "$description": "Canonical design-token source for the Brick visual foundation.",
   "reference": {
     "$description": "Private values used to construct the public semantic contract.",
+    "aspectRatio": {
+      "$type": "number",
+      "square": { "$value": 1 },
+      "landscape": { "$value": 1.3333333333333333 },
+      "portrait": { "$value": 0.75 },
+      "wide": { "$value": 1.7777777777777777 },
+      "ultrawide": { "$value": 3.6 },
+      "golden": { "$value": 1.618 }
+    },
     "light": {
       "color": {
         "$type": "color",
@@ -588,9 +597,15 @@
     },
     "fontWeight": {
       "$type": "fontWeight",
+      "thin": { "$value": 100 },
+      "extralight": { "$value": 200 },
+      "light": { "$value": 300 },
       "regular": { "$value": 400 },
       "medium": { "$value": 500 },
-      "semibold": { "$value": 600 }
+      "semibold": { "$value": 600 },
+      "bold": { "$value": 700 },
+      "extrabold": { "$value": 800 },
+      "black": { "$value": 900 }
     },
     "lineHeight": {
       "$type": "number",
@@ -617,6 +632,15 @@
   "semantic": {
     "$description": "Public semantic roles consumed by components and applications.",
     "light": {
+      "aspect-ratio": {
+        "$type": "number",
+        "square": { "$value": "{reference.aspectRatio.square}" },
+        "landscape": { "$value": "{reference.aspectRatio.landscape}" },
+        "portrait": { "$value": "{reference.aspectRatio.portrait}" },
+        "wide": { "$value": "{reference.aspectRatio.wide}" },
+        "ultrawide": { "$value": "{reference.aspectRatio.ultrawide}" },
+        "golden": { "$value": "{reference.aspectRatio.golden}" }
+      },
       "color": {
         "$type": "color",
         "surface": {
@@ -772,6 +796,17 @@
       },
       "radius": {
         "$type": "dimension",
+        "core": {
+          "2xs": { "$value": "{reference.dimension.radius2xs}" },
+          "xs": { "$value": "{reference.dimension.radiusXs}" },
+          "sm": { "$value": "{reference.dimension.radiusSm}" },
+          "md": { "$value": "{reference.dimension.radiusMd}" },
+          "lg": { "$value": "{reference.dimension.radiusLg}" },
+          "xl": { "$value": "{reference.dimension.radiusXl}" },
+          "2xl": { "$value": "{reference.dimension.radius2xl}" },
+          "3xl": { "$value": "{reference.dimension.radius3xl}" },
+          "4xl": { "$value": "{reference.dimension.radius4xl}" }
+        },
         "subtle": { "$value": "{reference.dimension.radius1}" },
         "control": { "$value": "{reference.dimension.radius2}" },
         "surface": { "$value": "{reference.dimension.radius3}" },
@@ -908,9 +943,15 @@
         },
         "weight": {
           "$type": "fontWeight",
+          "thin": { "$value": "{reference.fontWeight.thin}" },
+          "extralight": { "$value": "{reference.fontWeight.extralight}" },
+          "light": { "$value": "{reference.fontWeight.light}" },
           "regular": { "$value": "{reference.fontWeight.regular}" },
           "medium": { "$value": "{reference.fontWeight.medium}" },
-          "semibold": { "$value": "{reference.fontWeight.semibold}" }
+          "semibold": { "$value": "{reference.fontWeight.semibold}" },
+          "bold": { "$value": "{reference.fontWeight.bold}" },
+          "extrabold": { "$value": "{reference.fontWeight.extrabold}" },
+          "black": { "$value": "{reference.fontWeight.black}" }
         },
         "line-height": {
           "$type": "number",
@@ -1762,6 +1803,15 @@
       }
     },
     "dark": {
+      "aspect-ratio": {
+        "$type": "number",
+        "square": { "$value": "{reference.aspectRatio.square}" },
+        "landscape": { "$value": "{reference.aspectRatio.landscape}" },
+        "portrait": { "$value": "{reference.aspectRatio.portrait}" },
+        "wide": { "$value": "{reference.aspectRatio.wide}" },
+        "ultrawide": { "$value": "{reference.aspectRatio.ultrawide}" },
+        "golden": { "$value": "{reference.aspectRatio.golden}" }
+      },
       "color": {
         "$type": "color",
         "surface": {
@@ -1911,6 +1961,17 @@
       },
       "radius": {
         "$type": "dimension",
+        "core": {
+          "2xs": { "$value": "{reference.dimension.radius2xs}" },
+          "xs": { "$value": "{reference.dimension.radiusXs}" },
+          "sm": { "$value": "{reference.dimension.radiusSm}" },
+          "md": { "$value": "{reference.dimension.radiusMd}" },
+          "lg": { "$value": "{reference.dimension.radiusLg}" },
+          "xl": { "$value": "{reference.dimension.radiusXl}" },
+          "2xl": { "$value": "{reference.dimension.radius2xl}" },
+          "3xl": { "$value": "{reference.dimension.radius3xl}" },
+          "4xl": { "$value": "{reference.dimension.radius4xl}" }
+        },
         "subtle": { "$value": "{reference.dimension.radius1}" },
         "control": { "$value": "{reference.dimension.radius2}" },
         "surface": { "$value": "{reference.dimension.radius3}" },
@@ -2049,7 +2110,13 @@
           "$type": "fontWeight",
           "regular": { "$value": "{reference.fontWeight.regular}" },
           "medium": { "$value": "{reference.fontWeight.medium}" },
-          "semibold": { "$value": "{reference.fontWeight.semibold}" }
+          "semibold": { "$value": "{reference.fontWeight.semibold}" },
+          "thin": { "$value": "{reference.fontWeight.thin}" },
+          "extralight": { "$value": "{reference.fontWeight.extralight}" },
+          "light": { "$value": "{reference.fontWeight.light}" },
+          "bold": { "$value": "{reference.fontWeight.bold}" },
+          "extrabold": { "$value": "{reference.fontWeight.extrabold}" },
+          "black": { "$value": "{reference.fontWeight.black}" }
         },
         "line-height": {
           "$type": "number",

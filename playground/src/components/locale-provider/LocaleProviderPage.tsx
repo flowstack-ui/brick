@@ -1,4 +1,4 @@
-import { FormatNumber, LocaleProvider, Text, VStack, useLocaleContext } from "../../../../src/index.js";
+import { CloseButton, DateInput, FormatByte, FormatNumber, HStack, LocaleProvider, Text, VStack, parseDate, useLocaleContext } from "../../../../src/index.js";
 import { Scenario } from "../../shared/Scenario.js";
 import { Specimen } from "../../shared/Specimen.js";
 
@@ -7,7 +7,8 @@ export const localeProviderScenarios = [{
   number: 1,
   title: "Locale and direction inheritance",
   description: "Formatting and logical direction share one provider without an extra host.",
-}] as const;
+}, { id: "locale-provider.nesting", number: 2, title: "Nested providers", description: "Nested locales override formatting while partial control text merges." },
+{ id: "locale-provider.controls", number: 3, title: "Control labels", description: "Provider-owned labels and explicit instance names remain separate." }] as const;
 
 function LocaleOutput() {
   const { dir } = useLocaleContext();
@@ -29,6 +30,8 @@ export function LocaleProviderPage() {
           </LocaleProvider>
         </Specimen>
       </Scenario>
+      <Scenario {...localeProviderScenarios[1]}><Specimen label="French parent, German child"><LocaleProvider locale="fr-FR" localeText={{ close: "Fermer", clearDate: "Effacer la date" }}><VStack gap="4"><Text>French amount: <FormatNumber value={1234.5} /></Text><LocaleProvider locale="de-DE"><HStack gap="4" wrap><Text>German amount: <FormatNumber value={1234.5} /></Text><Text><FormatByte value={1234567} unitDisplay="long" /></Text><CloseButton /></HStack></LocaleProvider></VStack></LocaleProvider></Specimen></Scenario>
+      <Scenario {...localeProviderScenarios[2]}><Specimen label="Translated controls"><LocaleProvider locale="fr-FR" localeText={{ close: "Fermer", clearDate: "Effacer la date" }}><VStack gap="3"><DateInput.Root referenceDate={parseDate("2026-09-05")} defaultValue={parseDate("2026-09-05")}><DateInput.Label>Date de livraison</DateInput.Label><DateInput.Control><DateInput.SegmentGroup><DateInput.Segments /></DateInput.SegmentGroup><DateInput.ClearTrigger /></DateInput.Control></DateInput.Root><HStack gap="3"><CloseButton /><CloseButton aria-label="Fermer les paramètres" /></HStack></VStack></LocaleProvider></Specimen></Scenario>
     </VStack>
   );
 }

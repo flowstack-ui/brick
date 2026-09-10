@@ -2,6 +2,7 @@ import { createElement, createRef } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { CodeBlock } from "../../../src/code-block.js";
+import { IconButton } from "../../../src/icon-button.js";
 
 const source = "const answer = 42;";
 
@@ -30,6 +31,31 @@ function CompleteBlock({ writeValue = vi.fn().mockResolvedValue(undefined) }) {
 }
 
 describe("CodeBlock", () => {
+  it("composes one IconButton and preserves Clipboard success, errors and refs", async () => {
+    const ref = createRef<HTMLElement>();
+    const writeValue = vi.fn().mockResolvedValueOnce(undefined).mockRejectedValueOnce(new Error("Denied"));
+    render(<CodeBlock.Root value={source} writeValue={writeValue}>
+      <CodeBlock.CopyTrigger asChild ref={ref}>
+        <IconButton size="sm" aria-label="Copy code"><span>Icon</span></IconButton>
+      </CodeBlock.CopyTrigger>
+      <CodeBlock.CopyStatus>
+        <CodeBlock.CopyIndicator when="copied">Copied</CodeBlock.CopyIndicator>
+        <CodeBlock.CopyIndicator when="error">Failed</CodeBlock.CopyIndicator>
+      </CodeBlock.CopyStatus>
+    </CodeBlock.Root>);
+    const button = screen.getByRole("button", { name: "Copy code" });
+    expect(screen.getAllByRole("button")).toHaveLength(1);
+    expect(ref.current).toBe(button);
+    expect(button).toHaveClass("brick-icon-button");
+    expect(button).not.toHaveClass("brick-button");
+    fireEvent.click(button);
+    await screen.findByText("Copied");
+    expect(writeValue).toHaveBeenCalledWith(source);
+    fireEvent.click(button);
+    await screen.findByText("Failed");
+    expect(screen.queryByText("Copied")).toBeNull();
+  });
+
   it("renders only authored anatomy and canonical pre/code structure", () => {
     const ref = createRef<HTMLDivElement>();
     render(

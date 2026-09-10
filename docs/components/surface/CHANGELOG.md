@@ -4,6 +4,8 @@ Surface follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ### Changed
 
 - Strengthened the neutral `bordered` recipe to the shared default structural

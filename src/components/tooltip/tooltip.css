@@ -11,7 +11,7 @@
     --brick-tooltip-rich-max-inline-size: 24rem;
     --brick-tooltip-rich-gap: var(--brick-space-1);
 
-    z-index: calc(var(--brick-layer-overlay) - 1);
+    z-index: calc(var(--brick-layer-overlay) + var(--atom-overlay-layer, 0) + 1);
     box-sizing: border-box;
     inline-size: max-content;
     max-inline-size: min(var(--brick-tooltip-max-inline-size), calc(100vi - 2rem));

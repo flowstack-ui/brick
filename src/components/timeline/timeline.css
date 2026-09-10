@@ -1,0 +1,60 @@
+@layer brick.components {
+  .brick-timeline {
+    --brick-timeline-gap: var(--brick-space-4);
+    --brick-timeline-event-gap: var(--brick-space-5);
+    --brick-timeline-separator-color: var(--brick-color-border-default);
+    --brick-timeline-marker-size: calc(var(--brick-space-1) * 5);
+    --brick-timeline-title-size: var(--brick-typography-body-sm-font-size);
+    --brick-timeline-title-height: var(--brick-typography-body-sm-line-height);
+    --brick-timeline-tracks: [connector] var(--brick-timeline-marker-size) [after] minmax(0, 1fr);
+    margin: 0; padding: 0; list-style: none; min-inline-size: 0;
+    color: var(--brick-color-text-primary);
+  }
+  .brick-timeline[data-size="sm"] { --brick-timeline-marker-size: var(--brick-space-4); --brick-timeline-title-size: var(--brick-typography-caption-font-size); --brick-timeline-title-height: var(--brick-typography-caption-line-height); }
+  .brick-timeline[data-size="lg"] { --brick-timeline-marker-size: var(--brick-space-5); }
+  .brick-timeline[data-size="xl"] { --brick-timeline-marker-size: var(--brick-space-6); }
+  .brick-timeline:has(> .brick-timeline-item > .brick-timeline-content[data-side="before"]) { --brick-timeline-tracks: [before] minmax(0, 1fr) [connector] var(--brick-timeline-marker-size) [after] minmax(0, 1fr); }
+  .brick-timeline:has(> .brick-timeline-item > .brick-timeline-content[data-side="before"]):not(:has(> .brick-timeline-item > .brick-timeline-content[data-side="after"])) { --brick-timeline-tracks: [before] minmax(0, 1fr) [connector] var(--brick-timeline-marker-size); }
+  .brick-timeline-item { display: grid; grid-template-columns: var(--brick-timeline-tracks); column-gap: var(--brick-timeline-gap, var(--brick-space-4)); min-inline-size: 0; }
+  .brick-timeline-content { grid-column: after; grid-row: 1; display: flex; flex-direction: column; gap: var(--brick-space-1); min-inline-size: 0; padding-block-end: var(--brick-timeline-event-gap, var(--brick-space-5)); overflow-wrap: anywhere; }
+  .brick-timeline-content[data-side="before"] { grid-column: before; text-align: end; align-items: end; }
+  .brick-timeline-connector { grid-column: connector; grid-row: 1; display: flex; flex-direction: column; align-items: center; min-inline-size: 0; gap: var(--brick-space-1); padding-block-end: var(--brick-space-1); }
+  .brick-timeline-separator { order: 1; flex: 1; inline-size: 0; border-inline-start: var(--brick-border-width) solid var(--brick-timeline-separator-color, var(--brick-color-border-default)); }
+  .brick-timeline > .brick-timeline-item:last-child > .brick-timeline-connector > .brick-timeline-separator { visibility: hidden; }
+  .brick-timeline > .brick-timeline-item:last-child > .brick-timeline-content { padding-block-end: 0; }
+  .brick-timeline[data-show-last-separator="true"] > .brick-timeline-item:last-child > .brick-timeline-connector > .brick-timeline-separator { visibility: visible; }
+  .brick-timeline[data-show-last-separator="true"] > .brick-timeline-item:last-child > .brick-timeline-content { padding-block-end: var(--brick-timeline-event-gap, var(--brick-space-5)); }
+  .brick-timeline-indicator {
+    --brick-timeline-fill: var(--brick-timeline-solid);
+    --brick-timeline-ink: var(--brick-timeline-on-solid);
+    --brick-timeline-border: transparent;
+    display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box;
+    inline-size: var(--brick-timeline-marker-size); block-size: var(--brick-timeline-marker-size);
+    border: var(--brick-border-width) solid var(--brick-timeline-border); border-radius: var(--brick-radius-full);
+    background: var(--brick-timeline-fill); color: var(--brick-timeline-ink); overflow: hidden;
+    font-family: var(--brick-typography-caption-font-family); font-size: var(--brick-typography-caption-font-size);
+    font-weight: var(--brick-typography-caption-font-weight); line-height: var(--brick-typography-caption-line-height); letter-spacing: var(--brick-typography-caption-letter-spacing);
+  }
+  .brick-timeline-indicator > :is(svg, .brick-icon) { inline-size: 60%; block-size: 60%; flex: none; }
+  .brick-timeline-indicator > .brick-avatar { inline-size: 100%; block-size: 100%; min-inline-size: 0; min-block-size: 0; }
+  .brick-timeline-title { margin: 0; min-block-size: var(--brick-timeline-marker-size); display: flex; align-items: center; flex-wrap: wrap; gap: var(--brick-space-1);
+    font-family: var(--brick-typography-body-sm-font-family); font-size: var(--brick-timeline-title-size); font-weight: var(--brick-font-weight-medium); line-height: var(--brick-timeline-title-height); letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+  }
+  .brick-timeline-description { margin: 0; color: var(--brick-color-text-secondary);
+    font-family: var(--brick-typography-caption-font-family); font-size: var(--brick-typography-caption-font-size); font-weight: var(--brick-typography-caption-font-weight); line-height: var(--brick-typography-caption-line-height); letter-spacing: var(--brick-typography-caption-letter-spacing);
+  }
+  :is(.brick-timeline, .brick-timeline-item)[data-tone="neutral"] { --brick-timeline-solid: var(--brick-color-text-primary); --brick-timeline-on-solid: var(--brick-color-surface-base); --brick-timeline-soft: var(--brick-color-surface-subtle); --brick-timeline-text: var(--brick-color-text-primary); --brick-timeline-tone-border: var(--brick-color-border-default); }
+  :is(.brick-timeline, .brick-timeline-item)[data-tone="accent"] { --brick-timeline-solid: var(--brick-color-accent-solid); --brick-timeline-on-solid: var(--brick-color-accent-on-solid); --brick-timeline-soft: var(--brick-color-accent-soft); --brick-timeline-text: var(--brick-color-accent-text); --brick-timeline-tone-border: var(--brick-color-accent-border); }
+  :is(.brick-timeline, .brick-timeline-item)[data-tone="info"] { --brick-timeline-solid: var(--brick-color-info-solid); --brick-timeline-on-solid: var(--brick-color-info-on-solid); --brick-timeline-soft: var(--brick-color-info-soft); --brick-timeline-text: var(--brick-color-info-text); --brick-timeline-tone-border: var(--brick-color-info-border); }
+  :is(.brick-timeline, .brick-timeline-item)[data-tone="success"] { --brick-timeline-solid: var(--brick-color-success-solid); --brick-timeline-on-solid: var(--brick-color-success-on-solid); --brick-timeline-soft: var(--brick-color-success-soft); --brick-timeline-text: var(--brick-color-success-text); --brick-timeline-tone-border: var(--brick-color-success-border); }
+  :is(.brick-timeline, .brick-timeline-item)[data-tone="warning"] { --brick-timeline-solid: var(--brick-color-warning-solid); --brick-timeline-on-solid: var(--brick-color-warning-on-solid); --brick-timeline-soft: var(--brick-color-warning-soft); --brick-timeline-text: var(--brick-color-warning-text); --brick-timeline-tone-border: var(--brick-color-warning-border); }
+  :is(.brick-timeline, .brick-timeline-item)[data-tone="danger"] { --brick-timeline-solid: var(--brick-color-danger-solid); --brick-timeline-on-solid: var(--brick-color-danger-on-solid); --brick-timeline-soft: var(--brick-color-danger-soft); --brick-timeline-text: var(--brick-color-danger-text); --brick-timeline-tone-border: var(--brick-color-danger-border); }
+  .brick-timeline[data-variant="soft"] > .brick-timeline-item > .brick-timeline-connector > .brick-timeline-indicator { --brick-timeline-fill: var(--brick-timeline-soft); --brick-timeline-ink: var(--brick-timeline-text); }
+  .brick-timeline[data-variant="outline"] > .brick-timeline-item > .brick-timeline-connector > .brick-timeline-indicator { --brick-timeline-fill: transparent; --brick-timeline-ink: var(--brick-timeline-text); --brick-timeline-border: var(--brick-timeline-tone-border); }
+  .brick-timeline[data-variant="plain"] > .brick-timeline-item > .brick-timeline-connector > .brick-timeline-indicator { --brick-timeline-fill: transparent; --brick-timeline-ink: var(--brick-timeline-text); }
+  @media (forced-colors: active) {
+    .brick-timeline-indicator { background: Canvas; color: CanvasText; border-color: CanvasText; }
+    .brick-timeline-separator { border-color: CanvasText; }
+    .brick-timeline, .brick-timeline-description { color: CanvasText; }
+  }
+}

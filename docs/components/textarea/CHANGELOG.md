@@ -4,6 +4,8 @@ Textarea follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ### Changed
 
 - Expanded Textarea to the responsive shared 2xs–2xl control-size scale and

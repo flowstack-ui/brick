@@ -1,0 +1,1 @@
+export { DateInput, DateInputRoot, DateInputLabel, DateInputControl, DateInputSegmentGroup, DateInputSegment, DateInputSegments, DateInputClearTrigger, DateInputHiddenInput, DateInputContext, type DateInputRootProps, type DateInputVariant, type DateInputShape, type DateInputRecipeProps } from "./DateInput.js";

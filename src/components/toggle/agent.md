@@ -15,11 +15,14 @@ Present one persistent pressed or unpressed command with Brick recipes and Atom-
 
 ## Required composition
 
+- Omitted variant and tone use ghost and neutral: quiet toolbar commands with a flat pressed fill. Choose accent or a bordered variant explicitly when stronger emphasis is needed.
 - Keep one stable visible or accessible name across pressed states; use iconOnly only with a complete accessible name.
 - Choose variant for the selected-state treatment and accent or neutral tone for its emphasis before applying local customization.
+- Toggle, ToggleGroup and Toolbar.ToggleItem share variant/tone state paint. Preserve each owner’s anatomy, geometry and Atom keyboard behavior instead of substituting one for another.
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Toggle only when the same command meaning remains valid in pressed and unpressed states.
 - **MUST:** Use accent or neutral tone for selection emphasis; do not use semantic status colors to imply error, success, warning, or danger.
 - **MUST:** Preserve Atom-owned native button semantics, aria-pressed state, activation, disabled behavior, and composition.

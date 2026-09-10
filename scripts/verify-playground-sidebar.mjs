@@ -4,7 +4,7 @@ const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 const [page, registry, shell, css, audit, source] = await Promise.all([
   read("playground/src/components/sidebar/SidebarPage.tsx"),
   read("playground/src/app/component-registry.ts"),
-  read("playground/src/shell/PlaygroundShell.tsx"),
+  Promise.all([read("playground/src/shell/PlaygroundShell.tsx"), read("playground/src/shell/PlaygroundMobileNav.tsx")]).then(parts => parts.join("\n")),
   read("playground/src/styles/shell.css"),
   read("playground/docs/sidebar-adoption-audit.md"),
   read("src/components/sidebar/Sidebar.tsx"),

@@ -3,7 +3,7 @@ import { forwardRef, type HTMLAttributes } from "react";
 export type RadiomarkSize = "xs" | "sm" | "md" | "lg";
 export type RadiomarkTone =
   | "neutral" | "accent" | "info" | "success" | "warning" | "danger";
-export type RadiomarkVariant = "solid" | "outline" | "soft";
+export type RadiomarkVariant = "solid" | "outline" | "soft" | "inverted";
 
 export interface RadiomarkProps extends Omit<
   HTMLAttributes<HTMLSpanElement>,
@@ -11,6 +11,7 @@ export interface RadiomarkProps extends Omit<
 > {
   "data-slot"?: string;
   checked?: boolean;
+  filled?: boolean;
   disabled?: boolean;
   size?: RadiomarkSize;
   tone?: RadiomarkTone;
@@ -25,6 +26,7 @@ export const Radiomark = forwardRef<HTMLSpanElement, RadiomarkProps>(
   function Radiomark(
     {
       checked = false,
+      filled = false,
       className,
       disabled = false,
       size = "md",
@@ -41,6 +43,7 @@ export const Radiomark = forwardRef<HTMLSpanElement, RadiomarkProps>(
         aria-hidden="true"
         className={mergeClassName("brick-radiomark", className)}
         data-disabled={disabled ? "" : undefined}
+        data-filled={filled ? "" : undefined}
         data-size={size}
         data-slot={dataSlot ?? "radiomark"}
         data-state={checked ? "checked" : "unchecked"}

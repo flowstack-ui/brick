@@ -12,11 +12,14 @@ const tarballArgument = process.argv.indexOf("--tarball");
 const suppliedTarball = tarballArgument === -1
   ? undefined
   : process.argv[tarballArgument + 1];
+const atomArgument = process.argv.indexOf("--atom-tarball");
+const atomTarball = atomArgument === -1 ? process.env.FLOWSTACK_ATOM_TARBALL : process.argv[atomArgument + 1];
 const commandTimeoutMs = 300_000;
 
 if (tarballArgument !== -1 && !suppliedTarball) {
   throw new Error("--tarball requires an archive path");
 }
+if (atomArgument !== -1 && !atomTarball) throw new Error("--atom-tarball requires an archive path");
 
 function run(command, args, cwd) {
   const result = spawnSync(command, args, {
@@ -65,6 +68,15 @@ try {
     await readFile(consumerPackagePath, "utf8"),
   );
   consumerPackage.dependencies["@flowstack-ui/brick"] = `file:${tarball}`;
+  if (atomTarball) {
+    const archive = resolve(atomTarball);
+    const atom = JSON.parse(run("tar", ["-xOf", archive, "package/package.json"], packageRoot));
+    const brick = JSON.parse(run("tar", ["-xOf", tarball, "package/package.json"], packageRoot));
+    if (atom.name !== "@flowstack-ui/atom" || atom.version !== brick.dependencies["@flowstack-ui/atom"]) {
+      throw new Error("Atom candidate must match the packed Brick dependency exactly");
+    }
+    consumerPackage.dependencies["@flowstack-ui/atom"] = `file:${archive}`;
+  }
   await writeFile(
     consumerPackagePath,
     `${JSON.stringify(consumerPackage, null, 2)}\n`,

@@ -4,7 +4,7 @@ installVisualDefaults("/multi-select");
 
 async function removeStickyCaptureOverlap(page: import("@playwright/test").Page) {
   await page.addStyleTag({
-    content: ".evidence-app-bar, .evidence-review-header, .scenario-nav { display: none !important; }",
+    content: "[data-playground-app-bar], .evidence-review-header, .scenario-nav { display: none !important; }",
   });
   await page.waitForTimeout(50);
 }

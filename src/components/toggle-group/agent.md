@@ -14,11 +14,14 @@ Coordinate a related set of single- or multiple-selection pressed commands with 
 
 ## Required composition
 
+- Omitted variant and tone use ghost and neutral: quiet toolbar commands with a flat pressed fill. Choose accent or a bordered variant explicitly when stronger emphasis is needed.
 - Compose named Item controls directly inside Root, choose single or multiple value semantics deliberately, and let Root own the shared variant, tone, size, shape, attachment, and width policy.
 - Use iconOnly only when an Item contains an icon with a complete accessible name; keep visible labels when the icon is not universally understood.
+- Toggle, ToggleGroup and Toolbar.ToggleItem share variant/tone state paint. Preserve each owner’s anatomy, geometry and Atom keyboard behavior instead of substituting one for another.
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Choose single or multiple mode from the command model and keep the value and onValueChange types consistent with that choice.
 - **MUST:** Do not use ToggleGroup for a form choice that requires radio semantics, validation, or ordinary form submission.
 - **MUST:** Give Root an accessible name when surrounding context is insufficient and give every Item a stable complete name.

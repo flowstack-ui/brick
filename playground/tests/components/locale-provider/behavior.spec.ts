@@ -1,5 +1,14 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
+
+test("nested locales preserve translated labels and explicit names win", async ({ page }) => {
+  await page.goto("/locale-provider");
+  await expect(page.getByText("German amount: 1.234,5")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Fermer", exact: true })).toHaveCount(2);
+  await expect(page.getByRole("button", { name: "Fermer les paramètres", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Effacer la date", exact: true }).click();
+  await expect(page.getByRole("spinbutton").first()).not.toHaveAttribute("aria-valuenow");
+});
 
 test("locale and direction are inherited without an extra host", async ({ page }) => {
   await page.goto("/locale-provider");

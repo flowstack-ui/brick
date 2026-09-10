@@ -4,6 +4,11 @@ Toggle follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Change defaults to neutral ghost for quiet toolbar commands. Remove the soft
+  selected bottom shadow; strengthen neutral interaction states consistently in
+  both appearances and preserve active/disabled/forced-color precedence.
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ## 0.1.10
 
 ### Added

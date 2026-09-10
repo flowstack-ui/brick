@@ -7,6 +7,12 @@ import {
 } from "@flowstack-ui/atom/direction";
 
 export interface BrickLocaleText {
+  chooseDate: string;
+  clearDate: string;
+  invalidDate: string;
+  startDate: string;
+  endDate: string;
+  close: string;
   clearInput: string;
   closeNotification: string;
   decrementValue: string;
@@ -32,6 +38,12 @@ export interface LocaleProviderProps {
 export const defaultLocale = "en-US";
 
 export const defaultLocaleText: BrickLocaleText = Object.freeze({
+  chooseDate: "Choose date",
+  clearDate: "Clear date",
+  invalidDate: "Enter a valid date",
+  startDate: "Start date",
+  endDate: "End date",
+  close: "Close",
   clearInput: "Clear input",
   closeNotification: "Dismiss notification",
   decrementValue: "Decrement value",

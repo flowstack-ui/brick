@@ -20,11 +20,13 @@ Provide a compact finished icon-only action or deliberate icon-only navigation c
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Give every IconButton a concise discernible accessible name; the icon alone and a portalled Tooltip are not names.
 - **MUST:** Use the default button path for operations and supply href for a deliberate icon-only navigation destination so the final host remains a native anchor.
 - **MUST:** Keep temporary aria-expanded feedback distinct from a persistent pressed selection; use Toggle when the state itself is the user-controlled value.
 - **MUST:** Preserve perceptible ghost hover and pressed feedback on canvas, base, subtle, raised, and overlay surfaces instead of overriding it with a coincident surface color.
 - **MUST:** Load styles.css or core.css plus icon-button.css and icon.css when using Brick Icon.
+- **MUST:** Support scalar focusRing="outside" | "inside"; omission stays outside. Inside uses paired foreground and canonical negative-width offset without changing Atom behavior.
 
 ## Common mistakes
 

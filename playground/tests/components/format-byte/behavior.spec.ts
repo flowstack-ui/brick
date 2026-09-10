@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test("quantities use localized units", async ({ page }) => {
   await page.goto("/format-byte");

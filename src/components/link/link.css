@@ -1,9 +1,6 @@
 @layer brick.components {
   .brick-link {
     --brick-link-focus-ring: var(--brick-color-focus-ring);
-    --brick-link-decoration-color: currentColor;
-    --brick-link-decoration-thickness: 0.08em;
-    --brick-link-decoration-offset: 0.16em;
     --brick-link-gap: 0.375em;
     --brick-link-icon-size: 1em;
     --brick-link-font-family: inherit;
@@ -19,14 +16,14 @@
     color: var(--brick-link-foreground, var(--brick-color-link-text));
     font-family: var(--brick-link-font-family);
     font-size: var(--brick-link-font-size);
-    font-weight: var(--brick-link-font-weight, var(--brick-link-theme-font-weight, inherit));
+    font-weight: var(--brick-link-font-weight, inherit);
     letter-spacing: var(--brick-link-letter-spacing);
     line-height: var(--brick-link-line-height);
     overflow-wrap: anywhere;
-    text-decoration-color: var(--brick-link-decoration-color);
-    text-decoration-line: var(--brick-link-decoration, underline);
-    text-decoration-thickness: var(--brick-link-decoration-thickness);
-    text-underline-offset: var(--brick-link-decoration-offset);
+    text-decoration-color: var(--brick-link-decoration-color, color-mix(in srgb, currentColor 20%, transparent));
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--brick-link-decoration-thickness, 0.08em);
+    text-underline-offset: var(--brick-link-decoration-offset, 0.18em);
     vertical-align: baseline;
   }
 
@@ -48,12 +45,22 @@
     text-decoration-line: underline;
   }
 
+  .brick-link[data-variant="subtle"] {
+    text-decoration-line: none;
+  }
+
+  /* Compatibility with existing compiled Theme decoration policies. */
+  .brick-link[data-variant="theme"] {
+    font-weight: var(--brick-link-font-weight, var(--brick-link-theme-font-weight, inherit));
+    text-decoration-line: var(--brick-link-decoration, underline);
+  }
+
   .brick-link[data-variant="plain"] {
     --brick-link-font-weight: var(--brick-typography-body-md-font-weight);
     text-decoration-line: none;
   }
 
-  .brick-link[data-variant="theme"]:is(:hover, :focus-visible, :active) {
+  .brick-link:is([data-variant="subtle"], [data-variant="theme"]):is(:hover, :focus-visible, :active) {
     text-decoration-line: underline;
   }
 
@@ -113,12 +120,19 @@
     block-size: 100%;
   }
 
+  @media (prefers-contrast: more) {
+    .brick-link {
+      text-decoration-color: currentColor;
+    }
+  }
+
   @media (forced-colors: active) {
     .brick-link {
       --brick-link-foreground: LinkText;
       --brick-link-foreground-hover: LinkText;
       --brick-link-foreground-active: LinkText;
       --brick-link-focus-ring: Highlight;
+      text-decoration-color: currentColor;
       forced-color-adjust: auto;
     }
   }

@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test("HoverCard appearance and customization previews start closed", async ({
   page,

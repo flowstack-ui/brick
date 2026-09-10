@@ -38,20 +38,25 @@ The component renders one decorative SVG host. A single path is rendered only fo
 
 | Prop | Value | Default |
 | --- | --- | --- |
+| `filled` | `boolean` | `false` |
 | `checked` | `boolean` | `false` |
 | `indeterminate` | `boolean` | `false` |
 | `disabled` | `boolean` | `false` |
 | `size` | `xs`, `sm`, `md`, `lg` | `md` |
 | `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `accent` |
-| `variant` | `solid`, `outline`, `soft`, `plain` | `solid` |
+| `variant` | `solid`, `outline`, `soft`, `plain`, `inverted` | `solid` |
 
 ## Visual recipes and states
 
 Solid fills checked states, outline retains the surface, soft uses semantic subtle paint, and plain removes the box. State is exposed as checked, unchecked, or indeterminate.
 
+Unchecked marks in the default solid recipe are transparent. `filled` adds a canvas background;
+`inverted` uses canvas with a semantic foreground and border. These are visual
+options, not selection behavior. `plain` stays unboxed even with `filled`.
+
 ## Tokens and CSS hooks
 
-Stable hooks are `.brick-checkmark`, `data-disabled`, `data-size`, `data-slot`, `data-state`, `data-tone`, `data-variant`, and `--brick-checkmark-size`.
+Stable hooks are `.brick-checkmark`, `data-disabled`, `data-filled`, `data-size`, `data-slot`, `data-state`, `data-tone`, `data-variant`, and `--brick-checkmark-size`.
 
 ## Customization
 

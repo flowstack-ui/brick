@@ -163,6 +163,7 @@ export function ButtonPage() {
       data-testid="button-workbench"
     >
       <Scenario {...buttonScenarios[0]}>
+        <Button data-testid="button-inside-focus" focusRing="inside">Inside focus placement</Button>
         <EvidenceSurface
           className="button-overview"
           data-testid="button-overview"

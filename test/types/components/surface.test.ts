@@ -61,8 +61,9 @@ createElement(Surface, { as: "button" });
 createElement(Surface, { level: "accent" });
 // @ts-expect-error Elevation is semantic rather than numeric.
 createElement(Surface, { elevation: 8 });
-// @ts-expect-error Radius uses a closed semantic recipe.
 createElement(Surface, { radius: "full" });
+// @ts-expect-error Radius uses a closed token vocabulary, not arbitrary lengths.
+createElement(Surface, { radius: "8px" });
 // @ts-expect-error Inset uses a closed recipe.
 createElement(Surface, { inset: "3xl" });
 // @ts-expect-error Responsive breakpoints are deliberately closed.

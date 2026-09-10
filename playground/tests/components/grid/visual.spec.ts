@@ -12,7 +12,7 @@ installVisualDefaults("/grid");
 async function removeStickyCaptureOverlap(page: import("@playwright/test").Page) {
   await page.addStyleTag({
     content:
-      ".evidence-app-bar, .evidence-review-header, .scenario-nav { display: none !important; }",
+      "[data-playground-app-bar], .evidence-review-header, .scenario-nav { display: none !important; }",
   });
   await expect(page.locator(".scenario-nav")).toBeHidden();
 }

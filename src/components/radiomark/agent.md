@@ -15,6 +15,7 @@ Show passive selected or unselected circular state without creating radio behavi
 ## Required composition
 
 - Place Radiomark inside an existing choice owner and let that owner expose selected state and its accessible name.
+- Choose solid, soft, outline or inverted. Unchecked marks are transparent by default; filled adds a canvas background. Inverted keeps a canvas background with semantic foreground and border. Sizes xs/sm/md/lg are 12/16/20/24px.
 
 ## Rules
 

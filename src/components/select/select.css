@@ -79,7 +79,7 @@
     --brick-select-content-shadow: var(--brick-shadow-floating);
     --brick-select-content-max-block-size: min(20rem, var(--available-height, 20rem));
     --brick-select-content-padding: var(--brick-space-1);
-    --brick-select-content-z-index: 70;
+    --brick-select-content-z-index: var(--brick-layer-overlay);
     --brick-select-item-min-block-size: var(--brick-control-min-block-size-md);
     --brick-select-item-padding-inline: var(--brick-space-3);
     --brick-select-item-gap: var(--brick-space-2);
@@ -106,7 +106,7 @@
     background: var(--brick-select-content-background);
     box-shadow: var(--brick-select-content-shadow);
     color: var(--brick-select-content-foreground);
-    z-index: var(--brick-select-content-z-index);
+    z-index: calc(var(--brick-select-content-z-index) + var(--atom-overlay-layer, 0) + 1);
   }
 
   .brick-select-content[data-size="xs"] { --brick-select-item-min-block-size: var(--brick-control-min-block-size-xs); --brick-select-item-padding-inline: var(--brick-space-2); --brick-select-item-gap: var(--brick-space-1); --brick-select-item-font-family: var(--brick-typography-control-xs-font-family); --brick-select-item-font-size: var(--brick-typography-control-xs-font-size); --brick-select-item-font-weight: var(--brick-typography-control-xs-font-weight); --brick-select-item-line-height: var(--brick-typography-control-xs-line-height); --brick-select-indicator-size: .875rem; }

@@ -1,8 +1,58 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/code-block");
+});
+
+test("flush collapse action keeps focus inside the CodeBlock clip", async ({ page }) => {
+  const trigger = page.getByRole("button", { name: "Show full source", exact: true });
+  await trigger.focus();
+  await expect(trigger).toHaveCSS("outline-width", "2px");
+  await expect(trigger).toHaveCSS("outline-offset", "-2px");
+  const geometry = await trigger.evaluate(node => {
+    const action = node.getBoundingClientRect();
+    const frame = node.closest(".brick-code-block")!.getBoundingClientRect();
+    return { actionLeft: action.left, actionRight: action.right, actionBottom: action.bottom, frameLeft: frame.left, frameRight: frame.right, frameBottom: frame.bottom };
+  });
+  expect(geometry.actionLeft).toBeGreaterThanOrEqual(geometry.frameLeft);
+  expect(geometry.actionRight).toBeLessThanOrEqual(geometry.frameRight + 0.1);
+  expect(geometry.actionBottom).toBeLessThanOrEqual(geometry.frameBottom + 0.1);
+});
+
+test("icon-only copy uses the same source and reports real write outcomes", async ({ page }) => {
+  const sample = page.getByTestId("code-block-icon-copy");
+  await expect(sample.locator('[data-slot="code-block-header"]')).toHaveCount(0);
+  const button = sample.getByRole("button", { name: "Copy code" });
+  const heightBefore = (await sample.boundingBox())!.height;
+  await expect(button).toHaveClass(/brick-icon-button/);
+  await expect(sample.getByRole("button")).toHaveCount(1);
+  await page.evaluate(() => {
+    Object.defineProperty(navigator, "clipboard", { configurable: true, value: {
+      writeText: async (value: string) => { document.documentElement.dataset.copiedSource = value; },
+    } });
+  });
+  await button.focus();
+  await page.keyboard.press("Enter");
+  await expect(sample.getByText("Code copied.", { exact: true })).toBeAttached();
+  const announcement = sample.locator('[data-slot="visually-hidden"]');
+  await expect(announcement).toHaveAttribute("role", "status");
+  await expect(announcement).toHaveCSS("position", "absolute");
+  await expect(announcement).toHaveCSS("clip-path", "inset(50%)");
+  expect((await sample.boundingBox())!.height).toBe(heightBefore);
+  await expect(button.locator("svg.lucide-check")).toBeVisible();
+  await expect(button).toBeFocused();
+  expect(await page.locator("html").getAttribute("data-copied-source")).toBe(await sample.locator("pre code").textContent());
+  await expect(button.locator("svg")).toHaveCount(1);
+  await page.evaluate(() => {
+    Object.defineProperty(navigator, "clipboard", { configurable: true, value: {
+      writeText: async () => { throw new Error("Permission denied"); },
+    } });
+  });
+  await button.click();
+  await expect(sample.getByText("Could not copy. Select the code and copy it manually.")).toBeVisible();
+  await expect(sample.getByText("Code copied.", { exact: true })).toHaveCount(0);
+  await expect(button.locator("svg")).toHaveCount(1);
 });
 
 test("Code Block renders canonical and optional anatomy", async ({ page }) => {

@@ -1,0 +1,138 @@
+@layer brick.components {
+  .brick-native-select {
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+  .brick-native-select[data-full-width] {
+    inline-size: 100%;
+  }
+  .brick-native-select-field {
+    box-sizing: border-box;
+    appearance: none;
+    inline-size: 100%;
+    min-inline-size: 0;
+    block-size: var(--brick-control-size-block);
+    max-inline-size: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-inline: var(--brick-control-size-padding-inline);
+    padding-block: 0;
+    border: var(--brick-border-width) solid var(--brick-color-border-default);
+    border-radius: var(--brick-native-select-radius, var(--brick-radius-control));
+    background: transparent;
+    color: var(--brick-color-text-primary);
+    font-family: var(--brick-control-size-font-family);
+    font-size: var(--brick-control-size-font-size);
+    font-weight: var(--brick-control-size-font-weight);
+    line-height: var(--brick-control-size-line-height);
+    letter-spacing: var(--brick-control-size-letter-spacing);
+    text-align: start;
+    cursor: pointer;
+    transition:
+      background-color var(--brick-motion-duration-fast),
+      border-color var(--brick-motion-duration-fast);
+  }
+  .brick-native-select:has(.brick-native-select-indicator)
+    .brick-native-select-field {
+    padding-inline-end: calc(
+      var(--brick-control-size-padding-inline) +
+        var(--brick-control-size-icon) + var(--brick-control-size-gap)
+    );
+  }
+  .brick-native-select-indicator {
+    position: absolute;
+    inset-inline-end: var(--brick-control-size-padding-inline);
+    inset-block: 0;
+    display: grid;
+    place-items: center;
+    inline-size: var(--brick-control-size-icon);
+    pointer-events: none;
+    color: var(--brick-color-text-secondary);
+  }
+  .brick-native-select-indicator > svg {
+    inline-size: 100%;
+    block-size: var(--brick-control-size-icon);
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .brick-native-select[data-shape="sharp"] .brick-native-select-field {
+    border-radius: 0;
+  }
+  .brick-native-select[data-shape="pill"] .brick-native-select-field {
+    border-radius: var(--brick-radius-full);
+  }
+  .brick-native-select[data-variant="soft"] .brick-native-select-field {
+    background: var(--brick-color-surface-subtle);
+  }
+  .brick-native-select:is([data-variant="ghost"], [data-variant="plain"])
+    .brick-native-select-field {
+    border-color: transparent;
+  }
+  .brick-native-select[data-variant="underline"] .brick-native-select-field {
+    border-inline-color: transparent;
+    border-block-start-color: transparent;
+    border-radius: 0;
+  }
+  .brick-native-select-field:focus-visible {
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: var(--brick-border-width);
+  }
+  .brick-native-select-field[data-invalid] {
+    border-color: var(--brick-color-danger-text);
+  }
+  .brick-native-select-field:disabled {
+    color: var(--brick-color-text-muted);
+    background: var(--brick-color-surface-subtle);
+    cursor: not-allowed;
+  }
+  .brick-native-select[data-list] .brick-native-select-field {
+    block-size: auto;
+    min-block-size: var(--brick-control-size-block);
+    padding-block: var(--brick-control-size-padding-block);
+  }
+  .brick-native-select-field option,
+  .brick-native-select-field optgroup {
+    color: var(--brick-color-text-primary);
+    background: var(--brick-color-surface-base);
+  }
+  .brick-native-select-field option:checked {
+    background: var(--brick-color-accent-soft);
+    background-image: linear-gradient(var(--brick-color-accent-soft), var(--brick-color-accent-soft));
+    color: var(--brick-color-accent-text);
+  }
+  .brick-native-select-field option:disabled,
+  .brick-native-select-field optgroup:disabled {
+    color: GrayText;
+  }
+  @media (hover: hover) {
+    .brick-native-select:not([data-variant="plain"])
+      .brick-native-select-field:not(:disabled):hover {
+      background: var(--brick-color-surface-subtle);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brick-native-select-field {
+      transition: none;
+    }
+  }
+  @media (forced-colors: active) {
+    .brick-native-select-field option:checked { background: Highlight; color: HighlightText; }
+    .brick-native-select-field {
+      border-color: ButtonText;
+      color: CanvasText;
+      background: Canvas;
+    }
+    .brick-native-select-field:disabled {
+      border-color: GrayText;
+      color: GrayText;
+    }
+    .brick-native-select-field:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

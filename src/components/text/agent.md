@@ -18,6 +18,7 @@ Apply Brick typography roles, tones, weight, alignment, wrapping, and deliberate
 
 ## Rules
 
+- **MUST:** Use weight for explicit thin (100), extralight (200), light (300), regular (400), medium (500), semibold (600), bold (700), extrabold (800), or black (900) text. Omit it to retain the typography recipe or use inherit for parent weight. All named text exports share this API; the application must load font faces that support its selected weights.
 - **MUST:** Do not choose heading or paragraph semantics solely from the desired font size. Use the display scale, responsive visual variant, or responsive logical alignment without changing the correct semantic level.
 - **MUST:** Author real names and titles with their correct casing. Use transform only for deliberate visual presentation; CSS capitalize is not language-aware title case and must not repair registry or product content.
 - **MUST:** Prefer Heading, Paragraph, Caption, or Eyebrow for ordinary roles; use Text when their fixed semantic host or restricted visual family does not fit.

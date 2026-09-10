@@ -31,10 +31,14 @@ createElement(AspectRatio.Root, { render: (renderProps) => createElement("articl
 // @ts-expect-error variant is closed
 createElement(AspectRatio.Root, { variant: "solid" });
 // @ts-expect-error radius is closed
-createElement(AspectRatio.Root, { radius: "xl" });
+createElement(AspectRatio.Root, { radius: "invalid" });
 // @ts-expect-error overflow is closed
 createElement(AspectRatio.Root, { overflow: "clip" });
 // @ts-expect-error ratio remains numeric
 createElement(AspectRatio.Root, { ratio: "16 / 9" });
-// @ts-expect-error responsive values are application policy
+createElement(AspectRatio.Root, { ratio: { initial: 1, md: 16 / 9 }, contentLayout: "fill" });
+createElement(AspectRatio.Root, { ratio: { lg: 2 }, contentLayout: "flow" });
+// @ts-expect-error empty responsive objects have no meaning
+createElement(AspectRatio.Root, { ratio: {} });
+// @ts-expect-error use initial, not base
 createElement(AspectRatio.Root, { ratio: { base: 1, md: 16 / 9 } });

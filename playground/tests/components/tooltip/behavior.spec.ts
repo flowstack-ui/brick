@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test("only the dedicated defaultOpen specimen starts open below the sticky header", async ({
   page,

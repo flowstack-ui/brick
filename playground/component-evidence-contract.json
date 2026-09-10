@@ -1,6 +1,17 @@
 {
   "schema": "flowstack.brick-playground-evidence.v1",
-  "componentCount": 104,
+  "componentCount": 125,
+  "previewEnvironment": {
+    "defaultMode": "inline",
+    "directOwnerEvidenceQuery": "testMode=1",
+    "registryGenerator": "scripts/build-preview-registry.mjs",
+    "verification": "scripts/verify-preview-environment.mjs",
+    "runtimeSuite": "playground/tests/integration/preview-environment.spec.ts",
+    "catalogSuite": "playground/tests/integration/preview-catalog.spec.ts",
+    "sourceMode": "paired-page-source",
+    "scopePolicy": "authored-props-and-local-providers-win",
+    "forbidden": ["parent-document-mutation", "arbitrary-url-module-import", "whole-popover-scroll-wrapper", "simulated-css-zoom"]
+  },
   "requiredEvidence": [
     "page",
     "unit",
@@ -23,6 +34,9 @@
   "categories": {
     "Accessibility": ["skip-link", "visually-hidden"],
     "Actions": [
+      "action-bar",
+      "close-button",
+      "download-trigger",
       "button",
       "context-menu",
       "dropdown-menu",
@@ -35,6 +49,10 @@
       "toolbar"
     ],
     "Data display": [
+      "qr-code",
+      "stat",
+      "timeline",
+      "marquee",
       "accordion",
       "avatar",
       "avatar-group",
@@ -57,8 +75,14 @@
       "tree",
       "tree-grid"
     ],
-    "Feedback": ["progress", "progress-circle", "skeleton", "status", "toast"],
+    "Feedback": ["empty-state", "alert", "spinner", "progress", "progress-circle", "skeleton", "status", "toast"],
     "Forms": [
+      "tags-input",
+      "editable",
+      "native-select",
+      "calendar",
+      "date-input",
+      "date-picker",
       "checkbox",
       "checkbox-group",
       "color-picker",
@@ -70,7 +94,7 @@
       "input",
       "multi-select",
       "number-input",
-      "otp-field",
+      "pin-input",
       "password-toggle-field",
       "radio-card",
       "radio-group",
@@ -82,6 +106,7 @@
       "textarea"
     ],
     "Layout": [
+      "splitter",
       "appearance",
       "aspect-ratio",
       "bleed",
@@ -102,6 +127,7 @@
       "z-stack"
     ],
     "Navigation": [
+      "table-of-contents",
       "app-bar",
       "bottom-navigation",
       "breadcrumb",
@@ -110,9 +136,12 @@
       "nav-list",
       "navigation-menu",
       "pagination",
-      "tabs"
+      "tabs",
+      "steps"
     ],
     "Overlays": [
+      "floating-panel",
+      "overlay-manager",
       "alert-dialog",
       "dialog",
       "drawer",
@@ -241,6 +270,7 @@
       "tree-grid"
     ],
     "portal": [
+      "date-picker",
       "alert-dialog",
       "combobox",
       "context-menu",

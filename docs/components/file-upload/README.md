@@ -92,6 +92,15 @@ Named exports are `FileUpload`, `FileUploadRoot`, `FileUploadHiddenInput`, `File
 
 Rejected-file feedback does not automatically mark the Field invalid. Use `onRejectedFilesChange` for selection-policy feedback and use `invalid` or form validation for the Field's validity state.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 `outline` uses a dashed raised dropzone; `soft` uses a quiet filled surface and solid border. Size changes the complete dropzone density and type scale. Shape changes the dropzone, items, and actions together. Atom state attributes drive empty, filled, dragging, accepted, rejected, disabled, read-only, required, and invalid presentation without changing the public anatomy.

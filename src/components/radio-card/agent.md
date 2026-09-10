@@ -19,6 +19,7 @@ Present one rich whole-card choice while Atom owns radio semantics, selection, k
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Preserve Atom's radio Item as the whole interactive card; do not add a second input or click behavior.
 - **MUST:** Give Root an accessible group name and every Item a complete visible option name.
 - **MUST:** Keep Item values unique and use controlled or uncontrolled state consistently.

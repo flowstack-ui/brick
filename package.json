@@ -27,6 +27,90 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
+    "./table-of-contents": {
+      "types": "./dist/table-of-contents.d.ts",
+      "default": "./dist/table-of-contents.js"
+    },
+    "./radius": {
+      "types": "./dist/radius.d.ts",
+      "default": "./dist/radius.js"
+    },
+    "./qr-code": {
+      "types": "./dist/qr-code.d.ts",
+      "default": "./dist/qr-code.js"
+    },
+    "./tags-input": {
+      "types": "./dist/tags-input.d.ts",
+      "default": "./dist/tags-input.js"
+    },
+    "./editable": {
+      "types": "./dist/editable.d.ts",
+      "default": "./dist/editable.js"
+    },
+    "./native-select": {
+      "types": "./dist/native-select.d.ts",
+      "default": "./dist/native-select.js"
+    },
+    "./marquee": {
+      "types": "./dist/marquee.d.ts",
+      "default": "./dist/marquee.js"
+    },
+    "./stat": {
+      "types": "./dist/stat.d.ts",
+      "default": "./dist/stat.js"
+    },
+    "./timeline": {
+      "types": "./dist/timeline.d.ts",
+      "default": "./dist/timeline.js"
+    },
+    "./empty-state": {
+      "types": "./dist/empty-state.d.ts",
+      "default": "./dist/empty-state.js"
+    },
+    "./alert": {
+      "types": "./dist/alert.d.ts",
+      "default": "./dist/alert.js"
+    },
+    "./spinner": {
+      "types": "./dist/spinner.d.ts",
+      "default": "./dist/spinner.js"
+    },
+    "./floating-panel": {
+      "types": "./dist/floating-panel.d.ts",
+      "default": "./dist/floating-panel.js"
+    },
+    "./overlay-manager": {
+      "types": "./dist/overlay-manager.d.ts",
+      "default": "./dist/overlay-manager.js"
+    },
+    "./action-bar": {
+      "types": "./dist/action-bar.d.ts",
+      "default": "./dist/action-bar.js"
+    },
+    "./calendar": {
+      "types": "./dist/calendar.d.ts",
+      "default": "./dist/calendar.js"
+    },
+    "./date-input": {
+      "types": "./dist/date-input.d.ts",
+      "default": "./dist/date-input.js"
+    },
+    "./date-picker": {
+      "types": "./dist/date-picker.d.ts",
+      "default": "./dist/date-picker.js"
+    },
+    "./date-value": {
+      "types": "./dist/date-value.d.ts",
+      "default": "./dist/date-value.js"
+    },
+    "./download-trigger": {
+      "types": "./dist/download-trigger.d.ts",
+      "default": "./dist/download-trigger.js"
+    },
+    "./close-button": {
+      "types": "./dist/close-button.d.ts",
+      "default": "./dist/close-button.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
@@ -192,6 +276,14 @@
       "types": "./dist/breadcrumb.d.ts",
       "default": "./dist/breadcrumb.js"
     },
+    "./splitter": {
+      "types": "./dist/splitter.d.ts",
+      "default": "./dist/splitter.js"
+    },
+    "./steps": {
+      "types": "./dist/steps.d.ts",
+      "default": "./dist/steps.js"
+    },
     "./tabs": {
       "types": "./dist/tabs.d.ts",
       "default": "./dist/tabs.js"
@@ -284,9 +376,9 @@
       "types": "./dist/number-input.d.ts",
       "default": "./dist/number-input.js"
     },
-    "./otp-field": {
-      "types": "./dist/otp-field.d.ts",
-      "default": "./dist/otp-field.js"
+    "./pin-input": {
+      "types": "./dist/pin-input.d.ts",
+      "default": "./dist/pin-input.js"
     },
     "./password-toggle-field": {
       "types": "./dist/password-toggle-field.d.ts",
@@ -467,7 +559,7 @@
     "build": "npm run clean && npm run build:js && npm run build:css && npm run build:theme-contract && npm run agents:build",
     "agents:build": "node scripts/build-agent-knowledge.mjs",
     "agents:check": "node scripts/build-agent-knowledge.mjs --check",
-    "build:js": "tsc -p tsconfig.build.json",
+    "build:js": "node scripts/generate-aspect-ratios.mjs --check && tsc -p tsconfig.build.json",
     "build:css": "node scripts/generate-action-size-css.mjs --check && node scripts/generate-form-control-size-css.mjs --check && node scripts/build-styles.mjs --mode production",
     "build:css:dev": "node scripts/generate-action-size-css.mjs --check && node scripts/generate-form-control-size-css.mjs --check && node scripts/build-styles.mjs --mode development",
     "generate:action-sizes": "node scripts/generate-action-size-css.mjs",
@@ -476,7 +568,7 @@
     "generate:form-control-sizes:check": "node scripts/generate-form-control-size-css.mjs --check",
     "build:theme-contract": "node scripts/build-theme-contract.mjs",
     "build:playground": "npm run build && npm run build:playground:built",
-    "build:playground:built": "vite build --config playground/vite.config.ts",
+    "build:playground:built": "node scripts/verify-preview-environment.mjs && vite build --config playground/vite.config.ts",
     "build:consumer": "npm run build && npm run build:consumer:built",
     "build:consumer:built": "npm run build -w apps/consumer",
     "dev": "npm run dev:playground",
@@ -525,6 +617,7 @@
     "verify:theme-qualification": "node scripts/verify-theme-qualification.mjs",
     "test:processes": "node scripts/check-test-ports.mjs",
     "verify:typography": "node scripts/verify-typography.mjs",
+    "verify:focus": "node scripts/verify-focus-policy.mjs",
     "verify:playground-primitives": "node scripts/verify-playground-primitives.mjs",
     "verify:playground-contract": "node scripts/verify-playground-contract.mjs",
     "verify:playground-stack": "node scripts/verify-playground-stack.mjs",
@@ -542,7 +635,7 @@
     "verify:playground-composition": "node scripts/verify-playground-composition.mjs",
     "check": "npm run check:repository",
     "check:focused": "npm run test:component",
-    "check:repository": "npm run verify:repository-contract && npm run verify:theme-contract && npm run test:ownership && npm run verify:playground-contract && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run verify:playground-code && npm run verify:playground-nav-list && npm run verify:playground-sidebar && npm run verify:playground-icon && npm run verify:playground-image && npm run verify:playground-list && npm run verify:playground-composition && npm run build && npm run agents:check && npm run verify:theme-qualification && npm run typecheck:built && npm run test:node:built && npm run test:components && npm run test:css && npm run build:playground:built && npm run build:consumer:built && npm run pack:check && npm run verify:consumers:built",
+    "check:repository": "npm run verify:repository-contract && npm run verify:focus && npm run verify:theme-contract && npm run test:ownership && npm run verify:playground-contract && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run verify:playground-code && npm run verify:playground-nav-list && npm run verify:playground-sidebar && npm run verify:playground-icon && npm run verify:playground-image && npm run verify:playground-list && npm run verify:playground-composition && npm run build && npm run agents:check && npm run verify:theme-qualification && npm run typecheck:built && npm run test:node:built && npm run test:components && npm run test:css && npm run build:playground:built && npm run build:consumer:built && npm run pack:check && npm run verify:consumers:built",
     "check:release": "npm run check:repository && npm run test:browser:release:built && npm run verify:consumer:built && npm run size:css",
     "prepublishOnly": "npm run build"
   },
@@ -562,6 +655,8 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
+    "@fontsource-variable/inter": "5.3.0",
+    "@fontsource-variable/outfit": "5.3.0",
     "@playwright/test": "^1.61.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",

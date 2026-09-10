@@ -1,5 +1,13 @@
 # Image
 
+### Shared radius migration
+
+`ImageRadius` now aliases shared `Radius`; omission still means none.
+Historical sm/md/lg mapped to subtle/control/surface. Use those semantic names
+to preserve that appearance; sm/md/lg now select core sizes. Other core and
+semantic Radius values are supported, including xl and overlay. Image loading,
+fitting, intrinsic dimensions and numeric ratio behavior are unchanged.
+
 Image presents ordinary raster or vector media with authored alternative text,
 deterministic loading/fallback anatomy, fit and focal-position recipes, stable
 aspect ratio, and finished framing. Atom owns source lifecycle; Brick owns paint.
@@ -79,7 +87,7 @@ exclusive under Atom's source state.
 | `src` | image URL string | absent / `idle` |
 | `fit` | `cover`, `contain`, `fill`, `none`, `scale-down` | `cover` |
 | `position` | `center`, `top`, `bottom`, `start`, `end` | `center` |
-| `radius` | `none`, `sm`, `md`, `lg`, `full` | `none` |
+| `radius` | shared `Radius` core sizes and semantic roles | `none` |
 | `frame` | `none`, `subtle` | `none` |
 | `ratio` | positive finite number | intrinsic |
 | `fill` | `boolean` | `false` |

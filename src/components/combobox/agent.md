@@ -19,6 +19,7 @@ Present finished editable filtering and single-value selection while Atom owns c
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Keep committed value, editable input text, and popup open state independent and pair each controlled prop with its matching callback.
 - **MUST:** Keep Root options, rendered Items, stable values, labels, disabled state, grouping, and custom filtering aligned as one authoritative collection.
 - **MUST:** Keep Input as the named editable combobox focus owner, Content as positioning and dismissal owner, and Listbox as semantic option owner; never hand-position a Surface or put listbox role on Content.

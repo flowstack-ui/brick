@@ -1,8 +1,27 @@
 # Aspect Ratio
 
+### Standard ratio tokens and shared radius
+
+Import `aspectRatios` and `AspectRatioToken` from the package root or
+`@flowstack-ui/brick/aspect-ratio`. The frozen numeric scale is generated from
+the canonical token source: square=1, landscape=4/3, portrait=3/4, wide=16/9,
+ultrawide=18/5, golden=1.618. Use `ratio={aspectRatios.wide}` or responsive
+numeric values. Names are not strings accepted by ratio. Defaults and arbitrary
+numeric values remain unchanged.
+
+Matching `--brick-aspect-ratio-square` (and the other five names) CSS tokens are
+available with the normal foundation stylesheet. Standard proportions are
+appearance-invariant. Numeric constants are not runtime CSS/theme lookups;
+application-specific ratio roles must use separate names rather than redefine
+standard shapes. No provider, viewport JavaScript, or Atom change is needed.
+
+Radius now uses shared `Radius`, default none. Migration: replace legacy
+sm/md/lg with subtle/control/surface to retain the old semantic appearance;
+sm/md/lg now mean core radii, consistently with other Brick components.
+
 Aspect Ratio reserves stable width-to-height geometry for authored media,
 embeds, placeholders, and layout content. It controls the box and optional
-frame only; children retain their own semantics, sizing, and behavior.
+frame and child filling; children retain their own semantics and behavior.
 
 ## When and where to use
 
@@ -14,7 +33,7 @@ neutral frame paint.
 
 Use Image for image loading, fallback, fit, and focal position. Use Surface for
 a general panel and Skeleton for a loading placeholder. Aspect Ratio is not a
-video player, map, gallery, optimizer, cropper, or responsive-value system.
+video player, map, gallery, or optimizer.
 
 ## Installation and imports
 
@@ -39,7 +58,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 
 The subpath also exports `AspectRatioRoot`, `AspectRatioRootProps`,
-`AspectRatioVariant`, `AspectRatioRadius`, and `AspectRatioOverflow`.
+`AspectRatioVariant`, `AspectRatioRadius`, `AspectRatioOverflow`, and `AspectRatioContentLayout`.
 
 ## Quick start
 
@@ -49,14 +68,16 @@ The subpath also exports `AspectRatioRoot`, `AspectRatioRootProps`,
 </AspectRatio.Root>
 ```
 
-Size the child explicitly when it should fill the box:
+The immediate element child fills the box automatically. Native images and videos use cover fitting:
+
+Native iframe borders are removed in fill mode; use the Root outline variant
+when the frame needs a visible boundary.
 
 ```tsx
 <AspectRatio.Root ratio={4 / 3} overflow="hidden" radius="md">
   <img
     alt="Team reviewing a release"
     src="/release.jpg"
-    style={{ blockSize: "100%", inlineSize: "100%", objectFit: "cover" }}
   />
 </AspectRatio.Root>
 ```
@@ -79,9 +100,10 @@ wrapper. Atom owns the authoritative inline `aspect-ratio` style and
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `ratio` | positive `number` | `16 / 9` |
+| `ratio` | `ResponsiveValue<number>`; positive numeric values | `16 / 9` |
+| `contentLayout` | `fill`, `flow` | `fill` |
 | `variant` | `plain`, `subtle`, `outline` | `plain` |
-| `radius` | `none`, `sm`, `md`, `lg`, `full` | `none` |
+| `radius` | shared `Radius` core sizes and semantic roles | `none` |
 | `overflow` | `visible`, `hidden` | `hidden` |
 
 Atom normalizes zero, negative, `NaN`, and infinite ratios to `16 / 9`.
@@ -91,7 +113,7 @@ when at least one physical dimension remains automatic.
 ## Visual recipes and states
 
 `plain` is transparent, `subtle` supplies a neutral canvas, and `outline`
-supplies a neutral canvas plus a one-pixel boundary. Radius changes only corner
+adds a one-pixel boundary while keeping its background transparent. Radius changes only corner
 geometry. Overflow changes only clipping. `full` intentionally produces a
 capsule or ellipse for non-square ratios.
 
@@ -110,8 +132,8 @@ Public variables:
 
 Public hooks are `.brick-aspect-ratio`, `data-slot` / `[data-slot]` with
 `data-slot="aspect-ratio"`,
-`[data-variant]`, `[data-radius]`, and `[data-overflow]`. Atom's inline ratio
-is deliberately not a Brick CSS variable.
+`[data-variant]`, `[data-radius]`, `[data-overflow]`, and `[data-content-layout]`.
+The `--_brick-aspect-ratio-*` variables are private implementation details, not customization hooks.
 
 ## Customization
 
@@ -131,9 +153,13 @@ overridden by the authoritative `ratio` prop.
 ## Responsive behavior
 
 Root is block-level, inline-size contained, and fills its available inline
-size. It does not provide responsive prop objects or named ratio tokens.
-Compose responsive CSS outside Root when a ratio must change by container or
-viewport. Geometry is direction-neutral and identical in RTL. Dark and forced
+size. Use `ratio={{ initial: 1, md: 16 / 9 }}` for viewport-responsive geometry.
+Sparse objects such as `ratio={{ lg: 2 }}` retain the default 16/9 before the
+first breakpoint. Values carry forward through sm (30rem), md (48rem), lg
+(64rem), and xl (80rem). Empty objects and strings are not supported. Each
+invalid numeric value normalizes to 16/9. This is CSS-only, SSR-deterministic,
+and uses one DOM tree; container-specific changes remain application policy.
+Geometry is direction-neutral and identical in RTL. Dark and forced
 colors affect optional frame paint; the component has no motion.
 
 ## Accessibility
@@ -149,7 +175,12 @@ use `overflow="visible"`/an inset focus style.
 Root forwards compatible native div props, data/ARIA attributes, events,
 `className`, `style`, children, and an `HTMLDivElement` ref. Atom's `asChild`
 and `render` composition APIs remain available. Root is positioned relatively
-but does not stretch, crop, or absolutely position children.
+and by default absolutely positions its immediate element children to fill
+the frame. Wrap one primary content region; use Center to center text rather
+than expecting AspectRatio to choose the child's layout. Child display and
+descendant focus overflow are not overridden. Image retains its own fit API.
+Use `contentLayout="flow"` for natural-flow children (the previous behavior),
+or when migrating an authored layout that must control its own geometry.
 
 ## Examples
 
@@ -168,7 +199,6 @@ but does not stretch, crop, or absolutely position children.
   <iframe
     allow="fullscreen"
     src="/map"
-    style={{ blockSize: "100%", inlineSize: "100%" }}
     title="Office location"
   />
 </AspectRatio.Root>

@@ -1,4 +1,14 @@
 import { useEffect, useState, type ComponentType } from "react";
+import { StatPage, statScenarios } from "../components/stat/StatPage.js";
+import { QrCodePage, qrCodeScenarios } from "../components/qr-code/QrCodePage.js";
+import { TableOfContentsPage, tableOfContentsScenarios } from "../components/table-of-contents/TableOfContentsPage.js";
+import { NativeSelectPage, nativeSelectScenarios } from "../components/native-select/NativeSelectPage.js";
+import { EditablePage, editableScenarios } from "../components/editable/EditablePage.js";
+import { TagsInputPage, tagsInputScenarios } from "../components/tags-input/TagsInputPage.js";
+import { TimelinePage, timelineScenarios } from "../components/timeline/TimelinePage.js";
+import { EmptyStatePage, emptyStateScenarios } from "../components/empty-state/EmptyStatePage.js";
+import { AlertPage, alertScenarios } from "../components/alert/AlertPage.js";
+import { SpinnerPage, spinnerScenarios } from "../components/spinner/SpinnerPage.js";
 import {
   playgroundEntries,
   resolvePlaygroundEntry,
@@ -102,9 +112,9 @@ import {
   numberInputScenarios,
 } from "../components/number-input/NumberInputPage.js";
 import {
-  OTPFieldPage,
-  otpFieldScenarios,
-} from "../components/otp-field/OTPFieldPage.js";
+  PinInputPage,
+  pinInputScenarios,
+} from "../components/pin-input/PinInputPage.js";
 import {
   PasswordToggleFieldPage,
   passwordToggleFieldScenarios,
@@ -203,6 +213,13 @@ import {
 } from "../components/section/SectionPage.js";
 import { FramePage, frameScenarios } from "../components/frame/FramePage.js";
 import { CenterPage, centerScenarios } from "../components/center/CenterPage.js";
+import { StepsPage, stepsScenarios } from "../components/steps/StepsPage.js";
+import { SplitterPage, splitterScenarios } from "../components/splitter/SplitterPage.js";
+import { CloseButtonPage, closeButtonScenarios } from "../components/close-button/CloseButtonPage.js";
+import { CalendarPage, calendarScenarios } from "../components/calendar/CalendarPage.js";
+import { DateInputPage, dateInputScenarios } from "../components/date-input/DateInputPage.js";
+import { DatePickerPage, datePickerScenarios } from "../components/date-picker/DatePickerPage.js";
+import { DownloadTriggerPage, downloadTriggerScenarios } from "../components/download-trigger/DownloadTriggerPage.js";
 import { BleedPage, bleedScenarios } from "../components/bleed/BleedPage.js";
 import {
   SurfacePage,
@@ -343,6 +360,17 @@ interface PlaygroundModule {
 }
 
 const playgroundModules = {
+  stat: { Page: StatPage, scenarios: statScenarios },
+  "native-select": { Page: NativeSelectPage, scenarios: nativeSelectScenarios },
+  "qr-code": { Page: QrCodePage, scenarios: qrCodeScenarios },
+  "table-of-contents": { Page: TableOfContentsPage, scenarios: tableOfContentsScenarios },
+  editable: { Page: EditablePage, scenarios: editableScenarios },
+  "tags-input": { Page: TagsInputPage, scenarios: tagsInputScenarios },
+  timeline: { Page: TimelinePage, scenarios: timelineScenarios },
+  marquee: { Page: MarqueePage, scenarios: marqueeScenarios },
+  "empty-state": { Page: EmptyStatePage, scenarios: emptyStateScenarios },
+  alert: { Page: AlertPage, scenarios: alertScenarios },
+  spinner: { Page: SpinnerPage, scenarios: spinnerScenarios },
   accordion: { Page: AccordionPage, scenarios: accordionScenarios },
   "alert-dialog": { Page: AlertDialogPage, scenarios: alertDialogScenarios },
   "app-bar": { Page: AppBarPage, scenarios: appBarScenarios },
@@ -395,6 +423,16 @@ const playgroundModules = {
   form: { Page: FormPage, scenarios: formScenarios },
   frame: { Page: FramePage, scenarios: frameScenarios },
   center: { Page: CenterPage, scenarios: centerScenarios },
+  steps: { Page: StepsPage, scenarios: stepsScenarios },
+  splitter: { Page: SplitterPage, scenarios: splitterScenarios },
+  "close-button": { Page: CloseButtonPage, scenarios: closeButtonScenarios },
+  "action-bar": { Page: ActionBarPage, scenarios: actionBarScenarios },
+  "floating-panel": { Page: FloatingPanelPage, scenarios: floatingPanelScenarios },
+  "overlay-manager": { Page: OverlayManagerPage, scenarios: overlayManagerScenarios },
+  calendar: { Page: CalendarPage, scenarios: calendarScenarios },
+  "date-input": { Page: DateInputPage, scenarios: dateInputScenarios },
+  "date-picker": { Page: DatePickerPage, scenarios: datePickerScenarios },
+  "download-trigger": { Page: DownloadTriggerPage, scenarios: downloadTriggerScenarios },
   grid: { Page: GridPage, scenarios: gridScenarios },
   group: { Page: GroupPage, scenarios: groupScenarios },
   hide: { Page: HidePage, scenarios: hideScenarios },
@@ -421,7 +459,7 @@ const playgroundModules = {
     scenarios: notificationBadgeScenarios,
   },
   "number-input": { Page: NumberInputPage, scenarios: numberInputScenarios },
-  "otp-field": { Page: OTPFieldPage, scenarios: otpFieldScenarios },
+  "pin-input": { Page: PinInputPage, scenarios: pinInputScenarios },
   pagination: { Page: PaginationPage, scenarios: paginationScenarios },
   "password-toggle-field": {
     Page: PasswordToggleFieldPage,
@@ -513,12 +551,13 @@ function usePlaygroundPath() {
       }
 
       const destination = new URL(link.href, window.location.href);
-      if (
-        !destination.searchParams.has("theme") &&
-        new URLSearchParams(window.location.search).get("theme") ===
-          "qualification"
-      ) {
-        destination.searchParams.set("theme", "qualification");
+      const current = new URL(window.location.href);
+      if (destination.origin === current.origin && playgroundRoutes.has(destination.pathname)) {
+        for (const key of [...settingsKeys, "testMode", "isolated"]) {
+          if (!destination.searchParams.has(key) && current.searchParams.has(key)) {
+            destination.searchParams.set(key, current.searchParams.get(key)!);
+          }
+        }
       }
       if (
         destination.origin !== window.location.origin ||
@@ -536,6 +575,7 @@ function usePlaygroundPath() {
         `${destination.pathname}${destination.search}${destination.hash}`,
       );
       syncLocation();
+      window.dispatchEvent(new PopStateEvent("popstate"));
       window.scrollTo({ left: 0, top: 0 });
     };
 
@@ -550,8 +590,20 @@ function usePlaygroundPath() {
   return new URL(locationKey, window.location.origin).pathname;
 }
 
+import { InlineExampleEnvironment } from "../preview/ExampleEnvironment.js";
+import { aspectRatioSections } from "../components/aspect-ratio/sections.js";
+import { usePlaygroundSettings } from "../settings/PlaygroundSettingsProvider.js";
+import { settingsKeys } from "../settings/settings-model.js";
+
 export function PlaygroundApp() {
   const path = usePlaygroundPath();
+  const { settings } = usePlaygroundSettings();
+  const hash = window.location.hash;
+  useEffect(() => {
+    if (!/^#scenario-[a-z0-9-]+$/.test(hash)) return;
+    const frame = requestAnimationFrame(() => document.getElementById(hash.slice(1))?.scrollIntoView());
+    return () => cancelAnimationFrame(frame);
+  }, [path, hash]);
 
   if (path === "/skip-link/fixture") return <SkipLinkFixturePage />;
   if (path === "/hover-card/destination") return <HoverCardDestinationPage />;
@@ -569,8 +621,14 @@ export function PlaygroundApp() {
       : undefined;
 
   return (
-    <PlaygroundShell entry={entry} scenarios={scenarios} skipLink={skipLink}>
-      <Page />
+    <PlaygroundShell entry={entry} scenarios={scenarios} skipLink={skipLink}
+      tableOfContents={entry.id === "aspect-ratio" && new URLSearchParams(window.location.search).get("qualification") !== "1" ? aspectRatioSections : undefined}
+      editPageHref={entry.id === "aspect-ratio" ? "https://github.com/flowstack-ui/brick/edit/main/playground/src/components/aspect-ratio/AspectRatioDocumentation.tsx" : undefined}>
+      <InlineExampleEnvironment dir={settings.exampleDirection}><Page /></InlineExampleEnvironment>
     </PlaygroundShell>
   );
 }
+import { ActionBarPage, actionBarScenarios } from "../components/action-bar/ActionBarPage.js";
+import { FloatingPanelPage, floatingPanelScenarios } from "../components/floating-panel/FloatingPanelPage.js";
+import { OverlayManagerPage, overlayManagerScenarios } from "../components/overlay-manager/OverlayManagerPage.js";
+import { MarqueePage, marqueeScenarios } from "../components/marquee/MarqueePage.js";

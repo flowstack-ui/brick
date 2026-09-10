@@ -1,4 +1,5 @@
 import { forwardRef, type ReactElement, type ReactNode } from "react";
+import { radiusStyle, type Radius, type RadiusShapeProps } from "../_radius/Radius.js";
 import {
   ButtonRoot as AtomButtonRoot,
   type ButtonRootProps as AtomButtonRootProps,
@@ -15,6 +16,8 @@ export type IconButtonSize = ButtonSize;
 export type IconButtonShape = "rounded" | "circle";
 
 interface IconButtonVisualProps {
+  /** Focus placement only; keyboard modality remains browser/Atom owned. */
+  focusRing?: "outside" | "inside";
   /** Visual hierarchy. @default "ghost" */
   variant?: IconButtonVariant;
   /** Semantic color role. @default "neutral" */
@@ -23,12 +26,13 @@ interface IconButtonVisualProps {
   size?: ResponsiveValue<IconButtonSize>;
   /** Corner geometry. @default "rounded" */
   shape?: IconButtonShape;
+  radius?: Radius;
 }
 
 type IconButtonSharedProps = Omit<
   AtomButtonRootProps,
   "asChild" | "color" | "render"
-> & IconButtonVisualProps;
+> & Omit<IconButtonVisualProps, "shape" | "radius"> & RadiusShapeProps<IconButtonShape>;
 
 export type IconButtonProps = IconButtonSharedProps &
   (
@@ -55,6 +59,9 @@ export const IconButton = forwardRef<HTMLElement, IconButtonProps>(
       tone = "neutral",
       size = "lg",
       shape = "rounded",
+      radius,
+      focusRing,
+      style,
       className,
       children,
       asChild = false,
@@ -74,7 +81,9 @@ export const IconButton = forwardRef<HTMLElement, IconButtonProps>(
         {...rootProps}
         asChild={asChild}
         className={mergeClassName(className)}
-        data-shape={shape}
+        data-shape={radius === undefined ? shape : "rounded"}
+        data-focus-ring={focusRing}
+        style={radiusStyle(radius, "--brick-icon-button-radius", style)}
         data-tone={tone}
         data-variant={variant}
         ref={ref}

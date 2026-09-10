@@ -110,6 +110,15 @@ editor; the integrated Control can contain that Trigger too. In an integrated
 Control, Trigger and EyeDropperTrigger use the finished ghost-action treatment
 while the shared Control keeps the one field boundary.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 Popup editors use `Trigger`, `Positioner`, and elevated `Content`. Inline editors set `inline` on Root and render Content directly; direct inline Content removes popup border, background, shadow, and padding so the owning application surface controls containment. Sizes are `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, and `2xl`; variants are `outline` and `soft`. The default editor is 16rem wide, while `2xs` and `xs` use a compact 15rem popup for dense toolbars and creative controls. Choose a larger recipe when the surrounding form or touch context needs it. A Trigger whose only child is ValueSwatch is automatically square; a Trigger containing ValueText or other authored content retains content-driven width.

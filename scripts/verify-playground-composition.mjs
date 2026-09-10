@@ -15,11 +15,17 @@ async function collect(directory, extension) {
 }
 
 const expectedRouteIds = [
+  "table-of-contents",
+  "qr-code", "tags-input", "editable", "native-select",
+  "stat", "timeline", "marquee",
+  "alert", "empty-state", "spinner",
+  "action-bar", "floating-panel", "overlay-manager",
+  "calendar", "date-input", "date-picker", "close-button", "download-trigger", "splitter", "steps",
   "accordion", "alert-dialog", "app-bar", "appearance", "aspect-ratio", "avatar", "avatar-group", "badge", "blockquote", "bottom-navigation", "breadcrumb", "button", "card", "carousel",
   "center", "checkbox", "checkbox-group", "checkmark", "chip", "code", "code-block", "collapsible", "combobox", "container",
   "context-menu", "data-grid", "data-list", "dialog", "divider", "drawer", "dropdown-menu", "em", "feed", "field", "fieldset", "form", "grid", "group",
   "hide", "highlight", "hover-card", "icon", "icon-button", "image", "input", "kbd", "textarea", "link", "link-box", "list", "multi-select", "bleed", "prose",
-  "file-upload", "for", "format-byte", "format-number", "locale-provider", "menubar", "nav-list", "navigation-menu", "notification-badge", "number-input", "otp-field", "popover", "progress", "progress-circle", "radio-group", "radio-card", "radiomark", "rating", "scroll-area", "select", "sidebar", "slider",
+  "file-upload", "for", "format-byte", "format-number", "locale-provider", "menubar", "nav-list", "navigation-menu", "notification-badge", "number-input", "pin-input", "popover", "progress", "progress-circle", "radio-group", "radio-card", "radiomark", "rating", "scroll-area", "select", "sidebar", "slider",
   "mark", "pagination", "password-toggle-field", "reorderable-list", "segment-group", "show", "skeleton", "skip-link", "stack", "status", "color-swatch", "color-picker", "section", "frame", "surface", "swipeable-item", "switch", "table", "tabs", "text", "toast", "toggle", "toggle-group", "toolbar", "tooltip", "tree", "tree-grid",
   "visually-hidden", "z-stack",
 ];
@@ -40,6 +46,8 @@ const publicComponentIds = Object.keys(packageData.exports)
   .filter((entry) => (
     entry !== "."
     && entry !== "./theme-contract.json"
+    && entry !== "./date-value"
+    && entry !== "./radius"
     && !entry.endsWith(".css")
     && !entry.startsWith("./agents/")
   ))
@@ -55,9 +63,18 @@ const directAtomImports = [];
 for (const path of tsxPaths) {
   const source = await read(path);
   if (/from\s+["']@flowstack-ui\/atom(?:\/|["'])/.test(source)) {
+    // The isolated document host bridges native dir to headless keyboard context.
+    // This is not permission for visual examples or shell UI to bypass Brick.
+    if (path === "playground/src/preview/ExampleEnvironment.tsx") {
+      const imports = [...source.matchAll(/import\s+([^;]+?)\s+from\s+["'](@flowstack-ui\/atom[^"']*)["']/g)];
+      assert.equal(imports.length, 1);
+      assert.equal(imports[0][1].trim(), "{ DirectionProvider }");
+      assert.equal(imports[0][2], "@flowstack-ui/atom/direction");
+      continue;
+    }
     directAtomImports.push(path);
   }
 }
 assert.deepEqual(directAtomImports, [], "The Brick playground must not import Atom directly.");
 
-console.log("Verified complete Brick route coverage and no direct Atom imports.");
+console.log("Verified Brick route coverage and restricted headless document-direction bridge.");

@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
 import {
   ToggleGroup as AtomToggleGroup,
   type ToggleGroupItemRootProps as AtomToggleGroupItemRootProps,
@@ -15,19 +16,17 @@ type ToggleGroupRootCommonProps = Omit<
   AtomToggleGroupRootProps,
   "color" | "defaultValue" | "onValueChange" | "type" | "value"
 > & {
-  /** Shared item visual treatment. @default "soft" */
+  /** Shared item visual treatment. @default "ghost" */
   variant?: ToggleVariant;
-  /** Shared selected-state color treatment. @default "accent" */
+  /** Shared selected-state color treatment. @default "neutral" */
   tone?: ToggleTone;
   /** Shared item size. @default "md" */
   size?: ToggleSize;
-  /** Shared item and outer group geometry. @default "rounded" */
-  shape?: ToggleShape;
   /** Join items into one segmented surface. @default false */
   attached?: boolean;
   /** Fill the available inline width and distribute items. @default false */
   fullWidth?: boolean;
-};
+} & RadiusShapeProps<ToggleShape>;
 
 export type ToggleGroupSingleProps = ToggleGroupRootCommonProps & {
   type?: "single";
@@ -66,10 +65,12 @@ export const ToggleGroupRoot = forwardRef<
   ToggleGroupRootProps
 >(function ToggleGroupRoot(props, ref) {
   const {
-    variant = "soft",
-    tone = "accent",
+    variant = "ghost",
+    tone = "neutral",
     size = "md",
     shape = "rounded",
+    radius,
+    style,
     attached = false,
     fullWidth = false,
     className,
@@ -80,7 +81,8 @@ export const ToggleGroupRoot = forwardRef<
     className: mergeClassName("brick-toggle-group", className),
     "data-attached": String(attached),
     "data-full-width": fullWidth ? "" : undefined,
-    "data-shape": shape,
+    "data-shape": radius === undefined ? shape : "rounded",
+    style: radiusStyle(radius, "--brick-toggle-group-radius", style),
     "data-size": size,
     "data-tone": tone,
     "data-variant": variant,

@@ -25,6 +25,7 @@ Present finished static row-and-column relationships with native table semantics
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Preserve native table anatomy and meaningful row and column headers; do not rebuild tabular comparison with generic Grid, Stack, div, or ARIA role substitutes.
 - **MUST:** Keep Table static and readable; do not add row focus, whole-row activation, selection, arrow-key cell navigation, data mapping, filtering, pagination, editing, or virtualization to Table.
 - **MUST:** Author Table.Container or a separately labelled Scroll Area when wide comparison needs overflow; Root never inserts a wrapper and Table never hides columns or converts them into cards.

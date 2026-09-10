@@ -20,10 +20,17 @@
     }
   ],
   "composition": [
+    "Omitted variant and tone use ghost and neutral: quiet toolbar commands with a flat pressed fill. Choose accent or a bordered variant explicitly when stronger emphasis is needed.",
     "Keep one stable visible or accessible name across pressed states; use iconOnly only with a complete accessible name.",
-    "Choose variant for the selected-state treatment and accent or neutral tone for its emphasis before applying local customization."
+    "Choose variant for the selected-state treatment and accent or neutral tone for its emphasis before applying local customization.",
+    "Toggle, ToggleGroup and Toolbar.ToggleItem share variant/tone state paint. Preserve each owner’s anatomy, geometry and Atom keyboard behavior instead of substituting one for another."
   ],
   "rules": [
+    {
+      "id": "toggle-radius",
+      "level": "must",
+      "statement": "Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."
+    },
     {
       "id": "toggle-role",
       "level": "must",
@@ -66,7 +73,12 @@
     "Check every adopted variant and accent/neutral tone in light, dark, forced colors, narrow layouts, zoom, and RTL."
   ],
   "related": [
-    { "kind": "package", "package": "@flowstack-ui/atom", "id": "toggle", "versionPolicy": "installed-exact" },
+    {
+      "kind": "package",
+      "package": "@flowstack-ui/atom",
+      "id": "toggle",
+      "versionPolicy": "installed-exact"
+    },
     "toggle-group",
     "toolbar",
     "button",

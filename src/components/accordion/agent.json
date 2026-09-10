@@ -31,7 +31,7 @@
     "Use size=xl for spacious marketing disclosures that need a 60px trigger and 18px label.",
     "Use variant=ghost with indicatorPlacement=start for disclosure sections that should blend into an owning inspector surface."
   ],
-  "rules": [
+  "rules": [{"id":"accordion-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {
       "id": "accordion-complete-anatomy",
       "level": "must",

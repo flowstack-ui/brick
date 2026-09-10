@@ -12,6 +12,7 @@ import {
   type ImageLoadingStatus,
 } from "@flowstack-ui/atom/avatar";
 import { useAvatarGroupPresentation } from "../avatar-group/AvatarGroupContext.js";
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
 
 export type AvatarSize =
   | "xs"
@@ -26,13 +27,12 @@ export type AvatarSize =
 export type AvatarShape = "circle" | "rounded";
 export type AvatarStatus = "online" | "away" | "busy" | "offline";
 
-export interface AvatarProps
-  extends Omit<HTMLAttributes<HTMLSpanElement>, "children" | "color"> {
+export type AvatarProps =
+  Omit<HTMLAttributes<HTMLSpanElement>, "children" | "color"> & RadiusShapeProps<AvatarShape> & {
   src?: string;
   alt: string;
   fallback: ReactNode;
   size?: AvatarSize;
-  shape?: AvatarShape;
   status?: AvatarStatus;
   fallbackDelayMs?: number;
   onLoadingStatusChange?: (status: ImageLoadingStatus) => void;
@@ -50,6 +50,8 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
     fallback,
     size = "md",
     shape = "circle",
+    radius,
+    style,
     status,
     fallbackDelayMs,
     onLoadingStatusChange,
@@ -62,6 +64,7 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
   const groupPresentation = useAvatarGroupPresentation();
   const resolvedSize = groupPresentation?.size ?? size;
   const resolvedShape = groupPresentation?.shape ?? shape;
+  const resolvedRadius = groupPresentation ? groupPresentation.radius : radius;
   const fallbackSemantics =
     alt === ""
       ? ({ "aria-hidden": true } as const)
@@ -71,7 +74,8 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
     <AtomAvatarRoot
       {...props}
       className={mergeClassName("brick-avatar", className)}
-      data-shape={resolvedShape}
+      data-shape={resolvedRadius === undefined ? resolvedShape : "rounded"}
+      style={radiusStyle(resolvedRadius, "--brick-avatar-radius", style)}
       data-size={resolvedSize}
       data-slot={dataSlot}
       data-status={status}

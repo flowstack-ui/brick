@@ -26,6 +26,7 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Treat arrows and picker dots as optional authored controls; dots represent direct slide selection and are not Tabs.
 - **MUST:** Never enable automatic rotation without a visible RotationControl and direct Previous and Next controls.
 - **MUST:** Keep picker treatment independent from arrow visibility; use Picker variant bare for dots without a capsule and Navigation visibility interaction only when arrows remain discoverable through focus, pointer, and touch.

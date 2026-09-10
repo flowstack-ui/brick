@@ -1,3 +1,5 @@
+@import "../_focus/action-focus.css";
+
 @layer brick.components {
   .brick-icon-button {
     --brick-icon-button-size: var(--brick-control-min-block-size-md);
@@ -419,6 +421,27 @@
     }
   }
   /* action-size-recipes:end */
+
+  .brick-icon-button[data-tone="contrast"] {
+    --brick-icon-button-tone-solid: var(--brick-color-text-primary);
+    --brick-icon-button-tone-solid-hover: color-mix(
+      in srgb,
+      var(--brick-color-text-primary),
+      var(--brick-color-surface-base) 12%
+    );
+    --brick-icon-button-tone-solid-pressed: color-mix(
+      in srgb,
+      var(--brick-color-text-primary),
+      var(--brick-color-surface-base) 20%
+    );
+    --brick-icon-button-tone-on-solid: var(--brick-color-surface-base);
+    --brick-icon-button-tone-soft: var(--brick-color-surface-subtle);
+    --brick-icon-button-tone-soft-hover: var(--brick-color-surface-base);
+    --brick-icon-button-tone-soft-pressed: var(--brick-color-border-subtle);
+    --brick-icon-button-tone-on-soft: var(--brick-color-text-primary);
+    --brick-icon-button-tone-border: var(--brick-color-border-strong);
+    --brick-icon-button-tone-text: var(--brick-color-text-primary);
+  }
 
   .brick-icon-button[data-shape="circle"] {
     --brick-icon-button-radius: var(--brick-radius-full);

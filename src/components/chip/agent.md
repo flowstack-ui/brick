@@ -16,9 +16,12 @@ Present one compact authored or selected value with an optional, explicitly name
 ## Required composition
 
 - Compose Root with Label and include RemoveTrigger only when the surrounding application can remove that value; give every RemoveTrigger a value-specific ariaLabel and onPress handler.
+- Use StartElement and EndElement for coordinated adornments. For a primary token action, place Label inside ActionTrigger and keep RemoveTrigger as its sibling.
+- Use density=compact for compact passive tokens; interactive targets can increase the actual height. Keep tone and variant separate, such as accent with solid.
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Keep Root noninteractive; RemoveTrigger is the only removal control, so clicking the label does not silently perform the action.
 - **MUST:** Name every RemoveTrigger with the value and action, such as ariaLabel="Remove Men filter"; never expose an unlabeled close icon.
 - **MUST:** Treat onPress as a removal request; the parent owns state mutation, URL synchronization, focus recovery, and announcements.

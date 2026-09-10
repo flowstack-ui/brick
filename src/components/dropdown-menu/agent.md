@@ -19,6 +19,7 @@ Present a finished compact command or settings menu from a visible button while 
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use DropdownMenu for commands or settings opened by a visible button; use Select for a form value, ContextMenu for contextual invocation, Menubar for persistent command categories, and navigation owners for route lists.
 - **MUST:** Compose Trigger around a visible finished Button or IconButton with a complete accessible name and preserve Atom's button, popup, expanded, controls, disabled, and input-aware opening semantics.
 - **MUST:** Use uniquely valued Item, CheckboxItem, and RadioItem for their matching roles, provide textValue when rendered children are not searchable text, and preserve real focus, typeahead, and disabled-item navigation without activation.

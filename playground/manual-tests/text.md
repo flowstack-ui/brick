@@ -111,3 +111,9 @@ Workbook updated:
 
 Mark unavailable physical-device or assistive-technology environments
 `blocked`.
+# Explicit weight scale
+
+Check the weight specimens from thin through black with a font supplying
+100–900. Confirm omitted weight retains the recipe and inherit follows the
+parent. Check light/dark and a responsive heading variant with explicit bold.
+Do not interpret a missing font face's synthesized weight as a Brick recipe.

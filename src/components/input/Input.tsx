@@ -13,6 +13,7 @@ import {
   type ResponsiveControlSize,
 } from "../_control-size/ControlSize.js";
 import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
 
 export type InputVariant = "outline" | "soft" | "underline";
 export type InputSize = ControlSize;
@@ -57,15 +58,15 @@ type InputSharedProps = Omit<
 
 export type InputProps = InputSharedProps &
   (
-    | {
+    | (RadiusShapeProps<InputShape> & {
         /** Visual container recipe. @default "outline" */
         variant?: "outline" | "soft";
         /** Visual container geometry. @default "rounded" */
-        shape?: InputShape;
-      }
+      })
     | {
         variant: "underline";
         shape?: never;
+        radius?: never;
       }
   );
 
@@ -98,6 +99,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       inputStyle,
       onClear,
       shape = "rounded",
+      radius,
       size = "lg",
       startAdornment,
       style,
@@ -109,7 +111,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) {
     const { localeText } = useLocaleContext();
-    const resolvedShape = variant === "underline" ? undefined : shape;
+    const resolvedShape = variant === "underline" ? undefined : radius === undefined ? shape : "rounded";
 
     return (
       <span
@@ -118,7 +120,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         data-shape={resolvedShape}
         data-slot={dataSlot ?? "input"}
         data-variant={variant}
-        style={style}
+        style={radiusStyle(variant === "underline" ? undefined : radius, "--brick-input-radius", style)}
         {...controlSizeDataAttributes(size)}
       >
         {startAdornment !== undefined ? (

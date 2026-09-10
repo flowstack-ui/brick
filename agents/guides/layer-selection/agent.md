@@ -14,6 +14,24 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 
 ## Selection map
 
+- **same-document section navigation and reading position:** use TableOfContents. Use explicit target IDs and authored labels. Keep sticky layout and responsive disclosure outside the component; do not add a consumer scroll observer.
+- **locally generated scannable sharing graphic:** use QrCode. Keep a normal link alternative, preserve the quiet zone and scan-safe paint, and handle export errors. Camera scanning and session policy remain application concerns.
+- **browser-owned option picker:** use NativeSelect. Compose its native control and optional indicator with option/optgroup children. Select owns custom overlays; no custom popup is added here.
+- **inline preview-to-edit transaction:** use Editable. Choose Input or Textarea when entry stays visible. Use explicit controls where needed and keep persistence outside the component.
+- **editable authored string collection:** use TagsInput. Chip is the passive/actionable display owner, not a second collection engine. Choose MultiSelect for predefined values; use the public Combobox bridge for suggestions.
+- **continuous decorative partner or media strip:** use Marquee. Explicit passive replicas preserve one accessible original. Include persistent pause controls; use Carousel for discrete slide navigation.
+- **compact value with optional independent actions:** use Chip. Tag-like capabilities belong to Chip, not a duplicate Tag export. Use compact density for small passive tokens; ActionTrigger and RemoveTrigger are sibling controls. Badge remains a passive contextual label.
+- **labeled read-only metric:** use Stat. Use native metric anatomy and compose FormatNumber/FormatByte for locale-aware values. Card owns paint; arrow direction does not dictate semantic tone.
+- **static chronological events:** use Timeline. Use logical Content sides and decorative Connector geometry. Steps owns interactive progress; Feed owns dynamic activity semantics.
+- **persistent inline feedback:** use Alert. The status prop chooses the default glyph and palette, not announcement urgency. Compose CloseButton with application state; choose Toast for transient notifications and AlertDialog for blocking decisions.
+- **empty collection or workspace:** use EmptyState. Applications own content, filtering and recovery actions. Choose Title's semantic level independently; compose illustrations outside the fixed indicator slot.
+- **compact visual loading indicator:** use Spinner. Keep it decorative beside visible status text or existing busy semantics. Retain ProgressCircle for semantic progress and Button loading for busy actions.
+- **movable resizable nonmodal inspector window:** use FloatingPanel. Use Popover for trigger-anchored content, Dialog for blocking tasks, and Splitter for adjacent panes. Applications own saved geometry and workspace policy.
+- **imperative overlay lifecycle and typed results:** use OverlayManager createOverlay. Mount one Viewport below application providers. The authored overlay retains focus, dismissal and presentation; the manager coordinates identity, results, updates and completed exits.
+- **typed date entry, inline date selection or a date popup:** use DateInput, Calendar or DatePicker. DateInput owns segmented entry; Calendar is inline; DatePicker coordinates both with one popup. Supply a deterministic referenceDate and use the date-value utility for typed values.
+- **standard close action:** use CloseButton. Keep Dialog.Close, Drawer.Close or Popover.Close as the dismissal and focus owner.
+- **download generated file data:** use DownloadTrigger. Keep fetching and serialization application-owned; use a native download Link for existing URLs.
+- **adjacent resizable panels:** use Splitter. Compose Frame for definite dimensions and Surface for paint; do not invent empty panels to resize one element.
 - **headings, paragraphs, captions, and eyebrows:** use Heading, Paragraph, Caption, or Eyebrow. Give Heading an explicit semantic level and choose its visual variant independently.
 - **other text with Brick typography:** use Text. Choose the semantic rendered element through its public API and author the intended letter case in content.
 - **stress emphasis inside meaningful copy:** use Em. Keep Em inside the surrounding Text or component content owner and do not use it only for decorative italics.
@@ -47,11 +65,11 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - **related keyboard-navigable pressed commands:** use ToggleGroup. Choose Toggle for one command, RadioGroup or CheckboxGroup for form choices, Switch for immediate settings, and Tabs for switching panels.
 - **exact numeric value with typing and step actions:** use NumberInput. Choose Slider for approximate spatial adjustment, Input for numeric-looking identifiers, Select or RadioGroup for a small fixed set, and Progress for read-only completion.
 - **one predefined form value from a compact collapsed collection:** use Select. Choose RadioGroup for a short visible set, Combobox for editable filtering, MultiSelect for several values, DropdownMenu for commands, and Link for navigation.
-- **several predefined form values from a compact collapsed collection:** use MultiSelect. Choose CheckboxGroup for a short visible set, Select for one value, and Combobox only when its single-value editable model fits; record a Brick gap for unsupported tag creation or other specialized multi-value behavior.
+- **several predefined form values from a compact collapsed collection:** use MultiSelect. Choose CheckboxGroup for a short visible set, Select for one value, and TagsInput for authored string creation; Combobox owns one editable committed option.
 - **editable filtering and one committed option value:** use Combobox. Choose Input when any text is valid without options, Select for a compact noneditable list, RadioGroup for a short visible set, MultiSelect for several predefined values, and DropdownMenu for commands.
 - **persistently visible composite option collection:** use record a Brick gap before application-owned implementation. Brick has no public owner for this job. Do not import Atom directly; first reconsider RadioGroup or CheckboxGroup for visible form choices, Select or MultiSelect for collapsed choices, and Combobox for editable filtering.
-- **short one-time verification, recovery, or pairing code:** use OTPField. Choose PasswordToggleField for a reusable secret, NumberInput for a quantity, and Input for an ordinary identifier or variable-length value.
-- **password entry with an allowed reveal action:** use PasswordToggleField. Choose Input with type=password when reveal is forbidden or unwanted and OTPField for a one-time code.
+- **short one-time verification, recovery, or pairing code:** use PinInput. Choose PasswordToggleField for a reusable secret, NumberInput for a quantity, and Input for an ordinary identifier or variable-length value.
+- **password entry with an allowed reveal action:** use PasswordToggleField. Choose Input with type=password when reveal is forbidden or unwanted and PinInput for a one-time code.
 - **local file picking, optional drop, review, and removal before application processing:** use FileUpload. Choose Input for a textual path or URL, Progress for transfer progress, Toast for a transient result, and Image for a rendered asset; keep server validation and upload transport in the application.
 - **short non-blocking application outcome or process update:** use Toast. Choose Field or Form feedback for validation, Progress for numeric completion, AlertDialog for a required response, and persistent application content for essential or durable information.
 - **touch-enhanced quick actions for a list-like row with an obvious click alternative:** use SwipeableItem. Choose DropdownMenu for a larger command set, Button or IconButton for continuously visible actions, and Link when the row navigates.
@@ -97,6 +115,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 
 ## Related guidance
 
+- `table-of-contents`
 - `interface-composition`
 - `app-bar`
 - `container`
@@ -139,7 +158,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - `select`
 - `multi-select`
 - `combobox`
-- `otp-field`
+- `pin-input`
 - `password-toggle-field`
 - `file-upload`
 - `toast`
@@ -154,3 +173,6 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - `visually-hidden`
 - `slider`
 - `rating`
+- `alert`
+- `empty-state`
+- `spinner`

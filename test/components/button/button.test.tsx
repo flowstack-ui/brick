@@ -11,6 +11,12 @@ import {
 } from "../../../src/button.js";
 
 describe("Button", () => {
+  it("owns focus placement on the composed host without leaking the prop", () => {
+    render(<Button asChild focusRing="inside"><a href="/docs">Docs</a></Button>);
+    const host = screen.getByRole("link", { name: "Docs" });
+    expect(host).toHaveAttribute("data-focus-ring", "inside");
+    expect(host).not.toHaveAttribute("focusRing");
+  });
   it("renders the adopted defaults without leaking visual props", () => {
     render(<Button>Save changes</Button>);
 

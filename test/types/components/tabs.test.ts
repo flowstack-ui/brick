@@ -12,6 +12,9 @@ const triggerRadii: TabsTriggerRadius[] = ["default", "none"];
 const props: TabsRootProps = { defaultValue: "one", size: "md", variant: "line", fullWidth: true };
 createElement(Tabs.Root, { ...props, ref }, createElement(Tabs.List, { ariaLabel: "Sections" }, createElement(Tabs.Trigger, { value: "one" }, "One")), createElement(Tabs.Content, { value: "one" }, "Panel"));
 createElement(TabsRoot, props);
+createElement(TabsRoot, { tone: "neutral" });
+// @ts-expect-error closed visual tone
+createElement(TabsRoot, { tone: "warning" });
 createElement(RootTabs.Root, props);
 createElement(Tabs.Content, { inset: "none", value: "one" }, "Panel");
 createElement(Tabs.Root, { layout: { initial: "stacked", lg: "side" }, orientation: "vertical" });
@@ -26,8 +29,9 @@ createElement(Tabs.Content, { inset: "xl", value: "one" });
 createElement(Tabs.Root, { layout: { lg: "side" } });
 // @ts-expect-error closed list column count
 createElement(Tabs.List, { columns: 5 });
-// @ts-expect-error closed list radius
 createElement(Tabs.List, { radius: "full" });
+// @ts-expect-error closed list radius
+createElement(Tabs.List, { radius: "8px" });
 // @ts-expect-error closed trigger radius
 createElement(Tabs.List, { triggerRadius: "full" });
 void sizes; void variants; void insets; void layouts; void listColumns; void listRadii; void triggerRadii;

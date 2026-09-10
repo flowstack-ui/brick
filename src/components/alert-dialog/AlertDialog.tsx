@@ -12,6 +12,8 @@ import {
   type AlertDialogTriggerProps as AtomAlertDialogTriggerProps,
 } from "@flowstack-ui/atom/alert-dialog";
 
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+
 export type AlertDialogSize = "sm" | "md";
 export type AlertDialogFooterJustify = "start" | "center" | "end" | "between";
 export type AlertDialogRootProps = AtomAlertDialogRootProps;
@@ -19,6 +21,7 @@ export type AlertDialogTriggerProps = AtomAlertDialogTriggerProps;
 export type AlertDialogPortalProps = AtomAlertDialogPortalProps;
 export type AlertDialogOverlayProps = Omit<AtomAlertDialogOverlayProps, "disabled">;
 export interface AlertDialogContentProps extends AtomAlertDialogContentProps {
+  radius?: Radius;
   size?: AlertDialogSize;
 }
 export type AlertDialogHeaderProps = HTMLAttributes<HTMLDivElement> & {
@@ -82,13 +85,14 @@ export const AlertDialogContent = forwardRef<
   HTMLDivElement,
   AlertDialogContentProps
 >(function AlertDialogContent(
-  { className, size = "md", "data-slot": dataSlot, ...props },
+  { className, size = "md", radius, style, "data-slot": dataSlot, ...props },
   ref,
 ) {
   return (
     <AtomAlertDialog.Content
       {...props}
       className={mergeClassName("brick-alert-dialog-content", className)}
+      style={radiusStyle(radius, "--brick-alert-dialog-radius", style)}
       data-size={size}
       data-slot={slotOrDefault(dataSlot, "alert-dialog-content")}
       ref={ref}

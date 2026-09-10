@@ -4,6 +4,8 @@ Prose follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Use canonical focus-width tokens while preserving existing focus ownership and compact placement.
+
 ### Added
 
 - No unreleased changes.

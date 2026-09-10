@@ -1,5 +1,6 @@
 # Tabs
 
+
 Tabs switches between related peer panels while preserving complete keyboard,
 selection, and panel relationships through Atom.
 
@@ -58,12 +59,19 @@ role="tab"`, Content to `div role="tabpanel"`, and Indicator to a decorative
 Public exports are `Tabs`, `TabsRoot`, `TabsList`, `TabsTrigger`, `TabsContent`,
 `TabsIndicator`, `TabsRootProps`, `TabsListProps`, `TabsTriggerProps`,
 `TabsContentProps`, `TabsIndicatorProps`, `TabsContentInset`, `TabsLayout`,
-`TabsListColumns`, `TabsListRadius`, `TabsSize`, and `TabsVariant`.
+`TabsListColumns`, `TabsListRadius`, `TabsSize`, `TabsTone`, and `TabsVariant`.
+
+Root accepts `tone="accent|neutral"` (default `accent`). Neutral uses primary
+selected text, a neutral subtle surface for soft tabs, and a primary indicator
+for line tabs. Soft selection is flat; solid retains its elevated treatment.
+Tone does not change sizes, focus placement or List padding. The rendered
+Root exposes `data-tone`, not a native `tone` attribute.
 
 | Prop | Values | Default |
 | --- | --- | --- |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `variant` | `line`, `solid`, `soft`, `enclosed` | `line` |
+| `tone` | `accent`, `neutral` | `accent` |
 | `fullWidth` | `boolean` | `false` |
 | `layout` | `auto`, `stacked`, `side`, or responsive object | `auto` |
 
@@ -71,7 +79,8 @@ List accepts `columns={1|2|3|4}` or a responsive object. Omission preserves
 the ordinary one-axis list. Explicit columns create equal visual tracks while
 keeping Atom's orientation, DOM order, arrow keys, selection, and ARIA model.
 
-List accepts `radius="default|none"`. `default` preserves the variant recipe;
+List accepts shared token-only [Radius](../../guides/radius.md) choices and the
+legacy `default` spelling. Omission or `default` preserves the variant recipe;
 `none` removes List and Trigger corners for a solid or soft selector nested
 inside a clipping parent that owns the outer corners.
 
@@ -86,6 +95,15 @@ nested Surface. The selected value is exposed as `data-inset`.
 List, Trigger, Content, and Indicator extend their exact Atom props. Atom also
 supplies `orientation`, `activationMode`, `loop`, controlled/uncontrolled
 value, `keepMounted`, and `focusable`.
+
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
@@ -110,9 +128,14 @@ include `--brick-tabs-foreground`, `--brick-tabs-selected-foreground`,
 `--brick-tabs-focus-ring`, `--brick-tabs-gap`, `--brick-tabs-trigger-gap`,
 `--brick-tabs-trigger-height`, `--brick-tabs-trigger-padding`,
 `--brick-tabs-panel-padding`, `--brick-tabs-list-padding`, and
-`--brick-tabs-radius`. Solid and soft recipes reserve at least the complete
-focus-ring reach in List padding so a clipping parent cannot crop edge
-Triggers.
+`--brick-tabs-radius`. Focus is drawn inside Triggers and Content. Soft List
+has zero default inset; solid retains space-1 design padding. The focus-color
+extension defaults to the shared `--brick-color-focus-ring`, independently of
+the Trigger text tone. Forced colors uses Highlight. The Theme contract checks
+the focus color against neutral surfaces and the selected accent-soft fill.
+Default Trigger corners subtract the actual List padding from its radius.
+Soft therefore keeps the full List radius on every Trigger; solid accounts for
+its inset. First, middle and last Triggers use the same corner treatment.
 
 ## Customization
 
@@ -151,12 +174,16 @@ place non-tab controls inside the tablist for visual convenience.
 
 ## Accessibility
 
+### Focus presentation
+
+Focus paints inside Triggers and Content. Soft List has zero protective inset; solid keeps design padding. Scrolling and selection remain unchanged.
+See [Focus presentation](../../guides/focus-presentation.md).
+
 Give every List a useful label, pair each Trigger value with one Content value,
 and choose an initial value. Automatic activation is the default; choose manual
 when activating a panel is costly. Disabled tabs are skipped. Forced colors and
-reduced motion retain selection and focus. Keep the shipped List padding when
-solid or soft Tabs sit inside a clipped Card or Surface; it is part of the
-focus-visible geometry rather than decorative spacing.
+reduced motion retain selection and focus. Inside focus paint does not require
+protective List padding at clipping edges. Keep intentional solid surface spacing.
 
 ## Composition, native props, and refs
 

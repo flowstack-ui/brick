@@ -19,6 +19,7 @@ Present one compact finished choice from a predefined list while Atom owns selec
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Select only for one predefined value and keep controlled value and open state aligned with their matching callbacks.
 - **MUST:** Give Trigger a visible Field label or equivalent accessible name; placeholder and selected value are not the control name, and Trigger must retain combobox, expanded, controls, active-descendant, required, read-only, invalid, and disabled relationships.
 - **MUST:** Give every Item a stable unique value and ItemText or label, keep interactive descendants out, and preserve that text for closed display, option naming, typeahead, and the hidden native select.

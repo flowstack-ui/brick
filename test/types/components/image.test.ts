@@ -23,7 +23,7 @@ createElement(Image.Root, { fit: "crop" });
 // @ts-expect-error Position values are closed.
 createElement(Image.Root, { position: "left" });
 // @ts-expect-error Radius values are closed.
-createElement(Image.Root, { radius: "2xl" });
+createElement(Image.Root, { radius: "invalid" });
 // @ts-expect-error src belongs to Root, not Content.
 createElement(Image.Content, { alt: "Workspace", src: "/workspace.jpg" });
 

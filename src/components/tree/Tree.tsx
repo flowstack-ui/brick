@@ -1,3 +1,4 @@
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import {
   forwardRef,
   type ComponentPropsWithoutRef,
@@ -15,6 +16,7 @@ export type TreeSize = "sm" | "md";
 export type TreeBorderTone = "subtle" | "default" | "strong";
 
 export interface TreeRootProps extends Omit<AtomTreeRootProps, "orientation"> {
+  radius?: Radius;
   variant?: TreeVariant;
   size?: TreeSize;
   showGuide?: boolean;
@@ -45,7 +47,7 @@ export const TreeRoot = forwardRef<HTMLDivElement, TreeRootProps>(function TreeR
     size = "md",
     showGuide = false,
     borderTone = "default",
-    className,
+    className, radius, style,
     "data-slot": dataSlot,
     ...props
   },
@@ -54,7 +56,7 @@ export const TreeRoot = forwardRef<HTMLDivElement, TreeRootProps>(function TreeR
   return (
     <AtomTree.Root
       {...props}
-      className={mergeClassName("brick-tree", className)}
+      className={mergeClassName("brick-tree", className)} style={radiusStyle(radius, "--brick-tree-radius", style)}
       data-border-tone={borderTone}
       data-guide={showGuide ? "" : undefined}
       data-size={size}

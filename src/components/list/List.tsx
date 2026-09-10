@@ -1,3 +1,4 @@
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import { forwardRef, type HTMLAttributes } from "react";
 import {
   List as AtomList,
@@ -13,6 +14,7 @@ export type ListInset = "default" | "none";
 export type ListMarker = "auto" | "disc" | "circle" | "square" | "decimal" | "lower-alpha" | "upper-alpha" | "lower-roman" | "upper-roman" | "none";
 
 export interface ListRootProps extends AtomListRootProps {
+  radius?: Radius;
   variant?: ListVariant;
   size?: ListSize;
   density?: ListDensity;
@@ -38,10 +40,10 @@ function slotOrDefault(slot: string | undefined, fallback: string) {
 }
 
 const ListRoot = forwardRef<HTMLUListElement | HTMLOListElement, ListRootProps>(function ListRoot(
-  { variant = "plain", size = "md", density = "comfortable", align = "start", inset = "default", marker = "auto", className, role, "data-slot": dataSlot, ...props },
+  { variant = "plain", size = "md", density = "comfortable", align = "start", inset = "default", marker = "auto", className, radius, style, role, "data-slot": dataSlot, ...props },
   ref,
 ) {
-  return <AtomList.Root {...props} className={mergeClassName("brick-list", className)} data-align={align} data-density={density} data-inset={inset} data-marker={marker} data-size={size} data-slot={slotOrDefault(dataSlot, "list")} data-variant={variant} ref={ref} role={role ?? (marker === "none" ? "list" : undefined)} />;
+  return <AtomList.Root {...props} className={mergeClassName("brick-list", className)} style={radiusStyle(radius, "--brick-list-radius", style)} data-align={align} data-density={density} data-inset={inset} data-marker={marker} data-size={size} data-slot={slotOrDefault(dataSlot, "list")} data-variant={variant} ref={ref} role={role ?? (marker === "none" ? "list" : undefined)} />;
 });
 
 const ListItem = forwardRef<HTMLLIElement, ListItemProps>(function ListItem(

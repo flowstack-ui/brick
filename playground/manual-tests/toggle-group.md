@@ -1,5 +1,12 @@
 # Toggle Group manual-test protocol
 
+Unreleased appearance check: default Items are neutral ghost. Verify the Text
+formatting example with multiple selections in light/dark; hover and held-down
+paint must match standalone Toggle. Soft has a uniform border, no bottom shadow.
+Disabled Items must not gain enabled paint on hover; forced colors preserve
+selected and focused distinction. Actual device and assistive-technology checks
+still require a recorded human run below.
+
 | Run information | Value |
 | --- | --- |
 | Component | Toggle Group |

@@ -17,11 +17,37 @@ the repository `AGENTS.md`, exact-version Brick and Atom Agent Knowledge, and
 
 ## Page rules
 
+- Documentation Props sections use shared PropsTable and owner-local typed rows.
+  Read shared/PropsTable.md under playground/src for its source/default,
+  composition and narrow-screen rules. Do not list reference-library props that
+  Brick does not expose or expand the table with every native HTML attribute.
+
+- Documentation-style pages use shared DocsSection, ExamplePreview and
+  ExampleSource: one linked title, secondary Paragraph description and one
+  Preview/Code pair per feature, with related values compared together. Use
+  Heading for section hierarchy. Never append exhaustive qualification panels
+  to a migrated docs page. Preserve their stable scenario IDs and separate
+  qualification access for browser/manual evidence. Do not migrate other pages
+  unless requested. This overrides legacy numbered-specimen presentation for
+  the explicitly migrated documentation owners only.
+
+- Omit redundant props after checking both the component default and its parent
+  layout. Frame defaults to auto inline size, not 100%; in normal block flow or
+  a stretching column layout, use only `maxInlineSize` when that already gives
+  the intended bounded width. Keep explicit `inlineSize="100%"` when the actual
+  composition requires it (for example, a non-stretching flex parent). Do not
+  add it mechanically or ban it globally. Verify narrow and wide layouts after
+  removing sizing props.
 - Give every scenario a stable component-prefixed ID, number, title, and plain
   description. Keep its content deterministic.
 - Use `SpecimenLabel` for controlled comparison cells. Put it at the logical
   top-left and place the example after it through `VStack` or another explicit
   Brick layout owner.
+- In documentation comparisons, put a value inside the specimen when its
+  content naturally serves as the label (for example, plain or radius control
+  in a centered AspectRatio). Do not repeat an external label and identical
+  placeholder content in every item. Keep external labels when necessary to
+  understand clipping, content layout or the specimen's own semantics.
 - Use `EvidenceGroup` when one scenario demonstrates independent dimensions
   such as sizes and variants. Give each group a heading and description, then
   place one value per `Specimen` in a responsive row.

@@ -1,0 +1,6 @@
+@layer brick.components {
+  .brick-date-picker__input { flex: 1 1 auto; min-inline-size: 0; }
+  .brick-date-picker__input [data-slot="date-input-control"] { display: flex; flex-wrap: wrap; align-items: center; gap: var(--brick-space-3); }
+  .brick-date-picker__content { --brick-popover-max-inline-size-md: 100%; }
+  .brick-date-picker__content > [data-slot="popover-viewport"] { overflow: auto; }
+}

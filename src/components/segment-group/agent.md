@@ -19,6 +19,7 @@ Present one mutually exclusive immediate mode in a compact segmented surface wit
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use SegmentGroup only for one mutually exclusive value and preserve Atom Radio Group semantics and keyboard behavior.
 - **MUST:** Render one decorative Indicator for the canonical moving-selection recipe; selection and naming must remain on Items.
 - **MUST:** Do not use SegmentGroup for paired content panels or route navigation; use Tabs or navigation destinations.

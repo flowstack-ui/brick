@@ -265,7 +265,11 @@ export async function createAgentCoverage() {
   const subpathExports = new Map();
   for (const subpath of componentSubpaths) {
     const id = subpath.slice(2);
-    const sourcePath = join(packageRoot, "src", "components", id, "index.ts");
+    const utility = explicit.get(subpath)?.classification === "utility";
+    if (utility && (!explicit.get(subpath).documentation || !(await exists(join(packageRoot, explicit.get(subpath).documentation))))) {
+      failures.push(failure("missing-utility-documentation", `${subpath} requires an existing public utility guide.`));
+    }
+    const sourcePath = utility ? join(packageRoot, "src", `${id}.ts`) : join(packageRoot, "src", "components", id, "index.ts");
     if (!(await exists(sourcePath))) {
       failures.push(failure("missing-subpath-source", `${subpath} has no source component barrel.`, [relative(packageRoot, sourcePath)]));
       subpathExports.set(subpath, []);
@@ -313,7 +317,7 @@ export async function createAgentCoverage() {
 
   for (const subpath of componentSubpaths) {
     const id = subpath.slice(2);
-    if (!documentedOwners.includes(id)) failures.push(failure("unclassified-component-subpath", `${subpath} does not resolve to a documented component owner.`));
+    if (!documentedOwners.includes(id) && explicit.get(subpath)?.classification !== "utility") failures.push(failure("unclassified-component-subpath", `${subpath} does not resolve to a documented component owner.`));
   }
 
   const knowledgeFiles = await walk(join(packageRoot, "src", "components"), (path) => basename(path) === "agent.json");
@@ -395,6 +399,14 @@ export async function createAgentCoverage() {
   }
   for (const subpath of componentSubpaths) {
     const ownerId = subpath.slice(2);
+    if (explicit.get(subpath)?.classification === "utility") {
+      const documentation = explicit.get(subpath).documentation;
+      surfaces.push({ surface: subpath, classification: "utility", documentation, status: "covered" });
+      for (const symbol of subpathExports.get(subpath) ?? []) {
+        surfaces.push({ surface: `${subpath}#${symbol.name}`, classification: "utility", documentation, value: !symbol.typeOnly, status: "covered" });
+      }
+      continue;
+    }
     surfaces.push({ surface: subpath, classification: "component", ownerId, status: documentedOwners.includes(ownerId) ? "covered" : "unclassified" });
     for (const symbol of subpathExports.get(subpath) ?? []) {
       const surface = `${subpath}#${symbol.name}`;
@@ -411,6 +423,11 @@ export async function createAgentCoverage() {
   }
   for (const symbol of rootExports) {
     const subpaths = subpathSymbolOwners.get(symbol.name) ?? [];
+    const utility = subpaths.map(subpath => explicit.get(subpath)).find(record => record?.classification === "utility");
+    if (utility && subpaths.every(subpath => explicit.get(subpath)?.classification === "utility")) {
+      surfaces.push({ surface: `.#${symbol.name}`, classification: "utility", documentation: utility.documentation, value: !symbol.typeOnly, status: "covered" });
+      continue;
+    }
     const matchingRecord = [...explicit.values()].find((record) => subpaths.some((subpath) => record.surface === `${subpath}#${symbol.name}`));
     const explicitOwner = matchingRecord?.ownerId;
     const sourceOwner = symbol.source?.match(/^\.\/components\/([^/]+)\//u)?.[1];

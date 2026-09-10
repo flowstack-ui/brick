@@ -48,3 +48,9 @@ Text follows the package version of `@flowstack-ui/brick`.
 - Native attributes, an `HTMLElement` ref, stable class/slot/recipe metadata,
   public Text variables, expanded semantic type tokens, appearance, forced
   colors, RTL, and narrow-layout support.
+# Unreleased: complete explicit weight scale
+
+Text and its named exports accept thin/100, extralight/200, light/300,
+bold/700, extrabold/800 and black/900 in addition to existing weights.
+Existing recipe defaults and regular/400 naming remain unchanged.
+Applications supply font faces supporting the requested weights.

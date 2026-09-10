@@ -6,7 +6,9 @@
   "layer": "brick",
   "kind": "component",
   "purpose": "Style related in-page panel switching while Atom owns tab semantics, selection, roving focus, and indicator geometry.",
-  "useWhen": ["A small set of related panels shares one page and one panel is normally active."],
+  "useWhen": [
+    "A small set of related panels shares one page and one panel is normally active."
+  ],
   "avoidWhen": [
     {
       "condition": "Choices navigate to routes or multiple sections should remain open.",
@@ -14,6 +16,7 @@
     }
   ],
   "composition": [
+    "Use Root tone=neutral for neutral selected paint; accent remains the default. Soft selection is flat, while solid retains elevation. Focus is inside; soft List has no protective inset and solid retains design padding.",
     "Compose Trigger and optional Indicator inside List with matching Content values inside Root; lay out panel content with Brick components.",
     "Keep the default panel inset for ordinary copy; use Content inset=none for edge-to-edge media or nested surfaces rather than overriding component CSS.",
     "When a page-header control row visually continues the tab divider, keep unrelated controls outside List and let the surrounding Brick layout own the continuing decorative Divider.",
@@ -21,9 +24,16 @@
     "When vertical tab semantics stay correct but mobile needs full-width content, use responsive Root layout stacked to side; do not change semantic orientation with CSS.",
     "When the same vertical selector needs a compact mobile grid, use responsive List columns (for example, initial 2 and lg 1) rather than application selectors; keyboard orientation remains vertical.",
     "When a solid or soft List is nested inside a clipping parent that owns the outer corners, use List radius=none rather than overriding Tabs selectors; add triggerRadius=default only when individual Trigger surfaces should remain rounded.",
-    "Keep the shipped solid and soft List inset at or above the complete focus-ring reach; do not reduce it inside a clipping Card or Surface."
+    "Inside focus paint does not need protective List padding; preserve ordinary solid surface spacing and scrolling.",
+    "Default Trigger corners account for actual List padding; first, middle and last Triggers have identical individual corner geometry.",
+    "Focus uses the shared semantic focus color, not the selected text tone; keep inside placement and the forced-colors Highlight override."
   ],
   "rules": [
+    {
+      "id": "tabs-radius",
+      "level": "must",
+      "statement": "Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."
+    },
     {
       "id": "tabs-related-panels",
       "level": "must",
@@ -53,6 +63,11 @@
       "id": "tabs-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus tabs.css."
+    },
+    {
+      "id": "tabs-focus-presentation",
+      "level": "must",
+      "statement": "Focus paints inside Triggers and Content. Soft List has zero protective inset; solid keeps design padding. Scrolling and selection remain unchanged."
     }
   ],
   "commonMistakes": [
@@ -65,5 +80,10 @@
     "Check automatic/manual activation, arrows, Home/End, Enter/Space, disabled, controlled, keep-mounted, overflow, complete focus rings at every List edge and inside clipping parents, themes, zoom, and RTL.",
     "Confirm CSS is loaded."
   ],
-  "related": ["accordion", "navigation-menu", "bottom-navigation", "scroll-area"]
+  "related": [
+    "accordion",
+    "navigation-menu",
+    "bottom-navigation",
+    "scroll-area"
+  ]
 }

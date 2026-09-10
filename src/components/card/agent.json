@@ -21,7 +21,7 @@
     "Use variant=\"elevated\" for a borderless raised panel with layered medium elevation; do not reproduce that treatment with consumer shadow CSS.",
     "Card.Action reserves a trailing Header column across the title and description rows; when compact metadata belongs beside only the title, compose that title row with HStack and omit Card.Action so the description retains the full measure."
   ],
-  "rules": [
+  "rules": [{"id":"card-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {
       "id": "card-not-clickable-div",
       "level": "must",

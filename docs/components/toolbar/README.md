@@ -49,8 +49,8 @@ Toolbar keyboard behavior.
 
 | ToggleGroup prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
-| `tone` | `accent`, `neutral` | `accent` |
+| `variant` | `solid`, `soft`, `outline`, `ghost` | `ghost` |
+| `tone` | `accent`, `neutral` | `neutral` |
 
 Root inherits Atom `orientation`, `dir`, `loop`, and `ariaLabel`. The other
 five parts preserve their Atom props, including controlled/uncontrolled single
@@ -61,19 +61,24 @@ or multiple toggle values. Named exports are `Toolbar`, `ToolbarRoot`,
 `ToolbarToggleItemProps`, `ToolbarToggleTone`, `ToolbarToggleVariant`,
 `ToolbarSize`, and `ToolbarVariant`.
 
-Neutral solid ToggleItems use a layered selected surface: raised and white-ish
-over a light Toolbar, and a stronger raised neutral over a dark Toolbar. Hover
-and pressed stay between the selected surface and the Toolbar surface instead
-of collapsing into the container. This Toolbar recipe intentionally
-differs from a neutral solid Button while retaining the same non-accent intent.
+ToggleItems share Toggle and ToggleGroup paint: neutral ghost defaults, flat soft selection, and consistent hover, active, disabled and forced-color states. Toolbar retains its own geometry, contained focus offset, and Atom toolbar behavior. Its Root surface variant remains independent of the ToggleGroup variant.
+
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
 Variants change the root surface; sizes coordinate target and typography geometry. Hover, focus-visible, disabled, and pressed states do not change layout. Focus-visible uses an inward ring so first, middle, and last controls remain fully visible inside the scrolling root.
 
-Disabled commands and ToggleItems remove selected/outlined emphasis, use the
-disabled foreground, and fade as a whole without acquiring hover or pressed
-paint.
+Disabled commands use a faded disabled foreground. Disabled ToggleItems share
+Toggle's quiet disabled surface and border, and neither acquires hover or
+pressed paint.
 
 ## Tokens and CSS hooks
 

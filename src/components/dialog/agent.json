@@ -15,7 +15,7 @@
     "Compose Dialog.Root with Dialog.Trigger and Dialog.Portal; inside Portal keep Dialog.Overlay and Dialog.Content as siblings. Inside Content, arrange Dialog.Header with Dialog.Title and an optional Dialog.Description, put scrollable task content in Dialog.Body, place inline close actions in Dialog.Footer, and use Dialog.Close placement=\"corner\" as a direct Content child only for an authored top-end dismiss control.",
     "Use Dialog.Branch only for an unavoidable consumer-owned third-party portal that cannot mount inside Content. When a local Appearance scope owns the trigger, portal into that scope or apply the same Appearance to the portalled visual root."
   ],
-  "rules": [
+  "rules": [{"id":"dialog-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {"id": "dialog-modal-task", "level": "must", "statement": "Use Dialog for an ordinary blocking task or information surface; use AlertDialog for an urgent consequential decision and Popover for compact anchored work."},
     {"id": "dialog-overlay-content-siblings", "level": "must", "statement": "Render Overlay and Content as siblings inside Portal; never place Content beneath the aria-hidden Overlay."},
     {"id": "dialog-accessible-name", "level": "must", "statement": "Give Content an accessible name with one visible Title or an explicit native aria-label or aria-labelledby; add Description only when it supplies useful context."},

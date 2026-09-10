@@ -4,6 +4,8 @@ List follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ### Fixed
 
 - Kept native markers beside the first content line in bordered simple and

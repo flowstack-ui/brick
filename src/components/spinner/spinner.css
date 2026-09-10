@@ -1,0 +1,30 @@
+@layer brick.components {
+  .brick-spinner {
+    display: inline-block;
+    flex-shrink: 0;
+    vertical-align: middle;
+    --brick-spinner-color: currentColor;
+  }
+  .brick-spinner[data-size="inherit"] { --brick-spinner-size: 1em; }
+  .brick-spinner[data-size="xs"] { --brick-spinner-size: 0.75rem; }
+  .brick-spinner[data-size="sm"] { --brick-spinner-size: 1rem; }
+  .brick-spinner[data-size="md"] { --brick-spinner-size: 1.25rem; }
+  .brick-spinner[data-size="lg"] { --brick-spinner-size: 2rem; }
+  .brick-spinner[data-size="xl"] { --brick-spinner-size: 2.5rem; }
+  .brick-spinner[data-thickness="thin"] { --brick-spinner-thickness: 0.0625rem; }
+  .brick-spinner[data-thickness="regular"] { --brick-spinner-thickness: 0.125rem; }
+  .brick-spinner[data-thickness="thick"] { --brick-spinner-thickness: 0.1875rem; }
+  .brick-spinner[data-tone="primary"] { --brick-spinner-color: var(--brick-color-text-primary); }
+  .brick-spinner[data-tone="secondary"] { --brick-spinner-color: var(--brick-color-text-secondary); }
+  .brick-spinner[data-tone="muted"] { --brick-spinner-color: var(--brick-color-text-muted); }
+  .brick-spinner[data-tone="accent"] { --brick-spinner-color: var(--brick-color-accent-text); }
+  .brick-spinner[data-tone="info"] { --brick-spinner-color: var(--brick-color-info-text); }
+  .brick-spinner[data-tone="success"] { --brick-spinner-color: var(--brick-color-success-text); }
+  .brick-spinner[data-tone="warning"] { --brick-spinner-color: var(--brick-color-warning-text); }
+  .brick-spinner[data-tone="danger"] { --brick-spinner-color: var(--brick-color-danger-text); }
+  .brick-spinner[data-emphasis="solid"][data-tone="accent"] { --brick-spinner-color: var(--brick-color-accent-solid); }
+  .brick-spinner[data-emphasis="solid"][data-tone="info"] { --brick-spinner-color: var(--brick-color-info-solid); }
+  .brick-spinner[data-emphasis="solid"][data-tone="success"] { --brick-spinner-color: var(--brick-color-success-solid); }
+  .brick-spinner[data-emphasis="solid"][data-tone="warning"] { --brick-spinner-color: var(--brick-color-warning-solid); }
+  .brick-spinner[data-emphasis="solid"][data-tone="danger"] { --brick-spinner-color: var(--brick-color-danger-solid); }
+}

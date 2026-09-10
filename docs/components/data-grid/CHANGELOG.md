@@ -4,6 +4,8 @@ Data Grid follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 - Added Atom-backed `ColumnGroup` and `Column` parts with native `htmlWidth`
   sizing hints.
 - Added transparent/base surfaces, semantic border tones, independent column

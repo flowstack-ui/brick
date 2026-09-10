@@ -38,11 +38,11 @@ void ChipLabel;
 void ChipRemoveTrigger;
 
 // @ts-expect-error Chip variants are closed.
-const badVariant: ChipVariant = "solid";
-// @ts-expect-error Chip tones are intentionally not status tones.
-const badTone: ChipTone = "danger";
+const badVariant: ChipVariant = "ghost";
+// @ts-expect-error Chip tones use semantic roles, not arbitrary colors.
+const badTone: ChipTone = "purple";
 // @ts-expect-error Chip sizes are closed.
-const badSize: ChipSize = "xl";
+const badSize: ChipSize = "huge";
 // @ts-expect-error Chip shapes are closed.
 const badShape: ChipShape = "circle";
 // @ts-expect-error RemoveTrigger requires a localized accessible name.

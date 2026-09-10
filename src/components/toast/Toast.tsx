@@ -17,6 +17,7 @@ import {
   type ToastSwipeDirection,
 } from "@flowstack-ui/atom/toast";
 import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
+import { Spinner } from "../spinner/Spinner.js";
 
 export type { ToastId, ToastSwipeDirection };
 
@@ -150,7 +151,7 @@ export interface ToastIconProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 function StatusGlyph({ type }: { type: ToastType }) {
-  if (type === "loading") return <span className="brick-toast__spinner" />;
+  if (type === "loading") return <Spinner size="sm" className="brick-toast__spinner" />;
   if (type === "default") return null;
   const paths: Record<Exclude<ToastType, "default" | "loading">, ReactNode> = {
     success: <path d="m5 12 4 4 10-10" />,

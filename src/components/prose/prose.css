@@ -127,8 +127,8 @@
   :where(.brick-prose) :where(a:hover) { text-decoration-thickness: 0.14em; }
   :where(.brick-prose) :where(a:focus-visible) {
     border-radius: var(--brick-radius-subtle);
-    outline: 0.125rem solid var(--brick-color-focus-ring);
-    outline-offset: 0.125rem;
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: var(--brick-border-focus-width);
   }
 
   :where(.brick-prose) :where(blockquote) {

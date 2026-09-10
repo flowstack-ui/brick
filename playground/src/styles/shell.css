@@ -5,60 +5,23 @@
   box-sizing: border-box;
 }
 
-:root {
-  --evidence-floating-layer-z-index: 14;
-}
-
 .evidence-app {
-  --evidence-app-bar-block-size: 3.0625rem;
-  --evidence-scenario-scroll-margin: 22rem;
+  --evidence-app-bar-block-size: calc(
+    var(--brick-app-bar-toolbar-min-block-size-comfortable) + var(--brick-border-width)
+  );
+  --evidence-scenario-scroll-margin: calc(
+    var(--evidence-app-bar-block-size) + var(--brick-space-4)
+  );
 
   min-block-size: 100vh;
   background: var(--brick-color-surface-canvas);
   color: var(--brick-color-text-primary);
 }
 
-/* Portalled component examples belong below the playground's sticky review
-   chrome. Modal surfaces, Toasts, and Skip Links retain their component-owned
-   application layers. */
-:where(
-  .brick-combobox-content,
-  .brick-select-content,
-  .brick-multi-select-content,
-  .brick-dropdown-menu__content,
-  .brick-dropdown-menu__sub-content,
-  .brick-context-menu__content,
-  .brick-context-menu__sub-content,
-  .brick-menubar__content,
-  .brick-menubar__sub-content,
-  .brick-popover:not([aria-modal="true"]),
-  .brick-tooltip,
-  .brick-navigation-menu__viewport
-) {
-  z-index: var(--evidence-floating-layer-z-index);
-}
-
-.evidence-app-bar {
-  z-index: 20;
-}
-
-.evidence-brand {
-  color: inherit;
-  font-size: var(--brick-font-size-sm);
-  font-weight: var(--brick-font-weight-semibold);
-  line-height: 1.2;
-  text-decoration: none;
-}
-
-.evidence-brand:focus-visible,
 .scenario-nav a:focus-visible {
   border-radius: var(--brick-radius-control);
   outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
   outline-offset: var(--brick-border-focus-offset);
-}
-
-.evidence-mobile-menu {
-  display: inline-flex;
 }
 
 .evidence-layout {
@@ -90,45 +53,15 @@
 }
 
 .evidence-review-header {
-  position: sticky;
-  z-index: 15;
-  inset-block-start: var(--evidence-app-bar-block-size);
   padding-block-end: var(--brick-space-2);
-  background: var(--brick-color-surface-canvas);
-  box-shadow: 0 1rem 1.5rem -1.75rem var(--brick-color-shadow);
 }
 
 .evidence-page-header {
   padding-block: var(--brick-space-5);
 }
 
-.evidence-page-heading h1,
-.evidence-page-heading p {
-  margin: 0;
-}
-
-.evidence-page-heading h1 {
-  font-size: clamp(2.25rem, 7vw, 4.75rem);
-  letter-spacing: -0.05em;
-  line-height: 0.96;
-}
-
-.evidence-page-heading > p:last-child {
+.evidence-page-heading > p {
   max-inline-size: 72ch;
-  color: var(--brick-color-text-secondary);
-  line-height: var(--brick-font-line-height-body);
-}
-
-.review-controls-frame {
-  max-inline-size: 100%;
-}
-
-.review-controls {
-  inline-size: max-content;
-}
-
-.review-controls > .brick-toolbar__separator {
-  margin-inline: var(--brick-space-2);
 }
 
 .scenario-nav {
@@ -225,29 +158,4 @@
     );
   }
 
-  .evidence-review-header {
-    position: static;
-    inset-block-start: auto;
-    box-shadow: none;
-  }
-}
-
-@media (max-width: 30rem), (max-height: 30rem) {
-  .evidence-app {
-    --evidence-scenario-scroll-margin: var(--brick-space-4);
-  }
-
-  .evidence-app-bar {
-    position: static;
-    inset-block-start: auto;
-  }
-
-  .evidence-page-heading h1 {
-    font-size: clamp(2rem, 14vw, 3.25rem);
-  }
-
-  .review-controls {
-    position: static;
-    inline-size: 100%;
-  }
 }

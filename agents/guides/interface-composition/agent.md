@@ -6,15 +6,19 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 
 ## Decision order
 
-1. Map the page into landmarks, bounded regions, layout relationships, content, navigation, actions, media, and responsive changes.
-2. Choose the Brick owner for each relationship and read every selected component guide before implementation.
-3. Compose from the outside inward: AppBar or page landmark, Section, Container, Grid or Stack, Surface or Card, then content and controls.
-4. Decide how each child participates in its parent: content-sized, fixed, automatic, proportional, placed, stretched, or deliberately constrained.
-5. Follow the customization order completely: component owner, supported props, semantic theme tokens, component tokens, public parts, and only then a narrow stable-hook escape hatch.
-6. Audit responsive behavior, accessibility, CSS delivery, and native fallbacks before treating the composition as complete.
+1. Keep standalone action focus outside by default; use Button or IconButton focusRing inside at intentional flush clipping boundaries. Do not add protective layout gutters to compensate for a compound component focus defect, remove scrolling, or override focus management in consumer CSS.
+2. Map the page into landmarks, bounded regions, layout relationships, content, navigation, actions, media, and responsive changes.
+3. Choose the Brick owner for each relationship and read every selected component guide before implementation.
+4. Compose from the outside inward: AppBar or page landmark, Section, Container, Grid or Stack, Surface or Card, then content and controls.
+5. Decide how each child participates in its parent: content-sized, fixed, automatic, proportional, placed, stretched, or deliberately constrained.
+6. Follow the customization order completely: component owner, supported props, semantic theme tokens, component tokens, public parts, and only then a narrow stable-hook escape hatch.
+7. Audit responsive behavior, accessibility, CSS delivery, and native fallbacks before treating the composition as complete.
 
 ## Selection map
 
+- **date entry with optional calendar selection:** use DateInput, Calendar and DatePicker. Use DatePicker for a synchronized input and popup instead of wiring separate uncontrolled roots. Keep booking rules and translations in the application. Multiple mode uses ValueText plus HiddenInput, not segmented entry.
+- **shared resizable pane allocation:** use Splitter. Declare stable IDs and adjacent named resize triggers. Keep scrolling and panel paint with their separate owners.
+- **ordered interactive workflow progress:** use Steps. Compose NextTrigger and PrevTrigger with Button using asChild. Use List, Square, Surface, and text for static numbered instructions; do not add workflow semantics just for connected numbered artwork.
 - **page width and gutters:** use Container. Do not reproduce max-width and inline padding on every section.
 - **major page-region rhythm:** use Section. Keep paint in Surface, width and gutters in Container, and local child relationships in Stack or Grid.
 - **row or column relationship:** use HStack, VStack, or responsive Stack. Use fixed-axis conveniences when the axis stays fixed and Stack when the same content changes axis at a Brick breakpoint.
@@ -37,6 +41,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 
 ## Rules
 
+- **MUST:** Choose focused public owners and omit redundant props only after checking component defaults and parent layout. Consider documented asChild composition to avoid unnecessary hosts, verifying refs, semantics and style precedence. Do not assume a universal styling-prop API; propose shared props only from repeated, qualified composition gaps.
 - **MUST:** Assign page structure to Brick components before writing element-level CSS.
 - **MUST:** Use Section's named responsive rhythm for major page regions; use as=div when spacing is needed without thematic section semantics.
 - **MUST:** When Surface paint must cover Section rhythm, compose Surface asChild around Section so one host keeps the responsibilities separate.
@@ -138,3 +143,6 @@ Emit this record for every native/framework fallback or direct stable-hook decla
 - `list`
 - `blockquote`
 - `highlight`
+- `alert`
+- `empty-state`
+- `spinner`

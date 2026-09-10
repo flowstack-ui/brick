@@ -1,5 +1,11 @@
 @layer brick.components {
   .brick-aspect-ratio {
+    --_brick-aspect-ratio-initial: initial;
+    --_brick-aspect-ratio-sm: initial;
+    --_brick-aspect-ratio-md: initial;
+    --_brick-aspect-ratio-lg: initial;
+    --_brick-aspect-ratio-xl: initial;
+    --_brick-aspect-ratio-current: var(--_brick-aspect-ratio-initial);
     --brick-aspect-ratio-background: transparent;
     --brick-aspect-ratio-border-color: transparent;
     --brick-aspect-ratio-border-width: 0rem;
@@ -19,30 +25,42 @@
     background: var(--brick-aspect-ratio-background);
   }
 
+  .brick-aspect-ratio[data-content-layout="fill"] > :not(style) {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .brick-aspect-ratio[data-content-layout="fill"] > :is(img, video) {
+    object-fit: cover;
+  }
+
+  .brick-aspect-ratio[data-content-layout="fill"] > iframe {
+    border: 0;
+  }
+
+  @media (width >= 30rem) {
+    .brick-aspect-ratio { --_brick-aspect-ratio-current: var(--_brick-aspect-ratio-sm); }
+  }
+  @media (width >= 48rem) {
+    .brick-aspect-ratio { --_brick-aspect-ratio-current: var(--_brick-aspect-ratio-md); }
+  }
+  @media (width >= 64rem) {
+    .brick-aspect-ratio { --_brick-aspect-ratio-current: var(--_brick-aspect-ratio-lg); }
+  }
+  @media (width >= 80rem) {
+    .brick-aspect-ratio { --_brick-aspect-ratio-current: var(--_brick-aspect-ratio-xl); }
+  }
+
   .brick-aspect-ratio[data-variant="subtle"] {
     --brick-aspect-ratio-background: var(--brick-color-surface-subtle);
   }
 
   .brick-aspect-ratio[data-variant="outline"] {
-    --brick-aspect-ratio-background: var(--brick-color-surface-base);
     --brick-aspect-ratio-border-color: var(--brick-color-border-subtle);
     --brick-aspect-ratio-border-width: var(--brick-border-width);
-  }
-
-  .brick-aspect-ratio[data-radius="sm"] {
-    --brick-aspect-ratio-radius: var(--brick-radius-subtle);
-  }
-
-  .brick-aspect-ratio[data-radius="md"] {
-    --brick-aspect-ratio-radius: var(--brick-radius-control);
-  }
-
-  .brick-aspect-ratio[data-radius="lg"] {
-    --brick-aspect-ratio-radius: var(--brick-radius-surface);
-  }
-
-  .brick-aspect-ratio[data-radius="full"] {
-    --brick-aspect-ratio-radius: var(--brick-radius-full);
   }
 
   .brick-aspect-ratio[data-overflow="visible"] {
@@ -51,7 +69,6 @@
 
   @media (forced-colors: active) {
     .brick-aspect-ratio[data-variant="outline"] {
-      --brick-aspect-ratio-background: Canvas;
       --brick-aspect-ratio-border-color: CanvasText;
     }
   }

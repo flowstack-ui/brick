@@ -144,7 +144,7 @@ try {
   assert.equal(themeContract.$schema, "flowstack.brick-theme-contract.v1");
   assert.equal(themeContract.contractVersion, 5);
   assert.equal(themeContract.contrast.algorithm, "wcag2-relative-luminance");
-  assert.equal(themeContract.contrast.pairs.length, 92);
+  assert.equal(themeContract.contrast.pairs.length, 123);
   assert.equal(packageJson.exports["./theme-contract.json"], "./dist/theme-contract.json");
   assert.equal(agentManifest.package, packageJson.name);
   assert.equal(agentManifest.packageVersion, packageJson.version);

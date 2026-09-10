@@ -105,6 +105,18 @@ const componentTsx = await Promise.all(
 );
 const workbookEvidence = workbookEvidenceFromArchive();
 const workbookSheetNames = workbookEvidence.sheetNames;
+const capabilityLedger = JSON.parse(await read("playground/recent-component-capabilities.json"));
+for (const owner of capabilityLedger.owners) {
+  const source = await read(owner.page);
+  const declared = [...source.matchAll(/id:\s*"([a-z][a-z-]*\.[^"]+)"/g)].map(match => match[1]);
+  if (JSON.stringify(declared) !== JSON.stringify(owner.scenarios)) {
+    failures.push(`${owner.id} capability inventory is stale; review additions/removals explicitly`);
+  }
+  const assertions = await read(owner.assertion.file);
+  if (!assertions.includes(owner.assertion.name)) failures.push(`${owner.id} capability assertion is missing`);
+  const protocol = await read(owner.manual);
+  if (!protocol.includes("Scenario order:")) failures.push(`${owner.id} capability review protocol is missing`);
+}
 
 for (const entry of registryEntries) {
   const { id, title } = entry;
@@ -243,7 +255,14 @@ for (const entry of registryEntries) {
   if (!overall && filledResults.length > 0) {
     failures.push(`${id} manual steps are filled but Overall result is empty`);
   }
-  const workbookRows = workbookEvidence.rowsBySheet.get(title) ?? [];
+  // Display titles may contain spaces while older canonical sheets use the
+  // public export name (CloseButton, DownloadTrigger). Resolve one identity;
+  // do not create duplicate evidence sheets just to match display typography.
+  const matchingSheets = [...workbookSheetNames].filter(
+    (name) => name.replaceAll(" ", "").toLowerCase() === title.replaceAll(" ", "").toLowerCase(),
+  );
+  if (matchingSheets.length > 1) failures.push(`${id} has ambiguous workbook sheets`);
+  const workbookRows = workbookEvidence.rowsBySheet.get(matchingSheets[0] ?? title) ?? [];
   if (
     !/^pass$/i.test(overall) &&
     workbookRows.some(
@@ -286,7 +305,7 @@ for (const entry of registryEntries) {
       failures.push(`${id} evidence never addresses ${feature}`);
   }
 
-  if (!workbookSheetNames.has(title))
+  if (matchingSheets.length === 0)
     failures.push(`${id} workbook sheet ${title} is missing`);
 }
 

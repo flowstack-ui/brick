@@ -1,4 +1,5 @@
 "use client";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 
 import {
   createContext,
@@ -64,7 +65,7 @@ export type ColorPickerChannelInputProps = AtomChannelInputProps;
 export type ColorPickerNativeInputProps = AtomNativeInputProps;
 export type ColorPickerTriggerProps = AtomTriggerProps;
 export type ColorPickerPositionerProps = AtomPositionerProps;
-export type ColorPickerContentProps = AtomContentProps;
+export type ColorPickerContentProps = AtomContentProps & { radius?: Radius };
 export type ColorPickerValueTextProps = AtomValueTextProps;
 export type ColorPickerValueSwatchProps = Omit<AtomValueSwatchProps, "className"> & {
   className?: string;
@@ -154,8 +155,8 @@ export const ColorPickerPositioner: Forward<HTMLDivElement, ColorPickerPositione
   },
 );
 export const ColorPickerContent: Forward<HTMLDivElement, ColorPickerContentProps> = forwardRef<HTMLDivElement, ColorPickerContentProps>(
-  function ColorPickerContent({ className, ...props }, ref) {
-    return <AtomColorPicker.Content {...props} className={classes("brick-color-picker__content", className)} ref={ref} />;
+  function ColorPickerContent({ className, radius, style, ...props }, ref) {
+    return <AtomColorPicker.Content {...props} style={radiusStyle(radius, "--brick-color-picker-content-radius", style)} className={classes("brick-color-picker__content", className)} ref={ref} />;
   },
 );
 export const ColorPickerValueText: Forward<HTMLSpanElement, ColorPickerValueTextProps> = forwardRef<HTMLSpanElement, ColorPickerValueTextProps>(

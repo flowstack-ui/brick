@@ -1,0 +1,49 @@
+{
+  "schema": "flowstack.agent-component.v1",
+  "id": "calendar",
+  "name": "Calendar",
+  "package": "@flowstack-ui/brick",
+  "layer": "brick",
+  "kind": "component",
+  "purpose": "Inline single, range, or multiple date selection.",
+  "useWhen": [
+    "Inline single, range, or multiple date selection."
+  ],
+  "avoidWhen": [
+    {
+      "condition": "Scheduling, recurrence or remote business availability is required.",
+      "useInstead": "Application composition"
+    }
+  ],
+  "composition": [
+    "Calendar.Root size accepts 2xs, xs, sm, md, lg, xl or 2xl. Explicit size wins over the compatibility density prop: compact defaults to sm, comfortable to md. Cells remain square and shrink within narrow hosts; size does not change selection behavior.",
+    "Use Calendar.Root with a stable referenceDate and an accessible name. Root (div), Header (div), PrevTrigger/NextTrigger/ViewTrigger (buttons), Grid (table), MonthSelect/YearSelect (select), Context (render function). Default children provide navigation and all requested month grids. Day buttons remain native buttons within the grid.",
+    "Use date-value helpers without converting date-only values to UTC midnight."
+  ],
+  "rules": [
+    {
+      "id": "calendar-ownership",
+      "level": "must",
+      "statement": "Keep date behavior in Atom and presentation in Brick. Do not duplicate popup engines or replace semantic segments with text inputs."
+    },
+    {
+      "id": "calendar-styles",
+      "level": "must",
+      "statement": "Load styles.css or core.css plus styles/calendar.css. Use documented visual props and locale overrides."
+    }
+  ],
+  "commonMistakes": [
+    {
+      "mistake": "Inventing current dates during hydration or submitting localized strings.",
+      "correction": "Supply stable referenceDate and typed values; preserve canonical form mirrors."
+    }
+  ],
+  "validation": [
+    "Verify keyboard, locale/RTL, constraints, reset, narrow width, appearance and forced colors."
+  ],
+  "related": [
+    "locale-provider",
+    "field",
+    "popover"
+  ]
+}

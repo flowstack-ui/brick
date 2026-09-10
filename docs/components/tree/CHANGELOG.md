@@ -4,6 +4,10 @@ Tree follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Use canonical focus-width tokens while preserving existing focus ownership and compact placement.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 - Added semantic border tones shared by the outline boundary and optional
   hierarchy guides.
 

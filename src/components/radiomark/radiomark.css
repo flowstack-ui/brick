@@ -14,7 +14,7 @@
     place-items: center;
     border: var(--brick-border-width) solid var(--brick-color-border-strong);
     border-radius: var(--brick-radius-full);
-    background: var(--brick-color-surface-raised);
+    background: transparent;
     color: transparent;
     vertical-align: middle;
   }
@@ -25,9 +25,12 @@
     background: currentcolor;
     transform: scale(0.4);
   }
+  .brick-radiomark[data-state="unchecked"] .brick-radiomark__dot { visibility: hidden; }
   .brick-radiomark[data-size="xs"] { --brick-radiomark-size: 0.75rem; }
   .brick-radiomark[data-size="sm"] { --brick-radiomark-size: 1rem; }
   .brick-radiomark[data-size="lg"] { --brick-radiomark-size: 1.5rem; }
+  .brick-radiomark[data-filled], .brick-radiomark[data-variant="inverted"] { background: var(--brick-color-surface-canvas); }
+  .brick-radiomark[data-state="checked"][data-variant="inverted"] { border-color: var(--brick-radiomark-solid); color: var(--brick-radiomark-text); }
 
   .brick-radiomark[data-tone="neutral"] {
     --brick-radiomark-solid: var(--brick-color-text-primary);

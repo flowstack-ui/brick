@@ -21,6 +21,11 @@
   ],
   "rules": [
     {
+      "id": "segment-group-radius",
+      "level": "must",
+      "statement": "Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."
+    },
+    {
       "id": "segment-group-single-choice",
       "level": "must",
       "statement": "Use SegmentGroup only for one mutually exclusive value and preserve Atom Radio Group semantics and keyboard behavior."

@@ -11,7 +11,7 @@ installVisualDefaults("/input");
 
 async function removeStickyCaptureOverlap(page: import("@playwright/test").Page) {
   await page
-    .locator(".evidence-app-bar, .evidence-review-header")
+    .locator("[data-playground-app-bar], .evidence-review-header")
     .evaluateAll((elements) => {
       for (const element of elements) {
         (element as HTMLElement).style.display = "none";

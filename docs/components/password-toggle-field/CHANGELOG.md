@@ -1,8 +1,13 @@
 # Password Toggle Field changelog
 
+
 Password Toggle Field follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+- Forced colors preserves a real system-color focus outline; shadows are not the sole focus cue.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 - Expanded PasswordToggleField to the responsive shared 2xs–2xl control-size
   scale and made the 44px `lg` recipe the default.

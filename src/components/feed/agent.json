@@ -13,7 +13,7 @@
     "Compose ScrollArea outside Root only when a Frame or another parent supplies a definite bounded size.",
     "Use dividerStrength=default only when a compact utility feed needs clearer row separation; preserve the subtle default for ordinary continuous reading."
   ],
-  "rules": [
+  "rules": [{"id":"feed-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {"id": "feed-dynamic-owner", "level": "must", "statement": "Use Feed only for a dynamic rich article stream where feed semantics and article keyboard movement improve the experience."},
     {"id": "feed-direct-items", "level": "must", "statement": "Keep Feed.Item articles as direct Root children with useful accessible names and accurate positions and totals."},
     {"id": "feed-busy", "level": "must", "statement": "Set busy only while adding or replacing Feed DOM; do not make a passive feed a live region or treat busy paint as an announcement."},

@@ -15,6 +15,12 @@ function TestIcon() {
 }
 
 describe("IconButton", () => {
+  it("owns focus placement on the final host", () => {
+    render(<IconButton focusRing="inside" aria-label="Inspect"><TestIcon /></IconButton>);
+    const host = screen.getByRole("button", { name: "Inspect" });
+    expect(host).toHaveAttribute("data-focus-ring", "inside");
+    expect(host).not.toHaveAttribute("focusRing");
+  });
   it("renders the adopted defaults over Atom Button", () => {
     render(<IconButton aria-label="Open menu"><TestIcon /></IconButton>);
     const button = screen.getByRole("button", { name: "Open menu" });

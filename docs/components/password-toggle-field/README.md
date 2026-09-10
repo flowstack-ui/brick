@@ -1,5 +1,6 @@
 # Password Toggle Field
 
+
 Password Toggle Field is native password entry with an explicitly named visibility action, backed by Atom Password Toggle Field. Atom owns visibility state, Field and Form relationships, reset, submission safety, and native input behavior; Brick owns recipes and default eye artwork.
 
 ## When and where to use
@@ -62,6 +63,15 @@ Public exports are `PasswordToggleField`, `PasswordToggleFieldRoot`,
 
 `underline` rejects `shape`. Root preserves controlled/uncontrolled visibility, change callback, disabled, read-only, invalid, required, and validation props. Input preserves supported password input/native props. Toggle children replace the default Icon. Icon accepts required visible/hidden nodes, with Brick defaults when omitted.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 Recipes, sizes, and shapes align with Input. Visibility changes native input
 type and artwork only, not geometry. The default artwork is optically centered
@@ -81,6 +91,11 @@ Prefer recipe props, semantic tokens, then component variables. Replace Toggle c
 The input shrinks while the square action remains contained at the logical end. Long values edit natively, localization does not alter the fixed visual target, and RTL mirrors placement logically.
 
 ## Accessibility
+
+### Focus presentation
+
+Forced colors preserves a real system-color focus outline; shadows are not the sole focus cue.
+See [Focus presentation](../../guides/focus-presentation.md).
 Use a visible Field label. The action name describes the next action and changes between `showLabel` and `hideLabel`; localize both. Atom connects Field-generated IDs, descriptions, errors, and state to Input. Reset returns uncontrolled visibility to its default. Before native submit, Atom restores `type="password"` even if the value was visible.
 
 ## Composition, native props, and refs

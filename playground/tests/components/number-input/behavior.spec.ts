@@ -1,6 +1,19 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 test.beforeEach(async ({ page }) => page.goto("/number-input"));
+test("forced colors preserve numeric field focus across variants", async ({ page }) => {
+  await page.emulateMedia({ forcedColors: "active" });
+  for (const root of await page.getByTestId("number-input-variants").locator(".brick-number-input").all()) {
+    const before = await root.boundingBox();
+    await root.locator("input").focus();
+    await expect(root).toHaveCSS("outline-style", "solid");
+    await expect(root).toHaveCSS("outline-width", "2px");
+    await expect(root).toHaveCSS("box-shadow", "none");
+    const after = await root.boundingBox();
+    expect(after?.width).toBe(before?.width);
+    expect(after?.height).toBe(before?.height);
+  }
+});
 test("Number Input exposes defaults, stepping, bounds, and Field relationships", async ({
   page,
 }) => {

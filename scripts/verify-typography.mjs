@@ -69,6 +69,29 @@ for (const appearance of ["light", "dark"]) {
 }
 
 const allowedGeometryDeclarations = new Map([
+  // TOC instance aliases resolve to complete size-selected semantic body recipes.
+  ["table-of-contents/table-of-contents.css", [
+    "font-family: var(--brick-table-of-contents-font-family);",
+    "font-size: var(--brick-table-of-contents-font-size);",
+    "font-weight: var(--brick-table-of-contents-font-weight);",
+    "line-height: var(--brick-table-of-contents-line-height);",
+    "letter-spacing: var(--brick-table-of-contents-letter-spacing);",
+    "letter-spacing: inherit;",
+  ]],
+  // Editable's paired preview/editor hooks select only semantic body recipes.
+  ["editable/editable.css", ["font-size: var(--brick-editable-font-size);", "line-height: var(--brick-editable-line-height);"]],
+  // Alert's instance font hook resolves only to its size-selected semantic recipe.
+  ["alert/alert.css", ["font-size: var(--brick-alert-font-size);"]],
+  // EmptyState's inherited icon em is fixed glyph geometry, not authored text.
+  ["empty-state/empty-state.css", ["font-size: var(--brick-empty-state-indicator-size);"]],
+  // Steps' instance hooks resolve to size-selected semantic recipes.
+  ["steps/steps.css", [
+    "font-family: var(--brick-steps-font-family);",
+    "font-size: var(--brick-steps-font-size);",
+    "font-weight: var(--brick-steps-font-weight);",
+    "line-height: var(--brick-steps-line-height);",
+    "letter-spacing: var(--brick-steps-letter-spacing);",
+  ]],
   [
     "_action-menu/action-menu.css",
     [
@@ -122,6 +145,12 @@ const allowedGeometryDeclarations = new Map([
     "text/text.css",
     [
       "--brick-text-font-weight: inherit;",
+      "--brick-text-font-weight: var(--brick-font-weight-thin);",
+      "--brick-text-font-weight: var(--brick-font-weight-extralight);",
+      "--brick-text-font-weight: var(--brick-font-weight-light);",
+      "--brick-text-font-weight: var(--brick-font-weight-bold);",
+      "--brick-text-font-weight: var(--brick-font-weight-extrabold);",
+      "--brick-text-font-weight: var(--brick-font-weight-black);",
       "--brick-text-font-weight: var(--brick-font-weight-regular);",
       "--brick-text-font-weight: var(--brick-font-weight-medium);",
       "--brick-text-font-weight: var(--brick-font-weight-semibold);",
@@ -166,7 +195,6 @@ for (const directory of componentDirectories) {
         declaration.includes("var(--brick-control-size-") ||
         declaration.includes("var(--brick-input-") ||
         declaration.includes("var(--brick-password-") ||
-        declaration.includes("var(--brick-otp-") ||
         declaration.includes("var(--brick-number-input-") ||
         declaration.includes("var(--brick-combobox-") ||
         declaration.includes("var(--brick-textarea-") ||

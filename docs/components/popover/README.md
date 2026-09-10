@@ -80,6 +80,15 @@ Root always fixes Atom `triggerMode` to `click`; `triggerMode`, `openDelay`, and
 `closeDelay` are excluded. Content adds the size recipe. Other public parts inherit their Atom props.
 Header/Body/Footer add native attributes, `asChild`, and `render`.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 Size controls maximum inline width. Density controls internal panel rhythm;
@@ -114,6 +123,34 @@ resolve an alternate alignment before shifting. The application owns responsive
 content layout; logical placement supports RTL.
 
 ## Accessibility
+
+### Scrolling and padding: preserve the region anatomy
+
+`Content` already constrains the floating viewport. `Body` supplies padding and
+scrolls when content exceeds the available height. Start with this composition:
+
+```tsx
+<Popover.Content>
+  <Popover.Header>
+    <Popover.Title>Preview settings</Popover.Title>
+    <Popover.Description>Configure the example environment.</Popover.Description>
+  </Popover.Header>
+  <Popover.Body>{/* Settings controls; this region scrolls. */}</Popover.Body>
+  <Popover.Footer>{/* Optional persistent actions. */}</Popover.Footer>
+</Popover.Content>
+```
+
+Do not wrap the entire Header/Body/Footer structure in Frame or ScrollArea just
+to constrain the panel. That removes the regions from the viewport's flex layout
+and can disable body shrinking/scrolling. In particular, bare Title/Description
+receive edge padding only as direct Content children; inserting layout/scroll
+wrappers between them bypasses that padding. Use Header to group them, not
+custom margins, padding CSS or component-hook overrides.
+
+If an independently scrolling list is genuinely needed, compose it **inside
+Body**, with its own justified size constraint. Keep Arrow directly in Content.
+Verify the accessible name, title/description inset, alignment with body content,
+and reachability of the last action at narrow and short heights in both appearances.
 
 Use Title and Description when they clarify the panel. Atom owns trigger
 relationships, focus behavior, outside/Escape dismissal, and portal semantics.

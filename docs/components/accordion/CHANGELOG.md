@@ -4,6 +4,8 @@ Accordion follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ### Added
 
 - Added the surface-blended `ghost` variant and logical start/end indicator

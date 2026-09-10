@@ -1,3 +1,5 @@
+@import "../_focus/action-focus.css";
+
 @layer brick.components {
   .brick-button {
     --brick-button-background: var(--brick-button-tone-solid);

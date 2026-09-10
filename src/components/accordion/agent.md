@@ -25,6 +25,7 @@ Present a finished group of related disclosure sections while Atom owns expanded
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Root, Item, Header, Trigger, Content, and ContentInner rather than rebuilding disclosure state, relationships, measurement, or animation lifecycle.
 - **MUST:** Let Accordion Trigger own the finished control recipe; do not compose Button or IconButton into Trigger because competing recipes would own one element.
 - **MUST:** Keep visible padding and panel layout in ContentInner rather than Content so Atom can measure and animate the panel accurately.

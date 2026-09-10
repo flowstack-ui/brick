@@ -171,15 +171,6 @@
     stroke-linejoin: round;
     stroke-width: 2;
   }
-  .brick-toast__spinner {
-    inline-size: 1rem;
-    block-size: 1rem;
-    box-sizing: border-box;
-    border: 2px solid color-mix(in srgb, currentColor 30%, transparent);
-    border-block-start-color: currentColor;
-    border-radius: 50%;
-    animation: brick-toast-spin 800ms linear infinite;
-  }
   .brick-toast__content {
     display: grid;
     min-inline-size: 0;
@@ -236,9 +227,8 @@
   .brick-toast__action:hover { background: color-mix(in srgb, var(--brick-toast-accent-color) 18%, transparent); }
   .brick-toast__close:hover { background: var(--brick-color-surface-subtle); color: var(--brick-color-text-primary); }
   .brick-toast__action:focus-visible,
-  .brick-toast__close:focus-visible { outline: 2px solid var(--brick-color-focus-ring); outline-offset: 2px; }
+  .brick-toast__close:focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring); outline-offset: var(--brick-border-focus-width); }
 
-  @keyframes brick-toast-spin { to { transform: rotate(360deg); } }
 
   @media (max-width: 30rem) {
     .brick-toast-viewport[data-width="responsive"] {
@@ -252,7 +242,6 @@
     .brick-toast { transition: none; }
     .brick-toast[data-state="entering"],
     .brick-toast[data-state="exiting"] { transform: none; }
-    .brick-toast__spinner { animation: none; border-style: dotted; }
   }
 
   @media (forced-colors: active) {

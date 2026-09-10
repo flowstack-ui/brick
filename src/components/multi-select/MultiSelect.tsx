@@ -1,4 +1,5 @@
 "use client";
+import { radiusStyle, type Radius, type RadiusShapeProps } from "../_radius/Radius.js";
 
 import {
   Children,
@@ -46,14 +47,14 @@ type MultiSelectRootSharedProps = Omit<AtomMultiSelectRootProps, "children"> & {
 
 export type MultiSelectRootProps = MultiSelectRootSharedProps &
   (
-    | { variant?: "outline" | "soft"; shape?: MultiSelectShape }
-    | { variant: "underline"; shape?: never }
+    | ({ variant?: "outline" | "soft" } & RadiusShapeProps<MultiSelectShape>)
+    | { variant: "underline"; shape?: never; radius?: never }
   );
 export type MultiSelectTriggerProps = AtomMultiSelectTriggerProps;
 export type MultiSelectValueProps = AtomMultiSelectValueProps;
 export type MultiSelectIconProps = Omit<AtomMultiSelectIconProps, "children"> & { children?: ReactNode };
 export type MultiSelectPortalProps = AtomMultiSelectPortalProps;
-export type MultiSelectContentProps = AtomMultiSelectListboxProps;
+export type MultiSelectContentProps = AtomMultiSelectListboxProps & { radius?: Radius };
 export type MultiSelectListboxProps = MultiSelectContentProps;
 export type MultiSelectViewportProps = AtomMultiSelectViewportProps;
 export type MultiSelectScrollUpButtonProps = Omit<AtomMultiSelectScrollUpButtonProps, "children"> & { children?: ReactNode };
@@ -67,6 +68,7 @@ export type MultiSelectSeparatorProps = AtomMultiSelectSeparatorProps;
 export type MultiSelectArrowProps = Omit<AtomMultiSelectArrowProps, "children"> & { children?: ReactNode };
 
 interface MultiSelectVisualContextValue {
+  radius?: Radius;
   variant: MultiSelectVariant;
   size: ResponsiveControlSize;
   shape?: MultiSelectShape;
@@ -139,20 +141,21 @@ export function MultiSelectRoot({
   children,
   fullWidth = true,
   shape = "rounded",
+  radius,
   size = "lg",
   variant = "outline",
   ...props
 }: MultiSelectRootProps) {
-  const resolvedShape = variant === "underline" ? undefined : shape;
+  const resolvedShape = variant === "underline" ? undefined : radius === undefined ? shape : "rounded";
   return (
-    <MultiSelectVisualContext.Provider value={{ fullWidth, shape: resolvedShape, size, variant }}>
+    <MultiSelectVisualContext.Provider value={{ fullWidth, shape: resolvedShape, radius: variant === "underline" ? undefined : radius, size, variant }}>
       <AtomMultiSelect.Root {...props}>{supplyStaticItemLabels(children)}</AtomMultiSelect.Root>
     </MultiSelectVisualContext.Provider>
   );
 }
 
 export const MultiSelectTrigger = forwardRef<HTMLButtonElement, MultiSelectTriggerProps>(
-  function MultiSelectTrigger({ className, "data-slot": dataSlot, ...props }, ref) {
+  function MultiSelectTrigger({ className, style, "data-slot": dataSlot, ...props }, ref) {
     const visual = useContext(MultiSelectVisualContext);
     return (
       <AtomMultiSelect.Trigger
@@ -160,6 +163,7 @@ export const MultiSelectTrigger = forwardRef<HTMLButtonElement, MultiSelectTrigg
         className={mergeClassName("brick-multi-select-trigger brick-control-size", className)}
         data-full-width={visual.fullWidth ? "" : undefined}
         data-shape={visual.shape}
+        style={radiusStyle(visual.radius, "--brick-multi-select-trigger-radius", style)}
         data-slot={slotOrDefault(dataSlot, "multi-select-trigger")}
         data-variant={visual.variant}
         ref={ref}
@@ -184,9 +188,9 @@ export const MultiSelectIcon = forwardRef<HTMLSpanElement, MultiSelectIconProps>
 export const MultiSelectPortal = AtomMultiSelect.Portal;
 
 export const MultiSelectContent = forwardRef<HTMLDivElement, MultiSelectContentProps>(
-  function MultiSelectContent({ className, "data-slot": dataSlot, ...props }, ref) {
+  function MultiSelectContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) {
     const visual = useContext(MultiSelectVisualContext);
-    return <AtomMultiSelect.Content {...props} className={mergeClassName("brick-multi-select-content brick-control-size", className)} data-slot={slotOrDefault(dataSlot, "multi-select-listbox")} ref={ref} {...controlSizeDataAttributes(visual.size)} />;
+    return <AtomMultiSelect.Content {...props} style={radiusStyle(radius, "--brick-multi-select-content-radius", style)} className={mergeClassName("brick-multi-select-content brick-control-size", className)} data-slot={slotOrDefault(dataSlot, "multi-select-listbox")} ref={ref} {...controlSizeDataAttributes(visual.size)} />;
   },
 );
 

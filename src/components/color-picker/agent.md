@@ -32,6 +32,7 @@ Edit, inspect, choose, and submit one color through a finished popup or inline e
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Brick parts for the finished interface and keep parsing, format conversion, selection, focus, dismissal, and form state in the exact Atom-backed machine.
 - **MUST:** Give the primary editable or native input an accessible name through Label or an explicit aria-label.
 - **MUST:** Provide name to Root and render exactly one HiddenInput when the color must submit.

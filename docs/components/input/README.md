@@ -146,6 +146,15 @@ attribute.
 `className` and `style` apply to the visual wrapper. Use `inputClassName` and
 `inputStyle` for the native input.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 - `outline` uses a complete visible border and raised/base control surface.

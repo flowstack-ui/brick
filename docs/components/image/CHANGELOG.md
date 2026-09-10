@@ -4,6 +4,11 @@ Image follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Migrate radius to shared core/semantic Radius; omission remains none. Use
+  subtle/control/surface to preserve legacy sm/md/lg intent.
+
+
+
 ### Changed
 
 - Expanded delivery guidance for responsive source selection, intrinsic

@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "../../evidence-test.js";
 
 test("Dialog Footer maps logical action distribution to flex alignment", async ({ page }) => {
   await page.goto("/dialog");
@@ -20,7 +20,7 @@ async function readShellViewportOffsets(page: Page) {
       return element.getBoundingClientRect().y;
     };
     return {
-      appBar: readOffset(".evidence-app-bar"),
+      appBar: readOffset("[data-playground-app-bar]"),
       reviewHeader: readOffset(".evidence-review-header"),
       sidebar: readOffset(".evidence-sidebar"),
     };
@@ -42,7 +42,7 @@ test("Dialog exposes its default modal anatomy, relationships, and focus lifecyc
 }) => {
   await page.goto("/dialog");
 
-  const appBar = page.locator(".evidence-app-bar");
+  const appBar = page.locator("[data-playground-app-bar]");
   const sidebar = page.locator(".evidence-sidebar");
   const trigger = page.getByRole("button", { name: "Edit profile" });
   await page.evaluate(() => window.scrollTo(0, 400));

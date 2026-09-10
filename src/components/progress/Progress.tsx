@@ -15,6 +15,7 @@ import {
   type ProgressRootProps as AtomProgressRootProps,
 } from "@flowstack-ui/atom/progress";
 import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
 
 export type ProgressOrientation = "horizontal" | "vertical";
 export type ProgressSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -50,13 +51,12 @@ function mergeClassName(base: string, className?: string) {
   return className ? `${base} ${className}` : base;
 }
 
-export interface ProgressRootProps extends Omit<
+export type ProgressRootProps = Omit<
   AtomProgressRootProps,
   "className" | "style"
-> {
+> & RadiusShapeProps<ProgressShape> & {
   orientation?: ProgressOrientation;
   size?: ProgressSize;
-  shape?: ProgressShape;
   tone?: ProgressTone;
   bufferValue?: number | null;
   locale?: Intl.LocalesArgument;
@@ -79,6 +79,7 @@ export const ProgressRoot = forwardRef<HTMLDivElement, ProgressRootProps>(
       min = 0,
       orientation = "horizontal",
       shape = "rounded",
+      radius,
       size = "md",
       style,
       tone = "accent",
@@ -111,14 +112,14 @@ export const ProgressRoot = forwardRef<HTMLDivElement, ProgressRootProps>(
           aria-labelledby={ariaLabelledBy ?? (ariaLabel ? undefined : labelId)}
           className={mergeClassName("brick-progress", className)}
           data-orientation={orientation}
-          data-shape={shape}
+          data-shape={radius === undefined ? shape : "rounded"}
           data-size={size}
           data-slot={dataSlot ?? "progress"}
           data-tone={tone}
           max={max}
           min={min}
           ref={ref}
-          style={style}
+          style={radiusStyle(radius, "--brick-progress-radius", style)}
           value={value}
         >
           {children}

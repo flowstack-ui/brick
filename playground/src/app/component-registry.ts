@@ -18,6 +18,33 @@ export type PlaygroundCategory =
   | "Typography";
 
 export const componentEntries = [
+  { category: "Navigation", description: "Same-document section navigation and reading position.", id: "table-of-contents", route: "/table-of-contents", title: "Table of Contents" },
+  { category: "Data display", description: "Local scannable SVG codes and image export.", id: "qr-code", route: "/qr-code", title: "QR Code" },
+  { category: "Forms", description: "Create, edit and validate multiple short values.", id: "tags-input", route: "/tags-input", title: "Tags Input" },
+  { category: "Data display", description: "Accessible continuous motion with explicit safe visual replicas.", id: "marquee", route: "/marquee", title: "Marquee" },
+  { category: "Data display", description: "Labeled metrics, units and comparisons.", id: "stat", route: "/stat", title: "Stat" },
+  { category: "Forms", description: "Browser-native option selection with finished control recipes.", id: "native-select", route: "/native-select", title: "Native Select" },
+  { category: "Forms", description: "Inline text editing with commit and cancellation.", id: "editable", route: "/editable", title: "Editable" },
+  { category: "Data display", description: "Static chronological events with connected markers.", id: "timeline", route: "/timeline", title: "Timeline" },
+  { category: "Feedback", description: "Empty content with consistent hierarchy and next steps.", id: "empty-state", route: "/empty-state", title: "Empty State" },
+  { category: "Feedback", description: "Persistent inline feedback with semantic recipes.", id: "alert", route: "/alert", title: "Alert" },
+  { category: "Feedback", description: "A theme-aware visual loading indicator.", id: "spinner", route: "/spinner", title: "Spinner" },
+  { category: "Forms", description: "Inline date selection.", id: "calendar", route: "/calendar", title: "Calendar" },
+  { category: "Forms", description: "Segmented date entry.", id: "date-input", route: "/date-input", title: "Date Input" },
+  { category: "Forms", description: "Date entry with a calendar popup.", id: "date-picker", route: "/date-picker", title: "Date Picker" },
+  { category: "Layout", description: "Resizable adjacent panels with accessible handles.", id: "splitter", route: "/splitter", title: "Splitter" },
+  { category: "Actions", description: "Consistent dismissal action.", id: "close-button", route: "/close-button", title: "Close Button" },
+  { category: "Actions", description: "Detached contextual selection actions.", id: "action-bar", route: "/action-bar", title: "Action Bar" },
+  { category: "Overlays", description: "Movable, resizable nonmodal tool windows.", id: "floating-panel", route: "/floating-panel", title: "Floating Panel" },
+  { category: "Overlays", description: "Typed imperative overlay lifetime orchestration.", id: "overlay-manager", route: "/overlay-manager", title: "Overlay Manager" },
+  { category: "Actions", description: "Generated file downloads.", id: "download-trigger", route: "/download-trigger", title: "Download Trigger" },
+  {
+    category: "Navigation",
+    description: "Ordered workflow progress, validation gates, and completion.",
+    id: "steps",
+    route: "/steps",
+    title: "Steps",
+  },
   {
     category: "Typography",
     description: "Inherited locale, direction, and Brick-owned interface text.",
@@ -674,9 +701,9 @@ export const componentEntries = [
     category: "Forms",
     description:
       "Segmented one-time-code entry with paste and completion behavior.",
-    id: "otp-field",
-    route: "/otp-field",
-    title: "OTP Field",
+    id: "pin-input",
+    route: "/pin-input",
+    title: "Pin Input",
   },
   {
     category: "Forms",

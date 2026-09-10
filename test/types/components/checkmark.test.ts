@@ -1,6 +1,7 @@
 import { createElement, createRef } from "react";
 import { Checkmark, type CheckmarkProps, type CheckmarkSize, type CheckmarkTone, type CheckmarkVariant } from "../../../src/checkmark.js";
 
+createElement(Checkmark, { filled: true, variant: "inverted" });
 const props: CheckmarkProps = { checked: true, disabled: false, size: "md", tone: "success", variant: "outline" };
 createElement(Checkmark, { ...props, ref: createRef<SVGSVGElement>() });
 const sizes: CheckmarkSize[] = ["xs", "sm", "md", "lg"];

@@ -10,6 +10,16 @@ import {
 
 const packageRoot = new URL("../../", import.meta.url);
 
+test("Link decoration extension tokens inherit through owning CSS fallbacks", async () => {
+  const source = await inspectThemeSources(packageRoot.pathname);
+  const contract = await createThemeContract(packageRoot.pathname);
+  for (const name of ["--brick-link-decoration-color", "--brick-link-decoration-thickness", "--brick-link-decoration-offset"]) {
+    assert.equal(source.declaredBy.has(name), false);
+    assert.ok(source.references.some(reference => reference.name === name && reference.path === "src/components/link/link.css" && reference.hasFallback));
+    assert.equal(contract.tokens.find(token => token.name === name)?.classification, "optional-extension");
+  }
+});
+
 test("generated theme contract stays aligned with Brick authority", async () => {
   const generated = await createThemeContract(packageRoot.pathname);
   const packed = await readFile(new URL("../../dist/theme-contract.json", import.meta.url), "utf8");
@@ -35,7 +45,7 @@ test("generated theme contract stays aligned with Brick authority", async () => 
   );
   assert.equal(generated.contrast.algorithm, "wcag2-relative-luminance");
   assert.equal(generated.contrast.colorSpace, "srgb");
-  assert.equal(generated.contrast.pairs.length, 92);
+  assert.equal(generated.contrast.pairs.length, 123);
   assert.deepEqual(
     generated.atomicColorFamilies.find(({ id }) => id === "accent")?.tokens.filter((name) =>
       name.startsWith("--brick-color-selection-")),

@@ -3,7 +3,7 @@ import { forwardRef, type SVGAttributes } from "react";
 export type CheckmarkSize = "xs" | "sm" | "md" | "lg";
 export type CheckmarkTone =
   | "neutral" | "accent" | "info" | "success" | "warning" | "danger";
-export type CheckmarkVariant = "solid" | "outline" | "soft" | "plain";
+export type CheckmarkVariant = "solid" | "outline" | "soft" | "plain" | "inverted";
 
 export interface CheckmarkProps extends Omit<
   SVGAttributes<SVGSVGElement>,
@@ -11,6 +11,7 @@ export interface CheckmarkProps extends Omit<
 > {
   "data-slot"?: string;
   checked?: boolean;
+  filled?: boolean;
   disabled?: boolean;
   indeterminate?: boolean;
   size?: CheckmarkSize;
@@ -26,6 +27,7 @@ export const Checkmark = forwardRef<SVGSVGElement, CheckmarkProps>(
   function Checkmark(
     {
       checked = false,
+      filled = false,
       className,
       disabled = false,
       indeterminate = false,
@@ -48,6 +50,7 @@ export const Checkmark = forwardRef<SVGSVGElement, CheckmarkProps>(
         aria-hidden="true"
         className={mergeClassName("brick-checkmark", className)}
         data-disabled={disabled ? "" : undefined}
+        data-filled={filled ? "" : undefined}
         data-size={size}
         data-slot={dataSlot ?? "checkmark"}
         data-state={state}

@@ -4,6 +4,8 @@ Dialog follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ### Added
 
 - Added `Dialog.Close placement="corner"` for a reusable, logical top-end

@@ -25,6 +25,7 @@
     "Keep source state on Image.Root, then pass intrinsic width and height plus native responsive delivery props such as srcSet, sizes, loading, decoding, and fetchPriority to Image.Content."
   ],
   "rules": [
+    {"id": "image-shared-radius", "level": "must", "statement": "Use shared Radius with default none. Core sm/md/lg replace historical semantic mappings; use subtle/control/surface to preserve old intent. Radius does not change media fit, loading or aspect ratio."},
     {
       "id": "image-brick-first",
       "level": "must",

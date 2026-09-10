@@ -1,5 +1,10 @@
 # Toolbar manual-test protocol
 
+Unreleased shared-recipe check: compare the three owners in Shared toggle
+recipes for every tone/variant, light/dark and pointer state. Toolbar keeps
+compact geometry and an inset focus ring. Top review controls now use neutral
+ghost. Verify the documented selected-background customization still works.
+
 | Run information | Value |
 | --- | --- |
 | Component | Toolbar |
@@ -37,6 +42,21 @@ Notes or issue:
 At 320 CSS px and 200/400% zoom, confirm main-axis scrolling keeps every item reachable without wrapping or page overflow. Confirm horizontal and vertical scrolling boundaries do not clip focused edge controls. Confirm RTL navigation and logical layout.
 
 Result:
+Notes or issue:
+
+## Step 4 — Focus presentation qualification
+
+Action: Keyboard-focus every toolbar action or owned focus part, including
+first and last items where relevant. Repeat in light/dark, RTL, OS high
+contrast and actual 200%/400% zoom. Check selected/loading states where
+supported and rounded or scrolling boundaries.
+
+Expected: Visible focus without layout shifts or clipped edges. Inside
+actions use paired foreground paint; field focus survives without shadows
+in high contrast. Selection and focus remain distinguishable. Browser
+emulation does not replace OS or assistive-technology checks.
+
+Result: not run for this manual protocol revision.
 Notes or issue:
 
 ## Completion

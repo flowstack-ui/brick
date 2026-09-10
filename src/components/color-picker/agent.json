@@ -29,7 +29,7 @@
     "Place SwatchIndicator inside Swatch or ValueSwatch whenever selection needs a visible non-color cue.",
     "Add curated presets only when the product needs them; saved and recent palettes are optional application-owned state, not required popup anatomy."
   ],
-  "rules": [
+  "rules": [{"id":"color-picker-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     { "id": "color-picker-ownership", "level": "must", "statement": "Use Brick parts for the finished interface and keep parsing, format conversion, selection, focus, dismissal, and form state in the exact Atom-backed machine." },
     { "id": "color-picker-label", "level": "must", "statement": "Give the primary editable or native input an accessible name through Label or an explicit aria-label." },
     { "id": "color-picker-form", "level": "must", "statement": "Provide name to Root and render exactly one HiddenInput when the color must submit." },

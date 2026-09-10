@@ -1,8 +1,13 @@
 # Number Input changelog
 
+
 Number Input follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+- Forced colors preserves a real system-color focus outline; shadows are not the sole focus cue.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 - Generated step actions now inherit their generic accessible labels from
   `LocaleProvider` when Control labels are omitted.

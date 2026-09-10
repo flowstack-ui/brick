@@ -15,7 +15,8 @@ const tones: ProgressTone[] = ["neutral", "accent", "info", "success", "warning"
 const customStyle = { "--brick-progress-track-background": "#ede9fe", "--brick-progress-indicator-background": "#6d28d9", "--brick-progress-thickness": "0.875rem", "--brick-progress-radius": "0.375rem" } as CSSProperties;
 const customCode = "--brick-progress-track-background: #ede9fe;\n--brick-progress-indicator-background: #6d28d9;\n--brick-progress-thickness: 0.875rem;\n--brick-progress-radius: 0.375rem;";
 
-function LinearProgress({ label = "Upload files", value = 64, ...props }: { label?: string; value?: number | null } & Omit<ComponentProps<typeof Progress.Root>, "children" | "value">) {
+type ProgressRecipe<T> = T extends unknown ? Omit<T, "children" | "value"> : never;
+function LinearProgress({ label = "Upload files", value = 64, ...props }: { label?: string; value?: number | null } & ProgressRecipe<ComponentProps<typeof Progress.Root>>) {
   return <Progress.Root value={value} {...props}><Progress.Label>{label}</Progress.Label><Progress.Value /><Progress.Track>{props.bufferValue !== undefined ? <Progress.Buffer /> : null}<Progress.Indicator /></Progress.Track></Progress.Root>;
 }
 

@@ -20,6 +20,10 @@ tested.
 
 ## Step 1 — Defaults, variants, sizes
 
+Also compare neutral soft selection with the accent default: both are flat;
+solid retains elevation. Check light, dark, high contrast and keyboard focus.
+The existing protective inset remains intentional until the focus audit.
+
 Open `/tabs`; review 01–03. Focus and activate identical tabs in each recipe.
 Expected: defaults are medium line; only the named variant or size changes;
 selection, panel content, alignment, and focus remain clear. Reload while
@@ -56,6 +60,22 @@ animating when reduced motion is active.
 
 Traverse Overview. Expected: one named tablist, selected/disabled states and
 related panels announce once; arrow navigation does not add extra tab stops.
+
+## Step 6 — Focus presentation qualification
+
+Action: Keyboard-focus every tabs action or owned focus part, including
+first and last items where relevant. Repeat in light/dark, RTL, OS high
+contrast and actual 200%/400% zoom. Check selected/loading states where
+supported and rounded or scrolling boundaries.
+
+Expected: Visible focus without layout shifts or clipped edges. Tab triggers
+and focusable panels use the shared semantic focus color independently of
+neutral/accent label tone, with Highlight outlines in high contrast.
+Selection and focus remain distinguishable. Browser
+emulation does not replace OS or assistive-technology checks.
+
+Result: not run for this manual protocol revision.
+Notes or issue:
 
 ## Completion
 

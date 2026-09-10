@@ -1,0 +1,21 @@
+@layer brick.components {
+  .brick-spinner,
+  :where(.brick-button, .brick-icon-button)[data-loading]::after {
+    box-sizing: border-box;
+    inline-size: var(--brick-spinner-size, 1.25rem);
+    block-size: var(--brick-spinner-size, 1.25rem);
+    border: var(--brick-spinner-thickness, 0.125rem) solid var(--brick-spinner-track-color, transparent);
+    border-top-color: var(--brick-spinner-color, currentColor);
+    border-right-color: var(--brick-spinner-color, currentColor);
+    border-radius: var(--brick-radius-full);
+    animation: brick-spinner-spin var(--brick-spinner-duration, 500ms) linear infinite;
+  }
+  @keyframes brick-spinner-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .brick-spinner,
+    :where(.brick-button, .brick-icon-button)[data-loading]::after { animation: none; }
+  }
+  @media (forced-colors: active) {
+    .brick-spinner { border-top-color: currentColor; border-right-color: currentColor; }
+  }
+}

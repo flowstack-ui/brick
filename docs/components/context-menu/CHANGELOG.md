@@ -4,6 +4,8 @@ Context Menu follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ### Fixed
 
 - Use the standard overlay boundary token so popup and submenu edges remain

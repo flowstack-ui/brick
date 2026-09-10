@@ -15,6 +15,7 @@ import {
   type AvatarSize,
 } from "../avatar/Avatar.js";
 import { AvatarGroupPresentationContext } from "./AvatarGroupContext.js";
+import type { RadiusShapeProps } from "../_radius/Radius.js";
 
 export type AvatarGroupElement = "div" | "span";
 export type AvatarGroupOverlap = "none" | "sm" | "md" | "lg";
@@ -30,7 +31,6 @@ interface AvatarGroupBaseProps extends AvatarGroupNativeProps {
   children?: ReactNode;
   className?: string;
   overlap?: AvatarGroupOverlap;
-  shape?: AvatarShape;
   size?: AvatarSize;
   slot?: string;
   stacking?: AvatarGroupStacking;
@@ -58,7 +58,7 @@ interface AvatarGroupWithCustomOverflow {
   total?: number;
 }
 
-export type AvatarGroupProps = AvatarGroupBaseProps &
+export type AvatarGroupProps = AvatarGroupBaseProps & RadiusShapeProps<AvatarShape> &
   (
     | AvatarGroupWithoutOverflow
     | AvatarGroupWithDefaultOverflow
@@ -91,6 +91,7 @@ function AvatarGroupImpl(
     overflowLabel,
     renderOverflow,
     shape = "circle",
+    radius,
     size = "md",
     slot = "avatar-group",
     stacking = "last-on-top",
@@ -155,7 +156,7 @@ function AvatarGroupImpl(
   }
 
   return (
-    <AvatarGroupPresentationContext.Provider value={{ shape, size }}>
+    <AvatarGroupPresentationContext.Provider value={{ shape, size, radius }}>
       {createElement(
         as,
         {
@@ -163,7 +164,7 @@ function AvatarGroupImpl(
           className: mergeClassName(className),
           "data-count": totalCount,
           "data-overlap": overlap,
-          "data-shape": shape,
+          "data-shape": radius === undefined ? shape : "rounded",
           "data-size": size,
           "data-slot": slot,
           "data-stacking": stacking,

@@ -51,10 +51,11 @@ type SharedRootProps = AtomRootProps & {
   /** Arrange compact end controls or square controls around the value. @default "field" */
   layout?: NumberInputLayout;
 };
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
 export type NumberInputRootProps = SharedRootProps &
   (
-    | { variant?: "outline" | "soft"; shape?: NumberInputShape }
-    | { variant: "underline"; shape?: never }
+    | ({ variant?: "outline" | "soft" } & RadiusShapeProps<NumberInputShape>)
+    | { variant: "underline"; shape?: never; radius?: never }
   );
 export type NumberInputInputProps = AtomInputProps;
 export type NumberInputIncrementProps = Omit<AtomIncrementProps, "children"> & {
@@ -110,6 +111,8 @@ export const NumberInputRoot = forwardRef<HTMLDivElement, NumberInputRootProps>(
       fullWidth = true,
       layout = "field",
       shape = "rounded",
+      radius,
+      style,
       size = "lg",
       stepperVisibility = "always",
       variant = "outline",
@@ -121,7 +124,7 @@ export const NumberInputRoot = forwardRef<HTMLDivElement, NumberInputRootProps>(
     const visual = {
       fullWidth,
       layout,
-      shape: variant === "underline" ? undefined : shape,
+      shape: variant === "underline" ? undefined : radius === undefined ? shape : "rounded" as const,
       size,
       variant,
     };
@@ -133,6 +136,7 @@ export const NumberInputRoot = forwardRef<HTMLDivElement, NumberInputRootProps>(
           data-full-width={fullWidth ? "" : undefined}
           data-layout={layout}
           data-shape={visual.shape}
+          style={radiusStyle(variant === "underline" ? undefined : radius, "--brick-number-input-radius", style)}
           data-slot={dataSlot ?? "number-input"}
           data-stepper-visibility={stepperVisibility}
           data-variant={variant}

@@ -1,5 +1,12 @@
 export {
   Chip,
+  ChipActionTrigger,
+  ChipStartElement,
+  ChipEndElement,
+  type ChipActionTriggerProps,
+  type ChipStartElementProps,
+  type ChipEndElementProps,
+  type ChipDensity,
   ChipLabel,
   ChipRemoveTrigger,
   ChipRoot,

@@ -15,6 +15,7 @@ Present preserved multi-line technical source with native scrolling, explicit me
 
 ## Required composition
 
+- Use CopyTrigger asChild with a named Brick IconButton for icon-only copying. The child owns recipes; Root already owns Clipboard behavior. Do not add a second Clipboard Root. Reserve space when positioning the action over Content with ZStack.
 - Pass the exact plain-text source to Root value, then place Content inside Root and give focusable Content a specific accessible label.
 - Author Header, Title, Language, Actions, CopyTrigger, CopyStatus, and CopyIndicator only when the interface needs those optional parts.
 - For syntax highlighting, pass a synchronous adapter or trusted React token nodes to Content while keeping Root value identical to the plain text that must be copied.
@@ -31,6 +32,7 @@ Present preserved multi-line technical source with native scrolling, explicit me
 - **MUST:** Keep standalone maxLines content reachable through its focusable viewport; for expansion, pair CollapsePreview and CollapseContent with an accessible CollapseTrigger so only the current source view is exposed.
 - **MUST:** Inherit Brick's shared selection background and foreground by default; when a syntax palette needs local selection paint, override both public Code Block selection variables together and verify their text contrast.
 - **MUST:** Load styles.css or core.css plus code-block.css and its documented component dependencies.
+- **MUST:** The flush collapse action paints focus inside its clipped boundary; copy success remains icon-only with an accessible announcement.
 
 ## Common mistakes
 

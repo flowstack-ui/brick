@@ -1,8 +1,14 @@
 # Code Block changelog
 
+
 Code Block follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+- The flush collapse action paints focus inside its clipped boundary; copy success remains icon-only with an accessible announcement.
+
+- Support `CopyTrigger asChild` for a supplied IconButton, preserving the
+  existing Clipboard owner, refs, states and default Button rendering.
 
 ### Added
 

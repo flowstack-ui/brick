@@ -30,7 +30,7 @@
     "For application-controlled sorting, give the ColumnHeader onAction, update the data and sortDirection outside Data Grid, and keep SortIndicator decorative.",
     "Choose surface, border tone, optional column borders, layout, striping, sticky header, and cell alignment independently; state paint must remain stronger than stripe paint."
   ],
-  "rules": [
+  "rules": [{"id":"data-grid-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {
       "id": "data-grid-interactive-boundary",
       "level": "must",

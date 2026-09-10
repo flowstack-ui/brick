@@ -10,7 +10,7 @@ Present finished native password entry with a named reveal action while Atom own
 
 ## Choose something else when
 
-- The value is ordinary text or a one-time code, or security, observation, or shared-device policy forbids revealing the secret. Use Input, OTPField, or Input with type=password without a reveal control.
+- The value is ordinary text or a one-time code, or security, observation, or shared-device policy forbids revealing the secret. Use Input, PinInput, or Input with type=password without a reveal control.
 
 ## Required composition
 
@@ -19,6 +19,7 @@ Present finished native password entry with a named reveal action while Atom own
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Include the reveal action only when it is acceptable for the product's security, privacy, observation, recording, and shared-device context.
 - **MUST:** Keep Input as the native value, naming, autocomplete, validity, and submission owner while Atom changes only its owned type between password and text.
 - **MUST:** Provide localized state-aware showLabel and hideLabel values that describe the next action; do not add aria-pressed because the changing action name communicates the available action.
@@ -26,6 +27,7 @@ Present finished native password entry with a named reveal action while Atom own
 - **MUST:** Use visible with onVisibleChange or defaultVisible, preserve Field disabled/read-only/required/invalid behavior, reset uncontrolled visibility, and let Atom restore type=password before native submission.
 - **MUST:** Keep password strength, generation, confirmation, storage, authentication, clipboard, and security policy in the application or service.
 - **MUST:** Load styles.css or core.css plus password-toggle-field.css and Field CSS when composed.
+- **MUST:** Forced colors preserves a real system-color focus outline; shadows are not the sole focus cue.
 
 ## Common mistakes
 
@@ -43,6 +45,6 @@ Present finished native password entry with a named reveal action while Atom own
 - `@flowstack-ui/atom/agents/password-toggle-field`
 - `field`
 - `input`
-- `otp-field`
+- `pin-input`
 - `form`
 - `button`

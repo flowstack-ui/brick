@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => { await page.goto("/combobox"); });
 
@@ -8,7 +8,7 @@ test("Combobox defaults, filtering, selection, clearing, and keyboard remain int
   await expect(overview.locator(".brick-combobox-control")).toHaveAttribute("data-variant", "outline");
   await input.fill("lis");
   const content = page.locator(".brick-combobox-content:visible");
-  await expect(content).toHaveAttribute("data-size", "md");
+  await expect(content).toHaveAttribute("data-size", "lg");
   await expect(page.getByRole("option", { name: "Lisbon" })).toHaveCSS("min-height", "44px"); await input.press("ArrowDown"); await input.press("Enter");
   await expect(input).toHaveValue("Lisbon"); await overview.getByRole("button", { name: "Clear city" }).click(); await expect(input).toHaveValue("");
 });
@@ -66,14 +66,14 @@ test("playground evidence is concise, aligned, and clearly separated", async ({ 
   await expect(stress.locator(".combobox-cell")).toHaveCount(2);
 });
 
-test("option rows inherit small, medium, and large control density", async ({ page }) => {
+test("option rows inherit all seven shared control densities", async ({ page }) => {
   const sizing = page.locator('[data-scenario="combobox.sizing"] .combobox-grid').first();
   const triggers = sizing.getByRole("button", { name: "Toggle City options" });
-  for (const [index, size] of ["sm", "md", "lg"].entries()) {
+  for (const [index, size] of ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"].entries()) {
     await triggers.nth(index).click();
     const content = page.locator(".brick-combobox-content:visible");
     await expect(content).toHaveAttribute("data-size", size);
-    await expect(content.getByRole("option").first()).toHaveCSS("min-height", ["36px", "44px", "52px"][index]);
+    await expect(content.getByRole("option").first()).toHaveCSS("min-height", ["28px", "32px", "36px", "40px", "44px", "48px", "64px"][index]);
     await page.keyboard.press("Escape");
   }
 });
@@ -84,7 +84,7 @@ test("popup positions, flips when constrained, and route has no axe violations",
   const results = await new AxeBuilder({ page }).disableRules(["region"]).analyze(); expect(results.violations).toEqual([]);
 });
 
-test("portalled options remain below sticky playground navigation while scrolling", async ({ page }) => {
+test("portalled options keep the component-owned layer while scrolling", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   const overview = page.locator('[data-scenario="combobox.overview"]');
   await overview.getByRole("button", { name: "Toggle City options" }).click();
@@ -109,7 +109,7 @@ test("portalled options remain below sticky playground navigation while scrollin
     const x = (intersection.left + intersection.right) / 2;
     const y = (intersection.top + intersection.bottom) / 2;
     return {
-      headerContainsTopElement: headerElement.contains(document.elementFromPoint(x, y)),
+      popupContainsTopElement: popupElement.contains(document.elementFromPoint(x, y)),
       headerZIndex: Number(getComputedStyle(headerElement).zIndex),
       intersects: intersection.right > intersection.left && intersection.bottom > intersection.top,
       popupZIndex: Number(getComputedStyle(popupElement).zIndex),
@@ -118,6 +118,8 @@ test("portalled options remain below sticky playground navigation while scrollin
 
   expect(paintOrder).not.toBeNull();
   expect(paintOrder!.intersects).toBe(true);
-  expect(paintOrder!.popupZIndex).toBeLessThan(paintOrder!.headerZIndex);
-  expect(paintOrder!.headerContainsTopElement).toBe(true);
+  // Do not reintroduce the shell's layer-14 override: it hid suggestions
+  // behind a nested Dialog. The owner supplies both stacking and hit testing.
+  expect(paintOrder!.popupZIndex).toBeGreaterThan(paintOrder!.headerZIndex);
+  expect(paintOrder!.popupContainsTopElement).toBe(true);
 });

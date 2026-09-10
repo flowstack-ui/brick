@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page } from "../../evidence-test.js";
 
 async function readShellViewportOffsets(page: Page) {
   return page.evaluate(() => {
@@ -9,7 +9,7 @@ async function readShellViewportOffsets(page: Page) {
       return element.getBoundingClientRect().y;
     };
     return {
-      appBar: readOffset(".evidence-app-bar"),
+      appBar: readOffset("[data-playground-app-bar]"),
       reviewHeader: readOffset(".evidence-review-header"),
       sidebar: readOffset(".evidence-sidebar"),
     };
@@ -119,7 +119,7 @@ test("Popover exposes three bounded sizes, shared Arrow, and disabled state", as
   await anatomy
     .getByRole("button", { name: "Close anatomy" })
     .evaluate((element) => (element as HTMLElement).click());
-  await expect(anatomy).toHaveAttribute("data-state", "closed");
+  await expect(anatomy).toBeHidden();
 });
 
 test("Popover respects explicit dismissal policy and nested top-layer order", async ({
@@ -135,7 +135,7 @@ test("Popover respects explicit dismissal policy and nested top-layer order", as
   await explicit
     .getByRole("button", { name: "Close explicitly" })
     .evaluate((element) => (element as HTMLElement).click());
-  await expect(explicit).toHaveAttribute("data-state", "closed");
+  await expect(explicit).toBeHidden();
 
   await page.getByRole("button", { name: "Open parent panel" }).click();
   const parent = page.getByRole("dialog", { name: "Parent panel" });
@@ -155,16 +155,14 @@ test("Popover modal mode traps focus and closes through its visible action", asy
   page,
 }) => {
   await page.goto("/popover");
-  const appBar = page.locator(".evidence-app-bar");
+  const appBar = page.locator("[data-playground-app-bar]");
   const sidebar = page.locator(".evidence-sidebar");
   const trigger = page.getByRole("button", { name: "Open modal settings" });
   await trigger.scrollIntoViewIfNeeded();
   expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
   const shellOffsets = await readShellViewportOffsets(page);
-  if (shellOffsets.appBar === 0) {
-    expect(shellOffsets.sidebar).not.toBeNull();
-    expect(shellOffsets.reviewHeader).not.toBeNull();
-  }
+  // The app bar stays sticky on mobile, where the sidebar is intentionally
+  // hidden. Compare each actual shell region before/after modal locking.
   await trigger.evaluate((element) => (element as HTMLElement).click());
   const popover = page.getByRole("dialog", { name: "Open modal settings" });
   await expect(popover).toHaveAttribute("aria-modal", "true");

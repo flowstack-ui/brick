@@ -1,4 +1,5 @@
 import { forwardRef, type HTMLAttributes } from "react";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import {
   Dialog as AtomDialog,
   type DialogCloseProps as AtomDialogCloseProps,
@@ -23,6 +24,7 @@ export type DialogTriggerProps = AtomDialogTriggerProps;
 export type DialogPortalProps = AtomDialogPortalProps;
 export type DialogOverlayProps = AtomDialogOverlayProps;
 export interface DialogContentProps extends AtomDialogContentProps {
+  radius?: Radius;
   size?: DialogSize;
 }
 export type DialogHeaderProps = HTMLAttributes<HTMLDivElement> & { "data-slot"?: string };
@@ -79,13 +81,14 @@ export const DialogOverlay = forwardRef<HTMLDivElement, DialogOverlayProps>(
 
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   function DialogContent(
-    { className, size = "md", "data-slot": dataSlot, ...props },
+    { className, size = "md", radius, style, "data-slot": dataSlot, ...props },
     ref,
   ) {
     return (
       <AtomDialog.Content
         {...props}
         className={mergeClassName("brick-dialog-content", className)}
+        style={radiusStyle(radius, "--brick-dialog-radius", style)}
         data-size={size}
         data-slot={slotOrDefault(dataSlot, "dialog-content")}
         ref={ref}

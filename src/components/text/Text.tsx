@@ -43,7 +43,7 @@ export type TextTone =
   | "warning"
   | "danger";
 
-export type TextWeight = "inherit" | "regular" | "medium" | "semibold";
+export type TextWeight = "inherit" | "thin" | "extralight" | "light" | "regular" | "medium" | "semibold" | "bold" | "extrabold" | "black";
 export type TextAlign = "start" | "center" | "end";
 export type TextWrap = "wrap" | "nowrap" | "balance" | "pretty";
 export type TextTransform = "none" | "uppercase" | "lowercase" | "capitalize";

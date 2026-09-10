@@ -17,7 +17,7 @@ import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./link.playground.css";
 
-const variants: LinkVariant[] = ["theme", "underline", "plain"];
+const variants: LinkVariant[] = ["underline", "subtle", "plain"];
 const tones: LinkTone[] = ["accent", "neutral", "inherit"];
 const sizes: LinkSize[] = ["inherit", "sm", "md", "lg"];
 
@@ -45,8 +45,8 @@ function Cell({ children, label }: { children: ReactNode; label: string }) {
 }
 
 export const linkScenarios = [
-  { id: "link.overview", number: 1, title: "Overview", description: "Link’s canonical rendering follows the theme decoration policy, whose Brick fallback is an underlined accent destination that preserves native anchor behavior." },
-  { id: "link.variants", number: 2, title: "Variants", description: "Theme follows the compiled decoration policy, underline remains persistent, and plain stays decoration-free inside unmistakable navigation." },
+  { id: "link.overview", number: 1, title: "Overview", description: "Link defaults to a persistent underline and preserves native anchor behavior." },
+  { id: "link.variants", number: 2, title: "Variants", description: "Underline is persistent, subtle appears on hover and keyboard focus, and plain stays decoration-free inside unmistakable navigation." },
   { id: "link.tones", number: 3, title: "Tones", description: "Accent, neutral, and inherited foregrounds keep the same default decoration, content, size, and destination behavior." },
   { id: "link.sizes", number: 4, title: "Sizes", description: "Inherited typography follows surrounding copy; explicit small, medium, and large values use Brick body recipes." },
   { id: "link.content", number: 5, title: "Content", description: "Default text, decorative logical icons, and long destination names remain aligned, named, wrapped, and contained." },
@@ -135,8 +135,9 @@ export function LinkPage() {
               style={{ "--brick-link-decoration": "none" } as CSSProperties}
             >
               <VStack gap="2">
-                <Link href="#link-destination">Theme-following decoration</Link>
-                <Link href="#link-destination" variant="underline">Explicit underline decoration</Link>
+                <Link href="#link-destination" variant="theme">Legacy theme decoration</Link>
+                <Link href="#link-destination">Default underline ignores legacy policy</Link>
+                <Link href="#link-destination" variant="subtle">Explicit subtle decoration</Link>
               </VStack>
             </Surface>
           </EvidenceSurface>

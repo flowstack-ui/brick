@@ -90,6 +90,15 @@ Atom selection, expansion, `multiple`, disabled/read-only, required/invalid,
 forwarded. Brick Tree is vertical-only and omits Atom `orientation`. Boundary
 navigation is bounded by default; opt into wrapping with `loop`.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 Plain leaves the root transparent, soft adds a subtle root surface, and

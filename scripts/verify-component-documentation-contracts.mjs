@@ -40,9 +40,14 @@ for (const componentId of requested) {
   const [source, exportSource, css, documentation] = await Promise.all([
     readFile(contract.source, "utf8"),
     readFile(contract.exportSource, "utf8"),
-    readFile(contract.css, "utf8"),
+    contract.kind === "utility" && contract.css === null ? Promise.resolve("") : readFile(contract.css, "utf8"),
     readFile(`docs/components/${componentId}/README.md`, "utf8"),
   ]);
+
+  const sharedAttributeSources = await Promise.all((contract.attributeSources ?? []).map(async ({ path, importPath }) => {
+    if (!source.includes(`from "${importPath}"`)) throw new Error(`${componentId}: declared shared attribute owner is not imported`);
+    return readFile(path, "utf8");
+  }));
 
   for (const publicExport of contract.exports) {
     if (!new RegExp(`\\b${escaped(publicExport)}\\b`).test(exportSource)) {
@@ -85,7 +90,7 @@ for (const componentId of requested) {
   }
 
   for (const [prop, value] of Object.entries(contract.defaults)) {
-    const sourceDefault = `${prop} = ${JSON.stringify(value)}`;
+    const sourceDefault = contract.defaultExpressions?.[prop] ?? `${prop} = ${JSON.stringify(value)}`;
     if (!source.includes(sourceDefault)) {
       failures.push(`${componentId}: source default changed for ${prop}`);
     }
@@ -109,7 +114,9 @@ for (const componentId of requested) {
       !source.includes(`${attribute}=`) &&
       !source.includes(`"${attribute}":`) &&
       !source.includes(`responsiveDataAttributes("${attribute}"`) &&
-      !(attribute === "data-size" && source.includes("controlSizeDataAttributes("))
+      !(attribute === "data-size" && source.includes("controlSizeDataAttributes(")) &&
+      !(contract.inheritedDataAttributes?.includes(attribute) && source.includes("@flowstack-ui/atom/")) &&
+      !sharedAttributeSources.some(shared => shared.includes(`"${attribute}"`))
     ) {
       failures.push(`${componentId}: source no longer emits ${attribute}`);
     }

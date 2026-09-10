@@ -7,6 +7,9 @@
     "layer-selection"
   ],
   "classifications": [
+    { "surface": "./radius", "classification": "utility", "documentation": "docs/guides/radius.md", "reason": "Shared token-only radius type; no independently rendered component." },
+    { "surface": ".#Radius", "classification": "utility", "sourceOwner": "src/components/_radius", "documentation": "docs/guides/radius.md", "reason": "Shared public radius vocabulary for component boundary owners." },
+    { "surface": "./date-value", "classification": "utility", "documentation": "docs/guides/date-values.md", "reason": "Immutable public date values and parsers shared with Atom." },
     {
       "surface": ".",
       "classification": "aggregate",
@@ -108,6 +111,10 @@
     }
   ],
   "exclusions": [
+    { "pattern": "src/components/_radius/**", "visibility": "source-only", "reason": "Internal finite radius token mapping and compatibility types; public Radius is explicitly classified." },
+    { "pattern": "src/components/_spinner-ring/**", "visibility": "source-only", "reason": "Shared visual loading ring; no JavaScript or behavior surface." },
+    { "pattern": "src/components/_toggle/**", "visibility": "source-only", "reason": "Shared pressed-command paint for Toggle, ToggleGroup and Toolbar; not a public component or behavior owner." },
+    { "pattern": "src/components/_focus/**", "visibility": "source-only", "reason": "Shared static action focus placement; no public utility or headless behavior." },
     {
       "pattern": "src/components/_action-menu/**",
       "visibility": "source-only",

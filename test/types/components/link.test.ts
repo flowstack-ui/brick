@@ -10,7 +10,7 @@ import {
 import { Link as RootLink } from "../../../src/index.js";
 
 const ref = createRef<HTMLAnchorElement>();
-const variants: LinkVariant[] = ["underline", "plain"];
+const variants: LinkVariant[] = ["underline", "subtle", "plain", "theme"];
 const tones: LinkTone[] = ["accent", "neutral", "inherit"];
 const sizes: LinkSize[] = ["inherit", "sm", "md", "lg"];
 const render: LinkRenderProp = (props) => createElement("a", props);

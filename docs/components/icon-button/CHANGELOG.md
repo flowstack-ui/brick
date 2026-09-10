@@ -1,8 +1,20 @@
 # Icon Button changelog
 
+
 Icon Button follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+- Support scalar focusRing="outside" | "inside"; omission stays outside. Inside uses paired foreground and canonical negative-width offset without changing Atom behavior.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
+### Changed
+
+- Loading uses the shared 500ms visual ring and a static arc with reduced motion.
+
+- Keep loading and disabled-loading spinners centered when animations are
+  disabled, independently of their rotation, in both directions.
 
 - Expanded IconButton to the responsive seven-step `2xs`–`2xl` action scale,
   including sparse responsive values, while preserving its visible 44px

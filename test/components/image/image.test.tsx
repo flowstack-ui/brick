@@ -32,6 +32,17 @@ class MockImage {
 afterEach(() => { pending.length = 0; vi.unstubAllGlobals(); });
 
 describe("Image", () => {
+  it("uses shared radius tokens while preserving omission and style overrides", () => {
+    const { getByTestId, rerender } = render(<Image.Root data-testid="radius" />);
+    const root = getByTestId("radius");
+    expect(root.style.getPropertyValue("--brick-image-radius")).toBe("");
+    rerender(<Image.Root data-testid="radius" radius="xl" />);
+    expect(root.style.getPropertyValue("--brick-image-radius")).toBe("var(--brick-radius-core-xl)");
+    rerender(<Image.Root data-testid="radius" radius="surface" />);
+    expect(root.style.getPropertyValue("--brick-image-radius")).toBe("var(--brick-radius-surface)");
+    rerender(<Image.Root data-testid="radius" radius="full" style={{ "--brick-image-radius": "3px" } as React.CSSProperties} />);
+    expect(root.style.getPropertyValue("--brick-image-radius")).toBe("3px");
+  });
   it("exposes direct RSC-safe parts without changing the compound family", () => {
     expect(Image.Root).toBe(ImageRoot);
     expect(Image.Content).toBe(ImageContent);

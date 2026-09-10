@@ -19,8 +19,10 @@ Render a finished accessible action or emphasized native link with Brick size, t
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use action mode for operations and href link mode for emphasized destinations; visual prominence never justifies hiding navigation in onPress.
 - **MUST:** Load styles.css or core.css plus button.css.
+- **MUST:** Support scalar focusRing="outside" | "inside"; omission stays outside. Inside uses paired foreground and canonical negative-width offset without changing Atom behavior.
 
 ## Common mistakes
 

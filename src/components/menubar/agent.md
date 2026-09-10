@@ -20,6 +20,7 @@ Present a finished persistent application command strip with coordinated top-lev
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Menubar only for persistent application command categories, not website navigation, page tabs, route-current state, or a responsive application shell.
 - **MUST:** Give the role=menubar Root an accessible name and keep every top-level Trigger as its role=menuitem child with one Atom-owned roving tab stop.
 - **MUST:** Give every top-level Menu a unique value and keep its Trigger and Content within that Menu scope so controlled value and adjacent-menu handoff remain deterministic.

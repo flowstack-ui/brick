@@ -20,6 +20,7 @@ Present finished hierarchical multi-column rows while Atom owns treegrid relatio
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Name Root and preserve treegrid, rowgroup, row, rowheader, columnheader, and gridcell relationships with durable Row values, stable parentValue and level, one-based logical indexes, and truthful full totals.
 - **MUST:** Keep Root as the sole Tab stop and preserve active-descendant navigation across visible cells, vertical row movement, Home/End and whole-grid movement, disabled skipping, loop policy, and RTL-aware expansion and collapse in the tree column.
 - **MUST:** Mark only real parent Rows expandable, keep descendants hidden from navigation while any ancestor is collapsed, and let Atom relocate an active descendant to the collapsed ancestor's RowHeader cell.

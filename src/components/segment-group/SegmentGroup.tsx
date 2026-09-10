@@ -1,4 +1,5 @@
 "use client";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 
 import {
   forwardRef,
@@ -20,6 +21,7 @@ import {
 export type SegmentGroupSize = "2xs" | "xs" | "sm" | "md" | "lg";
 
 export interface SegmentGroupRootProps extends AtomRootProps {
+  radius?: Radius;
   /** Shared item and indicator geometry. @default "md" */
   size?: SegmentGroupSize;
   /** Fill the available inline width and distribute items. @default false */
@@ -55,6 +57,8 @@ export const SegmentGroupRoot = forwardRef<
     fullWidth = false,
     orientation = "horizontal",
     size = "md",
+    radius,
+    style,
     "data-slot": dataSlot,
     ...props
   },
@@ -64,6 +68,7 @@ export const SegmentGroupRoot = forwardRef<
     <AtomRadioGroup.Root
       {...props}
       className={mergeClassName("brick-segment-group", className)}
+      style={radiusStyle(radius, "--brick-segment-group-radius", style)}
       data-full-width={fullWidth ? "" : undefined}
       data-size={size}
       data-slot={dataSlot ?? "segment-group"}

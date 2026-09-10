@@ -996,6 +996,30 @@
     --brick-text-font-weight: var(--brick-font-weight-regular);
   }
 
+  .brick-text[data-weight="thin"] {
+    --brick-text-font-weight: var(--brick-font-weight-thin);
+  }
+
+  .brick-text[data-weight="extralight"] {
+    --brick-text-font-weight: var(--brick-font-weight-extralight);
+  }
+
+  .brick-text[data-weight="light"] {
+    --brick-text-font-weight: var(--brick-font-weight-light);
+  }
+
+  .brick-text[data-weight="bold"] {
+    --brick-text-font-weight: var(--brick-font-weight-bold);
+  }
+
+  .brick-text[data-weight="extrabold"] {
+    --brick-text-font-weight: var(--brick-font-weight-extrabold);
+  }
+
+  .brick-text[data-weight="black"] {
+    --brick-text-font-weight: var(--brick-font-weight-black);
+  }
+
   .brick-text[data-weight="medium"] {
     --brick-text-font-weight: var(--brick-font-weight-medium);
   }

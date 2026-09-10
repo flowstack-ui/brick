@@ -19,8 +19,8 @@ describe("ToggleGroup", () => {
     expect(group).toHaveClass("brick-toggle-group");
     expect(group).toHaveAttribute("data-attached", "false");
     expect(group).toHaveAttribute("data-orientation", "horizontal");
-    expect(group).toHaveAttribute("data-variant", "soft");
-    expect(group).toHaveAttribute("data-tone", "accent");
+    expect(group).toHaveAttribute("data-variant", "ghost");
+    expect(group).toHaveAttribute("data-tone", "neutral");
     expect(group).toHaveAttribute("data-size", "md");
     expect(group).toHaveAttribute("data-shape", "rounded");
     expect(screen.getByRole("button", { name: "Bold" })).toHaveClass(

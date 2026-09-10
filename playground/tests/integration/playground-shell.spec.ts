@@ -1,5 +1,35 @@
 import { expect, test } from "@playwright/test";
 
+test("docs preview shares the heading alignment at narrow and wide widths", async ({ page }) => {
+  for (const width of [390, 1024, 1920]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/aspect-ratio?testMode=1");
+    const heading = await page.locator(".evidence-page-heading h1").boundingBox();
+    const tabs = await page.locator("[data-example-preview] [role=tablist]").boundingBox();
+    const canvas = await page.locator("[data-example-canvas]").boundingBox();
+    expect(Math.abs(tabs!.x - heading!.x)).toBeLessThanOrEqual(1);
+    expect(Math.abs(canvas!.x - heading!.x)).toBeLessThanOrEqual(1);
+  }
+});
+
+test("shared page heading uses Brick 30px and 16px typography", async ({ page }) => {
+  await page.goto("/aspect-ratio?testMode=1");
+  const header = page.locator(".evidence-page-heading");
+  await expect(header.getByRole("heading", { level: 1, name: "Aspect Ratio", exact: true })).toHaveCSS("font-size", "30px");
+  await expect(header.locator("p")).toHaveCSS("font-size", "16px");
+  await expect(header).not.toContainText("@flowstack-ui/brick");
+  const source = header.getByRole("link", { name: "Source (opens in a new tab)", exact: true });
+  await expect(source).toHaveAttribute("href", "https://github.com/flowstack-ui/brick/tree/main/src/components/aspect-ratio");
+  await expect(source).toHaveAttribute("target", "_blank");
+  await expect(source.locator('[data-position="end"] svg')).toHaveCount(1);
+  const storybook = header.getByRole("link", { name: "Storybook — not available yet", exact: true });
+  await expect(storybook).toHaveAttribute("aria-disabled", "true");
+  await expect(storybook).not.toHaveAttribute("href");
+  await expect(storybook.locator("svg")).toHaveCount(2);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(header.locator("h1")).toHaveCSS("font-size", "30px");
+});
+
 test("playground loads the Brick reset and token-driven text selection", async ({ page }) => {
   await page.goto("/button");
   for (const appearance of ["light", "dark"] as const) {
@@ -8,8 +38,8 @@ test("playground loads the Brick reset and token-driven text selection", async (
     }, appearance);
     const colors = await page.locator("h1").evaluate((heading) => {
       const reference = document.createElement("span");
-      reference.style.backgroundColor = "color-mix(in srgb, color-mix(in srgb, var(--brick-color-accent-solid-pressed) 38%, black) 80%, transparent)";
-      reference.style.color = "#fff";
+      reference.style.backgroundColor = "var(--brick-color-selection-background)";
+      reference.style.color = "var(--brick-color-selection-foreground)";
       document.body.append(reference);
       const selection = getComputedStyle(heading, "::selection");
       const result = {
@@ -24,6 +54,28 @@ test("playground loads the Brick reset and token-driven text selection", async (
     expect(colors.background).toBe(colors.expectedBackground);
     expect(colors.color).toBe(colors.expectedColor);
   }
+});
+
+test("shared AI tip is passive, content-sized and contained on narrow screens", async ({ page }) => {
+  await page.goto("/aspect-ratio?testMode=1");
+  const tip = page.locator("[data-playground-ai-tip]");
+  await expect(tip).toContainText("AI Tip");
+  await expect(tip).toContainText("Want to skip the docs? Use our Agent Skills");
+  await expect(tip.locator('a, button, [tabindex], [role="link"], [role="alert"], [role="status"]')).toHaveCount(0);
+  await expect(tip).not.toHaveAttribute("role");
+  await expect(tip).toHaveAttribute("data-variant", "surface");
+  for (const width of [1280, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    const box = await tip.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.x).toBeGreaterThanOrEqual(0);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(width);
+    const geometry = await tip.evaluate(node => ({ scroll: node.scrollWidth, client: node.clientWidth, padding: parseFloat(getComputedStyle(node).paddingInlineStart) }));
+    expect(geometry.scroll).toBeLessThanOrEqual(geometry.client);
+    expect(geometry.padding).toBeGreaterThan(0);
+  }
+  await page.goto("/button?testMode=1");
+  await expect(tip).toHaveCount(1);
 });
 
 test("Button route exposes component and scenario navigation", async ({
@@ -65,16 +117,17 @@ test("Button route exposes component and scenario navigation", async ({
   await expect(
     componentNavigation.getByRole("heading", { name: "Integrations" }),
   ).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "Brick playground" })).toHaveText(
-    "Brick playground",
-  );
+  const brand = page.getByRole("link", { name: "Brick playground", exact: true });
+  await expect(brand).toHaveAttribute("href", "/aspect-ratio");
+  await expect(brand.locator("svg")).toBeVisible();
+  await expect(brand.locator("svg")).toHaveAttribute("aria-hidden", "true");
 
   const scenarioNavigation = page.getByRole("navigation", {
     name: "Button scenarios",
   });
   await expect(page.locator(".evidence-review-header")).toHaveCSS(
     "position",
-    "sticky",
+    "static",
   );
   await expect(scenarioNavigation.getByRole("link")).toHaveCount(9);
   await scenarioNavigation.getByRole("link", { name: /links/i }).click();
@@ -87,150 +140,31 @@ test("Button route exposes component and scenario navigation", async ({
   );
 });
 
-test("review controls update the document environment", async ({ page }) => {
-  await page.goto("/button");
-
-  await expect(page.locator(".review-controls.brick-toolbar")).toHaveCount(1);
-  await expect(
-    page.locator(".review-controls .brick-toolbar__toggle-group"),
-  ).toHaveCount(3);
-  await expect(
-    page.locator(".review-controls .brick-toolbar__toggle-item"),
-  ).toHaveCount(7);
-  await expect(
-    page.locator(".review-controls .brick-toolbar__separator"),
-  ).toHaveCount(2);
-  await expect(
-    page.getByRole("toolbar", { name: "Review controls" }),
-  ).toBeVisible();
-  await expect(page.getByRole("group", { name: "Direction" })).toBeAttached();
-  await expect(page.getByRole("group", { name: "Theme" })).toBeAttached();
-
-  await page
-    .getByRole("button", { name: "Qualification", exact: true })
-    .click();
-  await expect(page.locator("html")).toHaveAttribute(
-    "data-flowstack-theme",
-    "qualification",
-  );
-  await expect(page).toHaveURL(/\?theme=qualification$/);
-
-  await page.getByRole("button", { name: "dark", exact: true }).click();
-  await expect(
-    page.getByRole("button", { name: "dark", exact: true }),
-  ).toHaveAttribute("data-state", "on");
-  await expect(page.locator("html")).toHaveAttribute(
-    "data-brick-appearance",
-    "dark",
-  );
-
-  await page.getByRole("button", { name: "RTL", exact: true }).click();
-  await expect(
-    page.getByRole("button", { name: "RTL", exact: true }),
-  ).toHaveAttribute("data-state", "on");
-  await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-
-  await page.getByRole("button", { name: "system", exact: true }).click();
-  await expect(page.locator("html")).not.toHaveAttribute(
-    "data-brick-appearance",
-  );
+test("app-bar settings replace the toolbar and keep the docs direction stable", async ({ page }) => {
+  await page.goto("/button?testMode=1");
+  await expect(page.getByRole("toolbar", { name: "Review controls" })).toHaveCount(0);
+  const trigger = page.getByRole("button", { name: "Preview settings", exact: true });
+  await trigger.click();
+  await page.getByLabel("Appearance", { exact: true }).selectOption("dark");
+  await expect(page.locator("html")).toHaveAttribute("data-brick-appearance", "dark");
+  await expect(page.getByLabel("Example direction", { exact: true })).toBeEnabled();
+  await page.getByLabel("Example direction", { exact: true }).selectOption("rtl");
+  await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
+  await page.getByRole("button", { name: "Reset preferences", exact: true }).click();
+  await expect(page.getByLabel("Appearance", { exact: true })).toHaveValue("system");
+  await expect(page.locator("html")).not.toHaveAttribute("data-brick-appearance");
+  await page.keyboard.press("Escape");
+  await expect(trigger).toBeFocused();
 });
 
-test("review controls remain content-sized in a stacked header", async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 700, height: 900 });
-  await page.goto("/button");
-
-  const panel = page.locator(".review-controls");
-  const content = page.locator(".evidence-page-header");
-  const items = panel.locator(".brick-toolbar__toggle-item");
-  const [panelBox, contentBox, itemBoxes] = await Promise.all([
-    panel.boundingBox(),
-    content.boundingBox(),
-    items.evaluateAll((elements) =>
-      elements.map((element) => {
-        const box = element.getBoundingClientRect();
-        return { left: box.left, right: box.right, width: box.width };
-      }),
-    ),
-  ]);
-
-  expect(panelBox!.width).toBeLessThan(contentBox!.width);
-  expect(itemBoxes).toHaveLength(7);
-  expect(Math.min(...itemBoxes.map(({ left }) => left))).toBeGreaterThanOrEqual(
-    panelBox!.x,
-  );
-  expect(Math.max(...itemBoxes.map(({ right }) => right))).toBeLessThanOrEqual(
-    panelBox!.x + panelBox!.width,
-  );
-  expect(Math.max(...itemBoxes.map(({ width }) => width))).toBeLessThan(
-    panelBox!.width,
-  );
-});
-
-test("review controls contain their overflow on narrow viewports", async ({
+test("wide scenario navigation aligns and its header scrolls with the page", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/text");
-  await page
-    .getByText("واجهة موثوقة تحافظ على وضوح المحتوى في المساحات الضيقة.")
-    .scrollIntoViewIfNeeded();
-
-  const reviewHeader = page.locator(".evidence-review-header");
-  const stickyPosition = await reviewHeader.evaluate((element) => ({
-    inset: Number.parseFloat(getComputedStyle(element).insetBlockStart),
-    top: element.getBoundingClientRect().top,
-  }));
-  expect(stickyPosition.top).toBeCloseTo(stickyPosition.inset, 0);
-
-  await page.setViewportSize({ width: 320, height: 844 });
-
-  const panel = page.locator(".review-controls");
-  const heading = page.locator(".evidence-page-heading");
-  const scenarioNavigation = page.getByRole("navigation", {
-    name: "Text scenarios",
-  });
-  await expect
-    .poll(() => page.locator("html").evaluate((element) => element.scrollWidth))
-    .toBeLessThanOrEqual(320);
-  const [sizes, headingBox, panelBox, navigationBox] = await Promise.all([
-    panel.evaluate((element) => ({
-      clientWidth: element.clientWidth,
-      scrollWidth: element.scrollWidth,
-    })),
-    heading.boundingBox(),
-    panel.boundingBox(),
-    scenarioNavigation.boundingBox(),
-  ]);
-
-  expect(sizes.clientWidth).toBeLessThanOrEqual(320);
-  expect(sizes.scrollWidth).toBeGreaterThan(sizes.clientWidth);
-  expect(headingBox!.y + headingBox!.height).toBeLessThanOrEqual(panelBox!.y);
-  expect(panelBox!.y + panelBox!.height).toBeLessThanOrEqual(navigationBox!.y);
-
-  await page
-    .getByRole("button", { name: "Qualification", exact: true })
-    .scrollIntoViewIfNeeded();
-  expect(await panel.evaluate((element) => element.scrollLeft)).not.toBe(0);
-  await page
-    .getByRole("button", { name: "Qualification", exact: true })
-    .click();
-  await expect(page.locator("html")).toHaveAttribute(
-    "data-flowstack-theme",
-    "qualification",
-  );
-});
-
-test("wide scenario navigation aligns, scrolls without overlap, and sticks with its header", async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/aspect-ratio");
+  await page.goto("/button");
 
   const navigation = page.getByRole("navigation", {
-    name: "Aspect Ratio scenarios",
+    name: "Button scenarios",
   });
   const content = page.locator("[data-playground-content]");
   const [navigationBox, contentBox] = await Promise.all([
@@ -271,25 +205,21 @@ test("wide scenario navigation aligns, scrolls without overlap, and sticks with 
   );
 
   const appBar = page.getByRole("banner", { name: "Brick playground" });
-  const kicker = page.getByText("@flowstack-ui/brick", { exact: true });
-  const [initialAppBarBox, initialKickerBox] = await Promise.all([
-    appBar.boundingBox(),
-    kicker.boundingBox(),
-  ]);
-  const initialHeaderGap =
-    initialKickerBox!.y - (initialAppBarBox!.y + initialAppBarBox!.height);
+  const kicker = page.getByRole("heading", { level: 1, name: "Button", exact: true });
+  const initialKickerBox = await kicker.boundingBox();
   await page.evaluate(() => window.scrollTo(0, 1200));
-  const [appBarBox, reviewHeaderBox, stickyKickerBox] = await Promise.all([
+  const [appBarBox, reviewHeaderBox, scrolledKickerBox] = await Promise.all([
     appBar.boundingBox(),
     page.locator(".evidence-review-header").boundingBox(),
     kicker.boundingBox(),
   ]);
   expect(appBarBox?.y).toBe(0);
-  expect(reviewHeaderBox?.y).toBe(appBarBox?.height);
-  expect(stickyKickerBox!.y - reviewHeaderBox!.y).toBe(initialHeaderGap);
+  expect(reviewHeaderBox!.y).toBeLessThan(0);
+  expect(scrolledKickerBox!.y).toBeLessThan(initialKickerBox!.y - 500);
+  await expect(page.locator(".evidence-review-header")).toHaveCSS("box-shadow", "none");
 });
 
-test("zoom-equivalent layouts progressively release sticky review chrome", async ({
+test("narrow layouts keep the app bar sticky and release secondary chrome", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 960, height: 540 });
@@ -314,11 +244,11 @@ test("zoom-equivalent layouts progressively release sticky review chrome", async
 
   await page.setViewportSize({ width: 480, height: 270 });
   await page.reload();
-  await expect(appBar).toHaveCSS("position", "static");
+  await expect(appBar).toHaveCSS("position", "sticky");
   await expect(reviewHeader).toHaveCSS("position", "static");
   await page.evaluate(() => window.scrollTo(0, 1200));
   const scrolledAppBarBox = await appBar.boundingBox();
-  expect(scrolledAppBarBox!.y + scrolledAppBarBox!.height).toBeLessThan(0);
+  expect(scrolledAppBarBox!.y).toBe(0);
 });
 
 test("mobile component navigation opens, closes, and restores focus", async ({
@@ -434,7 +364,7 @@ test("component navigation keeps the shell and sidebar mounted while starting th
     .getByRole("link", { exact: true, name: "Icon" })
     .evaluate((link) => (link as HTMLAnchorElement).click());
 
-  await expect(page).toHaveURL(/\/icon$/);
+  await expect(page).toHaveURL(/\/icon\?/);
   await expect(
     page.getByRole("heading", { level: 1, name: "Icon" }),
   ).toBeVisible();

@@ -13,7 +13,7 @@
     "Choose sharp, rounded, or circle through shape rather than application border-radius CSS.",
     "Place the passive swatch inside its owning control when it represents a selectable option."
   ],
-  "rules": [
+  "rules": [{"id":"color-swatch-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     { "id": "color-swatch-meaning", "level": "must", "statement": "Do not use the swatch as the only carrier of a color name, selection state, validation state, or action." },
     { "id": "color-swatch-semantics", "level": "must", "statement": "Leave decorative swatches unlabeled, or provide label when the swatch itself must be exposed as an image." },
     { "id": "color-swatch-shape", "level": "should", "statement": "Use the closed shape prop for sharp, rounded, or circle geometry before overriding the public radius variable." },

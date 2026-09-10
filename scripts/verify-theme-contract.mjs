@@ -47,8 +47,10 @@ for (const [componentId, component] of Object.entries(componentDocumentationCont
       assignments.map(({ name }) => name))));
   for (const name of component.publicTokens ?? []) {
     if (!Object.hasOwn(themeInputs, name)) {
-      if (!inspection.declaredBy.has(name) && !recipeOutputNames.has(name)) {
-        throw new Error(`${componentId} public instance token is not declared: ${name}`);
+      const consumedWithFallback = inspection.references.some(reference =>
+        reference.name === name && reference.path === component.css && reference.hasFallback);
+      if (!inspection.declaredBy.has(name) && !recipeOutputNames.has(name) && !consumedWithFallback) {
+        throw new Error(`${componentId} public instance token is neither declared nor consumed with a fallback: ${name}`);
       }
       continue;
     }

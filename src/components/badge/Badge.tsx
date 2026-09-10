@@ -1,4 +1,5 @@
 import { forwardRef, type ReactElement } from "react";
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
 import {
   Badge as AtomBadge,
   type BadgeRootProps as AtomBadgeRootProps,
@@ -12,11 +13,10 @@ export type BadgeTone =
 export type BadgeSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type BadgeShape = "rounded" | "pill" | "circle";
 
-export type BadgeProps = Omit<AtomBadgeRootProps, "color"> & {
+export type BadgeProps = Omit<AtomBadgeRootProps, "color"> & RadiusShapeProps<BadgeShape> & {
   variant?: BadgeVariant;
   tone?: BadgeTone;
   size?: BadgeSize;
-  shape?: BadgeShape;
 };
 
 export type NotificationBadgePlacement =
@@ -77,6 +77,8 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     tone = "neutral",
     size = "md",
     shape = "rounded",
+    radius,
+    style,
     className,
     ...props
   },
@@ -86,7 +88,8 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     <AtomBadge.Root
       {...props}
       className={mergeClassName("brick-badge", className)}
-      data-shape={shape}
+      data-shape={radius === undefined ? shape : "rounded"}
+      style={radiusStyle(radius, "--brick-badge-radius", style)}
       data-size={size}
       data-tone={tone}
       data-variant={variant}

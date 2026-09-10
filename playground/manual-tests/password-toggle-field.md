@@ -33,6 +33,21 @@ Notes or issue:
 Setup: Enable the recorded screen reader. Action: Edit and toggle each important state. Expected: Label, password entry state, description, validity, and localized next-action name are announced once. Result:
 Notes or issue:
 
+## Step 5 — Focus presentation qualification
+
+Action: Keyboard-focus every password-toggle-field action or owned focus part, including
+first and last items where relevant. Repeat in light/dark, RTL, OS high
+contrast and actual 200%/400% zoom. Check selected/loading states where
+supported and rounded or scrolling boundaries.
+
+Expected: Visible focus without layout shifts or clipped edges. Inside
+actions use paired foreground paint; field focus survives without shadows
+in high contrast. Selection and focus remain distinguishable. Browser
+emulation does not replace OS or assistive-technology checks.
+
+Result: not run for this manual protocol revision.
+Notes or issue:
+
 ## Completion
 Overall result:
 Follow-up issues:

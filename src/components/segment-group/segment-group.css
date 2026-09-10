@@ -1,5 +1,6 @@
 @layer brick.components {
   .brick-segment-group {
+    --brick-segment-group-radius: var(--brick-radius-control);
     --brick-segment-group-min-block-size: var(
       --brick-control-min-block-size-md
     );
@@ -46,7 +47,7 @@
     gap: 0;
     padding: var(--brick-segment-group-inset);
     border: 0;
-    border-radius: var(--brick-radius-control);
+    border-radius: var(--brick-segment-group-radius);
     background: var(--brick-segment-group-background);
     box-shadow: var(--brick-segment-group-root-shadow);
   }
@@ -76,9 +77,9 @@
     block-size: var(--brick-segment-group-indicator-block-size, 0);
     border: var(--brick-border-width) solid
       var(--brick-segment-group-indicator-border);
-    border-radius: calc(
-      var(--brick-radius-control) - var(--brick-segment-group-inset)
-    );
+    border-radius: max(0px, calc(
+      var(--brick-segment-group-radius) - var(--brick-segment-group-inset)
+    ));
     background: var(--brick-segment-group-indicator-background);
     box-shadow: var(--brick-segment-group-indicator-shadow);
     opacity: 0;
@@ -116,9 +117,9 @@
     padding-block: var(--brick-space-1);
     padding-inline: var(--brick-segment-group-item-padding-inline);
     border: 0;
-    border-radius: calc(
-      var(--brick-radius-control) - var(--brick-segment-group-inset)
-    );
+    border-radius: max(0px, calc(
+      var(--brick-segment-group-radius) - var(--brick-segment-group-inset)
+    ));
     appearance: none;
     background: transparent;
     color: var(--brick-segment-group-foreground);

@@ -1,4 +1,20 @@
 import AxeBuilder from "@axe-core/playwright";import{expect,test}from"@playwright/test";test.beforeEach(async({page})=>page.goto("/password-toggle-field"));
+test("forced colors preserve the field boundary and reveal-action focus", async ({ page }) => {
+  await page.emulateMedia({ forcedColors: "active" });
+  for (const root of await page.getByTestId("password-toggle-field-variants").locator(".brick-password-toggle-field").all()) {
+    const before = await root.boundingBox();
+    await root.locator("input").focus();
+    await expect(root).toHaveCSS("outline-style", "solid");
+    await expect(root).toHaveCSS("outline-width", "2px");
+    await expect(root).toHaveCSS("box-shadow", "none");
+    await page.keyboard.press("Tab");
+    await expect(root.locator("button")).toBeFocused();
+    await expect(root.locator("button")).toHaveCSS("outline-style", "solid");
+    const after = await root.boundingBox();
+    expect(after?.width).toBe(before?.width);
+    expect(after?.height).toBe(before?.height);
+  }
+});
 test("Password Toggle Field is labeled and toggles localized visibility",async({page})=>{const area=page.getByTestId("password-toggle-field-overview");const input=area.getByRole("textbox",{name:"Password"});await expect(input).toHaveAttribute("type","password");await area.getByRole("button",{name:"Show password"}).click();await expect(input).toHaveAttribute("type","text");await expect(area.getByRole("button",{name:"Hide password"})).toBeVisible();const localized=page.getByTestId("password-toggle-field-visibility");await localized.getByRole("button",{name:"Mostrar contraseña"}).click();await expect(localized.getByRole("button",{name:"Ocultar contraseña"})).toBeVisible()});
 test("Password form reset clears validity, value, and visible type",async({page})=>{const form=page.getByRole("form",{name:"Password form"});const field=form.locator(".brick-field");const input=form.getByLabel("Account password",{exact:false});await expect(form.locator("label")).toHaveCount(1);await expect(form.locator("legend")).toHaveCount(0);await input.fill("correct horse battery staple");await form.getByRole("button",{name:"Show password"}).click();await expect(input).toHaveAttribute("type","text");await form.getByRole("button",{name:"Save password"}).click();await expect(form.locator("output")).toContainText("Submitted type: password");await form.getByRole("button",{name:"Reset"}).click();await expect(input).toHaveValue("");await expect(input).toHaveAttribute("type","password");await form.getByRole("button",{name:"Save password"}).click();await expect(field).toHaveAttribute("data-invalid","");await expect(form.getByText("Enter an account password.")).toBeVisible();await form.getByRole("button",{name:"Reset"}).click();await expect(field).not.toHaveAttribute("data-invalid");await expect(form.getByText("Enter an account password.")).toBeHidden();await expect(form.locator("output")).toContainText("Form reset")});
 test("Password state cards top-align their controls at every breakpoint",async({page})=>{const previews=page.getByTestId("password-toggle-field-states").locator(".forms-cell__preview");await expect(previews).toHaveCount(4);expect(await previews.evaluateAll(elements=>elements.map(element=>getComputedStyle(element).alignItems))).toEqual(["start","start","start","start"])});

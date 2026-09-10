@@ -1,3 +1,4 @@
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import { forwardRef, type HTMLAttributes } from "react";
 import {
   TreeGrid as AtomTreeGrid,
@@ -25,7 +26,8 @@ export type TreeGridBorderTone = "subtle" | "default" | "strong";
 export type TreeGridLayout = "auto" | "fixed";
 
 export interface TreeGridContainerProps extends HTMLAttributes<HTMLDivElement> { "data-slot"?: string; }
-export interface TreeGridRootProps extends AtomTreeGridRootProps { variant?: TreeGridVariant; size?: TreeGridSize; density?: TreeGridDensity; surface?: TreeGridSurface; borderTone?: TreeGridBorderTone; showColumnBorder?: boolean; layout?: TreeGridLayout; striped?: boolean; stickyHeader?: boolean; }
+export interface TreeGridRootProps extends AtomTreeGridRootProps {
+  radius?: Radius; variant?: TreeGridVariant; size?: TreeGridSize; density?: TreeGridDensity; surface?: TreeGridSurface; borderTone?: TreeGridBorderTone; showColumnBorder?: boolean; layout?: TreeGridLayout; striped?: boolean; stickyHeader?: boolean; }
 export interface TreeGridCaptionProps extends AtomTreeGridCaptionProps { side?: TreeGridCaptionSide; }
 export interface TreeGridColumnGroupProps extends AtomTreeGridColumnGroupProps {}
 export interface TreeGridColumnProps extends AtomTreeGridColumnProps {}
@@ -46,8 +48,8 @@ function alignment(align: TreeGridCellAlign | undefined, numeric: boolean) { ret
 export const TreeGridContainer = forwardRef<HTMLDivElement, TreeGridContainerProps>(function TreeGridContainer({ className, "data-slot": dataSlot, ...props }, ref) {
   return <div {...props} className={mergeClassName("brick-tree-grid-container", className)} data-slot={slot(dataSlot, "tree-grid-container")} ref={ref} />;
 });
-export const TreeGridRoot = forwardRef<HTMLElement, TreeGridRootProps>(function TreeGridRoot({ variant = "line", size = "md", density = "comfortable", surface = "transparent", borderTone = "default", showColumnBorder = false, layout = "auto", striped = false, stickyHeader = false, className, "data-slot": dataSlot, ...props }, ref) {
-  return <AtomTreeGrid.Root {...props} className={mergeClassName("brick-tree-grid", className)} data-border-tone={borderTone} data-column-border={showColumnBorder ? "" : undefined} data-density={density} data-layout={layout} data-size={size} data-slot={slot(dataSlot, "tree-grid")} data-sticky-header={stickyHeader ? "" : undefined} data-striped={striped ? "" : undefined} data-surface={surface} data-variant={variant} ref={ref} />;
+export const TreeGridRoot = forwardRef<HTMLElement, TreeGridRootProps>(function TreeGridRoot({ variant = "line", size = "md", density = "comfortable", surface = "transparent", borderTone = "default", showColumnBorder = false, layout = "auto", striped = false, stickyHeader = false, className, radius, style, "data-slot": dataSlot, ...props }, ref) {
+  return <AtomTreeGrid.Root {...props} className={mergeClassName("brick-tree-grid", className)} style={radiusStyle(radius, "--brick-tree-grid-radius", style)} data-border-tone={borderTone} data-column-border={showColumnBorder ? "" : undefined} data-density={density} data-layout={layout} data-size={size} data-slot={slot(dataSlot, "tree-grid")} data-sticky-header={stickyHeader ? "" : undefined} data-striped={striped ? "" : undefined} data-surface={surface} data-variant={variant} ref={ref} />;
 });
 export const TreeGridColumnGroup = forwardRef<HTMLTableColElement, TreeGridColumnGroupProps>(function TreeGridColumnGroup({ className, "data-slot": dataSlot, ...props }, ref) {
   return <AtomTreeGrid.ColumnGroup {...props} className={mergeClassName("brick-tree-grid__column-group", className)} data-slot={slot(dataSlot, "tree-grid-column-group")} ref={ref} />;

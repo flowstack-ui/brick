@@ -5,6 +5,116 @@
   "colorSpace": "srgb",
   "groups": [
     {
+      "id": "focus-inside-accent-on-solid",
+      "kind": "non-text",
+      "foreground": "--brick-color-accent-on-solid",
+      "backgrounds": [
+        "--brick-color-accent-solid",
+        "--brick-color-accent-solid-hover",
+        "--brick-color-accent-solid-pressed"
+      ],
+      "minimumRatio": 3
+    },
+    {
+      "id": "focus-inside-accent-on-soft",
+      "kind": "non-text",
+      "foreground": "--brick-color-accent-on-soft",
+      "backgrounds": [
+        "--brick-color-accent-soft",
+        "--brick-color-accent-soft-hover",
+        "--brick-color-accent-soft-pressed"
+      ],
+      "minimumRatio": 3
+    },
+    {
+      "id": "focus-inside-info-on-solid",
+      "kind": "non-text",
+      "foreground": "--brick-color-info-on-solid",
+      "backgrounds": [
+        "--brick-color-info-solid",
+        "--brick-color-info-solid-hover",
+        "--brick-color-info-solid-pressed"
+      ],
+      "minimumRatio": 3
+    },
+    {
+      "id": "focus-inside-info-on-soft",
+      "kind": "non-text",
+      "foreground": "--brick-color-info-on-soft",
+      "backgrounds": [
+        "--brick-color-info-soft",
+        "--brick-color-info-soft-hover",
+        "--brick-color-info-soft-pressed"
+      ],
+      "minimumRatio": 3
+    },
+    {
+      "id": "focus-inside-success-on-solid",
+      "kind": "non-text",
+      "foreground": "--brick-color-success-on-solid",
+      "backgrounds": [
+        "--brick-color-success-solid",
+        "--brick-color-success-solid-hover",
+        "--brick-color-success-solid-pressed"
+      ],
+      "minimumRatio": 3
+    },
+    {
+      "id": "focus-inside-success-on-soft",
+      "kind": "non-text",
+      "foreground": "--brick-color-success-on-soft",
+      "backgrounds": [
+        "--brick-color-success-soft",
+        "--brick-color-success-soft-hover",
+        "--brick-color-success-soft-pressed"
+      ],
+      "minimumRatio": 3
+    },
+    {
+      "id": "focus-inside-warning-on-solid",
+      "kind": "non-text",
+      "foreground": "--brick-color-warning-on-solid",
+      "backgrounds": [
+        "--brick-color-warning-solid",
+        "--brick-color-warning-solid-hover",
+        "--brick-color-warning-solid-pressed"
+      ],
+      "minimumRatio": 3
+    },
+    {
+      "id": "focus-inside-warning-on-soft",
+      "kind": "non-text",
+      "foreground": "--brick-color-warning-on-soft",
+      "backgrounds": [
+        "--brick-color-warning-soft",
+        "--brick-color-warning-soft-hover",
+        "--brick-color-warning-soft-pressed"
+      ],
+      "minimumRatio": 3
+    },
+    {
+      "id": "focus-inside-danger-on-solid",
+      "kind": "non-text",
+      "foreground": "--brick-color-danger-on-solid",
+      "backgrounds": [
+        "--brick-color-danger-solid",
+        "--brick-color-danger-solid-hover",
+        "--brick-color-danger-solid-pressed"
+      ],
+      "minimumRatio": 3
+    },
+    {
+      "id": "focus-inside-danger-on-soft",
+      "kind": "non-text",
+      "foreground": "--brick-color-danger-on-soft",
+      "backgrounds": [
+        "--brick-color-danger-soft",
+        "--brick-color-danger-soft-hover",
+        "--brick-color-danger-soft-pressed"
+      ],
+      "minimumRatio": 3
+    },
+    {
       "id": "text-primary-on-surface",
       "kind": "text",
       "foreground": "--brick-color-text-primary",
@@ -169,7 +279,7 @@
       "id": "focus-ring-on-surface",
       "kind": "non-text",
       "foreground": "--brick-color-focus-ring",
-      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle"],
+      "backgrounds": ["--brick-color-surface-base", "--brick-color-surface-canvas", "--brick-color-surface-overlay", "--brick-color-surface-raised", "--brick-color-surface-subtle", "--brick-color-accent-soft"],
       "minimumRatio": 3
     }
   ]

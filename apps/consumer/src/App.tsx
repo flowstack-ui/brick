@@ -1,4 +1,12 @@
 import { useEffect, useState, type CSSProperties, type FormEvent } from "react";
+import { DateDeliveryForm } from "./DateDeliveryForm";
+import { FeedbackSearch } from "./FeedbackSearch";
+import { DataDisplaySummary } from "./DataDisplaySummary";
+import { NativeSelectionSettings } from "./NativeSelectionSettings";
+import { DocumentRename } from "./DocumentRename";
+import { ShareDocument } from "./ShareDocument";
+import { ProjectLabels } from "./ProjectLabels";
+import { OverlayWorkbench } from "./OverlayWorkbench";
 import { AlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { AppBar } from "@flowstack-ui/brick/app-bar";
 import { Avatar } from "@flowstack-ui/brick/avatar";
@@ -30,7 +38,7 @@ import { RadioCard } from "@flowstack-ui/brick/radio-card";
 import { Switch } from "@flowstack-ui/brick/switch";
 import { Input } from "@flowstack-ui/brick/input";
 import { NumberInput } from "@flowstack-ui/brick/number-input";
-import { OTPField } from "@flowstack-ui/brick/otp-field";
+import { PinInput } from "@flowstack-ui/brick/pin-input";
 import { PasswordToggleField } from "@flowstack-ui/brick/password-toggle-field";
 import { Textarea } from "@flowstack-ui/brick/textarea";
 import { Select } from "@flowstack-ui/brick/select";
@@ -249,6 +257,8 @@ export function App() {
           </Sidebar.Panel>
           <Sidebar.Main asChild><Surface as="section" inset="md" level="subtle"><HStack gap="3" wrap><Sidebar.Trigger aria-label="Toggle project settings sidebar">☰</Sidebar.Trigger><Text>Persistent project tools composed from the packed public artifact.</Text></HStack></Surface></Sidebar.Main>
         </Sidebar.Root>
+        <DateDeliveryForm />
+        <OverlayWorkbench />
         <VStack as="section" className="hero" aria-labelledby="hero-title" gap="4">
           <Text as="p" className="eyebrow" tone="accent" variant="caption" weight="semibold">
             Independent package integration
@@ -546,15 +556,15 @@ export function App() {
             </Field.Root>
             <Field.Root id="consumer-verification-code" required>
               <Field.Label>Verification code</Field.Label>
-              <OTPField.Root length={6} name="verificationCode" required>
-                <OTPField.Group>
-                  {Array.from({ length: 3 }, (_, index) => <OTPField.Input index={index} key={index} />)}
-                </OTPField.Group>
-                <OTPField.Separator />
-                <OTPField.Group>
-                  {Array.from({ length: 3 }, (_, index) => <OTPField.Input index={index + 3} key={index + 3} />)}
-                </OTPField.Group>
-              </OTPField.Root>
+              <PinInput.Root length={6} name="verificationCode" required otp>
+                <PinInput.Group>
+                  {Array.from({ length: 3 }, (_, index) => <PinInput.Input index={index} key={index} />)}
+                </PinInput.Group>
+                <PinInput.Separator />
+                <PinInput.Group>
+                  {Array.from({ length: 3 }, (_, index) => <PinInput.Input index={index + 3} key={index + 3} />)}
+                </PinInput.Group>
+              </PinInput.Root>
               <Field.Description>Enter the six-digit code.</Field.Description>
               <Field.Error>Enter all six digits.</Field.Error>
             </Field.Root>
@@ -1392,6 +1402,12 @@ export function App() {
         </Surface>
         </SkipLink.Target>
 
+        <FeedbackSearch />
+        <DataDisplaySummary />
+        <NativeSelectionSettings />
+        <DocumentRename />
+        <ShareDocument />
+        <ProjectLabels />
         <footer>
           <p>Public Brick imports. Application-owned composition. No private compatibility layer.</p>
           <Button href="#top" size="sm" tone="neutral" variant="ghost">

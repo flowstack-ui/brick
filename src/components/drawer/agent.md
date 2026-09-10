@@ -19,6 +19,7 @@ Present a finished modal side sheet while Atom owns focus, dismissal, portal, sc
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Drawer parts rather than hand-building overlay, focus trap, Escape, outside interaction, or portal behavior.
 - **MUST:** Give Content an accessible name with a concise Title or, when no visible heading is appropriate, an explicit aria-label or aria-labelledby on Content.
 - **MUST:** Choose size and placement from content needs: use xl when content may need the viewport but should shrink when short, and full only when the surface must always fill it.

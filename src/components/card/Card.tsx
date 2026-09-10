@@ -1,4 +1,5 @@
 import { createElement, forwardRef, type HTMLAttributes } from "react";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 
 export type CardVariant = "outline" | "elevated" | "subtle";
 export type CardSize = "sm" | "md" | "lg";
@@ -6,6 +7,7 @@ export type CardRootElement = "div" | "article" | "section" | "li";
 export type CardTitleElement = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 export interface CardRootProps extends HTMLAttributes<HTMLElement> {
+  radius?: Radius;
   as?: CardRootElement;
   bordered?: boolean;
   variant?: CardVariant;
@@ -43,6 +45,8 @@ const CardRoot = forwardRef<HTMLElement, CardRootProps>(function CardRoot(
     bordered,
     variant = "outline",
     size = "md",
+    radius,
+    style,
     className,
     children,
     "data-slot": dataSlot,
@@ -55,6 +59,7 @@ const CardRoot = forwardRef<HTMLElement, CardRootProps>(function CardRoot(
     {
       ...rootProps,
       className: mergeClassName("brick-card", className),
+      style: radiusStyle(radius, "--brick-card-radius", style),
       "data-bordered": bordered === undefined ? undefined : String(bordered),
       "data-size": size,
       "data-slot": slotOrDefault(dataSlot, "card"),

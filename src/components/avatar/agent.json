@@ -24,7 +24,7 @@
     "Keep visible identity or status text nearby when the image or status ring alone would be ambiguous or consequential.",
     "Use AvatarGroup when multiple Avatars need one overlap, stacking, size, shape, or overflow contract."
   ],
-  "rules": [
+  "rules": [{"id":"avatar-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {
       "id": "avatar-compact-identity",
       "level": "must",

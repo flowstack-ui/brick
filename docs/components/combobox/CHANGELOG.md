@@ -4,6 +4,8 @@ Combobox follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 - Trigger artwork now inherits its generic accessible label from
   `LocaleProvider` when `aria-label` is omitted.
 - Expanded Combobox controls and portalled options to the responsive shared

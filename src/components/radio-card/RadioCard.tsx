@@ -1,4 +1,5 @@
 "use client";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import {
@@ -13,6 +14,7 @@ export type RadioCardAlign = "start" | "center" | "end";
 export type RadioCardJustify = "start" | "center" | "end";
 
 export interface RadioCardRootProps extends AtomRadioGroupRootProps {
+  radius?: Radius;
   size?: RadioCardSize;
   variant?: RadioCardVariant;
   align?: RadioCardAlign;
@@ -42,6 +44,8 @@ export const RadioCardRoot = forwardRef<HTMLDivElement, RadioCardRootProps>(
       orientation = "horizontal",
       size = "md",
       variant = "outline",
+      radius,
+      style,
       "data-slot": dataSlot,
       ...props
     },
@@ -56,6 +60,7 @@ export const RadioCardRoot = forwardRef<HTMLDivElement, RadioCardRootProps>(
         data-size={size}
         data-slot={dataSlot ?? "radio-card"}
         data-variant={variant}
+        style={radiusStyle(radius, "--brick-radio-card-radius", style)}
         orientation={orientation}
         ref={ref}
       />

@@ -19,6 +19,7 @@ Present a finished brief supplemental text description for an already named trig
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Give Trigger a complete accessible name independently; Tooltip supplies only a supplemental aria-describedby description while open and never replaces the control name.
 - **MUST:** Keep plain and rich Content free of links, buttons, inputs, and every other focusable control; use Popover for interaction.
 - **SHOULD:** Keep plain Content to one short hint and rich Content to a concise Title and Description; render essential instructions, errors, warnings, recovery, and full truncated text visibly.

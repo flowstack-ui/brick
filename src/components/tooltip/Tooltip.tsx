@@ -20,6 +20,8 @@ import {
   type TooltipTriggerProps as AtomTooltipTriggerProps,
 } from "@flowstack-ui/atom/tooltip";
 
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
+
 export type TooltipProviderProps = AtomTooltipProviderProps;
 export type TooltipRootProps = AtomTooltipRootProps;
 export type TooltipTriggerProps = AtomTooltipTriggerProps;
@@ -28,10 +30,7 @@ export type TooltipShape = "rounded" | "pill";
 export type TooltipContentProps = Omit<
   AtomTooltipContentProps,
   "aria-label" | "ariaLabel"
-> & {
-  /** Surface shape. @default "rounded" */
-  shape?: TooltipShape;
-};
+> & RadiusShapeProps<TooltipShape>;
 export type TooltipArrowProps = AtomTooltipArrowProps;
 
 export interface TooltipTextProps extends HTMLAttributes<HTMLElement> {
@@ -120,14 +119,15 @@ export const TooltipTrigger = forwardRef<HTMLElement, TooltipTriggerProps>(
 
 export const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
   function TooltipContent(
-    { className, shape = "rounded", sideOffset = 8, "data-slot": dataSlot, ...props },
+    { className, shape = "rounded", radius, style, sideOffset = 8, "data-slot": dataSlot, ...props },
     ref,
   ) {
     return (
       <AtomTooltip.Content
         {...props}
         className={mergeClassName("brick-tooltip", className)}
-        data-shape={shape}
+        data-shape={radius === undefined ? shape : "rounded"}
+        style={radiusStyle(radius, "--brick-tooltip-radius", style)}
         data-slot={slotOrDefault(dataSlot, "tooltip")}
         ref={ref}
         sideOffset={sideOffset}

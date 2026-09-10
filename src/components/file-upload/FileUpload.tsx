@@ -15,14 +15,14 @@ import {
 import type { FileUploadTriggerProps as AtomFileUploadTriggerProps } from "@flowstack-ui/atom";
 
 export type FileUploadSize = "sm" | "md" | "lg";
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
 export type FileUploadVariant = "outline" | "soft";
 export type FileUploadShape = "sharp" | "rounded";
 
-export interface FileUploadRootProps extends AtomFileUploadRootProps {
+export type FileUploadRootProps = AtomFileUploadRootProps & RadiusShapeProps<FileUploadShape> & {
   /** Whether the component fills its available inline size. @default true */
   fullWidth?: boolean;
   /** Corner treatment shared by the dropzone, items, and actions. @default "rounded" */
-  shape?: FileUploadShape;
   /** Density and control geometry. @default "md" */
   size?: FileUploadSize;
   /** Dropzone and item surface recipe. @default "outline" */
@@ -60,6 +60,8 @@ export const FileUploadRoot = forwardRef<HTMLDivElement, FileUploadRootProps>(
       className,
       fullWidth = true,
       shape = "rounded",
+      radius,
+      style,
       size = "md",
       variant = "outline",
       "data-slot": dataSlot,
@@ -72,7 +74,8 @@ export const FileUploadRoot = forwardRef<HTMLDivElement, FileUploadRootProps>(
         {...props}
         className={cn("brick-file-upload", className)}
         data-full-width={fullWidth ? "" : undefined}
-        data-shape={shape}
+        data-shape={radius === undefined ? shape : "rounded"}
+        style={radiusStyle(radius, "--brick-file-upload-radius", style)}
         data-size={size}
         data-slot={dataSlot ?? "file-upload"}
         data-variant={variant}

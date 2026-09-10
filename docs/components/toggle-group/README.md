@@ -59,8 +59,8 @@ values, and `(value: string) => void`; multiple mode requires
 
 | Root prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
-| `tone` | `accent`, `neutral` | `accent` |
+| `variant` | `solid`, `soft`, `outline`, `ghost` | `ghost` |
+| `tone` | `accent`, `neutral` | `neutral` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `shape` | `rounded`, `pill` | `rounded` |
 | `attached` | `boolean` | `false` |
@@ -84,7 +84,20 @@ labels or turning the outline recipe into a soft fill.
 Disabled Items use Toggle's faded disabled foreground and quiet surface;
 selected disabled Items do not retain enabled outline or inset emphasis.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
+
+The default is neutral ghost, matching Toggle: transparent when off and a flat
+soft fill when on. Shared state paint preserves hover, active and disabled
+precedence. Soft uses a uniform border without a bottom inset shadow.
 
 Root variant and tone recipes cascade uniformly to Items. Separated groups use a gap and may
 wrap; attached groups join borders and logical corners. `fullWidth` distributes

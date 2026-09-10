@@ -23,7 +23,7 @@
     "When a parent already owns a stable block size, use Root fill to propagate it through Carousel's Viewport, Track, and Slides; continue sizing authored Surface, Content, and layout components explicitly.",
     "Match Root radius to the visible containing geometry; use radius=none when an edge-to-edge square Surface owns the campaign boundary."
   ],
-  "rules": [
+  "rules": [{"id":"carousel-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     { "id": "carousel-optional-controls", "level": "must", "statement": "Treat arrows and picker dots as optional authored controls; dots represent direct slide selection and are not Tabs." },
     { "id": "carousel-autoplay-control", "level": "must", "statement": "Never enable automatic rotation without a visible RotationControl and direct Previous and Next controls." },
     { "id": "carousel-control-independence", "level": "must", "statement": "Keep picker treatment independent from arrow visibility; use Picker variant bare for dots without a capsule and Navigation visibility interaction only when arrows remain discoverable through focus, pointer, and touch." },

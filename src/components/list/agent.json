@@ -30,7 +30,7 @@
     "Use Root align=\"center\" when a compact leading visual and one-line content should share a visual center; keep the default start for multi-line rows whose leading and trailing parts belong with the first line.",
     "Use Root inset=\"none\" when an ordinary List's leading content must share a logical start with adjacent sibling content; keep the default inset for standalone List rhythm."
   ],
-  "rules": [
+  "rules": [{"id":"list-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {
       "id": "list-native-relationship",
       "level": "must",

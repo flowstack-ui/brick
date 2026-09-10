@@ -1,5 +1,6 @@
 # Icon Button
 
+
 IconButton presents one named icon-only action or a button-styled native link
 with finished Brick geometry and recipes over public Atom Button behavior.
 
@@ -89,6 +90,15 @@ ARIA, and data props except native `color`.
 one visible icon even though React's node type cannot enforce visual content.
 IconButton has no visible-text mode, icon registry, inferred name, or
 pressed-state API.
+
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
@@ -194,6 +204,11 @@ The default `lg` 44 CSS-pixel target is the general touch-safe baseline. Dense
 not become the unreviewed mobile default.
 
 ## Accessibility
+
+### Focus presentation
+
+Support scalar focusRing="outside" | "inside"; omission stays outside. Inside uses paired foreground and canonical negative-width offset without changing Atom behavior.
+See [Focus presentation](../../guides/focus-presentation.md).
 
 Every IconButton needs a complete name through `aria-label`,
 `aria-labelledby`, or an equivalent native relationship. The visible icon is

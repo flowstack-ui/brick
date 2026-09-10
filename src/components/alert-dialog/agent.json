@@ -15,7 +15,7 @@
     "Compose AlertDialog.Root with AlertDialog.Trigger and AlertDialog.Portal; inside Portal keep AlertDialog.Overlay and AlertDialog.Content as siblings. Inside Content, arrange Header with the required Title and Description, use a short optional Body only when needed, and place Cancel before Action in Footer.",
     "Compose Brick Button through Cancel and Action so each response keeps its visual and behavioral role. When a local Appearance scope owns the trigger, portal into that scope or apply the same Appearance to the portalled visual root."
   ],
-  "rules": [
+  "rules": [{"id":"alert-dialog-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {"id": "alert-dialog-consequential-only", "level": "must", "statement": "Reserve AlertDialog for one urgent or consequential decision; use Dialog for ordinary tasks, forms, or complex workflows."},
     {"id": "alert-dialog-required-semantics", "level": "must", "statement": "Keep the alertdialog semantics and provide both an accessible name with visible Title or native labeling and an accessible description with Description or native aria-describedby."},
     {"id": "alert-dialog-safe-cancel", "level": "must", "statement": "Place a visible enabled Cancel before Action and make Cancel the safe initial focus target for consequential actions unless an explicitly safer workflow target is supplied."},

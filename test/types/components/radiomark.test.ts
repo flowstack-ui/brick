@@ -1,6 +1,7 @@
 import { createElement, createRef } from "react";
 import { Radiomark, type RadiomarkProps, type RadiomarkSize, type RadiomarkTone, type RadiomarkVariant } from "../../../src/radiomark.js";
 
+createElement(Radiomark, { filled: true, variant: "inverted" });
 const props: RadiomarkProps = { checked: true, disabled: false, size: "md", tone: "accent", variant: "solid" };
 createElement(Radiomark, { ...props, ref: createRef<HTMLSpanElement>() });
 const sizes: RadiomarkSize[] = ["xs", "sm", "md", "lg"];

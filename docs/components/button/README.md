@@ -1,5 +1,6 @@
 # Button
 
+
 Button presents a finished action or emphasized native link. Brick owns its
 visual recipes and styling; the public Atom Button owns semantics, interaction,
 form behavior, unavailable/loading behavior, and composition.
@@ -147,6 +148,15 @@ semantic `tone`.
 `asChild` and `render` are mutually exclusive. When `asChild` is `true`,
 `children` must be one `ReactElement`, and `startIcon`/`endIcon` are rejected
 by the public type. Put any icon inside that child instead.
+
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
@@ -315,6 +325,11 @@ Brick does not mirror icon artwork. Supply the correct directional arrow or
 chevron for the current writing direction.
 
 ## Accessibility
+
+### Focus presentation
+
+Support scalar focusRing="outside" | "inside"; omission stays outside. Inside uses paired foreground and canonical negative-width offset without changing Atom behavior.
+See [Focus presentation](../../guides/focus-presentation.md).
 
 Provide meaningful visible children for the accessible name. Use the default
 button path for actions and `href` for navigation.

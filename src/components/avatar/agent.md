@@ -21,6 +21,7 @@ Present one compact person or entity identity with a finished fixed-square image
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Avatar for compact fixed-square identity presentation, not generic media or larger editorial portraits.
 - **MUST:** Decide alt from context: preserve meaningful identity when Avatar adds it, and use alt="" only when adjacent text or the owning control already supplies the same identity.
 - **MUST:** Pass the same source to the Atom-backed Root and Image path, preserve idle/loading/loaded/error state, and keep explicit fallback content durable through missing, changed, delayed, and failed images.

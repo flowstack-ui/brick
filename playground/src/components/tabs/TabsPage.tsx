@@ -34,7 +34,17 @@ export function TabsPage() {
   const [manual, setManual] = useState("one");
   return <VStack className="forms-page tabs-page" data-component-page="tabs" data-testid="tabs-workbench">
     <Scenario {...tabsScenarios[0]}><EvidenceSurface inset="lg" data-testid="tabs-overview"><DemoTabs ariaLabel="Overview sections" /></EvidenceSurface></Scenario>
-    <Scenario {...tabsScenarios[1]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="tabs-variants">{variants.map((variant) => <Cell key={variant} label={variant}><DemoTabs ariaLabel={`${variant} sections`} squareTriggers={variant === "line"} variant={variant} /></Cell>)}</Grid.Root></Scenario>
+    <Scenario {...tabsScenarios[1]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="tabs-variants">{variants.map((variant) => <Cell key={variant} label={variant}><DemoTabs ariaLabel={`${variant} sections`} squareTriggers={variant === "line"} variant={variant} /></Cell>)}</Grid.Root>
+      <EvidenceSurface data-testid="tabs-neutral">
+        <SpecimenLabel>Neutral soft tabs</SpecimenLabel>
+        <Tabs.Root defaultValue="preview" variant="soft" tone="neutral" size="sm">
+          <Tabs.List ariaLabel="Neutral sections"><Tabs.Trigger value="preview">Preview</Tabs.Trigger><Tabs.Trigger value="code">Code</Tabs.Trigger></Tabs.List>
+          <Tabs.Content value="preview"><Text>Neutral selected surface without elevation.</Text></Tabs.Content>
+          <Tabs.Content value="code"><Text>The same panels and keyboard behavior.</Text></Tabs.Content>
+        </Tabs.Root>
+        <PlaygroundCodeBlock>{'<Tabs.Root variant="soft" tone="neutral" size="sm">…</Tabs.Root>'}</PlaygroundCodeBlock>
+      </EvidenceSurface>
+    </Scenario>
     <Scenario {...tabsScenarios[2]}><Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="tabs-sizes">{sizes.map((size) => <Cell key={size} label={size}><DemoTabs ariaLabel={`${size} sections`} size={size} /></Cell>)}</Grid.Root></Scenario>
     <Scenario {...tabsScenarios[3]}>
       <VStack gap="4" data-testid="tabs-layout">

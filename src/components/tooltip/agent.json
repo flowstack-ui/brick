@@ -9,7 +9,7 @@
     "Compose Tooltip.Root with Tooltip.Trigger asChild around one already named focusable control, plus Tooltip.Portal and Tooltip.Content; add Tooltip.Arrow only when the styled hint needs a pointer. Use Tooltip.Provider when a coherent region shares timing policy.",
     "Use plain Content for one short hint or Root variant=rich with presentational Tooltip.Title and Tooltip.Description for a concise title and supporting text. Both recipes remain non-interactive descriptions. Reproduce any local Appearance scope on portalled Content."
   ],
-  "rules": [
+  "rules": [{"id":"tooltip-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {"id": "tooltip-trigger-name", "level": "must", "statement": "Give Trigger a complete accessible name independently; Tooltip supplies only a supplemental aria-describedby description while open and never replaces the control name."},
     {"id": "tooltip-noninteractive", "level": "must", "statement": "Keep plain and rich Content free of links, buttons, inputs, and every other focusable control; use Popover for interaction."},
     {"id": "tooltip-brief-content", "level": "should", "statement": "Keep plain Content to one short hint and rich Content to a concise Title and Description; render essential instructions, errors, warnings, recovery, and full truncated text visibly."},

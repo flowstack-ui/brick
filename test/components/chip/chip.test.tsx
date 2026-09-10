@@ -10,6 +10,64 @@ import {
 } from "../../../src/chip.js";
 
 describe("Chip", () => {
+  it("adds compact density, semantic recipes and stable adornment slots", () => {
+    const start = createRef<HTMLSpanElement>();
+    const end = createRef<HTMLSpanElement>();
+    render(<Chip.Root density="compact" size="xl" tone="success" variant="solid" data-testid="expanded">
+      <Chip.StartElement ref={start} data-slot="custom-start">A</Chip.StartElement>
+      <Chip.Label>Reviewer</Chip.Label>
+      <Chip.EndElement ref={end}>B</Chip.EndElement>
+    </Chip.Root>);
+    const root = screen.getByTestId("expanded");
+    expect(root).toHaveAttribute("data-density", "compact");
+    expect(root).not.toHaveAttribute("density");
+    expect(root).toHaveAttribute("data-size", "xl");
+    expect(root).toHaveAttribute("data-tone", "success");
+    expect(root).toHaveAttribute("data-variant", "solid");
+    expect(start.current).toHaveClass("brick-chip__start-element");
+    expect(start.current).toHaveAttribute("data-slot", "custom-start");
+    expect(end.current).toHaveAttribute("data-slot", "chip-end-element");
+  });
+
+  it("keeps primary action and removal independent for pointer and keyboard", async () => {
+    const user = userEvent.setup();
+    const action = vi.fn();
+    const remove = vi.fn();
+    const submit = vi.fn(event => event.preventDefault());
+    const ref = createRef<HTMLElement>();
+    render(<form onSubmit={submit}><Chip.Root>
+      <Chip.ActionTrigger onPress={action} ref={ref}><Chip.Label>Open Riley</Chip.Label></Chip.ActionTrigger>
+      <Chip.RemoveTrigger ariaLabel="Remove Riley" onPress={remove} />
+    </Chip.Root></form>);
+    expect(ref.current).toHaveAttribute("type", "button");
+    expect(ref.current).toHaveAttribute("data-slot", "chip-action-trigger");
+    await user.click(screen.getByRole("button", { name: "Open Riley" }));
+    expect(action).toHaveBeenCalledTimes(1);
+    expect(remove).not.toHaveBeenCalled();
+    await user.keyboard("{Enter}");
+    expect(action).toHaveBeenCalledTimes(2);
+    await user.tab();
+    await user.keyboard(" ");
+    expect(remove).toHaveBeenCalledTimes(1);
+    expect(action).toHaveBeenCalledTimes(2);
+    expect(submit).not.toHaveBeenCalled();
+    expect(ref.current?.querySelector("button")).toBeNull();
+  });
+
+  it("preserves disabled primary actions and consumer props", async () => {
+    const action = vi.fn();
+    const user = userEvent.setup();
+    render(<Chip.Root><Chip.ActionTrigger disabled onPress={action} className="custom-action" data-slot="custom-action">
+      <Chip.Label>Locked record</Chip.Label>
+    </Chip.ActionTrigger></Chip.Root>);
+    const button = screen.getByRole("button", { name: "Locked record" });
+    expect(button).toBeDisabled();
+    expect(button).toHaveClass("brick-chip__action-trigger", "custom-action");
+    expect(button).toHaveAttribute("data-slot", "custom-action");
+    await user.click(button);
+    expect(action).not.toHaveBeenCalled();
+  });
+
   it("renders the three-part default value-token contract", () => {
     render(
       <Chip.Root data-testid="chip">

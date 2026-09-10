@@ -82,7 +82,7 @@ for (const { path, source } of playgroundTsx) {
 }
 
 const customizationContracts = new Map([
-  ["playground/src/components/aspect-ratio/AspectRatioPage.tsx", "shared"],
+  ["playground/src/components/aspect-ratio/AspectRatioEvidence.tsx", "shared"],
   ["playground/src/components/bottom-navigation/BottomNavigationPage.tsx", "shared"],
   ["playground/src/components/context-menu/ContextMenuPage.tsx", "shared"],
   ["playground/src/components/divider/DividerPage.tsx", "shared"],

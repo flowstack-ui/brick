@@ -1,3 +1,4 @@
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import { forwardRef, type HTMLAttributes } from "react";
 import {
   DataGrid as AtomDataGrid,
@@ -24,7 +25,8 @@ export type DataGridBorderTone = "subtle" | "default" | "strong";
 export type DataGridLayout = "auto" | "fixed";
 
 export interface DataGridContainerProps extends HTMLAttributes<HTMLDivElement> { "data-slot"?: string; }
-export interface DataGridRootProps extends AtomDataGridRootProps { variant?: DataGridVariant; size?: DataGridSize; density?: DataGridDensity; surface?: DataGridSurface; borderTone?: DataGridBorderTone; showColumnBorder?: boolean; layout?: DataGridLayout; striped?: boolean; stickyHeader?: boolean; }
+export interface DataGridRootProps extends AtomDataGridRootProps {
+  radius?: Radius; variant?: DataGridVariant; size?: DataGridSize; density?: DataGridDensity; surface?: DataGridSurface; borderTone?: DataGridBorderTone; showColumnBorder?: boolean; layout?: DataGridLayout; striped?: boolean; stickyHeader?: boolean; }
 export interface DataGridCaptionProps extends AtomDataGridCaptionProps { side?: DataGridCaptionSide; }
 export interface DataGridColumnGroupProps extends AtomDataGridColumnGroupProps {}
 export interface DataGridColumnProps extends AtomDataGridColumnProps {}
@@ -42,8 +44,8 @@ function slot(value: string | undefined, fallback: string) { return value ?? fal
 export const DataGridContainer = forwardRef<HTMLDivElement, DataGridContainerProps>(function DataGridContainer({ className, "data-slot": dataSlot, ...props }, ref) {
   return <div {...props} className={mergeClassName("brick-data-grid-container", className)} data-slot={slot(dataSlot, "data-grid-container")} ref={ref} />;
 });
-export const DataGridRoot = forwardRef<HTMLTableElement, DataGridRootProps>(function DataGridRoot({ variant = "line", size = "md", density = "comfortable", surface = "transparent", borderTone = "default", showColumnBorder = false, layout = "auto", striped = false, stickyHeader = false, className, "data-slot": dataSlot, ...props }, ref) {
-  return <AtomDataGrid.Root {...props} className={mergeClassName("brick-data-grid", className)} data-border-tone={borderTone} data-column-border={showColumnBorder ? "" : undefined} data-density={density} data-layout={layout} data-size={size} data-slot={slot(dataSlot, "data-grid")} data-sticky-header={stickyHeader ? "" : undefined} data-striped={striped ? "" : undefined} data-surface={surface} data-variant={variant} ref={ref} />;
+export const DataGridRoot = forwardRef<HTMLTableElement, DataGridRootProps>(function DataGridRoot({ variant = "line", size = "md", density = "comfortable", surface = "transparent", borderTone = "default", showColumnBorder = false, layout = "auto", striped = false, stickyHeader = false, className, radius, style, "data-slot": dataSlot, ...props }, ref) {
+  return <AtomDataGrid.Root {...props} className={mergeClassName("brick-data-grid", className)} style={radiusStyle(radius, "--brick-data-grid-radius", style)} data-border-tone={borderTone} data-column-border={showColumnBorder ? "" : undefined} data-density={density} data-layout={layout} data-size={size} data-slot={slot(dataSlot, "data-grid")} data-sticky-header={stickyHeader ? "" : undefined} data-striped={striped ? "" : undefined} data-surface={surface} data-variant={variant} ref={ref} />;
 });
 export const DataGridColumnGroup = forwardRef<HTMLTableColElement, DataGridColumnGroupProps>(function DataGridColumnGroup({ className, "data-slot": dataSlot, ...props }, ref) {
   return <AtomDataGrid.ColumnGroup {...props} className={mergeClassName("brick-data-grid__column-group", className)} data-slot={slot(dataSlot, "data-grid-column-group")} ref={ref} />;

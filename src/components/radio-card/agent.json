@@ -9,7 +9,7 @@
   "useWhen": ["A short single-choice set needs icons, titles, descriptions, prices, badges, or supporting metadata inside large selectable targets."],
   "avoidWhen": [{"condition": "Choices are concise, multiple, compact, or immediate commands.", "useInstead": "RadioGroup, CheckboxGroup, Select, SegmentGroup, or ToggleGroup"}],
   "composition": ["Give Root an accessible group name, normally through Fieldset Legend. Give every Item a stable unique value and compose Control, Content, Title, optional Description, optional Indicator, and optional Addon deliberately.", "Use one Root. Put a Brick Grid or Stack inside it when responsive option tracks are needed; do not duplicate the semantic group."],
-  "rules": [
+  "rules": [{"id":"radio-card-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {"id": "radio-card-owner", "level": "must", "statement": "Preserve Atom's radio Item as the whole interactive card; do not add a second input or click behavior."},
     {"id": "radio-card-naming", "level": "must", "statement": "Give Root an accessible group name and every Item a complete visible option name."},
     {"id": "radio-card-values", "level": "must", "statement": "Keep Item values unique and use controlled or uncontrolled state consistently."},

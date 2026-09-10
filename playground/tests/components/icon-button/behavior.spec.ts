@@ -1,5 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
+import { verifyActionFocus } from "../../helpers/action-focus.js";
+import { setExampleDirection } from "../../helpers/example-direction.js";
+
+test("IconButton inside focus survives clipping and every action fill", async ({ page }) => {
+  await page.goto("/icon-button");
+  await verifyActionFocus(page, page.getByTestId("icon-button-inside-focus"));
+});
 
 test("IconButton exposes its default named-action anatomy", async ({
   page,
@@ -145,14 +152,14 @@ test("IconButton exposes every closed visual recipe at the promised geometry", a
       name: expected.name,
       exact: true,
     });
-    expect(await control.boundingBox()).toMatchObject({
-      height: expected.target,
-      width: expected.target,
-    });
-    expect(await control.locator("svg").boundingBox()).toMatchObject({
-      height: expected.icon,
-      width: expected.icon,
-    });
+    // Gecko can report 47.99994 for a 48px flex box; retain a subpixel
+    // tolerance without accepting a visibly different recipe.
+    const box = (await control.boundingBox())!;
+    expect(box.height).toBeCloseTo(expected.target, 2);
+    expect(box.width).toBeCloseTo(expected.target, 2);
+    const iconBox = (await control.locator("svg").boundingBox())!;
+    expect(iconBox.height).toBeCloseTo(expected.icon, 2);
+    expect(iconBox.width).toBeCloseTo(expected.icon, 2);
     await expect(control).toHaveAttribute("data-variant", "ghost");
     await expect(control).toHaveAttribute("data-tone", "neutral");
     await expect(control).toHaveAttribute("data-shape", "rounded");
@@ -269,7 +276,7 @@ test("IconButton keeps one decorative icon and complete names across states", as
     width: "20px",
   });
 
-  await page.getByRole("button", { name: "RTL", exact: true }).click();
+  await setExampleDirection(page, "rtl");
   const rtlSpinner = await loading.evaluate((element) => {
     const style = getComputedStyle(element, "::after");
     return {
@@ -279,11 +286,38 @@ test("IconButton keeps one decorative icon and complete names across states", as
     };
   });
   expect(rtlSpinner).toEqual({
-    animationName: "brick-action-spinner-spin-rtl",
+    animationName: "brick-spinner-spin",
     insetBlockStart: "21px",
     insetInlineStart: "21px",
   });
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+});
+
+test("loading spinners stay centered with animation disabled in both directions", async ({ page }) => {
+  await page.goto("/icon-button");
+  await page.addStyleTag({ content: '.brick-icon-button[data-loading]::after { animation: none !important; }' });
+  for (const direction of ["LTR", "RTL"]) {
+    await setExampleDirection(page, direction.toLowerCase() as "ltr" | "rtl");
+    for (const name of ["Loading search", "Unavailable loading search"]) {
+      const control = page.getByRole("button", { name, exact: true });
+      const geometry = await control.evaluate(element => {
+        const host = getComputedStyle(element);
+        const pseudo = getComputedStyle(element, "::after");
+        const [tx, ty] = pseudo.translate.split(" ").map(Number.parseFloat);
+        const width = Number.parseFloat(pseudo.width), height = Number.parseFloat(pseudo.height);
+        return {
+          x: Number.parseFloat(pseudo.left) + width / 2 + width * tx / 100,
+          y: Number.parseFloat(pseudo.top) + height / 2 + height * ty / 100,
+          expectedX: (element.getBoundingClientRect().width - Number.parseFloat(host.borderLeftWidth) - Number.parseFloat(host.borderRightWidth)) / 2,
+          expectedY: (element.getBoundingClientRect().height - Number.parseFloat(host.borderTopWidth) - Number.parseFloat(host.borderBottomWidth)) / 2,
+          transform: pseudo.transform,
+        };
+      });
+      expect(geometry.transform).toBe("none");
+      expect(geometry.x).toBeCloseTo(geometry.expectedX, 2);
+      expect(geometry.y).toBeCloseTo(geometry.expectedY, 2);
+    }
+  }
 });
 
 test("IconButton exposes appearance and supported customization hooks", async ({
@@ -431,7 +465,7 @@ test("IconButton honors reduced motion and forced-color boundaries", async ({
     await loading.evaluate(
       (element) => getComputedStyle(element, "::after").animationDuration,
     ),
-  ).toBe("1.4s");
+  ).toBe("0s");
   const spinnerColors = await loading.evaluate((element) => {
     const style = getComputedStyle(element, "::after");
     return [style.borderTopColor, style.borderRightColor];

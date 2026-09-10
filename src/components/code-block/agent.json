@@ -20,6 +20,7 @@
     }
   ],
   "composition": [
+    "Use CopyTrigger asChild with a named Brick IconButton for icon-only copying. The child owns recipes; Root already owns Clipboard behavior. Do not add a second Clipboard Root. Reserve space when positioning the action over Content with ZStack.",
     "Pass the exact plain-text source to Root value, then place Content inside Root and give focusable Content a specific accessible label.",
     "Author Header, Title, Language, Actions, CopyTrigger, CopyStatus, and CopyIndicator only when the interface needs those optional parts.",
     "For syntax highlighting, pass a synchronous adapter or trusted React token nodes to Content while keeping Root value identical to the plain text that must be copied.",
@@ -66,6 +67,11 @@
       "id": "code-block-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus code-block.css and its documented component dependencies."
+    },
+    {
+      "id": "code-block-focus-presentation",
+      "level": "must",
+      "statement": "The flush collapse action paints focus inside its clipped boundary; copy success remains icon-only with an accessible announcement."
     }
   ],
   "commonMistakes": [

@@ -21,6 +21,7 @@ Provide styled resilient media with Atom loading/fallback behavior, sizing recip
 
 ## Rules
 
+- **MUST:** Use shared Radius with default none. Core sm/md/lg replace historical semantic mappings; use subtle/control/surface to preserve old intent. Radius does not change media fit, loading or aspect ratio.
 - **MUST:** Use Brick Image for ordinary interface media; document any native or framework image fallback and the missing capability.
 - **MUST:** Provide meaningful alt text, or alt="" for a decorative image.
 - **MUST:** For a profile portrait, preserve the person's name as alt when the portrait communicates identity; use alt="" only when that specific portrait is intentionally decorative.

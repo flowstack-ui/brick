@@ -19,6 +19,7 @@ Present a finished local-file picker, optional drop target, and removable select
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Render exactly one HiddenInput whenever picker, Trigger, required validity, name, form, accept, or multiple semantics are needed and keep it aligned with the visible control.
 - **MUST:** Always provide a visible accessible Trigger for keyboard, touch, and pointer selection; Dropzone alone is not an equivalent picker, and Trigger already owns its button recipe rather than nesting Button.
 - **MUST:** Use accept, maxFiles, maxSize, and validateFile only for immediate client feedback, show authored localized rejection reasons, and validate type, size, content, authorization, and storage policy again on the server.

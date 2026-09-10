@@ -14,6 +14,7 @@ export {
   type TabsListProps,
   type TabsRootProps,
   type TabsSize,
+  type TabsTone,
   type TabsTriggerProps,
   type TabsTriggerRadius,
   type TabsVariant,

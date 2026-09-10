@@ -5,6 +5,10 @@ import {
   VStack,
   Text,
   Toggle,
+  ToggleGroup,
+  Button,
+  For,
+  type Radius,
   type ToggleShape,
   type ToggleSize,
   type ToggleTone,
@@ -71,7 +75,7 @@ function Cell({ children, label }: { children: ReactNode; label: string }) {
 export const toggleScenarios = [
   {
     description:
-      "Toggle’s canonical rendering is an unpressed soft command at the medium size with a rounded shape and ordinary text content. Activation persists through native aria-pressed state.",
+      "Toggle’s canonical rendering is an unpressed neutral ghost command at the medium size with a rounded shape and ordinary text content. Activation persists through native aria-pressed state.",
     id: "toggle.overview",
     number: 1,
     title: "Overview",
@@ -85,7 +89,7 @@ export const toggleScenarios = [
   },
   {
     description:
-      "This intentional variant-by-state matrix compares each resting recipe with its selected accent treatment. Content, size, and shape remain identical.",
+      "This intentional variant-by-state matrix compares each resting recipe with its selected neutral treatment. Content, size, and shape remain identical.",
     id: "toggle.states",
     navigationTitle: "States",
     number: 3,
@@ -93,7 +97,7 @@ export const toggleScenarios = [
   },
   {
     description:
-      "Size changes only target geometry, padding, gap, icon scale, and typography. Every specimen retains Toggle’s default soft, rounded, unpressed recipe.",
+      "Size changes only target geometry, padding, gap, icon scale, and typography. Every specimen retains Toggle’s default neutral ghost, rounded, unpressed recipe.",
     id: "toggle.sizes",
     number: 4,
     title: "Sizes",
@@ -198,6 +202,19 @@ export function TogglePage() {
 
       <Scenario {...toggleScenarios[4]}>
         <VStack className="toggle-evidence-stack" data-testid="toggle-shapes-icons">
+          <EvidenceGroup description="Core choices remain distinct from theme roles. Attached groups use the same outer radius." title="Radius tokens">
+            <Grid.Root columns={{initial:1,md:3}} gap="4">
+              <For each={["none","2xs","xs","sm","md","lg","xl","2xl","3xl","4xl","subtle","control","surface","overlay","full"] as Radius[]}>
+                {(radius) => <Cell key={radius} label={radius}><VStack align="start" gap="2" data-radius-example={radius}>
+                  <Button radius={radius}>Save</Button>
+                  <Toggle radius={radius}>Bold</Toggle>
+                  <ToggleGroup.Root aria-label={`Format ${radius}`} radius={radius} attached>
+                    <ToggleGroup.Item value="bold">Bold</ToggleGroup.Item><ToggleGroup.Item value="italic">Italic</ToggleGroup.Item>
+                  </ToggleGroup.Root>
+                </VStack></Cell>}
+              </For>
+            </Grid.Root>
+          </EvidenceGroup>
           <EvidenceGroup description="Both shapes use identical default content and state." title="Shapes">
             <Grid.Root columns={2} className="toggle-specimen-grid toggle-specimen-grid--two">
               {shapes.map((shape) => (

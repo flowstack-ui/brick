@@ -4,13 +4,20 @@ Toolbar follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Use canonical focus-width tokens while preserving existing focus ownership and compact placement.
+
+- Default ToggleGroup to neutral ghost and share Toggle/ToggleGroup paint,
+  including flat selected states and hover/active/disabled/forced-color styling.
+  Preserve Toolbar's compact geometry, inset focus and Atom roving navigation.
+- Apply the medium control typography tokens to medium Toolbar items.
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ### Fixed
 
-- Neutral solid ToggleItems now use a Toolbar-specific layered surface: raised
-  and white-ish in light appearance, stronger raised neutral in dark, with
-  hover and pressed states that remain distinct from the Toolbar container.
-- Disabled commands and ToggleItems now use a faded disabled foreground and
-  remove enabled selected/outlined emphasis.
+- Neutral solid ToggleItems use the shared neutral surface recipe, with
+  distinct hover and pressed states.
+- Disabled commands use a faded disabled foreground. ToggleItems share the
+  quiet disabled surface and border of Toggle and ToggleGroup.
 - Kept command, link, and toggle focus rings fully visible inside horizontal
   and vertical Toolbar scrolling boundaries, including edge controls and the
   zero-padding plain variant.

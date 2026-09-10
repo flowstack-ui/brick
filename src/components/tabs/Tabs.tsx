@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 import {
   Tabs as AtomTabs,
@@ -11,15 +12,17 @@ import {
 
 export type TabsSize = "sm" | "md" | "lg";
 export type TabsVariant = "line" | "solid" | "soft" | "enclosed";
+export type TabsTone = "accent" | "neutral";
 export type TabsContentInset = "none" | "sm" | "md" | "lg";
 export type TabsLayout = "auto" | "stacked" | "side";
 export type TabsListColumns = 1 | 2 | 3 | 4;
-export type TabsListRadius = "default" | "none";
+export type TabsListRadius = Radius | "default";
 export type TabsTriggerRadius = "default" | "none";
 
 export interface TabsRootProps extends AtomTabsRootProps {
   size?: TabsSize;
   variant?: TabsVariant;
+  tone?: TabsTone;
   fullWidth?: boolean;
   layout?: ResponsiveValue<TabsLayout>;
 }
@@ -40,19 +43,19 @@ function classes(base: string, className?: string) {
 
 export const TabsRoot = forwardRef<HTMLDivElement, TabsRootProps>(
   function TabsRoot(
-    { className, fullWidth = false, layout = "auto", size = "md", variant = "line", "data-slot": slot, ...props },
+    { className, fullWidth = false, layout = "auto", size = "md", variant = "line", tone = "accent", "data-slot": slot, ...props },
     ref,
   ) {
-    return <AtomTabs.Root {...props} {...responsiveDataAttributes("data-layout", layout, { defaultValue: "auto" })} className={classes("brick-tabs", className)} data-full-width={fullWidth ? "" : undefined} data-size={size} data-slot={slot ?? "tabs-root"} data-variant={variant} ref={ref} />;
+    return <AtomTabs.Root {...props} {...responsiveDataAttributes("data-layout", layout, { defaultValue: "auto" })} className={classes("brick-tabs", className)} data-full-width={fullWidth ? "" : undefined} data-size={size} data-slot={slot ?? "tabs-root"} data-variant={variant} data-tone={tone} ref={ref} />;
   },
 );
 
 export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
-  function TabsList({ className, columns, radius = "default", triggerRadius, "data-slot": slot, ...props }, ref) {
+  function TabsList({ className, columns, radius = "default", style, triggerRadius, "data-slot": slot, ...props }, ref) {
     const columnAttributes = columns === undefined
       ? {}
       : responsiveDataAttributes("data-columns", columns, { alwaysInitial: true });
-    return <AtomTabs.List {...props} {...columnAttributes} className={classes("brick-tabs-list", className)} data-radius={radius} data-slot={slot ?? "tabs-list"} data-trigger-radius={triggerRadius} ref={ref} />;
+    return <AtomTabs.List {...props} {...columnAttributes} className={classes("brick-tabs-list", className)} style={radiusStyle(radius === "default" || radius === "none" ? undefined : radius, "--brick-tabs-radius", style)} data-radius={radius} data-slot={slot ?? "tabs-list"} data-trigger-radius={triggerRadius} ref={ref} />;
   },
 );
 

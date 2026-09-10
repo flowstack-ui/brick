@@ -21,6 +21,7 @@ Group content about one subject in a finished static compound surface with heade
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Do not turn the whole Card into an unnamed clickable div; place explicit Link or Button controls inside or use a valid link composition.
 - **MUST:** Load styles.css or core.css plus card.css and styles for nested components.
 - **SHOULD:** Use bordered={false} when edge-to-edge authored media should meet Card's clipped outer boundary without retaining the selected recipe's border; do not remove that geometry with application CSS.

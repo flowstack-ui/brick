@@ -1,0 +1,98 @@
+@layer brick.components {
+  .brick-alert {
+    --brick-alert-tone-soft: var(--brick-color-surface-subtle);
+    --brick-alert-tone-on-soft: var(--brick-color-text-primary);
+    --brick-alert-tone-solid: var(--brick-color-text-primary);
+    --brick-alert-tone-on-solid: var(--brick-color-text-inverse);
+    --brick-alert-tone-border: var(--brick-color-border-default);
+    --brick-alert-tone-text: var(--brick-color-text-primary);
+    --brick-alert-background: var(--brick-alert-tone-soft);
+    --brick-alert-color: var(--brick-alert-tone-on-soft);
+    --brick-alert-border-color: transparent;
+    --brick-alert-radius: var(--brick-radius-surface);
+    --brick-alert-padding: var(--brick-space-4);
+    --brick-alert-gap: var(--brick-space-3);
+    --brick-alert-indicator-size: 1.25rem;
+    --brick-alert-font-size: var(--brick-typography-body-sm-font-size);
+    display: flex;
+    box-sizing: border-box;
+    align-items: flex-start;
+    inline-size: 100%;
+    min-inline-size: 0;
+    gap: var(--brick-alert-gap);
+    padding: var(--brick-alert-padding);
+    border: var(--brick-border-width) solid var(--brick-alert-border-color);
+    border-radius: var(--brick-alert-radius);
+    background: var(--brick-alert-background);
+    color: var(--brick-alert-color);
+    font-family: var(--brick-typography-body-sm-font-family);
+    font-size: var(--brick-alert-font-size);
+    font-weight: var(--brick-typography-body-sm-font-weight);
+    line-height: var(--brick-typography-body-sm-line-height);
+    letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    text-align: start;
+    overflow-wrap: anywhere;
+  }
+  .brick-alert[data-size="sm"] {
+    --brick-alert-padding: var(--brick-space-3);
+    --brick-alert-gap: var(--brick-space-2);
+    --brick-alert-indicator-size: 1.125rem;
+    --brick-alert-font-size: var(--brick-typography-caption-font-size);
+  }
+  .brick-alert[data-size="lg"] {
+    --brick-alert-indicator-size: 1.5rem;
+    --brick-alert-font-size: var(--brick-typography-body-md-font-size);
+  }
+  .brick-alert-content { display: flex; flex-direction: column; flex: 1; min-inline-size: 0; gap: var(--brick-space-1); }
+  .brick-alert[data-inline] > .brick-alert-content { flex-direction: row; flex-wrap: wrap; column-gap: var(--brick-space-2); }
+  .brick-alert-title, .brick-alert-description { margin: 0; }
+  .brick-alert-title { font-weight: var(--brick-font-weight-medium); }
+  .brick-alert-indicator { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 var(--brick-alert-indicator-size); inline-size: var(--brick-alert-indicator-size); block-size: var(--brick-alert-indicator-size); }
+  .brick-alert-indicator > svg { inline-size: 100%; block-size: 100%; }
+  .brick-alert[data-variant="surface"], .brick-alert[data-variant="outline"] { --brick-alert-border-color: var(--brick-alert-tone-border); }
+  .brick-alert[data-variant="outline"] { --brick-alert-background: transparent; --brick-alert-color: var(--brick-alert-tone-text); }
+  .brick-alert[data-variant="solid"] { --brick-alert-background: var(--brick-alert-tone-solid); --brick-alert-color: var(--brick-alert-tone-on-solid); }
+  .brick-alert[data-tone="accent"] {
+    --brick-alert-tone-soft: var(--brick-color-accent-soft);
+    --brick-alert-tone-on-soft: var(--brick-color-accent-on-soft);
+    --brick-alert-tone-solid: var(--brick-color-accent-solid);
+    --brick-alert-tone-on-solid: var(--brick-color-accent-on-solid);
+    --brick-alert-tone-border: var(--brick-color-accent-border);
+    --brick-alert-tone-text: var(--brick-color-accent-text);
+  }
+  .brick-alert[data-tone="info"] {
+    --brick-alert-tone-soft: var(--brick-color-info-soft);
+    --brick-alert-tone-on-soft: var(--brick-color-info-on-soft);
+    --brick-alert-tone-solid: var(--brick-color-info-solid);
+    --brick-alert-tone-on-solid: var(--brick-color-info-on-solid);
+    --brick-alert-tone-border: var(--brick-color-info-border);
+    --brick-alert-tone-text: var(--brick-color-info-text);
+  }
+  .brick-alert[data-tone="success"] {
+    --brick-alert-tone-soft: var(--brick-color-success-soft);
+    --brick-alert-tone-on-soft: var(--brick-color-success-on-soft);
+    --brick-alert-tone-solid: var(--brick-color-success-solid);
+    --brick-alert-tone-on-solid: var(--brick-color-success-on-solid);
+    --brick-alert-tone-border: var(--brick-color-success-border);
+    --brick-alert-tone-text: var(--brick-color-success-text);
+  }
+  .brick-alert[data-tone="warning"] {
+    --brick-alert-tone-soft: var(--brick-color-warning-soft);
+    --brick-alert-tone-on-soft: var(--brick-color-warning-on-soft);
+    --brick-alert-tone-solid: var(--brick-color-warning-solid);
+    --brick-alert-tone-on-solid: var(--brick-color-warning-on-solid);
+    --brick-alert-tone-border: var(--brick-color-warning-border);
+    --brick-alert-tone-text: var(--brick-color-warning-text);
+  }
+  .brick-alert[data-tone="danger"] {
+    --brick-alert-tone-soft: var(--brick-color-danger-soft);
+    --brick-alert-tone-on-soft: var(--brick-color-danger-on-soft);
+    --brick-alert-tone-solid: var(--brick-color-danger-solid);
+    --brick-alert-tone-on-solid: var(--brick-color-danger-on-solid);
+    --brick-alert-tone-border: var(--brick-color-danger-border);
+    --brick-alert-tone-text: var(--brick-color-danger-text);
+  }
+  @media (forced-colors: active) {
+    .brick-alert { border-color: CanvasText; background: Canvas; color: CanvasText; }
+  }
+}

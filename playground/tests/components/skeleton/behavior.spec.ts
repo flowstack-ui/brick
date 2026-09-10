@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 test.beforeEach(async ({ page }) => { await page.goto("/skeleton"); });
 test("defaults, variants, animations, dimensions, and lines are complete", async ({ page }) => {
   const root = page.getByTestId("skeleton-overview").locator(".brick-skeleton");

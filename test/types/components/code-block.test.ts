@@ -3,6 +3,7 @@ import {
   type CodeBlockAdapter,
   type CodeBlockCollapseTriggerProps,
   type CodeBlockContentProps,
+  type CodeBlockCopyTriggerProps,
   type CodeBlockLineChange,
   type CodeBlockLineProps,
   type CodeBlockRootProps,
@@ -10,6 +11,8 @@ import {
 } from "../../../src/code-block.js";
 
 const wrap: CodeBlockWrap = "scroll";
+const iconCopy: CodeBlockCopyTriggerProps = { asChild: true, children: null };
+void iconCopy;
 const root: CodeBlockRootProps = {
   children: null,
   value: "const value = 1",

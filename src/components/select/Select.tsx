@@ -1,4 +1,5 @@
 "use client";
+import { radiusStyle, type Radius, type RadiusShapeProps } from "../_radius/Radius.js";
 
 import {
   Children,
@@ -46,14 +47,14 @@ type SelectRootSharedProps = Omit<AtomSelectRootProps, "children"> & {
 
 export type SelectRootProps = SelectRootSharedProps &
   (
-    | { variant?: "outline" | "soft" | "ghost"; shape?: SelectShape }
-    | { variant: "underline"; shape?: never }
+    | ({ variant?: "outline" | "soft" | "ghost" } & RadiusShapeProps<SelectShape>)
+    | { variant: "underline"; shape?: never; radius?: never }
   );
 export type SelectTriggerProps = AtomSelectTriggerProps;
 export type SelectValueProps = AtomSelectValueProps;
 export type SelectIconProps = Omit<AtomSelectIconProps, "children"> & { children?: ReactNode };
 export type SelectPortalProps = AtomSelectPortalProps;
-export type SelectContentProps = AtomSelectListboxProps;
+export type SelectContentProps = AtomSelectListboxProps & { radius?: Radius };
 export type SelectListboxProps = SelectContentProps;
 export type SelectViewportProps = AtomSelectViewportProps;
 export type SelectScrollUpButtonProps = Omit<AtomSelectScrollUpButtonProps, "children"> & { children?: ReactNode };
@@ -67,6 +68,7 @@ export type SelectSeparatorProps = AtomSelectSeparatorProps;
 export type SelectArrowProps = Omit<AtomSelectArrowProps, "children"> & { children?: ReactNode };
 
 interface SelectVisualContextValue {
+  radius?: Radius;
   variant: SelectVariant;
   size: ResponsiveControlSize;
   shape?: SelectShape;
@@ -139,20 +141,21 @@ export function SelectRoot({
   children,
   fullWidth = true,
   shape = "rounded",
+  radius,
   size = "lg",
   variant = "outline",
   ...props
 }: SelectRootProps) {
-  const resolvedShape = variant === "underline" ? undefined : shape;
+  const resolvedShape = variant === "underline" ? undefined : radius === undefined ? shape : "rounded";
   return (
-    <SelectVisualContext.Provider value={{ fullWidth, shape: resolvedShape, size, variant }}>
+    <SelectVisualContext.Provider value={{ fullWidth, shape: resolvedShape, radius: variant === "underline" ? undefined : radius, size, variant }}>
       <AtomSelect.Root {...props}>{supplyStaticItemLabels(children)}</AtomSelect.Root>
     </SelectVisualContext.Provider>
   );
 }
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(
-  function SelectTrigger({ className, "data-slot": dataSlot, ...props }, ref) {
+  function SelectTrigger({ className, style, "data-slot": dataSlot, ...props }, ref) {
     const visual = useContext(SelectVisualContext);
     return (
       <AtomSelect.Trigger
@@ -160,6 +163,7 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(
         className={mergeClassName("brick-select-trigger brick-control-size", className)}
         data-full-width={visual.fullWidth ? "" : undefined}
         data-shape={visual.shape}
+        style={radiusStyle(visual.radius, "--brick-select-trigger-radius", style)}
         data-slot={slotOrDefault(dataSlot, "select-trigger")}
         data-variant={visual.variant}
         ref={ref}
@@ -184,9 +188,9 @@ export const SelectIcon = forwardRef<HTMLSpanElement, SelectIconProps>(
 export const SelectPortal = AtomSelect.Portal;
 
 export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
-  function SelectContent({ className, "data-slot": dataSlot, ...props }, ref) {
+  function SelectContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) {
     const visual = useContext(SelectVisualContext);
-    return <AtomSelect.Content {...props} className={mergeClassName("brick-select-content brick-control-size", className)} data-slot={slotOrDefault(dataSlot, "select-listbox")} ref={ref} {...controlSizeDataAttributes(visual.size)} />;
+    return <AtomSelect.Content {...props} style={radiusStyle(radius, "--brick-select-content-radius", style)} className={mergeClassName("brick-select-content brick-control-size", className)} data-slot={slotOrDefault(dataSlot, "select-listbox")} ref={ref} {...controlSizeDataAttributes(visual.size)} />;
   },
 );
 

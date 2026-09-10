@@ -18,8 +18,8 @@ describe("Toggle", () => {
     expect(toggle).toHaveAttribute("type", "button");
     expect(toggle).toHaveAttribute("aria-pressed", "false");
     expect(toggle).toHaveAttribute("data-state", "off");
-    expect(toggle).toHaveAttribute("data-variant", "soft");
-    expect(toggle).toHaveAttribute("data-tone", "accent");
+    expect(toggle).toHaveAttribute("data-variant", "ghost");
+    expect(toggle).toHaveAttribute("data-tone", "neutral");
     expect(toggle).toHaveAttribute("data-size", "md");
     expect(toggle).toHaveAttribute("data-shape", "rounded");
     expect(toggle).not.toHaveAttribute("data-icon-only");

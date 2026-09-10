@@ -21,7 +21,7 @@
     --brick-tree-selected-foreground: var(--brick-color-text-primary);
     --brick-tree-disabled-opacity: .5;
     --brick-tree-focus-ring: var(--brick-color-focus-ring);
-    --brick-tree-focus-ring-width: 2px;
+    --brick-tree-focus-ring-width: var(--brick-border-focus-width);
     --brick-tree-motion-duration: 160ms;
     --brick-tree-motion-easing: ease;
     box-sizing: border-box;
@@ -182,7 +182,7 @@
       --brick-tree-selected-foreground: HighlightText;
       --brick-tree-focus-ring: CanvasText;
     }
-    .brick-tree__item[data-active] > .brick-tree__item-content { outline: 2px solid CanvasText; outline-offset: -2px; }
+    .brick-tree__item[data-active] > .brick-tree__item-content { outline: var(--brick-tree-focus-ring-width) solid CanvasText; outline-offset: calc(-1 * var(--brick-tree-focus-ring-width)); }
     .brick-tree__item[data-disabled] > .brick-tree__item-content { color: GrayText; opacity: 1; }
   }
 }

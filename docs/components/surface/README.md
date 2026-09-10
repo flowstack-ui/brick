@@ -104,7 +104,7 @@ import from React Server Components.
 | `tone` | `neutral`, `accent` | `neutral` |
 | `bordered` | `boolean` | `false` |
 | `elevation` | `none`, `low`, `medium`, `high` | `none` |
-| `radius` | `none`, `subtle`, `surface` | `surface` |
+| `radius` | shared token-only `Radius`; see the [Radius guide](../../guides/radius.md) | `surface` |
 | `inset` | `none`, `sm`, `md`, `lg`, `xl`, `2xl`, or a responsive value | `none` |
 | `slot` | `string` | `surface` |
 | `children` | `ReactNode` | optional |
@@ -132,6 +132,15 @@ Native global/ARIA/data attributes, events, `className`, `style`, and an
 With `asChild`, Surface applies its paint recipes to exactly one existing
 non-Fragment element without adding a wrapper. It preserves the child's host,
 class, style, handlers, and ref while composing the forwarded Surface ref.
+
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
 
 ## Visual recipes and states
 

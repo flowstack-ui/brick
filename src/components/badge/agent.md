@@ -18,6 +18,7 @@ Present a short passive category, status, metadata label, or compact circular pa
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Keep Badge passive; do not add click, press, selection, or disclosure behavior to it.
 - **MUST:** Keep every count or status understandable from visible text or its owning control without relying on color, shape, or placement, and never assume Badge announces changes or joins a sibling control name automatically.
 - **MUST:** When composing Text inside Badge, use tone=inherit unless that Text intentionally communicates a separate semantic tone, so the Badge recipe continues to own foreground contrast.

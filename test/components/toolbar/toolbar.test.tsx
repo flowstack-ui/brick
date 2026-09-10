@@ -14,8 +14,8 @@ describe("Toolbar", () => {
     expect(screen.getByRole("button", { name: "Save" })).toHaveClass("brick-toolbar__button");
     expect(screen.getByRole("separator")).toHaveClass("brick-toolbar__separator");
     expect(screen.getByRole("group", { name: "Format" })).toHaveClass("brick-toolbar__toggle-group");
-    expect(screen.getByRole("group", { name: "Format" })).toHaveAttribute("data-tone", "accent");
-    expect(screen.getByRole("group", { name: "Format" })).toHaveAttribute("data-variant", "soft");
+    expect(screen.getByRole("group", { name: "Format" })).toHaveAttribute("data-tone", "neutral");
+    expect(screen.getByRole("group", { name: "Format" })).toHaveAttribute("data-variant", "ghost");
     expect(screen.getByRole("button", { name: "Bold" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("link", { name: "Help" })).toHaveClass("brick-toolbar__link");
   });

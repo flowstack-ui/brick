@@ -18,6 +18,18 @@ import {
 } from "../../../src/text.js";
 
 describe("Text", () => {
+  it("shares all explicit weights across named text exports without changing semantics", () => {
+    const weights: TextWeight[] = ["thin", "extralight", "light", "regular", "medium", "semibold", "bold", "extrabold", "black"];
+    const { rerender } = render(<Text>Default</Text>);
+    for (const weight of weights) {
+      rerender(<><Heading level={3} weight={weight}>Title</Heading><Paragraph weight={weight}>Body</Paragraph><Caption weight={weight}>Caption</Caption><Eyebrow weight={weight}>Eyebrow</Eyebrow></>);
+      for (const label of ["Title", "Body", "Caption", "Eyebrow"]) {
+        expect(screen.getByText(label)).toHaveAttribute("data-weight", weight);
+      }
+      expect(screen.getByRole("heading").tagName).toBe("H3");
+      expect(screen.getByText("Body").tagName).toBe("P");
+    }
+  });
   it("renders the adopted inline default without invented semantics", () => {
     const ref = createRef<HTMLElement>();
     render(<Text ref={ref}>Build dependable interfaces.</Text>);

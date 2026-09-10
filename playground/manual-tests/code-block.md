@@ -19,6 +19,13 @@ language → Wrapping and overflow → Copy states → Appearance and customizat
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 
+In Optional anatomy, also inspect the headerless dark example: its named ghost
+IconButton must remain above/right without covering source at 320px, tablet,
+desktop and zoom. Activate by keyboard, confirm exact copied source and the
+success indicator; deny clipboard access to check truthful failure feedback.
+Light page appearance must not lighten this locally dark example. This is an
+additional manual check, not a completed result.
+
 | Step | Setup and action                                                                          | Expected                                                                                                                                                                                                                                                                                                 | Result | Notes or issue |
 | ---- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | -------------- |
 | 1    | Open Overview and inspect the live structure.                                             | No header/action/status; one named focusable viewport; exact `pre > code` source.                                                                                                                                                                                                                        |        |                |
@@ -32,6 +39,21 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 | 9    | Compare light/dark defaults and the customized dark block.                                | Customized surface, text, border, and radius match the visible contract while focus and source remain readable.                                                                                                                                                                                          |        |                |
 | 10   | Repeat at 320/390 px, 200% text, 400% zoom, text-spacing override, long content, and RTL. | No page overflow; all lines remain reachable; logical header mirrors while source remains LTR.                                                                                                                                                                                                           |        |                |
 | 11   | Repeat the primary path with keyboard, forced colors, and the recorded screen reader.     | Every viewport has its authored name, focus remains visible, and copy status is announced politely once without duplicate content.                                                                                                                                                                       |        |                |
+
+## Step 1 — Focus presentation qualification
+
+Action: Keyboard-focus every code-block action or owned focus part, including
+first and last items where relevant. Repeat in light/dark, RTL, OS high
+contrast and actual 200%/400% zoom. Check selected/loading states where
+supported and rounded or scrolling boundaries.
+
+Expected: Visible focus without layout shifts or clipped edges. Inside
+actions use paired foreground paint; field focus survives without shadows
+in high contrast. Selection and focus remain distinguishable. Browser
+emulation does not replace OS or assistive-technology checks.
+
+Result: not run for this manual protocol revision.
+Notes or issue:
 
 ## Completion
 

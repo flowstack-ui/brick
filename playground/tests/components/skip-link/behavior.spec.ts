@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test("released Atom behavior provides first focus, target focus, scroll, and continuation", async ({ browserName, page }) => {
   await page.goto("/skip-link/fixture");

@@ -20,6 +20,7 @@ Present a finished one-column hierarchy while Atom owns tree semantics, active-d
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Name Root and preserve tree, treeitem, and group relationships, automatic levels, ItemText labeling, and parent-child nesting; use Brick ItemContent as the one finished row paint owner.
 - **MUST:** Give every Item a durable unique value, align scalar or array selection with multiple, and keep selection and expandedValue controlled or uncontrolled without mixing ownership.
 - **MUST:** Keep Root as the sole Tab stop and preserve active-descendant focus, visible-item Up/Down, Home/End, direction-aware expand/collapse and parent movement, typeahead, disabled skipping, bounded or looped policy, and scroll reveal.

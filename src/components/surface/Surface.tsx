@@ -31,7 +31,8 @@ export type SurfaceElement =
 export type SurfaceLevel = "canvas" | "base" | "subtle" | "raised";
 export type SurfaceTone = "neutral" | "accent";
 export type SurfaceElevation = "none" | "low" | "medium" | "high";
-export type SurfaceRadius = "none" | "subtle" | "surface";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+export type SurfaceRadius = Radius;
 export type SurfaceInset = "none" | "sm" | "md" | "lg" | "xl" | "2xl";
 export type SurfaceScrimStrength = "soft" | "medium" | "strong";
 export type SurfaceScrimDirection =
@@ -147,13 +148,15 @@ function SurfaceImpl(
     elevation = "none",
     inset = "none",
     level = "base",
-    radius = "surface",
+    radius: explicitRadius,
+    style,
     slot = "surface",
     tone = "neutral",
     ...props
   }: SurfaceProps,
   ref: ForwardedRef<HTMLElement>,
 ) {
+  const radius = explicitRadius ?? "surface";
   const rootProps = {
     ...props,
     ...responsiveDataAttributes("data-inset", inset, { alwaysInitial: true }),
@@ -162,6 +165,7 @@ function SurfaceImpl(
     "data-elevation": elevation,
     "data-level": level,
     "data-radius": radius,
+    style: radiusStyle(explicitRadius, "--brick-surface-radius", style),
     "data-slot": slot,
     "data-tone": tone,
     ref,

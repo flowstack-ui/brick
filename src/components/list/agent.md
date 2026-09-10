@@ -24,6 +24,7 @@ Render finished ordered or unordered content with native list semantics, optiona
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use List only for a real item or sequence relationship and preserve native list semantics.
 - **MUST:** Keep structured row parts in Leading, Content, Trailing order and use one Content and one Trailing maximum per Item.
 - **MUST:** Keep Trailing compact; move long actions into a Content-owned layout when a fixed trailing column would damage narrow-screen reading.

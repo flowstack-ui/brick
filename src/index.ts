@@ -1,3 +1,10 @@
+export * from "./spinner.js";
+export * from "./timeline.js";
+export * from "./alert.js";
+export * from "./empty-state.js";
+export * from "./steps.js";
+export * from "./splitter.js";
+
 export {
   Appearance,
   type AppearanceProps,
@@ -75,8 +82,11 @@ export {
 } from "./components/image/index.js";
 export {
   AspectRatio,
+  aspectRatios,
+  type AspectRatioToken,
   AspectRatioRoot,
   type AspectRatioOverflow,
+  type AspectRatioContentLayout,
   type AspectRatioRadius,
   type AspectRatioRootProps,
   type AspectRatioVariant,
@@ -140,6 +150,13 @@ export {
 } from "./components/badge/index.js";
 export {
   Chip,
+  ChipActionTrigger,
+  ChipStartElement,
+  ChipEndElement,
+  type ChipActionTriggerProps,
+  type ChipStartElementProps,
+  type ChipEndElementProps,
+  type ChipDensity,
   ChipLabel,
   ChipRemoveTrigger,
   ChipRoot,
@@ -338,6 +355,7 @@ export {
   type TabsListProps,
   type TabsRootProps,
   type TabsSize,
+  type TabsTone,
   type TabsTriggerProps,
   type TabsTriggerRadius,
   type TabsVariant,
@@ -415,7 +433,7 @@ export {
   type InputVariant,
 } from "./components/input/index.js";
 export * from "./components/number-input/index.js";
-export * from "./components/otp-field/index.js";
+export * from "./components/pin-input/index.js";
 export * from "./components/password-toggle-field/index.js";
 export {
   Textarea,
@@ -1026,3 +1044,20 @@ export * from "./components/pagination/index.js";
 export * from "./components/skip-link/index.js";
 export * from "./components/show/index.js";
 export * from "./components/hide/index.js";
+export { CloseButton, type CloseButtonProps } from "./components/close-button/index.js";
+export { DownloadTrigger, type DownloadTriggerProps } from "./components/download-trigger/index.js";
+export * from "./calendar.js";
+export * from "./date-input.js";
+export * from "./date-picker.js";
+export * from "./date-value.js";
+export * from "./components/action-bar/index.js";
+export * from "./floating-panel.js";
+export * from "./overlay-manager.js";
+export * from "./components/stat/index.js";
+export * from "./marquee.js";
+export * from "./native-select.js";
+export * from "./editable.js";
+export * from "./tags-input.js";
+export * from "./qr-code.js";
+export type { Radius } from "./radius.js";
+export * from "./table-of-contents.js";

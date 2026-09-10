@@ -1,6 +1,7 @@
 "use client";
 
 import { forwardRef } from "react";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import { AspectRatio } from "@flowstack-ui/atom/aspect-ratio";
 import {
   Image as AtomImage,
@@ -11,7 +12,7 @@ import {
 
 export type ImageFit = "cover" | "contain" | "fill" | "none" | "scale-down";
 export type ImagePosition = "center" | "top" | "bottom" | "start" | "end";
-export type ImageRadius = "none" | "sm" | "md" | "lg" | "full";
+export type ImageRadius = Radius;
 export type ImageFrame = "none" | "subtle";
 
 export interface ImageRootProps extends AtomImageRootProps {
@@ -34,11 +35,12 @@ export const ImageRoot = forwardRef<HTMLDivElement, ImageRootProps>(function Ima
   {
     fit = "cover",
     position = "center",
-    radius = "none",
+    radius,
     frame = "none",
     ratio,
     fill = false,
     className,
+    style,
     "data-slot": dataSlot = "image",
     ...props
   },
@@ -47,12 +49,13 @@ export const ImageRoot = forwardRef<HTMLDivElement, ImageRootProps>(function Ima
   const root = (
     <AtomImage.Root
       {...props}
+      style={radiusStyle(radius, "--brick-image-radius", style)}
       className={mergeClassName("brick-image", className)}
       data-fit={fit}
       data-frame={frame}
       data-fill={fill ? "" : undefined}
       data-position={position}
-      data-radius={radius}
+      data-radius={radius ?? "none"}
       data-ratio={ratio === undefined ? undefined : ""}
       data-slot={dataSlot}
       ref={ref}

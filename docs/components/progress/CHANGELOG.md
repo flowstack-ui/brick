@@ -4,6 +4,8 @@ Progress follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 - Formatted values now inherit `LocaleProvider.locale` unless Root supplies an
   explicit locale.
 ## 0.1.10

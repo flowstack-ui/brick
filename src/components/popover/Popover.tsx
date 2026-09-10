@@ -1,4 +1,5 @@
 "use client";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 
 import {
   cloneElement,
@@ -33,6 +34,7 @@ export type PopoverAnchorProps = AtomPopoverAnchorProps;
 export type PopoverTriggerProps = AtomPopoverTriggerProps;
 export type PopoverPortalProps = AtomPopoverPortalProps;
 export interface PopoverContentProps extends AtomPopoverContentProps {
+  radius?: Radius;
   /** Preferred maximum inline size. @default "md" */
   size?: PopoverSize;
   /** Visual inset and title density. @default "comfortable" */
@@ -168,6 +170,8 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
     {
       className,
       density = "comfortable",
+      radius,
+      style,
       sideOffset = 8,
       size = "md",
       "data-slot": dataSlot,
@@ -179,6 +183,7 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
       <AtomPopover.Content
         {...props}
         className={mergeClassName("brick-popover", className)}
+        style={radiusStyle(radius, "--brick-popover-radius", style)}
         data-density={density}
         data-size={size}
         data-slot={slotOrDefault(dataSlot, "popover")}

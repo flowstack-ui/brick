@@ -10,6 +10,10 @@ Use Combobox when a predefined option set benefits from filtering. Enable `freeS
 
 Use Select for select-only choices, Input for unconstrained text, Multi Select for several values, and menus for actions.
 
+For created string collections with suggestions, use TagsInput with
+useTagsInputCombobox bindings. Combobox continues to own the single suggestion
+popup; TagsInput owns the committed collection and shared input transactions.
+
 ## Installation and imports
 
 ```tsx
@@ -71,6 +75,15 @@ prop types are `ComboboxRootProps`, `ComboboxLabelProps`,
 `ComboboxTriggerProps`, `ComboboxIndicatorProps`, `ComboboxPortalProps`,
 `ComboboxContentProps`, `ComboboxListboxProps`, `ComboboxGroupProps`,
 `ComboboxItemProps`, `ComboboxEmptyProps`, and `ComboboxLoadingProps`.
+
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
 
 ## Visual recipes and states
 

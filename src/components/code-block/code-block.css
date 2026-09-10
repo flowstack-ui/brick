@@ -222,6 +222,14 @@
     grid-row: 3;
   }
 
+  /* This action is flush with the clipped CodeBlock, unlike a standalone disclosure. */
+  .brick-code-block .brick-code-block-collapse-trigger:focus-visible {
+    outline: var(--brick-border-focus-width) solid currentColor;
+    outline-offset: calc(-1 * var(--brick-border-focus-width));
+    border-end-start-radius: max(0px, calc(var(--brick-code-block-radius) - var(--brick-border-width)));
+    border-end-end-radius: max(0px, calc(var(--brick-code-block-radius) - var(--brick-border-width)));
+  }
+
   .brick-code-block-collapse
     > .brick-code-block
     > .brick-code-block-copy-status {

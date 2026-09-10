@@ -14,7 +14,7 @@
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
-Scenario order: `01 Locale and direction inheritance`.
+Scenario order: 01 locale-provider.inheritance; 02 locale-provider.nesting; 03 locale-provider.controls.
 
 ## Step 1 — Locale and direction
 
@@ -26,6 +26,17 @@ Notes or issue:
 ## Step 2 — Accessibility and stress
 
 Confirm nested text remains readable at 400% zoom and mobile width; light and dark appearance, forced-colors, RTL, keyboard use, and accessibility remain correct; explicit labels override defaults and axe reports no violations.
+
+Result:
+Notes or issue:
+
+## Expanded capabilities
+
+Follow every numbered scenario above, including all labelled specimens.
+Compare sizes independently of variants. Exercise any controlled reset, clear,
+parent-state change or disabled example and confirm the displayed outcome.
+Inspect the complete page in both appearances and at narrow width, not only its
+first overview. Record any missing capability or unclear demonstration here.
 
 Result:
 Notes or issue:

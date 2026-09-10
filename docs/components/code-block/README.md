@@ -1,5 +1,6 @@
 # Code Block
 
+
 Code Block presents structured multi-line source with native scrolling,
 explicit language metadata, and truthful Atom-backed copy behavior.
 
@@ -178,6 +179,11 @@ must change from an expansion action to a collapse action.
 
 ## Accessibility
 
+### Focus presentation
+
+The flush collapse action paints focus inside its clipped boundary; copy success remains icon-only with an accessible announcement.
+See [Focus presentation](../../guides/focus-presentation.md).
+
 Give focusable Content a specific `aria-label` or `aria-labelledby`; it is the
 only scroll-region keyboard stop. CopyTrigger retains focus. Author concise
 CopyStatus text for copying, success, and failure so Atom can announce truthful
@@ -188,6 +194,25 @@ mounting, and hidden state. Do not add
 `role="application"`.
 
 ## Composition, native props, and refs
+
+`CopyTrigger asChild` composes a supplied Brick `IconButton` instead of the
+default Button. Put visual props and an accessible label on the child:
+
+```tsx
+<CodeBlock.CopyTrigger asChild>
+  <IconButton size="sm" aria-label="Copy code">
+    <CopyIcon />
+  </IconButton>
+</CodeBlock.CopyTrigger>
+```
+
+Import `IconButton` from `@flowstack-ui/brick/icon-button` and provide your
+chosen icon. With modular styles also load `icon-button.css`. Root already
+owns Clipboard; do not nest another Clipboard Root. `CopyIndicator` and
+`CopyStatus` continue to reflect the same operation, including errors. Header
+is optional. For an overlaid action, use ZStack and reserve layout space so
+the button never covers source. Scope the entire composition to
+`data-brick-appearance="dark"` when code and its controls should stay dark.
 
 Root forwards Atom Clipboard props and its `HTMLDivElement` ref. Structural
 parts forward their native attributes and refs. Content's ref targets the

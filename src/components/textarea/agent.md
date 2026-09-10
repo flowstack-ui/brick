@@ -19,6 +19,7 @@ Render finished native multi-line text entry with Brick sizing, states, resize p
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use a persistent accessible label.
 - **MUST:** Load styles.css or core.css plus textarea.css and field.css when composed with Field.
 - **SHOULD:** Keep outline Textarea and outline Input on the same transparent surface recipe within one form.

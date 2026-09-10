@@ -121,12 +121,8 @@ const aliases = {
     "--brick-password-line-height": "var(--brick-control-size-value-line-height)",
     "--brick-password-letter-spacing": "var(--brick-control-size-value-letter-spacing)",
   },
-  ".brick-otp-field.brick-control-size": {
-    "--brick-otp-size": "var(--brick-control-size-block)",
-    "--brick-otp-font-family": "var(--brick-control-size-value-font-family)",
-    "--brick-otp-font-size": "var(--brick-control-size-value-font-size)",
-    "--brick-otp-font-weight": "var(--brick-control-size-value-font-weight)",
-    "--brick-otp-line-height": "var(--brick-control-size-value-line-height)",
+  ".brick-pin-input.brick-control-size": {
+    "--brick-pin-input-size": "var(--brick-control-size-block)",
   },
 };
 

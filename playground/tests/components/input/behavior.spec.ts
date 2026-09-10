@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function box(locator: Locator) {
   const value = await locator.boundingBox();
@@ -102,7 +102,7 @@ test("Input adornments remain logical and Clear delegates value and focus", asyn
   await expect(inputs).toHaveCount(3);
   for (const input of await inputs.all()) {
     await expect(input).toHaveValue("Brick workspace");
-    await expect(input.locator("..")).toHaveAttribute("data-size", "md");
+    await expect(input.locator("..")).toHaveAttribute("data-size", "lg");
   }
   await expect(
     inputs.nth(0).locator("..").locator("[data-slot='input-start']"),

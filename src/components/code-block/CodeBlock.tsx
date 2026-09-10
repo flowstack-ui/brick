@@ -91,7 +91,7 @@ export interface CodeBlockCollapseTriggerProps extends Omit<
 }
 export type CodeBlockCopyTriggerProps = Omit<
   AtomClipboardTriggerProps,
-  "asChild" | "render"
+  "render"
 > &
   Pick<
     ButtonProps,
@@ -439,6 +439,7 @@ export const CodeBlockCopyTrigger = forwardRef<
   CodeBlockCopyTriggerProps
 >(function CodeBlockCopyTrigger(
   {
+    asChild = false,
     variant = "ghost",
     tone = "neutral",
     size = "sm",
@@ -451,6 +452,18 @@ export const CodeBlockCopyTrigger = forwardRef<
   },
   ref,
 ) {
+  if (asChild) {
+    return (
+      <AtomClipboard.Trigger
+        {...props}
+        asChild
+        data-slot={slot(dataSlot, "code-block-copy-trigger")}
+        ref={ref as never}
+      >
+        {children}
+      </AtomClipboard.Trigger>
+    );
+  }
   return (
     <AtomClipboard.Trigger
       {...props}

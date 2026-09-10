@@ -38,6 +38,12 @@ component sheets.
 
 ## Status vocabulary
 
+The retired `OTP Field` sheet retains historical evidence only; `Pin Input`
+owns the current API and Index entry. Square and Circle have independent
+evidence sheets under Center's shared documentation owner. Action Bar retains
+its compact four-column evidence layout; its Index formulas read that layout
+directly and keep manual, consumer and package gates open until completed.
+
 Use only:
 
 ```text

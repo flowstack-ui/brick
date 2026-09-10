@@ -15,6 +15,7 @@ Show passive checked, unchecked, or indeterminate visual state without creating 
 ## Required composition
 
 - Pair Checkmark with visible text or place it inside a parent that already exposes the state accessibly.
+- Choose solid, soft, outline, plain or inverted. Unchecked marks are transparent by default; filled adds a canvas background to boxed recipes. Inverted keeps a canvas background with semantic foreground and border. Plain stays unboxed. Sizes xs/sm/md/lg are 12/16/20/24px.
 
 ## Rules
 

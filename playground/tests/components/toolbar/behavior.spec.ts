@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { readFile } from "node:fs/promises";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function expectFocusPaintContained(root: Locator, item: Locator) {
   await item.focus();
@@ -41,6 +42,65 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByRole("toolbar", { name: "Document tools" }).first()).toBeVisible();
 });
 
+test("Toolbar modular stylesheet includes the shared recipe without aggregate CSS", async ({page}) => {
+  await page.emulateMedia({reducedMotion:"reduce"});
+  const root=page.getByRole("toolbar",{name:"accent soft toolbar",exact:true});
+  const item=root.getByRole("button",{name:"Bold",exact:true});
+  const expected=await item.evaluate(el=>{
+    const s=getComputedStyle(el); return [s.backgroundColor,s.color,s.borderTopColor,s.boxShadow];
+  });
+  const markup=await root.evaluate(el=>el.outerHTML);
+  const [core, toolbar]=await Promise.all([
+    readFile(new URL("../../../../dist/styles/core.css",import.meta.url),"utf8"),
+    readFile(new URL("../../../../dist/styles/toolbar.css",import.meta.url),"utf8"),
+  ]);
+  await page.setContent(`<style>${core}\n${toolbar}</style>${markup}`);
+  expect(await page.getByRole("button",{name:"Bold"}).evaluate(el=>{
+    const s=getComputedStyle(el);return [s.backgroundColor,s.color,s.borderTopColor,s.boxShadow];
+  })).toEqual(expected);
+});
+
+for (const appearance of ["light", "dark"]) {
+  test(`Toolbar shares toggle recipe paint in ${appearance}`, async ({ page, isMobile }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.locator("html").evaluate((el, value) => { el.dataset.brickAppearance = value; }, appearance);
+    const paint = (item: Locator) => item.evaluate(el => {
+      const s=getComputedStyle(el);
+      return [s.backgroundColor,s.color,s.borderTopColor,s.boxShadow];
+    });
+    for (const tone of ["neutral", "accent"]) {
+      for (const variant of ["ghost", "soft", "outline", "solid"]) {
+        const items=page.getByTestId(`toggle-parity-${tone}-${variant}`).getByRole("button", {name:"Bold",exact:true});
+        await expect(items).toHaveCount(3);
+        for (const pressed of [true,false]) {
+          if(!pressed) for(const item of await items.all()) await item.click();
+          await page.mouse.move(0,0);
+          const expected=await paint(items.nth(0));
+          expect(await paint(items.nth(1))).toEqual(expected);
+          expect(await paint(items.nth(2))).toEqual(expected);
+          if(!isMobile) {
+            const hoverPaint=[];
+            const activePaint=[];
+            for(const item of await items.all()) {
+              await item.hover(); hoverPaint.push(await paint(item));
+              await page.mouse.down(); activePaint.push(await paint(item));
+              await page.mouse.move(0,0); await page.mouse.up();
+            }
+            expect(hoverPaint[1]).toEqual(hoverPaint[0]);
+            expect(hoverPaint[2]).toEqual(hoverPaint[0]);
+            expect(activePaint[1]).toEqual(activePaint[0]);
+            expect(activePaint[2]).toEqual(activePaint[0]);
+          }
+        }
+      }
+    }
+    const controls=page.getByRole("toolbar", {name:"Review controls"});
+    const appearanceGroup=controls.getByRole("group", {name:"Appearance"});
+    await expect(appearanceGroup).toHaveAttribute("data-variant","ghost");
+    await expect(appearanceGroup).toHaveAttribute("data-tone","neutral");
+  });
+}
+
 test("Toolbar recipes and six parts render", async ({ page }) => {
   const root = page.locator("#scenario-toolbar-overview .brick-toolbar");
   await expect(root).toHaveAttribute("data-variant", "soft");
@@ -64,7 +124,7 @@ test("Toolbar ToggleGroup applies shared variant and tone without leaving Toolba
     probe.style.color = "var(--brick-color-text-primary)";
     document.body.append(probe);
     const primary = getComputedStyle(probe).color;
-    probe.style.backgroundColor = "var(--brick-color-surface-raised)";
+    probe.style.backgroundColor = "color-mix(in srgb, var(--brick-color-surface-subtle), var(--brick-color-text-primary) 16%)";
     const raised = getComputedStyle(probe).backgroundColor;
     probe.remove();
     return {
@@ -109,7 +169,7 @@ test("Toolbar ToggleGroup applies shared variant and tone without leaving Toolba
     };
   });
   expect(darkPaint.background).not.toBe(darkPaint.primary);
-  expect(darkPaint.foreground).toBe(darkPaint.primary);
+  await expect(preview).toHaveCSS("color", darkPaint.primary);
 
   await preview.focus();
   await page.keyboard.press("ArrowRight");
@@ -127,8 +187,8 @@ test("Toolbar disabled controls remove enabled selection emphasis and fade", asy
     await expect(control).toHaveCSS("opacity", "0.55");
     await expect(control).toHaveCSS("box-shadow", "none");
   }
-  await expect(selected).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-  await expect(selected).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
+  await expect(selected).not.toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(selected).not.toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
 });
 
 test("Toolbar uses one tab entry and arrow navigation", async ({ page }) => {

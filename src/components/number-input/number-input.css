@@ -330,10 +330,15 @@
     }
     .brick-number-input:not([data-layout="stepper"]):focus-within {
       border-color: Highlight;
-      box-shadow: 0 0 0 var(--brick-border-focus-width) Highlight;
+      box-shadow: none;
+      outline: var(--brick-border-focus-width) solid Highlight;
+      outline-offset: 0;
     }
     .brick-number-input[data-layout="stepper"] .brick-number-input-step {
       border-color: ButtonText;
+    }
+    .brick-number-input[data-layout="stepper"] :is(.brick-number-input-control, .brick-number-input-step):focus-visible {
+      outline-color: Highlight;
     }
   }
 }

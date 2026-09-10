@@ -38,19 +38,24 @@ The component renders one passive span and one nested dot span. It adds no input
 
 | Prop | Value | Default |
 | --- | --- | --- |
+| `filled` | `boolean` | `false` |
 | `checked` | `boolean` | `false` |
 | `disabled` | `boolean` | `false` |
 | `size` | `xs`, `sm`, `md`, `lg` | `md` |
 | `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `accent` |
-| `variant` | `solid`, `outline`, `soft` | `solid` |
+| `variant` | `solid`, `outline`, `soft`, `inverted` | `solid` |
 
 ## Visual recipes and states
 
 Solid fills the selected circle, outline keeps the surrounding surface, and soft uses semantic subtle paint. Unchecked state retains a visible neutral boundary.
 
+Unchecked marks in the default solid recipe are transparent. `filled` adds a canvas background;
+`inverted` uses canvas with a semantic foreground and border. These are visual
+options, not selection behavior.
+
 ## Tokens and CSS hooks
 
-Stable hooks are `.brick-radiomark`, `.brick-radiomark__dot`, `data-disabled`, `data-size`, `data-slot`, `data-state`, `data-tone`, `data-variant`, and `--brick-radiomark-size`.
+Stable hooks are `.brick-radiomark`, `.brick-radiomark__dot`, `data-disabled`, `data-filled`, `data-size`, `data-slot`, `data-state`, `data-tone`, `data-variant`, and `--brick-radiomark-size`.
 
 ## Customization
 

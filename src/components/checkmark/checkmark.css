@@ -14,7 +14,7 @@
     overflow: visible;
     border: var(--brick-border-width) solid var(--brick-color-border-strong);
     border-radius: var(--brick-radius-subtle);
-    background: var(--brick-color-surface-raised);
+    background: transparent;
     color: transparent;
     vertical-align: middle;
   }
@@ -30,6 +30,9 @@
   .brick-checkmark[data-size="xs"] { --brick-checkmark-size: 0.75rem; }
   .brick-checkmark[data-size="sm"] { --brick-checkmark-size: 1rem; }
   .brick-checkmark[data-size="lg"] { --brick-checkmark-size: 1.5rem; }
+  .brick-checkmark:is([data-size="md"], [data-size="lg"]):not([data-variant="plain"]) { padding: calc(var(--brick-space-1) / 2); }
+  .brick-checkmark[data-filled], .brick-checkmark[data-variant="inverted"] { background: var(--brick-color-surface-canvas); }
+  .brick-checkmark[data-state]:not([data-state="unchecked"])[data-variant="inverted"] { border-color: var(--brick-checkmark-solid); color: var(--brick-checkmark-text); }
 
   .brick-checkmark[data-tone="neutral"] {
     --brick-checkmark-solid: var(--brick-color-text-primary);

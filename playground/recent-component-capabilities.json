@@ -1,0 +1,423 @@
+{
+  "schema": "flowstack.playground-capabilities.v1",
+  "scope": "Recent component qualification. Scenario inventory is a required floor, not a claim of full Cartesian API or manual coverage.",
+  "owners": [
+    {
+      "id": "qr-code", "page": "playground/src/components/qr-code/QrCodePage.tsx",
+      "scenarios": ["qr-code.basic", "qr-code.sizes", "qr-code.full", "qr-code.controlled", "qr-code.store", "qr-code.unicode", "qr-code.correction", "qr-code.encoding", "qr-code.margin", "qr-code.appearance", "qr-code.logos", "qr-code.overlay", "qr-code.download", "qr-code.actions", "qr-code.status", "qr-code.errors", "qr-code.rtl", "qr-code.dialog"],
+      "assertion": { "file": "playground/tests/components/qr-code/behavior.spec.ts", "name": "all scenarios render and preset frames stay square" },
+      "manual": "playground/manual-tests/qr-code.md"
+    },
+    {
+      "id": "marquee", "page": "playground/src/components/marquee/MarqueePage.tsx",
+      "scenarios": ["marquee.basic", "marquee.directions", "marquee.vertical", "marquee.timing", "marquee.fill", "marquee.pause", "marquee.store", "marquee.finite", "marquee.edges", "marquee.lanes", "marquee.art", "marquee.news", "marquee.cards", "marquee.preferences", "marquee.boundaries", "marquee.safety"],
+      "assertion": { "file": "playground/tests/components/marquee/behavior.spec.ts", "name": "Marquee motion, pause and replica safety" },
+      "manual": "playground/manual-tests/marquee.md"
+    },
+    {
+      "id": "chip", "page": "playground/src/components/chip/ChipPage.tsx",
+      "scenarios": ["chip.overview", "chip.anatomy", "chip.recipes", "chip.sizes", "chip.leading", "chip.removal", "chip.containment", "chip.appearance", "chip.boundary", "chip.compact", "chip.slots", "chip.actions"],
+      "assertion": { "file": "playground/tests/components/chip/behavior.spec.ts", "name": "Chip compact slots and actions retain geometry and independent activation" },
+      "manual": "playground/manual-tests/chip.md"
+    },
+    {
+      "id": "stat", "page": "playground/src/components/stat/StatPage.tsx",
+      "scenarios": ["stat.basic", "stat.sizes", "stat.formats", "stat.locales", "stat.units", "stat.trends", "stat.icons", "stat.support", "stat.group", "stat.values", "stat.appearance"],
+      "assertion": { "file": "playground/tests/components/stat/behavior.spec.ts", "name": "Stat sizes, native grammar and group overrides remain coherent" },
+      "manual": "playground/manual-tests/stat.md"
+    },
+    {
+      "id": "timeline", "page": "playground/src/components/timeline/TimelinePage.tsx",
+      "scenarios": ["timeline.basic", "timeline.sizes", "timeline.recipes", "timeline.indicators", "timeline.sides", "timeline.alternating", "timeline.rich", "timeline.time", "timeline.last", "timeline.surfaces", "timeline.appearance"],
+      "assertion": { "file": "playground/tests/components/timeline/behavior.spec.ts", "name": "Timeline marker sizes, final lines and tone overrides" },
+      "manual": "playground/manual-tests/timeline.md"
+    },
+    {
+      "id": "empty-state",
+      "page": "playground/src/components/empty-state/EmptyStatePage.tsx",
+      "scenarios": [
+        "empty-state.basic",
+        "empty-state.sizes",
+        "empty-state.actions",
+        "empty-state.list",
+        "empty-state.icon",
+        "empty-state.illustration",
+        "empty-state.optional",
+        "empty-state.heading",
+        "empty-state.alignment",
+        "empty-state.surfaces",
+        "empty-state.search",
+        "empty-state.narrow",
+        "empty-state.appearance"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/empty-state/behavior.spec.ts",
+        "name": "empty state recipes keep transparent roots and square indicators"
+      },
+      "manual": "playground/manual-tests/empty-state.md"
+    },
+    {
+      "id": "alert",
+      "page": "playground/src/components/alert/AlertPage.tsx",
+      "scenarios": [
+        "alert.basic",
+        "alert.description",
+        "alert.statuses",
+        "alert.variants",
+        "alert.sizes",
+        "alert.tone",
+        "alert.inline",
+        "alert.close",
+        "alert.loading",
+        "alert.custom",
+        "alert.no-icon",
+        "alert.actions",
+        "alert.rich",
+        "alert.semantics",
+        "alert.narrow",
+        "alert.appearance"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/alert/behavior.spec.ts",
+        "name": "alert recipes preserve border geometry and explicit semantics"
+      },
+      "manual": "playground/manual-tests/alert.md"
+    },
+    {
+      "id": "spinner",
+      "page": "playground/src/components/spinner/SpinnerPage.tsx",
+      "scenarios": [
+        "spinner.basic",
+        "spinner.sizes",
+        "spinner.inherit",
+        "spinner.tones",
+        "spinner.emphasis",
+        "spinner.color",
+        "spinner.track",
+        "spinner.thickness",
+        "spinner.duration",
+        "spinner.status",
+        "spinner.name",
+        "spinner.overlay",
+        "spinner.actions",
+        "spinner.feedback",
+        "spinner.preferences",
+        "spinner.appearance"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/spinner/behavior.spec.ts",
+        "name": "spinner sizes stay square and decorative with no overflow"
+      },
+      "manual": "playground/manual-tests/spinner.md"
+    },
+    {
+      "id": "overlay-manager",
+      "page": "playground/src/components/overlay-manager/OverlayManagerPage.tsx",
+      "scenarios": [
+        "overlay-manager.dialog",
+        "overlay-manager.drawer",
+        "overlay-manager.result",
+        "overlay-manager.update",
+        "overlay-manager.exit",
+        "overlay-manager.multiple",
+        "overlay-manager.reopen",
+        "overlay-manager.remove",
+        "overlay-manager.focus",
+        "overlay-manager.form",
+        "overlay-manager.providers",
+        "overlay-manager.hosts",
+        "overlay-manager.panel",
+        "overlay-manager.content"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/overlay-manager/behavior.spec.ts",
+        "name": "typed results and visual exits settle separately"
+      },
+      "manual": "playground/manual-tests/overlay-manager.md"
+    },
+    {
+      "id": "floating-panel",
+      "page": "playground/src/components/floating-panel/FloatingPanelPage.tsx",
+      "scenarios": [
+        "floating-panel.basic",
+        "floating-panel.controlled-open",
+        "floating-panel.store",
+        "floating-panel.stages",
+        "floating-panel.multiple",
+        "floating-panel.triggerless",
+        "floating-panel.context",
+        "floating-panel.drag",
+        "floating-panel.disabled",
+        "floating-panel.axes",
+        "floating-panel.constraints",
+        "floating-panel.anchor",
+        "floating-panel.boundary",
+        "floating-panel.position",
+        "floating-panel.size",
+        "floating-panel.overflow",
+        "floating-panel.rtl",
+        "floating-panel.modifiers",
+        "floating-panel.keyboard",
+        "floating-panel.focus",
+        "floating-panel.presence",
+        "floating-panel.appearance",
+        "floating-panel.content",
+        "floating-panel.environment"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/floating-panel/behavior.spec.ts",
+        "name": "polished header controls, keyboard geometry and minimized border box"
+      },
+      "manual": "playground/manual-tests/floating-panel.md"
+    },
+    {
+      "id": "calendar",
+      "page": "playground/src/components/calendar/CalendarPage.tsx",
+      "scenarios": [
+        "calendar.density",
+        "calendar.selection",
+        "calendar.locale",
+        "calendar.sizes",
+        "calendar.views",
+        "calendar.controlled",
+        "calendar.content",
+        "calendar.states"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/calendar/behavior.spec.ts",
+        "name": "week numbers, hidden outside days and controlled selection are usable"
+      },
+      "manual": "playground/manual-tests/calendar.md"
+    },
+    {
+      "id": "date-input",
+      "page": "playground/src/components/date-input/DateInputPage.tsx",
+      "scenarios": [
+        "date-input.sizes",
+        "date-input.recipes",
+        "date-input.forms",
+        "date-input.locale",
+        "date-input.granularity",
+        "date-input.format",
+        "date-input.controlled",
+        "date-input.constraints"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/date-input/behavior.spec.ts",
+        "name": "DateInput exposes granularities and controlled clear without hiding capabilities"
+      },
+      "manual": "playground/manual-tests/date-input.md"
+    },
+    {
+      "id": "date-picker",
+      "page": "playground/src/components/date-picker/DatePickerPage.tsx",
+      "scenarios": [
+        "date-picker.single",
+        "date-picker.range",
+        "date-picker.multiple",
+        "date-picker.nested",
+        "date-picker.controlled",
+        "date-picker.constraints",
+        "date-picker.custom"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/date-picker/behavior.spec.ts",
+        "name": "nested DatePicker accepts pointer selection above the parent Dialog"
+      },
+      "manual": "playground/manual-tests/date-picker.md"
+    },
+    {
+      "id": "steps",
+      "page": "playground/src/components/steps/StepsPage.tsx",
+      "scenarios": [
+        "steps.workflow",
+        "steps.recipes",
+        "steps.vertical",
+        "steps.validation",
+        "steps.variants",
+        "steps.content",
+        "steps.states"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/steps/behavior.spec.ts",
+        "name": "vertical content retains its value and disabled steps cannot navigate"
+      },
+      "manual": "playground/manual-tests/steps.md"
+    },
+    {
+      "id": "checkmark",
+      "page": "playground/src/components/checkmark/CheckmarkPage.tsx",
+      "scenarios": [
+        "checkmark.recipes",
+        "checkmark.sizes",
+        "checkmark.variants",
+        "checkmark.tones",
+        "checkmark.controlled"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/checkmark/behavior.spec.ts",
+        "name": "checkmark state follows its semantic parent across recipes"
+      },
+      "manual": "playground/manual-tests/checkmark.md"
+    },
+    {
+      "id": "radiomark",
+      "page": "playground/src/components/radiomark/RadiomarkPage.tsx",
+      "scenarios": [
+        "radiomark.recipes",
+        "radiomark.sizes",
+        "radiomark.variants",
+        "radiomark.tones",
+        "radiomark.controlled"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/radiomark/behavior.spec.ts",
+        "name": "radiomark follows its parent without acquiring radio semantics"
+      },
+      "manual": "playground/manual-tests/radiomark.md"
+    },
+    {
+      "id": "icon-button",
+      "page": "playground/src/components/icon-button/IconButtonPage.tsx",
+      "scenarios": [
+        "icon-button.overview",
+        "icon-button.variants",
+        "icon-button.tones",
+        "icon-button.sizes",
+        "icon-button.shapes",
+        "icon-button.composition",
+        "icon-button.states",
+        "icon-button.appearance",
+        "icon-button.stress"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/icon-button/behavior.spec.ts",
+        "name": "IconButton exposes every closed visual recipe at the promised geometry"
+      },
+      "manual": "playground/manual-tests/icon-button.md"
+    },
+    {
+      "id": "close-button",
+      "page": "playground/src/components/close-button/CloseButtonPage.tsx",
+      "scenarios": [
+        "close-button.sizes",
+        "close-button.naming",
+        "close-button.dialog",
+        "close-button.variants",
+        "close-button.popover"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/close-button/behavior.spec.ts",
+        "name": "CloseButton sizes and dialog dismissal retain accessibility"
+      },
+      "manual": "playground/manual-tests/close-button.md"
+    },
+    {
+      "id": "download-trigger",
+      "page": "playground/src/components/download-trigger/DownloadTriggerPage.tsx",
+      "scenarios": [
+        "download-trigger.ready",
+        "download-trigger.async",
+        "download-trigger.error",
+        "download-trigger.formats",
+        "download-trigger.cancel"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/download-trigger/behavior.spec.ts",
+        "name": "DownloadTrigger preserves generated file bytes and cancels unmounted preparation"
+      },
+      "manual": "playground/manual-tests/download-trigger.md"
+    },
+    {
+      "id": "splitter",
+      "page": "playground/src/components/splitter/SplitterPage.tsx",
+      "scenarios": [
+        "splitter.workspace",
+        "splitter.vertical",
+        "splitter.controlled",
+        "splitter.nested",
+        "splitter.pixels",
+        "splitter.disabled",
+        "splitter.constraints"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/splitter/behavior.spec.ts",
+        "name": "Splitter exposes non-drag collapse, restore and bounded resizing"
+      },
+      "manual": "playground/manual-tests/splitter.md"
+    },
+    {
+      "id": "format-number",
+      "page": "playground/src/components/format-number/FormatNumberPage.tsx",
+      "scenarios": [
+        "format-number.formats",
+        "format-number.units",
+        "format-number.locales",
+        "format-number.values"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/format-number/behavior.spec.ts",
+        "name": "numbers use platform locale formatting"
+      },
+      "manual": "playground/manual-tests/format-number.md"
+    },
+    {
+      "id": "format-byte",
+      "page": "playground/src/components/format-byte/FormatBytePage.tsx",
+      "scenarios": [
+        "format-byte.formats",
+        "format-byte.display",
+        "format-byte.locales",
+        "format-byte.boundaries"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/format-byte/behavior.spec.ts",
+        "name": "quantities use localized units"
+      },
+      "manual": "playground/manual-tests/format-byte.md"
+    },
+    {
+      "id": "for",
+      "page": "playground/src/components/for/ForPage.tsx",
+      "scenarios": [
+        "for.collection",
+        "for.empty",
+        "for.keys"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/for/behavior.spec.ts",
+        "name": "For preserves keyed child state when a collection reorders"
+      },
+      "manual": "playground/manual-tests/for.md"
+    },
+    {
+      "id": "locale-provider",
+      "page": "playground/src/components/locale-provider/LocaleProviderPage.tsx",
+      "scenarios": [
+        "locale-provider.inheritance",
+        "locale-provider.nesting",
+        "locale-provider.controls"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/locale-provider/behavior.spec.ts",
+        "name": "nested locales preserve translated labels and explicit names win"
+      },
+      "manual": "playground/manual-tests/locale-provider.md"
+    },
+    {
+      "id": "center",
+      "page": "playground/src/components/center/CenterPage.tsx",
+      "scenarios": [
+        "center.identities",
+        "center.composition",
+        "center.responsive",
+        "center.stress"
+      ],
+      "assertion": {
+        "file": "playground/tests/components/center/behavior.spec.ts",
+        "name": "Surface and Icon compose on one exact painted host"
+      },
+      "manual": "playground/manual-tests/center.md"
+    }
+  ]
+}

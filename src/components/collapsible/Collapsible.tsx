@@ -1,3 +1,4 @@
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import {
   Collapsible as AtomCollapsible,
@@ -10,6 +11,7 @@ export type CollapsibleVariant = "plain" | "soft" | "outline";
 export type CollapsibleSize = "sm" | "md" | "lg";
 
 export interface CollapsibleRootProps extends AtomCollapsibleRootProps {
+  radius?: Radius;
   variant?: CollapsibleVariant;
   size?: CollapsibleSize;
 }
@@ -33,13 +35,13 @@ function classes(base: string, className?: string) {
 
 export const CollapsibleRoot = forwardRef<HTMLDivElement, CollapsibleRootProps>(
   function CollapsibleRoot(
-    { className, size = "md", variant = "plain", "data-slot": slot, ...props },
+    { className, radius, style, size = "md", variant = "plain", "data-slot": slot, ...props },
     ref,
   ) {
     return (
       <AtomCollapsible.Root
         {...props}
-        className={classes("brick-collapsible", className)}
+        className={classes("brick-collapsible", className)} style={radiusStyle(radius, "--brick-collapsible-radius", style)}
         data-size={size}
         data-slot={slot ?? "collapsible-root"}
         data-variant={variant}

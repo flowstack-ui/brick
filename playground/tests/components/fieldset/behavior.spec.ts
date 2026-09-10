@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function expectAlignedFieldsetTops(grid: Locator) {
   const offsets = await grid.locator(".forms-cell").evaluateAll((cells) =>

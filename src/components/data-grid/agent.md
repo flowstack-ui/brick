@@ -24,6 +24,7 @@ Present flat interactive tabular data with Atom-owned active-cell navigation and
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Choose Data Grid only when composite keyboard navigation, row selection, or sortable-header activation has real value; use Table for static comparison.
 - **MUST:** Provide one stable accessible name, one-based row and column indexes, and truthful logical counts for the complete represented data set.
 - **MUST:** Keep data transformation, filtering, sorting direction changes, fetching, caching, URL state, pagination, stale-request cancellation, and persistence in the application.

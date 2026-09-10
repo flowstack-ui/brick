@@ -20,6 +20,7 @@ Present a finished modal task, form, settings flow, or focused information surfa
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Dialog for an ordinary blocking task or information surface; use AlertDialog for an urgent consequential decision and Popover for compact anchored work.
 - **MUST:** Render Overlay and Content as siblings inside Portal; never place Content beneath the aria-hidden Overlay.
 - **MUST:** Give Content an accessible name with one visible Title or an explicit native aria-label or aria-labelledby; add Description only when it supplies useful context.

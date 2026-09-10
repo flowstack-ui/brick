@@ -1,4 +1,6 @@
 "use client";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+
 
 import { createContext, forwardRef, useContext, type ReactNode } from "react";
 import {
@@ -33,7 +35,7 @@ export interface DropdownMenuRootProps extends AtomMenuRootProps {
 }
 export type DropdownMenuTriggerProps = AtomDropdownMenuTriggerProps;
 export type DropdownMenuPortalProps = AtomMenuPortalProps;
-export type DropdownMenuContentProps = AtomMenuContentProps;
+export type DropdownMenuContentProps = AtomMenuContentProps & { radius?: Radius };
 export type DropdownMenuArrowProps = AtomMenuArrowProps;
 export type DropdownMenuGroupProps = AtomMenuGroupProps;
 export type DropdownMenuLabelProps = AtomMenuLabelProps;
@@ -57,7 +59,7 @@ export type DropdownMenuSubProps = AtomMenuSubRootProps;
 export interface DropdownMenuSubTriggerProps extends AtomMenuSubTriggerProps {
   tone?: DropdownMenuItemTone;
 }
-export type DropdownMenuSubContentProps = AtomMenuSubContentProps;
+export type DropdownMenuSubContentProps = AtomMenuSubContentProps & { radius?: Radius };
 
 const SizeContext = createContext<DropdownMenuSize>("md");
 
@@ -86,9 +88,9 @@ export const DropdownMenuTrigger = forwardRef<HTMLElement, DropdownMenuTriggerPr
 export const DropdownMenuPortal = AtomDropdownMenu.Portal;
 
 export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuContentProps>(
-  function DropdownMenuContent({ className, "data-slot": dataSlot, ...props }, ref) {
+  function DropdownMenuContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) {
     const size = useContext(SizeContext);
-    return <AtomDropdownMenu.Content {...props} className={merge("brick-dropdown-menu__content", className)} data-size={size} data-slot={slot(dataSlot, "dropdown-menu-content")} ref={ref} />;
+    return <AtomDropdownMenu.Content {...props} style={radiusStyle(radius, "--brick-dropdown-menu-content-radius", style)} className={merge("brick-dropdown-menu__content", className)} data-size={size} data-slot={slot(dataSlot, "dropdown-menu-content")} ref={ref} />;
   },
 );
 
@@ -160,9 +162,9 @@ export const DropdownMenuSubTrigger = forwardRef<HTMLElement, DropdownMenuSubTri
 );
 
 export const DropdownMenuSubContent = forwardRef<HTMLDivElement, DropdownMenuSubContentProps>(
-  function DropdownMenuSubContent({ className, "data-slot": dataSlot, ...props }, ref) {
+  function DropdownMenuSubContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) {
     const size = useContext(SizeContext);
-    return <AtomDropdownMenu.SubContent {...props} className={merge("brick-dropdown-menu__sub-content", className)} data-size={size} data-slot={slot(dataSlot, "dropdown-menu-sub-content")} ref={ref} />;
+    return <AtomDropdownMenu.SubContent {...props} style={radiusStyle(radius, "--brick-dropdown-menu-content-radius", style)} className={merge("brick-dropdown-menu__sub-content", className)} data-size={size} data-slot={slot(dataSlot, "dropdown-menu-sub-content")} ref={ref} />;
   },
 );
 

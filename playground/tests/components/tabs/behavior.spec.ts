@@ -1,6 +1,98 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 test.beforeEach(async ({ page }) => { await page.goto("/tabs"); });
+
+test("tabs use the shared focus color independently of neutral or accent text", async ({ page }) => {
+  for (const appearance of ["light", "dark"]) {
+    for (const root of [page.getByTestId("tabs-neutral"), page.getByTestId("tabs-variants")]) {
+      await root.evaluate((node, value) => node.setAttribute("data-brick-appearance", value), appearance);
+      for (const tab of await root.getByRole("tab").all()) {
+        await tab.focus();
+        const paint = await tab.evaluate(node => {
+          const probe = document.createElement("span");
+          probe.style.color = "var(--brick-color-focus-ring)";
+          node.append(probe);
+          const expected = getComputedStyle(probe).color;
+          probe.remove();
+          return { actual: getComputedStyle(node).outlineColor, expected };
+        });
+        expect(paint.actual).toBe(paint.expected);
+        await expect(tab).toHaveCSS("outline-offset", "-2px");
+      }
+    }
+  }
+});
+
+test("keyboard End reveals a partially clipped tab and Home restores the first", async ({ page }) => {
+  const list = page.getByTestId("tabs-overview").getByRole("tablist");
+  await list.evaluate(node => { node.style.width="240px"; node.style.flex="none"; });
+  const tabs=list.getByRole("tab");
+  await tabs.first().focus();
+  for (const key of ["End", "Home"]) {
+    await page.keyboard.press(key);
+    const target=key==="End"?tabs.last():tabs.first();
+    await expect(target).toBeFocused();
+    await expect.poll(()=>target.evaluate(node=>{
+      const a=node.getBoundingClientRect(),b=node.closest('[role="tablist"]')!.getBoundingClientRect();
+      return a.left>=b.left-1 && a.right<=b.right+1;
+    })).toBe(true);
+  }
+});
+
+test("soft tab triggers share the actual list radius at every position", async ({ page }) => {
+  const list=page.getByTestId("tabs-variants").locator('[data-variant="soft"] [role="tablist"]');
+  const radius=await list.evaluate(node=>getComputedStyle(node).borderTopLeftRadius);
+  for (const trigger of await list.getByRole("tab").all()) {
+    await expect(trigger).toHaveCSS("border-top-left-radius",radius);
+    await expect(trigger).toHaveCSS("border-top-right-radius",radius);
+    await expect(trigger).toHaveCSS("border-bottom-left-radius",radius);
+    await expect(trigger).toHaveCSS("border-bottom-right-radius",radius);
+  }
+});
+
+test("every tab recipe keeps focused edge paint inside without protective gutters", async ({ page }) => {
+  for (const list of await page.getByTestId("tabs-workbench").getByRole("tablist").all()) {
+    if (!await list.isVisible()) continue;
+    for (const tab of [list.getByRole("tab").first(), list.getByRole("tab").last()]) {
+      if (await tab.isDisabled()) continue;
+      await tab.focus();
+      await expect(tab).toHaveCSS("outline-offset", "-2px");
+      await expect(tab).toHaveCSS("outline-width", "2px");
+      // Paint qualification is separate from Atom/browser scroll-reveal behavior.
+      await tab.scrollIntoViewIfNeeded();
+      await expect.poll(() => tab.evaluate(node => {
+        const box = node.getBoundingClientRect();
+        const list = node.closest(".brick-tabs-list")!.getBoundingClientRect();
+        const visible = box.width > list.width
+          ? box.left < list.right && box.right > list.left
+          : box.left >= list.left - 1 && box.right <= list.right + 1;
+        return visible ? "visible" : JSON.stringify({ label: node.textContent, box: box.toJSON(), list: list.toJSON() });
+      })).toBe("visible");
+    }
+  }
+  await expect(page.getByTestId("tabs-neutral").getByRole("tablist")).toHaveCSS("padding", "0px");
+});
+
+test("soft selection is flat and neutral tone uses semantic neutral paint", async ({ page }) => {
+  const neutral = page.getByTestId("tabs-neutral");
+  const trigger = neutral.getByRole("tab", { name: "Preview" });
+  await expect(trigger).toHaveCSS("box-shadow", "none");
+  const paint = await trigger.evaluate(el => {
+    const css = getComputedStyle(el);
+    const probe = document.createElement("span");
+    probe.style.color = "var(--brick-color-text-primary)";
+    probe.style.background = "var(--brick-color-surface-subtle)";
+    el.append(probe);
+    const expected = getComputedStyle(probe);
+    const result = { color: css.color, background: css.backgroundColor, expectedColor: expected.color, expectedBackground: expected.backgroundColor };
+    probe.remove();
+    return result;
+  });
+  expect(paint.color).toBe(paint.expectedColor);
+  expect(paint.background).toBe(paint.expectedBackground);
+  await expect(page.getByTestId("tabs-variants").locator('[data-variant="soft"] [aria-selected="true"]')).toHaveCSS("box-shadow", "none");
+  await expect(page.getByTestId("tabs-variants").locator('[data-variant="solid"] [aria-selected="true"]')).not.toHaveCSS("box-shadow", "none");
+});
 
 test("defaults expose complete relationships and automatic keyboard activation", async ({ page }) => {
   const root = page.getByTestId("tabs-overview").locator(".brick-tabs");

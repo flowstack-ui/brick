@@ -1,0 +1,51 @@
+@layer brick.components {
+  .brick-marquee {
+    --brick-marquee-edge-color: var(--brick-color-surface-base);
+    --brick-marquee-edge-size: 20%;
+    --brick-marquee-x: calc(-1 * var(--atom-marquee-distance, 0px));
+    --brick-marquee-y: 0px;
+    position: relative; inline-size: 100%; min-inline-size: 0;
+  }
+  .brick-marquee[data-orientation="vertical"] {
+    --brick-marquee-x: 0px;
+    --brick-marquee-y: calc(-1 * var(--atom-marquee-distance, 0px));
+    block-size: 100%; min-block-size: 0;
+  }
+  .brick-marquee-viewport {
+    display: flex; gap: var(--atom-marquee-spacing, var(--brick-space-4));
+    direction: ltr; overflow: hidden; min-inline-size: 0;
+  }
+  .brick-marquee-viewport[data-orientation="vertical"] { flex-direction: column; block-size: 100%; min-block-size: 0; }
+  .brick-marquee-content {
+    display: flex; flex: none; align-items: center; inline-size: max-content;
+    gap: var(--atom-marquee-spacing, var(--brick-space-4));
+    animation: brick-marquee-a var(--atom-marquee-duration, 0s) linear var(--atom-marquee-delay, 0s) var(--atom-marquee-iterations, infinite);
+  }
+  .brick-marquee[dir="rtl"] > .brick-marquee-viewport > .brick-marquee-content { direction: rtl; }
+  .brick-marquee-viewport[data-orientation="vertical"] > .brick-marquee-content { flex-direction: column; align-items: stretch; inline-size: 100%; }
+  .brick-marquee-item { flex: none; min-inline-size: 0; }
+  .brick-marquee[data-reversed] > .brick-marquee-viewport > .brick-marquee-content { animation-direction: reverse; }
+  .brick-marquee[data-generation="1"] > .brick-marquee-viewport > .brick-marquee-content { animation-name: brick-marquee-b; }
+  .brick-marquee[data-state="paused"] > .brick-marquee-viewport > .brick-marquee-content { animation-play-state: paused; }
+  .brick-marquee[data-static] > .brick-marquee-viewport { overflow: auto; }
+  .brick-marquee-viewport:focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring); outline-offset: calc(-1 * var(--brick-border-focus-width)); }
+  .brick-marquee[data-static] > .brick-marquee-viewport > .brick-marquee-content { animation: none; transform: none; }
+  .brick-marquee-edge { position: absolute; pointer-events: none; }
+  .brick-marquee-edge[data-side="start"], .brick-marquee-edge[data-side="end"] { inset-block: 0; inline-size: var(--brick-marquee-edge-size); }
+  .brick-marquee-edge[data-side="start"] { inset-inline-start: 0; background: linear-gradient(to right, var(--brick-marquee-edge-color), transparent); }
+  .brick-marquee-edge[data-side="end"] { inset-inline-end: 0; background: linear-gradient(to left, var(--brick-marquee-edge-color), transparent); }
+  .brick-marquee[dir="rtl"] > .brick-marquee-edge[data-side="start"] { background: linear-gradient(to left, var(--brick-marquee-edge-color), transparent); }
+  .brick-marquee[dir="rtl"] > .brick-marquee-edge[data-side="end"] { background: linear-gradient(to right, var(--brick-marquee-edge-color), transparent); }
+  .brick-marquee-edge[data-side="top"], .brick-marquee-edge[data-side="bottom"] { inset-inline: 0; block-size: var(--brick-marquee-edge-size); }
+  .brick-marquee-edge[data-side="top"] { inset-block-start: 0; background: linear-gradient(to bottom, var(--brick-marquee-edge-color), transparent); }
+  .brick-marquee-edge[data-side="bottom"] { inset-block-end: 0; background: linear-gradient(to top, var(--brick-marquee-edge-color), transparent); }
+  .brick-marquee[data-static] > .brick-marquee-edge { display: none; }
+  @keyframes brick-marquee-a { from { transform: translate(0, 0); } to { transform: translate(var(--brick-marquee-x), var(--brick-marquee-y)); } }
+  @keyframes brick-marquee-b { from { transform: translate(0, 0); } to { transform: translate(var(--brick-marquee-x), var(--brick-marquee-y)); } }
+  @media (prefers-reduced-motion: reduce) {
+    .brick-marquee > .brick-marquee-viewport { overflow: auto; }
+    .brick-marquee > .brick-marquee-viewport > .brick-marquee-content { animation: none; transform: none; }
+    .brick-marquee > .brick-marquee-viewport > [data-replica], .brick-marquee > .brick-marquee-edge { display: none; }
+  }
+  @media (forced-colors: active) { .brick-marquee-edge { display: none; } .brick-marquee-viewport:focus-visible { outline-color: Highlight; } }
+}

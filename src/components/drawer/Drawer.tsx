@@ -1,6 +1,7 @@
 "use client";
 
 import { forwardRef, type HTMLAttributes } from "react";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import {
   Drawer as AtomDrawer,
   type DrawerCloseProps as AtomDrawerCloseProps,
@@ -30,6 +31,7 @@ export interface DrawerContentProps
   placement?: DrawerPlacement;
   /** Complete Drawer dimension recipe. @default "md" */
   size?: DrawerSize;
+  radius?: Radius;
 }
 export type DrawerHeaderProps = HTMLAttributes<HTMLDivElement> & {
   "data-slot"?: string;
@@ -90,6 +92,8 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
       className,
       placement = "end",
       size = "md",
+      radius,
+      style,
       "data-slot": dataSlot,
       ...props
     },
@@ -99,6 +103,7 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
       <AtomDrawer.Content
         {...props}
         className={mergeClassName("brick-drawer-content", className)}
+        style={radiusStyle(radius, "--brick-drawer-radius", style)}
         data-size={size}
         data-slot={slotOrDefault(dataSlot, "drawer-content")}
         placement={placement}

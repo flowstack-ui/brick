@@ -9,6 +9,19 @@ CSS under `playground/src`.
 
 ## Decision rule
 
+The date-family and recent utility pass retains the same ownership:
+
+| Owner | Surface responsibility | Layout retained by |
+| --- | --- | --- |
+| Marquee | Surface and Card own content paint; optional Edge explicitly matches its surface | Frame bounds vertical height; Marquee owns tracks; two scoped artwork transforms are deliberate illustration CSS |
+| Calendar | shared Specimen surface only | Calendar cell and range paint remains component-owned |
+| Date Input | shared Specimen surface only | input recipe, segment focus and grouping remain DateInput-owned |
+| Date Picker | shared Specimen surface only | input and popup recipes remain component-owned; Popover owns portal presentation |
+| Close Button | shared Specimen surface only | IconButton action geometry and state paint |
+| Download Trigger | shared Specimen surface only | Button geometry and pending presentation |
+| Steps | shared Specimen surface only | progress markers, connectors and current state |
+| Splitter | shared Specimen surface only | boundary, grip and panel geometry |
+
 Use Brick Surface when one complete generic wrapper owns a neutral background,
 optional border/elevation/radius, and inset. Surface owns only that paint.
 Container continues to own measure; Stack and Grid continue to own layout.
@@ -83,6 +96,12 @@ different owner.
 | Highlight | overview, recipe, and adaptation evidence stages | Highlight's inline match paint, native semantic output, and exact Atom segmentation |
 | Prose | overview, scale, content, and adaptation evidence stages | Prose descendant typography, reading measure, editorial overflow, and native document structure |
 | Code Block | generic outer evidence cells and appearance stages | Code Block recipes, technical surface paint, overflow, selection, and source anatomy |
+| QR Code | outer specimen cells and comparison regions | QR symbol geometry, quiet zone, logo placement, export and scanner-safe paint |
+| Table of Contents | outer specimen cells and comparison regions | navigation hierarchy, current location, indicator, scroll containment and focus paint |
+| Tags Input | outer specimen cells and comparison regions | Editing field, chips, focus and suggestions remain component-owned |
+| Native Select | outer specimen cells and comparison regions | Native control boundary, indicator and form states remain component-owned |
+| Editable | outer specimen cells and comparison regions | Preview, edit field and action focus remain component-owned |
+| Pin Input | outer specimen cells and comparison regions | Individual cells, group spacing and focus remain component-owned |
 | List | overview, specimen cells, appearance scopes, customization shell, and stress panel | List markers, dividers, borders, anatomy, nesting, and exact output |
 | Data List | overview, comparison cells, appearance scopes, customization shell, and stress panels | Data List label/value semantics, orientation, dividers, and logical label-measure evidence |
 | Table | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Table boundaries, section paint, sticky/overflow geometry, and rendered native output |
@@ -203,6 +222,17 @@ playground pass:
    layout shells and lets Surface variables win over legacy page selectors.
 
 ## Completion gate
+
+| Owner | Shared evidence surface | Retained component paint |
+| --- | --- | --- |
+| Spinner | Specimen comparison cells | Ring and optional track only |
+| Stat | Metric comparison cells and nested appearance specimens | Native metric anatomy, typography, unit alignment and semantic trend indicators; no root surface |
+| Timeline | Chronology specimen cells and nested appearance examples | Native event list, indicator paint, logical tracks and stretched decorative separators; no root surface |
+| Action Bar | Shared evidence surfaces | Action Bar floating surface and interaction state paint |
+| Floating Panel | Shared evidence surfaces | Window surface, titlebar and resize boundaries |
+| Overlay Manager | Shared evidence surfaces | Registered overlay components retain their own presentation |
+| Alert | Specimen comparison cells | Status recipes, border and indicator anatomy |
+| Empty State | Specimen comparison cells | Transparent composition; explicit Card and Table examples own their surfaces |
 
 The migration is complete only when:
 

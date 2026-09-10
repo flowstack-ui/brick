@@ -1,5 +1,17 @@
 # Chip manual-test protocol
 
+## September 7 expansion review (not run)
+
+1. Compare compact passive and removable sm/md/lg/xl: passive targets are
+   18/20/24/32px; controls have at least 24px targets plus the root border.
+2. Inspect four variants and six semantic tones in light/dark and forced colors.
+3. Inspect StartElement/EndElement icons and avatars for square geometry and
+   label alignment at every compact size, narrow width and RTL.
+4. Keyboard-activate ActionTrigger and its sibling RemoveTrigger; verify independent
+   accessible names, no nested button, disabled treatment and visible focus.
+5. Verify legacy comfortable sizes, custom glyphs and direct children still work.
+6. Check actual zoom and physical touch targets; emulation is not a manual pass.
+
 | Run information | Value |
 | --- | --- |
 | Component | Chip |

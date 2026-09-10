@@ -1,6 +1,7 @@
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
+  For,
   Grid,
   HStack,
   VStack,
@@ -160,6 +161,7 @@ export function IconButtonPage() {
       data-testid="icon-button-workbench"
     >
       <Scenario {...iconButtonScenarios[0]}>
+        <IconButton data-testid="icon-button-inside-focus" focusRing="inside" aria-label="Inside focus placement"><SearchIcon /></IconButton>
         <EvidenceSurface
           className="icon-button-hero"
           data-testid="icon-button-overview"
@@ -187,13 +189,13 @@ export function IconButtonPage() {
           className="icon-button-specimen-grid"
           data-testid="icon-button-variants"
         >
-          {variants.map((variant) => (
+          <For each={variants}>{(variant) => (
             <SpecimenCell key={variant} label={variant}>
               <IconButton aria-label={`${variant} menu`} variant={variant}>
                 <MenuIcon />
               </IconButton>
             </SpecimenCell>
-          ))}
+          )}</For>
         </Grid.Root>
       </Scenario>
 
@@ -202,7 +204,7 @@ export function IconButtonPage() {
           className="icon-button-evidence-stack"
           data-testid="icon-button-tones"
         >
-          {variants.map((variant) => (
+          <For each={variants}>{(variant) => (
             <EvidenceGroup
               description={`All semantic tones using the ${variant} treatment.`}
               key={variant}
@@ -212,7 +214,7 @@ export function IconButtonPage() {
                 columns={6}
                 className="icon-button-specimen-grid icon-button-specimen-grid--six"
               >
-                {tones.map((tone) => (
+                <For each={tones}>{(tone) => (
                   <SpecimenCell key={tone} label={tone}>
                     <IconButton
                       aria-label={`${variant} ${tone} action`}
@@ -222,10 +224,10 @@ export function IconButtonPage() {
                       <SearchIcon />
                     </IconButton>
                   </SpecimenCell>
-                ))}
+                )}</For>
               </Grid.Root>
             </EvidenceGroup>
-          ))}
+          )}</For>
         </VStack>
       </Scenario>
 
@@ -236,13 +238,13 @@ export function IconButtonPage() {
             className="icon-button-row icon-button-specimen-grid icon-button-specimen-grid--seven"
             data-testid="icon-button-sizes"
           >
-            {sizes.map((size) => (
+            <For each={sizes}>{(size) => (
               <SpecimenCell key={size} label={size}>
                 <IconButton aria-label={`${size} action`} size={size}>
                   <MenuIcon />
                 </IconButton>
               </SpecimenCell>
-            ))}
+            )}</For>
           </Grid.Root>
           <EvidenceGroup
             description="One IconButton inherits the comfortable default below lg, then changes its complete square recipe without a second tree."
@@ -267,13 +269,13 @@ export function IconButtonPage() {
           className="icon-button-row icon-button-specimen-grid icon-button-specimen-grid--two"
           data-testid="icon-button-shapes"
         >
-          {shapes.map((shape) => (
+          <For each={shapes}>{(shape) => (
             <SpecimenCell key={shape} label={shape}>
               <IconButton aria-label={`${shape} action`} shape={shape}>
                 <SearchIcon />
               </IconButton>
             </SpecimenCell>
-          ))}
+          )}</For>
         </Grid.Root>
       </Scenario>
 
