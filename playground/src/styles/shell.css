@@ -22,6 +22,11 @@
   --brick-app-bar-background: var(--brick-color-surface-canvas);
 }
 
+/* Fragment navigation must leave documentation headings below shell chrome. */
+.evidence-app .evidence-docs-section {
+  scroll-margin-block-start: var(--evidence-scenario-scroll-margin);
+}
+
 .scenario-nav a:focus-visible {
   border-radius: var(--brick-radius-control);
   outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);

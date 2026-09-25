@@ -10,7 +10,7 @@ export function DocsSection({ id, title, level = 2, description, children }: {
   children: ReactNode;
 }) {
   return (
-    <VStack as="section" id={id} gap={description && level === 2 ? 6 : 8}>
+    <VStack as="section" id={id} className="evidence-docs-section" gap={description && level === 2 ? 6 : 8}>
       <VStack gap={level === 2 ? 4 : 2}>
       <Heading level={level} id={`${id}-heading`} variant={level === 2 ? "title-md" : "title-sm"}>
         <Link href={`#${id}`} tone="inherit" variant="underline">{title}</Link>

@@ -162,6 +162,8 @@ test("wide documentation navigation stays beside content while the heading scrol
   await expect(navigation).toBeVisible();
   const banner = await page.getByRole("banner", { name: "Brick playground" }).boundingBox();
   expect(banner!.y).toBe(0);
+  const section = await page.locator("#links").boundingBox();
+  expect(section!.y).toBeGreaterThanOrEqual(banner!.height);
 });
 
 test("narrow layouts keep the app bar sticky and release secondary chrome", async ({
@@ -178,13 +180,17 @@ test("narrow layouts keep the app bar sticky and release secondary chrome", asyn
   await expect(page.getByRole("navigation", { name: "On this page" })).toBeHidden();
   await page.goto("/button#links");
   const target = page.locator("#links");
-  await target.scrollIntoViewIfNeeded();
+  // Check native fragment placement itself, not a test-induced second scroll.
   await expect(target).toBeInViewport();
+  const scrollMargin = await target.evaluate((element) =>
+    parseFloat(getComputedStyle(element).scrollMarginBlockStart),
+  );
   const [appBarBox, targetBox] = await Promise.all([
     appBar.boundingBox(),
     target.boundingBox(),
   ]);
   expect(targetBox!.y).toBeGreaterThanOrEqual(appBarBox!.height);
+  expect(scrollMargin).toBeGreaterThan(appBarBox!.height);
 
   await page.setViewportSize({ width: 480, height: 270 });
   await page.reload();
