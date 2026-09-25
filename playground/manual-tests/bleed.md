@@ -1,5 +1,20 @@
 # Bleed manual-test protocol
 
+## Documentation page pass
+
+1. Open `/bleed`. Confirm the basic stripe reaches both inside border edges,
+   while the heading and copy retain padding. Open Code and compare it with
+   the rendered demo; return to Preview.
+2. Follow Usage, Vertical, Specific direction, Responsive, Edge override and
+   Composition using the TOC. Each named direction reaches only its intended
+   edge; vertical reaches both block edges. Repeat with RTL examples.
+3. Resize through narrow mobile, tablet and desktop. Responsive bleed follows
+   the parent's changing inset. No horizontal page scrolling or cut-off text.
+4. Check light/dark themes, enlarged text and browser zoom. Inspect props,
+   source copy, TOC focus and adjacent-page links using keyboard navigation.
+5. Open `/bleed?qualification=1` for the retained lower-level scenarios.
+   Automated results do not complete manual assistive-technology/device checks.
+
 | Run information | Value |
 | --- | --- |
 | Component | Bleed |

@@ -159,11 +159,6 @@
       "reason": "Shared visual recipe for action controls; it exports no JavaScript surface."
     },
     {
-      "pattern": "src/components/_responsive-visibility/**",
-      "visibility": "source-only",
-      "reason": "Internal responsive visibility implementation shared by Show and Hide."
-    },
-    {
       "pattern": "src/components/_field-variant/**",
       "visibility": "source-only",
       "reason": "Private responsive visual recipe serialization for field boundary owners."
@@ -232,6 +227,11 @@
       "pattern": "src/components/_responsive-value/**",
       "visibility": "source-only",
       "reason": "Internal responsive value normalization used by public layout owners."
+    },
+    {
+      "pattern": "src/components/_responsive-visibility/**",
+      "visibility": "source-only",
+      "reason": "Internal responsive visibility implementation shared by Show and Hide."
     }
   ],
   "nativeApplicationDestinations": []

@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 test.beforeEach(async ({ page }) => {
-  await page.goto("/show");
+  await page.goto("/show?qualification=1");
 });
 test("Show uses exact md boundary, stays mounted, and stays layout-transparent", async ({
   page,

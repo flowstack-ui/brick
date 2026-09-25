@@ -4,6 +4,24 @@ import { describe, expect, it } from "vitest";
 import { Prose, type ProseMeasure, type ProseSize } from "../../../src/prose.js";
 
 describe("Prose", () => {
+  it("serializes sparse responsive presentation and independent content boundaries", () => {
+    const contentRef = createRef<HTMLDivElement>();
+    const excludeRef = createRef<HTMLDivElement>();
+    const { container } = render(<Prose size={{ lg: "lg" }} measure="reading" tone="primary" codeOverflow="scroll" tableLayout="auto">
+      <Prose.Content ref={contentRef}><h2>Document</h2></Prose.Content>
+      <Prose.Exclude ref={excludeRef}><button>Embedded action</button></Prose.Exclude>
+    </Prose>);
+    const root = container.querySelector(".brick-prose");
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-lg", "lg");
+    expect(root).toHaveAttribute("data-measure", "reading");
+    expect(root).toHaveAttribute("data-tone", "primary");
+    expect(root).toHaveAttribute("data-code-overflow", "scroll");
+    expect(root).toHaveAttribute("data-table-layout", "auto");
+    expect(contentRef.current).toHaveClass("brick-prose-content");
+    expect(excludeRef.current).toHaveAttribute("data-prose-exclude", "");
+    expect(screen.getByRole("button")).toHaveTextContent("Embedded action");
+  });
   it("renders one semantic host with closed size and measure metadata", () => {
     const ref = createRef<HTMLElement>();
     const { rerender } = render(<Prose as="article" ref={ref}><h1>Release notes</h1><p>Trusted React content.</p></Prose>);

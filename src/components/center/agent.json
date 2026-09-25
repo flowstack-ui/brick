@@ -21,6 +21,11 @@
   ],
   "rules": [
     {
+      "id": "center-inline-alignment",
+      "level": "must",
+      "statement": "Center inline changes display only and preserves normal surrounding-text baseline alignment. Square and Circle retain middle alignment as fixed inline ornaments. Internal two-axis centering is independent of vertical-align."
+    },
+    {
       "id": "center-intent",
       "level": "must",
       "statement": "Choose Center for arbitrary centering, Square for a guaranteed equal-size centered region, and Circle only when genuinely circular geometry is intended."

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Show content only at selected Brick breakpoints through CSS, avoiding JavaScript viewport state and hydration flicker.
+Render conditional content with when, or preserve mounted content with CSS-only from visibility. The modes are exclusive.
 
 ## Use when
 
@@ -10,7 +10,7 @@ Show content only at selected Brick breakpoints through CSS, avoiding JavaScript
 
 ## Choose something else when
 
-- Content must remain available to assistive technology while visually hidden, or rendering depends on authorization or data. Use VisuallyHidden or application conditional rendering.
+- Content must remain available to assistive technology while visually hidden, or access needs authorization. Use VisuallyHidden or application/server authorization.
 
 ## Required composition
 
@@ -18,6 +18,7 @@ Show content only at selected Brick breakpoints through CSS, avoiding JavaScript
 
 ## Rules
 
+- **MUST:** Choose when with optional fallback and typed function children, or from with native host props. Never mix modes. Conditional mode has no host/ref and uses JS truthiness; test collection length explicitly. Responsive asChild projects onto one non-Fragment prop/ref-forwarding host and preserves its display. Do not use CSS visibility to stop effects, form submission or portalled overlays.
 - **MUST:** Use Show's CSS breakpoint contract rather than client viewport detection for responsive first paint.
 - **MUST:** Keep IDs, landmarks, form relationships, and focus order valid in every visible alternative.
 - **MUST:** Rely on Show's layout-transparent visible state inside parent layouts and put paint or geometry on a child layout component.

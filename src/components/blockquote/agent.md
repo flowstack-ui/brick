@@ -16,13 +16,13 @@ Compose an extended quotation, source URL, and optional attribution with correct
 ## Required composition
 
 - Place Blockquote.Content and optional Blockquote.Caption as siblings inside Blockquote.Root; put the source URL on Content through cite.
-- Use Blockquote.Cite inside Caption only for a referenced work or source, not merely for the person quoted.
+- Use Blockquote.Cite inside Caption only for a referenced work or source, not merely for the person quoted. Use asChild only with a host retaining the part semantics. Compose Float.Anchor with Root for positioned decoration and Paragraph inside Content for explicit typography.
 
 ## Rules
 
 - **MUST:** Preserve figure Root, blockquote Content, sibling figcaption Caption, and native cite Cite.
 - **MUST:** Keep attribution outside Content so it is not represented as part of the quotation.
-- **MUST:** Select only the documented accent, surface, or plain variant and start, center, or end alignment.
+- **MUST:** Choose subtle, solid, surface, plain or legacy accent plus semantic tone and logical alignment. Subtle/neutral/start is the default; solid strengthens the rule and icon, not the background.
 - **MUST:** Keep Icon decorative unless a consumer intentionally overrides aria-hidden for meaningful custom content.
 - **MUST:** Load styles.css or core.css plus blockquote.css.
 

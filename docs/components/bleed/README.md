@@ -32,7 +32,7 @@ import "@flowstack-ui/brick/styles/bleed.css";
 
 ```tsx
 <Surface inset="lg">
-  <Bleed inline={6} blockStart={6}>
+  <Bleed inline="6" blockStart="6">
     <Image.Root src="/editorial.jpg">...</Image.Root>
   </Bleed>
 </Surface>
@@ -60,9 +60,16 @@ Public exports are `Bleed`, `BleedProps`, and `BleedElement`.
 | `slot` | `string` | `bleed` |
 
 Spacing props accept non-negative Brick spacing values or responsive values
-with `initial` and optional `sm`, `md`, `lg`, and `xl` overrides. Directional
+with optional `initial`, `sm`, `md`, `lg`, and `xl` overrides. Sparse objects
+such as `{ md: 6 }` use zero before the first breakpoint. Directional
 values override their matching axis edge. `asChild` preserves one non-Fragment
 child.
+
+Match the parent's token when reaching its inset edge: `Surface inset="lg"`
+uses space-6 (32px by default), so use `inline="6"`. Numeric `inline={6}` is
+six base units (24px), not the same token. Explicit CSS lengths and variables
+are supported. Zero explicitly disables an edge; an authored directional
+override continues across later breakpoints until replaced.
 
 ## Visual recipes and states
 

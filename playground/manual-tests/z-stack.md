@@ -49,3 +49,11 @@ Notes or issue:
 Overall result:
 Follow-up issues:
 Workbook updated:
+
+## Docs migration review (pending human run)
+
+- Review Root and Item props headings and matching nested TOC links.
+- Verify natural sizing, RTL logical placement and breakpoint edge spacing.
+- Keyboard through both contained actions; check focus at browser zoom.
+- Open ?qualification=1 for the original scenario IDs. No blanket Item CSS
+  should mask recipe geometry.

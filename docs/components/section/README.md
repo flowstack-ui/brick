@@ -44,7 +44,7 @@ Public exports are `Section`, `SectionProps`, `SectionElement`, and
 ## Quick start
 
 ```tsx
-<Section spacing={{ initial: "md", lg: "xl" }}>
+<Section spacing={{ lg: "xl" }}>
   <Container>
     <VStack gap="4">
       <Text as="h2" variant="title-lg">Services</Text>
@@ -86,6 +86,11 @@ Without `initial`, the normal Section recipe applies below the first supplied
 breakpoint. Native global,
 ARIA, and data attributes, events, `className`, `style`, and an `HTMLElement`
 ref pass through.
+
+`slot` is the legacy `data-slot` styling hook, not the native shadow-DOM slot
+attribute. Sparse edge objects continue to follow `spacing` until their first
+explicit edge override. No `asChild` is exposed; compose Surface around Section
+when they should share a painted host.
 
 ## Visual recipes and states
 
@@ -180,7 +185,7 @@ When paint must cover the complete Section rhythm, enhance the same host:
 
 On that shared host, Section owns logical block padding and Surface owns
 paint. A selected Surface inset can still supply inline inset; use
-`inset="none"` when Container should remain the only inline-gutter owner.
+omit Surface inset when Container should remain the only inline-gutter owner.
 
 When only a contained panel is painted:
 

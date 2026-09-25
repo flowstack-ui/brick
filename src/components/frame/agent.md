@@ -16,7 +16,7 @@ Own responsive logical size constraints for one local element without taking ove
 ## Required composition
 
 - Use Frame inside a layout Item, or let Stack.Item/Grid.Item compose asChild around Frame when one host must own both parent participation and internal constraints.
-- For bounded long content, put ScrollArea inside a maxBlockSize Frame; Frame constrains and ScrollArea scrolls.
+- For bounded long content, compose a definite blockSize Frame asChild around ScrollArea.Root; a maximum alone does not establish descendant percentage height. Omitted dimensions preserve the host recipe; sparse values activate at their first breakpoint.
 
 ## Rules
 

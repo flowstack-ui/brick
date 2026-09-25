@@ -1,5 +1,10 @@
 # Surface changelog
 
+## Unreleased
+
+- Add transparent paint, align elevation with shared shadow roles, preserve composed ref cleanup, and honor Scrim's own text direction.
+- Add modular documentation examples and part-scoped props while retaining qualification scenarios.
+
 Surface follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
@@ -38,3 +43,8 @@ Surface follows the package version of `@flowstack-ui/brick`.
 - Initial one-root `Surface` API with four semantic levels, independent border,
   elevation, radius, and inset recipes, controlled semantic hosts, native
   prop/ref forwarding, forced-colors boundaries, and public CSS variables.
+
+## Unreleased — surface effects
+
+- Add independent treatment, background alpha, named/exact backdrop blur, saturation and structural border controls on the painted root.
+- Preserve ordinary defaults and existing blurred usage; add scoped input isolation and filter/preference fallbacks.

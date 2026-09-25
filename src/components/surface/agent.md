@@ -35,6 +35,8 @@ Apply semantic background tones and layers, boundaries, elevation, radius, inset
 - **MUST:** Put every foreground child inside Surface.Content when Media or Scrim is used.
 - **SHOULD:** Choose Scrim strength through the public prop and let the theme provide only the semantic scrim color unless one deliberate instance requires an advanced recipe override.
 - **MUST:** Verify foreground contrast against every media state; Scrim does not prove contrast by itself.
+- **MUST:** Use level=transparent for no fill, distinct from opaque canvas. Accent transparent uses accent text. Use uniform Scrim in vertical writing; directional Scrims support horizontal LTR/RTL including their own dir. asChild preserves child handlers and callback-ref cleanup through Atom's public composition adapter.
+- **MUST:** Use treatment translucent for an opt-in preset; backgroundOpacity, backdropBlur, backdropSaturate, borderColor and borderOpacity independently tune the painted root. Exact px/rem/em blur values need no token. Preserve semantic foregrounds, native overflow and portalled popup ownership; backdrop filtering contains positioned descendants. Instance effect inputs do not inherit into nested owners. Theme defaults tune opted-in presets only.
 
 ## Common mistakes
 
@@ -52,6 +54,7 @@ Apply semantic background tones and layers, boundaries, elevation, radius, inset
 - Confirm Media and Scrim fill the root, remain hidden from assistive technology and pointer input, and Content stays above both.
 - Check that layered foreground content has intentional spacing on all four logical edges at narrow and wide sizes.
 - Check that responsive inset changes at the intended shared breakpoint while media and scrim remain edge-to-edge.
+- Verify unchanged default and legacy blurred paint, independent effect inputs, nested instances, transparent levels, unsupported filters, reduced transparency and forced colors. Do not claim opaque Theme contrast validation proves contrast over arbitrary backdrops.
 
 ## Related guidance
 

@@ -1,173 +1,26 @@
-import {
-  Frame,
-  Grid,
-  HStack,
-  ScrollArea,
-  Surface,
-  Text,
-  VStack,
-} from "../../../../src/index.js";
+import { VStack } from "@flowstack-ui/brick";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { ExamplePreview } from "../../shared/ExamplePreview.js";
 import { Scenario } from "../../shared/Scenario.js";
-import { Specimen } from "../../shared/Specimen.js";
-import "./frame.playground.css";
-
-export const frameScenarios = [
-  {
-    id: "frame.overview",
-    number: 1,
-    title: "Constraint ownership",
-    description: "Four unrelated layouts use one narrow logical-size grammar.",
-  },
-  {
-    id: "frame.responsive",
-    number: 2,
-    title: "Responsive carry-forward",
-    description:
-      "Values remain active until a later Brick breakpoint replaces them.",
-  },
-  {
-    id: "frame.composition",
-    number: 3,
-    title: "One-host composition",
-    description:
-      "Frame can enhance the node that already owns semantics or paint.",
-  },
-  {
-    id: "frame.stress",
-    number: 4,
-    title: "Logical and content stress",
-    description:
-      "Long content, RTL, and vertical writing preserve access and source order.",
-  },
-];
-
-const updates = Array.from(
-  { length: 12 },
-  (_, index) => `Project update ${index + 1}`,
-);
-
+import { FrameBasic } from "./examples/FrameBasic.js";
+import source from "./examples/FrameBasic.tsx?raw";
+import { FrameDocumentation } from "./FrameDocumentation.js";
+import { FrameEvidence, frameScenarios } from "./FrameEvidence.js";
+export { frameScenarios } from "./FrameEvidence.js";
 export function FramePage() {
+  const preview = usePreviewContext();
+  const qualification =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("qualification") === "1";
+  if (preview || qualification) return <FrameEvidence />;
   return (
     <VStack data-component-page="frame" gap="6">
-      <Scenario {...frameScenarios[0]}>
-        <Grid.Root
-          columns={{ initial: 1, lg: 2 }}
-          data-testid="frame-cases"
-          gap="4"
-        >
-          <Specimen label="minimum inline size">
-            <Surface inset="md">
-              <HStack align="stretch" gap="3">
-                <Frame minInlineSize="9rem">
-                  <Text weight="semibold">Navigation rail</Text>
-                </Frame>
-                <Text tone="secondary">
-                  Flexible content remains beside a deliberate minimum.
-                </Text>
-              </HStack>
-            </Surface>
-          </Specimen>
-          <Specimen label="maximum readable measure">
-            <Surface inset="md">
-              <Frame maxInlineSize="48ch">
-                <Text>
-                  Readable copy stops growing while its surrounding layout may
-                  continue across a wide viewport.
-                </Text>
-              </Frame>
-            </Surface>
-          </Specimen>
-          <Specimen label="minimum block size">
-            <Frame minBlockSize={{ initial: "12rem", lg: "18rem" }}>
-              <Surface className="frame-canvas" inset="md">
-                <Text weight="semibold">Media canvas</Text>
-              </Surface>
-            </Frame>
-          </Specimen>
-          <Specimen label="maximum block + Scroll Area">
-            <Frame maxBlockSize={{ initial: "12rem", lg: "16rem" }}>
-              <ScrollArea.Root
-                className="frame-scroll"
-                scrollbarVisibility="always"
-              >
-                <ScrollArea.Viewport aria-label="Project updates" focusable>
-                  <VStack gap="2">
-                    {updates.map((update) => (
-                      <Text key={update}>{update}</Text>
-                    ))}
-                  </VStack>
-                </ScrollArea.Viewport>
-              </ScrollArea.Root>
-            </Frame>
-          </Specimen>
-        </Grid.Root>
+      <Scenario {...frameScenarios[0]} hideHeading>
+        <ExamplePreview label="Frame" source={source}>
+          <FrameBasic />
+        </ExamplePreview>
       </Scenario>
-
-      <Scenario {...frameScenarios[1]}>
-        <Specimen label="100% → 75% → 50%">
-          <Frame
-            data-testid="frame-responsive"
-            inlineSize={{ initial: "100%", md: "75%", xl: "50%" }}
-            minBlockSize={{ initial: "8rem", lg: "12rem" }}
-          >
-            <Surface inset="md">
-              <Text>Inspect my computed logical size at each breakpoint.</Text>
-            </Surface>
-          </Frame>
-        </Specimen>
-      </Scenario>
-
-      <Scenario {...frameScenarios[2]}>
-        <VStack gap="4">
-          <Specimen label="article is the single host">
-            <Frame asChild data-testid="frame-composed" maxInlineSize="36rem">
-              <Surface as="article" inset="md">
-                <Text weight="semibold">
-                  One article host owns paint and a deliberate maximum measure.
-                </Text>
-              </Surface>
-            </Frame>
-          </Specimen>
-          <Specimen label="nested constraints">
-            <Frame
-              blockSize={{ initial: "20rem", lg: "24rem" }}
-              data-testid="frame-nested-parent"
-            >
-              <Frame blockSize="50%" data-testid="frame-nested-child">
-                <Surface inset="sm">
-                  <Text>Nested Frame constraints remain locally scoped.</Text>
-                </Surface>
-              </Frame>
-              <Frame data-testid="frame-nested-auto">
-                <Text>An unconstrained child keeps intrinsic block size.</Text>
-              </Frame>
-            </Frame>
-          </Specimen>
-        </VStack>
-      </Scenario>
-
-      <Scenario {...frameScenarios[3]}>
-        <Grid.Root columns={2} gap="4">
-          <Specimen label="RTL">
-            <Frame as="section" dir="rtl" maxInlineSize="32rem">
-              <Surface inset="md">
-                <Text>
-                  محتوى طويل يحافظ على القيود المنطقية واتجاه القراءة.
-                </Text>
-              </Surface>
-            </Frame>
-          </Specimen>
-          <Specimen label="vertical writing">
-            <Frame className="frame-vertical" maxBlockSize="18rem">
-              <Surface inset="md">
-                <Text>
-                  Logical constraints remain meaningful in vertical writing.
-                </Text>
-              </Surface>
-            </Frame>
-          </Specimen>
-        </Grid.Root>
-      </Scenario>
+      <FrameDocumentation />
     </VStack>
   );
 }

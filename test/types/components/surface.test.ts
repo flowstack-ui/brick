@@ -90,3 +90,10 @@ void levels;
 void elevations;
 void radii;
 void insets;
+
+// Surface effect parameters preserve exact CSS lengths without a styling runtime.
+createElement(Surface, { treatment: "translucent", backgroundOpacity: 0.8, backdropBlur: "18px", backdropSaturate: 1.1, borderColor: "white", borderOpacity: 0.5 });
+// @ts-expect-error Blur percentages are not lengths.
+createElement(Surface, { backdropBlur: "20%" });
+// @ts-expect-error No universal responsive paint API.
+createElement(Surface, { backgroundOpacity: { initial: 0.8 } });

@@ -14,9 +14,18 @@
 
     box-sizing: border-box;
     inline-size: 100%;
-    max-inline-size: var(--brick-container-max-inline-size);
     min-inline-size: 0;
     margin-inline: auto;
+  }
+
+  /* Container owns these axes even when a painted host has base size/inset
+     declarations. Own recipe attributes outrank those base rules in either
+     modular stylesheet order; consumer inline styles remain an escape hatch. */
+  .brick-container[data-measure] {
+    max-inline-size: var(--brick-container-max-inline-size);
+  }
+
+  .brick-container[data-gutter] {
     padding-inline: var(--brick-container-padding-inline);
   }
 

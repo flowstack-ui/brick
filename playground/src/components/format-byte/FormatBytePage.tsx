@@ -12,6 +12,12 @@ export const formatByteScenarios = [{
 { id: "format-byte.boundaries", number: 4, title: "Boundaries", description: "Zero, negative and scale-boundary values remain deterministic." }] as const;
 
 export function FormatBytePage() {
+  const preview = usePreviewContext();
+  if (!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <FormatByteDocumentation />;
+  return <FormatByteEvidence />;
+}
+
+function FormatByteEvidence() {
   return (
     <VStack data-component-page="format-byte" gap="6">
       <Scenario {...formatByteScenarios[0]}>
@@ -29,3 +35,5 @@ export function FormatBytePage() {
     </VStack>
   );
 }
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { FormatByteDocumentation } from "./FormatByteDocumentation.js";

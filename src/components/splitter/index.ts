@@ -1,4 +1,6 @@
 export {
+  SplitterRootProvider, useSplitter, useSplitterContext, createSplitterRegistry,
+  type SplitterRootProviderProps, type UseSplitterReturn, type SplitterRegistry, type SplitterRegistryOptions,
   Splitter, SplitterRoot, SplitterPanel, SplitterResizeTrigger, SplitterContext,
   SplitterResizeTriggerSeparator, SplitterResizeTriggerIndicator,
   type SplitterRootProps, type SplitterPanelProps, type SplitterResizeTriggerProps,

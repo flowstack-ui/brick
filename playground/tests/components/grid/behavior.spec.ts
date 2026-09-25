@@ -8,7 +8,7 @@ async function box(locator: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/grid");
+  await page.goto("/grid?qualification=1");
 });
 
 test("Grid default is one explicit equal track with no semantic invention", async ({

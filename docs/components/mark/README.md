@@ -43,17 +43,20 @@ state, or interaction.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `subtle`, `solid`, `plain` | `subtle` |
-| `tone` | `accent`, `neutral` | `accent` |
+| `variant` | `subtle`, `solid`, `text`, `plain` | `subtle` |
+| `tone` | `accent`, `neutral`, `info`, `success`, `warning`, `danger` | `accent` |
+| `asChild` | `boolean` | `false` |
 | `slot` | `string` | `mark` |
 
 Public exports are `Mark`, `MarkProps`, `MarkVariant`, and `MarkTone`.
 
 ## Visual recipes and states
 
-Subtle is a quiet marked surface, solid is high emphasis, and plain preserves
-semantic marking without background paint. Accent and neutral choose closed
-semantic color relationships.
+Subtle uses a quiet semantic surface and solid uses a strong paired fill. Text
+uses medium weight without paint; plain preserves semantic marking alone.
+Text and plain inherit foreground and remove inset. Filled variants use paired
+semantic colors rather than inheriting potentially low-contrast text. Typography
+otherwise inherits, so Mark works inside headings and paragraphs without size props.
 
 ## Tokens and CSS hooks
 
@@ -72,12 +75,18 @@ Mark follows surrounding inline flow and wraps with the marked passage.
 ## Accessibility
 
 Native `mark` expresses relevance. Mark adds no role or focus. Forced colors
-uses system highlight colors; plain remains distinguishable with an underline.
+uses system highlight colors; plain and text remain distinguishable with an underline.
+Most screen readers do not automatically announce marked passages. Keep meaning
+understandable from context; Mark is not a substitute for Em or Strong.
 
 ## Composition, native props, and refs
 
 Keep Mark inside its sentence-level content owner. Native attributes, events,
 class, style, slot, children, and an `HTMLElement` ref pass to the mark host.
+
+With `asChild`, supply one element that renders a native `mark` and forwards
+props and refs. Static presentation merges classes, styles and refs without
+an extra wrapper. Arbitrary `as`, query matching and a props provider are not supplied.
 
 ## Examples
 

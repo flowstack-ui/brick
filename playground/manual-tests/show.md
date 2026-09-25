@@ -34,6 +34,12 @@ Setup: Enable the recorded screen reader. Action: Navigate below and above md. E
 Notes or issue:
 
 ## Completion
+Additional conditional/projection pass: toggle a focused conditional subtree and
+record application focus consequences; verify fallback and zero values; inspect
+projected controls with the screen reader and at actual browser zoom. Verify
+conditional counter reset versus responsive state retention. Result:
+Notes or issue:
+
 Overall result:
 Follow-up issues:
 Workbook updated:

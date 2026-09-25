@@ -10,7 +10,7 @@ Hide content through Brick's CSS breakpoint contract without JavaScript viewport
 
 ## Choose something else when
 
-- Content should be visually hidden but remain available to assistive technology, or should not render for business reasons. Use VisuallyHidden or application conditional rendering.
+- Content should be visually hidden but remain available to assistive technology, or should not render for business reasons. Use VisuallyHidden or Show when.
 
 ## Required composition
 
@@ -18,6 +18,7 @@ Hide content through Brick's CSS breakpoint contract without JavaScript viewport
 
 ## Rules
 
+- **MUST:** Use asChild to project responsive visibility onto one non-Fragment prop/ref-forwarding host without changing visible display. Do not combine as and asChild. CSS hiding retains mounted state and form participation and cannot hide external portals. Use Show when for conditional removal.
 - **MUST:** Use Hide instead of JavaScript matchMedia for first-paint responsive visibility.
 - **MUST:** Do not hide the only accessible name, error, instruction, or required content at a breakpoint.
 - **MUST:** Rely on Hide's layout-transparent visible state inside parent layouts and put paint or geometry on a child layout component.

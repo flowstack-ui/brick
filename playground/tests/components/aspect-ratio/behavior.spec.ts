@@ -94,15 +94,12 @@ test("Props lists Brick's real API and keeps the complete table accessible at na
     await expect(rows.nth(index).locator("td").last().locator("p")).not.toBeEmpty();
   }
   const scroll = page.getByRole("region", { name: "AspectRatio.Root props scroll area", exact: true });
-  await page.setViewportSize({ width: 320, height: 800 });
-  const dimensions = await scroll.evaluate(element => ({ client: element.clientWidth, scroll: element.scrollWidth }));
-  expect(dimensions.scroll).toBeGreaterThan(dimensions.client);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
-  await scroll.scrollIntoViewIfNeeded();
-  await scroll.focus();
-  await expect(scroll).toBeFocused();
-  await page.keyboard.press("ArrowRight", { delay: 150 });
-  await expect.poll(() => scroll.evaluate(element => element.scrollLeft)).toBeGreaterThan(0);
+  for (const width of [1600, 1280, 768, 390, 320]) {
+    await page.setViewportSize({ width, height: 800 });
+    const dimensions = await scroll.evaluate(element => ({ client: element.clientWidth, scroll: element.scrollWidth }));
+    expect(dimensions.scroll).toBeLessThanOrEqual(dimensions.client + 1);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+  }
   const accessibility = await new AxeBuilder({ page }).include("#props").analyze();
   expect(accessibility.violations).toEqual([]);
 });

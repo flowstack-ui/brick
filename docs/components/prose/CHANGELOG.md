@@ -8,7 +8,9 @@ Prose follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
-- No unreleased changes.
+- Added responsive size, reading measure, body tone, Content/Exclude boundaries,
+  code overflow and table layout choices. Improved document hierarchy, nested
+  lists, definitions, figures, transparent table headers and link decoration.
 
 ## 0.1.12 — 2026-08-30
 

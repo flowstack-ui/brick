@@ -14,16 +14,16 @@
     { "condition": "The content is a technical literal rather than keyboard input.", "useInstead": "Code" }
   ],
   "composition": [
-    "Keep Kbd inside meaningful surrounding copy or repeat Kbd for each authored key in a sequence with visible separators outside the key hosts."
+    "Use one Kbd for a complete authored combination or separate Kbd hosts for individual keys with visible separators. asChild projects presentation onto one authored kbd host."
   ],
   "rules": [
     { "id": "kbd-native", "level": "must", "statement": "Preserve the one native kbd host and use it only for keyboard-input notation." },
     { "id": "kbd-passive", "level": "must", "statement": "Do not register shortcuts, listen for keys, translate platform labels, or add interaction inside Kbd." },
-    { "id": "kbd-recipes", "level": "must", "statement": "Select only the documented raised, outline, subtle, or plain variant and sm, md, or lg size." },
+    { "id": "kbd-recipes", "level": "must", "statement": "Select documented variants, sizes and semantic tones; default raised/md/neutral." },
     { "id": "kbd-css", "level": "must", "statement": "Load styles.css or core.css plus kbd.css." }
   ],
   "commonMistakes": [
-    { "mistake": "Putting an entire shortcut such as Ctrl+Shift+P inside one Kbd host without authored separation.", "correction": "Use one Kbd per key and keep visible separators in the surrounding content owner." }
+    { "mistake": "Expecting Kbd to register shortcuts or translate platform symbols.", "correction": "The application owns shortcut behavior and labels. Both a whole combination and separate keycaps are valid." }
   ],
   "validation": [
     "Confirm native kbd semantics, closed recipes, readable key sequences, selection and copy, forced colors, zoom, localization, RTL, and CSS delivery.",

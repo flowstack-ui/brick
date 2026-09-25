@@ -81,6 +81,11 @@ application custom properties.
 ## Visual recipes and states
 
 Center uses flex centering and may opt into inline-flex. Square and Circle
+retain middle alignment as fixed inline ornaments. Center itself does not
+override vertical-align: inline text and composed links keep normal baseline
+alignment. This is independent of centering children inside the host.
+
+Square and Circle
 apply the same responsive value to logical inline and block size and use fixed
 flex participation. Circle additionally uses Brick's full-radius token. The
 family has no interactive states or paint recipes.
@@ -141,6 +146,12 @@ ref pass through. With `asChild`, the family enhances exactly one child and
 merges its props, event handlers, style, classes, and ref onto that one host.
 
 ## Examples
+
+The playground's default Center route provides six source-paired docs examples:
+basic, icon/number, inline link, Square, Circle, and responsive sizing, followed
+by ownership guidance and separate props tables. Use `?qualification=1` for
+the retained exhaustive scenarios. Copyable examples use public imports and
+the repository's enforced formatting, without hidden preview substitutions.
 
 ### Inline status ornament
 

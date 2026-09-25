@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/appearance");
+  await page.goto("/appearance?qualification=1");
 });
 
 function relativeLuminance(rgb: string) {

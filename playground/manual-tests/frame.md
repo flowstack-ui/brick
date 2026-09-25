@@ -61,3 +61,10 @@ Notes or issue:
 Overall result:
 Follow-up issues:
 Workbook updated:
+
+## Docs migration checks (pending human run)
+
+- Compare normal and Frame-composed buttons at narrow and desktop widths.
+- Review Usage, Examples, Guide and Props; verify code matches each live example.
+- Test browser zoom and keyboard scrolling through the final project update.
+- Use ?qualification=1 for the retained exhaustive scenario IDs.

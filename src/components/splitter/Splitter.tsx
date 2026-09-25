@@ -1,8 +1,13 @@
 "use client";
 import { forwardRef, type ComponentPropsWithoutRef } from "react";
-import { Splitter as AtomSplitter, type SplitterRootProps, type SplitterPanelProps, type SplitterResizeTriggerProps } from "@flowstack-ui/atom/splitter";
+import { Splitter as AtomSplitter, type SplitterRootProviderProps, type SplitterRootProps, type SplitterPanelProps, type SplitterResizeTriggerProps } from "@flowstack-ui/atom/splitter";
+export { useSplitter, useSplitterContext, createSplitterRegistry } from "@flowstack-ui/atom/splitter";
+export type { SplitterRootProviderProps, UseSplitterReturn, SplitterRegistry, SplitterRegistryOptions } from "@flowstack-ui/atom/splitter";
 export type { SplitterRootProps, SplitterPanelProps, SplitterResizeTriggerProps, SplitterContextProps, SplitterContextValue, SplitterPanelConfig, SplitterSize, SplitterSizes, SplitterResizeDetails, SplitterOrientation } from "@flowstack-ui/atom/splitter";
 const classes = (base: string, extra?: string) => extra ? `${base} ${extra}` : base;
+export const SplitterRootProvider = forwardRef<HTMLDivElement, SplitterRootProviderProps>(function SplitterRootProvider({ className, ...props }, ref) {
+  return <AtomSplitter.RootProvider {...props} ref={ref} className={classes("brick-splitter", className)} />;
+});
 export const SplitterRoot = forwardRef<HTMLDivElement, SplitterRootProps>(function SplitterRoot({ className, ...props }, ref) {
   return <AtomSplitter.Root {...props} ref={ref} className={classes("brick-splitter", className)} />;
 });
@@ -24,5 +29,5 @@ export const SplitterResizeTrigger = forwardRef<HTMLDivElement, SplitterResizeTr
   </AtomSplitter.ResizeTrigger>;
 });
 export const SplitterContext = AtomSplitter.Context;
-export const Splitter = Object.freeze({ Root: SplitterRoot, Panel: SplitterPanel, ResizeTrigger: SplitterResizeTrigger,
+export const Splitter = Object.freeze({ Root: SplitterRoot, RootProvider: SplitterRootProvider, Panel: SplitterPanel, ResizeTrigger: SplitterResizeTrigger,
   ResizeTriggerSeparator: SplitterResizeTriggerSeparator, ResizeTriggerIndicator: SplitterResizeTriggerIndicator, Context: SplitterContext });

@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/scroll-area"); });
+test.beforeEach(async ({ page }) => { await page.goto("/scroll-area?qualification=1"); });
 
 test("defaults and every physical axis produce native scrolling", async ({ page }) => {
   const viewport = page.getByTestId("scroll-area-default").locator(".brick-scroll-area-viewport");
@@ -41,6 +41,9 @@ test("composition, refs, reflow, and accessibility remain sound", async ({ page 
   const box = await page.locator('[data-scenario="scroll-area.stress"]').boundingBox();
   expect(box).not.toBeNull();
   expect(box!.x + box!.width).toBeLessThanOrEqual(390);
+  const writing = await page.locator(".scroll-area-vertical-writing").boundingBox();
+  expect(writing!.height).toBeLessThanOrEqual(240);
+  expect(writing!.width).toBeLessThanOrEqual(240);
   const results = await new AxeBuilder({ page }).include('[data-component-page="scroll-area"]').analyze();
   expect(results.violations).toEqual([]);
 });

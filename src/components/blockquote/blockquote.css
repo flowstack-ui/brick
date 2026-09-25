@@ -3,30 +3,33 @@
     --brick-blockquote-background: transparent;
     --brick-blockquote-foreground: var(--brick-color-text-primary);
     --brick-blockquote-muted-foreground: var(--brick-color-text-secondary);
-    --brick-blockquote-accent: var(--brick-color-accent-border);
+    --brick-blockquote-accent: var(--brick-color-border-default);
+    --brick-blockquote-icon-color: var(--brick-color-text-secondary);
     --brick-blockquote-border-color: transparent;
     --brick-blockquote-border-width: 0rem;
-    --brick-blockquote-radius: var(--brick-radius-surface);
-    --brick-blockquote-padding-block: var(--brick-space-4);
+    --brick-blockquote-radius: 0rem;
+    --brick-blockquote-padding-block: 0rem;
     --brick-blockquote-padding-inline: var(--brick-space-5);
-    --brick-blockquote-gap: var(--brick-space-3);
+    --brick-blockquote-gap: var(--brick-space-2);
     --brick-blockquote-icon-font-family: var(--brick-typography-display-font-family);
-    --brick-blockquote-icon-size: 2.5rem;
+    --brick-blockquote-icon-size: 1.25rem;
     --brick-blockquote-icon-font-weight: var(--brick-typography-display-font-weight);
     --brick-blockquote-icon-line-height: var(--brick-typography-display-line-height);
-    --brick-blockquote-content-font-family: var(--brick-typography-body-lg-font-family);
-    --brick-blockquote-content-font-size: var(--brick-typography-body-lg-font-size);
-    --brick-blockquote-content-font-weight: var(--brick-typography-body-lg-font-weight);
-    --brick-blockquote-content-line-height: var(--brick-typography-body-lg-line-height);
-    --brick-blockquote-content-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
-    --brick-blockquote-caption-font-family: var(--brick-typography-caption-font-family);
-    --brick-blockquote-caption-font-size: var(--brick-typography-caption-font-size);
-    --brick-blockquote-caption-font-weight: var(--brick-typography-caption-font-weight);
-    --brick-blockquote-caption-line-height: var(--brick-typography-caption-line-height);
-    --brick-blockquote-caption-letter-spacing: var(--brick-typography-caption-letter-spacing);
+    --brick-blockquote-content-font-family: inherit;
+    --brick-blockquote-content-font-size: inherit;
+    --brick-blockquote-content-font-weight: inherit;
+    --brick-blockquote-content-line-height: inherit;
+    --brick-blockquote-content-letter-spacing: inherit;
+    --brick-blockquote-caption-font-family: var(--brick-typography-body-sm-font-family);
+    --brick-blockquote-caption-font-size: var(--brick-typography-body-sm-font-size);
+    --brick-blockquote-caption-font-weight: var(--brick-typography-body-sm-font-weight);
+    --brick-blockquote-caption-line-height: var(--brick-typography-body-sm-line-height);
+    --brick-blockquote-caption-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
 
     display: grid;
     box-sizing: border-box;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
     gap: var(--brick-blockquote-gap);
     margin: 0;
     padding-block: var(--brick-blockquote-padding-block);
@@ -37,9 +40,16 @@
     background: var(--brick-blockquote-background);
     color: var(--brick-blockquote-foreground);
     text-align: start;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
   }
 
   .brick-blockquote[data-variant="surface"] {
+    --brick-blockquote-radius: var(--brick-radius-surface);
+    --brick-blockquote-padding-block: var(--brick-space-4);
     --brick-blockquote-background: var(--brick-color-surface-subtle);
     --brick-blockquote-border-color: var(--brick-color-border-subtle);
     --brick-blockquote-border-width: var(--brick-border-width);
@@ -63,9 +73,13 @@
   }
 
   .brick-blockquote__icon {
-    display: block;
-    block-size: 0.65em;
-    color: var(--brick-blockquote-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--brick-blockquote-icon-size);
+    block-size: var(--brick-blockquote-icon-size);
+    flex-shrink: 0;
+    color: var(--brick-blockquote-icon-color);
     font-family: var(--brick-blockquote-icon-font-family);
     font-size: var(--brick-blockquote-icon-size);
     font-weight: var(--brick-blockquote-icon-font-weight);
@@ -73,8 +87,22 @@
     user-select: none;
   }
 
+  .brick-blockquote__icon > svg,
+  svg.brick-blockquote__icon {
+    inline-size: var(--brick-blockquote-icon-size);
+    block-size: var(--brick-blockquote-icon-size);
+    flex-shrink: 0;
+  }
+
+  .brick-blockquote[data-variant="solid"] {
+    --brick-blockquote-accent: var(--brick-color-text-primary);
+    --brick-blockquote-icon-color: var(--brick-color-text-primary);
+  }
+
   .brick-blockquote__content {
     margin: 0;
+    padding: 0;
+    border: 0;
     color: var(--brick-blockquote-foreground);
     font-family: var(--brick-blockquote-content-font-family);
     font-size: var(--brick-blockquote-content-font-size);
@@ -96,12 +124,58 @@
     font-style: normal;
   }
 
+  .brick-blockquote[data-tone="accent"] {
+    --brick-blockquote-accent: var(--brick-color-accent-border);
+    --brick-blockquote-icon-color: var(--brick-color-accent-text);
+  }
+  .brick-blockquote[data-tone="accent"][data-variant="solid"] {
+    --brick-blockquote-accent: var(--brick-color-accent-solid);
+    --brick-blockquote-icon-color: var(--brick-color-accent-solid);
+  }
+
+  .brick-blockquote[data-tone="info"] {
+    --brick-blockquote-accent: var(--brick-color-info-border);
+    --brick-blockquote-icon-color: var(--brick-color-info-text);
+  }
+  .brick-blockquote[data-tone="info"][data-variant="solid"] {
+    --brick-blockquote-accent: var(--brick-color-info-solid);
+    --brick-blockquote-icon-color: var(--brick-color-info-solid);
+  }
+
+  .brick-blockquote[data-tone="success"] {
+    --brick-blockquote-accent: var(--brick-color-success-border);
+    --brick-blockquote-icon-color: var(--brick-color-success-text);
+  }
+  .brick-blockquote[data-tone="success"][data-variant="solid"] {
+    --brick-blockquote-accent: var(--brick-color-success-solid);
+    --brick-blockquote-icon-color: var(--brick-color-success-solid);
+  }
+
+  .brick-blockquote[data-tone="warning"] {
+    --brick-blockquote-accent: var(--brick-color-warning-border);
+    --brick-blockquote-icon-color: var(--brick-color-warning-text);
+  }
+  .brick-blockquote[data-tone="warning"][data-variant="solid"] {
+    --brick-blockquote-accent: var(--brick-color-warning-solid);
+    --brick-blockquote-icon-color: var(--brick-color-warning-solid);
+  }
+
+  .brick-blockquote[data-tone="danger"] {
+    --brick-blockquote-accent: var(--brick-color-danger-border);
+    --brick-blockquote-icon-color: var(--brick-color-danger-text);
+  }
+  .brick-blockquote[data-tone="danger"][data-variant="solid"] {
+    --brick-blockquote-accent: var(--brick-color-danger-solid);
+    --brick-blockquote-icon-color: var(--brick-color-danger-solid);
+  }
+
   @media (forced-colors: active) {
-    .brick-blockquote {
+    .brick-blockquote[data-tone][data-variant] {
       --brick-blockquote-background: Canvas;
       --brick-blockquote-foreground: CanvasText;
       --brick-blockquote-muted-foreground: CanvasText;
       --brick-blockquote-accent: Highlight;
+      --brick-blockquote-icon-color: CanvasText;
       --brick-blockquote-border-color: CanvasText;
     }
   }

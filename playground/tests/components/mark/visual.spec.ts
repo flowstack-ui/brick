@@ -1,6 +1,6 @@
 import { expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/mark");
+installVisualDefaults("/mark?qualification=1");
 
 test("Mark overview and closed recipes", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.locator('[data-scenario="mark.overview"]'), "overview-light.png");

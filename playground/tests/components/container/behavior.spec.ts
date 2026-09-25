@@ -8,7 +8,7 @@ async function box(locator: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/container");
+  await page.goto("/container?qualification=1");
 });
 
 test("default is one centered wide root with medium logical gutters", async ({

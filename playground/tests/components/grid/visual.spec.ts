@@ -7,7 +7,9 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/grid");
+// The retained exhaustive specimens live on the qualification route; the
+// public route now renders the source-paired documentation examples.
+installVisualDefaults("/grid?qualification=1");
 
 async function removeStickyCaptureOverlap(page: import("@playwright/test").Page) {
   await page.addStyleTag({

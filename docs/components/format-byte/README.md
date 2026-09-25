@@ -40,7 +40,7 @@ The component renders one `span` with `data-slot="format-byte"`. The string help
 | --- | --- | --- |
 | `value` | required numeric quantity | none |
 | `locale` | BCP 47 locale | inherited `LocaleProvider`, then `en-US` |
-| `precision` | significant digits | `3` |
+| `precision` | integer 1–100, pre-rounding significant digits | `3` |
 | `unit` | `bit`, `byte` | `byte` |
 | `unitDisplay` | `long`, `short`, `narrow` | `short` |
 | `unitSystem` | `binary`, `decimal` | `decimal` |
@@ -55,6 +55,15 @@ Output inherits surrounding typography and color. There are no visual variants o
 The stable hook is `data-slot` with value `format-byte`. The component exposes no paint token; its modular stylesheet is intentionally empty.
 
 ## Customization
+
+Invalid precision throws RangeError, including zero, fractions and non-finite
+values. Precision pre-rounds the scaled number; Intl display options may round
+again. For tiny values use formatOptions.maximumSignificantDigits when those
+digits must remain visible. NaN returns empty text; infinities use native Intl
+output at the largest supported unit. Zero retains localized units.
+
+With unit=bit, the source value is bits; no byte-to-bit conversion is performed.
+Binary uses a 1024 divisor with existing Intl SI labels, not IEC KiB/MiB names.
 
 Choose semantic unit options on the formatter and place it inside Text when a typography recipe is required.
 

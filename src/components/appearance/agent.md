@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Apply one explicit light, dark, or inherited semantic-token boundary without adding visual paint, layout, state, or a required client provider.
+Apply one explicit light, dark, or inherited semantic-token boundary with primary foreground, without adding background paint, layout, state, or a required client provider.
 
 ## Use when
 
@@ -21,6 +21,7 @@ Apply one explicit light, dark, or inherited semantic-token boundary without add
 
 ## Rules
 
+- **MUST:** Explicit boundaries establish low-specificity primary foreground for native HTML; component and author colors retain precedence. Inherit follows ancestor foreground. Supply compatible surrounding paint or compose Surface; Appearance adds no background.
 - **MUST:** Use Appearance only with a theme that supplies a complete appearance-dependent color and shadow assignment for the requested explicit appearance, including both paired native selection roles.
 - **MUST:** Do not recolor descendants component by component after establishing the scope.
 - **MUST:** Pass exactly one existing host. Do not pass a Fragment, string, or multiple direct children; author a semantic host explicitly when the region does not already have one.

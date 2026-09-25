@@ -1,7 +1,13 @@
+@import "./scroll-area-custom.css";
 @layer brick.components {
   .brick-scroll-area {
     --brick-scroll-area-scrollbar-thumb: var(--brick-color-border-strong);
     --brick-scroll-area-scrollbar-track: transparent;
+    --brick-scroll-area-scrollbar-size: 8px;
+    --brick-scroll-area-scrollbar-margin: 2px;
+    --brick-scroll-area-thumb-min-size: 24px;
+    --brick-scroll-area-shadow-size: 24px;
+    --brick-scroll-area-shadow-color: var(--brick-color-surface-canvas);
 
     display: grid;
     grid-template-columns: minmax(0, 1fr);

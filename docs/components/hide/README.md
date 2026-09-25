@@ -51,6 +51,7 @@ Hide renders one native host, `div` by default, with `.brick-hide`, `data-from`,
 | `as` | `div`, `span`, `section`, `article`, `nav`, `header`, `footer`, `main`, `aside`, `ul`, `ol`, `li` | `div` |
 | `slot` | string | `hide` |
 | `children` | ReactNode | required |
+| `asChild` | boolean | false |
 
 Thresholds are `30rem`, `48rem`, `64rem`, and `80rem`.
 
@@ -76,7 +77,13 @@ Hide adds no role or ARIA. Hidden descendants leave focus navigation and the acc
 
 ## Composition, native props, and refs
 
-Omit `as` when the default `div` is sufficient. Use `as` only for deliberate HTML semantics or valid document structure; it does not create a layout box. Put paint and geometry on a child layout component. Hide has no `asChild`, render, fallback, or unmount API. Avoid invalid table grammar and duplicate responsive content identity.
+Omit default `as`. Use `asChild` for one existing non-Fragment element that forwards
+props and refs. Do not combine it with `as`. Projection preserves the child's
+visible display, classes, styles, events, refs and default slot; `data-hide-from`
+carries the threshold. It adds no wrapper. Put paint/geometry on the child.
+Hide has no conditional mode: use Show when for actual removal. Avoid duplicate
+identities; hidden forms stay mounted and portals are not hidden by this host.
+Use separate hosts for nested responsive rules.
 
 ## Examples
 

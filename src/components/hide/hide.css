@@ -1,7 +1,11 @@
 @layer brick.components {
-  .brick-hide { display: contents !important; }
-  @media (width >= 30rem) { .brick-hide[data-from="sm"] { display: none !important; } }
-  @media (width >= 48rem) { .brick-hide[data-from="md"] { display: none !important; } }
-  @media (width >= 64rem) { .brick-hide[data-from="lg"] { display: none !important; } }
-  @media (width >= 80rem) { .brick-hide[data-from="xl"] { display: none !important; } }
+  .brick-hide:not([data-hide-from]) { display: contents !important; }
+  @media (width >= 30rem) { .brick-hide[data-hide-from="sm"] { display: none !important; } }
+  @media (width >= 48rem) { .brick-hide[data-hide-from="md"] { display: none !important; } }
+  @media (width >= 64rem) { .brick-hide[data-hide-from="lg"] { display: none !important; } }
+  @media (width >= 80rem) { .brick-hide[data-hide-from="xl"] { display: none !important; } }
+  @media (width >= 30rem) { .brick-hide:not([data-hide-from])[data-from="sm"] { display: none !important; } }
+  @media (width >= 48rem) { .brick-hide:not([data-hide-from])[data-from="md"] { display: none !important; } }
+  @media (width >= 64rem) { .brick-hide:not([data-hide-from])[data-from="lg"] { display: none !important; } }
+  @media (width >= 80rem) { .brick-hide:not([data-hide-from])[data-from="xl"] { display: none !important; } }
 }

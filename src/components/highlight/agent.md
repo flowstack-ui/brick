@@ -17,13 +17,14 @@ Discover literal queries in plain text through exact Atom behavior and render fi
 
 - Pass plain text through text and literal query values through query; keep surrounding sentence typography on Text or another content owner.
 - Let Highlight delegate all matching to Atom and keep search input, active result, counters, and navigation in the application.
+- For custom matches, import findHighlightSegments from Brick and compose For with Mark; preserve unmatched text and segment order. Do not import Atom or recreate matching.
 
 ## Rules
 
 - **MUST:** Use exact Atom Highlight behavior; do not copy or replace its segmentation, escaping, overlap, or exact-match logic.
 - **MUST:** Use Highlight only for plain text and literal queries, never by flattening or cloning arbitrary React content.
 - **MUST:** Preserve Brick's fixed native span root and Atom-generated native mark matches.
-- **MUST:** Select only the documented subtle, solid, or underline variant and accent or neutral tone.
+- **MUST:** Select subtle, solid, underline, text or plain and accent, neutral, info, success, warning or danger. Text/plain inherit color; filled variants use Mark-compatible semantic pairs.
 - **MUST:** Keep search state, active-result navigation, counts, keyboard commands, and announcements outside Highlight.
 - **MUST:** Load styles.css or core.css plus highlight.css.
 

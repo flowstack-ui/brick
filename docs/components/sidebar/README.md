@@ -70,6 +70,7 @@ and `Footer` are static panel regions.
 | `size` | `sm`, `md`, `lg` | `md` |
 | `position` | `static`, `sticky` | `static` |
 | `surface` | `transparent`, `base`, `raised` | `base` when docked; `raised` when floating |
+| `bordered` | `boolean` | `true` |
 | `defaultState` | `expanded`, `rail`, `offcanvas` | `expanded` |
 | `collapsedState` | `rail`, `offcanvas` | `offcanvas` |
 | `side` | `left`, `right` | `left` |
@@ -79,7 +80,34 @@ Root preserves controlled `state`/`onStateChange`. Trigger preserves
 `toState`. Panel preserves landmark naming. Every part preserves native props,
 class, style, slot, ref, `render`, and `asChild`.
 
+`useSidebarContext`, `SidebarContextValue`, `SidebarState`, `SidebarSide` and
+`SidebarCollapsedState` are re-exported from the root and sidebar entrypoints.
+Call the hook in a descendant to render rail-aware labels without duplicating
+controlled state. Compact controls still need complete accessible names.
+
+Prefer Trigger inside Main. A direct Root Trigger occupies a separate leading
+row spanning both columns. Panel and Main align on the following row. Keep the
+only reopening trigger outside the inert offcanvas Panel.
+
+`bordered={false}` removes Panel/Header/Footer boundaries while preserving
+floating elevation. Offcanvas removes the column gap even for floating shells.
+Region composition merges both handlers (owner first) and preserves callback-ref
+cleanup instead of replacing the child handler or ref.
+
 ## Visual recipes and states
+
+Header, Content and Footer accept `inset: SidebarInset` (`default | none`,
+default `default`) and emit `data-inset`. None removes the region padding only;
+it keeps gaps, borders and flexible sizing. Use it when an outer Container or
+inner composition owns spacing. ScrollArea remains the scroll owner; it does
+not need custom viewport padding to compensate for Sidebar. Render/asChild
+composition preserves the recipe without leaking an `inset` HTML attribute.
+
+```tsx
+<Sidebar.Content inset="none">
+  <NavList.Root aria-label="Workspace">{/* authored navigation */}</NavList.Root>
+</Sidebar.Content>
+```
 
 Docked attaches the panel to the shell edge with a logical separator.
 Floating adds gap, radius, border, and elevation. Surface selects panel paint
@@ -114,6 +142,15 @@ Public variables include `--brick-sidebar-expanded-width-sm`,
 `--brick-sidebar-sticky-offset`, `--brick-sidebar-available-block-size`,
 `--brick-sidebar-transition-duration`, and
 `--brick-sidebar-transition-easing`.
+
+State changes settle panel and main widths immediately. Opening fades the panel
+at its final width (unless reduced motion is requested), avoiding temporary
+text wrapping and page-height flicker. Closing is immediately hidden and inert.
+The duration/easing hooks control this opacity transition, not width animation.
+
+Compose `Sidebar.Trigger asChild` with `IconButton` for a compact named control.
+Place it in Main with start alignment rather than stretching it in a column.
+Sidebar's minimal trigger styles yield to the composed Button/IconButton recipe.
 
 ## Customization
 

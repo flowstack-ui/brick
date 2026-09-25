@@ -4,6 +4,11 @@ const size: ProseSize = "lg";
 const measure: ProseMeasure = "wide";
 const props: ProseProps = { as: element, size, measure, children: "Guide" };
 void Prose; void props;
+const responsive: ProseProps = { size: { lg: "lg" }, tone: "secondary", measure: "reading", codeOverflow: "scroll", tableLayout: "auto" };
+void responsive;
+// @ts-expect-error Responsive objects must not be empty.
+const emptySize: ProseProps = { size: {} };
+void emptySize;
 // @ts-expect-error Prose does not accept raw HTML strings as a convenience API.
 const invalidHtml: ProseProps = { html: "<p>Unsafe</p>" };
 // @ts-expect-error Prose accepts trusted React children, never injected HTML.

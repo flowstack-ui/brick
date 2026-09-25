@@ -30,6 +30,9 @@ export function formatByte(
     unitSystem = "decimal",
   }: FormatByteOptions = {},
 ) {
+  if (!Number.isInteger(precision) || precision < 1 || precision > 100) {
+    throw new RangeError("FormatByte precision must be an integer from 1 to 100");
+  }
   if (Number.isNaN(value)) return "";
   const factor = unitSystem === "binary" ? 1024 : 1000;
   const prefixes = unit === "bit" ? bitPrefixes : bytePrefixes;
@@ -41,7 +44,7 @@ export function formatByte(
   }
   const rounded = value === 0
     ? 0
-    : Number.parseFloat(scaled.toPrecision(Math.max(1, precision))) * Math.sign(value);
+    : Number.parseFloat(scaled.toPrecision(precision)) * Math.sign(value);
   const intlUnit = `${prefixes[index]}${unit}`;
   return formatNumber(rounded, locale, {
     ...formatOptions,

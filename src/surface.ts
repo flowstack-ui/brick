@@ -17,3 +17,5 @@ export {
   type SurfaceScrimStrength,
   type SurfaceTone,
 } from "./components/surface/index.js";
+
+export type { SurfaceTreatment, BackdropBlur } from "./components/surface/index.js";

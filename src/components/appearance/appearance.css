@@ -2,4 +2,7 @@
   .brick-appearance {
     box-sizing: border-box;
   }
+  :where(.brick-appearance[data-brick-appearance="light"], .brick-appearance[data-brick-appearance="dark"]) {
+    color: var(--brick-color-text-primary);
+  }
 }

@@ -12,8 +12,8 @@ share a centered maximum and consistent page gutters.
 
 ## When not to use
 
-Use Stack or Grid to arrange children, Card or a future Surface for paint,
-authored section composition for vertical rhythm, and application layout for
+Use Stack or Grid to arrange children, Card or Surface for paint,
+Section for vertical rhythm, and application layout for
 sidebars, breakpoints, safe areas, or viewport height. Do not use Container as
 an ordinary grouping div or to constrain a component specimen, dialog, field,
 phone frame, or paragraph.
@@ -49,7 +49,7 @@ Public exports are `Container`, `ContainerProps`, `ContainerElement`,
 ```tsx
 <Container as="main">
   <VStack gap="6">
-    <Text as="h1" variant="display">Projects</Text>
+    <Heading level={1} variant="display-md">Projects</Heading>
     <Grid.Root minItemSize="md" gap="4">{projects}</Grid.Root>
   </VStack>
 </Container>
@@ -70,14 +70,16 @@ Container renders exactly one selected native element:
 </main>
 ```
 
-It never inserts an inner element or clones, wraps, reorders, or filters
-children. The selected element is the `HTMLElement` ref target.
+It never inserts an inner element. Normally children remain unchanged;
+with `asChild`, one non-Fragment element is cloned to merge host props and refs.
+The resulting element is the `HTMLElement` ref target.
 
 ## API
 
 | Prop | Values | Default |
 | --- | --- | --- |
 | `as` | `div`, `section`, `article`, `main`, `header`, `footer`, `nav`, `aside` | `div` |
+| `asChild` | `boolean`; requires one non-Fragment element and excludes `as` | `false` |
 | `measure` | `narrow`, `medium`, `wide`, `max`, `full` | `wide` |
 | `gutter` | `none`, `sm`, `md`, `lg` | `md` |
 | `slot` | `string` | `container` |
@@ -163,11 +165,11 @@ or `vh`.
 
 ## Composition, native props, and refs
 
-Container constrains; Stack and Grid arrange; Card or a future Surface paints.
+Container constrains; Stack and Grid arrange; Card or Surface paints.
 For full-width paint with measured content, place Container inside the painted
 region. Native props and refs target the one authored host.
 
-Container does not expose `asChild`, `render`, custom-component hosts,
+Container does not expose `render`, custom-component hosts through `as`,
 responsive objects, arbitrary recipe values, vertical spacing, background,
 overflow, safe-area policy, viewport height, child alignment, or full-bleed
 child protocols.
@@ -177,11 +179,11 @@ child protocols.
 ### Full-width region with measured content
 
 ```tsx
-<section className="product-surface">
-  <Container measure="wide">
+<Surface as="section" level="subtle">
+  <Container>
     <VStack gap="4">Measured content</VStack>
   </Container>
-</section>
+</Surface>
 ```
 
 ### Deliberately narrower inner region
@@ -195,6 +197,40 @@ child protocols.
 ```
 
 ## Evidence
+
+The default playground route contains Basic, Measures, Fluid, Gutters,
+Centered Content and Shared Alignment previews with executable source.
+Use `?qualification=1` for exhaustive geometry, semantics, customization,
+RTL and writing-mode scenarios.
+
+Large measures can look identical inside a narrow parent: the maximum is a
+cap, not a forced width. `measure="full"` removes the cap, not the gutters.
+Use `VStack align="center"` for child centering. Container does not expose
+responsive measure objects or general style props.
+
+### Adopting a child host
+
+```tsx
+<Container asChild>
+  <Surface as="article" level="subtle">
+    <Paragraph>One host owns the measure and paint.</Paragraph>
+  </Surface>
+</Container>
+```
+
+Use either `as` or `asChild`. The child must forward props and its ref to
+one HTML host. Classes merge; inline styles merge with Container's supplied
+keys winning. Child-only styles remain. Container-supplied attributes win
+conflicts; both event handlers run, Container first. Both refs receive the
+host and are cleaned up on unmount. A composed component still applies its own
+documented metadata rules.
+
+Do not give both owners competing width or padding responsibilities: child
+inline styles can override Container's CSS recipe. Use Container for measure
+and gutters, Surface for paint. Container's measure and inline gutters take
+precedence over Surface's base sizing/inset rules on the shared host; Surface
+can still supply block padding. Keep separate hosts when a full-width
+background should surround narrower content.
 
 - [Playground route source](../../../playground/src/components/container/)
 - [Focused component tests](../../../test/components/container/)

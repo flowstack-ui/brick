@@ -12,4 +12,5 @@ export {
   type BlockquoteIconProps,
   type BlockquoteRootProps,
   type BlockquoteVariant,
+  type BlockquoteTone,
 } from "./Blockquote.js";

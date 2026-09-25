@@ -51,9 +51,10 @@ does not own a block, scroll region, language detector, or copy interaction.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `subtle`, `plain` | `subtle` |
-| `tone` | `neutral`, `inherit` | `neutral` |
-| `size` | `inherit`, `sm`, `md` | `inherit` |
+| `variant` | `subtle`, `plain`, `solid`, `outline`, `surface` | `subtle` |
+| `tone` | `neutral`, `inherit`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
+| `size` | `inherit`, `xs`, `sm`, `md`, `lg` | `inherit` |
+| `asChild` | `boolean` | `false` |
 | `slot` | `string` | `code` |
 
 Public exports are `Code`, `CodeProps`, `CodeVariant`, `CodeTone`, and
@@ -65,6 +66,12 @@ Public exports are `Code`, `CodeProps`, `CodeVariant`, `CodeTone`, and
 paint. `neutral` uses technical-text colors while `inherit` follows its
 parent. `inherit` size preserves prose rhythm; `sm` and `md` are explicit.
 Code has no interactive, disabled, loading, validation, or selected state.
+
+`outline` has no background. `surface` combines a tonal background and border;
+`solid` uses a paired strong foreground/background. Explicit sizes progress from
+caption through body-lg; existing sm/md metrics and inherited default remain.
+`asChild` projects these styles onto one authored `code` host with merged refs,
+classes and native props. Do not replace code semantics with a decorative span.
 
 ## Tokens and CSS hooks
 

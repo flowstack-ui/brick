@@ -55,3 +55,11 @@ void missingValue;
 void unsafe;
 void unsafeContent;
 void unsafeLine;
+import type { CodeBlockMeta, CodeBlockColorScheme, CodeBlockShikiOptions } from "../../../src/code-block.js";
+const metadata: CodeBlockMeta = { showLineNumbers: true, focusedLines: [1], dimUnfocused: true, addedLines: [2] };
+const scheme: CodeBlockColorScheme = "dark";
+const options: CodeBlockShikiOptions = { load: async () => ({ codeToTokens: () => ({ tokens: [] }), getTheme: () => ({ fg: "black", bg: "white" }), getLoadedLanguages: () => [] }), themes: { light: "light", dark: "dark" } };
+void metadata; void scheme; void options;
+// @ts-expect-error Root metadata is line numbers, not a selector string.
+const invalidMetadata: CodeBlockMeta = { highlightLines: "1-3" };
+void invalidMetadata;

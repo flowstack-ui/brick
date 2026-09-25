@@ -1,5 +1,17 @@
 # Blockquote manual-test protocol
 
+## Parity follow-up (pending human verification)
+
+1. Inspect /blockquote examples and /blockquote?qualification=1 in light/dark,
+   RTL, narrow widths and actual 200%/400% browser zoom. Check all tones and
+   subtle/solid rules, surface padding, and plain containment.
+2. Verify default/custom icons remain square and Float decoration stays within
+   the preview gutter without covering quotation text.
+3. Check author, work title and source link with a screen reader; decorative
+   SVGs must not be announced and attribution must remain outside the quote.
+4. Test forced colors, text spacing, long source links and typography examples.
+   Record physical-device results separately. Automation does not complete this gate.
+
 | Environment | Record before testing |
 | --- | --- |
 | Component | Blockquote |

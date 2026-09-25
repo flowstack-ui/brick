@@ -1,6 +1,4 @@
 import {
-  Children,
-  cloneElement,
   createElement,
   forwardRef,
   type CSSProperties,
@@ -8,8 +6,8 @@ import {
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
-  type Ref,
 } from "react";
+import { layoutHost } from "../_internal/layout-host.js";
 import type {
   ResponsiveBreakpoint,
   ResponsiveValue,
@@ -19,37 +17,66 @@ import { normalizeResponsiveValue } from "../_responsive-value/ResponsiveValue.j
 export type { ResponsiveValue };
 export type FrameLength = string | number;
 export type FrameElement =
-  | "div" | "span" | "section" | "article" | "aside" | "main"
-  | "header" | "footer" | "nav" | "ul" | "ol" | "li";
+  | "div"
+  | "span"
+  | "section"
+  | "article"
+  | "aside"
+  | "main"
+  | "header"
+  | "footer"
+  | "nav"
+  | "ul"
+  | "ol"
+  | "li";
 
-type FrameNativeProps = Omit<HTMLAttributes<HTMLElement>, "children" | "className" | "style">;
+type FrameNativeProps = Omit<
+  HTMLAttributes<HTMLElement>,
+  "children" | "className" | "style"
+>;
 type FrameHostProps =
   | { as?: FrameElement; asChild?: false; children?: ReactNode }
   | { as?: never; asChild: true; children: ReactElement };
 
-export type FrameProps = FrameNativeProps & FrameHostProps & {
-  inlineSize?: ResponsiveValue<FrameLength>;
-  minInlineSize?: ResponsiveValue<FrameLength>;
-  maxInlineSize?: ResponsiveValue<FrameLength>;
-  blockSize?: ResponsiveValue<FrameLength>;
-  minBlockSize?: ResponsiveValue<FrameLength>;
-  maxBlockSize?: ResponsiveValue<FrameLength>;
-  className?: string;
-  style?: CSSProperties;
-  slot?: string;
-};
+export type FrameProps = FrameNativeProps &
+  FrameHostProps & {
+    inlineSize?: ResponsiveValue<FrameLength>;
+    minInlineSize?: ResponsiveValue<FrameLength>;
+    maxInlineSize?: ResponsiveValue<FrameLength>;
+    blockSize?: ResponsiveValue<FrameLength>;
+    minBlockSize?: ResponsiveValue<FrameLength>;
+    maxBlockSize?: ResponsiveValue<FrameLength>;
+    className?: string;
+    style?: CSSProperties;
+    slot?: string;
+  };
 
 type FrameProperty =
-  | "inline-size" | "min-inline-size" | "max-inline-size"
-  | "block-size" | "min-block-size" | "max-block-size";
-type FrameStyle = CSSProperties & Record<`--brick-frame-${string}`, string | number | undefined>;
+  | "inline-size"
+  | "min-inline-size"
+  | "max-inline-size"
+  | "block-size"
+  | "min-block-size"
+  | "max-block-size";
+type FrameStyle = CSSProperties &
+  Record<`--brick-frame-${string}`, string | number | undefined>;
 const breakpoints: ResponsiveBreakpoint[] = ["sm", "md", "lg", "xl"];
 
 function serializeLength(value: FrameLength) {
-  return typeof value === "number" && value !== 0 ? `${value}px` : String(value);
+  if (typeof value === "number" && (!Number.isFinite(value) || value < 0)) {
+    throw new RangeError(
+      "Frame dimensions must be finite non-negative numbers.",
+    );
+  }
+  return typeof value === "number" && value !== 0
+    ? `${value}px`
+    : String(value);
 }
 
-function constraintVariables(property: FrameProperty, value: ResponsiveValue<FrameLength> | undefined) {
+function constraintVariables(
+  property: FrameProperty,
+  value: ResponsiveValue<FrameLength> | undefined,
+) {
   if (value === undefined) return {};
   const values = normalizeResponsiveValue(value);
   const variables: FrameStyle = {};
@@ -57,9 +84,12 @@ function constraintVariables(property: FrameProperty, value: ResponsiveValue<Fra
     variables[`--brick-frame-${property}`] = serializeLength(values.initial);
   }
   for (const breakpoint of breakpoints) {
-    const next = (values as Partial<Record<ResponsiveBreakpoint, FrameLength>>)[breakpoint];
+    const next = (values as Partial<Record<ResponsiveBreakpoint, FrameLength>>)[
+      breakpoint
+    ];
     if (next !== undefined) {
-      variables[`--brick-frame-${property}-${breakpoint}`] = serializeLength(next);
+      variables[`--brick-frame-${property}-${breakpoint}`] =
+        serializeLength(next);
     }
   }
   return variables;
@@ -69,28 +99,18 @@ function mergeClassName(className: string | undefined) {
   return className ? `brick-frame ${className}` : "brick-frame";
 }
 
-function composeRefs<T>(...refs: Array<Ref<T> | undefined>) {
-  return (value: T | null) => {
-    for (const ref of refs) {
-      if (typeof ref === "function") ref(value);
-      else if (ref) ref.current = value;
-    }
-  };
-}
-
-function mergeComposedProps(original: Record<string, unknown>, override: Record<string, unknown>) {
-  const merged = { ...original, ...override };
-  for (const [key, value] of Object.entries(override)) {
-    const current = original[key];
-    if (key.startsWith("on") && typeof current === "function" && typeof value === "function") {
-      merged[key] = (...args: unknown[]) => { value(...args); current(...args); };
-    } else if (key === "className" && typeof current === "string" && typeof value === "string") {
-      merged[key] = `${current} ${value}`;
-    } else if (key === "style" && current && value && typeof current === "object" && typeof value === "object") {
-      merged[key] = { ...current, ...value };
-    }
-  }
-  return merged;
+function constraintActivation(
+  property: FrameProperty,
+  value: ResponsiveValue<FrameLength> | undefined,
+) {
+  if (value === undefined) return {};
+  const values = normalizeResponsiveValue(value);
+  const first = (["initial", ...breakpoints] as const).find(
+    (key) => values[key] !== undefined,
+  );
+  if (!first)
+    throw new TypeError("Frame responsive constraints must not be empty.");
+  return { [`data-frame-${property}`]: first };
 }
 
 function FrameImpl(
@@ -124,23 +144,18 @@ function FrameImpl(
     ...props,
     className: mergeClassName(className),
     "data-frame": "",
+    ...constraintActivation("inline-size", inlineSize),
+    ...constraintActivation("min-inline-size", minInlineSize),
+    ...constraintActivation("max-inline-size", maxInlineSize),
+    ...constraintActivation("block-size", blockSize),
+    ...constraintActivation("min-block-size", minBlockSize),
+    ...constraintActivation("max-block-size", maxBlockSize),
     "data-slot": slot,
     ref,
     style: frameStyle,
   };
 
-  if (asChild) {
-    const child = Children.only(children) as ReactElement<Record<string, unknown>>;
-    const childRef = (
-      "ref" in child.props
-        ? child.props.ref
-        : (child as ReactElement & { ref?: Ref<HTMLElement> }).ref
-    ) as Ref<HTMLElement> | undefined;
-    return cloneElement(child, mergeComposedProps(child.props, {
-      ...frameProps,
-      ref: childRef || ref ? composeRefs(childRef, ref) : undefined,
-    }));
-  }
+  if (asChild) return layoutHost(children, frameProps, ref, "Frame");
 
   return createElement(as, frameProps, children);
 }

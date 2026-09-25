@@ -6,6 +6,11 @@ const size: CodeSize = "md";
 const props: CodeProps = { children: "token", variant, tone, size };
 void Code;
 void props;
+const extended: CodeProps = { children: "token", variant: "surface", tone: "success", size: "lg" };
+void extended;
+// @ts-expect-error A composed host must be a React element, not plain text.
+const invalidChild: CodeProps = { asChild: true, children: "token" };
+void invalidChild;
 
 // @ts-expect-error Code does not support block mode.
 const invalidBlock: CodeProps = { children: "token", block: true };

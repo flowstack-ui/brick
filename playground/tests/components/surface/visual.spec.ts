@@ -7,7 +7,7 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/surface");
+installVisualDefaults("/surface?qualification=1");
 
 test("Surface defaults and complete visual dimensions", async ({ page }) => {
   await expect(page.locator(".surface-stage")).toHaveScreenshot(

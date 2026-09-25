@@ -53,6 +53,7 @@ function SectionImpl(
       ...props,
       ...responsiveDataAttributes("data-spacing", spacing, {
         alwaysInitial: true,
+        defaultValue: "md",
       }),
       ...(startSpacing === undefined
         ? {}

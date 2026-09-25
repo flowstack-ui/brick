@@ -34,7 +34,7 @@ import "@flowstack-ui/brick/styles/highlight.css";
 
 ## Anatomy and DOM ownership
 
-Highlight wraps exact Atom Highlight 0.25.1. It owns one native `span`; Atom creates one native `mark` with `data-slot="highlight-match"` for every selected segment. Original text order remains intact.
+Highlight wraps exact Atom Highlight 0.27.0. It owns one native `span`; Atom creates one native `mark` with `data-slot="highlight-match"` for every selected segment. Original text order remains intact.
 
 ## API
 
@@ -45,14 +45,14 @@ Highlight wraps exact Atom Highlight 0.25.1. It owns one native `span`; Atom cre
 | `ignoreCase` | `boolean` | `true` |
 | `matchAll` | `boolean` | `true` |
 | `exactMatch` | `boolean` | `false` |
-| `variant` | `subtle`, `solid`, `underline` | `subtle` |
-| `tone` | `accent`, `neutral` | `accent` |
+| `variant` | `subtle`, `solid`, `underline`, `text`, `plain` | `subtle` |
+| `tone` | `accent`, `neutral`, `info`, `success`, `warning`, `danger` | `accent` |
 
-Public exports are `Highlight`, `HighlightProps`, `HighlightVariant`, and `HighlightTone`.
+Public exports are `Highlight`, `HighlightProps`, `HighlightVariant`, `HighlightTone`, `findHighlightSegments`, `HighlightOptions`, and `HighlightSegment`.
 
 ## Visual recipes and states
 
-Subtle provides quiet filled relevance, solid provides stronger contrast, and underline preserves an unfilled reading surface. Accent and neutral are semantic tones. These are passive recipes, not active-search-result state.
+Subtle provides quiet filled relevance, solid provides stronger contrast, and underline preserves an unfilled reading surface. Text uses medium weight without paint; plain retains only semantics. All six semantic tones match Mark's filled color pairs. Text/plain inherit the surrounding color. These are passive recipes, not active-search-result state.
 
 ## Tokens and CSS hooks
 
@@ -61,6 +61,24 @@ Use `.brick-highlight`, `[data-slot="highlight-match"]`, `data-slot`, `data-tone
 ## Customization
 
 Choose variant and tone first, then documented variables for a deliberate local recipe. Do not restyle Atom internals other than the documented match slot.
+
+### Custom match composition
+
+`findHighlightSegments(text, options)` is a direct public re-export of Atom's pure utility. Options are `query`, `ignoreCase = true`, `matchAll = true`, and `exactMatch = false`. Each segment has `text`, `match`, `start`, `end`, and optional `query`; offsets use JavaScript string indices. No React hook is necessary.
+
+```tsx
+import { findHighlightSegments, For, Mark, Text } from "@flowstack-ui/brick";
+
+<Text>
+  <For each={findHighlightSegments("A durable system", { query: "durable" })}>
+    {(segment) => segment.match ? (
+      <Mark key={segment.start} tone="info">{segment.text}</Mark>
+    ) : segment.text}
+  </For>
+</Text>
+```
+
+Queries are literal, never regular expressions. Empty queries leave text unchanged. Overlaps prefer the longest query at the same offset; `matchAll={false}` selects the first match overall. Whole-word matching uses Unicode letter/number boundaries, not locale-specific linguistic segmentation. Keep artwork and search state application-owned. Load Mark CSS when composing Mark.
 
 ## Responsive behavior
 

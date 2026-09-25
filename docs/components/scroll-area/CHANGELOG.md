@@ -4,6 +4,9 @@ Scroll Area follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Added opt-in custom scrollbar anatomy, four track sizes, stable custom gutters,
+  edge fades and the Atom-backed controller; native mode remains the default.
+
 ## 0.2.1 - 2026-08-31
 
 ### Fixed

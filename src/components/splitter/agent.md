@@ -31,6 +31,8 @@ Present resizable adjacent panels using Atom sizing and a theme-aware separator 
 
 - Verify orientation, RTL, constraints, hover/focus/drag, disabled, forced colors, nested panels and iframe crossings.
 - Verify definite vertical size, localized names and controlled sizes; persistence belongs to the app.
+- Use percentage numbers or %, px, em, rem, vw and vh strings, not calc(). Percent defaults are deterministic before measurement. useSplitter with one RootProvider owns external state; orientation remains scalar.
+- Keep descriptors, panels and adjacent boundaries synchronized. One panel is valid, zero is not. CSS-hidden panels remain registered. Applications own redistribution and storage; shared createSplitterRegistry coordinates perpendicular intersection dragging.
 
 ## Related guidance
 

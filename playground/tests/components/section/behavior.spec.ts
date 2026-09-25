@@ -17,7 +17,7 @@ async function expectCssPixels(
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/section");
+  await page.goto("/section?qualification=1");
 });
 
 test("default is one semantic root with medium logical rhythm", async ({ page }) => {

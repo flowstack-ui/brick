@@ -1,5 +1,17 @@
 # Sidebar manual-test protocol
 
+## Region inset regression
+
+On the docs route check direct trigger alignment, all sides in LTR/RTL, floating
+offcanvas reopening, borderless header/footer, and rail-aware labels. On phones,
+desktop specimens scroll horizontally; use the Drawer composition to test mobile
+navigation. Check reachability using touch and keyboard, not only a pointer.
+
+In Panel regions, compare default and none for Header, Content and Footer.
+Only padding should change; content, borders and layout remain. Check long
+navigation is scrollable and its first/last links are reachable in the shell,
+including keyboard, RTL and mobile Drawer use. Record actual results.
+
 | Run information | Value |
 | --- | --- |
 | Component | Sidebar |
@@ -12,6 +24,7 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/sidebar` |
+| Qualification route(s) | `/sidebar?qualification=1` |
 
 Scenario order: `01 Overview`, `02 States`, `03 Variants`, `04 Sizes`,
 `05 Sides and position`, `06 Panel regions and composition`,
@@ -60,6 +73,19 @@ Setup: Enable the recorded screen reader and review overview, rail, controlled, 
 Action: Navigate landmarks, Trigger, panel navigation, and main content; activate Trigger in each supported state.
 
 Expected: Complementary, navigation, and main landmarks are distinct; controls/expanded/disabled state is accurate; rail names remain meaningful; offcanvas Panel is absent.
+
+Result:
+Notes or issue:
+
+## Step 5 — Reopening and composed triggers
+
+On the normal route, repeatedly close and reopen Basic and Floating with normal
+motion and reduced motion. Watch the first frames, not only the settled state.
+The panel must never become a tall column or move the page through intermediate
+heights. Geometry settles immediately; normal-motion opening fades in.
+Check that States distinguishes full labels, a named icon rail and hidden
+navigation, then updates its label on activation. Composed icon controls should
+remain square, compact and keyboard focusable on both light and dark surfaces.
 
 Result:
 Notes or issue:

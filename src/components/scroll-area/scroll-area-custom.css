@@ -1,0 +1,109 @@
+@layer brick.components {
+  .brick-scroll-area {
+    position: relative;
+    isolation: isolate;
+  }
+  .brick-scroll-area[data-size="xs"] { --brick-scroll-area-scrollbar-size: 4px; }
+  .brick-scroll-area[data-size="sm"] { --brick-scroll-area-scrollbar-size: 6px; }
+  .brick-scroll-area[data-size="lg"] { --brick-scroll-area-scrollbar-size: 12px; }
+  .brick-scroll-area-content { display: flow-root; min-inline-size: 100%; }
+  .brick-scroll-area-scrollbar, .brick-scroll-area-corner { display: none; }
+
+  .brick-scroll-area[data-scrollbar="custom"][data-custom-ready] > .brick-scroll-area-viewport {
+    scrollbar-width: none;
+    scrollbar-gutter: auto;
+  }
+  .brick-scroll-area[data-scrollbar="custom"][data-custom-ready] > .brick-scroll-area-viewport::-webkit-scrollbar { display: none; }
+  .brick-scroll-area[data-scrollbar="custom"][data-custom-ready] > .brick-scroll-area-scrollbar {
+    display: block;
+    position: absolute;
+    touch-action: none;
+    user-select: none;
+    background: var(--brick-scroll-area-scrollbar-track);
+    border-radius: var(--brick-radius-full);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease 300ms;
+    z-index: 1;
+  }
+  .brick-scroll-area-scrollbar[data-orientation="vertical"] {
+    inset-block: var(--brick-scroll-area-scrollbar-margin);
+    inset-inline-end: var(--brick-scroll-area-scrollbar-margin);
+    inline-size: var(--brick-scroll-area-scrollbar-size);
+  }
+  .brick-scroll-area-scrollbar[data-orientation="horizontal"] {
+    inset-inline: var(--brick-scroll-area-scrollbar-margin);
+    inset-block-end: var(--brick-scroll-area-scrollbar-margin);
+    block-size: var(--brick-scroll-area-scrollbar-size);
+  }
+  .brick-scroll-area-scrollbar::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+  }
+  .brick-scroll-area-scrollbar[data-orientation="vertical"][data-overflow-x] { inset-block-end: calc(var(--brick-scroll-area-scrollbar-size) + 2 * var(--brick-scroll-area-scrollbar-margin)); }
+  .brick-scroll-area-scrollbar[data-orientation="horizontal"][data-overflow-y] { inset-inline-end: calc(var(--brick-scroll-area-scrollbar-size) + 2 * var(--brick-scroll-area-scrollbar-margin)); }
+  .brick-scroll-area-thumb {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    background: var(--brick-scroll-area-scrollbar-thumb);
+    border-radius: inherit;
+  }
+  .brick-scroll-area-thumb[data-orientation="vertical"] { inline-size: 100%; min-block-size: min(var(--brick-scroll-area-thumb-min-size), 100%); }
+  .brick-scroll-area-thumb[data-orientation="horizontal"] { block-size: 100%; min-inline-size: min(var(--brick-scroll-area-thumb-min-size), 100%); }
+  .brick-scroll-area[data-scrollbar="custom"][data-custom-ready]:is(:hover, :focus-within, [data-scrollbar-visibility="always"]) > .brick-scroll-area-scrollbar[data-state="visible"],
+  .brick-scroll-area[data-scrollbar="custom"][data-custom-ready] > .brick-scroll-area-scrollbar[data-state="visible"]:is([data-scrolling], [data-dragging]) {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0ms;
+  }
+  .brick-scroll-area[data-scrollbar="custom"][data-custom-ready] > .brick-scroll-area-corner[data-state="visible"] {
+    display: block;
+    position: absolute;
+    inset-inline-end: 0;
+    inset-block-end: 0;
+    inline-size: calc(var(--brick-scroll-area-scrollbar-size) + 2 * var(--brick-scroll-area-scrollbar-margin));
+    block-size: calc(var(--brick-scroll-area-scrollbar-size) + 2 * var(--brick-scroll-area-scrollbar-margin));
+    background: var(--brick-scroll-area-scrollbar-track);
+    pointer-events: none;
+  }
+  .brick-scroll-area[data-scrollbar="custom"][data-custom-ready][data-scrollbar-gutter="stable"][data-orientation="vertical"],
+  .brick-scroll-area[data-scrollbar="custom"][data-custom-ready][data-scrollbar-gutter="stable"][data-orientation="both"] { padding-inline-end: calc(var(--brick-scroll-area-scrollbar-size) + 2 * var(--brick-scroll-area-scrollbar-margin)); }
+  .brick-scroll-area[data-scrollbar="custom"][data-custom-ready][data-scrollbar-gutter="stable"][data-orientation="horizontal"],
+  .brick-scroll-area[data-scrollbar="custom"][data-custom-ready][data-scrollbar-gutter="stable"][data-orientation="both"] { padding-block-end: calc(var(--brick-scroll-area-scrollbar-size) + 2 * var(--brick-scroll-area-scrollbar-margin)); }
+
+  /* Presentation-only edge fades. The viewport remains the sole scroll owner. */
+  .brick-scroll-area[data-scrollbar="custom"][data-custom-ready]:not([data-scroll-shadow="none"])::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    --scroll-top: transparent;
+    --scroll-bottom: transparent;
+    --scroll-left: transparent;
+    --scroll-right: transparent;
+    background:
+      linear-gradient(to bottom, var(--scroll-top), transparent) top / 100% var(--brick-scroll-area-shadow-size),
+      linear-gradient(to top, var(--scroll-bottom), transparent) bottom / 100% var(--brick-scroll-area-shadow-size),
+      linear-gradient(to right, var(--scroll-left), transparent) left / var(--brick-scroll-area-shadow-size) 100%,
+      linear-gradient(to left, var(--scroll-right), transparent) right / var(--brick-scroll-area-shadow-size) 100%;
+    background-repeat: no-repeat;
+  }
+  .brick-scroll-area[data-scroll-shadow="vertical"]:has(> .brick-scroll-area-viewport:not([data-at-top]))::after,
+  .brick-scroll-area[data-scroll-shadow="both"]:has(> .brick-scroll-area-viewport:not([data-at-top]))::after { --scroll-top: var(--brick-scroll-area-shadow-color); }
+  .brick-scroll-area[data-scroll-shadow="vertical"]:has(> .brick-scroll-area-viewport:not([data-at-bottom]))::after,
+  .brick-scroll-area[data-scroll-shadow="both"]:has(> .brick-scroll-area-viewport:not([data-at-bottom]))::after { --scroll-bottom: var(--brick-scroll-area-shadow-color); }
+  .brick-scroll-area[data-scroll-shadow="horizontal"]:has(> .brick-scroll-area-viewport:not([data-at-left]))::after,
+  .brick-scroll-area[data-scroll-shadow="both"]:has(> .brick-scroll-area-viewport:not([data-at-left]))::after { --scroll-left: var(--brick-scroll-area-shadow-color); }
+  .brick-scroll-area[data-scroll-shadow="horizontal"]:has(> .brick-scroll-area-viewport:not([data-at-right]))::after,
+  .brick-scroll-area[data-scroll-shadow="both"]:has(> .brick-scroll-area-viewport:not([data-at-right]))::after { --scroll-right: var(--brick-scroll-area-shadow-color); }
+  .brick-scroll-area:focus-within::after { display: none; }
+  @media (prefers-reduced-motion: reduce) { .brick-scroll-area-scrollbar { transition: none !important; } }
+  @media (forced-colors: active) {
+    .brick-scroll-area[data-scrollbar="custom"][data-custom-ready] > .brick-scroll-area-viewport { scrollbar-width: auto; scrollbar-color: auto; }
+    .brick-scroll-area[data-scrollbar="custom"][data-custom-ready] > .brick-scroll-area-viewport::-webkit-scrollbar { display: block; }
+    .brick-scroll-area[data-scrollbar="custom"][data-custom-ready] > :is(.brick-scroll-area-scrollbar, .brick-scroll-area-corner),
+    .brick-scroll-area::after { display: none !important; }
+  }
+}

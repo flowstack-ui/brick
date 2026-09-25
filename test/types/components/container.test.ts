@@ -40,8 +40,13 @@ createElement(Container, { gutter: "xl" });
 createElement(Container, { measure: { base: "full", lg: "wide" } });
 // @ts-expect-error Viewport height is excluded.
 createElement(Container, { height: "viewport" });
-// @ts-expect-error No asChild composition API.
+createElement(Container, { asChild: true, children: createElement("article"), ref });
+// @ts-expect-error asChild requires a child.
 createElement(Container, { asChild: true });
+// @ts-expect-error Text cannot adopt props or refs.
+createElement(Container, { asChild: true, children: "text" });
+// @ts-expect-error Choose as or asChild, not both.
+createElement(Container, { as: "section", asChild: true, children: createElement("article") });
 // @ts-expect-error No render composition API.
 createElement(Container, { render: createElement("div") });
 

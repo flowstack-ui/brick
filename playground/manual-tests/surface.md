@@ -12,6 +12,7 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/surface` |
+| Qualification route(s) | `/surface?qualification=1` |
 
 Scenario order: `01 Overview`, `02 Levels`, `03 Borders`, `04 Elevation`,
 `05 Radius`, `06 Inset`, `07 Semantic hosts and composition`,
@@ -21,6 +22,11 @@ Scenario order: `01 Overview`, `02 Levels`, `03 Borders`, `04 Elevation`,
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Defaults and paint recipes
+
+On the default docs route compare transparent against canvas in light and dark.
+Check transparent accent text, shared elevation roles, own-dir Scrim behavior,
+and readable content. Directional scrims are horizontal-writing only; uniform
+is the supported vertical-writing choice. Do not infer contrast from the recipe.
 
 Setup: Open `/surface`; review `01`–`06` from top to bottom.
 
@@ -114,6 +120,17 @@ unchanged, and forced colors removes decorative layers.
 Result:
 Notes or issue:
 
+## Elevation and media comparison
+
+Review the normal Elevation example in light and dark appearances. Specimens
+must have identical dimensions and fill, with enough space to see different
+shadow offsets and softness. Elevation does not move a specimen or change its
+stacking order. Review Media with the local studio photo: artwork reaches every
+edge, while meaningful foreground content stays readable above it.
+
+Result:
+Notes or issue:
+
 ## Completion
 
 Overall result:
@@ -122,3 +139,7 @@ Workbook updated:
 
 Mark unavailable physical-device or assistive-technology environments
 `blocked`.
+
+## Surface effects qualification
+
+Pending manual review: compare the translucent and exact-value example in light/dark and narrow widths; scroll bright/dark content behind the root; confirm focus and popup placement, physical reduced-transparency behavior, and low-powered mobile performance. Ordinary and legacy-only paint must match the prior recipe. Automated engine checks are recorded separately and do not complete these manual judgments.

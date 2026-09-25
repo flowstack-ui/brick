@@ -1,6 +1,6 @@
 import { expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/prose");
+installVisualDefaults("/prose?qualification=1");
 
 test("Prose overview, scale, and editorial descendants", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.locator('[data-scenario="prose.overview"]'), "overview-light.png");

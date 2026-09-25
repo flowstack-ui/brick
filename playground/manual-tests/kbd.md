@@ -1,5 +1,13 @@
 # Kbd manual-test protocol
 
+## Parity revision checks
+
+Use /kbd for documentation and /kbd?qualification=1 for exhaustive evidence.
+Recheck whole combinations and separate keys, accessible modifier labels,
+all tones in light/dark, enlarged text and copying notation. For asChild,
+confirm a single native kbd host. Renew physical-device, screen-reader and
+actual browser zoom checks; automation does not mark these complete.
+
 | Environment | Record before testing |
 | --- | --- |
 | Component | Kbd |

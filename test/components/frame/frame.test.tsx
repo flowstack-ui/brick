@@ -1,9 +1,25 @@
-import { createRef } from "react";
+import { createRef, Fragment } from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Frame } from "../../../src/frame.js";
 
 describe("Frame", () => {
+  it("rejects invalid numeric dimensions and Fragment hosts", () => {
+    for (const value of [-1, NaN, Infinity]) {
+      expect(() => render(<Frame inlineSize={value} />)).toThrow(RangeError);
+    }
+    expect(() => render(<Frame inlineSize={{} as never} />)).toThrow(TypeError);
+    expect(() => render(<Frame asChild><Fragment><span /></Fragment></Frame>)).toThrow(/Fragment/);
+  });
+
+  it("preserves both callback ref cleanups", () => {
+    const ownerCleanup = vi.fn();
+    const childCleanup = vi.fn();
+    const { unmount } = render(<Frame asChild ref={() => ownerCleanup}><div ref={() => childCleanup} /></Frame>);
+    unmount();
+    expect(ownerCleanup).toHaveBeenCalledTimes(1);
+    expect(childCleanup).toHaveBeenCalledTimes(1);
+  });
   it("renders a neutral one-root default", () => {
     const ref = createRef<HTMLElement>();
     render(<Frame data-testid="frame" ref={ref}>Content</Frame>);

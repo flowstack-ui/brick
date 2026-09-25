@@ -20,7 +20,7 @@
 }
 
 .section-vertical {
-  block-size: 20rem;
+  inline-size: 12rem;
   writing-mode: vertical-rl;
 }
 

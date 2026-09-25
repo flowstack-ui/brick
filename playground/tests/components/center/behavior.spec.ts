@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/center");
+  await page.goto("/center?qualification=1");
 });
 
 test("public identities center content and keep one host", async ({ page }) => {

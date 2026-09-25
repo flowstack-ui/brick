@@ -1,6 +1,6 @@
 import { expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/kbd");
+installVisualDefaults("/kbd?qualification=1");
 
 test("Kbd overview and closed recipes", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.locator('[data-scenario="kbd.overview"]'), "overview-light.png");

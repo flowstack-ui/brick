@@ -19,6 +19,7 @@ Center authored content or guarantee a centered square or circle without taking 
 
 ## Rules
 
+- **MUST:** Center inline changes display only and preserves normal surrounding-text baseline alignment. Square and Circle retain middle alignment as fixed inline ornaments. Internal two-axis centering is independent of vertical-align.
 - **MUST:** Choose Center for arbitrary centering, Square for a guaranteed equal-size centered region, and Circle only when genuinely circular geometry is intended.
 - **MUST:** Give Square and Circle one explicit scalar or responsive size; do not recreate equal inline and block dimensions with separate Frame constraints.
 - **MUST:** Compose Surface or the purposeful finished owner for paint, padding, boundary, and elevation; Center, Square, and Circle own none of those jobs.

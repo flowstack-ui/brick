@@ -100,7 +100,7 @@ import from React Server Components.
 | --- | --- | --- |
 | `as` | `div`, `section`, `article`, `aside`, `nav`, `main`, `header`, `footer`, `form`, `li` | `div` |
 | `asChild` | `boolean` | `false` |
-| `level` | `canvas`, `base`, `subtle`, `raised` | `base` |
+| `level` | `transparent`, `canvas`, `base`, `subtle`, `raised` | `base` |
 | `tone` | `neutral`, `accent` | `neutral` |
 | `bordered` | `boolean` | `false` |
 | `elevation` | `none`, `low`, `medium`, `high` | `none` |
@@ -133,6 +133,14 @@ With `asChild`, Surface applies its paint recipes to exactly one existing
 non-Fragment element without adding a wrapper. It preserves the child's host,
 class, style, handlers, and ref while composing the forwarded Surface ref.
 
+Composition uses Atom's public host adapter. Both event handlers run, owner
+first. Callback refs retain their React 19 cleanup; React 18 uses its normal
+null-detach path. Custom child components must forward props and refs.
+
+Directional Scrims support horizontal writing, honoring the Scrim's resolved
+LTR/RTL direction including its own `dir`. Use `uniform` in vertical writing;
+directional gradients are not logical across vertical writing modes.
+
 ### Shared radius selection
 
 The parts listed for this component in the [Radius guide](../../guides/radius.md)
@@ -153,6 +161,16 @@ Border, elevation, radius, and inset remain independent so consumers can
 change only the visual dimension they intend to demonstrate. Surface has no
 hover, focus, selected, disabled, loading, validation, typography, or motion
 state.
+
+`level="transparent"` removes fill without removing inset, border or shadow.
+Neutral uses primary text; accent uses accent text instead of on-solid text.
+This differs from opaque `canvas`. Elevation low/medium/high resolves to the
+shared small/floating/modal shadow roles, retaining the Surface elevation hooks.
+Elevation changes shadow offset, softness and reach to suggest visual height.
+It does not move the element, change its z-index, or lighten its background;
+choose `level` independently for paint. Compare equal-sized specimens on a
+contrasting plane with room for their shadows. Dark-on-dark shadows are less
+pronounced, so a deliberate border or raised fill may also clarify the edge.
 
 `bordered` uses Brick's default structural boundary so a deliberate Surface
 edge remains as visible as Card, Divider, and preview-canvas boundaries in
@@ -220,6 +238,23 @@ Use recipes first, then override selected variables on a deliberate instance:
 
 This escape hatch does not make arbitrary values part of the recipe API.
 
+### Surface effects
+
+The painted root accepts `treatment`, `backgroundOpacity`, `backdropBlur`,
+`backdropSaturate`, `borderColor` and `borderOpacity`. Use `treatment="translucent"`
+for finished defaults or direct values such as `backdropBlur="18px"`.
+`SurfaceTreatment` and `BackdropBlur` describe the shared types. See the
+[surface effects guide](../../guides/surface-effects.md) for values, precedence,
+legacy `blurred` behavior, scoped Theme defaults, fallbacks and composition.
+
+Local input variables: `--brick-surface-effect-opacity`,
+`--brick-surface-effect-blur`, `--brick-surface-effect-saturation`,
+`--brick-surface-effect-border-color`, `--brick-surface-effect-border-opacity`.
+Inherited Theme input: `--brick-surface-translucent-opacity`.
+Inherited Theme input: `--brick-surface-translucent-blur`.
+Inherited Theme input: `--brick-surface-translucent-saturation`.
+
+
 ## Responsive behavior
 
 Surface follows the size of its parent and uses logical padding. `inset`
@@ -251,8 +286,7 @@ Surface paints; Container constrains; Stack and Grid arrange; Card represents a
 self-contained content object. Native props and refs target the one authored
 host.
 
-Surface does not expose `render`, custom-component hosts, status tones,
-translucency, generic clipping props, style-system props, runtime context,
+Surface does not expose `render`, custom-component hosts, status tones, generic clipping props, style-system props, runtime context,
 broad responsive paint objects, or arbitrary recipe values. Media clipping is
 limited to its own decorative layer.
 

@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/em"); });
+test.beforeEach(async ({ page }) => { await page.goto("/em?qualification=1"); });
 
 test("Em preserves native semantics and inherited contexts", async ({ page }) => {
   const overview = page.getByTestId("em-overview").locator(".brick-em");

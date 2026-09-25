@@ -1,7 +1,7 @@
 import { expect, test } from "../../evidence-test.js";
 import AxeBuilder from "@axe-core/playwright";
 test("Splitter exposes non-drag collapse, restore and bounded resizing", async ({ page }) => {
-  await page.goto("/splitter");
+  await page.goto("/splitter?qualification=1");
   const handle = page.getByRole("separator", { name: "Navigation rail width" });
   await page.getByRole("button", { name: "Collapse rail", exact: true }).click();
   await expect(handle).toHaveAttribute("aria-valuenow", "8");
@@ -15,12 +15,12 @@ test("Splitter exposes non-drag collapse, restore and bounded resizing", async (
   await expect(page.getByRole("separator", { name: "Project files width", exact: true })).toHaveAttribute("aria-valuenow", "30");
 });
 test("Splitter accessibility has no serious violations", async ({ page }) => {
-  await page.goto("/splitter");
+  await page.goto("/splitter?qualification=1");
   const result = await new AxeBuilder({ page }).include('[data-component-page="splitter"]').analyze();
   expect(result.violations.filter(v => v.impact === "serious" || v.impact === "critical")).toEqual([]);
 });
 test("Splitter grip is centered without consuming panel space", async ({ page }) => {
-  await page.goto("/splitter");
+  await page.goto("/splitter?qualification=1");
   const root = page.getByTestId("splitter-workspace");
   const geometry = await root.evaluate(el => {
     const bounds = el.getBoundingClientRect(), grip = el.querySelector(".brick-splitter-indicator")!.getBoundingClientRect();
@@ -34,7 +34,7 @@ test("Splitter grip is centered without consuming panel space", async ({ page })
   await expect(trigger).toHaveAttribute("aria-valuenow", "75");
 });
 test("Vertical grip rotates and focus remains visible", async ({ page }) => {
-  await page.goto("/splitter"); const root = page.getByTestId("splitter-vertical");
+  await page.goto("/splitter?qualification=1"); const root = page.getByTestId("splitter-vertical");
   const grip = await root.locator(".brick-splitter-indicator").boundingBox(); expect(grip!.width).toBe(24); expect(grip!.height).toBe(8);
   await root.getByRole("separator").focus();
   await expect(root.locator(".brick-splitter-indicator")).toHaveCSS("outline-style", "solid");

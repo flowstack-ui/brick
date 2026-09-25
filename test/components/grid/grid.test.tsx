@@ -15,6 +15,25 @@ import {
 } from "../../../src/grid.js";
 
 describe("Grid", () => {
+  it("serializes responsive native templates without forwarding layout props to HTML", () => {
+    render(<Grid.Root data-testid="native" templateColumns={{ lg: "12rem minmax(0, 1fr)" }} autoRows="minmax(3rem, auto)" autoFlow="row dense" inline={{ initial: true, md: false }}><Grid.Item area="main">Main</Grid.Item></Grid.Root>);
+    const root = screen.getByTestId("native");
+    expect(root.style.getPropertyValue("--brick-grid-template-columns-lg-input")).toBe("12rem minmax(0, 1fr)");
+    expect(root).not.toHaveAttribute("templateColumns");
+    expect(root).toHaveAttribute("data-mode", "template");
+  });
+  it("composes Root on one existing host", () => {
+    const ref = createRef<HTMLElement>();
+    render(<Grid.Root asChild ref={ref} columns={2}><section data-testid="host" className="owned">Content</section></Grid.Root>);
+    expect(ref.current).toBe(screen.getByTestId("host"));
+    expect(ref.current).toHaveClass("owned", "brick-grid");
+  });
+  it("carries responsive line placement and end-anchored spans independently", () => {
+    render(<Grid.Item data-testid="placed" columnSpan={{ initial: 2, lg: 3 }} columnEnd={{ initial: -1, md: "content-end" }} />);
+    const item = screen.getByTestId("placed");
+    expect(item.style.getPropertyValue("--brick-grid-placement-column-start-lg-input")).toBe("span 3");
+    expect(item.style.getPropertyValue("--brick-grid-placement-column-end-lg-input")).toBe("content-end");
+  });
   it("renders the adopted Root and Item defaults, including empty parts", () => {
     const rootRef = createRef<HTMLElement>();
     const itemRef = createRef<HTMLElement>();

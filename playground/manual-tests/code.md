@@ -37,3 +37,7 @@ Overall result:
 Follow-up issues:
 
 Workbook updated:
+## September 12 parity follow-up — manual checks pending
+
+Inspect the new documentation route in light/dark appearance, narrow widths,
+actual browser zoom and forced colors. Confirm inline wrapping, semantic tone contrast and composed code refs. Screen-reader and physical-device checks are not marked passed by automation.

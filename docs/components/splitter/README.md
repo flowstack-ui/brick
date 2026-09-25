@@ -53,7 +53,7 @@ and collapsed on actual transitions. Native onResize is intentionally replaced.
 
 Descriptor `SplitterPanelConfig` supports id, minSize (0), maxSize (100),
 collapsible (false), collapsedSize (0), resizeBehavior (proportional default or
-preserve-pixels). `SplitterSize` is a percentage number or explicit `%`/`px`
+preserve-pixels). `SplitterSize` is a percentage number or explicit `%`, `px`, `em`, `rem`, `vw` or `vh`
 string. `SplitterSizes` maps IDs to these values. Percent defaults are SSR stable;
 pixel constraints reconcile after measurement. Uncontrolled pixel preservation
 requires a proportional sibling; controlled applications own host-resize policy.
@@ -63,8 +63,9 @@ requires a proportional sibling; controlled applications own host-resize policy.
 name, accepts disabled and valueText(percent,pixels). Root/Panel/Trigger preserve
 native div props/refs and asChild/render. Do not override generated Panel IDs.
 
-`SplitterContext` exposes `SplitterContextValue`: sizes, setSizes, resetSizes,
-collapsePanel, expandPanel, isPanelCollapsed. Compose ordinary Buttons outside the
+`SplitterContext` and `useSplitterContext` expose `SplitterContextValue`: sizes, setSizes, resetSizes,
+collapsePanel, expandPanel, isPanelCollapsed, isPanelExpanded, resizePanel,
+getPanelSize, getPanels, getItems, getLayout, isDragging and orientation. Compose ordinary Buttons outside the
 separator for non-drag alternatives. Applications own storage and localization.
 
 Empty triggers supply `SplitterResizeTriggerSeparator` and
@@ -114,6 +115,40 @@ clipping; compose Surface/ScrollArea separately. Impossible minima expose
 data-insufficient-space and overflow rather than shrink below constraints.
 
 ## Examples
+
+The docs-style playground includes basic, controlled, vertical, multiple,
+collapsible/constrained, pixel-preserving, nested, disabled, separator-only,
+reset, event, store, CSS units, dynamic panels, intersection, responsive orientation
+and storage examples, each paired with its actual source. Root, RootProvider, Panel and
+ResizeTrigger have separate props sections. Existing qualification scenarios
+remain available with `?qualification=1`.
+
+### API boundaries
+
+`useSplitter(options)` owns public state and commands outside the rendered root.
+Pass its value to one `Splitter.RootProvider`. Root remains the convenient default.
+`getPanelSize` returns a percentage; `resizePanel(id, percentage)` redistributes
+through neighbors while respecting constraints. Unknown IDs are rejected.
+`getLayout` returns a JSON-encoded ordered ID list for application layout caches.
+`getItems` generates ordered panel and adjacent-handle descriptors.
+
+Percentages and px/em/rem/vh/vw sizes are accepted; calc() is not.
+Font and viewport units reconcile after measurement and track environmental changes.
+Do not hide panels with CSS while leaving their descriptors active. Coordinate
+descriptor, panel and trigger changes. One panel is valid; zero is not.
+Applications choose redistribution when adding panels. Reset reconciles original
+defaultSizes against the current IDs. Focus recovers when a focused panel collapses
+or is removed, and pointer focus does not scroll the page.
+
+Resizing cascades through neighboring panels when an immediate neighbor reaches
+its constraint. ARIA values represent the cumulative boundary position, not just
+the preceding panel. Resize callbacks include the ordered layout key and active
+before/after boundary (null for programmatic changes).
+
+Create `createSplitterRegistry()` once and share it between perpendicular roots
+to drag both axes at an intersection. Optional `hitAreaMargins: { fine, coarse }`
+configure CSS-pixel hit tolerance. Escape and cancellation roll back both axes.
+It injects no stylesheets and needs no CSP nonce. Independent roots need no registry.
 
 Use controlled sizes with onResize and an application reset Button; persist
 only onResizeEnd when cancelled is false. Use vertical orientation inside a Frame

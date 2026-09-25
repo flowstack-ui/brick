@@ -4,6 +4,18 @@ import { describe, expect, it } from "vitest";
 import { Mark, type MarkTone, type MarkVariant } from "../../../src/mark.js";
 
 describe("Mark", () => {
+  it("projects one semantic host and merges refs and classes", () => {
+    const outer = createRef<HTMLElement>();
+    const inner = createRef<HTMLElement>();
+    const {container,unmount} = render(<Mark asChild ref={outer} tone="info" className="outer"><mark ref={inner} className="inner">Relevant</mark></Mark>);
+    expect(container.querySelectorAll("mark")).toHaveLength(1);
+    expect(outer.current).toBe(inner.current);
+    expect(outer.current).toHaveClass("brick-mark", "outer", "inner");
+    expect(outer.current).toHaveAttribute("data-tone", "info");
+    unmount();
+    expect(outer.current).toBeNull();
+    expect(inner.current).toBeNull();
+  });
   it("renders native mark defaults and every closed recipe", () => {
     const ref = createRef<HTMLElement>();
     const { rerender } = render(<Mark ref={ref}>relevant</Mark>);
@@ -14,8 +26,8 @@ describe("Mark", () => {
     expect(marked).toHaveAttribute("data-slot", "mark");
     expect(marked).toHaveAttribute("data-variant", "subtle");
     expect(marked).toHaveAttribute("data-tone", "accent");
-    const variants: MarkVariant[] = ["subtle", "solid", "plain"];
-    const tones: MarkTone[] = ["accent", "neutral"];
+    const variants: MarkVariant[] = ["subtle", "solid", "text", "plain"];
+    const tones: MarkTone[] = ["accent", "neutral", "info", "success", "warning", "danger"];
     for (const variant of variants) {
       rerender(<Mark variant={variant}>relevant</Mark>);
       expect(screen.getByText("relevant")).toHaveAttribute("data-variant", variant);

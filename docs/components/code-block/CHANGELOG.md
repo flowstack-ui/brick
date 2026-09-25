@@ -44,3 +44,9 @@ Code Block follows the package version of `@flowstack-ui/brick`.
 - Added compound technical surfaces, Code and Scroll Area composition,
   explicit language, scroll/wrap policies, trusted highlighted nodes, optional
   header metadata/actions, and Atom-backed copy parts.
+# Unreleased parity additions
+
+Code typography is now 12px-equivalent small and 14px-equivalent regular/large,
+using shared rem-based recipes. Line and syntax-token spans retain monospace.
+
+Added optional safe Shiki integration, automatic line metadata, light/dark syntax schemes and lg density. Diff signs no longer rely solely on color; collapse focus follows the theme and copy actions accept current Button recipes.

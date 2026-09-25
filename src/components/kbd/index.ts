@@ -1,1 +1,1 @@
-export { Kbd, type KbdProps, type KbdSize, type KbdVariant } from "./Kbd.js";
+export { Kbd, type KbdProps, type KbdSize, type KbdVariant, type KbdTone } from "./Kbd.js";

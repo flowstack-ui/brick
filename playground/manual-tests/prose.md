@@ -83,3 +83,8 @@ Overall result: pending recorded run
 Follow-up issues:
 
 Workbook updated:
+## Presentation parity follow-up — not run
+
+1. Inspect /prose and /prose?qualification=1 at normal and narrow widths in both appearances.
+2. Check heading progression, nested list paragraphs, wrapped content edges, excluded embedded controls, table transparency and code keyboard scrolling.
+3. Exercise native browser text resize, actual zoom, RTL and screen-reader reading order. Record these separately from automated browser tests; no human pass is preclaimed.

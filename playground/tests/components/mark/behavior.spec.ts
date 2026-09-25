@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/mark"); });
+test.beforeEach(async ({ page }) => { await page.goto("/mark?qualification=1"); });
 
 test("Mark preserves native semantics and closed recipes", async ({ page }) => {
   const overview = page.getByTestId("mark-overview").locator(".brick-mark");

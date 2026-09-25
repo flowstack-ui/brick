@@ -1,7 +1,17 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/code"); });
+test.beforeEach(async ({ page }) => { await page.goto("/code?qualification=1"); });
+
+test("documentation exposes complete recipes and transparent outline", async ({ page }) => {
+  await page.goto("/code");
+  await expect(page.locator("#sizes .brick-code")).toHaveCount(5);
+  await expect(page.locator("#variants .brick-code")).toHaveCount(5);
+  await expect(page.locator("#tones .brick-code")).toHaveCount(7);
+  const outline = page.locator('#variants .brick-code[data-variant="outline"]');
+  expect(await outline.evaluate(node => getComputedStyle(node).backgroundColor)).toBe("rgba(0, 0, 0, 0)");
+  await expect(page.locator("#composition code code")).toHaveCount(0);
+});
 
 test("Code covers native defaults and controlled recipes", async ({ page }) => {
   const overview = page.getByTestId("code-overview").locator(".brick-code");

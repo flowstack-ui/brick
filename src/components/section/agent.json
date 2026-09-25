@@ -43,6 +43,11 @@
       "id": "section-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus section.css."
+    },
+    {
+      "id": "section-sparse-default",
+      "level": "must",
+      "statement": "Omit default spacing; sparse spacing inherits md, while sparse startSpacing/endSpacing follow spacing until explicitly overridden. slot remains a data-slot hook, not a native shadow-DOM slot."
     }
   ],
   "commonMistakes": [
@@ -55,5 +60,11 @@
     "Check named and responsive rhythm at constrained and wide widths, zoom, RTL, and vertical writing modes.",
     "Confirm the section has appropriate document meaning and that Surface asChild composition produces one host when full-width paint is needed."
   ],
-  "related": ["container", "surface", "stack", "grid", "interface-composition"]
+  "related": [
+    "container",
+    "surface",
+    "stack",
+    "grid",
+    "interface-composition"
+  ]
 }

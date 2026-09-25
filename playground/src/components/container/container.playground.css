@@ -52,11 +52,6 @@
   min-inline-size: 0;
 }
 
-.container-appearance > .brick-container,
-.playground-customization-preview > .brick-container {
-  inline-size: 100%;
-}
-
 .container-narrow {
   inline-size: min(100%, 20rem);
 }

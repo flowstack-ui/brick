@@ -5,7 +5,7 @@
   "package": "@flowstack-ui/brick",
   "layer": "brick",
   "kind": "component",
-  "purpose": "Apply one explicit light, dark, or inherited semantic-token boundary without adding visual paint, layout, state, or a required client provider.",
+  "purpose": "Apply one explicit light, dark, or inherited semantic-token boundary with primary foreground, without adding background paint, layout, state, or a required client provider.",
   "useWhen": [
     "A local region must use a different supported appearance from its DOM ancestor.",
     "An existing Brick host should receive an appearance boundary without another wrapper.",
@@ -25,6 +25,11 @@
     "Pass exactly one existing DOM or Brick host to Appearance. That host may contain any number of descendants, must accept DOM props and a ref, and receives the boundary without a wrapper. For a portal, target a container inside the intended scope or apply Appearance to every portalled visual root."
   ],
   "rules": [
+    {
+      "id": "appearance-foreground",
+      "level": "must",
+      "statement": "Explicit boundaries establish low-specificity primary foreground for native HTML; component and author colors retain precedence. Inherit follows ancestor foreground. Supply compatible surrounding paint or compose Surface; Appearance adds no background."
+    },
     {
       "id": "appearance-complete-theme",
       "level": "must",

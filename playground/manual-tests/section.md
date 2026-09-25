@@ -11,6 +11,7 @@
 | Viewport and zoom | |
 | Assistive technology | |
 | Playground route | `/section` |
+| Qualification route(s) | `/section?qualification=1` |
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
@@ -19,6 +20,10 @@ Scenario order: `01 Overview`, `02 Rhythm scale`, `03 Responsive rhythm`,
 `07 Theme and escape hatch`, `08 Responsive and logical stress`.
 
 ## Step 1 — Scale and responsive rhythm
+
+Also open the default docs route and check sparse spacing at each breakpoint.
+Before lg it must retain md; independent edges must follow spacing until their
+own override. Verify keyboard navigation into Preview/Code and Props.
 
 Compare `none` through `2xl`, then resize the responsive example through the
 `sm`, `md`, `lg`, and `xl` boundaries. Confirm each scale step produces a

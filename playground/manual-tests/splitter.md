@@ -1,6 +1,6 @@
 # Splitter manual protocol
 
-Status: not performed. Route: /splitter.
+Status: not performed. Docs route: /splitter. Numbered qualification route: /splitter?qualification=1.
 
 | Environment | Recorded value |
 | --- | --- |
@@ -9,6 +9,7 @@ Status: not performed. Route: /splitter.
 | Viewport and zoom | Not performed |
 | Assistive technology | Not performed |
 | Playground route | `/splitter` |
+| Qualification route | `/splitter?qualification=1` |
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for each check.
 
@@ -27,6 +28,11 @@ Record browser/device, outcome and evidence; automated emulation is not physical
 device or manual assistive-technology qualification.
 
 ## Expanded capabilities
+
+Also inspect the docs Store, CSS unit sizes, Dynamic panels, Intersection dragging,
+Responsive orientation and Storage examples. Change the root font, mount a provider
+after its store, remove a focused panel, and cancel a shared drag across an iframe.
+These additions still require real-device and assistive-technology review.
 
 Follow every numbered scenario above, including all labelled specimens.
 Compare sizes independently of variants. Exercise any controlled reset, clear,

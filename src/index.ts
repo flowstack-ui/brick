@@ -1,227 +1,4 @@
 
-export * from "./splitter.js";
-
-export {
-  Appearance,
-  type AppearanceProps,
-  type AppearanceValue,
-} from "./components/appearance/index.js";
-export * from "./components/format-byte/index.js";
-export {
-  AspectRatio,
-  aspectRatios,
-  type AspectRatioToken,
-  AspectRatioRoot,
-  type AspectRatioOverflow,
-  type AspectRatioContentLayout,
-  type AspectRatioRadius,
-  type AspectRatioRootProps,
-  type AspectRatioVariant,
-} from "./components/aspect-ratio/index.js";
-export {
-  Center,
-  Circle,
-  Square,
-  type CenterElement,
-  type CenterLength,
-  type CenterProps,
-  type CircleProps,
-  type SquareProps,
-} from "./components/center/index.js";
-export {
-  ZStack,
-  ZStackItem,
-  ZStackRoot,
-  type ZStackAlign,
-  type ZStackElement,
-  type ZStackItemAlign,
-  type ZStackItemElement,
-  type ZStackItemJustify,
-  type ZStackItemProps,
-  type ZStackJustify,
-  type ZStackRootProps,
-} from "./components/z-stack/index.js";
-export {
-  Grid,
-  type GridAlign,
-  type GridColumnSpan,
-  type GridColumns,
-  type GridGap,
-  type GridItemElement,
-  type GridItemProps,
-  type GridJustify,
-  type GridLine,
-  type GridMinItemSize,
-  type GridRootElement,
-  type GridRootProps,
-  type GridSelfAlign,
-  type GridSelfJustify,
-  type GridSpan,
-} from "./components/grid/index.js";
-export {
-  Container,
-  type ContainerElement,
-  type ContainerGutter,
-  type ContainerMeasure,
-  type ContainerProps,
-} from "./components/container/index.js";
-export {
-  Section,
-  type SectionElement,
-  type SectionProps,
-  type SectionSpacing,
-} from "./components/section/index.js";
-export {
-  Frame,
-  type FrameElement,
-  type FrameLength,
-  type FrameProps,
-} from "./components/frame/index.js";
-export {
-  Bleed,
-  type BleedElement,
-  type BleedProps,
-} from "./components/bleed/index.js";
-export {
-  Surface,
-  SurfaceContent,
-  SurfaceMedia,
-  SurfaceRoot,
-  SurfaceScrim,
-  type SurfaceContentProps,
-  type SurfaceElement,
-  type SurfaceElevation,
-  type SurfaceInset,
-  type SurfaceLevel,
-  type SurfaceMediaProps,
-  type SurfaceProps,
-  type SurfaceRadius,
-  type SurfaceScrimDirection,
-  type SurfaceScrimProps,
-  type SurfaceScrimStrength,
-  type SurfaceTone,
-} from "./components/surface/index.js";
-export {
-  ScrollArea,
-  ScrollAreaRoot,
-  ScrollAreaViewport,
-  type ScrollAreaOrientation,
-  type ScrollAreaRootElement,
-  type ScrollAreaRootProps,
-  type ScrollAreaScrollbarGutter,
-  type ScrollAreaScrollbarVisibility,
-  type ScrollAreaViewportElement,
-  type ScrollAreaViewportProps,
-} from "./components/scroll-area/index.js";
-export {
-  Code,
-  type CodeProps,
-  type CodeSize,
-  type CodeTone,
-  type CodeVariant,
-} from "./components/code/index.js";
-export { Em, type EmProps } from "./components/em/index.js";
-export {
-  Mark,
-  type MarkProps,
-  type MarkTone,
-  type MarkVariant,
-} from "./components/mark/index.js";
-export {
-  Kbd,
-  type KbdProps,
-  type KbdSize,
-  type KbdVariant,
-} from "./components/kbd/index.js";
-export {
-  Blockquote,
-  BlockquoteCaption,
-  BlockquoteCite,
-  BlockquoteContent,
-  BlockquoteIcon,
-  BlockquoteRoot,
-  type BlockquoteAlign,
-  type BlockquoteCaptionProps,
-  type BlockquoteCiteProps,
-  type BlockquoteContentProps,
-  type BlockquoteIconProps,
-  type BlockquoteRootProps,
-  type BlockquoteVariant,
-} from "./components/blockquote/index.js";
-export {
-  Highlight,
-  type HighlightProps,
-  type HighlightTone,
-  type HighlightVariant,
-} from "./components/highlight/index.js";
-export {
-  Prose,
-  type ProseElement,
-  type ProseMeasure,
-  type ProseProps,
-  type ProseSize,
-} from "./components/prose/index.js";
-export {
-  CodeBlock,
-  CodeBlockActions,
-  CodeBlockCollapse,
-  CodeBlockCollapseContent,
-  CodeBlockCollapsePreview,
-  CodeBlockCollapseTrigger,
-  CodeBlockContent,
-  CodeBlockCopyIndicator,
-  CodeBlockCopyStatus,
-  CodeBlockCopyTrigger,
-  CodeBlockHeader,
-  CodeBlockLanguage,
-  CodeBlockLine,
-  CodeBlockRoot,
-  CodeBlockTitle,
-  type CodeBlockAdapter,
-  type CodeBlockAdapterContext,
-  type CodeBlockActionsProps,
-  type CodeBlockCollapseProps,
-  type CodeBlockCollapseContentProps,
-  type CodeBlockCollapsePreviewProps,
-  type CodeBlockCollapseTriggerProps,
-  type CodeBlockContentProps,
-  type CodeBlockCopyIndicatorProps,
-  type CodeBlockCopyStatusProps,
-  type CodeBlockCopyTriggerProps,
-  type CodeBlockHeaderProps,
-  type CodeBlockLanguageProps,
-  type CodeBlockLineChange,
-  type CodeBlockLineProps,
-  type CodeBlockRootProps,
-  type CodeBlockSize,
-  type CodeBlockTitleProps,
-  type CodeBlockVariant,
-  type CodeBlockWrap,
-} from "./components/code-block/index.js";
-export {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMain,
-  SidebarPanel,
-  SidebarRoot,
-  SidebarTrigger,
-  type SidebarContentProps,
-  type SidebarFooterProps,
-  type SidebarHeaderProps,
-  type SidebarMainProps,
-  type SidebarPanelProps,
-  type SidebarPosition,
-  type SidebarRegionProps,
-  type SidebarRootProps,
-  type SidebarSize,
-  type SidebarSurface,
-  type SidebarTriggerProps,
-  type SidebarVariant,
-} from "./components/sidebar/index.js";
-export * from "./components/show/index.js";
-export * from "./components/hide/index.js";
 export * from "./date-value.js";
 export type { Radius } from "./radius.js";
 export * from "./spinner.js";
@@ -229,10 +6,17 @@ export * from "./timeline.js";
 export * from "./alert.js";
 export * from "./empty-state.js";
 export * from "./steps.js";
+export * from "./splitter.js";
 
 export type { StackSeparatorProps } from "./components/stack/StackSeparator.js";
+export {
+  Appearance,
+  type AppearanceProps,
+  type AppearanceValue,
+} from "./components/appearance/index.js";
 export * from "./components/locale-provider/index.js";
 export * from "./components/format-number/index.js";
+export * from "./components/format-byte/index.js";
 export * from "./components/for/index.js";
 export * from "./components/checkmark/index.js";
 export * from "./components/radiomark/index.js";
@@ -330,6 +114,17 @@ export {
   type ImageRadius,
   type ImageRootProps,
 } from "./components/image/index.js";
+export {
+  AspectRatio,
+  aspectRatios,
+  type AspectRatioToken,
+  AspectRatioRoot,
+  type AspectRatioOverflow,
+  type AspectRatioContentLayout,
+  type AspectRatioRadius,
+  type AspectRatioRootProps,
+  type AspectRatioVariant,
+} from "./components/aspect-ratio/index.js";
 export {
   AppBar,
   AppBarCenter,
@@ -930,6 +725,16 @@ export {
 } from "./components/stack/index.js";
 export type { SpacingValue } from "./components/_spacing-value/SpacingValue.js";
 export {
+  Center,
+  Circle,
+  Square,
+  type CenterElement,
+  type CenterLength,
+  type CenterProps,
+  type CircleProps,
+  type SquareProps,
+} from "./components/center/index.js";
+export {
   Group,
   type GroupElement,
   type GroupAlign,
@@ -958,6 +763,82 @@ export {
   type DataListValueProps,
 } from "./components/data-list/index.js";
 export {
+  ZStack,
+  ZStackItem,
+  ZStackRoot,
+  type ZStackAlign,
+  type ZStackElement,
+  type ZStackItemAlign,
+  type ZStackItemElement,
+  type ZStackItemJustify,
+  type ZStackItemProps,
+  type ZStackJustify,
+  type ZStackRootProps,
+} from "./components/z-stack/index.js";
+export {
+  Grid,
+  type GridAlign,
+  type GridAutoFlow,
+  type GridContentAlignment,
+  type GridTrack,
+  type GridColumnSpan,
+  type GridColumns,
+  type GridGap,
+  type GridItemElement,
+  type GridItemProps,
+  type GridJustify,
+  type GridLine,
+  type GridMinItemSize,
+  type GridRootElement,
+  type GridRootProps,
+  type GridSelfAlign,
+  type GridSelfJustify,
+  type GridSpan,
+} from "./components/grid/index.js";
+export {
+  Container,
+  type ContainerElement,
+  type ContainerGutter,
+  type ContainerMeasure,
+  type ContainerProps,
+} from "./components/container/index.js";
+export {
+  Section,
+  type SectionElement,
+  type SectionProps,
+  type SectionSpacing,
+} from "./components/section/index.js";
+export {
+  Frame,
+  type FrameElement,
+  type FrameLength,
+  type FrameProps,
+} from "./components/frame/index.js";
+export {
+  Bleed,
+  type BleedElement,
+  type BleedProps,
+} from "./components/bleed/index.js";
+export {
+  Surface,
+  SurfaceContent,
+  SurfaceMedia,
+  SurfaceRoot,
+  SurfaceScrim,
+  type SurfaceContentProps,
+  type SurfaceElement,
+  type SurfaceElevation,
+  type SurfaceInset,
+  type SurfaceLevel,
+  type SurfaceMediaProps,
+  type SurfaceProps,
+  type SurfaceRadius,
+  type SurfaceScrimDirection,
+  type SurfaceScrimProps,
+  type SurfaceScrimStrength,
+  type SurfaceTone,
+} from "./components/surface/index.js";
+export {
   Divider,
   type DividerComposedProps,
   type DividerElement,
@@ -970,6 +851,142 @@ export {
   type DividerThickness,
   type DividerVariant,
 } from "./components/divider/index.js";
+export {
+  ScrollArea,
+  ScrollAreaRoot,
+  ScrollAreaViewport,
+  ScrollAreaRootProvider,
+  ScrollAreaContent,
+  ScrollAreaScrollbar,
+  ScrollAreaThumb,
+  ScrollAreaCorner,
+  ScrollAreaContext,
+  useScrollArea,
+  type ScrollAreaRootProviderProps,
+  type ScrollAreaContentProps,
+  type ScrollAreaScrollbarProps,
+  type ScrollAreaThumbProps,
+  type ScrollAreaCornerProps,
+  type ScrollAreaSize,
+  type ScrollAreaScrollShadow,
+  type ScrollAreaController,
+  type UseScrollAreaProps,
+  type ScrollAreaScrollToDetails,
+  type ScrollAreaScrollToEdgeDetails,
+  type ScrollAreaScrollbarState,
+  type ScrollAreaState,
+  type ScrollAreaAxis,
+  type ScrollAreaEdge,
+  type ScrollAreaIds,
+  type ScrollAreaOrientation,
+  type ScrollAreaRootElement,
+  type ScrollAreaRootProps,
+  type ScrollAreaScrollbarGutter,
+  type ScrollAreaScrollbarVisibility,
+  type ScrollAreaViewportElement,
+  type ScrollAreaViewportProps,
+} from "./components/scroll-area/index.js";
+export {
+  Code,
+  type CodeProps,
+  type CodeSize,
+  type CodeTone,
+  type CodeVariant,
+} from "./components/code/index.js";
+export { Em, type EmProps } from "./components/em/index.js";
+export {
+  Mark,
+  type MarkProps,
+  type MarkTone,
+  type MarkVariant,
+} from "./components/mark/index.js";
+export {
+  Kbd,
+  type KbdProps,
+  type KbdSize,
+  type KbdTone,
+  type KbdVariant,
+} from "./components/kbd/index.js";
+export {
+  Blockquote,
+  BlockquoteCaption,
+  BlockquoteCite,
+  BlockquoteContent,
+  BlockquoteIcon,
+  BlockquoteRoot,
+  type BlockquoteAlign,
+  type BlockquoteCaptionProps,
+  type BlockquoteCiteProps,
+  type BlockquoteContentProps,
+  type BlockquoteIconProps,
+  type BlockquoteRootProps,
+  type BlockquoteVariant,
+  type BlockquoteTone,
+} from "./components/blockquote/index.js";
+export {
+  Highlight,
+  findHighlightSegments,
+  type HighlightOptions,
+  type HighlightSegment,
+  type HighlightProps,
+  type HighlightTone,
+  type HighlightVariant,
+} from "./components/highlight/index.js";
+export {
+  Prose,
+  type ProseElement,
+  type ProseMeasure,
+  type ProseProps,
+  type ProseSize,
+  type ProseTone,
+  type ProseCodeOverflow,
+  type ProseTableLayout,
+  type ProseContentProps,
+  type ProseExcludeProps,
+} from "./components/prose/index.js";
+export {
+  CodeBlock,
+  createShikiAdapter,
+  type CodeBlockColorScheme,
+  type CodeBlockMeta,
+  type CodeBlockToken,
+  type CodeBlockShikiHighlighter,
+  type CodeBlockShikiOptions,
+  CodeBlockActions,
+  CodeBlockCollapse,
+  CodeBlockCollapseContent,
+  CodeBlockCollapsePreview,
+  CodeBlockCollapseTrigger,
+  CodeBlockContent,
+  CodeBlockCopyIndicator,
+  CodeBlockCopyStatus,
+  CodeBlockCopyTrigger,
+  CodeBlockHeader,
+  CodeBlockLanguage,
+  CodeBlockLine,
+  CodeBlockRoot,
+  CodeBlockTitle,
+  type CodeBlockAdapter,
+  type CodeBlockAdapterContext,
+  type CodeBlockActionsProps,
+  type CodeBlockCollapseProps,
+  type CodeBlockCollapseContentProps,
+  type CodeBlockCollapsePreviewProps,
+  type CodeBlockCollapseTriggerProps,
+  type CodeBlockContentProps,
+  type CodeBlockCopyIndicatorProps,
+  type CodeBlockCopyStatusProps,
+  type CodeBlockCopyTriggerProps,
+  type CodeBlockHeaderProps,
+  type CodeBlockLanguageProps,
+  type CodeBlockLineChange,
+  type CodeBlockLineProps,
+  type CodeBlockRootProps,
+  type CodeBlockSize,
+  type CodeBlockTitleProps,
+  type CodeBlockVariant,
+  type CodeBlockWrap,
+} from "./components/code-block/index.js";
 export {
   NavList,
   NavListItem,
@@ -995,6 +1012,34 @@ export {
   type NavListTone,
   type NavListVariant,
 } from "./components/nav-list/index.js";
+export {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMain,
+  SidebarPanel,
+  SidebarRoot,
+  SidebarTrigger,
+  useSidebarContext,
+  type SidebarContextValue,
+  type SidebarState,
+  type SidebarSide,
+  type SidebarCollapsedState,
+  type SidebarContentProps,
+  type SidebarInset,
+  type SidebarFooterProps,
+  type SidebarHeaderProps,
+  type SidebarMainProps,
+  type SidebarPanelProps,
+  type SidebarPosition,
+  type SidebarRegionProps,
+  type SidebarRootProps,
+  type SidebarSize,
+  type SidebarSurface,
+  type SidebarTriggerProps,
+  type SidebarVariant,
+} from "./components/sidebar/index.js";
 export {
   Switch,
   SwitchRoot,
@@ -1256,6 +1301,8 @@ export {
 } from "./components/toolbar/index.js";
 export * from "./components/pagination/index.js";
 export * from "./components/skip-link/index.js";
+export * from "./components/show/index.js";
+export * from "./components/hide/index.js";
 export { CloseButton, type CloseButtonProps } from "./components/close-button/index.js";
 export { DownloadTrigger, type DownloadTriggerProps } from "./components/download-trigger/index.js";
 export { useDownload, type UseDownloadProps, type UseDownloadReturn, type DownloadableData, type DownloadDetails } from "./components/download-trigger/index.js";

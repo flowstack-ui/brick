@@ -1,9 +1,3 @@
-.frame-canvas,
-.frame-scroll {
-  block-size: 100%;
-  max-block-size: inherit;
-}
-
 .frame-vertical {
   writing-mode: vertical-rl;
 }

@@ -1,5 +1,11 @@
 # Frame changelog
 
+## Unreleased
+
+- Preserve composed-host sizing for omitted and not-yet-active responsive constraints.
+- Reject invalid numeric dimensions and Fragment hosts; preserve callback-ref cleanup.
+- Add docs-style examples and correct bounded-scroll composition without example CSS.
+
 Frame follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased

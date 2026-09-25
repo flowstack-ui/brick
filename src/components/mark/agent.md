@@ -15,12 +15,12 @@ Render a semantically marked static passage with restrained theme-aware Brick pa
 
 ## Required composition
 
-- Keep Mark inside the surrounding Text, heading, link, or Prose content owner.
+- Keep Mark inside the surrounding Text, heading, link, or Prose content owner. asChild projects onto one authored native mark host.
 
 ## Rules
 
 - **MUST:** Use Mark for authored static relevance; do not pass a query or implement search matching inside it.
-- **MUST:** Preserve the one native mark host and select only the documented variant and tone recipes.
+- **MUST:** Preserve native mark semantics. Variants are subtle, solid, text and plain; tones are accent, neutral, info, success, warning and danger. Defaults remain subtle/accent. Text adds medium weight, not a colored foreground.
 - **MUST:** Load styles.css or core.css plus mark.css.
 
 ## Common mistakes

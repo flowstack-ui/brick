@@ -59,3 +59,11 @@ Notes or issue:
 Overall result:
 Follow-up issues:
 Workbook updated:
+
+## Docs-page pass
+
+- On `/center`, verify basic, icon, inline link, Square, Circle and responsive
+  examples in light/dark, narrow viewports and RTL. Confirm centered geometry,
+  non-shrinking shapes and inline anchor focus. Compare Code with the preview.
+- Verify three props tables, TOC links and shared page navigation.
+- Existing stress scenarios remain at `/center?qualification=1`.

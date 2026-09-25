@@ -1,5 +1,10 @@
 # Section changelog
 
+## Unreleased
+
+- Fix sparse responsive spacing to retain the medium baseline while preserving independent edge inheritance.
+- Add modular documentation examples and part-scoped props while retaining qualification scenarios.
+
 Section follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased

@@ -9,6 +9,10 @@
 
   .brick-center[data-inline] {
     display: inline-flex;
+  }
+
+  /* Fixed inline ornaments retain their established surrounding-text alignment. */
+  .brick-square[data-inline] {
     vertical-align: middle;
   }
 

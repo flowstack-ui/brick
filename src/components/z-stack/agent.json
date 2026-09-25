@@ -6,7 +6,9 @@
   "layer": "brick",
   "kind": "component",
   "purpose": "Overlap authored children in one depth-aware layout while preserving source, reading, and focus order.",
-  "useWhen": ["Two or more visual layers intentionally share the same region."],
+  "useWhen": [
+    "Two or more visual layers intentionally share the same region."
+  ],
   "avoidWhen": [
     {
       "condition": "Content follows one row or column.",
@@ -19,11 +21,16 @@
     {
       "condition": "One in-flow region only needs two-axis centering or equal square/circle geometry.",
       "useInstead": "Center, Square, or Circle"
+    },
+    {
+      "condition": "The attachment should not contribute to its parent's natural size.",
+      "useInstead": "Float"
     }
   ],
   "composition": [
     "Place natural-size layers directly in ZStack.Root and use ZStack.Item only when one layer needs its own nine-position alignment.",
-    "For a corner action over media, use ZStack.Root isolation=\"open\" and ZStack.Item layer=\"action\" with edgeSpacing instead of recreating stacking, z-index, and inset margins in local CSS."
+    "For a corner action, use ZStack.Item layer=\"action\" with edgeSpacing. Keep Root isolation=\"contained\" unless layers must participate in an ancestor stacking context.",
+    "Root and Item accept asChild with one non-Fragment child that forwards props and ref. Compose Frame for size and Surface for paint."
   ],
   "rules": [
     {
@@ -60,6 +67,11 @@
       "id": "z-stack-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus z-stack.css."
+    },
+    {
+      "id": "z-stack-spacing-scope",
+      "level": "must",
+      "statement": "Omit edgeSpacing to preserve host margins; use zero to reset them. Sparse breakpoint spacing is local and never inherits ancestor Item values."
     }
   ],
   "commonMistakes": [
@@ -73,11 +85,19 @@
     },
     {
       "mistake": "Adding inline isolation, z-index, or margin styles to make an overlay action clickable and inset.",
-      "correction": "Use isolation=\"open\", layer=\"action\", and edgeSpacing on ZStack's public composition API."
+      "correction": "Use layer=\"action\" and edgeSpacing; ordinary clickable actions do not require isolation=\"open\"."
     }
   ],
   "validation": [
     "Check natural sizing, responsive logical placement, focus order, zoom, RTL, and pointer access."
   ],
-  "related": ["stack", "grid", "surface", "image", "center"]
+  "related": [
+    "stack",
+    "grid",
+    "surface",
+    "image",
+    "center",
+    "frame",
+    "float"
+  ]
 }

@@ -5,8 +5,8 @@ import {
   Fragment,
   type ForwardedRef,
   type ReactElement,
-  type Ref,
 } from "react";
+import { composeHost } from "@flowstack-ui/atom/compose-host";
 
 export type AppearanceValue = "light" | "dark" | "inherit";
 
@@ -16,20 +16,6 @@ export type AppearanceProps = {
   /** Explicit semantic appearance, or inherit to remove the boundary. */
   value?: AppearanceValue;
 };
-
-function mergeClassName(...values: Array<string | undefined>) {
-  const className = values.filter(Boolean).join(" ");
-  return className || undefined;
-}
-
-function composeRefs<T>(...refs: Array<Ref<T> | undefined>) {
-  return (value: T | null) => {
-    for (const ref of refs) {
-      if (typeof ref === "function") ref(value);
-      else if (ref) ref.current = value;
-    }
-  };
-}
 
 function AppearanceImpl(
   { children, value = "inherit" }: AppearanceProps,
@@ -45,23 +31,20 @@ function AppearanceImpl(
     );
   }
 
-  // React 19 exposes ref through props; React 18 keeps it on the element.
-  // Check props first so React 19 never reads its deprecated element.ref.
-  const childRef = (
-    "ref" in child.props
-      ? child.props.ref
-      : (child as ReactElement & { ref?: Ref<HTMLElement> }).ref
-  ) as Ref<HTMLElement> | undefined;
-  const composedRef = childRef || ref ? composeRefs(childRef, ref) : undefined;
-
-  return cloneElement(child, {
-    className: mergeClassName(
-      child.props.className as string | undefined,
-      "brick-appearance",
-    ),
-    "data-brick-appearance": value === "inherit" ? undefined : value,
-    ref: composedRef,
+  // Atom intentionally ignores undefined overrides. Clear an authored boundary
+  // explicitly before composing so inherit really returns to the ancestor.
+  const host = value === "inherit"
+    ? cloneElement(child, { "data-brick-appearance": undefined })
+    : child;
+  const childRef = Object.getOwnPropertyDescriptor(child.props, "ref")?.value
+    ?? Object.getOwnPropertyDescriptor(child, "ref")?.value;
+  const result = composeHost(host, {
+    className: "brick-appearance",
+    ...(value === "inherit" ? {} : { "data-brick-appearance": value }),
+    ...(ref && childRef ? { ref } : {}),
   });
+  // A single ref needs no combining callback and stays stable across renders.
+  return ref && !childRef ? cloneElement(result as ReactElement<Record<string, unknown>>, { ref }) : result;
 }
 
 /**

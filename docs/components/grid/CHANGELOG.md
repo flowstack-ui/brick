@@ -1,5 +1,9 @@
 # Grid changelog
 
+## Unreleased
+
+- Add native responsive tracks, named areas, flow, content distribution, inline layout, Root asChild and responsive named/negative line placement.
+
 Grid follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased

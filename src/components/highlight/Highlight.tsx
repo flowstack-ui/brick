@@ -4,8 +4,8 @@ import {
   type HighlightRootProps as AtomHighlightRootProps,
 } from "@flowstack-ui/atom/highlight";
 
-export type HighlightVariant = "subtle" | "solid" | "underline";
-export type HighlightTone = "accent" | "neutral";
+export type HighlightVariant = "subtle" | "solid" | "underline" | "text" | "plain";
+export type HighlightTone = "accent" | "neutral" | "info" | "success" | "warning" | "danger";
 
 export interface HighlightProps extends Omit<AtomHighlightRootProps, "dangerouslySetInnerHTML" | "render"> {
   variant?: HighlightVariant;

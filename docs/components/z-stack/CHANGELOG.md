@@ -1,5 +1,11 @@
 # ZStack changelog
 
+## Unreleased
+
+- Add Root asChild and preserve Root/Item callback-ref cleanup; reject Fragment hosts.
+- Preserve control minimum sizes and unauthored host margins.
+- Scope responsive edge spacing to each Item and use explicit fallback inputs.
+
 ZStack follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased

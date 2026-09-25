@@ -19,13 +19,13 @@ Present preserved multi-line technical source with native scrolling, explicit me
 - Pass the exact plain-text source to Root value, then place Content inside Root and give focusable Content a specific accessible label.
 - Author Header, Title, Language, Actions, CopyTrigger, CopyStatus, and CopyIndicator only when the interface needs those optional parts.
 - For syntax highlighting, pass a synchronous adapter or trusted React token nodes to Content while keeping Root value identical to the plain text that must be copied.
-- Use Line for authored line numbers, highlighting, focus, additions, and removals; metadata remains independent so one line can carry more than one relevant state.
+- Use Root meta for automatic line presentation or manual Line parts. Preserve source and explain diffs accessibly; visual signs and numbers are not copied.
 - Use Content maxLines for a bounded scroll region. For expansion, put bounded Content in CollapsePreview, unbounded Content in CollapseContent, and author CollapseTrigger so Brick Collapsible owns the real disclosure relationship and lifecycle.
 
 ## Rules
 
 - **MUST:** Keep Root value authoritative and exactly aligned with rendered highlighted content so copy behavior never depends on rendered textContent.
-- **MUST:** Keep tokenization, language loading, and syntax palettes in a pure synchronous consumer adapter; Brick accepts trusted React nodes and does not bundle a highlighter or unsafe HTML path.
+- **MUST:** Initialize optional createShikiAdapter once outside rendering, or supply a pure synchronous React adapter. Keep loading/retry/disposal application-owned; Brick never bundles Shiki or accepts highlighted HTML.
 - **MUST:** Let Content own canonical pre, code, focus, and horizontal scrolling instead of rebuilding them with a separate ScrollArea or native pre element.
 - **MUST:** Give every focusable Content region a specific aria-label or aria-labelledby, especially when several examples share one page.
 - **MUST:** Author Line metadata from the authoritative source or trusted adapter output; do not infer diffs, focus, or highlighting from visual tokens.

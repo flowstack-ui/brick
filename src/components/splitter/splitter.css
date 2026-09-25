@@ -43,9 +43,13 @@
   }
   .brick-splitter-trigger:hover > .brick-splitter-indicator { border-color: var(--brick-color-border-strong); }
   .brick-splitter-trigger:focus-visible > .brick-splitter-indicator,
-  .brick-splitter-trigger:focus-visible::before {
+  .brick-splitter-trigger:focus-visible:not(:has(.brick-splitter-indicator))::before {
     outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
     outline-offset: var(--brick-border-focus-offset);
+  }
+  .brick-splitter-trigger:focus-visible > .brick-splitter-indicator {
+    background: var(--brick-color-accent-soft);
+    border-color: var(--brick-color-border-strong);
   }
   .brick-splitter-trigger[data-state="dragging"] > .brick-splitter-indicator { background: var(--brick-color-accent-solid); }
   .brick-splitter-trigger[data-disabled] { cursor: default; }

@@ -5,20 +5,21 @@
   "package": "@flowstack-ui/brick",
   "layer": "brick",
   "kind": "component",
-  "purpose": "Show content only at selected Brick breakpoints through CSS, avoiding JavaScript viewport state and hydration flicker.",
+  "purpose": "Render conditional content with when, or preserve mounted content with CSS-only from visibility. The modes are exclusive.",
   "useWhen": [
     "A complete region should appear only at selected Brick breakpoints."
   ],
   "avoidWhen": [
     {
-      "condition": "Content must remain available to assistive technology while visually hidden, or rendering depends on authorization or data.",
-      "useInstead": "VisuallyHidden or application conditional rendering"
+      "condition": "Content must remain available to assistive technology while visually hidden, or access needs authorization.",
+      "useInstead": "VisuallyHidden or application/server authorization"
     }
   ],
   "composition": [
     "Wrap the smallest complete composition whose responsive presence changes; combine with Hide only for intentional alternate desktop/mobile structures."
   ],
   "rules": [
+    { "id": "show-modes", "level": "must", "statement": "Choose when with optional fallback and typed function children, or from with native host props. Never mix modes. Conditional mode has no host/ref and uses JS truthiness; test collection length explicitly. Responsive asChild projects onto one non-Fragment prop/ref-forwarding host and preserves its display. Do not use CSS visibility to stop effects, form submission or portalled overlays." },
     {
       "id": "show-first-paint",
       "level": "must",

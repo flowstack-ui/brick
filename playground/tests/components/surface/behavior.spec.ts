@@ -8,7 +8,7 @@ async function box(locator: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/surface");
+  await page.goto("/surface?qualification=1");
 });
 
 test("default renders one semantic-neutral base surface", async ({ page }) => {
@@ -309,4 +309,17 @@ test("scrim strength changes both paint intensity and directional reach", async 
     .include('[data-testid="surface-scrim-comparison"]')
     .analyze();
   expect(results.violations).toEqual([]);
+});
+
+
+test("surface effects preserve opaque descendants and focus", async ({ page }) => {
+  await page.goto("/surface");
+  const root = page.locator("#surface-effects .brick-surface[data-surface-effects]").first();
+  await expect(root).toHaveAttribute("data-surface-effects", "translucent");
+  await expect(root).toHaveCSS("backdrop-filter", /blur\(18px\)/);
+  await expect(root).toHaveCSS("opacity", "1");
+  await expect(root).toHaveCSS("overflow", "visible");
+  const target = root.locator("button, a").first();
+  await target.focus();
+  await expect(target).toBeFocused();
 });

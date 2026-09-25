@@ -6,7 +6,9 @@ Kbd follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
-- No unreleased changes.
+- Add semantic tones and static asChild composition.
+- Refine compact size recipes and raised bottom border; keep plain padding zero at every size.
+- Document whole combinations and separately authored keys.
 
 ## 0.1.12 — 2026-08-30
 

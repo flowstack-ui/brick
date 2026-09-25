@@ -2,7 +2,35 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
+  await page.goto("/code-block?qualification=1");
+});
+
+test("docs show actual syntax colors, metadata, correct line geometry and composed controls", async ({ page }) => {
   await page.goto("/code-block");
+  const shiki = page.locator("#shiki");
+  await expect(shiki.locator(".brick-code-block-token").first()).toBeVisible();
+  await expect(shiki.locator('.brick-code-block[data-brick-appearance="light"]')).toHaveCount(1);
+  const colors = await shiki.locator(".brick-code-block-token").evaluateAll(nodes => [...new Set(nodes.map(n => getComputedStyle(n).color))]);
+  expect(colors.length).toBeGreaterThan(2);
+  expect(await shiki.locator(".brick-code-block-token").first().evaluate(n => getComputedStyle(n).fontFamily)).toContain("monospace");
+  const lines = page.locator("#line-numbers .brick-code-block-line");
+  await expect(lines).toHaveCount(2);
+  const heights = await lines.evaluateAll(nodes => nodes.map(n => ({height: n.getBoundingClientRect().height, line: parseFloat(getComputedStyle(n).lineHeight)})));
+  for (const row of heights) expect(row.height).toBeLessThanOrEqual(row.line + 1);
+  expect(await page.locator('#diff [data-change="added"]').evaluate(n => getComputedStyle(n, "::after").content)).toContain("+");
+  // The docs wrap example must actually demonstrate wrapping, not short source.
+  const wrapped = page.locator('#word-wrap .brick-code-block-line').first();
+  await expect(wrapped).toBeVisible();
+  expect(await wrapped.evaluate(n => n.getBoundingClientRect().height / parseFloat(getComputedStyle(n).lineHeight))).toBeGreaterThan(1.5);
+  await expect(page.locator("#props-root")).toContainText("CodeBlockMeta");
+  await page.locator("#expand").getByRole("button", { name: "Expand code" }).click();
+  await expect(page.locator("#expand").getByRole("button", { name: "Collapse code" })).toBeVisible();
+  await page.getByRole("combobox", { name: "Code language" }).selectOption("python");
+  await expect(page.locator("#language pre")).toHaveText('print("Hello")');
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  const results = await new AxeBuilder({ page }).include("#shiki").analyze();
+  expect(results.violations).toEqual([]);
 });
 
 test("flush collapse action keeps focus inside the CodeBlock clip", async ({ page }) => {
@@ -108,6 +136,8 @@ test("Code Block line metadata and adapter output stay explicit", async ({
   await expect(lines.nth(1)).toHaveAttribute("data-change", "removed");
   await expect(lines.nth(2)).toHaveAttribute("data-focused", "");
   await expect(lines.nth(3)).toHaveAttribute("data-change", "added");
+  const starts = await lines.locator('[data-slot="code-block-line-content"]').evaluateAll(nodes => nodes.map(n => n.getBoundingClientRect().left));
+  expect(Math.max(...starts) - Math.min(...starts)).toBeLessThan(1);
 });
 
 test("Code Block bounded content stays reachable and disclosure expands", async ({
@@ -127,12 +157,11 @@ test("Code Block bounded content stays reachable and disclosure expands", async 
     const pre = getComputedStyle(node.querySelector("pre")!);
     const contentHeight =
       node.clientHeight -
-      Number.parseFloat(viewport.paddingBlockStart) -
-      Number.parseFloat(viewport.paddingBlockEnd);
+      Number.parseFloat(viewport.paddingBlockStart);
     return contentHeight / Number.parseFloat(pre.lineHeight);
   });
-  expect(visibleLines).toBeGreaterThanOrEqual(4.4);
-  expect(visibleLines).toBeLessThanOrEqual(5);
+  expect(visibleLines).toBeGreaterThanOrEqual(4.95);
+  expect(visibleLines).toBeLessThanOrEqual(5.05);
   expect(await preview.evaluate((node) => node.scrollHeight)).toBeGreaterThan(
     await preview.evaluate((node) => node.clientHeight),
   );
@@ -221,8 +250,8 @@ test("Code Block overflow, stress, and accessibility remain contained", async ({
   const longCode = page
     .getByRole("region", { name: "Long source" })
     .locator("pre");
-  await expect(shortCode).toHaveCSS("font-size", "16px");
-  await expect(longCode).toHaveCSS("font-size", "16px");
+  await expect(shortCode).toHaveCSS("font-size", "14px");
+  await expect(longCode).toHaveCSS("font-size", "14px");
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });
