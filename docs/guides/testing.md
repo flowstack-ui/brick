@@ -28,6 +28,11 @@ bounded shards so a long qualification run cannot accumulate one browser
 process indefinitely. Pass one or more project names directly to
 `scripts/run-release-browser-tests.mjs` when reproducing a release-profile
 failure. Main-branch and publication jobs use the same bounded project runner.
+WebKit batches derive from the selected test inventory, not fixed shard counts:
+at most 40 desktop or 24 mobile cases per browser process. Test-level sharding
+prevents a large catalog file from exceeding that limit; execution still uses
+one worker. Every shard is listed before execution and its report must account
+for that exact inventory. Empty, invalid or over-budget batches fail closed.
 
 Each release invocation retains JSON, HTML and failure traces in a unique
 `test-results/release-*/<project>-<shard>-of-<count>/` directory. Its parent
