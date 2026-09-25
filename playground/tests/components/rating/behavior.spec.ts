@@ -71,10 +71,12 @@ test("hover preview stays independent and right-click does not commit", async ({
   await last.hover();
   await expect(section).toContainText("Preview: 5");
   await expect(root).toHaveAttribute("aria-valuenow", "3");
-  await last.click({ button: "right" });
-  await expect(root).toHaveAttribute("aria-valuenow", "3");
   await page.mouse.move(1, 1);
   await expect(section).toContainText("Selected: 3");
+  // Native context menus can suspend page pointer events in WebKit. Verify
+  // ordinary hover exit first, then independently check secondary activation.
+  await last.click({ button: "right" });
+  await expect(root).toHaveAttribute("aria-valuenow", "3");
 });
 test("one-slider semantics, fractional fill, recipes, and Field states are complete",async({page})=>{const root=page.getByTestId("rating-overview").getByRole("slider",{name:"Product rating"});await expect(root).toHaveAttribute("aria-valuenow","3");await expect(root.locator(".brick-rating__item")).toHaveCount(5);await expect(page.getByTestId("rating-values").getByRole("slider").nth(2)).toHaveAttribute("aria-valuenow","3.5");for(const size of ["sm","md","lg"])expect(await page.getByTestId("rating-recipes").locator(`.brick-rating[data-size='${size}']`).count()).toBeGreaterThan(0);await expect(page.getByTestId("rating-states").locator(".brick-rating[data-invalid]")).toHaveCount(1)});
 test("forced colors retain a visible selected-versus-empty shape",async({page,browserName})=>{
