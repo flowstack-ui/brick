@@ -19,25 +19,25 @@
     );
     --brick-segment-group-inset: 0px;
     --brick-segment-group-background: var(--brick-color-surface-subtle);
-    --brick-segment-group-border: var(--brick-color-border-default);
+    --brick-segment-group-border: light-dark(color-mix(in srgb, var(--brick-color-text-primary) 8%, transparent), color-mix(in srgb, var(--brick-color-text-primary) 5%, transparent));
     --brick-segment-group-root-shadow: inset 0 0 0 var(--brick-border-width)
       var(--brick-segment-group-border);
-    --brick-segment-group-indicator-background: light-dark(
-      var(--brick-color-surface-base),
-      var(--brick-color-surface-raised)
-    );
+    --brick-segment-group-tone-background: var(--brick-color-surface-raised);
     --brick-segment-group-indicator-border: transparent;
+    /* Light surfaces need an outer edge, not the dark-mode inset highlight.
+       Keep the two appearance-specific edge layers mutually transparent. */
     --brick-segment-group-indicator-shadow:
-      0 0.125rem 0.25rem
-        color-mix(in srgb, var(--brick-color-shadow), transparent 45%),
-      0 0 0.0625rem var(--brick-color-shadow);
-    --brick-segment-group-foreground: var(--brick-color-text-secondary);
-    --brick-segment-group-selected-foreground: var(--brick-color-text-primary);
+      0 0.125rem 0.25rem light-dark(color-mix(in srgb, var(--brick-color-text-primary) 10%, transparent), var(--brick-color-shadow)),
+      0 0 0.0625rem light-dark(color-mix(in srgb, var(--brick-color-text-primary) 30%, transparent), transparent),
+      inset 0 0 0.0625rem light-dark(transparent, color-mix(in srgb, color-mix(in srgb, var(--brick-color-text-primary), var(--brick-color-text-secondary)) 30%, transparent));
+    --brick-segment-group-foreground: var(--brick-color-text-primary);
+    --brick-segment-group-tone-foreground: var(--brick-color-text-primary);
     --brick-segment-group-focus-ring: var(--brick-color-focus-ring);
     --brick-segment-group-divider: var(--brick-color-border-default);
     --brick-segment-group-divider-inset: 0.375rem;
 
     position: relative;
+    isolation: isolate;
     display: inline-flex;
     box-sizing: border-box;
     min-inline-size: 0;
@@ -54,6 +54,15 @@
 
   .brick-segment-group[data-orientation="vertical"] {
     flex-direction: column;
+  }
+
+  .brick-segment-group[data-tone="accent"] {
+    --brick-segment-group-tone-background: var(--brick-color-accent-solid);
+    --brick-segment-group-tone-foreground: var(--brick-color-accent-on-solid);
+  }
+  .brick-segment-group[data-tone="contrast"] {
+    --brick-segment-group-tone-background: var(--brick-color-text-primary);
+    --brick-segment-group-tone-foreground: var(--brick-color-surface-base);
   }
 
   .brick-segment-group[data-full-width] {
@@ -73,19 +82,20 @@
        measured left offset from the opposite edge. */
     top: 0;
     left: 0;
-    inline-size: var(--brick-segment-group-indicator-inline-size, 0);
-    block-size: var(--brick-segment-group-indicator-block-size, 0);
-    border: var(--brick-border-width) solid
-      var(--brick-segment-group-indicator-border);
+    inline-size: var(--radio-group-indicator-width, 0);
+    block-size: var(--radio-group-indicator-height, 0);
+    border: 0;
+    /* An optional boundary must not inset the shadow's painting edge. */
+    outline: var(--brick-border-width) solid var(--brick-segment-group-indicator-border);
+    outline-offset: calc(-1 * var(--brick-border-width));
     border-radius: max(0px, calc(
       var(--brick-segment-group-radius) - var(--brick-segment-group-inset)
     ));
-    background: var(--brick-segment-group-indicator-background);
+    background: var(--brick-segment-group-indicator-background, var(--brick-segment-group-tone-background));
     box-shadow: var(--brick-segment-group-indicator-shadow);
     opacity: 0;
     pointer-events: none;
-    translate: var(--brick-segment-group-indicator-x, 0)
-      var(--brick-segment-group-indicator-y, 0);
+    translate: var(--radio-group-indicator-x, 0) var(--radio-group-indicator-y, 0);
     transition:
       translate var(--brick-motion-duration-fast)
         var(--brick-motion-easing-standard),
@@ -99,6 +109,12 @@
 
   .brick-segment-group__indicator[data-ready] {
     opacity: 1;
+  }
+  .brick-segment-group__indicator:not([data-ready]),
+  .brick-segment-group__indicator:not([data-positioned]) { transition: none; }
+  .brick-segment-group:not(:has(> .brick-segment-group__indicator[data-ready])) > .brick-segment-group__item[data-state="checked"] {
+    background: var(--brick-segment-group-indicator-background, var(--brick-segment-group-tone-background));
+    box-shadow: var(--brick-segment-group-indicator-shadow);
   }
 
   .brick-segment-group__item {
@@ -146,12 +162,12 @@
   }
 
   .brick-segment-group__item[data-state="checked"] {
-    color: var(--brick-segment-group-selected-foreground);
+    color: var(--brick-segment-group-selected-foreground, var(--brick-segment-group-tone-foreground));
   }
 
   .brick-segment-group[data-orientation="horizontal"]
     > .brick-segment-group__item
-    + .brick-segment-group__item::before {
+    ~ .brick-segment-group__item::before {
     position: absolute;
     inset-block: var(--brick-segment-group-divider-inset);
     inset-inline-start: 0;
@@ -164,7 +180,7 @@
 
   .brick-segment-group[data-orientation="vertical"]
     > .brick-segment-group__item
-    + .brick-segment-group__item::before {
+    ~ .brick-segment-group__item::before {
     position: absolute;
     inset-block-start: 0;
     inset-inline: var(--brick-segment-group-divider-inset);
@@ -179,7 +195,8 @@
     > .brick-segment-group__item[data-state="checked"]::before,
   .brick-segment-group[data-orientation]
     > .brick-segment-group__item[data-state="checked"]
-    + .brick-segment-group__item::before {
+    + .brick-segment-group__item::before,
+  .brick-segment-group[data-orientation] > .brick-segment-group__item[data-state="checked"] + input + .brick-segment-group__item::before {
     opacity: 0;
   }
 
@@ -190,9 +207,10 @@
   }
 
   .brick-segment-group__item[data-disabled] {
-    color: var(--brick-color-text-disabled);
     cursor: not-allowed;
+    opacity: 0.5;
   }
+  .brick-segment-group__indicator[data-disabled] { opacity: 0.5; }
 
   .brick-segment-group__item[data-icon-only] {
     aspect-ratio: 1;
@@ -208,7 +226,7 @@
     --brick-segment-group-min-block-size: var(
       --brick-control-min-block-size-2xs
     );
-    --brick-segment-group-item-padding-inline: var(--brick-space-2);
+    --brick-segment-group-item-padding-inline: var(--brick-space-3);
     --brick-segment-group-item-gap: var(--brick-space-1);
     --brick-segment-group-icon-size: 0.75rem;
     --brick-segment-group-font-family: var(
@@ -218,6 +236,10 @@
     --brick-segment-group-line-height: var(
       --brick-typography-caption-line-height
     );
+  }
+
+  .brick-segment-group[data-size="2xs"] > .brick-segment-group__item {
+    padding-block: calc(var(--brick-space-1) / 2);
   }
 
   .brick-segment-group[data-size="sm"] {
@@ -242,7 +264,7 @@
     --brick-segment-group-min-block-size: var(
       --brick-control-min-block-size-lg
     );
-    --brick-segment-group-item-padding-inline: var(--brick-space-4);
+    --brick-segment-group-item-padding-inline: calc(var(--brick-space-4) + var(--brick-space-1) / 2);
     --brick-segment-group-item-gap: var(--brick-space-3);
     --brick-segment-group-icon-size: 1.25rem;
     --brick-segment-group-font-family: var(
@@ -255,7 +277,7 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .brick-segment-group__item:not([data-disabled]):hover {
+    .brick-segment-group__item:not([data-disabled]):not([data-state="checked"]):hover {
       color: var(--brick-color-text-primary);
     }
   }
@@ -272,7 +294,7 @@
       box-shadow: inset 0 0 0 var(--brick-border-width) ButtonText;
     }
     .brick-segment-group__indicator {
-      border-color: Highlight;
+      outline-color: Highlight;
       background: Highlight;
       box-shadow: none;
     }
@@ -283,6 +305,7 @@
     .brick-segment-group__item[data-state="checked"] {
       color: HighlightText;
     }
+    .brick-segment-group:not(:has(> .brick-segment-group__indicator[data-ready])) > .brick-segment-group__item[data-state="checked"] { background: Highlight; box-shadow: none; }
     .brick-segment-group__item:focus-visible {
       outline-color: Highlight;
     }

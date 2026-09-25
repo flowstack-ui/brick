@@ -1,8 +1,6 @@
 # Number Input
 
 
-Number Input is a finished numeric entry control backed by Atom Number Input. Atom owns numeric value, parsing, formatting, bounds, stepping, validation, and form behavior; Brick owns the visual recipes and fixed step artwork.
-
 ## When and where to use
 
 Use it when a person may type a number or adjust it in known increments, such as quantity, seats, or a bounded measurement.
@@ -49,6 +47,30 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ## Anatomy and DOM ownership
 
+For an internal `NumberInput.Label`, compose it before a direct
+`NumberInput.Group` containing Input and Control. Group is the painted field;
+Root remains the shared state and recipe boundary. This keeps the label outside
+the input border. Existing Input/Control-only roots need no Group.
+
+`NumberInputGroup`, `NumberInputGroupProps`, `NumberInputElement`, and
+`NumberInputElementProps` are also exported. Group and Element render native
+divs and forward native attributes and refs. Group inherits size, variant,
+radius, and state from Root or RootProvider. Use it with `layout="field"`;
+keep detached steppers ungrouped. Element accepts `placement="start" | "end"`
+(default `start`) and reserves a non-overlapping content column. Place a
+Scrubber containing a decorative Icon in Element for compact leading drag
+control. It supplements, never replaces, the accessible Input.
+
+```tsx
+<NumberInput.Root defaultValue={3}>
+  <NumberInput.Label>Quantity</NumberInput.Label>
+  <NumberInput.Group>
+    <NumberInput.Input />
+    <NumberInput.Control />
+  </NumberInput.Group>
+</NumberInput.Root>
+```
+
 `Root` renders Atom's `div` and is the Brick visual boundary. `Input` renders the native `input[type=text]` with `role=spinbutton` and receives the input ref. `Control` groups the logical-end stacked step actions and generates both actions when children are omitted. `Increment` and `Decrement` render Atom buttons and receive button refs. Their default SVGs are private decorative artwork. `Unit` renders a presentational suffix. Public slots cover every part through the matching `number-input-*` names; stable classes use the matching `.brick-number-input*` names.
 
 Generated Control actions inherit their generic accessible labels from
@@ -67,7 +89,7 @@ and `NumberInputLayout`.
 
 | Root prop           | Values                                                            | Default   |
 | ------------------- | ----------------------------------------------------------------- | --------- |
-| `variant`           | `outline`, `soft`, `underline`                                    | `outline` |
+| `variant`           | `outline`, `surface`, `soft`, `subtle`, `ghost`, `plain`, `underline`; or a responsive value | `outline` |
 | `size`              | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`; or a responsive value | `lg`      |
 | `shape`             | `sharp`, `rounded`, `pill`                                        | `rounded` |
 | `fullWidth`         | boolean                                                           | `true`    |
@@ -98,6 +120,56 @@ choose either it or `radius`, not both. This does not change behavior, sizing,
 or the independently owned corners of other parts.
 
 ## Visual recipes and states
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+### Internationalization and controller composition
+
+Numeric mode remains the default (`number | null` and a numeric callback).
+Opt into `valueMode="string"` for string values and callbacks containing
+`{ value, valueAsNumber }`; blank or invalid text projects NaN in details but
+submits an empty native value. Named fields always submit parsed numbers.
+`locale` inherits LocaleProvider and `formatOptions` supports native decimal,
+currency, percentage and unit presentation. Do not combine it with custom
+`parser`/`formatter` callbacks. Those legacy callbacks remain reversible pairs.
+
+`useNumberInput` supplies the same locale-adapted Atom controller to
+`RootProvider`. Label associates with Input, ValueText displays the current
+editing value, Context is a wrapper-free callback, and Scrubber supplies
+horizontal pointer stepping without replacing keyboard access. Increment and
+Decrement inherit translated names; explicit aria-label and Control label
+props win. RootProvider uses the same visual recipes as Root.
+
+Shift+Arrow uses largeStep, Alt+Arrow uses smallStep (step / 10). Enter and blur
+commit, following clampOnBlur. `allowOverflow` permits out-of-range editing by
+default; `allowMouseWheel` is false by default and only acts while focused.
+`spinOnPress` and `focusInputOnChange` default to true. Commit, focus and range
+details are available through onValueCommit, onFocusChange and onValueInvalid.
+Use ids for independent root/input/label/action IDs; the legacy id identifies
+the input. inputMode and pattern reach the actual input.
+
+Use outline for a transparent rest/hover control and surface for a neutral raised fill with the same border and geometry, without a shadow or extra Surface wrapper. Soft remains subdued. Popup backgrounds are independent; preserve explicit disabled, read-only, invalid and forced-colors states.
+
+
+
+Number Input is a finished numeric entry control backed by Atom Number Input. Atom owns numeric value, parsing, formatting, bounds, stepping, validation, and form behavior; Brick owns the visual recipes and fixed step artwork.
+
+In detached `layout="stepper"`, `surface` fills the two bordered action buttons;
+the space around the value remains transparent rather than joining the controls.
+
+The field recipes are `outline`, `surface`, `soft`, `subtle`, `ghost`,
+`plain` and `underline`, with responsive initial/sm/md/lg/xl values. Subtle
+has a neutral fill and transparent border; ghost gains only a neutral hover
+fill; plain has no hover fill. Underline uses zero start inset and bottom-only
+focus. Other breakpoints restore normal geometry. Responsive variant objects
+exclude explicit radius/shape. These choices do not repaint independent popups
+or stepper action buttons.
+
+While a connected Scrubber has `data-scrubbing`, Brick maintains the native
+horizontal resize cursor throughout its document and suppresses text selection.
+Ending the session restores existing cursor and selection styles automatically;
+no application CSS or document inline-style cleanup is required. Pointer lock
+and virtual cursor artwork are not used.
 
 Recipes align with Input: outline has a transparent surface and complete boundary, soft uses a subtle surface, and underline uses a single indicator. Sizes change the complete control; shapes change geometry. `field` keeps stacked logical-end steppers; `stepper` uses equal square actions around the value. Focus, invalid, disabled, read-only, and boundary-unavailable state derive from Atom attributes and native state. `stepperVisibility="hover"` applies to `field`, keeps action space stable, reveals the buttons on hover or focus for fine pointers, and keeps them visible on touch/coarse-pointer devices.
 

@@ -1,26 +1,29 @@
 @layer brick.components {
   .brick-editable {
-    --brick-editable-font-size: var(--brick-typography-body-md-font-size);
-    --brick-editable-line-height: var(--brick-typography-body-md-line-height);
-    --brick-editable-padding: var(--brick-space-2);
+    --brick-editable-min-height: 2.25rem;
+    --brick-editable-padding: var(--brick-space-1);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--brick-space-2);
     min-inline-size: 0;
     max-inline-size: 100%;
-    color: var(--brick-color-text-primary);
   }
   .brick-editable[data-size="sm"] {
-    --brick-editable-font-size: var(--brick-typography-body-sm-font-size);
-    --brick-editable-line-height: var(--brick-typography-body-sm-line-height);
-    --brick-editable-padding: var(--brick-space-1);
+    --brick-editable-min-height: 2rem;
   }
   .brick-editable[data-size="lg"] {
-    --brick-editable-font-size: var(--brick-typography-body-lg-font-size);
-    --brick-editable-line-height: var(--brick-typography-body-lg-line-height);
-    --brick-editable-padding: var(--brick-space-3);
+    --brick-editable-min-height: 2.5rem;
   }
+  .brick-editable[data-text-style="inherit"] {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+  .brick-editable[data-text-style="inherit"]:not([data-weight]) { font-weight: inherit; }
+  .brick-editable[data-text-style="inherit"]:not([data-tone]) { color: inherit; }
+  .brick-editable[data-text-style="inherit"]:not([data-align]) { text-align: inherit; }
   .brick-editable-area {
     min-inline-size: 0;
     max-inline-size: 100%;
@@ -32,9 +35,9 @@
   .brick-editable-label {
     flex-basis: 100%;
     font-family: var(--brick-typography-body-md-font-family);
-    font-size: var(--brick-editable-font-size);
+    font-size: var(--brick-typography-body-sm-font-size);
     font-weight: var(--brick-typography-label-md-font-weight);
-    line-height: var(--brick-editable-line-height);
+    line-height: var(--brick-typography-body-sm-line-height);
   }
   .brick-editable-preview,
   .brick-editable-input,
@@ -45,28 +48,28 @@
     inline-size: 100%;
     max-inline-size: 100%;
     border: var(--brick-border-width) solid transparent;
-    border-radius: var(--brick-radius-control);
+    border-radius: var(--brick-editable-radius, var(--brick-radius-control));
     padding-inline: var(--brick-editable-padding);
     padding-block: var(--brick-space-1);
-    font-family: var(--brick-typography-body-md-font-family);
-    font-size: var(--brick-editable-font-size);
-    font-weight: var(--brick-typography-body-md-font-weight);
-    line-height: var(--brick-editable-line-height);
-    letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    font: inherit;
+    letter-spacing: inherit;
     background: transparent;
     color: inherit;
-    text-align: start;
+    text-align: inherit;
     overflow-wrap: anywhere;
     min-block-size: calc(
-      1lh + var(--brick-space-1) * 2 + var(--brick-border-width) * 2
+      max(var(--brick-editable-min-height), 1lh + var(--brick-space-1) * 2 + var(--brick-border-width) * 2)
     );
   }
   .brick-editable-preview {
+    display: grid;
+    align-items: center;
     white-space: pre-wrap;
     cursor: text;
   }
   .brick-editable-input,
   .brick-editable-textarea {
+    appearance: none;
     border-color: var(--brick-color-border-default);
   }
   .brick-editable-textarea {
@@ -92,7 +95,7 @@
     gap: var(--brick-space-1);
     flex-shrink: 0;
   }
-  .brick-editable-trigger {
+  .brick-editable-trigger:not([data-unstyled]) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -103,14 +106,14 @@
     background: transparent;
     color: var(--brick-color-text-primary);
     font: inherit;
-    font-size: var(--brick-editable-font-size);
-    line-height: var(--brick-editable-line-height);
+    font-size: var(--brick-typography-body-sm-font-size);
+    line-height: var(--brick-typography-body-sm-line-height);
     cursor: pointer;
   }
   .brick-editable-preview:focus-visible,
   .brick-editable-input:focus-visible,
   .brick-editable-textarea:focus-visible,
-  .brick-editable-trigger:focus-visible {
+  .brick-editable-trigger:not([data-unstyled]):focus-visible {
     outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
     outline-offset: var(--brick-border-width);
   }
@@ -123,22 +126,23 @@
     border-color: var(--brick-color-danger-text);
   }
   .brick-editable[data-disabled] {
-    color: var(--brick-color-text-muted);
+    opacity: 0.5;
   }
   .brick-editable[data-disabled] .brick-editable-preview,
-  .brick-editable-trigger:disabled {
+  .brick-editable-trigger:not([data-unstyled]):disabled {
     cursor: not-allowed;
   }
-  .brick-editable-trigger:disabled {
-    color: var(--brick-color-text-muted);
+  .brick-editable-trigger:not([data-unstyled]):disabled {
+    opacity: 0.5;
   }
+  .brick-editable[data-disabled] .brick-editable-trigger:disabled { opacity: 1; }
   .brick-editable[data-readonly] .brick-editable-preview {
     cursor: default;
   }
   @media (hover: hover) {
     .brick-editable:not([data-disabled], [data-readonly])
-      .brick-editable-preview:hover,
-    .brick-editable-trigger:not(:disabled):hover {
+      .brick-editable-preview:not([data-highlight="none"]):hover,
+    .brick-editable-trigger:not([data-unstyled], :disabled):hover {
       background: var(--brick-color-surface-subtle);
     }
   }
@@ -154,7 +158,7 @@
     .brick-editable-preview:focus-visible,
     .brick-editable-input:focus-visible,
     .brick-editable-textarea:focus-visible,
-    .brick-editable-trigger:focus-visible {
+    .brick-editable-trigger:not([data-unstyled]):focus-visible {
       outline-color: Highlight;
     }
   }

@@ -1,4 +1,5 @@
-import { createRef } from "react";
+import { createRef, useState } from "react";
+import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -6,9 +7,52 @@ import { describe, expect, it, vi } from "vitest";
 import { CheckboxGroup } from "../../../src/checkbox-group.js";
 
 describe("CheckboxGroup", () => {
+  it("inherits recipes, permits item overrides and retains limits", async () => {
+    render(<CheckboxGroup.Root aria-label="Limit" variant="outline" size={{ md: "lg" }} tone="neutral" maxSelectedValues={1}>
+      <CheckboxGroup.Item value="a">A</CheckboxGroup.Item>
+      <CheckboxGroup.Item value="b" variant="subtle" tone="accent">B</CheckboxGroup.Item>
+    </CheckboxGroup.Root>);
+    const a = screen.getByRole("checkbox", { name: "A" });
+    const b = screen.getByRole("checkbox", { name: "B" });
+    expect(a).toHaveAttribute("data-size", "md");
+    expect(a).toHaveAttribute("data-size-md", "lg");
+    expect(a).toHaveAttribute("data-variant", "outline");
+    expect(b).toHaveAttribute("data-variant", "subtle");
+    const user = userEvent.setup();
+    await user.click(a);
+    expect(b).toBeDisabled();
+    expect(a).not.toBeDisabled();
+    await user.click(a);
+    expect(b).not.toBeDisabled();
+  });
+  it("keeps the documented controlled Parent example owned by Root", async () => {
+    const guide = readFileSync("docs/components/checkbox-group/README.md", "utf8");
+    expect(guide).not.toMatch(/<CheckboxGroup\.Parent\b[^>]*\ballValues=/);
+    expect(guide).toMatch(/<CheckboxGroup\.Root\b[^>]*\ballValues=/);
+    function Example() {
+      const [value, setValue] = useState<string[]>([]);
+      return (
+        <CheckboxGroup.Root aria-label="Notification channels" allValues={["email", "sms"]} value={value} onValueChange={setValue}>
+          <CheckboxGroup.Parent>Select all</CheckboxGroup.Parent>
+          <CheckboxGroup.Item value="email">Email</CheckboxGroup.Item>
+          <CheckboxGroup.Item value="sms">SMS</CheckboxGroup.Item>
+        </CheckboxGroup.Root>
+      );
+    }
+    expect(() => renderToStaticMarkup(<Example />)).not.toThrow();
+    render(<Example />);
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("checkbox", { name: "Select all" }));
+    expect(screen.getByRole("checkbox", { name: "Email" })).toHaveAttribute("aria-checked", "true");
+    expect(screen.getByRole("checkbox", { name: "SMS" })).toHaveAttribute("aria-checked", "true");
+    await user.click(screen.getByRole("checkbox", { name: "SMS" }));
+    expect(screen.getByRole("checkbox", { name: "Select all" })).toHaveAttribute("aria-checked", "mixed");
+  });
+
   it("owns its exact frozen namespace and defaults", () => {
     expect(Object.keys(CheckboxGroup)).toEqual([
       "Root",
+      "RootProvider",
       "Item",
       "ItemLabel",
       "ItemDescription",

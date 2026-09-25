@@ -547,6 +547,10 @@
     "./input-addon": {
       "types": "./dist/input-addon.d.ts",
       "default": "./dist/input-addon.js"
+    },
+    "./checkbox-card": {
+      "types": "./dist/checkbox-card.d.ts",
+      "default": "./dist/checkbox-card.js"
     }
   },
   "files": [

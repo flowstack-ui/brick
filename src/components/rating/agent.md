@@ -19,6 +19,11 @@ Collect a short ordered score, present a repeated-star aggregate, or present a c
 
 ## Rules
 
+- **MUST:** Use Label and Control for a standalone Rating, or Field.Label with Root as the control. Omitted Root and Control children generate the ordinary integer-ended scale; compose explicit Items for custom endpoints.
+- **MUST:** Use useRating with RootProvider for external state access. Hover preview never submits. Keep automatic inputs unless inputMode=manual and exactly one HiddenInput are composed.
+- **MUST:** Use ItemIndicator icon for layered decorative artwork. Use Item contentMode=content for opaque custom wrappers and single-rendered emoji. asChild requires exactly one authored host and no independent interactive descendants.
+- **SHOULD:** Use responsive size, variant, density and gap before CSS. Comfortable targets are 44px; compact targets are at least 24px. Explicit fillColor/emptyColor override public variables and recipes; verify custom color contrast.
+- **MUST:** Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
 - **MUST:** Use Root and Item only when the person can choose a score; use Display for aggregate or read-only presentation so passive content does not create a focusable slider.
 - **MUST:** Give Display and Summary a localized label that states the score and maximum, such as label="4.5 out of 5 stars"; use Summary valueText for localized visible formatting and keep adjacent review counts as ordinary text.
 - **MUST:** Provide one visible Field label for an input Rating or a complete accessible name for a standalone Root.

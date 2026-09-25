@@ -1,6 +1,6 @@
 import { expectEvidenceScreenshot, installVisualDefaults, test } from "../../visual-harness.js";
 
-installVisualDefaults("/number-input");
+installVisualDefaults("/number-input?qualification=1");
 
 test("Number Input visual evidence", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.getByTestId("number-input-overview"), "overview-light.png");

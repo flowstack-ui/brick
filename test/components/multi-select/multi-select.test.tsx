@@ -1,4 +1,5 @@
 import { createRef } from "react";
+import { useMultiSelect } from "../../../src/multi-select.js";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, describe, expect, it, vi } from "vitest";
@@ -34,6 +35,24 @@ function Example({ defaultOpen = false }: { defaultOpen?: boolean }) {
 }
 
 describe("MultiSelect", () => {
+  it("supports subtle and a separately named clear action", async () => {
+    const user = userEvent.setup();
+    const changed = vi.fn();
+    render(<MultiSelect.Root variant="subtle" onValueChange={changed}><MultiSelect.Trigger aria-label="Choice" /><MultiSelect.ClearTrigger aria-label="Clear choice" /></MultiSelect.Root>);
+    const trigger = screen.getByRole("button", { name: "Choice" });
+    expect(trigger).toHaveAttribute("data-variant", "subtle");
+    await user.click(screen.getByRole("button", { name: "Clear choice" }));
+    expect(changed).toHaveBeenCalledWith([]);
+    expect(trigger).toHaveFocus();
+  });
+
+  it("can delegate trigger presentation without losing semantics", () => {
+    render(<MultiSelect.Root><MultiSelect.Trigger unstyled aria-label="Custom" className="custom-trigger">Choice</MultiSelect.Trigger></MultiSelect.Root>);
+    const trigger = screen.getByRole("button", { name: "Custom" });
+    expect(trigger).toHaveClass("custom-trigger");
+    expect(trigger).not.toHaveClass("brick-multi-select-trigger");
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+  });
   beforeAll(() => { Element.prototype.scrollIntoView = vi.fn(); });
 
   it("renders canonical defaults, array summary, and default decorative artwork", () => {
@@ -51,7 +70,7 @@ describe("MultiSelect", () => {
   });
 
   it("exposes variants, sizes, shapes, and intrinsic width without prop leakage", () => {
-    const variants: MultiSelectVariant[] = ["outline", "soft", "underline"];
+    const variants: MultiSelectVariant[] = ["outline", "soft", "underline", "surface"];
     const sizes: MultiSelectSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
     const shapes: MultiSelectShape[] = ["sharp", "rounded", "pill"];
     const { rerender } = render(<Example />);
@@ -154,4 +173,16 @@ describe("MultiSelect", () => {
     expect(trigger).toHaveStyle({ marginInlineStart: "4px" });
     expect(screen.getAllByRole("button")).toHaveLength(1);
   });
+});
+it("MultiSelect controller preserves visual defaults and closed form values", () => {
+  function ControllerExample() {
+    const controller = useMultiSelect({ name: "choice", defaultValue: ["b"], items: [{value:"b",label:"Beta"}] });
+    return <form aria-label="Controller form"><MultiSelect.RootProvider value={controller} variant="subtle"><MultiSelect.Trigger aria-label="Controller choice"><MultiSelect.Value /></MultiSelect.Trigger><MultiSelect.State>{state => <span>{state.isOpen ? "Open" : "Closed"}</span>}</MultiSelect.State></MultiSelect.RootProvider></form>;
+  }
+  render(<ControllerExample />);
+  const trigger=screen.getByRole("button", {name:"Controller choice"});
+  expect(trigger).toHaveTextContent("Beta");
+  expect(trigger).toHaveAttribute("data-size","lg");
+  expect(trigger).toHaveAttribute("data-variant","subtle");
+  expect(new FormData(screen.getByRole("form") as HTMLFormElement).getAll("choice")).toEqual(["b"]);
 });

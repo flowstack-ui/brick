@@ -1,9 +1,16 @@
 # Switch manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 | Run information | Value |
 | --- | --- |
 | Component | Switch |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased 0.2.3 parity candidate |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -63,7 +70,9 @@ Notes or issue:
 Setup: Continue to scenario 08 and use page appearance controls.
 Action: Focus and toggle both scoped defaults and the customized setting.
 Expected: Both appearances remain readable; only the customized checked Switch
-has the larger green geometry shown by its exact code.
+has the larger green geometry shown by its exact code. Its hover and press paint
+remain green rather than returning to accent. Raised keeps a softer rail and
+solid thumb.
 Result:
 Notes or issue:
 
@@ -83,6 +92,22 @@ Setup: Return to the top with the recorded screen reader or voice-control tool.
 Action: Traverse, toggle, validate, and inspect read-only/disabled examples.
 Expected: Stable setting names, switch role, on/off state, descriptions, errors,
 and availability are announced once; validation focus is understandable.
+Result:
+Notes or issue:
+
+## Step 8 — Public examples and compound anatomy
+
+Setup: Open `/switch` without qualification mode and inspect every Preview and
+Code tab at desktop and narrow widths.
+Action: Exercise compound labels, controller/provider, indicators, tooltip,
+React Hook Form, native form, responsive recipe, custom colors, RTL and custom
+host examples. Follow the independent help link.
+Expected: Preview matches source; every Field has one Control and one
+HiddenInput; default Control has one Thumb; links do not toggle; tooltip targets
+the Control; form error focus reaches Control; responsive geometry changes
+without a sweep or bounce; track indicators remain centered opposite the Thumb
+and thumb indicators remain centered and clipped inside it in both states;
+there are no console errors or missing styles.
 Result:
 Notes or issue:
 

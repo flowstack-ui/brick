@@ -1,4 +1,5 @@
 import { createRef } from "react";
+import { useSelect } from "../../../src/select.js";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, describe, expect, it, vi } from "vitest";
@@ -10,6 +11,24 @@ function Example({ defaultOpen = false }: { defaultOpen?: boolean }) {
 }
 
 describe("Select", () => {
+  it("supports subtle and a separately named clear action", async () => {
+    const user = userEvent.setup();
+    const changed = vi.fn();
+    render(<Select.Root variant="subtle" onValueChange={changed}><Select.Trigger aria-label="Choice" /><Select.ClearTrigger aria-label="Clear choice" /></Select.Root>);
+    const trigger = screen.getByRole("combobox", { name: "Choice" });
+    expect(trigger).toHaveAttribute("data-variant", "subtle");
+    await user.click(screen.getByRole("button", { name: "Clear choice" }));
+    expect(changed).toHaveBeenCalledWith("");
+    expect(trigger).toHaveFocus();
+  });
+
+  it("can delegate trigger presentation without losing semantics", () => {
+    render(<Select.Root><Select.Trigger unstyled aria-label="Custom" className="custom-trigger">Choice</Select.Trigger></Select.Root>);
+    const trigger = screen.getByRole("combobox", { name: "Custom" });
+    expect(trigger).toHaveClass("custom-trigger");
+    expect(trigger).not.toHaveClass("brick-select-trigger");
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+  });
   beforeAll(() => {
     Element.prototype.scrollIntoView = vi.fn();
   });
@@ -27,7 +46,7 @@ describe("Select", () => {
   });
 
   it("exposes variants, sizes, shapes, and intrinsic width without prop leakage", () => {
-    const variants: SelectVariant[] = ["outline", "soft", "ghost", "underline"];
+    const variants: SelectVariant[] = ["outline", "soft", "ghost", "underline", "surface"];
     const sizes: SelectSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
     const shapes: SelectShape[] = ["sharp", "rounded", "pill"];
     const { rerender } = render(<Example />);
@@ -94,4 +113,16 @@ describe("Select", () => {
     expect(trigger).toHaveStyle({ marginInlineStart: "4px" });
     expect(screen.getAllByRole("combobox")).toHaveLength(1);
   });
+});
+it("Select controller preserves visual defaults and closed form values", () => {
+  function ControllerExample() {
+    const controller = useSelect({ name: "choice", defaultValue: "b", items: [{value:"b",label:"Beta"}] });
+    return <form aria-label="Controller form"><Select.RootProvider value={controller} variant="subtle"><Select.Trigger aria-label="Controller choice"><Select.Value /></Select.Trigger><Select.State>{state => <span>{state.isOpen ? "Open" : "Closed"}</span>}</Select.State></Select.RootProvider></form>;
+  }
+  render(<ControllerExample />);
+  const trigger=screen.getByRole("combobox", {name:"Controller choice"});
+  expect(trigger).toHaveTextContent("Beta");
+  expect(trigger).toHaveAttribute("data-size","lg");
+  expect(trigger).toHaveAttribute("data-variant","subtle");
+  expect(new FormData(screen.getByRole("form") as HTMLFormElement).getAll("choice")).toEqual(["b"]);
 });

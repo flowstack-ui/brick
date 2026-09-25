@@ -1,125 +1,76 @@
 "use client";
+import { forwardRef, type ReactElement } from "react";
+import { RadioCard as AtomCard, useRadioCardItemContext, type RadioCardRootProps as AtomRootProps, type RadioCardRootProviderProps as AtomProviderProps, type RadioCardItemProps as AtomItemProps, type RadioCardPartProps as AtomPartProps } from "@flowstack-ui/atom/radio-card";
+import { composeHost } from "@flowstack-ui/atom/compose-host";
 import { radiusStyle, type Radius } from "../_radius/Radius.js";
-
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
-import {
-  RadioGroup as AtomRadioGroup,
-  type RadioGroupRootProps as AtomRadioGroupRootProps,
-  type RadioRootProps as AtomRadioRootProps,
-} from "@flowstack-ui/atom/radio-group";
-
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
+import type { CheckboxTone } from "../checkbox/CheckboxPresentation.js";
+export { useRadioCard, useRadioCardContext, useRadioCardItemContext } from "@flowstack-ui/atom/radio-card";
+export type { RadioCardController, UseRadioCardProps, RadioCardHiddenInputProps } from "@flowstack-ui/atom/radio-card";
 export type RadioCardSize = "sm" | "md" | "lg";
 export type RadioCardVariant = "outline" | "surface" | "subtle" | "solid";
 export type RadioCardAlign = "start" | "center" | "end";
 export type RadioCardJustify = "start" | "center" | "end";
-
-export interface RadioCardRootProps extends AtomRadioGroupRootProps {
+export type RadioCardTone = CheckboxTone;
+export interface RadioCardPresentationProps {
   radius?: Radius;
-  size?: RadioCardSize;
-  variant?: RadioCardVariant;
-  align?: RadioCardAlign;
-  justify?: RadioCardJustify;
+  size?: ResponsiveValue<RadioCardSize>;
+  variant?: ResponsiveValue<RadioCardVariant>;
+  tone?: RadioCardTone;
+  align?: ResponsiveValue<RadioCardAlign>;
+  justify?: ResponsiveValue<RadioCardJustify>;
+  contentOrientation?: ResponsiveValue<"horizontal" | "vertical">;
 }
-
-export type RadioCardItemProps = AtomRadioRootProps;
-
-export interface RadioCardPartProps extends HTMLAttributes<HTMLSpanElement> {
-  "data-slot"?: string;
+export interface RadioCardRootProps extends AtomRootProps, RadioCardPresentationProps {}
+export interface RadioCardRootProviderProps extends AtomProviderProps, RadioCardPresentationProps {}
+export type RadioCardItemProps = AtomItemProps;
+export type RadioCardPartProps = AtomPartProps;
+export interface RadioCardIndicatorProps extends RadioCardPartProps { checked?: ReactElement }
+export type RadioCardRegionProps = Omit<RadioCardPartProps, "render">;
+const cn = (base: string, extra?: string) => extra ? `${base} ${extra}` : base;
+function presentation({ radius, size = "md", variant = "outline", tone = "accent", align = "start", justify = "start", orientation = "horizontal", contentOrientation = orientation, className, style, ...props }: RadioCardRootProps | RadioCardRootProviderProps) {
+  return { ...props, orientation, className: cn("brick-radio-card", className), "data-tone": tone,
+    ...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true }),
+    ...responsiveDataAttributes("data-variant", variant, { defaultValue: "outline", alwaysInitial: true }),
+    ...responsiveDataAttributes("data-align", align, { defaultValue: "start", alwaysInitial: true }),
+    ...responsiveDataAttributes("data-justify", justify, { defaultValue: "start", alwaysInitial: true }),
+    ...responsiveDataAttributes("data-content-orientation", contentOrientation, { defaultValue: "horizontal", alwaysInitial: true }),
+    style: radiusStyle(radius, "--brick-radio-card-radius", style) };
 }
-
-export interface RadioCardIndicatorProps extends RadioCardPartProps {
-  children?: ReactNode;
-}
-
-function mergeClassName(base: string, className?: string) {
-  return className ? `${base} ${className}` : base;
-}
-
-export const RadioCardRoot = forwardRef<HTMLDivElement, RadioCardRootProps>(
-  function RadioCardRoot(
-    {
-      align = "start",
-      className,
-      justify = "start",
-      orientation = "horizontal",
-      size = "md",
-      variant = "outline",
-      radius,
-      style,
-      "data-slot": dataSlot,
-      ...props
-    },
-    ref,
-  ) {
-    return (
-      <AtomRadioGroup.Root
-        {...props}
-        className={mergeClassName("brick-radio-card", className)}
-        data-align={align}
-        data-justify={justify}
-        data-size={size}
-        data-slot={dataSlot ?? "radio-card"}
-        data-variant={variant}
-        style={radiusStyle(radius, "--brick-radio-card-radius", style)}
-        orientation={orientation}
-        ref={ref}
-      />
-    );
-  },
-);
-
-export const RadioCardItem = forwardRef<HTMLButtonElement, RadioCardItemProps>(
-  function RadioCardItem({ className, "data-slot": dataSlot, ...props }, ref) {
-    return (
-      <AtomRadioGroup.Radio
-        {...props}
-        className={mergeClassName("brick-radio-card__item", className)}
-        data-slot={dataSlot ?? "radio-card-item"}
-        ref={ref}
-      />
-    );
-  },
-);
-
-function createPart(displayName: string, className: string, defaultSlot: string) {
-  const Part = forwardRef<HTMLSpanElement, RadioCardPartProps>(function Part(
-    { className: customClassName, "data-slot": dataSlot, ...props },
-    ref,
-  ) {
-    return <span {...props} className={mergeClassName(className, customClassName)} data-slot={dataSlot ?? defaultSlot} ref={ref} />;
+export const RadioCardRoot = forwardRef<HTMLDivElement, RadioCardRootProps>(function RadioCardRoot(props, ref) {
+  return <AtomCard.Root {...(presentation(props) as AtomRootProps)} ref={ref} />;
+});
+export const RadioCardRootProvider = forwardRef<HTMLDivElement, RadioCardRootProviderProps>(function RadioCardRootProvider(props, ref) {
+  return <AtomCard.RootProvider {...(presentation(props) as AtomProviderProps)} ref={ref} />;
+});
+export const RadioCardItem = forwardRef<HTMLLabelElement, RadioCardItemProps>(function RadioCardItem({ className, ...props }, ref) {
+  return <AtomCard.Item {...props} className={cn("brick-radio-card__item", className)} ref={ref} />;
+});
+function part(name: "Control" | "Title" | "Description" | "Label") {
+  const Component = AtomCard[name];
+  return forwardRef<HTMLSpanElement, RadioCardPartProps>(function RadioCardPart({ className, ...props }, ref) {
+    return <Component {...props} className={cn(`brick-radio-card__${name.toLowerCase()}`, className)} ref={ref} />;
   });
-  Part.displayName = displayName;
-  return Part;
 }
-
-export const RadioCardControl = createPart("RadioCard.Control", "brick-radio-card__control", "radio-card-control");
-export const RadioCardContent = createPart("RadioCard.Content", "brick-radio-card__content", "radio-card-content");
-export const RadioCardTitle = createPart("RadioCard.Title", "brick-radio-card__title", "radio-card-title");
-export const RadioCardDescription = createPart("RadioCard.Description", "brick-radio-card__description", "radio-card-description");
-export const RadioCardAddon = createPart("RadioCard.Addon", "brick-radio-card__addon", "radio-card-addon");
-
-export const RadioCardIndicator = forwardRef<HTMLSpanElement, RadioCardIndicatorProps>(function RadioCardIndicator(
-  { children, className, "data-slot": dataSlot, ...props },
-  ref,
-) {
-  return (
-    <span {...props} aria-hidden="true" className={mergeClassName("brick-radio-card__indicator", className)} data-custom={children !== undefined ? "" : undefined} data-slot={dataSlot ?? "radio-card-indicator"} ref={ref}>
-      {children ?? <span className="brick-radio-card__indicator-dot" />}
-    </span>
-  );
+function region(name: "content" | "addon") {
+  return forwardRef<HTMLSpanElement, RadioCardRegionProps>(function RadioCardRegion({ className, asChild, children, ...props }, ref) {
+    const attributes = { ...props, className: cn(`brick-radio-card__${name}`, className), "data-slot": props["data-slot"] ?? `radio-card-${name}`, ref };
+    return asChild ? composeHost(children, attributes) : <span {...attributes}>{children}</span>;
+  });
+}
+export const RadioCardLabel = part("Label");
+export const RadioCardControl = part("Control");
+export const RadioCardTitle = part("Title");
+export const RadioCardDescription = part("Description");
+export const RadioCardContent = region("content");
+export const RadioCardAddon = region("addon");
+export const RadioCardIndicator = forwardRef<HTMLSpanElement, RadioCardIndicatorProps>(function RadioCardIndicator({ checked, children, className, ...props }, ref) {
+  const state = useRadioCardItemContext();
+  return <AtomCard.Indicator {...props} ref={ref} className={cn("brick-radio-card__indicator", className)} data-custom={checked || children !== undefined ? "" : undefined}>
+    {state.checked && checked ? checked : children ?? <span className="brick-radio-card__indicator-dot" />}
+  </AtomCard.Indicator>;
 });
-
-RadioCardRoot.displayName = "RadioCard.Root";
-RadioCardItem.displayName = "RadioCard.Item";
-RadioCardIndicator.displayName = "RadioCard.Indicator";
-
-export const RadioCard = Object.freeze({
-  Root: RadioCardRoot,
-  Item: RadioCardItem,
-  Control: RadioCardControl,
-  Content: RadioCardContent,
-  Title: RadioCardTitle,
-  Description: RadioCardDescription,
-  Indicator: RadioCardIndicator,
-  Addon: RadioCardAddon,
-});
+export const RadioCardHiddenInput = AtomCard.HiddenInput;
+export const RadioCardContext = AtomCard.Context;
+export const RadioCardItemContext = AtomCard.ItemContext;
+export const RadioCard = Object.freeze({ Root: RadioCardRoot, RootProvider: RadioCardRootProvider, Label: RadioCardLabel, Item: RadioCardItem, HiddenInput: RadioCardHiddenInput, Control: RadioCardControl, Content: RadioCardContent, Title: RadioCardTitle, Description: RadioCardDescription, Indicator: RadioCardIndicator, Addon: RadioCardAddon, Context: RadioCardContext, ItemContext: RadioCardItemContext });

@@ -20,6 +20,11 @@
     "For aggregate product or review data, use Display with repeated stars or Summary with one star and a visible value; give either a localized label and do not use readOnly Root as a passive summary."
   ],
   "rules": [
+    { "id": "rating-modern-parts", "level": "must", "statement": "Use Label and Control for a standalone Rating, or Field.Label with Root as the control. Omitted Root and Control children generate the ordinary integer-ended scale; compose explicit Items for custom endpoints." },
+    { "id": "rating-preview-form", "level": "must", "statement": "Use useRating with RootProvider for external state access. Hover preview never submits. Keep automatic inputs unless inputMode=manual and exactly one HiddenInput are composed." },
+    { "id": "rating-custom-content", "level": "must", "statement": "Use ItemIndicator icon for layered decorative artwork. Use Item contentMode=content for opaque custom wrappers and single-rendered emoji. asChild requires exactly one authored host and no independent interactive descendants." },
+    { "id": "rating-responsive-paint", "level": "should", "statement": "Use responsive size, variant, density and gap before CSS. Comfortable targets are 44px; compact targets are at least 24px. Explicit fillColor/emptyColor override public variables and recipes; verify custom color contrast." },
+    {"id":"rating-disabled-presentation","level":"must","statement":"Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors."},
     {
       "id": "rating-input-vs-display",
       "level": "must",

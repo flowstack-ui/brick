@@ -24,13 +24,19 @@ import {
   type ResponsiveControlSize,
 } from "../_control-size/ControlSize.js";
 import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
+import { fieldVariantAttributes, type FieldVariant, type ResponsiveFieldVariant } from "../_field-variant/FieldVariant.js";
+export { useCombobox, useComboboxContext } from "@flowstack-ui/atom/combobox";
+export type { ComboboxController, UseComboboxProps, ComboboxOption, ComboboxContextValue } from "@flowstack-ui/atom/combobox";
+import type { ComboboxRootProviderProps as AtomProviderProps } from "@flowstack-ui/atom/combobox";
 
-export type ComboboxVariant = "outline" | "soft" | "underline";
+export type ComboboxVariant = FieldVariant;
 export type ComboboxSize = ControlSize;
 export type ComboboxShape = "sharp" | "rounded" | "pill";
 
 type RootShared = AtomRootProps & { size?: ResponsiveControlSize; fullWidth?: boolean };
-export type ComboboxRootProps = RootShared & (({ variant?: "outline" | "soft" } & RadiusShapeProps<ComboboxShape>) | { variant: "underline"; shape?: never; radius?: never });
+type PresentationProps = { size?: ResponsiveControlSize; fullWidth?: boolean; tone?: "neutral" | "accent" } & (({ variant?: Exclude<ComboboxVariant, "underline"> } & RadiusShapeProps<ComboboxShape>) | { variant: ResponsiveFieldVariant; shape?: never; radius?: never });
+export type ComboboxRootProps = RootShared & PresentationProps;
+export type ComboboxRootProviderProps = AtomProviderProps & PresentationProps;
 export type ComboboxControlProps = AtomControlProps;
 export type ComboboxInputProps = AtomInputProps;
 export type ComboboxClearProps = Omit<AtomClearProps, "children"> & { children?: ReactNode };
@@ -45,28 +51,32 @@ export type ComboboxItemProps = AtomItemProps;
 export type ComboboxEmptyProps = AtomEmptyProps;
 export type ComboboxLoadingProps = AtomLoadingProps;
 
-const VisualContext = createContext({ radius: undefined as Radius | undefined, fullWidth: true, shape: "rounded" as ComboboxShape | undefined, size: "lg" as ResponsiveControlSize, variant: "outline" as ComboboxVariant });
+const VisualContext = createContext({ tone: "neutral" as "neutral" | "accent", radius: undefined as Radius | undefined, fullWidth: true, shape: "rounded" as ComboboxShape | undefined, size: "lg" as ResponsiveControlSize, variant: "outline" as ResponsiveFieldVariant });
 const cn = (base: string, value?: string) => value ? `${base} ${value}` : base;
 const slot = (value: string | undefined, fallback: string) => value ?? fallback;
 
 function ClearArtwork() { return <svg aria-hidden="true" className="brick-combobox-clear-artwork" fill="none" viewBox="0 0 16 16"><path d="m4 4 8 8m0-8-8 8" /></svg>; }
 function IndicatorArtwork() { return <svg aria-hidden="true" className="brick-combobox-indicator-artwork" fill="none" viewBox="0 0 16 16"><path d="m4 6 4 4 4-4" /></svg>; }
 
-export function ComboboxRoot({ children, fullWidth = true, shape = "rounded", radius, size = "lg", variant = "outline", ...props }: ComboboxRootProps) {
+export function ComboboxRoot({ children, fullWidth = true, shape = "rounded", radius, size = "lg", variant = "outline", tone = "neutral", ...props }: ComboboxRootProps) {
   const resolvedShape = variant === "underline" ? undefined : radius === undefined ? shape : "rounded";
-  return <VisualContext.Provider value={{ radius: variant === "underline" ? undefined : radius, fullWidth, shape: resolvedShape, size, variant }}><AtomCombobox.Root {...props}>{children}</AtomCombobox.Root></VisualContext.Provider>;
+  return <VisualContext.Provider value={{ tone, radius: variant === "underline" ? undefined : radius, fullWidth, shape: resolvedShape, size, variant }}><AtomCombobox.Root {...props}>{children}</AtomCombobox.Root></VisualContext.Provider>;
+}
+
+export function ComboboxRootProvider({ value, children, ...presentation }: ComboboxRootProviderProps) {
+  return <ComboboxRoot {...value} {...presentation}>{children}</ComboboxRoot>;
 }
 
 export const ComboboxControl = forwardRef<HTMLDivElement, ComboboxControlProps>(function ComboboxControl({ className, style, "data-slot": dataSlot, ...props }, ref) {
   const visual = useContext(VisualContext);
-  return <AtomCombobox.Control {...props} style={radiusStyle(visual.radius, "--brick-combobox-radius", style)} className={cn("brick-combobox-control brick-control-size", className)} data-full-width={visual.fullWidth ? "" : undefined} data-shape={visual.shape} data-slot={slot(dataSlot, "combobox-control")} data-variant={visual.variant} ref={ref} {...controlSizeDataAttributes(visual.size)} />;
+  return <AtomCombobox.Control {...props} style={radiusStyle(visual.radius, "--brick-combobox-radius", style)} className={cn("brick-combobox-control brick-control-size", className)} data-full-width={visual.fullWidth ? "" : undefined} data-shape={visual.shape} data-slot={slot(dataSlot, "combobox-control")} data-tone={visual.tone} {...fieldVariantAttributes(visual.variant)} ref={ref} {...controlSizeDataAttributes(visual.size)} />;
 });
 export const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(function ComboboxInput({ className, "data-slot": dataSlot, ...props }, ref) { return <AtomCombobox.Input {...props} className={cn("brick-combobox-input", className)} data-slot={slot(dataSlot, "combobox-input")} ref={ref} />; });
 export const ComboboxClear = forwardRef<HTMLButtonElement, ComboboxClearProps>(function ComboboxClear({ children, className, "data-slot": dataSlot, ...props }, ref) { return <AtomCombobox.Clear {...props} className={cn("brick-combobox-clear", className)} data-slot={slot(dataSlot, "combobox-clear")} ref={ref}>{children ?? <ClearArtwork />}</AtomCombobox.Clear>; });
 export const ComboboxIndicator = forwardRef<HTMLSpanElement, ComboboxIndicatorProps>(function ComboboxIndicator({ children, className, "data-slot": dataSlot, ...props }, ref) { return <span {...props} aria-hidden="true" className={cn("brick-combobox-indicator", className)} data-slot={slot(dataSlot, "combobox-indicator")} ref={ref}>{children ?? <IndicatorArtwork />}</span>; });
 export const ComboboxTrigger = forwardRef<HTMLButtonElement, ComboboxTriggerProps>(function ComboboxTrigger({ children, className, "data-slot": dataSlot, ...props }, ref) { const { localeText } = useLocaleContext(); return <AtomCombobox.Trigger {...props} aria-label={props["aria-label"] ?? localeText.toggleOptions} className={cn("brick-combobox-trigger", className)} data-slot={slot(dataSlot, "combobox-trigger")} ref={ref}>{children ?? <ComboboxIndicator />}</AtomCombobox.Trigger>; });
 export const ComboboxPortal = AtomCombobox.Portal;
-export const ComboboxContent = forwardRef<HTMLDivElement, ComboboxContentProps>(function ComboboxContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) { const visual = useContext(VisualContext); return <AtomCombobox.Content {...props} style={radiusStyle(radius, "--brick-combobox-popup-radius", style)} className={cn("brick-combobox-content brick-control-size", className)} data-slot={slot(dataSlot, "combobox-content")} ref={ref} {...controlSizeDataAttributes(visual.size)} />; });
+export const ComboboxContent = forwardRef<HTMLDivElement, ComboboxContentProps>(function ComboboxContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) { const visual = useContext(VisualContext); return <AtomCombobox.Content {...props} style={radiusStyle(radius, "--brick-combobox-popup-radius", style)} className={cn("brick-combobox-content brick-control-size", className)} data-tone={visual.tone} data-slot={slot(dataSlot, "combobox-content")} ref={ref} {...controlSizeDataAttributes(visual.size)} />; });
 export const ComboboxListbox = forwardRef<HTMLDivElement, ComboboxListboxProps>(function ComboboxListbox({ className, "data-slot": dataSlot, ...props }, ref) { return <AtomCombobox.Listbox {...props} className={cn("brick-combobox-listbox", className)} data-slot={slot(dataSlot, "combobox-listbox")} ref={ref} />; });
 export const ComboboxGroup = forwardRef<HTMLDivElement, ComboboxGroupProps>(function ComboboxGroup({ className, "data-slot": dataSlot, ...props }, ref) { return <AtomCombobox.Group {...props} className={cn("brick-combobox-group", className)} data-slot={slot(dataSlot, "combobox-group")} ref={ref} />; });
 export const ComboboxLabel = forwardRef<HTMLElement, ComboboxLabelProps>(function ComboboxLabel({ className, "data-slot": dataSlot, ...props }, ref) { return <AtomCombobox.Label {...props} className={cn("brick-combobox-label", className)} data-slot={slot(dataSlot, "combobox-label")} ref={ref} />; });
@@ -74,4 +84,8 @@ export const ComboboxItem = forwardRef<HTMLDivElement, ComboboxItemProps>(functi
 export const ComboboxEmpty = forwardRef<HTMLDivElement, ComboboxEmptyProps>(function ComboboxEmpty({ className, "data-slot": dataSlot, ...props }, ref) { return <AtomCombobox.Empty {...props} className={cn("brick-combobox-message brick-combobox-empty", className)} data-slot={slot(dataSlot, "combobox-empty")} ref={ref} />; });
 export const ComboboxLoading = forwardRef<HTMLDivElement, ComboboxLoadingProps>(function ComboboxLoading({ className, "data-slot": dataSlot, ...props }, ref) { return <AtomCombobox.Loading {...props} className={cn("brick-combobox-message brick-combobox-loading", className)} data-slot={slot(dataSlot, "combobox-loading")} ref={ref} />; });
 
-export const Combobox = Object.freeze({ Root: ComboboxRoot, Label: ComboboxLabel, Control: ComboboxControl, Input: ComboboxInput, Clear: ComboboxClear, Trigger: ComboboxTrigger, Indicator: ComboboxIndicator, Portal: ComboboxPortal, Content: ComboboxContent, Listbox: ComboboxListbox, Group: ComboboxGroup, Item: ComboboxItem, Empty: ComboboxEmpty, Loading: ComboboxLoading });
+export const ComboboxIndicatorGroup = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement> & { "data-slot"?: string }>(function ComboboxIndicatorGroup({ className, "data-slot": dataSlot, ...props }, ref) { return <div {...props} ref={ref} className={cn("brick-combobox-indicator-group", className)} data-slot={slot(dataSlot, "combobox-indicator-group")} />; });
+export const ComboboxItemText = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement> & { "data-slot"?: string }>(function ComboboxItemText({ className, "data-slot": dataSlot, ...props }, ref) { return <span {...props} ref={ref} className={cn("brick-combobox-item-text", className)} data-slot={slot(dataSlot, "combobox-item-text")} />; });
+export const ComboboxItemIndicator = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement> & { "data-slot"?: string }>(function ComboboxItemIndicator({ className, children, "data-slot": dataSlot, ...props }, ref) { return <span {...props} ref={ref} aria-hidden="true" className={cn("brick-combobox-item-indicator", className)} data-slot={slot(dataSlot, "combobox-item-indicator")}>{children ?? <svg viewBox="0 0 16 16" fill="none"><path d="m3 8 3 3 7-7" stroke="currentColor" strokeWidth="1.5" /></svg>}</span>; });
+
+export const Combobox = Object.freeze({ Root: ComboboxRoot, RootProvider: ComboboxRootProvider, IndicatorGroup: ComboboxIndicatorGroup, ItemText: ComboboxItemText, ItemIndicator: ComboboxItemIndicator, Label: ComboboxLabel, Control: ComboboxControl, Input: ComboboxInput, Clear: ComboboxClear, Trigger: ComboboxTrigger, Indicator: ComboboxIndicator, Portal: ComboboxPortal, Content: ComboboxContent, Listbox: ComboboxListbox, Group: ComboboxGroup, Item: ComboboxItem, Empty: ComboboxEmpty, Loading: ComboboxLoading });

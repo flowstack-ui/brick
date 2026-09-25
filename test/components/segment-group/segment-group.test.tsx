@@ -1,4 +1,5 @@
 import { createRef } from "react";
+import { renderToString } from "react-dom/server";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
@@ -15,6 +16,17 @@ function Example({ onValueChange }: { onValueChange?: (value: string) => void })
 }
 
 describe("SegmentGroup", () => {
+  it("supports tones and shortcut items without duplicate named inputs", () => {
+    render(<SegmentGroup.Root name="mode" aria-label="Mode" tone="contrast" defaultValue="List"><SegmentGroup.Items items={["List", {value:"Grid",label:"Grid",disabled:true}]}/></SegmentGroup.Root>);
+    expect(screen.getByRole("radiogroup")).toHaveAttribute("data-tone","contrast");
+    expect(screen.getByRole("radio",{name:"Grid"})).toBeDisabled();
+    expect(document.querySelectorAll('input[name="mode"]')).toHaveLength(2);
+  });
+  it("preserves selected semantics before indicator measurement", () => {
+    const html=renderToString(<SegmentGroup.Root defaultValue="List"><SegmentGroup.Indicator/><SegmentGroup.Items items={["List","Grid"]}/></SegmentGroup.Root>);
+    expect(html).toContain('data-state="checked"');
+    expect(html).not.toContain('data-ready');
+  });
   it("renders adopted defaults, parts, and refs", () => {
     const rootRef = createRef<HTMLDivElement>();
     const itemRef = createRef<HTMLButtonElement>();

@@ -2,6 +2,8 @@
 
 import {
   forwardRef,
+  createContext,
+  useContext,
   type ComponentPropsWithoutRef,
   type ForwardRefExoticComponent,
   type RefAttributes,
@@ -12,6 +14,17 @@ import {
   type EditableRootProviderProps as AtomProviderProps,
   type EditableTriggerProps as AtomTriggerProps,
 } from "@flowstack-ui/atom/editable";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
+import type {
+  TextVariant,
+  TextWeight,
+  TextTone,
+  TextAlign,
+} from "../text/Text.js";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 
 export { useEditable, useEditableContext } from "@flowstack-ui/atom/editable";
 export type {
@@ -24,10 +37,17 @@ export type {
   EditableOutsideEvent,
 } from "@flowstack-ui/atom/editable";
 export type EditableSize = "sm" | "md" | "lg";
-export type EditableRootProps = AtomRootProps & { size?: EditableSize };
-export type EditableRootProviderProps = AtomProviderProps & {
+export interface EditableVisualProps {
   size?: EditableSize;
-};
+  textStyle?: ResponsiveValue<TextVariant> | "inherit";
+  weight?: TextWeight;
+  tone?: TextTone;
+  align?: ResponsiveValue<TextAlign>;
+  radius?: Radius;
+  unstyled?: boolean;
+}
+export type EditableRootProps = AtomRootProps & EditableVisualProps;
+export type EditableRootProviderProps = AtomProviderProps & EditableVisualProps;
 export type EditableAreaProps = ComponentPropsWithoutRef<
   typeof AtomEditable.Area
 >;
@@ -36,7 +56,7 @@ export type EditableLabelProps = ComponentPropsWithoutRef<
 >;
 export type EditablePreviewProps = ComponentPropsWithoutRef<
   typeof AtomEditable.Preview
->;
+> & { highlight?: "hover" | "none" };
 export type EditableInputProps = ComponentPropsWithoutRef<
   typeof AtomEditable.Input
 >;
@@ -46,32 +66,113 @@ export type EditableTextareaProps = ComponentPropsWithoutRef<
 export type EditableControlProps = ComponentPropsWithoutRef<
   typeof AtomEditable.Control
 >;
-export type EditableTriggerProps = AtomTriggerProps;
+export type EditableTriggerProps = AtomTriggerProps & { unstyled?: boolean };
+const VisualContext = createContext(false);
+function usePartClass(base: string, extra?: string, unstyled = false) {
+  const inherited = useContext(VisualContext);
+  return inherited || unstyled ? extra : cn(base, extra);
+}
 const cn = (base: string, extra?: string) =>
   extra ? `${base} ${extra}` : base;
 export const EditableRoot = forwardRef<HTMLDivElement, EditableRootProps>(
-  function EditableRoot({ size = "md", className, ...props }, ref) {
+  function EditableRoot(
+    {
+      size = "md",
+      textStyle,
+      weight,
+      tone,
+      align,
+      radius,
+      unstyled = false,
+      style,
+      className,
+      ...props
+    },
+    ref,
+  ) {
     return (
-      <AtomEditable.Root
-        {...props}
-        ref={ref}
-        data-size={size}
-        className={cn("brick-editable", className)}
-      />
+      <VisualContext.Provider value={unstyled}>
+        <AtomEditable.Root
+          {...props}
+          ref={ref}
+          data-size={size}
+          {...responsiveDataAttributes(
+            "data-variant",
+            textStyle === "inherit"
+              ? size === "lg"
+                ? "body-md"
+                : "body-sm"
+              : (textStyle ?? (size === "lg" ? "body-md" : "body-sm")),
+            {
+              defaultValue: size === "lg" ? "body-md" : "body-sm",
+              alwaysInitial: true,
+            },
+          )}
+          {...responsiveDataAttributes("data-align", align, {
+            defaultValue: align === undefined ? undefined : "start",
+            alwaysInitial: true,
+          })}
+          data-text-style={textStyle === "inherit" ? "inherit" : undefined}
+          data-weight={weight}
+          data-tone={tone}
+          style={radiusStyle(radius, "--brick-editable-radius", style)}
+          className={
+            unstyled ? className : cn("brick-editable brick-text", className)
+          }
+        />
+      </VisualContext.Provider>
     );
   },
 );
 export const EditableRootProvider = forwardRef<
   HTMLDivElement,
   EditableRootProviderProps
->(function EditableRootProvider({ size = "md", className, ...props }, ref) {
+>(function EditableRootProvider(
+  {
+    size = "md",
+    textStyle,
+    weight,
+    tone,
+    align,
+    radius,
+    unstyled = false,
+    style,
+    className,
+    ...props
+  },
+  ref,
+) {
   return (
-    <AtomEditable.RootProvider
-      {...props}
-      ref={ref}
-      data-size={size}
-      className={cn("brick-editable", className)}
-    />
+    <VisualContext.Provider value={unstyled}>
+      <AtomEditable.RootProvider
+        {...props}
+        ref={ref}
+        data-size={size}
+        {...responsiveDataAttributes(
+          "data-variant",
+          textStyle === "inherit"
+            ? size === "lg"
+              ? "body-md"
+              : "body-sm"
+            : (textStyle ?? (size === "lg" ? "body-md" : "body-sm")),
+          {
+            defaultValue: size === "lg" ? "body-md" : "body-sm",
+            alwaysInitial: true,
+          },
+        )}
+        {...responsiveDataAttributes("data-align", align, {
+          defaultValue: align === undefined ? undefined : "start",
+          alwaysInitial: true,
+        })}
+        data-text-style={textStyle === "inherit" ? "inherit" : undefined}
+        data-weight={weight}
+        data-tone={tone}
+        style={radiusStyle(radius, "--brick-editable-radius", style)}
+        className={
+          unstyled ? className : cn("brick-editable brick-text", className)
+        }
+      />
+    </VisualContext.Provider>
   );
 });
 export const EditableArea = forwardRef<HTMLDivElement, EditableAreaProps>(
@@ -80,7 +181,7 @@ export const EditableArea = forwardRef<HTMLDivElement, EditableAreaProps>(
       <AtomEditable.Area
         {...props}
         ref={ref}
-        className={cn("brick-editable-area", className)}
+        className={usePartClass("brick-editable-area", className)}
       />
     );
   },
@@ -91,7 +192,7 @@ export const EditableLabel = forwardRef<HTMLLabelElement, EditableLabelProps>(
       <AtomEditable.Label
         {...props}
         ref={ref}
-        className={cn("brick-editable-label", className)}
+        className={usePartClass("brick-editable-label", className)}
       />
     );
   },
@@ -99,12 +200,13 @@ export const EditableLabel = forwardRef<HTMLLabelElement, EditableLabelProps>(
 export const EditablePreview = forwardRef<
   HTMLSpanElement,
   EditablePreviewProps
->(function EditablePreview({ className, ...props }, ref) {
+>(function EditablePreview({ className, highlight = "hover", ...props }, ref) {
   return (
     <AtomEditable.Preview
       {...props}
       ref={ref}
-      className={cn("brick-editable-preview", className)}
+      data-highlight={highlight}
+      className={usePartClass("brick-editable-preview", className)}
     />
   );
 });
@@ -114,7 +216,7 @@ export const EditableInput = forwardRef<HTMLInputElement, EditableInputProps>(
       <AtomEditable.Input
         {...props}
         ref={ref}
-        className={cn("brick-editable-input", className)}
+        className={usePartClass("brick-editable-input", className)}
       />
     );
   },
@@ -127,7 +229,7 @@ export const EditableTextarea = forwardRef<
     <AtomEditable.Textarea
       {...props}
       ref={ref}
-      className={cn("brick-editable-textarea", className)}
+      className={usePartClass("brick-editable-textarea", className)}
     />
   );
 });
@@ -137,7 +239,7 @@ export const EditableControl = forwardRef<HTMLDivElement, EditableControlProps>(
       <AtomEditable.Control
         {...props}
         ref={ref}
-        className={cn("brick-editable-control", className)}
+        className={usePartClass("brick-editable-control", className)}
       />
     );
   },
@@ -145,11 +247,13 @@ export const EditableControl = forwardRef<HTMLDivElement, EditableControlProps>(
 export const EditableEditTrigger: ForwardRefExoticComponent<
   EditableTriggerProps & RefAttributes<HTMLButtonElement>
 > = forwardRef<HTMLButtonElement, EditableTriggerProps>(
-  function EditableEditTrigger({ className, ...props }, ref) {
+  function EditableEditTrigger({ className, unstyled, ...props }, ref) {
+    const inheritedUnstyled = useContext(VisualContext);
     return (
       <AtomEditable.EditTrigger
         {...props}
         ref={ref}
+        data-unstyled={unstyled || inheritedUnstyled ? "" : undefined}
         className={cn("brick-editable-trigger", className)}
       />
     );
@@ -158,11 +262,13 @@ export const EditableEditTrigger: ForwardRefExoticComponent<
 export const EditableSubmitTrigger: ForwardRefExoticComponent<
   EditableTriggerProps & RefAttributes<HTMLButtonElement>
 > = forwardRef<HTMLButtonElement, EditableTriggerProps>(
-  function EditableSubmitTrigger({ className, ...props }, ref) {
+  function EditableSubmitTrigger({ className, unstyled, ...props }, ref) {
+    const inheritedUnstyled = useContext(VisualContext);
     return (
       <AtomEditable.SubmitTrigger
         {...props}
         ref={ref}
+        data-unstyled={unstyled || inheritedUnstyled ? "" : undefined}
         className={cn("brick-editable-trigger", className)}
       />
     );
@@ -171,11 +277,13 @@ export const EditableSubmitTrigger: ForwardRefExoticComponent<
 export const EditableCancelTrigger: ForwardRefExoticComponent<
   EditableTriggerProps & RefAttributes<HTMLButtonElement>
 > = forwardRef<HTMLButtonElement, EditableTriggerProps>(
-  function EditableCancelTrigger({ className, ...props }, ref) {
+  function EditableCancelTrigger({ className, unstyled, ...props }, ref) {
+    const inheritedUnstyled = useContext(VisualContext);
     return (
       <AtomEditable.CancelTrigger
         {...props}
         ref={ref}
+        data-unstyled={unstyled || inheritedUnstyled ? "" : undefined}
         className={cn("brick-editable-trigger", className)}
       />
     );

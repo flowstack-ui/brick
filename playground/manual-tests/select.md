@@ -1,5 +1,21 @@
 # Select Manual Test Protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
+## Nested-dialog clipping regression
+
+On `/select#dialog`, open the dialog and its selector. Confirm every option,
+including its top and bottom edges, is visible outside the dialog boundary and
+can be activated. Selection must not dismiss the dialog. Escape closes the
+selector first and restores trigger focus; a second Escape closes the dialog.
+Repeat at a narrow viewport and with a screen reader. Record manual results,
+not just automated visibility. Keep the default Content portal enabled.
+
 Status: Unrun
 
 | Environment | Record before testing |
@@ -102,3 +118,19 @@ Overall result:
 Follow-up issues:
 
 Workbook updated:
+
+## Form surface comparison
+
+- Compare outline and surface on light/dark canvas and raised parents: outline stays transparent; surface owns its neutral fill without adding a shadow.
+- Hover, focus, disable and mark invalid; preserve visible boundaries and explicit state treatment. Compare matched size recipes including their outer borders.
+- Check narrow/RTL containment and forced colors. Popup panels and selection marks must retain their independent paint.
+## Select-family follow-up (not manually executed)
+
+- Compare all seven sizes and variants in light/dark, RTL and narrow views.
+- Verify real browser zoom at 200% and 400%, and physical mobile interaction.
+- Verify accessible labels, value announcements, disabled options,
+  required validation and reset with a real screen reader.
+- Check clear focus return, retained popup inertness and nested Dialog/Popover Escape order.
+- Confirm code examples and per-part Props headings match the public API.
+
+These are unperformed human checks; automated results do not fill them.

@@ -32,18 +32,29 @@ Public exports are `Radiomark`, `RadiomarkProps`, `RadiomarkSize`, `RadiomarkTon
 
 ## Anatomy and DOM ownership
 
-The component renders one passive span and one nested dot span. It adds no input, button, role, or focus target.
+The component renders one passive span and one nested dot span, or replacement decorative children. It adds no input, button, role, or focus target.
+
+### Recipe alignment
+
+Use responsive sizes and variants. Outline uses a 0.6 dot; other recipes use 0.4. Inverted uses solid palette foreground. invalid is visual only; disabled adds one fade and a disabled cursor. Preserve passive custom artwork.
+
+These passive utilities live under Utilities in the playground. Four sizes match
+12/16/20/24px geometry; button and field height names do not determine mark size.
+Neutral and contrast retain their shared palette. No new input semantics, focus,
+polymorphic host API or framework styling engine is added.
 
 ## API
 
 | Prop | Value | Default |
 | --- | --- | --- |
+| `invalid` | `boolean` | `false` |
 | `filled` | `boolean` | `false` |
 | `checked` | `boolean` | `false` |
 | `disabled` | `boolean` | `false` |
-| `size` | `xs`, `sm`, `md`, `lg` | `md` |
-| `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `accent` |
-| `variant` | `solid`, `outline`, `soft`, `inverted` | `solid` |
+| `size` | responsive `xs`, `sm`, `md`, `lg` | `md` |
+| `tone` | `neutral`, `contrast`, `accent`, `info`, `success`, `warning`, `danger` | `accent` |
+| `variant` | responsive `solid`, `outline`, `soft`, `subtle`, `inverted` | `solid` |
+| `children` | decorative ReactNode replacing the dot | dot |
 
 ## Visual recipes and states
 
@@ -59,11 +70,24 @@ Stable hooks are `.brick-radiomark`, `.brick-radiomark__dot`, `data-disabled`, `
 
 ## Customization
 
+Supported palette tokens are `--brick-radiomark-solid`, `--brick-radiomark-on-solid`,
+`--brick-radiomark-soft` and `--brick-radiomark-text`. Supply compatible foreground and
+background values together through a scoped class or style when the semantic
+`tone` choices do not express a category palette; verify light/dark contrast.
+`data-invalid` is a visual hook, not aria-invalid. Parent controls retain focus,
+validation meaning, form state and disabled interaction. Avoid applying disabled
+opacity independently to both a disabled parent and its nested mark.
+
 Prefer the recipe props. Override `--brick-radiomark-size` only for a bounded composition that cannot use a standard size.
+
+Replacement artwork is centered independently of surrounding text line height.
+Prefer an SVG or `Icon size="inherit"` for a predictable decorative shape;
+text glyphs still depend on the selected font. Do not add positioning offsets.
 
 ## Responsive behavior
 
-The mark remains circular and fixed in flex layouts. It has no viewport-dependent behavior.
+The mark remains circular. Size and variant support sparse responsive values.
+Subtle is an alias of soft. Neutral and contrast share the current palette.
 
 ## Accessibility
 

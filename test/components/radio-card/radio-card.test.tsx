@@ -6,25 +6,42 @@ import { Fieldset } from "../../../src/fieldset.js";
 import { RadioCard, type RadioCardSize, type RadioCardVariant } from "../../../src/radio-card.js";
 
 function Option({ description = "Billed once per year", value = "annual" }: { description?: string; value?: string }) {
-  return <RadioCard.Item value={value}><RadioCard.Control><RadioCard.Content><RadioCard.Title>{value === "annual" ? "Annual" : "Monthly"}</RadioCard.Title><RadioCard.Description>{description}</RadioCard.Description></RadioCard.Content><RadioCard.Indicator /></RadioCard.Control><RadioCard.Addon>Cancel anytime</RadioCard.Addon></RadioCard.Item>;
+  return <RadioCard.Item value={value}><RadioCard.HiddenInput /><RadioCard.Control><RadioCard.Content><RadioCard.Title>{value === "annual" ? "Annual" : "Monthly"}</RadioCard.Title><RadioCard.Description>{description}</RadioCard.Description></RadioCard.Content><RadioCard.Indicator /></RadioCard.Control><RadioCard.Addon>Cancel anytime</RadioCard.Addon></RadioCard.Item>;
 }
 
 describe("RadioCard", () => {
+  it("serializes responsive presentation without changing semantic orientation", () => {
+    render(<RadioCard.Root aria-label="Responsive" orientation="vertical" contentOrientation={{ initial: "vertical", md: "horizontal" }} size={{ md: "lg" }} variant={{ initial: "subtle", md: "outline" }} tone="contrast"><Option /></RadioCard.Root>);
+    const root = screen.getByRole("radiogroup");
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "lg");
+    expect(root).toHaveAttribute("data-content-orientation-md", "horizontal");
+    expect(root).toHaveAttribute("aria-orientation", "vertical");
+    expect(root).toHaveAttribute("data-tone", "contrast");
+    expect(root).not.toHaveAttribute("tone");
+  });
+  it("renders checked artwork only when selected", async () => {
+    const user = userEvent.setup();
+    render(<RadioCard.Root aria-label="Artwork"><RadioCard.Item value="a"><RadioCard.HiddenInput /><RadioCard.Control><RadioCard.Title>Alpha</RadioCard.Title><RadioCard.Indicator checked={<span data-testid="art">✓</span>} /></RadioCard.Control></RadioCard.Item></RadioCard.Root>);
+    expect(screen.queryByTestId("art")).toBeNull();
+    await user.click(screen.getByText("Alpha"));
+    expect(screen.getByTestId("art")).toBeInTheDocument();
+  });
   it("renders the adopted defaults, anatomy, slots, and refs", () => {
     const rootRef = createRef<HTMLDivElement>();
-    const itemRef = createRef<HTMLButtonElement>();
-    render(<RadioCard.Root aria-label="Billing" ref={rootRef}><RadioCard.Item ref={itemRef} value="annual"><RadioCard.Control><RadioCard.Content><RadioCard.Title>Annual</RadioCard.Title><RadioCard.Description>Save 20%</RadioCard.Description></RadioCard.Content><RadioCard.Indicator /></RadioCard.Control><RadioCard.Addon>Billed yearly</RadioCard.Addon></RadioCard.Item></RadioCard.Root>);
+    const itemRef = createRef<HTMLLabelElement>();
+    render(<RadioCard.Root aria-label="Billing" ref={rootRef}><RadioCard.Item ref={itemRef} value="annual"><RadioCard.HiddenInput /><RadioCard.Control><RadioCard.Content><RadioCard.Title>Annual</RadioCard.Title><RadioCard.Description>Save 20%</RadioCard.Description></RadioCard.Content><RadioCard.Indicator /></RadioCard.Control><RadioCard.Addon>Billed yearly</RadioCard.Addon></RadioCard.Item></RadioCard.Root>);
     const root = screen.getByRole("radiogroup", { name: "Billing" });
-    const item = screen.getByRole("radio", { name: /Annual Save 20% Billed yearly/ });
+    const item = screen.getByRole("radio", { name: "Annual" });
     expect(root).toBe(rootRef.current);
-    expect(item).toBe(itemRef.current);
+    expect(item.closest("label")).toBe(itemRef.current);
     expect(root).toHaveAttribute("data-size", "md");
     expect(root).toHaveAttribute("data-variant", "outline");
     expect(root).toHaveAttribute("data-align", "start");
     expect(root).toHaveAttribute("data-justify", "start");
     expect(root).toHaveAttribute("data-orientation", "horizontal");
-    for (const slot of ["radio-card-control", "radio-card-content", "radio-card-title", "radio-card-description", "radio-card-indicator", "radio-card-addon"]) expect(item.querySelector(`[data-slot='${slot}']`)).toBeInTheDocument();
-    expect(item.querySelector("[data-slot='radio-card-indicator']")).toHaveAttribute("aria-hidden", "true");
+    for (const slot of ["radio-card-control", "radio-card-content", "radio-card-title", "radio-card-description", "radio-card-indicator", "radio-card-addon"]) expect(item.closest("label")!.querySelector(`[data-slot='${slot}']`)).toBeInTheDocument();
+    expect(item.closest("label")!.querySelector("[data-slot='radio-card-indicator']")).toHaveAttribute("aria-hidden", "true");
   });
 
   it("exposes every visual recipe without leaking visual props", () => {
@@ -52,7 +69,7 @@ describe("RadioCard", () => {
     const monthly = screen.getByRole("radio", { name: /Monthly/ });
     await user.click(monthly);
     expect(changes).toHaveBeenLastCalledWith("monthly");
-    expect(monthly).toHaveAttribute("aria-checked", "true");
+    expect(monthly).toBeChecked();
     annual.focus();
     await user.keyboard("{ArrowRight}");
     expect(monthly).toHaveFocus();
@@ -61,10 +78,10 @@ describe("RadioCard", () => {
 
   it("composes with Fieldset and supports omitted or custom indicators", () => {
     const customRef = createRef<HTMLSpanElement>();
-    render(<Fieldset.Root id="billing-field" invalid required><Fieldset.Legend>Billing cadence</Fieldset.Legend><Fieldset.Description>Choose one.</Fieldset.Description><RadioCard.Root defaultValue="annual" name="billing"><RadioCard.Item value="annual"><RadioCard.Control><RadioCard.Content><RadioCard.Title>Annual</RadioCard.Title></RadioCard.Content></RadioCard.Control></RadioCard.Item><RadioCard.Item value="monthly"><RadioCard.Control><RadioCard.Indicator ref={customRef}><span data-testid="custom-mark">✓</span></RadioCard.Indicator><RadioCard.Content><RadioCard.Title>Monthly</RadioCard.Title></RadioCard.Content></RadioCard.Control></RadioCard.Item></RadioCard.Root><Fieldset.Error>Choose billing.</Fieldset.Error></Fieldset.Root>);
+    render(<Fieldset.Root id="billing-field" invalid required><Fieldset.Legend>Billing cadence</Fieldset.Legend><Fieldset.Description>Choose one.</Fieldset.Description><RadioCard.Root defaultValue="annual" name="billing"><RadioCard.Item value="annual"><RadioCard.HiddenInput /><RadioCard.Control><RadioCard.Content><RadioCard.Title>Annual</RadioCard.Title></RadioCard.Content></RadioCard.Control></RadioCard.Item><RadioCard.Item value="monthly"><RadioCard.HiddenInput /><RadioCard.Control><RadioCard.Indicator ref={customRef}><span data-testid="custom-mark">✓</span></RadioCard.Indicator><RadioCard.Content><RadioCard.Title>Monthly</RadioCard.Title></RadioCard.Content></RadioCard.Control></RadioCard.Item></RadioCard.Root><Fieldset.Error>Choose billing.</Fieldset.Error></Fieldset.Root>);
     const group = screen.getByRole("radiogroup", { name: "Billing cadence" });
     expect(group).toHaveAttribute("aria-describedby", "billing-field-description billing-field-error");
-    expect(screen.getByRole("radio", { name: "Annual" }).querySelector("[data-slot='radio-card-indicator']")).toBeNull();
+    expect(screen.getByRole("radio", { name: "Annual" }).closest("label")!.querySelector("[data-slot='radio-card-indicator']")).toBeNull();
     expect(customRef.current).toContainElement(screen.getByTestId("custom-mark"));
     expect(customRef.current).toHaveAttribute("data-custom", "");
   });
@@ -74,7 +91,7 @@ describe("RadioCard", () => {
     const changes = vi.fn();
     render(<RadioCard.Root aria-label="Billing" defaultValue="annual" onValueChange={changes} readOnly><Option /><Option value="monthly" /></RadioCard.Root>);
     await user.click(screen.getByRole("radio", { name: /Monthly/ }));
-    expect(screen.getByRole("radio", { name: /Annual/ })).toHaveAttribute("aria-checked", "true");
+    expect(screen.getByRole("radio", { name: /Annual/ })).toBeChecked();
     expect(changes).not.toHaveBeenCalled();
   });
 });

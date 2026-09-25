@@ -1,21 +1,38 @@
-import { forwardRef, type HTMLAttributes } from "react";
+import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
 
 export type RadiomarkSize = "xs" | "sm" | "md" | "lg";
 export type RadiomarkTone =
-  | "neutral" | "accent" | "info" | "success" | "warning" | "danger";
-export type RadiomarkVariant = "solid" | "outline" | "soft" | "inverted";
+  | "neutral"
+  | "accent"
+  | "contrast"
+  | "info"
+  | "success"
+  | "warning"
+  | "danger";
+export type RadiomarkVariant =
+  | "solid"
+  | "outline"
+  | "soft"
+  | "subtle"
+  | "inverted";
 
-export interface RadiomarkProps extends Omit<
-  HTMLAttributes<HTMLSpanElement>,
-  "children" | "color"
-> {
+export interface RadiomarkProps
+  extends Omit<HTMLAttributes<HTMLSpanElement>, "children" | "color"> {
   "data-slot"?: string;
   checked?: boolean;
   filled?: boolean;
   disabled?: boolean;
-  size?: RadiomarkSize;
+  /** Visual validation state only; the parent owns semantics. */
+  invalid?: boolean;
+  size?: ResponsiveValue<RadiomarkSize>;
   tone?: RadiomarkTone;
-  variant?: RadiomarkVariant;
+  variant?: ResponsiveValue<RadiomarkVariant>;
+  /** Decorative replacement artwork; omitted renders one dot. */
+  children?: ReactNode;
 }
 
 function mergeClassName(base: string, className?: string) {
@@ -29,9 +46,11 @@ export const Radiomark = forwardRef<HTMLSpanElement, RadiomarkProps>(
       filled = false,
       className,
       disabled = false,
+      invalid = false,
       size = "md",
       tone = "accent",
       variant = "solid",
+      children,
       "data-slot": dataSlot,
       ...props
     },
@@ -43,15 +62,26 @@ export const Radiomark = forwardRef<HTMLSpanElement, RadiomarkProps>(
         aria-hidden="true"
         className={mergeClassName("brick-radiomark", className)}
         data-disabled={disabled ? "" : undefined}
+        data-invalid={invalid ? "" : undefined}
         data-filled={filled ? "" : undefined}
-        data-size={size}
+        {...responsiveDataAttributes("data-size", size, {
+          defaultValue: "md",
+          alwaysInitial: true,
+        })}
         data-slot={dataSlot ?? "radiomark"}
         data-state={checked ? "checked" : "unchecked"}
         data-tone={tone}
-        data-variant={variant}
+        {...responsiveDataAttributes("data-variant", variant, {
+          defaultValue: "solid",
+          alwaysInitial: true,
+        })}
         ref={ref}
       >
-        <span className="brick-radiomark__dot" data-slot="radiomark-dot" />
+        {children === undefined ? (
+          <span className="brick-radiomark__dot" data-slot="radiomark-dot" />
+        ) : (
+          <span className="brick-radiomark__artwork">{children}</span>
+        )}
       </span>
     );
   },

@@ -1,3 +1,5 @@
+@import "./textarea-variants.css";
+
 @layer brick.components {
   .brick-textarea {
     --brick-textarea-padding-inline: var(--brick-space-3);
@@ -27,20 +29,22 @@
     --brick-textarea-hover-border: var(--brick-color-accent-border);
     --brick-textarea-focus-ring: var(--brick-color-focus-ring);
     --brick-textarea-invalid-border: var(--brick-color-danger-text);
-    --brick-textarea-disabled-background: var(--brick-color-surface-subtle);
-    --brick-textarea-disabled-foreground: var(--brick-color-text-secondary);
-    --brick-textarea-disabled-border: var(--brick-color-border-subtle);
+    --brick-textarea-disabled-background: var(--brick-textarea-background);
+    --brick-textarea-disabled-foreground: var(--brick-textarea-foreground);
+    --brick-textarea-disabled-border: var(--brick-textarea-border);
     --brick-textarea-readonly-background: var(--brick-color-surface-subtle);
     --brick-textarea-count-foreground: var(--brick-color-text-secondary);
     --brick-textarea-count-over-limit-foreground: var(
       --brick-color-danger-text
     );
 
-    display: inline-grid;
+    display: grid;
     box-sizing: border-box;
+    overflow: hidden;
     min-inline-size: 0;
     max-inline-size: 100%;
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(auto, 1fr) auto;
     gap: var(--brick-textarea-gap);
     padding: var(--brick-textarea-padding-block)
       var(--brick-textarea-padding-inline);
@@ -63,20 +67,6 @@
   }
   .brick-textarea:not([data-full-width]) {
     inline-size: fit-content;
-  }
-  .brick-textarea[data-variant="outline"] {
-    --brick-textarea-background: transparent;
-    --brick-textarea-hover-background: transparent;
-  }
-  .brick-textarea[data-variant="soft"] {
-    --brick-textarea-background: var(--brick-color-surface-subtle);
-    --brick-textarea-border: var(--brick-color-border-subtle);
-    --brick-textarea-hover-background: var(--brick-color-accent-soft);
-  }
-  .brick-textarea[data-variant="underline"] {
-    --brick-textarea-background: transparent;
-    --brick-textarea-radius: 0;
-    border-width: 0 0 var(--brick-border-width);
   }
   .brick-textarea[data-shape="sharp"] {
     --brick-textarea-radius: 0;
@@ -102,6 +92,8 @@
     display: block;
     box-sizing: border-box;
     inline-size: 100%;
+    block-size: 100%;
+    min-block-size: 1lh;
     min-inline-size: 0;
     max-inline-size: 100%;
     margin: 0;
@@ -109,6 +101,7 @@
     border: 0;
     outline: 0;
     background: transparent;
+    resize: none;
     color: inherit;
     font-family: var(--brick-textarea-font-family);
     font-size: var(--brick-textarea-font-size);
@@ -117,16 +110,16 @@
     line-height: var(--brick-textarea-line-height);
   }
 
-  .brick-textarea[data-resize="none"] .brick-textarea-control {
+  .brick-textarea[data-resize="none"] {
     resize: none;
   }
-  .brick-textarea[data-resize="vertical"] .brick-textarea-control {
+  .brick-textarea[data-resize="vertical"] {
     resize: vertical;
   }
-  .brick-textarea[data-resize="horizontal"] .brick-textarea-control {
+  .brick-textarea[data-resize="horizontal"] {
     resize: horizontal;
   }
-  .brick-textarea[data-resize="both"] .brick-textarea-control {
+  .brick-textarea[data-resize="both"] {
     resize: both;
   }
   .brick-textarea-control::placeholder {
@@ -149,36 +142,46 @@
     color: var(--brick-textarea-count-over-limit-foreground);
   }
 
+  /* Keep the footer text clear of the browser-owned corner affordance. */
+  .brick-textarea:not([data-resize="none"]) .brick-textarea-count {
+    padding-inline-end: var(--brick-space-4);
+  }
+  .brick-textarea:has(.brick-textarea-control:disabled) {
+    resize: none;
+  }
+
   .brick-textarea:focus-within {
     border-color: var(--brick-textarea-focus-ring);
     box-shadow: 0 0 0 var(--brick-border-focus-width)
       var(--brick-textarea-focus-ring);
   }
   .brick-textarea:has(.brick-textarea-control[data-invalid]) {
+    --brick-textarea-focus-ring: var(--brick-textarea-invalid-border);
     border-color: var(--brick-textarea-invalid-border);
   }
-  .brick-textarea:has(.brick-textarea-control[data-disabled]) {
+  .brick-textarea:has(.brick-textarea-control:is(:disabled, [data-disabled])) {
     border-color: var(--brick-textarea-disabled-border);
     background: var(--brick-textarea-disabled-background);
     color: var(--brick-textarea-disabled-foreground);
+    opacity: 0.5;
+    cursor: not-allowed;
   }
-  .brick-textarea:has(.brick-textarea-control[data-readonly]) {
+  .brick-textarea:has(.brick-textarea-control[data-readonly]):not(:has(.brick-textarea-control:is(:disabled, [data-disabled]))) {
     background: var(--brick-textarea-readonly-background);
   }
   .brick-textarea-control:disabled {
     cursor: not-allowed;
   }
-  .brick-textarea-control:read-only {
+  .brick-textarea-control:read-only:not(:disabled, [data-disabled]) {
     cursor: default;
   }
 
   @media (hover: hover) and (pointer: fine) {
     .brick-textarea:not(
-        :has(
-          .brick-textarea-control[data-disabled],
-          .brick-textarea-control[data-readonly],
-          .brick-textarea-control[data-invalid]
-        )
+        :focus-within,
+        :has(.brick-textarea-control:is(:disabled, [data-disabled])),
+        :has(.brick-textarea-control[data-readonly]),
+        :has(.brick-textarea-control[data-invalid])
       ):hover {
       border-color: var(--brick-textarea-hover-border);
       background: var(--brick-textarea-hover-background);
@@ -203,12 +206,18 @@
     .brick-textarea:has(.brick-textarea-control[data-invalid]) {
       border-color: Mark;
     }
-    .brick-textarea:has(.brick-textarea-control[data-disabled]) {
+    .brick-textarea:has(.brick-textarea-control:is(:disabled, [data-disabled])) {
       border-color: GrayText;
       color: GrayText;
     }
     .brick-textarea-count[data-over-limit] {
       color: Mark;
     }
+  }
+}
+
+@layer brick.components {
+  @media (forced-colors: active) {
+    .brick-textarea:has(.brick-textarea-control:is(:disabled, [data-disabled])) { opacity: 1; color: GrayText; }
   }
 }

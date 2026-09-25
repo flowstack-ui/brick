@@ -1,5 +1,22 @@
 # Editable manual protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
+## Typography and projection follow-up
+
+- Check title, body and inherited typography in preview/edit states at narrow
+  and wide widths. Confirm text size, weight, color and baseline do not jump.
+- Verify custom preview text follows commits/cancellation and no duplicate
+  controls enter the accessibility tree. Composed icon controls retain focus.
+- Check preview highlight=none with keyboard focus, RTL and forced colors.
+- Check large text with actual browser zoom and a screen reader. These steps
+  remain manual; automated browser results do not mark them complete.
+
 Not performed. Automated browser emulation is not physical-device evidence.
 
 | Environment | Recorded value |

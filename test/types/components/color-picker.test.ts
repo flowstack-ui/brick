@@ -10,7 +10,7 @@ import {
 import { ColorPicker as RootColorPicker } from "../../../src/index.js";
 
 const sizes: ColorPickerSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
-const variants: ColorPickerVariant[] = ["outline", "soft"];
+const variants: ColorPickerVariant[] = ["outline", "soft", "surface"];
 const controlLayouts: ColorPickerControlLayout[] = ["separate", "integrated"];
 const swatchFrames: ColorPickerSwatchFrame[] = ["none", "outline"];
 const swatchShapes: ColorPickerSwatchShape[] = ["sharp", "rounded", "circle"];
@@ -74,3 +74,6 @@ void variants;
 void controlLayouts;
 void swatchFrames;
 void swatchShapes;
+
+const surfaceRecipe: Pick<import("react").ComponentProps<typeof ColorPicker.Root>, "variant"> = { variant: "surface" };
+void surfaceRecipe;

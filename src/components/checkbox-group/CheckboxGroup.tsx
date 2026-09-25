@@ -3,6 +3,7 @@ import {
   forwardRef,
   type ReactElement,
   type ReactNode,
+  type CSSProperties,
 } from "react";
 import {
   CheckboxGroup as AtomCheckboxGroup,
@@ -15,6 +16,17 @@ import {
 } from "@flowstack-ui/atom/checkbox-group";
 import type { CheckboxSize } from "../checkbox/Checkbox.js";
 import { CheckboxVisual } from "../checkbox/CheckboxVisual.js";
+import {
+  CheckboxPresentationContext,
+  useCheckboxPresentation,
+  checkboxPresentationAttributes,
+  type CheckboxPresentationProps,
+} from "../checkbox/CheckboxPresentation.js";
+import {
+  resolveSpacingValue,
+  type SpacingValue,
+} from "../_spacing-value/SpacingValue.js";
+import type { CheckboxGroupController } from "@flowstack-ui/atom/checkbox-group";
 
 type ComposedProps<T extends { children?: ReactNode; render?: unknown }> = Omit<
   T,
@@ -33,27 +45,31 @@ type ComposedProps<T extends { children?: ReactNode; render?: unknown }> = Omit<
       }
   );
 
-type RequiredComposedProps<T extends { children: ReactNode; render?: unknown }> =
-  Omit<T, "asChild" | "children" | "render"> &
-    (
-      | {
-          asChild: true;
-          render?: never;
-          children: ReactElement<{ children?: ReactNode }>;
-        }
-      | { asChild?: false; render?: T["render"]; children: ReactNode }
-    );
+type RequiredComposedProps<
+  T extends { children: ReactNode; render?: unknown },
+> = Omit<T, "asChild" | "children" | "render"> &
+  (
+    | {
+        asChild: true;
+        render?: never;
+        children: ReactElement<{ children?: ReactNode }>;
+      }
+    | { asChild?: false; render?: T["render"]; children: ReactNode }
+  );
 
-export type CheckboxGroupRootProps = ComposedProps<AtomRootProps> & {
-  /** Shared row and visual-control size. @default "md" */
-  size?: CheckboxSize;
-};
-export type CheckboxGroupItemProps = ComposedProps<AtomItemProps>;
+export type CheckboxGroupRootProps = ComposedProps<AtomRootProps> &
+  CheckboxPresentationProps & {
+    /** Shared row and visual-control size. @default "md" */
+    gap?: SpacingValue;
+  };
+export type CheckboxGroupItemProps = ComposedProps<AtomItemProps> &
+  CheckboxPresentationProps & { indicator?: ReactNode };
 export type CheckboxGroupItemLabelProps =
   RequiredComposedProps<AtomItemLabelProps>;
 export type CheckboxGroupItemDescriptionProps =
   RequiredComposedProps<AtomItemDescriptionProps>;
-export type CheckboxGroupParentProps = ComposedProps<AtomParentProps>;
+export type CheckboxGroupParentProps = ComposedProps<AtomParentProps> &
+  CheckboxPresentationProps & { indicator?: ReactNode };
 
 function mergeClassName(base: string, className: string | undefined) {
   return className ? `${base} ${className}` : base;
@@ -63,10 +79,10 @@ function slotOrDefault(slot: string | undefined, fallback: string) {
   return slot ?? fallback;
 }
 
-function withVisual(children: ReactNode) {
+function withVisual(children: ReactNode, indicator?: ReactNode) {
   return (
     <>
-      <CheckboxVisual />
+      <CheckboxVisual>{indicator}</CheckboxVisual>
       {children}
     </>
   );
@@ -75,10 +91,15 @@ function withVisual(children: ReactNode) {
 function composeVisualChildren(
   asChild: boolean,
   children: ReactNode,
+  indicator?: ReactNode,
 ): ReactNode {
-  if (!asChild) return withVisual(children);
+  if (!asChild) return withVisual(children, indicator);
   const child = children as ReactElement<{ children?: ReactNode }>;
-  return cloneElement(child, undefined, withVisual(child.props.children));
+  return cloneElement(
+    child,
+    undefined,
+    withVisual(child.props.children, indicator),
+  );
 }
 
 export const CheckboxGroupRoot = forwardRef<
@@ -91,25 +112,49 @@ export const CheckboxGroupRoot = forwardRef<
     className,
     orientation = "vertical",
     render,
-    size = "md",
+    size,
+    variant,
+    tone,
+    radius,
+    density,
+    labelPlacement,
+    style,
+    gap,
     "data-slot": dataSlot,
     ...props
   },
   ref,
 ) {
+  const presentation = useCheckboxPresentation({
+    size,
+    variant,
+    tone,
+    radius,
+    density,
+    labelPlacement,
+  });
+  const rootStyle =
+    gap === undefined
+      ? style
+      : ({
+          "--brick-checkbox-group-gap": resolveSpacingValue(gap),
+          ...style,
+        } as CSSProperties);
   return (
-    <AtomCheckboxGroup.Root
-      {...props}
-      asChild={asChild}
-      className={mergeClassName("brick-checkbox-group", className)}
-      data-size={size}
-      data-slot={slotOrDefault(dataSlot, "checkbox-group")}
-      orientation={orientation}
-      ref={ref}
-      render={render}
-    >
-      {children}
-    </AtomCheckboxGroup.Root>
+    <CheckboxPresentationContext.Provider value={presentation}>
+      <AtomCheckboxGroup.Root
+        {...props}
+        asChild={asChild}
+        className={mergeClassName("brick-checkbox-group", className)}
+        {...checkboxPresentationAttributes(presentation, rootStyle)}
+        data-slot={slotOrDefault(dataSlot, "checkbox-group")}
+        orientation={orientation}
+        ref={ref}
+        render={render}
+      >
+        {children}
+      </AtomCheckboxGroup.Root>
+    </CheckboxPresentationContext.Provider>
   );
 });
 
@@ -122,21 +167,38 @@ export const CheckboxGroupItem = forwardRef<
     children,
     className,
     render,
+    size,
+    variant,
+    tone,
+    radius,
+    density,
+    labelPlacement,
+    style,
+    indicator,
     "data-slot": dataSlot,
     ...props
   },
   ref,
 ) {
+  const presentation = useCheckboxPresentation({
+    size,
+    variant,
+    tone,
+    radius,
+    density,
+    labelPlacement,
+  });
   return (
     <AtomCheckboxGroup.Item
       {...props}
+      {...checkboxPresentationAttributes(presentation, style)}
       asChild={asChild}
       className={mergeClassName("brick-checkbox-group-item", className)}
       data-slot={slotOrDefault(dataSlot, "checkbox-group-item")}
       ref={ref}
       render={render}
     >
-      {composeVisualChildren(asChild, children)}
+      {composeVisualChildren(asChild, children, indicator)}
     </AtomCheckboxGroup.Item>
   );
 });
@@ -158,7 +220,10 @@ export const CheckboxGroupItemLabel = markCheckboxGroupItemPart(
         <AtomCheckboxGroup.ItemLabel
           {...props}
           asChild={asChild}
-          className={mergeClassName("brick-checkbox-group-item-label", className)}
+          className={mergeClassName(
+            "brick-checkbox-group-item-label",
+            className,
+          )}
           data-slot={slotOrDefault(dataSlot, "checkbox-group-item-label")}
           ref={ref}
           render={render}
@@ -213,21 +278,38 @@ export const CheckboxGroupParent = forwardRef<
     children,
     className,
     render,
+    size,
+    variant,
+    tone,
+    radius,
+    density,
+    labelPlacement,
+    style,
+    indicator,
     "data-slot": dataSlot,
     ...props
   },
   ref,
 ) {
+  const presentation = useCheckboxPresentation({
+    size,
+    variant,
+    tone,
+    radius,
+    density,
+    labelPlacement,
+  });
   return (
     <AtomCheckboxGroup.Parent
       {...props}
+      {...checkboxPresentationAttributes(presentation, style)}
       asChild={asChild}
       className={mergeClassName("brick-checkbox-group-parent", className)}
       data-slot={slotOrDefault(dataSlot, "checkbox-group-parent")}
       ref={ref}
       render={render}
     >
-      {composeVisualChildren(asChild, children)}
+      {composeVisualChildren(asChild, children, indicator)}
     </AtomCheckboxGroup.Parent>
   );
 });
@@ -238,8 +320,34 @@ CheckboxGroupItemLabel.displayName = "CheckboxGroup.ItemLabel";
 CheckboxGroupItemDescription.displayName = "CheckboxGroup.ItemDescription";
 CheckboxGroupParent.displayName = "CheckboxGroup.Parent";
 
+type ProviderBase<T> = T extends unknown
+  ? Omit<T, "value" | "defaultValue" | "onValueChange" | "maxSelectedValues">
+  : never;
+export type CheckboxGroupRootProviderProps =
+  ProviderBase<CheckboxGroupRootProps> & { value: CheckboxGroupController };
+export const CheckboxGroupRootProvider = forwardRef<
+  HTMLDivElement,
+  CheckboxGroupRootProviderProps
+>(function CheckboxGroupRootProvider(
+  { value, disabled, readOnly, ...props },
+  ref,
+) {
+  return (
+    <CheckboxGroupRoot
+      {...(props as CheckboxGroupRootProps)}
+      ref={ref}
+      value={value.value}
+      onValueChange={value.setValue}
+      disabled={disabled || value.disabled}
+      readOnly={readOnly || value.readOnly}
+      maxSelectedValues={value.maxSelectedValues}
+    />
+  );
+});
+
 export const CheckboxGroup = Object.freeze({
   Root: CheckboxGroupRoot,
+  RootProvider: CheckboxGroupRootProvider,
   Item: CheckboxGroupItem,
   ItemLabel: CheckboxGroupItemLabel,
   ItemDescription: CheckboxGroupItemDescription,

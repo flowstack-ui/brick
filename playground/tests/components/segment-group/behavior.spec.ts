@@ -2,7 +2,44 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/segment-group");
+  await page.goto("/segment-group?qualification=1");
+});
+
+test("light indicator has a soft outer edge without an inset bevel", async ({ page }) => {
+  await page.goto("/segment-group?qualification=1&appearance=light");
+  const indicator = page.getByRole("radiogroup", { exact: true, name: "Project view" }).locator("[data-slot='segment-group-indicator']");
+  const shadow = await indicator.evaluate(element => getComputedStyle(element).boxShadow);
+  expect(shadow).toMatch(/(?:\/ 0\.1\)|, 0\.1\)) 0px 2px 4px/);
+  expect(shadow).toMatch(/(?:\/ 0\.3\)|, 0\.3\)) 0px 0px 1px/);
+  expect(shadow).toContain("rgba(0, 0, 0, 0) 0px 0px 1px 0px inset");
+});
+
+test("indicator slides continuously instead of resetting on selection", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  const group = page.getByRole("radiogroup", { exact: true, name: "Project view" });
+  const indicator = group.locator("[data-slot='segment-group-indicator']");
+  await expect(indicator).toHaveCSS("border-top-width", "0px");
+  await expect(indicator).toHaveAttribute("data-positioned", "");
+  const samples = await group.evaluate(async element => {
+    const marker = element.querySelector<HTMLElement>("[data-slot='segment-group-indicator']")!;
+    const buttons = element.querySelectorAll<HTMLButtonElement>("[role='radio']");
+    const start = marker.getBoundingClientRect().left;
+    const end = buttons[1]!.getBoundingClientRect().left;
+    const frames: { x: number; opacity: string; ready: boolean }[] = [];
+    buttons[1]!.click();
+    const until = performance.now() + 400;
+    while (performance.now() < until) {
+      await new Promise(requestAnimationFrame);
+      frames.push({ x: marker.getBoundingClientRect().left, opacity: getComputedStyle(marker).opacity, ready: marker.hasAttribute("data-ready") });
+    }
+    return { start, end, frames };
+  });
+  expect(samples.frames.every(frame => frame.ready && frame.opacity === "1")).toBe(true);
+  const low = Math.min(samples.start, samples.end);
+  const high = Math.max(samples.start, samples.end);
+  expect(samples.frames.some(frame => frame.x > low + 1 && frame.x < high - 1)).toBe(true);
+  expect(samples.frames.every(frame => frame.x >= low - 1 && frame.x <= high + 1)).toBe(true);
+  expect(samples.frames[samples.frames.length - 1]!.x).toBeCloseTo(samples.end, 0);
 });
 
 test("selection, keyboard, sizes, and indicator remain coordinated", async ({
@@ -22,7 +59,7 @@ test("selection, keyboard, sizes, and indicator remain coordinated", async ({
     element.append(probe);
     const expectedRoot = getComputedStyle(probe).backgroundColor;
     probe.style.background =
-      "light-dark(var(--brick-color-surface-base), var(--brick-color-surface-raised))";
+      "var(--brick-color-surface-raised)";
     const expectedIndicator = getComputedStyle(probe).backgroundColor;
     probe.remove();
     const selectedIndicator = element.querySelector<HTMLElement>(
@@ -60,7 +97,7 @@ test("selection, keyboard, sizes, and indicator remain coordinated", async ({
   );
   expect(indicatorShadow).toContain("0px 2px 4px");
   expect(indicatorShadow).toContain("0px 0px 1px");
-  expect(indicatorShadow).not.toContain("inset");
+  expect(indicatorShadow).toContain("inset");
   await expect(indicator).toHaveAttribute("data-ready", "");
   const [groupBox, listBox] = await Promise.all([
     group.boundingBox(),
@@ -214,7 +251,7 @@ test("full-width, RTL, reduced motion, and forced colors preserve the contract",
   await expect(indicator).toHaveCSS("transition-duration", "0s");
   expect(
     await indicator.evaluate(
-      (element) => getComputedStyle(element).borderTopColor,
+      (element) => getComputedStyle(element).outlineColor,
     ),
   ).not.toBe("rgba(0, 0, 0, 0)");
 });

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Present finished editable filtering and single-value selection while Atom owns committed value, input text, open state, listbox focus, positioning, dismissal, validation, and form participation.
+Present finished editable filtering and single or multiple selection while Atom owns committed value, input text, open state, listbox focus, positioning, dismissal, validation, and form participation.
 
 ## Use when
 
@@ -10,7 +10,7 @@ Present finished editable filtering and single-value selection while Atom owns c
 
 ## Choose something else when
 
-- Any text is valid without options, one predefined value needs no filtering, several values must be selected, or the popup contains commands. Use Input, Select or RadioGroup, MultiSelect, or DropdownMenu.
+- Any text is valid without options, one predefined value needs no filtering, or the popup contains commands. Use Input, Select or RadioGroup, MultiSelect, or DropdownMenu.
 
 ## Required composition
 
@@ -19,6 +19,10 @@ Present finished editable filtering and single-value selection while Atom owns c
 
 ## Rules
 
+- **MUST:** Use Atom-owned inputBehavior, selectionBehavior, openOnKeyPress, highlight and selection callbacks through Root. Do not recreate autocomplete in event handlers. Keep the virtualizer scroll element reactive when Content mounts lazily. Example geometry must use the same public form recipes as Input and Select.
+- **MUST:** Use multiple with values/defaultValues/onValuesChange for collection selection, and compose removable Chip values outside Control. RootProvider receives a useCombobox controller. Use seven shared responsive field variants and neutral/accent option tones. IndicatorGroup arranges actions; ItemText and ItemIndicator support rich option content. Content owns placement, strategy, detachment and exit presence; virtual scrolling stays application-owned through scrollToIndexFn.
+- **MUST:** Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+- **MUST:** Use outline for a transparent rest/hover control and surface for a neutral raised fill with the same border and geometry, without a shadow or extra Surface wrapper. Soft remains subdued. Popup backgrounds are independent; preserve explicit disabled, read-only, invalid and forced-colors states.
 - **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Keep committed value, editable input text, and popup open state independent and pair each controlled prop with its matching callback.
 - **MUST:** Keep Root options, rendered Items, stable values, labels, disabled state, grouping, and custom filtering aligned as one authoritative collection.

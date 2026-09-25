@@ -13,7 +13,7 @@ import {
 import { RadioCard as RootRadioCard } from "../../../src/index.js";
 
 const rootRef = createRef<HTMLDivElement>();
-const itemRef = createRef<HTMLButtonElement>();
+const itemRef = createRef<HTMLLabelElement>();
 const sizes: RadioCardSize[] = ["sm", "md", "lg"];
 const variants: RadioCardVariant[] = ["outline", "surface", "subtle", "solid"];
 const aligns: RadioCardAlign[] = ["start", "center", "end"];
@@ -31,3 +31,7 @@ createElement(RadioCard.Root, { ...root, variant: "ghost" });
 // @ts-expect-error Item requires a value
 createElement(RadioCard.Item, { children: "Annual" });
 void [sizes, variants, aligns, justifies];
+createElement(RadioCard.Root, { size: { initial: "sm", md: "lg" }, variant: { md: "subtle" }, tone: "contrast", contentOrientation: { initial: "vertical", md: "horizontal" } });
+createElement(RadioCard.HiddenInput, { ref: createRef<HTMLInputElement>() });
+// @ts-expect-error Behavioral orientation is scalar.
+createElement(RadioCard.Root, { orientation: { md: "vertical" } });

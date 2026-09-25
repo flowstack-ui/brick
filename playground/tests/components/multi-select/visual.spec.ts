@@ -1,6 +1,6 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/multi-select");
+installVisualDefaults("/multi-select?qualification=1");
 
 async function removeStickyCaptureOverlap(page: import("@playwright/test").Page) {
   await page.addStyleTag({

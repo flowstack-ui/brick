@@ -5,7 +5,7 @@
 
     display: grid;
     min-inline-size: 0;
-    row-gap: var(--brick-form-gap);
+    row-gap: var(--brick-form-gap-input, var(--brick-form-gap));
   }
 
   .brick-form > .brick-fieldset {
@@ -14,5 +14,17 @@
 
   .brick-form[data-submitting] {
     cursor: progress;
+  }
+  @media (min-width: 480px) {
+    .brick-form { row-gap: var(--brick-form-gap-sm-input, var(--brick-form-gap-input, var(--brick-form-gap))); }
+  }
+  @media (min-width: 768px) {
+    .brick-form { row-gap: var(--brick-form-gap-md-input, var(--brick-form-gap-sm-input, var(--brick-form-gap-input, var(--brick-form-gap)))); }
+  }
+  @media (min-width: 1024px) {
+    .brick-form { row-gap: var(--brick-form-gap-lg-input, var(--brick-form-gap-md-input, var(--brick-form-gap-sm-input, var(--brick-form-gap-input, var(--brick-form-gap))))); }
+  }
+  @media (min-width: 1280px) {
+    .brick-form { row-gap: var(--brick-form-gap-xl-input, var(--brick-form-gap-lg-input, var(--brick-form-gap-md-input, var(--brick-form-gap-sm-input, var(--brick-form-gap-input, var(--brick-form-gap)))))); }
   }
 }

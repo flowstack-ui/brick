@@ -1,10 +1,11 @@
 import { createRef, useState } from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Fieldset } from "../../../src/fieldset.js";
 import {
   RadioGroup,
+  useRadioGroup,
   type RadioGroupSize,
 } from "../../../src/radio-group.js";
 
@@ -13,6 +14,58 @@ function Items() {
 }
 
 describe("RadioGroup", () => {
+  it("inherits responsive presentation, permits item overrides, and replaces artwork", () => {
+    render(<RadioGroup.Root aria-label="Options" size={{ initial: "xs", md: "lg" }} variant={{ initial: "subtle", lg: "outline" }} tone="success" density="compact" labelPlacement="start" defaultValue="a">
+      <RadioGroup.Item value="a" indicator={<span data-testid="art">✓</span>}>Inherited</RadioGroup.Item>
+      <RadioGroup.Item value="b" size="sm" tone="contrast">Override</RadioGroup.Item>
+    </RadioGroup.Root>);
+    const item = screen.getByRole("radio", { name: "Inherited" });
+    expect(item).toHaveAttribute("data-size", "xs");
+    expect(item).toHaveAttribute("data-size-md", "lg");
+    expect(item).toHaveAttribute("data-density", "compact");
+    expect(item.querySelector(".brick-radiomark")).toHaveAttribute("data-variant-lg", "outline");
+    expect(item.querySelector(".brick-radiomark__dot")).toBeNull();
+    expect(item.querySelectorAll(".brick-radiomark")).toHaveLength(1);
+    expect(screen.getByRole("radio", { name: "Override" })).toHaveAttribute("data-tone", "contrast");
+  });
+
+  it("composes native refs, descriptions, independent links and one form value", async () => {
+    const user = userEvent.setup();
+    const inputRef = createRef<HTMLInputElement>();
+    const changes = vi.fn();
+    render(<form data-testid="form"><RadioGroup.Root name="delivery" defaultValue="a" onValueChange={changes}>
+      <RadioGroup.Label>Delivery</RadioGroup.Label>
+      {["a", "b"].map(value => <RadioGroup.ItemRoot key={value} value={value}>
+        <RadioGroup.ItemHiddenInput ref={value === "b" ? inputRef : undefined} />
+        <RadioGroup.ItemControl><RadioGroup.ItemIndicator /></RadioGroup.ItemControl>
+        <RadioGroup.ItemText>{value}<a href="#shipping">Terms {value}</a></RadioGroup.ItemText>
+        <RadioGroup.ItemDescription>Description {value}</RadioGroup.ItemDescription>
+      </RadioGroup.ItemRoot>)}
+    </RadioGroup.Root></form>);
+    const second = screen.getByRole("radio", { name: "b Terms b" });
+    expect(second).toBe(inputRef.current);
+    expect(second).toHaveAccessibleDescription("Description b");
+    // Real label/link default-action isolation is covered in browser tests.
+    fireEvent.click(screen.getByRole("link", { name: "Terms b" }));
+    expect(changes).not.toHaveBeenCalled();
+    await user.click(second);
+    expect(changes).toHaveBeenCalledTimes(1);
+    expect(new FormData(screen.getByTestId("form") as HTMLFormElement).getAll("delivery")).toEqual(["b"]);
+  });
+
+  it("shares an external controller without adding another selection store", async () => {
+    function Demo() {
+      const controller = useRadioGroup({ defaultValue: "email" });
+      return <><RadioGroup.RootProvider controller={controller} aria-label="Controller"><Items /></RadioGroup.RootProvider>
+        <button onClick={() => controller.setValue("sms")}>Choose SMS</button><button onClick={controller.reset}>Reset</button></>;
+    }
+    const user = userEvent.setup();
+    render(<Demo />);
+    await user.click(screen.getByRole("button", { name: "Choose SMS" }));
+    expect(screen.getByRole("radio", { name: "SMS" })).toBeChecked();
+    await user.click(screen.getByRole("button", { name: "Reset" }));
+    expect(screen.getByRole("radio", { name: "Email" })).toBeChecked();
+  });
   it("renders the adopted defaults, anatomy, and refs", () => {
     const rootRef = createRef<HTMLDivElement>();
     const itemRef = createRef<HTMLButtonElement>();
@@ -28,7 +81,7 @@ describe("RadioGroup", () => {
     expect(item).toHaveClass("brick-radio-group-item");
     expect(item).toHaveAttribute("data-slot", "radio-group-item");
     expect(item.querySelector("[data-slot='radio-group-control']")).toHaveAttribute("aria-hidden", "true");
-    expect(item.querySelector("[data-slot='radio-group-dot']")).toBeInTheDocument();
+    expect(item.querySelector("[data-slot='radiomark-dot']")).toBeInTheDocument();
     expect(item.querySelector("[data-slot='radio-group-label']")).toHaveTextContent("Email");
   });
 

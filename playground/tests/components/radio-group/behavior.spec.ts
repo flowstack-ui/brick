@@ -8,7 +8,7 @@ async function controlSize(radio: Locator) {
   });
 }
 
-test.beforeEach(async ({ page }) => { await page.goto("/radio-group"); });
+test.beforeEach(async ({ page }) => { await page.goto("/radio-group?qualification=1"); });
 
 test("defaults and sizes preserve one selected medium vertical recipe", async ({ page }) => {
   const overview = page.getByTestId("radio-group-overview").getByRole("radiogroup");

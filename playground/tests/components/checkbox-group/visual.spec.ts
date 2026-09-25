@@ -1,6 +1,6 @@
 import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/checkbox-group");
+installVisualDefaults("/checkbox-group?qualification=1");
 
 test("Checkbox Group ownership, size, and appearance", async ({ page }) => {
   await expect(page.getByTestId("checkbox-group-overview")).toHaveScreenshot("overview-light.png");
@@ -16,5 +16,6 @@ test("Checkbox Group constrained and forced-color evidence", async ({ page }) =>
   await expect(page.getByTestId("checkbox-group-stress")).toHaveScreenshot("stress-mobile.png");
   await page.setViewportSize({ width: 1120, height: 900 });
   await useForcedColors(page);
-  await expect(page.getByTestId("checkbox-group-states")).toHaveScreenshot("states-forced-colors.png");
+  await expect(page.getByRole("group", {name:"Invalid delivery methods"}).getByRole("checkbox").first().locator(".brick-checkbox-control")).toHaveCSS("border-top-color", "rgb(0, 0, 0)");
+  await expect(page.getByTestId("checkbox-group-states")).toHaveScreenshot("states-forced-colors.png", {maxDiffPixels:0, threshold:0});
 });

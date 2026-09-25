@@ -1,7 +1,20 @@
-import { forwardRef, type ReactElement, type ReactNode } from "react";
+import {
+  forwardRef,
+  type CSSProperties,
+  type ReactElement,
+  type ReactNode,
+} from "react";
+import {
+  responsiveDataAttributes,
+  normalizeResponsiveValue,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
+import { createIcon } from "../icon/createIcon.js";
 import {
   Field as AtomField,
   markFieldPart,
+  useFieldContext,
+  type FieldItemProps as AtomFieldItemProps,
   type FieldDescriptionProps as AtomFieldDescriptionProps,
   type FieldErrorProps as AtomFieldErrorProps,
   type FieldLabelProps as AtomFieldLabelProps,
@@ -13,19 +26,28 @@ import {
 type ComposedRequiredProps<T> = Omit<T, "asChild" | "children" | "render"> &
   (
     | { asChild: true; render?: never; children: ReactElement }
-    | { asChild?: false; render?: T extends { render?: infer R } ? R : never; children: ReactNode }
+    | {
+        asChild?: false;
+        render?: T extends { render?: infer R } ? R : never;
+        children: ReactNode;
+      }
   );
 
 export type FieldSize = "xs" | "sm" | "md";
 export type FieldTone = "primary" | "secondary";
-export type FieldRootProps = ComposedRequiredProps<AtomFieldRootProps> & {
+export type FieldRootProps = ComposedRequiredProps<
+  Omit<AtomFieldRootProps, "orientation">
+> & {
+  orientation?: ResponsiveValue<FieldOrientation>;
+  labelWidth?: CSSProperties["inlineSize"];
   /** Label density used by compact and ordinary form layouts. @default "md" */
-  size?: FieldSize;
+  size?: ResponsiveValue<FieldSize>;
   /** Label emphasis. @default "primary" */
   tone?: FieldTone;
 };
 export type FieldLabelProps = ComposedRequiredProps<AtomFieldLabelProps>;
-export type FieldDescriptionProps = ComposedRequiredProps<AtomFieldDescriptionProps>;
+export type FieldDescriptionProps =
+  ComposedRequiredProps<AtomFieldDescriptionProps>;
 export type FieldErrorProps = ComposedRequiredProps<AtomFieldErrorProps>;
 
 type RequiredIndicatorSharedProps = Omit<
@@ -64,6 +86,8 @@ export const FieldRoot = forwardRef<HTMLDivElement, FieldRootProps>(
       children,
       className,
       orientation = "vertical",
+      labelWidth,
+      style,
       size = "md",
       tone = "primary",
       render,
@@ -78,9 +102,28 @@ export const FieldRoot = forwardRef<HTMLDivElement, FieldRootProps>(
         asChild={asChild}
         className={mergeClassName("brick-field", className)}
         data-slot={slotOrDefault(dataSlot, "field")}
-        data-size={size}
+        {...responsiveDataAttributes("data-size", size, {
+          alwaysInitial: true,
+          defaultValue: "md",
+        })}
+        {...responsiveDataAttributes("data-orientation", orientation, {
+          alwaysInitial: true,
+          defaultValue: "vertical",
+        })}
         data-tone={tone}
-        orientation={orientation}
+        orientation={
+          normalizeResponsiveValue(orientation).initial ?? "vertical"
+        }
+        style={
+          {
+            ...(labelWidth === undefined
+              ? {}
+              : {
+                  "--brick-field-columns": `minmax(0, ${typeof labelWidth === "number" ? `${labelWidth}px` : labelWidth}) minmax(0, 1fr)`,
+                }),
+            ...style,
+          } as CSSProperties
+        }
         ref={ref}
         render={render}
       >
@@ -203,6 +246,28 @@ export const FieldRequiredIndicator = forwardRef<
 });
 
 markFieldPart(FieldDescription, "description");
+export const FieldErrorIcon = createIcon({
+  displayName: "Field.ErrorIcon",
+  defaultProps: {
+    size: "inherit",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 2,
+  },
+  path: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v6m0 3v1" />
+    </>
+  ),
+});
+export const FieldItem =
+  AtomField.Item as import("react").ForwardRefExoticComponent<
+    FieldItemProps & import("react").RefAttributes<HTMLDivElement>
+  >;
+export const FieldContext = AtomField.Context;
+export type FieldItemProps = ComposedRequiredProps<AtomFieldItemProps>;
+export { useFieldContext };
 markFieldPart(FieldError, "error");
 
 FieldRoot.displayName = "Field.Root";
@@ -212,6 +277,9 @@ FieldError.displayName = "Field.Error";
 FieldRequiredIndicator.displayName = "Field.RequiredIndicator";
 
 export const Field = Object.freeze({
+  Item: FieldItem,
+  Context: AtomField.Context,
+  ErrorIcon: FieldErrorIcon,
   Root: FieldRoot,
   Label: FieldLabel,
   Description: FieldDescription,

@@ -4,10 +4,21 @@ Segment Group follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add neutral/accent/contrast selection tones and Items convenience. Polish
+  neutral rail/indicator edges and spacing; preserve shared size and radius APIs.
+- Delegate indicator geometry to Atom; restore named-form dividers and SSR
+  selected paint. Add source-paired docs examples and part props tables.
+
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 ### Fixed
 
+- Refine neutral selection with raised-surface fill, a lighter light-mode
+  shadow and an outer edge instead of the dark-mode inset highlight.
+- Remove transparent indicator border spacing and soften the dark highlight;
+  optional indicator boundary color uses an inset outline without changing geometry.
+- Preserve the measured indicator through selection changes so its sliding
+  transition is not interrupted by fallback paint.
 - Matched compact segmented-control rhythm with regular-weight labels,
   component-owned inline padding and gaps, a borderless dark-semantic
   indicator shadow, and dividers that disappear beside the selected item.

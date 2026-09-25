@@ -1,8 +1,34 @@
 # Switch changelog
 
-Switch follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+- Improve navigation between usage examples and individual props documentation.
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+Switch follows the package version of `@flowstack-ui/brick`.
+
+- Compound Switch supports owner `ids` for server-rendered custom associations;
+  local Control and Label ID changes remain associated after mounting.
+
+- Preserve one track-owned focus ring when the optional reset fallback is loaded.
+
+### Added
+
+- Added compound Field, Control, Label, HiddenInput, Indicator,
+  ThumbIndicator and RootProvider parts, plus `useSwitch` and
+  `useSwitchContext`, while preserving standalone Root.
+- Added responsive size/variant recipes, seven checked-state tones, logical
+  label placement and a default compound thumb.
+
+### Fixed
+
+- Keep custom checked colors through hover and press, resolve effective nested
+  RTL direction, separate the raised checked rail from its thumb, and retain
+  clear read-only state identity.
+- Center track indicators in the unoccupied track half and contain thumb
+  indicators inside the thumb instead of allowing SVG line boxes to escape.
 
 ### Added
 

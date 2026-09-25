@@ -1,5 +1,12 @@
 # Color Picker manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 | Run information | Value |
 | --- | --- |
 | Component | Color Picker |
@@ -12,6 +19,15 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/color-picker` |
+| Qualification route(s) | `/color-picker?qualification=1`; documentation at `/color-picker` |
+
+## Controller and lifecycle regression checks
+
+- In Store, verify the external action updates the color.
+- In Lifecycle, verify closing removes the panel from keyboard and screen-reader navigation.
+- In Dialog, press Escape once and confirm only the picker closes and focus returns
+  to its trigger. A second Escape may close the dialog.
+- Verify channel labels with a screen reader and actual browser zoom and physical touch.
 
 Scenario order: `01 Overview`, `02 Inline editor`, `03 Sizes and variants`, `04 Entry points`, `05 Formats`, `06 State`, `07 Swatches`, `08 Integration`, `09 Platform`, `10 States`, `11 Adaptation`
 
@@ -87,3 +103,9 @@ Notes or issue:
 Overall result:
 Follow-up issues:
 Workbook updated:
+
+## Form surface comparison
+
+- Compare outline and surface on light/dark canvas and raised parents: outline stays transparent; surface owns its neutral fill without adding a shadow.
+- Hover, focus, disable and mark invalid; preserve visible boundaries and explicit state treatment. Compare matched size recipes including their outer borders.
+- Check narrow/RTL containment and forced colors. Popup panels and selection marks must retain their independent paint.

@@ -1,5 +1,6 @@
 # Editable
 
+
 ## When and where to use
 
 Rename a title or edit short existing text in place, with explicit cancellation.
@@ -45,6 +46,20 @@ Use exactly one editor; do not duplicate a hidden named input.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `size` | `sm`, `md`, `lg` | `md` |
+| `textStyle` | responsive `TextVariant` or `inherit` | `body-sm` for sm/md, `body-md` for lg |
+| `weight` | `TextWeight` | typography recipe |
+| `tone` | `TextTone` | primary |
+| `align` | responsive `TextAlign` | start |
+| `radius` | `Radius` | control |
+| `unstyled` | boolean | false |
+
+Size selects 32/36/40px minimum geometry; larger typography grows the editor.
+Set textStyle once on Root to keep preview and editor identical, including
+responsive variants. Use textStyle="inherit" inside an existing Text context.
+Label and controls retain compact typography rather than becoming title-sized.
+Preview highlight="none" removes hover fill, never keyboard focus.
+Root unstyled removes the full Brick recipe; action-trigger unstyled delegates
+only that trigger's appearance to its Button/IconButton child.
 
 EditableRootProps extends Atom's options with EditableSize `sm`, `md`, `lg`,
 default `md`. EditableRootProviderProps accepts the controller from useEditable
@@ -76,7 +91,9 @@ EditableSubmitTrigger, EditableCancelTrigger and EditableContext.
 
 ## Visual recipes and states
 
-Three coordinated text/padding sizes keep preview and editor baselines aligned.
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+Three coordinated minimum-height sizes keep preview and editor baselines aligned.
 Preview is transparent with subtle hover; editors have an outlined boundary and
 visible focus. Invalid, readonly and disabled are separate states. Shape follows
 the Theme control radius; there is no component-specific hardcoded radius.
@@ -92,7 +109,7 @@ data-readonly, data-invalid, data-autoresize. CSS overrides are application-owne
 
 Use size, native editor props and explicit controls first. Provide translated
 input/edit/submit/cancel names through translations or native accessible labels.
-Trigger children are application content; use asChild with Button/IconButton for
+Trigger children are application content; use unstyled asChild with Button/IconButton for
 their action recipes instead of overriding internal anatomy.
 
 ## Responsive behavior
@@ -115,8 +132,11 @@ then edit trigger/preview; outside completion does not steal focus.
 Native input/textarea refs point to the actual editor. Field state is inherited
 when Root or useEditable is created inside its scope; for an external controller,
 place the controller-owning child within Field.Root or pass flags explicitly.
-Use native name/form for real submission and native reset. asChild/render are
-trigger-only; do not replace Input with an arbitrary host.
+Use native name/form for real submission and native reset. Root, RootProvider,
+Area, Control and Preview support asChild. Input, Textarea and Label keep their
+native hosts. Triggers also support render. For custom preview content use
+Context.valueText so it follows commits and cancellation. Do not nest interactive
+descendants in Preview. A title textStyle is visual, not heading semantics.
 
 ## Examples
 

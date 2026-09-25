@@ -1,5 +1,6 @@
+@import "./field-variants.css";
 @layer brick.components {
-  .brick-number-input {
+  .brick-number-input:where(:not(.brick-number-input-group)) {
     --brick-number-input-height: var(--brick-control-min-block-size-md);
     --brick-number-input-stepper-inline-size: 2.25rem;
     --brick-number-input-step-icon-size: 1rem;
@@ -18,6 +19,8 @@
     --brick-number-input-radius: var(--brick-radius-control);
     --brick-number-input-background: transparent;
     --brick-number-input-border: var(--brick-color-border-strong);
+  }
+  .brick-number-input {
     display: inline-grid;
     grid-template-columns: minmax(0, 1fr) var(
         --brick-number-input-stepper-inline-size
@@ -67,58 +70,23 @@
     .brick-number-input-stepper {
     grid-column: 3;
   }
-  .brick-number-input[data-variant="soft"] {
+  .brick-number-input:not(.brick-number-input-group)[data-variant="surface"] {
+    --brick-number-input-background: var(--brick-color-surface-raised);
+  }
+  .brick-number-input:not(.brick-number-input-group)[data-variant="soft"] {
     --brick-number-input-background: var(--brick-color-surface-subtle);
     --brick-number-input-border: var(--brick-color-border-subtle);
   }
   .brick-number-input[data-variant="underline"] {
     --brick-number-input-background: transparent;
-    --brick-number-input-radius: 0;
     border-width: 0 0 var(--brick-border-width);
     overflow: visible;
   }
-  .brick-number-input[data-shape="sharp"] {
+  .brick-number-input:not(.brick-number-input-group)[data-shape="sharp"] {
     --brick-number-input-radius: 0;
   }
-  .brick-number-input[data-shape="pill"] {
+  .brick-number-input:not(.brick-number-input-group)[data-shape="pill"] {
     --brick-number-input-radius: var(--brick-radius-full);
-  }
-  .brick-number-input[data-size="xs"] {
-    --brick-number-input-height: var(--brick-control-min-block-size-xs);
-    --brick-number-input-stepper-inline-size: 1.125rem;
-    --brick-number-input-step-icon-size: 0.75rem;
-    --brick-number-input-font-family: var(
-      --brick-typography-control-xs-font-family
-    );
-    --brick-number-input-font-size: var(
-      --brick-typography-control-xs-font-size
-    );
-    --brick-number-input-font-weight: var(
-      --brick-typography-control-xs-font-weight
-    );
-    --brick-number-input-line-height: var(
-      --brick-typography-control-xs-line-height
-    );
-  }
-  .brick-number-input[data-size="sm"] {
-    --brick-number-input-height: var(--brick-control-min-block-size-sm);
-    --brick-number-input-stepper-inline-size: 1.25rem;
-    --brick-number-input-step-icon-size: 0.875rem;
-    --brick-number-input-font-family: var(
-      --brick-typography-control-sm-font-family
-    );
-    --brick-number-input-font-size: var(
-      --brick-typography-control-sm-font-size
-    );
-    --brick-number-input-font-weight: var(
-      --brick-typography-control-sm-font-weight
-    );
-    --brick-number-input-line-height: var(
-      --brick-typography-control-sm-line-height
-    );
-  }
-  .brick-number-input[data-size="lg"] {
-    --brick-number-input-height: var(--brick-control-min-block-size-lg);
   }
   .brick-number-input-control {
     grid-column: 1;
@@ -155,7 +123,7 @@
       opacity var(--brick-motion-duration-fast)
         var(--brick-motion-easing-standard);
   }
-  .brick-number-input:has(.brick-number-input-unit) .brick-number-input-step {
+  .brick-number-input:has(.brick-number-input-unit) > .brick-number-input-step {
     grid-column: 3;
   }
   .brick-number-input-stepper .brick-number-input-step {
@@ -194,10 +162,9 @@
     --brick-number-input-stepper-value-line-height: var(
       --brick-typography-body-lg-line-height
     );
-    grid-template-columns: var(--brick-number-input-height) minmax(
-        2.5rem,
-        1fr
-      ) var(--brick-number-input-height);
+    grid-template-columns:
+      var(--brick-number-input-height) minmax(2.5rem, 1fr)
+      var(--brick-number-input-height);
     grid-template-rows: 1fr;
     gap: var(--brick-space-2);
     overflow: visible;
@@ -205,10 +172,9 @@
     background: transparent;
   }
   .brick-number-input[data-layout="stepper"]:has(.brick-number-input-unit) {
-    grid-template-columns: var(--brick-number-input-height) minmax(
-        2.5rem,
-        1fr
-      ) max-content var(--brick-number-input-height);
+    grid-template-columns:
+      var(--brick-number-input-height) minmax(2.5rem, 1fr)
+      max-content var(--brick-number-input-height);
   }
   .brick-number-input[data-layout="stepper"] .brick-number-input-control {
     grid-column: 2;
@@ -235,6 +201,10 @@
   .brick-number-input[data-layout="stepper"] .brick-number-input-step {
     border: var(--brick-border-width) solid var(--brick-number-input-border);
     border-radius: var(--brick-radius-control);
+  }
+  :where(.brick-number-input[data-layout="stepper"][data-variant="surface"])
+    .brick-number-input-step {
+    background: var(--brick-number-input-background);
   }
   .brick-number-input[data-layout="stepper"] .brick-number-input-decrement {
     grid-column: 1;
@@ -266,27 +236,43 @@
     outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
     outline-offset: var(--brick-border-focus-offset);
   }
-  .brick-number-input:has(.brick-number-input-control[data-invalid]) {
+  .brick-number-input[data-invalid] {
     border-color: var(--brick-color-danger-text);
+    --brick-number-input-border: var(--brick-color-danger-text);
   }
-  .brick-number-input:has(.brick-number-input-control[data-disabled]) {
-    background: var(--brick-color-surface-subtle);
-    color: var(--brick-color-text-secondary);
-    opacity: 0.72;
+  .brick-number-input[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
-  .brick-number-input-step:disabled {
+  .brick-number-input[data-disabled] :is(.brick-number-input-control, .brick-number-input-step, .brick-number-input-scrubber) { cursor: not-allowed; }
+  .brick-number-input[data-disabled] .brick-number-input-step { opacity: 1; }
+  .brick-number-input[data-disabled] .brick-number-input-group { opacity: 1; }
+  .brick-number-input-step:is(:disabled, [aria-disabled="true"]) {
     cursor: not-allowed;
     opacity: 0.5;
   }
   @media (hover: hover) and (pointer: fine) {
-    .brick-number-input-step:not(:disabled):hover {
-      background: var(--brick-color-accent-soft);
+    .brick-number-input-step:not(:disabled):not([aria-disabled="true"]):hover {
+      background: var(--brick-color-surface-subtle);
       color: var(--brick-color-text-primary);
     }
     .brick-number-input[data-layout="field"][data-stepper-visibility="hover"]
       .brick-number-input-step {
       opacity: 0;
       pointer-events: none;
+    }
+    .brick-number-input[data-layout="field"][data-stepper-visibility="hover"]
+      .brick-number-input-stepper {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .brick-number-input[data-layout="field"][data-stepper-visibility="hover"]:is(
+        :hover,
+        :focus-within
+      )
+      .brick-number-input-stepper {
+      opacity: 1;
+      pointer-events: auto;
     }
     .brick-number-input[data-layout="field"][data-stepper-visibility="hover"]:is(
         :hover,
@@ -300,7 +286,7 @@
         :hover,
         :focus-within
       )
-      .brick-number-input-step:disabled {
+      .brick-number-input-step:is(:disabled, [aria-disabled="true"]) {
       opacity: 0.5;
     }
   }
@@ -309,7 +295,47 @@
       transition: none;
     }
   }
+  .brick-number-input-step:not(:disabled):not([aria-disabled="true"]):active {
+    background: var(--brick-color-surface-raised);
+    color: var(--brick-color-text-primary);
+  }
+  .brick-number-input-value-text {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    text-align: center;
+    font: inherit;
+  }
+  .brick-number-input-label {
+    grid-column: 1 / -1;
+    font: inherit;
+  }
+  .brick-number-input-scrubber {
+    display: inline-grid;
+    place-items: center;
+    touch-action: none;
+    user-select: none;
+    cursor: ew-resize;
+    color: var(--brick-color-text-secondary);
+  }
+  .brick-number-input-scrubber:is([data-disabled], [data-readonly]) {
+    cursor: default;
+  }
+  /* A captured drag outlives hover on the small scrubber. Scope feedback to
+     its document and restore existing cursors when the session ends. */
+  :root:has(.brick-number-input-scrubber[data-scrubbing]),
+  :root:has(.brick-number-input-scrubber[data-scrubbing]) * {
+    cursor: ew-resize !important;
+    user-select: none !important;
+  }
   @media (pointer: coarse) {
+    .brick-number-input.brick-control-size[data-layout="field"] {
+      --brick-number-input-height: max(
+        3.125rem,
+        var(--brick-control-size-block)
+      );
+      --brick-number-input-stepper-inline-size: 2.25rem;
+    }
     .brick-number-input:is(
       [data-size="xs"],
       [data-size="sm"],
@@ -337,8 +363,75 @@
     .brick-number-input[data-layout="stepper"] .brick-number-input-step {
       border-color: ButtonText;
     }
-    .brick-number-input[data-layout="stepper"] :is(.brick-number-input-control, .brick-number-input-step):focus-visible {
+    .brick-number-input[data-layout="stepper"]
+      :is(.brick-number-input-control, .brick-number-input-step):focus-visible {
       outline-color: Highlight;
     }
+  }
+
+  /* Group is the optional visual field boundary. The legacy ungrouped root
+     retains its presentation; neither path creates another behavior owner. */
+  .brick-number-input:has(> .brick-number-input-group):not(
+      .brick-number-input-group
+    ) {
+    display: inline-grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    gap: var(--brick-space-2);
+    min-block-size: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+    overflow: visible;
+  }
+  .brick-number-input.brick-number-input-group {
+    grid-template-columns: max-content minmax(
+        0,
+        1fr
+      ) max-content max-content var(--brick-number-input-stepper-inline-size);
+  }
+  .brick-number-input.brick-number-input-group:not(
+      :has(.brick-number-input-step)
+    ) {
+    grid-template-columns: max-content minmax(0, 1fr) max-content max-content;
+  }
+  .brick-number-input-group > .brick-number-input-control {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+  .brick-number-input-group > .brick-number-input-unit {
+    grid-column: 3;
+  }
+  .brick-number-input.brick-number-input-group > .brick-number-input-stepper,
+  .brick-number-input.brick-number-input-group > .brick-number-input-step {
+    grid-column: 5;
+  }
+  .brick-number-input-element {
+    display: grid;
+    place-items: center;
+    grid-row: 1 / 3;
+    color: var(--brick-color-text-secondary);
+  }
+  .brick-number-input-element[data-placement="start"] {
+    grid-column: 1;
+    padding-inline-start: var(
+      --brick-number-input-padding-inline,
+      var(--brick-space-3)
+    );
+  }
+  .brick-number-input-element[data-placement="end"] {
+    grid-column: 4;
+    padding-inline-end: var(
+      --brick-number-input-padding-inline,
+      var(--brick-space-3)
+    );
+  }
+}
+
+@layer brick.components {
+  @media (forced-colors: active) {
+    .brick-number-input[data-disabled] { opacity: 1; color: GrayText; }
   }
 }

@@ -3,7 +3,7 @@ import {
   installVisualDefaults,
   test,
 } from "../../visual-harness.js";
-installVisualDefaults("/editable");
+installVisualDefaults("/editable?qualification=1");
 test("Editable recipes and transactions", async ({ page }) => {
   for (const id of [
     "basic",

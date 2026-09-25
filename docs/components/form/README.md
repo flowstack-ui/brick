@@ -117,3 +117,11 @@ API above; preserve form semantics. Ref targets the rendered form.
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).
+### Form-family API
+
+Form accepts responsive `gap` using Brick spacing values (default 5).
+Callback submission metadata belongs to the latest attempt. Reset and unmount
+invalidate older pending completions without canceling application requests.
+Use preventDefaultOnSubmit for callback-only workflows. React function actions
+retain React-owned pending/reset behavior. Native attributes, external form
+association, refs, asChild and render remain available.

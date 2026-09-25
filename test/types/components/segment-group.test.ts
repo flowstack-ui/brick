@@ -19,3 +19,7 @@ createElement(SegmentGroupIndicator, {});
 // @ts-expect-error Segment Group has a closed five-size scale
 createElement(SegmentGroup.Root, { ...root, size: "xl" });
 void sizes;
+createElement(SegmentGroup.Root, { tone: "contrast" });
+createElement(SegmentGroup.Items, { items: ["List", { value: "grid", label: "Grid", disabled: true }] as const });
+// @ts-expect-error status tones are not selection tones
+createElement(SegmentGroup.Root, { tone: "danger" });

@@ -1,4 +1,5 @@
 export const componentIds = [
+  "checkbox-card",
   "input-addon",
   "table-of-contents",
   "qr-code",

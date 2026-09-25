@@ -1,11 +1,67 @@
 import "@testing-library/jest-dom/vitest";
+import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Field } from "../../../src/field.js";
 import { NumberInput } from "../../../src/number-input.js";
+import { LocaleProvider } from "../../../src/locale-provider.js";
 
 describe("Number Input", () => {
+  it("composes labelled groups with inherited recipes, native refs and logical elements", async () => {
+    const groupRef = createRef<HTMLDivElement>();
+    const elementRef = createRef<HTMLDivElement>();
+    render(
+      <NumberInput.Root defaultValue={3} invalid variant="surface" size="sm">
+        <NumberInput.Label>Grouped quantity</NumberInput.Label>
+        <NumberInput.Group ref={groupRef} title="Field group">
+          <NumberInput.Element ref={elementRef} placement="end">
+            kg
+          </NumberInput.Element>
+          <NumberInput.Input />
+          <NumberInput.Control />
+        </NumberInput.Group>
+      </NumberInput.Root>,
+    );
+    expect(groupRef.current).toHaveAttribute("data-variant", "surface");
+    expect(groupRef.current).toHaveAttribute("data-invalid", "");
+    expect(groupRef.current).toHaveAttribute("title", "Field group");
+    expect(elementRef.current).toHaveAttribute("data-placement", "end");
+    expect(groupRef.current?.querySelector("label")).toBeNull();
+    const input = screen.getByRole("spinbutton", { name: "Grouped quantity" });
+    await userEvent.click(
+      screen.getByRole("button", { name: "Increment value" }),
+    );
+    expect(input).toHaveValue("4");
+  });
+  it("inherits locale and translated names through generated controls", () => {
+    render(
+      <LocaleProvider
+        locale="de-DE"
+        localeText={{ incrementValue: "Mehr", decrementValue: "Weniger" }}
+      >
+        <NumberInput.Root defaultValue={1.5}>
+          <NumberInput.Input aria-label="Menge" />
+          <NumberInput.Control />
+        </NumberInput.Root>
+      </LocaleProvider>,
+    );
+    expect(screen.getByRole("spinbutton")).toHaveValue("1,5");
+    expect(screen.getByRole("button", { name: "Mehr" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Weniger" })).toBeInTheDocument();
+  });
+  it("gives explicit locale and control names precedence", () => {
+    render(
+      <LocaleProvider locale="de-DE" localeText={{ incrementValue: "Mehr" }}>
+        <NumberInput.Root locale="en-US" defaultValue={1.5}>
+          <NumberInput.Input aria-label="Quantity" />
+          <NumberInput.Control incrementLabel="Add" />
+        </NumberInput.Root>
+      </LocaleProvider>,
+    );
+    expect(screen.getByRole("spinbutton")).toHaveValue("1.5");
+    expect(screen.getByRole("button", { name: "Add" })).toBeInTheDocument();
+  });
   it("adapts Atom anatomy, visual defaults, and stepping", async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();

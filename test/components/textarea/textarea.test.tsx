@@ -33,7 +33,9 @@ describe("Textarea", () => {
   });
 
   it("exposes every closed visual recipe without leaking Brick props", () => {
-    const variants: TextareaVariant[] = ["outline", "soft", "underline"];
+    const variants: TextareaVariant[] = [
+      "outline", "surface", "soft", "subtle", "ghost", "plain", "underline",
+    ];
     const sizes: TextareaSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
     const shapes: TextareaShape[] = ["sharp", "rounded"];
     const resizeModes: TextareaResize[] = ["none", "vertical", "horizontal", "both"];
@@ -73,6 +75,22 @@ describe("Textarea", () => {
     expect(control).not.toHaveAttribute("textareaclassname");
   });
 
+  it("serializes sparse responsive variants with complete inherited restoration", () => {
+    render(
+      <Textarea.Root
+        aria-label="Responsive recipe"
+        variant={{ initial: "underline", md: "outline", xl: "ghost" }}
+      />,
+    );
+    const root = screen.getByRole("textbox", { name: "Responsive recipe" }).closest(".brick-textarea");
+    expect(root).toHaveAttribute("data-variant", "underline");
+    expect(root).toHaveAttribute("data-variant-sm", "underline");
+    expect(root).toHaveAttribute("data-variant-md", "outline");
+    expect(root).toHaveAttribute("data-variant-lg", "outline");
+    expect(root).toHaveAttribute("data-variant-xl", "ghost");
+    expect(root).not.toHaveAttribute("data-shape");
+  });
+
   it("routes native and customization props to their deliberate targets", () => {
     render(
       <Textarea.Root
@@ -81,6 +99,7 @@ describe("Textarea", () => {
         className="consumer-root"
         data-evidence="native"
         name="summary"
+        dir="rtl"
         placeholder="Explain the result"
         style={{ marginInlineStart: 4 }}
         textareaClassName="consumer-control"
@@ -91,6 +110,10 @@ describe("Textarea", () => {
     const control = screen.getByRole("textbox", { name: "Summary" });
     const root = control.closest(".brick-textarea");
     expect(root).toHaveClass("brick-textarea", "consumer-root");
+    expect(root).toHaveAttribute("dir", "rtl");
+    expect(control).toHaveAttribute("dir", "rtl");
+    expect(root).not.toHaveAttribute("tabindex");
+    expect(root).not.toHaveAttribute("role");
     expect(root).toHaveStyle({ marginInlineStart: "4px" });
     expect(control).toHaveClass("brick-textarea-control", "consumer-control");
     expect(control).toHaveStyle({ letterSpacing: "2px" });

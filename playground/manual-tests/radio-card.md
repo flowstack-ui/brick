@@ -13,7 +13,16 @@
 | Assistive technology | |
 | Playground route | `/radio-card` |
 
-Scenario order: `01 Overview`, `02 Variants`, `03 Sizes and alignment`, `04 States`, `05 Addons`, `06 Responsive and RTL`
+Scenario order: Basic, Sizes, Variants, Tones, States, Addon, No Indicator,
+Controlled, Controller, Attached, Custom Indicator, Responsive, Form, Alignment.
+Use `/radio-card?qualification=1` for the numbered qualification surface.
+
+The native input is the radio; Item is a label. Confirm the option name excludes
+description/addon metadata, which remains separately discoverable. Check read-only
+focus without value changes, one notification per click and external-form ownership.
+Review subtle/surface without an outline inset, responsive variable resets and
+attached corners in both appearances. Actual zoom, screen reader and physical
+device results remain blank until performed.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 

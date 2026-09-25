@@ -11,3 +11,6 @@ const multiple: NativeSelectFieldProps = { multiple: true };
 // @ts-expect-error Native select has no readonly.
 const readonly: NativeSelectFieldProps = { readOnly: true };
 void [shape, rows, multiple, readonly];
+
+const surfaceRecipe: Pick<import("react").ComponentProps<typeof NativeSelect.Root>, "variant"> = { variant: "surface" };
+void surfaceRecipe;

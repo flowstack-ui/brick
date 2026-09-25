@@ -19,17 +19,20 @@ Present a fixed-length PIN or optional OTP as theme-native segmented entry while
 
 ## Rules
 
+- **MUST:** Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+- **MUST:** Use outline for a transparent rest/hover control and surface for a neutral raised fill with the same border and geometry, without a shadow or extra Surface wrapper. Soft remains subdued. Popup backgrounds are independent; preserve explicit disabled, read-only, invalid and forced-colors states.
 - **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Treat all cells as one logical code, match visible Input count and order to Root length, and never create independent application state, validation, or submission names for each cell.
 - **MUST:** Retain string[] values and details callbacks so empty positions survive. Do not reconstruct controlled state from joined valueAsString. Atom sanitizes then rejects invalid paste atomically; configure ASCII types or a per-character RegExp and preserve invalid notifications.
 - **MUST:** Use the public usePinInput hook and RootProvider for externally controlled stores; create the hook inside inherited Field/Form/Direction providers. Context exposes that controller. Root owns one hidden named value; do not duplicate it.
 - **MUST:** PinInput replaces OTPField without an alias. Existing OTP consumers explicitly set otp. mask=true uses native password inputs; custom mask strings are visual-only. Security and verification remain outside the component.
-- **MUST:** Use seven responsive shared control sizes and outline/soft/underline; underline rejects shape. Outline is transparent. Group keeps a run of cells together; Control wraps groups. Use --brick-pin-input-size/radius only for documented custom geometry, never playground-only overrides.
+- **MUST:** Use seven responsive shared sizes and outline/surface/soft/subtle/ghost/plain/underline variants. Default lg stays aligned with Input. Underline and responsive variants reject explicit shape/radius. Neutral/accent tone controls interaction, invalid overrides it, and underline focus stays below. Keep adjacent native cells in each attached Group; Control wraps runs.
 - **MUST:** Name Root through Field or native ARIA, localize every generated position label, keep Separator decorative, and do not add unsupported aria-required to role=group.
 - **MUST:** Preserve one roving Tab stop, render-order registration, replacement and advance, Arrow/Home/End, Backspace/Delete, complete-code paste, disabled/read-only state, and logical source order in RTL.
 - **MUST:** Enable autoSubmit only when a complete accepted code should intentionally submit the associated form, with application-owned pending, verification, error, retry, and focus recovery behavior; choose autoFocus just as deliberately.
 - **MUST:** Keep required validity on the first visible cell and Root's named combined value submission-only, including Field invalid mirroring, external form association, and uncontrolled reset.
 - **MUST:** Load styles.css or core.css plus pin-input.css and Field CSS when composed.
+- **MUST:** For React Hook Form, use Controller with string[] values and onValueChange details.value, put its ref on the first Input and let Root own the single hidden named value. Do not add another hidden input or join away empty positions.
 
 ## Common mistakes
 

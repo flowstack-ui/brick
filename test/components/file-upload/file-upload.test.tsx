@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Field } from "../../../src/field.js";
 import { FileUpload } from "../../../src/file-upload.js";
+import { IconButton } from "../../../src/icon-button.js";
 
 function Upload({ onFilesChange = vi.fn() }: { onFilesChange?: (files: File[]) => void }) {
   return (
@@ -27,6 +28,56 @@ function Upload({ onFilesChange = vi.fn() }: { onFilesChange?: (files: File[]) =
 }
 
 describe("File Upload", () => {
+  it("exposes non-clickable dropzone styling without disabling its browse action", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<FileUpload.Root><FileUpload.HiddenInput />
+      <FileUpload.Dropzone disableClick aria-label="Drop files"><FileUpload.Trigger>Browse</FileUpload.Trigger></FileUpload.Dropzone>
+    </FileUpload.Root>);
+    const zone = screen.getByRole("group", { name: "Drop files" });
+    const click = vi.spyOn(container.querySelector("input")!, "click").mockImplementation(() => {});
+    expect(zone).toHaveAttribute("data-click-disabled", "");
+    await user.click(zone); expect(click).not.toHaveBeenCalled();
+    await user.click(screen.getByRole("button", { name: "Browse" })); expect(click).toHaveBeenCalledTimes(1);
+  });
+  it("shares Button recipes and composes one icon action without uploader paint", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<FileUpload.Root><FileUpload.HiddenInput />
+      <FileUpload.Trigger size={{ initial: "xs", md: "lg" }} tone="danger" variant="subtle" radius="sm">Choose document</FileUpload.Trigger>
+      <FileUpload.Trigger asChild><IconButton aria-label="Choose image" variant="ghost" size="xs"><svg /></IconButton></FileUpload.Trigger>
+    </FileUpload.Root>);
+    const text = screen.getByRole("button", { name: "Choose document" });
+    expect(text).toHaveClass("brick-button"); expect(text).toHaveAttribute("data-variant", "subtle");
+    expect(text).toHaveAttribute("data-tone", "danger"); expect(text).toHaveAttribute("data-size", "xs");
+    expect(container.querySelector("button button")).toBeNull();
+    expect(container.querySelector(".brick-file-upload__trigger")).toBeNull();
+    const input = container.querySelector("input")!;
+    const click = vi.spyOn(input, "click").mockImplementation(() => {});
+    const icon = screen.getByRole("button", { name: "Choose image" });
+    await user.click(icon); expect(click).toHaveBeenCalledTimes(1);
+    icon.focus(); await user.keyboard("{Enter}"); expect(click).toHaveBeenCalledTimes(2);
+    await user.keyboard(" "); expect(click).toHaveBeenCalledTimes(3);
+  });
+
+  it("provides ready-made list, clear, and filename text", async () => {
+    const user = userEvent.setup();
+    const file = new File(["hello"], "notes.txt", { type: "text/plain" });
+    render(<FileUpload.Root defaultFiles={[file]}><FileUpload.HiddenInput /><FileUpload.Trigger />
+      <FileUpload.FileText /><FileUpload.List /><FileUpload.ClearTrigger size="sm">Clear selection</FileUpload.ClearTrigger>
+    </FileUpload.Root>);
+    expect(screen.getAllByText("notes.txt")).toHaveLength(2);
+    expect(screen.getByRole("button", { name: "Remove notes.txt" })).toHaveClass("brick-icon-button");
+    await user.click(screen.getByRole("button", { name: "Clear files" }));
+    expect(screen.getByText("No file selected")).toBeVisible(); expect(screen.queryByRole("listitem")).toBeNull();
+  });
+
+  it("honors authored cancellation and prevents disabled/read-only picking", async () => {
+    const user = userEvent.setup();
+    const { container, rerender } = render(<FileUpload.Root><FileUpload.HiddenInput /><FileUpload.Trigger onClick={event => event.preventDefault()}>Choose</FileUpload.Trigger></FileUpload.Root>);
+    const click = vi.spyOn(container.querySelector("input")!, "click").mockImplementation(() => {});
+    await user.click(screen.getByRole("button", { name: "Choose" })); expect(click).not.toHaveBeenCalled();
+    rerender(<FileUpload.Root readOnly><FileUpload.HiddenInput /><FileUpload.Trigger>Choose</FileUpload.Trigger></FileUpload.Root>);
+    expect(screen.getByRole("button", { name: "Choose" })).toBeDisabled();
+  });
   it("adapts every Atom part with visual defaults and default actions", async () => {
     const user = userEvent.setup();
     const onFilesChange = vi.fn();

@@ -18,6 +18,9 @@ Present inline text editing with Atom-owned draft, commit, cancel and focus beha
 
 ## Rules
 
+- **MUST:** Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+- **MUST:** Use Root textStyle with shared Text recipes (responsive supported), weight, tone and align for synchronized preview/editor typography. Use textStyle=inherit inside an existing text context. Size controls density, not a typography limit. Do not style only the preview or duplicate a title value.
+- **MUST:** Use Root/Area/Control/Preview asChild for one structural host. Keep native Input, Textarea and Label. Custom Preview children must read Context.valueText. Use Trigger unstyled asChild for Button/IconButton so one recipe owns visuals. Preview highlight=none removes hover fill while keeping focus.
 - **MUST:** Separate draft changes from commit requests; saving, errors and retries belong to the application.
 - **MUST:** Update controlled value and edit in their callbacks. Create an external controller inside the Field scope when it must inherit Field state.
 - **MUST:** Load styles.css or core.css plus editable.css and the styles of composed components.

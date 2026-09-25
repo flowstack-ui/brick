@@ -46,3 +46,16 @@ Notes or issue:
 Overall result:
 Follow-up issues:
 Workbook updated:
+
+## September 18 recipe follow-up
+
+- Public examples: states, sizes, variants, tones, filled, responsive and parent
+  control; custom artwork is also shown. Inspect both light and dark appearance.
+- Compare unchecked/checked subtle and soft; outline-filled on the tinted
+  surface; invalid paint; disabled cursor and one fade inside semantic parents.
+- At 390, 850 and 1100px verify size/variant carry-forward and no overflow.
+- Outline has a larger dot; switching away restores the smaller dot. Unchecked replacement artwork stays hidden.
+- Run the semantic parent with keyboard and ensure the decorative mark does not
+  add a focus stop, role, accessible name or form field. Inspect forced colors.
+- Human screen-reader, physical-device and native 200–400% zoom results remain
+  open until independently performed; automated captures do not close them.

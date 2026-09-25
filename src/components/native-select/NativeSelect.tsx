@@ -1,12 +1,17 @@
 "use client";
+import { fieldVariantAttributes, type FieldVariant, type ResponsiveFieldVariant } from "../_field-variant/FieldVariant.js";
 import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
+import { layoutHost } from "../_internal/layout-host.js";
 
 import {
   createContext,
+  createElement,
   forwardRef,
   useContext,
   useMemo,
   type HTMLAttributes,
+  type ReactElement,
+  type ReactNode,
 } from "react";
 import {
   NativeSelect as AtomNativeSelect,
@@ -17,8 +22,7 @@ import {
   type ResponsiveControlSize,
 } from "../_control-size/ControlSize.js";
 
-export type NativeSelectVariant =
-  "outline" | "soft" | "ghost" | "plain" | "underline";
+export type NativeSelectVariant = "outline" | "surface" | "soft" | "subtle" | "ghost" | "plain" | "underline";
 export type NativeSelectShape = "sharp" | "rounded" | "pill";
 interface NativeSelectState {
   disabled?: boolean;
@@ -27,18 +31,19 @@ interface NativeSelectState {
   multiple?: boolean;
   rows?: number;
 }
-type RootBase = Omit<HTMLAttributes<HTMLDivElement>, "color"> &
+type RootBase = Omit<HTMLAttributes<HTMLElement>, "color" | "children"> &
   NativeSelectState & {
     size?: ResponsiveControlSize;
     fullWidth?: boolean;
     "data-slot"?: string;
   };
 export type NativeSelectRootProps = RootBase &
+  ({ asChild?: false; children?: ReactNode } | { asChild: true; children: ReactElement }) &
   (
     | (RadiusShapeProps<NativeSelectShape> & {
         variant?: Exclude<NativeSelectVariant, "underline">;
       })
-    | { variant: "underline"; shape?: never; radius?: never }
+    | { variant: ResponsiveFieldVariant; shape?: never; radius?: never }
   );
 export type NativeSelectFieldProps = Omit<AtomProps, "size" | "multiple">;
 export type NativeSelectIndicatorProps = HTMLAttributes<HTMLSpanElement> & {
@@ -55,11 +60,12 @@ const cn = (base: string, extra?: string) =>
   extra ? `${base} ${extra}` : base;
 
 export const NativeSelectRoot = forwardRef<
-  HTMLDivElement,
+  HTMLElement,
   NativeSelectRootProps
 >(function NativeSelectRoot(
   {
     size = "lg",
+    asChild = false,
     variant = "outline",
     shape = "rounded",
     radius,
@@ -85,22 +91,20 @@ export const NativeSelectRoot = forwardRef<
     () => ({ disabled, invalid, required, multiple, rows: count }),
     [disabled, invalid, required, multiple, count],
   );
+  const rootProps = {
+    ...props,
+    className: cn("brick-native-select brick-control-size", className),
+    "data-slot": slot,
+    ...fieldVariantAttributes(variant),
+    "data-shape": variant === "underline" ? undefined : radius === undefined ? shape : "rounded",
+    style: radiusStyle(variant === "underline" ? undefined : radius, "--brick-native-select-radius", style),
+    "data-full-width": fullWidth ? "" : undefined,
+    "data-list": multiple || (count ?? 0) > 1 ? "" : undefined,
+    ...controlSizeDataAttributes(size),
+  };
   return (
     <Context.Provider value={value}>
-      <div
-        {...props}
-        ref={ref}
-        className={cn("brick-native-select brick-control-size", className)}
-        data-slot={slot}
-        data-variant={variant}
-        data-shape={variant === "underline" ? undefined : radius === undefined ? shape : "rounded"}
-        style={radiusStyle(variant === "underline" ? undefined : radius, "--brick-native-select-radius", style)}
-        data-full-width={fullWidth ? "" : undefined}
-        data-list={multiple || (count ?? 0) > 1 ? "" : undefined}
-        {...controlSizeDataAttributes(size)}
-      >
-        {children}
-      </div>
+      {asChild ? layoutHost(children, rootProps, ref, "NativeSelect.Root") : createElement("div", { ...rootProps, ref }, children)}
     </Context.Provider>
   );
 });

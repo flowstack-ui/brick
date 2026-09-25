@@ -1,4 +1,6 @@
 import { forwardRef, type ReactElement, type ReactNode } from "react";
+import { responsiveSpacingStyles, type SpacingValue } from "../_spacing-value/SpacingValue.js";
+import type { ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 import {
   Form as AtomForm,
   type FormRootProps as AtomFormRootProps,
@@ -9,7 +11,7 @@ type FormSharedProps = Omit<
   "asChild" | "children" | "render"
 >;
 
-export type FormProps = FormSharedProps &
+export type FormProps = FormSharedProps & { gap?: ResponsiveValue<SpacingValue> } &
   (
     | {
         asChild: true;
@@ -32,6 +34,8 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(function Form(
     asChild = false,
     children,
     className,
+    gap,
+    style,
     render,
     "data-slot": dataSlot = "form",
     ...props
@@ -41,6 +45,7 @@ export const Form = forwardRef<HTMLFormElement, FormProps>(function Form(
   return (
     <AtomForm.Root
       {...props}
+      style={{ ...(gap === undefined ? {} : responsiveSpacingStyles("--brick-form-gap", gap)), ...style }}
       asChild={asChild}
       className={mergeClassName(className)}
       data-slot={dataSlot}

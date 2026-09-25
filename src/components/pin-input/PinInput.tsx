@@ -1,5 +1,6 @@
 "use client";
 import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
+import { fieldVariantAttributes, type FieldVariant, type ResponsiveFieldVariant } from "../_field-variant/FieldVariant.js";
 import {
   createContext,
   forwardRef,
@@ -30,7 +31,9 @@ import {
   type ControlSize,
   type ResponsiveControlSize,
 } from "../_control-size/ControlSize.js";
-export type PinInputVariant = "outline" | "soft" | "underline";
+export type PinInputVariant = FieldVariant;
+export type ResponsivePinInputVariant = ResponsiveFieldVariant;
+export type PinInputTone = "neutral" | "accent";
 export type PinInputSize = ControlSize;
 export type PinInputShape = "sharp" | "rounded";
 export type PinInputLayout = "separated" | "attached";
@@ -38,17 +41,19 @@ const VisualContext = createContext({
   layout: "separated" as PinInputLayout,
   shape: "rounded" as PinInputShape | undefined,
   size: "lg" as ResponsiveControlSize,
-  variant: "outline" as PinInputVariant,
+  variant: "outline" as ResponsivePinInputVariant,
 });
 const cn = (a: string, b?: string) => (b ? `${a} ${b}` : a);
 type Shared = AtomRootProps & {
+  tone?: PinInputTone;
   layout?: PinInputLayout;
   size?: ResponsiveControlSize;
 };
 export type PinInputRootProps = Shared &
   (
-    | ({ variant?: "outline" | "soft" } & RadiusShapeProps<PinInputShape>)
+    | ({ variant?: Exclude<PinInputVariant, "underline"> } & RadiusShapeProps<PinInputShape>)
     | { variant: "underline"; shape?: never; radius?: never }
+    | { variant: ResponsivePinInputVariant; shape?: never; radius?: never }
   );
 export type PinInputGroupProps = HTMLAttributes<HTMLDivElement> & {
   "data-slot"?: string;
@@ -68,6 +73,7 @@ export const PinInputRoot = forwardRef<HTMLDivElement, PinInputRootProps>(
       style,
       size = "lg",
       variant = "outline",
+      tone = "accent",
       "data-slot": dataSlot,
       ...props
     },
@@ -88,7 +94,8 @@ export const PinInputRoot = forwardRef<HTMLDivElement, PinInputRootProps>(
           data-shape={visual.shape}
           style={radiusStyle(variant === "underline" ? undefined : radius, "--brick-pin-input-radius", style)}
           data-slot={dataSlot ?? "pin-input"}
-          data-variant={variant}
+          {...fieldVariantAttributes(variant)}
+          data-tone={tone}
           ref={ref}
           {...controlSizeDataAttributes(size)}
         >
@@ -143,11 +150,13 @@ export const PinInputSeparator = forwardRef<
   );
 });
 export type PinInputRootProviderProps = AtomRootProviderProps & {
+  tone?: PinInputTone;
   layout?: PinInputLayout;
   size?: ResponsiveControlSize;
 } & (
-    | ({ variant?: "outline" | "soft" } & RadiusShapeProps<PinInputShape>)
+    | ({ variant?: Exclude<PinInputVariant, "underline"> } & RadiusShapeProps<PinInputShape>)
     | { variant: "underline"; shape?: never; radius?: never }
+    | { variant: ResponsivePinInputVariant; shape?: never; radius?: never }
   );
 export const PinInputRootProvider = forwardRef<
   HTMLDivElement,
@@ -162,6 +171,7 @@ export const PinInputRootProvider = forwardRef<
     style,
     size = "lg",
     variant = "outline",
+    tone = "accent",
     "data-slot": dataSlot,
     ...props
   },
@@ -182,7 +192,8 @@ export const PinInputRootProvider = forwardRef<
         data-shape={visual.shape}
         style={radiusStyle(variant === "underline" ? undefined : radius, "--brick-pin-input-radius", style)}
         data-slot={dataSlot ?? "pin-input"}
-        data-variant={variant}
+        {...fieldVariantAttributes(variant)}
+        data-tone={tone}
         ref={ref}
         {...controlSizeDataAttributes(size)}
       >

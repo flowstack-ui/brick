@@ -14,3 +14,4 @@ export {
   type FieldSize,
   type FieldTone,
 } from "./Field.js";
+export { FieldItem, FieldContext, FieldErrorIcon, useFieldContext, type FieldItemProps } from "./Field.js";

@@ -1,10 +1,5 @@
 # MultiSelect
 
-MultiSelect is Brick's styled multiple-value choice control. It is built
-directly on Atom MultiSelect 0.10.1: Atom owns the value array, open state, option
-registration, keyboard/typeahead, focus, dismissal, positioning, ARIA, native
-form participation, validation, and reset. Brick owns the complete visual
-system and default decorative artwork.
 
 ## When and where to use
 
@@ -116,11 +111,48 @@ Brick wrapper. Refs target each Atom-owned element listed above.
 
 ## API
 
+### Selection policy and presentation
+
+Root accepts `closeOnSelect`, `loopFocus`, controlled/default highlighting and
+`positioning` from Atom. Select defaults to closing after selection; MultiSelect
+stays open by default. Looping remains enabled unless explicitly disabled. Single Select
+also supports `deselectable`. Values remain string/string[] respectively.
+
+Use `subtle` for neutral muted fill and a transparent border, distinct from
+`soft`. Both owners support `ghost` and seven responsive sizes. Popup rows use
+compact content padding rather than full control height.
+
+Place `ClearTrigger` beside `Trigger`, never inside its button. Supply a
+localized `aria-label`. For IconButton-owned appearance, compose Trigger with
+`unstyled asChild`: this delegates presentation, not selection semantics.
+
+
+### Current recipes and composition
+
+Use the documentation route for focused Preview/Code examples; exhaustive
+evidence remains at `?qualification=1`. All seven responsive control sizes
+are supported (default lg). Subtle adds neutral muted fill with a transparent
+border, while soft keeps its existing appearance.
+
+Use explicit items records for opaque/async children and server-rendered
+labels/form values. Keep records and rendered Item values synchronized.
+Root supports controlled highlight, closeOnSelect (false by default), loopFocus,
+positioning, IDs, lazyMount/unmountOnExit, present, onExitComplete and
+cancellable focus/pointer/Escape dismissal. Content owns onInteractOutside.
+
+Import useMultiSelect from Brick and pass its original result to
+MultiSelect.RootProvider. The provider adds the visual recipe without copying
+state. MultiSelect.State exposes render-state access. Trigger unstyled asChild
+delegates appearance to an IconButton or Button. ClearTrigger belongs beside
+Trigger, never inside it. Use renderValue for summaries rather than nesting
+removable chip buttons inside the trigger.
+
+
 ### Root recipes
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `outline`, `soft`, `underline` | `outline` |
+| `variant` | `outline`, `surface`, `soft`, `subtle`, `ghost`, `underline` | `outline` |
 | `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`; or a responsive value | `lg` |
 | `shape` | `sharp`, `rounded`, `pill` | `rounded` |
 | `fullWidth` | `boolean` | `true` |
@@ -153,6 +185,22 @@ or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
+### Overlay arrow contract
+
+MultiSelect.Arrow retains its span ref and host. Its default diamond uses --brick-overlay-arrow-size (12px); --brick-multi-select-arrow-size is the local override. Keep Arrow directly in Content, outside Viewport. Viewport owns scrolling so Content can leave the arrow visible. positioning.gutter measures empty space to the tip; do not add compensation. The trigger Icon is not the popup Arrow.
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+
+Use outline for a transparent rest/hover control and surface for a neutral raised fill with the same border and geometry, without a shadow or extra Surface wrapper. Soft remains subdued. Popup backgrounds are independent; preserve explicit disabled, read-only, invalid and forced-colors states.
+
+
+MultiSelect is Brick's styled multiple-value choice control. It is built
+directly on Atom MultiSelect 0.10.1: Atom owns the value array, open state, option
+registration, keyboard/typeahead, focus, dismissal, positioning, ARIA, native
+form participation, validation, and reset. Brick owns the complete visual
+system and default decorative artwork.
+
 - `outline` uses a raised surface and strong complete border.
 - `soft` uses a subtle fill and restrained border.
 - `underline` uses a transparent surface and bottom line.
@@ -176,6 +224,13 @@ behavior remains unchanged by Brick visual props; Brick `size` is control
 geometry and never the native multi-select's numeric `size` attribute.
 
 ### Groups, scrolling, portal, and Arrow
+
+Inside Brick Dialog, keep Content's default portal enabled. Atom registers the
+portalled popup with the modal's focus and dismissal scope. `disablePortal`
+leaves it under Dialog.Body's scrolling clip and Dialog.Content's clipping
+boundary; a larger z-index cannot escape those ancestors. Use an explicit
+container only when it is outside clipping ancestors and verify focus,
+isolation, pointer selection and Escape. Do not remove Dialog overflow.
 
 Place Label and Items inside Group to expose an accessible option group. Use
 Separator between authored groups. Viewport owns option scrolling; the

@@ -12,8 +12,12 @@ import {
   type ControlSize,
   type ResponsiveControlSize,
 } from "../_control-size/ControlSize.js";
+import {
+  fieldVariantAttributes,
+  type ResponsiveFieldVariant,
+} from "../_field-variant/FieldVariant.js";
 
-export type TextareaVariant = "outline" | "soft" | "underline";
+export type TextareaVariant = "outline" | "surface" | "soft" | "subtle" | "ghost" | "plain" | "underline";
 import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
 export type TextareaSize = ControlSize;
 export type TextareaShape = "sharp" | "rounded";
@@ -45,11 +49,11 @@ type TextareaRootSharedProps = Omit<
 type TextareaVariantProps =
   | (RadiusShapeProps<TextareaShape> & {
       /** Visual container recipe. @default "outline" */
-      variant?: "outline" | "soft";
+      variant?: Exclude<TextareaVariant, "underline">;
       /** Visual container geometry. @default "rounded" */
     })
   | {
-      variant: "underline";
+      variant: ResponsiveFieldVariant;
       shape?: never;
       radius?: never;
     };
@@ -101,19 +105,21 @@ export const TextareaRoot = forwardRef<HTMLTextAreaElement, TextareaRootProps>(
     },
     ref,
   ) {
-    const resolvedShape = variant === "underline" ? undefined : radius === undefined ? shape : "rounded";
+    const hasFixedGeometry = typeof variant === "string" && variant !== "underline";
+    const resolvedShape = hasFixedGeometry ? radius === undefined ? shape : "rounded" : undefined;
     const resolvedResize = autoResize ? "none" : resize;
 
     return (
       <span
+        dir={props.dir}
         className={mergeClassName("brick-textarea brick-control-size", className)}
         data-autoresize={autoResize ? "" : undefined}
         data-full-width={fullWidth ? "" : undefined}
         data-resize={resolvedResize}
         data-shape={resolvedShape}
         data-slot={dataSlot ?? "textarea"}
-        data-variant={variant}
-        style={radiusStyle(variant === "underline" ? undefined : radius, "--brick-textarea-radius", style)}
+        {...fieldVariantAttributes(variant)}
+        style={radiusStyle(hasFixedGeometry ? radius : undefined, "--brick-textarea-radius", style)}
         {...controlSizeDataAttributes(size)}
       >
         <AtomTextarea.Root

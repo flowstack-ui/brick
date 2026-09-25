@@ -12,7 +12,7 @@ async function expectAlignedFieldsetTops(grid: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/fieldset");
+  await page.goto("/fieldset?qualification=1");
 });
 
 test("Fieldset overview preserves native defaults and Legend-owned relationships", async ({ page }) => {
@@ -154,22 +154,17 @@ test("Fieldset composition and appearances preserve identical defaults", async (
   }
 });
 
-test("Fieldset anchor navigation stays below the sticky review region", async ({ page }) => {
-  await page.getByRole("link", { name: "05 Relations" }).click();
-  await expect(page).toHaveURL(/#scenario-fieldset-relationships$/);
-  const target = page.locator("#scenario-fieldset-relationships");
-  const heading = target.locator(":scope > .scenario-heading");
-  await expect(target).toHaveCSS("outline-style", "none");
-  await expect(heading).toHaveCSS("border-left-style", "solid");
-  const positions = await page.evaluate(() => ({
-    headingTop: document
-      .querySelector("#scenario-fieldset-relationships > .scenario-heading")!
-      .getBoundingClientRect().top,
-    stickyBottom: document
-      .querySelector(".evidence-review-header")!
-      .getBoundingClientRect().bottom,
-  }));
-  expect(positions.headingTop).toBeGreaterThanOrEqual(positions.stickyBottom);
+test("Fieldset documentation links reach its Content part", async ({ page }) => {
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto("/fieldset");
+  await page.locator('[data-toc-link="props-content"]').click();
+  await expect(page).toHaveURL(/#props-content$/);
+  await expect(page.locator("#props-content")).toBeVisible();
+  await expect.poll(async () => {
+    const heading = await page.locator("#props-content").boundingBox();
+    const header = await page.getByRole("banner",{name:"Brick playground"}).boundingBox();
+    return heading!.y - (header!.y + header!.height);
+  }).toBeGreaterThanOrEqual(0);
 });
 
 test("Fieldset customization remains high contrast and narrow content stays contained", async ({ page }) => {

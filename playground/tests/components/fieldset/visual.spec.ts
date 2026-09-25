@@ -1,6 +1,6 @@
 import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/fieldset");
+installVisualDefaults("/fieldset?qualification=1");
 
 test("Fieldset anatomy, state, and appearance", async ({ page }) => {
   await expect(page.getByTestId("fieldset-overview")).toHaveScreenshot("overview-light.png");
@@ -13,7 +13,7 @@ test("Fieldset anatomy, state, and appearance", async ({ page }) => {
 
 test("Fieldset constrained and forced-color evidence", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.getByTestId("fieldset-stress")).toHaveScreenshot("stress-mobile.png");
+  await expectEvidenceScreenshot(page, page.getByTestId("fieldset-stress"), "stress-mobile.png");
   await page.setViewportSize({ width: 1120, height: 900 });
   await useForcedColors(page);
   await expect(page.getByTestId("fieldset-states")).toHaveScreenshot("states-forced-colors.png");

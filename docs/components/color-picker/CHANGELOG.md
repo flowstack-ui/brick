@@ -1,8 +1,17 @@
 # Color Picker changelog
 
-Color Picker follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+
+Color Picker follows the package version of `@flowstack-ui/brick`.
+
+- Add controller/provider, default editor anatomy, sliders and eyedropper shortcuts, subtle and responsive sizing.
+
+- Add surface as a neutral filled-and-bordered alternative with unchanged geometry; preserve outline defaults.
+- Keep outline transparent at rest and on hover, independently of popup paint.
 
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 

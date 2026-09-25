@@ -47,10 +47,29 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ## Anatomy and DOM ownership
 
 Root is an Atom `radiogroup` div. Item is an Atom radio button. ItemText is an
-optional span. Indicator is a decorative span that measures the active Item.
+optional span. Indicator is an Atom-owned decorative measured span.
 Refs target those rendered elements; Indicator never owns selection or naming.
 
 ## API
+
+Root adds `tone` (default `"neutral"`) using `SegmentGroupTone`:
+`neutral`, `accent`, or `contrast`.
+Neutral is a raised neutral selection; accent uses the solid accent and its
+on-solid foreground; contrast uses primary foreground as fill and base surface
+as text. The track stays neutral. Tone is not a status or validation signal.
+
+`SegmentGroup.Items` / `SegmentGroupItems` accepts
+`items: readonly (string | { value: string; label: ReactNode; disabled?: boolean })[]`.
+Values must be unique. It renders Item and ItemText and never duplicates native
+inputs. Use manual Item for icon-only labels, refs or custom native props.
+Additional exports: `SegmentGroupTone` and `SegmentGroupItemsProps`.
+
+```tsx
+<SegmentGroup.Root aria-label="View" defaultValue="List" tone="accent">
+  <SegmentGroup.Indicator />
+  <SegmentGroup.Items items={["List", "Grid", "Board"]} />
+</SegmentGroup.Root>
+```
 
 Root accepts Atom Radio Group props and adds `size: "2xs" | "xs" | "sm" | "md" | "lg"`
 (default `"md"`) and `fullWidth` (default `false`). Orientation defaults to
@@ -65,6 +84,7 @@ Public prop types are `SegmentGroupRootProps`, `SegmentGroupItemProps`,
 
 | Prop          | Values                        | Default      |
 | ------------- | ----------------------------- | ------------ |
+| `tone`        | `neutral`, `accent`, `contrast` | `neutral` |
 | `size`        | `2xs`, `xs`, `sm`, `md`, `lg` | `md`         |
 | `orientation` | `horizontal`, `vertical`      | `horizontal` |
 | `fullWidth`   | `boolean`                     | `false`      |
@@ -81,21 +101,24 @@ or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
-All sizes retain Brick's shared named outer control heights. `2xs` is the 28px
+All sizes retain Brick's shared named outer control heights. `2xs` is the 24px
 compact application-control recipe intended for dense property and editor
 panels; `xs` is the polished 32px marketing and compact-form recipe, and
 ordinary touch-first choices should continue to use `sm` or larger. Segment
 labels use regular-weight content typography rather than button-label weight,
-with component-owned horizontal padding and gaps. Resting Items use secondary
-text and the selected Item uses primary text. Indicator fills the selected
+with component-owned horizontal padding and gaps. Resting Items use primary
+text and the selected Item uses the tone's foreground. Indicator fills the selected
 Item's complete segmented area with a borderless shallow elevation, while the
 Root uses an inset boundary that does not enlarge the shared control size. The
 unselected rail uses the subtle surface, the selected
-segment uses the base surface in light appearance and raised surface in dark
-appearance, and short inset default-boundary rules keep every adjacent option
+segment uses the raised surface, with a soft outer edge in light appearance
+and an inset highlight in dark appearance. Short inset default-boundary rules keep every adjacent option
 distinct without drawing a full-height boxed edge. Dividers touching the
 selected item are hidden so they do not double its visual edge.
-Indicator moves and resizes without layout changes.
+Indicator moves and resizes without layout changes. Named forms keep separators
+despite Atom's interleaved hidden inputs. Before hydration/measurement the checked
+Item paints the same selected surface; the first indicator placement does not
+animate from the origin. Public data-slot overrides do not change host ownership.
 Disabled state stays visible but unavailable;
 read-only selection remains focusable and stable.
 
@@ -116,14 +139,25 @@ Stable classes and slots are `segment-group`, `segment-group-indicator`,
 `--brick-segment-group-focus-ring`, `--brick-segment-group-divider`, and
 `--brick-segment-group-divider-inset`.
 
-Root exposes `data-size` and `data-full-width`; Item exposes
+Root exposes `data-size`, `data-tone` and `data-full-width`; Item exposes
 `data-icon-only` alongside Atom's state and value attributes.
 
 ## Customization
 
-Prefer `size` and `fullWidth`, then public component variables. Keep the
+Prefer `size`, `tone`, `radius` and `fullWidth`, then public component variables. Keep the
 Indicator visibly distinct, preserve focus, and do not place accessible text
 on Indicator.
+
+For a local custom indicator, override `--brick-segment-group-indicator-background`
+and `--brick-segment-group-selected-foreground` together on Root. The public
+`--brick-segment-group-indicator-shadow` override can remove elevation. These
+instance extensions take precedence over tone and must preserve readable contrast;
+they do not require changing a global theme. Invalid state is independent of tone.
+
+Controlled form-library adapters bind `value` and `onValueChange` (a string,
+not an event or details object). Put `name` on Root for native submission.
+Do not render an additional hidden input. A form-library dependency is not
+required by Brick; use the adapter supplied by your application.
 
 ## Responsive behavior
 

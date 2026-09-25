@@ -1,20 +1,17 @@
-# Radio Card
-
-Radio Card is Brick's finished whole-card single-selection control for rich
-visible options. Atom owns radio semantics, selection, keyboard navigation,
-focus, forms, validation, direction, and reset; Brick owns the card anatomy,
-recipes, content hierarchy, indicator, addon, and state paint.
+# RadioCard
 
 ## When and where to use
 
-Use Radio Card for one payment method, billing cadence, shipping speed,
-permission profile, or plan choice when each option needs more than a concise
-label.
+Use for mutually exclusive rich options. Compose one named Root with Items,
+each containing exactly one HiddenInput, Control, Title and optional Description,
+Indicator and Addon. Item is now a label; its ref targets HTMLLabelElement.
+HiddenInput owns native radio focus, events and submission. Existing button-item
+consumers must add HiddenInput and move input-specific refs/ARIA onto that part.
 
 ## When not to use
 
-Use Radio Group for short text options, Checkbox Group for multiple selection,
-and Segment Group or Toggle Group for immediate commands.
+Use CheckboxCard for independent choices, RadioGroup for simple choices, and Card
+with separate controls for records containing links or actions.
 
 ## Installation and imports
 
@@ -23,154 +20,145 @@ import { RadioCard } from "@flowstack-ui/brick/radio-card";
 import "@flowstack-ui/brick/styles.css";
 ```
 
-For modular CSS, load the foundation once and the component stylesheet on each
-route that renders Radio Card:
+Or load modular styles:
 
 ```tsx
 import "@flowstack-ui/brick/styles/core.css";
 import "@flowstack-ui/brick/styles/radio-card.css";
 ```
 
-Add modular CSS for every other Brick component in the composition. Do not
-combine modular CSS with `styles.css` or `tokens.css`.
-
 ## Quick start
 
 ```tsx
-<Fieldset.Root>
-  <Fieldset.Legend>Billing cadence</Fieldset.Legend>
-  <RadioCard.Root defaultValue="annual" name="billing">
-    <RadioCard.Item value="annual">
-      <RadioCard.Control>
-        <RadioCard.Content>
-          <RadioCard.Title>Annual</RadioCard.Title>
-          <RadioCard.Description>Save 20%</RadioCard.Description>
-        </RadioCard.Content>
-        <RadioCard.Indicator />
-      </RadioCard.Control>
-      <RadioCard.Addon>Billed once per year</RadioCard.Addon>
-    </RadioCard.Item>
-  </RadioCard.Root>
-</Fieldset.Root>
+<RadioCard.Root name="plan" defaultValue="team">
+  <RadioCard.Label>Choose a plan</RadioCard.Label>
+  <RadioCard.Item value="team">
+    <RadioCard.HiddenInput />
+    <RadioCard.Control>
+      <RadioCard.Content>
+        <RadioCard.Title>Team</RadioCard.Title>
+        <RadioCard.Description>For collaborative projects</RadioCard.Description>
+      </RadioCard.Content>
+      <RadioCard.Indicator />
+    </RadioCard.Control>
+  </RadioCard.Item>
+</RadioCard.Root>
 ```
 
 ## Anatomy and DOM ownership
 
-`Root` adapts Atom's radiogroup `div`; `Item` adapts Atom's radio `button` and
-Atom-owned hidden form input. `Control`, `Content`, `Title`, `Description`,
-`Indicator`, and `Addon` are presentational spans. Indicator is optional and
-its authored order determines placement. Do not add another hidden input.
+Root and RootProvider render divs. Item renders a label. HiddenInput renders the
+native radio input. Label, Control, Content, Title, Description, Indicator and
+Addon render spans. Context and ItemContext are render-function parts.
 
 ## API
 
-Named exports are `RadioCard`, `RadioCardRoot`, `RadioCardItem`,
-`RadioCardControl`, `RadioCardContent`, `RadioCardTitle`,
-`RadioCardDescription`, `RadioCardIndicator`, and `RadioCardAddon`. Public
-types are `RadioCardRootProps`, `RadioCardItemProps`, `RadioCardPartProps`,
-`RadioCardIndicatorProps`, `RadioCardSize`, `RadioCardVariant`,
-`RadioCardAlign`, and `RadioCardJustify`.
-
-Root accepts Atom Radio Group props and adds:
-
 | Prop | Values | Default |
 | --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
-| `variant` | `outline`, `surface`, `subtle`, `solid` | `outline` |
-| `align` | `start`, `center`, `end` | `start` |
-| `justify` | `start`, `center`, `end` | `start` |
-| `orientation` | `vertical`, `horizontal` | `horizontal` |
+| `size` | `sm`, `md`, `lg`; responsive | `md` |
+| `variant` | `outline`, `surface`, `subtle`, `solid`; responsive | `outline` |
+| `align` | `start`, `center`, `end`; responsive | `start` |
+| `justify` | `start`, `center`, `end`; responsive | `start` |
+| `orientation` | `horizontal`, `vertical`; scalar | `horizontal` |
 
-Item requires a unique `value`. All parts accept class, style, slot, native
-span/button props, and refs appropriate to their rendered element. Custom
-Indicator children replace the default dot and remain decorative.
+Root supports controlled value/onValueChange or defaultValue; the callback
+receives a string. RootProvider accepts useRadioCard's controller. Controlled
+owners handle reset. Context exposes group state; ItemContext exposes option state.
+Label names the group; Title names the input and Description describes it.
+Fieldset remains the group legend/help/error owner.
 
-### Shared radius selection
+Sizes sm/md/lg and variants outline/surface/subtle/solid accept responsive values,
+as do align, justify and contentOrientation. Defaults are md, outline, accent,
+start/start. contentOrientation falls back to scalar orientation for migration.
+orientation remains the keyboard axis; contentOrientation is visual only.
+Use one Root with Grid, Stack or Group for option arrangement.
 
-The parts listed for this component in the [Radius guide](../../guides/radius.md)
-accept the shared token-only `Radius` contract. Omission preserves the owner’s
-normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
-and responsive objects are not accepted. Where a legacy corner `shape` exists,
-choose either it or `radius`, not both. This does not change behavior, sizing,
-or the independently owned corners of other parts.
+Exports include RadioCardRoot, RadioCardRootProvider, RadioCardLabel,
+RadioCardItem, RadioCardHiddenInput, RadioCardControl, RadioCardContent,
+RadioCardTitle, RadioCardDescription, RadioCardIndicator, RadioCardAddon,
+RadioCardContext, RadioCardItemContext and useRadioCard. Types include
+RadioCardRootProps, RadioCardRootProviderProps, RadioCardItemProps,
+RadioCardPartProps, RadioCardIndicatorProps, RadioCardSize, RadioCardVariant,
+RadioCardAlign, RadioCardJustify and RadioCardTone.
 
 ## Visual recipes and states
 
-`outline` keeps a transparent canvas and emphasizes the checked border;
-`surface` uses the base surface and a soft checked surface; `subtle` uses a
-subtle resting surface; and `solid` uses the accent solid role when checked.
-Horizontal orientation places Content and Indicator in a row; vertical
-orientation stacks them while preserving the same Item list and Atom keyboard
-model. Size changes padding, indicator geometry, and type together. Atom state
-attributes drive checked, disabled, read-only, invalid, and focus paint.
+Tone uses the shared form vocabulary: neutral, accent, contrast, info, success,
+warning and danger. Neutral and contrast share the current monochrome selection
+mapping. Tone is not validation: use invalid for validation. Theme owns custom
+palette bindings. Radius uses the existing Radius tokens, default surface.
+
+Indicator is decorative and optional. Order it before/after/inside Content.
+Use checked for checked-only artwork, children for custom mark artwork; custom
+artwork is hidden unchecked. Do not add a second radio or manual selection click
+handler. Keep every Item descendant passive; record actions need Card plus a
+separate control. asChild must preserve legal label/input semantics.
+
+Outline emphasizes the selected boundary; surface supplies tonal fill and border;
+subtle is borderless with an outlined radio mark; solid uses a strong selected fill.
+Disabled dims once. Read-only preserves normal contrast and focus without changes.
 
 ## Tokens and CSS hooks
 
-Stable classes and slots are `radio-card`, `radio-card-item`,
-`radio-card-control`, `radio-card-content`, `radio-card-title`,
-`radio-card-description`, `radio-card-indicator`, and `radio-card-addon` with
-matching `.brick-radio-card*` classes. Root exposes `data-size`,
-`data-variant`, `data-align`, `data-justify`, and `data-slot`; Atom exposes state
-and orientation attributes.
+Hooks include `--brick-radio-card-gap`, `--brick-radio-card-radius`,
+`--brick-radio-card-inset` and `--brick-radio-card-mark`.
 
-Public variables are `--brick-radio-card-gap`,
-`--brick-radio-card-min-block-size`, `--brick-radio-card-padding-block`,
-`--brick-radio-card-padding-inline`, `--brick-radio-card-radius`,
-`--brick-radio-card-background`, `--brick-radio-card-border`, and
-`--brick-radio-card-foreground`, `--brick-radio-card-indicator-size`,
-`--brick-radio-card-indicator-background`,
-`--brick-radio-card-indicator-border`,
-`--brick-radio-card-indicator-checked-background`,
-`--brick-radio-card-indicator-checked-border`, and
-`--brick-radio-card-indicator-checked-foreground`.
+Load styles.css or core.css plus radio-card.css and composed component CSS.
+Customize supported props first, then semantic Theme values and documented
+--brick-radio-card-* variables: solid/on-solid/soft/tone-text/tone-border, radius,
+inset, gap, mark, text-size and addon-inset. Preserve paired contrast and states.
+Existing --brick-radio-card-min-block-size, --brick-radio-card-padding-block,
+--brick-radio-card-padding-inline and --brick-radio-card-foreground hooks remain
+supported. Background and border hooks are --brick-radio-card-background and
+--brick-radio-card-border; selected paint uses the selected-background,
+selected-foreground and selected-border hooks.
 
 ## Customization
 
-Prefer the size, variant, align, and justify recipes, then semantic Theme
-tokens, then documented component variables. Keep reusable selection paint in
-Radio Card; application-specific option content remains composition.
+Prefer recipe props, then Theme bindings, then documented hooks. Classes follow
+brick-radio-card and __item/__control/__content/__title/__description/__indicator.
+Recipe attributes include data-size, data-variant, data-tone, data-align,
+data-justify, data-content-orientation and data-slot.
+
+Stable attributes: `data-size`, `data-variant`, `data-align`, `data-justify`,
+`data-slot`.
 
 ## Responsive behavior
 
-Root stacks Items by default while horizontal orientation arranges each
-Item's Control content in a row. For a precise responsive card grid, place a
-Brick Grid or Stack inside Root and keep `orientation` consistent with the
-intended keyboard movement. Use one semantic Root; do not render duplicate
-responsive groups with diverging state. Items stretch within their parent
-track and wrap long content.
+Responsive size, variant, align, justify and contentOrientation preserve one
+semantic group. Sparse values inherit defaults. orientation is scalar and
+defaults to horizontal; it controls keyboard navigation, not responsive layout.
 
 ## Accessibility
 
-Give Root an accessible group name, normally with Fieldset Legend or native
-ARIA. Atom provides radio roles/state, one roving Tab stop, Arrow/Home/End/
-Space behavior, disabled skipping, read-only, required/invalid state, named
-form submission, external forms, and reset. Brick preserves a 44px target,
-visible checked/focus states, forced colors, dark appearance, and reflow.
+Test native label clicks and keyboard selection once, roving focus, disabled
+skip, readOnly submission, required validation/reset, RTL, responsive recipes,
+variant borders, attached corners, forced colors and long content.
+
+Disabled inputs do not submit. Read-only inputs remain focusable and submit.
+Explicit input aria-label/aria-labelledby overrides generated Title naming.
+Render exactly one HiddenInput per Item; do not nest additional interactive controls.
 
 ## Composition, native props, and refs
 
-Control, Content, Title, Description, Indicator, and Addon preserve native span
-attributes, events, classes, styles, slots, and refs. Root and Item preserve
-their Atom/native props and refs. Keep every Item under one Root; authored
-content may use Brick Stack, Icon, Badge, Text, and other presentational
-components without changing radio ownership.
+Root refs target divs, Item refs labels, HiddenInput refs inputs, presentation
+part refs spans. Behavioral parts support Atom asChild/render where documented;
+Content and Addon support asChild. Keep native label/input semantics when replacing
+hosts. Old button-ref consumers must migrate to label refs or input refs.
 
 ## Examples
 
-Use `align="center" justify="center"` for compact centered choices. Put
-`RadioCard.Indicator` before Content for a leading indicator or after Content
-for a trailing indicator. Addon remains attached below Control and should hold
-supporting option context, not a second interactive control.
+[Executable examples](../../../playground/src/components/radio-card/) cover
+recipes, states, providers, custom artwork, addon, attached layout and forms.
 
 ## Evidence
 
-- [Playground route](../../../playground/src/components/radio-card/RadioCardPage.tsx)
-- [Component test](../../../test/components/radio-card/radio-card.test.tsx)
-- [Type test](../../../test/types/components/radio-card.test.ts)
-- [Browser test](../../../playground/tests/components/radio-card/behavior.spec.ts)
-- [Visual test](../../../playground/tests/components/radio-card/visual.spec.ts)
+- [Component tests](../../../test/components/radio-card/)
+- [Type tests](../../../test/types/components/radio-card.test.ts)
+- [Behavior](../../../playground/tests/components/radio-card/behavior.spec.ts)
+- [Visuals](../../../playground/tests/components/radio-card/visual.spec.ts)
 - [Manual protocol](../../../playground/manual-tests/radio-card.md)
-- [Packed Consumer](../../../apps/consumer/src/App.tsx)
 
 ## Changelog
 
-See [`CHANGELOG.md`](CHANGELOG.md).
+See [CHANGELOG.md](CHANGELOG.md).

@@ -1,5 +1,12 @@
 # Pin Input manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 | Run information | Value |
 | --- | --- |
 | Component | Pin Input |
@@ -44,3 +51,16 @@ have passed. Record actual devices and any password-manager limitations.
 Overall result:
 Follow-up issues:
 Workbook updated:
+
+## Form surface comparison
+
+- Compare outline and surface on light/dark canvas and raised parents: outline stays transparent; surface owns its neutral fill without adding a shadow.
+- Hover, focus, disable and mark invalid; preserve visible boundaries and explicit state treatment. Compare matched size recipes including their outer borders.
+- Check narrow/RTL containment and forced colors. Popup panels and selection marks must retain their independent paint.
+# September 18 parity qualification additions
+
+Use `/pin-input` for focused documentation and `/pin-input?qualification=1` for
+the twelve retained scenarios. Check all seven recipes, neutral/accent focus,
+invalid focus, responsive underline-to-filled restoration, attached runs in RTL,
+and Hook Form focus recovery. Real SMS suggestions, screen readers, physical IME,
+device input and 200–400% zoom remain unperformed until explicitly recorded.

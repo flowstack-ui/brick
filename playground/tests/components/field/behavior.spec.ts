@@ -18,7 +18,7 @@ async function expectResponsiveFieldLayout(grid: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/field");
+  await page.goto("/field?qualification=1");
 });
 
 test("Field overview preserves default anatomy and generated relationships", async ({ page }) => {
@@ -135,25 +135,17 @@ test("Field composition and appearances preserve identical defaults", async ({ p
   }
 });
 
-test("Field anchor navigation keeps target treatment below the sticky review region", async ({ page }) => {
-  await page.getByRole("link", { name: "06 Relations" }).click();
-  await expect(page).toHaveURL(/#scenario-field-relationships$/);
-  const target = page.locator("#scenario-field-relationships");
-  const heading = target.locator(":scope > .scenario-heading");
-  await expect(target).toHaveCSS("outline-style", "none");
-  await expect(heading).toHaveCSS("border-left-style", "solid");
-
-  const positions = await page.evaluate(() => {
-    const sticky = document.querySelector(".evidence-review-header")!;
-    const targetHeading = document.querySelector(
-      "#scenario-field-relationships > .scenario-heading",
-    )!;
-    return {
-      headingTop: targetHeading.getBoundingClientRect().top,
-      stickyBottom: sticky.getBoundingClientRect().bottom,
-    };
-  });
-  expect(positions.headingTop).toBeGreaterThanOrEqual(positions.stickyBottom);
+test("Field documentation links reach the targeted composition", async ({ page }) => {
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto("/field");
+  await page.locator('[data-toc-link="target"]').click();
+  await expect(page).toHaveURL(/#target$/);
+  await expect(page.locator("#target").getByRole("textbox", {name:"Price"})).toBeVisible();
+  await expect.poll(async () => {
+    const heading = await page.locator("#target").boundingBox();
+    const header = await page.getByRole("banner",{name:"Brick playground"}).boundingBox();
+    return heading!.y - (header!.y + header!.height);
+  }).toBeGreaterThanOrEqual(0);
 });
 
 test("Field customization remains high contrast and narrow layouts reflow", async ({ page }) => {

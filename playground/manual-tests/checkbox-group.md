@@ -92,6 +92,12 @@ Notes or issue:
 
 ## Completion
 
+For the September 16 controller and limit additions, verify limit announcements,
+selected-item removal at capacity, Parent partial selection/clear, linked-label
+independence and required-group error recovery after an item is removed.
+Record physical touch, real zoom and screen-reader results separately; automated
+browser evidence does not satisfy these manual checks.
+
 Overall result:
 Follow-up issues:
 Workbook updated:

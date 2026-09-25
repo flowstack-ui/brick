@@ -20,7 +20,7 @@
     --brick-color-picker-transparency-grid-base: #fff;
     --brick-color-picker-transparency-grid-contrast: #eee;
     --brick-color-picker-background: transparent;
-    --brick-color-picker-border-color: var(--brick-color-border-default);
+    --brick-color-picker-border-color: var(--brick-color-border-strong);
     --brick-color-picker-focus-ring: var(--brick-color-focus-ring);
     --brick-color-picker-content-background: var(--brick-color-surface-overlay);
     --brick-color-picker-content-border-color: var(--brick-color-border-default);
@@ -35,61 +35,368 @@
     color: var(--brick-color-text-primary);
   }
 
+/* BEGIN GENERATED COLOR PICKER SIZES */
   .brick-color-picker[data-size="2xs"] {
-    --brick-color-picker-control-size: 1.75rem;
-    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
-    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+    --brick-color-picker-control-size: 1.5rem;
     --brick-color-picker-area-block-size: 8rem;
-    --brick-color-picker-slider-block-size: 0.75rem;
-    --brick-color-picker-thumb-size: 0.75rem;
+    --brick-color-picker-slider-block-size: .75rem;
+    --brick-color-picker-thumb-size: .75rem;
     --brick-color-picker-value-swatch-size: 1rem;
     --brick-color-picker-swatch-size: 1.125rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-caption-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-caption-line-height);
   }
-
   .brick-color-picker[data-size="xs"] {
     --brick-color-picker-control-size: 2rem;
-    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
-    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
     --brick-color-picker-area-block-size: 9rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
     --brick-color-picker-value-swatch-size: 1rem;
     --brick-color-picker-swatch-size: 1.25rem;
-  }
-
-  .brick-color-picker[data-size="sm"] {
-    --brick-color-picker-control-size: 2.25rem;
     --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
     --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+  }
+  .brick-color-picker[data-size="sm"] {
+    --brick-color-picker-control-size: 2.25rem;
     --brick-color-picker-area-block-size: 10rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
     --brick-color-picker-value-swatch-size: 1.125rem;
     --brick-color-picker-swatch-size: 1.5rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
   }
-
+  .brick-color-picker[data-size="md"] {
+    --brick-color-picker-control-size: 2.5rem;
+    --brick-color-picker-area-block-size: 11.25rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.25rem;
+    --brick-color-picker-swatch-size: 1.75rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-md-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-md-line-height);
+  }
   .brick-color-picker[data-size="lg"] {
     --brick-color-picker-control-size: 2.75rem;
+    --brick-color-picker-area-block-size: 11.25rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.375rem;
+    --brick-color-picker-swatch-size: 1.75rem;
     --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
     --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
-    --brick-color-picker-value-swatch-size: 1.375rem;
   }
-
   .brick-color-picker[data-size="xl"] {
     --brick-color-picker-control-size: 3rem;
-    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
-    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
     --brick-color-picker-area-block-size: 12rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
     --brick-color-picker-value-swatch-size: 1.5rem;
     --brick-color-picker-swatch-size: 2rem;
-  }
-
-  .brick-color-picker[data-size="2xl"] {
-    --brick-color-picker-control-size: 4rem;
     --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
     --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  .brick-color-picker[data-size="2xl"] {
+    --brick-color-picker-control-size: 4rem;
     --brick-color-picker-area-block-size: 14rem;
+    --brick-color-picker-slider-block-size: .875rem;
     --brick-color-picker-thumb-size: 1rem;
     --brick-color-picker-value-swatch-size: 2rem;
     --brick-color-picker-swatch-size: 2.5rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
   }
+  @media (min-width: 30rem) {
+  .brick-color-picker[data-size-sm="2xs"] {
+    --brick-color-picker-control-size: 1.5rem;
+    --brick-color-picker-area-block-size: 8rem;
+    --brick-color-picker-slider-block-size: .75rem;
+    --brick-color-picker-thumb-size: .75rem;
+    --brick-color-picker-value-swatch-size: 1rem;
+    --brick-color-picker-swatch-size: 1.125rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-caption-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-caption-line-height);
+  }
+  .brick-color-picker[data-size-sm="xs"] {
+    --brick-color-picker-control-size: 2rem;
+    --brick-color-picker-area-block-size: 9rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1rem;
+    --brick-color-picker-swatch-size: 1.25rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+  }
+  .brick-color-picker[data-size-sm="sm"] {
+    --brick-color-picker-control-size: 2.25rem;
+    --brick-color-picker-area-block-size: 10rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.125rem;
+    --brick-color-picker-swatch-size: 1.5rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+  }
+  .brick-color-picker[data-size-sm="md"] {
+    --brick-color-picker-control-size: 2.5rem;
+    --brick-color-picker-area-block-size: 11.25rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.25rem;
+    --brick-color-picker-swatch-size: 1.75rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-md-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-md-line-height);
+  }
+  .brick-color-picker[data-size-sm="lg"] {
+    --brick-color-picker-control-size: 2.75rem;
+    --brick-color-picker-area-block-size: 11.25rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.375rem;
+    --brick-color-picker-swatch-size: 1.75rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  .brick-color-picker[data-size-sm="xl"] {
+    --brick-color-picker-control-size: 3rem;
+    --brick-color-picker-area-block-size: 12rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.5rem;
+    --brick-color-picker-swatch-size: 2rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  .brick-color-picker[data-size-sm="2xl"] {
+    --brick-color-picker-control-size: 4rem;
+    --brick-color-picker-area-block-size: 14rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: 1rem;
+    --brick-color-picker-value-swatch-size: 2rem;
+    --brick-color-picker-swatch-size: 2.5rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  }
+  @media (min-width: 48rem) {
+  .brick-color-picker[data-size-md="2xs"] {
+    --brick-color-picker-control-size: 1.5rem;
+    --brick-color-picker-area-block-size: 8rem;
+    --brick-color-picker-slider-block-size: .75rem;
+    --brick-color-picker-thumb-size: .75rem;
+    --brick-color-picker-value-swatch-size: 1rem;
+    --brick-color-picker-swatch-size: 1.125rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-caption-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-caption-line-height);
+  }
+  .brick-color-picker[data-size-md="xs"] {
+    --brick-color-picker-control-size: 2rem;
+    --brick-color-picker-area-block-size: 9rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1rem;
+    --brick-color-picker-swatch-size: 1.25rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+  }
+  .brick-color-picker[data-size-md="sm"] {
+    --brick-color-picker-control-size: 2.25rem;
+    --brick-color-picker-area-block-size: 10rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.125rem;
+    --brick-color-picker-swatch-size: 1.5rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+  }
+  .brick-color-picker[data-size-md="md"] {
+    --brick-color-picker-control-size: 2.5rem;
+    --brick-color-picker-area-block-size: 11.25rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.25rem;
+    --brick-color-picker-swatch-size: 1.75rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-md-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-md-line-height);
+  }
+  .brick-color-picker[data-size-md="lg"] {
+    --brick-color-picker-control-size: 2.75rem;
+    --brick-color-picker-area-block-size: 11.25rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.375rem;
+    --brick-color-picker-swatch-size: 1.75rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  .brick-color-picker[data-size-md="xl"] {
+    --brick-color-picker-control-size: 3rem;
+    --brick-color-picker-area-block-size: 12rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.5rem;
+    --brick-color-picker-swatch-size: 2rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  .brick-color-picker[data-size-md="2xl"] {
+    --brick-color-picker-control-size: 4rem;
+    --brick-color-picker-area-block-size: 14rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: 1rem;
+    --brick-color-picker-value-swatch-size: 2rem;
+    --brick-color-picker-swatch-size: 2.5rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  }
+  @media (min-width: 64rem) {
+  .brick-color-picker[data-size-lg="2xs"] {
+    --brick-color-picker-control-size: 1.5rem;
+    --brick-color-picker-area-block-size: 8rem;
+    --brick-color-picker-slider-block-size: .75rem;
+    --brick-color-picker-thumb-size: .75rem;
+    --brick-color-picker-value-swatch-size: 1rem;
+    --brick-color-picker-swatch-size: 1.125rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-caption-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-caption-line-height);
+  }
+  .brick-color-picker[data-size-lg="xs"] {
+    --brick-color-picker-control-size: 2rem;
+    --brick-color-picker-area-block-size: 9rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1rem;
+    --brick-color-picker-swatch-size: 1.25rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+  }
+  .brick-color-picker[data-size-lg="sm"] {
+    --brick-color-picker-control-size: 2.25rem;
+    --brick-color-picker-area-block-size: 10rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.125rem;
+    --brick-color-picker-swatch-size: 1.5rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+  }
+  .brick-color-picker[data-size-lg="md"] {
+    --brick-color-picker-control-size: 2.5rem;
+    --brick-color-picker-area-block-size: 11.25rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.25rem;
+    --brick-color-picker-swatch-size: 1.75rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-md-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-md-line-height);
+  }
+  .brick-color-picker[data-size-lg="lg"] {
+    --brick-color-picker-control-size: 2.75rem;
+    --brick-color-picker-area-block-size: 11.25rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.375rem;
+    --brick-color-picker-swatch-size: 1.75rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  .brick-color-picker[data-size-lg="xl"] {
+    --brick-color-picker-control-size: 3rem;
+    --brick-color-picker-area-block-size: 12rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.5rem;
+    --brick-color-picker-swatch-size: 2rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  .brick-color-picker[data-size-lg="2xl"] {
+    --brick-color-picker-control-size: 4rem;
+    --brick-color-picker-area-block-size: 14rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: 1rem;
+    --brick-color-picker-value-swatch-size: 2rem;
+    --brick-color-picker-swatch-size: 2.5rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  }
+  @media (min-width: 80rem) {
+  .brick-color-picker[data-size-xl="2xs"] {
+    --brick-color-picker-control-size: 1.5rem;
+    --brick-color-picker-area-block-size: 8rem;
+    --brick-color-picker-slider-block-size: .75rem;
+    --brick-color-picker-thumb-size: .75rem;
+    --brick-color-picker-value-swatch-size: 1rem;
+    --brick-color-picker-swatch-size: 1.125rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-caption-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-caption-line-height);
+  }
+  .brick-color-picker[data-size-xl="xs"] {
+    --brick-color-picker-control-size: 2rem;
+    --brick-color-picker-area-block-size: 9rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1rem;
+    --brick-color-picker-swatch-size: 1.25rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+  }
+  .brick-color-picker[data-size-xl="sm"] {
+    --brick-color-picker-control-size: 2.25rem;
+    --brick-color-picker-area-block-size: 10rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.125rem;
+    --brick-color-picker-swatch-size: 1.5rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-sm-line-height);
+  }
+  .brick-color-picker[data-size-xl="md"] {
+    --brick-color-picker-control-size: 2.5rem;
+    --brick-color-picker-area-block-size: 11.25rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.25rem;
+    --brick-color-picker-swatch-size: 1.75rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-md-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-md-line-height);
+  }
+  .brick-color-picker[data-size-xl="lg"] {
+    --brick-color-picker-control-size: 2.75rem;
+    --brick-color-picker-area-block-size: 11.25rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.375rem;
+    --brick-color-picker-swatch-size: 1.75rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  .brick-color-picker[data-size-xl="xl"] {
+    --brick-color-picker-control-size: 3rem;
+    --brick-color-picker-area-block-size: 12rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: .875rem;
+    --brick-color-picker-value-swatch-size: 1.5rem;
+    --brick-color-picker-swatch-size: 2rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  .brick-color-picker[data-size-xl="2xl"] {
+    --brick-color-picker-control-size: 4rem;
+    --brick-color-picker-area-block-size: 14rem;
+    --brick-color-picker-slider-block-size: .875rem;
+    --brick-color-picker-thumb-size: 1rem;
+    --brick-color-picker-value-swatch-size: 2rem;
+    --brick-color-picker-swatch-size: 2.5rem;
+    --brick-color-picker-control-font-size: var(--brick-typography-control-lg-font-size);
+    --brick-color-picker-control-line-height: var(--brick-typography-control-lg-line-height);
+  }
+  }
+/* END GENERATED COLOR PICKER SIZES */
 
+  .brick-color-picker[data-variant="surface"] { --brick-color-picker-background: var(--brick-color-surface-raised); }
   .brick-color-picker[data-variant="soft"] {
     --brick-color-picker-background: var(--brick-color-surface-subtle);
   }
@@ -105,24 +412,15 @@
     line-height: var(--brick-typography-label-md-line-height);
   }
 
-  .brick-color-picker:is([data-size="xs"], [data-size="sm"]) .brick-color-picker__label,
-  .brick-color-picker:is([data-size="xs"], [data-size="sm"]) .brick-color-picker__channel-slider-label {
-    color: var(--brick-color-text-secondary);
-    font-family: var(--brick-typography-control-sm-font-family);
-    font-size: var(--brick-typography-control-sm-font-size);
-    font-weight: var(--brick-typography-control-sm-font-weight);
-    letter-spacing: var(--brick-typography-control-sm-letter-spacing);
-    line-height: var(--brick-typography-control-sm-line-height);
+  .brick-color-picker[data-variant="subtle"] {
+    --brick-color-picker-background: var(--brick-color-surface-subtle);
+    --brick-color-picker-border-color: transparent;
   }
-
-  .brick-color-picker[data-size="2xs"] .brick-color-picker__label,
-  .brick-color-picker[data-size="2xs"] .brick-color-picker__channel-slider-label {
+  .brick-color-picker__sliders { display: grid; gap: var(--brick-space-3); }
+  .brick-color-picker__channel-text {
+    font-size: var(--brick-color-picker-control-font-size);
+    line-height: var(--brick-color-picker-control-line-height);
     color: var(--brick-color-text-secondary);
-    font-family: var(--brick-typography-caption-font-family);
-    font-size: var(--brick-typography-caption-font-size);
-    font-weight: var(--brick-typography-caption-font-weight);
-    letter-spacing: var(--brick-typography-caption-letter-spacing);
-    line-height: var(--brick-typography-caption-line-height);
   }
 
   .brick-color-picker__control {
@@ -266,6 +564,8 @@
   }
 
   .brick-color-picker__format-select {
+    min-inline-size: max-content;
+    flex-shrink: 0;
     block-size: var(--brick-color-picker-control-size);
     padding-block: 0;
     padding-inline: var(--brick-space-2) var(--brick-space-5);
@@ -281,9 +581,9 @@
     .brick-color-picker__eye-dropper-trigger,
     .brick-color-picker__format-trigger,
     .brick-color-picker__format-select
-  ):not(:disabled):hover {
-    border-color: var(--brick-color-border-strong);
-    background-color: var(--brick-color-surface-hover, var(--brick-color-surface-subtle));
+  ):where(:not(:disabled, [readonly], [data-readonly]):hover) {
+    border-color: var(--brick-color-picker-border-color);
+    background-color: var(--brick-color-picker-background);
   }
 
   .brick-color-picker__control[data-layout="integrated"]
@@ -474,7 +774,7 @@
   .brick-color-picker__positioner {
     /* Atom supplies position and collision geometry inline. This one
        presentation value must win over Floating UI's inline `z-index:auto`. */
-    z-index: calc(var(--brick-layer-overlay) - 1) !important;
+    z-index: calc(var(--brick-layer-overlay) - 1 + var(--atom-overlay-layer, 0)) !important;
   }
 
   .brick-color-picker__content {
@@ -602,17 +902,20 @@
     --brick-color-picker-focus-ring: var(--brick-color-danger-text);
   }
 
+  .brick-color-picker[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
   .brick-color-picker[data-disabled] :where(input, button, select) {
     cursor: not-allowed;
-    color: var(--brick-color-text-disabled);
-    opacity: 0.72;
+    opacity: 1;
   }
 
   .brick-color-picker__eye-dropper-trigger[data-unsupported] {
     cursor: not-allowed;
-    color: var(--brick-color-text-disabled);
-    opacity: 0.72;
+    opacity: 0.5;
   }
+  .brick-color-picker[data-disabled] .brick-color-picker__eye-dropper-trigger[data-unsupported] { opacity: 1; }
 
   .brick-color-picker[data-readonly] :where(input, select, .brick-color-picker__swatch-trigger) {
     cursor: not-allowed;
@@ -656,5 +959,11 @@
 
     .brick-color-picker__swatch-trigger[data-state="checked"],
     .brick-color-picker__swatch-trigger[aria-pressed="true"] { border-width: 2px; }
+  }
+}
+
+@layer brick.components {
+  @media (forced-colors: active) {
+    .brick-color-picker[data-disabled] { opacity: 1; color: GrayText; }
   }
 }

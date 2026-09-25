@@ -1,7 +1,5 @@
 # Fieldset
 
-Fieldset coordinates a related control group with a legend, description, and
-group error.
 
 ## When and where to use
 
@@ -38,32 +36,46 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 <Fieldset.Root>
   <Fieldset.Legend>Notifications</Fieldset.Legend>
   <Fieldset.Description>Select all that apply.</Fieldset.Description>
-  {/* controls */}
+  <Fieldset.Content>{/* controls */}</Fieldset.Content>
 </Fieldset.Root>
 ```
 
 ## Anatomy and DOM ownership
 
 Public Atom-backed parts are `Root` (`fieldset`), `Legend` (`legend`),
-`Description` (`p`), and `Error` (`p`) with corresponding element refs. Brick
-adds no private DOM.
+`Description` (`p`), `Error` (`p`), and `Context` (no host). Brick adds
+`Content` (`div`) for vertical spacing. DOM parts forward element refs.
 
 ## API
 
 Public exports are `Fieldset`, `FieldsetRoot`, `FieldsetLegend`,
 `FieldsetDescription`, `FieldsetError`, and their corresponding
 `FieldsetRootProps`, `FieldsetLegendProps`, `FieldsetDescriptionProps`, and
-`FieldsetErrorProps`.
+`FieldsetErrorProps`, plus `FieldsetContent`, `FieldsetContentProps`,
+`FieldsetContext`, `useFieldsetContext` and `FieldsetSize`.
 
 | Prop | Values | Default |
 | --- | --- | --- |
 | `asChild` | `boolean` | `false` |
+| Root `size` | responsive `sm`, `md`, `lg` | `md` |
+| Content `gap` | responsive spacing value | size recipe |
 
-All parts inherit Atom relationship/native props, require children, and support
+Behavioral DOM parts inherit Atom relationship/native props, require children, and support
 either one `asChild` element or `render`, never both. Root owns group required,
 disabled, invalid, generated relationship, and native fieldset behavior.
+Content accepts native div props and `asChild`; Context takes a render-function child.
 
 ## Visual recipes and states
+
+Legend remains a direct native child. Legend and Description have an 8px gap.
+The header-to-content gap is 8px (`sm`), 16px (`md`) or 24px (`lg`). Without
+Description, that section gap follows Legend. Content's independent default
+field gaps are 6/16/16px; its `gap` prop changes only that inner spacing.
+
+Disabled labels and legends fade to 50%; the structural container does not fade. Descendant controls own their disabled treatment so Fieldset inheritance never compounds opacity.
+
+Fieldset coordinates a related control group with a legend, description, and
+group error.
 
 Root stacks legend, description, controls, and error with separate group and
 control gaps. Atom ownership marks parts so description/error ids and group
@@ -134,3 +146,16 @@ Refs target the rendered elements listed under anatomy.
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).
+### Form-family API
+
+Fieldset adds Content, Context and useFieldsetContext. Content renders a div,
+accepts native HTML attributes, forwards its ref, supports asChild and responsive
+gap. It owns vertical rhythm between related controls without adding paint.
+Root.size accepts responsive sm/md/lg (default md). Each size adjusts group
+spacing and legend hierarchy.
+
+Group invalid state does not mark every independent Field invalid. Apply invalid
+to the fields that need correction; Fieldset may summarize their state. Native
+fieldset/legend grouping and disabled semantics remain. Required-group rules
+such as selecting at least one choice belong to the choice primitive/application.
+Legends and error text no longer use wavy underlines or error-edge stripes.

@@ -1,22 +1,40 @@
 import { forwardRef, type SVGAttributes } from "react";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 
 export type CheckmarkSize = "xs" | "sm" | "md" | "lg";
 export type CheckmarkTone =
-  | "neutral" | "accent" | "info" | "success" | "warning" | "danger";
-export type CheckmarkVariant = "solid" | "outline" | "soft" | "plain" | "inverted";
+  | "neutral"
+  | "accent"
+  | "contrast"
+  | "info"
+  | "success"
+  | "warning"
+  | "danger";
+export type CheckmarkVariant =
+  | "solid"
+  | "outline"
+  | "soft"
+  | "subtle"
+  | "plain"
+  | "inverted";
 
-export interface CheckmarkProps extends Omit<
-  SVGAttributes<SVGSVGElement>,
-  "children" | "color"
-> {
+export interface CheckmarkProps
+  extends Omit<SVGAttributes<SVGSVGElement>, "children" | "color"> {
   "data-slot"?: string;
   checked?: boolean;
   filled?: boolean;
   disabled?: boolean;
+  /** Visual validation state only; the parent owns semantics. */
+  invalid?: boolean;
   indeterminate?: boolean;
-  size?: CheckmarkSize;
+  size?: ResponsiveValue<CheckmarkSize>;
+  radius?: Radius;
   tone?: CheckmarkTone;
-  variant?: CheckmarkVariant;
+  variant?: ResponsiveValue<CheckmarkVariant>;
 }
 
 function mergeClassName(base: string, className?: string) {
@@ -30,10 +48,13 @@ export const Checkmark = forwardRef<SVGSVGElement, CheckmarkProps>(
       filled = false,
       className,
       disabled = false,
+      invalid = false,
       indeterminate = false,
       size = "md",
       tone = "accent",
       variant = "solid",
+      radius,
+      style,
       "data-slot": dataSlot,
       ...props
     },
@@ -50,12 +71,20 @@ export const Checkmark = forwardRef<SVGSVGElement, CheckmarkProps>(
         aria-hidden="true"
         className={mergeClassName("brick-checkmark", className)}
         data-disabled={disabled ? "" : undefined}
+        data-invalid={invalid ? "" : undefined}
         data-filled={filled ? "" : undefined}
-        data-size={size}
+        {...responsiveDataAttributes("data-size", size, {
+          alwaysInitial: true,
+          defaultValue: "md",
+        })}
+        style={radiusStyle(radius, "--brick-checkmark-radius", style)}
         data-slot={dataSlot ?? "checkmark"}
         data-state={state}
         data-tone={tone}
-        data-variant={variant}
+        {...responsiveDataAttributes("data-variant", variant, {
+          alwaysInitial: true,
+          defaultValue: "solid",
+        })}
         focusable="false"
         ref={ref}
         viewBox="0 0 16 16"

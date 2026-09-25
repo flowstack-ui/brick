@@ -1,8 +1,5 @@
 # Pin Input
 
-PinInput is fixed-length PIN and code entry backed by Atom PinInput. Atom owns
-accepted characters, focus, paste, native masking, completion, validation, reset,
-and form participation; Brick owns polished cell recipes and Group layout.
 
 ## When and where to use
 Use it for fixed-length PINs or short verification, recovery and pairing codes.
@@ -64,12 +61,15 @@ Also exported: `PinInputRootProvider`, `PinInputContext`, `PinInputLabel`,
 
 | Root prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `outline`, `soft`, `underline` | `outline` |
+| `variant` | `outline`, `surface`, `soft`, `subtle`, `ghost`, `plain`, `underline`; responsive map | `outline` |
+| `tone` | `neutral`, `accent` | `accent` |
 | `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`; or a responsive value | `lg` |
 | `shape` | `sharp`, `rounded` | `rounded` |
 | `layout` | `separated`, `attached` | `separated` |
 
-`underline` rejects `shape`. RootProvider accepts the same recipe options and a
+`underline` and responsive variant maps reject explicit `shape` and `radius`.
+Responsive maps inherit the previous breakpoint, starting from outline.
+RootProvider accepts the same recipe options and a
 controller from `usePinInput(options)`. Root behavior is delegated unchanged:
 
 | Behavior option | Values / default |
@@ -111,6 +111,15 @@ choose either it or `radius`, not both. This does not change behavior, sizing,
 or the independently owned corners of other parts.
 
 ## Visual recipes and states
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+Use outline for a transparent rest/hover control and surface for a neutral raised fill with the same border and geometry, without a shadow or extra Surface wrapper. Soft remains subdued. Popup backgrounds are independent; preserve explicit disabled, read-only, invalid and forced-colors states.
+
+
+PinInput is fixed-length PIN and code entry backed by Atom PinInput. Atom owns
+accepted characters, focus, paste, native masking, completion, validation, reset,
+and form participation; Brick owns polished cell recipes and Group layout.
 Outline is transparent, soft uses a semantic subtle surface, and underline has
 only its bottom border. Every size changes square border-box cells and type
 together using the shared form-control scale. Shape follows the Theme control
@@ -119,10 +128,19 @@ separated keeps gaps. Focus, invalid, disabled and readOnly paint follow Atom
 state with forced-color and reduced-motion fallbacks.
 
 ## Tokens and CSS hooks
-Public variables are `--brick-pin-input-size` and `--brick-pin-input-radius`. Root exposes `data-variant`, `data-size`, `data-shape`, `data-layout`, and `data-slot`. Stable classes and slots are listed above.
+Public variables use the `--brick-pin-input-` prefix: `size`, `radius`,
+`background`, `hover-background`, `border`, `hover-border`, `foreground`,
+`placeholder`, `focus-ring` and `error-color`. Use semantic token values for paint.
+Root exposes `data-variant`, `data-size`, responsive variant/size attributes, `data-tone`,
+`data-shape`, `data-layout` and `data-slot`. Invalid overrides interaction color;
+underline retains bottom-only focus. Neutral does not remove visible focus.
+The exported `PinInputTone` and `ResponsivePinInputVariant` describe these props.
 
 ## Customization
-Prefer recipe props and semantic tokens, then the two component variables. Compose Groups and Separators to express readable code grouping; do not alter cell order visually.
+Prefer recipe props and semantic tokens, then documented component variables.
+Compose Groups and Separators to express readable code grouping; do not alter
+cell order visually. Attached cells must be adjacent native input hosts within
+each run; asChild may project onto an input but must not add intervening wrappers.
 
 ## Responsive behavior
 Groups use logical flex layout and may wrap only at group boundaries. Keep code length appropriate for the available width. RTL preserves authored cell order while logical groups and separators remain contained.

@@ -1,5 +1,20 @@
 # Multi Select Manual Test Protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
+## Nested-dialog clipping regression
+
+On `/multi-select#dialog`, open the dialog and selector. Confirm every option's
+top and bottom edges are visible and clickable beyond the dialog boundary.
+Toggling options must keep the dialog open. Escape closes only the selector and
+returns trigger focus; the next Escape closes the dialog. Repeat at narrow
+widths and with assistive technology. Keep the default Content portal enabled.
+
 Status: Unrun
 
 | Environment | Record before testing |
@@ -103,3 +118,19 @@ Overall result:
 Follow-up issues:
 
 Workbook updated:
+
+## Form surface comparison
+
+- Compare outline and surface on light/dark canvas and raised parents: outline stays transparent; surface owns its neutral fill without adding a shadow.
+- Hover, focus, disable and mark invalid; preserve visible boundaries and explicit state treatment. Compare matched size recipes including their outer borders.
+- Check narrow/RTL containment and forced colors. Popup panels and selection marks must retain their independent paint.
+## Select-family follow-up (not manually executed)
+
+- Compare all seven sizes and variants in light/dark, RTL and narrow views.
+- Verify real browser zoom at 200% and 400%, and physical mobile interaction.
+- Verify accessible labels, value announcements, disabled options,
+  required validation and reset with a real screen reader.
+- Check clear focus return, retained popup inertness and nested Dialog/Popover Escape order.
+- Confirm code examples and per-part Props headings match the public API.
+
+These are unperformed human checks; automated results do not fill them.

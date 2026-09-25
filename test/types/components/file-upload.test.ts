@@ -36,7 +36,7 @@ createElement(FileUpload.Root, { ...props, ref: rootRef },
     ) }),
 );
 
-const variants: FileUploadVariant[] = ["outline", "soft"];
+const variants: FileUploadVariant[] = ["outline", "soft", "surface"];
 const sizes: FileUploadSize[] = ["sm", "md", "lg"];
 const shapes: FileUploadShape[] = ["sharp", "rounded"];
 void RootExport;
@@ -45,3 +45,13 @@ void sizes;
 void shapes;
 // @ts-expect-error unsupported visual variant
 createElement(FileUpload.Root, { variant: "solid" });
+
+const surfaceRecipe: Pick<import("react").ComponentProps<typeof FileUpload.Root>, "variant"> = { variant: "surface" };
+void surfaceRecipe;
+
+createElement(FileUpload.Trigger, { size: { initial: "xs", md: "lg" }, variant: "subtle", tone: "contrast", loading: true, loadingText: "Preparing" });
+createElement(FileUpload.ClearTrigger, { size: "2xs", variant: "plain", radius: "full" });
+createElement(FileUpload.ItemDeleteTrigger, { size: "xl", tone: "danger", variant: "outline" });
+createElement(FileUpload.Root, { accept: { "image/png": [".png"] }, minSize: 1, directory: true, capture: "environment", transformFiles: async files => files });
+// @ts-expect-error actions are not navigation links
+createElement(FileUpload.Trigger, { href: "/files" });

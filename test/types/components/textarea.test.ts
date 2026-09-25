@@ -12,7 +12,7 @@ import {
 import { Textarea as RootTextarea } from "../../../src/index.js";
 
 const ref = createRef<HTMLTextAreaElement>();
-const variants: TextareaVariant[] = ["outline", "soft", "underline"];
+const variants: TextareaVariant[] = ["outline", "surface", "soft", "subtle", "ghost", "plain", "underline"];
 const sizes: TextareaSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: TextareaShape[] = ["sharp", "rounded"];
 const resizeModes: TextareaResize[] = ["none", "vertical", "horizontal", "both"];
@@ -29,12 +29,15 @@ const props: TextareaRootProps = {
 
 createElement(Textarea.Root, { ...props, ref }, createElement(Textarea.Count));
 createElement(Textarea.Root, { "aria-label": "Responsive", size: { md: "sm", xl: "2xl" } });
+createElement(Textarea.Root, { "aria-label": "Responsive variant", variant: { initial: "underline", md: "outline", xl: "ghost" } });
 createElement(RootTextarea.Root, { ...props, ref });
 createElement(TextareaRoot, { "aria-label": "Auto", autoResize: true, maxRows: 8, minRows: 3 });
 createElement(TextareaCount, { "aria-live": "off" });
 
 // @ts-expect-error underline has fixed sharp geometry
 createElement(Textarea.Root, { "aria-label": "Notes", shape: "rounded", variant: "underline" });
+// @ts-expect-error responsive variants may select underline and therefore exclude explicit radius/shape
+createElement(Textarea.Root, { "aria-label": "Notes", shape: "rounded", variant: { md: "underline" } });
 // @ts-expect-error auto-resize and manual resize are competing sizing models
 createElement(Textarea.Root, { "aria-label": "Notes", autoResize: true, resize: "vertical" });
 // @ts-expect-error maxRows only applies to auto-resize
@@ -48,3 +51,6 @@ void variants;
 void sizes;
 void shapes;
 void resizeModes;
+
+const surfaceRecipe: Pick<import("react").ComponentProps<typeof Textarea.Root>, "variant"> = { variant: "surface" };
+void surfaceRecipe;

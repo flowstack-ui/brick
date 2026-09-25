@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
   page.on("pageerror", (error) => {
     throw error;
   });
-  await page.goto("/editable");
+  await page.goto("/editable?qualification=1");
   await expect(page.locator('[data-component-page="editable"]')).toBeVisible();
 });
 test("Editable commits once, restores empty drafts and respects activation", async ({

@@ -1,40 +1,42 @@
+@import "../_selection-mark/selection-mark.css";
 @layer brick.components {
   .brick-checkmark {
-    --brick-checkmark-size: 1.25rem;
+    --brick-checkmark-size: var(--brick-selection-mark-size, 1.25rem);
+    --brick-checkmark-radius: var(--brick-radius-subtle);
     --brick-checkmark-solid: var(--brick-color-accent-solid);
     --brick-checkmark-on-solid: var(--brick-color-accent-on-solid);
     --brick-checkmark-soft: var(--brick-color-accent-soft);
     --brick-checkmark-text: var(--brick-color-accent-text);
-
     display: inline-block;
+    overflow: visible;
+    padding: var(--brick-mark-inset);
     box-sizing: border-box;
     inline-size: var(--brick-checkmark-size);
     block-size: var(--brick-checkmark-size);
     flex: 0 0 var(--brick-checkmark-size);
-    overflow: visible;
-    border: var(--brick-border-width) solid var(--brick-color-border-strong);
-    border-radius: var(--brick-radius-subtle);
-    background: transparent;
+    border: var(--brick-border-width) solid var(--brick-mark-border);
+    border-radius: var(--brick-checkmark-radius);
+    background: var(--brick-mark-background);
     color: transparent;
     vertical-align: middle;
   }
-
   .brick-checkmark path {
     fill: none;
-    stroke: currentcolor;
+    stroke: currentColor;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 2;
   }
-
-  .brick-checkmark[data-size="xs"] { --brick-checkmark-size: 0.75rem; }
-  .brick-checkmark[data-size="sm"] { --brick-checkmark-size: 1rem; }
-  .brick-checkmark[data-size="lg"] { --brick-checkmark-size: 1.5rem; }
-  .brick-checkmark:is([data-size="md"], [data-size="lg"]):not([data-variant="plain"]) { padding: calc(var(--brick-space-1) / 2); }
-  .brick-checkmark[data-filled], .brick-checkmark[data-variant="inverted"] { background: var(--brick-color-surface-canvas); }
-  .brick-checkmark[data-state]:not([data-state="unchecked"])[data-variant="inverted"] { border-color: var(--brick-checkmark-solid); color: var(--brick-checkmark-text); }
-
+  .brick-checkmark[data-filled] {
+    --brick-mark-rest-background: var(--brick-color-surface-canvas);
+  }
   .brick-checkmark[data-tone="neutral"] {
+    --brick-checkmark-solid: var(--brick-color-text-primary);
+    --brick-checkmark-on-solid: var(--brick-color-surface-canvas);
+    --brick-checkmark-soft: var(--brick-color-surface-subtle);
+    --brick-checkmark-text: var(--brick-color-text-primary);
+  }
+  .brick-checkmark[data-tone="contrast"] {
     --brick-checkmark-solid: var(--brick-color-text-primary);
     --brick-checkmark-on-solid: var(--brick-color-surface-canvas);
     --brick-checkmark-soft: var(--brick-color-surface-subtle);
@@ -64,37 +66,418 @@
     --brick-checkmark-soft: var(--brick-color-danger-soft);
     --brick-checkmark-text: var(--brick-color-danger-text);
   }
-
-  .brick-checkmark[data-state]:not([data-state="unchecked"])[data-variant="solid"] {
-    border-color: var(--brick-checkmark-solid);
-    background: var(--brick-checkmark-solid);
-    color: var(--brick-checkmark-on-solid);
+  .brick-checkmark[data-variant="solid"] {
+    --brick-mark-background: var(--brick-mark-rest-background, transparent);
+    --brick-mark-border: var(--brick-color-border-strong);
+    --brick-mark-selected-background: var(--brick-checkmark-solid);
+    --brick-mark-selected-border: var(--brick-checkmark-solid);
+    --brick-mark-selected-foreground: var(--brick-checkmark-on-solid);
+    --brick-mark-inset: clamp(
+      0px,
+      calc((var(--brick-checkmark-size) - 1rem) / 2),
+      2px
+    );
   }
-  .brick-checkmark[data-state]:not([data-state="unchecked"])[data-variant="outline"] {
-    border-color: var(--brick-checkmark-solid);
-    color: var(--brick-checkmark-text);
+  .brick-checkmark[data-variant="outline"] {
+    --brick-mark-background: var(--brick-mark-rest-background, transparent);
+    --brick-mark-border: var(--brick-color-border-default);
+    --brick-mark-selected-background: var(
+      --brick-mark-rest-background,
+      transparent
+    );
+    --brick-mark-selected-border: var(--brick-checkmark-solid);
+    --brick-mark-selected-foreground: var(--brick-checkmark-text);
+    --brick-mark-inset: clamp(
+      0px,
+      calc((var(--brick-checkmark-size) - 1rem) / 2),
+      2px
+    );
   }
   .brick-checkmark[data-variant="soft"] {
-    border-color: var(--brick-checkmark-soft);
-    background: var(--brick-checkmark-soft);
+    --brick-mark-background: var(--brick-checkmark-soft);
+    --brick-mark-border: var(--brick-checkmark-soft);
+    --brick-mark-selected-background: var(--brick-checkmark-soft);
+    --brick-mark-selected-border: var(--brick-checkmark-soft);
+    --brick-mark-selected-foreground: var(--brick-checkmark-text);
+    --brick-mark-inset: clamp(
+      0px,
+      calc((var(--brick-checkmark-size) - 1rem) / 2),
+      2px
+    );
   }
-  .brick-checkmark[data-state]:not([data-state="unchecked"])[data-variant="soft"],
-  .brick-checkmark[data-state]:not([data-state="unchecked"])[data-variant="plain"] {
-    color: var(--brick-checkmark-text);
+  .brick-checkmark[data-variant="subtle"] {
+    --brick-mark-background: var(--brick-checkmark-soft);
+    --brick-mark-border: var(--brick-checkmark-soft);
+    --brick-mark-selected-background: var(--brick-checkmark-soft);
+    --brick-mark-selected-border: var(--brick-checkmark-soft);
+    --brick-mark-selected-foreground: var(--brick-checkmark-text);
+    --brick-mark-inset: clamp(
+      0px,
+      calc((var(--brick-checkmark-size) - 1rem) / 2),
+      2px
+    );
   }
   .brick-checkmark[data-variant="plain"] {
-    border-color: transparent;
-    background: transparent;
+    --brick-mark-background: transparent;
+    --brick-mark-border: transparent;
+    --brick-mark-selected-background: transparent;
+    --brick-mark-selected-border: transparent;
+    --brick-mark-selected-foreground: var(--brick-checkmark-text);
+    --brick-mark-inset: 0px;
   }
-  .brick-checkmark[data-disabled] { opacity: 0.5; }
-
+  .brick-checkmark[data-variant="inverted"] {
+    --brick-mark-background: var(--brick-mark-rest-background, transparent);
+    --brick-mark-border: var(--brick-color-border-default);
+    --brick-mark-selected-background: var(
+      --brick-mark-rest-background,
+      transparent
+    );
+    --brick-mark-selected-border: var(--brick-checkmark-solid);
+    --brick-mark-selected-foreground: var(--brick-checkmark-text);
+    --brick-mark-inset: clamp(
+      0px,
+      calc((var(--brick-checkmark-size) - 1rem) / 2),
+      2px
+    );
+  }
+  @media (min-width: 30rem) {
+    .brick-checkmark[data-variant-sm="solid"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-strong);
+      --brick-mark-selected-background: var(--brick-checkmark-solid);
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-on-solid);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-sm="outline"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-sm="soft"] {
+      --brick-mark-background: var(--brick-checkmark-soft);
+      --brick-mark-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-background: var(--brick-checkmark-soft);
+      --brick-mark-selected-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-sm="subtle"] {
+      --brick-mark-background: var(--brick-checkmark-soft);
+      --brick-mark-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-background: var(--brick-checkmark-soft);
+      --brick-mark-selected-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-sm="plain"] {
+      --brick-mark-background: transparent;
+      --brick-mark-border: transparent;
+      --brick-mark-selected-background: transparent;
+      --brick-mark-selected-border: transparent;
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: 0px;
+    }
+    .brick-checkmark[data-variant-sm="inverted"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+  }
+  @media (min-width: 48rem) {
+    .brick-checkmark[data-variant-md="solid"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-strong);
+      --brick-mark-selected-background: var(--brick-checkmark-solid);
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-on-solid);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-md="outline"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-md="soft"] {
+      --brick-mark-background: var(--brick-checkmark-soft);
+      --brick-mark-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-background: var(--brick-checkmark-soft);
+      --brick-mark-selected-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-md="subtle"] {
+      --brick-mark-background: var(--brick-checkmark-soft);
+      --brick-mark-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-background: var(--brick-checkmark-soft);
+      --brick-mark-selected-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-md="plain"] {
+      --brick-mark-background: transparent;
+      --brick-mark-border: transparent;
+      --brick-mark-selected-background: transparent;
+      --brick-mark-selected-border: transparent;
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: 0px;
+    }
+    .brick-checkmark[data-variant-md="inverted"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+  }
+  @media (min-width: 64rem) {
+    .brick-checkmark[data-variant-lg="solid"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-strong);
+      --brick-mark-selected-background: var(--brick-checkmark-solid);
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-on-solid);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-lg="outline"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-lg="soft"] {
+      --brick-mark-background: var(--brick-checkmark-soft);
+      --brick-mark-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-background: var(--brick-checkmark-soft);
+      --brick-mark-selected-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-lg="subtle"] {
+      --brick-mark-background: var(--brick-checkmark-soft);
+      --brick-mark-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-background: var(--brick-checkmark-soft);
+      --brick-mark-selected-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-lg="plain"] {
+      --brick-mark-background: transparent;
+      --brick-mark-border: transparent;
+      --brick-mark-selected-background: transparent;
+      --brick-mark-selected-border: transparent;
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: 0px;
+    }
+    .brick-checkmark[data-variant-lg="inverted"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+  }
+  @media (min-width: 80rem) {
+    .brick-checkmark[data-variant-xl="solid"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-strong);
+      --brick-mark-selected-background: var(--brick-checkmark-solid);
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-on-solid);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-xl="outline"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-xl="soft"] {
+      --brick-mark-background: var(--brick-checkmark-soft);
+      --brick-mark-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-background: var(--brick-checkmark-soft);
+      --brick-mark-selected-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-xl="subtle"] {
+      --brick-mark-background: var(--brick-checkmark-soft);
+      --brick-mark-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-background: var(--brick-checkmark-soft);
+      --brick-mark-selected-border: var(--brick-checkmark-soft);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+    .brick-checkmark[data-variant-xl="plain"] {
+      --brick-mark-background: transparent;
+      --brick-mark-border: transparent;
+      --brick-mark-selected-background: transparent;
+      --brick-mark-selected-border: transparent;
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: 0px;
+    }
+    .brick-checkmark[data-variant-xl="inverted"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-checkmark-solid);
+      --brick-mark-selected-foreground: var(--brick-checkmark-text);
+      --brick-mark-inset: clamp(
+        0px,
+        calc((var(--brick-checkmark-size) - 1rem) / 2),
+        2px
+      );
+    }
+  }
+  .brick-checkmark[data-state]:not([data-state="unchecked"]) {
+    background: var(--brick-mark-selected-background);
+    border-color: var(--brick-mark-selected-border);
+    color: var(--brick-mark-selected-foreground);
+  }
+  .brick-checkmark[data-invalid] {
+    --brick-checkmark-solid: var(--brick-color-danger-solid);
+    --brick-checkmark-on-solid: var(--brick-color-danger-on-solid);
+    --brick-checkmark-soft: var(--brick-color-danger-soft);
+    --brick-checkmark-text: var(--brick-color-danger-text);
+    border-color: var(--brick-color-danger-border);
+  }
+  .brick-checkmark[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
   @media (forced-colors: active) {
-    .brick-checkmark { border-color: CanvasText; background: Canvas; }
+    .brick-checkmark[data-state] {
+      border-color: CanvasText;
+      background: Canvas;
+    }
     .brick-checkmark[data-state]:not([data-state="unchecked"]) {
       border-color: Highlight;
       background: Highlight;
       color: HighlightText;
     }
-    .brick-checkmark[data-disabled] { color: GrayText; opacity: 1; }
+    .brick-checkmark[data-invalid] {
+      border-color: LinkText;
+    }
+    .brick-checkmark[data-disabled][data-state] {
+      border-color: GrayText;
+      background: Canvas;
+      color: GrayText;
+      opacity: 1;
+    }
   }
 }

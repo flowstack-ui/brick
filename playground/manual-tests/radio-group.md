@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Radio Group |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unpublished 0.2.3 candidate; record exact digest |
 | Reviewer |  |
 | Date |  |
 | Browser and version |  |
@@ -12,6 +12,16 @@
 | Physical device |  |
 | Assistive technology |  |
 | Playground route | `/radio-group` |
+| Qualification route(s) | `/radio-group` and `/radio-group?qualification=1` |
+
+New open-anatomy checks: use keyboard and a screen reader to verify Label,
+ItemText and ItemDescription associations. Activate a link inside ItemText
+without changing selection, then activate the label/control to select. Verify
+the native input ref, one submitted value and custom artwork without a second
+dot. Check responsive size/variant in both directions, all four sizes, semantic
+tones, invalid precedence, read-only versus disabled, comfortable/compact targets,
+actual 200–400% zoom, forced colors and physical touch. Leave these human results
+open until performed.
 
 Scenario order: `01 Overview`, `02 Sizes`, `03 Layout`, `04 Ownership`,
 `05 States`, `06 Validation`, `07 Form`, `08 Compose`, `09 Theme`, `10 Stress`
@@ -21,10 +31,11 @@ every result blank until the named environment is actually tested.
 
 ## Step 1 — Default, sizes, and layout
 
-Setup: Open `/radio-group`; review scenarios 01–03 from top to bottom.
+Setup: Open `/radio-group?qualification=1`; review scenarios 01–03 from top to bottom.
 
-Action: Select every Overview choice. Compare `sm`, `md`, `lg`, vertical, and
-horizontal examples; narrow the viewport until the horizontal row wraps.
+Action: Select every Overview choice. Compare the qualification `sm`, `md`, `lg`,
+vertical and horizontal examples, then compare all four `xs`–`lg` sizes on the
+normal route. Narrow the viewport until the horizontal row wraps.
 
 Expected: Exactly one choice stays selected. Sizes increase evenly while all
 other defaults remain identical. Horizontal content wraps without clipping.
@@ -57,6 +68,10 @@ the form example choose Text messages, save, then reset.
 Expected: Empty native validation focuses the first radio; correction clears
 the failure. Save reports `Submitted: sms`; reset restores Email reports. The
 external group remains Push notifications and participates in the named form.
+Check both pointer and keyboard correction, including dismissal of the browser's
+native validation bubble. Firefox automation can have its next pointer click
+intercepted by that bubble; do not infer this manual pointer result from the
+automated keyboard-correction test.
 
 Result:
 Notes or issue:
@@ -97,8 +112,8 @@ Action: Operate the long-label group. In RTL, focus the first choice and press
 Left. Follow the page top to bottom once in each environment.
 
 Expected: Labels wrap without page-level horizontal scroll; targets remain
-usable. RTL selects the visually next choice and keeps the invalid cue on the
-logical start edge. Reduced motion is immediate; forced colors distinguish
+usable. RTL selects the visually next choice; invalid treatment stays on the
+circular control rather than adding a side stripe. Reduced motion is immediate; forced colors distinguish
 focus, checked, disabled, read-only, and invalid states.
 
 Result:

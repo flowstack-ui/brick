@@ -1,5 +1,7 @@
 # NativeSelect
 
+
+
 ## When and where to use
 
 Use browser-native selection for a short set of text options, especially when
@@ -52,17 +54,32 @@ is introduced. Root and Indicator cannot change host; Field remains a select.
 
 ## API
 
+
+### Current recipes and composition
+
+Use the documentation route for focused Preview/Code examples; exhaustive
+evidence remains at `?qualification=1`. All seven responsive control sizes
+are supported (default lg). Subtle adds neutral muted fill with a transparent
+border, while soft keeps its existing appearance.
+
+Root supports asChild for one visual host. Field remains a native select:
+use native options, optgroups, value/onChange, name/form and defaultValue.
+Root multiple/rows enables the platform list presentation and hides Indicator.
+The optional Indicator can be omitted or replaced. The platform owns picker
+appearance; custom popup positioning and read-only are not native features.
+
+
 | Prop | Values | Default |
 | --- | --- | --- |
 | `size` | seven control sizes or a responsive object | `lg` |
-| `variant` | outline, soft, ghost, plain, underline | `outline` |
+| `variant` | outline, surface, soft, subtle, ghost, plain, underline | `outline` |
 | `shape` | sharp, rounded, pill | `rounded` |
 | `fullWidth` | boolean | `true` |
 | `multiple` | boolean | `false` |
 
 NativeSelectRootProps: size uses the shared seven control sizes `2xs`, `xs`,
 `sm`, `md`, `lg`, `xl`, `2xl` (default `lg`), including sparse responsive values.
-NativeSelectVariant is `outline`, `soft`, `ghost`, `plain`, `underline`; default
+NativeSelectVariant is `outline`, `surface`, `soft`, `subtle`, `ghost`, `plain`, `underline`; default
 `outline`. NativeSelectShape is `sharp`, `rounded`, `pill`; default `rounded`.
 Do not supply shape with underline. fullWidth defaults true; multiple defaults
 false. rows sets the native visible-row count (positive integer). Multiple or
@@ -90,6 +107,23 @@ choose either it or `radius`, not both. This does not change behavior, sizing,
 or the independently owned corners of other parts.
 
 ## Visual recipes and states
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+Root supports `asChild` for one composed wrapper, merging refs, classes and
+styles without adding a second wrapper. Field always remains a native select.
+The `subtle` variant adds neutral muted fill with a transparent border, distinct
+from soft. Invalid and forced-colors states retain their explicit border.
+
+Use outline for a transparent rest/hover control and surface for a neutral raised fill with the same border and geometry, without a shadow or extra Surface wrapper. Soft remains subdued. Popup backgrounds are independent; preserve explicit disabled, read-only, invalid and forced-colors states.
+
+The field recipes are `outline`, `surface`, `soft`, `subtle`, `ghost`,
+`plain` and `underline`, with responsive initial/sm/md/lg/xl values. Subtle
+has a neutral fill and transparent border; ghost gains only a neutral hover
+fill; plain has no hover fill. Underline uses zero start inset and bottom-only
+focus. Other breakpoints restore normal geometry. Responsive variant objects
+exclude explicit radius/shape. These choices do not repaint independent popups
+or stepper action buttons.
 
 Shared control geometry keeps all variants at the same border-box height as
 same-sized Input. The existing 2xs Button is a smaller compact action target;

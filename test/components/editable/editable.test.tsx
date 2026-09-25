@@ -5,6 +5,30 @@ import { Editable, useEditable } from "../../../src/editable.js";
 import { Field } from "../../../src/field.js";
 
 describe("Editable", () => {
+  it("shares responsive typography without leaking visual props", () => {
+    const { container } = render(<Editable.Root textStyle={{ lg: "title-lg" }} weight="medium" tone="secondary" radius="none" defaultValue="Title"><Editable.Preview highlight="none" /><Editable.Input aria-label="Title" /></Editable.Root>);
+    const root = container.firstElementChild!;
+    expect(root).toHaveAttribute("data-variant", "body-sm");
+    expect(root).toHaveAttribute("data-variant-lg", "title-lg");
+    expect(root).toHaveAttribute("data-weight", "medium");
+    expect(root).not.toHaveAttribute("textStyle");
+    expect(root).not.toHaveAttribute("radius");
+    expect(root.querySelector(".brick-editable-preview")).toHaveAttribute("data-highlight", "none");
+  });
+  it("projects structural hosts and keeps custom text synchronized", () => {
+    render(<Editable.Root asChild defaultValue="Before"><section aria-label="Rename"><Editable.Context>{({ valueText }) => <Editable.Preview asChild><span>{valueText}</span></Editable.Preview>}</Editable.Context><Editable.Input aria-label="Custom title" /></section></Editable.Root>);
+    fireEvent.focus(screen.getByRole("button", { name: "Before" }));
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "After" } });
+    fireEvent.keyDown(screen.getByRole("textbox"), { key: "Enter" });
+    expect(screen.getByRole("button", { name: "After" })).toBeVisible();
+    expect(screen.getByRole("region", { name: "Rename" }).tagName).toBe("SECTION");
+  });
+  it("delegates control styling without losing hidden-state ownership", () => {
+    const { rerender } = render(<Editable.Root defaultValue="Title"><Editable.Preview /><Editable.Input aria-label="Title" /><Editable.EditTrigger unstyled asChild><button>Change</button></Editable.EditTrigger></Editable.Root>);
+    expect(screen.getByRole("button", { name: "Change" })).toHaveAttribute("data-unstyled");
+    rerender(<Editable.Root defaultValue="Title"><Editable.Preview /><Editable.Input aria-label="Title" /><Editable.EditTrigger asChild><button>Change</button></Editable.EditTrigger></Editable.Root>);
+    expect(screen.getByRole("button", { name: "Change" })).not.toHaveAttribute("data-unstyled");
+  });
   it("preserves refs, recipes and empty cancellation without leaking props", () => {
     const ref = createRef<HTMLInputElement>();
     const commit = vi.fn();

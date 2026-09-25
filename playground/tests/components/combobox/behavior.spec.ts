@@ -1,7 +1,81 @@
+import { verifyFormSurfaceRecipes } from "../../form-surface-recipes.js";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/combobox"); });
+test.beforeEach(async ({ page }) => { await page.goto("/combobox?qualification=1"); });
+
+test("documentation TOC, multiple chips and minimum-query opening", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/combobox");
+  const links=page.locator('aside a[href^="#"]');
+  expect(await links.count()).toBeGreaterThan(40);
+  for(const href of await links.evaluateAll(nodes=>nodes.map(node=>node.getAttribute("href")!))) await expect(page.locator(`[id="${href.slice(1)}"]`)).toHaveCount(1);
+  const input=page.locator("#multiple").getByRole("combobox");
+  await input.fill("Vue");
+  await page.getByRole("option",{name:"Vue",exact:true}).click();
+  await expect(input).toHaveValue("");
+  await expect(page.locator("#multiple").getByRole("button",{name:"Remove vue",exact:true})).toBeVisible();
+  await input.press("Escape");
+  const minimum=page.locator("#minimum").getByRole("combobox");
+  await minimum.fill("r");
+  await expect(minimum).toHaveAttribute("aria-expanded","false");
+  await minimum.fill("re");
+  await expect(minimum).toHaveAttribute("aria-expanded","true");
+});
+
+test("dialog selection and virtualized keyboard navigation", async ({ page }) => {
+  await page.goto("/combobox");
+  await page.getByRole("button",{name:"Choose in dialog"}).click();
+  const dialog=page.getByRole("dialog");
+  await dialog.getByRole("combobox").fill("Vue");
+  await dialog.getByRole("option",{name:"Vue"}).click();
+  await expect(dialog.getByRole("combobox")).toHaveValue("Vue");
+  await dialog.getByRole("button",{name:"Close",exact:true}).click();
+  const input=page.locator("#virtual").getByRole("combobox");
+  await input.click();
+  await input.press("ArrowDown");
+  await input.press("End");
+  await expect(page.getByRole("option",{name:"Project 1000",exact:true})).toBeVisible();
+  await input.press("Enter");
+  await expect(input).toHaveValue("Project 1000");
+});
+
+test("creatable, input behavior, native reset, and reduced motion", async ({ page }) => {
+  await page.goto("/combobox");
+  const create=page.locator("#creatable").getByRole("combobox");
+  await create.fill("Angular");
+  await page.getByRole("option",{name:"Create “Angular”",exact:true}).click();
+  await expect(create).toHaveValue("Angular");
+  const complete=page.locator("#input-behavior").getByRole("combobox").nth(1);
+  await complete.click(); await complete.press("ArrowDown");
+  await expect(complete).toHaveValue("React");
+  await complete.press("ArrowDown"); await expect(complete).toHaveValue("Vue");
+  await complete.press("Escape");
+  const form=page.locator("#nativeform");
+  await form.getByRole("combobox").fill("Vue");
+  await page.getByRole("option",{name:"Vue",exact:true}).click();
+  await form.getByRole("button",{name:"Submit",exact:true}).click();
+  await expect(form.getByText("Submitted: vue",{exact:true})).toBeVisible();
+  await form.getByRole("button",{name:"Reset",exact:true}).click();
+  await expect(form.getByRole("combobox")).toHaveValue("React");
+  await page.emulateMedia({reducedMotion:"reduce"});
+  await page.locator("#animation").getByRole("combobox").click();
+  await expect(page.locator('.brick-combobox-content[data-state="open"]')).toHaveCSS("animation-name","none");
+});
+
+test("documented paint variables remain effective with responsive recipes", async ({page}) => {
+  const control=page.locator('[data-scenario="combobox.appearance"] .combobox-customization .brick-combobox-control');
+  const paint=await control.evaluate(element=>{
+    const style=getComputedStyle(element);
+    const probe=document.createElement("div"); element.append(probe);
+    probe.style.background="var(--brick-combobox-background)";
+    probe.style.borderColor="var(--brick-combobox-border)";
+    const result={background:style.backgroundColor,border:style.borderColor,expectedBackground:getComputedStyle(probe).backgroundColor,expectedBorder:getComputedStyle(probe).borderColor};
+    probe.remove(); return result;
+  });
+  await expect(control).toHaveCSS("background-color",paint.expectedBackground);
+  await expect(control).toHaveCSS("border-color",paint.expectedBorder);
+});
 
 test("Combobox defaults, filtering, selection, clearing, and keyboard remain integrated", async ({ page }) => {
   const overview = page.locator('[data-scenario="combobox.overview"]'); const input = overview.getByRole("combobox", { name: "City" });
@@ -9,8 +83,12 @@ test("Combobox defaults, filtering, selection, clearing, and keyboard remain int
   await input.fill("lis");
   const content = page.locator(".brick-combobox-content:visible");
   await expect(content).toHaveAttribute("data-size", "lg");
-  await expect(page.getByRole("option", { name: "Lisbon" })).toHaveCSS("min-height", "44px"); await input.press("ArrowDown"); await input.press("Enter");
+  await expect(page.getByRole("option", { name: "Lisbon" })).toHaveCSS("min-height", "36px"); await input.press("ArrowDown"); await input.press("Enter");
   await expect(input).toHaveValue("Lisbon"); await overview.getByRole("button", { name: "Clear city" }).click(); await expect(input).toHaveValue("");
+});
+
+test("surface recipes preserve transparent outline and filled surface", async ({ page }) => {
+  await verifyFormSurfaceRecipes(page, "combobox", ".brick-combobox-control", "");
 });
 
 test("chevron toggles and popup matches the complete control width", async ({ page }) => {
@@ -27,8 +105,8 @@ test("chevron toggles and popup matches the complete control width", async ({ pa
 });
 
 test("recipes and RTL retain closed visual contracts", async ({ page }) => {
-  const controls = page.locator('[data-scenario="combobox.recipes"] .brick-combobox-control'); await expect(controls).toHaveCount(3);
-  for (let i=0;i<3;i+=1) await expect(controls.nth(i)).toHaveAttribute("data-variant", ["outline","soft","underline"][i]);
+  const controls = page.locator('[data-scenario="combobox.recipes"] .brick-combobox-control'); await expect(controls).toHaveCount(4);
+  for (let i=0;i<4;i+=1) await expect(controls.nth(i)).toHaveAttribute("data-variant", ["outline","soft","underline","surface"][i]);
   await expect(page.locator('[data-scenario="combobox.stress"]').getByRole("combobox", { name: "المدينة" })).toBeVisible();
 });
 
@@ -71,9 +149,9 @@ test("option rows inherit all seven shared control densities", async ({ page }) 
   const triggers = sizing.getByRole("button", { name: "Toggle City options" });
   for (const [index, size] of ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"].entries()) {
     await triggers.nth(index).click();
-    const content = page.locator(".brick-combobox-content:visible");
+    const content = page.locator('.brick-combobox-content[data-state="open"]');
     await expect(content).toHaveAttribute("data-size", size);
-    await expect(content.getByRole("option").first()).toHaveCSS("min-height", ["28px", "32px", "36px", "40px", "44px", "48px", "64px"][index]);
+    await expect(content.getByRole("option").first()).toHaveCSS("min-height", ["24px", "24px", "28px", "32px", "36px", "40px", "56px"][index]);
     await page.keyboard.press("Escape");
   }
 });
@@ -89,14 +167,20 @@ test("portalled options keep the component-owned layer while scrolling", async (
   const overview = page.locator('[data-scenario="combobox.overview"]');
   await overview.getByRole("button", { name: "Toggle City options" }).click();
   const popup = page.locator(".brick-combobox-content:visible");
-  const header = page.locator(".evidence-review-header");
+  const header = page.locator(".evidence-app-bar");
 
-  await page.evaluate(() => window.scrollBy(0, 300));
+  await expect(popup).toHaveAttribute("data-positioned", "");
+  await page.evaluate(() => {
+    const panel = document.querySelector(".brick-combobox-content")!.getBoundingClientRect();
+    const header = document.querySelector(".evidence-app-bar")!.getBoundingClientRect();
+    window.scrollBy(0, panel.top - header.bottom + 12);
+  });
   await expect(popup).toBeVisible();
 
+  await expect.poll(async () => popup.evaluate(element => element.getBoundingClientRect().top)).toBeLessThan(80);
   const paintOrder = await page.evaluate(() => {
     const popupElement = document.querySelector<HTMLElement>(".brick-combobox-content");
-    const headerElement = document.querySelector<HTMLElement>(".evidence-review-header");
+    const headerElement = document.querySelector<HTMLElement>(".evidence-app-bar");
     if (!popupElement || !headerElement) return null;
     const popupRect = popupElement.getBoundingClientRect();
     const headerRect = headerElement.getBoundingClientRect();

@@ -19,6 +19,12 @@ import {
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { DocsSection } from "../../shared/DocsSection.js";
+import { ExamplePreview } from "../../shared/ExamplePreview.js";
+import { ExampleSource } from "../../shared/ExampleSource.js";
+import { PropsTable } from "../../shared/PropsTable.js";
+import { Basic, basicSource, examples, propGroups } from "./documentation.js";
 import "../../shared/forms-evidence.playground.css";
 
 const sizes: RadioGroupSize[] = ["sm", "md", "lg"];
@@ -47,6 +53,22 @@ function DefaultItems() {
 }
 
 export function RadioGroupPage() {
+  const preview = usePreviewContext();
+  if (preview || (typeof window !== "undefined" && new URLSearchParams(window.location.search).get("qualification") === "1")) return <RadioGroupEvidence />;
+  return <VStack gap={12} data-component-page="radio-group">
+    <ExamplePreview label="Radio Group basic" source={basicSource}><Basic /></ExamplePreview>
+    <DocsSection id="usage" title="Usage" level={2} description="Use RadioGroup to choose one option from a visible set.">
+      <ExampleSource label="Radio Group import" source={'import { RadioGroup } from "@flowstack-ui/brick";'} />
+      <ExampleSource label="Radio Group usage" source={'<RadioGroup.Root aria-label="Delivery"><RadioGroup.Item value="standard">Standard</RadioGroup.Item></RadioGroup.Root>'} />
+    </DocsSection>
+    <DocsSection id="examples" title="Examples" level={2}><VStack gap={16}>{examples.map(({ id, title, description, Demo, source }) =>
+      <DocsSection key={id} id={id} title={title} description={description} level={3}><ExamplePreview label={title} source={source}><Demo /></ExamplePreview></DocsSection>)}</VStack></DocsSection>
+    <DocsSection id="props" title="Props" level={2}><VStack gap={10}>{propGroups.map(({ id, title, description, rows }) =>
+      <DocsSection key={id} id={id} title={title} description={description} level={3}><PropsTable label={`Radio Group ${title} props`} rows={rows} /></DocsSection>)}</VStack></DocsSection>
+  </VStack>;
+}
+
+function RadioGroupEvidence() {
   const [controlled, setControlled] = useState("email");
   const [uncontrolled, setUncontrolled] = useState("email");
   const [status, setStatus] = useState("No form event yet");
@@ -129,7 +151,7 @@ export function RadioGroupPage() {
       <Scenario {...radioGroupScenarios[9]}>
         <VStack className="forms-evidence-stack" data-testid="radio-group-stress">
           <EvidenceGroup description="Long localized and unbroken labels wrap inside a narrow application-owned frame." title="Constrained-width stress"><EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame"><RadioGroup.Root aria-label="Localized delivery channel" defaultValue="long"><RadioGroup.Item value="long">Extremely detailed localized publishing preference ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</RadioGroup.Item><RadioGroup.Item value="push">Push notifications</RadioGroup.Item></RadioGroup.Root></div></EvidenceSurface></EvidenceGroup>
-          <EvidenceGroup description="The horizontal group uses genuine right-to-left direction; logical arrow navigation and invalid cue reverse without mirrored text hacks." title="RTL inheritance"><EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><RadioGroup.Root aria-label="طرق الإشعار" defaultValue="email" dir="rtl" invalid orientation="horizontal"><RadioGroup.Item value="email">البريد الإلكتروني</RadioGroup.Item><RadioGroup.Item value="push">الهاتف</RadioGroup.Item><RadioGroup.Item value="sms">رسالة نصية</RadioGroup.Item></RadioGroup.Root></div></EvidenceSurface></EvidenceGroup>
+          <EvidenceGroup description="The horizontal group uses genuine right-to-left direction and logical arrow navigation. Invalid treatment stays on each circle." title="RTL inheritance"><EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><RadioGroup.Root aria-label="طرق الإشعار" defaultValue="email" dir="rtl" invalid orientation="horizontal"><RadioGroup.Item value="email">البريد الإلكتروني</RadioGroup.Item><RadioGroup.Item value="push">الهاتف</RadioGroup.Item><RadioGroup.Item value="sms">رسالة نصية</RadioGroup.Item></RadioGroup.Root></div></EvidenceSurface></EvidenceGroup>
         </VStack>
       </Scenario>
     </VStack>

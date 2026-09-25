@@ -1,7 +1,6 @@
 @layer brick.components {
   .brick-checkbox-group {
-    --brick-checkbox-group-gap: var(--brick-space-1);
-    --brick-checkbox-radius: var(--brick-radius-subtle);
+    --brick-checkbox-group-gap: calc(var(--brick-space-1) * 1.5);
     --brick-checkbox-invalid-foreground: var(--brick-color-danger-text);
 
     display: flex;
@@ -11,15 +10,12 @@
     gap: var(--brick-checkbox-group-gap);
   }
 
-  .brick-checkbox-group[data-invalid] {
-    padding-inline-start: var(--brick-space-2);
-    border-inline-start: var(--brick-border-focus-width) solid
-      var(--brick-checkbox-invalid-foreground);
-    border-radius: var(--brick-checkbox-radius);
-  }
 
   .brick-checkbox-group[data-orientation="vertical"] {
     flex-direction: column;
+  }
+  .brick-checkbox-group[data-invalid] :where(.brick-checkbox-group-item, .brick-checkbox-group-parent, .brick-checkbox)[data-state="unchecked"] .brick-checkbox-control {
+    border-color: var(--brick-checkbox-control-border, var(--brick-color-border-strong));
   }
 
   .brick-checkbox-group[data-orientation="horizontal"] {
@@ -39,9 +35,9 @@
   .brick-checkbox-group-item-label {
     min-inline-size: 0;
     grid-column: 2;
-    color: var(--brick-checkbox-label-foreground);
+    color: var(--brick-checkbox-label-foreground, var(--brick-color-text-primary));
     font-family: var(--brick-typography-label-md-font-family);
-    font-size: var(--brick-typography-label-md-font-size);
+    font-size: inherit;
     font-weight: var(--brick-typography-label-md-font-weight);
     letter-spacing: var(--brick-typography-label-md-letter-spacing);
     line-height: var(--brick-typography-label-md-line-height);
@@ -50,7 +46,7 @@
   .brick-checkbox-group-item-description {
     min-inline-size: 0;
     grid-column: 2;
-    color: var(--brick-checkbox-description-foreground);
+    color: var(--brick-checkbox-description-foreground, var(--brick-color-text-secondary));
     font-family: var(--brick-typography-supporting-sm-font-family);
     font-size: var(--brick-typography-supporting-sm-font-size);
     font-weight: var(--brick-typography-supporting-sm-font-weight);
@@ -65,7 +61,7 @@
   .brick-checkbox-group-parent {
     margin-block-end: var(--brick-space-1);
     font-family: var(--brick-typography-label-strong-font-family);
-    font-size: var(--brick-typography-label-strong-font-size);
+    font-size: var(--brick-selection-label-size, var(--brick-typography-body-sm-font-size));
     font-weight: var(--brick-typography-label-strong-font-weight);
     letter-spacing: var(--brick-typography-label-strong-letter-spacing);
     line-height: var(--brick-typography-label-strong-line-height);
@@ -77,8 +73,8 @@
   }
 
   @media (forced-colors: active) {
-    .brick-checkbox-group[data-invalid] {
-      border-inline-start-color: Mark;
+    .brick-checkbox-group[data-invalid] :where(.brick-checkbox-group-item, .brick-checkbox-group-parent, .brick-checkbox)[data-state="unchecked"] .brick-checkbox-control {
+      border-color: ButtonText;
     }
 
     .brick-checkbox-group-item-label {

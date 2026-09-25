@@ -6,7 +6,7 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/segment-group");
+installVisualDefaults("/segment-group?qualification=1");
 
 test("Segment Group default, sizes, and appearances", async ({ page }) => {
   await expect(page.getByTestId("segment-group-overview")).toHaveScreenshot(

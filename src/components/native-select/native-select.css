@@ -1,5 +1,13 @@
+@import "./field-variants.css";
 @layer brick.components {
+  .brick-native-select[data-variant="subtle"] {
+    --brick-native-select-background: var(--brick-color-surface-subtle);
+    --brick-native-select-hover-background: var(--brick-color-surface-subtle);
+    --brick-native-select-border: transparent;
+  }
   .brick-native-select {
+    --brick-native-select-background: transparent;
+    --brick-native-select-hover-background: transparent;
     position: relative;
     display: inline-grid;
     grid-template-columns: minmax(0, 1fr);
@@ -20,9 +28,9 @@
     text-overflow: ellipsis;
     padding-inline: var(--brick-control-size-padding-inline);
     padding-block: 0;
-    border: var(--brick-border-width) solid var(--brick-color-border-default);
+    border: var(--brick-border-width) solid var(--brick-native-select-border, var(--brick-color-border-strong));
     border-radius: var(--brick-native-select-radius, var(--brick-radius-control));
-    background: transparent;
+    background: var(--brick-native-select-background);
     color: var(--brick-color-text-primary);
     font-family: var(--brick-control-size-font-family);
     font-size: var(--brick-control-size-font-size);
@@ -66,17 +74,16 @@
   .brick-native-select[data-shape="pill"] .brick-native-select-field {
     border-radius: var(--brick-radius-full);
   }
-  .brick-native-select[data-variant="soft"] .brick-native-select-field {
-    background: var(--brick-color-surface-subtle);
+  .brick-native-select[data-variant="surface"] {
+    --brick-native-select-background: var(--brick-color-surface-raised);
+    --brick-native-select-hover-background: var(--brick-color-surface-raised);
   }
-  .brick-native-select:is([data-variant="ghost"], [data-variant="plain"])
-    .brick-native-select-field {
-    border-color: transparent;
+  .brick-native-select[data-variant="soft"] {
+    --brick-native-select-background: var(--brick-color-surface-subtle);
+    --brick-native-select-hover-background: var(--brick-color-accent-soft);
   }
-  .brick-native-select[data-variant="underline"] .brick-native-select-field {
-    border-inline-color: transparent;
-    border-block-start-color: transparent;
-    border-radius: 0;
+  .brick-native-select[data-variant="ghost"] {
+    --brick-native-select-hover-background: var(--brick-color-surface-subtle);
   }
   .brick-native-select-field:focus-visible {
     outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
@@ -85,11 +92,11 @@
   .brick-native-select-field[data-invalid] {
     border-color: var(--brick-color-danger-text);
   }
-  .brick-native-select-field:disabled {
-    color: var(--brick-color-text-muted);
-    background: var(--brick-color-surface-subtle);
+  .brick-native-select:has(.brick-native-select-field:disabled) {
+    opacity: 0.5;
     cursor: not-allowed;
   }
+  .brick-native-select-field:disabled { cursor: not-allowed; opacity: 1; }
   .brick-native-select[data-list] .brick-native-select-field {
     block-size: auto;
     min-block-size: var(--brick-control-size-block);
@@ -110,9 +117,9 @@
     color: GrayText;
   }
   @media (hover: hover) {
-    .brick-native-select:not([data-variant="plain"])
+    .brick-native-select
       .brick-native-select-field:not(:disabled):hover {
-      background: var(--brick-color-surface-subtle);
+      background: var(--brick-native-select-hover-background);
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -134,5 +141,11 @@
     .brick-native-select-field:focus-visible {
       outline-color: Highlight;
     }
+  }
+}
+
+@layer brick.components {
+  @media (forced-colors: active) {
+    .brick-native-select:has(.brick-native-select-field:disabled) { opacity: 1; color: GrayText; }
   }
 }

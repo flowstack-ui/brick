@@ -1,7 +1,9 @@
+import { verifyFormSurfaceRecipes } from "../../form-surface-recipes.js";
+import { setAppearance } from "../../visual-harness.js";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/color-picker"); });
+test.beforeEach(async ({ page }) => { await page.goto("/color-picker?qualification=1"); });
 
 test("popup editor is layered, aligned, and keeps presets synchronized", async ({ page }) => {
   const overview = page.getByTestId("color-picker-overview");
@@ -49,6 +51,10 @@ test("popup editor is layered, aligned, and keeps presets synchronized", async (
   ]);
   const heights = rowControls.map((box) => box!.height);
   expect(Math.max(...heights) - Math.min(...heights)).toBeLessThanOrEqual(1);
+});
+
+test("surface recipes preserve transparent outline and filled surface", async ({ page }) => {
+  await verifyFormSurfaceRecipes(page, "color-picker", ".brick-color-picker", ".brick-color-picker__input");
 });
 
 test("finished field, slider, and swatch recipes keep exact geometry", async ({ page }) => {
@@ -154,7 +160,7 @@ test("finished field, slider, and swatch recipes keep exact geometry", async ({ 
   expect(checkerGeometry[0].row).toBe(checkerGeometry[1].row);
   expect(Number(checkerGeometry[0].zIndex)).toBeLessThan(Number(checkerGeometry[1].zIndex));
 
-  await page.getByRole("button", { name: "dark", exact: true }).click();
+  await setAppearance(page, "dark");
   const darkCheckerPaint = await transparencyLayer.evaluate((element) => ({
     background: getComputedStyle(element).backgroundColor,
     backgroundImage: getComputedStyle(element).backgroundImage,
@@ -167,7 +173,7 @@ test("finished field, slider, and swatch recipes keep exact geometry", async ({ 
   expect(darkCheckerPaint.backgroundImage).toContain("rgb(238, 238, 238)");
   expect(darkValueSwatchPaint.background).not.toBe(valueSwatchPaint.background);
   expect(darkValueSwatchPaint.backgroundImage).toContain("conic-gradient");
-  await page.getByRole("button", { name: "system", exact: true }).click();
+  await setAppearance(page, "light");
 
   const alphaChannelInput = page.locator('[data-scenario="color-picker.inline"] [data-slot="color-picker-channel-input"]').last();
   await alphaChannelInput.fill("1");

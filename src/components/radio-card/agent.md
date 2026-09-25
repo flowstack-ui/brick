@@ -14,19 +14,19 @@ Present one rich whole-card choice while Atom owns radio semantics, selection, k
 
 ## Required composition
 
-- Give Root an accessible group name, normally through Fieldset Legend. Give every Item a stable unique value and compose Control, Content, Title, optional Description, optional Indicator, and optional Addon deliberately.
-- Use one Root. Put a Brick Grid or Stack inside it when responsive option tracks are needed; do not duplicate the semantic group.
+- Compose a named Root with uniquely valued label Items, each with exactly one native HiddenInput. Title names the input and Description describes it.
+- Use RootProvider with useRadioCard for external controller state. Use one group with Grid/Stack/Group; controlled owners handle reset.
 
 ## Rules
 
 - **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
-- **MUST:** Preserve Atom's radio Item as the whole interactive card; do not add a second input or click behavior.
 - **MUST:** Give Root an accessible group name and every Item a complete visible option name.
 - **MUST:** Keep Item values unique and use controlled or uncontrolled state consistently.
-- **MUST:** Treat Indicator as decorative because Atom Item carries the semantic checked state.
-- **SHOULD:** Keep the default horizontal Control anatomy unless the option content and keyboard model intentionally require vertical orientation.
 - **SHOULD:** Use one semantic Root with Brick Grid or Stack for responsive tracks; never duplicate divergent radio-group state.
 - **MUST:** Load styles.css or core.css plus radio-card.css and every composed Brick component stylesheet.
+- **MUST:** Item is a label and requires one HiddenInput. Item ref targets label; HiddenInput ref targets input. Keep descendants passive and preserve native activation.
+- **MUST:** orientation is scalar keyboard navigation; responsive contentOrientation changes only internal presentation. Do not duplicate semantic groups.
+- **MUST:** Indicator is decorative. checked supplies checked-only artwork; children replaces default dot. Do not add control semantics.
 
 ## Common mistakes
 
@@ -39,7 +39,7 @@ Present one rich whole-card choice while Atom owns radio semantics, selection, k
 
 ## Related guidance
 
-- `@flowstack-ui/atom/agents/radio-group`
+- `@flowstack-ui/atom/agents/radio-card`
 - `radio-group`
 - `fieldset`
 - `grid`

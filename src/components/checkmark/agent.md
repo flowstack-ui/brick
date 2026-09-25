@@ -15,13 +15,15 @@ Show passive checked, unchecked, or indeterminate visual state without creating 
 ## Required composition
 
 - Pair Checkmark with visible text or place it inside a parent that already exposes the state accessibly.
-- Choose solid, soft, outline, plain or inverted. Unchecked marks are transparent by default; filled adds a canvas background to boxed recipes. Inverted keeps a canvas background with semantic foreground and border. Plain stays unboxed. Sizes xs/sm/md/lg are 12/16/20/24px.
+- Choose solid, outline, subtle, soft, plain or inverted with responsive size and variant. Subtle and soft use muted paint in all states; inverted is transparent unless filled. Plain stays unboxed. Sizes xs/sm/md/lg are 12/16/20/24px.
 
 ## Rules
 
 - **MUST:** Keep Checkmark passive and aria-hidden; the parent control or text owns semantics.
 - **MUST:** Use checked or indeterminate only to mirror state owned elsewhere.
 - **MUST:** Load styles.css or core.css plus checkmark.css.
+- **MUST:** Use responsive sizes and variants. Subtle and soft paint a muted box in every state; plain is unboxed, inverted is transparent unless filled, and boxed md/lg use 2px inset. invalid is visual only; disabled adds one fade and a disabled cursor.
+- **SHOULD:** Keep semantic tone props; for a qualified category palette use the documented --brick-checkmark-solid, --brick-checkmark-on-solid, --brick-checkmark-soft and --brick-checkmark-text tokens together and verify both appearances. Do not attach interaction to the mark.
 
 ## Common mistakes
 

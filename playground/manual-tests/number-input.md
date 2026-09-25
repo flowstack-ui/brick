@@ -1,5 +1,12 @@
 # Number Input manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 | Run information | Value |
 | --- | --- |
 | Component | Number Input |
@@ -52,3 +59,24 @@ Notes or issue:
 Overall result:
 Follow-up issues:
 Workbook updated:
+
+## Form surface comparison
+
+- Compare outline and surface on light/dark canvas and raised parents: outline stays transparent; surface owns its neutral fill without adding a shadow.
+- Hover, focus, disable and mark invalid; preserve visible boundaries and explicit state treatment. Compare matched size recipes including their outer borders.
+- Check narrow/RTL containment and forced colors. Popup panels and selection marks must retain their independent paint.
+## Internationalization parity follow-up
+
+Visual correction checks: compare 200px examples at desktop and narrow widths.
+In Controller and label, the label is outside Group with aligned leading edges.
+In Scrubber, drag the compact leading icon and confirm keyboard entry remains
+available. On a fine pointer, move away from Responsive and hover controls:
+both actions and their divider disappear, with no geometry change. Focus reveals
+them; touch keeps them visible. Test grouped fields in RTL and forced colors.
+
+Not performed: physical-device, screen-reader, and actual browser zoom review.
+Inspect the modern default route and the preserved ?qualification=1 route.
+Verify native language/direction semantics, narrow containment, explicit locale
+overrides, and light/dark text clarity. For NumberInput also inspect typed,
+wheel, press-and-hold and scrubber paths, and distinguish disabled from read-only.
+Do not mark these manual checks passed from automated results alone.

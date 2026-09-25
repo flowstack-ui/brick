@@ -1,5 +1,5 @@
-import { createRef, useState } from "react";
-import { render, screen } from "@testing-library/react";
+import { createRef, useState, type MouseEvent } from "react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Field } from "../../../src/field.js";
@@ -7,9 +7,34 @@ import {
   Switch,
   type SwitchSize,
   type SwitchVariant,
+  useSwitch,
 } from "../../../src/switch.js";
 
 describe("Switch", () => {
+  it("keeps custom part IDs associated and supports owner IDs", () => {
+    const { rerender } = render(
+      <Switch.Field ids={{ control: "owner-control", label: "owner-label" }}>
+        <Switch.Control id="local-control" />
+        <Switch.Label id="local-label">Alerts</Switch.Label>
+        <Switch.HiddenInput />
+      </Switch.Field>,
+    );
+    const control = screen.getByRole("switch", { name: "Alerts" });
+    expect(control).toHaveAttribute("aria-labelledby", "local-label");
+    expect(screen.getByText("Alerts")).toHaveAttribute("for", "local-control");
+    fireEvent.click(screen.getByText("Alerts"));
+    expect(control).toHaveAttribute("aria-checked", "true");
+    rerender(
+      <Switch.Field ids={{ control: "owner-control", label: "owner-label" }}>
+        <Switch.Control />
+        <Switch.Label>Alerts</Switch.Label>
+        <Switch.HiddenInput />
+      </Switch.Field>,
+    );
+    expect(control).toHaveAttribute("id", "owner-control");
+    expect(control).toHaveAttribute("aria-labelledby", "owner-label");
+    expect(screen.getByText("Alerts")).toHaveAttribute("for", "owner-control");
+  });
   it("renders adopted defaults, anatomy, slots, and refs", () => {
     const rootRef = createRef<HTMLButtonElement>();
     const thumbRef = createRef<HTMLSpanElement>();
@@ -162,5 +187,115 @@ describe("Switch", () => {
       "data-adapter",
       "as-child",
     );
+  });
+
+  it("composes one state owner, one input, a linked label, and a default thumb", async () => {
+    const user = userEvent.setup();
+    const changes = vi.fn();
+    render(
+      <Switch.Field defaultChecked name="digest" value="daily" onCheckedChange={changes}>
+        <Switch.Control />
+        <Switch.Label>Daily digest</Switch.Label>
+        <Switch.HiddenInput />
+      </Switch.Field>,
+    );
+    const control = screen.getByRole("switch", { name: "Daily digest" });
+    expect(control.querySelectorAll(".brick-switch-thumb")).toHaveLength(1);
+    expect(document.querySelectorAll("input[type='checkbox']")).toHaveLength(1);
+    expect(screen.getByText("Daily digest")).toHaveAttribute("for", control.id);
+    await user.click(screen.getByText("Daily digest"));
+    expect(control).toHaveAttribute("aria-checked", "false");
+    expect(changes).toHaveBeenLastCalledWith(false);
+  });
+
+  it("serializes, resets, and keeps repeated compound names", async () => {
+    const user = userEvent.setup();
+    render(
+      <form aria-label="preferences">
+        <Switch.Field defaultChecked name="channel" value="email">
+          <Switch.Control />
+          <Switch.Label>Email</Switch.Label>
+          <Switch.HiddenInput />
+        </Switch.Field>
+        <Switch.Field defaultChecked name="channel" value="push">
+          <Switch.Control />
+          <Switch.Label>Push</Switch.Label>
+          <Switch.HiddenInput />
+        </Switch.Field>
+        <button type="reset">Reset</button>
+      </form>,
+    );
+    const form = screen.getByRole("form", { name: "preferences" }) as HTMLFormElement;
+    expect(new FormData(form).getAll("channel")).toEqual(["email", "push"]);
+    await user.click(screen.getByRole("switch", { name: "Email" }));
+    expect(new FormData(form).getAll("channel")).toEqual(["push"]);
+    await user.click(screen.getByRole("button", { name: "Reset" }));
+    expect(screen.getByRole("switch", { name: "Email" })).toHaveAttribute("aria-checked", "true");
+  });
+
+  it("inherits responsive presentation and keeps explicit artwork ownership", () => {
+    render(
+      <Switch.Field
+        size={{ initial: "sm", md: "lg" }}
+        variant={{ initial: "solid", md: "raised" }}
+        tone="success"
+      >
+        <Switch.Control>
+          <Switch.Indicator forceMount fallback="off">on</Switch.Indicator>
+          <Switch.Thumb><Switch.ThumbIndicator forceMount>yes</Switch.ThumbIndicator></Switch.Thumb>
+        </Switch.Control>
+        <Switch.Label>Sync</Switch.Label>
+        <Switch.HiddenInput />
+      </Switch.Field>,
+    );
+    const control = screen.getByRole("switch", { name: "Sync" });
+    expect(control).toHaveAttribute("data-size", "sm");
+    expect(control).toHaveAttribute("data-size-md", "lg");
+    expect(control).toHaveAttribute("data-variant-md", "raised");
+    expect(control).toHaveAttribute("data-tone", "success");
+    expect(control.querySelectorAll(".brick-switch-thumb")).toHaveLength(1);
+    expect(control.querySelector(".brick-switch-indicator")).toHaveTextContent("off");
+  });
+
+  it("bridges one controller through RootProvider", async () => {
+    const user = userEvent.setup();
+    function ControllerExample() {
+      const controller = useSwitch({ defaultChecked: false });
+      return (
+        <Switch.RootProvider value={controller} inputValue="enabled" name="updates">
+          <Switch.Control />
+          <Switch.Label>Updates</Switch.Label>
+          <Switch.HiddenInput />
+        </Switch.RootProvider>
+      );
+    }
+    render(<ControllerExample />);
+    const control = screen.getByRole("switch", { name: "Updates" });
+    await user.click(control);
+    expect(control).toHaveAttribute("aria-checked", "true");
+    expect(document.querySelector("input[name='updates']")).toHaveAttribute("value", "enabled");
+    expect(document.querySelector("input[name='updates']")).toBeChecked();
+  });
+
+  it("forwards compound refs and preserves custom-host cancellation", () => {
+    const fieldRef = createRef<HTMLDivElement>();
+    const controlRef = createRef<HTMLButtonElement>();
+    const inputRef = createRef<HTMLInputElement>();
+    const cancelled = vi.fn((event: MouseEvent) => event.preventDefault());
+    render(
+      <Switch.Field ref={fieldRef}>
+        <Switch.Control ref={controlRef} asChild>
+          <button onClick={cancelled}><Switch.Thumb /></button>
+        </Switch.Control>
+        <Switch.Label>Custom host</Switch.Label>
+        <Switch.HiddenInput ref={inputRef} />
+      </Switch.Field>,
+    );
+    const control = screen.getByRole("switch", { name: "Custom host" });
+    fireEvent.click(control);
+    expect(control).toHaveAttribute("aria-checked", "false");
+    expect(fieldRef.current?.tagName).toBe("DIV");
+    expect(controlRef.current).toBe(control);
+    expect(inputRef.current?.type).toBe("checkbox");
   });
 });

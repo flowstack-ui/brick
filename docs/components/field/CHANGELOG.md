@@ -1,8 +1,11 @@
 # Field changelog
 
-Field follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+Disabled labels and legends fade to 50%; the structural container does not fade. Descendant controls own their disabled treatment so Fieldset inheritance never compounds opacity.
+
+Field follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
@@ -26,3 +29,6 @@ Field follows the package version of `@flowstack-ui/brick`.
 - Inline validation with `Field.Error` now aggregates native invalid state,
   focuses the visible control, clears after correction or reset, and permits
   an explicit native-validation override.
+## Unreleased
+
+- Add compound Item targeting, explicit IDs, context access, ErrorIcon and responsive presentation; simplify state styling.

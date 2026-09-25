@@ -29,9 +29,15 @@ Edit, inspect, choose, and submit one color through a finished popup or inline e
 - Choose SwatchTrigger shape=sharp|rounded|circle so frame and swatch match; choose frame=none only when a frameless visual is intended.
 - Place SwatchIndicator inside Swatch or ValueSwatch whenever selection needs a visible non-color cue.
 - Add curated presets only when the product needs them; saved and recent palettes are optional application-owned state, not required popup anatomy.
+- Area and ChannelSlider provide default anatomy when children are omitted; explicit children replace it, including null. Sliders composes hue and alpha. EyeDropper is the icon-bearing EyeDropperTrigger shortcut.
+- Use useColorPicker with RootProvider for an external Atom-owned controller. Configure lifecycle on Root or the hook; retained closed content remains inert.
+- size accepts ResponsiveValue including sparse objects; md is the baseline. Use subtle for a muted fill without a resting border. Swatch, ValueSwatch and SwatchTrigger accept radius tokens.
+- Use getColorChannels(format) and ChannelText for channel presentation. parseColorPickerValue and normalizeColorPickerValue return null for invalid input; they do not throw or duplicate conversion.
 
 ## Rules
 
+- **MUST:** Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+- **MUST:** Use outline for a transparent rest/hover control and surface for a neutral raised fill with the same border and geometry, without a shadow or extra Surface wrapper. Soft remains subdued. Popup backgrounds are independent; preserve explicit disabled, read-only, invalid and forced-colors states.
 - **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Brick parts for the finished interface and keep parsing, format conversion, selection, focus, dismissal, and form state in the exact Atom-backed machine.
 - **MUST:** Give the primary editable or native input an accessible name through Label or an explicit aria-label.

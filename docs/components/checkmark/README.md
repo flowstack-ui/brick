@@ -34,24 +34,35 @@ Public exports are `Checkmark`, `CheckmarkProps`, `CheckmarkSize`, `CheckmarkTon
 
 The component renders one decorative SVG host. A single path is rendered only for checked or indeterminate state.
 
+### Recipe alignment
+
+Use responsive sizes and variants. Subtle and soft paint a muted box in every state; plain is unboxed, inverted is transparent unless filled, and boxed md/lg use 2px inset. invalid is visual only; disabled adds one fade and a disabled cursor.
+
+These passive utilities live under Utilities in the playground. Four sizes match
+12/16/20/24px geometry; button and field height names do not determine mark size.
+Neutral and contrast retain their shared palette. No new input semantics, focus,
+polymorphic host API or framework styling engine is added.
+
 ## API
 
 | Prop | Value | Default |
 | --- | --- | --- |
+| `invalid` | `boolean` | `false` |
 | `filled` | `boolean` | `false` |
 | `checked` | `boolean` | `false` |
 | `indeterminate` | `boolean` | `false` |
 | `disabled` | `boolean` | `false` |
-| `size` | `xs`, `sm`, `md`, `lg` | `md` |
-| `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `accent` |
-| `variant` | `solid`, `outline`, `soft`, `plain`, `inverted` | `solid` |
+| `size` | Responsive `xs`, `sm`, `md`, `lg` | `md` |
+| `tone` | `neutral`, `accent`, `contrast`, `info`, `success`, `warning`, `danger` | `accent` |
+| `variant` | responsive `solid`, `outline`, `subtle`, `soft`, `plain`, `inverted` | `solid` |
+| `radius` | `Radius` | theme default |
 
 ## Visual recipes and states
 
 Solid fills checked states, outline retains the surface, soft uses semantic subtle paint, and plain removes the box. State is exposed as checked, unchecked, or indeterminate.
 
 Unchecked marks in the default solid recipe are transparent. `filled` adds a canvas background;
-`inverted` uses canvas with a semantic foreground and border. These are visual
+`inverted` is transparent unless filled, with semantic foreground and border. These are visual
 options, not selection behavior. `plain` stays unboxed even with `filled`.
 
 ## Tokens and CSS hooks
@@ -60,11 +71,22 @@ Stable hooks are `.brick-checkmark`, `data-disabled`, `data-filled`, `data-size`
 
 ## Customization
 
+Supported palette tokens are `--brick-checkmark-solid`, `--brick-checkmark-on-solid`,
+`--brick-checkmark-soft` and `--brick-checkmark-text`. Supply compatible foreground and
+background values together through a scoped class or style when the semantic
+`tone` choices do not express a category palette; verify light/dark contrast.
+`data-invalid` is a visual hook, not aria-invalid. Parent controls retain focus,
+validation meaning, form state and disabled interaction. Avoid applying disabled
+opacity independently to both a disabled parent and its nested mark.
+
 Prefer the public recipe props. Override `--brick-checkmark-size` only for a bounded composition that cannot use a standard size.
 
 ## Responsive behavior
 
-The mark is intrinsically square and fixed in flex layouts. The component has no responsive prop; choose a containing layout or standard size appropriate to the context.
+The mark is intrinsically square and fixed in flex layouts. Size supports sparse
+responsive values, for example `size={{ initial: "sm", md: "lg" }}`. The square
+scale is 12/16/20/24px, shared with Checkbox. `subtle` and the retained `soft`
+variant paint the unchecked box too. Variant supports the same responsive shape.
 
 ## Accessibility
 

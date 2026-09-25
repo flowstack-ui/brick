@@ -1,8 +1,17 @@
 # Fieldset changelog
 
-Fieldset follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+- Preserve full-width group layout after visually hidden native validation controls between Legend and the visible content.
+
+Disabled labels and legends fade to 50%; the structural container does not fade. Descendant controls own their disabled treatment so Fieldset inheritance never compounds opacity.
+
+Fieldset follows the package version of `@flowstack-ui/brick`.
+
+### Fixed
+
+- Keep visible group content below its legend when a hidden validation input precedes the group.
 
 ### Fixed
 
@@ -28,3 +37,6 @@ Fieldset follows the package version of `@flowstack-ui/brick`.
 - Inline validation with `Fieldset.Error` aggregates group invalid state,
   focuses the first visible control, clears after correction or reset, and
   permits an explicit native-validation override.
+## Unreleased
+
+- Add Content, context access and responsive sizes; correct group spacing and isolate child validity.

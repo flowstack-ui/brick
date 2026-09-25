@@ -12,8 +12,15 @@ import {
 } from "../../../src/fieldset.js";
 
 describe("Fieldset", () => {
+  it("exposes Content with responsive spacing and root sizing", () => {
+    render(<Fieldset.Root size={{initial:"sm",md:"lg"}}><Fieldset.Legend>Details</Fieldset.Legend><Fieldset.Content gap={{initial:2,md:4}}>Content</Fieldset.Content></Fieldset.Root>);
+    expect(document.querySelector("fieldset")).toHaveAttribute("data-size-md", "lg");
+    expect(screen.getByText("Content")).toHaveClass("brick-fieldset-content");
+    expect(screen.getByText("Content").style.getPropertyValue("--brick-fieldset-content-gap-md-input")).toBe("calc(var(--brick-space-1) * 4)");
+  });
   it("owns the exact frozen namespace", () => {
     expect(Object.keys(Fieldset)).toEqual([
+      "Content", "Context",
       "Root",
       "Legend",
       "Description",

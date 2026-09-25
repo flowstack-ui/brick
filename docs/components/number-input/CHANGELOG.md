@@ -1,9 +1,27 @@
 # Number Input changelog
 
 
+## Unreleased
+
+- Keep forced-colors focus visible for underline fields at the widest responsive breakpoint; match the other breakpoint selectors instead of overriding the system outline.
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+
+
 Number Input follows the package version of `@flowstack-ui/brick`.
 
-## Unreleased
+- Preserve the scrubber resize cursor beyond the icon for the complete drag session and restore normal cursor/selection styles afterward.
+
+- Add Group and Element for labelled fields and compact leading/trailing content without application CSS.
+- Hide the complete hover-control boundary with its buttons and preserve unit/control alignment.
+- Constrain documentation examples and show the scrubber as a leading icon.
+
+- Complete locale-aware API guidance and modern source-paired documentation examples.
+- Expose localized string editing and controller parts; refine step geometry and unavailable-action paint.
+
+- Add surface as a neutral filled-and-bordered alternative with unchanged geometry; preserve outline defaults.
+- Keep outline transparent at rest and on hover, independently of popup paint.
 
 - Forced colors preserves a real system-color focus outline; shadows are not the sole focus cue.
 

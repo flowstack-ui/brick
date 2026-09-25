@@ -1,5 +1,12 @@
 # NativeSelect manual protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 Status: pending. Automated results do not substitute for these checks.
 
 | Environment | Recorded value |
@@ -46,3 +53,19 @@ Scenario order:
 Overall result: Not performed.
 Follow-up issues: Actual OS picker, screen reader, physical device and zoom checks.
 Workbook updated: Manual gates remain open.
+
+## Form surface comparison
+
+- Compare outline and surface on light/dark canvas and raised parents: outline stays transparent; surface owns its neutral fill without adding a shadow.
+- Hover, focus, disable and mark invalid; preserve visible boundaries and explicit state treatment. Compare matched size recipes including their outer borders.
+- Check narrow/RTL containment and forced colors. Popup panels and selection marks must retain their independent paint.
+## Select-family follow-up (not manually executed)
+
+- Compare all seven sizes and variants in light/dark, RTL and narrow views.
+- Verify real browser zoom at 200% and 400%, and physical mobile interaction.
+- Verify accessible labels, value announcements, disabled options,
+  required validation and reset with a real screen reader.
+- Check the OS-owned native picker and multiple/rows presentation.
+- Confirm code examples and per-part Props headings match the public API.
+
+These are unperformed human checks; automated results do not fill them.

@@ -5,6 +5,16 @@ import { NativeSelect } from "../../../src/native-select.js";
 import { Field } from "../../../src/field.js";
 
 describe("NativeSelect", () => {
+  it("composes one Root host while retaining the native field and both refs", () => {
+    const root = createRef<HTMLElement>();
+    const child = createRef<HTMLElement>();
+    render(<NativeSelect.Root asChild variant="subtle" ref={root}><section ref={child} aria-label="Settings"><NativeSelect.Field aria-label="Plan"><option>Free</option></NativeSelect.Field></section></NativeSelect.Root>);
+    expect(root.current).toBe(child.current);
+    expect(root.current?.tagName).toBe("SECTION");
+    expect(root.current).toHaveAttribute("data-variant", "subtle");
+    expect(screen.getByRole("combobox").tagName).toBe("SELECT");
+    expect(root.current?.parentElement).not.toHaveClass("brick-native-select");
+  });
   it("preserves native selection, events, refs and recipe-only root attributes", () => {
     const ref = createRef<HTMLSelectElement>();
     const change = vi.fn();

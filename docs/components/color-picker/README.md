@@ -1,6 +1,5 @@
 # Color Picker
 
-Color Picker is the finished Atom-backed editor for one color. It supports popup and inline layouts, area and channel editing, alpha, RGB/HSL/HSB formats, named presets, native form submission, the browser color chooser, and the platform EyeDropper when available.
 
 ## When and where to use
 
@@ -56,16 +55,37 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ## Anatomy and DOM ownership
 
-Brick directly styles the matching public Atom 0.26.1 parts. Atom owns parsing, format conversion, pointer and keyboard behavior, focus, popup positioning and dismissal, selected state, Field inheritance, form reset, and platform-capability detection. Brick owns finished sizes, surfaces, spacing, focus visuals, and responsive containment.
+Brick directly styles the matching public Atom 0.27.0 parts. Atom owns parsing, format conversion, pointer and keyboard behavior, focus, popup positioning and dismissal, selected state, Field inheritance, form reset, and platform-capability detection. Brick owns finished sizes, surfaces, spacing, focus visuals, and responsive containment.
 
 The namespace contains `Root`, `Context`, `Label`, `Control`, `Input`, `ChannelInput`, `NativeInput`, `HiddenInput`, `Trigger`, `Positioner`, `Content`, `ValueText`, `ValueSwatch`, `Area`, `AreaBackground`, `AreaThumb`, `ChannelSlider`, `ChannelSliderLabel`, `ChannelSliderTrack`, `ChannelSliderThumb`, `ChannelSliderValueText`, `TransparencyGrid`, `EyeDropperTrigger`, `SwatchGroup`, `SwatchTrigger`, `Swatch`, `SwatchIndicator`, `FormatSelect`, `FormatTrigger`, and `View`.
 
 ## API
 
+Root and RootProvider accept responsive size values, including sparse objects
+such as `size={{ md: "lg" }}` (default md before that breakpoint).
+`variant="subtle"` adds a muted fill without a resting border.
+
+Omit Area children for Background + Thumb. Omit ChannelSlider children for its
+Track + Thumb (and alpha checker). Explicit children replace those defaults;
+null suppresses them. Sliders composes hue and alpha. EyeDropper aliases the
+finished icon-bearing EyeDropperTrigger. ChannelText renders a read-only channel;
+getColorChannels(format) returns the format's editable channel names.
+
+Use useColorPicker(options) with RootProvider value={controller} for external
+control. The original Atom API is exposed as controller.api. One controller
+belongs to one rendered picker. Root or the hook accepts ids, lazyMount,
+unmountOnExit, present and onExitComplete. Content is eager and retained by
+default; closed content stays inert even during visual exit.
+
+parseColorPickerValue and normalizeColorPickerValue are public safe parsing
+helpers; invalid input returns null. Swatch, ValueSwatch and SwatchTrigger accept
+radius tokens (explicit radius takes precedence over shape).
+
+
 | Prop or part | Values or important props | Default or purpose |
 | --- | --- | --- |
 | `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` |
-| `variant` | `outline`, `soft` | `outline` |
+| `variant` | `outline`, `surface`, `soft`, `subtle` | `outline` |
 | `Root` | Atom root props plus the Brick recipes | Supports popup or `inline` |
 | `Control.layout` | `separate`, `integrated` | `separate`; `integrated` paints one shared field border |
 | `Area` | `xChannel`, `yChannel` | Two-dimensional color editing |
@@ -121,7 +141,14 @@ or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
-Popup editors use `Trigger`, `Positioner`, and elevated `Content`. Inline editors set `inline` on Root and render Content directly; direct inline Content removes popup border, background, shadow, and padding so the owning application surface controls containment. Sizes are `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, and `2xl`; variants are `outline` and `soft`. The default editor is 16rem wide, while `2xs` and `xs` use a compact 15rem popup for dense toolbars and creative controls. Choose a larger recipe when the surrounding form or touch context needs it. A Trigger whose only child is ValueSwatch is automatically square; a Trigger containing ValueText or other authored content retains content-driven width.
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+Use outline for a transparent rest/hover control and surface for a neutral raised fill with the same border and geometry, without a shadow or extra Surface wrapper. Soft remains subdued. Popup backgrounds are independent; preserve explicit disabled, read-only, invalid and forced-colors states.
+
+
+Color Picker is the finished Atom-backed editor for one color. It supports popup and inline layouts, area and channel editing, alpha, RGB/HSL/HSB formats, named presets, native form submission, the browser color chooser, and the platform EyeDropper when available.
+
+Popup editors use `Trigger`, `Positioner`, and elevated `Content`. Inline editors set `inline` on Root and render Content directly; direct inline Content removes popup border, background, shadow, and padding so the owning application surface controls containment. Sizes are `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, and `2xl`; variants are `outline`, `surface` and `soft`. The default editor is 16rem wide, while `2xs` and `xs` use a compact 15rem popup for dense toolbars and creative controls. Choose a larger recipe when the surrounding form or touch context needs it. A Trigger whose only child is ValueSwatch is automatically square; a Trigger containing ValueText or other authored content retains content-driven width.
 
 `ValueSwatch` is the compact current-value preview used inside finished fields
 and triggers. Its size follows `--brick-color-picker-value-swatch-size`, while

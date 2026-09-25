@@ -1,8 +1,23 @@
 # Combobox changelog
 
-Combobox follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+- Preserve authored `data-slot` on IndicatorGroup, ItemText, and ItemIndicator, consistently with the other presentation parts.
+
+- Align option weights with semantic body typography and reconcile the public API/size guide with multiple selection and seven field variants.
+
+- Add multiple selection and controller forwarding, configurable opening/highlight/virtual scrolling, popup positioning and exit lifecycle from Atom.
+- Add seven responsive form variants, neutral/accent option tones, IndicatorGroup, ItemText and ItemIndicator; align responsive geometry and invalid/underline focus.
+- Add automatic highlight and keyboard completion, preserved-query selection, and configurable arrow-key opening.
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+
+Combobox follows the package version of `@flowstack-ui/brick`.
+
+- Add surface as a neutral filled-and-bordered alternative with unchanged geometry; preserve outline defaults.
+- Keep outline transparent at rest and on hover, independently of popup paint.
 
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 

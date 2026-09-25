@@ -1,6 +1,7 @@
+import { verifyFormSurfaceRecipes } from "../../form-surface-recipes.js";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
-test.beforeEach(async ({ page }) => { await page.goto("/native-select"); });
+test.beforeEach(async ({ page }) => { await page.goto("/native-select?qualification=1"); });
 test("NativeSelect changes, submits and resets without a proxy", async ({ page }) => {
   await page.getByRole("combobox", { name: "Controlled framework", exact: true }).selectOption("vue");
   await expect(page.getByText("Selected: vue", { exact: true })).toBeVisible();
@@ -11,6 +12,10 @@ test("NativeSelect changes, submits and resets without a proxy", async ({ page }
   await expect(field).toHaveValue("react");
   await expect(page.locator("#native-select-form input[type=hidden]")).toHaveCount(0);
   expect(await page.locator("#native-select-form").evaluate(node => Array.from(new FormData(node as HTMLFormElement)))).toEqual([["framework", "react"], ["region", "eu"]]);
+});
+
+test("surface recipes preserve transparent outline and filled surface", async ({ page }) => {
+  await verifyFormSurfaceRecipes(page, "native-select", ".brick-native-select", ".brick-native-select-field");
 });
 test("NativeSelect sizes and variants preserve peer border-box geometry", async ({ page }) => {
   for (const size of ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"]) {

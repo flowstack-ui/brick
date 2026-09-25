@@ -1,16 +1,16 @@
 @layer brick.components {
   .brick-field {
-    --brick-field-row-gap: var(--brick-space-3);
+    --brick-field-row-gap: calc(var(--brick-space-1) * 1.5);
     --brick-field-column-gap: var(--brick-space-5);
     --brick-field-label-min-inline-size: 8rem;
     --brick-field-control-min-inline-size: 12rem;
     --brick-field-label-foreground: var(--brick-color-text-primary);
-    --brick-field-label-foreground-disabled: var(--brick-color-text-secondary);
-    --brick-field-label-font-family: var(--brick-typography-label-md-font-family);
-    --brick-field-label-font-size: var(--brick-typography-label-md-font-size);
-    --brick-field-label-font-weight: var(--brick-typography-label-md-font-weight);
-    --brick-field-label-line-height: var(--brick-typography-label-md-line-height);
-    --brick-field-label-letter-spacing: var(--brick-typography-label-md-letter-spacing);
+    --brick-field-label-foreground-disabled: var(--brick-field-label-foreground);
+    --brick-field-label-font-family: var(--brick-typography-control-sm-font-family);
+    --brick-field-label-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight);
+    --brick-field-label-line-height: var(--brick-typography-control-sm-line-height);
+    --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing);
     --brick-field-indicator-foreground: var(--brick-color-danger-text);
     --brick-field-indicator-gap: var(--brick-space-1);
     --brick-field-optional-foreground: var(--brick-color-text-secondary);
@@ -29,7 +29,7 @@
   }
 
   .brick-field[data-orientation="horizontal"] {
-    grid-template-columns: repeat(
+    grid-template-columns: var(--brick-field-columns, repeat(
       auto-fit,
       minmax(
         min(
@@ -42,7 +42,7 @@
         ),
         1fr
       )
-    );
+    ));
   }
 
   .brick-field[data-tone="secondary"] {
@@ -137,9 +137,9 @@
   }
 
   .brick-field-error {
-    padding-inline-start: var(--brick-space-2);
-    border-inline-start: max(var(--brick-border-width), 0.125rem) solid
-      var(--brick-field-error-foreground);
+    display: flex;
+    align-items: center;
+    gap: var(--brick-space-1);
     color: var(--brick-field-error-foreground);
     font-family: var(--brick-typography-validation-sm-font-family);
     font-size: var(--brick-field-error-font-size);
@@ -148,20 +148,13 @@
     line-height: var(--brick-field-error-line-height);
   }
 
-  .brick-field[data-disabled] .brick-field-label {
+  .brick-field-label[data-disabled] {
     color: var(--brick-field-label-foreground-disabled);
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
-  .brick-field[data-readonly] .brick-field-label {
-    font-style: italic;
-  }
 
-  .brick-field[data-invalid] .brick-field-label {
-    text-decoration-line: underline;
-    text-decoration-style: wavy;
-    text-decoration-color: var(--brick-field-error-foreground);
-    text-underline-offset: 0.2em;
-  }
 
   @media (max-width: 34rem) {
     .brick-field[data-orientation="horizontal"] {
@@ -178,12 +171,52 @@
 
   @media (forced-colors: active) {
     .brick-field-error {
-      border-inline-start-color: Mark;
       color: CanvasText;
     }
+  }
+  .brick-field[data-size="xs"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1);  --brick-field-label-font-family: var(--brick-typography-caption-font-family); --brick-field-label-font-size: var(--brick-typography-caption-font-size); --brick-field-label-font-weight: var(--brick-typography-caption-font-weight); --brick-field-label-line-height: var(--brick-typography-caption-line-height); --brick-field-label-letter-spacing: var(--brick-typography-caption-letter-spacing); }
+  .brick-field[data-size="sm"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1);  --brick-field-label-font-family: var(--brick-typography-control-sm-font-family); --brick-field-label-font-size: var(--brick-typography-control-sm-font-size); --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight); --brick-field-label-line-height: var(--brick-typography-control-sm-line-height); --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-field[data-size="md"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1.5);  --brick-field-label-font-family: var(--brick-typography-control-sm-font-family); --brick-field-label-font-size: var(--brick-typography-control-sm-font-size); --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight); --brick-field-label-line-height: var(--brick-typography-control-sm-line-height); --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  @media (min-width: 480px) {
+  .brick-field[data-size-sm="xs"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1);  --brick-field-label-font-family: var(--brick-typography-caption-font-family); --brick-field-label-font-size: var(--brick-typography-caption-font-size); --brick-field-label-font-weight: var(--brick-typography-caption-font-weight); --brick-field-label-line-height: var(--brick-typography-caption-line-height); --brick-field-label-letter-spacing: var(--brick-typography-caption-letter-spacing); }
+  .brick-field[data-size-sm="sm"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1);  --brick-field-label-font-family: var(--brick-typography-control-sm-font-family); --brick-field-label-font-size: var(--brick-typography-control-sm-font-size); --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight); --brick-field-label-line-height: var(--brick-typography-control-sm-line-height); --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-field[data-size-sm="md"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1.5);  --brick-field-label-font-family: var(--brick-typography-control-sm-font-family); --brick-field-label-font-size: var(--brick-typography-control-sm-font-size); --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight); --brick-field-label-line-height: var(--brick-typography-control-sm-line-height); --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+    .brick-field[data-orientation-sm="vertical"] { grid-template-columns: minmax(0, 1fr); }
+    .brick-field[data-orientation-sm="vertical"] > :where(.brick-field-description, .brick-field-error) { grid-column: auto; }
+    .brick-field[data-orientation-sm="horizontal"] { grid-template-columns: var(--brick-field-columns, repeat(auto-fit, minmax(min(100%, 12rem), 1fr))); }
+    .brick-field[data-orientation-sm="horizontal"] > :where(.brick-field-description, .brick-field-error) { grid-column: -2 / -1; }
+  }
+  @media (min-width: 768px) {
+  .brick-field[data-size-md="xs"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1);  --brick-field-label-font-family: var(--brick-typography-caption-font-family); --brick-field-label-font-size: var(--brick-typography-caption-font-size); --brick-field-label-font-weight: var(--brick-typography-caption-font-weight); --brick-field-label-line-height: var(--brick-typography-caption-line-height); --brick-field-label-letter-spacing: var(--brick-typography-caption-letter-spacing); }
+  .brick-field[data-size-md="sm"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1);  --brick-field-label-font-family: var(--brick-typography-control-sm-font-family); --brick-field-label-font-size: var(--brick-typography-control-sm-font-size); --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight); --brick-field-label-line-height: var(--brick-typography-control-sm-line-height); --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-field[data-size-md="md"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1.5);  --brick-field-label-font-family: var(--brick-typography-control-sm-font-family); --brick-field-label-font-size: var(--brick-typography-control-sm-font-size); --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight); --brick-field-label-line-height: var(--brick-typography-control-sm-line-height); --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+    .brick-field[data-orientation-md="vertical"] { grid-template-columns: minmax(0, 1fr); }
+    .brick-field[data-orientation-md="vertical"] > :where(.brick-field-description, .brick-field-error) { grid-column: auto; }
+    .brick-field[data-orientation-md="horizontal"] { grid-template-columns: var(--brick-field-columns, repeat(auto-fit, minmax(min(100%, 12rem), 1fr))); }
+    .brick-field[data-orientation-md="horizontal"] > :where(.brick-field-description, .brick-field-error) { grid-column: -2 / -1; }
+  }
+  @media (min-width: 1024px) {
+  .brick-field[data-size-lg="xs"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1);  --brick-field-label-font-family: var(--brick-typography-caption-font-family); --brick-field-label-font-size: var(--brick-typography-caption-font-size); --brick-field-label-font-weight: var(--brick-typography-caption-font-weight); --brick-field-label-line-height: var(--brick-typography-caption-line-height); --brick-field-label-letter-spacing: var(--brick-typography-caption-letter-spacing); }
+  .brick-field[data-size-lg="sm"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1);  --brick-field-label-font-family: var(--brick-typography-control-sm-font-family); --brick-field-label-font-size: var(--brick-typography-control-sm-font-size); --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight); --brick-field-label-line-height: var(--brick-typography-control-sm-line-height); --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-field[data-size-lg="md"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1.5);  --brick-field-label-font-family: var(--brick-typography-control-sm-font-family); --brick-field-label-font-size: var(--brick-typography-control-sm-font-size); --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight); --brick-field-label-line-height: var(--brick-typography-control-sm-line-height); --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+    .brick-field[data-orientation-lg="vertical"] { grid-template-columns: minmax(0, 1fr); }
+    .brick-field[data-orientation-lg="vertical"] > :where(.brick-field-description, .brick-field-error) { grid-column: auto; }
+    .brick-field[data-orientation-lg="horizontal"] { grid-template-columns: var(--brick-field-columns, repeat(auto-fit, minmax(min(100%, 12rem), 1fr))); }
+    .brick-field[data-orientation-lg="horizontal"] > :where(.brick-field-description, .brick-field-error) { grid-column: -2 / -1; }
+  }
+  @media (min-width: 1280px) {
+  .brick-field[data-size-xl="xs"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1);  --brick-field-label-font-family: var(--brick-typography-caption-font-family); --brick-field-label-font-size: var(--brick-typography-caption-font-size); --brick-field-label-font-weight: var(--brick-typography-caption-font-weight); --brick-field-label-line-height: var(--brick-typography-caption-line-height); --brick-field-label-letter-spacing: var(--brick-typography-caption-letter-spacing); }
+  .brick-field[data-size-xl="sm"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1);  --brick-field-label-font-family: var(--brick-typography-control-sm-font-family); --brick-field-label-font-size: var(--brick-typography-control-sm-font-size); --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight); --brick-field-label-line-height: var(--brick-typography-control-sm-line-height); --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-field[data-size-xl="md"] { --brick-field-row-gap: calc(var(--brick-space-1) * 1.5);  --brick-field-label-font-family: var(--brick-typography-control-sm-font-family); --brick-field-label-font-size: var(--brick-typography-control-sm-font-size); --brick-field-label-font-weight: var(--brick-typography-control-sm-font-weight); --brick-field-label-line-height: var(--brick-typography-control-sm-line-height); --brick-field-label-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+    .brick-field[data-orientation-xl="vertical"] { grid-template-columns: minmax(0, 1fr); }
+    .brick-field[data-orientation-xl="vertical"] > :where(.brick-field-description, .brick-field-error) { grid-column: auto; }
+    .brick-field[data-orientation-xl="horizontal"] { grid-template-columns: var(--brick-field-columns, repeat(auto-fit, minmax(min(100%, 12rem), 1fr))); }
+    .brick-field[data-orientation-xl="horizontal"] > :where(.brick-field-description, .brick-field-error) { grid-column: -2 / -1; }
+  }
+}
 
-    .brick-field[data-invalid] .brick-field-label {
-      text-decoration-color: Mark;
-    }
+@layer brick.components {
+  @media (forced-colors: active) {
+    .brick-field-label[data-disabled] { opacity: 1; color: GrayText; }
   }
 }

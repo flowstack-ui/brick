@@ -13,8 +13,19 @@ import {
 } from "../../../src/field.js";
 
 describe("Field", () => {
+  it("forwards targeted IDs, responsive recipes and decorative error artwork", () => {
+    render(<Field.Root target="amount" ids={{control:"price"}} size={{initial:"xs",md:"md"}} orientation={{initial:"vertical",md:"horizontal"}} invalid>
+      <Field.Label>Price</Field.Label><Field.Item value="amount"><Input.Root /></Field.Item>
+      <Field.Error><Field.ErrorIcon />Check the amount</Field.Error>
+    </Field.Root>);
+    expect(screen.getByRole("textbox", {name:"Price"})).toHaveAttribute("id", "price-item-amount");
+    expect(document.querySelector(".brick-field")).toHaveAttribute("data-size-md", "md");
+    expect(document.querySelector(".brick-field")).toHaveAttribute("data-orientation-md", "horizontal");
+    expect(document.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+  });
   it("owns the exact frozen namespace", () => {
     expect(Object.keys(Field)).toEqual([
+      "Item", "Context", "ErrorIcon",
       "Root",
       "Label",
       "Description",
