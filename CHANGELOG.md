@@ -6,7 +6,7 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 Planned release: 0.3.0.
 
-### Changes
+### Changed
 
 - Make CSS source maps package-relative and deterministically indexed while
   retaining original debug locations. Reject machine-specific source paths in
