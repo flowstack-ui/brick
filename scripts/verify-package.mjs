@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join, posix, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { componentStyleNames } from "./css-entrypoints.mjs";
+import { canonicalCssSourceMap } from "./css-source-map.mjs";
 
 const dryRun = process.argv.includes("--dry-run");
 const tarballArgument = process.argv.indexOf("--tarball");
@@ -60,6 +61,11 @@ try {
   const output = JSON.parse(result.stdout);
   const pack = Array.isArray(output) ? output[0] : output;
   const files = new Set(pack.files.map((file) => file.path));
+  for (const path of files) {
+    if (!path.endsWith(".css.map")) continue;
+    const map = JSON.parse(await readPackedFile(path));
+    assert.deepEqual(map, canonicalCssSourceMap(map), `${path} must be portable and deterministically indexed`);
+  }
   for (const required of [
     "LICENSE",
     "README.md",

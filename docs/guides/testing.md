@@ -43,6 +43,18 @@ temporary fixture on failure, including application browser traces. A supplied
 Atom candidate can be checked with `--atom-sha256`; registry-backed release
 qualification should not set local candidate overrides.
 
+CSS builds keep package-relative source paths and canonical source/name indices
+in source maps. Mappings are decoded and reindexed together with embedded source
+content, preserving debug locations without leaking checkout paths. The package
+gate rejects noncanonical CSS maps. Regression coverage includes repeated real
+bundles from independent checkout roots; the codec is a development dependency,
+not consumer runtime code.
+The dedicated CSS build process bounds Lightning CSS's native pool to one
+worker: multithreaded bundling reproduced incorrect original-file references,
+not only unstable ordering. Keep that bound until an upstream version passes
+the repeated original-location regression; see the related
+[upstream source-map report](https://github.com/parcel-bundler/lightningcss/issues/1167).
+
 Do not rerun the repository or release tier after every focused edit. Escalate
 when the affected component is stable or when a shared boundary requires
 broader evidence.

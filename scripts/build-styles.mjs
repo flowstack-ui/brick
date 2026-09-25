@@ -2,7 +2,7 @@ import { mkdir, rm, writeFile } from "node:fs/promises";
 import { basename, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import browserslistModule from "browserslist";
-import { browserslistToTargets, bundleAsync } from "lightningcss";
+import { browserslistToTargets, bundleCss } from "./css-bundler.mjs";
 import { componentStyleEntries } from "./css-entrypoints.mjs";
 import { compileTokens } from "./token-compiler.mjs";
 
@@ -51,8 +51,9 @@ const generatedComponents = await Promise.all(componentStyleEntries.map(async ([
 }));
 
 async function bundle(input, outputName) {
-  const result = await bundleAsync({
+  const result = await bundleCss({
     filename: input,
+    projectRoot: packageRoot,
     minify: production,
     sourceMap: true,
     targets,

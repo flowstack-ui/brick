@@ -8,6 +8,10 @@ Planned release: 0.3.0.
 
 ### Changes
 
+- Make CSS source maps package-relative and deterministically indexed while
+  retaining original debug locations. Reject machine-specific source paths in
+  package qualification.
+
 - Add independent translucent surface controls to Surface, AppBar and BottomNavigation, preserving legacy blurred usage.
 - Introduce constrained theme-contract v2; upgrade to Theme 0.2.0 or a compatible dual-schema compiler before consuming this contract.
 
