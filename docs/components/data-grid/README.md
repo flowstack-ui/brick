@@ -13,8 +13,9 @@ rows.
 ## When not to use
 
 Use Table for static comparison, Grid for page layout, and Tree Grid for
-hierarchical rows. Data Grid does not provide editing, filtering, pagination,
-column resizing, virtualization, schemas, or enterprise data processing.
+hierarchical rows. Data Grid provides cell-control entry/exit and column resize
+interaction, not an editing transaction or data engine. Filtering, pagination,
+virtualization, validation, persistence and enterprise processing stay application-owned.
 
 ## Installation and imports
 
@@ -80,10 +81,10 @@ or define indexes, counts, navigation, or resizing.
 
 `DataGrid`, `DataGridContainer`, `DataGridRoot`, `DataGridColumnGroup`, `DataGridColumn`, `DataGridCaption`,
 `DataGridHeader`, `DataGridBody`, `DataGridFooter`, `DataGridRow`,
-`DataGridColumnHeader`, `DataGridCell`, `DataGridSortIndicator`,
+`DataGridColumnHeader`, `DataGridCell`, `DataGridRowHeader`, `DataGridColumnResizeHandle`, `DataGridSortIndicator`,
 `DataGridContainerProps`, `DataGridRootProps`, `DataGridColumnGroupProps`, `DataGridColumnProps`, `DataGridCaptionProps`,
 `DataGridHeaderProps`, `DataGridBodyProps`, `DataGridFooterProps`,
-`DataGridRowProps`, `DataGridColumnHeaderProps`, `DataGridCellProps`,
+`DataGridRowProps`, `DataGridColumnHeaderProps`, `DataGridCellProps`, `DataGridRowHeaderProps`, `DataGridColumnResizeHandleProps`,
 `DataGridSortIndicatorProps`, `DataGridVariant`, `DataGridSize`,
 `DataGridDensity`, `DataGridCaptionSide`, `DataGridCellAlign`,
 `DataGridCellVerticalAlign`, `DataGridSurface`, `DataGridBorderTone`, and
@@ -134,7 +135,8 @@ without moving cell geometry.
 ### Keyboard, selection, and sorting
 
 Root is the single focus target and exposes the active descendant. Arrow keys
-move by cell, Home/End move within a row, PageUp/PageDown move by row, and
+move by cell, Home/End move within a row, PageUp/PageDown move by `pageSize`
+mounted enabled rows (default 10), and
 Ctrl/Meta+Home or End reaches the first or last cell. Space applies Atom's row
 selection behavior. Disabled cells and rows are skipped according to Atom's
 contract.
@@ -151,7 +153,35 @@ invoke `onAction`; only the sorted header should expose a direction.
 ```
 
 Compose external Toolbar and Pagination components around the grid when those
-features are needed. Cells should remain non-editing in this version.
+features are needed. Use `Cell interactive` for named controls: Enter/F2 enters,
+child arrow keys remain native, and Escape returns to grid navigation. Tab exits
+without trapping. Author `ColumnHeader interactive` children with `tabIndex={-1}`.
+The application owns validation, draft, save/cancel, and control disabled/readOnly.
+
+`RowHeader` renders a native th with rowheader semantics. `ColumnResizeHandle`
+is a named separator inside an interactive header. Apply its controlled `value`
+to `Column.htmlWidth`; defaults are 160px width, 40/1200px bounds and 10px step.
+Left/Right follow direction; Shift increases the step; Home/End reach bounds.
+Escape and pointer cancellation restore the drag-start value. Commit is emitted
+on pointer release or keyboard adjustment, never on cancellation.
+
+Multiple selection supports Shift range extension and Ctrl/Meta+A for mounted
+selectable rows; offscreen selected IDs are retained. Full-dataset selection is
+an explicit application policy, not an implied consequence of select-all.
+
+### Responsive and integration recipes
+
+`size`, `density`, and `variant` accept sparse `initial/sm/md/lg/xl` objects.
+The sizes use 14/14/16px type, 8/12/16px inline insets, and 40/48/56px comfortable
+minimum rows. Compact reduces the minimum by 8px; spacious adds 8px. Content may
+grow beyond the minimum. `tone` is `accent` (default) or `neutral` selection paint.
+Use `minInlineSize`, logical `sticky="start" | "end"` and `stickyOffset` on matching
+header/body cells. SortIndicator preserves custom decorative children.
+
+The playground demonstrates optional `@tanstack/react-table@8.21.3` and
+`@tanstack/react-virtual@3.14.11`. They are not Brick runtime dependencies. Keep
+logical totals/indexes accurate and retain the active row in the virtual range;
+the application maps full-data movement before the requested row mounts.
 
 ## Tokens and CSS hooks
 

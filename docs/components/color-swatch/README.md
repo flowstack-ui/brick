@@ -37,13 +37,15 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 `Root` and `Mix` each render one native `span`. They are passive, content-sized visual elements and add no selection, button, input, or live-region behavior.
 
+Fixed sizes measure 14/16/18/20/24/28/32px respectively. `inherit` uses the parent's dimensions and `full` fills them; both require a definitely sized parent. These passive sizes are not interaction target sizes.
+
 ## API
 
 | Part | Prop | Values | Default |
 | --- | --- | --- | --- |
 | `Root` | `value` | valid CSS color | required |
 | `Mix` | `values` | two or more valid CSS colors | required |
-| `size` | both | `sm`, `md`, `lg` | `md` |
+| `size` | both | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `inherit`, `full` | `md` |
 | `shape` | both | `sharp`, `rounded`, `circle` | `rounded` |
 | both | `label` | localized string | none |
 

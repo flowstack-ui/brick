@@ -17,9 +17,11 @@ Present a labeled metric with optional units and comparison text.
 
 - Compose Root, Label, ValueText and optional HelpText; use FormatNumber or FormatByte inside ValueText.
 - Use Group for shared size defaults; explicit Root size wins.
+- Root and Group accept responsive size; an explicit sparse Root starts at md.
 
 ## Rules
 
+- **MUST:** Keep Progress in a block description or an explicitly growing layout region; a widthless flex item collapses its track. Indicators own logical trailing spacing. Compose Badge and wording with an explicit HStack gap; use ToggleTip for click/touch information.
 - **MUST:** Preserve dl/dt/dd grammar; HelpText defaults to dd, not a direct span beneath dl.
 - **MUST:** Keep calculation and messages application-owned; compose the existing locale and formatting helpers.
 - **MUST:** Provide comparison wording and choose tone independently of arrow direction.

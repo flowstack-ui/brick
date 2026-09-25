@@ -53,32 +53,45 @@ name, state, or interaction behavior.
 
 | Part or prop | Values | Default |
 | --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `size` | responsive `sm`, `md`, `lg` | `md` |
+| `variant` | responsive `subtle`, `bold` | `subtle` |
 | `orientation` | responsive `vertical`, `horizontal` | `vertical` |
-| `labelWidth` | `auto`, `sm`, `md`, `lg` | `auto` |
+| `labelWidth` | responsive `auto`, `sm`, `md`, `lg` | `auto` |
 | `divide` | boolean | `false` |
 | `slot` | string | `data-list-root` |
-| Parts | `Root`, `Item`, `Label`, `Value` | — |
+| Parts | `Root`, `Item`, `Label`, `Value`, `PropsProvider` | — |
 
 Public exports are `DataList`, `DataListRoot`, `DataListRootProps`,
 `DataListItem`, `DataListItemProps`, `DataListLabel`, `DataListLabelProps`,
 `DataListValue`, `DataListValueProps`, `DataListSize`,
-`DataListOrientation`, and `DataListLabelWidth`.
+`DataListOrientation`, `DataListLabelWidth`, `DataListVariant`, `DataListRecipeProps`,
+`DataListPropsProvider`, and `DataListPropsProviderProps`.
 
 ## Visual recipes and states
 
-Size selects type and rhythm. Horizontal orientation aligns each Item into a
-label and value grid; vertical orientation stacks them. `divide` adds semantic
-border paint between Items without changing source order or anatomy.
+Size selects 12/14/16px default-theme text with 12/16/20px item rhythm for sm/md/lg.
+Compact size/leading shares the semantic menu text metrics (12/16, 14/20 and
+16/24px); label/value emphasis keeps its separate semantic weight roles.
+Subtle mutes labels; bold emphasizes labels and mutes values. Horizontal orientation
+aligns each Item into two logical columns; vertical stacks its source order.
+Labels and values stay 4px apart vertically; horizontal columns have a 16px gap.
+`divide` adds borders between visible Items without changing semantics.
 
 ## Tokens and CSS hooks
 
 Stable hooks are `.brick-data-list`, `.brick-data-list__item`,
 `.brick-data-list__label`, `.brick-data-list__value`, and their `data-slot`
 values. Root exposes `data-divide`, `data-label-width`, `data-orientation`,
-`data-size`, and `data-slot`. Public variables include `--brick-data-list-gap`,
+`data-size`, `data-variant`, their responsive suffixes, and `data-slot`. Public variables include `--brick-data-list-gap`,
 `--brick-data-list-item-gap`, `--brick-data-list-label-size`,
-`--brick-data-list-divider-color`.
+`--brick-data-list-divider-color`, `--brick-data-list-column-gap`,
+`--brick-data-list-label-gap`, `--brick-data-list-label-color`,
+`--brick-data-list-value-color`, `--brick-data-list-label-weight`, and
+`--brick-data-list-value-weight`.
+
+`--brick-data-list-label-size` accepts a CSS length/percentage, including when
+labelWidth is auto. Measures are capped at 40% of the item to preserve the value
+column. Auto prefers 120px; sm/md/lg prefer 96/144/192px. Long words wrap.
 
 ## Customization
 
@@ -88,7 +101,8 @@ relationship. Do not restyle private descendants or add redundant ARIA roles.
 
 ## Responsive behavior
 
-Orientation accepts Brick responsive values. Keep one Label-then-Value source
+Size, variant, labelWidth and orientation accept Brick responsive values. Sparse
+maps start at component defaults. Keep one Label-then-Value source
 tree and switch only presentation. Long values wrap and horizontal layouts
 return to a vertical composition at the authored narrow breakpoint.
 
@@ -104,6 +118,14 @@ Place one or more Label parts before one or more Value parts inside each Item.
 Root, Item, Label, and Value merge native attributes, ARIA, events,
 `className`, `style`, and exact refs. The `slot` prop controls `data-slot` and
 does not claim the native HTML slot attribute.
+
+Fixed native hosts are intentional; there is no as/asChild/unstyled API.
+PropsProvider takes `value: DataListRecipeProps` and children, emits no host,
+and supplies recipe defaults. Explicit Root props win (including divide=false).
+An explicit responsive map replaces, rather than merges with, the provider map.
+Nested providers inherit omitted keys. Nested Roots otherwise reset to their
+own defaults. Compose ToggleTip in Label for optional context and Badge, Status,
+Link or formatters in Value; Data List does not add interaction or status tones.
 
 ## Examples
 

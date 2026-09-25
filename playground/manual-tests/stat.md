@@ -32,6 +32,12 @@ Scenario order:
 
 ## Review
 
+The normal route now contains focused Preview/Code examples. Use
+`/stat?qualification=1` for the retained numbered scenarios below.
+Also inspect responsive Group inheritance and sparse Root overrides, the
+click/touch information tip, custom outlined artwork, and the full-width
+progress track. Compare all docs code tabs to their rendered examples.
+
 1. Read label/value/comparison with a screen reader; no duplicate arrow announcement.
 2. Compare three sizes and unit baselines with the reference under matched font settings.
 3. Inspect currency, compact, percent, byte and locale examples; no clipped signs/units.

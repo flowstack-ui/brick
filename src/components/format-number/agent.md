@@ -21,6 +21,7 @@ Render or return locale-aware numeric text through one cached platform formatter
 - **MUST:** Prefer LocaleProvider inheritance and pass locale only for an intentional local override.
 - **MUST:** Use formatOptions rather than manually concatenating symbols or suffixes.
 - **MUST:** Load styles.css or core.css plus format-number.css.
+- **MUST:** Native Intl handles NaN, infinities and option errors. The shared formatter cache is bounded at 100 entries. The pure helper defaults to en-US rather than reading React context.
 
 ## Common mistakes
 

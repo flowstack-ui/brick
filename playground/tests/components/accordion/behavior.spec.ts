@@ -2,7 +2,76 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
+  await page.goto("/accordion?qualification=1");
+});
+
+test("public examples expose new recipes, controller and independent nested indicators", async ({ page }) => {
   await page.goto("/accordion");
+  await expect(page.getByRole("table", {name:"Accordion.RootProvider props",exact:true})).toBeAttached();
+  for (const variant of ["plain","ghost","soft","outline","subtle","enclosed"]) await expect(page.locator(`#variants .brick-accordion[data-variant="${variant}"]`)).toHaveCount(1);
+  const nested=page.locator("#nested .brick-accordion-indicator");
+  await expect(nested.nth(0)).toHaveCSS("order","-1");
+  await expect(nested.nth(1)).toHaveCSS("order","0");
+  await expect(nested.nth(1)).toHaveCSS("transform","matrix(1, 0, 0, 1, 0, 0)");
+  await page.locator("#nested").getByRole("button",{name:"Notification preferences"}).click();
+  await expect(nested.nth(1)).toHaveCSS("transform","matrix(-1, 0, 0, -1, 0, 0)");
+  await page.locator("#store").getByRole("button",{name:"Show returns"}).click();
+  await expect(page.locator("#store").getByRole("region")).toContainText("Unused items");
+  await page.locator("#store").getByRole("button",{name:"Close all"}).click();
+  await expect(page.locator("#store").getByRole("region")).toHaveCount(0);
+});
+
+test("a reopened parent grows when its nested accordion expands", async ({
+  page,
+}) => {
+  await page.goto("/accordion");
+  const example = page.locator("#nested");
+  const parentTrigger = example.getByRole("button", {
+    name: "Workspace settings",
+  });
+  const childTrigger = example.getByRole("button", {
+    name: "Notification preferences",
+  });
+  const parentContent = example.locator(".brick-accordion-content").first();
+
+  await parentTrigger.click();
+  await expect(childTrigger).toBeHidden();
+  await parentTrigger.click();
+  await expect(childTrigger).toBeVisible();
+  await parentContent.evaluate(async (element) => {
+    await Promise.all(element.getAnimations().map((animation) => animation.finished));
+  });
+
+  await expect(parentContent).toHaveCSS("animation-fill-mode", "none");
+  await childTrigger.click();
+  await expect(
+    example.getByText("Nested state and indicators remain independent."),
+  ).toBeVisible();
+  await expect
+    .poll(() =>
+      parentContent.evaluate(
+        (element) => Math.abs(element.scrollHeight - element.clientHeight),
+      ),
+    )
+    .toBeLessThan(1);
+});
+
+test("responsive recipes reset dividers and composed Button stays sole visual owner", async ({page}) => {
+  await page.goto("/accordion");
+  const root=page.locator("#responsive .brick-accordion");
+  await page.setViewportSize({width:1200,height:900});
+  await expect(root).toHaveCSS("border-top-width","1px");
+  await expect(root.locator(".brick-accordion-item").last()).toHaveCSS("border-bottom-width","0px");
+  await expect(root.getByRole("button").first()).toHaveCSS("min-height","52px");
+  await page.setViewportSize({width:390,height:844});
+  await expect(root).toHaveCSS("border-top-width","0px");
+  await expect(root.locator(".brick-accordion-item").last()).toHaveCSS("border-bottom-width","1px");
+  const composed=page.locator("#composition").getByRole("button",{name:"Advanced options"});
+  await expect(composed).toHaveCSS("display","inline-flex");
+  await composed.click();
+  await expect(page.locator("#composition .brick-accordion-content")).toHaveCSS("animation-name","none");
+  await expect(page.locator("#composition .brick-accordion-content-inner")).toHaveCSS("padding","0px");
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 });
 
 test("defaults, recipes, and selection models preserve controlled differences", async ({
@@ -71,10 +140,9 @@ test("plain dividers and full-row hover feedback retain a closing edge", async (
   expect(divider).toBe(defaultBorder);
 
   await firstTrigger.hover();
-  await expect(firstTrigger).not.toHaveCSS(
-    "background-color",
-    "rgba(0, 0, 0, 0)",
-  );
+  const fineHover = await page.evaluate(() => matchMedia("(hover: hover) and (pointer: fine)").matches);
+  if (fineHover) await expect(firstTrigger).not.toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  else await expect(firstTrigger).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
   const [rootBox, triggerBox] = await Promise.all([
     root.boundingBox(),
     firstTrigger.boundingBox(),
@@ -130,7 +198,7 @@ test("specimens stay top-aligned while content opens and composition is not dupl
           content?.style.getPropertyValue("--content-height") ?? "",
       };
     });
-  expect(transition.fillMode).toBe("both");
+  expect(transition.fillMode).toBe("none");
   expect(transition.measuredHeight).toMatch(/^\d+(?:\.\d+)?px$/);
   await expect(
     controlledRoot.locator(".brick-accordion-content[data-state='open']"),
@@ -252,6 +320,7 @@ test("default indicator direction and focus geometry remain complete", async ({
   await expect(verticalTrigger).toBeFocused();
   await expect(verticalRoot).toHaveCSS("overflow", "visible");
   await expect(verticalTrigger).toHaveCSS("outline-style", "solid");
+  await expect(verticalTrigger).toHaveCSS("border-top-left-radius", "0px");
   await verticalTrigger.click();
   await expect(indicator).toHaveCSS("transform", "matrix(-1, 0, 0, -1, 0, 0)");
 

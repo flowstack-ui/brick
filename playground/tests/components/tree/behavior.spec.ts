@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/tree"); await expect(page.locator("#scenario-tree-overview .brick-tree")).toBeVisible(); });
+test.beforeEach(async ({ page }) => { await page.goto("/tree?qualification=1"); await expect(page.locator("#scenario-tree-overview .brick-tree")).toBeVisible(); });
 
 test("defaults, anatomy, focus entry, and bounded navigation are deterministic", async ({ page }) => {
   const root = page.locator("#scenario-tree-overview .brick-tree");
@@ -30,17 +30,36 @@ test("selection, expansion, disabled state, and hierarchy remain Atom-owned", as
   await expect(branch).toHaveAttribute("aria-expanded", "false");
 });
 
+test("hover paints only the pointed row, not its ancestors", async ({ page }) => {
+  const root = page.locator("#scenario-tree-overview .brick-tree");
+  const ancestor = root.locator('[data-value="src"] > .brick-tree__item-content');
+  const leaf = root.locator('[data-value="tree"] > .brick-tree__item-content');
+  await page.mouse.move(0, 0);
+  const restingAncestor = await ancestor.evaluate(node => getComputedStyle(node).backgroundColor);
+  await leaf.hover();
+  await expect(ancestor).toHaveCSS("background-color", restingAncestor);
+  const supportsHover = await page.evaluate(() => matchMedia("(hover: hover)").matches);
+  if (supportsHover) expect(await leaf.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(restingAncestor);
+  else await expect(leaf).toHaveCSS("background-color", restingAncestor);
+});
+
 test("appearance, logical RTL, containment, and accessibility are stable", async ({ page }) => {
   await expect(page.locator("#scenario-tree-appearance [data-playground-specimen-label]")).toHaveText(["light", "dark", "customized"]);
   const rtl = page.locator("#scenario-tree-stress [dir=rtl] .brick-tree");
   await expect(rtl).toHaveAttribute("dir", "rtl");
   const ltrContent = page.locator("#scenario-tree-stress .tree-cell").first().locator('[data-level="2"] > .brick-tree__item-content').first();
   const rtlContent = rtl.locator('[data-level="2"] > .brick-tree__item-content').first();
-  expect(await ltrContent.evaluate(node => getComputedStyle(node).marginInlineStart)).not.toBe("0px");
-  expect(await rtlContent.evaluate(node => getComputedStyle(node).marginInlineStart)).not.toBe("0px");
+  for (const content of [ltrContent, rtlContent]) {
+    expect(await content.evaluate(node => parseFloat(getComputedStyle(node).paddingInlineStart))).toBeGreaterThan(20);
+    expect(await content.evaluate(node => getComputedStyle(node).marginInlineStart)).toBe("0px");
+  }
   await page.setViewportSize({ width: 390, height: 844 });
   const constrained = page.locator(".tree-constrained");
   expect(await constrained.evaluate(node => node.scrollWidth <= node.clientWidth)).toBe(true);
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
+  await page.emulateMedia({ forcedColors: "active" });
+  if (await page.evaluate(() => CSS.supports("forced-color-adjust", "none"))) {
+    await expect(page.locator("#scenario-tree-overview [data-selected] > .brick-tree__item-content > .brick-tree__item-text")).toHaveCSS("forced-color-adjust", "none");
+  }
 });

@@ -29,7 +29,8 @@ Load reset.css then styles.css, or core.css plus styles/download-trigger.css.
 ```
 
 ## Anatomy and DOM ownership
-One native button. Atom owns file lifecycle and Brick renders Button presentation.
+One native button. Atom useDownload owns file lifecycle; Brick renders the real
+Button, or IconButton with iconOnly and a required aria-label.
 Stable classes brick-download-trigger and brick-button; slot download-trigger.
 
 ## API
@@ -40,7 +41,16 @@ onDownloadStart runs before preparation. onDownloadInitiated receives fileName,
 mimeType and size (bytes). onDownloadError receives {error}.
 Inherits Button size, tone, variant, shape, fullWidth, startIcon/endIcon,
 disabled/loading, native props, onClick/onPress and HTMLElement ref.
+Text mode also supports loadingText, spinner and spinnerPlacement. Icon-only mode
+supports IconButton props including circle shape and custom spinner, not text
+artwork/fullWidth/loadingText. All preparation states use shared action loading.
 No href, type, asChild or render props. The host is always a non-submit button.
+
+`useDownload(options)` is exported with UseDownloadProps, UseDownloadReturn,
+DownloadableData and DownloadDetails. It returns state, loading, download and
+cancel. Call download(ownerDocument?) from user activation; pass the control's
+ownerDocument in an iframe. Bind loading to your action and call cancel to abort
+preparation. This is the custom-composition route rather than nested actions.
 
 ### Shared radius selection
 
@@ -52,13 +62,17 @@ choose either it or `radius`, not both. This does not change behavior, sizing,
 or the independently owned corners of other parts.
 
 ## Visual recipes and states
+ButtonGroup supplies size, variant, tone, radius and focusRing defaults. Explicit
+DownloadTrigger props override those defaults; an explicit shape overrides the
+group radius.
+
 Uses Button's existing complete size/variant/tone/shape recipes. Pending preparation
 uses loading; no new geometry. data-state is idle, preparing or error.
 Loading preserves the accessible name, icon geometry and label space.
 
 ## Tokens and CSS hooks
 Uses Button tokens and public hooks; no independent paint or size values.
-Modular download-trigger.css includes Button and action-spinner CSS.
+Modular download-trigger.css includes Button, IconButton and action-spinner CSS.
 
 ## Customization
 Supply startIcon/endIcon like Button. Application content owns translations and

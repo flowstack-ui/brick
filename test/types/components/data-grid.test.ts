@@ -3,6 +3,9 @@ import { DataGrid, DataGridColumn, DataGridColumnGroup, DataGridRoot, type DataG
 import { DataGrid as RootDataGrid } from "../../../src/index.js";
 
 const variant: DataGridVariant = "outline";
+createElement(DataGrid.Root, { size: { md: "lg" }, density: { initial: "compact", lg: "spacious" }, variant: { sm: "outline" }, tone: "neutral", pageSize: 5, minInlineSize: 600 });
+createElement(DataGrid.RowHeader, { columnIndex: 1, sticky: "start", stickyOffset: "2rem", interactive: true });
+createElement(DataGrid.ColumnResizeHandle, { value: 200, min: 100, max: 400, step: 5, onValueChange: width => width.toFixed(), "aria-label": "Width" });
 const size: DataGridSize = "lg";
 const density: DataGridDensity = "spacious";
 const align: DataGridCellAlign = "end";

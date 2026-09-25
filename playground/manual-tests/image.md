@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Image |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -12,6 +12,7 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/image` |
+| Qualification route(s) | `/image?qualification=1` |
 
 Scenario order: `01 Overview`, `02 Accessibility`, `03 Fits`, `04 Positions`,
 `05 Radius and frame`, `06 Responsive attributes and output`,
@@ -35,7 +36,7 @@ Notes or issue:
 
 In `06`, compare the visible responsive Image HTML with the specimen. In `07`,
 select Loaded, Broken, Absent, then Loaded again. Confirm attributes and alt are
-authored as displayed, Content and Fallback never appear together, each state
+authored as displayed, default fallback does not cover loading (explicit loading fallback may overlay Content), each state
 keeps exactly the same box, and the final image replaces the fallback cleanly.
 
 Result:
@@ -64,6 +65,17 @@ selection. With the recorded screen reader, traverse scenarios `01`, `02`, and
 `07`. Informative images must expose one useful authored name; decorative and
 named-action images must not add duplicate speech; fallback must remain passive
 unless surrounding application text provides status.
+
+Result:
+Notes or issue:
+
+## Step 5 — Documentation and framework delivery
+
+Review `/image` at narrow/wide widths in light/dark. Inspect the circle, authored
+focal point, responsive crop, picture composition, readable fallback and code.
+Review the production Next fixture with narrow/wide candidates, errors and warm
+cache. Record browser zoom, screen reader and native high contrast separately
+from automated emulation. No human qualification is inferred from test results.
 
 Result:
 Notes or issue:

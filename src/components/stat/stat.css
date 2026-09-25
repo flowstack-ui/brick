@@ -37,6 +37,7 @@
     font-family: var(--brick-typography-title-lg-font-family);
     font-size: var(--brick-stat-value-size, var(--brick-typography-title-lg-font-size));
     font-weight: var(--brick-typography-title-lg-font-weight);
+    font-variant-numeric: proportional-nums;
     line-height: var(--brick-stat-value-line-height, var(--brick-typography-title-lg-line-height));
     letter-spacing: var(--brick-typography-title-lg-letter-spacing);
   }
@@ -48,12 +49,13 @@
     line-height: var(--brick-typography-caption-line-height);
     letter-spacing: var(--brick-typography-caption-letter-spacing);
   }
-  .brick-stat-help-text { display: flex; align-items: center; flex-wrap: wrap; gap: var(--brick-space-1); }
+  .brick-stat-help-text { display: block; }
   .brick-stat-indicator {
     display: inline-flex; flex: none; align-items: center; justify-content: center;
     inline-size: 1em; block-size: 1em; color: var(--brick-stat-indicator-color, var(--brick-color-text-primary));
+    margin-inline-end: var(--brick-space-1); vertical-align: -0.125em;
   }
-  .brick-stat-indicator > svg { inline-size: 100%; block-size: 100%; fill: currentColor; }
+  .brick-stat-indicator > svg { inline-size: 100%; block-size: 100%; }
   .brick-stat-indicator[data-tone="neutral"] { --brick-stat-indicator-color: var(--brick-color-text-primary); }
   .brick-stat-indicator[data-tone="accent"] { --brick-stat-indicator-color: var(--brick-color-accent-text); }
   .brick-stat-indicator[data-tone="info"] { --brick-stat-indicator-color: var(--brick-color-info-text); }
@@ -62,5 +64,65 @@
   .brick-stat-indicator[data-tone="danger"] { --brick-stat-indicator-color: var(--brick-color-danger-text); }
   @media (forced-colors: active) {
     .brick-stat, .brick-stat-label, .brick-stat-help-text, .brick-stat-value-unit, .brick-stat-indicator { color: CanvasText; }
+  }
+}
+
+/* Responsive sizes share Root/Group tokens; a local Root declaration wins inheritance. */
+@layer brick.components {
+  @media (min-width: 30rem) {
+    :is(.brick-stat, .brick-stat-group)[data-size-sm="sm"] {
+      --brick-stat-value-size: var(--brick-typography-title-md-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-md-line-height);
+    }
+    :is(.brick-stat, .brick-stat-group)[data-size-sm="md"] {
+      --brick-stat-value-size: var(--brick-typography-title-lg-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-lg-line-height);
+    }
+    :is(.brick-stat, .brick-stat-group)[data-size-sm="lg"] {
+      --brick-stat-value-size: var(--brick-typography-title-xl-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-xl-line-height);
+    }
+  }
+  @media (min-width: 48rem) {
+    :is(.brick-stat, .brick-stat-group)[data-size-md="sm"] {
+      --brick-stat-value-size: var(--brick-typography-title-md-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-md-line-height);
+    }
+    :is(.brick-stat, .brick-stat-group)[data-size-md="md"] {
+      --brick-stat-value-size: var(--brick-typography-title-lg-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-lg-line-height);
+    }
+    :is(.brick-stat, .brick-stat-group)[data-size-md="lg"] {
+      --brick-stat-value-size: var(--brick-typography-title-xl-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-xl-line-height);
+    }
+  }
+  @media (min-width: 64rem) {
+    :is(.brick-stat, .brick-stat-group)[data-size-lg="sm"] {
+      --brick-stat-value-size: var(--brick-typography-title-md-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-md-line-height);
+    }
+    :is(.brick-stat, .brick-stat-group)[data-size-lg="md"] {
+      --brick-stat-value-size: var(--brick-typography-title-lg-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-lg-line-height);
+    }
+    :is(.brick-stat, .brick-stat-group)[data-size-lg="lg"] {
+      --brick-stat-value-size: var(--brick-typography-title-xl-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-xl-line-height);
+    }
+  }
+  @media (min-width: 80rem) {
+    :is(.brick-stat, .brick-stat-group)[data-size-xl="sm"] {
+      --brick-stat-value-size: var(--brick-typography-title-md-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-md-line-height);
+    }
+    :is(.brick-stat, .brick-stat-group)[data-size-xl="md"] {
+      --brick-stat-value-size: var(--brick-typography-title-lg-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-lg-line-height);
+    }
+    :is(.brick-stat, .brick-stat-group)[data-size-xl="lg"] {
+      --brick-stat-value-size: var(--brick-typography-title-xl-font-size);
+      --brick-stat-value-line-height: var(--brick-typography-title-xl-line-height);
+    }
   }
 }

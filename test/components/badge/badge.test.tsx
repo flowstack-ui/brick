@@ -10,6 +10,19 @@ import {
 } from "../../../src/badge.js";
 
 describe("Badge", () => {
+  it("serializes sparse responsive recipes without leaking objects to native props", () => {
+    const { rerender } = render(<Badge size={{ md: "xl" }} variant={{ sm: "solid", lg: "plain", xl: "soft" }}>Status</Badge>);
+    const badge = screen.getByText("Status");
+    expect(badge).toHaveAttribute("data-size", "md");
+    expect(badge).toHaveAttribute("data-size-md", "xl");
+    expect(badge).toHaveAttribute("data-variant", "soft");
+    expect(badge).toHaveAttribute("data-variant-sm", "solid");
+    expect(badge).toHaveAttribute("data-variant-lg", "plain");
+    expect(badge).not.toHaveAttribute("size");
+    rerender(<Badge size="xs" variant="outline">Status</Badge>);
+    expect(badge).not.toHaveAttribute("data-size-md");
+    expect(badge).not.toHaveAttribute("data-variant-lg");
+  });
   it("owns passive Badge defaults and visual metadata", () => {
     render(<Badge>Published</Badge>);
     const badge = screen.getByText("Published");
@@ -27,7 +40,7 @@ describe("Badge", () => {
   });
 
   it("exposes every closed recipe through stable metadata", () => {
-    const variants: BadgeVariant[] = ["soft", "solid", "outline", "surface"];
+    const variants: BadgeVariant[] = ["soft", "solid", "outline", "surface", "plain"];
     const tones: BadgeTone[] = [
       "neutral",
       "accent",

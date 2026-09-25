@@ -6,8 +6,10 @@ import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import { Scenario } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./tree.playground.css";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { TreeDocumentation } from "./TreeDocumentation.js";
 
-const customStyle = { "--brick-tree-border-color": "var(--brick-color-accent-border)", "--brick-tree-selected-background": "var(--brick-color-accent-subtle)", "--brick-tree-radius": "1rem" } as CSSProperties;
+const customStyle = { "--brick-tree-border-color": "var(--brick-color-accent-border)", "--brick-tree-selected-background": "var(--brick-color-accent-soft)", "--brick-tree-radius": "1rem" } as CSSProperties;
 function Cell({ children, label }: { children: ReactNode; label: string }) { return <EvidenceSurface className="tree-cell"><SpecimenLabel>{label}</SpecimenLabel>{children}</EvidenceSurface>; }
 function RepositoryTree({ longLabel = false, ...props }: React.ComponentProps<typeof Tree.Root> & { longLabel?: boolean }) {
   return <Tree.Root aria-label="Repository files" defaultExpandedValue={["src", "components"]} {...props}>
@@ -35,7 +37,7 @@ function RtlRepositoryTree() {
 }
 export const treeScenarios = [
   { id: "tree.overview", number: 1, title: "Overview", description: "A selected branch opens as a finished, keyboard-navigable repository tree." },
-  { id: "tree.anatomy", number: 2, title: "Anatomy and semantics", navigationTitle: "Anatomy", description: "All six parts and their generated tree relationships remain inspectable." },
+  { id: "tree.anatomy", number: 2, title: "Anatomy and semantics", navigationTitle: "Anatomy", description: "All nine parts and their generated tree relationships remain inspectable." },
   { id: "tree.variants", number: 3, title: "Variants and border tone", description: "Plain, soft, and outline change root treatment while outline border strength remains explicit." },
   { id: "tree.sizing", number: 4, title: "Sizes and guides", navigationTitle: "Sizing", description: "Compact and ordinary rows preserve stable indicators, indentation, and optional hierarchy guides." },
   { id: "tree.selection", number: 5, title: "Selection and interaction", navigationTitle: "Selection", description: "Active focus, selection, expansion, multiple selection, and disabled items remain distinct." },
@@ -43,7 +45,11 @@ export const treeScenarios = [
   { id: "tree.stress", number: 7, title: "Responsive, RTL, and content stress", navigationTitle: "Stress", description: "Long content wraps and logical indentation, guides, and chevrons mirror in RTL." },
   { id: "tree.preferences", number: 8, title: "Preference boundaries", navigationTitle: "Preferences", description: "Reduced motion and forced colors retain meaningful state boundaries." },
 ];
-export function TreePage() {
+export function TreePage(): React.ReactElement {
+  const preview = usePreviewContext();
+  return preview || new URLSearchParams(window.location.search).get("qualification") === "1" ? <TreeEvidence /> : <TreeDocumentation />;
+}
+function TreeEvidence() {
   const [selection, setSelection] = useState<string[]>(["tree"]); const variants: TreeVariant[] = ["plain", "soft", "outline"]; const sizes: TreeSize[] = ["sm", "md"];
   return <VStack className="tree-page" data-component-page="tree" gap="6">
     <Scenario {...treeScenarios[0]}><EvidenceSurface><RepositoryTree defaultValue="components" variant="outline" /></EvidenceSurface></Scenario>
@@ -51,7 +57,7 @@ export function TreePage() {
     <Scenario {...treeScenarios[2]}><Grid.Root className="tree-specimens" columns={3} gap="4">{variants.map(variant => <Cell key={variant} label={variant}><RepositoryTree variant={variant} /></Cell>)}<Cell label="subtle outline"><RepositoryTree borderTone="subtle" variant="outline" /></Cell><Cell label="strong outline"><RepositoryTree borderTone="strong" variant="outline" /></Cell></Grid.Root></Scenario>
     <Scenario {...treeScenarios[3]}><Grid.Root className="tree-specimens" columns={2} gap="4">{sizes.map(size => <Cell key={size} label={`${size} with guides`}><RepositoryTree showGuide size={size} /></Cell>)}</Grid.Root></Scenario>
     <Scenario {...treeScenarios[4]}><Cell label="controlled multiple selection"><RepositoryTree multiple value={selection} onValueChange={value => setSelection(Array.isArray(value) ? value : value ? [value] : [])} /></Cell></Scenario>
-    <Scenario {...treeScenarios[5]}><VStack gap="5"><Grid.Root className="tree-specimens" columns={2} gap="4"><EvidenceSurface data-brick-appearance="light"><SpecimenLabel>light</SpecimenLabel><RepositoryTree variant="outline" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><SpecimenLabel>dark</SpecimenLabel><RepositoryTree variant="outline" /></EvidenceSurface></Grid.Root><EvidenceSurface className="playground-customization-evidence" inset="none"><Grid.Root className="tree-customization playground-customization-layout" columns={2} gap="0"><VStack gap="2"><SpecimenLabel>customized</SpecimenLabel><Text as="h3" variant="title-sm">Tree CSS properties</Text><Text tone="secondary" variant="body-sm">The preview uses an accent boundary, selected fill, and larger radius while preserving focus and hierarchy.</Text><PlaygroundCodeBlock tabIndex={0}>{`--brick-tree-border-color: var(--brick-color-accent-border);\n--brick-tree-selected-background: var(--brick-color-accent-subtle);\n--brick-tree-radius: 1rem;`}</PlaygroundCodeBlock></VStack><div className="playground-customization-preview"><RepositoryTree style={customStyle} variant="outline" /></div></Grid.Root></EvidenceSurface></VStack></Scenario>
+    <Scenario {...treeScenarios[5]}><VStack gap="5"><Grid.Root className="tree-specimens" columns={2} gap="4"><EvidenceSurface data-brick-appearance="light"><SpecimenLabel>light</SpecimenLabel><RepositoryTree variant="outline" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><SpecimenLabel>dark</SpecimenLabel><RepositoryTree variant="outline" /></EvidenceSurface></Grid.Root><EvidenceSurface className="playground-customization-evidence" inset="none"><Grid.Root className="tree-customization playground-customization-layout" columns={2} gap="0"><VStack gap="2"><SpecimenLabel>customized</SpecimenLabel><Text as="h3" variant="title-sm">Tree CSS properties</Text><Text tone="secondary" variant="body-sm">The preview uses an accent boundary, selected fill, and larger radius while preserving focus and hierarchy.</Text><PlaygroundCodeBlock tabIndex={0}>{`--brick-tree-border-color: var(--brick-color-accent-border);\n--brick-tree-selected-background: var(--brick-color-accent-soft);\n--brick-tree-radius: 1rem;`}</PlaygroundCodeBlock></VStack><div className="playground-customization-preview"><RepositoryTree style={customStyle} variant="outline" /></div></Grid.Root></EvidenceSurface></VStack></Scenario>
     <Scenario {...treeScenarios[6]}><Grid.Root className="tree-specimens" columns={2} gap="4"><Cell label="320px constrained content"><div className="tree-constrained"><RepositoryTree longLabel showGuide variant="outline" /></div></Cell><Cell label="RTL localized hierarchy"><div dir="rtl"><RtlRepositoryTree /></div></Cell></Grid.Root></Scenario>
     <Scenario {...treeScenarios[7]}><Text tone="secondary" variant="body-sm">Indicator motion is removed under reduced motion; forced colors retain focus, selection, disabled text, guides, and outline boundaries.</Text></Scenario>
   </VStack>;

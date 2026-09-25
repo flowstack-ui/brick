@@ -4,6 +4,13 @@ Feed follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Clarify logical-start action alignment: prefer outline Buttons beside prose,
+  preserving normal padding and reserving ghost for intentional contextual actions.
+
+- Add responsive variant, density and divider strength, named parts and styling
+  PropsProvider. Preserve inherited token overrides and omit leading separators
+  when earlier articles are hidden. Rebuild the source-paired documentation page.
+
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 ## 0.1.10

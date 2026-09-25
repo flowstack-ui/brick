@@ -12,3 +12,8 @@ DownloadTrigger follows the package version of `@flowstack-ui/brick`.
 ### Added
 
 - Add Button presentation for Atom generated-file downloads and async preparation.
+# Unreleased — action-group defaults
+
+- Inherit ButtonGroup presentation defaults while preserving explicit overrides.
+- Use real Button/IconButton rendering, fix custom loading prop leakage, add
+  named iconOnly controls and export the shared useDownload lifecycle hook.

@@ -8,6 +8,21 @@ function Example(props: React.ComponentProps<typeof Table.Root> = {}) {
 }
 
 describe("Table", () => {
+  it("separates hover and logical sticky presentation from native behavior", () => {
+    const view = render(<Table.Root interactive><Table.Body><Table.Row><Table.Cell sticky="end" stickyOffset={32}>Pinned</Table.Cell></Table.Row></Table.Body></Table.Root>);
+    expect(view.getByRole("table")).toHaveAttribute("data-interactive", "");
+    const cell = view.getByRole("cell");
+    expect(cell).toHaveAttribute("data-sticky", "end");
+    expect(cell.style.getPropertyValue("--brick-table-sticky-inline-offset")).toBe("32px");
+    expect(cell).not.toHaveAttribute("stickyOffset");
+    expect(view.getByRole("row")).not.toHaveAttribute("tabindex");
+  });
+  it("supports selected presentation without grid semantics or native prop leakage", () => {
+    const view = render(<Table.Root><Table.Body><Table.Row selected><Table.Cell>A</Table.Cell></Table.Row></Table.Body></Table.Root>);
+    const row = view.getByRole("row");
+    expect(row).toHaveAttribute("data-selected", "");
+    for (const name of ["selected", "aria-selected", "tabindex", "role"]) expect(row).not.toHaveAttribute(name);
+  });
   it("renders native anatomy, defaults, slots, and exact refs", () => {
     const containerRef = createRef<HTMLDivElement>();
     const rootRef = createRef<HTMLTableElement>();

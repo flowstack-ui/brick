@@ -23,6 +23,9 @@ Present a static ordered chronology with connected event markers.
 - **MUST:** Preserve native ol/li order. Decorative Connector and Indicator cannot contain interactive controls; repeat status in Content.
 - **MUST:** Use Content side before or after for logical placement; do not add empty content wrappers or page-colored connector masks.
 - **MUST:** Load styles.css or core.css plus timeline.css and styles for composed owners.
+- **MUST:** Use sparse responsive size/variant/layout maps, PropsProvider for shared visual defaults and compact layout for leading date metadata. Responsive maps replace whole; explicit root props win.
+- **MUST:** Keep semantic event tones meaningful. For category paint use paired --brick-timeline-fill/ink/border hooks, not fake status tones. Inherited geometry overrides belong on Root or its ancestor; nested roots intentionally inherit public overrides.
+- **MUST:** Unstyled removes recipe classes but preserves semantic hosts and decorative attributes. Root choice applies to parts, not nested Roots. asChild uses public Atom composition; preserve list grammar and ref cleanup.
 
 ## Common mistakes
 

@@ -57,8 +57,11 @@ height- or width-animation boundary.
 
 ## API
 
-Public parts are `Root`, `Item`, `Header`, `Trigger`, `Indicator`, `Content`,
-and `ContentInner`.
+Public parts are `Root`, `RootProvider`, `Context`, `ItemContext`, `Item`, `Header`, `Trigger`, `Indicator`, `Content`,
+and `ContentInner`. `useAccordion` returns a controller for RootProvider;
+`useAccordionContext` and `useAccordionItemContext` read the nearest owner.
+`UseAccordionOptions`, `UseAccordionReturn`, and `AccordionRootProviderProps`
+are exported alongside the part props below.
 Named exports are `AccordionRoot`, `AccordionItem`, `AccordionHeader`,
 `AccordionTrigger`, `AccordionIndicator`, `AccordionContent`, and
 `AccordionContentInner`. Their types are `AccordionRootProps`,
@@ -75,8 +78,8 @@ Named exports are `AccordionRoot`, `AccordionItem`, `AccordionHeader`,
 | `disabled`               | `boolean`                              | `false`           |
 | `orientation`            | `vertical`, `horizontal`               | `vertical`        |
 | `dir`                    | `ltr`, `rtl`                           | direction context |
-| `variant`                | `plain`, `ghost`, `soft`, `outline`    | `plain`           |
-| `size`                   | `sm`, `md`, `lg`, `xl`                 | `md`              |
+| `variant`                | responsive `plain`, `ghost`, `soft`, `outline`, `subtle`, `enclosed` | `plain` |
+| `size`                   | responsive `sm`, `md`, `lg`, `xl`      | `md`              |
 | `indicatorPlacement`     | `start`, `end`                         | `end`             |
 
 Item requires a unique `value` and supports `disabled`. Header supports `h1`
@@ -84,6 +87,26 @@ through `h6`. Content supports `keepMounted` and `landmark`; landmark defaults
 to true, while false omits `role="region"` and `aria-labelledby`. Atom-backed
 parts preserve native props, refs, `render`, and `asChild`. Indicator children
 replace its default artwork.
+
+Root also accepts `lazyMount` and `unmountOnExit` (both default `true`),
+`hideMode="display-none" | "activity"`, `ids` (`root`, `item(value)`,
+`itemTrigger(value)`, `itemContent(value)`), `onExitComplete(value)` and
+`onFocusChange({ value })`. Focus notifications use null when a trigger blurs.
+`keepMounted` remains an explicit Content override of the mounting flags.
+Activity retains state and pauses effects on React 19.2+; older React falls
+back to hidden display without effect pausing. Closed content becomes inert
+and aria-hidden immediately, and unmounts after its own exit, not a child's
+animation. Interrupted exits do not report completion.
+
+RootProvider accepts the controller in `value` and the same recipe props.
+Controller `value`/`setValue` use arrays even in single mode; Root's existing
+single-string/multiple-array API is preserved. Context and ItemContext render
+callbacks expose the nearest root controller and item's `isOpen` state.
+
+Trigger `unstyled asChild` delegates to one Button or IconButton. Root
+`unstyled` also delegates its triggers and removes ContentInner padding;
+nested Roots reset that choice. Use Content `motion="none"` for an immediate
+reveal and ContentInner `inset="none" asChild` for a spacing-owning layout.
 
 ### Shared radius selection
 
@@ -103,6 +126,11 @@ into the owning surface, soft adds a subtle group surface, and outline adds one
 containing border. Sizes coordinate trigger height, typography, indicator, and
 panel padding. A locked-open single trigger remains focusable with
 `aria-disabled="true"` and `data-locked-open`.
+
+Subtle paints the expanded item without dividers; enclosed adds a containing
+border, interior dividers, and expanded-item paint. These are additive recipes:
+Brick plain remains divided (closest to Chakra outline), and Brick ghost is
+the separator-free choice (closest to Chakra plain). Do not rename old recipes.
 
 The default decorative Indicator points down while its Item is closed and up
 while it is open. This vertical disclosure language remains the same in LTR
@@ -131,6 +159,9 @@ Stable classes use `.brick-accordion*`. Root exposes `data-indicator-placement`,
 `--brick-accordion-content-padding-inline`, and
 `--brick-accordion-indicator-size`.
 
+`--brick-accordion-expanded-background` customizes subtle's open-item surface;
+`--brick-accordion-indicator-color` customizes the muted indicator independently.
+
 ## Customization
 
 Set the documented `--brick-accordion-*` variables on Root to customize one
@@ -157,8 +188,9 @@ only when many open regions would create excessive landmark noise.
 ## Composition, native props, and refs
 
 Atom-backed parts preserve their `render` and `asChild` contract, event
-composition, native attributes, classes, styles, slots, and refs. Indicator and
-ContentInner remain fixed styled hosts.
+composition, native attributes, classes, styles, slots, and refs. Indicator
+supports Atom composition; ContentInner supports `asChild` and composed
+callback-ref cleanup.
 
 ## Examples
 

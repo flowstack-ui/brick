@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Badge |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Local 0.2.3 candidate |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -12,6 +12,7 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/badge` |
+| Qualification route(s) | `/badge?qualification=1` |
 
 Scenario order: `01 Overview`, `02 Variants`, `03 Tones`, `04 Sizes`,
 `05 Shapes`, `06 Composition`, `07 Theme`, `08 Stress`
@@ -20,7 +21,7 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Overview and recipes
 
-Setup: Open `/badge` in system appearance.
+Setup: Open `/badge?qualification=1` in system appearance.
 
 Action: Inspect `01 Overview`; compare all specimens in `02 Variants`,
 `03 Tones`, `04 Sizes`, and `05 Shapes`.
@@ -97,3 +98,11 @@ Follow-up issues:
 Workbook updated:
 
 Mark unavailable assistive-technology environments `blocked`.
+
+## Responsive and documentation review
+
+On /badge inspect all five variants, five sizes, named xl circle, radius, leading
+and trailing inherited-size icons and nested Text. Resize the responsive example
+through 30/48/64/80rem in both directions. Plain/outline must clear prior fill;
+soft must clear prior borders. Inspect every tone/variant in light and dark,
+forced colors, RTL and actual browser zoom. Do not mark manual checks from tests.

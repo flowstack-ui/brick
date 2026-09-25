@@ -18,7 +18,12 @@
   "composition": [
     "Place the short label directly in Badge; when an icon or separately styled Text is necessary, keep those children passive and let Badge own their spacing and foreground. Use variant=surface when a soft fill needs a visible semantic boundary. Combine tone=accent with variant=solid for solid accent paint instead of inventing a compound tone. Use size=xl with shape=circle only for a deliberate passive empty-state icon well."
   ],
-  "rules": [{"id":"badge-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
+  "rules": [
+    {
+      "id": "badge-radius",
+      "level": "must",
+      "statement": "Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."
+    },
     {
       "id": "badge-passive",
       "level": "must",
@@ -73,6 +78,16 @@
       "id": "badge-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus badge.css."
+    },
+    {
+      "id": "badge-responsive",
+      "level": "must",
+      "statement": "Use responsive size and variant for internal recipes without duplicating content. Sparse initial/sm/md/lg/xl values inherit defaults; plain is transparent and preserves border-box geometry. Tone remains scalar and semantic."
+    },
+    {
+      "id": "badge-icons",
+      "level": "must",
+      "statement": "Use Icon size=inherit for text-relative artwork; name a meaningful icon with Icon label or visible context, not aria-label on a generic Badge span. Render authored collections with For and stable keys."
     }
   ],
   "commonMistakes": [

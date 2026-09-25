@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/list");
+  await page.goto("/list?qualification=1");
   await expect(page.locator("#scenario-list-overview .brick-list")).toBeVisible();
 });
 

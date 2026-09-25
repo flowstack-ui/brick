@@ -9,6 +9,7 @@ Status: pending manual verification. Automated tests are not a manual pass.
 | Viewport and zoom | |
 | Assistive technology | |
 | Playground route | `/marquee` |
+| Qualification route(s) | `/marquee?qualification=1`; public examples at `/marquee` |
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for recorded step results.
 

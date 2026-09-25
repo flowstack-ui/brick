@@ -4,6 +4,17 @@ List follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add size=inherit, Root/Item markerTone and responsive nestedInset on nested
+  Roots. Add asChild to Leading, Content, Title, Description and Trailing.
+- Center leading visuals within the first text line. Respect native ol type
+  and composed ordered hosts; an explicit marker still takes precedence.
+
+- Add responsive peer gap and zero-padding density; preserve typography on composed li hosts.
+
+- Add presentation-only selected state and semantic actionable hover for record
+  composition with public useSelection and ActionDelegate; preserve native
+  semantics, independent controls and existing static defaults.
+
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 ### Fixed

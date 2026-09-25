@@ -1,6 +1,7 @@
 # CloseButton
 
 
+
 ## When and where to use
 Use for a consistent icon-only dismissal action in an overlay or visible region.
 
@@ -47,6 +48,8 @@ choose either it or `radius`, not both. This does not change behavior, sizing,
 or the independently owned corners of other parts.
 
 ## Visual recipes and states
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
 Uses IconButton's complete seven-size scale, ghost/solid/soft/outline, semantic tones,
 rounded/circle shape and unchanged hover, pressed, focus, disabled/loading treatment.
 
@@ -93,3 +96,7 @@ Manual screen-reader, actual zoom and physical touch results are recorded separa
 
 ## Changelog
 [Component changelog](CHANGELOG.md).
+
+### Shared action family
+
+Button owns shared rendering and recipes. IconButton wraps its internal icon-only path; CloseButton wraps IconButton. Equal explicit variant/tone values share hover, expanded, disabled and focus presentation. Icon-only controls remain square and named. Custom spinner is available on ordinary/render IconButton and CloseButton; IconButton asChild excludes it. No visible loadingText or fullWidth icon-only mode. This supersedes earlier independent IconButton paint rules.

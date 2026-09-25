@@ -30,6 +30,12 @@ Scenario order:
 
 ## Manual checks
 
+Use `/timeline` for source-paired examples and `/timeline?qualification=1` for
+the numbered exhaustive scenarios. Check compact leading dates and alternating
+columns at narrow widths in both directions. Verify provider precedence,
+unstyled host semantics, inherited color pairs and responsive size/variant
+changes. Inspect the composed photo avatars, card and comment field.
+
 At 200% and 400% browser zoom, verify no clipped text/markers or page overflow.
 Use a screen reader to confirm ol/li chronology and that decorative artwork is
 not announced. Tab to the rich-content link/action; no connector receives focus.

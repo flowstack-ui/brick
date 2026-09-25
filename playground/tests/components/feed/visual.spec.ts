@@ -1,6 +1,17 @@
-import { expectEvidenceScreenshot, installVisualDefaults, test } from "../../visual-harness.js";
+import { expectEvidenceScreenshot, installVisualDefaults, setAppearance, test } from "../../visual-harness.js";
 
-installVisualDefaults("/feed");
+installVisualDefaults("/feed?qualification=1");
+
+test("Feed documentation examples are readable in light, dark and narrow RTL layouts", async ({ page }) => {
+  await page.goto("/feed");
+  await setAppearance(page, "light");
+  await expectEvidenceScreenshot(page, page.getByRole("feed", { name: "Project activity" }), "docs-basic-light.png");
+  await expectEvidenceScreenshot(page, page.getByRole("feed", { name: "Team updates" }), "docs-rich-light.png");
+  await setAppearance(page, "dark");
+  await expectEvidenceScreenshot(page, page.getByRole("feed", { name: "Team updates" }), "docs-rich-dark.png");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expectEvidenceScreenshot(page, page.getByRole("feed", { name: "نشاط المشروع" }), "docs-rtl-mobile.png");
+});
 
 test("Feed defaults, recipes, focus, and dynamic state", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.getByTestId("feed-overview"), "overview-light.png");

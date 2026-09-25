@@ -1,5 +1,9 @@
 # Tree Grid manual-test protocol
 
+September 24 correction follow-up (human qualification pending): hold the first
+pointer press on a noninitial cell and confirm no top-left focus flash. Repeat
+for headers, controlled active cells, disabled cells and embedded native controls.
+
 | Run information | Value |
 | --- | --- |
 | Component | Tree Grid |
@@ -13,11 +17,21 @@
 | Assistive technology | |
 | Playground route | `/tree-grid` |
 
-Scenario order: `01 Overview`, `02 Anatomy and semantics`, `03 Structure and paint`,
-`04 Sizes and density`, `05 Hierarchy and selection`, `06 Sorting and
-controlled behavior`, `07 Caption, alignment, numeric, header, and footer`,
-`08 Appearance and customization`, `09 Responsive, localization, RTL, and
-preferences`.
+Scenario order: `01 tree-grid.overview` → `02 tree-grid.anatomy` → `03 tree-grid.variants` → `04 tree-grid.sizing` → `05 tree-grid.hierarchy` → `06 tree-grid.controlled` → `07 tree-grid.content` → `08 tree-grid.appearance` → `09 tree-grid.stress`.
+
+Use `?qualification=1` for this preserved scenario sequence; review the ordinary documentation examples separately.
+
+Use the ordinary documentation examples on `/tree-grid`. Legacy visual fixtures
+remain at `/tree-grid?qualification=1` for repeatable geometry comparisons.
+
+## September 2026 additions — not yet human approved
+
+- Enter editable/checkbox cells with F2 and return with Escape; confirm header Enter sorts while F2 enters its resize handle.
+- Resize by pointer, keyboard and RTL keys; review sticky boundaries inside the same scroll container.
+- Check disclosure without row selection, visible range/select-all scope, and disabled/read-only behavior.
+- Exercise loading, error/retry, page changes and the empty result with assistive technology.
+- Scroll the fixed-row window and request row 101 or Control/Command+End. Confirm full row counts and mounted active/ancestor cells. Remote and variable-height virtual grids need their own qualification.
+- Review all sizes/densities, logical RTL, forced colors and 200–400% zoom on physical devices.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 

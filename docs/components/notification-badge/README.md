@@ -58,11 +58,33 @@ Public exports are `NotificationBadge`, `NotificationBadgeProps`,
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `danger` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `tone` | `neutral`, `contrast`, `accent`, `info`, `success`, `warning`, `danger` | `danger` |
+| `size` | Responsive `xs`, `sm`, `md`, `lg`, `xl` | `md` |
 | `placement` | `top-start`, `top-end`, `bottom-start`, `bottom-end` | `top-end` |
 | `overlap` | `rectangular`, `circular` | `rectangular` |
 | `invisible` | `boolean` | `false` |
+| `offset` | Responsive number or CSS length/percentage | `0`, circular `14.6447%` |
+| `offsetInline` / `offsetBlock` | Responsive number or CSS length/percentage | inherited from offset |
+| `bordered` | `boolean` | `true` |
+| `locale` | BCP 47 string | LocaleProvider, otherwise `en-US` |
+
+Placement also accepts a sparse responsive object. Positive offsets inset,
+negative offsets outset. Numeric values use Brick spacing factors; strings
+may use spacing tokens or CSS lengths. Axis offsets take precedence, including
+zero. Explicit offset replaces the circular fallback. Sparse objects retain
+the overlap fallback before their first breakpoint.
+
+| Size | Count height | Dot diameter | Count font |
+| --- | --- | --- | --- |
+| xs | 14px | 6px | 10px |
+| sm | 16px | 8px | 11px |
+| md | 20px | 10px | 12px |
+| lg | 24px | 12px | 13px |
+| xl | 28px | 14px | 14px |
+
+These are rem-based defaults at a 16px root. Badge size is independent from
+its anchor. Start with xs/sm for compact controls, sm/md for ordinary controls,
+and md/lg for larger avatars; a large target can still use a small dot.
 
 Count mode requires `count: number` and accepts `max?: number` (valid positive
 integer, otherwise `99`) and `showZero?: boolean` (`false`). Dot mode requires
@@ -86,6 +108,7 @@ Stable root/indicator hooks are `.brick-notification-badge` and
 `data-shape` for its owned presentation. Public tokens are
 `--brick-notification-badge-size`, `--brick-notification-badge-dot-size`,
 `--brick-notification-badge-inline-padding`,
+`--brick-notification-badge-font-size`,
 `--brick-notification-badge-outline-color`,
 `--brick-notification-badge-translate-inline`, and
 `--brick-notification-badge-translate-block`.
@@ -99,7 +122,16 @@ implementation-owned.
 ## Responsive behavior
 
 The overlay follows its child's box and logical direction. The application
-owns child sizing, clipping, and responsive placement decisions.
+owns clipping and breakpoint choices; size, placement and offsets accept
+responsive values. Sparse size begins at md and placement at top-end.
+
+The conditional `data-bordered` hook controls the seam. `bordered={false}`
+uses a transparent boundary without changing dimensions. Use the outline-color
+token for a specific surface; Brick does not sample underlying images.
+
+Counts inherit LocaleProvider or explicit locale and use ungrouped integer
+digits, including the maximum in overflow. The plus sign remains `+`.
+Use the same locale on server and client; no browser locale is guessed.
 
 ## Accessibility
 
@@ -111,6 +143,24 @@ count changes.
 
 Native span props are forwarded to the root, but `asChild` is excluded. The ref
 targets the root span, not the child or indicator.
+
+Wrapping the entire button, Avatar or Image anchors to its outer boundary.
+Wrapping the icon inside IconButton anchors to the artwork instead. Both are
+valid; ghost styling does not automatically select one. IconButton preserves
+its own artwork size through NotificationBadge for a direct SVG, image or
+Brick Icon, including Icon asChild. Do not manually synchronize icon sizes or
+replace a named button with a passive icon. The indicator remains independent.
+
+```tsx
+<IconButton aria-label="Inbox, 3 unread messages">
+  <NotificationBadge count={3} size="sm">
+    <Icon><Mail /></Icon>
+  </NotificationBadge>
+</IconButton>
+```
+
+Load IconButton and Icon styles for that composition. The badge stylesheet
+includes Float's positioning styles; no extra Float stylesheet is required.
 
 ## Examples
 

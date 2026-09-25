@@ -1,6 +1,16 @@
 # Table
 
-Table presents static row-and-column relationships with native HTML semantics,
+### Responsive recipes and optional engine
+
+`size`, `density`, and `variant` accept sparse `initial/sm/md/lg/xl` values.
+Sizes use 14/14/16px type, 8/12/16px inline insets and 40/48/56px comfortable
+minimum row heights; compact reduces the minimum by 8px. Cells can grow for content.
+Use a named Button inside Head for application-owned sorting and pass truthful
+sortDirection. SortIndicator preserves supplied decorative children.
+The playground includes an optional `@tanstack/react-table@8.21.3` integration;
+the engine is not a Brick runtime dependency and does not change native table semantics.
+
+Table presents row-and-column relationships with native HTML semantics,
 finished visual recipes, logical alignment, and explicit responsive
 containment. Atom owns the semantic table primitives and sort metadata; Brick
 owns presentation.
@@ -9,13 +19,12 @@ owns presentation.
 
 Use Table when people compare values across meaningful columns, including
 reports, invoices, inventories, pricing, and audit results. Use Data Grid when
-the tabular region itself needs arrow-key cell navigation or row selection.
-reports, invoices, inventories, pricing, and audit results.
+the tabular region itself needs arrow-key cell navigation.
 
 ## When not to use
 
-Use Data Grid when the tabular region itself needs arrow-key cell navigation
-or row selection. Table does not own data mapping, sorting, filtering,
+Use Data Grid when the tabular region itself needs arrow-key cell navigation.
+Table does not own data mapping, sorting, filtering,
 pagination, editing, resizing, virtualization, or responsive card conversion.
 
 ## Installation and imports
@@ -96,6 +105,9 @@ a CSS-unit value, column schema, or resizing API.
 | `minInlineSize` | CSS length string or pixel number | unset; recipe baseline is `0` |
 | `striped` | boolean | `false` |
 | `stickyHeader` | boolean | `false` |
+| `interactive` | boolean; hover presentation only | `false` |
+| `Head/Cell sticky` | `start`, `end` | unset |
+| `Head/Cell stickyOffset` | length string or pixel number | `0` |
 | `side` | `top`, `bottom` | defaults to `"top"` |
 | `align` | `start`, `center`, `end` | `start`, or `end` when numeric |
 | `verticalAlign` | `top`, `middle`, `bottom` | `middle` |
@@ -116,6 +128,20 @@ and responsive objects are not accepted. Where a legacy corner `shape` exists,
 choose either it or `radius`, not both. This does not change behavior, sizing,
 or the independently owned corners of other parts.
 
+Logical sticky columns must be applied to the matching header and body cells.
+Offsets for multiple pinned columns are authored; no resizing or measurement
+engine is implied. Pinned cells use an opaque base surface to keep scrolling
+content from showing through. Root `interactive` never adds activation or focus.
+With both sticky axes, Brick layers pinned body cells below headers and pinned
+header intersections above the remaining headers. No consumer z-index override
+is required for that combination.
+Container applies a one-CSS-pixel leading-edge paint clip when it directly
+contains a sticky-header Root. This prevents subpixel body-text leakage in
+WebKit without changing dimensions, padding or sticky offsets. Keyboard focus
+is inset so the clip cannot cut off the theme focus indicator. As with other
+bounded vertical examples, use a line table and place any persistent outer
+border on the stable surrounding surface rather than the scrolling table.
+
 ## Visual recipes and states
 
 Line separates rows; outline adds the outer boundary while cell
@@ -126,7 +152,8 @@ subtle header/footer paint. Size owns typography and row metrics, density owns b
 padding, stripe affects only alternating body rows, and sticky affects only
 header positioning. A section Row adds stronger row-group heading cadence and
 a structural separator without inventing new table semantics. Table adds no
-hover, selected, focus, loading, empty, or error state.
+focus, loading, empty, or error state. Hover and selected paint are opt-in
+presentation; their controls and application state remain separately composed.
 
 ### Sorting
 
@@ -136,7 +163,7 @@ in application state, and pass the current direction to `sortDirection`.
 
 ```tsx
 <Table.Head sortDirection="ascending">
-  <Button onClick={sortRows}>Name<Table.SortIndicator /></Button>
+  <Button onClick={sortRows} endIcon={<Table.SortIndicator />}>Name</Button>
 </Table.Head>
 ```
 
@@ -241,3 +268,19 @@ See the [Table changelog](CHANGELOG.md).
 
 See the [Table changelog](CHANGELOG.md) and
 [package changelog](../../../CHANGELOG.md).
+
+### Record selection
+
+Row accepts optional selected (boolean, default false). This is
+presentation only: it emits data-selected, not aria-selected, a role,
+or a tab stop. Compose a named Checkbox with the public selection utility;
+optional ActionDelegate targets a real descendant primary control.
+See [record selection](../../guides/record-selection.md) for the complete
+state, scope, delegation and accessibility contract.
+
+Local styling variables: --brick-table-selected-background,
+--brick-table-selected-foreground, --brick-table-hover-background.
+Selected paint uses `--brick-color-accent-soft` and primary text. Actionable
+hover mixes primary text at 6% over the base surface; selected paint wins.
+Selected paint overrides hover without changing geometry. Forced colors
+uses system canvas colors; the checkbox conveys selection without color.

@@ -11,7 +11,7 @@ async function expectCardDefaults(card: Locator) {
 test("Card exposes its default static anatomy and explicit child actions", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const card = page.getByTestId("card-overview").locator(".brick-card");
   await expectCardDefaults(card);
   await expect(card).toHaveJSProperty("tagName", "DIV");
@@ -40,7 +40,7 @@ test("Card exposes its default static anatomy and explicit child actions", async
 });
 
 test("Card variants change only surface prominence", async ({ page }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const variants = page.getByTestId("card-variants");
   await expect(variants.locator(".brick-card")).toHaveCount(3);
 
@@ -107,7 +107,7 @@ test("Card variants change only surface prominence", async ({ page }) => {
 test("Card sizes change only coordinated spacing and title scale", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const sizes = page.getByTestId("card-sizes");
   await expect(sizes.locator(".brick-card")).toHaveCount(3);
   const measurements: Array<{ space: number; title: number }> = [];
@@ -125,7 +125,7 @@ test("Card sizes change only coordinated spacing and title scale", async ({
         const title = element.querySelector(".brick-card-title")!;
         return {
           space: Number.parseFloat(
-            rootStyle.getPropertyValue("--brick-card-space"),
+            getComputedStyle(element.querySelector(".brick-card-header")!).paddingInlineStart,
           ),
           title: Number.parseFloat(getComputedStyle(title).fontSize),
         };
@@ -142,7 +142,7 @@ test("Card sizes change only coordinated spacing and title scale", async ({
 test("Card renders only the anatomy authored by the consumer", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const anatomy = [
     {
       absent: ["card-header", "card-footer"],
@@ -181,7 +181,7 @@ test("Card renders only the anatomy authored by the consumer", async ({
 test("Card reserves a trailing header column only when Action is authored", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const headerOnly = page
     .getByTestId("card-anatomy-header")
     .locator(".brick-card-header");
@@ -238,7 +238,7 @@ test("Card reserves a trailing header column only when Action is authored", asyn
 test("Card exposes every restricted Root and Title element", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
 
   for (const element of ["div", "article", "section", "li"] as const) {
     const card = page.getByTestId(`card-root-${element}`);
@@ -264,7 +264,7 @@ test("Card exposes every restricted Root and Title element", async ({
 test("Card composes Brick Image, explicit controls, and an application link", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const imageCard = page.getByTestId("card-composition-image");
   const controlsCard = page.getByTestId("card-composition-controls");
   await expect(imageCard).toHaveAttribute("data-variant", "outline");
@@ -309,7 +309,7 @@ test("Card composes Brick Image, explicit controls, and an application link", as
 test("Card supports scoped appearance and exact customization hooks", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const scopes = page.getByTestId("card-appearance");
   const light = scopes.locator('[data-brick-appearance="light"] .brick-card');
   const dark = scopes.locator('[data-brick-appearance="dark"] .brick-card');
@@ -353,7 +353,7 @@ test("Card remains contained and logical in constrained and RTL content", async 
   page,
 }) => {
   await page.setViewportSize({ width: 256, height: 900 });
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   expect(
     await page.evaluate(
       () =>
@@ -397,7 +397,7 @@ test("Card preserves visible boundaries without adding motion", async ({
     testInfo.project.name !== "chromium",
     "Forced colors is a Chromium release check.",
   );
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const elevated = page
     .getByTestId("card-variants")
     .locator('.brick-card[data-variant="elevated"]');

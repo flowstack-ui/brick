@@ -12,6 +12,56 @@ import {
 } from "../../../src/list.js";
 
 describe("List", () => {
+  it("serializes typography, nested indentation and independent marker tones", () => {
+    const view = render(<List.Root size="inherit" markerTone="muted" nestedInset={{ md: "5", xl: 8 }}><List.Item markerTone="accent">Accent marker</List.Item><List.Item>Inherited marker</List.Item></List.Root>);
+    const root = view.getByRole("list");
+    expect(root).toHaveAttribute("data-size", "inherit");
+    expect(root).toHaveAttribute("data-marker-tone", "muted");
+    expect(root.style.getPropertyValue("--brick-list-nested-inset-md-input")).toBe("var(--brick-space-5)");
+    expect(root.style.getPropertyValue("--brick-list-nested-inset-xl-input")).toBe("calc(var(--brick-space-1) * 8)");
+    expect(root.style.getPropertyValue("--brick-list-nested-inset-input")).toBe("");
+    expect(view.getAllByRole("listitem")[0]).toHaveAttribute("data-marker-tone", "accent");
+    expect(view.getAllByRole("listitem")[1]).not.toHaveAttribute("data-marker-tone");
+    expect(root).not.toHaveAttribute("nestedInset");
+    expect(root).not.toHaveAttribute("markerTone");
+  });
+
+  it("projects each presentation part onto one child with refs, classes and events", () => {
+    const outer = createRef<HTMLSpanElement>();
+    const inner = createRef<HTMLSpanElement>();
+    const onOuter = vi.fn();
+    const onInner = vi.fn();
+    const view = render(<List.Root marker="none"><List.Item>
+      <List.Leading asChild ref={outer} className="outer" onClick={onOuter}><span className="inner" ref={inner} onClick={onInner}>Icon</span></List.Leading>
+      <List.Content asChild><section><List.Title asChild><strong>Title</strong></List.Title><List.Description asChild><p>Description</p></List.Description></section></List.Content>
+      <List.Trailing asChild><span>Metadata</span></List.Trailing>
+    </List.Item></List.Root>);
+    const leading = view.getByText("Icon");
+    expect(leading).toBe(outer.current);
+    expect(leading).toBe(inner.current);
+    expect(leading).toHaveClass("brick-list__leading", "inner", "outer");
+    leading.click();
+    expect(onOuter).toHaveBeenCalledOnce();
+    expect(onInner).toHaveBeenCalledOnce();
+    expect(view.getByText("Title").tagName).toBe("STRONG");
+    expect(view.getByText("Description").tagName).toBe("P");
+    expect(view.container.querySelector(".brick-list__content")?.tagName).toBe("SECTION");
+    expect(view.getByText("Metadata").tagName).toBe("SPAN");
+    expect(view.container.querySelector("[aschild]")).toBeNull();
+  });
+  it("serializes sparse gap without leaking props", () => {
+    const view = render(<List.Root density="none" inset="none" gap={{ md: "4" }}><List.Item>One</List.Item></List.Root>);
+    const root = view.getByRole("list");
+    expect(root.style.getPropertyValue("--brick-list-gap-md-input")).toBe("var(--brick-space-4)");
+    expect(root.style.getPropertyValue("--brick-list-gap-input")).toBe("");
+    expect(root).not.toHaveAttribute("gap");
+  });
+  it("paints selection without option semantics", () => {
+    const view = render(<List.Root><List.Item selected>Person</List.Item></List.Root>);
+    const item = view.getByRole("listitem");
+    expect(item).toHaveAttribute("data-selected", "");
+    for (const name of ["selected", "aria-selected", "tabindex", "role"]) expect(item).not.toHaveAttribute(name);
+  });
   it("renders native defaults, stable anatomy, slots, and refs", () => {
     const rootRef = createRef<HTMLUListElement>();
     const itemRef = createRef<HTMLLIElement>();
@@ -66,7 +116,7 @@ describe("List", () => {
   it("exposes every closed recipe without leaking props", () => {
     const variants: ListVariant[] = ["plain", "divided", "bordered"];
     const sizes: ListSize[] = ["sm", "md", "lg"];
-    const densities: ListDensity[] = ["compact", "comfortable"];
+    const densities: ListDensity[] = ["none", "compact", "comfortable"];
     const alignments: ListAlign[] = ["start", "center", "end"];
     const insets: ListInset[] = ["default", "none"];
     const markers: ListMarker[] = ["auto", "disc", "circle", "square", "decimal", "lower-alpha", "upper-alpha", "lower-roman", "upper-roman", "none"];

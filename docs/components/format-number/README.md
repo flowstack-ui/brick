@@ -38,7 +38,7 @@ The component renders one semantic-neutral `span` with `data-slot="format-number
 
 | Prop | Value | Default |
 | --- | --- | --- |
-| `value` | required finite number | none |
+| `value` | required number, including NaN/infinities | none |
 | `locale` | BCP 47 locale | inherited `LocaleProvider`, then `en-US` |
 | `formatOptions` | `Intl.NumberFormatOptions` | `{}` |
 
@@ -53,6 +53,14 @@ Formatted output inherits surrounding typography and color. There are no visual 
 The stable hook is `data-slot` with value `format-number`. The component exposes no paint token; its modular stylesheet is intentionally empty.
 
 ## Customization
+
+`formatOptions` forwards native Intl options, including notation, units,
+grouping, sign and precision. Invalid locales/options retain native errors.
+Newer rounding options depend on runtime ICU and TypeScript support; no
+polyfill is bundled. Stable server/client locale and ICU data are needed for
+identical hydration output. The pure helper defaults to en-US, while the React
+component inherits LocaleProvider. The shared formatter cache is a bounded
+100-entry LRU and does not retain failed constructors.
 
 Compose with Text or another typographic owner instead of adding a typography recipe to the formatter.
 

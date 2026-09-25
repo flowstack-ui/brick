@@ -1,6 +1,6 @@
-import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
+import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/accordion");
+installVisualDefaults("/accordion?qualification=1");
 
 test("Accordion defaults, variants, sizes, selection, states, and orientation", async ({ page }) => {
   await expect(page.getByTestId("accordion-overview")).toHaveScreenshot("overview-light.png");
@@ -26,5 +26,20 @@ test("Accordion responsive and forced colors", async ({ page }) => {
 test("Accordion edge focus remains complete", async ({ page }) => {
   const overview = page.getByTestId("accordion-overview");
   await overview.getByRole("button", { name: "Account settings" }).focus();
-  await expect(overview).toHaveScreenshot("focus-ring-light.png");
+  await expect(overview).toHaveScreenshot("focus-ring-light.png", { maxDiffPixelRatio: 0 });
+});
+
+test("Accordion feature recipes and delegated button composition", async ({ page }) => {
+  await page.goto("/accordion?appearance=light");
+  const variants = page.locator("#variants");
+  await expect(variants.locator(".brick-accordion")).toHaveCount(6);
+  for (const root of await variants.locator(".brick-accordion").all()) {
+    const trigger = root.locator(".brick-accordion-trigger").first();
+    if (await trigger.getAttribute("aria-expanded") !== "true") await trigger.click();
+  }
+  await expectEvidenceScreenshot(page, variants, "feature-recipes-light.png", { maxDiffPixelRatio: 0 });
+  await setAppearance(page, "dark");
+  await expectEvidenceScreenshot(page, variants, "feature-recipes-dark.png", { maxDiffPixelRatio: 0 });
+  const composition = page.locator("#composition");
+  await expectEvidenceScreenshot(page, composition, "feature-composition-dark.png", { maxDiffPixelRatio: 0 });
 });

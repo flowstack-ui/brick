@@ -21,9 +21,15 @@
   ],
   "composition": [
     "Compose Root, Label, ValueText and optional HelpText; use FormatNumber or FormatByte inside ValueText.",
-    "Use Group for shared size defaults; explicit Root size wins."
+    "Use Group for shared size defaults; explicit Root size wins.",
+    "Root and Group accept responsive size; an explicit sparse Root starts at md."
   ],
   "rules": [
+    {
+      "id": "stat-support-layout",
+      "level": "must",
+      "statement": "Keep Progress in a block description or an explicitly growing layout region; a widthless flex item collapses its track. Indicators own logical trailing spacing. Compose Badge and wording with an explicit HStack gap; use ToggleTip for click/touch information."
+    },
     {
       "id": "stat-grammar",
       "level": "must",

@@ -49,7 +49,7 @@ separately documented Notification Badge family.
 
 | Prop      | Values                                                      | Default   |
 | --------- | ----------------------------------------------------------- | --------- |
-| `variant` | `soft`, `solid`, `outline`, `surface`                       | `soft`    |
+| `variant` | `soft`, `solid`, `outline`, `surface`, `plain`                       | `soft`    |
 | `tone`    | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
 | `size`    | `xs`, `sm`, `md`, `lg`, `xl`                                | `md`      |
 | `shape`   | `rounded`, `pill`, `circle`                                 | `rounded` |
@@ -130,8 +130,8 @@ rendered span; composed output must remain passive.
 
 <Badge variant="surface" tone="accent">Fast and secure</Badge>
 
-<Badge aria-label="Verified" shape="circle" tone="accent">
-  <Icon aria-hidden size="xs">{checkIcon}</Icon>
+<Badge shape="circle" tone="accent">
+  <Icon label="Verified" size="inherit">{checkIcon}</Icon>
 </Badge>
 ```
 
@@ -139,7 +139,7 @@ Badge applies its public gap token when children include an icon and label:
 
 ```tsx
 <Badge tone="accent" shape="pill">
-  <Icon size="xs">{icon}</Icon>
+  <Icon size="inherit">{icon}</Icon>
   Built for business
 </Badge>
 ```
@@ -149,7 +149,7 @@ foreground so the selected Badge recipe continues to own contrast:
 
 ```tsx
 <Badge tone="accent" shape="pill">
-  <Icon size="xs">{icon}</Icon>
+  <Icon size="inherit">{icon}</Icon>
   <Text tone="inherit" variant="caption">
     Built for business
   </Text>
@@ -175,3 +175,22 @@ it does not switch to the inverse black/white pair between appearances.
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).
+
+### Responsive recipes and plain treatment
+
+Size and variant accept ResponsiveValue with initial/sm/md/lg/xl keys. Omitted
+initial values inherit md and soft. Tone remains scalar. Plain keeps the same
+reserved border and spacing but uses transparent paint and semantic text.
+
+```tsx
+<Badge size={{ sm: "xs", md: "lg" }} variant={{ md: "plain", xl: "soft" }}>
+  Published
+</Badge>
+```
+
+Use Icon size="inherit" for text-relative artwork. Badge does not name a generic
+span from aria-label; a meaningful icon needs Icon label or visible context.
+The optional --brick-badge-circle-icon-size hook controls passive circle artwork.
+The normal playground route uses focused Preview/Code examples; exhaustive legacy
+scenarios remain at /badge?qualification=1. Independent category palettes are not
+part of the six semantic tone recipes.

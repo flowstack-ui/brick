@@ -207,10 +207,6 @@
   margin: 0;
 }
 
-.badge-phone-frame .brick-badge {
-  max-inline-size: 100%;
-  overflow-wrap: anywhere;
-}
 
 @container (min-width: 34rem) {
   .badge-specimen-grid--two,

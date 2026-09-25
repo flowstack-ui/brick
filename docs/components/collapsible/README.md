@@ -55,7 +55,9 @@ padding so Content remains an accurate height-animation boundary.
 
 ## API
 
-Public parts are `Root`, `Trigger`, `Indicator`, `Content`, and `ContentInner`.
+Public parts are `Root`, `RootProvider`, `Context`, `Trigger`, `Indicator`, `Content`, and `ContentInner`.
+`useCollapsible` creates an external controller for RootProvider;
+`useCollapsibleContext` reads the nearest owner. State is not duplicated in Brick.
 Named exports are `CollapsibleRoot`, `CollapsibleTrigger`,
 `CollapsibleIndicator`, `CollapsibleContent`, and `CollapsibleContentInner`.
 Their types are `CollapsibleRootProps`, `CollapsibleTriggerProps`,
@@ -64,8 +66,8 @@ Their types are `CollapsibleRootProps`, `CollapsibleTriggerProps`,
 
 | Root prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `plain`, `soft`, `outline` | `plain` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `variant` | responsive `plain`, `soft`, `outline` | `plain` |
+| `size` | responsive `sm`, `md`, `lg` | `md` |
 | `open` / `defaultOpen` | controlled / initial state | closed |
 | `disabled` | `boolean` | `false` |
 | `orientation` | `vertical`, `horizontal` | `vertical` |
@@ -73,12 +75,60 @@ Their types are `CollapsibleRootProps`, `CollapsibleTriggerProps`,
 
 Trigger accepts `iconOnly`. It uses the Root size to create a square,
 centered disclosure control and emits `data-icon-only`. Supply a complete
-accessible name with `aria-label`; do not add a sizing wrapper or compose a
-second Button recipe.
+accessible name with `aria-label`; do not add a sizing wrapper.
 
-Content supports `keepMounted`. Atom-backed parts preserve native props,
-callbacks, refs, `render`, and `asChild`. Indicator children replace its
-default artwork. Indicator and ContentInner intentionally stay fixed hosts.
+Atom-backed parts preserve native props, callbacks, refs, `render`, and `asChild`.
+Indicator children replace its default artwork, and placement selects start,
+end (default), or inline spacing. ContentInner supports asChild.
+
+### Background feedback and composition
+
+Trigger `highlight="none" | "hover" | "open" | "both"` defaults to `both`.
+It controls background feedback only; `none` preserves keyboard focus.
+Use Trigger `unstyled asChild` for a finished Button or IconButton:
+
+```tsx
+<Collapsible.Root unstyled>
+  <Collapsible.Trigger unstyled asChild>
+    <Button variant="outline">Details</Button>
+  </Collapsible.Trigger>
+  <Collapsible.Content>
+    <Collapsible.ContentInner>Details</Collapsible.ContentInner>
+  </Collapsible.Content>
+</Collapsible.Root>
+```
+
+Root `unstyled` removes its containing visual/layout recipe, not Trigger's.
+Trigger `unstyled` removes all its visual rules, not disclosure behavior.
+Do not combine it with iconOnly/highlight; the child owns those visuals.
+ContentInner `inset="none"` removes size padding for layout-owned spacing.
+Content `motion="none"` disables animation; reduced motion always wins.
+
+### Visibility and lifecycle
+
+Root `lazyMount` and `unmountOnExit` both default to `true`, preserving Brick's
+historical behavior (Chakra defaults differ). For retained form state set
+`unmountOnExit={false}`; add `lazyMount={false}` for eager retained rendering.
+Content `keepMounted` is deprecated. Explicit true maps to eager/retained;
+false maps to lazy/unmounted. It wins conflicting Root options with a warning.
+
+Root `collapsedHeight` and `collapsedWidth` accept nonnegative numeric pixels
+or validated CSS unit lengths (not arbitrary expressions). A positive preview
+keeps content mounted. The entire closed region is inert and aria-hidden:
+keep summaries and required actions outside Content. Open/close uses live
+measured geometry; `onExitComplete` runs after completed, not cancelled exits.
+
+Root `hideMode="display-none"` supports React 18+. Optional `"activity"`
+pauses hidden effects on React 19.2+ and falls back to display-none on older React. The fallback retains state but does not pause effects. Use retained mounting for
+Activity to preserve state while pausing hidden effects. IDs can be supplied
+with `ids={{ root, trigger, content }}`.
+
+### External controller
+
+Pass `useCollapsible(options)` to `RootProvider value`. Its `open`, `setOpen`,
+`onOpen`, `onClose`, and `onToggle` coordinate external actions. Read the same
+controller with `Context`'s render callback or `useCollapsibleContext`.
+RootProvider accepts Root's presentation options, not a second state policy.
 
 ### Shared radius selection
 
@@ -125,6 +175,12 @@ Supported variables include `--brick-collapsible-background`,
 `--brick-collapsible-content-padding-inline`, and
 `--brick-collapsible-indicator-size`.
 
+`--brick-collapsible-indicator-color` overrides the muted decorative artwork.
+Size and variant accept sparse responsive objects, for example
+`size={{ initial: "sm", md: "lg" }}`. Disabled triggers use a consistent
+0.5 fade; touch does not latch a mouse-hover surface. Full reveals animate
+size and opacity; partial previews keep full opacity while animating size.
+
 ## Customization
 
 Set the documented `--brick-collapsible-*` variables on Root to customize one
@@ -143,7 +199,7 @@ indicator motion; RTL preserves logical order and indicator meaning.
 
 Atom supplies the button, `aria-expanded`, `aria-controls`, generated IDs,
 labelled region, Enter/Space behavior, and disabled behavior. Focus remains on
-Trigger. Give Trigger a clear content name, keep Indicator decorative, and do
+Trigger; closing a focused descendant returns focus to Trigger. Give Trigger a clear content name, keep Indicator decorative, and do
 not put another interactive control inside Trigger.
 
 ## Composition, native props, and refs

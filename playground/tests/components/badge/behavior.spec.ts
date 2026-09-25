@@ -3,8 +3,54 @@ import { expect, test } from "../../evidence-test.js";
 
 const specimenBadge = ".brick-badge:not([data-playground-specimen-label])";
 
-test.beforeEach(async ({ page }) => {
+test("documentation covers plain, icon geometry, radius and passive composition", async ({page}) => {
   await page.goto("/badge");
+  await expect(page.getByTestId("badge-workbench")).toHaveCount(0);
+  await expect(page.locator("#variants .brick-badge")).toHaveCount(5);
+  const heights=await page.locator("#variants .brick-badge").evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().height));
+  expect(new Set(heights).size).toBe(1);
+  const plain=page.locator('#variants .brick-badge[data-variant="plain"]');
+  await expect(plain).toHaveCSS("background-color","rgba(0, 0, 0, 0)");
+  await expect(plain).toHaveCSS("border-top-color","rgba(0, 0, 0, 0)");
+  await expect(page.locator("#sizes .brick-badge")).toHaveCount(5);
+  const metrics=await page.locator("#icons .brick-badge").evaluateAll(nodes=>nodes.map(n=>{
+    const icon=n.querySelector('.brick-icon')!;const b=icon.getBoundingClientRect();
+    return {font:parseFloat(getComputedStyle(n).fontSize),width:b.width,height:b.height,gap:getComputedStyle(n).gap};
+  }));
+  for(const m of metrics){expect(m.width).toBeCloseTo(m.font,1);expect(m.height).toBeCloseTo(m.font,1);expect(m.gap).toBe("4px");}
+  const circle=page.locator('#shapes .brick-badge[data-size="xl"]');
+  const box=await circle.boundingBox();expect(box!.width).toBe(44);expect(box!.height).toBe(44);
+  const iconBox=await circle.locator('.brick-icon').boundingBox();expect(iconBox!.width).toBe(24);expect(iconBox!.height).toBe(24);
+  await expect(circle.getByRole("img",{name:"Verified xl"})).toBeVisible();
+  for(const item of await page.locator('#shapes .brick-badge[data-shape="circle"]').all()) {
+    const bounds=await item.boundingBox();expect(bounds!.width).toBeCloseTo(bounds!.height,1);
+    const artwork=item.locator('.brick-icon');
+    if(await artwork.count()){const inner=await artwork.boundingBox();expect(inner!.width).toBeLessThan(bounds!.width);expect(inner!.height).toBeLessThan(bounds!.height);}
+  }
+  await expect(page.locator("#radius .brick-badge")).toHaveCount(6);
+  await expect(page.locator('#composition .brick-badge').first().locator('.brick-text')).toHaveCSS('color',await page.locator('#composition .brick-badge').first().evaluate(n=>getComputedStyle(n).color));
+});
+
+test("responsive recipes reset complete paint and geometry in both directions", async ({page})=>{
+  await page.goto('/badge');
+  const badge=page.locator('#responsive .brick-badge');
+  for(const [width,size,variant,height] of [[390,'md','soft',24],[600,'xs','solid',16],[800,'sm','outline',20],[1100,'lg','plain',28],[1400,'md','soft',24],[1100,'lg','plain',28],[800,'sm','outline',20],[600,'xs','solid',16],[390,'md','soft',24]] as const){
+    await page.setViewportSize({width,height:900});
+    await expect(badge).toHaveCSS('min-height',`${height}px`);
+    const paint=await badge.evaluate(n=>({bg:getComputedStyle(n).backgroundColor,border:getComputedStyle(n).borderTopColor}));
+    expect(paint.bg==='rgba(0, 0, 0, 0)').toBe(variant==='plain'||variant==='outline');
+    expect(paint.border==='rgba(0, 0, 0, 0)').toBe(variant==='plain'||variant==='soft');
+  }
+});
+
+test("all five paints and six tones retain contrast in dark appearance", async ({page})=>{
+  await page.goto('/badge?qualification=1&appearance=dark');
+  const results=await new AxeBuilder({page}).include('[data-testid="badge-tones"]').analyze();
+  expect(results.violations).toEqual([]);
+});
+
+test.beforeEach(async ({ page }) => {
+  await page.goto("/badge?qualification=1");
 });
 
 test("Badge overview exposes only canonical defaults and passive semantics", async ({
@@ -23,8 +69,8 @@ test("Badge overview exposes only canonical defaults and passive semantics", asy
 
 test("variants change only variant metadata", async ({ page }) => {
   const badges = page.getByTestId("badge-variants").locator(specimenBadge);
-  await expect(badges).toHaveCount(4);
-  await expect(badges).toHaveText(["Status", "Status", "Status", "Status"]);
+  await expect(badges).toHaveCount(5);
+  await expect(badges).toHaveText(["Status", "Status", "Status", "Status", "Status"]);
   await expect
     .poll(() =>
       badges.evaluateAll((items) =>
@@ -41,13 +87,14 @@ test("variants change only variant metadata", async ({ page }) => {
       { shape: "rounded", size: "md", tone: "neutral", variant: "solid" },
       { shape: "rounded", size: "md", tone: "neutral", variant: "outline" },
       { shape: "rounded", size: "md", tone: "neutral", variant: "surface" },
+      { shape: "rounded", size: "md", tone: "neutral", variant: "plain" },
     ]);
 });
 
 test("tone matrix covers every variant and semantic tone", async ({ page }) => {
   const region = page.getByTestId("badge-tones");
-  await expect(region.locator(specimenBadge)).toHaveCount(24);
-  for (const variant of ["soft", "solid", "outline", "surface"]) {
+  await expect(region.locator(specimenBadge)).toHaveCount(30);
+  for (const variant of ["soft", "solid", "outline", "surface", "plain"]) {
     for (const tone of [
       "neutral",
       "accent",

@@ -1,7 +1,113 @@
 import { expect, test } from "../../evidence-test.js";
 import AxeBuilder from "@axe-core/playwright";
 
-test.beforeEach(async ({ page }) => { await page.emulateMedia({ reducedMotion: "no-preference" }); await page.goto("/marquee"); });
+test("public pause freezes every track without changing separation", async ({ page }) => {
+  await page.goto("/marquee");
+  for (const [label, button] of [["Partners", "partners"], ["Reversed partners", "reversed partners"], ["Left studio gallery", "left gallery"], ["Right studio gallery", "right gallery"]]) {
+    const root = page.getByRole("region", { name: label, exact: true }).first();
+    await root.scrollIntoViewIfNeeded();
+    await expect(root).not.toHaveAttribute("data-static");
+    for (let cycle = 0; cycle < 3; cycle++) {
+      await page.getByRole("button", { name: `Pause ${button}`, exact: true }).click();
+      await expect(root).toHaveAttribute("data-state", "paused");
+      await page.waitForTimeout(50);
+      const read = () => root.locator(".brick-marquee-content").evaluateAll(nodes => nodes.map(node => {
+        const rect = node.getBoundingClientRect();
+        return { transform: getComputedStyle(node).transform, time: Number(node.getAnimations()[0]?.currentTime), x: rect.x, y: rect.y, width: rect.width, height: rect.height };
+      }));
+      const before = await read();
+      await page.waitForTimeout(250);
+      const after = await read();
+      expect(after).toEqual(before);
+      for (const track of after) expect(Math.abs(track.time - after[0].time)).toBeLessThan(20);
+      const vertical = await root.getAttribute("data-orientation") === "vertical";
+      const gap = await root.locator(".brick-marquee-viewport").evaluate(n => parseFloat(getComputedStyle(n).gap));
+      for (let i = 1; i < after.length; i++) {
+        const previous = after[i - 1], current = after[i];
+        const separation = vertical ? current.y - previous.y - previous.height : current.x - previous.x - previous.width;
+        expect(Math.abs(separation - gap)).toBeLessThan(1);
+      }
+      await page.getByRole("button", { name: `Resume ${button}`, exact: true }).click();
+      await expect.poll(async () => (await read())[0].time).toBeGreaterThan(after[0].time);
+    }
+  }
+});
+
+test.beforeEach(async ({ page }) => { await page.emulateMedia({ reducedMotion: "no-preference" }); await page.goto("/marquee?qualification=1"); });
+test("pause realigns a late replica before holding its position", async ({ page }) => {
+  await page.goto("/marquee");
+  const root = page.getByRole("region", { name: "Reversed partners", exact: true });
+  await expect(root.locator("[data-replica]").first()).toBeAttached();
+  // Reproduce independently scheduled track phases deterministically, rather
+  // than depending on a particular browser's background/compositor timing.
+  await root.evaluate(node => {
+    const original = node.querySelector("[data-original]")!.getAnimations()[0];
+    const copy = node.querySelector("[data-replica]")!.getAnimations()[0];
+    copy.currentTime = Number(original.currentTime) + 1500;
+  });
+  await page.getByRole("button", { name: "Pause reversed partners", exact: true }).click();
+  await expect.poll(() => root.evaluate(node => {
+    const times = [...node.querySelectorAll(".brick-marquee-content")].map(n => Number(n.getAnimations()[0].currentTime));
+    return Math.max(...times) - Math.min(...times);
+  })).toBeLessThan(1);
+});
+test("Marquee documentation exposes source-paired features, part headings and responsive gaps", async ({ page }) => {
+  await page.goto("/marquee");
+  for (const id of ["reversed", "vertical", "speed", "interaction", "store", "finite", "edges", "multiple", "diagonal", "news", "gallery", "testimonials", "responsive", "defaults"]) {
+    const section = page.locator(`#${id}`);
+    await expect(section.getByRole("tab", {name: "Code", exact: true})).toHaveCount(1);
+  }
+  for (const part of ["Root", "RootProvider", "PropsProvider", "Viewport", "Content", "Item", "Edge", "Context"]) {
+    await expect(page.locator(`#props-${part.toLowerCase()}`).getByRole("heading", {name: part, exact: true})).toBeVisible();
+  }
+  const root = page.getByRole("region", {name: "Responsive spacing", exact: true});
+  await page.setViewportSize({width: 600, height: 900});
+  await expect.poll(() => root.locator("[data-original]").evaluate(n => getComputedStyle(n).gap)).toBe("8px");
+  await page.setViewportSize({width: 1000, height: 900});
+  await expect.poll(() => root.locator("[data-original]").evaluate(n => getComputedStyle(n).gap)).toBe("24px");
+  await expect(root).not.toHaveAttribute("data-static");
+});
+test("Marquee synchronizes coverage immediately when a paused viewport grows", async ({ page }) => {
+  for (const label of ["Start", "End", "RTL start", "Up", "Down"]) {
+    const root = page.locator(`[data-example="${label}"]`);
+    await expect(root).not.toHaveAttribute("data-static");
+    await root.evaluate(node => {
+      const root = node as HTMLElement;
+      const vertical = root.dataset.orientation === "vertical";
+      root.style[vertical ? "height" : "width"] = "120px";
+    });
+    await page.waitForTimeout(100);
+    // Keyboard activation avoids sticky-shell overlap after deliberately
+    // expanding a qualification fixture beyond the device viewport.
+    const pause = page.getByRole("button", { name: `Pause ${label}`, exact: true });
+    await pause.focus();
+    await pause.press("Enter");
+    const before = await root.evaluate(node => {
+      const original = node.querySelector<HTMLElement>("[data-original]")!;
+      const animation = original.getAnimations()[0];
+      animation.currentTime = parseFloat((node as HTMLElement).style.getPropertyValue("--atom-marquee-duration")) * 1000 * .99;
+      return animation.currentTime;
+    });
+    await root.evaluate(node => {
+      const root = node as HTMLElement;
+      const distance = parseFloat(root.style.getPropertyValue("--atom-marquee-distance"));
+      root.style[root.dataset.orientation === "vertical" ? "height" : "width"] = `${distance * 2.5}px`;
+    });
+    await expect(root.locator("[data-replica]")).toHaveCount(3);
+    const result = await root.evaluate(node => {
+      const tracks = [...node.querySelectorAll<HTMLElement>(".brick-marquee-content")];
+      const boxes = tracks.map(n => n.getBoundingClientRect());
+      const v = node.querySelector(".brick-marquee-viewport")!.getBoundingClientRect();
+      const vertical = node.getAttribute("data-orientation") === "vertical";
+      return {
+        times: tracks.map(n => Number(n.getAnimations()[0].currentTime)),
+        uncovered: (vertical ? v.bottom : v.right) - Math.max(...boxes.map(b => vertical ? b.bottom : b.right)),
+      };
+    });
+    for (const time of result.times) expect(time).toBeCloseTo(Number(before), 0);
+    expect(result.uncovered).toBeLessThanOrEqual(1);
+  }
+});
 test("Marquee motion, pause and replica safety", async ({ page }) => {
   const root = page.locator('[data-example="Partners"]');
   await expect(root).toHaveAttribute("data-state", "playing");

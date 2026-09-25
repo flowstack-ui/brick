@@ -4,6 +4,16 @@ Image follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Added
+
+- Image supports responsive fit, CSS focal position and numeric ratio, plus Root srcSet metadata for server-rendered source state.
+
+### Fixed
+
+- Image logical focal presets honor root-local direction and nested opposite-direction scopes.
+
+- Adopt native Image delivery and idle/error fallback defaults; preserve hidden error content and server-rendered media discovery.
+
 - Migrate radius to shared core/semantic Radius; omission remains none. Use
   subtle/control/surface to preserve legacy sm/md/lg intent.
 

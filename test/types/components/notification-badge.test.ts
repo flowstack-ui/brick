@@ -49,7 +49,7 @@ const invalidPlacement: NotificationBadgePlacement = "top-left";
 // @ts-expect-error Overlap models are closed.
 const invalidOverlap: NotificationBadgeOverlap = "square";
 // @ts-expect-error Sizes are closed.
-const invalidSize: NotificationBadgeSize = "xl";
+const invalidSize: NotificationBadgeSize = "huge";
 // @ts-expect-error Dot mode excludes count.
 const invalidDotCount: NotificationBadgeProps = {
   children: child,
@@ -84,3 +84,5 @@ void invalidDotMax;
 void invalidTextChild;
 void invalidAsChild;
 void invalidMissingMode;
+
+createElement(NotificationBadge, { children: child, count: 20, size: { initial: "xs", md: "xl" }, placement: { sm: "bottom-start" }, offset: { initial: 0, md: -1 }, offsetInline: "2px", offsetBlock: 0, bordered: false, locale: "ar-EG" });

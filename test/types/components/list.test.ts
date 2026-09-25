@@ -5,7 +5,7 @@ import { List as RootList } from "../../../src/index.js";
 const rootRef = createRef<HTMLUListElement | HTMLOListElement>();
 const itemRef = createRef<HTMLLIElement>();
 const variants: ListVariant[] = ["plain", "divided", "bordered"];
-const sizes: ListSize[] = ["sm", "md", "lg"];
+const sizes: ListSize[] = ["inherit", "sm", "md", "lg"];
 const densities: ListDensity[] = ["compact", "comfortable"];
 const alignments: ListAlign[] = ["start", "center", "end"];
 const insets: ListInset[] = ["default", "none"];
@@ -17,6 +17,16 @@ createElement(List.Root, { align: "center", density: "compact", inset: "none", m
     createElement(List.Content, null, createElement(List.Title, null, "Build"), createElement(List.Description, null, "Passed")),
     createElement(List.Trailing, null, "Ready")));
 createElement(RootList.Root, null, createElement(RootList.Item, null, "One"));
+createElement(List.Root, { size: "inherit", markerTone: "muted", nestedInset: { md: "5", xl: 8 } });
+createElement(List.Item, { markerTone: "inherit" });
+createElement(List.Leading, { asChild: true, children: createElement("span", null, "Icon") });
+createElement(List.Title, { asChild: true, children: createElement("strong", null, "Title") });
+// @ts-expect-error Marker tones are semantic, not arbitrary colors.
+createElement(List.Root, { markerTone: "red.500" });
+// @ts-expect-error Empty responsive objects are not valid.
+createElement(List.Root, { nestedInset: {} });
+// @ts-expect-error Host projection requires one element, not text.
+createElement(List.Leading, { asChild: true, children: "Icon" });
 
 // @ts-expect-error Variant values are closed.
 createElement(List.Root, { variant: "raised" });

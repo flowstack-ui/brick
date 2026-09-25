@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Notification Badge |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Local 0.2.3 candidate |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -12,6 +12,7 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/notification-badge` |
+| Qualification route(s) | `/notification-badge?qualification=1` and `/notification-badge` docs |
 
 Scenario order: `01 Overview`, `02 Tones`, `03 Sizes`, `04 Placements`,
 `05 Overlap`, `06 States`, `07 Semantics`, `08 Theme`, `09 Stress`
@@ -20,7 +21,7 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Overview, tones, and sizes
 
-Setup: Open `/notification-badge` in system appearance.
+Setup: Open `/notification-badge?qualification=1` in system appearance.
 
 Action: Inspect `01 Overview`, every tone in `02 Tones`, and every size in
 `03 Sizes`.
@@ -95,6 +96,36 @@ Action: Inspect representative count and dot indicators with focused owners.
 
 Expected: Indicator boundary/content and the owner’s focus remain visible
 without relying on color alone.
+
+Result:
+Notes or issue:
+
+## Step 7 — Inner and outer anchors
+
+Setup: Open the normal documentation route, then Semantics in qualification.
+
+Action: Compare ghost artwork anchoring, outline whole-control anchoring and
+all action sizes with raw SVG, Icon and Icon asChild. Focus and activate each
+enabled control; inspect loading and disabled examples.
+
+Expected: Both anchors are intentional, the full control target stays intact,
+and the nested icon follows action size without resizing the badge. Loading
+stays centered and disabled controls do not activate.
+
+Result:
+Notes or issue:
+
+## Step 8 — Responsive recipes, seams and locale
+
+Setup: Open Sizes, Responsive placement and offsets, Border and Locale docs.
+
+Action: Resize across 768px, switch RTL/light/dark, inspect xs–xl text and
+compare bordered/unbordered geometry and localized counts.
+
+Expected: Logical offsets mirror, sparse sizes inherit, positive offsets inset,
+border removal does not resize, and Arabic digits/overflow match the locale.
+Accessible names remain authored by the application. Check actual zoom and
+physical touch separately; do not treat viewport emulation as those checks.
 
 Result:
 Notes or issue:

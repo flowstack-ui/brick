@@ -13,10 +13,24 @@
 | Assistive technology | |
 | Playground route | `/tree` |
 
-Scenario order: `01 Overview`, `02 Anatomy and semantics`, `03 Variants`,
-`04 Sizes and guides`, `05 Selection and interaction`, `06 Appearance and
-customization`, `07 Responsive, RTL, and content stress`, `08 Preference
-boundaries`.
+Scenario order: `01 tree.overview` → `02 tree.anatomy` → `03 tree.variants` → `04 tree.sizing` → `05 tree.selection` → `06 tree.appearance` → `07 tree.stress` → `08 tree.preferences`.
+
+Use `?qualification=1` for this preserved scenario sequence; review the ordinary documentation examples separately.
+
+Use the ordinary documentation examples on `/tree`. Legacy visual fixtures are
+available at `/tree?qualification=1`; they do not replace the feature examples.
+
+## September 2026 additions — not yet human approved
+
+- Verify plain click replaces multiple selection, Ctrl/Command-click toggles, and Shift-click/Shift-navigation extends the anchor range. Test both operating-system modifier conventions.
+- Inspect icon-only disclosure, opt-in guide alignment, unindented composition, and checked/mixed/disabled contrast in light, dark, RTL and native forced colors.
+
+- Review independent Trigger and Checkbox with a screen reader, including mixed checks and nonselectable branches.
+- Enter interactive links/rename with F2, cancel with Escape and verify native modifier-click navigation.
+- Confirm lazy loading/error/retry announcements and focus after changes to the collection.
+- Interrupt Group animation, change content height, then enable reduced motion.
+- Scroll the fixed-row window, use End/Home and reveal report 100. Confirm full sibling count and the mounted active target. This example does not qualify remote or variable-height virtual trees.
+- Compare xs/sm/md compact rows and comfortable touch targets at 200–400% zoom and on a physical touch device.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 

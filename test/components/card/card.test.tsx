@@ -10,6 +10,62 @@ import {
 } from "../../../src/card.js";
 
 describe("Card", () => {
+  it("serializes sparse responsive recipes and removes stale attributes", () => {
+    const view = render(<Card.Root size={{ md: "lg" }} variant={{ lg: "subtle" }}>Status</Card.Root>);
+    const root = view.container.firstElementChild;
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "lg");
+    expect(root).toHaveAttribute("data-variant", "outline");
+    expect(root).toHaveAttribute("data-variant-lg", "subtle");
+    view.rerender(<Card.Root>Default</Card.Root>);
+    expect(root).not.toHaveAttribute("data-size-md");
+    expect(root).not.toHaveAttribute("data-variant-lg");
+  });
+
+  it("composes every public part without leaking region props", () => {
+    for (const Part of [Card.Header, Card.Content, Card.Footer, Card.Action]) {
+      const childRef = createRef<HTMLDivElement>();
+      const ownerRef = createRef<HTMLDivElement>();
+      const view = render(<Part asChild gap={{ md: 3 }} ref={ownerRef}><div ref={childRef}>Region</div></Part>);
+      expect(childRef.current).toBe(ownerRef.current);
+      expect(ownerRef.current).not.toHaveAttribute("asChild");
+      expect(ownerRef.current).not.toHaveAttribute("gap");
+      expect(ownerRef.current?.style.getPropertyValue("--brick-card-region-gap-md-input")).toBe("calc(var(--brick-space-1) * 3)");
+      view.unmount();
+      expect(ownerRef.current).toBeNull();
+      expect(childRef.current).toBeNull();
+    }
+    const view = render(<Card.Root><Card.Title asChild><h2>Title</h2></Card.Title><Card.Description asChild><p>Copy</p></Card.Description><Card.Footer justify={{ md: "end" }}>Actions</Card.Footer></Card.Root>);
+    expect(view.getByRole("heading", { level: 2 })).toHaveClass("brick-card-title");
+    expect(view.getByText("Copy")).toHaveClass("brick-card-description");
+    expect(view.getByText("Actions")).toHaveAttribute("data-card-justify-md", "end");
+    expect(view.getByText("Actions")).not.toHaveAttribute("justify");
+  });
+
+  it("composes a native form with both refs and event handlers", () => {
+    const owner = createRef<HTMLElement>();
+    const child = createRef<HTMLFormElement>();
+    const onOwner = vi.fn();
+    const onChild = vi.fn();
+    const view = render(<Card.Root asChild ref={owner} overflow="visible" onClick={onOwner}><form aria-label="Profile" ref={child} onClick={onChild}><Card.Content>Profile</Card.Content></form></Card.Root>);
+    const form = view.getByRole("form");
+    expect(owner.current).toBe(form);
+    expect(child.current).toBe(form);
+    expect(form).toHaveAttribute("data-overflow", "visible");
+    expect(form).not.toHaveAttribute("asChild");
+    fireEvent.click(form);
+    expect(onOwner).toHaveBeenCalledOnce();
+    expect(onChild).toHaveBeenCalledOnce();
+    view.unmount();
+    expect(owner.current).toBeNull();
+    expect(child.current).toBeNull();
+  });
+  it("paints selection without changing semantics", () => {
+    const view = render(<Card.Root as="article" selected>Product</Card.Root>);
+    const card = view.getByRole("article");
+    expect(card).toHaveAttribute("data-selected", "");
+    for (const name of ["selected", "aria-selected", "tabindex", "role"]) expect(card).not.toHaveAttribute(name);
+  });
   it("renders the adopted static defaults without invented semantics", () => {
     render(
       <Card.Root>

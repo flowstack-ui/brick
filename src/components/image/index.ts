@@ -8,6 +8,10 @@ export {
   type ImageFit,
   type ImageFrame,
   type ImagePosition,
+  type ImagePositionPreset,
+  type ResponsiveImageFit,
+  type ResponsiveImagePosition,
+  type ResponsiveImageRatio,
   type ImageRadius,
   type ImageRootProps,
 } from "./Image.js";

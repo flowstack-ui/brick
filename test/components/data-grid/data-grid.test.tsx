@@ -10,6 +10,67 @@ function Example(props: React.ComponentProps<typeof DataGrid.Root> = {}) {
 }
 
 describe("DataGrid", () => {
+  it("serializes sparse responsive recipes and preserves custom sort artwork", () => {
+    const { getByRole, getByTestId } = render(<DataGrid.Root aria-label="Responsive" size={{ md: "lg" }} variant={{ initial: "line", lg: "outline" }} density={{ sm: "compact" }} tone="neutral" minInlineSize={640}><DataGrid.Body><DataGrid.Row rowIndex={1}><DataGrid.RowHeader columnIndex={1} sticky="start" stickyOffset={20}>Name<DataGrid.SortIndicator><span data-testid="custom">↑</span></DataGrid.SortIndicator></DataGrid.RowHeader></DataGrid.Row></DataGrid.Body></DataGrid.Root>);
+    expect(getByRole("grid")).toHaveAttribute("data-size", "md");
+    expect(getByRole("grid")).toHaveAttribute("data-size-md", "lg");
+    expect(getByRole("grid")).toHaveAttribute("data-density-sm", "compact");
+    expect(getByRole("grid")).toHaveAttribute("data-tone", "neutral");
+    expect(getByRole("rowheader").tagName).toBe("TH");
+    expect(getByRole("rowheader")).toHaveAttribute("scope", "row");
+    expect(getByTestId("custom")).toHaveTextContent("↑");
+  });
+
+  it("establishes entry, moves by pages, and skips newly disabled cells", () => {
+    const ExampleRows = ({ disabled = false }) => <DataGrid.Root aria-label="Pages" pageSize={2}><DataGrid.Body>{[1,2,3,4,5].map(row => <DataGrid.Row key={row} rowIndex={row} value={String(row)} disabled={disabled && row === 3}><DataGrid.Cell columnIndex={1}>{row}</DataGrid.Cell><DataGrid.Cell columnIndex={2}>{row * 2}</DataGrid.Cell></DataGrid.Row>)}</DataGrid.Body></DataGrid.Root>;
+    const { getByRole, rerender } = render(<ExampleRows />);
+    const root = getByRole("grid");
+    fireEvent.focusIn(root);
+    expect(root.querySelector("[data-active]")).toHaveTextContent("1");
+    fireEvent.keyDown(root, { key: "PageDown" });
+    expect(root.querySelector("[data-active]")).toHaveTextContent("3");
+    rerender(<ExampleRows disabled />);
+    expect(root.querySelector("[data-active]")).toHaveTextContent("4");
+    fireEvent.keyDown(root, { key: "PageUp" });
+    expect(root.querySelector("[data-active]")).toHaveTextContent("1");
+  });
+
+  it("selects a mounted range and select-all preserves offscreen IDs", () => {
+    const onChange = vi.fn();
+    const { getByRole } = render(<DataGrid.Root aria-label="Select" selectionMode="multiple" defaultValue={["offscreen"]} onValueChange={onChange} selectOnRowClick><DataGrid.Body>{[1,2,3].map(row => <DataGrid.Row key={row} rowIndex={row} value={String(row)} selectable><DataGrid.Cell columnIndex={1}>Row {row}</DataGrid.Cell></DataGrid.Row>)}</DataGrid.Body></DataGrid.Root>);
+    const root = getByRole("grid");
+    fireEvent.click(root.querySelectorAll("td")[0]);
+    fireEvent.click(root.querySelectorAll("td")[2], { shiftKey: true });
+    expect(onChange).toHaveBeenLastCalledWith(["offscreen", "1", "2", "3"]);
+    fireEvent.keyDown(root, { key: "a", ctrlKey: true });
+    expect(onChange).toHaveBeenLastCalledWith(["offscreen"]);
+  });
+
+  it("keeps child clicks out of selection and preserves their arrow keys", () => {
+    const onChange = vi.fn();
+    const { getByRole } = render(<DataGrid.Root aria-label="Controls" selectionMode="multiple" selectOnRowClick onValueChange={onChange}><DataGrid.Body><DataGrid.Row rowIndex={1} value="one" selectable><DataGrid.Cell columnIndex={1} interactive><input aria-label="Editor" /></DataGrid.Cell><DataGrid.Cell columnIndex={2}>End</DataGrid.Cell></DataGrid.Row></DataGrid.Body></DataGrid.Root>);
+    const input = getByRole("textbox");
+    expect(input).toHaveAttribute("tabindex", "-1");
+    fireEvent.click(input);
+    expect(onChange).not.toHaveBeenCalled();
+    input.focus();
+    fireEvent.keyDown(input, { key: "ArrowRight" });
+    expect(input).toHaveFocus();
+    fireEvent.keyDown(input, { key: "Escape" });
+    expect(getByRole("grid")).toHaveFocus();
+  });
+
+  it("inherits RTL resize direction and enforces keyboard bounds", () => {
+    const onChange = vi.fn();
+    const { getByRole } = render(<DataGrid.Root aria-label="Resize" dir="rtl"><DataGrid.Header><DataGrid.Row rowIndex={1}><DataGrid.ColumnHeader columnIndex={1} interactive>Width<DataGrid.ColumnResizeHandle aria-label="Width" defaultValue={160} min={150} max={180} onValueChange={onChange} /></DataGrid.ColumnHeader></DataGrid.Row></DataGrid.Header></DataGrid.Root>);
+    const handle = getByRole("separator");
+    fireEvent.keyDown(handle, { key: "ArrowLeft" });
+    expect(onChange).toHaveBeenLastCalledWith(170);
+    fireEvent.keyDown(handle, { key: "End" });
+    expect(handle).toHaveAttribute("aria-valuenow", "180");
+    fireEvent.keyDown(handle, { key: "Home" });
+    expect(handle).toHaveAttribute("aria-valuenow", "150");
+  });
   it("renders exact anatomy, refs, defaults, and slots", () => {
     const containerRef = createRef<HTMLDivElement>();
     const rootRef = createRef<HTMLTableElement>();

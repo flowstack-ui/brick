@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Data List |
-| Version or commit | Unreleased 0.1.9 |
+| Version or commit | Unreleased 0.2.3 |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -13,8 +13,12 @@
 | Assistive technology | |
 | Playground route | `/data-list` |
 
-Scenario order: `01 Overview`, `02 Orientations`, `03 Sizes`, `04 Label
-Measures`, `05 Composition`, `06 Theme`, `07 Stress`
+Normal documentation: Basic, Sizes, Variants, Orientation, Responsive,
+Separator, Info tip, Rich values, Label measures, Grouped terms and nested
+facts, Shared defaults and closed composition, Long content and RTL.
+The stable evidence route remains `/data-list?qualification=1`.
+
+Scenario order: `01 Overview`, `02 Responsive orientation`, `03 Recipes, appearance, and stress`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
@@ -34,34 +38,39 @@ Notes or issue:
 
 ## Step 2 — Sizes, label measures, and separators
 
-Setup: Inspect `03 Sizes` and `04 Label Measures`.
+Setup: Inspect Sizes, Variants, Label measures, Responsive, and Separator.
 
-Action: Compare each size and label width, then toggle divided rows where the
-example permits it.
+Action: Compare each size, emphasis variant and label width. Resize across
+768, 1024 and 1280 px, including the horizontal-to-vertical example.
 
 Expected: Typography and rhythm change together, horizontal labels share the
 requested logical measure, and separators remain visible without changing
-description-list semantics.
+description-list semantics. Default-theme text is 12/14/16 px with item gaps
+12/16/20 px. Every responsive reversal resets the layout. A custom measure
+works in auto mode and remains bounded at narrow widths.
 
 Result:
 Notes or issue:
 
 ## Step 3 — Rich values and interaction
 
-Setup: Open `05 Composition`.
+Setup: Inspect Rich values, Info tip, Grouped terms and nested facts, and
+Shared defaults and closed composition.
 
-Action: Tab through links and other explicit controls authored inside Value.
+Action: Tab through links and the named info button. Open the tip with Enter,
+close with Escape, and inspect grouped terms and nested description lists.
 
 Expected: Rich values wrap and retain their own native behavior. Data List adds
 no row click action, focus target, table semantics, or invented label/value
-relationships.
+relationships. Escape restores focus to the info button. Multiple terms precede
+descriptions in DOM reading order, while a nested list owns its own recipes.
 
 Result:
 Notes or issue:
 
 ## Step 4 — Theme and system preferences
 
-Setup: Open `06 Theme` and `07 Stress`; switch system, light, and dark
+Setup: Use the playground appearance controls; switch system, light, and dark
 appearance, then enable forced colors and reduced motion.
 
 Action: Inspect labels, values, dividers, and any nested focusable content.
@@ -89,7 +98,7 @@ Notes or issue:
 
 Setup: Enable VoiceOver and another available screen reader.
 
-Action: Navigate the Overview and Composition examples in reading order.
+Action: Navigate Basic, Grouped terms and nested facts, and Info tip in reading order.
 
 Expected: Native description-list context is available without redundant ARIA
 roles; labels and values are read in authored order and nested controls retain

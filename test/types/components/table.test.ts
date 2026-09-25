@@ -3,6 +3,7 @@ import { Table, TableColumn, TableColumnGroup, TableRoot, type TableBorderTone, 
 import { Table as RootTable } from "../../../src/index.js";
 
 const variant: TableVariant = "outline";
+createElement(Table.Root, { size: { md: "lg" }, density: { sm: "compact" }, variant: { initial: "outline", xl: "line" } });
 const size: TableSize = "lg";
 const density: TableDensity = "compact";
 const align: TableCellAlign = "end";

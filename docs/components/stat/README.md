@@ -38,9 +38,13 @@ UpIndicator and DownIndicator are decorative spans with SVG triangles by default
 They do not add status announcements, heading levels or form behavior.
 ## API
 
-StatSize: `sm`, `md`, `lg`. StatTone: `neutral`, `accent`, `info`, `success`, `warning`, `danger`.
+StatSize: `sm`, `md`, `lg`. ResponsiveStatSize accepts a scalar or a nonempty
+`initial/sm/md/lg/xl` map. StatTone: `neutral`, `accent`, `info`, `success`, `warning`, `danger`.
 StatRootProps and StatGroupProps accept optional size, visually md by default.
 Omitted Root size inherits Group's size; explicit Root size wins.
+An explicit sparse Root size starts at md, independently of Group. CSS resolves
+breakpoints without a mount-time measurement. Group defaults to `role="group"`;
+native role overrides and an optional accessible name remain supported.
 StatLabelProps, StatValueTextProps, StatValueUnitProps and StatHelpTextProps
 accept native HTMLElement attributes, className, style, data-slot, refs and
 asChild projection with one element. Native color is omitted.
@@ -62,7 +66,8 @@ Classes: .brick-stat, .brick-stat-group, .brick-stat-label, .brick-stat-value-te
 .brick-stat-value-unit, .brick-stat-help-text and .brick-stat-indicator.
 Slots use stat, stat-group, stat-label, stat-value-text, stat-value-unit,
 stat-help-text, stat-up-indicator and stat-down-indicator.
-Root and Group emit `data-size` only when authored; indicators emit `data-tone`.
+Root and Group emit `data-size` only when authored and breakpoint attributes
+`data-size-sm/md/lg/xl` for responsive values; indicators emit `data-tone`.
 Every part accepts `data-slot`.
 
 Public variables: --brick-stat-gap, --brick-stat-value-size,
@@ -73,7 +78,10 @@ Prefer size and semantic tone, then Theme and documented component variables.
 Put the metric in Card/Surface when a visual boundary is needed.
 ## Responsive behavior
 
-Root shrinks and wraps without cropping. Group is a wrapping flex composition;
+Root shrinks and wraps without cropping. Both Root and Group accept responsive size.
+For example, `<Stat.Group size={{ initial: "sm", md: "lg" }}>` supplies defaults
+to Roots that omit size. An explicit scalar Root remains fixed across breakpoints.
+Group is a wrapping flex composition;
 use Grid or Stack when page-specific column counts or placement are needed.
 ## Accessibility
 
@@ -82,10 +90,22 @@ not span directly beneath dl. Pair arrows with comparison words; color is not
 the sole signal. Indicators are aria-hidden. Composed controls require names.
 ## Composition, native props, and refs
 
-asChild projects onto one non-Fragment element and merges native props, events,
-classes, styles and refs. Retain valid hosts. Project HelpText onto span only
+asChild uses Atom's public composition helper to project onto one non-Fragment
+element and merge native props, events, classes, styles and React 18/19 refs,
+including cleanup callbacks. Owner and child event handlers both run in that
+order. Retain valid hosts. Project HelpText onto span only
 inside an existing dd, not directly beneath Root. Native roles and aria props
 are application-owned except the indicators' decorative aria-hidden.
+
+HelpText is normal block text flow so inline comparisons and block content both
+work. Use HStack with an explicit gap to combine a Badge and separate wording.
+Indicators supply their own logical end spacing; don't add a second gap just
+between an indicator and its adjacent text. Custom SVG fill/stroke is preserved.
+Values use proportional numerals; theme typography remains the size/weight owner.
+
+For progress, place a named Progress in HelpText (or a VStack inside HelpText),
+inside a bounded Stat. Do not place a widthless progress bar inside a non-growing
+flex item. Use ToggleTip for a click/touch information tip in the label.
 ## Examples
 
 ```tsx

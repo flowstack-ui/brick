@@ -1,6 +1,7 @@
 import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { LocaleProvider } from "../../../src/locale-provider.js";
 import {
   NotificationBadge,
   type NotificationBadgeOverlap,
@@ -9,6 +10,25 @@ import {
 } from "../../../src/badge.js";
 
 describe("NotificationBadge", () => {
+  it("inherits locale, permits an override and preserves localized overflow", () => {
+    const { rerender } = render(<LocaleProvider locale="ar-EG"><NotificationBadge count={125}><button>Inbox</button></NotificationBadge></LocaleProvider>);
+    expect(screen.getByText("٩٩+")).toHaveAttribute("aria-hidden", "true");
+    rerender(<LocaleProvider locale="ar-EG"><NotificationBadge count={12} locale="en-US"><button>Inbox</button></NotificationBadge></LocaleProvider>);
+    expect(screen.getByText("12")).toBeInTheDocument();
+  });
+
+  it("forwards responsive geometry to Float without changing the anchor", () => {
+    render(<NotificationBadge count={2} size={{ md: "xl" }} placement={{ initial: "top-end", md: "bottom-start" }} overlap="circular" offset={{ md: 0 }} offsetInline={-1} bordered={false}><button>Inbox</button></NotificationBadge>);
+    const root = screen.getByRole("button").parentElement!;
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "xl");
+    expect(root).not.toHaveAttribute("data-bordered");
+    const indicator = screen.getByText("2");
+    expect(indicator).toHaveClass("brick-float");
+    expect(indicator).toHaveAttribute("data-placement-md", "bottom-start");
+    expect(indicator.style.getPropertyValue("--brick-float-offset-initial")).toBe("14.6447%");
+    expect(indicator.style.getPropertyValue("--brick-float-offset-md")).toBe("var(--brick-space-0)");
+  });
   it("owns count formatting and its visual-only indicator", () => {
     render(
       <NotificationBadge count={125} max={99}>
@@ -104,6 +124,7 @@ describe("NotificationBadge", () => {
     const sizes: NotificationBadgeSize[] = ["sm", "md", "lg"];
     const tones = [
       "neutral",
+      "contrast",
       "accent",
       "info",
       "success",

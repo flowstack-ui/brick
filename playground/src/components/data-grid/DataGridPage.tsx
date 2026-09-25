@@ -6,11 +6,13 @@ import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import { Scenario } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./data-grid.playground.css";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { DataGridDocumentation } from "./DataGridDocumentation.js";
 
 const rows = [{ id: "atom", project: "Atom", status: "Ready", checks: 492 }, { id: "brick", project: "Brick", status: "Review", checks: 238 }, { id: "consumer", project: "Consumer", status: "Ready", checks: 24 }];
 const customStyle = { "--brick-data-grid-border-color": "var(--brick-color-accent-border)", "--brick-data-grid-header-background": "var(--brick-color-accent-subtle)", "--brick-data-grid-radius": "1rem" } as CSSProperties;
 
-function Cell({ children, label }: { children: ReactNode; label: string }) { return <EvidenceSurface className="data-grid-cell"><SpecimenLabel>{label}</SpecimenLabel>{children}</EvidenceSurface>; }
+function Cell({ children, label }: { children: ReactNode; label: string }) { return <EvidenceSurface className="data-grid-cell"><SpecimenLabel>{label}</SpecimenLabel><DataGrid.Container>{children}</DataGrid.Container></EvidenceSurface>; }
 function ProjectGrid({ disabled = false, ...props }: React.ComponentProps<typeof DataGrid.Root> & { disabled?: boolean }) {
   return <DataGrid.Root {...props} aria-label="Project verification" columnCount={3} rowCount={rows.length + 2}><DataGrid.ColumnGroup><DataGrid.Column htmlWidth="50%" /><DataGrid.Column /><DataGrid.Column htmlWidth="18%" /></DataGrid.ColumnGroup><DataGrid.Caption>Project verification</DataGrid.Caption><DataGrid.Header><DataGrid.Row rowIndex={1}><DataGrid.ColumnHeader columnIndex={1}>Project</DataGrid.ColumnHeader><DataGrid.ColumnHeader columnIndex={2}>Status</DataGrid.ColumnHeader><DataGrid.ColumnHeader columnIndex={3} numeric>Checks</DataGrid.ColumnHeader></DataGrid.Row></DataGrid.Header><DataGrid.Body>{rows.map((row, index) => <DataGrid.Row disabled={disabled && index === 1} key={row.id} rowIndex={index + 2} selectable value={row.id}><DataGrid.Cell columnIndex={1}>{row.project}</DataGrid.Cell><DataGrid.Cell columnIndex={2}><Badge size="sm" tone={row.status === "Ready" ? "success" : "warning"}>{row.status}</Badge></DataGrid.Cell><DataGrid.Cell columnIndex={3} numeric>{row.checks}</DataGrid.Cell></DataGrid.Row>)}</DataGrid.Body><DataGrid.Footer><DataGrid.Row rowIndex={rows.length + 2}><DataGrid.Cell columnIndex={1}>Total</DataGrid.Cell><DataGrid.Cell columnIndex={2} /><DataGrid.Cell columnIndex={3} numeric>754</DataGrid.Cell></DataGrid.Row></DataGrid.Footer></DataGrid.Root>;
 }
@@ -36,7 +38,12 @@ export const dataGridScenarios = [
   { id: "data-grid.stress", number: 9, title: "Responsive, RTL, and boundary", navigationTitle: "Stress", description: "Explicit overflow and logical RTL remain separate from layout Grid, static Table, and Tree Grid." },
 ];
 
-export function DataGridPage() {
+export function DataGridPage(): React.ReactElement {
+  const preview = usePreviewContext();
+  return preview || new URLSearchParams(window.location.search).get("qualification") === "1" ? <DataGridEvidence /> : <DataGridDocumentation />;
+}
+
+function DataGridEvidence() {
   const [selection, setSelection] = useState<string[]>(["atom"]);
   const variants: DataGridVariant[] = ["line", "outline"];
   const sizes: DataGridSize[] = ["sm", "md", "lg"];

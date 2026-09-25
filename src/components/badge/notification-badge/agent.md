@@ -14,8 +14,8 @@ Overlay a Brick-owned visual count or dot on exactly one element while Atom Badg
 
 ## Required composition
 
-- Wrap exactly one React element in NotificationBadge and choose either count mode or dot mode, then choose tone, size, logical placement, and overlap for the child's shape. Include count or status meaning in the child control's accessible name or nearby visible status text.
-- Use count with a finite non-negative integer and deliberate max/showZero policy, or dot=true without count-only props. Keep child sizing, clipping, responsive placement, live announcements, and state effects outside NotificationBadge.
+- Wrap exactly one React element in NotificationBadge and choose either count mode or dot mode, then choose tone, size, logical placement, and overlap for the child's shape. Include count or status meaning in the child control's accessible name or nearby visible status text. Use contrast for appearance-adaptive strong neutral paint without a semantic status; tone affects only the indicator.
+- Use finite nonnegative count with max/showZero or exclusive dot mode. Choose responsive xs–xl size and logical placement/offsets; bordered controls the seam. locale overrides LocaleProvider for digits; accessible copy and announcements remain application-owned.
 
 ## Rules
 
@@ -26,6 +26,8 @@ Overlay a Brick-owned visual count or dot on exactly one element while Atom Badg
 - **MUST:** Do not assume changing count announces or add live semantics to the private indicator; use one deliberate application-owned live path only when urgency and frequency justify it.
 - **MUST:** Choose circular or rectangular overlap from the child geometry, preserve logical placement in RTL, and verify child clipping, focus rings, count growth, zoom, and responsive size without using physical offsets.
 - **MUST:** Load styles.css or core.css plus badge.css and the stylesheet for the wrapped Brick child.
+- **MUST:** Both outer-control and inner-artwork NotificationBadge anchoring are valid. In IconButton > NotificationBadge > SVG/IMG/Icon, IconButton owns artwork size and NotificationBadge owns indicator size. Do not replace the button with a passive icon or manually synchronize sizes.
+- **MUST:** Use responsive size, placement, offset, offsetInline and offsetBlock. Numeric offsets are spacing factors; explicit zero replaces circular inset. Choose bordered=false or the outline-color token for seams. Match server/client locale and retain full accessible notification meaning.
 
 ## Common mistakes
 

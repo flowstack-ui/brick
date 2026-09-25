@@ -13,6 +13,8 @@ import {
   Avatar,
   type AvatarShape,
   type AvatarSize,
+  type AvatarVariant,
+  type AvatarTone,
 } from "../avatar/Avatar.js";
 import { AvatarGroupPresentationContext } from "./AvatarGroupContext.js";
 import type { RadiusShapeProps } from "../_radius/Radius.js";
@@ -31,7 +33,10 @@ interface AvatarGroupBaseProps extends AvatarGroupNativeProps {
   children?: ReactNode;
   className?: string;
   overlap?: AvatarGroupOverlap;
-  size?: AvatarSize;
+  size?: Exclude<AvatarSize, "full">;
+  variant?: AvatarVariant;
+  tone?: AvatarTone;
+  borderless?: boolean;
   slot?: string;
   stacking?: AvatarGroupStacking;
   style?: CSSProperties;
@@ -93,6 +98,9 @@ function AvatarGroupImpl(
     shape = "circle",
     radius,
     size = "md",
+    variant = "subtle",
+    tone = "neutral",
+    borderless = false,
     slot = "avatar-group",
     stacking = "last-on-top",
     style,
@@ -156,7 +164,7 @@ function AvatarGroupImpl(
   }
 
   return (
-    <AvatarGroupPresentationContext.Provider value={{ shape, size, radius }}>
+    <AvatarGroupPresentationContext.Provider value={{ shape, size, radius, variant, tone, borderless }}>
       {createElement(
         as,
         {

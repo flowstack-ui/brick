@@ -4,6 +4,18 @@ Avatar follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Clarify the distinction between convenience anatomy and compound host composition.
+
+- Use an in-box border with clipped background for clean separation edges, preserving the named outer size.
+
+- Add compound Root/Image/Fallback/Icon, native imageProps, generic fallback,
+  subtle/solid/outline variants, neutral/accent/contrast tones and borderless.
+- Adopt compact 2xs–2xl sizes (24/32/36/40/44/48/64px), retain 3xl–5xl,
+  add constrained full size, and coordinate medium-weight fallback typography.
+- Preserve native SSR image discovery, lazy loading and responsive requests.
+
+- Remove the default standalone separation ring; optional rings are drawn inside the fixed avatar dimensions, not outside them.
+
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 ### Changed

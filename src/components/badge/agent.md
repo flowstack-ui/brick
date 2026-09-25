@@ -30,6 +30,8 @@ Present a short passive category, status, metadata label, or compact circular pa
 - **MUST:** Use shape=circle only for one compact passive icon or single character with nearby context; use IconButton for an action and Status for a dot-and-label state.
 - **MUST:** Treat Badge size as container density, not editorial hierarchy; lg keeps compact 14px label text inside its 28px minimum block size.
 - **MUST:** Load styles.css or core.css plus badge.css.
+- **MUST:** Use responsive size and variant for internal recipes without duplicating content. Sparse initial/sm/md/lg/xl values inherit defaults; plain is transparent and preserves border-box geometry. Tone remains scalar and semantic.
+- **MUST:** Use Icon size=inherit for text-relative artwork; name a meaningful icon with Icon label or visible context, not aria-label on a generic Badge span. Render authored collections with For and stable keys.
 
 ## Common mistakes
 

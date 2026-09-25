@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Group content about one subject in a finished static compound surface with header, content, and footer anatomy.
+Group content about one subject in a finished compound surface with header, content, and footer anatomy.
 
 ## Use when
 
@@ -18,6 +18,10 @@ Group content about one subject in a finished static compound surface with heade
 - Use the default outline recipe for base-surface grouping with a structural boundary and no elevation.
 - Use variant="elevated" for a borderless raised panel with layered medium elevation; do not reproduce that treatment with consumer shadow CSS.
 - Card.Action reserves a trailing Header column across the title and description rows; when compact metadata belongs beside only the title, compose that title row with HStack and omit Card.Action so the description retains the full measure.
+- Record selection uses the public selection utility; optional ActionDelegate points to a visible descendant link, button or checkbox. The host owns no keyboard navigation.
+- Content owns complete padding and flex growth. Use Root overflow=visible for protruding content, retaining clip by default. Root asChild merges onto one semantic host; never nest interactive controls inside an interactive root.
+- Use responsive size and variant for Card-owned density/paint; Grid, Stack and Frame still own layout and measure. Regions support responsive gap and Footer supports logical justify.
+- Every part supports asChild on one non-Fragment host forwarding props/refs. Do not combine Title or Root as with asChild. Content is a growing column; use Paragraph for inline prose.
 
 ## Rules
 
@@ -27,12 +31,15 @@ Group content about one subject in a finished static compound surface with heade
 - **SHOULD:** Use bordered={false} when edge-to-edge authored media should meet Card's clipped outer boundary without retaining the selected recipe's border; do not remove that geometry with application CSS.
 - **SHOULD:** Use Card.Action only when every Header text row should reserve its trailing column; otherwise compose title-only metadata in a Brick HStack.
 - **SHOULD:** For edge media, place authored Image directly under Card.Root, then use Card.Header for topic, title, and description so the root clips outer corners and the complete text region receives Card inset.
+- **MUST:** Use selected only as presentation alongside a named Checkbox. Compose useSelection and ActionDelegate for record selection and primary activation; retain native semantics, actual controls and independent secondary actions. Never add row role=button or a tab stop. See docs/guides/record-selection.md.
+- **MUST:** Use documented background, foreground and description-foreground hooks together for intentional local paint. Primary Card text inherits foreground; independent controls retain their own recipes. Do not treat instance hooks as global Theme inputs or add arbitrary variant names.
+- **MUST:** Use nonempty sparse ResponsiveValue for size/variant and region gap; omitted initial inherits md/outline or region defaults. Footer justify is start/center/end/between/around/evenly. Never emulate Card density with viewport-dependent render branches.
 
 ## Common mistakes
 
 - **Avoid:** Using Card for every spacing group. **Instead:** Use Stack or Surface when there is no bounded card subject.
 - **Avoid:** Using Card.Action for a title-only Badge and unintentionally narrowing the description below it. **Instead:** Place the title and Badge in a Brick HStack, then render Card.Description as the next full-width Header child.
-- **Avoid:** Placing Card.Content directly after edge media and expecting top inset. **Instead:** Use Card.Header for the introductory text anatomy.
+- **Avoid:** Adding a nested layout wrapper solely to change a Card region's gap or footer alignment. **Instead:** Use the region gap prop and Footer justify. Use asChild when a meaningful existing host should own the region.
 
 ## Validation checklist
 

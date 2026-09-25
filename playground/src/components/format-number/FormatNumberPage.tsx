@@ -12,6 +12,12 @@ export const formatNumberScenarios = [{
 { id: "format-number.values", number: 4, title: "Value boundaries", description: "Negative, zero and large values use the surrounding type recipe." }] as const;
 
 export function FormatNumberPage() {
+  const preview = usePreviewContext();
+  if (!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <FormatNumberDocumentation />;
+  return <FormatNumberEvidence />;
+}
+
+function FormatNumberEvidence() {
   return (
     <VStack data-component-page="format-number" gap="6">
       <Scenario {...formatNumberScenarios[0]}>
@@ -29,3 +35,5 @@ export function FormatNumberPage() {
     </VStack>
   );
 }
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { FormatNumberDocumentation } from "./FormatNumberDocumentation.js";

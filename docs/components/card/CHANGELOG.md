@@ -1,8 +1,23 @@
 # Card changelog
 
+## Unreleased
+
+- Use the supported `Title as="h2"` in the basic documentation example to preserve the page's heading hierarchy.
+
+- Add responsive size/variant recipes, part composition, region gap and Footer justification.
+- Correct explicit borders on subtle cards and primary text inheritance.
+- Refine Header spacing and Content column layout; document paired paint and title hooks.
+- Expand focused documentation examples and qualification for recipe resets and composition.
+
 Card follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+- Add Root asChild and overflow, complete Content padding and growth, and coordinated size progression.
+
+- Add presentation-only selected state and semantic actionable hover for record
+  composition with public useSelection and ActionDelegate; preserve native
+  semantics, independent controls and existing static defaults.
 
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 

@@ -90,3 +90,19 @@ Workbook updated:
 
 Mark unavailable physical-device or assistive-technology environments
 `blocked`.
+# Inherited presentation regression pass
+
+Verify the normal docs route and `?qualification=1` evidence. Check explicit
+child overrides, borderless separation, both stacking orders, RTL, localized
+overflow and custom menu focus/return. Rings must never enlarge members. Hover
+must not unexpectedly reorder members. Human screen-reader/device/zoom checks
+remain separate from automated geometry and accessibility checks.
+
+## Separation-edge regression (September 14, 2026)
+
+Inspect solid initials and loaded images at 32px, circular and rounded, on light
+and dark surfaces, at normal and fractional zoom. Compare standalone, singleton,
+overflow-only, overlapping pair, non-overlapping and borderless groups.
+Expected: no separator on a singleton or overflow-only group; clean peer borders
+without a dark outer fringe; unchanged outer size, centered content and status.
+Result: pending owner physical-device/zoom review.

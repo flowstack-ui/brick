@@ -17,6 +17,7 @@ Preview one color or a compact mix of colors with a finished alpha-aware visual 
 - Render Root for one color and Mix for two or more colors.
 - Choose sharp, rounded, or circle through shape rather than application border-radius CSS.
 - Place the passive swatch inside its owning control when it represents a selectable option.
+- Sizes 2xs/xs/sm/md/lg/xl/2xl are 14/16/18/20/24/28/32px. inherit and full require a definitely sized parent; these remain passive previews, not target sizes.
 
 ## Rules
 

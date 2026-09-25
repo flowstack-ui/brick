@@ -57,9 +57,12 @@ dividers, striping, sticky headers, all sizes and densities, captions, footer,
 selected, active, disabled, actionable, hover, light/dark, customized radius, RTL,
 reduced motion, and forced colors. At 320 CSS px and 200/400% zoom, confirm
 Container holds horizontal overflow without clipping or widening the page.
-Operate selection and scrolling on a physical touch device. Confirm no editing,
-filtering, pagination, resizing, virtualization, hierarchy, or layout-grid
-behavior appears inside Data Grid.
+Operate selection, resizing, and scrolling on a physical touch device. Check
+F2/Enter child entry, Escape recovery, IME typing, cancelled edits, and resize
+pointer cancellation. Filtering, paging, editing transactions, and virtualizer
+geometry remain application-owned; verify the focused examples independently.
+Check Page keys, Shift range selection and select-all with offscreen selection.
+Confirm active virtual rows remain mounted and announced after scrolling.
 
 Result:
 Notes or issue:

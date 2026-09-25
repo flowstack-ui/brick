@@ -1,5 +1,10 @@
 # Tree Grid
 
+File-browser rows may compose a decorative folder/file Icon with their label;
+Indicator is optional and should not add a redundant chevron column. Use
+Trigger for a separate disclosure control. Pointer-down resolves the intended
+cell before native grid focus; embedded controls retain their own focus.
+
 Tree Grid presents hierarchical rows with Atom-owned cell navigation,
 expansion, selection, active-cell semantics, and sortable-header activation.
 Brick supplies finished table paint, hierarchy artwork, recipes, and overflow;
@@ -15,10 +20,16 @@ navigable columns. Use Tree when each node has one primary value.
 Use Data Grid for flat interactive rows, Table for static tabular content, and
 a disclosure pattern when expansion reveals detail rather than child rows.
 Tree Grid does not provide schemas, sorting or filtering algorithms,
-pagination, editing, resizing, reordering, virtualization, or spreadsheet
-behavior. Interactive descendants inside cells are unsupported in this version.
+pagination engines, persistence, reordering, virtualization, or spreadsheet
+behavior. It does support opt-in cell controls and a column resize handle;
+applications own editing validation, data updates and applied column widths.
 
 ## Installation and imports
+
+Windowing is an optional application integration. The windowing example uses
+`@tanstack/react-virtual`; install it separately when copying that example.
+Keep complete logical hierarchy metadata and retain the active target and
+pending reveal target in the mounted range. Brick does not bundle a virtualizer.
 
 ```tsx
 import { TreeGrid } from "@flowstack-ui/brick";
@@ -99,6 +110,9 @@ navigation, or resizing.
 `TreeGridSurface`, `TreeGridBorderTone`, and `TreeGridLayout` are available from root and
 `@flowstack-ui/brick/tree-grid` imports.
 
+`TreeGridTrigger`, `TreeGridTriggerProps`, `TreeGridColumnResizeHandle`,
+`TreeGridColumnResizeHandleProps`, and `TreeGridTone` are also exported.
+
 ### Recipes
 
 | Prop | Values | Default |
@@ -106,6 +120,10 @@ navigation, or resizing.
 | `variant` | `line`, `outline` | defaults to `"line"` |
 | `size` | `sm`, `md`, `lg` | defaults to `"md"` |
 | `density` | `compact`, `comfortable`, `spacious` | defaults to `"comfortable"` |
+| `tone` | `neutral`, `accent` | `accent` |
+| `minInlineSize` | CSS length or pixel number | `0` |
+| Cell/header `sticky` | `start`, `end` | unset |
+| Cell/header `stickyOffset` | CSS length or pixel number | `0` |
 | `surface` | `transparent`, `base` | defaults to `"transparent"` |
 | `borderTone` | `subtle`, `default`, `strong` | defaults to `"default"` |
 | `showColumnBorder` | boolean | `false` |
@@ -155,6 +173,21 @@ column-1 cell.
 Sorting is application-controlled. Give an indexed ColumnHeader `onAction`,
 update records and `sortDirection`, and render decorative SortIndicator.
 Pointer and active-header Enter invoke the same action.
+
+`size`, `density` and `variant` accept sparse responsive values. `pageSize`
+controls PageUp/PageDown movement (default 10 visible rows). Shift+click/Space
+extends multiple selection; Ctrl/Command+A toggles visible eligible rows.
+
+Set `interactive` on a Cell, RowHeader or ColumnHeader containing controls.
+Enter/F2 enters controls and Escape returns to navigation. Actionable headers
+preserve Enter sorting and use F2 to enter controls. Text editing and IME keys
+remain native. `Trigger` separates disclosure from selection; set
+`RowHeader.expandOnClick={false}` when the trigger owns pointer disclosure.
+
+Put a named `ColumnResizeHandle` inside an interactive ColumnHeader. Control
+`value`/`onValueChange` and apply that pixel width to `Column.htmlWidth`.
+`onValueCommit` reports completion; `min`, `max`, `step`, Shift acceleration and
+logical RTL arrow behavior are supported. Data mutation remains external.
 
 ## Tokens and CSS hooks
 
@@ -221,8 +254,9 @@ Provide one stable accessible name. Keep the first data column a RowHeader,
 indexes one-based, parent/level relationships correct, and counts truthful.
 Atom owns roles, active descendant, keyboard movement, expansion, selection,
 disabled/read-only state, and RTL. Brick keeps active focus separate from
-selected fill and makes both indicators silent. Do not place links, buttons,
-inputs, or editable controls inside cells in this version.
+selected fill and makes both indicators silent. Opt into `interactive` before
+composing links, buttons, inputs or editors. Keep controls outside the grid when
+they act on the whole collection rather than a cell.
 
 ## Composition, native props, and refs
 

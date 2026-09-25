@@ -20,12 +20,18 @@
     }
   ],
   "composition": [
+    "Content stays in server HTML and during loading; Atom observes the native image. Fallback defaults to idle/error. Loading covers are opt-in and may delay visible content; never add a detached preload to compensate.",
     "Compose Image.Content and optional Image.Fallback inside Image.Root; use Brick Stack or layout components around it rather than wrapper spans for alignment.",
     "In a React Server Component, import ImageRoot, ImageContent, and ImageFallback directly; the compound Image namespace is intended for client module composition.",
-    "Keep source state on Image.Root, then pass intrinsic width and height plus native responsive delivery props such as srcSet, sizes, loading, decoding, and fetchPriority to Image.Content."
+    "Keep source state on Image.Root, then pass intrinsic width and height plus native responsive delivery props such as sizes, loading, decoding, and fetchPriority to Image.Content.",
+    "Put canonical src/srcSet on Root for SSR-known loading state. Content srcSet overrides Root for compatibility but cannot inform Root during SSR. One Content per Root; meaningful authored fallback replaces hidden error content, otherwise the result is empty."
   ],
   "rules": [
-    {"id": "image-shared-radius", "level": "must", "statement": "Use shared Radius with default none. Core sm/md/lg replace historical semantic mappings; use subtle/control/surface to preserve old intent. Radius does not change media fit, loading or aspect ratio."},
+    {
+      "id": "image-shared-radius",
+      "level": "must",
+      "statement": "Use shared Radius with default none. Core sm/md/lg replace historical semantic mappings; use subtle/control/surface to preserve old intent. Radius does not change media fit, loading or aspect ratio."
+    },
     {
       "id": "image-brick-first",
       "level": "must",
@@ -80,6 +86,21 @@
       "id": "image-rsc-parts",
       "level": "must",
       "statement": "Use direct named Image parts across a React Server Component boundary instead of wrapping the complete consumer in use client."
+    },
+    {
+      "id": "image-responsive-crop",
+      "level": "must",
+      "statement": "Use responsive fit/position/numeric ratio with initial/sm/md/lg/xl; sparse defaults are cover, center and 16/9 for supplied ratio. Omitted ratio stays intrinsic. Logical start/end follow effective direction; authored physical focal coordinates do not mirror."
+    },
+    {
+      "id": "image-picture",
+      "level": "must",
+      "statement": "Compose Root as picture with source children before one direct Content and phrasing span fallback. Nested picture wrappers do not support ratio/fill; preserve actual img refs and native handlers in framework composition."
+    },
+    {
+      "id": "image-optimization",
+      "level": "must",
+      "statement": "Keep Next/CDN optimization and caching application-owned. Map getImageProps src/srcSet to Root and remaining native props to Content; do not use helper blur placeholders. Never add framework imports to Brick runtime."
     }
   ],
   "commonMistakes": [
@@ -89,9 +110,14 @@
     }
   ],
   "validation": [
-    "Check loaded, loading, error, cached, narrow and wide source selection, transferred bytes, priority, parent-fill geometry, crop, layout shift, contextual alt text—including identity-bearing and intentionally decorative portraits—contrast of fallback content, and RTL where relevant.",
+    "Check loaded, loading, error, cached, narrow and wide source selection, transferred bytes, priority, parent-fill geometry, crop, layout shift, contextual alt text\u2014including identity-bearing and intentionally decorative portraits\u2014contrast of fallback content, and RTL where relevant.",
     "For delivery-sensitive media, verify cold, warm, constrained-network, blocked-image, first-viewport, and post-proximity behavior; keep localhost timing separate from production or field evidence.",
     "Confirm CSS and any adapter report are complete."
   ],
-  "related": ["aspect-ratio", "stack", "avatar", "surface"]
+  "related": [
+    "aspect-ratio",
+    "stack",
+    "avatar",
+    "surface"
+  ]
 }

@@ -1,7 +1,7 @@
 import { forwardRef, type CSSProperties, type HTMLAttributes } from "react";
 import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
 
-export type ColorSwatchSize = "sm" | "md" | "lg";
+export type ColorSwatchSize = "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "inherit" | "full";
 export type ColorSwatchShape = "sharp" | "rounded" | "circle";
 
 export type ColorSwatchRootProps =

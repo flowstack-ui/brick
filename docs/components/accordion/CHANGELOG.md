@@ -4,6 +4,13 @@ Accordion follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add RootProvider, Context, ItemContext, public controller hooks, custom IDs,
+  mounting policies, focus/exit callbacks and safe Activity fallback through Atom.
+- Add subtle/enclosed and responsive recipes, nearest-owner indicator isolation,
+  unstyled Button delegation, composed ContentInner, and motion/inset controls.
+- Align disabled fade, muted indicators, type and insets; animate size and fade.
+- Replace normal-page qualification matrices with 18 source-paired feature examples.
+
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 ### Added
@@ -15,6 +22,8 @@ Accordion follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Let reopened vertical panels return to intrinsic block sizing after entrance
+  motion so later nested disclosure growth is measured and remains visible.
 - Removed item separators from the surface-blended `ghost` recipe so inspector
   disclosures do not draw an unintended nested section boundary.
 - Restored the approved default disclosure Indicator to point down while

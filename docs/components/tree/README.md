@@ -13,11 +13,17 @@ Use Tree to browse or select nested categories, files, or component groups.
 
 Use Tree Grid for hierarchical rows with navigable columns, Data Grid for flat
 interactive tabular data, List for static hierarchy, and Accordion or
-Collapsible for arbitrary disclosure content. Tree does not own loading,
-filtering, links, checking, rename, drag/drop, virtualization, context menus,
-routing, or persistence.
+Collapsible for arbitrary disclosure content. Applications own records, routing,
+persistence, drag/drop and windowing. Atom supplies checking, abortable lazy-load
+lifecycle, collection filtering and an opt-in interaction mode for native links
+and application-owned rename controls.
 
 ## Installation and imports
+
+Windowing is an optional application integration. The windowing example uses
+`@tanstack/react-virtual`; install it separately when copying that example.
+Keep complete logical hierarchy metadata and retain the active target and
+pending reveal target in the mounted range. Brick does not bundle a virtualizer.
 
 ```tsx
 import { Tree } from "@flowstack-ui/brick";
@@ -73,7 +79,10 @@ with stable space and default chevron artwork. Nest Items only inside Group.
 `Tree`, `TreeRoot`, `TreeItem`, `TreeItemContent`, `TreeIndicator`,
 `TreeItemText`, `TreeGroup`, `TreeRootProps`, `TreeItemProps`,
 `TreeItemContentProps`, `TreeIndicatorProps`, `TreeItemTextProps`,
-`TreeGroupProps`, `TreeVariant`, `TreeSize`, and `TreeBorderTone` are available from root and
+`TreeGroupProps`, `TreeRootProvider`, `TreeRootProviderProps`, `TreeTrigger`, `TreeTriggerProps`, `TreeCheckbox`,
+`TreeCheckboxProps`, `createTreeCollection`, `useTreeController`, `useTreeContext`,
+`useTreeItemContext`, `TreeNode`, `TreeCollection`, `TreeVariant`, `TreeSize`,
+`TreeDensity`, `TreeTone`, `TreeSelectionVariant`, and `TreeBorderTone` are available from root and
 subpath imports.
 
 ### Root recipes
@@ -81,7 +90,10 @@ subpath imports.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `variant` | `plain`, `soft`, `outline` | defaults to `"plain"` |
-| `size` | `sm`, `md` | defaults to `"md"` |
+| `size` | `xs`, `sm`, `md` (responsive) | `md` |
+| `density` | `compact`, `comfortable` (responsive) | `comfortable` |
+| `tone` | `neutral`, `accent` | `neutral` |
+| `selectionVariant` | `subtle`, `solid` | `subtle` |
 | `showGuide` | boolean | defaults to `false` |
 | `borderTone` | `subtle`, `default`, `strong` | defaults to `"default"` |
 
@@ -104,16 +116,55 @@ or the independently owned corners of other parts.
 Plain leaves the root transparent, soft adds a subtle root surface, and
 outline adds a clipped rounded boundary. ItemContent owns hover, active focus,
 selected, and disabled paint. Active focus is an inset ring independent of the
-selection fill. Indicator rotates when expanded; leaves retain its space but
-hide the artwork. `showGuide` draws decorative logical-start group lines.
+selection fill. Indicator is optional: omit it for folder/file artwork without
+an extra chevron column. When explicitly composed, it rotates when expanded;
+leaves retain its space but hide the artwork. `showGuide` defaults to false and
+draws decorative logical-start group lines aligned with a 16px artwork column.
+Use `--brick-tree-guide-offset` for custom artwork geometry and set
+`--brick-tree-depth-indent: 0px` only for deliberately unindented trees.
 
 ### Keyboard and selection
 
 Root is one focus stop with an active descendant. On entry Atom activates the
 first visible selected item, then the first enabled visible item. Up/Down,
 Home/End, expand/collapse arrows, activation, and typeahead follow Atom's Tree
-contract. Selection does not follow focus. Interactive descendants are not
-supported; compose actions outside Tree.
+contract. Selection does not follow focus. Set `selectionMode="none"` for
+disclosure-only trees. `Item.selectable={false}` preserves navigation and
+expansion but omits selection. In multiple mode, plain click replaces selection,
+Ctrl/Command-click toggles an item, and Shift+click/Space or Shift+navigation
+extends a visible eligible range. Ctrl/Command+A toggles eligible visible nodes.
+Checking uses solid checkmark paint independent of the row selection variant.
+
+Set `Item.interactive` for links, buttons or editors. Enter/F2 enters owned
+controls, Escape returns to Root, and text-editing/IME keys remain native.
+Applications own rename draft, validation, commit/cancel and persistence.
+Use `Trigger` with `expandOnClick={false}` for independent disclosure.
+When only parents have a leading Trigger and child icons or checkboxes should
+align with the parent's matching column, set `--brick-tree-depth-indent` to
+`calc(var(--brick-tree-trigger-size) + var(--brick-tree-row-gap))` on Root.
+This accounts for the complete disclosure column without empty leaf triggers
+or changing the default indentation of icon-only trees.
+
+### Checking, loading and controllers
+
+`checkable`, `checkedValue`/`defaultCheckedValue`/`onCheckedValueChange` and
+`checkPropagation="descendants"` control checking independently from selection.
+Supply a complete `createTreeCollection(nodes)` for unmounted descendants;
+disabled branches are excluded. `Tree.Checkbox` shows mixed state. `name` submits
+selection, not checked values; submit checked values explicitly when required.
+
+`loadChildren(value, { signal })` owns an abortable request per branch. The
+application inserts loaded children and respects the signal. Public context
+exposes `loadingValues`, `loadErrors` and `retryLoad`; failed loads require retry.
+Use empty `children: []` for a known empty branch, not an unknown unloaded one.
+
+`useTreeController({ collection, ...props })` exposes controlled `rootProps`,
+state setters, `expandAll`, `collapseAll`, and `getNodeState`. Spread `rootProps`
+onto Root, or pass the controller to RootProvider.value. Collections provide `find`, `visible`, ancestor-retaining `filter`,
+immutable `remove` and `update`. Stable unique values are mandatory.
+
+`Group.animate` opts into measured height motion. Closing content becomes inert
+immediately; `forceMount` retains hidden DOM and `onExitComplete` reports exit.
 
 ## Tokens and CSS hooks
 
@@ -170,8 +221,9 @@ Provide a stable accessible name with Field, `aria-label`, or
 `aria-labelledby`. Atom owns tree roles, levels, names, relationships, focus,
 keyboard, selection, expansion, states, and forms. Brick keeps active and
 selected visually distinct, makes indicators and guides decorative, removes
-transitions for reduced motion, and retains forced-color boundaries. `md` is
-the ordinary touch-usable size; `sm` is compact-density usage.
+transitions for reduced motion, and retains forced-color boundaries. Comfortable
+density keeps 44px minimum rows; compact xs/sm/md target 24/28/32px independently
+of responsive typography. Size, density and variant support sparse breakpoints.
 
 ## Composition, native props, and refs
 

@@ -1,5 +1,5 @@
 import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
-installVisualDefaults("/collapsible");
+installVisualDefaults("/collapsible?qualification=1");
 test("Collapsible defaults, variants, sizes, states, anatomy, and orientation", async ({ page }) => {
   await expect(page.getByTestId("collapsible-overview")).toHaveScreenshot("overview-light.png");
   await expect(page.getByTestId("collapsible-variants")).toHaveScreenshot("variants-light.png");
@@ -9,6 +9,8 @@ test("Collapsible defaults, variants, sizes, states, anatomy, and orientation", 
   await expect(page.getByTestId("collapsible-orientation")).toHaveScreenshot("orientation-light.png");
   await expectEvidenceScreenshot(page, page.locator(".collapsible-customization"), "customization-light.png");
   await setAppearance(page, "dark");
+  await page.getByTestId("collapsible-appearance").scrollIntoViewIfNeeded();
+  await page.evaluate(() => window.scrollBy(0, -120));
   await expect(page.getByTestId("collapsible-appearance")).toHaveScreenshot("appearance-dark.png");
 });
 test("Collapsible responsive and forced colors", async ({ page }) => {

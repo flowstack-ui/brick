@@ -1,6 +1,6 @@
 import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/avatar");
+installVisualDefaults("/avatar?qualification=1");
 
 test("Avatar geometry and status", async ({ page }) => {
   await expect(page.getByTestId("avatar-sizes")).toHaveScreenshot("sizes-light.png");

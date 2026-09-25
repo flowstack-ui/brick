@@ -38,13 +38,18 @@ QrCodeRoot / QrCodeRootProvider are divs. QrCodeFrame is an SVG with background
 rect and a default QrCodePattern; explicitly supply Pattern children to customize
 its native SVG props. QrCodeOverlay is a decorative div. QrCodeDownloadTrigger
 is a non-submit button. QrCodeContext renders no DOM. Namespace parts are Root,
-RootProvider, Frame, Pattern, Overlay, DownloadTrigger and Context.
+RootProvider, PropsProvider (also RootPropsProvider), Frame, Pattern, Overlay,
+DownloadTrigger and Context. PropsProvider renders no host and supplies size and
+unstyled defaults. Explicit values win; nested defined values merge and maps replace.
 
 ## API
 
 | Prop | Default | Meaning |
 | --- | --- | --- |
-| `size` | `md` | Scalar QR display preset on Root or RootProvider. |
+| `size` | `md` | Responsive QR display preset on Root or RootProvider. |
+| `unstyled` | `false` | Remove graphic recipes; explicit parts override inheritance. |
+| `asChild` | `false` | Compatible host for Root/Provider/Frame/Pattern/Overlay. |
+| `id / ids` | generated | Root/frame/overlay IDs; native part IDs win. |
 
 QrCodeRootProps: value/defaultValue strings (default empty), size (md), encoding,
 pixelSize (10, positive <=100), onValueChange({value}), onEncode({result}) and
@@ -65,14 +70,21 @@ QrCodeContext expose the current controller. Generation callbacks run after
 commit, not during SSR. No form submission value or built-in loading state.
 
 QrCodeFrameProps: titleText, description, background and native SVG fill/ARIA.
-QrCodePatternProps exclude owned d and children. QrCodeOverlayProps accepts
+QrCodePatternProps exclude owned d; asChild requires one path child. QrCodeOverlayProps accepts
 exportSrc for arbitrary visual children; a contained img or self-contained SVG
 can otherwise be exported. Avoid interactive children in the decorative overlay.
 
+Keep `exportSrc` visually consistent with the displayed artwork. The portable
+overlay example uses an HTML-wrapped Brick mark and a self-contained SVG of the
+same mark for downloads; the ordinary logo example uses a direct SVG instead.
+
 QrCodeDownloadTriggerProps: fileName and mimeType required; quality, includeOverlay
 (true), exportSize (integer 1–4096), onDownloadStart, onDownloadInitiated and
-onDownloadError. Inherits Button tone/variant/size/shape/fullWidth, startIcon/endIcon,
-disabled/loading and native activation props; no href/asChild/render/type.
+onDownloadError. Inherits finished DownloadTrigger's Button recipes, loadingText,
+spinner/spinnerPlacement/focusRing, startIcon/endIcon and native activation props;
+no href/asChild/render/type. iconOnly selects IconButton and requires aria-label.
+ButtonGroup and Button defaults apply. Graphic unstyled does not suppress the
+independently styled download action.
 Its size is Button size, never image size. Default output edge is matrix size ×
 pixelSize (ceil, capped at 4096), independent of CSS size.
 
@@ -112,6 +124,8 @@ Public --brick-qr-code-size, --brick-qr-code-foreground,
 Root class brick-qr-code and `data-size`; part classes brick-qr-code-frame,
 brick-qr-code-pattern, brick-qr-code-overlay, brick-qr-code-download-trigger.
 Slots qr-code-root/frame/pattern/background/overlay/download-trigger are Atom-owned.
+Overlay size/padding/radius variables work on Root or Overlay. Default and maximum
+overlay width remain one third of Frame; padding defaults to 4px.
 Root state, SVG geometry and generated d are not presentation overrides.
 
 ## Customization
@@ -123,7 +137,8 @@ mode and forced colors. Custom/inverted colors need scan qualification.
 
 ## Responsive behavior
 
-Scalar named presets; full fits a parent constrained by Frame. The QR stays square
+Named presets accept scalar or initial/sm/md/lg/xl maps. Sparse maps inherit md
+until an authored breakpoint; full fits a bounded parent. The QR stays square
 and does not mirror in RTL. A small physical QR may be too dense to scan even if
 its SVG is geometrically correct. Download Button sizing is independently responsive.
 
@@ -138,7 +153,9 @@ No announcements per keystroke. Surrounding buttons retain native focus/keyboard
 ## Composition, native props, and refs
 
 Refs target div/SVG/path hosts; DownloadTrigger keeps HTMLElement action refs.
-Native props/class/style pass through. Frame viewBox/preserveAspectRatio and
+Native props/class/style pass through. React 19 ref cleanup and React 18 null
+detachment are preserved. asChild hosts forward props and refs; Frame/Pattern
+retain SVG/path hosts. Frame viewBox/preserveAspectRatio and
 Pattern d are owned. titleText avoids native title collision. RootProvider only
 accepts useQrCode, not arbitrary hand-constructed controllers. One Frame and
 optional Overlay per controller. No DOM duplication for responsive layout.
@@ -154,7 +171,8 @@ optional Overlay per controller. No DOM duplication for responsive layout.
 </QrCode.Root>
 ```
 
-The playground exposes 18 numbered scenarios: baseline, sizes, full, controlled,
+The public playground has source-paired examples, API tables and TOC. The
+qualification route (?qualification=1) retains 18 scenarios: baseline, sizes, full, controlled,
 store, Unicode, correction, encoding, margin, appearance, logos, explicit overlay,
 download, action states, application status, recovery, RTL and dialog composition.
 

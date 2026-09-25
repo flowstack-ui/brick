@@ -23,6 +23,8 @@ Present a locally generated QR graphic with safe scanning defaults, logo composi
 - **MUST:** Preserve the light scanning backing in dark mode. Custom fill, background, inversion, small sizes and logos require independent decoding and physical scan checks.
 - **MUST:** Handle export errors. Supply exportSrc for arbitrary overlay content or explicitly omit its export. Never assume CORS assets or browser saving will succeed.
 - **MUST:** Keep application session states and translations outside QrCode. Do not replace Atom encoding or DownloadTrigger lifecycle with application handlers.
+- **MUST:** Use Root responsive size and PropsProvider for graphic defaults. asChild must retain compatible SVG/path hosts and forwarded refs. unstyled affects graphic recipes, not the independently styled DownloadTrigger.
+- **MUST:** Use DownloadTrigger shared Button recipes or iconOnly with aria-label. ButtonGroup defaults apply; action size and exportSize are independent. Author overlay size/padding/radius variables on Root or Overlay, within the one-third containment limit.
 
 ## Common mistakes
 

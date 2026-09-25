@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | List |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased 0.2.3 |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -12,6 +12,7 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/list` |
+| Qualification route(s) | `/list` for documentation; `/list?qualification=1` for numbered scenarios |
 
 Scenario order: `01 Overview`, `02 Semantics`, `03 Variants`, `04 Sizes,
 density, and inset`, `05 Markers and nesting`, `06 Structured anatomy`, `07 Native output
@@ -19,9 +20,23 @@ and state`, `08 Appearance and customization`, `09 Responsive and stress`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
+## Documentation parity pass
+
+Open `/list` and inspect the basic, ordered, icon, nested, marker-style and
+typography examples before the advanced selection compositions. At desktop
+and mobile widths, check first-line icon alignment, logical nested indentation,
+readable marker colors, and three visibly distinct inherited text recipes.
+Descriptions retain their secondary color at the inherited size and weight.
+Check all Preview/Code pairs and Root/Item/static-part props sections.
+Use a screen reader to verify ordered numbering and native list announcements;
+marker tone must never be the sole carrier of meaning.
+
+Result:
+Notes or issue:
+
 ## Step 1 — Defaults and recipes
 
-Setup: Open `/list`; review `01`–`05` from top to bottom.
+Setup: Open `/list?qualification=1`; review `01`–`05` from top to bottom.
 
 Action: Compare unordered/ordered output, boundaries, sizes, densities, both
 inset recipes, all marker labels, and the nested sequence.
@@ -104,3 +119,13 @@ Workbook updated:
 
 Mark unavailable physical-device or assistive-technology environments
 `blocked`.
+
+## Record selection addition (manual run pending)
+
+Automated integration: record-selection.spec.ts. On the record scenario,
+select a named checkbox, activate the primary control and then a secondary
+action. Only the intended action changes state. The host adds no tab stop,
+button role or aria-selected. Check light/dark, RTL, high zoom, physical touch
+and screen-reader output. Selection paint must not change dimensions or be
+the only selection indicator. Manual screen-reader and physical-device checks
+remain unperformed; do not mark them passed from automation.

@@ -1,9 +1,37 @@
 import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Marquee, useMarquee } from "../../../src/marquee.js";
 
 describe("Marquee", () => {
+  it("inherits defined presentation defaults, replaces maps and respects explicit unstyled overrides", () => {
+    render(<Marquee.PropsProvider value={{ unstyled: true, spacing: { initial: 2, lg: 8 } }}>
+      <Marquee.Root data-testid="raw"><Marquee.Viewport data-testid="viewport"><Marquee.Content><Marquee.Item>Raw item</Marquee.Item></Marquee.Content></Marquee.Viewport><Marquee.Edge data-testid="edge" /></Marquee.Root>
+      <Marquee.RootPropsProvider value={{ spacing: { md: 6 }, unstyled: undefined }}><Marquee.Root unstyled={false} data-testid="styled" /></Marquee.RootPropsProvider>
+    </Marquee.PropsProvider>);
+    expect(screen.getByTestId("raw")).not.toHaveClass("brick-marquee");
+    expect(screen.getByTestId("viewport")).not.toHaveClass("brick-marquee-viewport");
+    expect(screen.getByTestId("edge")).toHaveAttribute("aria-hidden", "true");
+    expect(screen.getByTestId("edge")).not.toHaveClass("brick-marquee-edge");
+    expect(screen.getByTestId("styled")).toHaveClass("brick-marquee");
+    expect(screen.getByTestId("styled").style.getPropertyValue("--brick-marquee-gap-md-input")).toContain("6");
+    expect(screen.getByTestId("styled").style.getPropertyValue("--brick-marquee-gap-lg-input")).toBe("");
+    expect(screen.getByTestId("raw")).not.toHaveAttribute("unstyled");
+  });
+  it("preserves Edge projected ref cleanup on replacement and unmount", () => {
+    const cleanup = vi.fn();
+    const childRef = vi.fn((node: HTMLElement | null) => node ? cleanup : undefined);
+    const ref = createRef<HTMLElement>();
+    const { rerender, unmount } = render(<Marquee.Edge asChild ref={ref}><i ref={childRef} /></Marquee.Edge>);
+    expect(ref.current?.tagName).toBe("I");
+    rerender(<Marquee.Edge asChild ref={ref}><span ref={childRef} /></Marquee.Edge>);
+    expect(cleanup).toHaveBeenCalledTimes(1);
+    expect(ref.current?.tagName).toBe("SPAN");
+    unmount();
+    expect(cleanup).toHaveBeenCalledTimes(2);
+    expect(childRef).not.toHaveBeenCalledWith(null);
+    expect(ref.current).toBeNull();
+  });
   it("forwards native attributes and refs while supplying Brick spacing", () => {
     const ref = createRef<HTMLDivElement>();
     render(<Marquee.Root ref={ref} aria-label="Partners" className="custom"><Marquee.Viewport><Marquee.Content><Marquee.Item>One</Marquee.Item></Marquee.Content></Marquee.Viewport></Marquee.Root>);

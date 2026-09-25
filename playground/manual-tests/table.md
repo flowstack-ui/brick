@@ -20,6 +20,11 @@ customization`, `09 Responsive, RTL, and boundary`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
+For the default docs route, scroll `#sticky` vertically on a HiDPI display and
+at non-default browser zoom. Check the very top painted edge for leaked body
+text, not just header overlap. Also verify keyboard focus remains visible on
+a focusable Container. These are manual checks, not implied by automation.
+
 ## Step 1 — Native structure and recipes
 
 Review scenarios 01–05. Confirm captions, sections, row/column headers,
@@ -72,6 +77,25 @@ Notes or issue:
 
 ## Completion
 
+## Responsive and engine additions (manual run pending)
+
+On the public documentation route, compare size/density at both sides of each
+breakpoint and reverse the viewport change. Exercise the optional engine's
+filter and page controls, then verify a stable accessible name, native table
+semantics, sort announcement and focus. These examples do not add grid-style
+arrow navigation. Check custom sort artwork, nested tables and sticky
+intersections with selected/striped rows in both directions.
+
 Overall result:
 Follow-up issues:
 Workbook updated:
+
+## Record selection addition (manual run pending)
+
+Automated integration: record-selection.spec.ts. On the record scenario,
+select a named checkbox, activate the primary control and then a secondary
+action. Only the intended action changes state. The host adds no tab stop,
+button role or aria-selected. Check light/dark, RTL, high zoom, physical touch
+and screen-reader output. Selection paint must not change dimensions or be
+the only selection indicator. Manual screen-reader and physical-device checks
+remain unperformed; do not mark them passed from automation.

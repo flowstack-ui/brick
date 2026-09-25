@@ -4,6 +4,17 @@ Collapsible follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add responsive sizes/variants, consistent disabled fade, hover-capable paint,
+  muted indicator color and coordinated content insets.
+- Animate full reveals with size/fade while preserving partial-preview opacity.
+- Demonstrate Activity effect pausing and gracefully retain state on older React.
+
+- Add independent trigger highlight modes and explicit unstyled Button composition.
+- Expose Atom's controller, provider/context, IDs, partial previews, mount policies,
+  Activity hiding and exit completion while retaining legacy keepMounted support.
+- Add Content motion, ContentInner inset/asChild, and state-aware Indicator placement/composition.
+- Scope orientation and indicator styling to the nearest disclosure.
+
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 ## 0.1.10

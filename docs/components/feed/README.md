@@ -72,8 +72,9 @@ loading UI, or article schema. Authored children remain in their original order.
 
 ### Exports
 
-`Feed`, `FeedRootProps`, `FeedItemProps`, `FeedVariant`, `FeedDensity`, and
-`FeedDividerStrength` are
+`Feed`, `FeedRoot`, `FeedItem`, `FeedPropsProvider`, `FeedRootProps`,
+`FeedItemProps`, `FeedPropsProviderProps`, `FeedRecipeProps`, `FeedVariant`,
+`FeedDensity`, and `FeedDividerStrength` are
 available from the root package and Feed subpath.
 
 ### Root recipes
@@ -83,6 +84,18 @@ available from the root package and Feed subpath.
 | `variant` | `plain`, `divided`, `outline` | `divided` |
 | `density` | `compact`, `comfortable` | `comfortable` |
 | `dividerStrength` | `subtle`, `default` | `subtle` |
+
+All three recipes accept `ResponsiveValue` maps with `initial`, `sm`, `md`,
+`lg`, and `xl`. Sparse maps begin with the component default. Explicit Root
+props replace provider defaults, including responsive maps.
+
+### Styling defaults
+
+`Feed.PropsProvider` (also `FeedPropsProvider`) accepts `value: FeedRecipeProps`
+and children. It provides only variant, density, dividerStrength and radius;
+it creates no DOM and does not inherit busy state or logical totals. Nested
+providers merge defaults, and Root props win. Public CSS tokens can be defined
+on an ancestor; internal recipe defaults do not overwrite them.
 
 Root also preserves Atom `busy`, `setSize`, `render`, `asChild`, native
 attributes/events, `className`, `style`, custom `data-slot`, and an
@@ -178,6 +191,14 @@ transition.
 Place every Feed child inside a direct Item. Links, buttons, menus, and form
 controls inside an Item keep their native behavior and focus order; the Item is
 not a whole-row action.
+
+For article actions aligned with the logical start of the surrounding text,
+prefer `Button variant="outline"`. The visible edge aligns with the content,
+while the label retains normal button padding. A ghost button has the same
+inset without a visible boundary and can look unintentionally indented.
+Ghost remains useful for intentional toolbar, icon, and contextual actions;
+do not compensate with negative margins or removed control padding. Use
+Stack gap for separation, including in RTL layouts.
 
 Fetching, insertion/removal, status and error UI, pagination, and scroll
 anchoring are application-owned. Compose Scroll Area outside Root only when a

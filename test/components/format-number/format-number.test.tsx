@@ -3,8 +3,19 @@ import { createRef } from "react";
 import { describe, expect, it } from "vitest";
 import { FormatNumber, formatNumber } from "../../../src/format-number.js";
 import { LocaleProvider } from "../../../src/locale-provider.js";
+import { getNumberFormatter } from "../../../src/components/_intl/NumberFormatter.js";
 
 describe("FormatNumber", () => {
+  it("bounds the cache and normalizes omitted option values", () => {
+    const first = getNumberFormatter("en-US", { minimumFractionDigits: 1 });
+    expect(getNumberFormatter("en-US", { maximumFractionDigits: undefined, minimumFractionDigits: 1 })).toBe(first);
+    for (let index = 0; index < 101; index++) getNumberFormatter(`en-US-x-${index}`);
+    expect(getNumberFormatter("en-US", { minimumFractionDigits: 1 })).not.toBe(first);
+  });
+  it("preserves native nonfinite, negative zero and error behavior", () => {
+    for (const value of [NaN, Infinity, -Infinity, -0]) expect(formatNumber(value)).toBe(new Intl.NumberFormat("en-US").format(value));
+    expect(() => formatNumber(1, "invalid_locale")).toThrow(RangeError);
+  });
   it("inherits locale and accepts native span props and refs", () => {
     const ref = createRef<HTMLSpanElement>();
     render(

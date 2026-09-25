@@ -1,5 +1,12 @@
 import { expectEvidenceScreenshot, installVisualDefaults, test } from "../../visual-harness.js";
-installVisualDefaults("/marquee");
+installVisualDefaults("/marquee?qualification=1");
+test("Marquee public logos and straight gallery", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/marquee");
+  await expectEvidenceScreenshot(page, page.getByRole("region", { name: "Partners", exact: true }).first(), "docs-logos.png");
+  await expectEvidenceScreenshot(page, page.locator("#gallery"), "docs-gallery.png");
+  await expectEvidenceScreenshot(page, page.locator("#testimonials"), "docs-testimonials.png");
+});
 test("Marquee stationary content and appearance", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   for (const id of ["basic", "vertical", "cards", "preferences"]) {

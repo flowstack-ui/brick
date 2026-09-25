@@ -1,6 +1,31 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/tree");
+installVisualDefaults("/tree?qualification=1");
+
+test("public guides and checking recipes", async ({ page }) => {
+  await page.goto("/tree");
+  const disclosure = page.getByRole("tree", { name: "Disclosure-only files", exact: true });
+  await disclosure.getByRole("button", { name: "Toggle project folder" }).click();
+  for (const appearance of ["light", "dark"] as const) {
+    await setAppearance(page, appearance);
+    await expect(page.getByRole("tree", { name: "Guided hierarchy", exact: true })).toHaveScreenshot(`guided-artwork-${appearance}.png`);
+    const checks = page.getByRole("tree", { name: "Files to include", exact: true });
+    await checks.evaluate(node => node.scrollIntoView({ block: "center" }));
+    await page.mouse.move(0, 0);
+    await expect(checks).toHaveScreenshot(`checking-${appearance}.png`, { maxDiffPixelRatio: 0 });
+    await disclosure.evaluate(node => node.scrollIntoView({ block: "center" }));
+    await expect(disclosure).toHaveScreenshot(`disclosure-aligned-${appearance}.png`, { maxDiffPixelRatio: 0 });
+  }
+});
+
+test("public file explorer icons in light and dark", async ({ page }) => {
+  await page.goto("/tree");
+  const tree = page.getByRole("tree", { name: "Project files", exact: true }).first();
+  for (const appearance of ["light", "dark"] as const) {
+    await setAppearance(page, appearance);
+    await expect(tree).toHaveScreenshot(`file-icons-${appearance}.png`, { maxDiffPixelRatio: 0 });
+  }
+});
 
 test("Tree defaults, recipes, sizing, and selection", async ({ page }) => {
   await page.setViewportSize({ width: 1120, height: 1400 });

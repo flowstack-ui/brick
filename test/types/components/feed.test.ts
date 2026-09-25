@@ -1,6 +1,9 @@
 import { createElement, createRef } from "react";
 import {
   Feed,
+  FeedPropsProvider,
+  FeedRoot,
+  FeedItem,
   type FeedDensity,
   type FeedDividerStrength,
   type FeedItemProps,
@@ -42,6 +45,8 @@ void RootFeed;
 void variants;
 void densities;
 void dividerStrengths;
+createElement(FeedPropsProvider, { value: { density: { md: "compact" }, radius: "none" } },
+  createElement(FeedRoot, { variant: { sm: "outline", xl: "plain" }, dividerStrength: { lg: "default" } }, createElement(FeedItem)));
 
 // @ts-expect-error Feed variants are closed.
 const invalidVariant: FeedVariant = "cards";

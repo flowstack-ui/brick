@@ -1,51 +1,18 @@
-import { useState, type CSSProperties } from "react";
-import { Accordion, Grid, Text, VStack, type AccordionSize, type AccordionVariant } from "@flowstack-ui/brick";
-import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
-import { FormEvidenceCell as Cell, FormEvidenceGroup as EvidenceGroup } from "../../shared/FormEvidence.js";
-import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
-import { RenderedOutput } from "../../shared/RenderedOutput.js";
-import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
-import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
-import "../../shared/forms-evidence.playground.css";
-import "./accordion.playground.css";
-
-const variants: AccordionVariant[] = ["plain", "soft", "outline"];
-const sizes: AccordionSize[] = ["sm", "md", "lg", "xl"];
-const customStyle = { "--brick-accordion-background": "#ecfeff", "--brick-accordion-border-color": "#0891b2", "--brick-accordion-radius": "1rem" } as CSSProperties;
-
-function Items() {
-  return <><Accordion.Item value="account"><Accordion.Header><Accordion.Trigger>Account settings<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner><Text variant="body-sm" tone="secondary">Update your profile and sign-in preferences.</Text></Accordion.ContentInner></Accordion.Content></Accordion.Item><Accordion.Item value="billing"><Accordion.Header><Accordion.Trigger>Billing details<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner><Text variant="body-sm" tone="secondary">Review invoices and payment methods.</Text></Accordion.ContentInner></Accordion.Content></Accordion.Item><Accordion.Item value="notifications"><Accordion.Header><Accordion.Trigger>Notifications<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner><Text variant="body-sm" tone="secondary">Choose when workspace updates are delivered.</Text></Accordion.ContentInner></Accordion.Content></Accordion.Item></>;
-}
-
-function Example(props: React.ComponentProps<typeof Accordion.Root>) { return <Accordion.Root {...props}><Items /></Accordion.Root>; }
-
-function SemanticExample() {
-  return <Accordion.Root render="section"><Accordion.Item value="account"><Accordion.Header as="h3"><Accordion.Trigger>Account settings<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content render="article"><Accordion.ContentInner>Semantic hosts retain their relationships.</Accordion.ContentInner></Accordion.Content></Accordion.Item></Accordion.Root>;
-}
-
-export const accordionScenarios = [
-  { id: "accordion.overview", number: 1, title: "Overview", description: "Accordion defaults to one closed, vertical, single-selection group with plain medium styling and labelled panel landmarks." },
-  { id: "accordion.variants", number: 2, title: "Variants", description: "Plain, soft, and outline change only the group surface while the same default content, size, orientation, and state remain." },
-  { id: "accordion.sizes", number: 3, title: "Sizes", description: "Small through extra large coordinate trigger height, typography, indicator size, and panel padding." },
-  { id: "accordion.selection", number: 4, title: "Selection models", navigationTitle: "Selection", description: "Single, collapsible single, controlled, and multiple models expose their distinct state rules without changing recipes." },
-  { id: "accordion.states", number: 5, title: "Content and states", navigationTitle: "States", description: "Default-open, item-disabled, root-disabled, mounted, and landmark-free panels preserve the expected Atom behavior." },
-  { id: "accordion.orientation", number: 6, title: "Orientation and keyboard", navigationTitle: "Orientation", description: "Vertical groups navigate with up and down; horizontal groups reveal width and use direction-aware left and right navigation." },
-  { id: "accordion.composition", number: 7, title: "Composition and output", navigationTitle: "Composition", description: "Semantic hosts, heading levels, IDs, ARIA relationships, and landmark opt-out remain inspectable in rendered output." },
-  { id: "accordion.appearance", number: 8, title: "Appearance and customization", navigationTitle: "Theme", description: "Semantic recipes adapt across appearances; supported component variables produce the exact custom example shown." },
-  { id: "accordion.stress", number: 9, title: "Responsive and accessibility", navigationTitle: "Stress", description: "Long labels, narrow horizontal overflow, RTL, zoom, reduced motion, and forced colors remain usable without page overflow." },
-] as const satisfies readonly ScenarioDefinition[];
-
+import { VStack } from "@flowstack-ui/brick";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { ExamplePreview } from "../../shared/ExamplePreview.js";
+import { OwnerDocumentation } from "../../shared/OwnerDocumentation.js";
+import { AccordionEvidence } from "./AccordionEvidence.js";
+import { accordionExamples } from "./documentation.js";
+import { accordionParts } from "./parts.js";
+import { AccordionBasic } from "./examples/AccordionBasic.js";
+import source from "./examples/AccordionBasic.tsx?raw";
+export { accordionScenarios } from "./AccordionEvidence.js";
 export function AccordionPage() {
-  const [controlled, setControlled] = useState("");
-  return <VStack className="forms-page accordion-page" data-component-page="accordion" data-testid="accordion-workbench">
-    <Scenario {...accordionScenarios[0]}><EvidenceSurface inset="lg" data-testid="accordion-overview"><Example /></EvidenceSurface></Scenario>
-    <Scenario {...accordionScenarios[1]}><Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="accordion-variants">{variants.map((variant) => <Cell key={variant} label={variant}><Example variant={variant} /></Cell>)}</Grid.Root></Scenario>
-    <Scenario {...accordionScenarios[2]}><Grid.Root columns={{ initial: 1, md: 2 }} className="forms-grid forms-grid--two" data-testid="accordion-sizes">{sizes.map((size) => <Cell key={size} label={size}><Example size={size} variant="outline" /></Cell>)}</Grid.Root></Scenario>
-    <Scenario {...accordionScenarios[3]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="accordion-selection"><Cell label="single locked open"><Example collapsible={false} defaultValue="account" /></Cell><Cell label="single collapsible"><Example collapsible defaultValue="account" /></Cell><Cell label="controlled"><VStack gap="2"><Example collapsible value={controlled} onValueChange={setControlled} /><Text variant="caption" tone="secondary">Value: {controlled || "none"}</Text></VStack></Cell><Cell label="multiple"><Example type="multiple" defaultValue={["account", "billing"]} /></Cell></Grid.Root></Scenario>
-    <Scenario {...accordionScenarios[4]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="accordion-states"><Cell label="default open"><Example defaultValue="account" /></Cell><Cell label="disabled item"><Accordion.Root><Accordion.Item disabled value="account"><Accordion.Header><Accordion.Trigger>Account settings<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner>Unavailable</Accordion.ContentInner></Accordion.Content></Accordion.Item><Accordion.Item value="billing"><Accordion.Header><Accordion.Trigger>Billing details<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner>Available</Accordion.ContentInner></Accordion.Content></Accordion.Item></Accordion.Root></Cell><Cell label="root disabled"><Example disabled /></Cell><Cell label="keep mounted, no landmark"><Accordion.Root><Accordion.Item value="account"><Accordion.Header><Accordion.Trigger>Account settings<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content keepMounted landmark={false}><Accordion.ContentInner>Mounted without a region landmark.</Accordion.ContentInner></Accordion.Content></Accordion.Item></Accordion.Root></Cell></Grid.Root></Scenario>
-    <Scenario {...accordionScenarios[5]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="accordion-orientation"><Cell label="vertical"><Example defaultValue="account" /></Cell><Cell label="horizontal"><Example orientation="horizontal" defaultValue="account" /></Cell></Grid.Root></Scenario>
-    <Scenario {...accordionScenarios[6]}><div data-testid="accordion-composition"><RenderedOutput label="Accordion relationship HTML" previewLabel="Semantic composition"><SemanticExample /></RenderedOutput></div></Scenario>
-    <Scenario {...accordionScenarios[7]}><VStack className="forms-evidence-stack" data-testid="accordion-theme"><EvidenceGroup title="Scoped appearances" description="The same default recipe uses semantic tokens in both appearances."><Grid.Root columns={2} className="accordion-appearance-grid" data-testid="accordion-appearance"><EvidenceSurface className="accordion-appearance-panel" data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><div className="accordion-appearance-preview"><Example /></div></EvidenceSurface><EvidenceSurface className="accordion-appearance-panel" data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><div className="accordion-appearance-preview"><Example /></div></EvidenceSurface></Grid.Root></EvidenceGroup><EvidenceGroup title="Consumer customization" description="These supported variables exactly produce the cyan rounded outline group."><EvidenceSurface className="playground-customization-evidence" inset="none"><Grid.Root className="accordion-customization playground-customization-layout" columns={2} gap="0"><VStack gap="2"><SpecimenLabel>Customized</SpecimenLabel><Text as="h4" variant="title-sm">Accordion CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Only the documented surface, border, and radius properties change.</Text><PlaygroundCodeBlock aria-label="Accordion customization code">{`--brick-accordion-background: #ecfeff;\n--brick-accordion-border-color: #0891b2;\n--brick-accordion-radius: 1rem;`}</PlaygroundCodeBlock></VStack><div className="accordion-customization__preview"><Example variant="outline" style={customStyle} /></div></Grid.Root></EvidenceSurface></EvidenceGroup></VStack></Scenario>
-    <Scenario {...accordionScenarios[8]}><VStack className="forms-evidence-stack" data-testid="accordion-stress"><EvidenceGroup title="Narrow horizontal overflow" description="The component contains its own inline scrolling rather than overflowing the page."><EvidenceSurface><div className="accordion-phone"><Example orientation="horizontal" defaultValue="account" /></div></EvidenceSurface></EvidenceGroup><EvidenceGroup title="RTL horizontal" description="Items follow RTL order and horizontal arrow navigation follows reading direction."><EvidenceSurface dir="rtl"><Example orientation="horizontal" dir="rtl" defaultValue="account" /></EvidenceSurface></EvidenceGroup></VStack></Scenario>
+  const preview = usePreviewContext();
+  if (preview || new URLSearchParams(window.location.search).get("qualification") === "1") return <AccordionEvidence />;
+  return <VStack gap={12} data-component-page="accordion">
+    <ExamplePreview label="Accordion basic" source={source}><AccordionBasic /></ExamplePreview>
+    <OwnerDocumentation name="Accordion" usage={'<Accordion.Root>\n  <Accordion.Item value="details">\n    <Accordion.Header><Accordion.Trigger>Details<Accordion.Indicator /></Accordion.Trigger></Accordion.Header>\n    <Accordion.Content><Accordion.ContentInner>Content</Accordion.ContentInner></Accordion.Content>\n  </Accordion.Item>\n</Accordion.Root>'} examples={accordionExamples} parts={accordionParts} />
   </VStack>;
 }

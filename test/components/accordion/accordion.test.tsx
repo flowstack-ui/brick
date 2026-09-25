@@ -1,7 +1,8 @@
 import { createRef, useState } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { Accordion } from "../../../src/accordion.js";
+import { Accordion, useAccordion } from "../../../src/accordion.js";
+import { Button } from "../../../src/button.js";
 
 function Item({ disabled, value = "account" }: { disabled?: boolean; value?: string }) {
   const label = value === "account" ? "Account" : value === "billing" ? "Billing" : "Security";
@@ -9,6 +10,34 @@ function Item({ disabled, value = "account" }: { disabled?: boolean; value?: str
 }
 
 describe("Accordion", () => {
+  it("serializes sparse responsive recipes and delegates composed triggers", () => {
+    render(<Accordion.Root unstyled size={{ md: "lg" }} variant={{ md: "enclosed" }}><Accordion.Item value="a"><Accordion.Header><Accordion.Trigger asChild><Button>Delegated</Button></Accordion.Trigger></Accordion.Header><Accordion.Content motion="none"><Accordion.ContentInner asChild><section>Body</section></Accordion.ContentInner></Accordion.Content></Accordion.Item></Accordion.Root>);
+    const trigger=screen.getByRole("button", {name:"Delegated"});
+    const root=trigger.closest(".brick-accordion");
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "lg");
+    expect(root).toHaveAttribute("data-variant-md", "enclosed");
+    expect(trigger).toHaveClass("brick-button");
+    expect(trigger).toHaveAttribute("data-unstyled");
+    fireEvent.click(trigger);
+    expect(screen.getByText("Body").tagName).toBe("SECTION");
+    expect(screen.getByText("Body")).toHaveAttribute("data-inset","none");
+  });
+  it("exposes controller, IDs, item state and retained inert panels", () => {
+    function Store() {
+      const api=useAccordion({type:"multiple", lazyMount:false, unmountOnExit:false, ids:{root:"group",itemTrigger:v=>`${v}-trigger`,itemContent:v=>`${v}-panel`}});
+      return <Accordion.RootProvider value={api}><button onClick={()=>api.setValue(["a"])}>Expand</button><Accordion.Item value="a"><Accordion.Header><Accordion.Trigger>Stored<Accordion.Indicator /></Accordion.Trigger></Accordion.Header><Accordion.Content><Accordion.ContentInner><Accordion.ItemContext>{item=><span>{item.isOpen ? "Opened" : "Closed"}</span>}</Accordion.ItemContext></Accordion.ContentInner></Accordion.Content></Accordion.Item></Accordion.RootProvider>;
+    }
+    render(<Store />);
+    expect(screen.getByRole("region", {hidden:true})).toHaveAttribute("hidden");
+    expect(screen.getByRole("region", {hidden:true})).toHaveAttribute("inert");
+    fireEvent.click(screen.getByRole("button",{name:"Expand"}));
+    expect(screen.getByRole("region")).toHaveAttribute("id","a-panel");
+    expect(screen.getByRole("region")).toHaveAttribute("aria-labelledby","a-trigger");
+    expect(screen.getByText("Opened")).toBeVisible();
+    fireEvent.click(screen.getByRole("button",{name:"Stored"}));
+    expect(screen.getByRole("region", {hidden:true})).toHaveAttribute("aria-hidden","true");
+  });
   it("renders the seven-part default contract and Atom relationships", () => {
     render(<Accordion.Root><Item /></Accordion.Root>);
     const root = screen.getByText("Account").closest(".brick-accordion");
@@ -27,7 +56,7 @@ describe("Accordion", () => {
 
   it("supports every variant and size without leaking recipe props", () => {
     const { rerender } = render(<Accordion.Root><Item /></Accordion.Root>);
-    for (const variant of ["plain", "ghost", "soft", "outline"] as const) for (const size of ["sm", "md", "lg", "xl"] as const) {
+    for (const variant of ["plain", "ghost", "soft", "outline", "subtle", "enclosed"] as const) for (const size of ["sm", "md", "lg", "xl"] as const) {
       rerender(<Accordion.Root variant={variant} size={size}><Item /></Accordion.Root>);
       const root = screen.getByText("Account").closest(".brick-accordion");
       expect(root).toHaveAttribute("data-variant", variant);

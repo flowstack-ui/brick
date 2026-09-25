@@ -13,7 +13,7 @@ when changing item order would change meaning.
 ## When not to use
 
 Use Nav List for destinations, Listbox or selection controls for choices,
-Grid/Stack for repetition without list meaning, and a future Data List for
+Grid/Stack for repetition without list meaning, and Data List for
 name/value records. List does not provide row activation, selection, routing,
 reordering, virtualization, or feed behavior.
 
@@ -81,6 +81,11 @@ Public exports include `List`, `ListRootProps`, `ListItemProps`,
 
 Item contains a private row wrapper so native markers and structured grid
 layout can coexist. It is not a public part or customization hook.
+A composed `asChild` li retains typography; keep normal Item composition for
+Leading/Content/Trailing so the structured row wrapper remains available.
+Use `density="none"` and `inset="none"` for flush typography. `gap` separates
+siblings without adding an outer gap; sparse breakpoint objects use the
+normal density recipe below their first breakpoint.
 
 ## API
 
@@ -90,15 +95,31 @@ layout can coexist. It is not a public part or customization hook.
 | --- | --- | --- |
 | `ordered` | boolean | `false` |
 | `variant` | `plain`, `divided`, `bordered` | `plain` |
-| `size` | `sm`, `md`, `lg` | `md` |
-| `density` | `compact`, `comfortable` | `comfortable` |
+| `size` | `inherit`, `sm`, `md`, `lg` | `md` |
+| `density` | `none`, `compact`, `comfortable` | `comfortable` |
+| `gap` | `ResponsiveValue<SpacingValue>` | density recipe |
+| `nestedInset` | `ResponsiveValue<SpacingValue>` | space-6, nested Roots only |
+| `markerTone` | `TextTone` | secondary via marker color variable |
 | `align` | `start`, `center`, `end` | `start` |
 | `inset` | `default`, `none` | `default` |
 | `marker` | `auto`, `disc`, `circle`, `square`, `decimal`, `lower-alpha`, `upper-alpha`, `lower-roman`, `upper-roman`, `none` | `auto` |
 
 Root preserves Atom `render`, `asChild`, slots, refs, and native attributes.
 Native ordered-list `start`, `reversed`, and `type` pass through. `auto` uses
-disc for unordered and decimal for ordered roots.
+disc for unordered and decimal for ordered roots, including composed `ol`
+hosts. Native `type="a"`, `"A"`, `"i"`, or `"I"` chooses alphabetic or Roman
+numbering when marker is auto; an explicit marker takes precedence.
+
+`size="inherit"` preserves surrounding font family, size, weight, line height
+and letter spacing through Item and canonical Content > Title/Description.
+It keeps the md inline inset and the title/description color roles. For a
+complete typography recipe, wrap the list with `Text as="div"`; don't merge
+Text and Root onto one host, since both own `data-variant`.
+
+`markerTone` accepts `inherit`, `primary`, `secondary`, `muted`, `accent`,
+`info`, `success`, `warning`, or `danger`. It colors only native markers, not
+item text or authored icons. Omission preserves `--brick-list-marker-color`;
+inherit follows current text color. Set Icon's own tone for an authored icon.
 
 ### Item and structured parts
 
@@ -106,6 +127,12 @@ Item preserves Atom `disabled`, `render`, `asChild`, native item attributes
 including `value`, and its ref. Disabled adds `aria-disabled` and
 `data-disabled` but does not suppress events. Passive parts forward their
 native attributes, data/ARIA attributes, classes, styles, slots, and refs.
+Item also accepts `markerTone`, overriding the Root for that Item only.
+All five passive parts accept `asChild`: one non-Fragment element receives
+their class, slot, attributes, styles and composed ref. Keep normal Item when
+using structured parts. Leading reserves at least one text line and centers
+its authored visual within that line; use Icon for glyph dimensions and color.
+Host projection does not add a keyboard model or generate an icon.
 
 ### Shared radius selection
 
@@ -130,8 +157,9 @@ remains controlled by the bordered recipe.
 
 Items support simple direct content or a three-column structured row. Long
 Title and Description content wraps rather than truncates. Disabled changes
-opacity only; List has no hover, active, selected, loading, validation, focus,
-or motion state. Bordered lists keep visible native markers beside the first
+opacity only. Item selected is presentation, and actionable hover applies only
+to an ActionDelegate host. List adds no active, loading, validation, focus,
+or motion behavior. Bordered lists keep visible native markers beside the first
 content line for both simple and structured rows.
 
 ## Tokens and CSS hooks
@@ -144,7 +172,8 @@ Stable classes are `.brick-list`, `.brick-list__item`,
 
 Root exposes `data-variant`, `data-size`, `data-density`, `data-align`,
 `data-inset`, `data-marker`, and Atom `data-ordered`. Every part exposes `data-slot`; Item exposes Atom
-`data-disabled` when applicable.
+`data-disabled` when applicable. Root and Item expose `data-marker-tone` when
+specified; selected Item exposes `data-selected`.
 
 Public variables:
 
@@ -187,7 +216,9 @@ Prefer recipes, then public variables for a deliberate exception:
 
 ## Responsive behavior
 
-List defines no breakpoint. Logical padding and columns follow direction.
+Gap and nestedInset support the shared sm/md/lg/xl CSS breakpoints, with scalar,
+explicit initial and sparse default-inheriting forms. nestedInset is set on
+the nested Root itself; omission keeps space-6. Logical padding and columns follow direction.
 Structured Content uses the remaining width while Leading and Trailing remain
 contained. Text wraps at narrow widths and nested lists use logical
 indentation. Surround List with Container, Grid, or Stack for page layout.
@@ -214,6 +245,12 @@ layout rather than Brick's private row wrapper.
 Classes and styles merge. Root, Item, and passive-part refs target their
 documented native elements. List never proxies props to Icon, Avatar, Badge,
 Button, Card, Surface, or other composed components.
+
+Brick's `variant="plain"` means no boundary, not no markers. Use
+`marker="none"` for an icon list, with `Leading` rather than a second Indicator
+alias. List does not expose Chakra's generic style-prop engine, recipe
+providers or unstyled switch. Use focused Brick props and composition first,
+public CSS variables for deliberate exceptions, or Atom for headless output.
 
 ## Examples
 
@@ -269,3 +306,19 @@ Button, Card, Surface, or other composed components.
 
 See the [List changelog](CHANGELOG.md) and
 [package changelog](../../../CHANGELOG.md).
+
+### Record selection
+
+Item accepts optional selected (boolean, default false). This is
+presentation only: it emits data-selected, not aria-selected, a role,
+or a tab stop. Compose a named Checkbox with the public selection utility;
+optional ActionDelegate targets a real descendant primary control.
+See [record selection](../../guides/record-selection.md) for the complete
+state, scope, delegation and accessibility contract.
+
+Local styling variables: --brick-list-selected-background,
+--brick-list-selected-foreground, --brick-list-hover-background.
+Selected paint uses `--brick-color-accent-soft` and primary text. Actionable
+hover mixes primary text at 6% over the base surface; selected paint wins.
+Selected paint overrides hover without changing geometry. Forced colors
+uses system canvas colors; the checkbox conveys selection without color.

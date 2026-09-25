@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Feed |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased 0.2.3 candidate; record exact archive digest |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -13,6 +13,11 @@
 | Assistive technology | |
 | Playground route | `/feed` |
 
+Normal documentation: basic, variants, responsive density, divider strength,
+rich content, keyboard, loading/empty/retry, logical positions, defaults, RTL.
+Each example has matching source; Props and TOC are available on `/feed`.
+
+Legacy qualification route: `/feed?qualification=1`.
 Scenario order: `01 Overview`, `02 Anatomy and semantics`, `03 Variants`,
 `04 Density`, `05 Dynamic state`, `06 Keyboard and focus`, `07 Rich
 composition`, `08 Appearance`, `09 Customized`, `10 Responsive and RTL`.
@@ -24,6 +29,11 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 Tab to an Item and use Page Up/Page Down from the article and an article-local
 control. Confirm bounded movement, Control/Command Home/End exit, consumer
 prevention, and visible nearest scrolling in both the page and bounded viewport.
+Hide or make an intermediate article inert: navigation must skip it. Hidden,
+disabled and inert outside controls must not trap Control/Command Home/End.
+Textareas, inputs and editable content retain native editing keys. Nested feeds
+must not cause the parent feed to navigate. Verify negative-tabIndex articles
+remain available to programmatic article navigation.
 
 Result:
 Notes or issue:
@@ -54,6 +64,9 @@ focus, light/dark scopes, and the token override. Confirm no Item hover or
 whole-row action affordance and no background escapes rounded outline Items.
 Compare subtle and default divider strengths: both must preserve the same
 geometry, while default provides a clearer internal boundary on compact trays.
+Resize both directions across 30/48/64/80rem boundaries; recipes must reset.
+Hide the first article and confirm the first visible article has no separator.
+Apply a public padding token on an ancestor and confirm it reaches each Item.
 
 Result:
 Notes or issue:

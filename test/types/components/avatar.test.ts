@@ -42,7 +42,7 @@ void statuses;
 
 // @ts-expect-error alt is required.
 const invalidMissingAlt: AvatarProps = { fallback: "AL" };
-// @ts-expect-error fallback is required.
+// Omitting authored fallback uses a generic person icon.
 const invalidMissingFallback: AvatarProps = { alt: "Ada Lovelace" };
 // @ts-expect-error Sizes are closed.
 const invalidSize: AvatarSize = "6xl";

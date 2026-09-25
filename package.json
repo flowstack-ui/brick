@@ -548,9 +548,21 @@
       "types": "./dist/input-addon.d.ts",
       "default": "./dist/input-addon.js"
     },
+    "./selection": {
+      "types": "./dist/selection.d.ts",
+      "default": "./dist/selection.js"
+    },
+    "./action-delegate": {
+      "types": "./dist/action-delegate.d.ts",
+      "default": "./dist/action-delegate.js"
+    },
     "./checkbox-card": {
       "types": "./dist/checkbox-card.d.ts",
       "default": "./dist/checkbox-card.js"
+    },
+    "./float": {
+      "types": "./dist/float.d.ts",
+      "default": "./dist/float.js"
     }
   },
   "files": [

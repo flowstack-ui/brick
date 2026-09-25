@@ -1,2 +1,4 @@
 export { DataGrid, DataGridBody, DataGridCaption, DataGridCell, DataGridColumn, DataGridColumnGroup, DataGridColumnHeader, DataGridContainer, DataGridFooter, DataGridHeader, DataGridRoot, DataGridRow, DataGridSortIndicator } from "./components/data-grid/index.js";
 export type { DataGridBodyProps, DataGridBorderTone, DataGridCaptionProps, DataGridCaptionSide, DataGridCellAlign, DataGridCellProps, DataGridCellVerticalAlign, DataGridColumnGroupProps, DataGridColumnHeaderProps, DataGridColumnProps, DataGridContainerProps, DataGridDensity, DataGridFooterProps, DataGridHeaderProps, DataGridLayout, DataGridRootProps, DataGridRowProps, DataGridSize, DataGridSortIndicatorProps, DataGridSurface, DataGridVariant } from "./components/data-grid/index.js";
+export { DataGridRowHeader, DataGridColumnResizeHandle } from "./components/data-grid/index.js";
+export type { DataGridRowHeaderProps, DataGridColumnResizeHandleProps } from "./components/data-grid/index.js";

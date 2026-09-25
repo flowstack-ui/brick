@@ -4,6 +4,22 @@ Table follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Added responsive size/density/variant, meaningful row minimum geometry and
+  portable sort artwork that preserves custom children.
+- Added named sorting controls and optional TanStack Table integration examples.
+
+- Prevent fractional-coordinate body-text leakage at the top of Container-owned
+  sticky headers with a paint-only scroll-edge clip.
+
+- Correct sticky header/column intersection stacking so scrolling cells cannot
+  paint over pinned column headers.
+
+- Add independent hover highlighting and logical sticky cells; refine size typography and inline inset.
+
+- Add presentation-only selected state and semantic actionable hover for record
+  composition with public useSelection and ActionDelegate; preserve native
+  semantics, independent controls and existing static defaults.
+
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 - Added Atom-backed `ColumnGroup` and `Column` parts with native `htmlWidth`

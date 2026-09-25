@@ -19,8 +19,8 @@
       "useInstead": "Grid, List, or Card composition"
     },
     {
-      "condition": "Cells must contain independent controls, support editing, resize or pin columns, virtualize rows, or expose a schema-driven enterprise data engine.",
-      "useInstead": "An application-owned data tool or a separately qualified future component"
+      "condition": "The application needs a built-in schema, persistence, aggregation or enterprise processing engine.",
+      "useInstead": "An application-owned engine composed with DataGrid or a dedicated enterprise grid"
     }
   ],
   "composition": [
@@ -30,7 +30,12 @@
     "For application-controlled sorting, give the ColumnHeader onAction, update the data and sortDirection outside Data Grid, and keep SortIndicator decorative.",
     "Choose surface, border tone, optional column borders, layout, striping, sticky header, and cell alignment independently; state paint must remain stronger than stripe paint."
   ],
-  "rules": [{"id":"data-grid-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
+  "rules": [
+    {
+      "id": "data-grid-radius",
+      "level": "must",
+      "statement": "Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."
+    },
     {
       "id": "data-grid-interactive-boundary",
       "level": "must",
@@ -49,7 +54,7 @@
     {
       "id": "data-grid-external-controls",
       "level": "must",
-      "statement": "Compose independently named Brick controls and Pagination outside Root; do not place arbitrary interactive controls inside v1 cells or make the grid itself own surrounding workflow state."
+      "statement": "Compose surrounding filters and Pagination outside Root. Use Cell interactive for named child controls: Enter/F2 enters; child arrows remain native; Escape returns. Validation, save/cancel and persistence remain application-owned. Set disabled/readOnly on authored controls as needed; grid state does not rewrite their business state."
     },
     {
       "id": "data-grid-overflow",
@@ -90,6 +95,11 @@
       "id": "data-grid-column-sizing",
       "level": "must",
       "statement": "Treat Column.htmlWidth as a native CSS-pixel number or percentage sizing hint only; do not pass CSS-unit values, and never use it to define logical indexes, columnCount, navigation, measurement, or resizing behavior."
+    },
+    {
+      "id": "data-grid-expanded-recipes",
+      "level": "must",
+      "statement": "Use responsive size/density/variant, neutral/accent selection tone, RowHeader for row names, and logical sticky cells with explicit offsets. ColumnResizeHandle owns bounded pointer/keyboard width interaction; apply its value to Column.htmlWidth. Virtualization, sorting/filtering and pagination remain optional application/engine compositions, not Brick runtime dependencies."
     }
   ],
   "commonMistakes": [
@@ -102,8 +112,8 @@
       "correction": "Compose those application-owned systems around the public Data Grid anatomy."
     },
     {
-      "mistake": "Placing buttons, links, editable fields, or menus in v1 cells without an interaction mode.",
-      "correction": "Keep cells non-editing and use an application-owned data tool when independent cell controls are required."
+      "mistake": "Adding independent page Tab stops to every grid cell.",
+      "correction": "Use interactive Cell for managed entry/exit; author interactive ColumnHeader controls with tabIndex=-1. Use Table when every control should be in the normal Tab sequence."
     },
     {
       "mistake": "Using zero-based or page-local indexes while claiming a larger logical set.",
@@ -119,10 +129,15 @@
     "Test one Tab entry, arrows, Home and End, PageUp and PageDown, Ctrl or Meta plus Home and End, RTL mapping, disabled skipping, and pointer or Enter sortable-header parity.",
     "Verify stable selection IDs and focus after application sorting, filtering, page changes, or reordered data.",
     "Check explicit Container overflow, complete outline corners with and without Header or Footer, 320 CSS pixels, 200% text, 400% zoom, long content, dark appearance, forced colors, and no page-level horizontal overflow.",
-    "Confirm editing, arbitrary cell controls, virtualization, schemas, fetching, filtering, pagination, and persistence remain excluded."
+    "Verify interactive cell entry/exit, range/select-all mounted scope, resize bounds/cancel/RTL, responsive recipes and active-descendant mounting in windowed compositions."
   ],
   "related": [
-    { "kind": "package", "package": "@flowstack-ui/atom", "id": "data-grid", "versionPolicy": "installed-exact" },
+    {
+      "kind": "package",
+      "package": "@flowstack-ui/atom",
+      "id": "data-grid",
+      "versionPolicy": "installed-exact"
+    },
     "table",
     "tree-grid",
     "toolbar",

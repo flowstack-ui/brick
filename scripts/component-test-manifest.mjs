@@ -1,4 +1,5 @@
 export const componentIds = [
+  "float",
   "checkbox-card",
   "input-addon",
   "table-of-contents",

@@ -1,5 +1,12 @@
 # CloseButton manual protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 | Environment | Recorded value |
 | --- | --- |
 | Browser and version | Not performed |

@@ -14,26 +14,26 @@ Present a finished one-column hierarchy while Atom owns tree semantics, active-d
 
 ## Required composition
 
-- Give Tree.Root a stable accessible name and deliberate selection, expansion, direction, and form state. Compose uniquely valued Items containing required Brick ItemContent with decorative Indicator and reliable ItemText; place each nested Group as a sibling of ItemContent inside its actual parent Item.
-- Choose plain, soft, or outline plus sm or md and optional showGuide on Root. Keep links, commands, loading, filtering, routing, rename, drag and drop, virtualization, and persistence outside Tree.
-- Choose borderTone deliberately for outline boundaries and hierarchy guides; use subtle only when its contrast remains visible on the actual parent surface.
+- Give Tree.Root a stable accessible name and deliberate selection, expansion, direction, and form state. Compose uniquely valued Items containing required Brick ItemContent with optional decorative Indicator or folder/file artwork and reliable ItemText; place each nested Group as a sibling of ItemContent inside its actual parent Item.
+- Choose responsive xs/sm/md size, compact/comfortable density and plain/soft/outline variant independently. Neutral/accent tone and subtle/solid selectionVariant style selection. Trigger separates disclosure from row selection; Checkbox owns separate checkedValue. Use createTreeCollection for logical data and useTreeController with RootProvider or controlled rootProps.
+- Plain click replaces multiple selection; Ctrl/Command-click toggles and Shift-click or Shift-navigation extends a range. When parents alone have a leading Trigger, align child icons or checkboxes by setting --brick-tree-depth-indent to calc(var(--brick-tree-trigger-size) + var(--brick-tree-row-gap)); do not add empty interactive leaf triggers. Guides are opt-in and separate from indentation; omit redundant chevrons in file artwork compositions. Choose borderTone deliberately for outline boundaries and hierarchy guides; use subtle only when its contrast remains visible on the actual parent surface. Group.animate opts into measured expansion motion. Root.loadChildren owns abortable request lifecycle; applications insert returned children and render loading/error/retry status.
 
 ## Rules
 
 - **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Name Root and preserve tree, treeitem, and group relationships, automatic levels, ItemText labeling, and parent-child nesting; use Brick ItemContent as the one finished row paint owner.
 - **MUST:** Give every Item a durable unique value, align scalar or array selection with multiple, and keep selection and expandedValue controlled or uncontrolled without mixing ownership.
-- **MUST:** Keep Root as the sole Tab stop and preserve active-descendant focus, visible-item Up/Down, Home/End, direction-aware expand/collapse and parent movement, typeahead, disabled skipping, bounded or looped policy, and scroll reveal.
+- **MUST:** Keep Root as the navigation Tab stop. Item.interactive opts into owned controls: Enter/F2 enters, Escape returns to Root, and editing/IME keys stay native. Preserve active-descendant focus outside interaction mode, visible-item movement, direction-aware expansion, disabled skipping and scroll reveal.
 - **MUST:** Mark only actual parent Items expandable, hide collapsed descendants from navigation, and allow Atom to relocate active state to a visible ancestor or reset when controlled expansion hides it.
 - **MUST:** Preserve Field naming and descriptions, disabled, read-only, required, invalid, and named submission; read-only may navigate but must not mutate selection or expansion through selection keys.
-- **MUST:** Keep Indicator decorative, ItemText reliable for naming and typeahead, active focus distinct from selected fill, and interactive descendants outside Tree; use application-owned adjacent controls instead of turning Item rows into mixed widgets.
-- **MUST:** If an application windows a large tree, it must retain complete logical parent and level metadata and keep the active descendant and expansion target mounted; geometry utilities do not reconstruct tree semantics.
+- **MUST:** Keep Indicator decorative, ItemText reliable for naming/typeahead and active focus distinct from selected fill. Opt Item into interactive before composing buttons, links or editors. Application code owns rename validation, commit/cancel and persistence. Checking is independent from selection and named selection submission; supply the complete collection for descendant propagation through unmounted branches.
+- **MUST:** If an application windows a large tree, it must retain complete logical parent and level metadata and keep the active descendant and expansion target mounted; geometry utilities do not reconstruct tree semantics. The windowing example uses the separately installed @tanstack/react-virtual optional integration; Brick does not bundle a virtualizer.
 - **MUST:** Load styles.css or core.css plus tree.css and every stylesheet for adjacent composed controls.
 
 ## Common mistakes
 
 - **Avoid:** Using Tree for arbitrary disclosures, marking leaves expandable for an icon, placing Group outside its parent, or giving every Item a Tab stop. **Instead:** Choose Accordion or Collapsible for content, mark only real parents, keep nested Group inside its Item, and preserve Root-owned composite focus.
-- **Avoid:** Omitting ItemText for complex rows, using duplicate or visual-index values, or inserting buttons and links into ItemContent. **Instead:** Register complete searchable text, use durable identities, and keep row actions in separately owned application UI.
+- **Avoid:** Omitting ItemText, using visual-index values, inserting controls without interactive, or treating checking as selection. **Instead:** Register searchable text and durable identities; opt into the owned interaction mode and control checkedValue separately from value.
 
 ## Validation checklist
 

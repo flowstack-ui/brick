@@ -18,11 +18,28 @@ const identities = [
 
 function avatars() {
   return identities.map(([alt, fallback]) => (
-    <Avatar alt={alt} fallback={fallback} key={alt} size="5xl" shape="rounded" />
+    <Avatar alt={alt} fallback={fallback} key={alt} />
   ));
 }
 
 describe("AvatarGroup", () => {
+  it("inherits presentation defaults without overriding explicit children", () => {
+    const { container } = render(
+      <AvatarGroup size="lg" tone="accent" variant="solid" radius="sm" borderless>
+        <Avatar alt="Ada" fallback="AL" />
+        <Avatar alt="Grace" fallback="GH" size="xs" tone="neutral" variant="outline" shape="circle" borderless={false} />
+      </AvatarGroup>,
+    );
+    const [inherited, explicit] = container.querySelectorAll(".brick-avatar");
+    expect(inherited).toHaveAttribute("data-size", "lg");
+    expect(inherited).toHaveAttribute("data-tone", "accent");
+    expect(inherited).toHaveAttribute("data-borderless");
+    expect(explicit).toHaveAttribute("data-size", "xs");
+    expect(explicit).toHaveAttribute("data-tone", "neutral");
+    expect(explicit).toHaveAttribute("data-shape", "circle");
+    expect(explicit).not.toHaveAttribute("data-borderless");
+    expect((explicit as HTMLElement).style.getPropertyValue("--brick-avatar-radius")).toBe("");
+  });
   it("renders an empty neutral root without item or overflow wrappers", () => {
     const { container } = render(<AvatarGroup />);
     const root = container.firstElementChild;

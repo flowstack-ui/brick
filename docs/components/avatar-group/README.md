@@ -3,6 +3,12 @@
 AvatarGroup presents several compact Avatar identities in one overlapping
 inline stack with optional explicit overflow.
 
+Size, radius, tone and variant are inherited defaults; explicit child Avatar
+props win. `borderless` removes overlap separation rings without changing the
+outer size. Named sizes follow Avatar's compact progression; `full` is excluded
+because overlap needs a definite size. Hover does not change stacking order;
+focused composed controls may rise to remain visible.
+
 ## When and where to use
 
 Use it for collaborator summaries, review participants, project members, or
@@ -57,7 +63,10 @@ Public exports are `AvatarGroup`, `AvatarGroupProps`, `AvatarGroupElement`,
 | Prop | Values | Default |
 | --- | --- | --- |
 | `as` | `div`, `span` | `div` |
-| `size` | Avatar sizes `xs` through `5xl` | `md` |
+| `size` | Avatar sizes `2xs` through `5xl` | `md` |
+| `tone` | `neutral`, `accent`, `contrast` | `neutral` |
+| `variant` | `subtle`, `solid`, `outline` | `subtle` |
+| `borderless` | `boolean` | false |
 | `shape` | `circle`, `rounded` | `circle` |
 | `overlap` | `none`, `sm`, `md`, `lg` | `md` |
 | `stacking` | `first-on-top`, `last-on-top` | `last-on-top` |
@@ -86,7 +95,7 @@ or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
-One group size and shape apply to every descendant Brick Avatar. Overlap uses
+Group presentation supplies defaults that explicit child props override. Overlap uses
 logical margins and stacking changes only paint order, never DOM order.
 Avatar owns all image, fallback, status, color, outline, theme, and
 forced-color presentation.
@@ -159,3 +168,9 @@ slot attribute. The ref targets the selected `div` or `span` host.
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).
+
+### Single rendered item
+
+Groups with one rendered item omit peer separation automatically, including
+`max={1}` overflow-only output. Multiple overlapping items use Avatar's border
+inside its named square; `borderless` and `overlap="none"` omit separation.

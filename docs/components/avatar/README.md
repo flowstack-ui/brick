@@ -43,9 +43,23 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ## Anatomy and DOM ownership
 
-The direct component renders an Atom root `span`, optional Atom image, and
-always-present Atom fallback. The ref targets the root `HTMLSpanElement`.
-Image and fallback are implementation-owned, not public compound parts.
+The callable component renders a root span, native image and state-dependent
+fallback. Its ref targets the root span. For custom composition use
+`Avatar.Root`, `Avatar.Image`, `Avatar.Fallback` and `Avatar.Icon`, also available
+as named exports with matching Props types. Root requires `alt`; Image inherits
+the identity and source. Each compound part forwards its native ref and supports
+Atom composition (Icon accepts native SVG props).
+
+```tsx
+<Avatar.Root alt="Ada Lovelace" src="/ada.jpg" tone="accent" variant="subtle">
+  <Avatar.Image loading="lazy" srcSet="/ada@2x.jpg 2x" sizes="40px" />
+  <Avatar.Fallback delayMs={150}>AL</Avatar.Fallback>
+</Avatar.Root>
+```
+
+Image stays server-rendered and uses native loading/request attributes, with no
+detached preload. The convenience API accepts these attributes in `imageProps`.
+Fallback omission supplies a generic person icon, never inferred initials.
 
 ## API
 
@@ -56,14 +70,23 @@ Public exports are `Avatar`, `AvatarProps`, `AvatarSize`, `AvatarShape`, and
 | --- | --- | --- |
 | `src` | `string` | none |
 | `alt` | `string` (required; `""` allowed) | — |
-| `fallback` | `ReactNode` (required) | — |
-| `size` | `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `5xl` | `md` |
+| `fallback` | `ReactNode` | generic person icon |
+| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `5xl`, `full` | `md` |
+| `variant` | `subtle`, `solid`, `outline` | `subtle` |
+| `tone` | `neutral`, `accent`, `contrast` | `neutral` |
+| `borderless` | `boolean` | false |
+| `imageProps` | native image attributes | none |
 | `shape` | `circle`, `rounded` | `circle` |
 | `status` | `online`, `away`, `busy`, `offline` | none |
 | `fallbackDelayMs` | `number` | Atom default |
 | `onLoadingStatusChange` | Atom image-status callback | none |
 
 Root span attributes except `children` and `color` are forwarded.
+
+Named sizes are 24, 32, 36, 40, 44, 48, 64, 96, 112 and 128px. This replaces
+the previous xs=24, sm=32, lg=48, xl=64, 2xl=80 progression. Audit those names
+when migrating; md stays 40px. `full` requires a parent with definite equal
+inline and block dimensions. Rings never enlarge the outer box.
 
 ### Shared radius selection
 
@@ -80,8 +103,15 @@ Sizes change frame and fallback type together. Shape controls circle or rounded
 geometry. Status adds a non-interactive ring. Failed, absent, or delayed images
 resolve through Atom fallback behavior.
 
-Inside AvatarGroup, the group `size` and `shape` recipe intentionally controls
-each descendant Avatar so one stack cannot drift into mixed geometry.
+Inside AvatarGroup, presentation props are defaults. Explicit child size,
+radius, shape, tone, variant and borderless choices override inherited values.
+
+Standalone Avatar has no separation outline by default. Overlapping groups
+draw the separation inside each Avatar's declared square. Neither grouping nor
+enabling an outline enlarges that square. Non-overlapping groups and groups with one rendered item omit the ring.
+Set the documented outline width/color tokens for an optional standalone ring;
+the border stays inside the named size and insets the image/fallback. Background
+paint is clipped away from the border to avoid a dark antialiased outer fringe.
 
 ## Tokens and CSS hooks
 
@@ -100,8 +130,8 @@ size-recipe detail, not a public token.
 Use size, shape, and status first, then public Avatar tokens. Named `2xl`–`5xl`
 sizes cover larger square profile identities; use Image for non-square or
 editorial portraits instead of overriding `--brick-avatar-size`. Root
-`className` and `style` are escape hatches; image/fallback classes are styling
-hooks, not renderable parts.
+`className` and `style` are escape hatches. Use the compound Image and Fallback
+parts for native attributes, refs and custom composition.
 
 ## Responsive behavior
 
@@ -123,9 +153,11 @@ the owning control's accessible name.
 
 ## Composition, native props, and refs
 
-Avatar has no `asChild` or `render` path. Native span props are forwarded and
-the ref targets the root span. Use AvatarGroup for overlap, paint order, and
-explicit overflow representation.
+The callable Avatar convenience has no `asChild` or `render` path because it
+supplies its own image and fallback. Compound Root, Image and Fallback retain
+their public Atom host-composition paths and native refs. Preserve passive
+identity semantics when composing a host. Use AvatarGroup for overlap, paint
+order, and explicit overflow representation.
 
 ## Examples
 

@@ -7,6 +7,7 @@
 | Viewport and zoom | Not performed |
 | Assistive technology | Not performed |
 | Playground route | `/qr-code` |
+| Qualification route(s) | `/qr-code` and `/qr-code?qualification=1` |
 
 Use `pass`, `fail`, `blocked`, or `not applicable`.
 
@@ -16,6 +17,10 @@ Scenario order: qr-code.basic; qr-code.sizes; qr-code.full; qr-code.controlled; 
 2. With VoiceOver/Safari and NVDA/Firefox, read the graphic name and alternative link. Operate each download and the dialog by keyboard. Confirm focus restoration and announced errors.
 3. Scan plain and branded codes on physical iOS and Android cameras at representative display sizes and print scales. Verify exact Unicode and whitespace payloads using an independent reader. Small/dense/inverted/custom-color codes need application-specific qualification.
 4. Save every format, inspect logo inclusion and scan saved images. Verify unsupported overlay errors, offline use, canceled actions and Safari/iOS download behavior.
+5. On the public route check all 15 source-paired examples. Resize the full-width
+   example across breakpoints, inspect the smaller root-customized logo, and
+   operate both named text/icon download actions. Verify the unstyled SVG and
+   inherited defaults examples in narrow, RTL, dark and high-contrast environments.
 
 Result:
 Notes or issue:

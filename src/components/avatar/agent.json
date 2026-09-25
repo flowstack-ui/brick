@@ -20,11 +20,18 @@
     }
   ],
   "composition": [
-    "Provide explicit alt and fallback; keep Avatar passive and let an owning Button or Link provide interaction, focus, and the functional accessible name.",
+    "Separation is a border inside the named square with background clipped away from its outer edge. Groups with only one rendered item, including overflow-only groups, omit peer separation.",
+    "Standalone avatars have no separation ring by default. Optional and group rings stay inside the named size; grouping never enlarges an avatar's visible outer box.",
+    "Provide explicit alt and localized fallback, or omit fallback for a generic person icon. Keep Avatar passive and let an owning Button or Link provide interaction, focus, and the functional accessible name.",
     "Keep visible identity or status text nearby when the image or status ring alone would be ambiguous or consequential.",
     "Use AvatarGroup when multiple Avatars need one overlap, stacking, size, shape, or overflow contract."
   ],
-  "rules": [{"id":"avatar-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
+  "rules": [
+    {
+      "id": "avatar-radius",
+      "level": "must",
+      "statement": "Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."
+    },
     {
       "id": "avatar-compact-identity",
       "level": "must",
@@ -38,12 +45,12 @@
     {
       "id": "avatar-source-state",
       "level": "must",
-      "statement": "Pass the same source to the Atom-backed Root and Image path, preserve idle/loading/loaded/error state, and keep explicit fallback content durable through missing, changed, delayed, and failed images."
+      "statement": "Set src on Avatar or Avatar.Root and let Image inherit it. Native loading, srcSet, sizes and request attributes belong on Image or imageProps; never create a detached preload."
     },
     {
       "id": "avatar-explicit-fallback",
       "level": "must",
-      "statement": "Supply explicit localized fallback content; do not generate initials or infer identity from a filename."
+      "statement": "Supply localized fallback when initials are desired; omission uses a generic person icon. Never infer identity or generate initials from a filename."
     },
     {
       "id": "avatar-passive",
@@ -58,7 +65,7 @@
     {
       "id": "avatar-named-size",
       "level": "must",
-      "statement": "Choose the nearest named Avatar size, including 2xl through 5xl for larger square profile identities, instead of overriding --brick-avatar-size inline; use Image for authored non-square portrait media."
+      "statement": "Use named sizes 2xs through 5xl or full inside a constrained square parent. The compact progression is 24/32/36/40/44/48/64px through 2xl; use Image for authored non-square media."
     },
     {
       "id": "avatar-css",
@@ -76,5 +83,19 @@
     "Check missing, idle, loading, loaded, changed-source, and error paths; delayed fallback timing; fixed square size; crop; informative and decorative naming; passive semantics; nearby identity/status text; light/dark/forced colors; zoom; and RTL.",
     "Confirm a named Avatar size is used, CSS is loaded, and any owning Button, Link, or NotificationBadge preserves its own public contract."
   ],
-  "related": [{"kind": "package", "package": "@flowstack-ui/atom", "id": "avatar", "versionPolicy": "installed-exact"}, "avatar-group", "image", "button", "link", "notification-badge", "badge", "status"]
+  "related": [
+    {
+      "kind": "package",
+      "package": "@flowstack-ui/atom",
+      "id": "avatar",
+      "versionPolicy": "installed-exact"
+    },
+    "avatar-group",
+    "image",
+    "button",
+    "link",
+    "notification-badge",
+    "badge",
+    "status"
+  ]
 }

@@ -4,6 +4,17 @@ Badge follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Added
+
+- Plain paint and sparse responsive size/variant recipes with complete resets.
+- Focused Preview/Code examples for icons, every size, circles, radius and native
+  composition; the exhaustive qualification view remains available separately.
+
+### Fixed
+
+- Circle artwork now respects its intended size independently of Icon flex basis.
+- Corrected meaningful icon naming guidance; generic Badge spans are not labels.
+
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 ### Added

@@ -2,13 +2,15 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/avatar-group");
+  await page.goto("/avatar-group?qualification=1");
 });
 
 test("overview preserves canonical recipes, identity order, and neutral semantics", async ({
   page,
 }) => {
-  const group = page.getByTestId("avatar-group-overview").locator(".brick-avatar-group");
+  const group = page
+    .getByTestId("avatar-group-overview")
+    .locator(".brick-avatar-group");
   await expect(page.getByTestId("avatar-group-workbench")).toBeVisible();
   await expect(group).toHaveAttribute("data-size", "md");
   await expect(group).toHaveAttribute("data-shape", "circle");
@@ -25,11 +27,24 @@ test("overview preserves canonical recipes, identity order, and neutral semantic
   ]);
 });
 
-test("group size and shape coordinate actual Avatar recipes", async ({ page }) => {
+test("group size and shape coordinate actual Avatar recipes", async ({
+  page,
+}) => {
   const recipes = page.getByTestId("avatar-group-recipes");
   const groups = recipes.locator(".brick-avatar-group");
-  const expectedSizes = [24, 32, 40, 48, 64, 80, 96, 112, 128, 48];
-  const expectedNames = ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "lg"];
+  const expectedSizes = [32, 36, 40, 44, 48, 64, 96, 112, 128, 44];
+  const expectedNames = [
+    "xs",
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "2xl",
+    "3xl",
+    "4xl",
+    "5xl",
+    "lg",
+  ];
   for (let index = 0; index < expectedSizes.length; index += 1) {
     const group = groups.nth(index);
     const avatars = group.locator(".brick-avatar");
@@ -71,20 +86,16 @@ test("named overlap changes logical geometry while stacking changes paint only",
 
   const first = groups.nth(4).locator("[data-slot='avatar-group-item']");
   const last = groups.nth(5).locator("[data-slot='avatar-group-item']");
-  expect(await first.evaluateAll((items) => items.map((item) => getComputedStyle(item).zIndex))).toEqual([
-    "5",
-    "4",
-    "3",
-    "2",
-    "1",
-  ]);
-  expect(await last.evaluateAll((items) => items.map((item) => getComputedStyle(item).zIndex))).toEqual([
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-  ]);
+  expect(
+    await first.evaluateAll((items) =>
+      items.map((item) => getComputedStyle(item).zIndex),
+    ),
+  ).toEqual(["5", "4", "3", "2", "1"]);
+  expect(
+    await last.evaluateAll((items) =>
+      items.map((item) => getComputedStyle(item).zIndex),
+    ),
+  ).toEqual(["1", "2", "3", "4", "5"]);
 });
 
 test("max and total produce localized overflow with the promised slot budget", async ({
@@ -92,30 +103,40 @@ test("max and total produce localized overflow with the promised slot budget", a
 }) => {
   const region = page.getByTestId("avatar-group-overflow");
   const groups = region.locator(".brick-avatar-group");
-  await expect(groups.nth(0).locator(".brick-avatar-group__item")).toHaveCount(3);
-  await expect(groups.nth(0).getByRole("img", { name: "3 more collaborators" })).toHaveText(
-    "+3",
+  await expect(groups.nth(0).locator(".brick-avatar-group__item")).toHaveCount(
+    3,
   );
-  await expect(groups.nth(1).locator(".brick-avatar-group__item")).toHaveCount(4);
-  await expect(groups.nth(1).getByRole("img", { name: "21 more reviewers" })).toHaveText(
-    "+21",
+  await expect(
+    groups.nth(0).getByRole("img", { name: "3 more collaborators" }),
+  ).toHaveText("+3");
+  await expect(groups.nth(1).locator(".brick-avatar-group__item")).toHaveCount(
+    4,
   );
+  await expect(
+    groups.nth(1).getByRole("img", { name: "21 more reviewers" }),
+  ).toHaveText("+21");
 });
 
 test("custom overflow owns focus and activation without changing Avatar semantics", async ({
   page,
 }) => {
   const region = page.getByTestId("avatar-group-composition");
-  const button = region.getByRole("button", { name: "Show 3 more collaborators" });
+  const button = region.getByRole("button", {
+    name: "Show 3 more collaborators",
+  });
   await button.focus();
   await expect(button).toBeFocused();
   await expect(region.locator(".brick-avatar")).toHaveCount(2);
-  for (const fallback of await region.locator("[data-slot='avatar-fallback']").all()) {
+  for (const fallback of await region
+    .locator("[data-slot='avatar-fallback']")
+    .all()) {
     await expect(fallback).toHaveAttribute("aria-hidden", "true");
   }
 });
 
-test("RTL uses logical overlap without reversing source order", async ({ page }) => {
+test("RTL uses logical overlap without reversing source order", async ({
+  page,
+}) => {
   const rtl = page.getByTestId("avatar-group-stress").locator("[dir='rtl']");
   const items = rtl.locator("[data-slot='avatar-group-item']");
   await expect(items).toHaveText(["ن", "ل", "س"]);
@@ -132,7 +153,10 @@ test("narrow width and 200% text preserve containment", async ({ page }) => {
   await page.evaluate(() => {
     document.documentElement.style.fontSize = "200%";
   });
-  for (const group of await page.getByTestId("avatar-group-stress").locator(".brick-avatar-group").all()) {
+  for (const group of await page
+    .getByTestId("avatar-group-stress")
+    .locator(".brick-avatar-group")
+    .all()) {
     const box = await group.boundingBox();
     expect(box).not.toBeNull();
     expect(box!.x).toBeGreaterThanOrEqual(0);
@@ -147,7 +171,10 @@ test("forced colors retain peer separation", async ({ page }, testInfo) => {
   );
   await page.emulateMedia({ forcedColors: "active" });
   await page.reload();
-  const avatar = page.getByTestId("avatar-group-overview").locator(".brick-avatar").first();
+  const avatar = page
+    .getByTestId("avatar-group-overview")
+    .locator(".brick-avatar")
+    .first();
   const computed = await avatar.evaluate((element) => ({
     border: getComputedStyle(element).borderTopWidth,
     shadow: getComputedStyle(element).boxShadow,
@@ -161,4 +188,52 @@ test("AvatarGroup reference route has no automated accessibility violations", as
 }) => {
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
+});
+
+test("separation follows rendered peers and stays inside the named square", async ({
+  page,
+}) => {
+  const groups = page
+    .getByTestId("avatar-group-stacking")
+    .locator(".brick-avatar-group");
+  for (const index of [0, 6, 7, 9]) {
+    for (const avatar of await groups
+      .nth(index)
+      .locator(".brick-avatar")
+      .all()) {
+      expect(
+        await avatar.evaluate((element) =>
+          parseFloat(
+            getComputedStyle(element).getPropertyValue(
+              "--brick-avatar-outline-width",
+            ),
+          ),
+        ),
+      ).toBe(0);
+    }
+  }
+  const pair = groups.nth(8).locator(".brick-avatar");
+  for (const avatar of await pair.all()) {
+    const geometry = await avatar.evaluate((element) => {
+      const style = getComputedStyle(element);
+      const box = element.getBoundingClientRect();
+      const inner = element
+        .querySelector(".brick-avatar__fallback")!
+        .getBoundingClientRect();
+      return {
+        width: box.width,
+        height: box.height,
+        inset: inner.x - box.x,
+        innerWidth: inner.width,
+        border: parseFloat(style.borderLeftWidth),
+        backgroundClip: style.backgroundClip,
+      };
+    });
+    expect(geometry.width).toBe(32);
+    expect(geometry.height).toBe(32);
+    expect(geometry.border).toBeGreaterThan(0);
+    expect(geometry.inset).toBe(geometry.border);
+    expect(geometry.innerWidth).toBe(32 - 2 * geometry.border);
+    expect(geometry.backgroundClip).toBe("padding-box");
+  }
 });

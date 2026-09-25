@@ -1,7 +1,25 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/tree-grid"); await expect(page.locator("#scenario-tree-grid-overview .brick-tree-grid")).toBeVisible(); });
+test.beforeEach(async ({ page }) => { await page.goto("/tree-grid?qualification=1"); await expect(page.locator("#scenario-tree-grid-overview .brick-tree-grid")).toBeVisible(); });
+
+for (const [role, name] of [["gridcell", "CSS"], ["columnheader", "Type"], ["rowheader", "styles.css"]] as const) {
+test(`first pointer press activates ${role} before mouseup`, async ({ page }) => {
+  await page.goto("/tree-grid");
+  const grid = page.getByRole("treegrid", { name: "Project files", exact: true }).first();
+  const target = grid.getByRole(role, { name, exact: true });
+  await target.scrollIntoViewIfNeeded();
+  const box = await target.boundingBox();
+  if (!box) throw new Error("Missing CSS cell");
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down();
+  await expect(grid).toHaveAttribute("aria-activedescendant", await target.getAttribute("id") ?? "");
+  await page.mouse.up();
+  await expect(grid).toHaveAttribute("aria-activedescendant", await target.getAttribute("id") ?? "");
+  await expect(grid.locator("tbody .brick-icon")).toHaveCount(4);
+  await expect(grid.locator("[data-slot=tree-grid-indicator]")).toHaveCount(0);
+});
+}
 
 test("defaults, hierarchy, and anatomy are deterministic", async ({ page }) => {
   const root = page.locator("#scenario-tree-grid-overview .brick-tree-grid");
@@ -16,6 +34,16 @@ test("defaults, hierarchy, and anatomy are deterministic", async ({ page }) => {
   await expect(root.locator("tbody tr").nth(2)).toHaveAttribute("aria-level", "3");
   await expect(root.locator("tbody tr").nth(2)).toHaveAttribute("aria-selected", "true");
   await expect(page.locator("#scenario-tree-grid-anatomy [data-slot=tree-grid-indicator]").first()).toHaveAttribute("aria-hidden", "true");
+});
+
+test("Name sorting preserves parent-before-child order in both directions", async ({ page }) => {
+  const root = page.locator("#scenario-tree-grid-controlled .brick-tree-grid");
+  const names = root.locator("tbody th");
+  await expect(names).toHaveText(["README.md", "src", "components", "tree-grid.css", "TreeGrid.tsx"]);
+  await root.locator("[data-actionable]").click();
+  await expect(names).toHaveText(["src", "components", "TreeGrid.tsx", "tree-grid.css", "README.md"]);
+  await root.locator("[data-actionable]").click();
+  await expect(names).toHaveText(["README.md", "src", "components", "tree-grid.css", "TreeGrid.tsx"]);
 });
 
 test("navigation, expansion, selection, sorting, and collapse focus remain operable", async ({ page }) => {
@@ -72,4 +100,8 @@ test("outline clipping, responsive overflow, RTL, preferences, and accessibility
   await expect(rtl.locator("caption")).toHaveText("ملفات الإصدار");
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
+  await page.emulateMedia({ forcedColors: "active" });
+  if (await page.evaluate(() => CSS.supports("forced-color-adjust", "none"))) {
+    await expect(page.locator("#scenario-tree-grid-overview [data-selected] > .brick-tree-grid__row-header")).toHaveCSS("forced-color-adjust", "none");
+  }
 });

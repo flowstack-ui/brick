@@ -80,14 +80,6 @@
       "reason": "The optional reset stylesheet is a delivery surface, not a component owner."
     },
     {
-      "surface": "./badge#NotificationBadge",
-      "classification": "component",
-      "ownerId": "notification-badge",
-      "sourceOwner": "badge",
-      "documentation": "docs/components/notification-badge/README.md",
-      "reason": "NotificationBadge has an independently selectable contract while sharing Badge's implementation module and subpath."
-    },
-    {
       "surface": "./badge#NotificationBadgeProps",
       "classification": "compound-part",
       "ownerId": "notification-badge",
@@ -112,6 +104,18 @@
       "reason": "Public size type for the Notification Badge owner."
     },
     {
+      "surface": "./selection",
+      "classification": "utility",
+      "documentation": "docs/guides/record-selection.md",
+      "reason": "Atom-backed record state and checkbox binding without rendered anatomy or CSS."
+    },
+    {
+      "surface": "./action-delegate",
+      "classification": "utility",
+      "documentation": "docs/guides/record-selection.md",
+      "reason": "Atom-backed semantic-preserving event delegation without a styled host or CSS entry."
+    },
+    {
       "surface": ".#SurfaceTreatment",
       "classification": "utility",
       "sourceOwner": "src/components/_surface-effects",
@@ -131,6 +135,14 @@
       "sourceOwner": "src/components/_radius",
       "documentation": "docs/guides/radius.md",
       "reason": "Shared public radius vocabulary for component boundary owners."
+    },
+    {
+      "surface": "./badge#NotificationBadge",
+      "classification": "component",
+      "ownerId": "notification-badge",
+      "sourceOwner": "badge",
+      "documentation": "docs/components/notification-badge/README.md",
+      "reason": "NotificationBadge has an independently selectable contract while sharing Badge's implementation module and subpath."
     },
     {
       "surface": ".#SpacingValue",

@@ -15,6 +15,8 @@ Present an Atom-backed generated-file download as a finished Button.
 ## Required composition
 
 - Supply data, fileName, mimeType for string data and visible children. Lazy producers receive AbortSignal. Use normal Button size, tone, variant and startIcon/endIcon props. FormatByte can describe a known file size separately.
+- DownloadTrigger renders the real Button or, with iconOnly and required aria-label, IconButton. Shared loading presentation uses automatic preparation state. ButtonGroup defaults apply; explicit props win. Do not nest interactive controls.
+- useDownload returns state, loading, download(ownerDocument?) and cancel for custom actions. Call only from activation; pass the activated control's ownerDocument for iframes and bind loading to the action.
 
 ## Rules
 

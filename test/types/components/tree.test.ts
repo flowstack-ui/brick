@@ -21,6 +21,12 @@ const props: TreeRootProps = {
 void Tree;
 void props;
 
+const responsive: TreeRootProps = { size: { initial: "xs", md: "md" }, density: { lg: "compact" }, tone: "neutral", selectionVariant: "solid", selectionMode: "none" };
+void responsive;
+void Tree.RootProvider;
+void Tree.Trigger;
+void Tree.Checkbox;
+
 // @ts-expect-error Tree variants are closed.
 const badVariant: TreeVariant = "solid";
 // @ts-expect-error Brick Tree is vertical-only and omits Atom orientation.

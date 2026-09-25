@@ -25,7 +25,7 @@ Load the stylesheets of composed components as well.
 
 ```tsx
 function PartnerStrip() {
-  const value = useMarquee();
+  const value = useMarquee({ autoFill: true });
   return <>
     <button onClick={value.togglePause}>{value.requestedPaused ? "Resume" : "Pause"}</button>
     <Marquee.RootProvider value={value} aria-label="Our partners">
@@ -41,6 +41,10 @@ function PartnerStrip() {
 
 ## Anatomy and DOM ownership
 
+The quick start uses `autoFill` so a short track fills a wider container. Without
+it, a track shorter than the viewport intentionally stays stationary rather than
+leaving empty space in a moving strip.
+
 Root, RootProvider, Viewport, Content and Item render divs. Context renders no DOM.
 Edge renders a decorative span. Only Content's original track owns its forwarded
 ref and ID. Explicit visual replicas are inert, aria-hidden presentation divs.
@@ -49,7 +53,7 @@ Brick owns spacing translation, track keyframes, overflow and decorative edge pa
 
 ## API
 
-MarqueeSide: `start`, `end`, `top`, `bottom`. MarqueeSpacing follows SpacingValue.
+MarqueeSide: `start`, `end`, `top`, `bottom`. MarqueeSpacing is ResponsiveValue<SpacingValue>: a scalar or initial/sm/md/lg/xl map.
 
 | Prop | Default |
 | --- | --- |
@@ -87,13 +91,13 @@ No size, tone, variant or background recipe. Compose ordinary Brick content.
 User pause stops at the current transform. Focus, reduced motion, missing geometry
 or unsafe replicas expose stationary originals through native overflow.
 Finite completion stops at a cycle boundary. Hover and focus cannot undo manual pause.
-Dimensions update at a safe cycle boundary; content changes restart measurement.
+Viewport coverage updates immediately, including while paused; new copies synchronize to the original animation phase. Travel-distance changes restart the current cycle while retaining completed iterations and requested pause. Content replacement explicitly restarts the run. Missing animation synchronization APIs use stationary originals.
 
 ## Tokens and CSS hooks
 
 Public styling variables: --brick-marquee-edge-color defaults to
 var(--brick-color-surface-base); --brick-marquee-edge-size defaults to 20%.
-Set them on Root or RootProvider when composing a different owning Surface.
+Set them on Root, RootProvider or an ancestor when composing a different owning Surface. Fades stack locally above the viewport.
 Atom geometry outputs --atom-marquee-spacing, --atom-marquee-distance,
 --atom-marquee-duration, --atom-marquee-delay, --atom-marquee-iterations are
 read-only integration values, not a second animation API.
@@ -102,6 +106,21 @@ data-orientation, `data-side`, data-reversed, data-generation, data-original,
 data-replica. Do not author these behavior-owned state attributes.
 
 ## Customization
+
+Marquee.PropsProvider accepts value: MarqueeRecipeProps (spacing, unstyled).
+Marquee.RootPropsProvider is an alias. Defined values merge; nested responsive
+maps replace. Explicit root/hook values win. Named MarqueePropsProvider and
+MarqueeRootPropsProvider exports and MarqueePropsProviderProps are available.
+RootProvider consumes its controller without overriding its spacing; use Brick's
+useMarquee hook for responsive presentation metadata.
+
+Root, RootProvider, Viewport, Content, Item and Edge accept unstyled. Root
+suppression is inherited by parts, not nested roots; explicit part values win.
+Native props and behavior remain. Supply your own required layout/motion CSS,
+or use Atom for a headless implementation. The provider never controls speed or
+pause. Example: useMarquee({autoFill: true, spacing: {initial: 2, md: 6}}) uses
+8px initially and 24px at md. Spacing is resolved in CSS and measured by Atom.
+
 
 Compose optional start/end or top/bottom Edge parts, with no pointer interception.
 Edges disappear for stationary presentation and forced colors. Card and Surface
@@ -128,13 +147,16 @@ Content does not become a live announcement on every iteration.
 
 Root/Provider/Viewport/Content/Item forward HTMLDivElement refs, className, style,
 data-slot and native events; asChild/render are delegated to Atom projection.
-Edge forwards an HTMLElement ref and accepts one-element asChild projection.
+Edge forwards an HTMLElement ref and accepts one-element asChild projection,
+preserving projected callback-ref cleanup on React 19.
 Keep Viewport directly beneath Root and Content directly beneath Viewport for
 scoped track animation; Item may contain passive Brick compositions.
 
 ## Examples
 
-The /marquee playground contains 16 numbered scenarios for directions, vertical
+Logo examples use local Simple Icons artwork (CC0) with visible brand names and decorative SVGs. No external image request is needed for logos. The image gallery uses straight, fixed-height images; the separate Diagonal example demonstrates an intentional artwork transform. Keep transforms outside the moving Content, whose transform belongs to Marquee.
+
+The public /marquee route contains source-paired feature examples and complete API sections. Its qualification=1 view preserves 16 numbered scenarios for directions, vertical
 movement, speed, spacing, pause, store access, loops, fades, multiple lanes,
 artwork, original links, testimonials, preferences, hidden geometry and safety.
 

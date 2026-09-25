@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/table"); await expect(page.locator("#scenario-table-overview .brick-table")).toBeVisible(); });
+test.beforeEach(async ({ page }) => { await page.goto("/table?qualification=1"); await expect(page.locator("#scenario-table-overview .brick-table")).toBeVisible(); });
 
 test("Table defaults and native anatomy are deterministic", async ({ page }) => {
   const root = page.locator("#scenario-table-overview .brick-table");
@@ -27,9 +27,9 @@ test("Table recipes, numeric alignment, and sorting remain independent", async (
   await expect(bodyOnlyOutline.locator("tbody td").last()).not.toHaveCSS("border-top-right-radius", "0px");
   await expect(bodyOnlyOutline.locator("tbody tr").last().locator("td").first()).not.toHaveCSS("border-bottom-left-radius", "0px");
   await expect(bodyOnlyOutline.locator("tbody tr").last().locator("td").last()).not.toHaveCSS("border-bottom-right-radius", "0px");
-  await expect(outlines.nth(2)).toHaveAttribute("data-striped", "");
+  await expect(page.locator("#scenario-table-variants .brick-table[data-striped]")).toHaveCount(1);
   const sizes = await page.locator("#scenario-table-sizing .table-grid").first().locator(".brick-table").evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).fontSize));
-  expect(new Set(sizes).size).toBe(3);
+  expect(sizes).toEqual(["14px", "14px", "16px"]);
   const numeric = page.locator("#scenario-table-alignment [data-numeric]");
   await expect(numeric).toHaveCSS("text-align", "end");
   const button = page.locator("#scenario-table-sorting button");

@@ -4,6 +4,15 @@ Tree Grid follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Resolve pointer cells before initial native focus through Atom, preventing the top-left focus flash.
+- Use folder/file artwork without redundant disclosure slots in file-browser examples; keep independent disclosure as an explicit composition.
+
+- Use the shared focus-width token and document optional application-owned TanStack windowing.
+
+- Add independent disclosure, interactive cells and headers, public column resize handles and logical sticky columns.
+- Add responsive size/density/variant, neutral/accent selection and authored minimum width; correct visible-row striping and depth metadata.
+- Rebuild source-paired documentation with controlled selection, checkbox cells, editing, resizing, filtering and server-page recovery.
+
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 - Added Atom-backed `ColumnGroup` and `Column` parts with native `htmlWidth`

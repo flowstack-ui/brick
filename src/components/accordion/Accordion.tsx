@@ -1,5 +1,11 @@
 import { radiusStyle, type Radius } from "../_radius/Radius.js";
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import { forwardRef, createContext, useContext } from "react";
+import { staticPart, type StaticPartProps } from "../_internal/StaticPart.js";
+import { layoutHost } from "../_internal/layout-host.js";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
 import {
   Accordion as AtomAccordion,
   type AccordionContentProps as AtomAccordionContentProps,
@@ -7,34 +13,59 @@ import {
   type AccordionItemProps as AtomAccordionItemProps,
   type AccordionRootProps as AtomAccordionRootProps,
   type AccordionTriggerProps as AtomAccordionTriggerProps,
+  type AccordionIndicatorProps as AtomAccordionIndicatorProps,
+  type AccordionRootProviderProps as AtomAccordionRootProviderProps,
+  useAccordionContext,
+} from "@flowstack-ui/atom/accordion";
+export {
+  useAccordion,
+  useAccordionContext,
+  useAccordionItemContext,
+  AccordionContext,
+  AccordionItemContext,
+  type UseAccordionOptions,
+  type UseAccordionReturn,
 } from "@flowstack-ui/atom/accordion";
 
-export type AccordionVariant = "plain" | "ghost" | "soft" | "outline";
+export type AccordionVariant =
+  | "plain"
+  | "ghost"
+  | "soft"
+  | "outline"
+  | "subtle"
+  | "enclosed";
 export type AccordionSize = "sm" | "md" | "lg" | "xl";
 export type AccordionIndicatorPlacement = "start" | "end";
 
 export type AccordionRootProps = AtomAccordionRootProps & {
   radius?: Radius;
-  variant?: AccordionVariant;
-  size?: AccordionSize;
+  variant?: ResponsiveValue<AccordionVariant>;
+  size?: ResponsiveValue<AccordionSize>;
+  unstyled?: boolean;
   indicatorPlacement?: AccordionIndicatorPlacement;
 };
 export type AccordionItemProps = AtomAccordionItemProps;
 export type AccordionHeaderProps = AtomAccordionHeaderProps;
-export type AccordionTriggerProps = AtomAccordionTriggerProps;
-export type AccordionContentProps = AtomAccordionContentProps;
+export type AccordionTriggerProps = AtomAccordionTriggerProps & {
+  unstyled?: boolean;
+};
+export type AccordionContentProps = AtomAccordionContentProps & {
+  motion?: "auto" | "none";
+};
+export type AccordionRootProviderProps = AtomAccordionRootProviderProps &
+  Pick<
+    AccordionRootProps,
+    "radius" | "variant" | "size" | "indicatorPlacement" | "unstyled"
+  >;
 
-export interface AccordionIndicatorProps extends Omit<
-  HTMLAttributes<HTMLSpanElement>,
-  "children" | "aria-hidden"
-> {
-  children?: ReactNode;
-  "data-slot"?: string;
-}
-
-export interface AccordionContentInnerProps extends HTMLAttributes<HTMLDivElement> {
-  "data-slot"?: string;
-}
+export type AccordionIndicatorProps = AtomAccordionIndicatorProps;
+export type AccordionContentInnerProps = StaticPartProps & {
+  inset?: "auto" | "none";
+};
+const RecipeContext = createContext({
+  placement: "end" as AccordionIndicatorPlacement,
+  unstyled: false,
+});
 
 function classes(base: string, className?: string) {
   return className ? `${base} ${className}` : base;
@@ -43,36 +74,93 @@ function classes(base: string, className?: string) {
 export const AccordionRoot = forwardRef<HTMLDivElement, AccordionRootProps>(
   function AccordionRoot(
     {
-      className, radius, style,
+      className,
+      radius,
+      style,
       indicatorPlacement = "end",
       size = "md",
       variant = "plain",
+      unstyled = false,
       "data-slot": slot,
       ...props
     },
     ref,
   ) {
     return (
-      <AtomAccordion.Root
-        {...props}
-        className={classes("brick-accordion", className)} style={radiusStyle(radius, "--brick-accordion-radius", style)}
-        data-indicator-placement={indicatorPlacement}
-        data-size={size}
-        data-slot={slot ?? "accordion-root"}
-        data-variant={variant}
-        ref={ref}
-      />
+      <RecipeContext.Provider
+        value={{ placement: indicatorPlacement, unstyled }}
+      >
+        <AtomAccordion.Root
+          {...props}
+          className={classes("brick-accordion", className)}
+          style={radiusStyle(radius, "--brick-accordion-radius", style)}
+          data-indicator-placement={indicatorPlacement}
+          {...responsiveDataAttributes("data-size", size, {
+            defaultValue: "md",
+            alwaysInitial: true,
+          })}
+          data-slot={slot ?? "accordion-root"}
+          {...responsiveDataAttributes("data-variant", variant, {
+            defaultValue: "plain",
+            alwaysInitial: true,
+          })}
+          data-unstyled={unstyled ? "" : undefined}
+          ref={ref}
+        />
+      </RecipeContext.Provider>
     );
   },
 );
 
+export const AccordionRootProvider = forwardRef<
+  HTMLDivElement,
+  AccordionRootProviderProps
+>(function AccordionRootProvider(
+  {
+    className,
+    radius,
+    style,
+    indicatorPlacement = "end",
+    size = "md",
+    variant = "plain",
+    unstyled = false,
+    "data-slot": slot,
+    ...props
+  },
+  ref,
+) {
+  return (
+    <RecipeContext.Provider value={{ placement: indicatorPlacement, unstyled }}>
+      <AtomAccordion.RootProvider
+        {...props}
+        ref={ref}
+        className={classes("brick-accordion", className)}
+        style={radiusStyle(radius, "--brick-accordion-radius", style)}
+        data-slot={slot ?? "accordion-root"}
+        data-indicator-placement={indicatorPlacement}
+        data-unstyled={unstyled ? "" : undefined}
+        {...responsiveDataAttributes("data-size", size, {
+          defaultValue: "md",
+          alwaysInitial: true,
+        })}
+        {...responsiveDataAttributes("data-variant", variant, {
+          defaultValue: "plain",
+          alwaysInitial: true,
+        })}
+      />
+    </RecipeContext.Provider>
+  );
+});
+
 export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
   function AccordionItem({ className, "data-slot": slot, ...props }, ref) {
+    const recipe = useContext(RecipeContext);
     return (
       <AtomAccordion.Item
         {...props}
         className={classes("brick-accordion-item", className)}
         data-slot={slot ?? "accordion-item"}
+        data-unstyled={recipe.unstyled ? "" : undefined}
         ref={ref}
       />
     );
@@ -96,12 +184,17 @@ export const AccordionHeader = forwardRef<
 export const AccordionTrigger = forwardRef<
   HTMLButtonElement,
   AccordionTriggerProps
->(function AccordionTrigger({ className, "data-slot": slot, ...props }, ref) {
+>(function AccordionTrigger(
+  { className, unstyled, "data-slot": slot, ...props },
+  ref,
+) {
+  const recipe = useContext(RecipeContext);
   return (
     <AtomAccordion.Trigger
       {...props}
       className={classes("brick-accordion-trigger", className)}
       data-slot={slot ?? "accordion-trigger"}
+      data-unstyled={(unstyled ?? recipe.unstyled) ? "" : undefined}
       ref={ref}
     />
   );
@@ -114,12 +207,14 @@ export const AccordionIndicator = forwardRef<
   { children, className, "data-slot": slot, ...props },
   ref,
 ) {
+  const recipe = useContext(RecipeContext);
   return (
-    <span
+    <AtomAccordion.Indicator
       {...props}
       aria-hidden="true"
       className={classes("brick-accordion-indicator", className)}
       data-slot={slot ?? "accordion-indicator"}
+      data-placement={recipe.placement}
       ref={ref}
     >
       {children ?? (
@@ -133,38 +228,64 @@ export const AccordionIndicator = forwardRef<
           />
         </svg>
       )}
-    </span>
+    </AtomAccordion.Indicator>
   );
 });
 
 export const AccordionContent = forwardRef<
   HTMLDivElement,
   AccordionContentProps
->(function AccordionContent({ className, "data-slot": slot, ...props }, ref) {
+>(function AccordionContent(
+  { className, motion = "auto", "data-slot": slot, ...props },
+  ref,
+) {
   return (
     <AtomAccordion.Content
       {...props}
       className={classes("brick-accordion-content", className)}
       data-slot={slot ?? "accordion-content"}
+      data-motion={motion}
       ref={ref}
     />
   );
 });
 
 export const AccordionContentInner = forwardRef<
-  HTMLDivElement,
+  HTMLElement,
   AccordionContentInnerProps
->(function AccordionContentInner(
-  { className, "data-slot": slot, ...props },
-  ref,
-) {
-  return (
-    <div
-      {...props}
-      className={classes("brick-accordion-content-inner", className)}
-      data-slot={slot ?? "accordion-content-inner"}
-      ref={ref}
-    />
+>(function AccordionContentInner({ inset = "auto", ...props }, ref) {
+  const { orientation } = useAccordionContext();
+  const recipe = useContext(RecipeContext);
+  const attributes: StaticPartProps = {
+    ...props,
+    "data-inset": recipe.unstyled ? "none" : inset,
+    "data-orientation": orientation,
+  };
+  if (props.asChild) {
+    const {
+      asChild,
+      children,
+      className,
+      "data-slot": slot,
+      ...native
+    } = attributes;
+    return layoutHost(
+      children,
+      {
+        ...native,
+        className: classes("brick-accordion-content-inner", className),
+        "data-slot": slot ?? "accordion-content-inner",
+      },
+      ref,
+      "Accordion.ContentInner",
+    );
+  }
+  return staticPart(
+    "div",
+    attributes,
+    ref,
+    "brick-accordion-content-inner",
+    "accordion-content-inner",
   );
 });
 
@@ -177,6 +298,9 @@ AccordionContent.displayName = "Accordion.Content";
 AccordionContentInner.displayName = "Accordion.ContentInner";
 
 export const Accordion = Object.freeze({
+  RootProvider: AccordionRootProvider,
+  Context: AtomAccordion.Context,
+  ItemContext: AtomAccordion.ItemContext,
   Root: AccordionRoot,
   Item: AccordionItem,
   Header: AccordionHeader,

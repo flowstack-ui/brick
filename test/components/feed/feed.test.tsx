@@ -1,7 +1,7 @@
 import { createRef } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { Feed } from "../../../src/feed.js";
+import { Feed, FeedRoot, FeedItem, FeedPropsProvider } from "../../../src/feed.js";
 
 function ActivityFeed(props: Partial<React.ComponentProps<typeof Feed.Root>> = {}) {
   return (
@@ -19,6 +19,24 @@ function ActivityFeed(props: Partial<React.ComponentProps<typeof Feed.Root>> = {
 }
 
 describe("Feed", () => {
+  it("exports parts and resolves provider defaults with explicit sparse responsive overrides", () => {
+    expect(Feed.Root).toBe(FeedRoot);
+    expect(Feed.Item).toBe(FeedItem);
+    expect(Feed.PropsProvider).toBe(FeedPropsProvider);
+    render(<Feed.PropsProvider value={{ variant: "outline", density: "compact", radius: "none" }}>
+      <Feed.PropsProvider value={{ dividerStrength: "default" }}>
+        <ActivityFeed variant={{ md: "plain", lg: "divided" }} />
+      </Feed.PropsProvider>
+    </Feed.PropsProvider>);
+    const root = screen.getByRole("feed");
+    expect(root).toHaveAttribute("data-variant", "divided");
+    expect(root).toHaveAttribute("data-variant-md", "plain");
+    expect(root).toHaveAttribute("data-variant-lg", "divided");
+    expect(root).toHaveAttribute("data-density", "compact");
+    expect(root).toHaveAttribute("data-divider-strength", "default");
+    expect(root.style.getPropertyValue("--brick-feed-radius")).not.toBe("");
+    expect(root).not.toHaveAttribute("value");
+  });
   it("renders the two-part default contract without Brick wrappers", () => {
     render(<ActivityFeed />);
     const root = screen.getByRole("feed", { name: "Activity" });

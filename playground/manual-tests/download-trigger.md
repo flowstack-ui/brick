@@ -7,6 +7,7 @@
 | Viewport and zoom | Not performed |
 | Assistive technology | Not performed |
 | Playground route | `/download-trigger` |
+| Qualification route(s) | `/download-trigger?qualification=1` (legacy evidence); `/download-trigger` (docs) |
 
 Use `pass`, `fail`, `blocked`, or `not applicable`.
 
@@ -20,6 +21,12 @@ Scenario order: 01 download-trigger.ready; 02 download-trigger.async; 03 downloa
 4. Verify actual saved bytes and cancellation on physical Safari/iOS; no unintended navigation.
 
 ## Expanded capabilities
+
+On the documentation route, also inspect icon-only square/circle controls,
+automatic loading text/custom spinner, ButtonGroup defaults, custom hook
+cancellation and visible error recovery. Confirm no duplicate save from repeated
+activation. Compare DownloadTrigger with adjacent Button and IconButton at the
+same size; inspect the centered loading indicator in disabled + loading mode.
 
 Follow every numbered scenario above, including all labelled specimens.
 Compare sizes independently of variants. Exercise any controlled reset, clear,
