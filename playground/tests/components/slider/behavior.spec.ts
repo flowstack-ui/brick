@@ -83,13 +83,7 @@ test("secondary clicks do not edit; primary track activation focuses for keyboar
   const root = page.getByTestId("slider-overview");
   const thumb = root.getByRole("slider");
   const rail = await root.locator(".brick-slider__track").boundingBox();
-  await page.mouse.click(
-    rail!.x + rail!.width * 0.8,
-    rail!.y + rail!.height / 2,
-    { button: "right" },
-  );
   await expect(thumb).toHaveAttribute("aria-valuenow", "40");
-  await page.keyboard.press("Escape");
   await page.mouse.click(
     rail!.x + rail!.width * 0.2,
     rail!.y + rail!.height / 2,
@@ -97,6 +91,14 @@ test("secondary clicks do not edit; primary track activation focuses for keyboar
   await expect(thumb).toBeFocused();
   const before = Number(await thumb.getAttribute("aria-valuenow"));
   await page.keyboard.press("ArrowRight");
+  await expect(thumb).toHaveAttribute("aria-valuenow", String(before + 1));
+  // A native WebKit context menu suspends later page input, including Escape.
+  // Check secondary activation last so it cannot mask primary focus behavior.
+  await page.mouse.click(
+    rail!.x + rail!.width * 0.8,
+    rail!.y + rail!.height / 2,
+    { button: "right" },
+  );
   await expect(thumb).toHaveAttribute("aria-valuenow", String(before + 1));
 });
 
