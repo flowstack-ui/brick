@@ -739,7 +739,7 @@
     {
       "component": "float",
       "source": "playground/src/components/float/FloatPage.tsx",
-      "sourceSha256": "bd553503782364afa523b78a8986cee11b2b252b4e08196b5ba564331a2c78f1",
+      "sourceSha256": "223994d663223f4bdcab0f92a1d23b7d49a73ce0f0e45149af47ea1f1e91f970",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
