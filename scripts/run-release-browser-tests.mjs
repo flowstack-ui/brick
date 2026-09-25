@@ -1,4 +1,6 @@
 import { spawnSync } from "node:child_process";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 const allProjects = [
   "chromium",
@@ -51,6 +53,18 @@ for (const project of projects) {
   }
 }
 
+let reportDirectory;
+const summary = { startedAt: new Date().toISOString(), node: process.version, projects, shardGroup: selectedShardGroup, status: "running", runs: [] };
+if (!planOnly) {
+  mkdirSync("test-results", { recursive: true });
+  reportDirectory = mkdtempSync(resolve("test-results", "release-"));
+  console.log(`Release evidence: ${reportDirectory}`);
+}
+function saveSummary() {
+  if (reportDirectory) writeFileSync(resolve(reportDirectory, "summary.json"), JSON.stringify(summary, null, 2) + "\n");
+}
+saveSummary();
+
 for (const project of projects) {
   // Keep WebKit workers below the observed macOS context-lifecycle ceiling.
   // Desktop WebKit stalls after roughly 55 isolated contexts and Mobile
@@ -87,12 +101,26 @@ for (const project of projects) {
       console.log(`npx ${args.join(" ")}`);
       continue;
     }
+    const artifactDirectory = resolve(reportDirectory, `${project}-${shard}-of-${shardCount}`);
+    const started = Date.now();
     const result = spawnSync("npx", args, {
       encoding: "utf8",
       stdio: "inherit",
+      env: { ...process.env, FLOWSTACK_TEST_ARTIFACT_DIR: artifactDirectory },
     });
-    if (result.status !== 0) {
-      process.exit(result.status ?? 1);
+    let stats;
+    try { stats = JSON.parse(readFileSync(resolve(artifactDirectory, "report.json"), "utf8")).stats; } catch { /* Missing reports fail the evidence gate below. */ }
+    summary.runs.push({ project, shard, shardCount, durationMs: Date.now() - started, exitCode: result.status, signal: result.signal, artifactDirectory, stats });
+    if (result.status !== 0 || !stats || stats.unexpected > 0 || stats.flaky > 0) {
+      summary.status = "failed";
+      saveSummary();
+      if (!stats) console.error(`Missing release report for ${project} shard ${shard}`);
+      if (stats?.flaky > 0) console.error(`Flaky release results require diagnosis for ${project} shard ${shard}`);
+      process.exit(result.status || 1);
     }
+    saveSummary();
   }
 }
+summary.status = "passed";
+summary.completedAt = new Date().toISOString();
+saveSummary();

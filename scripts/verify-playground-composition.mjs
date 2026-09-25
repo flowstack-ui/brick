@@ -15,6 +15,9 @@ async function collect(directory, extension) {
 }
 
 const expectedRouteIds = [
+  "checkbox-card", "input-addon",
+  "toggle-tip",
+  "float",
   "table-of-contents",
   "qr-code", "tags-input", "editable", "native-select",
   "stat", "timeline", "marquee",
@@ -48,6 +51,9 @@ const publicComponentIds = Object.keys(packageData.exports)
     && entry !== "./theme-contract.json"
     && entry !== "./date-value"
     && entry !== "./radius"
+    // Non-visual utilities are qualified in record compositions and Atom's workbench.
+    && entry !== "./selection"
+    && entry !== "./action-delegate"
     && !entry.endsWith(".css")
     && !entry.startsWith("./agents/")
   ))

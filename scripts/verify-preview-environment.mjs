@@ -5,6 +5,7 @@ import { execFileSync } from "node:child_process";
 import ts from "typescript";
 const root = new URL("../", import.meta.url);
 const read = path => readFile(new URL(path, root), "utf8");
+execFileSync(process.execPath, [new URL("format-playground-examples.mjs", import.meta.url).pathname], { stdio: "inherit" });
 assert.doesNotMatch(await read("playground/src/shared/Scenario.tsx"), /PreviewFrame|<iframe/, "App-bar settings must not replace inline examples with preview frames.");
 assert.doesNotMatch(await read("playground/src/app/PlaygroundApp.tsx"), /PreviewContext\.Provider/, "Normal component routes must remain inline, including old isolated links.");
 execFileSync(process.execPath, [new URL("build-preview-registry.mjs", import.meta.url).pathname, "--check"], { stdio: "inherit" });

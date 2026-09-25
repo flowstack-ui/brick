@@ -52,6 +52,8 @@ const componentStyleSubpaths = {
   "notification-badge": "badge",
 };
 const componentSymbols = {
+  "input-addon": "InputAddon",
+  "toggle-tip": "ToggleTip",
   "table-of-contents": "TableOfContents",
   "qr-code": "QrCode",
   marquee: "Marquee",
@@ -91,6 +93,7 @@ const componentSymbols = {
   card: "Card",
   chip: "Chip",
   checkbox: "Checkbox",
+  "checkbox-card": "CheckboxCard",
   "checkbox-group": "CheckboxGroup",
   "radio-group": "RadioGroup",
   "radio-card": "RadioCard",
@@ -140,6 +143,7 @@ const componentSymbols = {
   section: "Section",
   frame: "Frame",
   center: "Center",
+  float: "Float",
   surface: "Surface",
   "hover-card": "HoverCard",
   icon: "Icon",
@@ -328,14 +332,16 @@ for (const componentId of requested) {
     failures.push(`${componentId}: missing stable component-subpath import`);
   }
 
-  if (!documentation.includes('@flowstack-ui/brick/styles.css')) {
+  // For renders no host and its retained compatibility CSS entry is empty.
+  const requiresStyles = componentId !== "for";
+  if (requiresStyles && !documentation.includes('@flowstack-ui/brick/styles.css')) {
     failures.push(`${componentId}: missing compiled stylesheet import`);
   }
-  if (!documentation.includes('@flowstack-ui/brick/styles/core.css')) {
+  if (requiresStyles && !documentation.includes('@flowstack-ui/brick/styles/core.css')) {
     failures.push(`${componentId}: missing modular CSS foundation import`);
   }
   const componentStyleSubpath = componentStyleSubpaths[componentId] ?? componentId;
-  if (componentId !== "overlay-manager" && !documentation.includes(`@flowstack-ui/brick/styles/${componentStyleSubpath}.css`)) {
+  if (requiresStyles && componentId !== "overlay-manager" && !documentation.includes(`@flowstack-ui/brick/styles/${componentStyleSubpath}.css`)) {
     failures.push(`${componentId}: missing modular component stylesheet import`);
   }
 

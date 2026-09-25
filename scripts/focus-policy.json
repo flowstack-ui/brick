@@ -1,6 +1,10 @@
 {
   "schema": "brick.focus-source-policy.v1",
   "owners": {
+    "toggle-tip": {
+      "kind": "delegated",
+      "reason": "Popover owns dialog focus and dismissal; composed Button/IconButton owns trigger focus paint."
+    },
     "table-of-contents": {
       "kind": "direct",
       "reason": "Native section links have an inward semantic focus ring without artificial rail gutters."
@@ -168,6 +172,14 @@
     "checkbox": {
       "kind": "direct",
       "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
+    },
+    "checkbox-card": {
+      "kind": "direct",
+      "reason": "Paints the card boundary when its Atom-owned native checkbox is focus-visible."
+    },
+    "input-addon": {
+      "kind": "passive",
+      "reason": "Non-interactive field decoration; an adjacent Input or authored control owns focus."
     },
     "checkbox-group": {
       "kind": "composite",
@@ -430,8 +442,8 @@
       "reason": "Owns interactive-part focus paint; use canonical roles and owner browser evidence."
     },
     "table": {
-      "kind": "passive",
-      "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+      "kind": "clipping",
+      "reason": "Preserves native table semantics; sticky-header Container owns a leading paint clip and insets authored scroll-container focus without replacing theme color or width."
     },
     "data-grid": {
       "kind": "composite",
@@ -460,6 +472,10 @@
     "center": {
       "kind": "passive",
       "reason": "No independent focus recipe; preserve authored native semantics and interactive descendants."
+    },
+    "float": {
+      "kind": "passive",
+      "reason": "Static edge attachment preserves authored semantics and child focus; no independent focus recipe."
     },
     "notification-badge": {
       "kind": "passive",
@@ -504,6 +520,10 @@
   },
   "literalExceptions": [
     {
+      "key": "src/components/table/table.css|.brick-table-container:has(> .brick-table[data-sticky-header]):focus-visible|outline-offset|calc(-1px - var(--brick-border-focus-width, 2px))",
+      "reason": "Inset the theme-width focus ring past the one-CSS-pixel sticky scrollport raster guard. The 2px fallback matches reset; fractional-edge and focus geometry are browser-qualified together."
+    },
+    {
       "key": "src/components/calendar/calendar.css|.brick-calendar :where(button, select):focus-visible|outline-offset|1px",
       "reason": "Retained one-pixel dense field/segment geometry; not the standalone outside focus gap. Owner browser qualification remains required."
     },
@@ -518,6 +538,14 @@
     {
       "key": "src/components/tags-input/tags-input.css|.brick-tags-input-control:focus-within|outline-offset|1px",
       "reason": "Retained one-pixel dense field/segment geometry; not the standalone outside focus gap. Owner browser qualification remains required."
+    },
+    {
+      "key": "src/components/slider/slider.css|.brick-slider__thumb:focus-visible::before|outline|2px solid Highlight",
+      "reason": "Native forced-colors focus needs a visible system-color outline on the visual thumb; browser evidence qualifies it alongside the 44px contained target."
+    },
+    {
+      "key": "src/components/slider/slider.css|.brick-slider__thumb:focus-visible::before|outline-offset|2px",
+      "reason": "The system-color focus outline clears the visual thumb by two CSS pixels while remaining inside the contained 44px interaction target."
     }
   ]
 }

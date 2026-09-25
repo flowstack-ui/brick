@@ -19,7 +19,9 @@ for (const required of [
   'className="evidence-page-header"',
   'className="scenario-nav"',
   'data-playground-content=""',
-  'className="evidence-footer"',
+  // Footer now shares its parent's Container; it must not recreate gutters.
+  'as="footer"',
+  'aria-label="Adjacent component pages"',
 ]) {
   if (!shellSource.includes(required)) {
     failures.push(`PlaygroundShell is missing ${required}`);

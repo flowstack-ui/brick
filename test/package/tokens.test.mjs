@@ -4,6 +4,13 @@ import { compileTokens } from "../../scripts/token-compiler.mjs";
 
 const tokenSource = new URL("../../src/styles/tokens.tokens.json", import.meta.url);
 
+test("compact form-control minimum matches the 24px action recipe", async () => {
+  const css = await compileTokens(tokenSource);
+  assert.match(css, /--brick-control-min-block-size-2xs: 1\.5rem/);
+  assert.match(css, /--brick-control-min-block-size-xs: 2rem/);
+  assert.match(css, /--brick-control-min-block-size-lg: 2\.75rem/);
+});
+
 test("standard ratios have matching numeric and appearance-invariant CSS exports", async () => {
   const { aspectRatios } = await import("../../dist/aspect-ratio.js");
   const { aspectRatios: rootRatios } = await import("../../dist/index.js");

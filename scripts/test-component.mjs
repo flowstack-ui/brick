@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { componentIds, componentTestPaths } from "./component-test-manifest.mjs";
+import { componentIds, componentTestPaths, componentTestSuites } from "./component-test-manifest.mjs";
 
 const modes = new Set(["all", "unit", "types", "browser", "visual"]);
 const [mode = "all", componentId] = process.argv.slice(2);
@@ -12,7 +12,7 @@ if (!modes.has(mode) || !componentId || !componentIds.includes(componentId)) {
   process.exit(1);
 }
 
-const paths = componentTestPaths(componentId);
+const paths = { ...componentTestPaths(componentId), ...componentTestSuites(componentId) };
 
 function run(command, args) {
   const result = spawnSync(command, args, { stdio: "inherit" });
@@ -20,7 +20,7 @@ function run(command, args) {
 }
 
 function runUnit() {
-  run("npm", ["exec", "--", "vitest", "run", paths.unit, "--coverage=false"]);
+  run("npm", ["exec", "--", "vitest", "run", ...new Set([paths.unit, ...paths.unitSuites]), "--coverage=false"]);
 }
 
 function runTypes() {
@@ -48,13 +48,13 @@ function runTypes() {
 function runBrowser() {
   run("npm", ["run", "build:playground"]);
   run("npm", ["run", "test:processes"]);
-  run("npm", ["exec", "--", "playwright", "test", paths.browser, "--project=chromium"]);
+  run("npm", ["exec", "--", "playwright", "test", ...new Set([paths.browser, ...paths.browserSuites]), "--project=chromium"]);
 }
 
 function runVisual() {
   run("npm", ["run", "build:playground"]);
   run("npm", ["run", "test:processes"]);
-  run("npm", ["exec", "--", "playwright", "test", paths.visual, "--project=chromium"]);
+  run("npm", ["exec", "--", "playwright", "test", ...new Set([paths.visual, ...paths.visualSuites]), "--project=chromium"]);
 }
 
 if (mode === "all" || mode === "unit") runUnit();

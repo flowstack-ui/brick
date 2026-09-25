@@ -1,8 +1,21 @@
+import { existsSync, readdirSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
+import { isVisualSuite } from "./browser-suite-kind.mjs";
+
+const packageRoot = fileURLToPath(new URL("../", import.meta.url));
+
+function suitesIn(directory, matches) {
+  const absolute = resolve(packageRoot, directory);
+  return existsSync(absolute)
+    ? readdirSync(absolute).filter(matches).sort().map((file) => `${directory}/${file}`)
+    : [];
+}
+
 export const componentIds = [
+  "input-addon",
   "toggle-tip",
   "float",
-  "checkbox-card",
-  "input-addon",
   "table-of-contents",
   "qr-code",
   "tags-input",
@@ -45,6 +58,7 @@ export const componentIds = [
   "card",
   "chip",
   "checkbox",
+  "checkbox-card",
   "checkbox-group",
   "radio-group",
   "radio-card",
@@ -130,7 +144,21 @@ export const componentIds = [
   "tooltip",
 ];
 
+export function componentTestSuites(componentId) {
+  if (!componentIds.includes(componentId)) throw new Error(`Unknown component: ${componentId}`);
+  const browserDirectory = `playground/tests/components/${componentId}`;
+  const visualName = isVisualSuite;
+  return {
+    // Keep primary evidence paths stable for ownership validators, while focused
+    // execution also includes the owner's later parity and regression suites.
+    unitSuites: suitesIn(`test/components/${componentId}`, (name) => /\.test\.tsx?$/.test(name)),
+    browserSuites: suitesIn(browserDirectory, (name) => name.endsWith(".spec.ts") && !visualName(name)),
+    visualSuites: suitesIn(browserDirectory, visualName),
+  };
+}
+
 export function componentTestPaths(componentId) {
+  if (!componentIds.includes(componentId)) throw new Error(`Unknown component: ${componentId}`);
   return {
     browser: `playground/tests/components/${componentId}/behavior.spec.ts`,
     changelog: `docs/components/${componentId}/CHANGELOG.md`,

@@ -13,7 +13,10 @@ const [page, registry, navigation, audit, source, styles] = await Promise.all([
 
 assert.match(registry, /route:\s*"\/nav-list"/);
 assert.match(page, /data-component-page="nav-list"/);
-assert.equal([...page.matchAll(/<Scenario\b/g)].length, 9);
+const evidence = await read("playground/src/components/nav-list/NavListEvidence.tsx");
+assert.equal([...evidence.matchAll(/<Scenario\b/g)].length, 9);
+assert.match(page, /OwnerDocumentation/);
+assert.match(page, /NavListEvidence/);
 assert.match(source, /AtomNavList/);
 assert.match(styles, /forced-colors:\s*active/);
 assert.match(navigation, /<NavList\.Root/);

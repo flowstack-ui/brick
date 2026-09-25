@@ -339,7 +339,8 @@ function workbookEvidenceFromArchive() {
   if (
     workbookResult.status !== 0 ||
     relationshipsResult.status !== 0 ||
-    sharedStringsResult.status !== 0
+    // XLSX permits inline strings without a shared-string table (unzip 11).
+    (sharedStringsResult.status !== 0 && sharedStringsResult.status !== 11)
   ) {
     failures.push(
       `cannot inspect coverage workbook: ${workbookResult.stderr || relationshipsResult.stderr || sharedStringsResult.stderr || "unzip failed"}`,

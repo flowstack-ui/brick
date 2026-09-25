@@ -40,7 +40,7 @@ for (const componentId of requested) {
   const [source, exportSource, css, documentation] = await Promise.all([
     readFile(contract.source, "utf8"),
     readFile(contract.exportSource, "utf8"),
-    contract.kind === "utility" && contract.css === null ? Promise.resolve("") : readFile(contract.css, "utf8"),
+    contract.kind === "utility" && contract.css === null ? Promise.resolve("") : Promise.all([contract.css, ...(contract.cssSources ?? [])].map(path => readFile(path,"utf8"))).then(sources => sources.join("\n")),
     readFile(`docs/components/${componentId}/README.md`, "utf8"),
   ]);
 
@@ -59,7 +59,16 @@ for (const componentId of requested) {
   }
 
   for (const [typeName, values] of Object.entries(contract.unions ?? {})) {
-    const actual = stringUnion(source, typeName);
+    const shared = contract.unionSources?.[typeName];
+    let actual = stringUnion(source, typeName);
+    if (shared) {
+      const alias = new RegExp(`export type ${escaped(typeName)}\\s*=\\s*${escaped(shared.type)}\\s*;`);
+      const reexport = new RegExp(`export type \\{[^}]*\\b${escaped(typeName)}\\b[^}]*\\} from "${escaped(shared.importPath)}"`).test(source);
+      if ((!alias.test(source) && !reexport) || !source.includes(`from "${shared.importPath}"`)) {
+        failures.push(`${componentId}: ${typeName} shared type ownership changed`);
+      }
+      actual = stringUnion(await readFile(shared.path, "utf8"), shared.type);
+    }
     if (!sameValues(actual, values)) {
       failures.push(
         `${componentId}: ${typeName} source values differ from its semantic contract`,
@@ -91,10 +100,10 @@ for (const componentId of requested) {
 
   for (const [prop, value] of Object.entries(contract.defaults)) {
     const sourceDefault = contract.defaultExpressions?.[prop] ?? `${prop} = ${JSON.stringify(value)}`;
-    if (!source.includes(sourceDefault)) {
+    if (!source.includes(sourceDefault) && !sharedAttributeSources.some(shared => shared.includes(sourceDefault))) {
       failures.push(`${componentId}: source default changed for ${prop}`);
     }
-    const documentedDefault = `| \`${prop}\``;
+    const documentedDefault = `| \`${contract.documentedDefaultProps?.[prop] ?? prop}\``;
     const row = documentation
       .split("\n")
       .find((line) => line.startsWith(documentedDefault));
@@ -113,8 +122,10 @@ for (const componentId of requested) {
     if (
       !source.includes(`${attribute}=`) &&
       !source.includes(`"${attribute}":`) &&
-      !source.includes(`responsiveDataAttributes("${attribute}"`) &&
+      !new RegExp(`responsiveDataAttributes\\(\\s*"${attribute}"`).test(source) &&
+      !(componentId === "stack" && new RegExp(`metadata\\(\\s*"${attribute}"`).test(source) && /responsiveDataAttributes\(\s*attribute,\s*stackValues\(value\)/.test(source)) &&
       !(attribute === "data-size" && source.includes("controlSizeDataAttributes(")) &&
+      !(attribute === "data-variant" && source.includes("fieldVariantAttributes(")) &&
       !(contract.inheritedDataAttributes?.includes(attribute) && source.includes("@flowstack-ui/atom/")) &&
       !sharedAttributeSources.some(shared => shared.includes(`"${attribute}"`))
     ) {
@@ -126,7 +137,7 @@ for (const componentId of requested) {
   }
 
   for (const token of contract.publicTokens) {
-    if (!css.includes(`${token}:`) && !css.includes(`var(${token},`)) {
+    if (!css.includes(`${token}:`) && !new RegExp(`var\\(\\s*${escaped(token)}\\s*[,)]`).test(css)) {
       failures.push(`${componentId}: CSS neither defines nor consumes public token ${token}`);
     }
     if (!documentation.includes(token)) {

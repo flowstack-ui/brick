@@ -13,7 +13,7 @@ test("Agent Knowledge catalog reconciles every public Brick surface", async () =
   assert.equal(report.schema, "flowstack.agent-coverage.v1");
   assert.equal(report.package, "@flowstack-ui/brick");
   assert.equal(report.layer, "brick");
-  assert.equal(report.summary.componentOwners, 125);
+  assert.equal(report.summary.componentOwners, 129);
   assert.equal(report.summary.packageGuides, 2);
   assert.equal(report.summary.unclassified, 0);
   assert.equal(report.summary.invalidExclusions, 0);
@@ -38,7 +38,8 @@ test("Agent Knowledge catalog reconciles every public Brick surface", async () =
     markdown: "src/components/badge/notification-badge/agent.md",
   });
 
-  assert.equal(report.exclusions.length, 11);
+  assert.equal(report.exclusions.length, 16);
+  assert.ok(report.exclusions.every(({ visibility, status }) => visibility === "source-only" && status === "covered"));
   assert.equal(report.nativeApplicationDestinations.length, 0);
   assert.equal(
     report.surfaces.find(({ surface }) => surface === ".").classification,

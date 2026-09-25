@@ -25,7 +25,7 @@ test("generated theme contract stays aligned with Brick authority", async () => 
   const packed = await readFile(new URL("../../dist/theme-contract.json", import.meta.url), "utf8");
 
   assert.equal(generated.$schema, themeContractSchema);
-  assert.equal(generated.contractVersion, 5);
+  assert.equal(generated.contractVersion, 6);
   assert.equal(packed, serializeThemeContract(generated));
   assert.deepEqual(generated.css.themeLayerPosition, {
     after: "brick.tokens",
@@ -33,7 +33,7 @@ test("generated theme contract stays aligned with Brick authority", async () => 
   });
   assert.deepEqual(
     generated.componentThemeInputs.map(({ name }) => name),
-    ["--brick-drawer-background", "--brick-drawer-radius", "--brick-link-decoration-policy"],
+    ["--brick-drawer-background", "--brick-drawer-radius", "--brick-link-decoration-policy", ...["app-bar", "bottom-navigation", "surface"].flatMap(owner => ["blur", "opacity", "saturation"].map(parameter => `--brick-${owner}-translucent-${parameter}`))].sort(),
   );
   assert.deepEqual(
     generated.componentThemeInputs.find(({ name }) => name === "--brick-link-decoration-policy")?.allowedValues,

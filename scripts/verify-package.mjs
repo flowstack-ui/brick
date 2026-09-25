@@ -20,6 +20,7 @@ const temp = await mkdtemp(join(tmpdir(), "brick-package-"));
 function readTarballFile(path) {
   const result = spawnSync("tar", ["-xOf", resolve(tarball), `package/${path}`], {
     encoding: "utf8",
+    maxBuffer: 16 * 1024 * 1024,
   });
   assert.equal(result.status, 0, `unable to read ${path} from release archive`);
   return result.stdout;
@@ -106,10 +107,13 @@ try {
     "docs/guides/control-sizing.md",
     "docs/guides/agent-knowledge.md",
     "docs/guides/browser-support.md",
+    "docs/guides/input-integrations.md",
+    "docs/components/image/integrations.md",
     "dist/agents/manifest.json",
     "dist/agents/coverage.json",
     "dist/theme-contract.json",
     "docs/guides/theme-contract.md",
+    "docs/guides/surface-effects.md",
     "package.json",
   ]) {
     assert.ok(files.has(required), `packed artifact is missing ${required}`);
@@ -123,8 +127,11 @@ try {
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/control-sizing.md",
     "docs/guides/theme-contract.md",
+    "docs/guides/surface-effects.md",
     "docs/guides/agent-knowledge.md",
     "docs/guides/browser-support.md",
+    "docs/guides/input-integrations.md",
+    "docs/components/image/integrations.md",
   ]);
   for (const file of files) {
     const isRuntimeFile = /^dist\/.+\.(?:js|css|d\.ts)(?:\.map)?$/u.test(file);
@@ -141,8 +148,8 @@ try {
   const agentManifest = JSON.parse(await readPackedFile("dist/agents/manifest.json"));
   const agentCoverage = JSON.parse(await readPackedFile("dist/agents/coverage.json"));
   const themeContract = JSON.parse(await readPackedFile("dist/theme-contract.json"));
-  assert.equal(themeContract.$schema, "flowstack.brick-theme-contract.v1");
-  assert.equal(themeContract.contractVersion, 5);
+  assert.equal(themeContract.$schema, "flowstack.brick-theme-contract.v2");
+  assert.equal(themeContract.contractVersion, 6);
   assert.equal(themeContract.contrast.algorithm, "wcag2-relative-luminance");
   assert.equal(themeContract.contrast.pairs.length, 123);
   assert.equal(packageJson.exports["./theme-contract.json"], "./dist/theme-contract.json");
@@ -206,13 +213,16 @@ try {
   }
 
   const publicMarkdown = [
+    "docs/guides/input-integrations.md",
     "README.md",
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/control-sizing.md",
     "docs/guides/theme-contract.md",
+    "docs/guides/surface-effects.md",
     "docs/guides/agent-knowledge.md",
     "docs/guides/browser-support.md",
+    "docs/components/image/integrations.md",
   ];
   const forbiddenDocumentation = [
     /\bplayground\b/iu,
@@ -228,8 +238,10 @@ try {
   ];
   for (const path of publicMarkdown) {
     const source = await readPackedFile(path);
+    // Public source links are allowed; their URL paths are not prose guidance.
+    const prose = source.replace(/\]\(https?:\/\/[^)]+\)/gu, "]");
     for (const pattern of forbiddenDocumentation) {
-      assert.doesNotMatch(source, pattern, `${path} contains repository-only guidance`);
+      assert.doesNotMatch(prose, pattern, `${path} contains repository-only guidance`);
     }
     assertPackedLinksResolve(path, source, files);
   }

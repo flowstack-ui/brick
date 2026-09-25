@@ -202,7 +202,7 @@ test("File Upload renders deterministic empty picker and dropzone anatomy during
   assert.match(markup, /multiple=""/);
   assert.match(markup, /name="attachments"/);
   assert.match(markup, /class="brick-file-upload__dropzone"/);
-  assert.match(markup, />Choose files<\/button>/);
+  assert.match(markup, /<span class="brick-button__content">Choose files<\/span>/);
   assert.match(markup, /data-count="0"/);
 });
 
@@ -775,16 +775,16 @@ test("Radio Group renders complete styled radio semantics during SSR", () => {
   assert.match(markup, /data-size="md"/);
   assert.match(markup, /class="brick-radio-group-item"/);
   assert.match(markup, /data-slot="radio-group-control"/);
-  assert.match(markup, /data-slot="radio-group-dot"/);
+  assert.match(markup, /data-slot="radiomark-dot"/);
   assert.match(markup, /data-slot="radio-group-label"/);
 });
 
 test("Radio Card renders complete rich radio semantics during SSR", () => {
-  const markup = renderToString(React.createElement(RadioCard.Root, { "aria-label": "Plan", defaultValue: "team" }, React.createElement(RadioCard.Item, { value: "team" }, React.createElement(RadioCard.Control, null, React.createElement(RadioCard.Content, null, React.createElement(RadioCard.Title, null, "Team"), React.createElement(RadioCard.Description, null, "For product teams")), React.createElement(RadioCard.Indicator)), React.createElement(RadioCard.Addon, null, "Popular"))));
+  const markup = renderToString(React.createElement(RadioCard.Root, { "aria-label": "Plan", defaultValue: "team" }, React.createElement(RadioCard.Item, { value: "team" }, React.createElement(RadioCard.HiddenInput), React.createElement(RadioCard.Control, null, React.createElement(RadioCard.Content, null, React.createElement(RadioCard.Title, null, "Team"), React.createElement(RadioCard.Description, null, "For product teams")), React.createElement(RadioCard.Indicator)), React.createElement(RadioCard.Addon, null, "Popular"))));
   assert.match(markup, /class="brick-radio-card"/);
   assert.match(markup, /role="radiogroup"/);
   assert.match(markup, /class="brick-radio-card__item"/);
-  assert.match(markup, /role="radio"/);
+  assert.match(markup, /type="radio"/);
   assert.match(markup, /data-state="checked"/);
   assert.match(markup, /data-slot="radio-card-indicator"/);
   assert.match(markup, />Popular<\/span>/);
@@ -829,7 +829,7 @@ test("Breadcrumb renders complete styled hierarchy semantics during SSR", () => 
 
 test("Tabs renders complete selected relationships during SSR", () => {
   const markup = renderToString(React.createElement(Tabs.Root, { defaultValue: "one", size: "lg", variant: "soft", fullWidth: true }, React.createElement(Tabs.List, { ariaLabel: "Sections" }, React.createElement(Tabs.Trigger, { value: "one" }, "One"), React.createElement(Tabs.Trigger, { value: "two" }, "Two")), React.createElement(Tabs.Content, { value: "one" }, "Panel one"), React.createElement(Tabs.Content, { value: "two" }, "Panel two")));
-  assert.match(markup, /class="brick-tabs"/); assert.match(markup, /data-size="lg"/); assert.match(markup, /data-variant="soft"/); assert.match(markup, /data-full-width=""/); assert.match(markup, /role="tablist"/); assert.match(markup, /aria-selected="true"/); assert.match(markup, /role="tabpanel"/);
+  assert.match(markup, /class="brick-tabs"/); assert.match(markup, /data-size="lg"/); assert.match(markup, /data-variant="soft"/); assert.match(markup, /data-full-width="true"/); assert.match(markup, /role="tablist"/); assert.match(markup, /aria-selected="true"/); assert.match(markup, /role="tabpanel"/);
 });
 
 test("Skeleton renders deterministic loading geometry during SSR", () => {

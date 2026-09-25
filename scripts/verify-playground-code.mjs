@@ -13,7 +13,10 @@ const failures = [];
 for (const path of await files("playground/src")) {
   if (!/\.[jt]sx$/.test(path)) continue;
   const source = await readFile(path, "utf8");
-  if (path.endsWith("/components/prose/ProsePage.tsx")) continue;
+  // Prose deliberately demonstrates styling semantic document HTML.
+  if (["/components/prose/ProsePage.tsx", "/components/prose/ProseEvidence.tsx", "/components/prose/examples/ProseCode.tsx"].some(owner => path.endsWith(owner))) continue;
+  // This one adoption example demonstrates Code.asChild on its semantic host.
+  if (path.endsWith("/components/code/examples/CodeComposition.tsx") && /<Code asChild>\s*<code\b/.test(source)) continue;
   if (/<\/?(?:code|pre)(?:\s|>)/.test(source)) {
     failures.push(`${path}: use Brick Code or CodeBlock instead of a raw technical display host`);
   }

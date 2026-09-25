@@ -5,20 +5,36 @@ import { componentStyleNames } from "../../scripts/css-entrypoints.mjs";
 
 const packageRoot = new URL("../../", import.meta.url);
 
+test("Atom dependency resolves to the exact public registry release", async () => {
+  const packageJson = JSON.parse(await readFile(new URL("package.json", packageRoot), "utf8"));
+  const lock = JSON.parse(await readFile(new URL("package-lock.json", packageRoot), "utf8"));
+  const version = packageJson.dependencies["@flowstack-ui/atom"];
+  const atom = lock.packages["node_modules/@flowstack-ui/atom"];
+
+  assert.equal(lock.packages[""].dependencies["@flowstack-ui/atom"], version);
+  assert.equal(atom.version, version);
+  assert.equal(atom.resolved, `https://registry.npmjs.org/@flowstack-ui/atom/-/atom-${version}.tgz`);
+  assert.match(atom.integrity, /^sha512-/);
+});
+
 test("package metadata defines the public Brick boundary", async () => {
   const packageJson = JSON.parse(
     await readFile(new URL("package.json", packageRoot), "utf8"),
   );
 
   assert.equal(packageJson.name, "@flowstack-ui/brick");
-  assert.equal(packageJson.version, "0.2.3");
-  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.26.1");
+  assert.equal(packageJson.version, "0.3.0");
+  assert.equal(packageJson.dependencies["@flowstack-ui/atom"], "0.27.1");
   assert.deepEqual(packageJson.publishConfig, { access: "public" });
   assert.equal(
     packageJson.repository.url,
     "git+https://github.com/flowstack-ui/brick.git",
   );
   assert.deepEqual(packageJson.exports, {
+    "./checkbox-card": { types: "./dist/checkbox-card.d.ts", default: "./dist/checkbox-card.js" },
+    "./input-addon": { types: "./dist/input-addon.d.ts", default: "./dist/input-addon.js" },
+    "./selection": { types: "./dist/selection.d.ts", default: "./dist/selection.js" },
+    "./action-delegate": { types: "./dist/action-delegate.d.ts", default: "./dist/action-delegate.js" },
     "./radius": { types: "./dist/radius.d.ts", default: "./dist/radius.js" },
     "./qr-code": { types: "./dist/qr-code.d.ts", default: "./dist/qr-code.js" },
     "./native-select": { types: "./dist/native-select.d.ts", default: "./dist/native-select.js" },
@@ -224,6 +240,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/segment-group.d.ts",
       default: "./dist/segment-group.js",
     },
+    "./toggle-tip": {
+      types: "./dist/toggle-tip.d.ts",
+      default: "./dist/toggle-tip.js",
+    },
     "./switch": {
       types: "./dist/switch.d.ts",
       default: "./dist/switch.js",
@@ -404,6 +424,10 @@ test("package metadata defines the public Brick boundary", async () => {
       types: "./dist/z-stack.d.ts",
       default: "./dist/z-stack.js",
     },
+    "./float": {
+      types: "./dist/float.d.ts",
+      default: "./dist/float.js",
+    },
     "./grid": {
       types: "./dist/grid.d.ts",
       default: "./dist/grid.js",
@@ -479,7 +503,7 @@ test("package metadata defines the public Brick boundary", async () => {
   });
   assert.deepEqual(packageJson.sideEffects, ["**/*.css"]);
   const componentSubpaths = Object.entries(packageJson.exports)
-    .filter(([path, target]) => path !== "." && path !== "./radius" && path !== "./date-value" && path !== "./overlay-manager" && typeof target === "object")
+    .filter(([path, target]) => path !== "." && path !== "./radius" && path !== "./date-value" && path !== "./overlay-manager" && path !== "./selection" && path !== "./action-delegate" && typeof target === "object")
     .map(([path]) => path.slice(2))
     .sort();
   assert.deepEqual([...componentStyleNames].sort(), componentSubpaths);
@@ -501,8 +525,21 @@ test("release identity, changelog, dependency lock, and provenance stay aligned"
   assert.equal(lockedRoot.version, packageJson.version);
   assert.equal(lockedRoot.dependencies["@flowstack-ui/atom"], packageJson.dependencies["@flowstack-ui/atom"]);
   assert.equal(lockedAtom.version, packageJson.dependencies["@flowstack-ui/atom"]);
-  assert.match(changelog, new RegExp(`^## ${packageJson.version} - 2026-08-31$`, "m"));
+  const releaseVersion = packageJson.version.replaceAll(".", "\\.");
+  assert.match(changelog, new RegExp(`^(?:Planned release: ${releaseVersion}\\.|## ${releaseVersion} - \\d{4}-\\d{2}-\\d{2})$`, "m"));
   assert.match(workflow, /npm publish[^\n]+--provenance/u);
+});
+
+test("ScrollArea custom anatomy agrees between root, namespace and subpath", async () => {
+  const root = await import(new URL("../../dist/index.js", import.meta.url));
+  const subpath = await import(new URL("../../dist/scroll-area.js", import.meta.url));
+  const parts = ["Root", "RootProvider", "Viewport", "Content", "Scrollbar", "Thumb", "Corner", "Context"];
+  assert.deepEqual(Object.keys(subpath).sort(), ["ScrollArea", "useScrollArea", ...parts.map(part => `ScrollArea${part}`)].sort());
+  for (const part of parts) {
+    assert.equal(root[`ScrollArea${part}`], subpath[`ScrollArea${part}`]);
+    assert.equal(root.ScrollArea[part], subpath[`ScrollArea${part}`]);
+  }
+  assert.equal(root.useScrollArea, subpath.useScrollArea);
 });
 
 test("built package entrypoint can be imported without a CSS loader", async () => {
@@ -613,6 +650,117 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.deepEqual(
     Object.keys(brick),
     [
+      "AccordionContext",
+      "AccordionItemContext",
+      "AccordionRootProvider",
+      "CalendarDayTable",
+      "CalendarMonthTable",
+      "CalendarRangeText",
+      "CalendarRootProvider",
+      "CalendarTable",
+      "CalendarTableBody",
+      "CalendarTableCell",
+      "CalendarTableCellTrigger",
+      "CalendarTableHead",
+      "CalendarTableHeader",
+      "CalendarTableRow",
+      "CalendarView",
+      "CalendarViewControl",
+      "CalendarYearTable",
+      "CarouselAutoplayIndicator",
+      "CarouselContext",
+      "CarouselIndicators",
+      "CarouselProgressText",
+      "CarouselPropsProvider",
+      "CarouselRootProvider",
+      "ComboboxIndicatorGroup",
+      "ComboboxItemIndicator",
+      "ComboboxItemText",
+      "ComboboxRootProvider",
+      "DataGridColumnResizeHandle",
+      "DataGridRowHeader",
+      "DataListPropsProvider",
+      "DateInputPropsProvider",
+      "DateInputRootProvider",
+      "DatePickerIndicatorGroup",
+      "DatePickerPresetTrigger",
+      "DatePickerPropsProvider",
+      "DatePickerRootProvider",
+      "DatePickerTextInput",
+      "FeedItem",
+      "FeedPropsProvider",
+      "FeedRoot",
+      "FieldContext",
+      "FieldErrorIcon",
+      "FieldItem",
+      "FieldsetContent",
+      "FieldsetContext",
+      "MarqueePropsProvider",
+      "MarqueeRootPropsProvider",
+      "QrCodePropsProvider",
+      "QrCodeRootPropsProvider",
+      "RadioGroupContext",
+      "RadioGroupItemContext",
+      "RadioGroupItemControl",
+      "RadioGroupItemDescription",
+      "RadioGroupItemHiddenInput",
+      "RadioGroupItemIndicator",
+      "RadioGroupItemRoot",
+      "RadioGroupItemText",
+      "RadioGroupLabel",
+      "RadioGroupRootProvider",
+      "RatingContext",
+      "RatingControl",
+      "RatingHiddenInput",
+      "RatingItemContext",
+      "RatingItemIndicator",
+      "RatingItems",
+      "RatingLabel",
+      "RatingPropsProvider",
+      "RatingRootProvider",
+      "TagsInputItemContext",
+      "TimelinePropsProvider",
+      "TimelineRootPropsProvider",
+      "TreeCheckbox",
+      "TreeGridColumnResizeHandle",
+      "TreeGridTrigger",
+      "TreeRootProvider",
+      "TreeTrigger",
+      "createTreeCollection",
+      "useAccordion",
+      "useAccordionContext",
+      "useAccordionItemContext",
+      "useCalendar",
+      "useCalendarContext",
+      "useCarousel",
+      "useCarouselContext",
+      "useCombobox",
+      "useComboboxContext",
+      "useDateInput",
+      "useDateInputContext",
+      "useDatePicker",
+      "useDatePickerContext",
+      "useFieldContext",
+      "useFieldsetContext",
+      "useRadioGroup",
+      "useRadioGroupContext",
+      "useRadioGroupItemContext",
+      "useRating",
+      "useRatingContext",
+      "useRatingItemContext",
+      "useTreeContext",
+      "useTreeController",
+      "useTreeItemContext",
+      "AvatarFallback", "AvatarIcon", "AvatarImage", "AvatarRoot", "BreadcrumbTrigger",
+      "CheckboxCard", "CheckboxCardAddon", "CheckboxCardContent", "CheckboxCardContext", "CheckboxCardControl", "CheckboxCardDescription", "CheckboxCardHiddenInput", "CheckboxCardIndicator", "CheckboxCardLabel", "CheckboxCardRoot", "CheckboxCardRootProvider",
+      "CheckboxGroupRootProvider", "CheckboxIndicator", "CheckboxRootProvider",
+      "FileUploadClearTrigger", "FileUploadContext", "FileUploadDropzoneContent", "FileUploadFileText", "FileUploadItemContent", "FileUploadItemPreview", "FileUploadItemPreviewImage", "FileUploadItems", "FileUploadLabel", "FileUploadList", "FileUploadRootProvider",
+      "IconPropsProvider", "InputAddon",
+      "RadioCardContext", "RadioCardHiddenInput", "RadioCardItemContext", "RadioCardLabel", "RadioCardRootProvider",
+      "SegmentGroupItems", "StepsNumber", "StepsRootProvider", "StepsStatus",
+      "SwitchControl", "SwitchField", "SwitchHiddenInput", "SwitchIndicator", "SwitchLabel", "SwitchRootProvider", "SwitchThumbIndicator",
+      "TabsContentGroup", "TabsContext", "TabsRootProvider", "ToolbarGroup", "ToolbarInput",
+      "createIcon", "createToaster", "useActionBar", "useCheckbox", "useCheckboxCard", "useCheckboxCardContext", "useCheckboxContext", "useCheckboxGroup", "useCheckboxGroupContext", "useCheckboxGroupItem", "useDownload", "useFileUpload", "useFileUploadContext", "useFileUploadItemContext", "useRadioCard", "useRadioCardContext", "useRadioCardItemContext", "useSteps", "useStepsContext", "useStepsItemContext", "useSwitch", "useSwitchContext", "useTabs", "useTabsContext",
       "ActionBar", "ActionBarRoot", "ActionBarRootProvider", "ActionBarContext", "ActionBarPortal", "ActionBarPositioner", "ActionBarContent", "ActionBarSelectionTrigger", "ActionBarCloseTrigger", "ActionBarSeparator", "ActionBarTitle", "ActionBarDescription",
       "FloatingPanel", "FloatingPanelRoot", "FloatingPanelRootProvider", "FloatingPanelContext", "FloatingPanelPortal", "FloatingPanelTrigger", "FloatingPanelPositioner", "FloatingPanelContent", "FloatingPanelHeader", "FloatingPanelBody", "FloatingPanelTitle", "FloatingPanelDescription", "FloatingPanelControl", "FloatingPanelDragTrigger", "FloatingPanelStageTrigger", "FloatingPanelCloseTrigger", "FloatingPanelResizeTrigger", "FloatingPanelResizeTriggers", "useFloatingPanel", "useFloatingPanelContext", "createOverlay",
       "Accordion",
@@ -672,6 +820,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "BreadcrumbRoot",
       "BreadcrumbSeparator",
       "Button",
+      "ButtonGroup",
       "Caption",
       "Card",
       "Carousel",
@@ -688,6 +837,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "CarouselViewport",
       "Center",
       "Checkbox",
+      "CheckboxRoot", "CheckboxControl", "CheckboxLabel", "CheckboxDescription", "CheckboxError",
       "CheckboxGroup",
       "Checkmark",
       "Chip",
@@ -715,8 +865,12 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Collapsible",
       "CollapsibleContent",
       "CollapsibleContentInner",
+      "CollapsibleContext",
+      "useCollapsible",
+      "useCollapsibleContext",
       "CollapsibleIndicator",
       "CollapsibleRoot",
+      "CollapsibleRootProvider",
       "CollapsibleTrigger",
       "ColorPicker",
       "ColorPickerArea",
@@ -740,6 +894,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ColorPickerNativeInput",
       "ColorPickerPositioner",
       "ColorPickerRoot",
+      "ColorPickerRootProvider", "ColorPickerSliders", "ColorPickerChannelText", "ColorPickerEyeDropper",
+      "useColorPicker", "useColorPickerContext", "getColorChannels", "parseColorPickerValue", "normalizeColorPickerValue",
       "ColorPickerSwatch",
       "ColorPickerSwatchGroup",
       "ColorPickerSwatchIndicator",
@@ -783,6 +939,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ContextMenuRadioGroup",
       "ContextMenuRadioItem",
       "ContextMenuRoot",
+      "ContextMenuRootProvider",
+      "ContextMenuContext",
+      "ContextMenuTriggerIndicator",
+      "useContextMenu",
       "ContextMenuSeparator",
       "ContextMenuShortcut",
       "ContextMenuSub",
@@ -826,6 +986,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "DropdownMenuRadioGroup",
       "DropdownMenuRadioItem",
       "DropdownMenuRoot",
+      "DropdownMenuRootProvider",
+      "DropdownMenuContext",
+      "DropdownMenuTriggerIndicator",
+      "useDropdownMenu",
       "DropdownMenuSeparator",
       "DropdownMenuShortcut",
       "DropdownMenuSub",
@@ -852,6 +1016,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "FormatByte",
       "FormatNumber",
       "Frame",
+      "Float",
+      "FloatAnchor",
+      "FloatRoot",
       "Grid",
       "Group",
       "HStack",
@@ -859,6 +1026,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "Hide",
       "Highlight",
       "HoverCard",
+      "HoverCardContext",
+      "HoverCardRootProvider",
+      "useHoverCard",
       "Icon",
       "IconButton",
       "Image",
@@ -891,6 +1061,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "MenubarRadioGroup",
       "MenubarRadioItem",
       "MenubarRoot",
+      "MenubarRootProvider",
+      "MenubarContext",
+      "MenubarTriggerIndicator",
+      "useMenubar",
       "MenubarSeparator",
       "MenubarShortcut",
       "MenubarSub",
@@ -899,6 +1073,7 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "MenubarTrigger",
       "MultiSelect",
       "MultiSelectArrow",
+      "MultiSelectClearTrigger",
       "MultiSelectContent",
       "MultiSelectGroup",
       "MultiSelectIcon",
@@ -909,6 +1084,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "MultiSelectListbox",
       "MultiSelectPortal",
       "MultiSelectRoot",
+      "MultiSelectRootProvider",
+      "MultiSelectState",
       "MultiSelectScrollDownButton",
       "MultiSelectScrollUpButton",
       "MultiSelectSeparator",
@@ -932,17 +1109,31 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "NavigationMenuLink",
       "NavigationMenuList",
       "NavigationMenuRoot",
+      "NavigationMenuRootProvider",
+      "NavigationMenuContext",
+      "NavigationMenuItemIndicator",
+      "useNavigationMenu",
+      "useNavigationMenuContext",
       "NavigationMenuSub",
       "NavigationMenuTrigger",
       "NavigationMenuViewport",
       "NotificationBadge",
       "NumberInput",
+      "NumberInputContext",
       "NumberInputControl",
       "NumberInputDecrement",
+      "NumberInputElement",
+      "NumberInputGroup",
       "NumberInputIncrement",
       "NumberInputInput",
+      "NumberInputLabel",
       "NumberInputRoot",
+      "NumberInputRootProvider",
+      "NumberInputScrubber",
       "NumberInputUnit",
+      "NumberInputValueText",
+      "useNumberInput",
+      "useFilter",
       "PinInput",
       "PinInputGroup",
       "PinInputInput",
@@ -956,6 +1147,13 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "PaginationNext",
       "PaginationPrevious",
       "PaginationRoot",
+      "PaginationRootProvider",
+      "PaginationFirst",
+      "PaginationLast",
+      "PaginationPageText",
+      "usePagination",
+      "usePaginationContext",
+      "useProgress",
       "Paragraph",
       "PasswordToggleField",
       "PasswordToggleFieldIcon",
@@ -979,14 +1177,18 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ProgressBuffer",
       "ProgressCircle",
       "ProgressCircleCircle",
+      "ProgressCircleContext",
       "ProgressCircleIndicator",
       "ProgressCircleLabel",
       "ProgressCircleRoot",
+      "ProgressCircleRootProvider",
       "ProgressCircleTrack",
       "ProgressCircleValue",
+      "ProgressContext",
       "ProgressIndicator",
       "ProgressLabel",
       "ProgressRoot",
+      "ProgressRootProvider",
       "ProgressTrack",
       "ProgressValue",
       "Prose",
@@ -1020,8 +1222,15 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ReorderableListMoveToStart",
       "ReorderableListRoot",
       "ScrollArea",
+      "ScrollAreaContent",
+      "ScrollAreaContext",
+      "ScrollAreaCorner",
       "ScrollAreaRoot",
+      "ScrollAreaRootProvider",
+      "ScrollAreaScrollbar",
+      "ScrollAreaThumb",
       "ScrollAreaViewport",
+      "useScrollArea",
       "Section",
       "SegmentGroup",
       "SegmentGroupIndicator",
@@ -1040,6 +1249,14 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "SelectListbox",
       "SelectPortal",
       "SelectRoot",
+      "SelectRootProvider",
+      "SelectState",
+      "SelectClearTrigger",
+      "useSelect",
+      "useMultiSelect",
+      "PopoverIndicator", "PopoverRootProvider", "PopoverState", "usePopover", "usePopoverState",
+      "TooltipContext", "TooltipRootProvider", "useTooltip",
+      "ToggleTip", "ToggleTipRoot", "ToggleTipContent", "ToggleTipBody", "useToggleTip", "useToggleTipState",
       "SelectScrollDownButton",
       "SelectScrollUpButton",
       "SelectSeparator",
@@ -1060,12 +1277,25 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "SkipLinkRoot",
       "SkipLinkTarget",
       "Slider",
+      "SliderControl",
+      "SliderDraggingIndicator",
+      "SliderHiddenInput",
+      "SliderLabel",
       "SliderMarker",
+      "SliderMarkerGroup",
+      "SliderMarkerIndicator",
+      "SliderMarkerLabel",
+      "SliderMarks",
       "SliderRange",
       "SliderRoot",
+      "SliderRootProvider",
       "SliderThumb",
+      "SliderThumbs",
       "SliderTrack",
       "SliderValueLabel",
+      "SliderValueText",
+      "useSlider",
+      "useSliderContext",
       "Splitter",
       "SplitterContext",
       "SplitterPanel",
@@ -1102,7 +1332,10 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "SwipeableItem",
       "SwipeableItemActions",
       "SwipeableItemContent",
+      "SwipeableItemContext",
       "SwipeableItemRoot",
+      "SwipeableItemRootProvider",
+      "useSwipeableItem",
       "Switch",
       "SwitchRoot",
       "SwitchThumb",
@@ -1193,11 +1426,14 @@ test("built package entrypoint can be imported without a CSS loader", async () =
       "ZStackRoot",
       "defaultLocale",
       "defaultLocaleText",
+      "createShikiAdapter",
+      "findHighlightSegments",
       "formatByte",
       "formatNumber",
       "getLocaleDirection",
       "toast",
-      "useLocaleContext"
+      "useLocaleContext", "useSelection", "useSelectionCheckbox", "useSidebarContext", "ActionDelegate",
+      "SplitterRootProvider", "createSplitterRegistry", "useSplitter", "useSplitterContext"
     ].sort(),
   );
   assert.equal(appearance.Appearance, brick.Appearance);
@@ -1256,6 +1492,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(pagination.Pagination, brick.Pagination);
   assert.equal(pagination.PaginationRoot, brick.Pagination.Root);
   assert.equal(pagination.PaginationItems, brick.Pagination.Items);
+  assert.equal(pagination.PaginationRootProvider, brick.Pagination.RootProvider);
+  assert.equal(pagination.PaginationFirst, brick.Pagination.First);
+  assert.equal(pagination.PaginationLast, brick.Pagination.Last);
+  assert.equal(pagination.PaginationPageText, brick.Pagination.PageText);
+  assert.equal(pagination.usePagination, brick.usePagination);
   assert.equal(carousel.Carousel, brick.Carousel);
   assert.equal(carousel.CarouselRoot, brick.Carousel.Root);
   assert.equal(carousel.CarouselPickerItem, brick.Carousel.PickerItem);
@@ -1357,6 +1598,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(breadcrumb.BreadcrumbEllipsis, brick.Breadcrumb.Ellipsis);
   assert.equal(tabs.Tabs, brick.Tabs);
   assert.equal(tabs.TabsRoot, brick.Tabs.Root);
+  assert.equal(tabs.TabsRootProvider, brick.Tabs.RootProvider);
+  assert.equal(tabs.TabsContext, brick.Tabs.Context);
+  assert.equal(tabs.TabsContentGroup, brick.Tabs.ContentGroup);
+  assert.equal(tabs.useTabs, brick.useTabs);
+  assert.equal(tabs.useTabsContext, brick.useTabsContext);
   assert.equal(tabs.TabsList, brick.Tabs.List);
   assert.equal(tabs.TabsTrigger, brick.Tabs.Trigger);
   assert.equal(tabs.TabsContent, brick.Tabs.Content);
@@ -1364,6 +1610,9 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(skeleton.Skeleton, brick.Skeleton);
   assert.equal(progress.Progress, brick.Progress);
   assert.equal(progress.ProgressRoot, brick.Progress.Root);
+  assert.equal(progress.ProgressRootProvider, brick.Progress.RootProvider);
+  assert.equal(progress.ProgressContext, brick.Progress.Context);
+  assert.equal(progress.useProgress, brick.useProgress);
   assert.equal(progress.ProgressLabel, brick.Progress.Label);
   assert.equal(progress.ProgressValue, brick.Progress.Value);
   assert.equal(progress.ProgressTrack, brick.Progress.Track);
@@ -1371,6 +1620,8 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(progress.ProgressIndicator, brick.Progress.Indicator);
   assert.equal(progressCircle.ProgressCircle, brick.ProgressCircle);
   assert.equal(progressCircle.ProgressCircleRoot, brick.ProgressCircle.Root);
+  assert.equal(progressCircle.ProgressCircleRootProvider, brick.ProgressCircle.RootProvider);
+  assert.equal(progressCircle.ProgressCircleContext, brick.ProgressCircle.Context);
   assert.equal(progressCircle.ProgressCircleCircle, brick.ProgressCircle.Circle);
   assert.equal(progressCircle.ProgressCircleTrack, brick.ProgressCircle.Track);
   assert.equal(progressCircle.ProgressCircleIndicator, brick.ProgressCircle.Indicator);
@@ -1378,11 +1629,20 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(progressCircle.ProgressCircleValue, brick.ProgressCircle.Value);
   assert.equal(slider.Slider, brick.Slider);
   assert.equal(slider.SliderRoot, brick.Slider.Root);
+  assert.equal(slider.SliderRootProvider, brick.Slider.RootProvider);
+  assert.equal(slider.SliderControl, brick.Slider.Control);
   assert.equal(slider.SliderTrack, brick.Slider.Track);
   assert.equal(slider.SliderRange, brick.Slider.Range);
   assert.equal(slider.SliderThumb, brick.Slider.Thumb);
   assert.equal(slider.SliderMarker, brick.Slider.Marker);
+  assert.equal(slider.SliderMarkerGroup, brick.Slider.MarkerGroup);
+  assert.equal(slider.SliderMarkerIndicator, brick.Slider.MarkerIndicator);
+  assert.equal(slider.SliderMarkerLabel, brick.Slider.MarkerLabel);
+  assert.equal(slider.SliderMarks, brick.Slider.Marks);
   assert.equal(slider.SliderValueLabel, brick.Slider.ValueLabel);
+  assert.equal(slider.SliderValueText, brick.Slider.ValueText);
+  assert.equal(slider.SliderDraggingIndicator, brick.Slider.DraggingIndicator);
+  assert.equal(slider.SliderHiddenInput, brick.Slider.HiddenInput);
   assert.equal(radioCard.RadioCard, brick.RadioCard);
   assert.equal(radioCard.RadioCardRoot, brick.RadioCard.Root);
   assert.equal(radioCard.RadioCardItem, brick.RadioCard.Item);
@@ -1511,6 +1771,11 @@ test("built package entrypoint can be imported without a CSS loader", async () =
   assert.equal(scrollArea.ScrollArea, brick.ScrollArea);
   assert.equal(scrollArea.ScrollAreaRoot, brick.ScrollArea.Root);
   assert.equal(scrollArea.ScrollAreaViewport, brick.ScrollArea.Viewport);
+  for (const part of ["Content", "Context", "Corner", "RootProvider", "Scrollbar", "Thumb"]) {
+    assert.equal(scrollArea[`ScrollArea${part}`], brick.ScrollArea[part]);
+    assert.equal(brick[`ScrollArea${part}`], brick.ScrollArea[part]);
+  }
+  assert.equal(scrollArea.useScrollArea, brick.useScrollArea);
   assert.equal(select.Select, brick.Select);
   assert.equal(select.SelectRoot, brick.Select.Root);
   assert.equal(select.SelectContent, brick.Select.Content);
@@ -1578,7 +1843,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /\.brick-checkbox/);
   assert.match(styles, /\.brick-checkbox-group/);
   assert.match(styles, /\.brick-checkbox-group\[data-invalid\]/);
-  assert.match(styles, /\.brick-checkbox-group:not\(\[data-invalid\]\)/);
+  assert.match(styles, /\.brick-checkbox-group\[data-orientation=vertical\]/);
   assert.match(styles, /\.brick-input/);
   assert.match(styles, /\.brick-textarea/);
   assert.match(styles, /\.brick-text/);
@@ -1624,7 +1889,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-drawer-block-size-xl/);
   assert.match(
     styles,
-    /max-block-size:var\(--brick-drawer-block-size-md\)/,
+    /--brick-drawer-height:var\(--brick-drawer-block-size-md\)/,
   );
   assert.match(
     styles,
@@ -1632,7 +1897,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   );
   assert.match(
     styles,
-    /var\(--brick-drawer-radius,var\(--brick-radius-overlay\)\)/,
+    /var\(--brick-drawer-radius,var\(--brick-radius-control\)\)/,
   );
   assert.doesNotMatch(
     styles,
@@ -1659,7 +1924,7 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(styles, /--brick-link-foreground/);
   assert.match(styles, /--brick-link-box-focus-ring/);
   assert.match(styles, /--brick-breadcrumb-foreground/);
-  assert.match(styles, /--brick-pagination-current-background/);
+  assert.match(styles, /--brick-pagination-list-gap/);
   assert.match(styles, /--brick-bottom-navigation-selection-background/);
   assert.match(styles, /--brick-list-marker-style/);
   assert.match(styles, /--brick-tree-row-min-block-size/);
@@ -1686,7 +1951,11 @@ test("published CSS entrypoints are complete browser CSS", async () => {
   assert.match(reset, /-webkit-font-smoothing:antialiased/);
   assert.match(reset, /-moz-osx-font-smoothing:grayscale/);
   assert.match(reset, /::selection\{background:var\(--brick-color-selection-background\);color:var\(--brick-color-selection-foreground\)\}/);
-  assert.match(reset, /@media \(forced-colors:active\)\{::selection\{color:highlighttext;background:highlight\}\}/);
+  assert.match(reset, /::selection\{color:highlighttext;background:highlight\}/);
+  assert.match(reset, /:where\(:focus-visible\)/);
+  assert.match(reset, /--brick-color-focus-ring/);
+  assert.match(reset, /outline-color:highlight/);
+  assert.ok(reset.indexOf("brick.reset") < reset.indexOf("brick.tokens"));
   assert.doesNotMatch(styles, /font-smoothing/);
   assert.doesNotMatch(styles, /@(?:tailwind|source|theme|utility|custom-variant)/);
   assert.doesNotMatch(styles, /\.\.\//);
@@ -1703,11 +1972,11 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   );
   assert.doesNotMatch(core, /\.brick-button/);
 
-  assert.equal(componentStyleNames.length, 123);
+  assert.equal(componentStyleNames.length, 127);
   const stylelessComponentNames = new Set(["locale-provider", "format-number", "format-byte", "for"]);
   for (const name of componentStyleNames) {
     const css = await readFile(new URL(`../../dist/styles/${name}.css`, import.meta.url), "utf8");
-    assert.match(css, /@layer brick\.tokens,flowstack\.theme,brick\.foundations/);
+    assert.match(css, /@layer brick\.reset,brick\.tokens,flowstack\.theme,brick\.foundations/);
     if (name === "visually-hidden" || stylelessComponentNames.has(name)) {
       assert.match(css, /brick\.components,brick\.utilities,brick\.effects/);
       assert.doesNotMatch(css, /\.brick-/);
@@ -1732,7 +2001,8 @@ test("optional modular CSS entrypoints preserve the complete default", async () 
   assert.match(checkboxGroup, /\.brick-checkbox-group/);
   assert.match(toggleGroup, /\.brick-toggle-group-item/);
   assert.match(toggleGroup, /\.brick-toggle-group/);
-  assert.match(pagination, /\.brick-icon/);
+  assert.match(pagination, /\.brick-button/);
+  assert.match(pagination, /\.brick-text/);
   assert.match(pagination, /\.brick-pagination/);
   assert.match(codeBlock, /\.brick-button/);
   assert.match(codeBlock, /\.brick-code(?:\W|$)/);

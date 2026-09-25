@@ -1,20 +1,21 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { nativeHostFindings } from "./playground-native-hosts.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRoot = path.join(root, "playground", "src");
 const allowedRawHosts = new Map([
+  // This specimen must use native text to qualify foreground inheritance.
+  ["components/appearance/examples/AppearanceNative.tsx", [/^<p>$/]],
   // Failure reporting must survive a failed component import/render and cannot
   // depend on the library whose loading failure it reports. No example copy.
   ["preview/ExampleEnvironment.tsx", [/^<p role="alert">$/]],
   ["preview/preview-entry.tsx", [/^<p role="alert">$/]],
-  ["components/checkbox-group/CheckboxGroupPage.tsx", [/<strong data-adapter=/, /<small data-adapter=/]],
-  ["components/field/FieldPage.tsx", [/<p data-adapter=/]],
-  ["components/fieldset/FieldsetPage.tsx", [/<p data-adapter=/]],
-  ["components/prose/ProsePage.tsx", [/<(?:h[1-6]|p)\b/]],
-  ["components/text/TextPage.tsx", [/^<strong>$/]],
-  ["components/visually-hidden/VisuallyHiddenPage.tsx", [/<strong \{\.\.\.props\} data-adapter=/]],
+  // Text's semantic-emphasis examples intentionally contrast host semantics
+  // with visual weight/style props. These are not independent text recipes.
+  ["components/text/TextEvidence.tsx", [/^<strong>$/]],
+  ["components/text/examples/TextStyle.tsx", [/^<strong>$/]],
 ]);
 
 async function collect(directory) {
@@ -33,12 +34,14 @@ for (const file of await collect(sourceRoot)) {
   const relative = path.relative(sourceRoot, file);
   const source = await readFile(file, "utf8");
   const allowed = allowedRawHosts.get(relative) ?? [];
-  for (const [index, line] of source.split("\n").entries()) {
-    const rawHosts = line.match(/<(?:h[1-6]|p|input|strong|small)\b[^>]*>/g) ?? [];
-    for (const rawHost of rawHosts) {
-      if (allowed.some((pattern) => pattern.test(rawHost))) continue;
-      failures.push(`${relative}:${index + 1}: ${rawHost}`);
-    }
+  for (const { line, host, functionName } of nativeHostFindings(source, relative)) {
+    // Extracted trusted article content is rendered under Prose in each use.
+    if (relative === "components/prose/ProseEvidence.tsx" && functionName === "ArticleSample" && /^<(?:h1|h2|p)>$/u.test(host)) continue;
+    // Retention fixture intentionally tests an uncontrolled native input, not
+    // Input's own adapter. It is excluded from copied feature examples.
+    if (relative === "components/carousel/CarouselEdgeCases.tsx" && /^<input\s+aria-label=\{`\$\{value\} retained input`\}\s+defaultValue=\{value\}\s*\/>$/u.test(host)) continue;
+    if (allowed.some((pattern) => pattern.test(host))) continue;
+    failures.push(`${relative}:${line}: ${host}`);
   }
 }
 
