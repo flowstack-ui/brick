@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("default IconButton remains readable on a solid accent AppBar", async ({
   page,
 }) => {
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   const root = page
     .getByTestId("app-bar-tones")
     .locator('.brick-app-bar[data-variant="solid"][data-tone="accent"]');
@@ -25,7 +25,7 @@ test("IconButton actions retain square targets inside constrained and RTL AppBar
   page,
 }) => {
   await page.setViewportSize({ width: 320, height: 720 });
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
 
   for (const name of [
     "Open constrained menu",

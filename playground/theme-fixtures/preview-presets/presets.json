@@ -12,7 +12,7 @@
           "name": "Preview blue"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "appearances": {
           "supported": [
@@ -1474,14 +1474,14 @@
           "name": "Preview blue"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "brickContract": {
-          "schema": "flowstack.brick-theme-contract.v1",
-          "version": 5,
+          "schema": "flowstack.brick-theme-contract.v2",
+          "version": 6,
           "package": {
             "name": "@flowstack-ui/brick",
-            "version": "0.2.3"
+            "version": "0.3.0"
           }
         },
         "appearances": {
@@ -1510,7 +1510,7 @@
         "$schema": "flowstack.theme-report.v1",
         "valid": true,
         "themeId": "preview-accent-blue",
-        "brickVersion": "0.2.3",
+        "brickVersion": "0.3.0",
         "counts": {
           "emitted": 160,
           "brickRequired": 160,
@@ -4495,7 +4495,7 @@
           "name": "Preview teal"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "appearances": {
           "supported": [
@@ -5956,14 +5956,14 @@
           "name": "Preview teal"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "brickContract": {
-          "schema": "flowstack.brick-theme-contract.v1",
-          "version": 5,
+          "schema": "flowstack.brick-theme-contract.v2",
+          "version": 6,
           "package": {
             "name": "@flowstack-ui/brick",
-            "version": "0.2.3"
+            "version": "0.3.0"
           }
         },
         "appearances": {
@@ -5992,7 +5992,7 @@
         "$schema": "flowstack.theme-report.v1",
         "valid": true,
         "themeId": "preview-accent-teal",
-        "brickVersion": "0.2.3",
+        "brickVersion": "0.3.0",
         "counts": {
           "emitted": 160,
           "brickRequired": 160,
@@ -8977,7 +8977,7 @@
           "name": "Preview rose"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "appearances": {
           "supported": [
@@ -10463,14 +10463,14 @@
           "name": "Preview rose"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "brickContract": {
-          "schema": "flowstack.brick-theme-contract.v1",
-          "version": 5,
+          "schema": "flowstack.brick-theme-contract.v2",
+          "version": 6,
           "package": {
             "name": "@flowstack-ui/brick",
-            "version": "0.2.3"
+            "version": "0.3.0"
           }
         },
         "appearances": {
@@ -10499,7 +10499,7 @@
         "$schema": "flowstack.theme-report.v1",
         "valid": true,
         "themeId": "preview-accent-rose",
-        "brickVersion": "0.2.3",
+        "brickVersion": "0.3.0",
         "counts": {
           "emitted": 160,
           "brickRequired": 160,
@@ -13484,7 +13484,7 @@
           "name": "Preview orange"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "appearances": {
           "supported": [
@@ -15066,14 +15066,14 @@
           "name": "Preview orange"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "brickContract": {
-          "schema": "flowstack.brick-theme-contract.v1",
-          "version": 5,
+          "schema": "flowstack.brick-theme-contract.v2",
+          "version": 6,
           "package": {
             "name": "@flowstack-ui/brick",
-            "version": "0.2.3"
+            "version": "0.3.0"
           }
         },
         "appearances": {
@@ -15102,7 +15102,7 @@
         "$schema": "flowstack.theme-report.v1",
         "valid": true,
         "themeId": "preview-accent-orange",
-        "brickVersion": "0.2.3",
+        "brickVersion": "0.3.0",
         "counts": {
           "emitted": 160,
           "brickRequired": 160,
@@ -18087,7 +18087,7 @@
           "name": "Preview radius square"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "appearances": {
           "supported": [
@@ -18112,14 +18112,14 @@
           "name": "Preview radius square"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "brickContract": {
-          "schema": "flowstack.brick-theme-contract.v1",
-          "version": 5,
+          "schema": "flowstack.brick-theme-contract.v2",
+          "version": 6,
           "package": {
             "name": "@flowstack-ui/brick",
-            "version": "0.2.3"
+            "version": "0.3.0"
           }
         },
         "appearances": {
@@ -18148,7 +18148,7 @@
         "$schema": "flowstack.theme-report.v1",
         "valid": true,
         "themeId": "preview-radius-square",
-        "brickVersion": "0.2.3",
+        "brickVersion": "0.3.0",
         "counts": {
           "emitted": 164,
           "brickRequired": 160,
@@ -21133,7 +21133,7 @@
           "name": "Preview radius small"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "appearances": {
           "supported": [
@@ -21158,14 +21158,14 @@
           "name": "Preview radius small"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "brickContract": {
-          "schema": "flowstack.brick-theme-contract.v1",
-          "version": 5,
+          "schema": "flowstack.brick-theme-contract.v2",
+          "version": 6,
           "package": {
             "name": "@flowstack-ui/brick",
-            "version": "0.2.3"
+            "version": "0.3.0"
           }
         },
         "appearances": {
@@ -21194,7 +21194,7 @@
         "$schema": "flowstack.theme-report.v1",
         "valid": true,
         "themeId": "preview-radius-small",
-        "brickVersion": "0.2.3",
+        "brickVersion": "0.3.0",
         "counts": {
           "emitted": 164,
           "brickRequired": 160,
@@ -24179,7 +24179,7 @@
           "name": "Preview radius large"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "appearances": {
           "supported": [
@@ -24204,14 +24204,14 @@
           "name": "Preview radius large"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "brickContract": {
-          "schema": "flowstack.brick-theme-contract.v1",
-          "version": 5,
+          "schema": "flowstack.brick-theme-contract.v2",
+          "version": 6,
           "package": {
             "name": "@flowstack-ui/brick",
-            "version": "0.2.3"
+            "version": "0.3.0"
           }
         },
         "appearances": {
@@ -24240,7 +24240,7 @@
         "$schema": "flowstack.theme-report.v1",
         "valid": true,
         "themeId": "preview-radius-large",
-        "brickVersion": "0.2.3",
+        "brickVersion": "0.3.0",
         "counts": {
           "emitted": 164,
           "brickRequired": 160,
@@ -27225,7 +27225,7 @@
           "name": "Preview font inter"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "appearances": {
           "supported": [
@@ -27250,14 +27250,14 @@
           "name": "Preview font inter"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "brickContract": {
-          "schema": "flowstack.brick-theme-contract.v1",
-          "version": 5,
+          "schema": "flowstack.brick-theme-contract.v2",
+          "version": 6,
           "package": {
             "name": "@flowstack-ui/brick",
-            "version": "0.2.3"
+            "version": "0.3.0"
           }
         },
         "appearances": {
@@ -27286,7 +27286,7 @@
         "$schema": "flowstack.theme-report.v1",
         "valid": true,
         "themeId": "preview-font-inter",
-        "brickVersion": "0.2.3",
+        "brickVersion": "0.3.0",
         "counts": {
           "emitted": 162,
           "brickRequired": 160,
@@ -30271,7 +30271,7 @@
           "name": "Preview font outfit"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "appearances": {
           "supported": [
@@ -30296,14 +30296,14 @@
           "name": "Preview font outfit"
         },
         "compatibility": {
-          "brick": "^0.2.3"
+          "brick": "0.3.0"
         },
         "brickContract": {
-          "schema": "flowstack.brick-theme-contract.v1",
-          "version": 5,
+          "schema": "flowstack.brick-theme-contract.v2",
+          "version": 6,
           "package": {
             "name": "@flowstack-ui/brick",
-            "version": "0.2.3"
+            "version": "0.3.0"
           }
         },
         "appearances": {
@@ -30332,7 +30332,7 @@
         "$schema": "flowstack.theme-report.v1",
         "valid": true,
         "themeId": "preview-font-outfit",
-        "brickVersion": "0.2.3",
+        "brickVersion": "0.3.0",
         "counts": {
           "emitted": 162,
           "brickRequired": 160,

@@ -1,8 +1,12 @@
 import { useEffect, useState, type CSSProperties, type FormEvent } from "react";
+import { SegmentView } from "./SegmentView";
 import { DateDeliveryForm } from "./DateDeliveryForm";
 import { FeedbackSearch } from "./FeedbackSearch";
 import { DataDisplaySummary } from "./DataDisplaySummary";
+import { FloatExample } from "./FloatExample";
+import { GridGroupExample } from "./GridGroupExample";
 import { NativeSelectionSettings } from "./NativeSelectionSettings";
+import { BackupOptions } from "./BackupOptions";
 import { DocumentRename } from "./DocumentRename";
 import { ShareDocument } from "./ShareDocument";
 import { ProjectLabels } from "./ProjectLabels";
@@ -28,6 +32,7 @@ import { ToggleGroup } from "@flowstack-ui/brick/toggle-group";
 import { Tooltip } from "@flowstack-ui/brick/tooltip";
 import { HoverCard } from "@flowstack-ui/brick/hover-card";
 import { Popover } from "@flowstack-ui/brick/popover";
+import { ToggleTip } from "@flowstack-ui/brick/toggle-tip";
 import { Form } from "@flowstack-ui/brick/form";
 import { Field } from "@flowstack-ui/brick/field";
 import { Fieldset } from "@flowstack-ui/brick/fieldset";
@@ -146,6 +151,9 @@ export function App() {
   const [releaseAccent, setReleaseAccent] = useState("#6d5bd0");
   const [planStatus, setPlanStatus] = useState("No billing plan submitted.");
   const [skillsStatus, setSkillsStatus] = useState("No team skills submitted.");
+  const [passwordStatus, setPasswordStatus] = useState(
+    "Account password has not been checked.",
+  );
   const [channelStatus, setChannelStatus] = useState("No delivery channel submitted.");
   const [compactDestination, setCompactDestination] = useState("home");
   const [tableSort, setTableSort] = useState<"ascending" | "descending">("descending");
@@ -188,7 +196,7 @@ export function App() {
     <SkipLink.Root>Skip to workspace content</SkipLink.Root>
     <Toaster />
     <div id="top">
-      <AppBar.Root aria-label="Primary" blurred className="site-header" position="sticky">
+      <AppBar.Root aria-label="Primary" treatment="translucent" backgroundOpacity={0.88} backdropBlur="md" className="site-header" position="sticky">
         <AppBar.Toolbar className="site-header-toolbar" density="compact">
           <AppBar.Start>
             <Link className="brand" href="#top" aria-label="Brick Consumer home" tone="inherit" variant="plain">
@@ -218,6 +226,10 @@ export function App() {
                         <Switch.Thumb />
                       </Switch.Root>
                       <Text>Compact project spacing</Text>
+                      <ToggleTip.Root portalled={false}>
+                        <ToggleTip.Trigger asChild><Button size="xs" variant="ghost">Spacing help</Button></ToggleTip.Trigger>
+                        <ToggleTip.Content aria-label="Spacing help"><ToggleTip.Body>Compact spacing fits more projects without changing your saved data.</ToggleTip.Body><ToggleTip.Arrow /></ToggleTip.Content>
+                      </ToggleTip.Root>
                     </HStack>
                   </Popover.Body>
                   <Popover.Footer><Popover.Close asChild><Button size="sm">Done</Button></Popover.Close></Popover.Footer>
@@ -238,16 +250,16 @@ export function App() {
             <NavList.Item><NavList.Link href="#publishing-preferences">Publishing</NavList.Link></NavList.Item>
           </NavList.List>
         </NavList.Root>
-        <Breadcrumb.Root ariaLabel="Current workspace path">
+        <Breadcrumb.Root aria-label="Current workspace path" size={{ initial: "sm", md: "md" }}>
           <Breadcrumb.List>
             <Breadcrumb.Item><Breadcrumb.Link href="#top">Home</Breadcrumb.Link></Breadcrumb.Item>
             <Breadcrumb.Separator />
-            <Breadcrumb.Item><Breadcrumb.Link href="#workspace">Projects</Breadcrumb.Link></Breadcrumb.Item>
+            <Breadcrumb.Item><DropdownMenu.Root><DropdownMenu.Trigger asChild><Breadcrumb.Trigger>Projects</Breadcrumb.Trigger></DropdownMenu.Trigger><DropdownMenu.Portal><DropdownMenu.Content><DropdownMenu.Item value="workspace" asChild><Link variant="plain" href="#workspace">Workspace</Link></DropdownMenu.Item><DropdownMenu.Item value="projects" asChild><Link variant="plain" href="#projects">All projects</Link></DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Portal></DropdownMenu.Root></Breadcrumb.Item>
             <Breadcrumb.Separator />
             <Breadcrumb.Item><Breadcrumb.Page>Mobile checkout refresh</Breadcrumb.Page></Breadcrumb.Item>
           </Breadcrumb.List>
         </Breadcrumb.Root>
-        <SkipLink.Target>
+        <SkipLink.Target render={<main />}>
         <Sidebar.Root className="consumer-sidebar-proof" collapsedState="rail" size="sm">
           <Sidebar.Panel aria-label="Project settings sidebar">
             <Sidebar.Header><Text weight="semibold">Project settings</Text></Sidebar.Header>
@@ -568,15 +580,42 @@ export function App() {
               <Field.Description>Enter the six-digit code.</Field.Description>
               <Field.Error>Enter all six digits.</Field.Error>
             </Field.Root>
-            <Field.Root id="consumer-account-password" required>
-              <Field.Label>Account password</Field.Label>
-              <PasswordToggleField.Root required>
-                <PasswordToggleField.Input name="accountPassword" />
-                <PasswordToggleField.Toggle />
-              </PasswordToggleField.Root>
-              <Field.Description>Use the toggle to review the password.</Field.Description>
-              <Field.Error>Enter an account password.</Field.Error>
-            </Field.Root>
+            <Form
+              aria-label="Account password check"
+              onReset={() =>
+                setPasswordStatus("Account password check was reset.")
+              }
+              onSubmit={(event) => {
+                event.preventDefault();
+                setPasswordStatus("Account password is ready for verification.");
+              }}
+            >
+              <VStack gap="2">
+                <Field.Root id="consumer-account-password" required>
+                  <Field.Label>Account password</Field.Label>
+                  <PasswordToggleField.Root required>
+                    <PasswordToggleField.Input
+                      autoComplete="current-password"
+                      name="accountPassword"
+                    />
+                    <PasswordToggleField.Toggle />
+                  </PasswordToggleField.Root>
+                  <Field.Description>
+                    Use the toggle to review the password.
+                  </Field.Description>
+                  <Field.Error>Enter an account password.</Field.Error>
+                </Field.Root>
+                <HStack gap="2">
+                  <Button type="submit">Check password</Button>
+                  <Button type="reset" variant="outline">
+                    Reset
+                  </Button>
+                </HStack>
+                <Text aria-live="polite" data-testid="password-status">
+                  {passwordStatus}
+                </Text>
+              </VStack>
+            </Form>
           </VStack>
         </Surface>
 
@@ -651,8 +690,8 @@ export function App() {
           <Fieldset.Root>
             <Fieldset.Legend><Text as="span" id="plan-choice-title" variant="title-lg">Plan choice</Text></Fieldset.Legend>
             <RadioCard.Root defaultValue="team" name="plan-choice">
-              <RadioCard.Item value="starter"><RadioCard.Control><RadioCard.Content><RadioCard.Title>Starter</RadioCard.Title><RadioCard.Description>For personal projects</RadioCard.Description></RadioCard.Content><RadioCard.Indicator /></RadioCard.Control></RadioCard.Item>
-              <RadioCard.Item value="team"><RadioCard.Control><RadioCard.Content><RadioCard.Title>Team</RadioCard.Title><RadioCard.Description>For product teams</RadioCard.Description></RadioCard.Content><RadioCard.Indicator /></RadioCard.Control><RadioCard.Addon>Most popular</RadioCard.Addon></RadioCard.Item>
+              <RadioCard.Item value="starter"><RadioCard.HiddenInput /><RadioCard.Control><RadioCard.Content><RadioCard.Title>Starter</RadioCard.Title><RadioCard.Description>For personal projects</RadioCard.Description></RadioCard.Content><RadioCard.Indicator /></RadioCard.Control></RadioCard.Item>
+              <RadioCard.Item value="team"><RadioCard.HiddenInput /><RadioCard.Control><RadioCard.Content><RadioCard.Title>Team</RadioCard.Title><RadioCard.Description>For product teams</RadioCard.Description></RadioCard.Content><RadioCard.Indicator /></RadioCard.Control><RadioCard.Addon>Most popular</RadioCard.Addon></RadioCard.Item>
             </RadioCard.Root>
           </Fieldset.Root>
         </Surface>
@@ -781,12 +820,12 @@ export function App() {
 
           <Grid.Root
             className="workspace-grid"
-            columns={3}
+            columns={workspaceView === "list" ? 1 : { initial: 1, md: 3 }}
             data-compact={compactWorkspace ? "true" : undefined}
             data-view={workspaceView}
             gap="4"
           >
-            <Grid.Item className="workspace-featured" columnSpan={2}>
+            <Grid.Item className="workspace-featured" columnSpan={{ initial: "full", md: workspaceView === "list" ? "full" : 2 }}>
               <Card.Root
               aria-labelledby="project-title"
               as="article"
@@ -1305,7 +1344,7 @@ export function App() {
           <VStack gap="3">
             <Heading level={2} id="collapsible-proof-title" variant="title-lg">Advanced workspace details</Heading>
             <Collapsible.Root variant="outline">
-              <Collapsible.Trigger>Release notifications<Collapsible.Indicator /></Collapsible.Trigger>
+              <Collapsible.Trigger highlight="none">Release notifications<Collapsible.Indicator /></Collapsible.Trigger>
               <Collapsible.Content>
                 <Collapsible.ContentInner><Text tone="secondary">Weekly release summaries are sent every Friday.</Text></Collapsible.ContentInner>
               </Collapsible.Content>
@@ -1331,7 +1370,7 @@ export function App() {
               <Text tone="secondary">Use the compact destinations on narrow workspaces.</Text>
             </Hide>
             <NavigationMenu.Root aria-label="Workspace destinations" defaultValue="projects">
-              <NavigationMenu.List>
+              <NavigationMenu.List surface="raised">
                 <NavigationMenu.Item value="projects">
                   <NavigationMenu.Trigger>Projects</NavigationMenu.Trigger>
                   <NavigationMenu.Content>
@@ -1400,14 +1439,17 @@ export function App() {
             </BottomNavigation.Root>
           </VStack>
         </Surface>
-        </SkipLink.Target>
-
         <FeedbackSearch />
         <DataDisplaySummary />
+      <FloatExample />
+      <GridGroupExample />
         <NativeSelectionSettings />
+        <BackupOptions />
         <DocumentRename />
         <ShareDocument />
         <ProjectLabels />
+        <SegmentView />
+        </SkipLink.Target>
         <footer>
           <p>Public Brick imports. Application-owned composition. No private compatibility layer.</p>
           <Button href="#top" size="sm" tone="neutral" variant="ghost">

@@ -5,8 +5,8 @@ test("docs preview shares the heading alignment at narrow and wide widths", asyn
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/aspect-ratio?testMode=1");
     const heading = await page.locator(".evidence-page-heading h1").boundingBox();
-    const tabs = await page.locator("[data-example-preview] [role=tablist]").boundingBox();
-    const canvas = await page.locator("[data-example-canvas]").boundingBox();
+    const tabs = await page.locator("[data-example-preview] [role=tablist]").first().boundingBox();
+    const canvas = await page.locator("[data-example-canvas]").first().boundingBox();
     expect(Math.abs(tabs!.x - heading!.x)).toBeLessThanOrEqual(1);
     expect(Math.abs(canvas!.x - heading!.x)).toBeLessThanOrEqual(1);
   }
@@ -122,22 +122,12 @@ test("Button route exposes component and scenario navigation", async ({
   await expect(brand.locator("svg")).toBeVisible();
   await expect(brand.locator("svg")).toHaveAttribute("aria-hidden", "true");
 
-  const scenarioNavigation = page.getByRole("navigation", {
-    name: "Button scenarios",
-  });
-  await expect(page.locator(".evidence-review-header")).toHaveCSS(
-    "position",
-    "static",
-  );
-  await expect(scenarioNavigation.getByRole("link")).toHaveCount(9);
-  await scenarioNavigation.getByRole("link", { name: /links/i }).click();
-  await expect(page).toHaveURL(/#scenario-button-composition$/);
-  const target = page.locator("#scenario-button-composition");
-  await expect(target).toHaveCSS("outline-style", "none");
-  await expect(target.locator(":scope > .scenario-heading")).toHaveCSS(
-    "border-left-style",
-    "solid",
-  );
+  const navigation = page.getByRole("navigation", { name: "On this page" });
+  await expect(navigation).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Sizes", exact: true })).toHaveAttribute("href", "#sizes");
+  await navigation.getByRole("link", { name: "Links and refs", exact: true }).click();
+  await expect(page).toHaveURL(/#links$/);
+  await expect(page.locator("#links")).toBeInViewport();
 });
 
 test("app-bar settings replace the toolbar and keep the docs direction stable", async ({ page }) => {
@@ -157,66 +147,21 @@ test("app-bar settings replace the toolbar and keep the docs direction stable", 
   await expect(trigger).toBeFocused();
 });
 
-test("wide scenario navigation aligns and its header scrolls with the page", async ({
-  page,
-}) => {
+test("wide documentation navigation stays beside content while the heading scrolls", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/button");
-
-  const navigation = page.getByRole("navigation", {
-    name: "Button scenarios",
-  });
-  const content = page.locator("[data-playground-content]");
-  const [navigationBox, contentBox] = await Promise.all([
-    navigation.boundingBox(),
-    content.boundingBox(),
-  ]);
-  expect(navigationBox?.x).toBe(contentBox?.x);
-  expect(navigationBox?.width).toBe(contentBox?.width);
-
-  const itemRects = await navigation.locator("li").evaluateAll((items) =>
-    items.map((item) => {
-      const rect = item.getBoundingClientRect();
-      return { left: rect.left, right: rect.right };
-    }),
-  );
-  expect(
-    itemRects.every(
-      (rect, index) =>
-        index === itemRects.length - 1 ||
-        rect.right <= itemRects[index + 1]!.left + 0.5,
-    ),
-  ).toBe(true);
-  const overflowingLinks = await navigation
-    .locator("a")
-    .evaluateAll(
-      (links) =>
-        links.filter((link) => link.scrollWidth > link.clientWidth).length,
-    );
-  expect(overflowingLinks).toBe(0);
-  const scrollGeometry = await navigation
-    .locator(".scenario-nav-scroll")
-    .evaluate((root) => ({
-      clientWidth: root.clientWidth,
-      scrollWidth: root.scrollWidth,
-    }));
-  expect(scrollGeometry.scrollWidth).toBeGreaterThanOrEqual(
-    scrollGeometry.clientWidth,
-  );
-
-  const appBar = page.getByRole("banner", { name: "Brick playground" });
-  const kicker = page.getByRole("heading", { level: 1, name: "Button", exact: true });
-  const initialKickerBox = await kicker.boundingBox();
-  await page.evaluate(() => window.scrollTo(0, 1200));
-  const [appBarBox, reviewHeaderBox, scrolledKickerBox] = await Promise.all([
-    appBar.boundingBox(),
-    page.locator(".evidence-review-header").boundingBox(),
-    kicker.boundingBox(),
-  ]);
-  expect(appBarBox?.y).toBe(0);
-  expect(reviewHeaderBox!.y).toBeLessThan(0);
-  expect(scrolledKickerBox!.y).toBeLessThan(initialKickerBox!.y - 500);
-  await expect(page.locator(".evidence-review-header")).toHaveCSS("box-shadow", "none");
+  const navigation = page.getByRole("navigation", { name: "On this page" });
+  await expect(navigation).toBeVisible();
+  const content = page.locator('[data-component-page="button"]');
+  const navBox = await navigation.boundingBox();
+  const contentBox = await content.boundingBox();
+  expect(navBox!.x).toBeGreaterThanOrEqual(contentBox!.x + contentBox!.width);
+  expect(navBox!.x + navBox!.width).toBeLessThanOrEqual(1440);
+  await navigation.getByRole("link", { name: "Links and refs", exact: true }).click();
+  await expect(page.locator("#links")).toBeInViewport();
+  await expect(navigation).toBeVisible();
+  const banner = await page.getByRole("banner", { name: "Brick playground" }).boundingBox();
+  expect(banner!.y).toBe(0);
 });
 
 test("narrow layouts keep the app bar sticky and release secondary chrome", async ({
@@ -230,11 +175,10 @@ test("narrow layouts keep the app bar sticky and release secondary chrome", asyn
   await expect(appBar).toHaveCSS("position", "sticky");
   await expect(reviewHeader).toHaveCSS("position", "static");
 
-  await page
-    .getByRole("navigation", { name: "Button scenarios" })
-    .getByRole("link", { name: /links/i })
-    .click();
-  const target = page.locator("#scenario-button-composition");
+  await expect(page.getByRole("navigation", { name: "On this page" })).toBeHidden();
+  await page.goto("/button#links");
+  const target = page.locator("#links");
+  await target.scrollIntoViewIfNeeded();
   await expect(target).toBeInViewport();
   const [appBarBox, targetBox] = await Promise.all([
     appBar.boundingBox(),

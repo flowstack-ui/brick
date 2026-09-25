@@ -7,7 +7,7 @@ const owners = [...registry.matchAll(/^  "([a-z-]+)": \{/gm)].map(match => match
 for (const owner of owners) {
   test(`${owner}: authored scenarios resolve in the isolated document`, async ({ page }) => {
     test.setTimeout(120_000);
-    await page.goto(`/${owner}?isolated=0&testMode=1`, { waitUntil: "domcontentloaded", timeout: 15000 });
+    await page.goto(`/${owner}?qualification=1&isolated=0&testMode=1`, { waitUntil: "domcontentloaded", timeout: 15000 });
     await expect(page.locator("[data-scenario]").first()).toBeVisible();
     const ids = await page.locator("[data-scenario]").evaluateAll(nodes => nodes.map(node => node.getAttribute("data-scenario")!));
     expect(ids.length).toBeGreaterThan(0);

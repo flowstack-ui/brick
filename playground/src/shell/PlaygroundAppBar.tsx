@@ -23,10 +23,11 @@ export function PlaygroundAppBar({
   return (
     <AppBar.Root
       aria-label="Brick playground"
+      className="evidence-app-bar"
       data-playground-app-bar=""
       position="sticky"
     >
-      <Container measure="full">
+      <Container measure="max">
         <AppBar.Toolbar inset="none">
           <AppBar.Start>
             <Link
@@ -40,7 +41,7 @@ export function PlaygroundAppBar({
           </AppBar.Start>
           <AppBar.End>
             <PlaygroundSettingsPopover />
-            <Hide from="xl">
+            <Hide from="md">
               <IconButton
                 aria-label="Open component navigation"
                 onPress={onOpenNavigation}

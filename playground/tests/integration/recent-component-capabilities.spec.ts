@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
 const { owners } = JSON.parse(readFileSync(new URL("../../recent-component-capabilities.json", import.meta.url), "utf8")) as {
-  owners: Array<{id: string; scenarios: string[]}>;
+  owners: Array<{id: string; scenarios: string[]; route?: string}>;
 };
 
 for (const owner of owners) {
@@ -11,7 +11,7 @@ for (const owner of owners) {
     page.on("pageerror", error => errors.push(error.message));
     for (const width of [390, 1280]) {
       await page.setViewportSize({ width, height: 900 });
-      await page.goto(`/${owner.id}`);
+      await page.goto(owner.route ?? `/${owner.id}?qualification=1`);
       const expected = owner.scenarios.map(id => `scenario-${id.replace(/\./g, "-")}`);
       const sections = page.locator(`[data-scenario^="${owner.id}."]`);
       await expect(sections).toHaveCount(expected.length);

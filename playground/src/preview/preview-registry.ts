@@ -103,6 +103,11 @@ export const previewRegistry = {
     source: () => import("../components/checkbox/CheckboxPage.tsx?raw").then(m => m.default),
     height: 720,
   },
+  "checkbox-card": {
+    load: () => import("../components/checkbox-card/CheckboxCardPage.js").then(m => ({ Page: m.CheckboxCardPage, scenarios: m.checkboxCardScenarios })),
+    source: () => import("../components/checkbox-card/CheckboxCardPage.tsx?raw").then(m => m.default),
+    height: 720,
+  },
   "checkbox-group": {
     load: () => import("../components/checkbox-group/CheckboxGroupPage.js").then(m => ({ Page: m.CheckboxGroupPage, scenarios: m.checkboxGroupScenarios })),
     source: () => import("../components/checkbox-group/CheckboxGroupPage.tsx?raw").then(m => m.default),
@@ -243,6 +248,11 @@ export const previewRegistry = {
     source: () => import("../components/file-upload/FileUploadPage.tsx?raw").then(m => m.default),
     height: 720,
   },
+  "float": {
+    load: () => import("../components/float/FloatPage.js").then(m => ({ Page: m.FloatPage, scenarios: m.floatScenarios })),
+    source: () => import("../components/float/FloatPage.tsx?raw").then(m => m.default),
+    height: 720,
+  },
   "floating-panel": {
     load: () => import("../components/floating-panel/FloatingPanelPage.js").then(m => ({ Page: m.FloatingPanelPage, scenarios: m.floatingPanelScenarios })),
     source: () => import("../components/floating-panel/FloatingPanelPage.tsx?raw").then(m => m.default),
@@ -316,6 +326,11 @@ export const previewRegistry = {
   "input": {
     load: () => import("../components/input/InputPage.js").then(m => ({ Page: m.InputPage, scenarios: m.inputScenarios })),
     source: () => import("../components/input/InputPage.tsx?raw").then(m => m.default),
+    height: 720,
+  },
+  "input-addon": {
+    load: () => import("../components/input-addon/InputAddonPage.js").then(m => ({ Page: m.InputAddonPage, scenarios: m.inputAddonScenarios })),
+    source: () => import("../components/input-addon/InputAddonPage.tsx?raw").then(m => m.default),
     height: 720,
   },
   "kbd": {
@@ -596,6 +611,11 @@ export const previewRegistry = {
   "toggle-group": {
     load: () => import("../components/toggle-group/ToggleGroupPage.js").then(m => ({ Page: m.ToggleGroupPage, scenarios: m.toggleGroupScenarios })),
     source: () => import("../components/toggle-group/ToggleGroupPage.tsx?raw").then(m => m.default),
+    height: 720,
+  },
+  "toggle-tip": {
+    load: () => import("../components/toggle-tip/ToggleTipPage.js").then(m => ({ Page: m.ToggleTipPage, scenarios: m.toggleTipScenarios })),
+    source: () => import("../components/toggle-tip/ToggleTipPage.tsx?raw").then(m => m.default),
     height: 720,
   },
   "toolbar": {

@@ -90,7 +90,7 @@ const invalidCheckboxValidation: CheckboxProps = { children: "Terms", validation
 const invalidAriaAlias: CheckboxProps = { ariaLabel: "Terms" };
 // @ts-expect-error Root asChild requires one element.
 const invalidRootChild: CheckboxGroupRootProps = { asChild: true, children: "Channels" };
-// @ts-expect-error Items do not accept per-item size.
+// Explicit item presentation may override the group default.
 const invalidItemSize: CheckboxGroupItemProps = { value: "email", size: "sm" };
 // @ts-expect-error Item value is required.
 const invalidItemValue: CheckboxGroupItemProps = { children: "Email" };

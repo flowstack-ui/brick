@@ -15,7 +15,7 @@ export function PropsTable<Props>({ label, rows }: {
 }) {
   return <ScrollArea.Root orientation="horizontal">
     <ScrollArea.Viewport focusable aria-label={`${label} scroll area`}>
-      <Table.Root aria-label={label} variant="outline" layout="fixed" minInlineSize={800}>
+      <Table.Root aria-label={label} variant="outline" layout="fixed">
         <Table.ColumnGroup>
           <Table.Column htmlWidth="20%" />
           <Table.Column htmlWidth="15%" />

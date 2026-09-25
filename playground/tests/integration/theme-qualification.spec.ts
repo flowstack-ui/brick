@@ -2,10 +2,12 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 test("the query-selected theme is present before application code and follows catalog navigation", async ({ page, isMobile }) => {
-  await page.goto("/button?theme=qualification");
+  await page.goto("/button?theme=qualification&qualification=1");
 
   await expect(page.locator("html")).toHaveAttribute("data-flowstack-theme", "qualification");
-  await expect(page.getByRole("button", { name: "Qualification", exact: true })).toHaveAttribute("data-state", "on");
+  await page.getByRole("button", { name: "Preview settings", exact: true }).click();
+  await expect(page.getByLabel("Theme", { exact: true })).toHaveValue("qualification");
+  await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Publish project", exact: true })).toHaveCSS(
     "background-color",
     "rgb(0, 97, 84)",
@@ -21,7 +23,7 @@ test("the query-selected theme is present before application code and follows ca
         .getByRole("navigation", { name: "Component navigation" })
     : page.getByRole("navigation", { name: "Component navigation" });
   await componentNavigation.getByRole("link", { name: "Card", exact: true }).click();
-  await expect(page).toHaveURL(/\/card\?theme=qualification$/);
+  await expect(page).toHaveURL((url) => url.pathname === "/card" && url.searchParams.get("theme") === "qualification");
   await expect(page.locator("html")).toHaveAttribute("data-flowstack-theme", "qualification");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 });
@@ -43,7 +45,7 @@ test("the generated theme remains legible under user preference media", async ({
     forcedColors: browserName === "chromium" ? "active" : "none",
     reducedMotion: "reduce",
   });
-  await page.goto("/appearance?theme=qualification");
+  await page.goto("/appearance?theme=qualification&qualification=1");
   await expect(page.locator("html")).toHaveAttribute("data-flowstack-theme", "qualification");
   await expect(page.locator("html")).toHaveCSS("--brick-color-focus-ring", "#ff9a52");
   await expect(page.locator("#scenario-appearance-stress")).toBeVisible();

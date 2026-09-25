@@ -1,6 +1,6 @@
 {
   "$schema": "flowstack.theme-report.v1",
-  "brickVersion": "0.2.3",
+  "brickVersion": "0.3.0",
   "contrast": {
     "algorithm": "wcag2-relative-luminance",
     "colorSpace": "srgb",
@@ -2965,10 +2965,10 @@
     "brickInherited": 108,
     "brickOverridden": 52,
     "brickRequired": 160,
-    "componentInputs": 3,
+    "componentInputs": 12,
     "contrastPairs": 246,
-    "emitted": 190,
-    "foundations": 3,
+    "emitted": 200,
+    "foundations": 4,
     "projectContrastPairs": 0,
     "projectTokens": 22
   },

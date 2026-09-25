@@ -37,7 +37,7 @@ export function DocsTableOfContents({
       navigation="managed"
       scrollOffset={88}
     >
-      <Grid.Root columns={{ initial: 1, xl: 4 }} gap="10" align="start">
+      <Grid.Root columns={{ initial: 1, xl: 4 }} gap="14" align="start">
         <Grid.Item columnSpan={{ initial: 1, xl: 3 }} ref={content}>
           {children}
         </Grid.Item>

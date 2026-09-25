@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("core and semantic radius choices reach standalone and attached controls", async ({page}) => {
-  await page.goto("/toggle");
+  await page.goto("/toggle?qualification=1");
   const choices={none:0,"2xs":1,xs:2,sm:4,md:6,lg:8,xl:12,"2xl":16,"3xl":24,"4xl":32,subtle:4,control:8,surface:12,overlay:16,full:9999};
   for(const [radius,pixels] of Object.entries(choices)) {
     const example=page.locator(`[data-radius-example="${radius}"]`);
@@ -43,7 +43,7 @@ for (const [route,selector,property] of [
 }
 
 test("attached corners follow logical edges in RTL and small nested radii stay nonnegative",async({page})=>{
-  await page.goto("/toggle");
+  await page.goto("/toggle?qualification=1");
   const example=page.locator('[data-radius-example="xs"]');
   await example.evaluate(element=>element.setAttribute("dir","rtl"));
   const items=example.getByRole("group").getByRole("button");
@@ -51,7 +51,9 @@ test("attached corners follow logical edges in RTL and small nested radii stay n
   await expect(items.first()).toHaveCSS("border-top-left-radius","0px");
   await expect(items.last()).toHaveCSS("border-top-left-radius","2px");
   await page.goto("/tabs");
-  const list=page.locator('.brick-tabs[data-variant="soft"] .brick-tabs-list').first();
+  // Solid has an inset list; soft intentionally has zero padding and retains
+  // the outer radius. Exercise an actual negative inner-radius candidate.
+  const list=page.locator('.brick-tabs[data-variant="solid"] > .brick-tabs-list').first();
   await list.evaluate(element=>(element as HTMLElement).style.setProperty("--brick-tabs-radius","1px"));
   await expect(list.getByRole("tab").first()).toHaveCSS("border-top-left-radius","0px");
 });

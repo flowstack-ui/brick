@@ -54,6 +54,9 @@ the repository `AGENTS.md`, exact-version Brick and Atom Agent Knowledge, and
 - Use `Grid` for repeated two-dimensional comparisons and `Stack` for one
   primary axis. Use `Frame` for local size constraints and `ScrollArea` only
   when a named ancestor gives it a definite size.
+- Set an explicit `gap` for rows of independent comparison controls: Stack,
+  HStack and VStack default to zero gap. Use wrapping when the row can exceed
+  the preview width; zero spacing is intentional only for attached compositions.
 - Do not duplicate content merely to change row/column arrangement. Use
   responsive Stack or Grid values. Use Show/Hide only when the interface itself
   changes.

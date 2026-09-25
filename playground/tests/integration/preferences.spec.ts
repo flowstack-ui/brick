@@ -4,7 +4,7 @@ test("Button preserves system-color boundaries and focus in forced colors", asyn
   test.skip(testInfo.project.name !== "chromium", "Forced-colors emulation is a Chromium release check.");
 
   await page.emulateMedia({ colorScheme: "light", forcedColors: "active" });
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
   expect(await page.evaluate(() => matchMedia("(forced-colors: active)").matches)).toBe(true);
 
   const primary = page.getByRole("button", { name: "Publish project" });
@@ -37,7 +37,7 @@ test("Button preserves system-color boundaries and focus in forced colors", asyn
 
 test("Button honors reduced motion without hiding loading status", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const primary = page.getByRole("button", { name: "Publish project" });
   await expect(primary).toHaveCSS("transition-duration", "0s");
@@ -45,18 +45,22 @@ test("Button honors reduced motion without hiding loading status", async ({ page
   const loading = page.getByTestId("button-loading");
   const spinnerStyle = await loading.evaluate((element) => {
     const style = getComputedStyle(element, "::after");
-    return { animationDuration: style.animationDuration, display: style.display };
+    return { animationName: style.animationName, display: style.display, content: style.content };
   });
-  expect(spinnerStyle.animationDuration).toBe("1.4s");
+  expect(spinnerStyle.animationName).toBe("none");
   expect(spinnerStyle.display).not.toBe("none");
+  expect(spinnerStyle.content).not.toBe("none");
+  await expect(loading).toHaveAttribute("aria-busy", "true");
 });
 
 test("Card keeps visible static boundaries in forced colors", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Forced-colors emulation is a Chromium release check.");
   await page.emulateMedia({ colorScheme: "light", forcedColors: "active", reducedMotion: "reduce" });
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
 
-  for (const card of await page.getByTestId("card-variants").locator(".brick-card").all()) {
+  const cards = page.getByTestId("card-variants").locator(".brick-card");
+  await expect(cards).toHaveCount(3);
+  for (const card of await cards.all()) {
     const style = await card.evaluate((element) => {
       const computed = getComputedStyle(element);
       return {

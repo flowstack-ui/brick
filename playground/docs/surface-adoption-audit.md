@@ -13,6 +13,8 @@ The date-family and recent utility pass retains the same ownership:
 
 | Owner | Surface responsibility | Layout retained by |
 | --- | --- | --- |
+| Toggle Tip | shared Preview/Code canvas only | Popover owns the toggled panel paint; Button owns its trigger |
+| Float | Its child owns paint; Float itself is placement-only | Anchor establishes containment and Root owns logical offsets |
 | Marquee | Surface and Card own content paint; optional Edge explicitly matches its surface | Frame bounds vertical height; Marquee owns tracks; two scoped artwork transforms are deliberate illustration CSS |
 | Calendar | shared Specimen surface only | Calendar cell and range paint remains component-owned |
 | Date Input | shared Specimen surface only | input recipe, segment focus and grouping remain DateInput-owned |
@@ -99,6 +101,8 @@ different owner.
 | QR Code | outer specimen cells and comparison regions | QR symbol geometry, quiet zone, logo placement, export and scanner-safe paint |
 | Table of Contents | outer specimen cells and comparison regions | navigation hierarchy, current location, indicator, scroll containment and focus paint |
 | Tags Input | outer specimen cells and comparison regions | Editing field, chips, focus and suggestions remain component-owned |
+| Input Addon | shared example and specimen canvas | InputAddon segment paint and Group attachment geometry remain component-owned |
+| Checkbox Card | shared example and specimen canvas | CheckboxCard selection, border, focus, and disabled recipes remain component-owned |
 | Native Select | outer specimen cells and comparison regions | Native control boundary, indicator and form states remain component-owned |
 | Editable | outer specimen cells and comparison regions | Preview, edit field and action focus remain component-owned |
 | Pin Input | outer specimen cells and comparison regions | Individual cells, group spacing and focus remain component-owned |

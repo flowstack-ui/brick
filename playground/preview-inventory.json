@@ -4,14 +4,14 @@
     {
       "component": "accordion",
       "source": "playground/src/components/accordion/AccordionPage.tsx",
-      "sourceSha256": "6679fea2aecbb056201af2d86deeb4ba35ce6fa62f9706348fc19e2a9098fb4c",
+      "sourceSha256": "f7d508a46e61146191b96dba75722c075dbb1dc700fda891de1c5e774daa6b7e",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -19,29 +19,29 @@
     {
       "component": "action-bar",
       "source": "playground/src/components/action-bar/ActionBarPage.tsx",
-      "sourceSha256": "f876b15a899e15d7599ac40fc5ad52cfa768a244e77404fbdd7f2858ae48eab0",
+      "sourceSha256": "ae5610b9d09be779b9da8bd9692bac4c8549f4cef1afaecc6bcdda2bd80f5d6f",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
         "explicitAppearance": false,
-        "explicitDirection": true,
-        "locale": true,
+        "explicitDirection": false,
+        "locale": false,
         "portalOrShadowRoot": false
       }
     },
     {
       "component": "alert",
       "source": "playground/src/components/alert/AlertPage.tsx",
-      "sourceSha256": "84f7f353f6bc521c23a80d20f934f7116cf4e42721090b61f6f4e389dbc880d2",
+      "sourceSha256": "d54d98e7be636a4321ec5e7872fed7b76388f7bb364b0310a2d9deb3db94a7f4",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -49,14 +49,14 @@
     {
       "component": "alert-dialog",
       "source": "playground/src/components/alert-dialog/AlertDialogPage.tsx",
-      "sourceSha256": "cb6c499e2b637431f75e56393b3df7aedf278f8c5e4c7e3849875323770d9569",
+      "sourceSha256": "c45e775f597098522e5bd6e52e5ebf600f49637afcad30e95266cc041221e94b",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -64,14 +64,14 @@
     {
       "component": "app-bar",
       "source": "playground/src/components/app-bar/AppBarPage.tsx",
-      "sourceSha256": "bf40d9c62aeba428299a8e737b29569069008b140d9000f5079a440da6d01eab",
+      "sourceSha256": "25122add09cf593f396e1e1c2753e92be63bfaed13321c6b0ae4c86f3b6ba577",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -79,14 +79,14 @@
     {
       "component": "appearance",
       "source": "playground/src/components/appearance/AppearancePage.tsx",
-      "sourceSha256": "521dd9d5cb153b1a00180b443fc4a3270af9c50a457f34831164dcfbde6ea6bd",
+      "sourceSha256": "3a225a8c50fa83e9aaa7f3db5d68d82a5df42707abd2add255620392d5065439",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
         "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -109,14 +109,14 @@
     {
       "component": "avatar",
       "source": "playground/src/components/avatar/AvatarPage.tsx",
-      "sourceSha256": "d285cd955a6dc289f8fa90b385030301d4eeabc2059c643560f2b66369599363",
+      "sourceSha256": "318e067218ce486139659333e062612cfce39d8faa0ab4708f911f7292b7ee67",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -124,14 +124,14 @@
     {
       "component": "avatar-group",
       "source": "playground/src/components/avatar-group/AvatarGroupPage.tsx",
-      "sourceSha256": "1b067cc949695d10349e3403feaee3477441be4216b7f29c771cab9665fec48c",
+      "sourceSha256": "bb049a74cdd9889264aa0bfb7e37bd3703e461d30ccd8014f1524b3387c25206",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -139,14 +139,14 @@
     {
       "component": "badge",
       "source": "playground/src/components/badge/BadgePage.tsx",
-      "sourceSha256": "1356b05faf14eae718170f00458902bb13e00cb94cb1c5d1e457a705d170c597",
+      "sourceSha256": "f4b374b9f93c9487766f4809c2bc1e28f82c4eecc33f9c72ffd7b92c469b7e9a",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -154,14 +154,14 @@
     {
       "component": "bleed",
       "source": "playground/src/components/bleed/BleedPage.tsx",
-      "sourceSha256": "4daf9a637c19c6f30605e2117614b4f4d034ca40db9a96bf48dec3fa45f53c6f",
+      "sourceSha256": "c72216a7f6389e5bd0594d2be13b4a1298e6d0a2f434aeb5d9abc83a390f4107",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
         "explicitAppearance": false,
-        "explicitDirection": true,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -169,14 +169,14 @@
     {
       "component": "blockquote",
       "source": "playground/src/components/blockquote/BlockquotePage.tsx",
-      "sourceSha256": "3103be83882c0a526c6d2ccf2980a90512a6485d1c0dc5b9e8e0dd33d61b3791",
+      "sourceSha256": "af1988d6882b065a2d224550403ce841c5e9c33e60a73f18d83c4e75763c0f2a",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -184,14 +184,14 @@
     {
       "component": "bottom-navigation",
       "source": "playground/src/components/bottom-navigation/BottomNavigationPage.tsx",
-      "sourceSha256": "432ab5f4921dd2562db6ff2bf833e4bc13dec554eb1db79587b6a8edc27d0500",
+      "sourceSha256": "f6539ffcbbdfc78fa5f633357b5a091dcdfe8a23055ebee860ada3b9da4d7080",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -199,14 +199,14 @@
     {
       "component": "breadcrumb",
       "source": "playground/src/components/breadcrumb/BreadcrumbPage.tsx",
-      "sourceSha256": "9b08dfa83e05f2049602c14cc4ed6dc46f042cc6d09f2556e4f9b1b1c5653b48",
+      "sourceSha256": "45f08f95db6e9bd58a34573b717fe69828d2c6d87138e6fc4e20dc9fec66e543",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -214,7 +214,7 @@
     {
       "component": "button",
       "source": "playground/src/components/button/ButtonPage.tsx",
-      "sourceSha256": "ab6ab9122f2f990de6249a8484b492c62a02a7f9fde1272fa67b9535d0977448",
+      "sourceSha256": "b15ce7de6d072df1d09b34f30093240f85fdd281e78cbbd3ce3fd67938075c4f",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -229,7 +229,7 @@
     {
       "component": "calendar",
       "source": "playground/src/components/calendar/CalendarPage.tsx",
-      "sourceSha256": "d6ea44df3d348b81426a7fc94f0eaa943deaf83800f978dd989502cd5a4fbfb5",
+      "sourceSha256": "10673cb6186be399b530f16d1cb08e8af7c0dfa0edafe14c7df6ebb0432879b9",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -237,21 +237,21 @@
       "reviewSignals": {
         "explicitAppearance": false,
         "explicitDirection": false,
-        "locale": true,
+        "locale": false,
         "portalOrShadowRoot": false
       }
     },
     {
       "component": "card",
       "source": "playground/src/components/card/CardPage.tsx",
-      "sourceSha256": "f80a109c41d960f5101ea5ee4befda1ffde89a3fa7bc232de895011bf07479c1",
+      "sourceSha256": "6880c44c726924be68ea036398a6d62473d590dcff4b3c2dee1ca7495154acbc",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -259,13 +259,13 @@
     {
       "component": "carousel",
       "source": "playground/src/components/carousel/CarouselPage.tsx",
-      "sourceSha256": "8c16abc559f5b49cb4b73050324417c30de800aa0b376883b9efed5d000ac8c7",
+      "sourceSha256": "9f16823c9d9fcec345c3d624f2a131188c4bfacfeecc2b5d3c34a0725c82abe8",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
+        "explicitAppearance": false,
         "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
@@ -274,14 +274,14 @@
     {
       "component": "center",
       "source": "playground/src/components/center/CenterPage.tsx",
-      "sourceSha256": "63967ef9a8b25da7c80f4146eecd9ab990c0b68b5c270d8b0eaf8263c1a7b0ff",
+      "sourceSha256": "c9bc1295584403812fb97b975732b68e681ffd9a14ec93ca1721746d7c2f975e",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
         "explicitAppearance": false,
-        "explicitDirection": true,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -289,14 +289,29 @@
     {
       "component": "checkbox",
       "source": "playground/src/components/checkbox/CheckboxPage.tsx",
-      "sourceSha256": "ee00ce83d3169a16fb135ba76e7037317edd6e60c588d5c5184c19270013d003",
+      "sourceSha256": "9b7d7b1faf9fe8ec28e6240fa495b2c22bc948210b7e9c13eb66635f09a21e07",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "checkbox-card",
+      "source": "playground/src/components/checkbox-card/CheckboxCardPage.tsx",
+      "sourceSha256": "0778d562759e27d7174e4393daa891c4f4116c970b947e6bf5e62e408ab890db",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -304,14 +319,14 @@
     {
       "component": "checkbox-group",
       "source": "playground/src/components/checkbox-group/CheckboxGroupPage.tsx",
-      "sourceSha256": "6e6f0c8f49558d3011fb3220991f51c210a0dbd30cbb7264b3f889085f2bf56b",
+      "sourceSha256": "96f8deee8781b1b90c4183915b0d00a5dfc4574c02f815f97a4f65895ae25b82",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -319,7 +334,7 @@
     {
       "component": "checkmark",
       "source": "playground/src/components/checkmark/CheckmarkPage.tsx",
-      "sourceSha256": "529b223a82eaf2151af20f8b05fc7daff0c70bc62f933d1be149f469a8e6f873",
+      "sourceSha256": "a170f77ab2fcf184c0129075d042b5440fbaa9e47ff0a40d8d33827dc8bcc00d",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -334,14 +349,14 @@
     {
       "component": "chip",
       "source": "playground/src/components/chip/ChipPage.tsx",
-      "sourceSha256": "a5deb49227983fdda5c375a7c56b958b2314424449594e5f2c9b3a41a2451ad9",
+      "sourceSha256": "7b61988e74ea7a58ee0a8977fc3d29b173c987ac18e7347982b8a6c839b87c17",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -349,7 +364,7 @@
     {
       "component": "close-button",
       "source": "playground/src/components/close-button/CloseButtonPage.tsx",
-      "sourceSha256": "385b2ac3ce8fd8d70cd16c0d685cfd8f9bcf1078111727cbf02b6e2c80762439",
+      "sourceSha256": "80d9c4734f4288f4ef178e7d7667717c1e5bb92b732cacfdbf2021916ddfb564",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -364,14 +379,14 @@
     {
       "component": "code",
       "source": "playground/src/components/code/CodePage.tsx",
-      "sourceSha256": "b9427a0858016624dcd72b68b79585a34a779e7ef8623bc7fcd2527593ecb98a",
+      "sourceSha256": "b40d6bafa9eed33c7e6ca39ae2e5c6a5334fc507a7e8fbea351856e835b8173a",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -379,14 +394,14 @@
     {
       "component": "code-block",
       "source": "playground/src/components/code-block/CodeBlockPage.tsx",
-      "sourceSha256": "f11692075b87f6d94085bb856deed13b33ceee4f9fb7bd4d7ee8bbe8d66dcbdd",
+      "sourceSha256": "6b12c8ef4410a34ce8e64cff46b1e667d790c480bc6e993a30b49ca55192abbe",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -394,14 +409,14 @@
     {
       "component": "collapsible",
       "source": "playground/src/components/collapsible/CollapsiblePage.tsx",
-      "sourceSha256": "36094cedd294aae3eca0c9f7fc1209f4f67ab06a4459e2db48128de94b523bc1",
+      "sourceSha256": "f2267bb95c5e84bea890f9bef9008d5ac8f3ee06cee1470d54a04e5a341cb8b2",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -409,14 +424,14 @@
     {
       "component": "color-picker",
       "source": "playground/src/components/color-picker/ColorPickerPage.tsx",
-      "sourceSha256": "bdbf1602f67e95abb951d24b9a55995c841ada9e3f15a7376993b7c9dfeb9cca",
+      "sourceSha256": "5cf4eb993a0962a323d7261945779038b19e3f1171da46acbfa2c2168f81c905",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -424,13 +439,13 @@
     {
       "component": "color-swatch",
       "source": "playground/src/components/color-swatch/ColorSwatchPage.tsx",
-      "sourceSha256": "0dc6d72a2b9d0066c395944cfd7421b294efe6d26e23c937adaffa37bab2ef2b",
+      "sourceSha256": "c91bf7619b03b85fff384afb4caefeb185a6b3b96c1e4082a0b044d7909e201a",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
+        "explicitAppearance": false,
         "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
@@ -439,7 +454,7 @@
     {
       "component": "combobox",
       "source": "playground/src/components/combobox/ComboboxPage.tsx",
-      "sourceSha256": "4a04505e153f64075b2af6343c3e16d8e036d7a59d8e21523e641217607af88d",
+      "sourceSha256": "d05153c6d9a85c1434a5c0b87aec59c9af91f3d5141cf9a79b6fc5cbaf7bb878",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -454,14 +469,14 @@
     {
       "component": "container",
       "source": "playground/src/components/container/ContainerPage.tsx",
-      "sourceSha256": "50259ba262f394dec782048774f9dadb898209d463b8e0f66d3a8cd1cda87780",
+      "sourceSha256": "9587ec748da7378d49a41f6b4987f30b24250da40fa07caedf48ac0185264bf0",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -469,14 +484,14 @@
     {
       "component": "context-menu",
       "source": "playground/src/components/context-menu/ContextMenuPage.tsx",
-      "sourceSha256": "073c209503a20094631ad5f161f12e2751d5d58a57970938bf8a8a006fb0df8b",
+      "sourceSha256": "d91de705bb6c833e08fec6e137462fcfa7beb3a31539ca74c12b9077999c48e1",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -484,7 +499,7 @@
     {
       "component": "data-grid",
       "source": "playground/src/components/data-grid/DataGridPage.tsx",
-      "sourceSha256": "440e679031355fd177566827ecdd7288f645df9af81d97e6a882850fd291ec89",
+      "sourceSha256": "9455d71ab9ce04254f66fd94f4ed883449dc12e2f3384deb7f80012d9299de7e",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -499,14 +514,14 @@
     {
       "component": "data-list",
       "source": "playground/src/components/data-list/DataListPage.tsx",
-      "sourceSha256": "f75b7cd5a81cdae7f68edeaf2e279d43178a5f031ff19566bcb75594d63cd600",
+      "sourceSha256": "65bdf8293f36d74b3ef89c2fd07b1e7d030d24407aced27fdee23af022f4a6a0",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -514,7 +529,7 @@
     {
       "component": "date-input",
       "source": "playground/src/components/date-input/DateInputPage.tsx",
-      "sourceSha256": "ffbe876c41a86a4d0339f1d877c0ee4b8bfb3ae4c0326817eebcdaa87b1d1c55",
+      "sourceSha256": "94258c05d3f4cf81b4cf6fbeeb3501ba78136566642966f7d5e432bcb90c8c55",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -522,14 +537,14 @@
       "reviewSignals": {
         "explicitAppearance": false,
         "explicitDirection": false,
-        "locale": true,
+        "locale": false,
         "portalOrShadowRoot": false
       }
     },
     {
       "component": "date-picker",
       "source": "playground/src/components/date-picker/DatePickerPage.tsx",
-      "sourceSha256": "4ea20a7f266a90534ffd7152422bed3860996fab26303aeb80d0f042da895b60",
+      "sourceSha256": "060e1d62975ce1f87a78f983e11871f070ee3d37794f7ceea6f1ee71207249b3",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -537,36 +552,36 @@
       "reviewSignals": {
         "explicitAppearance": false,
         "explicitDirection": false,
-        "locale": true,
+        "locale": false,
         "portalOrShadowRoot": false
       }
     },
     {
       "component": "dialog",
       "source": "playground/src/components/dialog/DialogPage.tsx",
-      "sourceSha256": "2764f752ca12ba3807a1b14bef4741ce39b8ba1df9f1b148470bdb2d5d3b121d",
+      "sourceSha256": "19de6face9c7380613186f035830ca6c3df3085d88dc44919cb4c4a867119c57",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
-        "portalOrShadowRoot": true
+        "portalOrShadowRoot": false
       }
     },
     {
       "component": "divider",
       "source": "playground/src/components/divider/DividerPage.tsx",
-      "sourceSha256": "6b925acf4b44a2c3dce6478eb1cefeb610c5f5668784fc89bace49685898270f",
+      "sourceSha256": "4b93e6e8eb7acdeda2c05875daac7347e33422d0f1f6ef26a6e70ccdb6908d82",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -574,7 +589,7 @@
     {
       "component": "download-trigger",
       "source": "playground/src/components/download-trigger/DownloadTriggerPage.tsx",
-      "sourceSha256": "7c15edf7bcfdcf68e261dbdb2a971a11131eb012813040dcc8fc381de98c797c",
+      "sourceSha256": "e7bc09d08c08cc2b3cd159fe0251d1dd9d64c9aa59f65ec5a9ce16acdd093eec",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -589,29 +604,29 @@
     {
       "component": "drawer",
       "source": "playground/src/components/drawer/DrawerPage.tsx",
-      "sourceSha256": "61f1498aaf18fd6adc187f50d4b988f11819a1003ceaf97dfaa6f4e4f573e8b1",
+      "sourceSha256": "534e1349372bb1639409ce0ca58710b16eef349b3c70f0eb38a3429c20bcc3c8",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
-        "portalOrShadowRoot": true
+        "portalOrShadowRoot": false
       }
     },
     {
       "component": "dropdown-menu",
       "source": "playground/src/components/dropdown-menu/DropdownMenuPage.tsx",
-      "sourceSha256": "c36fe9a79a000bfd0d40aae5cf85ac01763ee70eb260e56d6967cd64429a6f58",
+      "sourceSha256": "9f473961281251adee0ba3e1926f42003e35b998736f846da7ae93f882ccad86",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -619,14 +634,14 @@
     {
       "component": "editable",
       "source": "playground/src/components/editable/EditablePage.tsx",
-      "sourceSha256": "a84bbec605b199f76df0c86099d4b42b33385c0851400449f7e22e80854e4fe9",
+      "sourceSha256": "7dda170e8debdffcc6ff0b40316795e75b8c646d80dcc121d00d2e907e7d2056",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -634,14 +649,14 @@
     {
       "component": "em",
       "source": "playground/src/components/em/EmPage.tsx",
-      "sourceSha256": "2baf53a2948782e4d724ef08484bb520e37205183bed902a1f736acfae7c8b2f",
+      "sourceSha256": "71ac759dfd4803a404bfbd3a986c46e62e4988df148c79d1420840004bf18181",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -649,14 +664,14 @@
     {
       "component": "empty-state",
       "source": "playground/src/components/empty-state/EmptyStatePage.tsx",
-      "sourceSha256": "9dd2dfbb9e09325b7d8d7a9399a0b5bc1f8c57a59cc6b5455f5856ad6876ed56",
+      "sourceSha256": "47a8a4c47821e797ef942195418a9e810b9f08aa6e1eb4844d9a1bf0dbfd2530",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -664,14 +679,14 @@
     {
       "component": "feed",
       "source": "playground/src/components/feed/FeedPage.tsx",
-      "sourceSha256": "7e25d1db1d1f11f0f714a41182d0de251f7417ed5520f48aad12bb95395649af",
+      "sourceSha256": "f8ea2233c72ddc5e501e829c78a19b3c57a5d80be62d73fb88480e83e9d5ed46",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -679,14 +694,14 @@
     {
       "component": "field",
       "source": "playground/src/components/field/FieldPage.tsx",
-      "sourceSha256": "3bf4edcc000eb5d9b22033a85c1dbab5701521ff2d961bef747ef1b80f5fb6c9",
+      "sourceSha256": "fdf4f4f7ff74903a11f91e045a93dc3e1706e4044a793397f10dfca5c3ccb6a7",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -694,14 +709,14 @@
     {
       "component": "fieldset",
       "source": "playground/src/components/fieldset/FieldsetPage.tsx",
-      "sourceSha256": "3004e3705c4807389252c13de93e8fc77c985b3fd5842d57a4773c12ee131440",
+      "sourceSha256": "94472d1621debcd48445d34a62c101ba61af73342621dbeb07f238578ce4c622",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -709,14 +724,29 @@
     {
       "component": "file-upload",
       "source": "playground/src/components/file-upload/FileUploadPage.tsx",
-      "sourceSha256": "48c710ade2cf397edff02e26ac78318e26db1ecf620fb6c14cee58c2d698ff28",
+      "sourceSha256": "975f253b407849dc1989c4862dc56fadb20a7917fb322d78f6be25837d920503",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "float",
+      "source": "playground/src/components/float/FloatPage.tsx",
+      "sourceSha256": "bd553503782364afa523b78a8986cee11b2b252b4e08196b5ba564331a2c78f1",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -724,22 +754,22 @@
     {
       "component": "floating-panel",
       "source": "playground/src/components/floating-panel/FloatingPanelPage.tsx",
-      "sourceSha256": "607771f498f549b03e9b13af87cb1dff60a28eb7ad147f59d957542452dfa1cc",
+      "sourceSha256": "4a09bd2ce90695c9d8d8e28aae507fa70da9f7cd3d8278fc6b7a90a3be745330",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
+        "explicitAppearance": false,
         "explicitDirection": false,
         "locale": false,
-        "portalOrShadowRoot": true
+        "portalOrShadowRoot": false
       }
     },
     {
       "component": "for",
       "source": "playground/src/components/for/ForPage.tsx",
-      "sourceSha256": "19b0fad1dc31e160b113760caff2e8164f07f274b25582d52deabaf98e6891b9",
+      "sourceSha256": "2facc7bc07cd3dbf1a7ff0dc7b844f35c34228e1adfa880c55013d56e9804dad",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -754,14 +784,14 @@
     {
       "component": "form",
       "source": "playground/src/components/form/FormPage.tsx",
-      "sourceSha256": "e97f799b1105f4405bcf46f2d6667495cc382861f7eef0e0b02ab65883108817",
+      "sourceSha256": "c920f07e0915b43c62be0f5f2e3790e4cb5dc728dc85a9141470eeca85d786f9",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -769,7 +799,7 @@
     {
       "component": "format-byte",
       "source": "playground/src/components/format-byte/FormatBytePage.tsx",
-      "sourceSha256": "c5af1e42cf02ad3aee403ae4a750740944818cb2369b794129013145200c4e8a",
+      "sourceSha256": "755d44c3b0b093bcfd4075aa708a3c267d002108fb0721b20538016bd3dc459f",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -784,7 +814,7 @@
     {
       "component": "format-number",
       "source": "playground/src/components/format-number/FormatNumberPage.tsx",
-      "sourceSha256": "a5216a341de723c5a14a8a8e25e534e7e166f546906f632ac0ccb6fbbb795785",
+      "sourceSha256": "d0884ccb9a359872fd2079fdaf950ea47dc387f0259f5aaedb31afd00bc1232e",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -799,14 +829,14 @@
     {
       "component": "frame",
       "source": "playground/src/components/frame/FramePage.tsx",
-      "sourceSha256": "9186e0c51839215e4460c36b258d2cad22b061ae2aa873676b8c96bed6f14769",
+      "sourceSha256": "b9ce1eb79c221f839083283abba59eea5000faece634e64ea1f5ea5a39c41abc",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
         "explicitAppearance": false,
-        "explicitDirection": true,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -814,14 +844,14 @@
     {
       "component": "grid",
       "source": "playground/src/components/grid/GridPage.tsx",
-      "sourceSha256": "cfbd3b18b764aa4c077da741497f81c0600ed902c56bad8cebfcaee145fd15f8",
+      "sourceSha256": "d80901d27b65e6b012746f55b475f146479c65264db7797ac1cf86e18f605300",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -829,14 +859,14 @@
     {
       "component": "group",
       "source": "playground/src/components/group/GroupPage.tsx",
-      "sourceSha256": "d36279d5de6b56d85a7da71fedb999c40d85f8b9a63520b34026d58076968394",
+      "sourceSha256": "1ebd65b4716b5daa68e4119c3381c4e1afc736cca38d8ecfb4b5a421c64bb537",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -844,7 +874,7 @@
     {
       "component": "hide",
       "source": "playground/src/components/hide/HidePage.tsx",
-      "sourceSha256": "0b8eff4c16a307a2e84cf95c76b2e216a5b41dca9120983e2456b0bb39a748a2",
+      "sourceSha256": "99e19da099238079366c70e116c2733c73e19182e602e68b0ef1bfbe2eb0ad45",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -859,14 +889,14 @@
     {
       "component": "highlight",
       "source": "playground/src/components/highlight/HighlightPage.tsx",
-      "sourceSha256": "f64277fbc3778b78b5202bc0637e1e60e8a288f654c40adc6b94ba52fd600bbf",
+      "sourceSha256": "7300a44f7c558a1c10694daa3889bc6b9038b3e103809fc71ab9d1208ab4270a",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -874,14 +904,14 @@
     {
       "component": "hover-card",
       "source": "playground/src/components/hover-card/HoverCardPage.tsx",
-      "sourceSha256": "dc0b39ad4b8336c5e082590435cbfb25dc5928d076a53a570679dab9da49de4f",
+      "sourceSha256": "7b7c7719cd44aa4d697653bb7ad2abfd786990c5a08a167b2fe4f2349c4988c7",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -889,7 +919,7 @@
     {
       "component": "icon",
       "source": "playground/src/components/icon/IconPage.tsx",
-      "sourceSha256": "2eae7b3cb33d6b2c7f22f777937b2323766e2d2d2d1756b87b4522f06cca3861",
+      "sourceSha256": "82da22203352446970ad30b69acf3890f0b6901b678d9590608c7e15ca9db123",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -904,7 +934,7 @@
     {
       "component": "icon-button",
       "source": "playground/src/components/icon-button/IconButtonPage.tsx",
-      "sourceSha256": "c2e9cd27ff5bb030a2e64abbf6e67a7e738537c93d67cf2a7224b7aad075ff86",
+      "sourceSha256": "54cb571b2c6d34367242d577e2d94e0d7650f484754ac51e9d4042e93b995032",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -919,7 +949,7 @@
     {
       "component": "image",
       "source": "playground/src/components/image/ImagePage.tsx",
-      "sourceSha256": "75807aeea7816e81f51acd1e730eaaefb8a9026384aba491a676e098be887a45",
+      "sourceSha256": "4dfda33f06e53deca48a9b5332e46faa8b496b600982f66b511999aa4a2d9007",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -934,14 +964,29 @@
     {
       "component": "input",
       "source": "playground/src/components/input/InputPage.tsx",
-      "sourceSha256": "6481e59937a203031c08c413d7365cac77fe2121ea27e33017b1f45034a6865c",
+      "sourceSha256": "b27fc86b102b395503816de0a532a4a9b62aa505939ee0e0f9d5a3f74bf3b068",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "input-addon",
+      "source": "playground/src/components/input-addon/InputAddonPage.tsx",
+      "sourceSha256": "d47cdc7813e9ca1772b3c923050b3857a47cd5ffd53592e9e682785c5e959a00",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -949,14 +994,14 @@
     {
       "component": "kbd",
       "source": "playground/src/components/kbd/KbdPage.tsx",
-      "sourceSha256": "23639befeede9172817323e34b3ec0cb77778711c68d34ccd2140207c90dba02",
+      "sourceSha256": "6d307130bd9f3ef86cf2da5dce8dccdeb5f0c7e9e6fffd6a7c53b82d365d7740",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -964,14 +1009,14 @@
     {
       "component": "link",
       "source": "playground/src/components/link/LinkPage.tsx",
-      "sourceSha256": "786ab9ffab02f426b89b8462f4d83a32f0a2ba3afe7dab8c333e3a8455fb6da3",
+      "sourceSha256": "3d2db959a9a04e7d0d04b20360452e2701e6d7aa5012abff84131df284bf251a",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -979,14 +1024,14 @@
     {
       "component": "link-box",
       "source": "playground/src/components/link-box/LinkBoxPage.tsx",
-      "sourceSha256": "570092c648afdf19e0e433908c7fa3f823bbe39e9680d1baa6668e4d1d236109",
+      "sourceSha256": "d5bc3d394f11a8789fcf34b6d23b72d747004e3387ba29fa04d404867c8f4b0b",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -994,14 +1039,14 @@
     {
       "component": "list",
       "source": "playground/src/components/list/ListPage.tsx",
-      "sourceSha256": "16cb0ad700296a1db46a321a4ffbae0925c540e2673d839621941cfd3b5c78d7",
+      "sourceSha256": "0e2b6f9271e0d548dedb15319e89aed51bdb67513fdb844024c5e0f0d1d290fb",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1009,7 +1054,7 @@
     {
       "component": "locale-provider",
       "source": "playground/src/components/locale-provider/LocaleProviderPage.tsx",
-      "sourceSha256": "fb8b540d25c74b612cc5c102e3cff00930842392373ca9a9f6dca1ac24df26c8",
+      "sourceSha256": "99ba16154294c3833ca2487291bfae601e6b039b9790a2ae7318857cc5e97646",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1024,14 +1069,14 @@
     {
       "component": "mark",
       "source": "playground/src/components/mark/MarkPage.tsx",
-      "sourceSha256": "dd147b1738cbba43a3d7e1c03130e0e3b757c41a2398d83a0040c78394b2a121",
+      "sourceSha256": "ae4bf08511f51fd0a4a026ebdcbda0affa47ccb407ce71245e158966b56bfb41",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1039,14 +1084,14 @@
     {
       "component": "marquee",
       "source": "playground/src/components/marquee/MarqueePage.tsx",
-      "sourceSha256": "515f0d79ad437bc052f20abefb4353ff953b7128bc0b36fa58a4758f7e9e0651",
+      "sourceSha256": "9737ba4fe11a0d1bc0ce2b0b95a1d7241b160b4123079957fae29eda9058f7fd",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1054,14 +1099,14 @@
     {
       "component": "menubar",
       "source": "playground/src/components/menubar/MenubarPage.tsx",
-      "sourceSha256": "32d1d674c4a2fe812002d6bfef10b9fd3f10120a4364a3d5d16a6f8c262afa38",
+      "sourceSha256": "bc93ab213757c5cf3b3cbcc64839ca3dc1a5ee1962cf33790fc6e8d065396f2d",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1069,14 +1114,14 @@
     {
       "component": "multi-select",
       "source": "playground/src/components/multi-select/MultiSelectPage.tsx",
-      "sourceSha256": "662bee0ff1512777fa8934aaaa46ab0c9a795e88cdc095c7b3726e509ea63588",
+      "sourceSha256": "72a1ec29e1130ceb2fc087c7c383ed39224b81a9cf26621503f4323db36d6e17",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1084,14 +1129,14 @@
     {
       "component": "native-select",
       "source": "playground/src/components/native-select/NativeSelectPage.tsx",
-      "sourceSha256": "c5ee6f0f3835f4606a45aa5651314c5ee261b06459e7cdd6f64449b47d8fe636",
+      "sourceSha256": "55fb9931b76b1e15aacf173b9112b2541c999d17dae7c6ac40b184f1b216caab",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1099,14 +1144,14 @@
     {
       "component": "nav-list",
       "source": "playground/src/components/nav-list/NavListPage.tsx",
-      "sourceSha256": "449b2fc8c7648f032c808410dacf3bd252e1f8334a9a8bdb984b84bf8d1070c1",
+      "sourceSha256": "ff92dae30915773ef452848f183c0295a1734abda37035e52901f220220e77dc",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1114,14 +1159,14 @@
     {
       "component": "navigation-menu",
       "source": "playground/src/components/navigation-menu/NavigationMenuPage.tsx",
-      "sourceSha256": "d249a9dfaf5579c5f6acd061cc0a444b0c1ea1aa7e91c41211d9fb44e44bbe3e",
+      "sourceSha256": "012d1563363af0e8a298a1f465057a6f8854cc1a07769735b21ad45d0ea5042d",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1129,14 +1174,14 @@
     {
       "component": "notification-badge",
       "source": "playground/src/components/notification-badge/NotificationBadgePage.tsx",
-      "sourceSha256": "90cecbbb9c9b711741ec1d100fd562cfdd8fa708a90a6851f180964e9ce98afd",
+      "sourceSha256": "c7e43e9210b3a4ee756e22a40c4505eeb465d7fb6dbbc572acdf73dcf4eecf08",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1144,7 +1189,7 @@
     {
       "component": "number-input",
       "source": "playground/src/components/number-input/NumberInputPage.tsx",
-      "sourceSha256": "6b9f3ccb3d5bff340511ea513c2d2c8bb1b95991504c017a63062323ec0af793",
+      "sourceSha256": "942c8e4eef9c7d2b1108dac97dfac216fa86c13b159385da3ed17a6857631e36",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1152,36 +1197,36 @@
       "reviewSignals": {
         "explicitAppearance": true,
         "explicitDirection": true,
-        "locale": false,
+        "locale": true,
         "portalOrShadowRoot": false
       }
     },
     {
       "component": "overlay-manager",
       "source": "playground/src/components/overlay-manager/OverlayManagerPage.tsx",
-      "sourceSha256": "95351bac491f0a4f30af79ace3ded536467d0132b549c3679c8f3fdde5078c45",
+      "sourceSha256": "b2254eafbd8a49034fd3f52fd2f4c4339a92e77e5ca764e34b86f801490e4321",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
+        "explicitAppearance": false,
         "explicitDirection": false,
-        "locale": true,
+        "locale": false,
         "portalOrShadowRoot": false
       }
     },
     {
       "component": "pagination",
       "source": "playground/src/components/pagination/PaginationPage.tsx",
-      "sourceSha256": "c1cc891d6119377ceb50ee6ea1d04e266264097397686dcbd75fc15bf2731af4",
+      "sourceSha256": "fe272dd3d7fd1c9389792dd6ea72b0c5122c5dfa3f1567b4b7f88da8d6e8d813",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1189,14 +1234,14 @@
     {
       "component": "password-toggle-field",
       "source": "playground/src/components/password-toggle-field/PasswordToggleFieldPage.tsx",
-      "sourceSha256": "b10ebcfe09a2728f9e349f389c9119e929287a8f0868fe5810545ec481cff6c4",
+      "sourceSha256": "29db2f5d0f5ac14df1654b643a6b3e015e1f7ad6bc8346f4d9bff59a88db9b47",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1204,14 +1249,14 @@
     {
       "component": "pin-input",
       "source": "playground/src/components/pin-input/PinInputPage.tsx",
-      "sourceSha256": "f6ec256c45a73bcf9f967eba063da0cbd0f57cde0c0b157b997323f859c36535",
+      "sourceSha256": "8e18a0aa526174b946f4c5b235e08deb987acad639ebb722913eb0f097248cca",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1219,7 +1264,7 @@
     {
       "component": "popover",
       "source": "playground/src/components/popover/PopoverPage.tsx",
-      "sourceSha256": "b78d1bd033095d39f6115d2f3ead0259181f15a1f1d265c07f5162200111cd47",
+      "sourceSha256": "3dd4214d12afe79b1b358fbad81dd05e23efaddb45ea59f74db2a3063dcff0ed",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1234,14 +1279,14 @@
     {
       "component": "progress",
       "source": "playground/src/components/progress/ProgressPage.tsx",
-      "sourceSha256": "a2e10b393d861229cac76996d66095986a91c829f731548b0bbd70d48aa2b232",
+      "sourceSha256": "bcb0851285c8c5a08d05abe3ca56ab1580852cdd60bfd4c3aa80bf0918723f07",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1249,14 +1294,14 @@
     {
       "component": "progress-circle",
       "source": "playground/src/components/progress-circle/ProgressCirclePage.tsx",
-      "sourceSha256": "5219c141b59a446a6ee693e8ac32aecdff7bf47865899bec037e3f75ec8891f0",
+      "sourceSha256": "430beccde4bc7f6aacf970ec62e64e24560e64152f49af9a91fc8b65813c32c1",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1264,14 +1309,14 @@
     {
       "component": "prose",
       "source": "playground/src/components/prose/ProsePage.tsx",
-      "sourceSha256": "b0995a47e84167965d1e32e0b02cda96edcb48ac8e455187e7fc60c7726eb94a",
+      "sourceSha256": "78cbdbb523dc7accfd9a0b03b0c8187a7ead05a09b5ebfe019ca6596918c2ea6",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1279,14 +1324,14 @@
     {
       "component": "qr-code",
       "source": "playground/src/components/qr-code/QrCodePage.tsx",
-      "sourceSha256": "7b5d97fee6af526d9daf8c529abafd66de6f8247d1838fbb542ffd0b4af658cb",
+      "sourceSha256": "339fed469dc8211cbfc034e2f26e3b54a76d78c81aaf2e9d7ca6c0401f7304d0",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1294,14 +1339,14 @@
     {
       "component": "radio-card",
       "source": "playground/src/components/radio-card/RadioCardPage.tsx",
-      "sourceSha256": "3b69f457780c1cbe3518379cb9ba43413711625e223dc72bb2a1fc32eedbc020",
+      "sourceSha256": "70b33793e54384485327ea41c50868506a1a8fc14c30a18cc16ebc2d508366ba",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1309,7 +1354,7 @@
     {
       "component": "radio-group",
       "source": "playground/src/components/radio-group/RadioGroupPage.tsx",
-      "sourceSha256": "ba9fece4ae8a39630ea1069486bd49db3c1911b135a02503bd319fbbc119d7fb",
+      "sourceSha256": "bbe5f241d6c20e816f4fe14d588c989d65f2d5d8856d6fa031e0c2fd21e2be8f",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1324,7 +1369,7 @@
     {
       "component": "radiomark",
       "source": "playground/src/components/radiomark/RadiomarkPage.tsx",
-      "sourceSha256": "7516595d64212adf5d9d78082dd5c07180c55bfaf25aa0d446b98168d4de3561",
+      "sourceSha256": "67000cc2852602f5a43f0ead1b69d0fcd8a555eba5616b0effa3d3a852dbe632",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1339,14 +1384,14 @@
     {
       "component": "rating",
       "source": "playground/src/components/rating/RatingPage.tsx",
-      "sourceSha256": "b99e77f560248e893c21606c7b80685a5215a56565e7f6ebc626b21c75420576",
+      "sourceSha256": "c0151efa5bfcfec6137275c925b70fdcf77531d9e89984590762e3c230b9fb31",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1354,14 +1399,14 @@
     {
       "component": "reorderable-list",
       "source": "playground/src/components/reorderable-list/ReorderableListPage.tsx",
-      "sourceSha256": "3df168dac3aed19de2034921d4d13762334d921f93087557efe21835cc7936ed",
+      "sourceSha256": "0dde7ab6172c8d88a3b1cadb7f58d550f26a06b2f549bca23d16582f25471f29",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1369,14 +1414,14 @@
     {
       "component": "scroll-area",
       "source": "playground/src/components/scroll-area/ScrollAreaPage.tsx",
-      "sourceSha256": "360aecc370b51fcbb76d013a7b1cf38c4008b63172ce1da56f15383447262784",
+      "sourceSha256": "744e3cc840203c910ebbabef7af039ccda538454e8b0d5246781abb05adeae4c",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1384,14 +1429,14 @@
     {
       "component": "section",
       "source": "playground/src/components/section/SectionPage.tsx",
-      "sourceSha256": "7974ad1364be55a45e9afc921e4dfceac426da549e1517000c4cb7a277fe26d1",
+      "sourceSha256": "b728dcfd6d16dc2054b978b33a976a82b4cc9537cfed46a63d385d5333e86516",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
         "explicitAppearance": false,
-        "explicitDirection": true,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1399,14 +1444,14 @@
     {
       "component": "segment-group",
       "source": "playground/src/components/segment-group/SegmentGroupPage.tsx",
-      "sourceSha256": "6bb620e3c5bc2f30134f7546fe2d1bfde9f9786655254d4d136f4cd309a0d7f9",
+      "sourceSha256": "e4845e0ff43be3acd2122bbab04603df022c6eff7ffd8748883feb5070cf6497",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1414,14 +1459,14 @@
     {
       "component": "select",
       "source": "playground/src/components/select/SelectPage.tsx",
-      "sourceSha256": "fc744c9a4fb478050954228bb77a1e7084998a32da0a50e61e469eaf6268653c",
+      "sourceSha256": "5fda528594b2aac37e1474164746194923fc1cb231ce34818b6d6c98e3e98281",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1429,7 +1474,7 @@
     {
       "component": "show",
       "source": "playground/src/components/show/ShowPage.tsx",
-      "sourceSha256": "0a12c40ef7c46f5cc4af11e80527a99d3f1e9d85f6c9e60f29663d5963fadcec",
+      "sourceSha256": "74557c630e86c3d3da51fb264996aa88e10ac779dd17f4a94ef4c30e823aa5f2",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1444,14 +1489,14 @@
     {
       "component": "sidebar",
       "source": "playground/src/components/sidebar/SidebarPage.tsx",
-      "sourceSha256": "e5802f5a090d4ab607fd1a19866a4cc72507140b6396766f32761547eb9cacf7",
+      "sourceSha256": "08653588c22e9cd449328987590e572057fe92555a960db29c51771038b03205",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1459,14 +1504,14 @@
     {
       "component": "skeleton",
       "source": "playground/src/components/skeleton/SkeletonPage.tsx",
-      "sourceSha256": "e07d919f7d8c2fa94dfb076fc634853038a5e32607622ceae3863a590e3fd3e5",
+      "sourceSha256": "f011052bf5575d8ade909b7a21937583d6dadbb83607747f0ce8d2615cf04d84",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1474,14 +1519,14 @@
     {
       "component": "skip-link",
       "source": "playground/src/components/skip-link/SkipLinkPage.tsx",
-      "sourceSha256": "f8c741b4b10aac2953e490ace7c018a8f48fb95cd1d5c00ae07ef6a70f03adc4",
+      "sourceSha256": "8184ea71bf3eb50d6f72bf123709144c4a6243d66bcec3008aee240771947280",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1489,7 +1534,7 @@
     {
       "component": "slider",
       "source": "playground/src/components/slider/SliderPage.tsx",
-      "sourceSha256": "cd723f0492cf8299f2e138a1dd34f4317c5c8b795e37c2e134a47c8804f32060",
+      "sourceSha256": "3f1c994c737981e4037f8dbf14fb6b2fe443f8f40e40c7cd0e1ea2eae8d07e6c",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1504,14 +1549,14 @@
     {
       "component": "spinner",
       "source": "playground/src/components/spinner/SpinnerPage.tsx",
-      "sourceSha256": "1b5ab314a7eb0648ff286c57565407f3b56a04e69c47aa11c484b8a3f2d4d3f3",
+      "sourceSha256": "5994e8eb9316f1bf31c1f50889d0118835cc1c5231c7e2224ce9f7335c07c07f",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1519,14 +1564,14 @@
     {
       "component": "splitter",
       "source": "playground/src/components/splitter/SplitterPage.tsx",
-      "sourceSha256": "efa11e6acd372c418f254cf47709e48e98eeb3c87f1419ac9702dc0ca7e1999f",
+      "sourceSha256": "b11d11e6f858067bc20c9317dda08a61af4112add230c96dc3a485357581712e",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
         "explicitAppearance": false,
-        "explicitDirection": true,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1534,14 +1579,14 @@
     {
       "component": "stack",
       "source": "playground/src/components/stack/StackPage.tsx",
-      "sourceSha256": "53432e4d08541a68d5a688dd7ad1b254211f4c06764b7bb1193bd1879dc0951d",
+      "sourceSha256": "6e8e03d32b1ede875dc95cdb742aafb47c6db6e0689d2a8b6d4ae1eae9710071",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1549,22 +1594,22 @@
     {
       "component": "stat",
       "source": "playground/src/components/stat/StatPage.tsx",
-      "sourceSha256": "12cfc110067dabdad62e256f9e96a6a559aa5b945b73783212a13bef1b3f70ae",
+      "sourceSha256": "869d0d9e24be33d5cfb9ce4e12d5fef73e4a08cc2b4f0aeb2f92979aa3e5a9a0",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
-        "locale": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
         "portalOrShadowRoot": false
       }
     },
     {
       "component": "status",
       "source": "playground/src/components/status/StatusPage.tsx",
-      "sourceSha256": "f17afb3dc0a80879cdb04f2ccf0c1c999f6f99d92e36c037dada01972c944387",
+      "sourceSha256": "5b9dff27acbcbfea3ef24b437d12b59ba17f4009653d29f9fa1679689f5f64c9",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1579,14 +1624,14 @@
     {
       "component": "steps",
       "source": "playground/src/components/steps/StepsPage.tsx",
-      "sourceSha256": "c5a3a7fa24d5cf330531232607deda2bd36c9debc436630df7f04f859d48416c",
+      "sourceSha256": "292aaf078682378c807db10e090522bede26cbb85a97115f0be7d3175cf1dd61",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
         "explicitAppearance": false,
-        "explicitDirection": true,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1594,14 +1639,14 @@
     {
       "component": "surface",
       "source": "playground/src/components/surface/SurfacePage.tsx",
-      "sourceSha256": "ee7cb7442f1e6d81bc091e0ea43556b524757bf8036265723a4baec857837411",
+      "sourceSha256": "4b65efc1bbf394f8669357d1e2932a38188584587882d713099720875b0696c0",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1609,14 +1654,14 @@
     {
       "component": "swipeable-item",
       "source": "playground/src/components/swipeable-item/SwipeableItemPage.tsx",
-      "sourceSha256": "4461276ed5651d3c644ee67a9559f0f2d5f2b9608b0abf154c3f5d0c1ba200e3",
+      "sourceSha256": "e60c90ef57ab1399e4dff2869dc66d1224763b979547534a5cf5965a6a0410eb",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1624,14 +1669,14 @@
     {
       "component": "switch",
       "source": "playground/src/components/switch/SwitchPage.tsx",
-      "sourceSha256": "5dbdd6b0f29dc3bb4a130ee1b8268338c74a8bdff396b3d1bcb90f77c8186993",
+      "sourceSha256": "5b4d6e5fc7357b7fff2605e9a90a88161f8cdf560e51a43d2d689667ed7ccc41",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1639,14 +1684,14 @@
     {
       "component": "table",
       "source": "playground/src/components/table/TablePage.tsx",
-      "sourceSha256": "90d6d4fe1dde4d83ba9aaa2046b2286f9b4403ab7cba51a0000619a9e5c3e647",
+      "sourceSha256": "c1640f19ff4071c3b5737db0cfa7a011dda83d8a41c71b3c1bbac2a044bb6c0e",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1654,7 +1699,7 @@
     {
       "component": "table-of-contents",
       "source": "playground/src/components/table-of-contents/TableOfContentsPage.tsx",
-      "sourceSha256": "3e76d2e70f22472fb0cbf8d4272367d715eff065ea616ad6b3c052e27c4dbef7",
+      "sourceSha256": "093ea9bddb2ccffaadb088914ab3bec2fc311661587f7a17622c19318d43f16e",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1669,14 +1714,14 @@
     {
       "component": "tabs",
       "source": "playground/src/components/tabs/TabsPage.tsx",
-      "sourceSha256": "9c0e35bd44f73891131446545cf80c309f821b975f04b676e695e5829b51c05d",
+      "sourceSha256": "cb362875806acfc600eb23a94f8207d5f679dffc1b6bc85c28aa39f111540d3d",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1684,14 +1729,14 @@
     {
       "component": "tags-input",
       "source": "playground/src/components/tags-input/TagsInputPage.tsx",
-      "sourceSha256": "e3c9adb94e00888e00df4bc637b6a0b7c6cc055c6d56ed5fca1f61bf06bbbc8f",
+      "sourceSha256": "daa8749349bff23dbcb15fd8130dc21989bd3190904bb954e35a2dcd466f8552",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1699,14 +1744,14 @@
     {
       "component": "text",
       "source": "playground/src/components/text/TextPage.tsx",
-      "sourceSha256": "5d3103a907eca0c135092515a76e6eb3835e88833255986044914b1760640558",
+      "sourceSha256": "167fd5886027174331e63b8c7281cc46eb13ef7f5a85e5828b66f840b0ef2734",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1714,7 +1759,7 @@
     {
       "component": "textarea",
       "source": "playground/src/components/textarea/TextareaPage.tsx",
-      "sourceSha256": "7a5c063dd54eda6343810778056841b2182346d867d8e9f00a5cfd2ad1ca0433",
+      "sourceSha256": "fd0ed805f71379b9b3be47abbf73d64dfbf07ee3052a2421ed43b7ae9fda2320",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1729,14 +1774,14 @@
     {
       "component": "timeline",
       "source": "playground/src/components/timeline/TimelinePage.tsx",
-      "sourceSha256": "2a37b0825227562a5a654616b51c868fc6d50d5959711a030bd9658be0b374f4",
+      "sourceSha256": "8d52c053708d64a6856595211ebbecf63aae447ff1db87d88593f75fd11e3090",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1744,14 +1789,14 @@
     {
       "component": "toast",
       "source": "playground/src/components/toast/ToastPage.tsx",
-      "sourceSha256": "8b58f10e6270009f82b387337a2a1cb7c66bf231106999f603d3e3ae39cbf03b",
+      "sourceSha256": "804b4c46e0fbc7182dc4c3c251ef139b3436e60d5f592fc7cbb2b68f741dc010",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1759,7 +1804,7 @@
     {
       "component": "toggle",
       "source": "playground/src/components/toggle/TogglePage.tsx",
-      "sourceSha256": "6bfb57d31eb968b4a48e21290f3233c923df3d8f4c8be220b342288ee0af8295",
+      "sourceSha256": "32bc85466bb35787b00657964974920499b58756ec06b29e9241bccb36fd34a7",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1774,7 +1819,7 @@
     {
       "component": "toggle-group",
       "source": "playground/src/components/toggle-group/ToggleGroupPage.tsx",
-      "sourceSha256": "15d70778c1864e89fe610eb28a6b062dfa0e0a66737f4c50cbb9af4d9ceac925",
+      "sourceSha256": "3af27977a858c872f8cc907a0c1d3b3cc3f6551cb358c9e8bf5e2d79a320c8b8",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1782,6 +1827,21 @@
       "reviewSignals": {
         "explicitAppearance": true,
         "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "toggle-tip",
+      "source": "playground/src/components/toggle-tip/ToggleTipPage.tsx",
+      "sourceSha256": "bd1bb17d3e90563855d4d976aa9c289900464fadd114c799f0b1b9b4f8babbf8",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1789,14 +1849,14 @@
     {
       "component": "toolbar",
       "source": "playground/src/components/toolbar/ToolbarPage.tsx",
-      "sourceSha256": "5d480cbe7e15f7553119f7e24e38522c1d76f8d462f9af61c2242a1e2f806994",
+      "sourceSha256": "349d909e1c837c0b96d0a007675f4d65e0c52314340f2a3dd069c2f521dea3ab",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1804,7 +1864,7 @@
     {
       "component": "tooltip",
       "source": "playground/src/components/tooltip/TooltipPage.tsx",
-      "sourceSha256": "1788a2262deadd44399b8929ec561f43f20105985bd798c067d6c721a00419fd",
+      "sourceSha256": "ee404c0ef9195d34511987876f8e6cf3934c82a9e6e0d1f6ba6f3d9c22199e2a",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1819,7 +1879,7 @@
     {
       "component": "tree",
       "source": "playground/src/components/tree/TreePage.tsx",
-      "sourceSha256": "5b29817fde1a93181be0823b21eef640bc3adec91065ba5718d1c9139395b34b",
+      "sourceSha256": "67400bc2eda7a85f0c2a1aa1b5cea754c8d34e7a3e761e501af10fc796202f99",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1834,7 +1894,7 @@
     {
       "component": "tree-grid",
       "source": "playground/src/components/tree-grid/TreeGridPage.tsx",
-      "sourceSha256": "921ae2ffbae87777b83d3794de882b3079165eda4aca2d430cc9a8b8efad1471",
+      "sourceSha256": "b42c922cd3d5888387e711b43442448fc4dfedc7c97521d3cddb0d32eccea43c",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
@@ -1849,14 +1909,14 @@
     {
       "component": "visually-hidden",
       "source": "playground/src/components/visually-hidden/VisuallyHiddenPage.tsx",
-      "sourceSha256": "dd34586517ed40d99fec1ba393494cb4719393d19c56efe36d15e62f36fdd1c9",
+      "sourceSha256": "5838afa712d7a620581f675151467bcfd27d89f9f3915b3ebb5559bd4d426f32",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
-        "explicitAppearance": true,
-        "explicitDirection": true,
+        "explicitAppearance": false,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }
@@ -1864,14 +1924,14 @@
     {
       "component": "z-stack",
       "source": "playground/src/components/z-stack/ZStackPage.tsx",
-      "sourceSha256": "c41037ff7f4444de237cb54070c01e8d21b4a5385a4ad1a86c1c2852d46ac149",
+      "sourceSha256": "94e0cc025d66aab9cd68804c5d724e52ba134148a55505144d512a2679d16714",
       "mode": "inline",
       "sourceMode": "paired-page-source",
       "heightPolicy": "authored-layout",
       "scopePolicy": "authored-local-providers-and-props-win",
       "reviewSignals": {
         "explicitAppearance": false,
-        "explicitDirection": true,
+        "explicitDirection": false,
         "locale": false,
         "portalOrShadowRoot": false
       }

@@ -3,38 +3,43 @@
   "scope": "Recent component qualification. Scenario inventory is a required floor, not a claim of full Cartesian API or manual coverage.",
   "owners": [
     {
-      "id": "qr-code", "page": "playground/src/components/qr-code/QrCodePage.tsx",
+      "id": "qr-code", "page": "playground/src/components/qr-code/QrCodeEvidence.tsx", "route": "/qr-code?qualification=1",
       "scenarios": ["qr-code.basic", "qr-code.sizes", "qr-code.full", "qr-code.controlled", "qr-code.store", "qr-code.unicode", "qr-code.correction", "qr-code.encoding", "qr-code.margin", "qr-code.appearance", "qr-code.logos", "qr-code.overlay", "qr-code.download", "qr-code.actions", "qr-code.status", "qr-code.errors", "qr-code.rtl", "qr-code.dialog"],
       "assertion": { "file": "playground/tests/components/qr-code/behavior.spec.ts", "name": "all scenarios render and preset frames stay square" },
       "manual": "playground/manual-tests/qr-code.md"
     },
     {
-      "id": "marquee", "page": "playground/src/components/marquee/MarqueePage.tsx",
+      "id": "marquee", "page": "playground/src/components/marquee/MarqueeEvidence.tsx",
+      "route": "/marquee?qualification=1",
       "scenarios": ["marquee.basic", "marquee.directions", "marquee.vertical", "marquee.timing", "marquee.fill", "marquee.pause", "marquee.store", "marquee.finite", "marquee.edges", "marquee.lanes", "marquee.art", "marquee.news", "marquee.cards", "marquee.preferences", "marquee.boundaries", "marquee.safety"],
       "assertion": { "file": "playground/tests/components/marquee/behavior.spec.ts", "name": "Marquee motion, pause and replica safety" },
       "manual": "playground/manual-tests/marquee.md"
     },
     {
-      "id": "chip", "page": "playground/src/components/chip/ChipPage.tsx",
+      "id": "chip", "page": "playground/src/components/chip/ChipEvidence.tsx",
+      "route": "/chip?qualification=1",
       "scenarios": ["chip.overview", "chip.anatomy", "chip.recipes", "chip.sizes", "chip.leading", "chip.removal", "chip.containment", "chip.appearance", "chip.boundary", "chip.compact", "chip.slots", "chip.actions"],
       "assertion": { "file": "playground/tests/components/chip/behavior.spec.ts", "name": "Chip compact slots and actions retain geometry and independent activation" },
       "manual": "playground/manual-tests/chip.md"
     },
     {
-      "id": "stat", "page": "playground/src/components/stat/StatPage.tsx",
+      "id": "stat", "page": "playground/src/components/stat/StatEvidence.tsx",
+      "route": "/stat?qualification=1",
       "scenarios": ["stat.basic", "stat.sizes", "stat.formats", "stat.locales", "stat.units", "stat.trends", "stat.icons", "stat.support", "stat.group", "stat.values", "stat.appearance"],
       "assertion": { "file": "playground/tests/components/stat/behavior.spec.ts", "name": "Stat sizes, native grammar and group overrides remain coherent" },
       "manual": "playground/manual-tests/stat.md"
     },
     {
-      "id": "timeline", "page": "playground/src/components/timeline/TimelinePage.tsx",
+      "id": "timeline", "page": "playground/src/components/timeline/TimelineEvidence.tsx",
+      "route": "/timeline?qualification=1",
       "scenarios": ["timeline.basic", "timeline.sizes", "timeline.recipes", "timeline.indicators", "timeline.sides", "timeline.alternating", "timeline.rich", "timeline.time", "timeline.last", "timeline.surfaces", "timeline.appearance"],
       "assertion": { "file": "playground/tests/components/timeline/behavior.spec.ts", "name": "Timeline marker sizes, final lines and tone overrides" },
       "manual": "playground/manual-tests/timeline.md"
     },
     {
       "id": "empty-state",
-      "page": "playground/src/components/empty-state/EmptyStatePage.tsx",
+      "page": "playground/src/components/empty-state/EmptyStateEvidence.tsx",
+      "route": "/empty-state?qualification=1",
       "scenarios": [
         "empty-state.basic",
         "empty-state.sizes",
@@ -58,7 +63,8 @@
     },
     {
       "id": "alert",
-      "page": "playground/src/components/alert/AlertPage.tsx",
+      "route": "/alert?qualification=1",
+      "page": "playground/src/components/alert/AlertEvidence.tsx",
       "scenarios": [
         "alert.basic",
         "alert.description",
@@ -85,7 +91,8 @@
     },
     {
       "id": "spinner",
-      "page": "playground/src/components/spinner/SpinnerPage.tsx",
+      "page": "playground/src/components/spinner/SpinnerEvidence.tsx",
+      "route": "/spinner?qualification=1",
       "scenarios": [
         "spinner.basic",
         "spinner.sizes",
@@ -112,7 +119,7 @@
     },
     {
       "id": "overlay-manager",
-      "page": "playground/src/components/overlay-manager/OverlayManagerPage.tsx",
+      "page": "playground/src/components/overlay-manager/OverlayManagerEvidence.tsx",
       "scenarios": [
         "overlay-manager.dialog",
         "overlay-manager.drawer",
@@ -137,7 +144,7 @@
     },
     {
       "id": "floating-panel",
-      "page": "playground/src/components/floating-panel/FloatingPanelPage.tsx",
+      "page": "playground/src/components/floating-panel/FloatingPanelEvidence.tsx",
       "scenarios": [
         "floating-panel.basic",
         "floating-panel.controlled-open",
@@ -172,7 +179,8 @@
     },
     {
       "id": "calendar",
-      "page": "playground/src/components/calendar/CalendarPage.tsx",
+      "route": "/calendar?qualification=1",
+      "page": "playground/src/components/calendar/CalendarEvidence.tsx",
       "scenarios": [
         "calendar.density",
         "calendar.selection",
@@ -191,7 +199,8 @@
     },
     {
       "id": "date-input",
-      "page": "playground/src/components/date-input/DateInputPage.tsx",
+      "route": "/date-input?qualification=1",
+      "page": "playground/src/components/date-input/DateInputEvidence.tsx",
       "scenarios": [
         "date-input.sizes",
         "date-input.recipes",
@@ -210,7 +219,8 @@
     },
     {
       "id": "date-picker",
-      "page": "playground/src/components/date-picker/DatePickerPage.tsx",
+      "route": "/date-picker?qualification=1",
+      "page": "playground/src/components/date-picker/DatePickerEvidence.tsx",
       "scenarios": [
         "date-picker.single",
         "date-picker.range",
@@ -228,7 +238,7 @@
     },
     {
       "id": "steps",
-      "page": "playground/src/components/steps/StepsPage.tsx",
+      "page": "playground/src/components/steps/StepsEvidence.tsx",
       "scenarios": [
         "steps.workflow",
         "steps.recipes",
@@ -246,7 +256,8 @@
     },
     {
       "id": "checkmark",
-      "page": "playground/src/components/checkmark/CheckmarkPage.tsx",
+      "route": "/checkmark?qualification=1",
+      "page": "playground/src/components/checkmark/CheckmarkEvidence.tsx",
       "scenarios": [
         "checkmark.recipes",
         "checkmark.sizes",
@@ -262,7 +273,8 @@
     },
     {
       "id": "radiomark",
-      "page": "playground/src/components/radiomark/RadiomarkPage.tsx",
+      "route": "/radiomark?qualification=1",
+      "page": "playground/src/components/radiomark/RadiomarkEvidence.tsx",
       "scenarios": [
         "radiomark.recipes",
         "radiomark.sizes",
@@ -314,7 +326,7 @@
     },
     {
       "id": "download-trigger",
-      "page": "playground/src/components/download-trigger/DownloadTriggerPage.tsx",
+      "page": "playground/src/components/download-trigger/DownloadTriggerEvidence.tsx",
       "scenarios": [
         "download-trigger.ready",
         "download-trigger.async",
@@ -330,7 +342,7 @@
     },
     {
       "id": "splitter",
-      "page": "playground/src/components/splitter/SplitterPage.tsx",
+      "page": "playground/src/components/splitter/SplitterEvidence.tsx",
       "scenarios": [
         "splitter.workspace",
         "splitter.vertical",
@@ -406,7 +418,7 @@
     },
     {
       "id": "center",
-      "page": "playground/src/components/center/CenterPage.tsx",
+      "page": "playground/src/components/center/CenterEvidence.tsx",
       "scenarios": [
         "center.identities",
         "center.composition",

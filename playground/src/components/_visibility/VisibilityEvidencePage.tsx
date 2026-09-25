@@ -20,7 +20,7 @@ import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { Specimen } from "../../shared/Specimen.js";
 import "./visibility.playground.css";
 
-type VisibilityProps = ShowProps | HideProps;
+type VisibilityProps = Extract<ShowProps, { from: string }> | HideProps;
 
 export function createVisibilityScenarios(id: "show" | "hide") {
   const label = id === "show" ? "Show" : "Hide";

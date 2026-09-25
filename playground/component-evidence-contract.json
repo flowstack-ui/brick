@@ -1,6 +1,6 @@
 {
   "schema": "flowstack.brick-playground-evidence.v1",
-  "componentCount": 125,
+  "componentCount": 129,
   "previewEnvironment": {
     "defaultMode": "inline",
     "directOwnerEvidenceQuery": "testMode=1",
@@ -59,7 +59,6 @@
       "badge",
       "card",
       "carousel",
-      "checkmark",
       "chip",
       "collapsible",
       "color-swatch",
@@ -70,20 +69,18 @@
       "image",
       "list",
       "notification-badge",
-      "radiomark",
       "table",
       "tree",
       "tree-grid"
     ],
     "Feedback": ["empty-state", "alert", "spinner", "progress", "progress-circle", "skeleton", "status", "toast"],
+    "Date and Time": ["calendar", "date-input", "date-picker"],
     "Forms": [
       "tags-input",
       "editable",
       "native-select",
-      "calendar",
-      "date-input",
-      "date-picker",
       "checkbox",
+      "checkbox-card",
       "checkbox-group",
       "color-picker",
       "combobox",
@@ -92,6 +89,7 @@
       "file-upload",
       "form",
       "input",
+      "input-addon",
       "multi-select",
       "number-input",
       "pin-input",
@@ -106,26 +104,24 @@
       "textarea"
     ],
     "Layout": [
+      "float",
       "splitter",
-      "appearance",
       "aspect-ratio",
       "bleed",
       "center",
       "container",
       "divider",
-      "for",
       "frame",
       "grid",
       "group",
-      "hide",
       "scroll-area",
       "section",
-      "show",
       "sidebar",
       "stack",
       "surface",
       "z-stack"
     ],
+    "Utilities": ["appearance", "show", "hide", "for", "checkmark", "radiomark"],
     "Navigation": [
       "table-of-contents",
       "app-bar",
@@ -140,6 +136,7 @@
       "steps"
     ],
     "Overlays": [
+      "toggle-tip",
       "floating-panel",
       "overlay-manager",
       "alert-dialog",
@@ -149,16 +146,14 @@
       "popover",
       "tooltip"
     ],
+    "Internationalization": ["locale-provider", "format-number", "format-byte"],
     "Typography": [
       "blockquote",
       "code",
       "code-block",
       "em",
-      "format-byte",
-      "format-number",
       "highlight",
       "kbd",
-      "locale-provider",
       "mark",
       "prose",
       "text"

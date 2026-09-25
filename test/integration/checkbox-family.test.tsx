@@ -88,7 +88,7 @@ describe("Checkbox family integration", () => {
     });
   });
 
-  it("inherits Fieldset naming, description, state, and required validity", () => {
+  it("inherits Fieldset naming, description, state, and required validity", async () => {
     render(
       <Fieldset.Root id="topics" invalid required>
         <Fieldset.Legend>Topics</Fieldset.Legend>
@@ -108,6 +108,11 @@ describe("Checkbox family integration", () => {
     expect(group).toHaveAttribute("data-invalid");
     expect(group).toHaveAttribute("data-required");
     expect(item).toHaveAttribute("aria-invalid", "true");
-    expect(item).toHaveAttribute("aria-required", "true");
+    expect(item).not.toHaveAttribute("aria-required");
+    const validation = document.querySelector<HTMLInputElement>("#topics input[required]");
+    expect(validation).not.toBeNull();
+    expect(validation!.checkValidity()).toBe(false);
+    await userEvent.click(item);
+    expect(validation!.checkValidity()).toBe(true);
   });
 });

@@ -3,6 +3,7 @@ import type { PlaygroundEntry } from "../app/component-registry.js";
 import { scenarioDomId, type ScenarioDefinition } from "../shared/Scenario.js";
 import { PlaygroundResourceLinks } from "./PlaygroundResourceLinks.js";
 import { PlaygroundAiTip } from "./PlaygroundAiTip.js";
+import { docsRoutes } from "../app/docs-routes.js";
 
 export function PlaygroundPageHeader({ entry, scenarios }: {
   entry: PlaygroundEntry;
@@ -25,13 +26,13 @@ export function PlaygroundPageHeader({ entry, scenarios }: {
             <Paragraph tone="secondary">
               {entry.description}
             </Paragraph>
-            <PlaygroundResourceLinks componentId={entry.id} />
+            {entry.kind !== "composition" && <PlaygroundResourceLinks componentId={entry.id} />}
             <PlaygroundAiTip />
           </VStack>
         </Stack.Item>
       </Stack>
 
-      {entry.id !== "aspect-ratio" && <Container
+      {!docsRoutes[entry.id] && <Container
         aria-label={`${pageTitle} scenarios`}
         as="nav"
         className="scenario-nav"

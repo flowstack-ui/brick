@@ -14,7 +14,23 @@ Keep shared page chrome here, not inside individual component examples.
   It composes Alert's bordered warning paint, Badge, Stack and Text without
   custom CSS. Agent Skills is plain text until a destination is approved;
   do not add a placeholder link, click handler or live announcement role.
-- `PlaygroundFooter.tsx` owns shared footer content.
+- `PlaygroundFooter.tsx` owns previous/next documentation links, within the
+  article column. `navigation-order.ts` shares category/title ordering with
+  the sidebar; omit missing neighbors at the ends instead of wrapping routes.
+
+Docs-style pages register section metadata and their edit URL in
+`app/docs-routes.ts`. This shared map drives the rail and suppresses the legacy
+scenario menu; do not add per-component conditions to the shell. Keep examples
+and their raw source together, typed props/section data separate, and retained
+qualification scenarios behind the owner's qualification/preview path.
+
+Copyable `components/*/examples/*.tsx` files must be formatted with
+`npm run format:playground-examples` before handoff. The playground build checks
+this with pinned Prettier: readable indentation, multiline JSX returns wrapped
+in parentheses, and consistently wrapped imports/props. Display the executable
+file through its raw import, without separate hand-maintained source strings.
+Keep test-only IDs out of these files; locate examples through their shared
+preview wrapper and component anatomy. The formatting check also enforces this.
 - `ComponentNavigation.tsx` owns the reusable component index.
 - `branding/BrickLogo.tsx` contains the SVG asset and its Frame size constraint.
 

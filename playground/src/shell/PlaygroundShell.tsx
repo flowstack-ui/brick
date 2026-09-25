@@ -5,7 +5,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import { Container, ScrollArea, Sidebar, SkipLink } from "@flowstack-ui/brick";
+import { Container, ScrollArea, Sidebar, SkipLink, VStack } from "@flowstack-ui/brick";
 import {
   playgroundEntries,
   type PlaygroundEntry,
@@ -61,7 +61,7 @@ export function PlaygroundShell({
   const mobileNavigationTriggerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const desktopQuery = window.matchMedia("(min-width: 80rem)");
+    const desktopQuery = window.matchMedia("(min-width: 48rem)");
     const closeMobileNavigation = ({
       matches,
     }: Pick<MediaQueryList, "matches">) => {
@@ -81,6 +81,7 @@ export function PlaygroundShell({
     <Container data-playground-content="" gutter="none" measure="full">
       {children}
     </Container>
+    <PlaygroundFooter currentRoute={entry.route} />
   </>;
 
   return (
@@ -103,43 +104,47 @@ export function PlaygroundShell({
         finalFocus={restoreMobileNavigationFocus ? mobileNavigationTriggerRef : undefined}
       />
 
-      <Sidebar.Root className="evidence-layout" position="sticky">
-        <Sidebar.Panel
-          aria-label="Component index"
-          className="evidence-sidebar"
-        >
-          <Sidebar.Content>
-            <ScrollArea.Root
-              className="evidence-sidebar-scroll"
-              scrollbarVisibility="interaction"
-            >
-              <ScrollArea.Viewport focusable>
-                <ComponentNavigation
-                  currentRoute={entry.route}
-                  entries={playgroundEntries}
-                />
-              </ScrollArea.Viewport>
-            </ScrollArea.Root>
-          </Sidebar.Content>
-        </Sidebar.Panel>
+      <Container measure="max">
+        <Sidebar.Root className="evidence-layout" position="sticky" surface="transparent">
+          <Sidebar.Panel
+            aria-label="Component index"
+            className="evidence-sidebar"
+          >
+            <Sidebar.Content inset="none">
+              <ScrollArea.Root
+                className="evidence-sidebar-scroll"
+                scrollbarVisibility="interaction"
+              >
+                <ScrollArea.Viewport focusable>
+                  <VStack startSpacing="5" endSpacing="5">
+                    <ComponentNavigation
+                      density="compact"
+                      currentRoute={entry.route}
+                      entries={playgroundEntries}
+                    />
+                  </VStack>
+                </ScrollArea.Viewport>
+              </ScrollArea.Root>
+            </Sidebar.Content>
+          </Sidebar.Panel>
 
-        <Sidebar.Main asChild>
-          <OptionalSkipTarget config={skipLink}>
-            <Container
-              as="main"
-              className="evidence-main-column"
-              gutter="lg"
-              measure="max"
-            >
-              {tableOfContents ? (
-                <DocsTableOfContents sections={tableOfContents} editPageHref={editPageHref}>{pageContent}</DocsTableOfContents>
-              ) : pageContent}
+          <Sidebar.Main asChild>
+            <OptionalSkipTarget config={skipLink}>
+              <Container
+                as="main"
+                className="evidence-main-column"
+                gutter="lg"
+                measure="max"
+              >
+                {tableOfContents ? (
+                  <DocsTableOfContents sections={tableOfContents} editPageHref={editPageHref}>{pageContent}</DocsTableOfContents>
+                ) : pageContent}
 
-              <PlaygroundFooter />
-            </Container>
-          </OptionalSkipTarget>
-        </Sidebar.Main>
-      </Sidebar.Root>
+              </Container>
+            </OptionalSkipTarget>
+          </Sidebar.Main>
+        </Sidebar.Root>
+      </Container>
     </div>
   );
 }

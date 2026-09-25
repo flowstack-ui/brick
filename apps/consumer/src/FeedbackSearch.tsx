@@ -19,7 +19,7 @@ export function FeedbackSearch() {
     <Text role="status">{state === "loading" ? "Searching projects…" : state === "empty" ? "No matching projects." : state === "ready" ? "One project found." : "Search interrupted."}</Text>
     <VStack aria-busy={state === "loading"} gap="3">
       {state === "loading" && <Spinner />}
-      {state === "empty" && <EmptyState.Root><EmptyState.Content><EmptyState.Title as="h3">No matching projects</EmptyState.Title><EmptyState.Description>Try a shorter term or clear your filters.</EmptyState.Description><Button tone="neutral" variant="outline" onClick={() => { setQuery(""); setState("ready"); }}>Reset project filters</Button></EmptyState.Content></EmptyState.Root>}
+      {state === "empty" && <EmptyState.Root size={{ initial: "sm", md: "md" }}><EmptyState.Content><VStack gap={2}><EmptyState.Title as="h3">No matching projects</EmptyState.Title><EmptyState.Description>Try a shorter term or clear your filters.</EmptyState.Description></VStack><Button tone="neutral" variant="outline" onClick={() => { setQuery(""); setState("ready"); }}>Reset project filters</Button></EmptyState.Content></EmptyState.Root>}
       {state === "error" && <Alert.Root status="error" variant="surface"><Alert.Indicator /><Alert.Content><Alert.Title>Search unavailable</Alert.Title><Alert.Description>Your query is preserved. Try again.</Alert.Description><HStack><Button size="sm" onClick={() => setState("ready")}>Retry project search</Button></HStack></Alert.Content></Alert.Root>}
       {state === "ready" && <Text>Website redesign</Text>}
     </VStack>

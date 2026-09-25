@@ -17,10 +17,10 @@ part. This table is documentation, not a new Brick export or universal schema.
 Use native Table with row and column headers, Code for identifiers, Paragraph
 for descriptions, and For for rows. Surface paints the header; table body is
 transparent. A named keyboard-focusable horizontal ScrollArea preserves all
-three columns on narrow screens. Do not replace it with generic layout or hide
-type/default information on mobile. Test narrow containment and actual scrolling.
-The 800px minimum comparison width keeps ordinary prop names and defaults intact
-instead of breaking identifiers and their quotes across lines.
+three columns if exceptional content overflows. Do not replace it with generic
+layout or hide type/default information on mobile. Let the table fit its content
+column without a forced minimum width; Code wraps long identifiers and unions.
+Test desktop and narrow containment rather than requiring horizontal scrolling.
 
 Changes to a component API must update these rows and their browser assertions
 alongside its public README and Agent Knowledge; typed names alone do not verify

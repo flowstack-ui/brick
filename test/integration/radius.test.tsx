@@ -29,7 +29,7 @@ it("consumes radius on action owners without leaking a native attribute", () => 
   render(<><Button radius="sm">Save</Button><IconButton radius="none" aria-label="Search">S</IconButton><Toggle radius="full">Bold</Toggle><CloseButton radius="subtle"/></>);
   for(const label of ["Save","Search","Bold","Close"]) expect(screen.getByRole("button",{name:label})).not.toHaveAttribute("radius");
   expect(screen.getByRole("button",{name:"Save"}).style.getPropertyValue("--brick-button-radius")).toBe("var(--brick-radius-core-sm)");
-  expect(screen.getByRole("button",{name:"Search"}).style.getPropertyValue("--brick-icon-button-radius")).toBe("0px");
+  expect(screen.getByRole("button",{name:"Search"}).style.getPropertyValue("--brick-button-radius")).toBe("0px");
 });
 it("places group radius on the group while leaving pressed behavior intact", () => {
   render(<ToggleGroup.Root aria-label="Format" radius="md" attached><ToggleGroup.Item value="bold">Bold</ToggleGroup.Item></ToggleGroup.Root>);
@@ -71,15 +71,16 @@ it("keeps nested avatar groups and generated overflow corners independent", () =
   </AvatarGroup>);
   const avatars=container.querySelectorAll<HTMLElement>(".brick-avatar");
   expect(avatars).toHaveLength(2);
-  for(const avatar of avatars)expect(avatar.style.getPropertyValue("--brick-avatar-radius")).toBe("var(--brick-radius-core-sm)");
+  expect(avatars[0]!.style.getPropertyValue("--brick-avatar-radius")).toBe("var(--brick-radius-full)");
+  expect(avatars[1]!.style.getPropertyValue("--brick-avatar-radius")).toBe("var(--brick-radius-core-sm)");
   expect(container.querySelector("[radius]")).toBeNull();
   rerender(<AvatarGroup radius="sm"><AvatarGroup as="span" radius="lg"><Avatar alt="Nested" fallback="N"/></AvatarGroup></AvatarGroup>);
   expect(container.querySelector<HTMLElement>(".brick-avatar")?.style.getPropertyValue("--brick-avatar-radius")).toBe("var(--brick-radius-core-lg)");
 });
 
-it("consumes an independently authored menu content radius", () => {
-  render(<DropdownMenu.Root defaultOpen><DropdownMenu.Trigger>Actions</DropdownMenu.Trigger><DropdownMenu.Content radius="xs"><DropdownMenu.Item>Save</DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Root>);
-  const menu=screen.getByRole("menu");
+it("consumes an independently authored menu content radius", async () => {
+  render(<DropdownMenu.Root defaultOpen><DropdownMenu.Trigger>Actions</DropdownMenu.Trigger><DropdownMenu.Content radius="xs"><DropdownMenu.Item value="save">Save</DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Root>);
+  const menu=await screen.findByRole("menu");
   expect(menu.style.getPropertyValue("--brick-dropdown-menu-content-radius")).toBe("var(--brick-radius-core-xs)");
   expect(menu).not.toHaveAttribute("radius");
 });
