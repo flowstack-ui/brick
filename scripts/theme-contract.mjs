@@ -9,7 +9,7 @@ import {
   serializeValue,
 } from "./token-compiler.mjs";
 
-export const themeContractSchema = "flowstack.brick-theme-contract.v1";
+export const themeContractSchema = "flowstack.brick-theme-contract.v2";
 
 const cssCustomPropertyPattern = /^--[_a-z][_a-z0-9-]*$/u;
 const componentAuthorPathPattern = /^[a-z0-9]+(?:\.[a-z0-9]+)*$/u;
@@ -18,6 +18,14 @@ function validateComponentThemeInput(name, input, component) {
   if (!input || typeof input !== "object") throw new Error(`${component} has an invalid theme input ${name}`);
   if (input.authorPath !== undefined && (typeof input.authorPath !== "string" || !componentAuthorPathPattern.test(input.authorPath))) {
     throw new Error(`${component} theme input ${name} has an invalid authorPath`);
+  }
+  if (input.constraints) {
+    const c = input.constraints;
+    const value = String(input.fallback);
+    const valid = c.kind === "number"
+      ? Number.isFinite(c.minimum) && (c.maximum === undefined || (Number.isFinite(c.maximum) && c.maximum >= c.minimum)) && /^(?:\d+(?:\.\d+)?|\.\d+)$/.test(value) && Number(value) >= c.minimum && (c.maximum === undefined || Number(value) <= c.maximum)
+      : c.kind === "length" && c.minimum === 0 && Array.isArray(c.units) && c.units.length > 0 && c.units.every(unit => ["px", "rem", "em"].includes(unit)) && (value === "0" || /^(?:\d+(?:\.\d+)?|\.\d+)(?:px|rem|em)$/.test(value));
+    if (!valid) throw new Error(`${component} has invalid constraints/default for ${name}`);
   }
   if (input.valueAssignments === undefined) return;
   if (!Array.isArray(input.allowedValues) || input.allowedValues.some((value) => typeof value !== "string")) {
@@ -265,6 +273,7 @@ export async function createThemeContract(packageRoot) {
       name,
       classification: appearanceDependent ? "required" : "derived",
       type: sourceToken.type,
+      ...(name.startsWith("--brick-blur-") ? { constraints: { kind: "length", minimum: 0, units: ["px", "rem", "em"], allowUnitlessZero: true } } : {}),
       description: sourceToken.description ?? tokenDescription(lightPath.slice("semantic.light.".length), sourceToken.type),
       appearance: appearanceDependent ? "light-and-dark" : "invariant",
       defaults: {
@@ -319,7 +328,7 @@ export async function createThemeContract(packageRoot) {
 
   return {
     $schema: themeContractSchema,
-    contractVersion: 5,
+    contractVersion: 6,
     package: { name: packageJson.name, version: packageJson.version },
     sources: {
       tokens: "src/styles/tokens.tokens.json",

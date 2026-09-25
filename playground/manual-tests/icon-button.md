@@ -1,9 +1,16 @@
 # Icon Button manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 | Run information | Value |
 | --- | --- |
 | Component | Icon Button |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased candidate — record exact commit and archive digest |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -21,7 +28,7 @@ does not automatically apply after a route or scenario change.
 
 ## Step 1 — Overview
 
-Setup: Open `/icon-button` at the default review viewport with system
+Setup: Open `/icon-button?qualification=1` at the default review viewport with system
 appearance and LTR direction.
 
 Action: Inspect `01 Overview`, activate `Search workspace` once, and observe
@@ -38,8 +45,8 @@ Notes or issue:
 
 Setup: Open `02 Variants`, then `03 Tones`.
 
-Action: Compare solid, soft, outline, and ghost. In Tones, review neutral,
-accent, info, success, warning, and danger inside every variant group.
+Action: Compare solid, soft, subtle, surface, outline, ghost, and plain. In
+Tones, review neutral, contrast, accent, info, success, warning, and danger.
 
 Expected: Variants change emphasis and boundary only. Tones change semantic
 color treatment only. Every specimen remains square, centered, medium,
@@ -52,9 +59,9 @@ Notes or issue:
 
 Setup: Open `04 Sizes` and `05 Shapes`.
 
-Action: Compare xs, sm, md, lg, and xl, then rounded and circle.
+Action: Compare 2xs, xs, sm, md, lg, xl, and 2xl, then rounded and circle.
 
-Expected: Sizes increase in a clear five-step scale while every target stays
+Expected: Sizes increase in a clear seven-step scale while every target stays
 square and its icon remains centered and proportional. Shape changes corner
 geometry only; it does not change target size, icon size, tone, or action.
 

@@ -7,7 +7,7 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/stack");
+installVisualDefaults("/stack?qualification=1");
 
 async function removeStickyCaptureOverlap(page: import("@playwright/test").Page) {
   await page.addStyleTag({

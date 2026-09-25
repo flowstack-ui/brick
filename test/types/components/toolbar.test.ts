@@ -10,3 +10,5 @@ void badVariant;
 // @ts-expect-error Toolbar toggle tones are intentionally limited to selection emphasis.
 const badToggleTone: ToolbarToggleTone = "danger";
 void badToggleTone;
+const responsive: ToolbarRootProps = { size: { initial: "2xs", md: "2xl" }, disabled: true, variant: "surface" };
+void responsive;

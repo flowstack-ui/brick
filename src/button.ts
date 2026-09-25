@@ -6,3 +6,4 @@ export {
   type ButtonTone,
   type ButtonVariant,
 } from "./components/button/index.js";
+export { ButtonGroup, type ButtonGroupProps } from "./components/button/index.js";

@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Divider |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Record tested package/archive identity |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -12,8 +12,15 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/divider` |
+| Qualification route | `/divider?qualification=1` |
 
-Scenario order: `01 Overview`, `02 Orientation`, `03 Variants`,
+Scenario order: follow the numbered qualification fixtures, then the seven documentation examples.
+
+The documentation route has seven concise examples. Also verify all five
+thicknesses, responsive decorative orientation and inset reset across each
+breakpoint. Semantic/labeled separators retain a scalar orientation.
+
+Qualification scenario order: `01 Overview`, `02 Orientation`, `03 Variants`,
 `04 Thickness`, `05 Inset`, `06 Labels`, `07 Semantics and composition`,
 `08 Appearance and customization`, `09 Responsive and RTL`.
 
@@ -21,7 +28,7 @@ Use `pass`, `fail`, `blocked`, or `not applicable`.
 
 ## Step 1 — Default and visual recipes
 
-Setup: Open `/divider`; review `01`–`06` top to bottom.
+Setup: Open `/divider?qualification=1`; review `01`–`06` top to bottom.
 
 Action: Compare each controlled row without changing page controls.
 

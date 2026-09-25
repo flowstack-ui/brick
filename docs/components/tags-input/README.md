@@ -1,5 +1,7 @@
 # TagsInput
 
+
+
 ## When and where to use
 
 Create and edit multiple short string values in one logical field, optionally
@@ -39,7 +41,8 @@ plus each composed component's stylesheet.
 
 Root, Control and Item are divs; Label is a label; ItemPreview and ItemText are
 spans; Input, ItemInput and HiddenInput are native inputs. ItemDeleteTrigger and
-ClearTrigger are native buttons with asChild/render projection. Atom owns all
+ClearTrigger are native buttons. Structural parts and visible inputs also support
+asChild/render projection; custom hosts must preserve native semantics. Atom owns all
 behavior. Brick Items uses For to render indexed items with preview, removal
 and sibling editor. Custom children replace ItemText content, not the editor.
 
@@ -48,10 +51,10 @@ and sibling editor. Custom children replace ItemText content, not the editor.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` or sparse responsive object | `lg` |
-| `variant` | `outline`, `soft`, `underline` | `outline` |
+| `variant` | `outline`, `surface`, `soft`, `subtle`, `ghost`, `plain`, `underline`, or sparse responsive object | `outline` |
 | `shape` | `sharp`, `rounded`, `pill` (not with underline) | `rounded` |
 | `fullWidth` | boolean | `true` |
-| `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
+| `tone` | `neutral`, `accent`, `contrast`, `info`, `success`, `warning`, `danger` (on Item/Items) | `neutral` |
 
 TagsInputSize, TagsInputVariant, TagsInputShape and TagsInputItemTone are the
 recipe types. TagsInputRootProps and TagsInputRootProviderProps add recipes to
@@ -88,13 +91,20 @@ prohibit imperative mutations. Disabled indexed items survive clear-all.
 
 TagsInputItemProps requires value and current index; disabled is optional.
 TagsInputItemsProps accepts tone, disabled(value,index) and children(value,index).
+It also forwards shared native Item attributes, className and style. Use explicit
+Item parts instead of the shortcut for asChild/render or custom interactive anatomy.
+TagsInputItemContext / TagsInput.ItemContext renders the current index, value,
+id, editing, highlighted and disabled state from its existing Item owner.
+Root `ids.item(index)`, `ids.itemInput(index)` and `ids.itemDeleteTrigger(index)`
+customize occurrence identities. Existing root/control/input/label/hiddenInput/
+clearTrigger IDs remain supported. Stable index/value order is required.
 Keep disabled rules tied to value identity when collection positions can change.
 TagsInputLabelProps, TagsInputControlProps, TagsInputInputProps,
 TagsInputItemPreviewProps, TagsInputItemTextProps, TagsInputItemInputProps,
 TagsInputTriggerProps and TagsInputHiddenInputProps preserve their native attributes.
 
 Named exports mirror every namespace part: TagsInputRoot, TagsInputRootProvider,
-TagsInputContext, TagsInputLabel, TagsInputControl, TagsInputInput, TagsInputItem,
+TagsInputContext, TagsInputItemContext, TagsInputLabel, TagsInputControl, TagsInputInput, TagsInputItem,
 TagsInputItems, TagsInputItemPreview, TagsInputItemText, TagsInputItemInput,
 TagsInputItemDeleteTrigger, TagsInputClearTrigger and TagsInputHiddenInput.
 
@@ -106,15 +116,25 @@ normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
 and responsive objects are not accepted. Where a legacy corner `shape` exists,
 choose either it or `radius`, not both. This does not change behavior, sizing,
 or the independently owned corners of other parts.
+Responsive variants and scalar underline exclude both radius and shape so a
+later boxed breakpoint restores its normal corners.
 
 ## Visual recipes and states
 
-Outline is transparent; soft uses a semantic surface; underline keeps the border
-box but paints only the bottom edge. Seven shared control sizes coordinate text,
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+Use outline for a transparent rest/hover control and surface for a neutral raised fill with the same border and geometry, without a shadow or extra Surface wrapper. Soft remains subdued. Popup backgrounds are independent; preserve explicit disabled, read-only, invalid and forced-colors states.
+
+Outline is transparent; surface is neutral raised; soft is bordered and subdued;
+subtle has a muted fill and transparent border; ghost fills on hover; plain stays
+minimal. Underline has zero horizontal inset and bottom-only hover/focus.
+Invalid focus follows the error color. Seven shared control sizes coordinate text,
 padding and one-row height with Input. Tokens use compact Chip-like geometry;
 remove targets are at least 24px, including small control sizes. Wrapping grows
 the control naturally. Highlight, focus, invalid, disabled and readonly retain
-geometry. Item tones do not add status semantics.
+geometry. Read-only retains focus and submission without add placeholders or
+remove/clear affordances. Labels use Field typography; editable text stays at
+least 16px independently of compact tag text. Item tones do not add status semantics.
 
 ## Tokens and CSS hooks
 
@@ -128,6 +148,12 @@ preview exposes data-highlighted.
 Component hooks: --brick-tags-input-background, --brick-tags-input-border,
 --brick-tags-input-radius, --brick-tags-input-item-background,
 --brick-tags-input-item-foreground and --brick-tags-input-item-radius.
+Additional local hooks are --brick-tags-input-focus-ring,
+--brick-tags-input-invalid-border, --brick-tags-input-hover-background,
+--brick-tags-input-hover-border, --brick-tags-input-item-border and
+--brick-tags-input-item-highlight-background. Set item hooks on the Item itself;
+set boundary hooks on Root or RootProvider. Pair foreground/background changes
+and check highlighted contrast in both appearances.
 They derive from existing semantic Theme tokens; no new Theme slots.
 
 ## Customization
@@ -139,8 +165,10 @@ or translations override default English labels. Applications own async lookup.
 
 ## Responsive behavior
 
-size accepts a scalar or sparse responsive object; missing baseline uses lg.
-Root follows the available width and long values wrap without covering removal.
+size and variant accept scalars or sparse responsive objects; missing baselines
+use lg and outline. Root follows the available width and item rows wrap. Long
+individual labels truncate visually, preserving full values and accessible names
+without covering removal.
 Logical CSS and Atom direction preserve RTL navigation. Parent layout owns placement.
 
 ## Accessibility
@@ -159,7 +187,8 @@ Live feedback is polite and accepts translated messages.
 
 ## Composition, native props, and refs
 
-Native hosts and refs remain invariant except button projection. Field owns
+asChild/render merge into one semantic host and preserve refs/events. Visible
+editors must remain native inputs, Label a label, and actions buttons. Field owns
 description/error relationships. One HiddenInput submits the JSON committed array;
 the unnamed draft is not form data and cannot satisfy required collection validity.
 Parse JSON on the server, not comma-separated text. Reset restores uncontrolled
@@ -175,7 +204,9 @@ when using nondefault sizes so suggestion typography remains coordinated.
 
 ## Examples
 
-The twelve playground scenarios cover all listed policy axes, editing, paste,
+The normal route offers focused source-paired examples, including React Hook
+Form, responsive recipes and item composition. The twelve qualification scenarios
+at `?qualification=1` cover all listed policy axes, editing, paste,
 limits, disabled items, forms, controlled/provider state, shared suggestions,
 loading/empty UI, nested Dialog, recipes, localization and simulated IME.
 

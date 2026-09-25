@@ -1,9 +1,16 @@
 # Icon Button changelog
 
 
+## Unreleased
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+
 Icon Button follows the package version of `@flowstack-ui/brick`.
 
-## Unreleased
+- Preserve action-owned icon sizing through an immediate NotificationBadge, without resizing its indicator.
+
+- Support subtle, surface and plain recipes and ButtonGroup visual defaults.
 
 - Support scalar focusRing="outside" | "inside"; omission stays outside. Inside uses paired foreground and canonical negative-width offset without changing Atom behavior.
 
@@ -50,3 +57,5 @@ Icon Button follows the package version of `@flowstack-ui/brick`.
   `asChild` composition removes the decorative wrapper.
 - Loading presentation now uses the shared private action-spinner recipe and
   retains a visible system-color spinner in forced-color environments.
+
+- Consolidated shared action presentation and icon-only custom loading.

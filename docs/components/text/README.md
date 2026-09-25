@@ -110,11 +110,15 @@ recipe metadata, and documented variables are stable public hooks.
 | `variant`   | `display`, `display-sm`, `display-md`, `display-lg`, `display-xl`, `title-xl`, `title-lg`, `title-md`, `title-sm`, `title-xs`, `title-2xs`, `body-xl`, `body-lg`, `body-md`, `body-sm`, `caption`, `eyebrow`; or a responsive value | `body-md` |
 | `tone`      | `inherit`, `primary`, `secondary`, `muted`, `accent`, `info`, `success`, `warning`, `danger`                                                                                      | `primary`      |
 | `weight` | `inherit`, `thin`, `extralight`, `light`, `regular`, `medium`, `semibold`, `bold`, `extrabold`, `black` | recipe default |
-| `align`     | `start`, `center`, `end`; or a responsive value                                                                                                                                   | natural/start  |
+| `align`     | `start`, `center`, `end`, `justify`; or a responsive value                                                                                                                        | natural/start  |
 | `wrap`      | `wrap`, `nowrap`, `balance`, `pretty`                                                                                                                                             | `wrap`         |
 | `transform` | `none`, `uppercase`, `lowercase`, `capitalize`                                                                                                                                    | variant recipe |
 | `truncate`  | `boolean`                                                                                                                                                                         | `false`        |
-| `lineClamp` | `2`, `3`, `4`, `5`, `6`                                                                                                                                                           | none           |
+| `lineClamp` | Positive integer or `none`, including responsive values | none |
+| `fontStyle` | `normal`, `italic`, `oblique` | inherited |
+| `numeric` | CSS `font-variant-numeric` values, such as `tabular-nums` | inherited |
+| `decoration` | `none`, `underline`, `overline`, `line-through` | inherited |
+| `decorationStyle` | `solid`, `double`, `dotted`, `dashed`, `wavy` | inherited |
 | `slot`      | `string`                                                                                                                                                                          | `text`         |
 | `children`  | `ReactNode`                                                                                                                                                                       | required       |
 
@@ -322,6 +326,25 @@ The parent must provide the inline-size constraint.
 - [Browser behavior](../../../playground/tests/components/text/behavior.spec.ts)
 - [Visual owner](../../../playground/tests/components/text/visual.spec.ts)
 - [Manual protocol](../../../playground/manual-tests/text.md)
+
+### Additional presentation controls
+
+All named exports share `fontStyle`, `numeric`, `decoration`, and
+`decorationStyle`. TextAlign also includes `justify`. These affect paint only:
+use semantic Em/strong when emphasis is meaningful. Numeric typography chooses
+glyph forms, not locale-aware formatting; FormatNumber owns formatting.
+
+TextLineClamp accepts positive integers (validated at runtime) or `none`.
+`lineClamp={{ initial: 1, md: "none", lg: 8 }}` restores full text at md and
+clamps again at lg. Sparse values retain natural text before the first override.
+Native style supports deliberate font size, family, leading, tracking and
+decoration color/thickness/offset overrides. No generic CSS-in-JS prop engine
+or new asChild behavior is introduced.
+
+New public types are TextFontStyle, TextNumeric, TextDecoration and
+TextDecorationStyle. Metadata includes data-font-style, data-decoration,
+data-decoration-style and responsive data-line-clamp-sm/md/lg/xl. Numeric
+glyph choices use native inline style; clamp variables are implementation-only.
 
 ## Changelog
 

@@ -1,8 +1,10 @@
 # Group changelog
 
-Group follows the package version of `@flowstack-ui/brick`.
-
 ## Unreleased
+
+- Add responsive grouping layout, alignment, wrapping, stacking, skipped children and asChild composition; preserve child-owned paint and focus visibility.
+
+Group follows the package version of `@flowstack-ui/brick`.
 
 ### Changed
 

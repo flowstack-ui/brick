@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/icon");
+  await page.goto("/icon?qualification=1");
 });
 
 test("Icon defaults and explicit accessibility modes are deterministic", async ({
@@ -92,14 +92,14 @@ test("Icon sizes, tones, SVG sources, composition, and direction are observable"
     "#scenario-icon-direction [dir=rtl] [data-directional]",
   );
   await expect(rtlDirectional).toHaveCSS(
-    "transform",
-    "matrix(-1, 0, 0, 1, 0, 0)",
+    "scale",
+    "-1 1",
   );
   await expect(
     page.locator(
       "#scenario-icon-direction [dir=rtl] .brick-icon:not([data-directional])",
     ),
-  ).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, 0)");
+  ).toHaveCSS("scale", "1");
 });
 
 test("Icon remains contained and the route has no serious accessibility violations", async ({
@@ -111,4 +111,11 @@ test("Icon remains contained and the route has no serious accessibility violatio
   ).toBeLessThanOrEqual(390);
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
+});
+
+test("directional artwork respects a nested LTR boundary", async ({ page }) => {
+  const icon = page.locator("#scenario-icon-direction [dir=rtl] [data-directional]");
+  await expect(icon).toHaveCSS("scale", "-1 1");
+  await icon.evaluate(node => node.setAttribute("dir", "ltr"));
+  await expect(icon).toHaveCSS("scale", "1");
 });

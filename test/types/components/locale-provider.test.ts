@@ -7,8 +7,16 @@ import {
   type LocaleProviderProps,
 } from "../../../src/locale-provider.js";
 
-const text: Partial<BrickLocaleText> = { clearInput: "Effacer" };
-const props: LocaleProviderProps = { children: "App", locale: "fr-FR", localeText: text };
+const text: Partial<BrickLocaleText> = {
+  clearInput: "Effacer",
+  hidePassword: "Masquer le mot de passe",
+  showPassword: "Afficher le mot de passe",
+};
+const props: LocaleProviderProps = {
+  children: "App",
+  locale: "fr-FR",
+  localeText: text,
+};
 createElement(LocaleProvider, props);
 getLocaleDirection(defaultLocale);
 // @ts-expect-error A provider boundary must name its locale.

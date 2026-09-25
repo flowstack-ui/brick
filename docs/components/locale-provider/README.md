@@ -40,13 +40,37 @@ Public exports are `LocaleProvider`, `LocaleProviderProps`, `LocaleContextValue`
 
 ## API
 
-| Prop | Value | Default |
-| --- | --- | --- |
-| `locale` | required BCP 47 locale string | none |
-| `localeText` | partial `BrickLocaleText` | inherited English defaults |
-| `children` | `ReactNode` | none |
+`useFilter(options = {})` returns locale-aware `contains(value, query)`,
+`startsWith(value, query)` and `endsWith(value, query)`. Options are
+`FilterOptions`: an optional locale override plus Intl.CollatorOptions.
+`LocaleFilter` names the result type. Both types and the hook are exported from
+the root and locale-provider subpath. Locale defaults to the nearest provider;
+usage defaults to search. Use sensitivity=base to ignore case and accents.
+NFC normalization and a bounded Atom collator cache are shared behavior, not
+an application-specific search engine. Empty queries match. Fixed-substring
+matching does not promise fuzzy matching, transliteration, or equivalence for
+arbitrary expansions and differently sized punctuation sequences.
 
-`BrickLocaleText` contains `clearInput`, `close`, `closeNotification`, `decrementValue`, `incrementValue`, `notifications`, `toggleOptions`, `chooseDate`, `clearDate`, `invalidDate`, `startDate`, and `endDate`. Date controls inherit these labels; explicit component labels take precedence. Locale selection does not translate this copy automatically: applications supply translations through `localeText`.
+The provider renders no DOM: set native lang and dir on your existing host.
+It never reads browser language or loads translations. FormatNumber/FormatByte
+inherit formatting locale; NumberInput inherits parsing, formatting and generic
+action labels; date controls inherit locale and date labels; Progress and Steps
+inherit formatted labels where documented. Direction-sensitive Atom controls
+inherit behavioral direction, not a DOM dir attribute. Explicit owner props win.
+
+| Prop         | Value                         | Default                    |
+| ------------ | ----------------------------- | -------------------------- |
+| `locale`     | required BCP 47 locale string | none                       |
+| `localeText` | partial `BrickLocaleText`     | inherited English defaults |
+| `children`   | `ReactNode`                   | none                       |
+
+`BrickLocaleText` contains `clearInput`, `close`, `closeNotification`,
+`decrementValue`, `incrementValue`, `notifications`, `toggleOptions`,
+`showPassword`, `hidePassword`, `chooseDate`, `clearDate`, `invalidDate`,
+`startDate`, and `endDate`. Password Toggle Field and date controls inherit
+these labels; explicit component labels take precedence. Locale selection does
+not translate this copy automatically: applications supply translations
+through `localeText`.
 
 ## Visual recipes and states
 

@@ -1,5 +1,12 @@
 # Date Input manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 | Run information | Value |
 | --- | --- |
 | Component | Date Input |
@@ -29,9 +36,9 @@ empty required value, enter a valid date and reset the form.
 
 Expected: Date values, labels, selection and focus remain synchronized. Invalid
 entry does not silently submit a previous value. Reset restores initial values.
-Popup selection closes only after single or complete range selection;
-multiple selection remains open. Escape in the nested example closes only the
-date popup and restores trigger focus.
+Single and range segments retain their independent names and editing order.
+DateInput has no popup or multiple-selection mode; those are DatePicker and
+Calendar checks, not requirements for this route.
 
 Result:
 Notes or issue: Human interaction-quality review remains unperformed.
@@ -43,9 +50,9 @@ Setup: Inspect light and dark appearance, forced colors, RTL, real 200% and
 
 Action: Repeat the main interaction and inspect every scenario.
 
-Expected: Targets, focus and state remain perceivable; calendar cells remain
-square; adjacent specimens reflow without overlap. Input text remains editable,
-and localized endpoints retain distinct names. Popup stays within the viewport.
+Expected: Targets, focus and state remain perceivable; adjacent specimens reflow
+without overlap. Segments remain vertically aligned with clear actions, editable
+text is not clipped, and localized range endpoints retain distinct names.
 
 Result:
 Notes or issue: Emulated mobile checks do not replace actual zoom or hardware.
@@ -54,11 +61,11 @@ Notes or issue: Emulated mobile checks do not replace actual zoom or hardware.
 
 Setup: Enable VoiceOver or NVDA and record its browser and version above.
 
-Action: Navigate labels, date segments or calendar grids, select a date, and
-inspect any invalid-state message and popup focus transition.
+Action: Navigate labels and date segments, edit a date, and inspect invalid-state
+messages, clearing, and focus movement between range endpoints.
 
 Expected: Names, roles, values, descriptions and state are announced without
-duplicate speech. Calendar keyboard movement and native form focus are usable.
+duplicate speech. Segment keyboard editing and native form validation focus are usable.
 
 Result:
 Notes or issue: Screen-reader review has not been performed.
@@ -79,3 +86,15 @@ Notes or issue:
 Overall result:
 Follow-up issues: Independent assistive-technology, real zoom and physical touch review.
 Workbook updated: Manual coverage remains open; no manual pass is claimed.
+
+## Form surface comparison
+
+- Compare outline and surface on light/dark canvas and raised parents: outline stays transparent; surface owns its neutral fill without adding a shadow.
+- Hover, focus, disable and mark invalid; preserve visible boundaries and explicit state treatment. Compare matched size recipes including their outer borders.
+- Check narrow/RTL containment and forced colors. Segment emphasis must remain distinct from placeholders.
+# Presentation follow-up checks
+
+- [ ] Check segment glyphs and clear icons at every size in light/dark.
+- [ ] Check trailing actions in LTR/RTL, including narrow range entry.
+- [ ] Compare neutral and accent focus across outline/subtle/underline.
+- [ ] Verify placeholder readability, forced colors and real 200–400% zoom.

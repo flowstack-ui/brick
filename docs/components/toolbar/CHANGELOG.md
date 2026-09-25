@@ -4,6 +4,10 @@ Toolbar follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add Group/Input, root disabled, discoverable disabled commands, seven responsive sizes and shared Button/Toggle presentation with per-item overrides.
+- Add surface; make outline transparent. Replace legacy toolbar-item variables with shared control props and variables.
+- Preserve focused documentation examples and separate exhaustive qualification.
+
 - Use canonical focus-width tokens while preserving existing focus ownership and compact placement.
 
 - Default ToggleGroup to neutral ghost and share Toggle/ToggleGroup paint,

@@ -7,6 +7,7 @@ import {
 } from "react";
 import {
   responsiveDataAttributes,
+  normalizeResponsiveValue,
   type ResponsiveValue,
 } from "../_responsive-value/ResponsiveValue.js";
 
@@ -44,10 +45,14 @@ export type TextTone =
   | "danger";
 
 export type TextWeight = "inherit" | "thin" | "extralight" | "light" | "regular" | "medium" | "semibold" | "bold" | "extrabold" | "black";
-export type TextAlign = "start" | "center" | "end";
+export type TextAlign = "start" | "center" | "end" | "justify";
+export type TextFontStyle = "normal" | "italic" | "oblique";
+export type TextNumeric = NonNullable<CSSProperties["fontVariantNumeric"]>;
+export type TextDecoration = "none" | "underline" | "overline" | "line-through";
+export type TextDecorationStyle = "solid" | "double" | "dotted" | "dashed" | "wavy";
 export type TextWrap = "wrap" | "nowrap" | "balance" | "pretty";
 export type TextTransform = "none" | "uppercase" | "lowercase" | "capitalize";
-export type TextLineClamp = 2 | 3 | 4 | 5 | 6;
+export type TextLineClamp = number | "none";
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 export type HeadingVariant =
   | "display"
@@ -75,7 +80,7 @@ type TextOverflowProps =
     }
   | {
       truncate?: false;
-      lineClamp?: TextLineClamp;
+      lineClamp?: ResponsiveValue<TextLineClamp>;
     };
 
 type TextVisualProps = {
@@ -87,6 +92,10 @@ type TextVisualProps = {
   align?: ResponsiveValue<TextAlign>;
   wrap?: TextWrap;
   transform?: TextTransform;
+  fontStyle?: TextFontStyle;
+  numeric?: TextNumeric;
+  decoration?: TextDecoration;
+  decorationStyle?: TextDecorationStyle;
   className?: string;
   style?: CSSProperties;
   slot?: string;
@@ -107,22 +116,44 @@ export const Text = forwardRef<HTMLElement, TextProps>(function Text(
     align,
     wrap = "wrap",
     transform,
+    fontStyle,
+    numeric,
+    decoration,
+    decorationStyle,
     truncate = false,
     lineClamp,
     className,
     slot = "text",
     children,
+    style,
     ...props
   },
   ref,
 ) {
+  const clampStyles: Record<string, string | number> = {};
+  if (truncate && lineClamp !== undefined) {
+    throw new Error("Text truncate and lineClamp are mutually exclusive.");
+  }
+  if (lineClamp !== undefined) {
+    for (const [key, value] of Object.entries(normalizeResponsiveValue(lineClamp))) {
+      if (value === undefined) continue;
+      if (value !== "none" && (!Number.isSafeInteger(value) || value < 1)) {
+        throw new RangeError("Text lineClamp must be a positive integer or none.");
+      }
+      clampStyles[`--_brick-text-clamp${key === "initial" ? "" : `-${key}`}`] = value;
+    }
+  }
   return createElement(
     as,
     {
       ...props,
       className: mergeClassName(className),
       ...responsiveDataAttributes("data-align", align),
-      "data-line-clamp": lineClamp,
+      ...(lineClamp === undefined ? {} : responsiveDataAttributes("data-line-clamp", lineClamp)),
+      "data-font-style": fontStyle,
+      "data-decoration": decoration,
+      "data-decoration-style": decorationStyle,
+      style: { ...clampStyles, ...(numeric === undefined ? {} : { fontVariantNumeric: numeric }), ...style },
       "data-slot": slot,
       "data-tone": tone,
       "data-transform": transform,

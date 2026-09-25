@@ -18,6 +18,13 @@ const tone: ChipTone = "accent";
 const size: ChipSize = "lg";
 const shape: ChipShape = "rounded";
 const rootProps: ChipRootProps = { variant, tone, size, shape };
+const responsive: ChipRootProps = {size:{sm:"sm",md:"lg"},density:{initial:"compact",lg:"comfortable"},variant:{md:"subtle"},tone:"contrast",unstyled:true};
+const projected: ChipLabelProps = {asChild:true,unstyled:true,children:createElement("strong",null,"Design")};
+// @ts-expect-error shared breakpoints exclude arbitrary names
+const invalidBreakpoint: ChipRootProps = {size:{tablet:"md"}};
+// @ts-expect-error radius and shape are mutually exclusive
+const invalidRadius: ChipRootProps = {radius:"control",shape:"pill"};
+void responsive; void projected; void invalidBreakpoint; void invalidRadius;
 const labelProps: ChipLabelProps = { children: "Riley" };
 const removeProps: ChipRemoveTriggerProps = {
   ariaLabel: "Remove Riley",

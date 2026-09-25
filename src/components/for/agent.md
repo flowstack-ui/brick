@@ -20,7 +20,7 @@ Render a typed collection or one explicit fallback without inserting a wrapper.
 
 - **MUST:** Author stable keys on returned item roots; For does not infer identity.
 - **MUST:** Do not add a wrapper merely for For; choose the semantic collection owner separately.
-- **MUST:** Load styles.css or core.css plus for.css.
+- **MUST:** Load any styles required by rendered children; For itself needs no CSS and its compatibility stylesheet is empty.
 
 ## Common mistakes
 

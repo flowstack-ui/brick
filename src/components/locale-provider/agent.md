@@ -18,10 +18,11 @@ Supply an inherited locale, logical direction, and overridable Brick-authored in
 
 ## Rules
 
-- **MUST:** Translate chooseDate, clearDate, invalidDate, startDate and endDate through localeText when needed; setting locale alone does not translate generic accessibility copy.
+- **MUST:** Translate showPassword, hidePassword, chooseDate, clearDate, invalidDate, startDate and endDate through localeText when needed; setting locale alone does not translate generic accessibility copy. Explicit component label props take precedence.
 - **MUST:** Mount LocaleProvider at an application boundary rather than inside each Block.
 - **MUST:** Use localeText only for generic Brick-authored accessibility labels; keep product copy in the application message catalog.
 - **MUST:** Load styles.css or core.css plus locale-provider.css.
+- **MUST:** useFilter inherits locale unless explicitly overridden and forwards Intl.CollatorOptions to Atom. It returns contains, startsWith and endsWith, not application ranking or translation. Set native lang/dir on an existing host; the provider renders no DOM.
 
 ## Common mistakes
 
@@ -41,3 +42,4 @@ Supply an inherited locale, logical direction, and overridable Brick-authored in
 - `calendar`
 - `date-input`
 - `date-picker`
+- `password-toggle-field`

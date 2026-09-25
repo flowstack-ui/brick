@@ -5,7 +5,7 @@ import {
   test,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/group");
+installVisualDefaults("/group?qualification=1");
 
 test("Group overview, attached geometry, and composition", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.locator(".group-overview"), "overview-light.png");

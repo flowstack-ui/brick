@@ -137,7 +137,7 @@
     color: var(--brick-color-text-disabled);
     box-shadow: none;
     cursor: not-allowed;
-    opacity: 0.55;
+    opacity: 0.5;
   }
 
   :where(.brick-toggle[data-disabled][data-state="on"], .brick-toggle-group-item[data-disabled][data-state="on"], .brick-toolbar__toggle-item[data-disabled][data-state="on"]) {

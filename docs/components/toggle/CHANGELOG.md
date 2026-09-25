@@ -1,8 +1,17 @@
 # Toggle changelog
 
+## Unreleased
+
+- Restore the shared single 50% disabled fade without changing geometry or
+  selected-state semantics; retain opaque system colors in forced-colors mode.
+
+Normalize wrapped Icon artwork to the owning slot, matching raw SVG geometry
+without compensating Icon size props. Add an owner browser regression.
+
+- Share Button sizing, including seven responsive sizes, contrast tone, subtle/surface/plain variants and inside focus rings.
+
 Toggle follows the package version of `@flowstack-ui/brick`.
 
-## Unreleased
 
 - Change defaults to neutral ghost for quiet toolbar commands. Remove the soft
   selected bottom shadow; strengthen neutral interaction states consistently in

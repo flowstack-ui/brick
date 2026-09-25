@@ -1,0 +1,69 @@
+@layer brick.components {
+  .brick-button[data-loading][data-custom-loading]::after { content: none; }
+  .brick-button[data-loading][data-custom-loading] > .brick-button__loading-content,
+  .brick-button[data-loading][data-custom-loading] > .brick-button__loading-overlay {
+    opacity: 1;
+    color: var(--brick-button-foreground);
+  }
+  .brick-button[data-disabled][data-loading][data-custom-loading] > :is(.brick-button__loading-content, .brick-button__loading-overlay) {
+    color: var(--brick-button-foreground);
+  }
+  .brick-button__loading-content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--brick-button-gap);
+    min-inline-size: 0;
+  }
+  .brick-button__loading-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+  .brick-button__spinner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    inline-size: 1em;
+    block-size: 1em;
+  }
+  .brick-button__spinner > svg { inline-size: 100%; block-size: 100%; }
+  .brick-button[data-variant="subtle"],
+  .brick-button[data-variant="surface"] {
+    --brick-button-background: var(--brick-icon-button-background, var(--brick-button-tone-soft));
+    --brick-button-background-hover: var(--brick-icon-button-background-hover, var(--brick-button-tone-soft-hover));
+    --brick-button-background-pressed: var(--brick-icon-button-background-pressed, var(--brick-button-tone-soft-pressed));
+    --brick-button-foreground: var(--brick-icon-button-foreground, var(--brick-button-tone-on-soft));
+    --brick-button-border-color: var(--brick-icon-button-border-color, transparent);
+  }
+  .brick-button[data-variant="surface"] {
+    box-shadow: inset 0 0 0 var(--brick-border-width) var(--brick-button-tone-soft-hover);
+  }
+  .brick-button[data-variant="plain"] {
+    --brick-button-background: var(--brick-icon-button-background, transparent);
+    --brick-button-background-hover: var(--brick-icon-button-background-hover, transparent);
+    --brick-button-background-pressed: var(--brick-icon-button-background-pressed, transparent);
+    --brick-button-foreground: var(--brick-icon-button-foreground, var(--brick-button-tone-text));
+    --brick-button-border-color: var(--brick-icon-button-border-color, transparent);
+  }
+  .brick-button[data-variant]:is([data-variant="subtle"], [data-variant="surface"], [data-variant="plain"]):not([data-disabled], [data-loading]):is(:hover, :active) {
+    border-color: transparent;
+  }
+  .brick-button[aria-expanded="true"]:not([data-disabled], [data-loading]) {
+    background: var(--brick-button-background-hover);
+  }
+  .brick-button[data-disabled]:is([data-variant="subtle"], [data-variant="surface"]) {
+    background: var(--brick-color-surface-subtle);
+    border-color: transparent;
+  }
+  .brick-button[data-disabled][data-variant="surface"] {
+    box-shadow: inset 0 0 0 var(--brick-border-width) var(--brick-color-border-subtle);
+  }
+  @media (forced-colors: active) {
+    .brick-button[data-variant="surface"] { box-shadow: none; }
+    .brick-button[data-variant]:is(:hover, :active, [aria-expanded="true"]) { border-color: ButtonText; }
+  }
+}

@@ -1,0 +1,45 @@
+@layer brick.components {
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="outline"] { --brick-date-segment-background: var(--brick-date-segment-emphasized); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="surface"] { --brick-date-segment-background: var(--brick-date-segment-emphasized); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="soft"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-secondary); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="subtle"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-secondary); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="ghost"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="plain"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="underline"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+@media (min-width: 30rem) {
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="outline"] { --brick-date-segment-background: var(--brick-date-segment-emphasized); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="surface"] { --brick-date-segment-background: var(--brick-date-segment-emphasized); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="soft"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-secondary); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="subtle"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-secondary); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="ghost"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="plain"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="underline"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+}
+@media (min-width: 48rem) {
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="outline"] { --brick-date-segment-background: var(--brick-date-segment-emphasized); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="surface"] { --brick-date-segment-background: var(--brick-date-segment-emphasized); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="soft"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-secondary); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="subtle"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-secondary); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="ghost"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="plain"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="underline"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+}
+@media (min-width: 64rem) {
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="outline"] { --brick-date-segment-background: var(--brick-date-segment-emphasized); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="surface"] { --brick-date-segment-background: var(--brick-date-segment-emphasized); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="soft"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-secondary); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="subtle"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-secondary); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="ghost"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="plain"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="underline"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+}
+@media (min-width: 80rem) {
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="outline"] { --brick-date-segment-background: var(--brick-date-segment-emphasized); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="surface"] { --brick-date-segment-background: var(--brick-date-segment-emphasized); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="soft"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-secondary); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="subtle"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-secondary); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="ghost"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="plain"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="underline"] { --brick-date-segment-background: var(--brick-date-segment-soft); --brick-date-placeholder: var(--brick-color-text-muted); }
+}
+}

@@ -14,6 +14,8 @@ Present visual loading without owning request state or announcements.
 
 ## Required composition
 
+- Use responsive size for breakpoint-specific diameters; inherit follows typography.
+- Use asChild for one passive SVG/artwork element, never a control or focusable subtree. Artwork owns its stroke; Spinner supplies size, color and motion without ring paint.
 - Pair a decorative Spinner with visible status text; keep Button loading and Toast announcements on their existing owners.
 
 ## Rules

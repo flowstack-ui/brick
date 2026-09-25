@@ -1,7 +1,42 @@
 @layer brick.components {
-  :where(.brick-tooltip__arrow, .brick-hover-card__arrow, .brick-popover__arrow) {
-    color: var(--brick-floating-arrow-stroke, var(--brick-tooltip-border-color));
-    fill: var(--brick-floating-arrow-fill, var(--brick-tooltip-background));
-    filter: drop-shadow(0 1px 0 var(--brick-floating-arrow-stroke, var(--brick-tooltip-border-color)));
+  .brick-floating-arrow {
+    --_brick-arrow-width: var(--brick-floating-arrow-width, calc(var(--brick-overlay-arrow-size, 12px) * 1.41421356237));
+    --_brick-arrow-height: var(--brick-floating-arrow-height, calc(var(--brick-overlay-arrow-size, 12px) * .70710678118));
+    width: var(--_brick-arrow-width);
+    height: var(--_brick-arrow-height);
+    color: var(--brick-floating-arrow-fill);
+    fill: var(--brick-floating-arrow-fill);
+    stroke: var(--brick-floating-arrow-stroke);
+    overflow: visible;
+    pointer-events: none;
+  }
+  .brick-floating-arrow:is([data-side="left"], [data-side="right"]) {
+    width: var(--_brick-arrow-height);
+    height: var(--_brick-arrow-width);
+  }
+  .brick-floating-arrow [data-arrow-artwork] { display: none; }
+  .brick-floating-arrow[data-side="bottom"] [data-arrow-artwork="bottom"],
+  .brick-floating-arrow[data-side="top"] [data-arrow-artwork="top"],
+  .brick-floating-arrow[data-side="left"] [data-arrow-artwork="left"],
+  .brick-floating-arrow[data-side="right"] [data-arrow-artwork="right"] { display: inline; }
+  .brick-floating-arrow__join {
+    vector-effect: non-scaling-stroke;
+    stroke: var(--brick-floating-arrow-fill);
+    stroke-width: calc(var(--brick-floating-arrow-border-width, var(--brick-border-width)) * 2);
+  }
+  .brick-floating-arrow__edge {
+    vector-effect: non-scaling-stroke;
+    stroke-width: var(--brick-floating-arrow-border-width, var(--brick-border-width));
+    stroke-linejoin: round;
+  }
+  .brick-tooltip__arrow {
+    --brick-floating-arrow-fill: var(--brick-tooltip-background);
+    --brick-floating-arrow-stroke: var(--brick-tooltip-border-color);
+    --brick-floating-arrow-border-width: 0px;
+  }
+  @media (forced-colors: active) {
+    .brick-floating-arrow { --brick-floating-arrow-fill: Canvas; --brick-floating-arrow-stroke: CanvasText; }
+    .brick-floating-arrow__join { stroke: Canvas; }
+    .brick-tooltip__arrow { --brick-floating-arrow-border-width: var(--brick-border-width); }
   }
 }

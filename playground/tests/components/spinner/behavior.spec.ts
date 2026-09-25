@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 
 test("spinner sizes stay square and decorative with no overflow", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/spinner");
+  await page.goto("/spinner?qualification=1");
   const rings = page.locator('[data-scenario="spinner.sizes"] .brick-spinner');
   const expected = [12, 16, 20, 32, 40];
   for (let i = 0; i < expected.length; i++) {
@@ -18,7 +18,7 @@ test("spinner sizes stay square and decorative with no overflow", async ({ page 
 
 test("spinner rotates normally and stays still with reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.goto("/spinner");
+  await page.goto("/spinner?qualification=1");
   const ring = page.getByTestId("spinner-basic");
   await expect(ring).toHaveCSS("animation-name", "brick-spinner-spin");
   const transforms = await ring.evaluate(async el => {
@@ -34,7 +34,7 @@ test("spinner rotates normally and stays still with reduced motion", async ({ pa
 });
 
 test("spinner honors customization and narrow RTL containment", async ({ page }) => {
-  await page.goto("/spinner");
+  await page.goto("/spinner?qualification=1");
   await expect(page.locator('[data-scenario="spinner.duration"] .brick-spinner')).toHaveCSS("animation-duration", "1s");
   await expect(page.locator('[data-scenario="spinner.thickness"] .brick-spinner').last()).toHaveCSS("border-top-width", "3px");
   await page.setViewportSize({ width: 390, height: 844 });

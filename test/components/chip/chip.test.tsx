@@ -10,6 +10,30 @@ import {
 } from "../../../src/chip.js";
 
 describe("Chip", () => {
+  it("serializes sparse responsive recipes with compatible initial values", () => {
+    render(<Chip.Root data-testid="responsive" size={{md:"lg"}} density={{sm:"compact"}} variant={{lg:"subtle"}} tone="contrast"><Chip.Label>Responsive</Chip.Label></Chip.Root>);
+    const root=screen.getByTestId("responsive");
+    for(const [name,value] of Object.entries({"data-size":"md","data-size-md":"lg","data-density":"comfortable","data-density-sm":"compact","data-variant":"soft","data-variant-lg":"subtle","data-tone":"contrast"})) expect(root).toHaveAttribute(name,value);
+    expect(root).not.toHaveAttribute("size");
+  });
+  it("projects static parts onto one actual host and cleans up refs", () => {
+    const ref=createRef<HTMLSpanElement>();
+    const {unmount}=render(<Chip.Root><Chip.Label asChild ref={ref} className="owner"><strong className="child">Projected</strong></Chip.Label><Chip.StartElement render={<i />} aria-hidden>+</Chip.StartElement></Chip.Root>);
+    expect(ref.current?.tagName).toBe("STRONG");
+    expect(ref.current).toHaveClass("owner","child","brick-chip__label");
+    expect(screen.getByText("Projected").parentElement).toHaveClass("brick-chip");
+    expect(screen.getByText("+").tagName).toBe("I");
+    unmount(); expect(ref.current).toBeNull();
+  });
+  it("forwards unstyled only through data attributes and preserves actions", async () => {
+    const onPress=vi.fn(); const user=userEvent.setup();
+    render(<Chip.Root unstyled data-testid="delegate"><Chip.ActionTrigger unstyled onPress={onPress}><Chip.Label unstyled>Open project</Chip.Label></Chip.ActionTrigger><Chip.EndElement unstyled><Chip.RemoveTrigger unstyled disabled ariaLabel="Remove project" /></Chip.EndElement></Chip.Root>);
+    const root=screen.getByTestId("delegate");
+    expect(root).toHaveAttribute("data-unstyled");
+    expect(root.querySelector("[unstyled]")).toBeNull();
+    await user.click(screen.getByRole("button",{name:"Open project"})); expect(onPress).toHaveBeenCalledOnce();
+    expect(screen.getByRole("button",{name:"Remove project"})).toBeDisabled();
+  });
   it("adds compact density, semantic recipes and stable adornment slots", () => {
     const start = createRef<HTMLSpanElement>();
     const end = createRef<HTMLSpanElement>();

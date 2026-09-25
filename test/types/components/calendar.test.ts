@@ -7,6 +7,8 @@ const invalid: CalendarRootProps = { referenceDate, selectionMode: "range", valu
 void [Calendar, valid, invalid];
 
 const sized: CalendarRootProps = { referenceDate, size: "2xl", density: "compact" };
-// @ts-expect-error Calendar uses a scalar size, not viewport-driven behavior.
-const invalidSize: CalendarRootProps = { referenceDate, size: { lg: "xl" } };
-void [sized, invalidSize];
+const responsive: CalendarRootProps = { referenceDate, size: { initial: "sm", lg: "xl" }, asChild: true };
+const sparseResponsive: CalendarRootProps = { referenceDate, size: { lg: "xl" } };
+// @ts-expect-error Responsive sizes only accept supported control-size values.
+const invalidSize: CalendarRootProps = { referenceDate, size: { lg: "huge" } };
+void [sized, responsive, sparseResponsive, invalidSize];

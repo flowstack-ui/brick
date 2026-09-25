@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Icon |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased Icon parity, Brick 0.2.3 |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -12,6 +12,8 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/icon` |
+
+Qualification route: `/icon?qualification=1`. The default `/icon` route has focused documentation examples.
 
 Scenario order: `01 Overview`, `02 Accessibility`, `03 Sizes`, `04 Tones`,
 `05 SVG sources`, `06 Composition`, `07 Direction`,
@@ -52,3 +54,19 @@ Notes or issue:
 Overall result:
 Follow-up issues:
 Workbook updated:
+
+
+## Parity additions — not yet manually performed
+
+- Check all focused `/icon` examples and Preview/Code pairs in both appearances.
+- With VoiceOver, confirm decorative title-bearing SVGs are skipped, informative
+  wrapper/direct/factory graphics announce exactly one name, and named actions
+  do not repeat icon labels. Confirm icons never receive keyboard focus.
+- At actual browser 200% text and 400% zoom, verify responsive md/inherit restoration,
+  provider defaults, small action slot geometry and no horizontal overflow.
+- On physical touch devices, check intrinsic action widths, artwork alignment,
+  RTL directional versus nondirectional graphics, and authored-transform composition.
+- Under real OS forced colors, check currentColor and fixed multicolor artwork;
+  adjacent text must preserve meaning when color changes.
+
+Automated browser emulation and screenshots do not mark these manual rows passed.

@@ -1,5 +1,15 @@
 # Group manual-test protocol
 
+## Expanded grouping (unperformed)
+
+1. Open `/group`; compare attached, mixed, vertical, wrapping and grow examples.
+2. At real zoom and on a physical narrow device, confirm mixed input/actions
+   retain readable labels and joined borders without clipping.
+3. Verify skipped children remain visible, stacked children keep visible focus,
+   and RTL/vertical outside corners remain correct.
+4. Use `/group?qualification=1` for retained exhaustive scenarios below.
+5. Record physical-device and assistive-technology results only after running them.
+
 | Run information | Value |
 | --- | --- |
 | Component | Group |

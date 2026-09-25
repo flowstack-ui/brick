@@ -11,8 +11,7 @@ corners and one continuous border silhouette.
 
 ## When not to use
 
-Use HStack or Stack for ordinary application layout, responsive direction,
-wrapping, or distribution. Use Toolbar for one named roving-focus command set,
+Use HStack or Stack for ordinary application layout, general page layout. Use Toolbar for one named roving-focus command set,
 ToggleGroup for pressed selection, and Fieldset for form-group semantics. Use
 List, Grid, DataList, or Stack for tags, skills, social destinations, profile
 facts, or responsive actions; those are content collections, not an attached
@@ -48,7 +47,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ## Anatomy and DOM ownership
 
 Group renders one native `div` by default or a deliberate `span`. It renders
-no inner wrapper, never clones children, and adds no role or accessible name.
+no inner wrapper and adds no role or accessible name. By default it styles rendered direct children. With skip or stacking, it flattens fragments and annotates participating React elements.
 Rendered direct elements are the visual items. Refs target the selected host.
 
 ## API
@@ -56,14 +55,40 @@ Rendered direct elements are the visual items. Refs target the selected host.
 | Prop          | Values                          | Default      |
 | ------------- | ------------------------------- | ------------ |
 | `as`          | `div`, `span`                   | `div`        |
-| `orientation` | `horizontal`, `vertical`        | `horizontal` |
-| `gap`         | Brick spacing value             | `2`          |
+| `orientation` | Responsive `horizontal`, `vertical` | `horizontal` |
+| `gap`         | Responsive Brick spacing value  | `2`          |
 | `attached`    | boolean                         | `false`      |
-| `grow`        | boolean                         | `false`      |
+| `grow`        | Responsive boolean              | `false`      |
 | `slot`        | Brick `data-slot` hook override | `group`      |
 
 Public exports are `Group`, `GroupProps`, `GroupElement`, and
-`GroupOrientation`.
+`GroupOrientation`, `GroupAlign`, `GroupJustify`, `GroupWrap`, and `GroupStacking`.
+
+### Expanded layout and composition
+
+| Prop | Values | Default |
+| --- | --- | --- |
+| `align` | ResponsiveValue<GroupAlign>: start, end, center, stretch, baseline | center |
+| `justify` | ResponsiveValue<GroupJustify>: start, end, center, space-between, space-around, space-evenly | start |
+| `wrap` | ResponsiveValue<GroupWrap>: nowrap, wrap, wrap-reverse | nowrap |
+| `stacking` | GroupStacking: first-on-top, last-on-top | native order |
+| `skip` | (child: ReactElement) => boolean | unset |
+| `asChild` | boolean | false |
+
+asChild merges onto one non-Fragment element and excludes as. Child and owner
+refs/events/styles are preserved. With skip or stacking, the composed host's
+children are annotated. Custom children must forward data attributes and style
+to their actual visual host. Returning multiple hosts cannot represent one item.
+
+skip leaves excluded content in place but omits its attachment and growth.
+Hidden elements are not automatically skipped; filter them or supply skip when
+that is intended. Fragments flatten with stable keyed identities in managed
+mode. Group never removes content based on selection or visibility policy.
+
+Stacking is local. Hover rises above the default stack and focus above hover.
+Internal markers are data-managed, data-group-item, data-group-first,
+data-group-last, data-group-skip and data-stacking. New input/resolved variables
+are private; existing gap and overlap hooks remain public.
 
 ## Visual recipes and states
 
@@ -93,10 +118,10 @@ resize, recolor, or restyle its children.
 
 ## Responsive behavior
 
-Group is intentionally content-sized and non-wrapping. Attached groups remain
-one continuous row or column at narrow widths and high zoom. The application
-owns available width, overflow, or an alternative composition. Use Stack when
-orientation or wrapping changes at application breakpoints.
+Group is content-sized and non-wrapping by default. Orientation, gap, grow,
+align, justify and wrap support sparse initial/sm/md/lg/xl responsive values.
+Attached wrapping follows source-order corners, not visual row edges.
+Prefer detached wrapping when one continuous silhouette cannot fit.
 
 ## Accessibility
 

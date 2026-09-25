@@ -1,5 +1,31 @@
 # Stack manual-test protocol
 
+## Separator addition (September 12, 2026; human run pending)
+
+Review the Separator preview at every breakpoint, RTL and narrow widths. Confirm
+lines are decorative, do not take focus, and have equal spacing on either side.
+Review the short centered line, custom artwork and responsive axis changes.
+Check light/dark, forced colors and actual browser zoom. For/Fragment output and
+CSS-hidden peers are intentionally not traversed; use manual peer composition.
+
+## Expanded flex pass (September 10, 2026; human run pending)
+
+Normal `/stack` contains source-paired docs. Original numbered scenarios remain
+at `/stack?qualification=1` and in the standalone evidence runner.
+
+1. Review all fifteen curated docs previews at 320, 768 and 1440px; confirm clear labels,
+   genuine differences, readable wrapping and no clipped controls.
+2. Review reverse/order in LTR and RTL; keyboard and screen-reader traversal
+   must remain meaningful. No positive tabindex or duplicated content.
+3. Compare row/column gaps, multiline alignment, factors, basis and margins.
+   Resize across every authored breakpoint and check explicit resets.
+4. Review inline prose baseline and root/Item/Surface composition. Confirm the
+   first preview fills its row with three equal tracks, without custom CSS.
+5. Run actual 400% zoom, forced colors, text spacing and physical touch checks.
+
+Results: not run. Automated browser results are recorded independently; they
+do not close manual assistive-technology or physical-device checks.
+
 | Run information | Value |
 | --- | --- |
 | Component | Stack |

@@ -12,6 +12,8 @@
 | Assistive technology | |
 | Playground route | `/for` |
 
+Use `/for?qualification=1` for the numbered qualification scenarios below.
+
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 Scenario order: 01 for.collection; 02 for.empty; 03 for.keys.
@@ -42,6 +44,10 @@ Result:
 Notes or issue:
 
 ## Completion
+
+Review the Utilities docs page, Preview/Code source, single props table and TOC.
+Type notes in Stable keys and reverse the collection; state must follow items.
+For owns no focus, paint or motion; assess its composed children in context.
 
 Overall result:
 Follow-up issues:

@@ -117,3 +117,8 @@ Check the weight specimens from thin through black with a font supplying
 100–900. Confirm omitted weight retains the recipe and inherit follows the
 parent. Check light/dark and a responsive heading variant with explicit bold.
 Do not interpret a missing font face's synthesized weight as a Brick recipe.
+## Presentation parity follow-up — not run
+
+1. Inspect /text and /text?qualification=1 at normal and narrow widths in both appearances.
+2. Check all typography roles, numeric glyph alignment, decorations, responsive clamp removal and semantic heading order.
+3. Exercise native browser text resize, actual zoom, RTL and screen-reader reading order. Record these separately from automated browser tests; no human pass is preclaimed.

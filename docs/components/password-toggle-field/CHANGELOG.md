@@ -1,9 +1,24 @@
 # Password Toggle Field changelog
 
 
+## Unreleased
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
 Password Toggle Field follows the package version of `@flowstack-ui/brick`.
 
-## Unreleased
+- Add all seven shared field variants, responsive recipes, and corrected
+  independent Input/Toggle focus presentation while retaining Atom-owned
+  visibility, value, reset, submit, and pointer-focus behavior.
+- Inherit `showPassword` and `hidePassword` from LocaleProvider; explicit Root
+  labels take precedence.
+- Replace legacy exhaustive public examples with concise, source-paired
+  documentation examples while retaining exhaustive qualification evidence.
+- Document and qualify React Hook Form, local password-strength, native form,
+  custom action, responsive/RTL, privacy-safe feedback, and autocomplete usage.
+- Center text-based custom Icon artwork by normalizing its line box, restore
+  responsive size resolution at active breakpoints, and top-align unequal state
+  examples so their label-to-control spacing remains consistent.
 
 - Forced colors preserves a real system-color focus outline; shadows are not the sole focus cue.
 
@@ -15,6 +30,7 @@ Password Toggle Field follows the package version of `@flowstack-ui/brick`.
 ## 0.1.10
 
 ### Added
+
 - Added public PasswordToggleField Agent Knowledge covering reveal-policy
   selection, native input ownership, localized next-action labels, focus,
   reset and submission safety, application boundaries, and appearance checks.

@@ -12,7 +12,7 @@
   ],
   "avoidWhen": [
     {
-      "condition": "The relationship needs responsive direction, wrapping, distribution, or ordinary block layout.",
+      "condition": "The relationship is ordinary application layout rather than a compact group of controls.",
       "useInstead": "Stack/HStack/VStack"
     },
     {
@@ -31,7 +31,7 @@
     {
       "id": "group-attached-chain",
       "level": "must",
-      "statement": "Use attached only for one unwrapped row or column whose direct children form one continuous visual silhouette."
+      "statement": "Use attached for joined direct hosts. Wrapping is supported but attachment follows source order, not visual row boundaries; prefer detached wrap for multiple lines."
     },
     {
       "id": "group-semantics",
@@ -52,6 +52,11 @@
       "id": "group-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus group.css and every composed child component stylesheet."
+    },
+    {
+      "id": "group-child-participation",
+      "level": "must",
+      "statement": "With skip or stacking, forward grouping data attributes and style through custom children. Excluded children stay rendered. Group owns layout only; it never supplies selection, keyboard behavior or child paint."
     }
   ],
   "commonMistakes": [
@@ -64,5 +69,14 @@
     "Check direct-child structure, shared borders, outside logical corners, hover/focus stacking, visible focus rings, RTL, vertical orientation, zoom, forced colors, and narrow containment.",
     "Confirm Group adds no role, name, selection, or keyboard behavior."
   ],
-  "related": ["stack", "data-list", "list", "grid", "button", "icon-button", "toolbar", "toggle-group"]
+  "related": [
+    "stack",
+    "data-list",
+    "list",
+    "grid",
+    "button",
+    "icon-button",
+    "toolbar",
+    "toggle-group"
+  ]
 }

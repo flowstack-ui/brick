@@ -1,8 +1,14 @@
 # Icon changelog
 
+## Unreleased
+
+Add responsive sizes, createIcon and presentation-only IconPropsProvider; use Atom ref/event composition, authoritative SVG naming and nonfocusable direct output. Modernize focused documentation examples and retain qualification scenarios.
+
 Icon follows the package version of `@flowstack-ui/brick`.
 
-## Unreleased
+### Fixed
+
+- Directional artwork follows its own resolved text direction, including LTR content nested inside RTL containers.
 
 ### Added
 

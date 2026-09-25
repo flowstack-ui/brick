@@ -1,8 +1,13 @@
 # Chip changelog
 
-Chip follows the package version of `@flowstack-ui/brick`.
-
 ## Unreleased
+
+- Clarify theme-controlled corners through `radius="control"` while preserving the default pill recipe.
+
+Added subtle and contrast, sparse responsive size/variant/density, public Atom-backed static-part projection and unstyled delegation. Corrected palette borders, close foregrounds, compact geometry and unavailable-action fading. Defaults are unchanged. Added 18 focused source-paired examples and expanded regression coverage.
+
+
+Chip follows the package version of `@flowstack-ui/brick`.
 
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 

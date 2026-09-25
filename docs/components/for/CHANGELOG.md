@@ -4,6 +4,9 @@ For follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Clarify CSS-free utility usage and fallback semantics; add Utilities
+  documentation with object, fallback and stable-key examples.
+
 ### Added
 
 - Added a typed, wrapper-free render loop with an explicit empty-state fallback.

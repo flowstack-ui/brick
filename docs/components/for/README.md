@@ -14,13 +14,11 @@ Use native array methods for data transformations such as filtering, grouping, p
 
 ```tsx
 import { For } from "@flowstack-ui/brick/for";
-import "@flowstack-ui/brick/styles.css";
 ```
 
-```tsx
-import "@flowstack-ui/brick/styles/core.css";
-import "@flowstack-ui/brick/styles/for.css";
-```
+For itself requires no CSS. Load the styles required by rendered Brick children,
+either aggregate `styles.css` or their documented modular entries. The empty
+`styles/for.css` entry remains available for compatibility.
 
 Public exports are `For`, `ForProps`, `ForCollection`, and `ForItem`. Explicit
 generic annotations describe the collection type; ordinary usage infers it from
@@ -45,6 +43,10 @@ generic annotations describe the collection type; ordinary usage infers it from
 | `each` | mutable, readonly, or heterogeneous union array; or `undefined` | none |
 | `children` | `(item, index) => ReactNode` | none |
 | `fallback` | `ReactNode` | `null` |
+
+Empty and undefined collections return the fallback unchanged, including `0`.
+Nullable collections are not part of the typed API. For does not filter values
+inside an array; narrow optional item values in the callback when needed.
 
 ## Visual recipes and states
 

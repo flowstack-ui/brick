@@ -14,8 +14,9 @@ import {
 } from "../_control-size/ControlSize.js";
 import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
 import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
+import { fieldVariantAttributes, type FieldVariant, type ResponsiveFieldVariant } from "../_field-variant/FieldVariant.js";
 
-export type InputVariant = "outline" | "soft" | "underline";
+export type InputVariant = "outline" | "surface" | "soft" | "subtle" | "ghost" | "plain" | "underline";
 export type InputSize = ControlSize;
 export type InputShape = "sharp" | "rounded" | "pill";
 export type InputType =
@@ -60,11 +61,11 @@ export type InputProps = InputSharedProps &
   (
     | (RadiusShapeProps<InputShape> & {
         /** Visual container recipe. @default "outline" */
-        variant?: "outline" | "soft";
+        variant?: Exclude<InputVariant, "underline">;
         /** Visual container geometry. @default "rounded" */
       })
     | {
-        variant: "underline";
+        variant: ResponsiveFieldVariant;
         shape?: never;
         radius?: never;
       }
@@ -112,14 +113,25 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ) {
     const { localeText } = useLocaleContext();
     const resolvedShape = variant === "underline" ? undefined : radius === undefined ? shape : "rounded";
+    // Group styles its direct children, which for Input means the painted
+    // wrapper. Native naming, events and arbitrary data attributes stay on input.
+    const nativeProps = { ...props };
+    const groupProps: Record<string, unknown> = {};
+    for (const key of ["data-group-item", "data-group-first", "data-group-last", "data-group-skip"] as const) {
+      if (key in nativeProps) {
+        groupProps[key] = (nativeProps as Record<string, unknown>)[key];
+        delete (nativeProps as Record<string, unknown>)[key];
+      }
+    }
 
     return (
       <span
+        {...groupProps}
         className={mergeClassName("brick-input brick-control-size", className)}
         data-full-width={fullWidth ? "" : undefined}
         data-shape={resolvedShape}
         data-slot={dataSlot ?? "input"}
-        data-variant={variant}
+        {...fieldVariantAttributes(variant)}
         style={radiusStyle(variant === "underline" ? undefined : radius, "--brick-input-radius", style)}
         {...controlSizeDataAttributes(size)}
       >
@@ -129,7 +141,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           </span>
         ) : null}
         <AtomInput.Root
-          {...props}
+          {...nativeProps}
           className={mergeClassName("brick-input-control", inputClassName)}
           data-slot="input-control"
           ref={ref}

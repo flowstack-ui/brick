@@ -112,7 +112,7 @@ describe("IconButton", () => {
   });
 
   it("exposes every closed visual recipe", () => {
-    const variants: IconButtonVariant[] = ["solid", "soft", "outline", "ghost"];
+    const variants: IconButtonVariant[] = ["solid", "soft", "subtle", "surface", "outline", "ghost", "plain"];
     const tones: IconButtonTone[] = ["neutral", "accent", "info", "success", "warning", "danger"];
     const sizes: IconButtonSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
     const shapes: IconButtonShape[] = ["rounded", "circle"];

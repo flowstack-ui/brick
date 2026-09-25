@@ -1,7 +1,8 @@
 .carousel-demo-fill-frame { block-size: 26.25rem; }
 .carousel-demo-fill-frame .carousel-demo-slide { block-size: 100%; }
 .carousel-demo-slide { min-block-size: 18rem; display: flex; align-items: center; }
-.carousel-demo-slide-content { padding-inline: calc(var(--brick-carousel-control-size) + (var(--brick-carousel-gap) * 2)); }
+.carousel-demo-slide-content { padding-inline: var(--brick-space-2); padding-block-end: var(--brick-space-8); }
+.brick-carousel:has(> .brick-carousel__navigation) .carousel-demo-slide-content { padding-inline: calc(var(--brick-carousel-control-size, 2.75rem) + var(--brick-space-2)); }
 .carousel-demo-grid { align-items: start; }
 .carousel-demo-grid > * { min-inline-size: 0; }
 @media (max-width: 760px) { .carousel-demo-grid { --brick-grid-columns: minmax(0, 1fr); grid-template-columns: 1fr; } .carousel-demo-slide { min-block-size: 15rem; } }

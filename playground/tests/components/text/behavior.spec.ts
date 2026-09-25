@@ -8,7 +8,7 @@ async function box(locator: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/text");
+  await page.goto("/text?qualification=1");
 });
 
 test("Text overview preserves the canonical semantic and visual defaults", async ({

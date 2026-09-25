@@ -1,3 +1,5 @@
+import { IconButtonDocumentation } from "./IconButtonDocumentation.js";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
@@ -20,7 +22,7 @@ import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
 import { ArrowIcon, MenuIcon, SearchIcon } from "../../shared/icons.js";
 import "./icon-button.playground.css";
 
-const variants: IconButtonVariant[] = ["solid", "soft", "outline", "ghost"];
+const variants: IconButtonVariant[] = ["solid", "soft", "subtle", "surface", "outline", "ghost", "plain"];
 const tones: IconButtonTone[] = [
   "neutral",
   "accent",
@@ -151,7 +153,8 @@ export const iconButtonScenarios = [
   },
 ] as const satisfies readonly ScenarioDefinition[];
 
-export function IconButtonPage() {
+export function IconButtonPage() { const preview=usePreviewContext(); if (!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <IconButtonDocumentation />; return <IconButtonEvidence />; }
+function IconButtonEvidence() {
   const [pressCount, setPressCount] = useState(0);
 
   return (

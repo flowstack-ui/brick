@@ -2,32 +2,25 @@
 
 ## Purpose
 
-Present one item or campaign at a time with optional navigation, picker dots, touch scrolling, and user-controlled rotation.
+Present measured carousel pages with accessible navigation, multiple visible items, optional autoplay and native scroll motion.
 
 ## Use when
 
-- Several peer items benefit from sharing one bounded visual region.
-- A campaign hero needs multiple authored messages without placing them all in the initial viewport.
+- Peer content benefits from one or several visible slides with optional navigation, touch scrolling and mouse drag.
 
 ## Choose something else when
 
-- Every item must be visible for comparison or comprehension. Use Grid, Stack, List, or Tabs.
-- The content is only decorative image rotation. Use a non-interactive media treatment that respects reduced motion.
+- Every item must be visible at once for comparison. Use Grid, Stack or List.
 
 ## Required composition
 
-- Compose Root, Viewport, Track, and one Slide per unique value; add Navigation, Controls, Previous, Next, Picker, PickerItem, and RotationControl only when the product needs them.
-- In a React Server Component, import the subpath as a module namespace with import * as Carousel from '@flowstack-ui/brick/carousel'; use the frozen Carousel runtime object only inside client components.
-- When automatic rotation is enabled, always render RotationControl, Previous, and Next so people can stop and navigate the sequence; place RotationControl before Viewport in DOM order.
-- Build campaign-specific slide content from Brick layout, typography, action, and media components; Carousel does not own hero messaging or proof content.
-- When artwork, scrim, and copy form one peer campaign, compose a complete Surface with Media, Scrim, and Content inside each Slide; keep genuinely invariant evidence or navigation outside the rotating sequence.
-- When a parent already owns a stable block size, use Root fill to propagate it through Carousel's Viewport, Track, and Slides; continue sizing authored Surface, Content, and layout components explicitly.
-- Match Root radius to the visible containing geometry; use radius=none when an edge-to-edge square Surface owns the campaign boundary.
+- Compose Root, Viewport, Track and uniquely valued Slide parts. Add the controls appropriate to the content.
+- Use useCarousel and RootProvider for one externally accessible controller. Choose value-based or page-based control, not both.
 
 ## Rules
 
 - **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
-- **MUST:** Treat arrows and picker dots as optional authored controls; dots represent direct slide selection and are not Tabs.
+- **MUST:** Treat arrows and picker dots as optional authored controls. Automatic dots represent reachable pages; explicit PickerItem values resolve slide anchors. Neither is Tabs.
 - **MUST:** Never enable automatic rotation without a visible RotationControl and direct Previous and Next controls.
 - **MUST:** Keep picker treatment independent from arrow visibility; use Picker variant bare for dots without a capsule and Navigation visibility interaction only when arrows remain discoverable through focus, pointer, and touch.
 - **SHOULD:** Use a compact xs ghost RotationControl when the required stop mechanism should remain visually quiet; never remove it while automatic rotation can run.
@@ -40,6 +33,13 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 - **MUST:** When controls overlay slides, reserve application-owned content safe areas so arrows, rotation controls, and picker targets never obscure authored text or actions.
 - **SHOULD:** Prioritize only initially visible campaign media and defer non-current media when the image delivery layer supports it.
 - **MUST:** Load styles.css or core.css plus carousel.css.
+- **MUST:** Derive automatic indicators and progress from pageSnapPoints, not raw item count. Several visible items can share one snap page.
+- **MUST:** Visible peer slides remain interactive; do not add application inert or aria-hidden rules based solely on the selected value.
+- **MUST:** Never clone authored slides. Short-content loops may settle instantly when smooth cyclic placement would require duplication.
+- **MUST:** Use value/defaultValue or page/defaultPage exclusively. Keep stable Slide values and supply index for server-known page visibility.
+- **MUST:** Use the shared action variants and tones on Previous, Next and RotationControl. Root visual defaults and local control overrides must not compete.
+- **MUST:** Use spacing and padding for slide geometry, autoSize for authored dimensions, and a definite viewport height for vertical mode. Native scroll easing is browser owned.
+- **MUST:** Use unstyled with asChild when composing text Button actions; otherwise controls use the shared square IconButton recipe.
 
 ## Common mistakes
 
@@ -51,7 +51,7 @@ Present one item or campaign at a time with optional navigation, picker dots, to
 ## Validation checklist
 
 - Check optional-control compositions, first and last boundaries in both directions, interaction-only arrow discovery, independent picker treatment, native horizontal touch scrolling, focus pause, hover pause, reduced motion, RTL, and screen-reader naming.
-- Confirm inactive slides are unavailable to focus and assistive technology, the overlay-safe Viewport focus indicator remains visible above slide media, control focus rings remain complete at rounded edges, overlay controls do not cover content, complete campaign media changes with its copy, and slide changes do not cause page-level layout shift.
+- Confirm fully offscreen slides are unavailable to focus and assistive technology while visible peer slides remain interactive. Verify the overlay-safe Viewport focus indicator, complete control focus rings at rounded edges, unobscured content, coordinated media/copy changes, and no page-level layout shift.
 
 ## Related guidance
 

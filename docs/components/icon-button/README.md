@@ -1,9 +1,6 @@
 # Icon Button
 
 
-IconButton presents one named icon-only action or a button-styled native link
-with finished Brick geometry and recipes over public Atom Button behavior.
-
 ## When and where to use
 
 Use IconButton for compact, recognizable actions such as search, close,
@@ -75,7 +72,7 @@ ARIA, and data props except native `color`.
 
 | Prop                  | Values                                                      | Default   |
 | --------------------- | ----------------------------------------------------------- | --------- |
-| `variant`             | `solid`, `soft`, `outline`, `ghost`                         | `ghost`   |
+| `variant`             | `solid`, `soft`, `subtle`, `surface`, `outline`, `ghost`, `plain`                         | `ghost`   |
 | `tone`                | `neutral`, `contrast`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
 | `size`                | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, or a non-empty sparse responsive value | `lg` |
 | `shape`               | `rounded`, `circle`                                         | `rounded` |
@@ -102,12 +99,22 @@ or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+ButtonGroup supplies optional size, variant, tone, radius and focusRing defaults.
+Individual props override them. Subtle, surface and plain share Button's new
+recipes. Standalone defaults remain ghost/neutral/lg.
+
+
+IconButton presents one named icon-only action or a button-styled native link
+with finished Brick geometry and recipes over public Atom Button behavior.
+
 - `solid` is the highest local emphasis.
 - `soft` is a quieter filled treatment.
 - `outline` provides a visible transparent boundary.
 - `ghost` is the default, lowest standalone emphasis.
 
-All four variants support all six tones. Sizes are square 24, 32, 36, 40, 44,
+All seven variants support all seven tones. Sizes are square 24, 32, 36, 40, 44,
 48, and 64 CSS pixels with 14, 16, 16, 20, 20, 20, and 24 CSS-pixel icon
 boxes. `rounded` uses
 the control radius; `circle` uses the full radius.
@@ -115,17 +122,16 @@ the control radius; `circle` uses the full radius.
 Neutral solid controls use a strong neutral surface and the normal foreground,
 not an appearance-inverting black/white treatment.
 
-Disabled IconButtons use the disabled foreground and reduced opacity so they do
-not resemble an enabled neutral outline action.
+Disabled IconButtons preserve their variant and use the shared Button fade and
+not-allowed cursor. Their icon does not apply a second opacity reduction.
 
 Hover is limited to fine hover-capable pointers. Ghost hover and pressed paint
 derive from the current foreground so the cue remains visible on canvas, base,
 subtle, raised, and overlay surfaces instead of disappearing when two semantic
-surface roles share a value. Focus-visible uses the global focus ring. Disabled
-uses a subdued surface. Loading hides the visible icon,
+surface roles share a value. Focus-visible uses the global focus ring. Loading hides the visible icon,
 retains the square footprint and accessible name, exposes `aria-busy`, and
 centers a CSS spinner in LTR and RTL. Reduced motion removes transitions and
-slows the spinner; forced colors restores system boundaries and focus.
+leaves a static spinner arc; forced colors restores system boundaries and focus.
 When an owning disclosure such as Popover composes IconButton as its trigger,
 `aria-expanded="true"` keeps the recipe's pressed surface visible until the
 disclosure closes. This is open-state feedback, not a persistent toggle.
@@ -227,6 +233,15 @@ persistent selected state.
 
 ## Composition, native props, and refs
 
+### Notification anchoring
+
+Place NotificationBadge around IconButton to anchor to the whole control, or
+inside IconButton around its SVG/IMG/Icon to anchor to the artwork. Both are
+valid for any variant. The control retains its full target and owns artwork
+size through this supported wrapper; the badge's size stays independent.
+Name the control with its notification meaning; do not replace it with a
+passive icon or use asChild merely to force sizing.
+
 Use direct `href` for ordinary navigation:
 
 ```tsx
@@ -287,3 +302,7 @@ constrained layouts, reduced motion, forced colors, and RTL loading.
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).
+
+### Shared action family
+
+Button owns shared rendering and recipes. IconButton wraps its internal icon-only path; CloseButton wraps IconButton. Equal explicit variant/tone values share hover, expanded, disabled and focus presentation. Icon-only controls remain square and named. Custom spinner is available on ordinary/render IconButton and CloseButton; IconButton asChild excludes it. No visible loadingText or fullWidth icon-only mode. This supersedes earlier independent IconButton paint rules.

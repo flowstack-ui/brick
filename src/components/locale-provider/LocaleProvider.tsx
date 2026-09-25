@@ -19,6 +19,8 @@ export interface BrickLocaleText {
   incrementValue: string;
   notifications: string;
   toggleOptions: string;
+  showPassword: string;
+  hidePassword: string;
 }
 
 export interface LocaleContextValue {
@@ -50,15 +52,44 @@ export const defaultLocaleText: BrickLocaleText = Object.freeze({
   incrementValue: "Increment value",
   notifications: "Notifications",
   toggleOptions: "Toggle options",
+  showPassword: "Show password",
+  hidePassword: "Hide password",
 });
 
 const rtlScripts = new Set([
-  "Adlm", "Arab", "Armi", "Avst", "Hebr", "Mand", "Mend", "Nkoo",
-  "Rohg", "Samr", "Syrc", "Thaa",
+  "Adlm",
+  "Arab",
+  "Armi",
+  "Avst",
+  "Hebr",
+  "Mand",
+  "Mend",
+  "Nkoo",
+  "Rohg",
+  "Samr",
+  "Syrc",
+  "Thaa",
 ]);
 const rtlLanguages = new Set([
-  "ae", "ar", "arc", "bcc", "bqi", "ckb", "dv", "fa", "glk", "he",
-  "ku", "mzn", "nqo", "pnb", "ps", "sd", "ug", "ur", "yi",
+  "ae",
+  "ar",
+  "arc",
+  "bcc",
+  "bqi",
+  "ckb",
+  "dv",
+  "fa",
+  "glk",
+  "he",
+  "ku",
+  "mzn",
+  "nqo",
+  "pnb",
+  "ps",
+  "sd",
+  "ug",
+  "ur",
+  "yi",
 ]);
 
 export function getLocaleDirection(locale: string): DirectionValue {
@@ -86,11 +117,14 @@ export function LocaleProvider({
   localeText,
 }: LocaleProviderProps) {
   const parent = useContext(LocaleContext);
-  const value = useMemo<LocaleContextValue>(() => ({
-    dir: getLocaleDirection(locale),
-    locale,
-    localeText: { ...parent.localeText, ...localeText },
-  }), [locale, localeText, parent.localeText]);
+  const value = useMemo<LocaleContextValue>(
+    () => ({
+      dir: getLocaleDirection(locale),
+      locale,
+      localeText: { ...parent.localeText, ...localeText },
+    }),
+    [locale, localeText, parent.localeText],
+  );
 
   return (
     <LocaleContext.Provider value={value}>

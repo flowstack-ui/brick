@@ -20,6 +20,11 @@ import {
 } from "../_control-size/ControlSize.js";
 import { For } from "../for/For.js";
 import type { ChipTone } from "../chip/Chip.js";
+import {
+  fieldVariantAttributes,
+  type FieldVariant,
+  type ResponsiveFieldVariant,
+} from "../_field-variant/FieldVariant.js";
 export {
   useTagsInput,
   useTagsInputContext,
@@ -37,12 +42,14 @@ export type {
   TagsInputInputValueChangeDetails,
 } from "@flowstack-ui/atom/tags-input";
 export type TagsInputSize = ControlSize;
-export type TagsInputVariant = "outline" | "soft" | "underline";
+export type TagsInputVariant = FieldVariant;
 export type TagsInputShape = "sharp" | "rounded" | "pill";
-export type TagsInputItemTone = ChipTone;
+export type TagsInputItemTone = ChipTone | "contrast";
 type VisualProps = { size?: ResponsiveControlSize; fullWidth?: boolean } & (
-  | ({ variant?: "outline" | "soft" } & RadiusShapeProps<TagsInputShape>)
-  | { variant: "underline"; shape?: never; radius?: never }
+  | ({
+      variant?: Exclude<FieldVariant, "underline">;
+    } & RadiusShapeProps<TagsInputShape>)
+  | { variant: ResponsiveFieldVariant; shape?: never; radius?: never }
 );
 export type TagsInputRootProps = AtomRootProps & VisualProps;
 export type TagsInputRootProviderProps = AtomProviderProps & VisualProps;
@@ -68,9 +75,19 @@ export const TagsInputRoot = forwardRef<HTMLDivElement, TagsInputRootProps>(
         ref={ref}
         className={cn("brick-tags-input brick-control-size", className)}
         {...controlSizeDataAttributes(size)}
-        data-variant={variant}
-        data-shape={variant === "underline" ? undefined : radius === undefined ? shape : "rounded"}
-        style={radiusStyle(variant === "underline" ? undefined : radius, "--brick-tags-input-radius", style)}
+        {...fieldVariantAttributes(variant)}
+        data-shape={
+          variant === "underline"
+            ? undefined
+            : radius === undefined
+              ? shape
+              : "rounded"
+        }
+        style={radiusStyle(
+          variant === "underline" ? undefined : radius,
+          "--brick-tags-input-radius",
+          style,
+        )}
         data-full-width={fullWidth ? "" : undefined}
       />
     );
@@ -98,9 +115,19 @@ export const TagsInputRootProvider = forwardRef<
       ref={ref}
       className={cn("brick-tags-input brick-control-size", className)}
       {...controlSizeDataAttributes(size)}
-      data-variant={variant}
-      data-shape={variant === "underline" ? undefined : radius === undefined ? shape : "rounded"}
-      style={radiusStyle(variant === "underline" ? undefined : radius, "--brick-tags-input-radius", style)}
+      {...fieldVariantAttributes(variant)}
+      data-shape={
+        variant === "underline"
+          ? undefined
+          : radius === undefined
+            ? shape
+            : "rounded"
+      }
+      style={radiusStyle(
+        variant === "underline" ? undefined : radius,
+        "--brick-tags-input-radius",
+        style,
+      )}
       data-full-width={fullWidth ? "" : undefined}
     />
   );
@@ -108,24 +135,29 @@ export const TagsInputRootProvider = forwardRef<
 export type TagsInputLabelProps = ComponentPropsWithoutRef<
   typeof AtomTagsInput.Label
 >;
-export const TagsInputLabel = forwardRef<HTMLLabelElement, TagsInputLabelProps>(
-  function TagsInputLabel({ className, ...props }, ref) {
-    return (
-      <AtomTagsInput.Label
-        {...props}
-        ref={ref}
-        className={cn("brick-tags-input-label", className)}
-      />
-    );
-  },
-);
+export const TagsInputLabel: ForwardRefExoticComponent<
+  TagsInputLabelProps & RefAttributes<HTMLLabelElement>
+> = forwardRef<HTMLLabelElement, TagsInputLabelProps>(function TagsInputLabel(
+  { className, ...props },
+  ref,
+) {
+  return (
+    <AtomTagsInput.Label
+      {...props}
+      ref={ref}
+      className={cn("brick-tags-input-label", className)}
+    />
+  );
+});
 export type TagsInputControlProps = ComponentPropsWithoutRef<
   typeof AtomTagsInput.Control
 >;
-export const TagsInputControl = forwardRef<
-  HTMLDivElement,
-  TagsInputControlProps
->(function TagsInputControl({ className, ...props }, ref) {
+export const TagsInputControl: ForwardRefExoticComponent<
+  TagsInputControlProps & RefAttributes<HTMLDivElement>
+> = forwardRef<HTMLDivElement, TagsInputControlProps>(function TagsInputControl(
+  { className, ...props },
+  ref,
+) {
   return (
     <AtomTagsInput.Control
       {...props}
@@ -137,77 +169,86 @@ export const TagsInputControl = forwardRef<
 export type TagsInputInputProps = ComponentPropsWithoutRef<
   typeof AtomTagsInput.Input
 >;
-export const TagsInputInput = forwardRef<HTMLInputElement, TagsInputInputProps>(
-  function TagsInputInput({ className, ...props }, ref) {
-    return (
-      <AtomTagsInput.Input
-        {...props}
-        ref={ref}
-        className={cn("brick-tags-input-input", className)}
-      />
-    );
-  },
-);
+export const TagsInputInput: ForwardRefExoticComponent<
+  TagsInputInputProps & RefAttributes<HTMLInputElement>
+> = forwardRef<HTMLInputElement, TagsInputInputProps>(function TagsInputInput(
+  { className, ...props },
+  ref,
+) {
+  return (
+    <AtomTagsInput.Input
+      {...props}
+      ref={ref}
+      className={cn("brick-tags-input-input", className)}
+    />
+  );
+});
 export type TagsInputItemPreviewProps = ComponentPropsWithoutRef<
   typeof AtomTagsInput.ItemPreview
 >;
-export const TagsInputItemPreview = forwardRef<
-  HTMLSpanElement,
-  TagsInputItemPreviewProps
->(function TagsInputItemPreview({ className, ...props }, ref) {
-  return (
-    <AtomTagsInput.ItemPreview
-      {...props}
-      ref={ref}
-      className={cn("brick-tags-input-item-preview", className)}
-    />
-  );
-});
-export type TagsInputItemTextProps = ComponentPropsWithoutRef<
-  typeof AtomTagsInput.ItemText
->;
-export const TagsInputItemText = forwardRef<
-  HTMLSpanElement,
-  TagsInputItemTextProps
->(function TagsInputItemText({ className, ...props }, ref) {
-  return (
-    <AtomTagsInput.ItemText
-      {...props}
-      ref={ref}
-      className={cn("brick-tags-input-item-text", className)}
-    />
-  );
-});
-export type TagsInputItemInputProps = ComponentPropsWithoutRef<
-  typeof AtomTagsInput.ItemInput
->;
-export const TagsInputItemInput = forwardRef<
-  HTMLInputElement,
-  TagsInputItemInputProps
->(function TagsInputItemInput({ className, ...props }, ref) {
-  return (
-    <AtomTagsInput.ItemInput
-      {...props}
-      ref={ref}
-      className={cn("brick-tags-input-item-input", className)}
-    />
-  );
-});
-export type TagsInputItemProps = ComponentPropsWithoutRef<
-  typeof AtomTagsInput.Item
-> & { tone?: TagsInputItemTone };
-export const TagsInputItem = forwardRef<HTMLDivElement, TagsInputItemProps>(
-  function TagsInputItem({ tone = "neutral", className, ...props }, ref) {
+export const TagsInputItemPreview: ForwardRefExoticComponent<
+  TagsInputItemPreviewProps & RefAttributes<HTMLSpanElement>
+> = forwardRef<HTMLSpanElement, TagsInputItemPreviewProps>(
+  function TagsInputItemPreview({ className, ...props }, ref) {
     return (
-      <AtomTagsInput.Item
+      <AtomTagsInput.ItemPreview
         {...props}
         ref={ref}
-        className={cn("brick-tags-input-item", className)}
-        data-tone={tone}
+        className={cn("brick-tags-input-item-preview", className)}
       />
     );
   },
 );
+export type TagsInputItemTextProps = ComponentPropsWithoutRef<
+  typeof AtomTagsInput.ItemText
+>;
+export const TagsInputItemText: ForwardRefExoticComponent<
+  TagsInputItemTextProps & RefAttributes<HTMLSpanElement>
+> = forwardRef<HTMLSpanElement, TagsInputItemTextProps>(
+  function TagsInputItemText({ className, ...props }, ref) {
+    return (
+      <AtomTagsInput.ItemText
+        {...props}
+        ref={ref}
+        className={cn("brick-tags-input-item-text", className)}
+      />
+    );
+  },
+);
+export type TagsInputItemInputProps = ComponentPropsWithoutRef<
+  typeof AtomTagsInput.ItemInput
+>;
+export const TagsInputItemInput: ForwardRefExoticComponent<
+  TagsInputItemInputProps & RefAttributes<HTMLInputElement>
+> = forwardRef<HTMLInputElement, TagsInputItemInputProps>(
+  function TagsInputItemInput({ className, ...props }, ref) {
+    return (
+      <AtomTagsInput.ItemInput
+        {...props}
+        ref={ref}
+        className={cn("brick-tags-input-item-input", className)}
+      />
+    );
+  },
+);
+export type TagsInputItemProps = ComponentPropsWithoutRef<
+  typeof AtomTagsInput.Item
+> & { tone?: TagsInputItemTone };
+export const TagsInputItem: ForwardRefExoticComponent<
+  TagsInputItemProps & RefAttributes<HTMLDivElement>
+> = forwardRef<HTMLDivElement, TagsInputItemProps>(function TagsInputItem(
+  { tone = "neutral", className, ...props },
+  ref,
+) {
+  return (
+    <AtomTagsInput.Item
+      {...props}
+      ref={ref}
+      className={cn("brick-tags-input-item", className)}
+      data-tone={tone}
+    />
+  );
+});
 export type TagsInputTriggerProps = AtomTriggerProps;
 function CloseArtwork() {
   return (
@@ -246,7 +287,10 @@ export const TagsInputClearTrigger: ForwardRefExoticComponent<
     );
   },
 );
-export type TagsInputItemsProps = {
+export type TagsInputItemsProps = Omit<
+  TagsInputItemProps,
+  "index" | "value" | "disabled" | "children" | "asChild" | "render"
+> & {
   tone?: TagsInputItemTone;
   disabled?: (value: string, index: number) => boolean;
   children?: (value: string, index: number) => ReactNode;
@@ -255,6 +299,7 @@ export function TagsInputItems({
   tone,
   disabled,
   children,
+  ...props
 }: TagsInputItemsProps) {
   return (
     <AtomTagsInput.Context>
@@ -262,6 +307,7 @@ export function TagsInputItems({
         <For each={api.value}>
           {(value, index) => (
             <TagsInputItem
+              {...props}
               key={index}
               value={value}
               index={index}
@@ -287,6 +333,7 @@ export type TagsInputHiddenInputProps = ComponentPropsWithoutRef<
   typeof TagsInputHiddenInput
 >;
 export const TagsInputContext = AtomTagsInput.Context;
+export const TagsInputItemContext = AtomTagsInput.ItemContext;
 export const TagsInput: {
   Root: typeof TagsInputRoot;
   RootProvider: typeof TagsInputRootProvider;
@@ -295,6 +342,7 @@ export const TagsInput: {
   Control: typeof TagsInputControl;
   Input: typeof TagsInputInput;
   Item: typeof TagsInputItem;
+  ItemContext: typeof TagsInputItemContext;
   Items: typeof TagsInputItems;
   ItemPreview: typeof TagsInputItemPreview;
   ItemText: typeof TagsInputItemText;
@@ -310,6 +358,7 @@ export const TagsInput: {
   Control: TagsInputControl,
   Input: TagsInputInput,
   Item: TagsInputItem,
+  ItemContext: TagsInputItemContext,
   Items: TagsInputItems,
   ItemPreview: TagsInputItemPreview,
   ItemText: TagsInputItemText,

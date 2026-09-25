@@ -5,7 +5,7 @@ import {
   setAppearance,
   test,
 } from "../../visual-harness.js";
-installVisualDefaults("/toolbar");
+installVisualDefaults("/toolbar?qualification=1");
 test.beforeEach(async ({page}) => {
   await page.addStyleTag({content:'.evidence-review-header, [data-playground-app-bar] { position: static !important; visibility: hidden; }'});
 });

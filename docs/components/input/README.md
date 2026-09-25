@@ -1,9 +1,5 @@
 # Input
 
-Input is a finished single-line text-entry control built on Atom Input. Atom
-owns native input behavior, value state, validation, reset, Field
-relationships, Clear behavior, and the input ref; Brick owns the visual
-wrapper, recipes, geometry, adornment layout, and static CSS.
 
 ## When and where to use
 
@@ -109,7 +105,7 @@ Clear artwork is private decorative anatomy. The forwarded ref always targets
 | Prop        | Values                                              | Default   |
 | ----------- | --------------------------------------------------- | --------- |
 | `type`      | `text`, `email`, `password`, `search`, `tel`, `url` | `text`    |
-| `variant`   | `outline`, `soft`, `underline`                      | `outline` |
+| `variant`   | `outline`, `surface`, `soft`, `subtle`, `ghost`, `plain`, `underline`; or a responsive value | `outline` |
 | `size`      | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`; or a responsive value | `lg` |
 | `shape`     | `sharp`, `rounded`, `pill`                          | `rounded` |
 | `fullWidth` | `boolean`                                           | `true`    |
@@ -124,7 +120,9 @@ Sidebar or other containing surface; Soft intentionally owns a filled surface.
 | `inputClassName` | `string` | none |
 | `inputStyle` | `CSSProperties` | none |
 
-`underline` has fixed sharp geometry and does not accept `shape`.
+`underline` has fixed sharp geometry and does not accept `shape` or `radius`.
+Responsive variants also exclude explicit shape/radius; normal corners return
+when a breakpoint changes away from underline.
 
 ### Native input types
 
@@ -157,11 +155,25 @@ or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
-- `outline` uses a complete visible border and raised/base control surface.
-- `soft` uses a subtle filled surface and restrained border.
-- `underline` uses a transparent surface and one bottom indicator.
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
 
-The shared `2xs`–`2xl` scale uses 28, 32, 36, 40, 44, 48, and 64px minimum
+Use outline for a transparent rest/hover control and surface for a neutral raised fill with the same border and geometry, without a shadow or extra Surface wrapper. Soft remains subdued. Popup backgrounds are independent; preserve explicit disabled, read-only, invalid and forced-colors states.
+
+
+Input is a finished single-line text-entry control built on Atom Input. Atom
+owns native input behavior, value state, validation, reset, Field
+relationships, Clear behavior, and the input ref; Brick owns the visual
+wrapper, recipes, geometry, adornment layout, and static CSS.
+
+- `outline` uses a complete visible border and transparent surface.
+- `surface` adds a neutral raised fill without changing the outline geometry.
+- `soft` uses a subtle filled surface and restrained border.
+- `subtle` uses a neutral subdued fill with a transparent border.
+- `ghost` is transparent at rest with a neutral hover fill.
+- `plain` has neither rest nor hover fill.
+- `underline` uses a transparent surface, zero inline inset and bottom-only focus.
+
+The shared `2xs`–`2xl` scale uses 24, 32, 36, 40, 44, 48, and 64px minimum
 block sizes. The `lg` default keeps general-purpose entry at 16px text and a
 44px target; compact sizes are deliberate dense-UI choices.
 
@@ -170,8 +182,8 @@ default; `fullWidth={false}` uses intrinsic fit-content sizing within the
 available container.
 
 Atom attributes drive filled, focused, disabled, required, read-only, and
-invalid state. Brick adds hover-capable pointer treatment, `:focus-within`
-focus paint, semantic invalid/disabled/read-only colors, autofill-safe text,
+invalid state. Brick adds hover-capable pointer treatment, native-input-owned
+boundary focus paint, semantic invalid/disabled/read-only colors, autofill-safe text,
 dark appearance, reduced-motion, and a system-color outline fallback in
 forced-colors mode.
 
@@ -247,9 +259,9 @@ Input uses logical sizing and spacing, `min-inline-size: 0`, and
 `max-inline-size: 100%`. Adornments and Clear reverse naturally in RTL.
 Long values retain native horizontal editing without widening the page.
 
-The component remains usable at narrow widths and 200%/400% zoom. Brick does
-not add responsive object props, automatic breakpoints, or application layout
-policy.
+Size and variant accept the shared initial/sm/md/lg/xl responsive values. Sparse
+breakpoints inherit the preceding recipe. Application layout and width remain
+owned by the surrounding layout components.
 
 ## Accessibility
 
@@ -280,6 +292,22 @@ The ref targets `HTMLInputElement`. Supported native props, form ownership,
 events, ARIA, and data attributes reach that input. Field state and
 relationships inherit through Atom, while explicit local values take
 precedence.
+
+Managed Group attributes reach the painted wrapper so attached segments retain
+their joins; ordinary native attributes still reach the input. Start adornments
+have intrinsic width for prefixes and independently named actions. Decorative
+artwork alone is constrained to the icon size.
+
+Use [InputAddon](../input-addon/README.md) and Group attached for external
+segments. Set matching sizes/variants on each child; Group does not propagate
+field recipes. Use actual Button/IconButton components for actions.
+
+### Optional integrations
+
+See [Input integrations](../../guides/input-integrations.md) for React Hook Form,
+use-mask-input and react-payment-inputs. These are application dependencies, not
+Brick runtime dependencies. Preserve refs/handlers and use one value owner.
+Uncontrolled Input remains DOM-owned; controlled Input uses value/onValueChange.
 
 ## Examples
 
@@ -331,3 +359,8 @@ const [value, setValue] = useState("");
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).
+
+
+### Icon artwork sizing
+
+The owning artwork slot sets final Icon dimensions even with larger standalone/provider sizes; do not add compensating Icon size props. Text and interactive adornments retain their own layout.

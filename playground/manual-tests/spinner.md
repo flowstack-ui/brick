@@ -11,6 +11,7 @@
 | Viewport and zoom | |
 | Assistive technology | |
 | Playground route | `/spinner` |
+| Qualification route(s) | `/spinner` and `/spinner?qualification=1` |
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
@@ -18,6 +19,8 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 Inspect all 16 numbered scenarios, including every size, color, thickness and
 customization. Rings must be square, separated from labels and not clipped.
+On the normal docs route, inspect custom artwork with no additional ring,
+responsive sizing and the contained overlay. Check both appearance modes.
 
 Result:
 Notes or issue:

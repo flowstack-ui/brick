@@ -1,3 +1,5 @@
+import { ToggleDocumentation } from "./ToggleDocumentation.js";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
@@ -144,7 +146,8 @@ export const toggleScenarios = [
   },
 ] as const satisfies readonly ScenarioDefinition[];
 
-export function TogglePage() {
+export function TogglePage(){ const preview=usePreviewContext(); if(!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <ToggleDocumentation/>; return <ToggleEvidence/>; }
+function ToggleEvidence() {
   const [controlled, setControlled] = useState(false);
   return (
     <VStack className="toggle-page" data-component-page="toggle" data-testid="toggle-workbench">

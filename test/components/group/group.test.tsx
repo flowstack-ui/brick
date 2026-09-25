@@ -8,6 +8,26 @@ import {
 } from "../../../src/group.js";
 
 describe("Group", () => {
+  it("keeps skipped children and marks participating fragment children", () => {
+    render(<Group skip={child => Boolean((child.props as Record<string, unknown>)["data-skip"])}><><button>First</button><span data-skip>Between</span><button>Last</button></></Group>);
+    expect(screen.getByText("First")).toHaveAttribute("data-group-first");
+    expect(screen.getByText("Last")).toHaveAttribute("data-group-last");
+    expect(screen.getByText("Between")).toHaveAttribute("data-group-skip");
+    expect(screen.getByText("Between")).not.toHaveAttribute("data-group-item");
+  });
+  it("composes one host and retains its children when stacking is enabled", () => {
+    const ref = createRef<HTMLElement>();
+    render(<Group asChild ref={ref} stacking="last-on-top"><section data-testid="composed"><button>One</button><button>Two</button></section></Group>);
+    expect(ref.current).toBe(screen.getByTestId("composed"));
+    expect(screen.getByText("Two")).toHaveAttribute("data-group-last");
+    expect(screen.getByText("Two").style.getPropertyValue("--brick-group-index")).toBe("1");
+  });
+  it("serializes responsive layout without DOM replacement", () => {
+    render(<Group data-testid="responsive" orientation={{ md: "vertical" }} grow={{ lg: true }} wrap="wrap" align="end" />);
+    expect(screen.getByTestId("responsive")).toHaveAttribute("data-orientation", "horizontal");
+    expect(screen.getByTestId("responsive")).toHaveAttribute("data-orientation-lg", "vertical");
+    expect(screen.getByTestId("responsive").style.getPropertyValue("--brick-group-display-lg-input")).toBe("flex");
+  });
   it("renders one role-free host with adopted defaults", () => {
     const ref = createRef<HTMLElement>();
     render(

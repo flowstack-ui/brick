@@ -7,7 +7,13 @@ const linkProps: PaginationRootProps = { children: null, totalPages: 8, page: 2,
 void Pagination; void props;
 void linkProps;
 // @ts-expect-error Pagination variants are closed.
-const badVariant: PaginationVariant = "solid";
+const badVariant: PaginationVariant = "unknown";
 // @ts-expect-error Pagination requires a numeric total page count.
 const badProps: PaginationRootProps = { children: null, totalPages: "8" };
 void badVariant; void badProps;
+const countProps: PaginationRootProps = { children: null, count: 100, defaultPageSize: 25, selectedVariant: "solid", tone: "accent", size: { md: "lg" } };
+// @ts-expect-error Choose exactly one count model.
+const mixed: PaginationRootProps = { children: null, count: 100, totalPages: 4 };
+// @ts-expect-error Page-size arithmetic requires record count.
+const invalidSize: PaginationRootProps = { children: null, totalPages: 4, pageSize: 25 };
+void countProps; void mixed; void invalidSize;

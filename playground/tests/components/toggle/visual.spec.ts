@@ -6,7 +6,7 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/toggle");
+installVisualDefaults("/toggle?qualification=1");
 
 test.beforeEach(async ({ page }) => {
   await page.addStyleTag({ content: ".evidence-review-header, [data-playground-app-bar] { position: static !important; visibility: hidden; }" });

@@ -6,20 +6,22 @@ Pagination follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
-- Added `boundaryVariant` so Previous and Next can use an outline recipe while
-  numbered items retain the Root presentation.
-- Added native URL-backed Pagination through Atom `Root.getPageHref`, with
-  styled anchor controls, browser navigation semantics, and inert boundary
-  links while retaining the existing button-controlled mode.
+- Added count/page-size state, usePagination, RootProvider, Context, First,
+  Last, custom generated hosts, distinct ID maps, and localized PageText formats.
+- Added Button visual variants, selectedVariant, tone, radius and responsive sizes.
+- Added native URL destinations, localized labels, stable generated ranges,
+  and the legacy boundaryVariant outline shortcut.
+- Added public Agent Knowledge for selection, composition and CSS delivery.
+
+### Changed
+
+- Controls share Button presentation, defaulting to neutral ghost with outline
+  selected state. Container paint composes through Surface; legacy root, control,
+  current-page and typography CSS variables are retired. List gap remains supported.
+- List wrappers are optional, enabling direct attached ButtonGroup composition.
 
 ### Fixed
 
-- Reserved the complete focus-outline width plus offset inside the owned
-  inline scroll container so controls do not clip at any edge.
-- Kept the current page on the accent-solid interaction scale during hover and
-  press instead of applying the generic neutral page-control background.
-
-- Added public Agent Knowledge for component selection, composition,
-  CSS-delivery, recurring mistakes, and validation.
-
-- Added the seven-part Atom-backed `Pagination` family with generated stable ranges, localized labels, explicit composition, three variants and sizes, logical controls, and no-wrap inline overflow.
+- Inside focus remains visible within the owned inline scroll container.
+- Sparse responsive sizes inherit Pagination's md default.
+- Attached controls retain their named Button-sized minimum targets.

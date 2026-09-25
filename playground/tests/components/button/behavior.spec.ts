@@ -4,14 +4,14 @@ import { verifyActionFocus } from "../../helpers/action-focus.js";
 import { setExampleDirection } from "../../helpers/example-direction.js";
 
 test("Button inside focus survives clipping and every action fill", async ({ page }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
   await verifyActionFocus(page, page.getByTestId("button-inside-focus"));
 });
 
 test("Button exposes the approved recipes and native semantics", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const overview = page.getByTestId("button-overview");
   const primary = overview.getByRole("button", { name: "Publish project" });
@@ -50,7 +50,7 @@ test("Button exposes the approved recipes and native semantics", async ({
 test("Button specimens change only the dimension owned by their scenario", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const variants = page.getByTestId("button-variants").locator(".brick-button");
   await expect(variants).toHaveCount(4);
@@ -115,27 +115,14 @@ test("Button specimens change only the dimension owned by their scenario", async
     await expect(control).toHaveAttribute("data-shape", "rounded");
   }
   const disabled = page.getByTestId("button-disabled");
-  await expect(disabled).toHaveCSS("opacity", "1");
-  expect(
-    await disabled.evaluate((element) => {
-      const probe = document.createElement("span");
-      probe.style.color = "var(--brick-color-text-disabled)";
-      document.body.append(probe);
-      const expected = getComputedStyle(probe).color;
-      probe.remove();
-      return getComputedStyle(element).color === expected;
-    }),
-  ).toBe(true);
-  expect(
-    await disabled.evaluate((element) => {
-      const probe = document.createElement("span");
-      probe.style.color = "var(--brick-color-border-subtle)";
-      document.body.append(probe);
-      const expected = getComputedStyle(probe).color;
-      probe.remove();
-      return getComputedStyle(element).borderTopColor === expected;
-    }),
-  ).toBe(true);
+  await expect(disabled).toHaveCSS("opacity", "0.5");
+  await expect(disabled).toHaveCSS("cursor", "not-allowed");
+  for (const property of ["color", "background-color", "border-top-color"]) {
+    const enabledPaint = await page.getByTestId("button-start-icon").evaluate(
+      (element, name) => getComputedStyle(element).getPropertyValue(name), property,
+    );
+    await expect(disabled).toHaveCSS(property, enabledPaint);
+  }
 
   const consumerHooks = page.locator(
     '.button-customization [data-slot="custom-action"]',
@@ -177,7 +164,7 @@ test("Button specimens change only the dimension owned by their scenario", async
 test("Button native actions compose with Brick Form and Field", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const form = page.getByRole("form", {
     name: "Button native form example",
@@ -226,7 +213,7 @@ test("Button native actions compose with Brick Form and Field", async ({
 test("Button preserves loading layout and adopted target sizes", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const loading = page.getByTestId("button-loading");
   await expect(loading).toHaveAttribute("aria-busy", "true");
@@ -261,7 +248,7 @@ test("Button responsive size changes the complete recipe at the shared breakpoin
   const responsive = page.getByTestId("button-responsive-size");
 
   await page.setViewportSize({ width: 768, height: 900 });
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
   await expect(responsive).toHaveAttribute("data-size", "lg");
   await expect(responsive).toHaveAttribute("data-size-lg", "md");
   await expect(responsive).toHaveCSS("min-height", "44px");
@@ -281,7 +268,7 @@ test("Button responsive size changes the complete recipe at the shared breakpoin
 test("Button keeps standard icons token-sized while its slot follows larger component content", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const button = page.getByTestId("button-end-icon");
   const icon = button.locator(".brick-button__icon");
@@ -298,7 +285,7 @@ test("Button keeps standard icons token-sized while its slot follows larger comp
 test("Button keeps loading centered and directional icons semantic in RTL", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const loading = page.getByTestId("button-loading");
   await page.addStyleTag({
@@ -375,7 +362,7 @@ test("Button evidence uses complete tone groups and balanced variant rows", asyn
   page,
 }) => {
   await page.setViewportSize({ width: 700, height: 900 });
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   for (const variant of ["Solid", "Soft", "Outline", "Ghost"]) {
     const group = page
@@ -428,7 +415,7 @@ test("Button evidence uses complete tone groups and balanced variant rows", asyn
 test("full-width evidence fills its available specimen container", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const button = page.getByRole("button", { name: "Explicit full width" });
   const frame = button.locator("..");
@@ -442,7 +429,7 @@ test("full-width evidence fills its available specimen container", async ({
 test("Button preserves native keyboard activation and visible focus", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const overview = page.getByTestId("button-overview");
   const primary = overview.getByRole("button", { name: "Publish project" });
@@ -464,7 +451,7 @@ test("Button preserves native keyboard activation and visible focus", async ({
 test("Button keeps disabled loading presentation centered and unavailable", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const unavailableLoading = page.getByTestId("button-disabled-loading");
   await expect(unavailableLoading).toBeDisabled();
@@ -500,7 +487,7 @@ test("Button keeps disabled loading presentation centered and unavailable", asyn
 
 test("Button reflows in a constrained mobile viewport", async ({ page }) => {
   await page.setViewportSize({ width: 256, height: 800 });
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const stress = page.getByTestId("button-stress");
   const longButton = stress.getByRole("button", {

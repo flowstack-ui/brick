@@ -13,13 +13,24 @@
 | Assistive technology | |
 | Playground route | `/carousel` |
 
-Scenario order: `01 Overview`, `02 Optional controls`, `03 User-controlled rotation`, `04 Placement, size, and appearance`
+Scenario order: `01 carousel.overview` → `02 carousel.controls` → `03 carousel.rotation` → `04 carousel.appearance`.
+
+Use `?qualification=1` for this preserved scenario sequence; review the ordinary documentation examples separately.
+
+The normal route has source-paired feature examples. Legacy regression scenarios
+remain available at `/carousel?qualification=1`. This protocol is unperformed
+until a named reviewer records results below; automated emulation is separate.
+
+Scenario order: basic, geometry, interaction, composition, preferences.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 
 ## Step 1 — Controls and touch
 
-Operate arrows and picker dots by pointer, keyboard, and touch swipe. Confirm one slide settles at a time, focus remains visible, labels match destinations, and the control-free example remains usable by native horizontal scrolling.
+Operate arrows and picker dots by pointer, keyboard, and touch swipe. Confirm one
+snap page settles at a time, including multiple visible slides; visible peer links
+remain usable and fully offscreen controls leave the tab order. Confirm labels
+match destinations and the control-free example works with native scrolling.
 
 Tab to the native Viewport at each rounded edge. Confirm its rounded indicator
 appears above the active slide without being covered by media or cropped by
@@ -58,12 +69,30 @@ Notes or issue:
 
 ## Step 4 — Assistive technology
 
-With a screen reader, navigate the labelled carousel, active slide, controls, and picker. Confirm inactive content is not reachable and rotation announcements do not create repeated speech.
+With a screen reader, navigate the labelled carousel, visible slides, controls, and picker. Confirm fully offscreen content is not reachable, visible peer content remains reachable, and rotation announcements do not create repeated speech.
 
 Result:
 Notes or issue:
 
-## Completion
+## Step 5 — New geometry, state and compositions
+
+Check grouped movement, fractional peeking, padding and variable dimensions in
+both axes and directions. Resize while moving, load late images/fonts, remove or
+reorder the selected item, and interrupt motion rapidly. Confirm no blank frame,
+diagonal movement, stale selection or recreated slide content. Short collections
+that cannot loop seamlessly without duplication use an instant boundary reset;
+review this explicitly rather than claiming identical motion for every layout.
+
+Drag with mouse, cancel, leave the window, and click nested links/buttons. Confirm
+only an actual drag suppresses the following click. Test native touch with page
+scrolling on physical iPhone and Android. Check controlled acceptance/rejection,
+external store commands, Dialog focus return, thumbnail names, localized labels,
+and dynamically changing reduced-motion preferences.
+
+Result:
+Notes or issue:
+
+## Completion record
 
 Overall result:
 Follow-up issues:

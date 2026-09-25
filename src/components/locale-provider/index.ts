@@ -8,3 +8,4 @@ export {
   type LocaleContextValue,
   type LocaleProviderProps,
 } from "./LocaleProvider.js";
+export { useFilter, type FilterOptions, type LocaleFilter } from "./useFilter.js";

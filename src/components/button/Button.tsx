@@ -1,4 +1,8 @@
+"use client";
+
 import { forwardRef, type ReactElement, type ReactNode } from "react";
+import { useButtonGroupDefaults } from "./ButtonGroup.js";
+import { Spinner } from "../spinner/Spinner.js";
 import { radiusStyle, type Radius, type RadiusShapeProps } from "../_radius/Radius.js";
 import {
   ButtonRoot as AtomButtonRoot,
@@ -9,7 +13,7 @@ import {
   type ResponsiveValue,
 } from "../_responsive-value/ResponsiveValue.js";
 
-export type ButtonVariant = "solid" | "soft" | "outline" | "ghost";
+export type ButtonVariant = "solid" | "soft" | "subtle" | "surface" | "outline" | "ghost" | "plain";
 
 export type ButtonTone =
   "neutral" | "contrast" | "accent" | "info" | "success" | "warning" | "danger";
@@ -44,11 +48,17 @@ export type ButtonProps = ButtonSharedProps &
         render?: never;
         startIcon?: never;
         endIcon?: never;
+        loadingText?: never;
+        spinner?: never;
+        spinnerPlacement?: never;
         children: ReactElement;
       }
     | {
         asChild?: false;
         render?: AtomButtonRootProps["render"];
+        loadingText?: ReactNode;
+        spinner?: ReactNode;
+        spinnerPlacement?: "start" | "end";
       }
   );
 
@@ -56,6 +66,7 @@ export type ButtonProps = ButtonSharedProps &
 export function buttonPresentation(
   { variant = "solid", tone = "accent", size = "lg", shape = "rounded", radius, fullWidth = false, focusRing }: ButtonVisualProps,
   className?: string,
+  defaultSize: ButtonSize = "lg",
 ) {
   return {
     className: className ? `brick-button ${className}` : "brick-button",
@@ -67,7 +78,7 @@ export function buttonPresentation(
     "data-variant": variant,
     ...responsiveDataAttributes("data-size", size, {
       alwaysInitial: true,
-      defaultValue: "lg",
+      defaultValue: defaultSize,
     }),
   };
 }
@@ -92,37 +103,65 @@ export function ButtonContent(
   );
 }
 
-export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
+/** Internal icon-only mode is not part of Button's public API. */
+export const ButtonBase = forwardRef<HTMLElement, ButtonProps & { iconOnly?: boolean; iconShape?: "rounded" | "circle" }>(function Button(
   {
-    variant = "solid",
-    tone = "accent",
-    size = "lg",
-    shape = "rounded",
-    radius,
+    variant: ownVariant,
+    tone: ownTone,
+    size: ownSize,
+    shape,
+    radius: ownRadius,
     style,
     fullWidth = false,
-    focusRing,
+    focusRing: ownFocusRing,
     startIcon,
     endIcon,
     className,
     children,
     asChild = false,
     render,
+    loadingText,
+    spinner,
+    spinnerPlacement = "start",
+    iconOnly = false,
+    iconShape,
     ...rootProps
   },
   ref,
 ) {
+  const defaults = useButtonGroupDefaults();
+  const variant = ownVariant ?? defaults.variant;
+  const tone = ownTone ?? defaults.tone;
+  const size = ownSize ?? defaults.size;
+  const radius = ownRadius ?? (shape === undefined ? defaults.radius : undefined);
+  const focusRing = ownFocusRing ?? defaults.focusRing;
+  const hasLoadingText = loadingText !== undefined && loadingText !== null && typeof loadingText !== "boolean";
+  const customLoading = !asChild && rootProps.loading && (hasLoadingText || spinner !== undefined);
+  const indicator = <span aria-hidden="true" className="brick-button__spinner">{spinner === undefined ? <Spinner size="inherit" /> : spinner}</span>;
   const content = asChild ? (
     children
   ) : (
-    <ButtonContent startIcon={startIcon} endIcon={endIcon}>{children}</ButtonContent>
+    customLoading && hasLoadingText ? (
+      <span className="brick-button__loading-content">
+        {spinnerPlacement === "start" ? indicator : null}
+        <span>{loadingText}</span>
+        {spinnerPlacement === "end" ? indicator : null}
+      </span>
+    ) : (
+      <>
+        {iconOnly ? <span aria-hidden="true" className="brick-icon-button__icon">{children}</span> : <ButtonContent startIcon={startIcon} endIcon={endIcon}>{children}</ButtonContent>}
+        {customLoading ? <span className="brick-button__loading-overlay">{indicator}</span> : null}
+      </>
+    )
   );
 
   return (
     <AtomButtonRoot
       {...rootProps}
       asChild={asChild}
+      data-custom-loading={customLoading ? "" : undefined}
       {...buttonPresentation({ variant, tone, size, shape, radius, fullWidth, focusRing }, className)}
+      data-shape={radius === undefined ? iconShape ?? shape ?? "rounded" : "rounded"}
       style={radiusStyle(radius, "--brick-button-radius", style)}
       ref={ref}
       render={render}
@@ -132,4 +171,5 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(function Button(
   );
 });
 
-Button.displayName = "Button";
+ButtonBase.displayName = "Button";
+export const Button: ReturnType<typeof forwardRef<HTMLElement, ButtonProps>> = ButtonBase;

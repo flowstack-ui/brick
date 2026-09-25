@@ -54,9 +54,10 @@ Public exports are `Toggle`, `ToggleProps`, `ToggleVariant`, `ToggleTone`,
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `solid`, `soft`, `outline`, `ghost` | `ghost` |
-| `tone` | `accent`, `neutral` | `neutral` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `variant` | `solid`, `soft`, `subtle`, `surface`, `outline`, `ghost`, `plain` | `ghost` |
+| `tone` | `accent`, `neutral`, `contrast` | `neutral` |
+| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` (responsive) | `md` |
+| `focusRing` | `outside`, `inside` | theme default |
 | `shape` | `rounded`, `pill` | `rounded` |
 | `iconOnly` | `boolean` | `false` |
 
@@ -88,10 +89,12 @@ Neutral solid selection uses a strong theme-derived neutral surface with the
 normal foreground instead of the inverse black/white pair.
 
 Outline selection uses the tone's solid accent for its border while preserving
-the normal primary foreground. The recipe does not add a soft fill.
+the normal primary foreground. Selected outline adds a soft fill.
 
 Disabled Toggles use a faded disabled foreground and quiet surface; selected
 disabled state does not retain the enabled outline or inset selection edge.
+The control fades once to 50% opacity and uses a not-allowed cursor. Do not
+add a faded wrapper. Forced colors keeps opacity at 1 and uses system colors.
 
 ## Tokens and CSS hooks
 
@@ -105,6 +108,10 @@ tokens are `--brick-toggle-min-block-size`, `--brick-toggle-padding-inline`,
 
 Choose props first, then semantic or public Toggle tokens. Use `className` or
 `style` for a local exception while preserving pressed and focus distinction.
+
+### Shared action scale
+
+Sizes share Button geometry: 24, 32, 36, 40, 44, 48, and 64px. Default md is 40px. Use `size={{ lg: "lg" }}` for md below lg and lg above it; explicit initial values are supported. Toggle retains Atom behavior instead of nesting Button. Contrast supplies inverse solid selection; neutral remains the default. Subtle is borderless, surface has an inset edge, and plain marks selection with a bottom edge.
 
 ## Responsive behavior
 
@@ -142,3 +149,8 @@ semantics when composing. The ref targets the rendered `HTMLButtonElement`.
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).
+
+
+### Icon artwork sizing
+
+The owning artwork slot sets final Icon dimensions even with larger standalone/provider sizes; do not add compensating Icon size props. Text and interactive adornments retain their own layout.

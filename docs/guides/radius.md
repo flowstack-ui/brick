@@ -17,16 +17,17 @@ The following public parts accept this contract:
 
 | Family | Part |
 | --- | --- |
-| Actions | Button, IconButton, Toggle, ToggleGroup.Root, SegmentGroup.Root, Toolbar.Root |
+| Actions | Button, IconButton, Toggle, ToggleGroup.Root, SegmentGroup.Root, Toolbar.Root, Toolbar.Button, Toolbar.Link, Toolbar.ToggleGroup, Toolbar.ToggleItem |
 | Action wrappers | CloseButton, DownloadTrigger, QrCode.DownloadTrigger |
 | Fields | Input, Textarea.Root, NumberInput.Root, PasswordToggleField, FileUpload.Root |
-| Compound fields | NativeSelect.Root, PinInput.Root/RootProvider, TagsInput.Root/RootProvider, DateInput.Root, DatePicker.Root |
+| Compound fields | NativeSelect.Root, PinInput.Root/RootProvider, TagsInput.Root/RootProvider, Editable.Root/RootProvider, DateInput.Root, DatePicker.Root |
 | Choices | Select.Root, MultiSelect.Root, Combobox.Root, RadioCard.Root |
 | Independent popup boundaries | Select.Content, MultiSelect.Content, Combobox.Content, DatePicker.Content, ColorPicker.Content |
+| Color preview boundaries | ColorPicker.Swatch, ColorPicker.ValueSwatch, ColorPicker.SwatchTrigger |
 | Surfaces | Card.Root, Surface, Dialog.Content, AlertDialog.Content, Popover.Content, Drawer.Content, FloatingPanel.Content, ActionBar.Content |
 | Menus | DropdownMenu.Content/SubContent, ContextMenu.Content/SubContent, Menubar.Content/SubContent, Tooltip.Content |
-| Compact content | Badge, Chip.Root, Tabs.List |
-| Media and progress | Avatar, AvatarGroup, ColorSwatch.Root/Mix, Carousel.Root, Progress.Root |
+| Compact content | Badge, Chip.Root, Tabs.List, Tabs.Indicator, ToggleTip.Content |
+| Media and progress | Avatar/Avatar.Root, AvatarGroup, ColorSwatch.Root/Mix, Carousel.Root, Progress.Root |
 | Collections | Table.Root, Tree.Root, DataGrid.Root, TreeGrid.Root, List.Root, Feed.Root |
 | Disclosures | Accordion.Root, Collapsible.Root |
 
@@ -34,10 +35,11 @@ Underline fields deliberately exclude corner selection. Popup radius is separate
 from trigger radius: selecting a pill trigger must not create a pill popup.
 `Tabs.List` retains `default` as a compatibility spelling for omission; its inner
 corners are clamped to zero when the inset is larger than the outer radius.
-Drawer still rounds only free edges; full-screen and viewport-edge constraints
-remain part of its geometry recipe.
+Drawer flush panels default to square corners. A Positioner inset gives the
+panel a control-radius default; Content.radius explicitly overrides it.
 
-AvatarGroup owns a shared member radius, including its generated overflow avatar;
+AvatarGroup supplies a default member radius, including its generated overflow avatar;
+an explicit member corner choice overrides it, without combining radius and shape.
 nested groups establish their own presentation. Carousel viewport radius does
 not change the geometry of its navigation buttons. Progress radius changes the
 track ends, not the meaning or orientation of the progress indicator.

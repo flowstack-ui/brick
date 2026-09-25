@@ -21,6 +21,12 @@ function LocaleOutput() {
 }
 
 export function LocaleProviderPage() {
+  const preview = usePreviewContext();
+  if (!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <LocaleProviderDocumentation />;
+  return <LocaleProviderEvidence />;
+}
+
+function LocaleProviderEvidence() {
   return (
     <VStack data-component-page="locale-provider" gap="6">
       <Scenario {...localeProviderScenarios[0]}>
@@ -35,3 +41,5 @@ export function LocaleProviderPage() {
     </VStack>
   );
 }
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { LocaleProviderDocumentation } from "./LocaleProviderDocumentation.js";

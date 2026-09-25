@@ -1,4 +1,6 @@
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { ButtonDocumentation } from "./ButtonDocumentation.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
@@ -151,6 +153,12 @@ export const buttonScenarios = [
 ] as const satisfies readonly ScenarioDefinition[];
 
 export function ButtonPage() {
+  const preview = usePreviewContext();
+  if (!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <ButtonDocumentation />;
+  return <ButtonEvidence />;
+}
+
+function ButtonEvidence() {
   const [pressCount, setPressCount] = useState(0);
   const [formStatus, setFormStatus] = useState(
     "Edit the project name, then submit or reset the form.",

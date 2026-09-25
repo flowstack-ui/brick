@@ -1,3 +1,4 @@
+export type { StackSeparatorProps } from "./components/stack/StackSeparator.js";
 export {
   HStack,
   Stack,
@@ -6,6 +7,9 @@ export {
   type ResponsiveValue,
   type SpacingValue,
   type StackAlign,
+  type StackAlignContent,
+  type StackBasis,
+  type StackWrap,
   type StackBreakpoint,
   type StackDirection,
   type StackElement,

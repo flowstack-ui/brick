@@ -6,6 +6,24 @@ import { For } from "../../../src/for.js";
 import { Select } from "../../../src/select.js";
 
 describe("For", () => {
+  it("preserves zero fallback and renders nothing without a fallback", () => {
+    const { container, rerender } = render(<For each={[]} fallback={0}>{() => "unused"}</For>);
+    expect(container).toHaveTextContent("0");
+    rerender(<For each={undefined} fallback={0}>{() => "unused"}</For>);
+    expect(container).toHaveTextContent("0");
+    rerender(<For each={[]}>{() => "unused"}</For>);
+    expect(container).toBeEmptyDOMElement();
+    rerender(<For each={undefined}>{() => "unused"}</For>);
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it("passes optional array values through without filtering or reindexing", () => {
+    const renderItem = vi.fn((item: string | undefined, index: number) => <span key={index}>{item ?? "Missing"}:{index}</span>);
+    render(<For each={[undefined, "Two"] as const}>{renderItem}</For>);
+    expect(screen.getByText("Missing:0")).toBeVisible();
+    expect(screen.getByText("Two:1")).toBeVisible();
+    expect(renderItem).toHaveBeenCalledTimes(2);
+  });
   beforeAll(() => {
     Element.prototype.scrollIntoView = vi.fn();
   });

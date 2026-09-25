@@ -18,6 +18,15 @@ Scenario order: 01 calendar.density; 02 calendar.selection; 03 calendar.locale; 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 Automated browser checks are separate evidence, not manual passes.
 
+## September 18 parity additions
+
+Compare the public examples separately from `?qualification=1`. Check today
+underlining both selected and unselected, one whole-disabled fade, read-only
+navigation, and full month names. In booking, choose a date/time, change the
+date, confirm time resets, then scroll to the final slot. Repeat at 390px in
+both directions and appearances. Confirm keyboard focus remains visible and
+announce the selected date with a real screen reader. Human checks remain open.
+
 ## Step 1 — Visible scenarios and interaction
 
 Setup: Open `/calendar` and follow the scenario order above.
@@ -75,6 +84,13 @@ Result:
 Notes or issue:
 
 ## Completion
+
+Polish regression: inspect the muted week-number column and # header in light
+and dark appearances. Hover/click a week number: no blocked cursor, focus stop
+or date selection. In booking, inspect centered empty content, weekday/date
+heading, unavailable weekends, bounded scrolling, time reset after a date
+change, and stacked panes at 390px. Automated checks and reviewed captures do
+not close the independent manual environments below.
 
 Overall result:
 Follow-up issues: Independent assistive-technology, real zoom and physical touch review.

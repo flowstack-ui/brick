@@ -1,8 +1,20 @@
 # Input changelog
 
-Input follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+- Prevent legacy scalar size rules from overriding shared responsive sizing when composing Input with InputAddon.
+
+Normalize wrapped Icon artwork to the owning slot, matching raw SVG geometry
+without compensating Icon size props. Add an owner browser regression.
+
+
+Input follows the package version of `@flowstack-ui/brick`.
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+- Add surface as a neutral filled-and-bordered alternative with unchanged geometry; preserve outline defaults.
+- Keep outline transparent at rest and on hover, independently of popup paint.
 
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
@@ -14,6 +26,9 @@ Input follows the package version of `@flowstack-ui/brick`.
   the 44px `lg` recipe the default.
 
 ### Fixed
+
+- Scope the input boundary focus treatment to its native text control, so an
+  independently focused select or button adornment does not display two rings.
 
 - Use an explicit system-color outline for focused controls in forced-colors
   mode so Input and Textarea expose the same unclipped focus affordance.

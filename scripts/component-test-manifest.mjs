@@ -1,4 +1,5 @@
 export const componentIds = [
+  "input-addon",
   "table-of-contents",
   "qr-code",
   "tags-input",

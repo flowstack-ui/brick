@@ -1,5 +1,12 @@
 # TagsInput manual protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 Not performed. Record platform, browser, screen reader, zoom, reviewer and date.
 
 | Environment | Recorded value |
@@ -9,6 +16,7 @@ Not performed. Record platform, browser, screen reader, zoom, reviewer and date.
 | Viewport and zoom | Not performed |
 | Assistive technology | Not performed |
 | Playground route | `/tags-input` |
+| Qualification route(s) | `/tags-input?qualification=1` plus normal docs examples |
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for each recorded check.
 
@@ -28,13 +36,21 @@ tags-input.translations.
 9. Forms: JSON submission, reset, external association and required collection validation.
 10. Suggestions: physical keyboard/touch selection, nested Dialog, two Escape layers,
     empty/loading, rejected suggestion draft and portalled outside behavior.
-11. Recipes: all seven sizes, three variants, shapes, actual 200/400% zoom,
+11. Recipes: all seven sizes and seven responsive variants, shapes, actual 200/400% zoom,
     narrow wrapping, forced colors and reduced motion; no overlapping targets.
 12. Translations: real Japanese/Chinese IME, Arabic RTL caret/navigation, localized
     spoken feedback and errors.
 
 For every step record pass/fail/blocked, evidence and unresolved issue. Do not
 mark physical testing complete based on browser emulation.
+
+13. Parity corrections: compare 2xs one-row heights and actual edge hit areas;
+    underline hover/focus must never restore side borders or horizontal inset.
+    Resize from underline to boxed and back; verify corners and focus restore.
+14. Composition: inspect ItemContext, indexed IDs, native composed input/editor
+    refs and inner link activation. Read-only has no add placeholder or mutation
+    controls, but retains keyboard access and JSON submission. Check soft with
+    accent/contrast/semantic tags and full accessible names for truncated labels.
 
 ## Step 1 — Focus presentation qualification
 
@@ -56,3 +72,9 @@ Notes or issue:
 Overall result: Not performed.
 Follow-up issues: Physical IME, screen reader, touch, clipboard and zoom checks.
 Workbook updated: Manual gates remain open.
+
+## Form surface comparison
+
+- Compare outline and surface on light/dark canvas and raised parents: outline stays transparent; surface owns its neutral fill without adding a shadow.
+- Hover, focus, disable and mark invalid; preserve visible boundaries and explicit state treatment. Compare matched size recipes including their outer borders.
+- Check narrow/RTL containment and forced colors. Popup panels and selection marks must retain their independent paint.

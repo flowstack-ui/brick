@@ -11,6 +11,14 @@ import {
 } from "../../../src/toggle.js";
 
 describe("Toggle", () => {
+  it("uses sparse responsive action sizing and inside focus without extra hosts", () => {
+    render(<Toggle size={{ lg: "2xl" }} focusRing="inside" variant="subtle" tone="contrast">Command</Toggle>);
+    const button = screen.getByRole("button", { name: "Command" });
+    expect(button).toHaveAttribute("data-size", "md");
+    expect(button).toHaveAttribute("data-size-lg", "2xl");
+    expect(button).toHaveAttribute("data-focus-ring", "inside");
+    expect(button.querySelector("button")).toBeNull();
+  });
   it("owns adopted defaults and Atom pressed semantics", () => {
     render(<Toggle>Bold</Toggle>);
     const toggle = screen.getByRole("button", { name: "Bold" });
@@ -52,10 +60,10 @@ describe("Toggle", () => {
   });
 
   it("exposes every closed visual recipe", () => {
-    const variants: ToggleVariant[] = ["solid", "soft", "outline", "ghost"];
-    const sizes: ToggleSize[] = ["sm", "md", "lg"];
+    const variants: ToggleVariant[] = ["solid", "soft", "subtle", "surface", "outline", "ghost", "plain"];
+    const sizes: ToggleSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
     const shapes: ToggleShape[] = ["rounded", "pill"];
-    const tones: ToggleTone[] = ["accent", "neutral"];
+    const tones: ToggleTone[] = ["accent", "neutral", "contrast"];
     const { rerender } = render(<Toggle>Recipe</Toggle>);
     const toggle = screen.getByRole("button", { name: "Recipe" });
     for (const variant of variants) {

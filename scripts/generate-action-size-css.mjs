@@ -78,17 +78,9 @@ const buttonRecipes = {
 };
 
 const iconButtonRecipes = Object.fromEntries(
-  Object.entries({
-    "2xs": ["1.5rem", "0.875rem"],
-    xs: ["2rem", "1rem"],
-    sm: ["2.25rem", "1rem"],
-    md: ["2.5rem", "1.25rem"],
-    lg: ["2.75rem", "1.25rem"],
-    xl: ["3rem", "1.25rem"],
-    "2xl": ["4rem", "1.5rem"],
-  }).map(([size, [controlSize, iconSize]]) => [
+  Object.entries(buttonRecipes).map(([size, recipe]) => [
     size,
-    { size: controlSize, "icon-size": iconSize },
+    { size: recipe["min-block-size"], "icon-size": recipe["icon-size"] },
   ]),
 );
 
@@ -104,7 +96,7 @@ function selectors(component, recipes, breakpoint) {
   return Object.entries(recipes)
     .map(
       ([size, recipe]) =>
-        `${indentation}.brick-${component}[${attribute}="${size}"] {\n${declarations(
+        `${indentation}.brick-${component}[${attribute}="${size}"]${component === "toggle" ? `, .brick-toggle-group[${attribute}="${size}"] > .brick-toggle-group-item` : ""} {\n${declarations(
           component,
           recipe,
           `${indentation}  `,
@@ -170,6 +162,8 @@ const iconButtonBytes = await update(
   iconButtonRecipes,
   5_500,
 );
+
+await update("src/components/toggle/toggle.css", "toggle", buttonRecipes, 19000);
 
 console.log(
   `${check ? "Action-size CSS is current" : "Generated action-size CSS"} ` +

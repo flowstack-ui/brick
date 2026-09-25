@@ -4,6 +4,10 @@ Text follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Added justified alignment, font style, numeric glyph and decoration controls.
+  Line clamping accepts responsive positive integers and an explicit none reset;
+  named text exports share these controls.
+
 ### Changed
 
 - Refined the authored display and large-copy scale to 36/44, 48/60, 18/27,

@@ -1,6 +1,6 @@
 import { expect, installVisualDefaults, test } from "../../visual-harness.js";
 
-installVisualDefaults("/chip");
+installVisualDefaults("/chip?qualification=1");
 
 test("Chip compact anatomy and independent action", async ({ page }) => {
   await page.setViewportSize({ width: 1120, height: 1200 });
@@ -22,4 +22,14 @@ test("Chip appearance, removal, and boundary", async ({ page }) => {
   await expect(page.locator("#scenario-chip-removal")).toHaveScreenshot("removal-focus-light.png");
   await expect(page.locator("#scenario-chip-appearance")).toHaveScreenshot("appearance-light.png");
   await expect(page.locator("#scenario-chip-boundary")).toHaveScreenshot("boundary-light.png");
+});
+
+test("Chip focused documentation recipes in both appearances", async ({page}) => {
+  await page.goto("/chip?appearance=light");
+  await expect(page.locator("#variants")).toHaveScreenshot("documentation-variants-light.png");
+  await expect(page.locator("#sizes")).toHaveScreenshot("documentation-sizes-light.png");
+  await page.goto("/chip?appearance=dark");
+  await expect(page.locator("#variants")).toHaveScreenshot("documentation-variants-dark.png");
+  await expect(page.locator("#disabled")).toHaveScreenshot("documentation-disabled-dark.png");
+  await expect(page.locator("#rtl")).toHaveScreenshot("documentation-rtl-dark.png");
 });

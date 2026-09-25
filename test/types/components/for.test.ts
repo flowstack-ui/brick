@@ -12,3 +12,7 @@ For({
 });
 // @ts-expect-error Render callback is required.
 For({ each: [1, 2] });
+
+For({ each: [undefined, "One"] as const, children: item => item?.toUpperCase() });
+// @ts-expect-error Nullable collections are outside the public contract.
+For({ each: null, children: () => null });

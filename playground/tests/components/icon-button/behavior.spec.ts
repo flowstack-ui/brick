@@ -4,14 +4,14 @@ import { verifyActionFocus } from "../../helpers/action-focus.js";
 import { setExampleDirection } from "../../helpers/example-direction.js";
 
 test("IconButton inside focus survives clipping and every action fill", async ({ page }) => {
-  await page.goto("/icon-button");
+  await page.goto("/icon-button?qualification=1");
   await verifyActionFocus(page, page.getByTestId("icon-button-inside-focus"));
 });
 
 test("IconButton exposes its default named-action anatomy", async ({
   page,
 }) => {
-  await page.goto("/icon-button");
+  await page.goto("/icon-button?qualification=1");
   const action = page.getByRole("button", { name: "Search workspace" });
 
   await expect(action).toHaveAttribute("data-variant", "ghost");
@@ -34,7 +34,7 @@ test("IconButton exposes its default named-action anatomy", async ({
 test("IconButton preserves every supported link composition path", async ({
   page,
 }) => {
-  await page.goto("/icon-button");
+  await page.goto("/icon-button?qualification=1");
 
   const direct = page.getByTestId("icon-button-link-href");
   const rendered = page.getByTestId("icon-button-link-render");
@@ -91,12 +91,12 @@ test("IconButton preserves every supported link composition path", async ({
 test("IconButton exposes every closed visual recipe at the promised geometry", async ({
   page,
 }) => {
-  await page.goto("/icon-button");
+  await page.goto("/icon-button?qualification=1");
 
   const variants = page
     .getByTestId("icon-button-variants")
     .locator(".brick-icon-button");
-  await expect(variants).toHaveCount(4);
+  await expect(variants).toHaveCount(7);
   for (const variant of await variants.all()) {
     await expect(variant).toHaveAttribute("data-tone", "neutral");
     await expect(variant).toHaveAttribute("data-size", "lg");
@@ -106,7 +106,7 @@ test("IconButton exposes every closed visual recipe at the promised geometry", a
   const tones = page
     .getByTestId("icon-button-tones")
     .locator(".brick-icon-button");
-  await expect(tones).toHaveCount(24);
+  await expect(tones).toHaveCount(42);
   const toneRecipes = await tones.evaluateAll((elements) =>
     elements.map((element) => ({
       tone: element.getAttribute("data-tone"),
@@ -117,7 +117,7 @@ test("IconButton exposes every closed visual recipe at the promised geometry", a
     new Set(["neutral", "accent", "info", "success", "warning", "danger"]),
   );
   expect(new Set(toneRecipes.map(({ variant }) => variant))).toEqual(
-    new Set(["solid", "soft", "outline", "ghost"]),
+    new Set(["solid", "soft", "subtle", "surface", "outline", "ghost", "plain"]),
   );
   for (const control of await tones.all()) {
     await expect(control).toHaveAttribute("data-size", "lg");
@@ -189,7 +189,7 @@ test("IconButton sparse responsive size inherits the default before its first br
   const responsive = page.getByTestId("icon-button-responsive-size");
 
   await page.setViewportSize({ width: 768, height: 900 });
-  await page.goto("/icon-button");
+  await page.goto("/icon-button?qualification=1");
   await expect(responsive).toHaveAttribute("data-size", "lg");
   await expect(responsive).toHaveAttribute("data-size-lg", "md");
   expect(await responsive.boundingBox()).toMatchObject({ height: 44, width: 44 });
@@ -209,7 +209,7 @@ test("IconButton sparse responsive size inherits the default before its first br
 test("IconButton keeps one decorative icon and complete names across states", async ({
   page,
 }) => {
-  await page.goto("/icon-button");
+  await page.goto("/icon-button?qualification=1");
 
   const svgAction = page.getByRole("button", { name: "Search projects" });
   const imageAction = page.getByRole("button", {
@@ -238,7 +238,10 @@ test("IconButton keeps one decorative icon and complete names across states", as
     "/assets/icon-button/brick-image.png",
   );
   await expect(disabled).toBeDisabled();
-  await expect(disabled).toHaveCSS("opacity", "0.55");
+  await expect(disabled).toHaveCSS("opacity", "0.5");
+  await expect(disabled).toHaveCSS("cursor", "not-allowed");
+  // The action owns the fade; its decorative child must not compound it.
+  await expect(disabled.locator(".brick-icon-button__icon")).toHaveCSS("opacity", "1");
   await expect(loading).toHaveAttribute("aria-busy", "true");
   await expect(unavailableLoading).toBeDisabled();
   await expect(unavailableLoading).toHaveAttribute("aria-busy", "true");
@@ -294,7 +297,7 @@ test("IconButton keeps one decorative icon and complete names across states", as
 });
 
 test("loading spinners stay centered with animation disabled in both directions", async ({ page }) => {
-  await page.goto("/icon-button");
+  await page.goto("/icon-button?qualification=1");
   await page.addStyleTag({ content: '.brick-icon-button[data-loading]::after { animation: none !important; }' });
   for (const direction of ["LTR", "RTL"]) {
     await setExampleDirection(page, direction.toLowerCase() as "ltr" | "rtl");
@@ -323,7 +326,7 @@ test("loading spinners stay centered with animation disabled in both directions"
 test("IconButton exposes appearance and supported customization hooks", async ({
   page,
 }) => {
-  await page.goto("/icon-button");
+  await page.goto("/icon-button?qualification=1");
 
   const specimenGrid = page.getByTestId("icon-button-variants");
   const specimenGridStyle = await specimenGrid.evaluate((element) => ({
@@ -421,7 +424,7 @@ test("IconButton remains square in constrained and RTL content", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 256, height: 720 });
-  await page.goto("/icon-button");
+  await page.goto("/icon-button?qualification=1");
 
   expect(
     await page.evaluate(
@@ -454,7 +457,7 @@ test("IconButton honors reduced motion and forced-color boundaries", async ({
     "Forced-colors emulation is a Chromium release check.",
   );
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
-  await page.goto("/icon-button");
+  await page.goto("/icon-button?qualification=1");
 
   const loading = page.getByRole("button", {
     exact: true,

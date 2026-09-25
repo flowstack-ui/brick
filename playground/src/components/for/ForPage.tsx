@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button, For, Input, List, Text, VStack } from "../../../../src/index.js";
 import { Scenario } from "../../shared/Scenario.js";
 import { Specimen } from "../../shared/Specimen.js";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { ForDocumentation } from "./ForDocumentation.js";
 
 export const forScenarios = [{
   id: "for.collection",
@@ -14,6 +16,12 @@ export const forScenarios = [{
 const items = [{ id: "a", label: "First item" }, { id: "b", label: "Second item" }];
 
 export function ForPage() {
+  const preview = usePreviewContext();
+  if (!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <ForDocumentation />;
+  return <ForEvidence />;
+}
+
+function ForEvidence() {
   const [reversed, setReversed] = useState(false);
   return (
     <VStack data-component-page="for" gap="6">

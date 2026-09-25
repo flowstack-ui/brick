@@ -1,3 +1,5 @@
+import { IconDocumentation } from "./IconDocumentation.js";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
 import { type CSSProperties, type ReactNode } from "react";
 import {
   Button,
@@ -176,7 +178,9 @@ export const iconScenarios = [
   },
 ] as const;
 
-export function IconPage() {
+export function IconPage() { const preview = usePreviewContext(); if (!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <IconDocumentation />; return <IconEvidence />; }
+
+function IconEvidence() {
   return (
     <VStack className="icon-page" data-component-page="icon">
       <Scenario {...iconScenarios[0]}>

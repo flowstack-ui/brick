@@ -8,7 +8,7 @@ async function box(locator: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/stack");
+  await page.goto("/stack?qualification=1");
 });
 
 test("Stack defaults and family conveniences preserve one contract", async ({ page }) => {

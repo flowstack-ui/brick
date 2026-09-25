@@ -32,22 +32,25 @@ SpinnerTone, SpinnerEmphasis and SpinnerThickness.
 
 ## Anatomy and DOM ownership
 
-One span with class brick-spinner and data-slot="spinner"; no nested control,
-SVG, wrapper or progressbar. The ref targets HTMLSpanElement.
+One span with class brick-spinner and data-slot="spinner" by default. With
+`asChild`, one passive artwork element receives these props without an extra
+wrapper. The ref targets the span or projected SVG element, never a progressbar.
 
 ## API
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `size` | `inherit`, `xs`, `sm`, `md`, `lg`, `xl` | `md` |
+| `size` | responsive `inherit`, `xs`, `sm`, `md`, `lg`, `xl` | `md` |
 | `tone` | `inherit`, `primary`, `secondary`, `muted`, `accent`, `info`, `success`, `warning`, `danger` | `inherit` |
 | `emphasis` | `text`, `solid` | `text` |
 | `thickness` | `thin`, `regular`, `thick` | `regular` |
+| `asChild` | boolean; requires one element child when true | false |
 | label | authored accessible graphic name | absent |
 | aria-labelledby | ID reference instead of label | absent |
 
-Label and aria-labelledby are mutually exclusive. No children, asChild, render,
-value, loading, role or aria-hidden props. Native color is omitted in favor of
+Label and aria-labelledby are mutually exclusive; whitespace-only names are
+decorative. Children require asChild. No render, tabIndex, value, loading, role
+or aria-hidden props. Native color is omitted in favor of
 tone. Other native span attributes, className, style and data-slot pass through.
 
 ## Visual recipes and states
@@ -65,6 +68,9 @@ Stable class: brick-spinner. Attributes: `data-size`, `data-tone`, `data-emphasi
 --brick-spinner-color, --brick-spinner-track-color, --brick-spinner-thickness,
 --brick-spinner-duration. Defaults are currentColor, transparent track, 2px
 thickness and 500ms duration. Theme semantic text/status colors supply tones.
+Projected artwork uses `data-spinner-artwork`, `data-spinner-size`,
+`data-spinner-tone` and `data-spinner-emphasis` to avoid overwriting child
+recipes. Responsive size adds `-sm`, `-md`, `-lg`, `-xl` attribute suffixes.
 
 ## Customization
 
@@ -77,7 +83,8 @@ opening. Keep sufficient contrast and preserve reduced-motion preferences.
 
 ## Responsive behavior
 
-Sizes are scalar. Use inherit to follow surrounding responsive typography.
+Size accepts a scalar or `{ initial, sm, md, lg, xl }`. Sparse objects begin
+at md until their first breakpoint. Use inherit to follow responsive typography.
 Parent layout owns placement; the nonshrinking ring remains square.
 
 ## Accessibility
@@ -89,9 +96,16 @@ request state and announcement timing. No keyboard or focus behavior is added.
 
 ## Composition, native props, and refs
 
-A span ref and native attributes are forwarded. Recipe props do not reach the
+A span or projected SVG ref and native attributes are forwarded. Recipe props do not reach the
 DOM. Compose into HStack, Alert indicators or a ZStack overlay. Do not replace
 an existing semantic control with a named Spinner.
+
+Use `asChild` for one passive SVG (for example a Lucide LoaderCircle). It gets
+size, semantic color and rotation without a second border ring. The artwork
+owns its stroke: thickness and track customization only apply to the built-in
+ring. Avoid projecting an Icon with conflicting size/semantic props; prefer
+the SVG artwork directly. Do not project buttons, links, focusable hosts or
+interactive descendants. Keep transforms on a separate parent when required.
 
 ## Examples
 
@@ -99,6 +113,8 @@ an existing semantic control with a named Spinner.
 <Spinner size="lg" tone="accent" emphasis="solid" />
 <Spinner size="inherit" thickness="thin" />
 <Spinner label="Preparing preview" />
+<Spinner size={{ initial: "sm", md: "lg" }} />
+<Spinner asChild size="lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2a10 10 0 0 1 10 10" /></svg></Spinner>
 ```
 
 ## Evidence

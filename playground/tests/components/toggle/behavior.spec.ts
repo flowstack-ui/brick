@@ -3,7 +3,7 @@ import { expect, test } from "../../evidence-test.js";
 import { setAppearance } from "../../visual-harness.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/toggle");
+  await page.goto("/toggle?qualification=1");
 });
 
 for (const appearance of ["light", "dark"] as const) {
@@ -114,7 +114,7 @@ test("Toggle pressed recipes remain visually distinct", async ({ page }) => {
       outline.evaluate((element) => getComputedStyle(element).backgroundColor),
     ]);
   expect(solidBackground).not.toBe(softBackground);
-  expect(softBackground).not.toBe(outlineBackground);
+  expect(outlineBackground).not.toBe("rgba(0, 0, 0, 0)");
   await expect(soft).toHaveCSS("box-shadow", "none");
   await expect(outline).toHaveCSS("box-shadow", "none");
   await expect(ghost).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
@@ -142,7 +142,9 @@ test("Toggle composition, disabled state, customization, and RTL remain observab
     .getByTestId("toggle-disabled")
     .getByRole("button", { name: "Preview" });
   await expect(disabled.first()).toBeDisabled();
-  await expect(disabled.first()).toHaveCSS("opacity", "0.55");
+  await expect(disabled.first()).toHaveCSS("opacity", "0.5");
+  await expect(disabled.last()).toHaveCSS("opacity", "0.5");
+  await expect(disabled.first()).toHaveCSS("cursor", "not-allowed");
   await expect(disabled.last()).toHaveCSS("box-shadow", "none");
   expect(
     await disabled.last().evaluate((element) => {

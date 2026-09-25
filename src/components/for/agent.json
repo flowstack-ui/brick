@@ -12,7 +12,7 @@
   "rules": [
     {"id": "for-keys", "level": "must", "statement": "Author stable keys on returned item roots; For does not infer identity."},
     {"id": "for-wrapper", "level": "must", "statement": "Do not add a wrapper merely for For; choose the semantic collection owner separately."},
-    {"id": "for-css", "level": "must", "statement": "Load styles.css or core.css plus for.css."}
+    {"id": "for-css", "level": "must", "statement": "Load any styles required by rendered children; For itself needs no CSS and its compatibility stylesheet is empty."}
   ],
   "commonMistakes": [{"mistake": "Using the source index as identity for reorderable data.", "correction": "Use the item's stable domain identifier as the returned root key."}, {"mistake": "Placing For directly inside a component that counts or transforms immediate authored children, such as AvatarGroup.", "correction": "Author the fixed children explicitly or use that owner's collection API so its direct-child contract remains visible."}],
   "validation": ["Verify direct child structure, item order, empty and undefined fallback, inferred item types, and key ownership."],

@@ -1,6 +1,14 @@
 import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/divider");
+installVisualDefaults("/divider?qualification=1");
+
+test("new docs thickness and responsive", async ({ page }) => {
+  await page.goto("/divider");
+  await expectEvidenceScreenshot(page, page.locator("#thickness"), "docs-thickness-light.png");
+  await setAppearance(page, "dark");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expectEvidenceScreenshot(page, page.locator("#responsive"), "docs-responsive-dark.png");
+});
 
 test("Divider defaults and complete visual dimensions", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.getByTestId("divider-overview"), "overview-light.png");

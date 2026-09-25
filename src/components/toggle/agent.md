@@ -19,16 +19,20 @@ Present one persistent pressed or unpressed command with Brick recipes and Atom-
 - Keep one stable visible or accessible name across pressed states; use iconOnly only with a complete accessible name.
 - Choose variant for the selected-state treatment and accent or neutral tone for its emphasis before applying local customization.
 - Toggle, ToggleGroup and Toolbar.ToggleItem share variant/tone state paint. Preserve each owner’s anatomy, geometry and Atom keyboard behavior instead of substituting one for another.
+- Share Button sizes 2xs through 2xl (24/32/36/40/44/48/64px); md is the 40px default. Sparse responsive size objects inherit md below their first breakpoint. Choose outside or inside focusRing for the composition. Keep Atom as the behavior owner, not a nested Button.
+- Variants are solid, soft, subtle, surface, outline, ghost and plain; tones are neutral, accent and contrast. Contrast is inverse solid emphasis, not a semantic status.
 
 ## Rules
 
+- **MUST:** Disabled controls fade once to 50% with a not-allowed cursor; do not add an opacity wrapper. Forced colors keeps full opacity and system disabled colors.
 - **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Toggle only when the same command meaning remains valid in pressed and unpressed states.
-- **MUST:** Use accent or neutral tone for selection emphasis; do not use semantic status colors to imply error, success, warning, or danger.
+- **MUST:** Use accent, neutral or contrast tone for selection emphasis; do not use semantic status colors to imply error, success, warning, or danger.
 - **MUST:** Preserve Atom-owned native button semantics, aria-pressed state, activation, disabled behavior, and composition.
 - **MUST:** Use pressed with onPressedChange for controlled state or defaultPressed for uncontrolled state, and keep one stable command name across both aria-pressed states.
 - **MUST:** When using asChild or render, preserve one element with Atom props, handlers, refs, tab stop, Enter and Space activation, button semantics, and disabled exposure.
 - **MUST:** Load styles.css or core.css plus toggle.css.
+- **MUST:** The owning artwork slot sets final Icon dimensions even with larger standalone/provider sizes; do not add compensating Icon size props.
 
 ## Common mistakes
 

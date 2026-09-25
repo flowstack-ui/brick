@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/chip");
+  await page.goto("/chip?qualification=1");
   await expect(page.locator("[data-component-page='chip']")).toBeVisible();
 });
 
@@ -23,6 +23,8 @@ test("Chip compact slots and actions retain geometry and independent activation"
   const avatarSizes = await page.locator("#scenario-chip-slots .brick-avatar").evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().width));
   const iconSizes = await page.locator("#scenario-chip-slots .brick-icon").evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().width));
   expect(avatarSizes).toEqual([12, 14, 18, 24]);
+  const fallbackSizes=await page.locator("#scenario-chip-slots .brick-avatar__fallback").evaluateAll(nodes=>nodes.map(n=>parseFloat(getComputedStyle(n).fontSize)));
+  for(let i=0;i<fallbackSizes.length;i++) expect(fallbackSizes[i]).toBeCloseTo(avatarSizes[i]*.4,1);
   expect(iconSizes).toEqual([12, 14, 16, 18]);
   await expect(page.locator("#scenario-chip-slots .brick-icon svg")).toHaveCount(4);
   const action = page.locator("#scenario-chip-actions");

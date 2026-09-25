@@ -4,6 +4,9 @@ Stack follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add automatic decorative separators and Stack.Separator with responsive axis,
+  theme border styling and custom cross-axis extent.
+
 ### Changed
 
 - Expanded gap and logical edge spacing to accept numeric base-unit factors,
@@ -22,6 +25,13 @@ Stack follows the package version of `@flowstack-ui/brick`.
   their size recipe.
 
 ### Added
+
+- Added reverse directions, wrap-reverse, independent row/column gaps and
+  multiline alignment while retaining existing defaults and boolean wrapping.
+- Added responsive inline display and root asChild with merged props and refs.
+- Added Item grow/shrink/basis, order and logical auto margins; explicit
+  longhands retain precedence across responsive recipe changes.
+- Isolated root and Item layout inputs for same-host composition.
 
 - Added responsive direction, gap, alignment, distribution, wrapping, and
   logical edge spacing at the canonical Brick breakpoints.

@@ -6,7 +6,7 @@ export type StaticPartProps = Omit<HTMLAttributes<HTMLElement>, "color"> & { [ke
 );
 
 /** Presentation-only host projection, following the existing Center contract. */
-export function staticPart(tag: "div" | "span" | "p" | "dl" | "dt" | "dd" | "ol" | "li", props: StaticPartProps, ref: Ref<HTMLElement>, className: string, slot: string): ReactElement {
+export function staticPart(tag: "em" | "mark" | "kbd" | "figure" | "blockquote" | "figcaption" | "cite" | "code" | "div" | "span" | "p" | "dl" | "dt" | "dd" | "ol" | "li", props: StaticPartProps, ref: Ref<HTMLElement>, className: string, slot: string): ReactElement {
   const { asChild, children, className: custom, style, "data-slot": customSlot, ...native } = props;
   const host = { ...native, className: [className, custom].filter(Boolean).join(" "), style, "data-slot": customSlot ?? slot, ref };
   if (!asChild) return createElement(tag, host, children);

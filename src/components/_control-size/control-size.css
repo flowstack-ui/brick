@@ -710,7 +710,7 @@
   }
 
   .brick-select-content.brick-control-size {
-    --brick-select-item-min-block-size: var(--brick-control-size-block);
+    --brick-select-item-min-block-size: calc(var(--brick-control-size-block) - var(--brick-space-2));
     --brick-select-item-padding-inline: var(--brick-control-size-padding-inline);
     --brick-select-item-gap: var(--brick-control-size-gap);
     --brick-select-item-font-family: var(--brick-control-size-font-family);
@@ -733,7 +733,7 @@
   }
 
   .brick-multi-select-content.brick-control-size {
-    --brick-multi-select-item-min-block-size: var(--brick-control-size-block);
+    --brick-multi-select-item-min-block-size: calc(var(--brick-control-size-block) - var(--brick-space-2));
     --brick-multi-select-item-padding-inline: var(--brick-control-size-padding-inline);
     --brick-multi-select-item-gap: var(--brick-control-size-gap);
     --brick-multi-select-item-font-family: var(--brick-control-size-font-family);
@@ -769,8 +769,8 @@
   .brick-number-input.brick-control-size {
     --brick-number-input-height: var(--brick-control-size-block);
     --brick-number-input-padding-inline: var(--brick-control-size-padding-inline);
-    --brick-number-input-stepper-inline-size: calc(var(--brick-control-size-block) / 2);
-    --brick-number-input-step-icon-size: var(--brick-control-size-icon);
+    --brick-number-input-stepper-inline-size: clamp(1rem, calc(var(--brick-control-size-block) - 1rem), 1.5rem);
+    --brick-number-input-step-icon-size: clamp(0.625rem, calc(var(--brick-control-size-block) / 3), 0.875rem);
     --brick-number-input-font-family: var(--brick-control-size-font-family);
     --brick-number-input-font-size: var(--brick-control-size-font-size);
     --brick-number-input-font-weight: var(--brick-control-size-font-weight);

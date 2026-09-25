@@ -1,5 +1,18 @@
 # Button manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
+## Pending parity review
+
+- [ ] Compare subtle, soft and surface in light/dark; verify plain stays clear.
+- [ ] Verify loading text and custom indicators at actual browser zoom.
+- [ ] Verify ButtonGroup and split-menu keyboard/device use in both directions.
+
 | Run information | Value |
 | --- | --- |
 | Component | Button |

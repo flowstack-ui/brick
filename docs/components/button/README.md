@@ -1,10 +1,6 @@
 # Button
 
 
-Button presents a finished action or emphasized native link. Brick owns its
-visual recipes and styling; the public Atom Button owns semantics, interaction,
-form behavior, unavailable/loading behavior, and composition.
-
 ## When and where to use
 
 Use Button for immediate actions such as saving, submitting, confirming,
@@ -23,7 +19,7 @@ action.
 - Use variants for normal hierarchy. Reserve `info`, `success`, `warning`, and
   `danger` tones for actions with that actual meaning.
 
-Button intentionally has no `label`, `iconOnly`, `loadingText`,
+Button intentionally has no `label`, `iconOnly`,
 `loadingIndicator`, icon registry, arbitrary radius/color, gradient, or
 translucent prop.
 
@@ -94,11 +90,32 @@ On the default and `render` paths, Brick adds private content wrappers:
 implementation details, not public parts or customization hooks.
 
 `asChild` leaves the single child element's content unchanged and therefore
-adds none of these wrappers. Loading adds a CSS pseudo-element, not semantic
+adds none of these wrappers. Default loading adds a CSS pseudo-element, not semantic
 DOM, while retaining the original content as the accessible name and layout
 footprint.
 
 ## API
+
+### Recipe and group additions
+
+Additional variants: `subtle` is a borderless quiet fill; `surface` has an inset
+boundary; `plain` has no hover/expanded fill. Soft remains unchanged.
+Other recipes retain hover presentation when `aria-expanded=true`.
+
+Normal/render hosts accept `loadingText?: ReactNode`, `spinner?: ReactNode`
+and `spinnerPlacement?: "start" | "end"` (default start). Loading text replaces
+visible content and may change width. Without text a custom spinner overlays
+the original content, preserving its name/footprint. Without customization the
+CSS loader is unchanged. asChild rejects these content-replacement props.
+Custom indicators are decorative and must not contain interactive elements.
+
+`ButtonGroup` and `ButtonGroupProps` are exported from the root and button
+subpath. All Group layout/host props are supported, plus size, variant, tone,
+radius and focusRing defaults for Button/IconButton. Individual props win;
+child shape overrides inherited radius. Nested groups reset the scope.
+Omitted values preserve component defaults. Ref targets the Group host.
+Disabled/loading/events and toolbar behavior are not shared.
+The modular Button stylesheet includes Group and Spinner styles.
 
 ### Exports
 
@@ -106,6 +123,8 @@ footprint.
 Button;
 ButtonProps;
 ButtonVariant;
+ButtonGroup;
+ButtonGroupProps;
 ButtonTone;
 ButtonSize;
 ButtonShape;
@@ -115,7 +134,7 @@ ButtonShape;
 
 | Prop        | Allowed values                                                                        | Default     |
 | ----------- | ------------------------------------------------------------------------------------- | ----------- |
-| `variant`   | `"solid"`, `"soft"`, `"outline"`, `"ghost"`                                           | `"solid"`   |
+| `variant` | `"solid"`, `"soft"`, `"subtle"`, `"surface"`, `"outline"`, `"ghost"`, `"plain"` | `"solid"` |
 | `tone`      | `"neutral"`, `"contrast"`, `"accent"`, `"info"`, `"success"`, `"warning"`, `"danger"` | `"accent"`  |
 | `size`      | `"2xs"`, `"xs"`, `"sm"`, `"md"`, `"lg"`, `"xl"`, `"2xl"`, or a non-empty responsive value | `"lg"` |
 | `shape`     | `"sharp"`, `"rounded"`, `"pill"`                                                      | `"rounded"` |
@@ -159,6 +178,13 @@ choose either it or `radius`, not both. This does not change behavior, sizing,
 or the independently owned corners of other parts.
 
 ## Visual recipes and states
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+
+Button presents a finished action or emphasized native link. Brick owns its
+visual recipes and styling; the public Atom Button owns semantics, interaction,
+form behavior, unavailable/loading behavior, and composition.
 
 ### Variants
 
@@ -417,3 +443,12 @@ host.
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).
+
+### Shared action family
+
+Button owns shared rendering and recipes. IconButton wraps its internal icon-only path; CloseButton wraps IconButton. Equal explicit variant/tone values share hover, expanded, disabled and focus presentation. Icon-only controls remain square and named. Custom spinner is available on ordinary/render IconButton and CloseButton; IconButton asChild excludes it. No visible loadingText or fullWidth icon-only mode. This supersedes earlier independent IconButton paint rules.
+
+
+### Icon artwork sizing
+
+The owning artwork slot sets final Icon dimensions even with larger standalone/provider sizes; do not add compensating Icon size props. Text and interactive adornments retain their own layout.

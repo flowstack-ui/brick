@@ -553,7 +553,7 @@
       "radiusFull": { "$value": { "value": 9999, "unit": "px" } },
       "border1": { "$value": { "value": 1, "unit": "px" } },
       "border2": { "$value": { "value": 2, "unit": "px" } },
-      "control2xs": { "$value": { "value": 1.75, "unit": "rem" } },
+      "control2xs": { "$value": { "value": 1.5, "unit": "rem" } },
       "controlXs": { "$value": { "value": 2, "unit": "rem" } },
       "controlSm": { "$value": { "value": 2.25, "unit": "rem" } },
       "controlMd": { "$value": { "value": 2.5, "unit": "rem" } },
@@ -632,6 +632,7 @@
   "semantic": {
     "$description": "Public semantic roles consumed by components and applications.",
     "light": {
+      "blur": { "$type": "dimension", "sm": { "$value": { "value": 0.375, "unit": "rem" } }, "md": { "$value": { "value": 0.75, "unit": "rem" } }, "lg": { "$value": { "value": 1.5, "unit": "rem" } } },
       "aspect-ratio": {
         "$type": "number",
         "square": { "$value": "{reference.aspectRatio.square}" },
@@ -968,6 +969,206 @@
         }
       },
       "typography": {
+        "prose-body": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.body}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.regular}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.7
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.normal}"
+          }
+        },
+        "prose-h1": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 2.15,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.2
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-h2": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1.65,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.3
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-h3": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1.35,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.4
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-h4": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1.15,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.5
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-h5": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.5
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-h6": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 0.875,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.5
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-caption": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.body}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 0.875,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.regular}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.5
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.normal}"
+          }
+        },
         "display": {
           "font-family": {
             "$type": "fontFamily",
@@ -1371,7 +1572,7 @@
           },
           "font-size": {
             "$type": "dimension",
-            "$value": "{reference.dimension.fontSm}"
+            "$value": "{reference.dimension.fontXs}"
           },
           "font-weight": {
             "$type": "fontWeight",
@@ -1393,7 +1594,7 @@
           },
           "font-size": {
             "$type": "dimension",
-            "$value": "{reference.dimension.fontMd}"
+            "$value": "{reference.dimension.fontSm}"
           },
           "font-weight": {
             "$type": "fontWeight",
@@ -1760,6 +1961,72 @@
             "$value": "{reference.letterSpacing.normal}"
           }
         },
+        "menu-sm": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.body}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": "{reference.dimension.fontXs}"
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.regular}"
+          },
+          "line-height": {
+            "$type": "dimension",
+            "$value": { "value": 1, "unit": "rem" }
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.normal}"
+          }
+        },
+        "menu-md": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.body}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": "{reference.dimension.fontSm}"
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.regular}"
+          },
+          "line-height": {
+            "$type": "dimension",
+            "$value": { "value": 1.25, "unit": "rem" }
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.normal}"
+          }
+        },
+        "menu-lg": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.body}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": "{reference.dimension.fontMd}"
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.regular}"
+          },
+          "line-height": {
+            "$type": "dimension",
+            "$value": { "value": 1.5, "unit": "rem" }
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.normal}"
+          }
+        },
         "control-xl": {
           "font-family": {
             "$type": "fontFamily",
@@ -1803,6 +2070,7 @@
       }
     },
     "dark": {
+      "blur": { "$type": "dimension", "sm": { "$value": { "value": 0.375, "unit": "rem" } }, "md": { "$value": { "value": 0.75, "unit": "rem" } }, "lg": { "$value": { "value": 1.5, "unit": "rem" } } },
       "aspect-ratio": {
         "$type": "number",
         "square": { "$value": "{reference.aspectRatio.square}" },
@@ -2133,6 +2401,206 @@
         }
       },
       "typography": {
+        "prose-body": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.body}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.regular}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.7
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.normal}"
+          }
+        },
+        "prose-h1": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 2.15,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.2
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-h2": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1.65,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.3
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-h3": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1.35,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.4
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-h4": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1.15,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.5
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-h5": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.5
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-h6": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.heading}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 0.875,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.semibold}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.5
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.tight}"
+          }
+        },
+        "prose-caption": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.body}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": {
+              "value": 0.875,
+              "unit": "em"
+            }
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.regular}"
+          },
+          "line-height": {
+            "$type": "number",
+            "$value": 1.5
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.normal}"
+          }
+        },
         "display": {
           "font-family": {
             "$type": "fontFamily",
@@ -2536,7 +3004,7 @@
           },
           "font-size": {
             "$type": "dimension",
-            "$value": "{reference.dimension.fontSm}"
+            "$value": "{reference.dimension.fontXs}"
           },
           "font-weight": {
             "$type": "fontWeight",
@@ -2558,7 +3026,7 @@
           },
           "font-size": {
             "$type": "dimension",
-            "$value": "{reference.dimension.fontMd}"
+            "$value": "{reference.dimension.fontSm}"
           },
           "font-weight": {
             "$type": "fontWeight",
@@ -2919,6 +3387,72 @@
           "line-height": {
             "$type": "number",
             "$value": "{reference.lineHeight.tight}"
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.normal}"
+          }
+        },
+        "menu-sm": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.body}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": "{reference.dimension.fontXs}"
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.regular}"
+          },
+          "line-height": {
+            "$type": "dimension",
+            "$value": { "value": 1, "unit": "rem" }
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.normal}"
+          }
+        },
+        "menu-md": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.body}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": "{reference.dimension.fontSm}"
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.regular}"
+          },
+          "line-height": {
+            "$type": "dimension",
+            "$value": { "value": 1.25, "unit": "rem" }
+          },
+          "letter-spacing": {
+            "$type": "dimension",
+            "$value": "{reference.letterSpacing.normal}"
+          }
+        },
+        "menu-lg": {
+          "font-family": {
+            "$type": "fontFamily",
+            "$value": "{reference.fontFamily.body}"
+          },
+          "font-size": {
+            "$type": "dimension",
+            "$value": "{reference.dimension.fontMd}"
+          },
+          "font-weight": {
+            "$type": "fontWeight",
+            "$value": "{reference.fontWeight.regular}"
+          },
+          "line-height": {
+            "$type": "dimension",
+            "$value": { "value": 1.5, "unit": "rem" }
           },
           "letter-spacing": {
             "$type": "dimension",

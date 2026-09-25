@@ -1,4 +1,4 @@
-export * from "./spinner.js";
+
 export * from "./timeline.js";
 export * from "./alert.js";
 export * from "./empty-state.js";
@@ -10,63 +10,10 @@ export {
   type AppearanceProps,
   type AppearanceValue,
 } from "./components/appearance/index.js";
-export * from "./components/locale-provider/index.js";
 export * from "./components/format-number/index.js";
 export * from "./components/format-byte/index.js";
-export * from "./components/for/index.js";
 export * from "./components/checkmark/index.js";
 export * from "./components/radiomark/index.js";
-export {
-  Button,
-  type ButtonProps,
-  type ButtonShape,
-  type ButtonSize,
-  type ButtonTone,
-  type ButtonVariant,
-} from "./components/button/index.js";
-export {
-  Carousel,
-  CarouselControls,
-  CarouselNavigation,
-  CarouselNext,
-  CarouselPicker,
-  CarouselPickerItem,
-  CarouselPrevious,
-  CarouselRoot,
-  CarouselRotationControl,
-  CarouselSlide,
-  CarouselTrack,
-  CarouselViewport,
-  type CarouselControlPlacement,
-  type CarouselControlsProps,
-  type CarouselNavigationProps,
-  type CarouselNextProps,
-  type CarouselPickerItemProps,
-  type CarouselPickerProps,
-  type CarouselPreviousProps,
-  type CarouselRootProps,
-  type CarouselRadius,
-  type CarouselRotationControlProps,
-  type CarouselSize,
-  type CarouselSlideProps,
-  type CarouselTrackProps,
-  type CarouselViewportProps,
-} from "./components/carousel/index.js";
-export {
-  IconButton,
-  type IconButtonProps,
-  type IconButtonShape,
-  type IconButtonSize,
-  type IconButtonTone,
-  type IconButtonVariant,
-} from "./components/icon-button/index.js";
-export {
-  Icon,
-  type IconEmphasis,
-  type IconProps,
-  type IconSize,
-  type IconTone,
-} from "./components/icon/index.js";
 export {
   Image,
   ImageContent,
@@ -149,26 +96,6 @@ export {
   type NotificationBadgeSize,
 } from "./components/badge/index.js";
 export {
-  Chip,
-  ChipActionTrigger,
-  ChipStartElement,
-  ChipEndElement,
-  type ChipActionTriggerProps,
-  type ChipStartElementProps,
-  type ChipEndElementProps,
-  type ChipDensity,
-  ChipLabel,
-  ChipRemoveTrigger,
-  ChipRoot,
-  type ChipLabelProps,
-  type ChipRemoveTriggerProps,
-  type ChipRootProps,
-  type ChipShape,
-  type ChipSize,
-  type ChipTone,
-  type ChipVariant,
-} from "./components/chip/index.js";
-export {
   Avatar,
   type AvatarProps,
   type AvatarShape,
@@ -202,14 +129,6 @@ export {
   type ColorSwatchSize,
 } from "./components/color-swatch/index.js";
 export * from "./components/color-picker/index.js";
-export {
-  Toggle,
-  type ToggleProps,
-  type ToggleShape,
-  type ToggleSize,
-  type ToggleTone,
-  type ToggleVariant,
-} from "./components/toggle/index.js";
 export {
   ToggleGroup,
   ToggleGroupItem,
@@ -424,17 +343,8 @@ export * from "./components/file-upload/index.js";
 export * from "./components/toast/index.js";
 export * from "./components/collapsible/index.js";
 export * from "./components/accordion/index.js";
-export {
-  Input,
-  type InputProps,
-  type InputShape,
-  type InputSize,
-  type InputType,
-  type InputVariant,
-} from "./components/input/index.js";
 export * from "./components/number-input/index.js";
 export * from "./components/pin-input/index.js";
-export * from "./components/password-toggle-field/index.js";
 export {
   Textarea,
   TextareaCount,
@@ -488,29 +398,6 @@ export {
 } from "./components/select/index.js";
 export * from "./components/multi-select/index.js";
 export * from "./components/combobox/index.js";
-export {
-  Caption,
-  Eyebrow,
-  Heading,
-  Paragraph,
-  Text,
-  type CaptionProps,
-  type EyebrowProps,
-  type HeadingLevel,
-  type HeadingProps,
-  type HeadingVariant,
-  type ParagraphProps,
-  type ParagraphVariant,
-  type TextAlign,
-  type TextElement,
-  type TextLineClamp,
-  type TextProps,
-  type TextTone,
-  type TextTransform,
-  type TextVariant,
-  type TextWeight,
-  type TextWrap,
-} from "./components/text/index.js";
 export {
   Link,
   type LinkProps,
@@ -569,26 +456,6 @@ export {
   type ReorderableListVariant,
 } from "./components/reorderable-list/index.js";
 export {
-  HStack,
-  Stack,
-  VStack,
-  type HStackProps,
-  type ResponsiveValue,
-  type StackAlign,
-  type StackBreakpoint,
-  type StackDirection,
-  type StackElement,
-  type StackGap,
-  type StackItemAlign,
-  type StackItemElement,
-  type StackItemFlex,
-  type StackItemProps,
-  type StackJustify,
-  type StackProps,
-  type VStackProps,
-} from "./components/stack/index.js";
-export type { SpacingValue } from "./components/_spacing-value/SpacingValue.js";
-export {
   Center,
   Circle,
   Square,
@@ -598,12 +465,6 @@ export {
   type CircleProps,
   type SquareProps,
 } from "./components/center/index.js";
-export {
-  Group,
-  type GroupElement,
-  type GroupOrientation,
-  type GroupProps,
-} from "./components/group/index.js";
 export {
   DataList,
   DataListItem,
@@ -691,19 +552,6 @@ export {
   type SurfaceScrimStrength,
   type SurfaceTone,
 } from "./components/surface/index.js";
-export {
-  Divider,
-  type DividerComposedProps,
-  type DividerElement,
-  type DividerInset,
-  type DividerLabelAlign,
-  type DividerLabelProps,
-  type DividerLineProps,
-  type DividerOrientation,
-  type DividerProps,
-  type DividerThickness,
-  type DividerVariant,
-} from "./components/divider/index.js";
 export {
   ScrollArea,
   ScrollAreaRoot,
@@ -1021,15 +869,228 @@ export {
   type SwipeableItemRootProps,
   type SwipeableItemVariant,
 } from "./components/swipeable-item/index.js";
+export * from "./components/skip-link/index.js";
+export * from "./components/show/index.js";
+export * from "./components/hide/index.js";
+export { CloseButton, type CloseButtonProps } from "./components/close-button/index.js";
+export { DownloadTrigger, type DownloadTriggerProps } from "./components/download-trigger/index.js";
+export * from "./date-value.js";
+export * from "./components/action-bar/index.js";
+export * from "./floating-panel.js";
+export * from "./overlay-manager.js";
+export * from "./components/stat/index.js";
+export * from "./marquee.js";
+export * from "./native-select.js";
+export * from "./editable.js";
+export * from "./qr-code.js";
+export type { Radius } from "./radius.js";
+export * from "./table-of-contents.js";
+export * from "./spinner.js";
+
+export type { StackSeparatorProps } from "./components/stack/StackSeparator.js";
+export * from "./components/locale-provider/index.js";
+export * from "./components/for/index.js";
+export {
+  Button,
+  type ButtonProps,
+  type ButtonShape,
+  type ButtonSize,
+  type ButtonTone,
+  type ButtonVariant,
+} from "./components/button/index.js";
+export { ButtonGroup, type ButtonGroupProps } from "./components/button/index.js";
+export {
+  Carousel,
+  CarouselControls,
+  CarouselNavigation,
+  CarouselNext,
+  CarouselPicker,
+  CarouselPickerItem,
+  CarouselPrevious,
+  CarouselRoot,
+  CarouselRootProvider,
+  CarouselPropsProvider,
+  CarouselContext,
+  CarouselIndicators,
+  CarouselProgressText,
+  CarouselAutoplayIndicator,
+  useCarousel,
+  useCarouselContext,
+  type CarouselRootProviderProps,
+  type CarouselPropsProviderProps,
+  type CarouselRecipeProps,
+  type CarouselIndicatorsProps,
+  type CarouselProgressTextProps,
+  type CarouselAutoplayIndicatorProps,
+  type CarouselTone,
+  type UseCarouselProps,
+  type CarouselPageChangeDetails,
+  type CarouselTranslations,
+  CarouselRotationControl,
+  CarouselSlide,
+  CarouselTrack,
+  CarouselViewport,
+  type CarouselControlPlacement,
+  type CarouselControlsProps,
+  type CarouselNavigationProps,
+  type CarouselNextProps,
+  type CarouselPickerItemProps,
+  type CarouselPickerProps,
+  type CarouselPreviousProps,
+  type CarouselRootProps,
+  type CarouselRadius,
+  type CarouselRotationControlProps,
+  type CarouselSize,
+  type CarouselSlideProps,
+  type CarouselTrackProps,
+  type CarouselViewportProps,
+} from "./components/carousel/index.js";
+export {
+  IconButton,
+  type IconButtonProps,
+  type IconButtonShape,
+  type IconButtonSize,
+  type IconButtonTone,
+  type IconButtonVariant,
+} from "./components/icon-button/index.js";
+export {
+  Icon,
+  createIcon,
+  IconPropsProvider,
+  type CreateIconOptions,
+  type CreatedIconProps,
+  type IconPresentationProps,
+  type IconPropsProviderProps,
+  type ResponsiveIconSize,
+  type IconEmphasis,
+  type IconProps,
+  type IconSize,
+  type IconTone,
+} from "./components/icon/index.js";
+export {
+  Chip,
+  ChipActionTrigger,
+  ChipStartElement,
+  ChipEndElement,
+  type ChipActionTriggerProps,
+  type ChipStartElementProps,
+  type ChipEndElementProps,
+  type ChipDensity,
+  ChipLabel,
+  ChipRemoveTrigger,
+  ChipRoot,
+  type ChipLabelProps,
+  type ChipRemoveTriggerProps,
+  type ChipRootProps,
+  type ChipShape,
+  type ChipSize,
+  type ChipTone,
+  type ChipVariant,
+} from "./components/chip/index.js";
+export {
+  Toggle,
+  type ToggleProps,
+  type ToggleShape,
+  type ToggleSize,
+  type ToggleTone,
+  type ToggleVariant,
+} from "./components/toggle/index.js";
+export {
+  Input,
+  type InputProps,
+  type InputShape,
+  type InputSize,
+  type InputType,
+  type InputVariant,
+} from "./components/input/index.js";
+export * from "./components/input-addon/index.js";
+export * from "./components/password-toggle-field/index.js";
+export {
+  Caption,
+  Eyebrow,
+  Heading,
+  Paragraph,
+  Text,
+  type CaptionProps,
+  type EyebrowProps,
+  type HeadingLevel,
+  type HeadingProps,
+  type HeadingVariant,
+  type ParagraphProps,
+  type ParagraphVariant,
+  type TextAlign,
+  type TextFontStyle,
+  type TextNumeric,
+  type TextDecoration,
+  type TextDecorationStyle,
+  type TextElement,
+  type TextLineClamp,
+  type TextProps,
+  type TextTone,
+  type TextTransform,
+  type TextVariant,
+  type TextWeight,
+  type TextWrap,
+} from "./components/text/index.js";
+export {
+  HStack,
+  Stack,
+  VStack,
+  type HStackProps,
+  type ResponsiveValue,
+  type StackAlign,
+  type StackAlignContent,
+  type StackBasis,
+  type StackWrap,
+  type StackBreakpoint,
+  type StackDirection,
+  type StackElement,
+  type StackGap,
+  type StackItemAlign,
+  type StackItemElement,
+  type StackItemFlex,
+  type StackItemProps,
+  type StackJustify,
+  type StackProps,
+  type VStackProps,
+} from "./components/stack/index.js";
+export type { SpacingValue } from "./components/_spacing-value/SpacingValue.js";
+export {
+  Group,
+  type GroupElement,
+  type GroupAlign,
+  type GroupJustify,
+  type GroupWrap,
+  type GroupStacking,
+  type GroupOrientation,
+  type GroupProps,
+} from "./components/group/index.js";
+export {
+  Divider,
+  type DividerComposedProps,
+  type DividerElement,
+  type DividerInset,
+  type DividerLabelAlign,
+  type DividerLabelProps,
+  type DividerLineProps,
+  type DividerOrientation,
+  type DividerProps,
+  type DividerThickness,
+  type DividerVariant,
+} from "./components/divider/index.js";
 export {
   Toolbar,
   ToolbarButton,
+  ToolbarGroup,
+  ToolbarInput,
   ToolbarLink,
   ToolbarRoot,
   ToolbarSeparator,
   ToolbarToggleGroup,
   ToolbarToggleItem,
   type ToolbarButtonProps,
+  type ToolbarGroupProps,
+  type ToolbarInputProps,
   type ToolbarLinkProps,
   type ToolbarRootProps,
   type ToolbarSeparatorProps,
@@ -1041,23 +1102,8 @@ export {
   type ToolbarVariant,
 } from "./components/toolbar/index.js";
 export * from "./components/pagination/index.js";
-export * from "./components/skip-link/index.js";
-export * from "./components/show/index.js";
-export * from "./components/hide/index.js";
-export { CloseButton, type CloseButtonProps } from "./components/close-button/index.js";
-export { DownloadTrigger, type DownloadTriggerProps } from "./components/download-trigger/index.js";
 export * from "./calendar.js";
 export * from "./date-input.js";
 export * from "./date-picker.js";
-export * from "./date-value.js";
-export * from "./components/action-bar/index.js";
-export * from "./floating-panel.js";
-export * from "./overlay-manager.js";
-export * from "./components/stat/index.js";
-export * from "./marquee.js";
-export * from "./native-select.js";
-export * from "./editable.js";
 export * from "./tags-input.js";
-export * from "./qr-code.js";
-export type { Radius } from "./radius.js";
-export * from "./table-of-contents.js";
+export { useFilter, type FilterOptions, type LocaleFilter } from "./components/locale-provider/useFilter.js";

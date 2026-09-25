@@ -1,9 +1,19 @@
 # Button changelog
 
 
+## Unreleased
+
+Normalize wrapped Icon artwork alongside raw/direct SVGs in start/end slots, including flex allocation; action sizes override standalone/provider dimensions without overriding semantic color.
+
+
 Button follows the package version of `@flowstack-ui/brick`.
 
-## Unreleased
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+- Add subtle, surface and plain recipes while preserving soft.
+- Add loadingText, spinner and spinnerPlacement on normal/render hosts.
+- Add ButtonGroup visual defaults over Group layout for Button and IconButton.
+- Add expanded trigger presentation and documentation-style examples.
 
 - Support scalar focusRing="outside" | "inside"; omission stays outside. Inside uses paired foreground and canonical negative-width offset without changing Atom behavior.
 
@@ -59,3 +69,5 @@ Button follows the package version of `@flowstack-ui/brick`.
 - Loading presentation now uses the shared private action-spinner recipe while
   preserving Button-specific sizing, colors, disabled treatment, and RTL and
   preference behavior.
+
+- Consolidated shared action presentation and icon-only custom loading.

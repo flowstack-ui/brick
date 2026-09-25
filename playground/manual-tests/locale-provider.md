@@ -46,3 +46,11 @@ Notes or issue:
 Overall result:
 Follow-up issues:
 Workbook updated:
+## Internationalization parity follow-up
+
+Not performed: physical-device, screen-reader, and actual browser zoom review.
+Inspect the modern default route and the preserved ?qualification=1 route.
+Verify native language/direction semantics, narrow containment, explicit locale
+overrides, and light/dark text clarity. For NumberInput also inspect typed,
+wheel, press-and-hold and scrubber paths, and distinguish disabled from read-only.
+Do not mark these manual checks passed from automated results alone.

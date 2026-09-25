@@ -29,6 +29,7 @@ Apply Brick typography roles, tones, weight, alignment, wrapping, and deliberate
 - **MUST:** Keep a Link or other inline component that completes one sentence inside the semantic Text paragraph and let it inherit the surrounding typography and natural wrapping.
 - **SHOULD:** Give separately meaningful inline peer labels compatible typography metrics and arrange them with HStack gap rather than literal spaces or manual positional offsets.
 - **MUST:** Load styles.css or core.css plus text.css.
+- **MUST:** Use fontStyle, numeric, decoration and decorationStyle for visual presentation; use semantic emphasis for meaning. align supports justify. lineClamp accepts responsive positive integers or none; preserve truncate exclusivity and a way to read essential hidden content. Native style is the deliberate escape hatch for font metrics and decoration details, not a missing capability or a new generic style-prop system.
 
 ## Common mistakes
 

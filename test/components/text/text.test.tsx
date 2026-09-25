@@ -18,6 +18,23 @@ import {
 } from "../../../src/text.js";
 
 describe("Text", () => {
+  it("shares presentation controls and responsive clamp resets with named exports", () => {
+    render(<Paragraph align="justify" fontStyle="italic" numeric="tabular-nums" decoration="underline" decorationStyle="dotted" lineClamp={{ initial: 1, md: "none", lg: 8 }}>Long copy</Paragraph>);
+    const node = screen.getByText("Long copy");
+    expect(node.tagName).toBe("P");
+    expect(node).toHaveAttribute("data-align", "justify");
+    expect(node).toHaveAttribute("data-font-style", "italic");
+    expect(node).toHaveAttribute("data-decoration", "underline");
+    expect(node).toHaveStyle({ fontVariantNumeric: "tabular-nums" });
+    expect(node).toHaveAttribute("data-line-clamp-md", "none");
+    expect(node.style.getPropertyValue("--_brick-text-clamp-lg")).toBe("8");
+    expect(node).not.toHaveAttribute("numeric");
+  });
+  it("rejects invalid numeric clamps instead of silently hiding content", () => {
+    for (const lineClamp of [0, -1, 1.5, NaN, Infinity]) {
+      expect(() => render(<Text lineClamp={lineClamp}>Copy</Text>)).toThrow(RangeError);
+    }
+  });
   it("shares all explicit weights across named text exports without changing semantics", () => {
     const weights: TextWeight[] = ["thin", "extralight", "light", "regular", "medium", "semibold", "bold", "extrabold", "black"];
     const { rerender } = render(<Text>Default</Text>);

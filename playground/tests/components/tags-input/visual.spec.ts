@@ -5,7 +5,7 @@ test("TagsInput all scenario visual evidence", async ({ page }, testInfo) => {
     testInfo.project.name !== "chromium",
     "Visual baselines use Chromium",
   );
-  await page.goto("/tags-input");
+  await page.goto("/tags-input?qualification=1");
   for (const id of [
     "basic",
     "controlled",

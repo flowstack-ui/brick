@@ -26,7 +26,9 @@
   "composition": [
     "Pass exactly one consumer-authored SVG element; prefer the default span wrapper and use asChild only when the direct root must remain that SVG.",
     "When visible nearby text already provides the meaning, keep Icon decorative; when a standalone icon conveys information, provide label or aria-labelledby.",
-    "Inside an icon-only control, label the control and leave its nested Icon decorative."
+    "Inside an icon-only control, label the control and leave its nested Icon decorative.",
+    "Use createIcon at module scope for reusable authored geometry and an SVGSVGElement ref; choose exactly one d or path, retaining fixed authored fills.",
+    "Let Button/IconButton own artwork dimensions; no redundant Icon size is needed, and explicit semantic tone remains available."
   ],
   "rules": [
     {
@@ -73,6 +75,36 @@
       "id": "icon-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus icon.css."
+    },
+    {
+      "id": "icon-default-precedence",
+      "level": "must",
+      "statement": "Presentation resolves instance > nearest provider > factory > library. IconPropsProvider accepts only size, tone and emphasis; undefined inherits outer properties and responsive sizes replace whole values."
+    },
+    {
+      "id": "icon-responsive",
+      "level": "must",
+      "statement": "Use ResponsiveIconSize with initial/sm/md/lg/xl. Sparse values start at md, omitted breakpoints retain the last active value, and inherit follows typography outside action slots."
+    },
+    {
+      "id": "icon-composition-lifecycle",
+      "level": "must",
+      "statement": "Use one noninteractive SVG for asChild. Atom composeHost preserves both refs, React 19 callback cleanup, child class/style and owner-first events; default prevention does not suppress the child handler. Owner naming wins."
+    },
+    {
+      "id": "icon-client-boundary",
+      "level": "must",
+      "statement": "Icon and its provider consume client context and support React SSR/hydration. Define createIcon calls in client modules in RSC applications; do not claim server-only factory execution."
+    },
+    {
+      "id": "icon-factory-name",
+      "level": "must",
+      "statement": "Factory defaults never carry contextual names, refs or host substitution. Name each informative instance using label or aria-labelledby; factory output is exactly one SVG."
+    },
+    {
+      "id": "icon-effective-direction",
+      "level": "must",
+      "statement": "Directional mirroring follows effective :dir(rtl), including nested LTR. Independent scale composes with authored transforms; do not mirror both SVG and wrapper."
     }
   ],
   "commonMistakes": [
@@ -91,7 +123,15 @@
   ],
   "validation": [
     "Check decorative and informative accessibility trees, icon-only control naming, all sizes, tones, and emphases, currentColor adoption, flex shrinking, and RTL directional mirroring.",
-    "Confirm asChild targets only one SVG and that CSS is present."
+    "Confirm asChild targets only one SVG and that CSS is present.",
+    "Verify React 18/19 refs, StrictMode cleanup, SSR/hydration, responsive md/inherit restoration, provider/factory precedence and all seven action-slot sizes."
   ],
-  "related": ["icon-button", "image", "button", "stack", "center", "text"]
+  "related": [
+    "icon-button",
+    "image",
+    "button",
+    "stack",
+    "center",
+    "text"
+  ]
 }

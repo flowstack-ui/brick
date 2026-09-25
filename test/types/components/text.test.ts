@@ -81,8 +81,10 @@ createElement(Text, { children: "Copy", tone: "brand" });
 createElement(Text, { align: "left", children: "Copy" });
 // @ts-expect-error Arbitrary numeric weight is excluded.
 createElement(Text, { children: "Copy", weight: 700 });
-// @ts-expect-error Clamp values are bounded.
 createElement(Text, { children: "Copy", lineClamp: 7 });
+createElement(Text, { children: "Copy", lineClamp: { initial: 1, md: "none", lg: 8 }, align: "justify", fontStyle: "italic", numeric: "tabular-nums", decoration: "underline", decorationStyle: "dotted" });
+// @ts-expect-error Empty responsive objects are invalid.
+createElement(Text, { children: "Copy", lineClamp: {} });
 // @ts-expect-error Truncate and lineClamp are mutually exclusive.
 createElement(Text, { children: "Copy", lineClamp: 3, truncate: true });
 // @ts-expect-error Links belong to Link.

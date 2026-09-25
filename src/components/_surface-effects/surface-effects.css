@@ -1,0 +1,174 @@
+@layer brick.components {
+  :where(.brick-surface, .brick-app-bar, .brick-bottom-navigation) {
+    --brick-surface-effect-opacity: initial;
+    --brick-surface-effect-blur: initial;
+    --brick-surface-effect-saturation: initial;
+    --brick-surface-effect-border-color: initial;
+    --brick-surface-effect-border-opacity: initial;
+    --_brick-effect-opacity: 100%;
+    --_brick-effect-blur: 0px;
+    --_brick-effect-saturation: 1;
+  }
+  .brick-surface {
+    --_brick-effect-source: var(--brick-surface-background);
+    --_brick-effect-normal-foreground: var(--brick-surface-foreground);
+    --_brick-effect-border: var(--brick-surface-border-color);
+    --_brick-effect-foreground: var(--brick-surface-foreground);
+    --_brick-effect-fallback: var(--brick-surface-background);
+  }
+  .brick-surface[data-surface-effects="translucent"] {
+    --_brick-effect-opacity: calc(
+      var(--brick-surface-translucent-opacity, 0.9) * 100%
+    );
+    --_brick-effect-blur: var(
+      --brick-surface-translucent-blur,
+      var(--brick-blur-md, 0.75rem)
+    );
+    --_brick-effect-saturation: var(
+      --brick-surface-translucent-saturation,
+      1.15
+    );
+  }
+  .brick-app-bar {
+    --_brick-effect-source: var(--brick-app-bar-background);
+    --_brick-effect-normal-foreground: var(--brick-app-bar-foreground);
+    --_brick-effect-border: var(--brick-app-bar-border-color);
+    --_brick-effect-foreground: var(--brick-app-bar-foreground);
+    --_brick-effect-fallback: var(
+      --brick-app-bar-reduced-transparency-background
+    );
+  }
+  .brick-app-bar[data-surface-effects="translucent"] {
+    --_brick-effect-opacity: calc(
+      var(--brick-app-bar-translucent-opacity, 0.88) * 100%
+    );
+    --_brick-effect-blur: var(
+      --brick-app-bar-translucent-blur,
+      var(--brick-blur-md, 0.75rem)
+    );
+    --_brick-effect-saturation: var(
+      --brick-app-bar-translucent-saturation,
+      1.15
+    );
+  }
+  .brick-app-bar[data-surface-effects="legacy"] {
+    --_brick-effect-source: var(--brick-app-bar-blurred-background);
+    --_brick-effect-blur: 0.75rem;
+    --_brick-effect-saturation: 1.15;
+  }
+  .brick-app-bar[data-surface-effects="legacy"][data-surface-alpha] {
+    --_brick-effect-source: var(--brick-app-bar-material);
+  }
+  .brick-bottom-navigation {
+    --_brick-effect-source: var(--brick-bottom-navigation-background);
+    --_brick-effect-normal-foreground: var(
+      --brick-bottom-navigation-foreground
+    );
+    --_brick-effect-border: var(--brick-bottom-navigation-border-color);
+    --_brick-effect-foreground: var(--brick-bottom-navigation-foreground);
+    --_brick-effect-fallback: var(
+      --brick-bottom-navigation-reduced-transparency-background
+    );
+  }
+  .brick-bottom-navigation[data-surface-effects="translucent"] {
+    --_brick-effect-opacity: calc(
+      var(--brick-bottom-navigation-translucent-opacity, 0.86) * 100%
+    );
+    --_brick-effect-blur: var(
+      --brick-bottom-navigation-translucent-blur,
+      var(--brick-blur-md, 0.75rem)
+    );
+    --_brick-effect-saturation: var(
+      --brick-bottom-navigation-translucent-saturation,
+      1.15
+    );
+  }
+  .brick-bottom-navigation[data-surface-effects="legacy"] {
+    --_brick-effect-source: var(--brick-bottom-navigation-blurred-background);
+    --_brick-effect-blur: 0.75rem;
+    --_brick-effect-saturation: 1.15;
+  }
+  .brick-bottom-navigation[data-surface-effects="legacy"][data-surface-alpha] {
+    --_brick-effect-source: var(--brick-bottom-navigation-material);
+  }
+  .brick-surface[data-level="transparent"],
+  .brick-app-bar[data-variant="transparent"] {
+    --_brick-effect-fallback: var(--brick-color-surface-base);
+    --_brick-effect-foreground: var(--brick-color-text-primary);
+  }
+  .brick-surface[data-level="transparent"][data-tone="accent"],
+  .brick-app-bar[data-variant="transparent"][data-tone="accent"] {
+    --_brick-effect-fallback: var(--brick-color-accent-soft);
+    --_brick-effect-foreground: var(--brick-color-accent-on-soft);
+  }
+  :is(
+      .brick-surface,
+      .brick-app-bar,
+      .brick-bottom-navigation
+    )[data-surface-effects][data-surface-effects] {
+    --_brick-effect-paint: color-mix(
+      in srgb,
+      var(--_brick-effect-source)
+        var(--brick-surface-effect-opacity, var(--_brick-effect-opacity)),
+      transparent
+    );
+    background: var(--_brick-effect-paint);
+    border-color: color-mix(
+      in srgb,
+      var(--brick-surface-effect-border-color, var(--_brick-effect-border))
+        var(--brick-surface-effect-border-opacity, 100%),
+      transparent
+    );
+    backdrop-filter: none;
+  }
+  :is(
+      .brick-surface,
+      .brick-app-bar,
+      .brick-bottom-navigation
+    )[data-surface-effects][data-surface-filter="active"] {
+    background: var(--_brick-effect-fallback);
+    color: var(--_brick-effect-foreground);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    :is(
+        .brick-surface,
+        .brick-app-bar,
+        .brick-bottom-navigation
+      )[data-surface-effects][data-surface-filter="active"] {
+      background: var(--_brick-effect-paint);
+      color: var(--_brick-effect-normal-foreground);
+      backdrop-filter: blur(
+          var(--brick-surface-effect-blur, var(--_brick-effect-blur))
+        )
+        saturate(
+          var(
+            --brick-surface-effect-saturation,
+            var(--_brick-effect-saturation)
+          )
+        );
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    :is(
+        .brick-surface,
+        .brick-app-bar,
+        .brick-bottom-navigation
+      )[data-surface-effects][data-surface-transparency] {
+      background: var(--_brick-effect-fallback);
+      color: var(--_brick-effect-foreground);
+      backdrop-filter: none;
+    }
+  }
+  @media (forced-colors: active) {
+    :is(
+        .brick-surface,
+        .brick-app-bar,
+        .brick-bottom-navigation
+      )[data-surface-effects][data-surface-effects] {
+      background: Canvas;
+      color: CanvasText;
+      border-color: CanvasText;
+      backdrop-filter: none;
+    }
+  }
+}

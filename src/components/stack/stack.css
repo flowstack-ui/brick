@@ -1,220 +1,412 @@
+@import "./stack-separator.css";
 @layer brick.components {
   .brick-stack {
-    --brick-stack-gap: var(--brick-space-0);
-    --brick-stack-start-spacing: var(--brick-space-0);
-    --brick-stack-end-spacing: var(--brick-space-0);
-
+    --brick-stack-direction-input: initial;
+    --brick-stack-direction-sm-input: initial;
+    --brick-stack-direction-md-input: initial;
+    --brick-stack-direction-lg-input: initial;
+    --brick-stack-direction-xl-input: initial;
+    --brick-stack-gap-input: initial;
+    --brick-stack-gap-sm-input: initial;
+    --brick-stack-gap-md-input: initial;
+    --brick-stack-gap-lg-input: initial;
+    --brick-stack-gap-xl-input: initial;
+    --brick-stack-row-gap-input: initial;
+    --brick-stack-row-gap-sm-input: initial;
+    --brick-stack-row-gap-md-input: initial;
+    --brick-stack-row-gap-lg-input: initial;
+    --brick-stack-row-gap-xl-input: initial;
+    --brick-stack-column-gap-input: initial;
+    --brick-stack-column-gap-sm-input: initial;
+    --brick-stack-column-gap-md-input: initial;
+    --brick-stack-column-gap-lg-input: initial;
+    --brick-stack-column-gap-xl-input: initial;
+    --brick-stack-align-input: initial;
+    --brick-stack-align-sm-input: initial;
+    --brick-stack-align-md-input: initial;
+    --brick-stack-align-lg-input: initial;
+    --brick-stack-align-xl-input: initial;
+    --brick-stack-justify-input: initial;
+    --brick-stack-justify-sm-input: initial;
+    --brick-stack-justify-md-input: initial;
+    --brick-stack-justify-lg-input: initial;
+    --brick-stack-justify-xl-input: initial;
+    --brick-stack-align-content-input: initial;
+    --brick-stack-align-content-sm-input: initial;
+    --brick-stack-align-content-md-input: initial;
+    --brick-stack-align-content-lg-input: initial;
+    --brick-stack-align-content-xl-input: initial;
+    --brick-stack-wrap-input: initial;
+    --brick-stack-wrap-sm-input: initial;
+    --brick-stack-wrap-md-input: initial;
+    --brick-stack-wrap-lg-input: initial;
+    --brick-stack-wrap-xl-input: initial;
+    --brick-stack-display-input: initial;
+    --brick-stack-display-sm-input: initial;
+    --brick-stack-display-md-input: initial;
+    --brick-stack-display-lg-input: initial;
+    --brick-stack-display-xl-input: initial;
+    --brick-stack-start-spacing-input: initial;
+    --brick-stack-start-spacing-sm-input: initial;
+    --brick-stack-start-spacing-md-input: initial;
+    --brick-stack-start-spacing-lg-input: initial;
+    --brick-stack-start-spacing-xl-input: initial;
+    --brick-stack-end-spacing-input: initial;
+    --brick-stack-end-spacing-sm-input: initial;
+    --brick-stack-end-spacing-md-input: initial;
+    --brick-stack-end-spacing-lg-input: initial;
+    --brick-stack-end-spacing-xl-input: initial;
+    --brick-stack-direction: var(--brick-stack-direction-input, column);
+    --brick-stack-gap: var(--brick-stack-gap-input, var(--brick-space-0));
+    --brick-stack-row-gap: var(--brick-stack-row-gap-input, var(--brick-stack-gap));
+    --brick-stack-column-gap: var(--brick-stack-column-gap-input, var(--brick-stack-gap));
+    --brick-stack-align: var(--brick-stack-align-input, stretch);
+    --brick-stack-justify: var(--brick-stack-justify-input, start);
+    --brick-stack-align-content: var(--brick-stack-align-content-input, normal);
+    --brick-stack-wrap: var(--brick-stack-wrap-input, nowrap);
+    --brick-stack-display: var(--brick-stack-display-input, flex);
+    --brick-stack-start-spacing: var(--brick-stack-start-spacing-input, var(--brick-stack-base-inset, 0px));
+    --brick-stack-end-spacing: var(--brick-stack-end-spacing-input, var(--brick-stack-base-inset, 0px));
+  }
+  .brick-stack-item {
+    --brick-stack-item-recipe-grow-input: initial;
+    --brick-stack-item-recipe-grow-sm-input: initial;
+    --brick-stack-item-recipe-grow-md-input: initial;
+    --brick-stack-item-recipe-grow-lg-input: initial;
+    --brick-stack-item-recipe-grow-xl-input: initial;
+    --brick-stack-item-recipe-shrink-input: initial;
+    --brick-stack-item-recipe-shrink-sm-input: initial;
+    --brick-stack-item-recipe-shrink-md-input: initial;
+    --brick-stack-item-recipe-shrink-lg-input: initial;
+    --brick-stack-item-recipe-shrink-xl-input: initial;
+    --brick-stack-item-recipe-basis-input: initial;
+    --brick-stack-item-recipe-basis-sm-input: initial;
+    --brick-stack-item-recipe-basis-md-input: initial;
+    --brick-stack-item-recipe-basis-lg-input: initial;
+    --brick-stack-item-recipe-basis-xl-input: initial;
+    --brick-stack-item-grow-input: initial;
+    --brick-stack-item-grow-sm-input: initial;
+    --brick-stack-item-grow-md-input: initial;
+    --brick-stack-item-grow-lg-input: initial;
+    --brick-stack-item-grow-xl-input: initial;
+    --brick-stack-item-shrink-input: initial;
+    --brick-stack-item-shrink-sm-input: initial;
+    --brick-stack-item-shrink-md-input: initial;
+    --brick-stack-item-shrink-lg-input: initial;
+    --brick-stack-item-shrink-xl-input: initial;
+    --brick-stack-item-basis-input: initial;
+    --brick-stack-item-basis-sm-input: initial;
+    --brick-stack-item-basis-md-input: initial;
+    --brick-stack-item-basis-lg-input: initial;
+    --brick-stack-item-basis-xl-input: initial;
+    --brick-stack-item-order-input: initial;
+    --brick-stack-item-order-sm-input: initial;
+    --brick-stack-item-order-md-input: initial;
+    --brick-stack-item-order-lg-input: initial;
+    --brick-stack-item-order-xl-input: initial;
+    --brick-stack-item-align-input: initial;
+    --brick-stack-item-align-sm-input: initial;
+    --brick-stack-item-align-md-input: initial;
+    --brick-stack-item-align-lg-input: initial;
+    --brick-stack-item-align-xl-input: initial;
+    --brick-stack-item-margin-inline-start-input: initial;
+    --brick-stack-item-margin-inline-start-sm-input: initial;
+    --brick-stack-item-margin-inline-start-md-input: initial;
+    --brick-stack-item-margin-inline-start-lg-input: initial;
+    --brick-stack-item-margin-inline-start-xl-input: initial;
+    --brick-stack-item-margin-inline-end-input: initial;
+    --brick-stack-item-margin-inline-end-sm-input: initial;
+    --brick-stack-item-margin-inline-end-md-input: initial;
+    --brick-stack-item-margin-inline-end-lg-input: initial;
+    --brick-stack-item-margin-inline-end-xl-input: initial;
+    --brick-stack-item-margin-block-start-input: initial;
+    --brick-stack-item-margin-block-start-sm-input: initial;
+    --brick-stack-item-margin-block-start-md-input: initial;
+    --brick-stack-item-margin-block-start-lg-input: initial;
+    --brick-stack-item-margin-block-start-xl-input: initial;
+    --brick-stack-item-margin-block-end-input: initial;
+    --brick-stack-item-margin-block-end-sm-input: initial;
+    --brick-stack-item-margin-block-end-md-input: initial;
+    --brick-stack-item-margin-block-end-lg-input: initial;
+    --brick-stack-item-margin-block-end-xl-input: initial;
+    --brick-stack-item-recipe-grow: var(--brick-stack-item-recipe-grow-input, 0);
+    --brick-stack-item-recipe-shrink: var(--brick-stack-item-recipe-shrink-input, 1);
+    --brick-stack-item-recipe-basis: var(--brick-stack-item-recipe-basis-input, auto);
+    --brick-stack-item-grow: var(--brick-stack-item-grow-input, var(--brick-stack-item-recipe-grow));
+    --brick-stack-item-shrink: var(--brick-stack-item-shrink-input, var(--brick-stack-item-recipe-shrink));
+    --brick-stack-item-basis: var(--brick-stack-item-basis-input, var(--brick-stack-item-recipe-basis));
+    --brick-stack-item-order: var(--brick-stack-item-order-input, 0);
+    --brick-stack-item-align: var(--brick-stack-item-align-input, auto);
+    --brick-stack-item-margin-inline-start: var(--brick-stack-item-margin-inline-start-input, 0px);
+    --brick-stack-item-margin-inline-end: var(--brick-stack-item-margin-inline-end-input, 0px);
+    --brick-stack-item-margin-block-start: var(--brick-stack-item-margin-block-start-input, 0px);
+    --brick-stack-item-margin-block-end: var(--brick-stack-item-margin-block-end-input, 0px);
+  }
+  :where(.brick-stack) { margin: 0; padding: 0; }
+  .brick-stack {
     box-sizing: border-box;
-    display: flex;
     min-inline-size: 0;
-    margin: 0;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: start;
-    gap: var(--brick-stack-gap);
-    padding-block: var(--brick-stack-start-spacing) var(--brick-stack-end-spacing);
-    padding-inline: 0;
+    display: var(--brick-stack-display);
+    flex-direction: var(--brick-stack-direction);
+    align-items: var(--brick-stack-align);
+    justify-content: var(--brick-stack-justify);
+    align-content: var(--brick-stack-align-content);
+    flex-wrap: var(--brick-stack-wrap);
+    row-gap: var(--brick-stack-row-gap);
+    column-gap: var(--brick-stack-column-gap);
+    --brick-stack-base-inset: 0px;
   }
-
-  .brick-stack:is(ul, ol) {
-    list-style: none;
-  }
-
-  .brick-stack[data-direction="row"] {
-    flex-direction: row;
-    padding-block: 0;
-    padding-inline: var(--brick-stack-start-spacing) var(--brick-stack-end-spacing);
-  }
-  .brick-stack[data-gap] { --brick-stack-gap: var(--brick-stack-gap-input, var(--brick-space-0)); }
-  .brick-stack[data-start-spacing] { --brick-stack-start-spacing: var(--brick-stack-start-spacing-input, var(--brick-space-0)); }
-  .brick-stack[data-end-spacing] { --brick-stack-end-spacing: var(--brick-stack-end-spacing-input, var(--brick-space-0)); }
-
-  .brick-stack[data-align="start"] { align-items: start; }
-  .brick-stack[data-align="center"] { align-items: center; }
-  .brick-stack[data-align="end"] { align-items: end; }
-  .brick-stack[data-align="baseline"] { align-items: baseline; }
-  .brick-stack[data-justify="center"] { justify-content: center; }
-  .brick-stack[data-justify="end"] { justify-content: end; }
-  .brick-stack[data-justify="between"] { justify-content: space-between; }
-  .brick-stack[data-justify="around"] { justify-content: space-around; }
-  .brick-stack[data-justify="evenly"] { justify-content: space-evenly; }
-  .brick-stack[data-wrap] { flex-wrap: wrap; }
-
+  /* Surface's documented inset hook is the baseline for same-host edge spacing. */
+  .brick-stack.brick-surface { --brick-stack-base-inset: var(--brick-surface-padding); }
+  .brick-stack:is(ul, ol) { list-style: none; }
   .brick-stack-item {
     box-sizing: border-box;
     min-inline-size: 0;
-    flex: 0 1 auto;
-    align-self: auto;
+    flex-grow: var(--brick-stack-item-grow);
+    flex-shrink: var(--brick-stack-item-shrink);
+    flex-basis: var(--brick-stack-item-basis);
+    order: var(--brick-stack-item-order);
+    align-self: var(--brick-stack-item-align);
   }
-
   .brick-stack-item:not([data-stack-item-composed]) { min-block-size: 0; }
-
-  .brick-stack-item[data-flex="fixed"] { flex: 0 0 auto; }
-  .brick-stack-item[data-flex="auto"] { flex: 1 1 auto; }
-  .brick-stack-item[data-flex="1"] { flex: 1 1 0; }
-  .brick-stack-item[data-flex="2"] { flex: 2 1 0; }
-  .brick-stack-item[data-flex="3"] { flex: 3 1 0; }
-  .brick-stack-item[data-flex="4"] { flex: 4 1 0; }
-  .brick-stack-item[data-align="stretch"] { align-self: stretch; }
-  .brick-stack-item[data-align="start"] { align-self: start; }
-  .brick-stack-item[data-align="center"] { align-self: center; }
-  .brick-stack-item[data-align="end"] { align-self: end; }
-  .brick-stack-item[data-align="baseline"] { align-self: baseline; }
-
+  .brick-stack-item[data-stack-margin-inline-start] { margin-inline-start: var(--brick-stack-item-margin-inline-start); }
+  .brick-stack-item[data-stack-margin-inline-end] { margin-inline-end: var(--brick-stack-item-margin-inline-end); }
+  .brick-stack-item[data-stack-margin-block-start] { margin-block-start: var(--brick-stack-item-margin-block-start); }
+  .brick-stack-item[data-stack-margin-block-end] { margin-block-end: var(--brick-stack-item-margin-block-end); }
+  .brick-stack[data-stack-edges] {
+    padding-inline-start: var(--brick-stack-base-inset);
+    padding-inline-end: var(--brick-stack-base-inset);
+    padding-block-start: var(--brick-stack-start-spacing);
+    padding-block-end: var(--brick-stack-end-spacing);
+  }
+  .brick-stack[data-stack-edges][data-stack-direction="row"] {
+    padding-inline-start: var(--brick-stack-start-spacing);
+    padding-inline-end: var(--brick-stack-end-spacing);
+    padding-block-start: var(--brick-stack-base-inset);
+    padding-block-end: var(--brick-stack-base-inset);
+  }
+  .brick-stack[data-stack-edges][data-stack-direction="row-reverse"] {
+    padding-inline-start: var(--brick-stack-end-spacing);
+    padding-inline-end: var(--brick-stack-start-spacing);
+    padding-block-start: var(--brick-stack-base-inset);
+    padding-block-end: var(--brick-stack-base-inset);
+  }
+  .brick-stack[data-stack-edges][data-stack-direction="column-reverse"] {
+    padding-inline-start: var(--brick-stack-base-inset);
+    padding-inline-end: var(--brick-stack-base-inset);
+    padding-block-start: var(--brick-stack-end-spacing);
+    padding-block-end: var(--brick-stack-start-spacing);
+  }
   @media (width >= 30rem) {
-    .brick-stack[data-direction-sm="column"] { flex-direction: column; padding-block: var(--brick-stack-start-spacing) var(--brick-stack-end-spacing); padding-inline: 0; }
-    .brick-stack[data-direction-sm="row"] { flex-direction: row; padding-block: 0; padding-inline: var(--brick-stack-start-spacing) var(--brick-stack-end-spacing); }
-    .brick-stack[data-align-sm="stretch"] { align-items: stretch; }
-    .brick-stack[data-align-sm="start"] { align-items: start; }
-    .brick-stack[data-align-sm="center"] { align-items: center; }
-    .brick-stack[data-align-sm="end"] { align-items: end; }
-    .brick-stack[data-align-sm="baseline"] { align-items: baseline; }
-    .brick-stack[data-justify-sm="start"] { justify-content: start; }
-    .brick-stack[data-justify-sm="center"] { justify-content: center; }
-    .brick-stack[data-justify-sm="end"] { justify-content: end; }
-    .brick-stack[data-justify-sm="between"] { justify-content: space-between; }
-    .brick-stack[data-justify-sm="around"] { justify-content: space-around; }
-    .brick-stack[data-justify-sm="evenly"] { justify-content: space-evenly; }
-    .brick-stack[data-wrap-sm="true"] { flex-wrap: wrap; }
-    .brick-stack[data-wrap-sm="false"] { flex-wrap: nowrap; }
-    .brick-stack-item[data-flex-sm="content"] { flex: 0 1 auto; }
-    .brick-stack-item[data-flex-sm="fixed"] { flex: 0 0 auto; }
-    .brick-stack-item[data-flex-sm="auto"] { flex: 1 1 auto; }
-    .brick-stack-item[data-flex-sm="1"] { flex: 1 1 0; }
-    .brick-stack-item[data-flex-sm="2"] { flex: 2 1 0; }
-    .brick-stack-item[data-flex-sm="3"] { flex: 3 1 0; }
-    .brick-stack-item[data-flex-sm="4"] { flex: 4 1 0; }
-    .brick-stack-item[data-align-sm="auto"] { align-self: auto; }
-    .brick-stack-item[data-align-sm="stretch"] { align-self: stretch; }
-    .brick-stack-item[data-align-sm="start"] { align-self: start; }
-    .brick-stack-item[data-align-sm="center"] { align-self: center; }
-    .brick-stack-item[data-align-sm="end"] { align-self: end; }
-    .brick-stack-item[data-align-sm="baseline"] { align-self: baseline; }
+    .brick-stack {
+      --brick-stack-direction: var(--brick-stack-direction-sm-input, var(--brick-stack-direction-input, column));
+      --brick-stack-gap: var(--brick-stack-gap-sm-input, var(--brick-stack-gap-input, var(--brick-space-0)));
+      --brick-stack-row-gap: var(--brick-stack-row-gap-sm-input, var(--brick-stack-row-gap-input, var(--brick-stack-gap)));
+      --brick-stack-column-gap: var(--brick-stack-column-gap-sm-input, var(--brick-stack-column-gap-input, var(--brick-stack-gap)));
+      --brick-stack-align: var(--brick-stack-align-sm-input, var(--brick-stack-align-input, stretch));
+      --brick-stack-justify: var(--brick-stack-justify-sm-input, var(--brick-stack-justify-input, start));
+      --brick-stack-align-content: var(--brick-stack-align-content-sm-input, var(--brick-stack-align-content-input, normal));
+      --brick-stack-wrap: var(--brick-stack-wrap-sm-input, var(--brick-stack-wrap-input, nowrap));
+      --brick-stack-display: var(--brick-stack-display-sm-input, var(--brick-stack-display-input, flex));
+      --brick-stack-start-spacing: var(--brick-stack-start-spacing-sm-input, var(--brick-stack-start-spacing-input, var(--brick-stack-base-inset, 0px)));
+      --brick-stack-end-spacing: var(--brick-stack-end-spacing-sm-input, var(--brick-stack-end-spacing-input, var(--brick-stack-base-inset, 0px)));
+    }
+    .brick-stack-item {
+      --brick-stack-item-recipe-grow: var(--brick-stack-item-recipe-grow-sm-input, var(--brick-stack-item-recipe-grow-input, 0));
+      --brick-stack-item-recipe-shrink: var(--brick-stack-item-recipe-shrink-sm-input, var(--brick-stack-item-recipe-shrink-input, 1));
+      --brick-stack-item-recipe-basis: var(--brick-stack-item-recipe-basis-sm-input, var(--brick-stack-item-recipe-basis-input, auto));
+      --brick-stack-item-grow: var(--brick-stack-item-grow-sm-input, var(--brick-stack-item-grow-input, var(--brick-stack-item-recipe-grow)));
+      --brick-stack-item-shrink: var(--brick-stack-item-shrink-sm-input, var(--brick-stack-item-shrink-input, var(--brick-stack-item-recipe-shrink)));
+      --brick-stack-item-basis: var(--brick-stack-item-basis-sm-input, var(--brick-stack-item-basis-input, var(--brick-stack-item-recipe-basis)));
+      --brick-stack-item-order: var(--brick-stack-item-order-sm-input, var(--brick-stack-item-order-input, 0));
+      --brick-stack-item-align: var(--brick-stack-item-align-sm-input, var(--brick-stack-item-align-input, auto));
+      --brick-stack-item-margin-inline-start: var(--brick-stack-item-margin-inline-start-sm-input, var(--brick-stack-item-margin-inline-start-input, 0px));
+      --brick-stack-item-margin-inline-end: var(--brick-stack-item-margin-inline-end-sm-input, var(--brick-stack-item-margin-inline-end-input, 0px));
+      --brick-stack-item-margin-block-start: var(--brick-stack-item-margin-block-start-sm-input, var(--brick-stack-item-margin-block-start-input, 0px));
+      --brick-stack-item-margin-block-end: var(--brick-stack-item-margin-block-end-sm-input, var(--brick-stack-item-margin-block-end-input, 0px));
+    }
+  .brick-stack[data-stack-edges][data-stack-direction-sm="column"] {
+    padding-inline-start: var(--brick-stack-base-inset);
+    padding-inline-end: var(--brick-stack-base-inset);
+    padding-block-start: var(--brick-stack-start-spacing);
+    padding-block-end: var(--brick-stack-end-spacing);
   }
-
-  @media (width >= 48rem) {
-    .brick-stack[data-direction-md="column"] { flex-direction: column; padding-block: var(--brick-stack-start-spacing) var(--brick-stack-end-spacing); padding-inline: 0; }
-    .brick-stack[data-direction-md="row"] { flex-direction: row; padding-block: 0; padding-inline: var(--brick-stack-start-spacing) var(--brick-stack-end-spacing); }
-    .brick-stack[data-align-md="stretch"] { align-items: stretch; }
-    .brick-stack[data-align-md="start"] { align-items: start; }
-    .brick-stack[data-align-md="center"] { align-items: center; }
-    .brick-stack[data-align-md="end"] { align-items: end; }
-    .brick-stack[data-align-md="baseline"] { align-items: baseline; }
-    .brick-stack[data-justify-md="start"] { justify-content: start; }
-    .brick-stack[data-justify-md="center"] { justify-content: center; }
-    .brick-stack[data-justify-md="end"] { justify-content: end; }
-    .brick-stack[data-justify-md="between"] { justify-content: space-between; }
-    .brick-stack[data-justify-md="around"] { justify-content: space-around; }
-    .brick-stack[data-justify-md="evenly"] { justify-content: space-evenly; }
-    .brick-stack[data-wrap-md="true"] { flex-wrap: wrap; }
-    .brick-stack[data-wrap-md="false"] { flex-wrap: nowrap; }
-    .brick-stack-item[data-flex-md="content"] { flex: 0 1 auto; }
-    .brick-stack-item[data-flex-md="fixed"] { flex: 0 0 auto; }
-    .brick-stack-item[data-flex-md="auto"] { flex: 1 1 auto; }
-    .brick-stack-item[data-flex-md="1"] { flex: 1 1 0; }
-    .brick-stack-item[data-flex-md="2"] { flex: 2 1 0; }
-    .brick-stack-item[data-flex-md="3"] { flex: 3 1 0; }
-    .brick-stack-item[data-flex-md="4"] { flex: 4 1 0; }
-    .brick-stack-item[data-align-md="auto"] { align-self: auto; }
-    .brick-stack-item[data-align-md="stretch"] { align-self: stretch; }
-    .brick-stack-item[data-align-md="start"] { align-self: start; }
-    .brick-stack-item[data-align-md="center"] { align-self: center; }
-    .brick-stack-item[data-align-md="end"] { align-self: end; }
-    .brick-stack-item[data-align-md="baseline"] { align-self: baseline; }
+  .brick-stack[data-stack-edges][data-stack-direction-sm="row"] {
+    padding-inline-start: var(--brick-stack-start-spacing);
+    padding-inline-end: var(--brick-stack-end-spacing);
+    padding-block-start: var(--brick-stack-base-inset);
+    padding-block-end: var(--brick-stack-base-inset);
   }
-
-  @media (width >= 64rem) {
-    .brick-stack[data-direction-lg="column"] { flex-direction: column; padding-block: var(--brick-stack-start-spacing) var(--brick-stack-end-spacing); padding-inline: 0; }
-    .brick-stack[data-direction-lg="row"] { flex-direction: row; padding-block: 0; padding-inline: var(--brick-stack-start-spacing) var(--brick-stack-end-spacing); }
-    .brick-stack[data-align-lg="stretch"] { align-items: stretch; }
-    .brick-stack[data-align-lg="start"] { align-items: start; }
-    .brick-stack[data-align-lg="center"] { align-items: center; }
-    .brick-stack[data-align-lg="end"] { align-items: end; }
-    .brick-stack[data-align-lg="baseline"] { align-items: baseline; }
-    .brick-stack[data-justify-lg="start"] { justify-content: start; }
-    .brick-stack[data-justify-lg="center"] { justify-content: center; }
-    .brick-stack[data-justify-lg="end"] { justify-content: end; }
-    .brick-stack[data-justify-lg="between"] { justify-content: space-between; }
-    .brick-stack[data-justify-lg="around"] { justify-content: space-around; }
-    .brick-stack[data-justify-lg="evenly"] { justify-content: space-evenly; }
-    .brick-stack[data-wrap-lg="true"] { flex-wrap: wrap; }
-    .brick-stack[data-wrap-lg="false"] { flex-wrap: nowrap; }
-    .brick-stack-item[data-flex-lg="content"] { flex: 0 1 auto; }
-    .brick-stack-item[data-flex-lg="fixed"] { flex: 0 0 auto; }
-    .brick-stack-item[data-flex-lg="auto"] { flex: 1 1 auto; }
-    .brick-stack-item[data-flex-lg="1"] { flex: 1 1 0; }
-    .brick-stack-item[data-flex-lg="2"] { flex: 2 1 0; }
-    .brick-stack-item[data-flex-lg="3"] { flex: 3 1 0; }
-    .brick-stack-item[data-flex-lg="4"] { flex: 4 1 0; }
-    .brick-stack-item[data-align-lg="auto"] { align-self: auto; }
-    .brick-stack-item[data-align-lg="stretch"] { align-self: stretch; }
-    .brick-stack-item[data-align-lg="start"] { align-self: start; }
-    .brick-stack-item[data-align-lg="center"] { align-self: center; }
-    .brick-stack-item[data-align-lg="end"] { align-self: end; }
-    .brick-stack-item[data-align-lg="baseline"] { align-self: baseline; }
+  .brick-stack[data-stack-edges][data-stack-direction-sm="row-reverse"] {
+    padding-inline-start: var(--brick-stack-end-spacing);
+    padding-inline-end: var(--brick-stack-start-spacing);
+    padding-block-start: var(--brick-stack-base-inset);
+    padding-block-end: var(--brick-stack-base-inset);
   }
-
-  @media (width >= 80rem) {
-    .brick-stack[data-direction-xl="column"] { flex-direction: column; padding-block: var(--brick-stack-start-spacing) var(--brick-stack-end-spacing); padding-inline: 0; }
-    .brick-stack[data-direction-xl="row"] { flex-direction: row; padding-block: 0; padding-inline: var(--brick-stack-start-spacing) var(--brick-stack-end-spacing); }
-    .brick-stack[data-align-xl="stretch"] { align-items: stretch; }
-    .brick-stack[data-align-xl="start"] { align-items: start; }
-    .brick-stack[data-align-xl="center"] { align-items: center; }
-    .brick-stack[data-align-xl="end"] { align-items: end; }
-    .brick-stack[data-align-xl="baseline"] { align-items: baseline; }
-    .brick-stack[data-justify-xl="start"] { justify-content: start; }
-    .brick-stack[data-justify-xl="center"] { justify-content: center; }
-    .brick-stack[data-justify-xl="end"] { justify-content: end; }
-    .brick-stack[data-justify-xl="between"] { justify-content: space-between; }
-    .brick-stack[data-justify-xl="around"] { justify-content: space-around; }
-    .brick-stack[data-justify-xl="evenly"] { justify-content: space-evenly; }
-    .brick-stack[data-wrap-xl="true"] { flex-wrap: wrap; }
-    .brick-stack[data-wrap-xl="false"] { flex-wrap: nowrap; }
-    .brick-stack-item[data-flex-xl="content"] { flex: 0 1 auto; }
-    .brick-stack-item[data-flex-xl="fixed"] { flex: 0 0 auto; }
-    .brick-stack-item[data-flex-xl="auto"] { flex: 1 1 auto; }
-    .brick-stack-item[data-flex-xl="1"] { flex: 1 1 0; }
-    .brick-stack-item[data-flex-xl="2"] { flex: 2 1 0; }
-    .brick-stack-item[data-flex-xl="3"] { flex: 3 1 0; }
-    .brick-stack-item[data-flex-xl="4"] { flex: 4 1 0; }
-    .brick-stack-item[data-align-xl="auto"] { align-self: auto; }
-    .brick-stack-item[data-align-xl="stretch"] { align-self: stretch; }
-    .brick-stack-item[data-align-xl="start"] { align-self: start; }
-    .brick-stack-item[data-align-xl="center"] { align-self: center; }
-    .brick-stack-item[data-align-xl="end"] { align-self: end; }
-    .brick-stack-item[data-align-xl="baseline"] { align-self: baseline; }
+  .brick-stack[data-stack-edges][data-stack-direction-sm="column-reverse"] {
+    padding-inline-start: var(--brick-stack-base-inset);
+    padding-inline-end: var(--brick-stack-base-inset);
+    padding-block-start: var(--brick-stack-end-spacing);
+    padding-block-end: var(--brick-stack-start-spacing);
   }
-
-  @media (width >= 30rem) {
   }
   @media (width >= 48rem) {
+    .brick-stack {
+      --brick-stack-direction: var(--brick-stack-direction-md-input, var(--brick-stack-direction-sm-input, var(--brick-stack-direction-input, column)));
+      --brick-stack-gap: var(--brick-stack-gap-md-input, var(--brick-stack-gap-sm-input, var(--brick-stack-gap-input, var(--brick-space-0))));
+      --brick-stack-row-gap: var(--brick-stack-row-gap-md-input, var(--brick-stack-row-gap-sm-input, var(--brick-stack-row-gap-input, var(--brick-stack-gap))));
+      --brick-stack-column-gap: var(--brick-stack-column-gap-md-input, var(--brick-stack-column-gap-sm-input, var(--brick-stack-column-gap-input, var(--brick-stack-gap))));
+      --brick-stack-align: var(--brick-stack-align-md-input, var(--brick-stack-align-sm-input, var(--brick-stack-align-input, stretch)));
+      --brick-stack-justify: var(--brick-stack-justify-md-input, var(--brick-stack-justify-sm-input, var(--brick-stack-justify-input, start)));
+      --brick-stack-align-content: var(--brick-stack-align-content-md-input, var(--brick-stack-align-content-sm-input, var(--brick-stack-align-content-input, normal)));
+      --brick-stack-wrap: var(--brick-stack-wrap-md-input, var(--brick-stack-wrap-sm-input, var(--brick-stack-wrap-input, nowrap)));
+      --brick-stack-display: var(--brick-stack-display-md-input, var(--brick-stack-display-sm-input, var(--brick-stack-display-input, flex)));
+      --brick-stack-start-spacing: var(--brick-stack-start-spacing-md-input, var(--brick-stack-start-spacing-sm-input, var(--brick-stack-start-spacing-input, var(--brick-stack-base-inset, 0px))));
+      --brick-stack-end-spacing: var(--brick-stack-end-spacing-md-input, var(--brick-stack-end-spacing-sm-input, var(--brick-stack-end-spacing-input, var(--brick-stack-base-inset, 0px))));
+    }
+    .brick-stack-item {
+      --brick-stack-item-recipe-grow: var(--brick-stack-item-recipe-grow-md-input, var(--brick-stack-item-recipe-grow-sm-input, var(--brick-stack-item-recipe-grow-input, 0)));
+      --brick-stack-item-recipe-shrink: var(--brick-stack-item-recipe-shrink-md-input, var(--brick-stack-item-recipe-shrink-sm-input, var(--brick-stack-item-recipe-shrink-input, 1)));
+      --brick-stack-item-recipe-basis: var(--brick-stack-item-recipe-basis-md-input, var(--brick-stack-item-recipe-basis-sm-input, var(--brick-stack-item-recipe-basis-input, auto)));
+      --brick-stack-item-grow: var(--brick-stack-item-grow-md-input, var(--brick-stack-item-grow-sm-input, var(--brick-stack-item-grow-input, var(--brick-stack-item-recipe-grow))));
+      --brick-stack-item-shrink: var(--brick-stack-item-shrink-md-input, var(--brick-stack-item-shrink-sm-input, var(--brick-stack-item-shrink-input, var(--brick-stack-item-recipe-shrink))));
+      --brick-stack-item-basis: var(--brick-stack-item-basis-md-input, var(--brick-stack-item-basis-sm-input, var(--brick-stack-item-basis-input, var(--brick-stack-item-recipe-basis))));
+      --brick-stack-item-order: var(--brick-stack-item-order-md-input, var(--brick-stack-item-order-sm-input, var(--brick-stack-item-order-input, 0)));
+      --brick-stack-item-align: var(--brick-stack-item-align-md-input, var(--brick-stack-item-align-sm-input, var(--brick-stack-item-align-input, auto)));
+      --brick-stack-item-margin-inline-start: var(--brick-stack-item-margin-inline-start-md-input, var(--brick-stack-item-margin-inline-start-sm-input, var(--brick-stack-item-margin-inline-start-input, 0px)));
+      --brick-stack-item-margin-inline-end: var(--brick-stack-item-margin-inline-end-md-input, var(--brick-stack-item-margin-inline-end-sm-input, var(--brick-stack-item-margin-inline-end-input, 0px)));
+      --brick-stack-item-margin-block-start: var(--brick-stack-item-margin-block-start-md-input, var(--brick-stack-item-margin-block-start-sm-input, var(--brick-stack-item-margin-block-start-input, 0px)));
+      --brick-stack-item-margin-block-end: var(--brick-stack-item-margin-block-end-md-input, var(--brick-stack-item-margin-block-end-sm-input, var(--brick-stack-item-margin-block-end-input, 0px)));
+    }
+  .brick-stack[data-stack-edges][data-stack-direction-md="column"] {
+    padding-inline-start: var(--brick-stack-base-inset);
+    padding-inline-end: var(--brick-stack-base-inset);
+    padding-block-start: var(--brick-stack-start-spacing);
+    padding-block-end: var(--brick-stack-end-spacing);
+  }
+  .brick-stack[data-stack-edges][data-stack-direction-md="row"] {
+    padding-inline-start: var(--brick-stack-start-spacing);
+    padding-inline-end: var(--brick-stack-end-spacing);
+    padding-block-start: var(--brick-stack-base-inset);
+    padding-block-end: var(--brick-stack-base-inset);
+  }
+  .brick-stack[data-stack-edges][data-stack-direction-md="row-reverse"] {
+    padding-inline-start: var(--brick-stack-end-spacing);
+    padding-inline-end: var(--brick-stack-start-spacing);
+    padding-block-start: var(--brick-stack-base-inset);
+    padding-block-end: var(--brick-stack-base-inset);
+  }
+  .brick-stack[data-stack-edges][data-stack-direction-md="column-reverse"] {
+    padding-inline-start: var(--brick-stack-base-inset);
+    padding-inline-end: var(--brick-stack-base-inset);
+    padding-block-start: var(--brick-stack-end-spacing);
+    padding-block-end: var(--brick-stack-start-spacing);
+  }
   }
   @media (width >= 64rem) {
+    .brick-stack {
+      --brick-stack-direction: var(--brick-stack-direction-lg-input, var(--brick-stack-direction-md-input, var(--brick-stack-direction-sm-input, var(--brick-stack-direction-input, column))));
+      --brick-stack-gap: var(--brick-stack-gap-lg-input, var(--brick-stack-gap-md-input, var(--brick-stack-gap-sm-input, var(--brick-stack-gap-input, var(--brick-space-0)))));
+      --brick-stack-row-gap: var(--brick-stack-row-gap-lg-input, var(--brick-stack-row-gap-md-input, var(--brick-stack-row-gap-sm-input, var(--brick-stack-row-gap-input, var(--brick-stack-gap)))));
+      --brick-stack-column-gap: var(--brick-stack-column-gap-lg-input, var(--brick-stack-column-gap-md-input, var(--brick-stack-column-gap-sm-input, var(--brick-stack-column-gap-input, var(--brick-stack-gap)))));
+      --brick-stack-align: var(--brick-stack-align-lg-input, var(--brick-stack-align-md-input, var(--brick-stack-align-sm-input, var(--brick-stack-align-input, stretch))));
+      --brick-stack-justify: var(--brick-stack-justify-lg-input, var(--brick-stack-justify-md-input, var(--brick-stack-justify-sm-input, var(--brick-stack-justify-input, start))));
+      --brick-stack-align-content: var(--brick-stack-align-content-lg-input, var(--brick-stack-align-content-md-input, var(--brick-stack-align-content-sm-input, var(--brick-stack-align-content-input, normal))));
+      --brick-stack-wrap: var(--brick-stack-wrap-lg-input, var(--brick-stack-wrap-md-input, var(--brick-stack-wrap-sm-input, var(--brick-stack-wrap-input, nowrap))));
+      --brick-stack-display: var(--brick-stack-display-lg-input, var(--brick-stack-display-md-input, var(--brick-stack-display-sm-input, var(--brick-stack-display-input, flex))));
+      --brick-stack-start-spacing: var(--brick-stack-start-spacing-lg-input, var(--brick-stack-start-spacing-md-input, var(--brick-stack-start-spacing-sm-input, var(--brick-stack-start-spacing-input, var(--brick-stack-base-inset, 0px)))));
+      --brick-stack-end-spacing: var(--brick-stack-end-spacing-lg-input, var(--brick-stack-end-spacing-md-input, var(--brick-stack-end-spacing-sm-input, var(--brick-stack-end-spacing-input, var(--brick-stack-base-inset, 0px)))));
+    }
+    .brick-stack-item {
+      --brick-stack-item-recipe-grow: var(--brick-stack-item-recipe-grow-lg-input, var(--brick-stack-item-recipe-grow-md-input, var(--brick-stack-item-recipe-grow-sm-input, var(--brick-stack-item-recipe-grow-input, 0))));
+      --brick-stack-item-recipe-shrink: var(--brick-stack-item-recipe-shrink-lg-input, var(--brick-stack-item-recipe-shrink-md-input, var(--brick-stack-item-recipe-shrink-sm-input, var(--brick-stack-item-recipe-shrink-input, 1))));
+      --brick-stack-item-recipe-basis: var(--brick-stack-item-recipe-basis-lg-input, var(--brick-stack-item-recipe-basis-md-input, var(--brick-stack-item-recipe-basis-sm-input, var(--brick-stack-item-recipe-basis-input, auto))));
+      --brick-stack-item-grow: var(--brick-stack-item-grow-lg-input, var(--brick-stack-item-grow-md-input, var(--brick-stack-item-grow-sm-input, var(--brick-stack-item-grow-input, var(--brick-stack-item-recipe-grow)))));
+      --brick-stack-item-shrink: var(--brick-stack-item-shrink-lg-input, var(--brick-stack-item-shrink-md-input, var(--brick-stack-item-shrink-sm-input, var(--brick-stack-item-shrink-input, var(--brick-stack-item-recipe-shrink)))));
+      --brick-stack-item-basis: var(--brick-stack-item-basis-lg-input, var(--brick-stack-item-basis-md-input, var(--brick-stack-item-basis-sm-input, var(--brick-stack-item-basis-input, var(--brick-stack-item-recipe-basis)))));
+      --brick-stack-item-order: var(--brick-stack-item-order-lg-input, var(--brick-stack-item-order-md-input, var(--brick-stack-item-order-sm-input, var(--brick-stack-item-order-input, 0))));
+      --brick-stack-item-align: var(--brick-stack-item-align-lg-input, var(--brick-stack-item-align-md-input, var(--brick-stack-item-align-sm-input, var(--brick-stack-item-align-input, auto))));
+      --brick-stack-item-margin-inline-start: var(--brick-stack-item-margin-inline-start-lg-input, var(--brick-stack-item-margin-inline-start-md-input, var(--brick-stack-item-margin-inline-start-sm-input, var(--brick-stack-item-margin-inline-start-input, 0px))));
+      --brick-stack-item-margin-inline-end: var(--brick-stack-item-margin-inline-end-lg-input, var(--brick-stack-item-margin-inline-end-md-input, var(--brick-stack-item-margin-inline-end-sm-input, var(--brick-stack-item-margin-inline-end-input, 0px))));
+      --brick-stack-item-margin-block-start: var(--brick-stack-item-margin-block-start-lg-input, var(--brick-stack-item-margin-block-start-md-input, var(--brick-stack-item-margin-block-start-sm-input, var(--brick-stack-item-margin-block-start-input, 0px))));
+      --brick-stack-item-margin-block-end: var(--brick-stack-item-margin-block-end-lg-input, var(--brick-stack-item-margin-block-end-md-input, var(--brick-stack-item-margin-block-end-sm-input, var(--brick-stack-item-margin-block-end-input, 0px))));
+    }
+  .brick-stack[data-stack-edges][data-stack-direction-lg="column"] {
+    padding-inline-start: var(--brick-stack-base-inset);
+    padding-inline-end: var(--brick-stack-base-inset);
+    padding-block-start: var(--brick-stack-start-spacing);
+    padding-block-end: var(--brick-stack-end-spacing);
+  }
+  .brick-stack[data-stack-edges][data-stack-direction-lg="row"] {
+    padding-inline-start: var(--brick-stack-start-spacing);
+    padding-inline-end: var(--brick-stack-end-spacing);
+    padding-block-start: var(--brick-stack-base-inset);
+    padding-block-end: var(--brick-stack-base-inset);
+  }
+  .brick-stack[data-stack-edges][data-stack-direction-lg="row-reverse"] {
+    padding-inline-start: var(--brick-stack-end-spacing);
+    padding-inline-end: var(--brick-stack-start-spacing);
+    padding-block-start: var(--brick-stack-base-inset);
+    padding-block-end: var(--brick-stack-base-inset);
+  }
+  .brick-stack[data-stack-edges][data-stack-direction-lg="column-reverse"] {
+    padding-inline-start: var(--brick-stack-base-inset);
+    padding-inline-end: var(--brick-stack-base-inset);
+    padding-block-start: var(--brick-stack-end-spacing);
+    padding-block-end: var(--brick-stack-start-spacing);
+  }
   }
   @media (width >= 80rem) {
+    .brick-stack {
+      --brick-stack-direction: var(--brick-stack-direction-xl-input, var(--brick-stack-direction-lg-input, var(--brick-stack-direction-md-input, var(--brick-stack-direction-sm-input, var(--brick-stack-direction-input, column)))));
+      --brick-stack-gap: var(--brick-stack-gap-xl-input, var(--brick-stack-gap-lg-input, var(--brick-stack-gap-md-input, var(--brick-stack-gap-sm-input, var(--brick-stack-gap-input, var(--brick-space-0))))));
+      --brick-stack-row-gap: var(--brick-stack-row-gap-xl-input, var(--brick-stack-row-gap-lg-input, var(--brick-stack-row-gap-md-input, var(--brick-stack-row-gap-sm-input, var(--brick-stack-row-gap-input, var(--brick-stack-gap))))));
+      --brick-stack-column-gap: var(--brick-stack-column-gap-xl-input, var(--brick-stack-column-gap-lg-input, var(--brick-stack-column-gap-md-input, var(--brick-stack-column-gap-sm-input, var(--brick-stack-column-gap-input, var(--brick-stack-gap))))));
+      --brick-stack-align: var(--brick-stack-align-xl-input, var(--brick-stack-align-lg-input, var(--brick-stack-align-md-input, var(--brick-stack-align-sm-input, var(--brick-stack-align-input, stretch)))));
+      --brick-stack-justify: var(--brick-stack-justify-xl-input, var(--brick-stack-justify-lg-input, var(--brick-stack-justify-md-input, var(--brick-stack-justify-sm-input, var(--brick-stack-justify-input, start)))));
+      --brick-stack-align-content: var(--brick-stack-align-content-xl-input, var(--brick-stack-align-content-lg-input, var(--brick-stack-align-content-md-input, var(--brick-stack-align-content-sm-input, var(--brick-stack-align-content-input, normal)))));
+      --brick-stack-wrap: var(--brick-stack-wrap-xl-input, var(--brick-stack-wrap-lg-input, var(--brick-stack-wrap-md-input, var(--brick-stack-wrap-sm-input, var(--brick-stack-wrap-input, nowrap)))));
+      --brick-stack-display: var(--brick-stack-display-xl-input, var(--brick-stack-display-lg-input, var(--brick-stack-display-md-input, var(--brick-stack-display-sm-input, var(--brick-stack-display-input, flex)))));
+      --brick-stack-start-spacing: var(--brick-stack-start-spacing-xl-input, var(--brick-stack-start-spacing-lg-input, var(--brick-stack-start-spacing-md-input, var(--brick-stack-start-spacing-sm-input, var(--brick-stack-start-spacing-input, var(--brick-stack-base-inset, 0px))))));
+      --brick-stack-end-spacing: var(--brick-stack-end-spacing-xl-input, var(--brick-stack-end-spacing-lg-input, var(--brick-stack-end-spacing-md-input, var(--brick-stack-end-spacing-sm-input, var(--brick-stack-end-spacing-input, var(--brick-stack-base-inset, 0px))))));
+    }
+    .brick-stack-item {
+      --brick-stack-item-recipe-grow: var(--brick-stack-item-recipe-grow-xl-input, var(--brick-stack-item-recipe-grow-lg-input, var(--brick-stack-item-recipe-grow-md-input, var(--brick-stack-item-recipe-grow-sm-input, var(--brick-stack-item-recipe-grow-input, 0)))));
+      --brick-stack-item-recipe-shrink: var(--brick-stack-item-recipe-shrink-xl-input, var(--brick-stack-item-recipe-shrink-lg-input, var(--brick-stack-item-recipe-shrink-md-input, var(--brick-stack-item-recipe-shrink-sm-input, var(--brick-stack-item-recipe-shrink-input, 1)))));
+      --brick-stack-item-recipe-basis: var(--brick-stack-item-recipe-basis-xl-input, var(--brick-stack-item-recipe-basis-lg-input, var(--brick-stack-item-recipe-basis-md-input, var(--brick-stack-item-recipe-basis-sm-input, var(--brick-stack-item-recipe-basis-input, auto)))));
+      --brick-stack-item-grow: var(--brick-stack-item-grow-xl-input, var(--brick-stack-item-grow-lg-input, var(--brick-stack-item-grow-md-input, var(--brick-stack-item-grow-sm-input, var(--brick-stack-item-grow-input, var(--brick-stack-item-recipe-grow))))));
+      --brick-stack-item-shrink: var(--brick-stack-item-shrink-xl-input, var(--brick-stack-item-shrink-lg-input, var(--brick-stack-item-shrink-md-input, var(--brick-stack-item-shrink-sm-input, var(--brick-stack-item-shrink-input, var(--brick-stack-item-recipe-shrink))))));
+      --brick-stack-item-basis: var(--brick-stack-item-basis-xl-input, var(--brick-stack-item-basis-lg-input, var(--brick-stack-item-basis-md-input, var(--brick-stack-item-basis-sm-input, var(--brick-stack-item-basis-input, var(--brick-stack-item-recipe-basis))))));
+      --brick-stack-item-order: var(--brick-stack-item-order-xl-input, var(--brick-stack-item-order-lg-input, var(--brick-stack-item-order-md-input, var(--brick-stack-item-order-sm-input, var(--brick-stack-item-order-input, 0)))));
+      --brick-stack-item-align: var(--brick-stack-item-align-xl-input, var(--brick-stack-item-align-lg-input, var(--brick-stack-item-align-md-input, var(--brick-stack-item-align-sm-input, var(--brick-stack-item-align-input, auto)))));
+      --brick-stack-item-margin-inline-start: var(--brick-stack-item-margin-inline-start-xl-input, var(--brick-stack-item-margin-inline-start-lg-input, var(--brick-stack-item-margin-inline-start-md-input, var(--brick-stack-item-margin-inline-start-sm-input, var(--brick-stack-item-margin-inline-start-input, 0px)))));
+      --brick-stack-item-margin-inline-end: var(--brick-stack-item-margin-inline-end-xl-input, var(--brick-stack-item-margin-inline-end-lg-input, var(--brick-stack-item-margin-inline-end-md-input, var(--brick-stack-item-margin-inline-end-sm-input, var(--brick-stack-item-margin-inline-end-input, 0px)))));
+      --brick-stack-item-margin-block-start: var(--brick-stack-item-margin-block-start-xl-input, var(--brick-stack-item-margin-block-start-lg-input, var(--brick-stack-item-margin-block-start-md-input, var(--brick-stack-item-margin-block-start-sm-input, var(--brick-stack-item-margin-block-start-input, 0px)))));
+      --brick-stack-item-margin-block-end: var(--brick-stack-item-margin-block-end-xl-input, var(--brick-stack-item-margin-block-end-lg-input, var(--brick-stack-item-margin-block-end-md-input, var(--brick-stack-item-margin-block-end-sm-input, var(--brick-stack-item-margin-block-end-input, 0px)))));
+    }
+  .brick-stack[data-stack-edges][data-stack-direction-xl="column"] {
+    padding-inline-start: var(--brick-stack-base-inset);
+    padding-inline-end: var(--brick-stack-base-inset);
+    padding-block-start: var(--brick-stack-start-spacing);
+    padding-block-end: var(--brick-stack-end-spacing);
   }
-
-  @media (width >= 30rem) {
-    .brick-stack[data-gap-sm] { --brick-stack-gap: var(--brick-stack-gap-sm-input, var(--brick-stack-gap-input, var(--brick-space-0))); }
-    .brick-stack[data-start-spacing-sm] { --brick-stack-start-spacing: var(--brick-stack-start-spacing-sm-input, var(--brick-stack-start-spacing-input, var(--brick-space-0))); }
-    .brick-stack[data-end-spacing-sm] { --brick-stack-end-spacing: var(--brick-stack-end-spacing-sm-input, var(--brick-stack-end-spacing-input, var(--brick-space-0))); }
+  .brick-stack[data-stack-edges][data-stack-direction-xl="row"] {
+    padding-inline-start: var(--brick-stack-start-spacing);
+    padding-inline-end: var(--brick-stack-end-spacing);
+    padding-block-start: var(--brick-stack-base-inset);
+    padding-block-end: var(--brick-stack-base-inset);
   }
-
-  @media (width >= 48rem) {
-    .brick-stack[data-gap-md] { --brick-stack-gap: var(--brick-stack-gap-md-input, var(--brick-stack-gap-input, var(--brick-space-0))); }
-    .brick-stack[data-start-spacing-md] { --brick-stack-start-spacing: var(--brick-stack-start-spacing-md-input, var(--brick-stack-start-spacing-input, var(--brick-space-0))); }
-    .brick-stack[data-end-spacing-md] { --brick-stack-end-spacing: var(--brick-stack-end-spacing-md-input, var(--brick-stack-end-spacing-input, var(--brick-space-0))); }
+  .brick-stack[data-stack-edges][data-stack-direction-xl="row-reverse"] {
+    padding-inline-start: var(--brick-stack-end-spacing);
+    padding-inline-end: var(--brick-stack-start-spacing);
+    padding-block-start: var(--brick-stack-base-inset);
+    padding-block-end: var(--brick-stack-base-inset);
   }
-
-  @media (width >= 64rem) {
-    .brick-stack[data-gap-lg] { --brick-stack-gap: var(--brick-stack-gap-lg-input, var(--brick-stack-gap-input, var(--brick-space-0))); }
-    .brick-stack[data-start-spacing-lg] { --brick-stack-start-spacing: var(--brick-stack-start-spacing-lg-input, var(--brick-stack-start-spacing-input, var(--brick-space-0))); }
-    .brick-stack[data-end-spacing-lg] { --brick-stack-end-spacing: var(--brick-stack-end-spacing-lg-input, var(--brick-stack-end-spacing-input, var(--brick-space-0))); }
+  .brick-stack[data-stack-edges][data-stack-direction-xl="column-reverse"] {
+    padding-inline-start: var(--brick-stack-base-inset);
+    padding-inline-end: var(--brick-stack-base-inset);
+    padding-block-start: var(--brick-stack-end-spacing);
+    padding-block-end: var(--brick-stack-start-spacing);
   }
-
-  @media (width >= 80rem) {
-    .brick-stack[data-gap-xl] { --brick-stack-gap: var(--brick-stack-gap-xl-input, var(--brick-stack-gap-input, var(--brick-space-0))); }
-    .brick-stack[data-start-spacing-xl] { --brick-stack-start-spacing: var(--brick-stack-start-spacing-xl-input, var(--brick-stack-start-spacing-input, var(--brick-space-0))); }
-    .brick-stack[data-end-spacing-xl] { --brick-stack-end-spacing: var(--brick-stack-end-spacing-xl-input, var(--brick-stack-end-spacing-input, var(--brick-space-0))); }
   }
 }

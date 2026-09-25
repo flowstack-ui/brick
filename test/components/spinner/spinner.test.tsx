@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { createRef } from "react";
+import { createRef, Fragment } from "react";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { Spinner } from "../../../src/spinner.js";
@@ -34,5 +34,35 @@ describe("Spinner", () => {
     const first = renderToString(<Spinner size="inherit" />);
     expect(renderToString(<Spinner size="inherit" />)).toBe(first);
     expect(first).not.toContain("progressbar");
+  });
+  it("serializes sparse responsive sizes without leaking object props", () => {
+    const { container } = render(<Spinner size={{ md: "lg", xl: "inherit" }} />);
+    expect(container.firstChild).toHaveAttribute("data-size", "md");
+    expect(container.firstChild).toHaveAttribute("data-size-md", "lg");
+    expect(container.firstChild).toHaveAttribute("data-size-xl", "inherit");
+    expect(container.innerHTML).not.toContain("[object Object]");
+  });
+  it("projects passive artwork and preserves both refs, classes and styles", () => {
+    const ref = createRef<SVGSVGElement>();
+    const inner = createRef<SVGSVGElement>();
+    const { container } = render(<Spinner asChild ref={ref} size="lg" tone="accent" label="Working" className="outer" style={{ "--brick-spinner-duration": "1s" }}><svg ref={inner} className="inner" style={{ opacity: .8 }} data-size="custom" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10" /></svg></Spinner>);
+    expect(container.children).toHaveLength(1);
+    expect(ref.current).toBe(inner.current);
+    expect(ref.current).toHaveClass("brick-spinner", "outer", "inner");
+    expect(ref.current).toHaveAttribute("data-size", "custom");
+    expect(ref.current).toHaveAttribute("data-spinner-size", "lg");
+    expect(ref.current).toHaveAttribute("data-spinner-artwork", "");
+    expect(ref.current).not.toHaveAttribute("data-thickness");
+    expect(ref.current?.style.opacity).toBe("0.8");
+    expect(screen.getByRole("img", { name: "Working" })).toBe(ref.current);
+  });
+  it("keeps whitespace names decorative and ignores runtime tab stops", () => {
+    const { container } = render(<Spinner label="  " {...({tabIndex: 0} as object)} />);
+    expect(container.firstChild).toHaveAttribute("aria-hidden", "true");
+    expect(container.firstChild).not.toHaveAttribute("role");
+    expect(container.firstChild).toHaveAttribute("tabindex", "-1");
+  });
+  it("rejects fragments as projected artwork hosts", () => {
+    expect(() => renderToString(<Spinner asChild><Fragment><svg /></Fragment></Spinner>)).toThrow("requires one element host");
   });
 });

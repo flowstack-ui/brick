@@ -268,3 +268,5 @@ Every released component owns one folder containing its public `README.md` and
 - [OverlayManager](components/overlay-manager/README.md) — keyed imperative overlay orchestration.
 - [Marquee](./components/marquee/README.md) — continuous motion, safe replicas and pause controls.
 - [TagsInput](components/tags-input/README.md) — multi-value entry with validation and suggestions.
+
+- [InputAddon](components/input-addon/README.md) — external noninteractive input segments

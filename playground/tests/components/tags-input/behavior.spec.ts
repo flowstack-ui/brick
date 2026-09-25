@@ -1,13 +1,18 @@
+import { verifyFormSurfaceRecipes } from "../../form-surface-recipes.js";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 test.beforeEach(async ({ page }) => {
   page.on("pageerror", (error) => {
     throw error;
   });
-  await page.goto("/tags-input");
+  await page.goto("/tags-input?qualification=1");
   await expect(
     page.locator('[data-component-page="tags-input"]'),
   ).toBeVisible();
+});
+
+test("surface recipes preserve transparent outline and filled surface", async ({ page }) => {
+  await verifyFormSurfaceRecipes(page, "tags-input", ".brick-tags-input", ".brick-tags-input-control");
 });
 test("TagsInput creation, keyboard removal, editing and controller transactions", async ({
   page,
@@ -143,7 +148,7 @@ test("TagsInput shared suggestions and nested Escape preserve dialog", async ({
   await expect(dialog).toBeVisible();
   await expect(input).toBeFocused();
 });
-test("TagsInput coordinated geometry, reflow, accessibility and forced colors", async ({
+test("TagsInput coordinated geometry and targets", async ({
   page,
 }) => {
   for (const size of ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"]) {
@@ -153,7 +158,42 @@ test("TagsInput coordinated geometry, reflow, accessibility and forced colors", 
     expect(Math.abs(tags!.height - input!.height)).toBeLessThanOrEqual(1);
     const remove = await pair.locator(".brick-tags-input-delete").boundingBox();
     expect(remove!.width).toBeGreaterThanOrEqual(24);
+    expect(remove!.height).toBeGreaterThanOrEqual(24);
+    const button = pair.locator(".brick-tags-input-delete");
+    await button.scrollIntoViewIfNeeded();
+    expect(await button.evaluate(node => {
+      const box = node.getBoundingClientRect();
+      return [0.5, box.height - 0.5].every(y => node.contains(document.elementFromPoint(box.x + box.width / 2, box.y + y)));
+    })).toBe(true);
   }
+});
+test("TagsInput underline, responsive recovery, readonly and tone precedence", async ({ page }) => {
+  const input = page.getByRole("textbox", { name: "underline variant", exact: true });
+  const plane = input.locator("..");
+  await input.hover();
+  await expect(plane).toHaveCSS("border-top-width", "0px");
+  await expect(plane).toHaveCSS("border-left-width", "0px");
+  await expect(plane).toHaveCSS("padding-left", "0px");
+  await input.focus();
+  await expect(plane).toHaveCSS("outline-style", "none");
+  const shadow = await plane.evaluate(node => getComputedStyle(node).boxShadow);
+  expect(shadow).toMatch(/0px 2px 0px 0px/);
+  const readonly = page.getByRole("textbox", { name: "Readonly topics" });
+  await expect(readonly).not.toHaveAttribute("placeholder");
+  await readonly.focus();
+  await expect(readonly).toBeFocused();
+  await expect(readonly.locator("..").getByRole("button")).toHaveCount(0);
+  const accent = page.getByRole("textbox", { name: "Soft accent topics" }).locator("..").locator(".brick-tags-input-item-preview").first();
+  const contrast = page.getByRole("textbox", { name: "Soft contrast topics" }).locator("..").locator(".brick-tags-input-item-preview").first();
+  expect(await accent.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(await contrast.evaluate(node => getComputedStyle(node).backgroundColor));
+  const responsive = page.getByRole("textbox", { name: "Responsive topics" }).locator("..");
+  await page.setViewportSize({ width: 600, height: 800 });
+  await expect(responsive).toHaveCSS("border-top-width", "0px");
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await expect(responsive).toHaveCSS("border-top-width", "1px");
+  await expect(responsive).not.toHaveCSS("padding-left", "0px");
+});
+test("TagsInput reflow, accessibility and forced colors", async ({ page }) => {
   const violations = (
     await new AxeBuilder({ page })
       .include('[data-component-page="tags-input"]')
@@ -172,4 +212,22 @@ test("TagsInput coordinated geometry, reflow, accessibility and forced colors", 
   expect(
     await input.locator("..").evaluate((n) => getComputedStyle(n).outlineStyle),
   ).toBe("solid");
+});
+test("TagsInput invalid focus keeps error paint and long values keep removal reachable", async ({ page }) => {
+  const invalid = page.getByRole('textbox', {name:'Overflow exposed'});
+  const control=invalid.locator('..');
+  const color=await control.evaluate(n=>getComputedStyle(n).borderBottomColor);
+  await invalid.focus();
+  await expect(control).toHaveCSS('border-bottom-color',color);
+  expect(await control.evaluate(n=>getComputedStyle(n).boxShadow)).toContain(color);
+  await page.setViewportSize({width:360,height:780});
+  const input=page.getByRole('textbox',{name:'Topics',exact:true});
+  const long='An exceptionally long topic '.repeat(12).trim();
+  await input.fill(long); await input.press('Enter');
+  const remove=input.locator('..').getByRole('button',{name:'Remove '+long,exact:true});
+  await expect(remove).toBeVisible();
+  await remove.click();
+  await expect(remove).toHaveCount(0);
+  await expect(input).toBeFocused();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });

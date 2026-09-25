@@ -1,5 +1,14 @@
 # Date Picker manual-test protocol
 
+## Focused documentation follow-up
+
+- Compare localized basic/size/variant fields and month/year endpoints with their displayed source.
+- Check separate range borders and decorative arrows in narrow and RTL layouts.
+- Open custom headers, month/year selects, presets/sidebar, fixed weeks, Persian and popup-time examples.
+- Confirm custom content has the same inset as a plain calendar, with no doubled Calendar padding.
+- Confirm Today navigates without selecting, Clear disappears when empty, and 12-hour time exposes AM/PM.
+- Physical-device, screen-reader and actual browser zoom qualification still require a human run.
+
 | Run information | Value |
 | --- | --- |
 | Component | Date Picker |
@@ -20,7 +29,8 @@ Automated browser checks are separate evidence, not manual passes.
 
 ## Step 1 — Visible scenarios and interaction
 
-Setup: Open `/date-picker` and follow the scenario order above.
+Setup: Open `/date-picker?qualification=1` for the scenario order above, then
+review the source-paired examples at `/date-picker`.
 
 Action: Operate each example with keyboard and pointer. Edit or select dates,
 exercise the displayed modes, and compare selected state with displayed value.
@@ -67,6 +77,16 @@ Notes or issue: Screen-reader review has not been performed.
 
 ## Expanded capabilities
 
+Exercise both segmented Input and native TextInput. Type invalid and partial
+dates, paste a complete date and use an IME. The draft must remain visible until
+an intentional commit; moving to a calendar or clear button must not prematurely
+discard it. Invalid text must never submit the previously committed value.
+Test Enter, boundary blur, Escape, reset, custom DD/MM/YYYY parsing, range
+endpoints and semicolon-separated multiple dates. Check month/year precision,
+presets, time-preserving date edits, Fieldset toggling and React Hook Form.
+Compare first popup focus with the typed selection; arrows must follow the
+visible day or period grid. Record actual screen-reader announcements.
+
 Follow every numbered scenario above, including all labelled specimens.
 Compare sizes independently of variants. Exercise any controlled reset, clear,
 parent-state change or disabled example and confirm the displayed outcome.
@@ -81,3 +101,15 @@ Notes or issue:
 Overall result:
 Follow-up issues: Independent assistive-technology, real zoom and physical touch review.
 Workbook updated: Manual coverage remains open; no manual pass is claimed.
+
+## Form surface comparison
+
+- Compare outline and surface on light/dark canvas and raised parents: outline stays transparent; surface owns its neutral fill without adding a shadow.
+- Hover, focus, disable and mark invalid; preserve visible boundaries and explicit state treatment. Compare matched size recipes including their outer borders.
+- Check narrow/RTL containment and forced colors. Popup panels and selection marks must retain their independent paint.
+# Presentation follow-up checks
+
+- [ ] Check segment glyphs and clear/open icons at every size in light/dark.
+- [ ] Check trailing actions in LTR/RTL, including narrow range entry.
+- [ ] Compare neutral and accent focus across outline/subtle/underline.
+- [ ] Verify placeholder readability, forced colors and real 200–400% zoom.

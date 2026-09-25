@@ -58,9 +58,9 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 | Part | Default host | Backing owner | Ref |
 | --- | --- | --- | --- |
 | `Root` | `span` | Atom Badge.Root | `HTMLSpanElement` |
-| `Label` | `span` | Brick native structure | `HTMLSpanElement` |
+| `Label` | `span` | Atom Badge.Root | `HTMLSpanElement` |
 | `RemoveTrigger` | `button` | Atom Button.Root | actual `HTMLElement` host |
-| `StartElement`, `EndElement` | `span` | Brick native structure | `HTMLSpanElement` |
+| `StartElement`, `EndElement` | `span` | Atom Badge.Root | `HTMLSpanElement` |
 | `ActionTrigger` | `button` | Atom Button.Root | actual `HTMLElement` host |
 
 Root stays noninteractive and adds no role or tab stop. ActionTrigger and
@@ -73,11 +73,12 @@ primary action. Brick's default close SVG is decorative and implementation-only.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `soft`, `outline`, `surface`, `solid` | `soft` |
-| `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
-| `size` | `sm`, `md`, `lg`, `xl` | `md` |
+| `variant` | Responsive `soft`, `subtle`, `outline`, `surface`, `solid` | `soft` |
+| `tone` | `neutral`, `contrast`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
+| `size` | Responsive `sm`, `md`, `lg`, `xl` | `md` |
 | `shape` | `rounded`, `pill` | `pill` |
-| `density` | `comfortable`, `compact` | `comfortable` |
+| `density` | Responsive `comfortable`, `compact` | `comfortable` |
+| `unstyled` | `boolean` | `false` |
 
 Root preserves Atom Badge native span props, `asChild`, `render`, class,
 style, slot, and ref. `color` is omitted because `tone` owns visual color.
@@ -95,6 +96,11 @@ The public recipe types are `ChipVariant`, `ChipTone`, `ChipSize`, and
 `ChipRemoveTrigger` is available as `Chip.RemoveTrigger`.
 
 ### Shared radius selection
+
+Use `radius="control"` to follow the theme's control corners. The documentation
+examples use this prop so changing the theme radius updates their shape.
+Omitting both `radius` and `shape` retains the library's pill default;
+`shape="pill"` explicitly keeps rounded ends independently of control radius.
 
 The parts listed for this component in the [Radius guide](../../guides/radius.md)
 accept the shared token-only `Radius` contract. Omission preserves the owner’s
@@ -180,11 +186,22 @@ navigation, form submission, or editable-field semantics.
 
 ## Composition, native props, and refs
 
-Root and RemoveTrigger preserve Atom `asChild` and `render`; Label remains a
-native span. Root/Label refs target spans. RemoveTrigger's ref targets the
+All six parts preserve public Atom `asChild` and `render`. Static parts default
+to spans; projected refs reach their actual host. RemoveTrigger's ref targets the
 actual Atom host. ActionTrigger is a sibling of RemoveTrigger and may contain
 Label and adornments, never another control. Both default to non-submitting
 buttons. Applications own primary-action results and post-removal focus.
+
+### Modern recipes and composition
+
+- `size`, `variant` and `density` accept sparse shared ResponsiveValue objects with initial/sm/md/lg/xl. Omitted initial entries use established defaults; no viewport hooks or remounts.
+- Keep soft/neutral/md/comfortable/pill defaults. Use compact/surface/radius=control for the reference-like rounded recipe. Subtle equals soft; contrast is inverse text/surface paint, not neutral.
+- All six parts project through public Atom asChild/render. Root unstyled delegates its subtree; a nested root resets ownership. Part unstyled delegates that part only, including focus paint.
+- Six --brick-chip-tone-* palette variables require coherent solid/on-solid and soft/on-soft pairs. Bind semantic tokens to support both appearances.
+- Fade only an unavailable action to 50% with not-allowed cursor; keep the passive label and independent sibling actions unchanged. Do not add parent opacity. Native fieldset disabling applies.
+- Supply focus visibility and usable target geometry when delegating with unstyled. Do not nest interactive hosts.
+- Compact sm/md/lg/xl passive heights are 18/20/24/32px, padding 6/6/8/10px, text 12/12/14/14px, icons 12/14/16/18px, avatars 12/14/18/24px at a 16px root. Actions remain at least 24px and can increase actual height.
+- Use TagsInput for editable collection state; Chip has no automatic removal, selection or exit animation.
 
 ## Examples
 
