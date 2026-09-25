@@ -12,11 +12,10 @@ test("Container adopts Surface without another host or a geometry change", async
   await expect(host).toHaveClass(/brick-surface/);
   await expect(host).toHaveAttribute("data-measure", "wide");
   await expect(host).toHaveAttribute("data-gutter", "md");
-  const containerCss = readFileSync(
-    "src/components/container/container.css",
-    "utf8",
-  );
-  const surfaceCss = readFileSync("src/components/surface/surface.css", "utf8");
+  // Qualify the consumer entrypoints, with their transitive imports bundled.
+  // Raw Surface source has a relative @import that cannot resolve in this page.
+  const containerCss = readFileSync("dist/styles/container.css", "utf8");
+  const surfaceCss = readFileSync("dist/styles/surface.css", "utf8");
   for (const css of [containerCss + surfaceCss, surfaceCss + containerCss]) {
     const sheet = await page.addStyleTag({ content: css });
     await expect(host).toHaveCSS("max-inline-size", "1152px");

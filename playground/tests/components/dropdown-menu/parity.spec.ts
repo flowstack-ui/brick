@@ -59,10 +59,15 @@ test("choice rows clear pointer highlight but retain their selection", async ({
     ["#choices", "Preferences", "menuitemcheckbox", "Notifications"],
     ["#radio-items", "Density", "menuitemradio", "Comfortable"],
   ] as const) {
-    await page
+    const trigger = page
       .locator(section)
-      .getByRole("button", { name, exact: true })
-      .click();
+      .getByRole("button", { name, exact: true });
+    // Keep room for the popup before opening. Hover's automatic page scroll
+    // otherwise races floating-position updates when this trigger is at an edge.
+    await trigger.evaluate((element) =>
+      element.scrollIntoView({ block: "center", behavior: "instant" }),
+    );
+    await trigger.click();
     const item = page.getByRole(role, { name: itemName, exact: true });
     await item.hover();
     await expect(item).toHaveAttribute("data-highlighted", "");
