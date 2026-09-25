@@ -7,6 +7,7 @@
 | Viewport and zoom | Not recorded |
 | Assistive technology | Not recorded |
 | Playground route | `/floating-panel` |
+| Qualification route(s) | `/floating-panel` for docs; `/floating-panel?qualification=1` for exhaustive scenarios |
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for each performed check.
 Leave checks unperformed until a person actually completes them.
@@ -53,6 +54,10 @@ Scenario order:
 1. Inspect all 24 named route scenarios using keyboard and a screen reader.
 2. Verify dialog name, description and header action names; no default focus trap.
 3. Move and resize without dragging using geometry settings and keyboard arrows.
+4. Verify Content and DragTrigger keyboard entry without eight default handle
+   tab stops. Pointer handles are groups, not buttons. Check screen-reader
+   discoverability of the movement instructions and numeric alternatives.
+5. Verify only restore remains while staged; controller commands remain available.
 4. Test eight handles with pointer and physical touch, Shift ratio, Alt center,
    grid snapping, Escape cancellation, loss of capture and window blur.
 5. Test controlled rejection/delay, minimized focus recovery and geometry restore.

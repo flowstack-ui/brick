@@ -1,5 +1,5 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
-installVisualDefaults("/menubar");
+installVisualDefaults("/menubar?qualification=1");
 
 test("menubar defaults and complete recipes", async ({ page }) => {
   await expect(page.getByTestId("menubar-overview")).toHaveScreenshot("overview-light.png");

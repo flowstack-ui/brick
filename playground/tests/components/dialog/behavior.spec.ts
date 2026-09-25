@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator, type Page } from "../../evidence-test.js";
 
 test("Dialog Footer maps logical action distribution to flex alignment", async ({ page }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   await page.getByRole("button", { name: "Edit profile" }).click();
   const footer = page.getByTestId("dialog-overview-content").locator("[data-slot='dialog-footer']");
   await expect(footer).toHaveAttribute("data-justify", "end");
@@ -40,7 +40,7 @@ async function expectDialogDefaults(
 test("Dialog exposes its default modal anatomy, relationships, and focus lifecycle", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
 
   const appBar = page.locator("[data-playground-app-bar]");
   const sidebar = page.locator(".evidence-sidebar");
@@ -102,7 +102,7 @@ test("Dialog exposes its default modal anatomy, relationships, and focus lifecyc
   await expect(dialog).toHaveCSS("opacity", "1");
   expect(
     await overlay.evaluate((element) => getComputedStyle(element).backgroundColor),
-  ).toMatch(/^rgba\(.+,\s*0\.\d+\)$/);
+  ).toMatch(/^(rgba\(.+,\s*0\.\d+\)|color\(srgb .+ \/ 0\.\d+\))$/);
   await expect.poll(() => readShellViewportOffsets(page)).toEqual(shellOffsets);
   await expect.poll(() => page.evaluate(() => document.documentElement.style.overflow)).toBe("hidden");
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).not.toBe("hidden");
@@ -126,7 +126,7 @@ test("Dialog sizes change only preferred measure and coordinated inset", async (
   page,
 }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   const measurements: Array<{ space: number; width: number }> = [];
 
   for (const size of ["sm", "md", "lg"] as const) {
@@ -152,14 +152,14 @@ test("Dialog sizes change only preferred measure and coordinated inset", async (
 
   expect(measurements[0].width).toBeLessThan(measurements[1].width);
   expect(measurements[1].width).toBeLessThan(measurements[2].width);
-  expect(measurements[0].space).toBeLessThan(measurements[1].space);
-  expect(measurements[1].space).toBeLessThan(measurements[2].space);
+  expect(measurements[0].space).toBe(measurements[1].space);
+  expect(measurements[1].space).toBe(measurements[2].space);
 });
 
 test("Dialog renders only the anatomy authored by the consumer", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
 
   await page.getByRole("button", { name: "Open named surface" }).click();
   const titleOnly = page.getByTestId("dialog-anatomy-title");
@@ -191,7 +191,7 @@ test("Dialog renders only the anatomy authored by the consumer", async ({
 test("Dialog Title exposes every supported native heading level", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
 
   for (const level of [1, 2, 3, 4, 5, 6] as const) {
     await page.getByRole("button", { name: `Open h${level} title` }).click();
@@ -210,7 +210,7 @@ test("Dialog Title exposes every supported native heading level", async ({
 test("Dialog preserves dismissal reasons and unavailable policies", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   const eventTrigger = page.getByRole("button", { name: "Open event dialog" });
   await eventTrigger.click();
   const eventDialog = page.getByRole("dialog", { name: "Dismissal evidence" });
@@ -258,7 +258,7 @@ test("Dialog preserves dismissal reasons and unavailable policies", async ({
 test("Dialog preserves nested layers and a registered portalled branch", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   const parentTrigger = page.getByRole("button", {
     name: "Open parent dialog",
   });
@@ -298,7 +298,7 @@ test("Dialog preserves nested layers and a registered portalled branch", async (
 test("Dialog preserves scoped portals and exact customization hooks", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   const scopes = page.getByTestId("dialog-appearance");
 
   await scopes.getByRole("button", { name: "Light scoped dialog" }).click();
@@ -345,7 +345,7 @@ test("Dialog keeps long Body content and RTL surfaces within the viewport", asyn
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 640 });
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
 
   await page
     .getByRole("button", { name: "Open long mobile dialog" })
@@ -398,7 +398,7 @@ test("Dialog removes nonessential motion and preserves its boundary", async ({
     testInfo.project.name !== "chromium",
     "Forced colors is a Chromium release check.",
   );
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
   await page.getByRole("button", { name: "Edit profile" }).click();
   const dialog = page.getByTestId("dialog-overview-content");

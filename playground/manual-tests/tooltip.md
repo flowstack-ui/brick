@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Tooltip |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Local 0.2.3 candidate; record exact archive digest |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -13,6 +13,9 @@
 | Assistive technology | |
 | Playground route | `/tooltip` |
 
+The primary `/tooltip` route is the documentation page. The numbered legacy
+qualification scenarios below are available at `/tooltip?qualification=1`.
+
 Scenario order: `01 Overview`, `02 Recipes`, `03 Shapes`, `04 Sides`,
 `05 Alignments`, `06 States`, `07 Composition`, `08 Theme`, `09 Stress`
 
@@ -20,14 +23,14 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Overview and input behavior
 
-Setup: Open `/tooltip` and `01 Overview`.
+Setup: Open `/tooltip?qualification=1` and `01 Overview`.
 
 Action: Focus the trigger, press Escape, hover across trigger and Tooltip, and
 perform a touch hold on a real touch device when available.
 
 Expected: Tooltip opens after the appropriate input/timing, remains open across
 the hover bridge, contains no interactive content, closes with Escape, and
-leaves focus on the trigger. It stays below the playground header.
+leaves focus on the trigger. It layers above its containing overlay.
 
 Result:
 Notes or issue:
@@ -100,6 +103,14 @@ Result:
 Notes or issue:
 
 ## Completion
+
+Before completion, also review the documentation examples: controller and
+shared triggers, dismissal switches, retained hidden content, virtual/fixed
+positioning, and nested Dialog/Popover. Only the active shared trigger should
+receive the tooltip description. Opening and closing must not flash at the
+viewport origin. Hover retention is explicit; neither plain nor rich content
+may contain focusable controls. Verify screen-reader descriptions and physical
+touch separately from automated browser checks.
 
 Overall result:
 Follow-up issues:

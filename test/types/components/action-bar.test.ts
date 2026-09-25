@@ -5,3 +5,6 @@ const content: ActionBarContentProps = { children:null, initialFocus:false, "ari
 // @ts-expect-error ActionBar is not an anchored Popover.
 const invalid: ActionBarPlacement = "top";
 void [placement, root, content, invalid];
+// @ts-expect-error Detached bars have no anchored positioning API.
+const anchored: ActionBarRootProps = { children: null, positioning: { placement: "top" } };
+void anchored;

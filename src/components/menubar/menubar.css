@@ -1,91 +1,77 @@
 @layer brick.components {
-  .brick-menubar {
-    --brick-menubar-background: var(--brick-color-surface-subtle);
-    --brick-menubar-border: var(--brick-color-border-subtle);
-    --brick-menubar-radius: var(--brick-radius-control);
-    --brick-menubar-padding: var(--brick-space-1);
-    --brick-menubar-gap: var(--brick-space-1);
-    --brick-menubar-trigger-min-block-size: var(--brick-control-target-min);
-    --brick-menubar-trigger-padding-inline: var(--brick-space-3);
-    --brick-menubar-trigger-radius: calc(var(--brick-radius-control) - var(--brick-border-width));
-    --brick-menubar-trigger-foreground: var(--brick-color-text-primary);
-    --brick-menubar-trigger-interaction-background: var(--brick-color-surface-raised);
-    --brick-menubar-trigger-open-background: var(--brick-color-accent-soft);
-    --brick-menubar-trigger-open-foreground: var(--brick-color-accent-text);
-    --brick-menubar-trigger-focus-ring: var(--brick-color-focus-ring);
-
-    display: inline-flex;
-    box-sizing: border-box;
-    max-inline-size: 100%;
-    align-items: stretch;
-    gap: var(--brick-menubar-gap);
-    padding: var(--brick-menubar-padding);
-    border: var(--brick-border-width) solid var(--brick-menubar-border);
-    border-radius: var(--brick-menubar-radius);
-    background: var(--brick-menubar-background);
-  }
-
-  .brick-menubar[data-orientation="vertical"] { flex-direction: column; inline-size: fit-content; }
-  .brick-menubar[data-size="sm"] { --brick-menubar-trigger-min-block-size: 2rem; --brick-menubar-trigger-padding-inline: var(--brick-space-2); }
-  .brick-menubar[data-size="lg"] { --brick-menubar-trigger-min-block-size: 3rem; --brick-menubar-trigger-padding-inline: var(--brick-space-4); }
-
-  .brick-menubar__trigger {
-    display: inline-flex;
-    box-sizing: border-box;
-    min-block-size: var(--brick-menubar-trigger-min-block-size);
-    align-items: center;
-    justify-content: center;
-    padding-inline: var(--brick-menubar-trigger-padding-inline);
-    border: 0;
-    border-radius: var(--brick-menubar-trigger-radius);
-    background: transparent;
-    color: var(--brick-menubar-trigger-foreground);
-    font: inherit;
-    white-space: nowrap;
-    cursor: default;
-  }
-  .brick-menubar__trigger:is(:hover, :focus-visible) { background: var(--brick-menubar-trigger-interaction-background); }
-  .brick-menubar__trigger:focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-menubar-trigger-focus-ring); outline-offset: var(--brick-border-focus-offset); }
-  .brick-menubar__trigger[data-state="open"] { background: var(--brick-menubar-trigger-open-background); color: var(--brick-menubar-trigger-open-foreground); }
-  .brick-menubar__trigger[data-disabled] { color: var(--brick-color-text-muted); opacity: 0.65; }
-
-  .brick-menubar__content[data-state="closed"] {
-    visibility: hidden;
-    transition: none;
-  }
-
-  :where(.brick-menubar__content, .brick-menubar__sub-content) {
+  /* Consume owner hooks at their actual part, retaining direct and inherited overrides. */
+  :where(.brick-menubar__content, .brick-menubar__sub-content, .brick-menubar__item, .brick-menubar__checkbox-item, .brick-menubar__radio-item, .brick-menubar__sub-trigger, .brick-menubar__label, .brick-menubar__leading, .brick-menubar__item-label, .brick-menubar__description, .brick-menubar__shortcut, .brick-menubar__separator, .brick-menubar__item-indicator, .brick-menubar__arrow, .brick-menubar__group) {
     --brick-action-menu-content-background: var(--brick-menubar-content-background, var(--brick-color-surface-overlay));
     --brick-action-menu-content-foreground: var(--brick-menubar-content-foreground, var(--brick-color-text-primary));
     --brick-action-menu-content-border: var(--brick-menubar-content-border, var(--brick-color-border-default));
     --brick-action-menu-content-radius: var(--brick-menubar-content-radius, var(--brick-radius-overlay));
     --brick-action-menu-content-shadow: var(--brick-menubar-content-shadow, var(--brick-shadow-floating));
-    --brick-action-menu-content-padding: var(--brick-menubar-content-padding, var(--brick-space-1));
+    --brick-action-menu-content-padding: var(--brick-menubar-content-padding, var(--brick-action-menu-recipe-inset));
     --brick-action-menu-content-max-block-size: var(--brick-menubar-content-max-block-size, 20rem);
-    --brick-action-menu-content-z-index: var(--brick-layer-overlay);
-    --brick-action-menu-row-min-block-size: var(--brick-menubar-row-min-block-size, var(--brick-control-target-min));
-    --brick-action-menu-row-padding-inline: var(--brick-menubar-row-padding-inline, var(--brick-space-3));
-    --brick-action-menu-row-gap: var(--brick-menubar-row-gap, var(--brick-space-2));
+    --brick-action-menu-row-min-block-size: var(--brick-menubar-row-min-block-size, var(--brick-action-menu-recipe-min));
+    --brick-action-menu-row-padding-inline: var(--brick-menubar-row-padding-inline, var(--brick-action-menu-recipe-inline));
+    --brick-action-menu-row-gap: var(--brick-menubar-row-gap, var(--brick-action-menu-recipe-gap));
     --brick-action-menu-row-radius: var(--brick-menubar-row-radius, var(--brick-radius-control));
-    --brick-action-menu-row-foreground: var(--brick-menubar-row-foreground, var(--brick-color-text-primary));
-    --brick-action-menu-row-highlighted-background: var(--brick-menubar-row-highlighted-background, var(--brick-color-accent-soft));
-    --brick-action-menu-row-highlighted-foreground: var(--brick-menubar-row-highlighted-foreground, var(--brick-color-accent-text));
+    --brick-action-menu-row-foreground: var(--brick-menubar-row-foreground, var(--brick-action-menu-recipe-row-foreground));
+    --brick-action-menu-row-highlighted-background: var(--brick-menubar-row-highlighted-background, var(--brick-action-menu-recipe-highlight-bg));
+    --brick-action-menu-row-highlighted-foreground: var(--brick-menubar-row-highlighted-foreground, var(--brick-action-menu-recipe-highlight-fg));
     --brick-action-menu-description-foreground: var(--brick-menubar-description-foreground, var(--brick-color-text-secondary));
     --brick-action-menu-shortcut-foreground: var(--brick-menubar-shortcut-foreground, var(--brick-color-text-muted));
     --brick-action-menu-label-foreground: var(--brick-menubar-label-foreground, var(--brick-color-text-secondary));
     --brick-action-menu-disabled-foreground: var(--brick-menubar-disabled-foreground, var(--brick-color-text-muted));
-    --brick-action-menu-danger-foreground: var(--brick-menubar-danger-foreground, var(--brick-color-danger-text));
-    --brick-action-menu-danger-background: var(--brick-menubar-danger-background, var(--brick-color-danger-soft));
     --brick-action-menu-separator-color: var(--brick-menubar-separator-color, var(--brick-color-border-subtle));
-    --brick-action-menu-indicator-size: var(--brick-menubar-indicator-size, 1rem);
+    --brick-action-menu-indicator-size: var(--brick-menubar-indicator-size, var(--brick-action-menu-recipe-icon));
     --brick-action-menu-focus-ring: var(--brick-menubar-focus-ring, var(--brick-color-focus-ring));
     --brick-action-menu-motion-duration: var(--brick-menubar-motion-duration, var(--brick-motion-duration-fast));
-    --brick-action-menu-font-size: var(--brick-typography-control-md-font-size);
-    --brick-action-menu-line-height: var(--brick-typography-control-md-line-height);
+  }
+  :where(.brick-menubar__item, .brick-menubar__checkbox-item, .brick-menubar__radio-item, .brick-menubar__sub-trigger)[data-tone="danger"] {
+    --brick-action-menu-palette-text: var(--brick-menubar-danger-foreground, var(--brick-color-danger-text));
+    --brick-action-menu-palette-soft: var(--brick-menubar-danger-background, var(--brick-color-danger-soft));
   }
 
+  .brick-menubar {
+    display: inline-flex; box-sizing: border-box; max-inline-size: 100%; align-items: stretch;
+    gap: var(--brick-menubar-gap, var(--brick-space-1));
+    padding: var(--brick-menubar-padding, 0); border: 0; background: var(--brick-menubar-background, transparent);
+    border-radius: var(--brick-menubar-radius, var(--brick-radius-control));
+  }
+  .brick-menubar[data-variant="surface"] {
+    padding: var(--brick-menubar-padding, var(--brick-space-1));
+    border: var(--brick-border-width) solid var(--brick-menubar-border, var(--brick-color-border-subtle));
+    background: var(--brick-menubar-background, var(--brick-color-surface-subtle));
+  }
+  .brick-menubar[data-orientation="vertical"] { flex-direction: column; inline-size: fit-content; }
+  .brick-menubar__trigger {
+    --brick-menubar-recipe-height: var(--brick-control-min-block-size-md);
+    --brick-menubar-recipe-inset: var(--brick-space-3);
+    display: inline-flex; box-sizing: border-box; min-inline-size: 0;
+    min-block-size: var(--brick-menubar-trigger-min-block-size, var(--brick-menubar-recipe-height));
+    align-items: center; justify-content: center; gap: var(--brick-space-2);
+    padding-inline: var(--brick-menubar-trigger-padding-inline, var(--brick-menubar-recipe-inset));
+    border: 0; border-radius: var(--brick-menubar-trigger-radius, var(--brick-radius-control));
+    background: transparent; color: var(--brick-menubar-trigger-foreground, var(--brick-color-text-primary));
+    font-family: var(--brick-typography-control-sm-font-family);
+    font-size: var(--brick-typography-control-sm-font-size); font-weight: var(--brick-typography-control-sm-font-weight);
+    line-height: var(--brick-typography-control-sm-line-height);
+    white-space: nowrap; cursor: default; touch-action: manipulation;
+  }
+  .brick-menubar__trigger[data-size="sm"] { --brick-menubar-recipe-height: var(--brick-control-min-block-size-sm); }
+  .brick-menubar__trigger[data-size="lg"] {
+    --brick-menubar-recipe-height: var(--brick-control-min-block-size-lg);
+    --brick-menubar-recipe-inset: var(--brick-space-4);
+    font-size: var(--brick-typography-control-lg-font-size);
+    line-height: var(--brick-typography-control-lg-line-height);
+  }
+  .brick-menubar__trigger > .brick-icon { --brick-icon-size: var(--brick-space-4); }
+  .brick-menubar__trigger[data-size="lg"] > .brick-icon { --brick-icon-size: calc(var(--brick-space-4) + var(--brick-space-1) / 2); }
+  .brick-menubar__trigger[data-variant="subtle"]:hover:not([data-disabled]) { background: var(--brick-menubar-trigger-interaction-background, var(--brick-color-surface-subtle)); }
+  .brick-menubar__trigger[data-variant="subtle"][data-state="open"]:not([data-disabled]) { background: var(--brick-menubar-trigger-open-background, var(--brick-color-surface-subtle)); color: var(--brick-menubar-trigger-open-foreground, var(--brick-color-text-primary)); }
+  .brick-menubar__trigger:focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-menubar-trigger-focus-ring, var(--brick-color-focus-ring)); outline-offset: calc(-1 * var(--brick-border-focus-width)); }
+  .brick-menubar__trigger[data-disabled] { color: var(--brick-color-text-muted); opacity: .65; }
   @media (forced-colors: active) {
-    .brick-menubar { border-color: CanvasText; background: Canvas; color: CanvasText; }
+    .brick-menubar[data-variant="surface"] { border-color: CanvasText; background: Canvas; }
+    .brick-menubar__trigger { color: CanvasText; }
     .brick-menubar__trigger:focus-visible { outline-color: Highlight; }
+    .brick-menubar__trigger[data-disabled] { color: GrayText; opacity: 1; }
   }
 }

@@ -8,12 +8,17 @@ describe("FloatingPanel", () => {
     const ref=createRef<HTMLDivElement>();
     render(<FloatingPanel.Root defaultOpen><FloatingPanel.Positioner><FloatingPanel.Content ref={ref}>
       <FloatingPanel.Header><FloatingPanel.DragTrigger><FloatingPanel.Title>Inspector</FloatingPanel.Title></FloatingPanel.DragTrigger><FloatingPanel.Control><FloatingPanel.CloseTrigger>Close</FloatingPanel.CloseTrigger></FloatingPanel.Control></FloatingPanel.Header>
-      <FloatingPanel.Body><FloatingPanel.Description>Appearance settings</FloatingPanel.Description></FloatingPanel.Body><FloatingPanel.ResizeTriggers axes={["se","e"]}/>
+      <FloatingPanel.Body><FloatingPanel.Description>Appearance settings</FloatingPanel.Description></FloatingPanel.Body><FloatingPanel.ResizeTriggers axes={["se","e"]} className="shared-handle" style={{opacity:0.8}} aria-label="Resize workspace"/>
     </FloatingPanel.Content></FloatingPanel.Positioner></FloatingPanel.Root>);
     expect(ref.current).toBe(screen.getByRole("dialog",{name:"Inspector"}));
     expect(ref.current).toHaveClass("brick-floating-panel-content");
     expect(ref.current?.parentElement).toHaveClass("brick-floating-panel-positioner");
     expect(ref.current?.querySelectorAll(".brick-floating-panel-resize-trigger")).toHaveLength(2);
+    for(const handle of ref.current!.querySelectorAll(".brick-floating-panel-resize-trigger")) {
+      expect(handle).toHaveClass("shared-handle");expect(handle).toHaveAttribute("aria-label","Resize workspace");
+      expect(handle).toHaveAttribute("tabindex","-1");expect(handle).toHaveAttribute("role","group");
+      expect(handle).not.toHaveAttribute("axes");expect(handle).toHaveStyle({opacity:0.8});
+    }
     expect(screen.getByRole("button",{name:"Close panel"})).toHaveAttribute("type","button");
   });
   it("keeps Root and the Brick hook minimum defaults equivalent", () => {

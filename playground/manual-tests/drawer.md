@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Drawer |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased 0.2.3 candidate |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -12,6 +12,25 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/drawer` |
+
+The normal `/drawer` page documents the public API. Use `/drawer?qualification=1`
+for the numbered scenarios below. Local automated tests are not a substitute for
+the manual results recorded here.
+
+## New recipe and ownership checks
+
+- Inspect xs/sm/md/lg/xl/full, flush square corners, inset corners, readable
+  header actions, 14px base typography, and mobile/short-height scrolling.
+- Resize the responsive example from bottom to end and back. The same panel and
+  draft must survive without page overflow; repeat with RTL.
+- Close/reopen Retained and confirm the draft persists without hidden focus stops.
+- Nonmodal must leave the background interactive without an overlay or scroll
+  lock. Outside dismissal must not steal page focus. Explicit finalFocus wins.
+- Confirm container bounds do not falsely imply container-only modality.
+- Review with screen reader, physical touch device and actual browser zoom.
+
+Result:
+Notes or issue:
 
 Scenario order: `01 Overview`, `02 Placements`, `03 Sizes`, `04 Anatomy`,
 `05 States`, `06 Composition`, `07 Theme`, `08 Customization`, `09 Stress`

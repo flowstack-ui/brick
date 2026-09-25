@@ -43,7 +43,7 @@ void footerProps;
 void closeProps;
 
 // @ts-expect-error Dialog sizes are a closed set.
-const invalidSize: DialogSize = "xl";
+const invalidSize: DialogSize = "xxl";
 // @ts-expect-error Dialog is a namespace and not a callable flat component.
 const invalidFlatDialog = createElement(Dialog, null, "Settings");
 // @ts-expect-error Dialog deliberately has no visual variant prop.

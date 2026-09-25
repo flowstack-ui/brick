@@ -1,9 +1,15 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
-installVisualDefaults("/context-menu");
+installVisualDefaults("/context-menu?qualification=1");
 
 test("context-menu defaults and complete recipes", async ({ page }) => {
   await page.getByRole("article", { name: "Quarterly report" }).click({ button: "right" });
-  await expect(page).toHaveScreenshot("overview-open-light.png");
+  const menu = page.getByRole("menu").last();
+  const background = await menu.evaluate(element => getComputedStyle(element).backgroundColor);
+  // Shared artwork retains four directions; only the positioned side is painted.
+  const arrowFill = menu.locator("..").locator(".brick-context-menu__arrow polygon:visible");
+  await expect(arrowFill).toHaveCount(1);
+  await expect(arrowFill).toHaveCSS("fill", background);
+  await expect(page).toHaveScreenshot("overview-open-light.png", { maxDiffPixelRatio: 0 });
   await page.keyboard.press("Escape");
   await expect(page.getByTestId("context-menu-overview")).toHaveScreenshot("overview-light.png");
   await expect(page.getByTestId("context-menu-invocation")).toHaveScreenshot("invocation-light.png");

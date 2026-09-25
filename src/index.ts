@@ -36,22 +36,6 @@ export {
   type AppBarVariant,
 } from "./components/app-bar/index.js";
 export {
-  Dialog,
-  type DialogFooterJustify,
-  type DialogSize,
-} from "./components/dialog/index.js";
-export {
-  AlertDialog,
-  type AlertDialogFooterJustify,
-  type AlertDialogSize,
-} from "./components/alert-dialog/index.js";
-export {
-  Drawer,
-  type DrawerFooterJustify,
-  type DrawerPlacement,
-  type DrawerSize,
-} from "./components/drawer/index.js";
-export {
   Status,
   StatusIndicator,
   StatusLabel,
@@ -61,66 +45,6 @@ export {
   type StatusSize,
   type StatusTone,
 } from "./components/status/index.js";
-export {
-  ToggleGroup,
-  ToggleGroupItem,
-  ToggleGroupRoot,
-  type ToggleGroupItemProps,
-  type ToggleGroupMultipleProps,
-  type ToggleGroupRootProps,
-  type ToggleGroupSingleProps,
-} from "./components/toggle-group/index.js";
-export {
-  Tooltip,
-  type TooltipArrowProps,
-  type TooltipContentProps,
-  type TooltipDescriptionProps,
-  type TooltipPortalProps,
-  type TooltipProviderProps,
-  type TooltipRootProps,
-  type TooltipTextProps,
-  type TooltipTitleProps,
-  type TooltipTriggerProps,
-} from "./components/tooltip/index.js";
-export {
-  HoverCard,
-  type HoverCardArrowProps,
-  type HoverCardContentProps,
-  type HoverCardPortalProps,
-  type HoverCardRootProps,
-  type HoverCardSize,
-  type HoverCardTriggerProps,
-} from "./components/hover-card/index.js";
-export {
-  Popover,
-  PopoverAnchor,
-  PopoverArrow,
-  PopoverBody,
-  PopoverClose,
-  PopoverContent,
-  PopoverDescription,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverPortal,
-  PopoverRoot,
-  PopoverTitle,
-  PopoverTrigger,
-  type PopoverAnchorProps,
-  type PopoverArrowProps,
-  type PopoverBodyProps,
-  type PopoverCloseProps,
-  type PopoverContentProps,
-  type PopoverDensity,
-  type PopoverDescriptionProps,
-  type PopoverFooterProps,
-  type PopoverHeaderProps,
-  type PopoverPortalProps,
-  type PopoverRootProps,
-  type PopoverSize,
-  type PopoverStructureProps,
-  type PopoverTitleProps,
-  type PopoverTriggerProps,
-} from "./components/popover/index.js";
 export {
   Tabs,
   TabsContent,
@@ -142,53 +66,6 @@ export {
   type TabsTriggerRadius,
   type TabsVariant,
 } from "./components/tabs/index.js";
-export {
-  DropdownMenu,
-  DropdownMenuArrow,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuDescription,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuItemIndicator,
-  DropdownMenuItemLabel,
-  DropdownMenuLabel,
-  DropdownMenuLeading,
-  DropdownMenuPortal,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuRoot,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-  type DropdownMenuArrowProps,
-  type DropdownMenuCheckboxItemProps,
-  type DropdownMenuContentProps,
-  type DropdownMenuDescriptionProps,
-  type DropdownMenuGroupProps,
-  type DropdownMenuItemIndicatorProps,
-  type DropdownMenuItemLabelProps,
-  type DropdownMenuItemProps,
-  type DropdownMenuItemTone,
-  type DropdownMenuLabelProps,
-  type DropdownMenuLeadingProps,
-  type DropdownMenuPortalProps,
-  type DropdownMenuRadioGroupProps,
-  type DropdownMenuRadioItemProps,
-  type DropdownMenuRootProps,
-  type DropdownMenuSeparatorProps,
-  type DropdownMenuShortcutProps,
-  type DropdownMenuSize,
-  type DropdownMenuSubContentProps,
-  type DropdownMenuSubProps,
-  type DropdownMenuSubTriggerProps,
-  type DropdownMenuTriggerProps,
-} from "./components/dropdown-menu/index.js";
-export * from "./components/context-menu/index.js";
-export * from "./components/menubar/index.js";
 export * from "./components/navigation-menu/index.js";
 export * from "./components/bottom-navigation/index.js";
 export * from "./components/visually-hidden/index.js";
@@ -220,28 +97,6 @@ export {
   type LinkBoxRootProps,
   type LinkBoxVariant,
 } from "./components/link-box/index.js";
-export {
-  ReorderableList,
-  ReorderableListActions,
-  ReorderableListContent,
-  ReorderableListDropIndicator,
-  ReorderableListHandle,
-  ReorderableListItem,
-  ReorderableListMoveAfter,
-  ReorderableListMoveBefore,
-  ReorderableListMoveToEnd,
-  ReorderableListMoveToStart,
-  ReorderableListRoot,
-  type ReorderableListActionsProps,
-  type ReorderableListContentProps,
-  type ReorderableListDropIndicatorProps,
-  type ReorderableListHandleProps,
-  type ReorderableListItemProps,
-  type ReorderableListMoveProps,
-  type ReorderableListRootProps,
-  type ReorderableListSize,
-  type ReorderableListVariant,
-} from "./components/reorderable-list/index.js";
 export {
   Center,
   Circle,
@@ -485,23 +340,10 @@ export {
   type BreadcrumbSize,
   type BreadcrumbVariant,
 } from "./components/breadcrumb/index.js";
-export {
-  SwipeableItem,
-  SwipeableItemActions,
-  SwipeableItemContent,
-  SwipeableItemRoot,
-  type SwipeableItemActionsProps,
-  type SwipeableItemContentProps,
-  type SwipeableItemRootProps,
-  type SwipeableItemVariant,
-} from "./components/swipeable-item/index.js";
 export * from "./components/skip-link/index.js";
 export * from "./components/show/index.js";
 export * from "./components/hide/index.js";
 export * from "./date-value.js";
-export * from "./components/action-bar/index.js";
-export * from "./floating-panel.js";
-export * from "./overlay-manager.js";
 export type { Radius } from "./radius.js";
 export * from "./table-of-contents.js";
 export * from "./spinner.js";
@@ -622,6 +464,47 @@ export {
   type CardVariant,
 } from "./components/card/index.js";
 export {
+  Dialog,
+  type DialogRootProps,
+  type DialogContentProps,
+  type DialogPositionerProps,
+  type DialogPortalProps,
+  type DialogCloseProps,
+  type DialogFooterProps,
+  type DialogPlacement,
+  type DialogScrollBehavior,
+  type DialogMotionPreset,
+  type DialogFooterJustify,
+  type DialogSize,
+} from "./components/dialog/index.js";
+export {
+  AlertDialog,
+  type AlertDialogRootProps,
+  type AlertDialogContentProps,
+  type AlertDialogPortalProps,
+  type AlertDialogCancelProps,
+  type AlertDialogActionProps,
+  type AlertDialogFooterProps,
+  type AlertDialogPositionerProps,
+  type AlertDialogPlacement,
+  type AlertDialogScrollBehavior,
+  type AlertDialogMotionPreset,
+  type AlertDialogFooterJustify,
+  type AlertDialogSize,
+} from "./components/alert-dialog/index.js";
+export {
+  Drawer,
+  type DrawerContextProps,
+  type DrawerContextValue,
+  type DrawerPositionerProps,
+  type DrawerPositioning,
+  type DrawerInset,
+  type DrawerClosePlacement,
+  type DrawerFooterJustify,
+  type DrawerPlacement,
+  type DrawerSize,
+} from "./components/drawer/index.js";
+export {
   Badge,
   NotificationBadge,
   type BadgeProps,
@@ -696,6 +579,87 @@ export {
   type ToggleTone,
   type ToggleVariant,
 } from "./components/toggle/index.js";
+export {
+  ToggleGroup,
+  ToggleGroupItem,
+  ToggleGroupRoot,
+  type ToggleGroupItemProps,
+  type ToggleGroupMultipleProps,
+  type ToggleGroupRootProps,
+  type ToggleGroupSingleProps,
+} from "./components/toggle-group/index.js";
+export {
+  Tooltip,
+  TooltipRootProvider, TooltipContext, useTooltip,
+  type UseTooltipOptions, type UseTooltipReturn, type TooltipRootProviderProps, type TooltipState, type TooltipStateProps, type TooltipPositioningOptions, type TooltipIds, type TooltipLifecycleOptions,
+  type TooltipArrowProps,
+  type TooltipContentProps,
+  type TooltipDescriptionProps,
+  type TooltipPortalProps,
+  type TooltipProviderProps,
+  type TooltipRootProps,
+  type TooltipTextProps,
+  type TooltipTitleProps,
+  type TooltipTriggerProps,
+} from "./components/tooltip/index.js";
+export {
+  HoverCard,
+  HoverCardRootProvider, HoverCardContext, useHoverCard,
+  type UseHoverCardOptions, type UseHoverCardReturn,
+  type HoverCardRootProviderProps, type HoverCardContextProps,
+  type HoverCardIds, type HoverCardLifecycleOptions, type HoverCardOutsideEvents, type HoverCardPositioningOptions,
+  type HoverCardInset,
+  type HoverCardArrowProps,
+  type HoverCardContentProps,
+  type HoverCardPortalProps,
+  type HoverCardRootProps,
+  type HoverCardSize,
+  type HoverCardTriggerProps,
+} from "./components/hover-card/index.js";
+export {
+  Popover,
+  PopoverAnchor,
+  PopoverArrow,
+  PopoverBody,
+  PopoverClose,
+  PopoverContent,
+  PopoverDescription,
+  PopoverFooter,
+  PopoverHeader,
+  PopoverPortal,
+  PopoverRoot,
+  PopoverTitle,
+  PopoverTrigger,
+  type PopoverAnchorProps,
+  type PopoverArrowProps,
+  type PopoverBodyProps,
+  type PopoverCloseProps,
+  type PopoverContentProps,
+  type PopoverDensity,
+  type PopoverDescriptionProps,
+  type PopoverFooterProps,
+  type PopoverHeaderProps,
+  type PopoverPortalProps,
+  type PopoverRootProps,
+  type PopoverSize,
+  type PopoverInset,
+  usePopover,
+  usePopoverState,
+  PopoverRootProvider,
+  PopoverState,
+  PopoverIndicator,
+  type UsePopoverOptions,
+  type UsePopoverReturn,
+  type PopoverRootProviderProps,
+  type PopoverStateProps,
+  type PopoverIndicatorProps,
+  type PopoverPositioningOptions,
+  type PopoverIds,
+  type PopoverLifecycleOptions,
+  type PopoverStructureProps,
+  type PopoverTitleProps,
+  type PopoverTriggerProps,
+} from "./components/popover/index.js";
 export { Form, type FormProps } from "./components/form/index.js";
 export {
   Field,
@@ -779,6 +743,55 @@ export {
   type SegmentGroupRootProps,
   type SegmentGroupSize,
 } from "./components/segment-group/index.js";
+export {
+  DropdownMenu,
+  DropdownMenuArrow,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuDescription,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuItemIndicator,
+  DropdownMenuItemLabel,
+  DropdownMenuLabel,
+  DropdownMenuLeading,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuRoot,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+  type DropdownMenuArrowProps,
+  type DropdownMenuCheckboxItemProps,
+  type DropdownMenuContentProps,
+  type DropdownMenuDescriptionProps,
+  type DropdownMenuGroupProps,
+  type DropdownMenuItemIndicatorProps,
+  type DropdownMenuItemLabelProps,
+  type DropdownMenuItemProps,
+  type DropdownMenuItemTone,
+  type DropdownMenuVariant,
+  type DropdownMenuInset,
+  type DropdownMenuLabelProps,
+  type DropdownMenuLeadingProps,
+  type DropdownMenuPortalProps,
+  type DropdownMenuRadioGroupProps,
+  type DropdownMenuRadioItemProps,
+  type DropdownMenuRootProps,
+  type DropdownMenuSeparatorProps,
+  type DropdownMenuShortcutProps,
+  type DropdownMenuSize,
+  type DropdownMenuSubContentProps,
+  type DropdownMenuSubProps,
+  type DropdownMenuSubTriggerProps,
+  type DropdownMenuTriggerProps,
+} from "./components/dropdown-menu/index.js";
+export * from "./components/context-menu/index.js";
+export * from "./components/menubar/index.js";
 export * from "./components/slider/index.js";
 export * from "./components/rating/index.js";
 export * from "./components/file-upload/index.js";
@@ -899,6 +912,28 @@ export {
   type ListTrailingProps,
   type ListVariant,
 } from "./components/list/index.js";
+export {
+  ReorderableList,
+  ReorderableListActions,
+  ReorderableListContent,
+  ReorderableListDropIndicator,
+  ReorderableListHandle,
+  ReorderableListItem,
+  ReorderableListMoveAfter,
+  ReorderableListMoveBefore,
+  ReorderableListMoveToEnd,
+  ReorderableListMoveToStart,
+  ReorderableListRoot,
+  type ReorderableListActionsProps,
+  type ReorderableListContentProps,
+  type ReorderableListDropIndicatorProps,
+  type ReorderableListHandleProps,
+  type ReorderableListItemProps,
+  type ReorderableListMoveProps,
+  type ReorderableListRootProps,
+  type ReorderableListSize,
+  type ReorderableListVariant,
+} from "./components/reorderable-list/index.js";
 export {
   HStack,
   Stack,
@@ -1162,6 +1197,22 @@ export {
   type FeedVariant,
 } from "./components/feed/index.js";
 export {
+  SwipeableItem,
+  SwipeableItemActions,
+  SwipeableItemContent,
+  SwipeableItemRoot,
+  SwipeableItemRootProvider,
+  SwipeableItemContext,
+  useSwipeableItem,
+  type SwipeableItemController,
+  type UseSwipeableItemProps,
+  type SwipeableItemRootProviderProps,
+  type SwipeableItemActionsProps,
+  type SwipeableItemContentProps,
+  type SwipeableItemRootProps,
+  type SwipeableItemVariant,
+} from "./components/swipeable-item/index.js";
+export {
   Toolbar,
   ToolbarButton,
   ToolbarGroup,
@@ -1191,6 +1242,9 @@ export { useDownload, type UseDownloadProps, type UseDownloadReturn, type Downlo
 export * from "./calendar.js";
 export * from "./date-input.js";
 export * from "./date-picker.js";
+export * from "./components/action-bar/index.js";
+export * from "./floating-panel.js";
+export * from "./overlay-manager.js";
 export * from "./components/stat/index.js";
 export * from "./marquee.js";
 export * from "./native-select.js";
@@ -1200,10 +1254,17 @@ export * from "./qr-code.js";
 export * from "./components/float/index.js";
 export * from "./selection.js";
 export * from "./action-delegate.js";
+export * from "./components/toggle-tip/index.js";
 export { useFilter, type FilterOptions, type LocaleFilter } from "./components/locale-provider/useFilter.js";
 export { NumberInputRootProvider, NumberInputLabel, NumberInputValueText, NumberInputScrubber, NumberInputContext, useNumberInput } from "./components/number-input/NumberInput.js";
 export { NumberInputGroup, NumberInputElement, type NumberInputGroupProps, type NumberInputElementProps } from "./components/number-input/NumberInput.js";
 export type { NumberInputRootProviderProps, NumberInputLabelProps, NumberInputValueTextProps, NumberInputScrubberProps, NumberInputContextProps, NumberInputContextValue, UseNumberInputOptions, NumberInputValueChangeDetails, NumberInputFocusChangeDetails, NumberInputValueInvalidDetails, NumberInputIds, NumberInputTranslations } from "./components/number-input/NumberInput.js";
+export { DropdownMenuRootProvider, DropdownMenuContext, DropdownMenuTriggerIndicator, useDropdownMenu } from "./components/dropdown-menu/index.js";
+export type { DropdownMenuRootProviderProps, DropdownMenuContextProps, DropdownMenuTriggerIndicatorProps, UseDropdownMenuOptions, UseDropdownMenuReturn, DropdownMenuState, DropdownMenuHighlightTarget, DropdownMenuHighlightChangeDetails, DropdownMenuSelectionEvent, DropdownMenuNavigateDetails, DropdownMenuPositioningOptions } from "./components/dropdown-menu/index.js";
+export { ContextMenuRootProvider, ContextMenuContext, ContextMenuTriggerIndicator, useContextMenu } from "./components/context-menu/index.js";
+export type { ContextMenuRootProviderProps, ContextMenuContextProps, ContextMenuTriggerIndicatorProps, UseContextMenuOptions, UseContextMenuReturn, ContextMenuState, ContextMenuHighlightTarget, ContextMenuHighlightChangeDetails, ContextMenuSelectionEvent, ContextMenuNavigateDetails, ContextMenuPositioningOptions } from "./components/context-menu/index.js";
+export { MenubarRootProvider, MenubarContext, MenubarTriggerIndicator, useMenubar } from "./components/menubar/index.js";
+export type { MenubarRootProviderProps, MenubarContextProps, MenubarTriggerIndicatorProps, UseMenubarOptions, UseMenubarReturn, MenubarMenuState, MenubarHighlightTarget, MenubarHighlightChangeDetails, MenubarSelectionEvent, MenubarNavigateDetails, MenubarPositioningOptions } from "./components/menubar/index.js";
 export * from "./components/checkbox-card/index.js";
 export { useCheckbox, useCheckboxContext, CheckboxRootProvider, CheckboxIndicator } from "./components/checkbox/CheckboxController.js";
 export type { UseCheckboxProps, CheckboxController, CheckboxRootProviderProps, CheckboxIndicatorProps } from "./components/checkbox/CheckboxController.js";

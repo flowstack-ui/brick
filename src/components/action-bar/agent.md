@@ -23,6 +23,7 @@ Floating contextual actions with theme-owned surface, spacing and motion.
 - **MUST:** Keep selection, counts, translations and business operations application-owned. Closing is not clearing selection.
 - **MUST:** Set placement on Positioner. Use child Button sizes instead of inventing ActionBar sizes. Load aggregate styles or core plus action-bar and child component styles.
 - **MUST:** Name Content. Opening preserves focus by default; retain collection interaction through closeOnInteractOutside=false or persistentElements.
+- **MUST:** Use useActionBar with RootProvider value for external control; pass the unchanged controller. Positioner supports asChild/render. Content uses compact md corners by default. Root presence options include present, immediate, skipAnimationOnMount and hideMode. Keep examples focused and retain exhaustive matrices in qualification.
 
 ## Common mistakes
 

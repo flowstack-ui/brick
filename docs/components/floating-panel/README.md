@@ -30,7 +30,7 @@ Import `FloatingPanel`, `useFloatingPanel` and `useFloatingPanelContext` from
       <FloatingPanel.Content>
         <FloatingPanel.Header>
           <FloatingPanel.DragTrigger><FloatingPanel.Title>Inspector</FloatingPanel.Title></FloatingPanel.DragTrigger>
-          <FloatingPanel.Control><FloatingPanel.CloseTrigger asChild><CloseButton size="xs" /></FloatingPanel.CloseTrigger></FloatingPanel.Control>
+          <FloatingPanel.Control><FloatingPanel.CloseTrigger asChild><CloseButton size="2xs" /></FloatingPanel.CloseTrigger></FloatingPanel.Control>
         </FloatingPanel.Header>
         <FloatingPanel.Body>Tool content</FloatingPanel.Body>
         <FloatingPanel.ResizeTriggers />
@@ -52,6 +52,18 @@ Header contains sibling DragTrigger and Control regions. Title is a div;
 Description is a p; Body, Header, Control, DragTrigger and ResizeTrigger are divs.
 Trigger, StageTrigger and CloseTrigger are button controls. ResizeTriggers is a
 wrapper-free shorthand for all eight handles. Brick adds no extra DOM.
+
+ResizeTriggers forwards shared ResizeTrigger props except axis to each selected
+handle. Use individual handles for separate refs/labels; the shortcut has no ref.
+Content is the initial focus fallback and a tab stop. Handles are named groups
+with tabIndex=-1 by default, not buttons. Keyboard arrows on Content/DragTrigger
+move; Control/Command plus arrows resize, Shift increases the step. Physical
+directions remain physical in RTL. Stage controls show minimize/maximize in the
+normal stage and restore only while staged. Controller commands remain available.
+
+DragTrigger aligns a grip Icon and flexible Title automatically. Keep Control
+as its sibling. Existing ghost 2xs IconButton/CloseButton recipes provide compact
+24px actions; applications can choose larger controls for their audience.
 
 ## API
 

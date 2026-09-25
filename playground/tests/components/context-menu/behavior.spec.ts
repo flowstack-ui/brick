@@ -1,14 +1,14 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/context-menu"); });
+test.beforeEach(async ({ page }) => { await page.goto("/context-menu?qualification=1"); });
 
 test("pointer, keyboard, sizes, states, submenu, and composition work", async ({ page }) => {
   const target = page.getByRole("article", { name: "Quarterly report" });
   await target.click({ button: "right" });
   const menu = page.getByRole("menu", { name: "Quarterly report actions" });
   await expect(menu).toHaveAttribute("data-size", "md");
-  await expect(menu.getByRole("menuitem").first()).toHaveCSS("min-height", "44px");
+  await expect(menu.getByRole("menuitem").first()).toHaveCSS("min-height", "32px");
   await page.keyboard.press("Escape"); await target.focus(); await target.press("Shift+F10");
   await expect(menu).toBeVisible(); await page.keyboard.press("Escape");
   const sizeTargets = page.getByTestId("context-menu-density").getByRole("article");
@@ -16,7 +16,7 @@ test("pointer, keyboard, sizes, states, submenu, and composition work", async ({
     const sizedTarget = sizeTargets.nth(index); await sizedTarget.click({ button: "right" });
     const sizedMenu = page.locator("[role='menu'][data-state='open']");
     await expect(sizedMenu).toHaveAttribute("data-size", size);
-    await expect(sizedMenu.getByRole("menuitem").first()).toHaveCSS("min-height", ["32px", "44px", "48px"][index]);
+    await expect(sizedMenu.getByRole("menuitem").first()).toHaveCSS("min-height", ["24px", "32px", "44px"][index]);
     await page.keyboard.press("Escape");
   }
   const archived = page.getByRole("article", { name: "Archived report" }); await archived.click({ button: "right" });

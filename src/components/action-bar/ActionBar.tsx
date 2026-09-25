@@ -4,14 +4,16 @@ import { forwardRef, type HTMLAttributes } from "react";
 import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import { ActionBar as AtomActionBar, type ActionBarRootProps,
   type ActionBarContentProps as AtomActionBarContentProps, type ActionBarCloseTriggerProps,
-  type ActionBarSelectionTriggerProps, type ActionBarContextValue } from "@flowstack-ui/atom/action-bar";
+  type ActionBarSelectionTriggerProps, type ActionBarContextValue,
+  type ActionBarPositionerProps as AtomActionBarPositionerProps } from "@flowstack-ui/atom/action-bar";
+export { useActionBar, type UseActionBarOptions, type UseActionBarReturn, type ActionBarRootProviderProps } from "@flowstack-ui/atom/action-bar";
 import { Divider } from "../divider/Divider.js";
 
 export type ActionBarContentProps = AtomActionBarContentProps & { radius?: Radius };
 export type { ActionBarRootProps, ActionBarCloseTriggerProps,
   ActionBarSelectionTriggerProps, ActionBarContextValue };
 export type ActionBarPlacement = "bottom" | "bottom-start" | "bottom-end";
-export interface ActionBarPositionerProps extends HTMLAttributes<HTMLDivElement> {
+export interface ActionBarPositionerProps extends AtomActionBarPositionerProps {
   placement?: ActionBarPlacement;
 }
 export type ActionBarSeparatorProps = Omit<HTMLAttributes<HTMLDivElement>, "children">;

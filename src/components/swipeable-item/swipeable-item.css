@@ -14,6 +14,7 @@
     --brick-swipeable-item-action-padding-inline: var(--brick-space-2);
     --brick-swipeable-item-action-min-size: 2.75rem;
     --brick-swipeable-item-transition-duration: var(--brick-motion-duration-fast);
+    --brick-swipeable-item-transition-easing: var(--brick-motion-easing-standard);
 
     position: relative;
     isolation: isolate;
@@ -43,10 +44,11 @@
     outline: var(--brick-swipeable-item-focus-width) solid transparent;
     outline-offset: var(--brick-swipeable-item-focus-offset);
     transform: translate3d(var(--atom-swipeable-item-offset, 0px), 0, 0);
-    transition: transform var(--brick-swipeable-item-transition-duration) ease;
+    transition: transform var(--brick-swipeable-item-transition-duration) var(--brick-swipeable-item-transition-easing);
   }
 
-  .brick-swipeable-item[data-dragging] .brick-swipeable-item__content {
+  .brick-swipeable-item[data-dragging] > .brick-swipeable-item__content,
+  .brick-swipeable-item[data-motion="none"] > .brick-swipeable-item__content {
     transition: none;
   }
 
@@ -60,7 +62,7 @@
     inset-block: 0;
     box-sizing: border-box;
     display: flex;
-    align-items: stretch;
+    align-items: center;
     gap: var(--brick-swipeable-item-action-gap);
     min-inline-size: var(--brick-swipeable-item-action-min-size);
     padding-inline: var(--brick-swipeable-item-action-padding-inline);
@@ -71,10 +73,23 @@
   .brick-swipeable-item__actions[data-side="start"] { inset-inline-start: 0; }
   .brick-swipeable-item__actions[data-side="end"] { inset-inline-end: 0; }
 
-  .brick-swipeable-item__actions > * {
-    min-inline-size: var(--brick-swipeable-item-action-min-size);
-    min-block-size: var(--brick-swipeable-item-action-min-size);
+  /* Expand artwork, not the measured action box, so arming cannot change the
+     reveal threshold or start a ResizeObserver feedback loop. */
+  .brick-swipeable-item[data-armed="start"] > .brick-swipeable-item__actions[data-side="start"]::before,
+  .brick-swipeable-item[data-armed="end"] > .brick-swipeable-item__actions[data-side="end"]::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    inset-block: 0;
+    inline-size: max(100%, var(--atom-swipeable-item-offset, 0px), calc(0px - var(--atom-swipeable-item-offset, 0px)));
+    background: var(--brick-swipeable-item-action-background);
+    outline: var(--brick-swipeable-item-focus-width) solid var(--brick-swipeable-item-focus-color);
+    outline-offset: var(--brick-swipeable-item-focus-offset);
   }
+
+  .brick-swipeable-item__actions[data-side="start"]::before { inset-inline-start: 0; }
+  .brick-swipeable-item__actions[data-side="end"]::before { inset-inline-end: 0; }
 
   .brick-swipeable-item[data-disabled] { opacity: 0.55; }
   .brick-swipeable-item[data-readonly] { cursor: default; }

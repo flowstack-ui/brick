@@ -1,5 +1,5 @@
 import { expectEvidenceScreenshot, installVisualDefaults, setAppearance, test } from "../../visual-harness.js";
-installVisualDefaults("/overlay-manager");
+installVisualDefaults("/overlay-manager?qualification=1");
 for(const appearance of ["light","dark"] as const){
   test(`OverlayManager Drawer ${appearance}`,async({page})=>{
     await setAppearance(page,appearance);

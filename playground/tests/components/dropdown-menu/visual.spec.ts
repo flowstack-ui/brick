@@ -1,5 +1,5 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
-installVisualDefaults("/dropdown-menu");
+installVisualDefaults("/dropdown-menu?qualification=1");
 
 test("dropdown-menu defaults and complete recipes", async ({ page }) => {
   await page.getByTestId("dropdown-menu-overview").getByRole("button", { name: "Project actions" }).click();

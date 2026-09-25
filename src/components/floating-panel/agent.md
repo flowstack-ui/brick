@@ -32,6 +32,7 @@ Compose a finished movable and resizable nonmodal application tool using Atom-ow
 ## Validation checklist
 
 - Verify header/control containment, typography, border and radius, all handles, scrolling, narrow hosts, RTL, dark appearance, reduced motion and nested overlays.
+- DragTrigger aligns grip and Title; keep Control outside it. Use ghost 2xs actions for compact panels and larger existing sizes when needed. ResizeTriggers forwards shared handle props but has no shared ref. Content remains a keyboard target; pointer handles are named groups outside the default tab sequence. Staged controls show restore only.
 
 ## Related guidance
 

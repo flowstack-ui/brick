@@ -1,4 +1,5 @@
 export const componentIds = [
+  "toggle-tip",
   "float",
   "checkbox-card",
   "input-addon",

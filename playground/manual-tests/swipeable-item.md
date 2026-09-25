@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Swipeable Item |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Record exact candidate digest before testing |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -13,10 +13,16 @@
 | Assistive technology | |
 | Playground route | `/swipeable-item` |
 
-Scenario order: `01 Overview`, `02 Anatomy and output`, `03 Variants`,
-`04 Start and end actions`, `05 Visible alternative`, `06 Disabled and read
-only`, `07 Controlled state`, `08 Appearance`, `09 Customized`,
-`10 Responsive and RTL`.
+Scenario order: `01 swipeable-item.overview` → `02 swipeable-item.anatomy` → `03 swipeable-item.variants` → `04 swipeable-item.sides` → `05 swipeable-item.alternative` → `06 swipeable-item.states` → `07 swipeable-item.controlled` → `08 swipeable-item.appearance` → `09 swipeable-item.customized` → `10 swipeable-item.stress`.
+
+Use `?qualification=1` for this preserved scenario sequence; review the ordinary documentation examples separately.
+
+Use the public examples first. Legacy technical/appearance fixtures remain at
+`/swipeable-item?qualification=1`. Do not treat emulated touch as physical-device
+qualification.
+
+Scenario order: Basic, Composition, Logical sides, Presentation, Controlled,
+Controller, Dismissal, Motion, Full swipe, Async actions, States and RTL.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
@@ -75,6 +81,30 @@ Notes or issue:
 With a screen reader, confirm closed Actions are unavailable, the opened
 localized action group is discoverable, every native action has a clear name,
 and the always-visible More actions alternative has an understandable label.
+
+Result:
+Notes or issue:
+
+## Step 7 — Interrupted motion and reset
+
+Re-grab during both opening and closing. Reverse direction without lifting.
+There must be no jump to the old destination or lag behind the finger. In the
+controller example, Reset must stop travel immediately. Change reduced-motion
+preference during settlement and repeat with a narrow row and larger text.
+
+Result:
+Notes or issue:
+
+## Step 8 — Full swipe safety and recovery
+
+Use the Full swipe example. Cross the threshold, move back and release: no
+command should run. Release beyond the threshold: the reversible command runs
+once. Cancellation, lost capture, Escape and repeated arrows never execute it.
+The armed surface must identify the available action without unexplained blank
+space. Confirm the visible button performs the same command.
+
+In Async actions, the first save deliberately fails after a brief pending state.
+Reopen actions and retry: success remains visible and no row is silently removed.
 
 Result:
 Notes or issue:

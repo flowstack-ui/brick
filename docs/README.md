@@ -274,3 +274,5 @@ Every released component owns one folder containing its public `README.md` and
 - [InputAddon](components/input-addon/README.md) — external noninteractive input segments
 
 - [CheckboxCard](components/checkbox-card/README.md) — rich independent option cards
+
+- [ToggleTip](components/toggle-tip/README.md)

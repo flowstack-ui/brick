@@ -23,20 +23,22 @@ Enhance a finished list-like row with logical start or end quick-action panels r
 - **MUST:** Give every Actions panel a localized accessible group name and every child complete native semantics; keep closed panels inert and accessibility-hidden.
 - **MUST:** Preserve pan-y vertical scrolling, horizontal intent detection, pointer capture, cancellation rollback, measured logical-side widths, threshold settlement, and one owned pointer interaction.
 - **MUST:** Keep Content focusable and preserve direction-aware Arrow reveal, opposite-Arrow close, and Escape close only when Content owns the key; nested controls retain their own keyboard behavior.
-- **MUST:** Do not implement gesture execution around Brick SwipeableItem: Brick intentionally omits Atom's onFullSwipe and fullSwipeThreshold props so destructive or consequential commands require an explicit control.
 - **MUST:** Use openSide with onOpenSideChange or defaultOpenSide, preserve disabled versus focusable read-only behavior, and treat start and end as logical sides that follow LTR and RTL.
 - **MUST:** Keep authored Content wrapping, visible alternatives reachable, actions measured, and the shared clipped radius intact at narrow widths, zoom, RTL, forced colors, and reduced motion.
 - **MUST:** Load styles.css or core.css plus swipeable-item.css and the CSS for every composed action or row component.
+- **MUST:** Use useSwipeableItem with RootProvider value for external open/close/reset controls, or Context for descendants. onOpenSideChange requests a side; onSettle reports the accepted destination's completion. getOffset/getProgress sample presentation without per-frame React renders. Do not add application gesture math or a second animation driver.
+- **MUST:** Enable fullSwipeSides explicitly and pair onFullSwipe with a visible equivalent action. A callback alone does not enable full swipe in Brick. Only deliberate pointer release executes; cancel, lost capture and keyboard never do. The application owns async work, confirmation and undo.
+- **MUST:** Native editable controls and data-swipeable-ignore retain gestures. Author accessible action target sizes with Button/IconButton props; Actions does not resize every direct child. Use closeOnClick=false for async policy; prevented action events and padding clicks do not close.
 
 ## Common mistakes
 
-- **Avoid:** Making swipe the only route to Delete, blocking vertical scroll, firing a destructive threshold gesture, or letting Arrow keys from nested controls reveal actions. **Instead:** Provide an obvious explicit control, preserve pan-y and gesture intent, use Brick's no-full-swipe API, and retain keyboard target isolation.
+- **Avoid:** Making swipe the only route to Delete, blocking vertical scroll, firing a destructive threshold gesture, or letting Arrow keys from nested controls reveal actions. **Instead:** Provide an obvious explicit control, preserve pan-y and gesture intent, keep full swipe off unless explicitly appropriate, and retain keyboard target isolation.
 - **Avoid:** Using SwipeableItem as List, Feed, navigation, selection, confirmation, or multi-row coordination ownership. **Instead:** Keep semantic row ownership and application effects outside the three-part enhancement boundary.
 
 ## Validation checklist
 
 - Verify controlled/uncontrolled start/end/null state, LTR and RTL mapping, measured widths and offsets, pointer down/move/up settlement, threshold boundaries, cancellation, capture, vertical pan, disabled/read-only state, and action closeOnClick.
-- Verify Content focus, Arrow reveal/close, Escape, descendant keyboard isolation, inert hidden panels, group and control names, obvious pointer fallback, absence of full-swipe execution, native props, refs, and real-browser mouse/touch scrolling.
+- Verify Content focus, Arrow reveal/close, Escape, descendant keyboard isolation, inert hidden panels, group and control names, obvious pointer fallback, explicit per-side full-swipe opt-in, pointer-only execution, native props, refs, and real-browser mouse/touch scrolling.
 - Verify plain and outline boundaries, long content, narrow widths, zoom, RTL, shared radii, focus, light/dark appearance, forced colors, reduced motion, and surrounding List or Feed semantics.
 
 ## Related guidance

@@ -1,60 +1,48 @@
 @layer brick.components {
-  :where(.brick-dropdown-menu__content, .brick-dropdown-menu__sub-content) {
-    --brick-dropdown-menu-content-background: var(--brick-color-surface-overlay);
-    --brick-dropdown-menu-content-foreground: var(--brick-color-text-primary);
-    --brick-dropdown-menu-content-border: var(--brick-color-border-default);
-    --brick-dropdown-menu-content-radius: var(--brick-radius-overlay);
-    --brick-dropdown-menu-content-shadow: var(--brick-shadow-floating);
-    --brick-dropdown-menu-content-padding: var(--brick-space-1);
-    --brick-dropdown-menu-content-max-block-size: 20rem;
-    --brick-dropdown-menu-row-min-block-size: var(--brick-control-target-min);
-    --brick-dropdown-menu-row-padding-inline: var(--brick-space-3);
-    --brick-dropdown-menu-row-gap: var(--brick-space-2);
-    --brick-dropdown-menu-row-radius: var(--brick-radius-control);
-    --brick-dropdown-menu-row-foreground: var(--brick-color-text-primary);
-    --brick-dropdown-menu-row-highlighted-background: var(--brick-color-accent-soft);
-    --brick-dropdown-menu-row-highlighted-foreground: var(--brick-color-accent-text);
-    --brick-dropdown-menu-description-foreground: var(--brick-color-text-secondary);
-    --brick-dropdown-menu-shortcut-foreground: var(--brick-color-text-muted);
-    --brick-dropdown-menu-label-foreground: var(--brick-color-text-secondary);
-    --brick-dropdown-menu-disabled-foreground: var(--brick-color-text-muted);
-    --brick-dropdown-menu-danger-foreground: var(--brick-color-danger-text);
-    --brick-dropdown-menu-danger-background: var(--brick-color-danger-soft);
-    --brick-dropdown-menu-separator-color: var(--brick-color-border-subtle);
-    --brick-dropdown-menu-indicator-size: 1rem;
-    --brick-dropdown-menu-focus-ring: var(--brick-color-focus-ring);
-    --brick-dropdown-menu-motion-duration: var(--brick-motion-duration-fast);
-
-    --brick-action-menu-content-background: var(--brick-dropdown-menu-content-background);
-    --brick-action-menu-content-foreground: var(--brick-dropdown-menu-content-foreground);
-    --brick-action-menu-content-border: var(--brick-dropdown-menu-content-border);
-    --brick-action-menu-content-radius: var(--brick-dropdown-menu-content-radius);
-    --brick-action-menu-content-shadow: var(--brick-dropdown-menu-content-shadow);
-    --brick-action-menu-content-padding: var(--brick-dropdown-menu-content-padding);
-    --brick-action-menu-content-max-block-size: var(--brick-dropdown-menu-content-max-block-size);
-    --brick-action-menu-content-z-index: var(--brick-layer-overlay);
-    --brick-action-menu-row-min-block-size: var(--brick-dropdown-menu-row-min-block-size);
-    --brick-action-menu-row-padding-inline: var(--brick-dropdown-menu-row-padding-inline);
-    --brick-action-menu-row-gap: var(--brick-dropdown-menu-row-gap);
-    --brick-action-menu-row-radius: var(--brick-dropdown-menu-row-radius);
-    --brick-action-menu-row-foreground: var(--brick-dropdown-menu-row-foreground);
-    --brick-action-menu-row-highlighted-background: var(--brick-dropdown-menu-row-highlighted-background);
-    --brick-action-menu-row-highlighted-foreground: var(--brick-dropdown-menu-row-highlighted-foreground);
-    --brick-action-menu-description-foreground: var(--brick-dropdown-menu-description-foreground);
-    --brick-action-menu-shortcut-foreground: var(--brick-dropdown-menu-shortcut-foreground);
-    --brick-action-menu-label-foreground: var(--brick-dropdown-menu-label-foreground);
-    --brick-action-menu-disabled-foreground: var(--brick-dropdown-menu-disabled-foreground);
-    --brick-action-menu-danger-foreground: var(--brick-dropdown-menu-danger-foreground);
-    --brick-action-menu-danger-background: var(--brick-dropdown-menu-danger-background);
-    --brick-action-menu-separator-color: var(--brick-dropdown-menu-separator-color);
-    --brick-action-menu-indicator-size: var(--brick-dropdown-menu-indicator-size);
-    --brick-action-menu-focus-ring: var(--brick-dropdown-menu-focus-ring);
-    --brick-action-menu-motion-duration: var(--brick-dropdown-menu-motion-duration);
-    --brick-action-menu-font-size: var(--brick-typography-control-md-font-size);
-    --brick-action-menu-line-height: var(--brick-typography-control-md-line-height);
+  /* Consume owner hooks at their actual part, retaining direct and inherited overrides. */
+  :where(.brick-dropdown-menu__content, .brick-dropdown-menu__sub-content, .brick-dropdown-menu__item, .brick-dropdown-menu__checkbox-item, .brick-dropdown-menu__radio-item, .brick-dropdown-menu__sub-trigger, .brick-dropdown-menu__label, .brick-dropdown-menu__leading, .brick-dropdown-menu__item-label, .brick-dropdown-menu__description, .brick-dropdown-menu__shortcut, .brick-dropdown-menu__separator, .brick-dropdown-menu__item-indicator, .brick-dropdown-menu__arrow, .brick-dropdown-menu__group) {
+    --brick-action-menu-content-background: var(--brick-dropdown-menu-content-background, var(--brick-color-surface-overlay));
+    --brick-action-menu-content-foreground: var(--brick-dropdown-menu-content-foreground, var(--brick-color-text-primary));
+    --brick-action-menu-content-border: var(--brick-dropdown-menu-content-border, var(--brick-color-border-default));
+    --brick-action-menu-content-radius: var(--brick-dropdown-menu-content-radius, var(--brick-radius-overlay));
+    --brick-action-menu-content-shadow: var(--brick-dropdown-menu-content-shadow, var(--brick-shadow-floating));
+    --brick-action-menu-content-padding: var(--brick-dropdown-menu-content-padding, var(--brick-action-menu-recipe-inset));
+    --brick-action-menu-content-max-block-size: var(--brick-dropdown-menu-content-max-block-size, 20rem);
+    --brick-action-menu-row-min-block-size: var(--brick-dropdown-menu-row-min-block-size, var(--brick-action-menu-recipe-min));
+    --brick-action-menu-row-padding-inline: var(--brick-dropdown-menu-row-padding-inline, var(--brick-action-menu-recipe-inline));
+    --brick-action-menu-row-gap: var(--brick-dropdown-menu-row-gap, var(--brick-action-menu-recipe-gap));
+    --brick-action-menu-row-radius: var(--brick-dropdown-menu-row-radius, var(--brick-radius-control));
+    --brick-action-menu-row-foreground: var(--brick-dropdown-menu-row-foreground, var(--brick-action-menu-recipe-row-foreground));
+    --brick-action-menu-row-highlighted-background: var(--brick-dropdown-menu-row-highlighted-background, var(--brick-action-menu-recipe-highlight-bg));
+    --brick-action-menu-row-highlighted-foreground: var(--brick-dropdown-menu-row-highlighted-foreground, var(--brick-action-menu-recipe-highlight-fg));
+    --brick-action-menu-description-foreground: var(--brick-dropdown-menu-description-foreground, var(--brick-color-text-secondary));
+    --brick-action-menu-shortcut-foreground: var(--brick-dropdown-menu-shortcut-foreground, var(--brick-color-text-muted));
+    --brick-action-menu-label-foreground: var(--brick-dropdown-menu-label-foreground, var(--brick-color-text-secondary));
+    --brick-action-menu-disabled-foreground: var(--brick-dropdown-menu-disabled-foreground, var(--brick-color-text-muted));
+    --brick-action-menu-separator-color: var(--brick-dropdown-menu-separator-color, var(--brick-color-border-subtle));
+    --brick-action-menu-indicator-size: var(--brick-dropdown-menu-indicator-size, var(--brick-action-menu-recipe-icon));
+    --brick-action-menu-focus-ring: var(--brick-dropdown-menu-focus-ring, var(--brick-color-focus-ring));
+    --brick-action-menu-motion-duration: var(--brick-dropdown-menu-motion-duration, var(--brick-motion-duration-fast));
   }
-
-  .brick-dropdown-menu__trigger {
-    touch-action: manipulation;
+  :where(.brick-dropdown-menu__item, .brick-dropdown-menu__checkbox-item, .brick-dropdown-menu__radio-item, .brick-dropdown-menu__sub-trigger)[data-tone="danger"] {
+    --brick-action-menu-palette-text: var(--brick-dropdown-menu-danger-foreground, var(--brick-color-danger-text));
+    --brick-action-menu-palette-soft: var(--brick-dropdown-menu-danger-background, var(--brick-color-danger-soft));
+  }
+  .brick-dropdown-menu__trigger { touch-action: manipulation; }
+  .brick-dropdown-menu__trigger[data-native-trigger] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    border-radius: var(--brick-radius-control);
+    cursor: pointer;
+  }
+  .brick-dropdown-menu__trigger[data-native-trigger]:focus-visible {
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: var(--brick-border-focus-width);
   }
 }

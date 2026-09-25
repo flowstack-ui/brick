@@ -1,7 +1,7 @@
 import { expect, test } from "../../evidence-test.js";
 import AxeBuilder from "@axe-core/playwright";
 
-test.beforeEach(async({page})=>{await page.emulateMedia({reducedMotion:"reduce"});await page.goto("/floating-panel");});
+test.beforeEach(async({page})=>{await page.emulateMedia({reducedMotion:"reduce"});await page.goto("/floating-panel?qualification=1");});
 for (const stage of ["default", "minimized", "maximized"] as const) {
   test(`normal-motion ${stage} close preserves geometry throughout exit`, async ({page}) => {
     await page.emulateMedia({reducedMotion:"no-preference"});
@@ -88,8 +88,14 @@ test("iframe and shadow-root hosts retain independent geometry",async({page})=>{
   const frame=page.frameLocator('iframe[title="Independent panel document"]');
   await frame.getByRole("button",{name:"Open iframe",exact:true}).click();
   const panel=frame.getByRole("dialog",{name:"Inspector iframe",exact:true});
-  await expect(panel).toBeVisible();await panel.focus();await page.keyboard.press("ArrowRight");
-  await expect(frame.getByRole("status")).toContainText("accepted x 9");
+  await expect(panel).toBeVisible();
+  const expectedX=await panel.evaluate(el=>{
+    const positioner=el.parentElement!;
+    const boundary=(positioner as HTMLElement).offsetParent as HTMLElement;
+    return Math.min(parseFloat(positioner.style.left)+1,Math.max(0,boundary.clientWidth-positioner.offsetWidth));
+  });
+  await panel.focus();await page.keyboard.press("ArrowRight");
+  await expect(frame.getByRole("status")).toContainText(`accepted x ${Math.round(expectedX)}`);
   await frame.getByRole("button",{name:"Close iframe",exact:true}).click();await expect(panel).toBeHidden();
   await page.getByRole("button",{name:"Open shadow root",exact:true}).click();
   const shadow=page.getByRole("dialog",{name:"Inspector shadow root",exact:true});await expect(shadow).toBeVisible();
@@ -126,7 +132,8 @@ for(const axis of ["n","s","e","w","ne","nw","se","sw"]){
 test("small boundaries override impossible minimum dimensions without clipping",async({page})=>{
   await page.getByRole("button",{name:"Open small boundary",exact:true}).click();
   const panel=page.getByRole("dialog",{name:"Inspector small boundary",exact:true});await expect(panel).toBeVisible();
-  const rect=(await panel.boundingBox())!;expect(rect.width).toBeLessThanOrEqual(220);expect(rect.height).toBeLessThanOrEqual(360);
+  // Firefox can report subpixel serialization noise at the exact boundary.
+  const rect=(await panel.boundingBox())!;expect(rect.width).toBeLessThanOrEqual(220.01);expect(rect.height).toBeLessThanOrEqual(360.01);
   await expect(panel.locator("..")).toHaveAttribute("data-constrained","");
 });
 test("a portalled panel remains interactive inside an owning modal",async({page})=>{

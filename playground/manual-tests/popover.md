@@ -1,5 +1,15 @@
 # Popover manual-test protocol
 
+## Documentation geometry regression
+
+- Open Settings in Indicator: confirm one trailing icon, vertically centered with
+  the label and separated by normal Button spacing.
+- Open each Radius specimen: confirm its centered label remains fully readable,
+  including full at narrow widths and increased text size.
+- Open Virtual anchor: confirm it appears at Reference, not the trigger or page
+  origin. Scroll, resize and reopen; confirm it follows the measured reference
+  and its arrow remains connected. Repeat in light/dark and LTR/RTL.
+
 | Run information | Value |
 | --- | --- |
 | Component | Popover |
@@ -12,6 +22,15 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/popover` |
+
+The public `/popover` route documents the expanded API. Run historical stress
+scenarios below at `/popover?qualification=1`.
+
+Additional parity checks: switch Profile to Help without closing; Escape restores
+Help; repeat in RTL. Compare all four insets in light/dark. Retain a lazy draft.
+Open and close the nested Dialog Popover. Test controller, virtual reference,
+256px viewport, actual browser zoom, physical touch and screen reader. Record
+results separately; this protocol update does not constitute a manual pass.
 
 Scenario order: `01 Overview`, `02 Sizes`, `03 Anatomy`, `04 Placement`,
 `05 States`, `06 Composition`, `07 Theme`, `08 Custom`, `09 Stress`

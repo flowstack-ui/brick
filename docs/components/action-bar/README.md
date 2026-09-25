@@ -60,11 +60,13 @@ ActionBarRoot / ActionBarRootProps: open, defaultOpen=false, onOpenChange,
 modal=false, disabled=false, closeOnEscape=true, closeOnInteractOutside=true,
 lazyMount=true, unmountOnExit=true, onExitComplete, onEscapeKeyDown and
 persistentElements. These delegate to Atom. ActionBarRootProvider accepts the
-same props; it is not a separate store API. ActionBarContext children receive
+same legacy props or a value returned by useActionBar. Pass the unchanged controller
+to RootProvider value for external state access. ActionBarContext children receive
 ActionBarContextValue `{open, setOpen}`. ActionBarPortal accepts container/disabled.
 
 ActionBarPositioner / ActionBarPositionerProps forwards div props/ref; placement
 defaults to `bottom`. ActionBarPlacement accepts `bottom`, `bottom-start`, and `bottom-end`.
+Positioner supports asChild/render and registers the resulting host in the shared overlay layer.
 
 | Prop | Default |
 | --- | --- |
@@ -99,7 +101,7 @@ or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
-One theme-owned panel recipe, with inset separator and dashed selection action.
+One theme-owned panel recipe with a compact md radius, inset separator and dashed selection action.
 Use small Buttons for the reference density. Loading geometry remains Button-owned.
 
 ## Tokens and CSS hooks
@@ -133,7 +135,11 @@ it is not an automatic roving-focus Toolbar. Escape and outside dismissal are
 configurable. Keep a selection region persistent when selecting more records.
 Explicit modal mode delegates trapping, isolation and scroll locking to Atom.
 Use CloseTrigger inside named Content and preserve nested overlay ownership.
-Retained content uses hidden after exit; it is not React Activity effect suspension.
+Retained content uses hidden after exit by default. Root hideMode="activity" pauses
+hidden effects where React supports Activity, with hidden mounting on React18.
+Root present overrides presence; immediate=false defers it to a frame.
+skipAnimationOnMount suppresses the initial entrance when initially open.
+Root outside focus/pointer callbacks support preventDefault cancellation.
 Reduced motion removes transition motion; forced colors retain a visible boundary.
 
 ## Composition, native props, and refs
@@ -148,7 +154,8 @@ context, outside focus, retained state, inline portal, localization and loading.
 
 ## Evidence
 
-Playground `/action-bar` exposes fourteen numbered scenario groups. Component
+Playground `/action-bar` provides focused Preview/Code examples and per-part Props.
+`/action-bar?qualification=1` retains fourteen exhaustive scenario groups. Component
 unit/type tests and browser/visual owners accompany the manual protocol at
 `playground/manual-tests/action-bar.md`. Manual checks are not implied by builds.
 

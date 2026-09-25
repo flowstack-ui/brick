@@ -23,13 +23,12 @@ void RootSwipeableItem;
 
 // @ts-expect-error variants are closed.
 const invalidVariant: SwipeableItemVariant = "soft";
-// @ts-expect-error full-swipe command execution is excluded from Brick v1.
-const invalidFullSwipe: SwipeableItemRootProps = { children: null, onFullSwipe: () => {} };
-// @ts-expect-error full-swipe threshold is excluded with command execution.
-const invalidFullThreshold: SwipeableItemRootProps = { children: null, fullSwipeThreshold: 0.8 };
+const fullSwipe: SwipeableItemRootProps = { children: null, fullSwipeSides: ["end"], onFullSwipe: () => {}, fullSwipeThreshold: 0.8, radius: "none" };
+// @ts-expect-error only logical sides are supported.
+const invalidFullSwipe: SwipeableItemRootProps = { fullSwipeSides: ["left"] };
 // @ts-expect-error Actions requires an authored localized group label.
 const missingActionsLabel: SwipeableItemActionsProps = { children: null, side: "start" };
 void invalidVariant;
 void invalidFullSwipe;
-void invalidFullThreshold;
+void fullSwipe;
 void missingActionsLabel;

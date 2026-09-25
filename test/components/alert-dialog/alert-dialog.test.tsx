@@ -39,6 +39,26 @@ function OpenAlertDialog({
 }
 
 describe("AlertDialog", () => {
+  it("shares Dialog recipe classes and responsive attributes without changing alert semantics", () => {
+    const ref = createRef<HTMLDivElement>();
+    render(<AlertDialog.Root defaultOpen>
+      <AlertDialog.Positioner ref={ref} placement="bottom" scrollBehavior="inside">
+        <AlertDialog.Content size={{ lg: "xl" }} motionPreset="none" radius="sm">
+          <AlertDialog.Title>Confirm</AlertDialog.Title>
+          <AlertDialog.Description>This cannot be undone.</AlertDialog.Description>
+          <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+        </AlertDialog.Content>
+      </AlertDialog.Positioner>
+    </AlertDialog.Root>);
+    const panel = screen.getByRole("alertdialog");
+    expect(panel).toHaveClass("brick-dialog-content", "brick-alert-dialog-content");
+    expect(panel).toHaveAttribute("data-size", "md");
+    expect(panel).toHaveAttribute("data-size-lg", "xl");
+    expect(panel).toHaveAttribute("data-motion-preset", "none");
+    expect(ref.current).toHaveClass("brick-dialog-positioner", "brick-alert-dialog-positioner");
+    expect(ref.current).toHaveAttribute("data-placement", "bottom");
+    expect(ref.current).toHaveAttribute("data-scroll-behavior", "inside");
+  });
   it("renders the approved anatomy, alert semantics, default size, and relationships", () => {
     render(<OpenAlertDialog />);
 

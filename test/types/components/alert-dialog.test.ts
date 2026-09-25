@@ -40,7 +40,7 @@ void titleProps;
 void footerProps;
 
 // @ts-expect-error AlertDialog sizes are a closed set.
-const invalidSize: AlertDialogSize = "lg";
+const invalidSize: AlertDialogSize = "huge";
 // @ts-expect-error AlertDialog is a namespace and not a flat callable component.
 const invalidFlatAlert = createElement(AlertDialog, null, "Remove");
 // @ts-expect-error Backdrop dismissal is permanently blocked.
@@ -67,3 +67,9 @@ void invalidPlacement;
 void invalidLoading;
 void invalidTitle;
 void invalidFooter;
+
+const responsiveContent: AlertDialogContentProps = {
+  children: "Decision", size: { lg: "xl" }, motionPreset: "slide-in-bottom",
+};
+createElement(AlertDialog.Positioner, { placement: "bottom", scrollBehavior: "inside" });
+void responsiveContent;

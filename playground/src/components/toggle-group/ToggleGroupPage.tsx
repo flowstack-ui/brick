@@ -1,3 +1,5 @@
+import { ToggleGroupDocumentation } from "./ToggleGroupDocumentation.js";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type ReactNode } from "react";
 import {
@@ -53,7 +55,8 @@ export const toggleGroupScenarios = [
   { description: "Separated groups wrap long content, attached groups expose fit pressure honestly, and logical corners plus arrow navigation mirror in genuine RTL.", id: "toggle-group.stress", navigationTitle: "Stress", number: 9, title: "Responsive and RTL" },
 ] as const satisfies readonly ScenarioDefinition[];
 
-export function ToggleGroupPage() {
+export function ToggleGroupPage(){ const preview=usePreviewContext(); if(!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <ToggleGroupDocumentation/>; return <ToggleGroupEvidence/>; }
+function ToggleGroupEvidence() {
   const [view, setView] = useState("cards");
   const [filters, setFilters] = useState<string[]>(["active"]);
   return (

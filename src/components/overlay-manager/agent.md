@@ -25,6 +25,7 @@ Host authored Brick overlays by stable ID and await typed results separately fro
 ## Common mistakes
 
 - **Avoid:** Using a timer in the manager to guess animation completion. **Instead:** Forward onExitComplete to the overlay behavior owner.
+- **Avoid:** Treating get/getSnapshot as reactive hooks. **Instead:** Use application state for reactive displays. A never-committed overlay closes without visual exit; committed overlays still report exit completion.
 
 ## Validation checklist
 

@@ -1,4 +1,8 @@
-import type { FloatingPanelOptions,FloatingPanelStageTriggerProps,FloatingPanelResizeTriggerProps } from "../../../src/floating-panel.js";
+import type { FloatingPanelOptions,FloatingPanelStageTriggerProps,FloatingPanelResizeTriggerProps,FloatingPanelResizeTriggersProps } from "../../../src/floating-panel.js";
+const shared:FloatingPanelResizeTriggersProps={axes:["n","se"],className:"handles",style:{opacity:0.8},onPointerDown:event=>event.preventDefault()};
+// @ts-expect-error A shortcut with multiple hosts cannot own one ref.
+const sharedRef:FloatingPanelResizeTriggersProps={ref:()=>{}};
+void [shared,sharedRef];
 const options:FloatingPanelOptions={position:{x:1,y:2},size:{width:320,height:240},hideMode:"activity",onSizeChange:(_size,details)=>{void details.reason;}};
 const stage:FloatingPanelStageTriggerProps={stage:"maximized",children:null};
 const axis:FloatingPanelResizeTriggerProps={axis:"nw",children:null};

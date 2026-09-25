@@ -7,6 +7,7 @@
 | Viewport and zoom | Not recorded |
 | Assistive technology | Not recorded |
 | Playground route | `/overlay-manager` |
+| Qualification route(s) | `/overlay-manager` and `/overlay-manager?qualification=1` |
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for each performed check.
 Leave checks unperformed until a person actually completes them.
@@ -40,7 +41,8 @@ Scenario order:
 
 ## Accessibility
 
-1. Inspect all 14 named route scenarios using keyboard and a screen reader.
+1. Inspect the normal documentation examples and all 14 named qualification
+   scenarios using keyboard and a screen reader.
 2. Verify managed Dialog, Drawer and FloatingPanel retain their own semantics,
    naming, focus entry, dismissal and restoration behavior.
 3. Accept/cancel, update a draft, duplicate an ID, reopen during exit, remove,
@@ -48,6 +50,11 @@ Scenario order:
 4. Verify modal stacking, transient launcher focus return and form close veto.
 5. Test local appearance/locale context, long labels, real 200%/400% zoom,
    physical mobile input, rtl direction, reduced motion and forced colors.
+6. Submit the documentation form using Enter. Cancel a confirmation; verify no
+   follow-up opens. Confirm it; verify the next dialog opens only after exit.
+7. Use Open and immediately close; verify cancellation settles without showing
+   a dialog. In the nested-menu example, close with Finish and verify Commands
+   regains focus.
 
 The manager has no independent visual recipe. Record integration defects under
 their owning visual primitive; do not invent manager CSS to mask them.

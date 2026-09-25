@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
 import {
   ToggleGroup as AtomToggleGroup,
@@ -21,7 +22,8 @@ type ToggleGroupRootCommonProps = Omit<
   /** Shared selected-state color treatment. @default "neutral" */
   tone?: ToggleTone;
   /** Shared item size. @default "md" */
-  size?: ToggleSize;
+  size?: ResponsiveValue<ToggleSize>;
+  focusRing?: "outside" | "inside";
   /** Join items into one segmented surface. @default false */
   attached?: boolean;
   /** Fill the available inline width and distribute items. @default false */
@@ -68,6 +70,7 @@ export const ToggleGroupRoot = forwardRef<
     variant = "ghost",
     tone = "neutral",
     size = "md",
+    focusRing,
     shape = "rounded",
     radius,
     style,
@@ -83,7 +86,8 @@ export const ToggleGroupRoot = forwardRef<
     "data-full-width": fullWidth ? "" : undefined,
     "data-shape": radius === undefined ? shape : "rounded",
     style: radiusStyle(radius, "--brick-toggle-group-radius", style),
-    "data-size": size,
+    ...responsiveDataAttributes("data-size", size, {alwaysInitial:true,defaultValue:"md"}),
+    "data-focus-ring": focusRing,
     "data-tone": tone,
     "data-variant": variant,
     ref,

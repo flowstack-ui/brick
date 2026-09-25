@@ -1,0 +1,51 @@
+@layer brick.components {
+  .brick-popover.brick-toggle-tip[data-tip-size="xs"] {
+    --brick-toggle-tip-inline-space: var(--brick-space-2);
+    --brick-toggle-tip-block-space: var(--brick-space-1);
+    font-family: var(--brick-typography-caption-font-family);
+    font-size: var(--brick-typography-caption-font-size);
+    font-weight: var(--brick-typography-caption-font-weight);
+    line-height: var(--brick-typography-caption-line-height);
+    letter-spacing: var(--brick-typography-caption-letter-spacing);
+  }
+  .brick-popover.brick-toggle-tip[data-tip-size="sm"] {
+    --brick-toggle-tip-inline-space: var(--brick-space-3);
+    --brick-toggle-tip-block-space: var(--brick-space-2);
+    font-family: var(--brick-typography-body-sm-font-family);
+    font-size: var(--brick-typography-body-sm-font-size);
+    font-weight: var(--brick-typography-body-sm-font-weight);
+    line-height: var(--brick-typography-body-sm-line-height);
+    letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+  }
+  .brick-popover.brick-toggle-tip[data-tip-size="md"] {
+    --brick-toggle-tip-inline-space: var(--brick-space-4);
+    --brick-toggle-tip-block-space: var(--brick-space-3);
+    font-family: var(--brick-typography-body-md-font-family);
+    font-size: var(--brick-typography-body-md-font-size);
+    font-weight: var(--brick-typography-body-md-font-weight);
+    line-height: var(--brick-typography-body-md-line-height);
+    letter-spacing: var(--brick-typography-body-md-letter-spacing);
+  }
+  .brick-popover.brick-toggle-tip[data-tip-size="lg"] {
+    --brick-toggle-tip-inline-space: calc(var(--brick-space-4) + var(--brick-space-1));
+    --brick-toggle-tip-block-space: var(--brick-space-4);
+    font-family: var(--brick-typography-body-lg-font-family);
+    font-size: var(--brick-typography-body-lg-font-size);
+    font-weight: var(--brick-typography-body-lg-font-weight);
+    line-height: var(--brick-typography-body-lg-line-height);
+    letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+  }
+  .brick-popover.brick-toggle-tip .brick-toggle-tip__body {
+    padding: var(--brick-toggle-tip-block-space) var(--brick-toggle-tip-inline-space);
+    line-height: inherit;
+    scrollbar-gutter: auto;
+  }
+  .brick-popover.brick-toggle-tip :where([data-slot="popover-title"], [data-slot="popover-description"]) {
+    font: inherit;
+    letter-spacing: inherit;
+    padding: 0;
+  }
+  .brick-popover.brick-toggle-tip [data-slot="popover-title"] {
+    font-weight: var(--brick-font-weight-semibold);
+  }
+}

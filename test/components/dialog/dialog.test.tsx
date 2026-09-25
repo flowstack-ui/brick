@@ -37,6 +37,17 @@ function OpenDialog({
 }
 
 describe("Dialog", () => {
+  it("forwards positioner recipes and sparse responsive sizes without leaking props", () => {
+    render(<Dialog.Root defaultOpen><Dialog.Positioner placement="bottom" scrollBehavior="inside"><Dialog.Content aria-label="Recipes" size={{ lg: "xl" }} motionPreset="slide-in-top">Content</Dialog.Content></Dialog.Positioner></Dialog.Root>);
+    const panel = screen.getByRole("dialog", { name: "Recipes" });
+    expect(panel).toHaveAttribute("data-size", "md");
+    expect(panel).toHaveAttribute("data-size-lg", "xl");
+    expect(panel).toHaveAttribute("data-motion-preset", "slide-in-top");
+    expect(panel.parentElement).toHaveAttribute("data-placement", "bottom");
+    expect(panel.parentElement).toHaveAttribute("data-scroll-behavior", "inside");
+    expect(panel).not.toHaveAttribute("size");
+    expect(panel.parentElement).not.toHaveAttribute("scrollBehavior");
+  });
   it("renders the approved anatomy, default size, and generated relationships", () => {
     render(<OpenDialog />);
 

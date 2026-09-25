@@ -10,6 +10,8 @@ export {
   ReorderableListMoveToEnd,
   ReorderableListMoveToStart,
   ReorderableListRoot,
+  ReorderableListPreview,
+  type ReorderableListPreviewProps,
   type ReorderableListActionsProps,
   type ReorderableListContentProps,
   type ReorderableListDropIndicatorProps,

@@ -28,33 +28,6 @@
     flex: 1 1 0;
   }
 
-  .brick-toggle-group > .brick-toggle-group-item {
-    --brick-toggle-min-block-size: var(--brick-control-min-block-size-md);
-    --brick-toggle-padding-inline: 1rem;
-    --brick-toggle-gap: 0.5rem;
-    --brick-toggle-icon-size: 1.125rem;
-  }
-
-  .brick-toggle-group[data-size="sm"] > .brick-toggle-group-item {
-    --brick-toggle-min-block-size: var(--brick-control-min-block-size-sm);
-    --brick-toggle-padding-inline: 0.75rem;
-    --brick-toggle-gap: 0.375rem;
-    --brick-toggle-icon-size: 1rem;
-
-    padding-block: 0.25rem;
-    font-size: var(--brick-typography-control-sm-font-size);
-  }
-
-  .brick-toggle-group[data-size="lg"] > .brick-toggle-group-item {
-    --brick-toggle-min-block-size: var(--brick-control-min-block-size-lg);
-    --brick-toggle-padding-inline: 1.25rem;
-    --brick-toggle-gap: 0.625rem;
-    --brick-toggle-icon-size: 1.25rem;
-
-    padding-block: 0.5rem;
-    font-size: var(--brick-typography-control-lg-font-size);
-  }
-
   .brick-toggle-group[data-shape="pill"] > .brick-toggle-group-item {
     --brick-toggle-radius: var(--brick-radius-full);
   }

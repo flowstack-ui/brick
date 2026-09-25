@@ -548,6 +548,10 @@
       "types": "./dist/input-addon.d.ts",
       "default": "./dist/input-addon.js"
     },
+    "./toggle-tip": {
+      "types": "./dist/toggle-tip.d.ts",
+      "default": "./dist/toggle-tip.js"
+    },
     "./selection": {
       "types": "./dist/selection.d.ts",
       "default": "./dist/selection.js"

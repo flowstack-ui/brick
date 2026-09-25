@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Alert Dialog |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased 0.2.3 |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -12,11 +12,19 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/alert-dialog` |
+| Qualification route(s) | `/alert-dialog?qualification=1` (legacy scenarios); `/alert-dialog` (shared recipes) |
 
 Scenario order: `01 Overview`, `02 Sizes`, `03 Anatomy`, `04 States`,
 `05 Nesting`, `06 Theme`, `07 Customization`, `08 Responsive`, `09 RTL`
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
+
+Shared recipe checks (not yet manually qualified): compare Dialog and AlertDialog
+with the same size, placement, appearance and radius; inspect all seven sizes,
+inside/outside scrolling, responsive full-to-panel transitions and reduced motion.
+Confirm that outside Positioner clicks never dismiss AlertDialog and that Cancel
+retains safe focus. Verify retained examples remain hidden and preserve state.
+Use the qualification query for the numbered scenarios below.
 
 ## Step 1 — Overview and safe decision
 
@@ -109,3 +117,13 @@ Follow-up issues:
 Workbook updated:
 
 Mark unavailable physical or assistive-technology environments `blocked`.
+
+## Confirmation above an ActionBar
+
+In `/alert-dialog?qualification=1`, open the AlertDialog action bar in
+“Confirmation above ActionBar”. Click its close button while leaving the bar
+mounted. Confirm Keep editing is focused and clickable, closes only the alert,
+and returns focus to the bar’s close button. Reopen and click Discard changes;
+both surfaces close. Repeat with the Dialog action bar. No custom z-index CSS
+or temporary ActionBar unmount is used. Verify the Positioner shares Overlay’s
+`--atom-overlay-layer` and its computed z-index is one higher.

@@ -16,7 +16,7 @@
   .brick-action-bar {
     --brick-action-bar-background: var(--brick-color-surface-overlay);
     --brick-action-bar-foreground: var(--brick-color-text-primary);
-    --brick-action-bar-radius: var(--brick-radius-overlay);
+    --brick-action-bar-radius: var(--brick-radius-core-md);
     --brick-action-bar-shadow: var(--brick-shadow-md);
     box-sizing: border-box;
     display: flex;
@@ -36,6 +36,7 @@
     animation: brick-action-bar-enter var(--brick-motion-duration-moderate) var(--brick-motion-easing-enter);
   }
   .brick-action-bar[hidden] { display: none; }
+  .brick-action-bar[data-initial-open] { animation: none; }
   .brick-action-bar[data-state="closed"] {
     pointer-events: none;
     animation: brick-action-bar-exit var(--brick-motion-duration-fast) var(--brick-motion-easing-exit) forwards;

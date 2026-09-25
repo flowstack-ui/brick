@@ -2,6 +2,7 @@
 
 import { forwardRef, type HTMLAttributes } from "react";
 import { radiusStyle, type Radius } from "../_radius/Radius.js";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 import {
   Drawer as AtomDrawer,
   type DrawerCloseProps as AtomDrawerCloseProps,
@@ -11,6 +12,9 @@ import {
   type DrawerPortalProps as AtomDrawerPortalProps,
   type DrawerTitleProps as AtomDrawerTitleProps,
   type DrawerTriggerProps as AtomDrawerTriggerProps,
+  type DrawerPositionerProps as AtomDrawerPositionerProps,
+  type DrawerContextProps,
+  type DrawerContextValue,
   type ModalRootProps as AtomModalRootProps,
 } from "@flowstack-ui/atom/drawer";
 import {
@@ -19,18 +23,27 @@ import {
 } from "@flowstack-ui/atom/modal";
 
 export type DrawerPlacement = "start" | "end" | "top" | "bottom";
-export type DrawerSize = "sm" | "md" | "lg" | "xl" | "full";
+export type DrawerSize = "xs" | "sm" | "md" | "lg" | "xl" | "full";
+export type DrawerPositioning = "fixed" | "absolute";
+export type DrawerInset = "none" | "sm" | "md" | "lg";
+export type DrawerClosePlacement = "inline" | "corner";
+export interface DrawerPositionerProps extends AtomDrawerPositionerProps {
+  /** Containing block: viewport or an explicitly positioned application region. */
+  positioning?: DrawerPositioning;
+  inset?: DrawerInset;
+}
+export type { DrawerContextProps, DrawerContextValue };
 export type DrawerFooterJustify = "start" | "center" | "end" | "between";
 export type DrawerRootProps = AtomModalRootProps;
 export type DrawerTriggerProps = AtomDrawerTriggerProps;
 export type DrawerPortalProps = AtomDrawerPortalProps;
-export type DrawerOverlayProps = AtomDrawerOverlayProps;
+export type DrawerOverlayProps = AtomDrawerOverlayProps & { positioning?: DrawerPositioning };
 export interface DrawerContentProps
   extends Omit<AtomDrawerContentProps, "placement"> {
   /** Logical edge from which the Drawer enters. @default "end" */
-  placement?: DrawerPlacement;
-  /** Complete Drawer dimension recipe. @default "md" */
-  size?: DrawerSize;
+  placement?: ResponsiveValue<DrawerPlacement>;
+  /** Complete Drawer dimension recipe. @default "xs" */
+  size?: ResponsiveValue<DrawerSize>;
   radius?: Radius;
 }
 export type DrawerHeaderProps = HTMLAttributes<HTMLDivElement> & {
@@ -46,7 +59,7 @@ export type DrawerFooterProps = HTMLAttributes<HTMLDivElement> & {
 };
 export type DrawerTitleProps = AtomDrawerTitleProps;
 export type DrawerDescriptionProps = AtomDrawerDescriptionProps;
-export type DrawerCloseProps = AtomDrawerCloseProps;
+export type DrawerCloseProps = AtomDrawerCloseProps & { placement?: DrawerClosePlacement };
 export type DrawerBranchProps = AtomModalBranchProps;
 
 function mergeClassName(base: string, className: string | undefined) {
@@ -59,6 +72,15 @@ function slotOrDefault(slot: string | undefined, fallback: string) {
 
 export const DrawerRoot = AtomDrawer.Root;
 export const DrawerPortal = AtomDrawer.Portal;
+export const DrawerContext = AtomDrawer.Context;
+export const DrawerPositioner = forwardRef<HTMLDivElement, DrawerPositionerProps>(
+  function DrawerPositioner({ positioning = "fixed", inset = "none", className, "data-slot": slot, ...props }, ref) {
+    return <AtomDrawer.Positioner {...props} ref={ref}
+      className={mergeClassName("brick-drawer-positioner", className)}
+      data-positioning={positioning} data-inset={inset}
+      data-slot={slotOrDefault(slot, "drawer-positioner")} />;
+  },
+);
 
 export const DrawerTrigger = forwardRef<HTMLElement, DrawerTriggerProps>(
   function DrawerTrigger({ className, "data-slot": dataSlot, ...props }, ref) {
@@ -74,11 +96,12 @@ export const DrawerTrigger = forwardRef<HTMLElement, DrawerTriggerProps>(
 );
 
 export const DrawerOverlay = forwardRef<HTMLDivElement, DrawerOverlayProps>(
-  function DrawerOverlay({ className, "data-slot": dataSlot, ...props }, ref) {
+  function DrawerOverlay({ className, positioning = "fixed", "data-slot": dataSlot, ...props }, ref) {
     return (
       <AtomDrawer.Overlay
         {...props}
         className={mergeClassName("brick-drawer-overlay", className)}
+        data-positioning={positioning}
         data-slot={slotOrDefault(dataSlot, "drawer-overlay")}
         ref={ref}
       />
@@ -91,7 +114,7 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
     {
       className,
       placement = "end",
-      size = "md",
+      size = "xs",
       radius,
       style,
       "data-slot": dataSlot,
@@ -104,9 +127,10 @@ export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
         {...props}
         className={mergeClassName("brick-drawer-content", className)}
         style={radiusStyle(radius, "--brick-drawer-radius", style)}
-        data-size={size}
+        {...responsiveDataAttributes("data-size", size, { defaultValue: "xs", alwaysInitial: true })}
         data-slot={slotOrDefault(dataSlot, "drawer-content")}
-        placement={placement}
+        {...responsiveDataAttributes("data-placement", placement, { defaultValue: "end", alwaysInitial: true })}
+        placement={typeof placement === "string" ? placement : placement.initial ?? "end"}
         ref={ref}
       />
     );
@@ -187,11 +211,12 @@ export const DrawerFooter = forwardRef<HTMLDivElement, DrawerFooterProps>(
 );
 
 export const DrawerClose = forwardRef<HTMLElement, DrawerCloseProps>(
-  function DrawerClose({ className, "data-slot": dataSlot, ...props }, ref) {
+  function DrawerClose({ className, placement = "inline", "data-slot": dataSlot, ...props }, ref) {
     return (
       <AtomDrawer.Close
         {...props}
         className={mergeClassName("brick-drawer-close", className)}
+        data-placement={placement}
         data-slot={slotOrDefault(dataSlot, "drawer-close")}
         ref={ref}
       />
@@ -224,6 +249,8 @@ DrawerClose.displayName = "Drawer.Close";
 DrawerBranch.displayName = "Drawer.Branch";
 
 export const Drawer = Object.freeze({
+  Context: DrawerContext,
+  Positioner: DrawerPositioner,
   Root: DrawerRoot,
   Trigger: DrawerTrigger,
   Portal: DrawerPortal,

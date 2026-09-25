@@ -43,7 +43,7 @@ Scenario order:
 Verify keyboard naming and focus with assistive technology; automated axe is
 supporting evidence, not screen-reader verification.
 
-1. Open each of fourteen route scenarios at normal and narrow widths.
+1. Open each of fourteen `/action-bar?qualification=1` scenarios at normal and narrow widths.
 2. Compare the four Chakra examples at matched font, theme and viewport.
 3. Verify light/dark surface, shadow, inset separator and centered action loaders.
 4. With keyboard and screen reader, confirm naming, reachability, Escape and
@@ -51,5 +51,11 @@ supporting evidence, not screen-reader verification.
 5. Test real 200%/400% zoom, touch safe areas, virtual keyboard and long labels.
 6. Verify RTL logical placement and reduced-motion/forced-colors appearance.
 7. Test modal bar inside an existing Dialog and custom portal appearance scope.
+8. On the normal docs route, open the external controller example; confirm Close
+   and Escape restore focus appropriately. Reopen a retained draft and verify text.
+9. Verify default corners, explicit radius, initial animation suppression and
+   interrupted exit/reopen in light/dark and reduced motion.
+10. With classic scrollbars enabled, open a nested Dialog and check that the
+    ActionBar does not shift sideways. Repeat inside an iframe with its own portal.
 
 Record environment, outcome and remaining defects for each step before approval.

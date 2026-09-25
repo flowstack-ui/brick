@@ -1,6 +1,18 @@
 # Popover
 
-Popover presents click-open contextual content anchored to a trigger or anchor.
+For an icon-bearing Button trigger, compose `Popover.Indicator` through Button's
+`endIcon` or `startIcon` slot, rather than beside its text children. This preserves
+Button's icon alignment and gap.
+
+Radius and inset are independent. `radius="full"` creates a pill-shaped clipping
+boundary, not automatic shape-aware text padding. Compact centered content works
+well in a pill; use an ordinary overlay radius for multiline settings panels.
+
+When a retained ancestor overlay closes, `onRequestDismiss` can observe or cancel
+the child panel's dismissal. This does not cancel the ancestor's own close.
+Removing the active Trigger requests closing and clears the active value;
+controlled owners must accept those callbacks. Default-open shared panels should
+provide `defaultTriggerValue` explicitly.
 
 ## When and where to use
 
@@ -90,6 +102,35 @@ choose either it or `radius`, not both. This does not change behavior, sizing,
 or the independently owned corners of other parts.
 
 ## Visual recipes and states
+
+### Overlay arrow contract
+
+Overlay arrows share a 12px square-equivalent seed (--brick-overlay-arrow-size), exposed-edge artwork and owner surface/border paint. Prefer the shipped Arrow; do not add directional filters or translations. SVG Arrow width/height remain supported; positioning gutter measures the empty gap to the tip. Explicit positioning.offset remains raw. ToggleTip inherits Popover; Select/MultiSelect retain span hosts. NavigationMenu Indicator remains separately positioned.
+
+
+### State, layout and mounting
+
+Use `usePopover` and `Popover.RootProvider` for external control; `Popover.State`
+and `usePopoverState` provide state and methods without mutating internal refs.
+Give shared triggers unique `value` strings. One panel follows the active trigger.
+Root positioning adds offset, fixed strategy, collision controls, same-width and
+virtual anchors. Existing Content side/align/sideOffset remain supported.
+
+Content `size` controls maximum width. `inset="xs|sm|md|lg"` controls padding
+(12/16/20/24px in the default theme); explicit inset takes precedence over density
+spacing. Omitting inset preserves existing density spacing. Use direct Header,
+Body and Footer; Body owns scrolling. Do not wrap the entire panel in ScrollArea.
+Compose Close with Button or CloseButton; Indicator never generates an icon.
+
+Root lazyMount/unmountOnExit/immediate default true. Retained closed content is
+hidden. Activity hiding falls back to display-none when unavailable. Disabled
+suppresses visibility without mutating controlled state. Outside callbacks are
+preventable; outside-focus closing also obeys closeOnInteractOutside. Portal
+container selects the rendering scope; the portalled flag controls tab guards,
+not creation of a portal. Content accepts asChild/render and native ARIA labels.
+
+Popover presents click-open contextual content anchored to a trigger or anchor.
+
 
 Size controls maximum inline width. Density controls internal panel rhythm;
 compact is intended for concise menus and utility panels. Atom owns controlled/uncontrolled state,

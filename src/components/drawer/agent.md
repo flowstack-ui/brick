@@ -14,7 +14,7 @@ Present a finished modal side sheet while Atom owns focus, dismissal, portal, sc
 
 ## Required composition
 
-- Compose Trigger and Portal with Overlay and Content; put a header containing Title, Description when useful, and Close inside Content, then use Stack/NavList for its body.
+- Compose Trigger and Portal with sibling Overlay and Positioner; place Content inside Positioner. Use Header, Title, Body, Footer and authored CloseButton. Context supplies open/setOpen without another state owner.
 - Title is a native heading rather than a polymorphic layout host. Use its as prop to choose the heading level; do not pass a multi-element brand or layout through asChild. When the surface intentionally has no visible heading, give Content an explicit accessible name such as aria-label="Mobile navigation".
 
 ## Rules
@@ -27,6 +27,9 @@ Present a finished modal side sheet while Atom owns focus, dismissal, portal, sc
 - **MUST:** Use Footer justify for simple action distribution, a Brick layout component inside Footer for complex grouping, and Button fullWidth only when the action itself should fill the row.
 - **MUST:** In React Server Components, import the component subpath as import * as Drawer from @flowstack-ui/brick/drawer; use the legacy root-package runtime object only inside a client-owned module.
 - **MUST:** Load styles.css or core.css plus drawer.css.
+- **MUST:** Use Positioner inset for offset panels. For container geometry pair absolute Positioner and Overlay inside a positioned region; Portal alone does not contain geometry. Container geometry does not scope document modality.
+- **MUST:** Size and placement accept sparse ResponsiveValue with xs/end defaults. Use CSS-only responsive values on one Content tree. Choose full only when the whole available region must fill.
+- **MUST:** Nonmodal is opt-in via modal=false. Omit Overlay; Positioner leaves its empty area pointer-transparent. trapFocus and preventScroll default to modal. Use cancelable Escape/outside events rather than rebuilding dismissal.
 
 ## Common mistakes
 
@@ -39,6 +42,7 @@ Present a finished modal side sheet while Atom owns focus, dismissal, portal, sc
 - Test labeling, initial focus, focus containment/return, Escape, overlay, Close, scroll lock, content growth and capped Body overflow, touch, reduced motion, narrow screens, and nested portals.
 - Confirm CSS and every composed child component stylesheet are loaded.
 - In a React Server Component consumer, confirm the module-namespace form passes a production prerender without promoting the page to use client.
+- Verify retained DOM/input state, Context actions, responsive edges, container bounds, nonmodal background interaction, cancelable dismissal and named documentation parts.
 
 ## Related guidance
 

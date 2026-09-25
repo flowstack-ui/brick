@@ -30,7 +30,12 @@ const notice = createOverlay<{ title: string }, void>(
     <Dialog.Root {...lifecycle}>
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content><Dialog.Title>{title}</Dialog.Title><Dialog.Close>Close</Dialog.Close></Dialog.Content>
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header><Dialog.Title>{title}</Dialog.Title></Dialog.Header>
+            <Dialog.Footer><Dialog.Close>Close</Dialog.Close></Dialog.Footer>
+          </Dialog.Content>
+        </Dialog.Positioner>
       </Dialog.Portal>
     </Dialog.Root>
   ),
@@ -54,7 +59,7 @@ Exports: `createOverlay`, `OverlayManager`, `OverlayLifecycleProps`,
 | --- | --- |
 | `Viewport` | Mount exactly one host below required providers. |
 | `open(id, props)` | Returns `Promise<R \| undefined>`; same open ID updates props and shares the promise. |
-| `close(id, result?)` | Settles the result on committed closure and returns `Promise<void>` for exit. |
+| `close(id, result?)` | Settles the result when closure is requested and returns `Promise<void>` for exit. |
 | `update(id, partialProps)` | Merges authored props; missing ID throws. |
 | `remove(id)`, `removeAll()` | Remove immediately and settle pending result/exit work. |
 | `has(id)`, `get(id)` | Query existence or a readonly snapshot entry; missing get throws. |
@@ -66,6 +71,15 @@ and reserved. Forward all three to the authored overlay Root. A same-ID reopen
 during exit creates a new generation; old callbacks cannot remove it. Permanent
 host disposal settles pending work; StrictMode replay does not dispose instances.
 Opening before a host rejects; duplicate Viewports are diagnosed.
+
+Closing before an instance first commits open needs no animation: the manager
+removes it and settles exit after the current commit opportunity. Once an open
+instance commits, its authored overlay must report exit completion. Suspended
+content that never appeared cannot leave a pending exit.
+
+`get` and `getSnapshot` are imperative reads, not reactive hooks. Use application
+state for reactive activity displays. Define authored prop defaults in the
+overlay component; the factory has no options/default-props argument.
 
 ## Visual recipes and states
 
@@ -103,6 +117,8 @@ for SSR and never mutate a shared server instance while rendering.
 
 The playground covers confirmation results, updates, removal, exit sequencing,
 provider inheritance, menu handoff, multiple instances and managed panels.
+The normal route pairs focused examples with their exact source. Use
+`?qualification=1` for the retained exhaustive scenarios.
 
 ## Evidence
 

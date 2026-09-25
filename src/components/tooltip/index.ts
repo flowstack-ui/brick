@@ -1,5 +1,7 @@
 export {
   Tooltip,
+  TooltipRootProvider, TooltipContext, useTooltip,
+  type UseTooltipOptions, type UseTooltipReturn, type TooltipRootProviderProps, type TooltipState, type TooltipStateProps, type TooltipPositioningOptions, type TooltipIds, type TooltipLifecycleOptions,
   TooltipArrow,
   TooltipContent,
   TooltipDescription,

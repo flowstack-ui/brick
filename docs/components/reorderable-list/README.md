@@ -1,11 +1,12 @@
 # Reorderable List
 
 Reorderable List is Brick's finished manual-order composition, backed by the
-published `@flowstack-ui/atom@0.23.0` Reorder behavior.
+Atom Reorder behavior. Gesture measurement, preview lifecycle and scrolling
+belong to Atom; Brick owns their visual presentation.
 
 ## When and where to use
 
-Use it when a person deliberately arranges a small linear collection into an
+Use it when a person deliberately arranges a small ordered collection into an
 order the application will save, such as deployment steps, dashboard sections,
 or priority rules.
 
@@ -77,8 +78,12 @@ preserve Atom composition props and exact refs.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
-| `variant` | `outline`, `soft` | `outline` |
+| `size` | responsive `sm`, `md`, `lg` | `md` |
+| `variant` | responsive `outline`, `surface`, `soft` | `outline` |
+| `radius` | `Radius` | `surface` |
+| `motion` | boolean | `true` |
+| `activation` | `{ distance?, touchDelay?, touchTolerance? }` | 6px, 220ms, 8px |
+| `autoScroll` | boolean | `true` |
 
 Root also requires `items`, `getItemLabel`, and `onItemsChange`, and forwards
 Atom's `orientation`, `disabled`, `readOnly`, `instructions`, localized
@@ -91,15 +96,29 @@ public prop, size, and variant types.
 
 ## Visual recipes and states
 
-Outline draws an item boundary; soft uses a quieter filled item surface. Size
-changes spacing while every interaction target remains at least 44px. Atom
+### Wrapping layouts
+
+Set `layout="grid"` for row-major CSS Grid or wrapping Flex layouts. `orientation` applies to linear layouts only. Grid pickup uses all four arrow keys spatially, with Home/End selecting the collection boundaries. The native ordered list semantics and controlled identity order remain unchanged.
+
+Automatic displacement measures both axes without moving DOM nodes during hover. Item sizes must follow item identity, not nth-child or other index-dependent rules. Use `displacement="none"` for index-dependent sizing or unsupported layouts; the insertion indicator and committed order still work. Dense grids, spans, masonry, reverse/author CSS order, virtualized collections, scaled ancestors and vertical writing modes are outside automatic projection. Resize is remeasured; reduced motion is a presentation responsibility.
+
+Grid column sizing is customizable through `--brick-reorderable-list-grid-min-inline-size` (default `14rem`). Use identity-sized cards and `align-items: start` for smooth reflow; automatic projection falls back when row stretching changes card dimensions.
+
+The default `Preview` retains a decorative six-dot grip beside the item label. It remains inert and hidden from accessibility APIs; no second handle button is mounted. Supply `Preview` children to replace the default artwork.
+
+Active draggable items and handles expose `data-drag-input="pointer"` or `"keyboard"` alongside `data-dragging`; the input attribute is absent when idle. Brick keeps the cursor `grabbing` throughout pointer reordering in the same document, including without a Preview. Normal cursors return on drop or cancellation; keyboard moves do not override the document cursor.
+
+
+Outline draws a transparent item boundary; surface adds an opaque base fill;
+soft uses a quieter filled item surface. Sizes use 32, 40, and 48px controls;
+coarse pointers retain at least 44px targets. Atom
 state attributes drive dragging, valid insertion targets, disabled, read-only,
 orientation, and movement availability.
 
 ## Tokens and CSS hooks
 
 Stable classes are `.brick-reorderable-list`, `__item`, `__handle`, `__content`,
-`__actions`, `__move`, and `__drop-indicator`. Root exposes `data-size`,
+`__actions`, `__move`, `__preview`, and `__drop-indicator`. Root exposes `data-size`,
 `data-variant`, `data-orientation`, `data-disabled`, and `data-readonly`. Every
 public part exposes `data-slot`. Atom also exposes item dragging, target,
 position, and unavailable-control state.
@@ -173,12 +192,38 @@ removes interaction.
 The application owns data objects, persistence, Undo, optimistic updates,
 server conflicts, validation, analytics, and automatic sorting. Use stable
 item values rather than array indexes and update application order from
-`onItemsChange`. Root and Item preserve Atom `render` and `asChild`; their
+`onItemsChange`. Root preserves Atom `render` and `asChild`; Item supports `render`. Their
 composed hosts must remain valid ordered-list and list-item elements. Classes,
 styles, data attributes, ARIA, native events, and refs merge on every owning
 part. Content and Actions forward div attributes and refs.
 
 ## Examples
+
+### Lifted preview and motion
+
+Place `ReorderableList.Preview` inside Root, after the Items. It displays the
+item label by default, or accepts `(value) => ReactNode` for passive artwork.
+It is inert and hidden from assistive technology. The source remains mounted
+and keeps focus while siblings slide into the tentative position. The final
+order changes only on drop; Escape cancels. `motion={false}` and reduced-motion
+preferences remove transitions, not movement feedback.
+
+Preview uses `ReorderableListPreviewProps` and is also exported as
+`ReorderableListPreview`. It inherits size, variant and radius choices through
+Root. Its opaque background prevents underlying rows showing through. It
+portals to the source document body by default; use `container` for an
+untransformed layer host inside a local appearance or modal scope. Theme and
+local CSS variables follow that portal host, not the source DOM ancestry.
+Never render a second Item, Handle, duplicate IDs or live controls in Preview.
+
+Keep visible direct movement controls (or an equivalent simple-pointer
+alternative); keyboard dragging alone is not a substitute. A direct-only list
+can omit Handle and Preview.
+
+Auto-scroll acts near eligible ancestor edges during pointer dragging. Set
+`autoScroll={false}` to disable it. Activation numbers must be finite and
+non-negative. Horizontal lists are linear, not wrapped grids. Virtualization,
+cross-list transfer, table rows and multi-drag require different adapters.
 
 ### Read-only policy order
 

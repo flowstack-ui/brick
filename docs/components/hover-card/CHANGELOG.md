@@ -4,6 +4,13 @@ Hover Card follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Correct dialog preview portal composition and controlled-trigger alignment.
+
+- Add shared triggers, controller/provider, Context, positioning and lifecycle
+  controls; default opening delay is now 600ms.
+- Add independent inset and shared radius, small body typography and semantic
+  floating shadow. Preserve authored paragraph colors and Content composition.
+
 ## 0.1.10
 
 ### Added

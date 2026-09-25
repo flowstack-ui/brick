@@ -6,7 +6,7 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/tooltip");
+installVisualDefaults("/tooltip?qualification=1");
 
 test("Tooltip default surface and recipes", async ({ page }) => {
   await expectEvidenceScreenshot(

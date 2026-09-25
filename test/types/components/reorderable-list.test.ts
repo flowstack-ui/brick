@@ -25,6 +25,8 @@ const rootProps: ReorderableListRootProps = {
   items: ["a"],
   onItemsChange: () => {},
   orientation: "vertical",
+  layout: "grid",
+  displacement: "auto",
   size,
   variant,
 };
@@ -33,6 +35,8 @@ const handleProps: ReorderableListHandleProps = { "aria-label": "Reorder A", chi
 const moveProps: ReorderableListMoveProps = { "aria-label": "Move A later", children: "Later" };
 const contentProps: ReorderableListContentProps = { children: "A" };
 const actionsProps: ReorderableListActionsProps = { children: null };
+createElement(ReorderableList.Root, { ...rootProps, size: { initial: "sm", md: "lg" }, variant: { lg: "surface" }, radius: "none", motion: false, activation: { distance: 10 }, autoScroll: false });
+createElement(ReorderableList.Preview, { ref: createRef<HTMLDivElement>(), children: (value: string) => value });
 createElement(ReorderableList.Root, { ...rootProps, ref: rootRef },
   createElement(ReorderableList.Item, { ...itemProps, ref: itemRef },
     createElement(ReorderableList.Handle, { ...handleProps, ref: handleRef }),
@@ -60,3 +64,6 @@ void invalidVariant;
 void missingHandleName;
 void missingMoveName;
 void missingItemLabel;
+
+// @ts-expect-error unknown layouts must not leak as native DOM props
+const invalidLayout: ReorderableListRootProps["layout"] = "masonry";

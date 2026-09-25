@@ -43,8 +43,8 @@ export const FloatingPanelDragTrigger = styled(AtomFloatingPanel.DragTrigger, "b
 export const FloatingPanelResizeTrigger = forwardRef<HTMLDivElement, FloatingPanelResizeTriggerProps>(function FloatingPanelResizeTrigger({className,...props},ref) {
   return <AtomFloatingPanel.ResizeTrigger {...props} ref={ref} className={cx("brick-floating-panel-resize-trigger",className)} />;
 });
-export function FloatingPanelResizeTriggers({axes=["n","s","e","w","ne","nw","se","sw"]}:FloatingPanelResizeTriggersProps) {
-  return <For each={axes}>{axis=><FloatingPanelResizeTrigger key={axis} axis={axis} />}</For>;
+export function FloatingPanelResizeTriggers({axes=["n","s","e","w","ne","nw","se","sw"],...props}:FloatingPanelResizeTriggersProps) {
+  return <For each={axes}>{axis=><FloatingPanelResizeTrigger {...props} key={axis} axis={axis} />}</For>;
 }
 export const FloatingPanel = { Root:FloatingPanelRoot, RootProvider:FloatingPanelRootProvider, Context:FloatingPanelContext,
   Portal:FloatingPanelPortal, Trigger:FloatingPanelTrigger, Positioner:FloatingPanelPositioner, Content:FloatingPanelContent,

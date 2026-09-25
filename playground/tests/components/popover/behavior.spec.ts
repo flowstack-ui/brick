@@ -1,6 +1,144 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "../../evidence-test.js";
 
+test("nested popup arrows do not steal the parent resize observer", async ({ page }) => {
+  await page.goto("/popover#nested");
+  const trigger = page.getByRole("button", { name: "Open parent", exact: true });
+  await trigger.click();
+  const parent = page.getByRole("dialog", { name: "Parent panel", exact: true });
+  await expect(parent).toHaveCSS("opacity", "1");
+  await page.getByRole("button", { name: "Open nested panel", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Nested panel", exact: true })).toHaveCSS("opacity", "1");
+  const arrow = parent.locator(":scope > [data-slot=popover-arrow]");
+  const gap = async () => {
+    const a = (await arrow.boundingBox())!;
+    const t = (await trigger.boundingBox())!;
+    const side = await parent.getAttribute("data-side");
+    return side === "bottom" ? a.y - t.y - t.height : t.y - a.y - a.height;
+  };
+  const before = await gap();
+  await arrow.evaluate(element => (element as SVGElement).style.setProperty("--brick-overlay-arrow-size", "24px"));
+  await expect.poll(async () => (await arrow.boundingBox())!.width).toBeCloseTo(24 * Math.SQRT2, 1);
+  await expect.poll(async () => Math.abs(await gap() - before)).toBeLessThan(1);
+});
+
+test("shared arrow resizing preserves tip clearance and the border join", async ({ page }) => {
+  await page.goto("/popover?appearance=dark#placement");
+  const trigger = page.locator("#placement").getByRole("button", { name: "bottom", exact: true });
+  await trigger.click();
+  const panel = page.getByRole("dialog", { name: "bottom", exact: true });
+  await expect(panel).toHaveCSS("opacity", "1");
+  const arrow = panel.locator("[data-slot=popover-arrow]");
+  const measure = async () => {
+    const t = (await trigger.boundingBox())!;
+    const p = (await panel.boundingBox())!;
+    const a = (await arrow.boundingBox())!;
+    const side = await panel.getAttribute("data-side");
+    return {
+      width: a.width, height: a.height,
+      gap: side === "bottom" ? a.y - t.y - t.height : t.y - a.y - a.height,
+      join: side === "bottom" ? Math.abs(a.y + a.height - p.y) : Math.abs(a.y - p.y - p.height),
+    };
+  };
+  const initial = await measure();
+  expect(initial.width).toBeCloseTo(12 * Math.SQRT2, 1);
+  expect(initial.gap).toBeGreaterThan(0);
+  await arrow.evaluate(element => (element as SVGElement).style.setProperty("--brick-overlay-arrow-size", "20px"));
+  await expect.poll(async () => (await measure()).width).toBeCloseTo(20 * Math.SQRT2, 1);
+  await expect.poll(async () => Math.abs((await measure()).gap - initial.gap)).toBeLessThan(1);
+  expect((await measure()).join).toBeLessThan(2);
+  await expect(arrow).toHaveCSS("filter", "none");
+  await expect(arrow.locator(".brick-floating-arrow__edge").first()).toHaveCSS("vector-effect", "non-scaling-stroke");
+  await page.emulateMedia({ forcedColors: "active" });
+  const colors = await arrow.evaluate(element => {
+    const paint = getComputedStyle(element);
+    const join = getComputedStyle(element.querySelector(".brick-floating-arrow__join")!);
+    return { fill: paint.fill, join: join.stroke };
+  });
+  expect(colors.fill).toBe(colors.join);
+});
+
+test("virtual DOMRect anchor positions the panel at Reference and follows scrolling", async ({ page }) => {
+  await page.goto("/popover#virtual");
+  const trigger = page.getByRole("button", { name: "Open at reference", exact: true });
+  const reference = page.getByRole("button", { name: "Reference", exact: true });
+  const panel = page.getByRole("dialog", { name: "Virtual anchor", exact: true });
+  for (let attempt = 0; attempt < 2; attempt++) {
+    await trigger.click();
+    await expect(panel).toBeVisible();
+    const checkPosition = async () => {
+      const a = (await reference.boundingBox())!;
+      const b = (await panel.boundingBox())!;
+      expect(Number.isFinite(b.x + b.y + b.width + b.height)).toBe(true);
+      return Math.abs(a.x + a.width / 2 - b.x - b.width / 2);
+    };
+    await expect.poll(checkPosition).toBeLessThan(3);
+    await page.evaluate(() => window.scrollBy(0, 30));
+    await expect.poll(checkPosition).toBeLessThan(3);
+    const a = (await reference.boundingBox())!;
+    const b = (await panel.boundingBox())!;
+    expect(Math.min(Math.abs(b.y + b.height - a.y), Math.abs(b.y - a.y - a.height))).toBeLessThan(30);
+    await expect(panel.locator("[data-slot=popover-arrow]")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(trigger).toBeFocused();
+  }
+});
+
+test("documentation indicator uses the button icon slot and radius specimens stay compact", async ({ page }) => {
+  await page.goto("/popover#indicator");
+  const trigger = page.locator("#indicator").getByRole("button", { name: "Settings", exact: true });
+  const icon = trigger.locator(".brick-button__icon [data-slot=popover-indicator]");
+  await expect(icon).toHaveCount(1);
+  const labelBox = (await trigger.locator(".brick-button__content").boundingBox())!;
+  const iconBox = (await icon.boundingBox())!;
+  expect(Math.abs(labelBox.y + labelBox.height / 2 - iconBox.y - iconBox.height / 2)).toBeLessThan(2);
+  expect(iconBox.x - labelBox.x - labelBox.width).toBeGreaterThan(3);
+  for (const radius of ["none", "sm", "overlay", "full"]) {
+    await page.locator("#radius").getByRole("button", { name: radius, exact: true }).click();
+    const panel = page.getByRole("dialog", { name: radius, exact: true });
+    await expect(panel).toBeVisible();
+    await expect(panel.locator("[data-slot=popover-body]")).toHaveText(radius);
+    await page.keyboard.press("Escape");
+  }
+});
+
+test("documentation arrows attach on resolved sides and full radius supports narrow RTL enlarged text", async ({ page }) => {
+  await page.goto("/popover#placement");
+  for (const side of ["top", "right", "bottom", "left"]) {
+    await page.locator("#placement").getByRole("button", { name: side, exact: true }).click();
+    const panel = page.getByRole("dialog", { name: side, exact: true });
+    await expect(panel).toHaveCSS("opacity", "1");
+    const box = (await panel.boundingBox())!;
+    const arrow = (await panel.locator("[data-slot=popover-arrow]").boundingBox())!;
+    const resolved = await panel.getAttribute("data-side");
+    const distance = resolved === "top" ? Math.abs(arrow.y - box.y - box.height)
+      : resolved === "bottom" ? Math.abs(arrow.y + arrow.height - box.y)
+      : resolved === "left" ? Math.abs(arrow.x - box.x - box.width)
+      : Math.abs(arrow.x + arrow.width - box.x);
+    expect(distance).toBeLessThan(3);
+    await page.keyboard.press("Escape");
+  }
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/popover?appearance=dark&exampleDirection=rtl#radius");
+  // Text enlargement is independent of actual browser zoom qualification.
+  await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
+  await page.locator("#radius").getByRole("button", { name: "full", exact: true }).click();
+  const panel = page.getByRole("dialog", { name: "full", exact: true });
+  await expect(panel).toHaveCSS("opacity", "1");
+  const box = (await panel.boundingBox())!;
+  expect(box.x).toBeGreaterThanOrEqual(0);
+  expect(box.x + box.width).toBeLessThanOrEqual(375);
+  const readable = await panel.locator(".brick-text").evaluate(element => {
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    const r = range.getBoundingClientRect();
+    return [[r.left + 1, r.top + 1], [r.right - 1, r.top + 1],
+      [r.left + 1, r.bottom - 1], [r.right - 1, r.bottom - 1]].every(([x, y]) =>
+      element.contains(document.elementFromPoint(x, y)));
+  });
+  expect(readable).toBe(true);
+});
+
 async function readShellViewportOffsets(page: Page) {
   return page.evaluate(() => {
     const readOffset = (selector: string) => {
@@ -16,28 +154,19 @@ async function readShellViewportOffsets(page: Page) {
   });
 }
 
-test("the persistent customization preview stays below the sticky header", async ({
-  page,
-}) => {
+test("documentation exposes preview examples and named props sections", async ({ page }) => {
   await page.goto("/popover");
-  const previews = page.locator(".popover-persistent-preview");
-  await expect(previews).toHaveCount(1);
-  const headerLayer = await page
-    .locator(".evidence-review-header")
-    .evaluate((element) => Number(getComputedStyle(element).zIndex));
-  for (const preview of await previews.all()) {
-    expect(
-      await preview.evaluate((element) =>
-        Number(getComputedStyle(element).zIndex),
-      ),
-    ).toBeLessThan(headerLayer);
-  }
+  await expect(page.getByRole("heading", { name: "Multiple triggers", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Root", exact: true })).toHaveCount(1);
+  await page.getByRole("button", { name: "Open settings", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Project settings", exact: true })).toBeVisible();
+  await page.keyboard.press("Escape");
 });
 
 test("Popover opens intentionally with generated name and description, then restores focus", async ({
   page,
 }) => {
-  await page.goto("/popover");
+  await page.goto("/popover?qualification=1");
   const trigger = page.getByRole("button", { name: "Project settings" });
   await trigger.focus();
   await page.keyboard.press("Enter");
@@ -80,11 +209,54 @@ test("Popover opens intentionally with generated name and description, then rest
   await expect(trigger).toBeFocused();
 });
 
+test("shared triggers move one panel without a second disclosure", async ({ page }) => {
+  await page.goto("/popover");
+  await page.getByRole("button", { name: "Profile", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Profile", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Help", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Help", exact: true })).toBeVisible();
+  await expect(page.getByRole("dialog")).toHaveCount(1);
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Help", exact: true })).toBeFocused();
+});
+
+test("insets scale independently and same width matches its trigger", async ({ page }) => {
+  await page.goto("/popover");
+  for (const [name, inset] of [["xs", 12], ["sm", 16], ["md", 20], ["lg", 24]] as const) {
+    await page.locator("#insets").getByRole("button", { name, exact: true }).click();
+    const panel = page.getByRole("dialog", { name, exact: true });
+    await expect(panel.locator("[data-slot=popover-body]")).toHaveCSS("padding-left", `${inset}px`);
+    await page.keyboard.press("Escape");
+  }
+  const trigger = page.getByRole("button", { name: "Match trigger width", exact: true });
+  await trigger.click();
+  const panel = page.getByRole("dialog", { name: "Same width", exact: true });
+  await expect(panel).toBeVisible();
+  await expect.poll(async () => Math.abs((await panel.boundingBox())!.width - (await trigger.boundingBox())!.width)).toBeLessThan(2);
+});
+
+test("docs nested dialog and retained draft use the library behavior", async ({ page }) => {
+  await page.goto("/popover");
+  await page.getByRole("button", { name: "Lazy mount", exact: true }).click();
+  await page.getByRole("textbox", { name: "Draft name" }).fill("Preserved draft");
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Lazy mount", exact: true }).click();
+  await expect(page.getByRole("textbox", { name: "Draft name" })).toHaveValue("Preserved draft");
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Open dialog", exact: true }).click();
+  const dialog = page.getByRole("dialog", { name: "Workspace settings", exact: true });
+  await dialog.getByRole("button", { name: "Project settings", exact: true }).click();
+  const panel = page.getByRole("dialog", { name: "Inside the dialog", exact: true });
+  await expect(panel).toBeVisible();
+  await panel.getByRole("button", { name: "Done", exact: true }).click();
+  await expect(dialog).toBeVisible();
+});
+
 test("Popover removes authored motion when reduced motion is requested", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/popover");
+  await page.goto("/popover?qualification=1");
   await page.getByRole("button", { name: "Project settings" }).click();
   const durations = await page
     .getByRole("dialog", { name: "Project settings" })
@@ -97,7 +269,7 @@ test("Popover removes authored motion when reduced motion is requested", async (
 test("Popover exposes three bounded sizes, shared Arrow, and disabled state", async ({
   page,
 }) => {
-  await page.goto("/popover");
+  await page.goto("/popover?qualification=1");
   for (const size of ["sm", "md", "lg"] as const) {
     await page.getByRole("button", { name: `Open ${size} settings` }).click();
     const popover = page.locator(
@@ -125,7 +297,7 @@ test("Popover exposes three bounded sizes, shared Arrow, and disabled state", as
 test("Popover respects explicit dismissal policy and nested top-layer order", async ({
   page,
 }) => {
-  await page.goto("/popover");
+  await page.goto("/popover?qualification=1");
   await page.getByRole("button", { name: "Explicit close only" }).click();
   const explicit = page.getByRole("dialog", {
     name: "Explicit close settings",
@@ -154,7 +326,7 @@ test("Popover respects explicit dismissal policy and nested top-layer order", as
 test("Popover modal mode traps focus and closes through its visible action", async ({
   page,
 }) => {
-  await page.goto("/popover");
+  await page.goto("/popover?qualification=1");
   const appBar = page.locator("[data-playground-app-bar]");
   const sidebar = page.locator(".evidence-sidebar");
   const trigger = page.getByRole("button", { name: "Open modal settings" });
@@ -193,7 +365,7 @@ test("Popover remains contained at 256 px, supports RTL, and passes focused axe"
   page,
 }) => {
   await page.setViewportSize({ width: 256, height: 640 });
-  await page.goto("/popover");
+  await page.goto("/popover?qualification=1");
   await page.getByRole("button", { name: "فتح إعدادات المشروع" }).click();
   const popover = page.getByRole("dialog", { name: "إعدادات المشروع" });
   await expect(popover).toBeVisible();
@@ -228,7 +400,7 @@ test("Popover remains contained at 256 px, supports RTL, and passes focused axe"
 test("Popover stays open during outside touch scrolling and closes on an outside touch tap", async ({
   page,
 }) => {
-  await page.goto("/popover");
+  await page.goto("/popover?qualification=1");
   await page.getByRole("button", { name: "Project settings" }).click();
   const popover = page.getByRole("dialog", { name: "Project settings" });
   await expect(popover).toBeVisible();
@@ -278,7 +450,7 @@ test("Popover stacks long Footer actions inside an extreme narrow viewport", asy
   page,
 }) => {
   await page.setViewportSize({ width: 150, height: 200 });
-  await page.goto("/popover");
+  await page.goto("/popover?qualification=1");
   const trigger = page.getByRole("button", { name: "Open long settings" });
   await trigger.scrollIntoViewIfNeeded();
   await trigger.focus();

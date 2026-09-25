@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Locator } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/reorderable-list");
+  await page.goto("/reorderable-list?qualification=1");
   await expect(page.locator("#scenario-reorderable-list-overview .brick-reorderable-list")).toBeVisible();
 });
 
@@ -112,7 +112,8 @@ test("recipes, targets, focus rings, states, and narrow geometry remain complete
   await expect(recipeRoots.nth(0)).toHaveAttribute("data-variant", "outline");
   await expect(recipeRoots.nth(1)).toHaveAttribute("data-variant", "soft");
   const targetSizes = await page.locator("#scenario-reorderable-list-recipes .brick-reorderable-list__handle").evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().height));
-  expect(Math.min(...targetSizes)).toBeGreaterThanOrEqual(44);
+  expect(Math.min(...targetSizes)).toBeGreaterThanOrEqual(32);
+  expect(Math.max(...targetSizes)).toBeGreaterThanOrEqual(48);
 
   const focusControl = page.locator("#scenario-reorderable-list-overview").getByRole("button", { name: "Reorder Connect source" });
   await focusControl.focus();
@@ -158,3 +159,80 @@ test("Reorderable List has no automated accessibility violations", async ({ page
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });
+
+for (const example of ["grid", "mixed"]) {
+  test(`${example} projects two-dimensional destinations without hover persistence`, async ({ page }) => {
+    await page.goto("/reorderable-list");
+    const root = page.locator(`#${example} .brick-reorderable-list`);
+    await root.scrollIntoViewIfNeeded();
+    const handle = root.getByRole("button", { name: "Reorder Blue", exact: true });
+    await handle.focus();
+    await handle.press("Space");
+    await handle.press("End");
+    const projected = await root.locator(':scope > li').evaluateAll(nodes => nodes.map(node => {
+      const el = node as HTMLElement;
+      return { value: el.dataset.value, x: el.offsetLeft + parseFloat(el.style.getPropertyValue('--atom-reorder-x')), y: el.offsetTop + parseFloat(el.style.getPropertyValue('--atom-reorder-y')) };
+    }));
+    expect(projected[0]?.value).toBe('Blue');
+    await handle.press("Enter");
+    const committed = await root.locator(':scope > li').evaluateAll(nodes => nodes.map(node => ({ value: (node as HTMLElement).dataset.value, x: (node as HTMLElement).offsetLeft, y: (node as HTMLElement).offsetTop })));
+    expect(committed[committed.length - 1]?.value).toBe('Blue');
+    for (const entry of projected.filter(entry => entry.value !== 'Blue')) expect(committed.find(actual => actual.value === entry.value)).toEqual(entry);
+    await expect(handle).toBeFocused();
+  });
+}
+
+for (const withPreview of [false, true]) {
+  test(`pointer drag cursor stays grabbing across the document (${withPreview ? "preview" : "no preview"})`, async ({ page }) => {
+    if (withPreview) await page.goto('/reorderable-list?testMode=1');
+    const root = withPreview ? page.locator('ol[data-slot="reorderable-list"]').first() : page.locator('#scenario-reorderable-list-overview ol');
+    await root.scrollIntoViewIfNeeded();
+    const handle = root.locator('.brick-reorderable-list__handle').first();
+    const source = root.locator('li').first();
+    const target = root.locator('li').nth(1);
+    await page.evaluate(() => {
+      const probe = document.createElement('button');
+      probe.id = 'cursor-probe';
+      probe.textContent = 'Cursor probe';
+      Object.assign(probe.style, { position: 'fixed', right: '8px', bottom: '8px', cursor: 'pointer', zIndex: '99999' });
+      document.body.append(probe);
+    });
+    const probe = page.locator('#cursor-probe');
+    await expect(probe).toHaveCSS('cursor', 'pointer');
+    await handle.focus();
+    await handle.press('Space');
+    await expect(source).toHaveAttribute('data-drag-input', 'keyboard');
+    await expect(probe).toHaveCSS('cursor', 'pointer');
+    await handle.press('Escape');
+
+    for (const ending of ['drop', 'escape', 'blur', 'capture-loss']) {
+      await handle.scrollIntoViewIfNeeded();
+      const h = (await handle.boundingBox())!;
+      await page.mouse.move(h.x + h.width / 2, h.y + h.height / 2);
+      await expect(handle).toHaveCSS('cursor', 'grab');
+      await page.mouse.down();
+      await page.mouse.move(h.x + h.width / 2 + 12, h.y + h.height / 2);
+      await expect(source).toHaveAttribute('data-drag-input', 'pointer');
+      await expect(page.locator('[data-slot="reorderable-list-preview"]')).toHaveCount(withPreview ? 1 : 0);
+      for (const element of [root, root.locator('.brick-reorderable-list__content').first(), root.locator('.brick-reorderable-list__move').first(), probe]) {
+        const box = (await element.boundingBox())!;
+        await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+        await expect(element).toHaveCSS('cursor', 'grabbing');
+      }
+      await expect(page.locator('html')).toHaveCSS('cursor', 'grabbing');
+      expect(await probe.evaluate(el => (el as HTMLElement).style.cursor)).toBe('pointer');
+      if (ending === 'drop') {
+        const box = (await target.boundingBox())!;
+        await page.mouse.move(box.x + box.width / 2, box.y + box.height * .85);
+        await page.mouse.up();
+      } else {
+        if (ending === 'escape') await page.keyboard.press('Escape');
+        if (ending === 'blur') await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+        if (ending === 'capture-loss') await handle.dispatchEvent('lostpointercapture', { pointerId: 1 });
+        await page.mouse.up();
+      }
+      await expect(page.locator('.brick-reorderable-list__item[data-drag-input]')).toHaveCount(0);
+      await expect(probe).toHaveCSS('cursor', 'pointer');
+    }
+  });
+}

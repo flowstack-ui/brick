@@ -7,7 +7,7 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/hover-card");
+installVisualDefaults("/hover-card?qualification=1");
 
 test("Hover Card default and composition surfaces", async ({ page }) => {
   await expectEvidenceScreenshot(

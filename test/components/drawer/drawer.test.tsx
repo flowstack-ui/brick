@@ -38,6 +38,25 @@ function OpenDrawer({
 }
 
 describe("Drawer", () => {
+  it("forwards sparse responsive recipes and positioned composition", () => {
+    const ref = createRef<HTMLDivElement>();
+    render(<Drawer.Root defaultOpen modal={false}>
+      <Drawer.Positioner ref={ref} inset="md" positioning="absolute">
+        <Drawer.Content aria-label="Responsive" size={{ md: "lg" }} placement={{ md: "bottom" }}>
+          <Drawer.Context>{({ open }) => String(open)}</Drawer.Context>
+          <Drawer.Close placement="corner">Close</Drawer.Close>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>);
+    const content = screen.getByRole("dialog");
+    expect(content).not.toHaveAttribute("aria-modal");
+    expect(content).toHaveAttribute("data-size", "xs");
+    expect(content).toHaveAttribute("data-size-md", "lg");
+    expect(content).toHaveAttribute("data-placement", "end");
+    expect(content).toHaveAttribute("data-placement-md", "bottom");
+    expect(ref.current).toHaveAttribute("data-inset", "md");
+    expect(ref.current).toHaveAttribute("data-positioning", "absolute");
+  });
   it("renders the adopted anatomy and defaults with generated relationships", () => {
     render(<OpenDrawer />);
 
@@ -45,7 +64,7 @@ describe("Drawer", () => {
     expect(drawer).toHaveClass("brick-drawer-content");
     expect(drawer).toHaveAttribute("data-slot", "drawer-content");
     expect(drawer).toHaveAttribute("data-placement", "end");
-    expect(drawer).toHaveAttribute("data-size", "md");
+    expect(drawer).toHaveAttribute("data-size", "xs");
     expect(drawer).toHaveAccessibleDescription("Narrow the visible project list.");
     expect(screen.getByRole("heading", { level: 2, name: "Filter projects" })).toHaveClass(
       "brick-drawer-title",

@@ -43,10 +43,10 @@
     border-start-end-radius: inherit;
   }
   .brick-floating-panel-header[data-stage="minimized"] { border-block-end: 0; border-radius: inherit; }
-  .brick-floating-panel-drag-trigger { flex: 1; min-inline-size: 0; cursor: grab; user-select: none; }
+  .brick-floating-panel-drag-trigger { display: flex; align-items: center; gap: var(--brick-space-2); flex: 1; min-inline-size: 0; cursor: grab; user-select: none; }
   .brick-floating-panel-drag-trigger[data-dragging] { cursor: grabbing; }
   .brick-floating-panel-drag-trigger[data-disabled], .brick-floating-panel-drag-trigger[data-stage="maximized"] { cursor: default; }
-  .brick-floating-panel-title { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-weight: var(--brick-font-weight-semibold); }
+  .brick-floating-panel-title { flex: 1; min-inline-size: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-weight: var(--brick-typography-label-strong-font-weight); }
   .brick-floating-panel-description { color: var(--brick-color-text-secondary); margin: 0; }
   .brick-floating-panel-control { display: flex; flex: none; align-items: center; gap: var(--brick-space-1); }
   .brick-floating-panel-body { flex: 1; min-block-size: 0; overflow: auto; overscroll-behavior: contain; padding: var(--brick-space-3); border-end-start-radius: inherit; border-end-end-radius: inherit; }
@@ -55,7 +55,7 @@
   .brick-floating-panel-resize-trigger[data-axis="e"], .brick-floating-panel-resize-trigger[data-axis="w"] { height: auto; margin-block: var(--brick-space-2); cursor: ew-resize; }
   .brick-floating-panel-resize-trigger[data-axis="ne"], .brick-floating-panel-resize-trigger[data-axis="sw"] { cursor: nesw-resize; }
   .brick-floating-panel-resize-trigger[data-axis="nw"], .brick-floating-panel-resize-trigger[data-axis="se"] { cursor: nwse-resize; }
-  .brick-floating-panel-drag-trigger:focus-visible, .brick-floating-panel-resize-trigger:focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring); outline-offset: var(--brick-border-focus-offset); }
+  .brick-floating-panel-content:focus-visible, .brick-floating-panel-drag-trigger:focus-visible, .brick-floating-panel-resize-trigger:focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring); outline-offset: var(--brick-border-focus-offset); }
   @media (pointer: coarse) { .brick-floating-panel-resize-trigger { width: var(--brick-space-3); height: var(--brick-space-3); } }
   @keyframes brick-floating-panel-enter { from { opacity: 0; } to { opacity: 1; } }
   @keyframes brick-floating-panel-exit { from { opacity: 1; } to { opacity: 0; } }

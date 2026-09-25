@@ -4,7 +4,7 @@ import { expect, test } from "../../evidence-test.js";
 test("HoverCard appearance and customization previews start closed", async ({
   page,
 }) => {
-  await page.goto("/hover-card");
+  await page.goto("/hover-card?qualification=1");
   await expect(page.locator("[data-slot='hover-card']")).toHaveCount(0);
 
   await page.getByRole("link", { name: "light profile" }).focus();
@@ -22,7 +22,7 @@ test("HoverCard appearance and customization previews start closed", async ({
 test("HoverCard opens from keyboard focus, closes with Escape, and keeps link focus", async ({
   page,
 }) => {
-  await page.goto("/hover-card");
+  await page.goto("/hover-card?qualification=1");
   const trigger = page.getByRole("link", { name: "Ada Lovelace" });
   await trigger.focus();
   const content = page.getByTestId("hover-card-content-ada-lovelace");
@@ -46,7 +46,7 @@ test("HoverCard removes authored motion when reduced motion is requested", async
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/hover-card");
+  await page.goto("/hover-card?qualification=1");
   await page.getByRole("link", { name: "Ada Lovelace" }).focus();
   const durations = await page
     .getByTestId("hover-card-content-ada-lovelace")
@@ -64,7 +64,7 @@ test("HoverCard remains open across the pointer bridge and contains no interacti
     isMobile,
     "Pointer-bridge behavior requires a hover-capable project",
   );
-  await page.goto("/hover-card");
+  await page.goto("/hover-card?qualification=1");
   const trigger = page.getByRole("link", { name: "Grace Hopper" });
   await trigger.evaluate((element) =>
     element.scrollIntoView({ block: "center" }),
@@ -101,7 +101,7 @@ test("HoverCard does not open from touch and preserves native link navigation", 
           }
         : nativeMatchMedia(query);
   });
-  await page.goto("/hover-card");
+  await page.goto("/hover-card?qualification=1");
   const trigger = page.getByRole("link", { name: "Ada Lovelace" });
   await trigger.dispatchEvent("pointerdown", { pointerType: "touch" });
   await trigger.dispatchEvent("pointerover", { pointerType: "touch" });
@@ -115,7 +115,7 @@ test("HoverCard does not open from touch and preserves native link navigation", 
   );
   await trigger.click();
   await expect(page).toHaveURL(
-    /\/hover-card\/destination\?resource=ada-lovelace$/,
+    /\/hover-card\/destination\?resource=ada-lovelace(?:&|$)/,
   );
   await expect(page.getByTestId("hover-card-destination")).toBeVisible();
 });
@@ -124,7 +124,7 @@ test("HoverCard exposes the three bounded sizes, optional shared Arrow, and disa
   page,
   isMobile,
 }) => {
-  await page.goto("/hover-card");
+  await page.goto("/hover-card?qualification=1");
   for (const size of ["sm", "md", "lg"] as const) {
     await page.getByRole("link", { name: `${size} preview` }).focus();
     const content = page.getByTestId(`hover-card-content-${size}-preview`);
@@ -140,9 +140,9 @@ test("HoverCard exposes the three bounded sizes, optional shared Arrow, and disa
         const style = getComputedStyle(element);
         return { filter: style.filter, translate: style.translate };
       });
-      expect(arrowPaint.translate).not.toBe("none");
-      expect(arrowPaint.translate).not.toBe("0px");
-      expect(arrowPaint.filter).toContain("drop-shadow");
+      expect(arrowPaint.translate).toBe("none");
+      expect(arrowPaint.filter).toBe("none");
+      await expect(arrow.locator(".brick-floating-arrow__edge").first()).toBeAttached();
     }
     await page.keyboard.press("Escape");
   }
@@ -166,7 +166,7 @@ test("HoverCard exposes the three bounded sizes, optional shared Arrow, and disa
 test("HoverCard keeps its genuine link contract and passes the focused accessibility audit", async ({
   page,
 }) => {
-  await page.goto("/hover-card");
+  await page.goto("/hover-card?qualification=1");
   const link = page.getByRole("link", { name: "Compiler project notes" });
   await expect(link).toHaveAttribute(
     "href",
@@ -196,7 +196,7 @@ test("HoverCard remains contained at 256 px and supports RTL logical layout", as
   page,
 }) => {
   await page.setViewportSize({ width: 256, height: 640 });
-  await page.goto("/hover-card");
+  await page.goto("/hover-card?qualification=1");
   await page.getByRole("link", { name: "ملف آدا لوفلايس" }).focus();
   const content = page
     .locator("[data-slot='hover-card']")
@@ -219,7 +219,7 @@ test("HoverCard can fall back to a perpendicular axis when neither horizontal si
   page,
 }) => {
   await page.setViewportSize({ width: 256, height: 640 });
-  await page.goto("/hover-card");
+  await page.goto("/hover-card?qualification=1");
   const trigger = page.getByRole("link", { name: "Right" });
   await trigger.evaluate((element) => {
     element.style.position = "fixed";
@@ -236,7 +236,7 @@ test("HoverCard preserves the requested side when another alignment fits", async
   page,
 }) => {
   await page.setViewportSize({ width: 1000, height: 720 });
-  await page.goto("/hover-card");
+  await page.goto("/hover-card?qualification=1");
   const trigger = page.getByRole("link", { name: "Top", exact: true });
   await trigger.evaluate((element) => {
     element.style.position = "fixed";

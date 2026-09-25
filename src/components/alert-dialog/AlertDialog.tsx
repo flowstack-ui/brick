@@ -13,8 +13,15 @@ import {
 } from "@flowstack-ui/atom/alert-dialog";
 
 import { radiusStyle, type Radius } from "../_radius/Radius.js";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
+import { Dialog as AtomDialog } from "@flowstack-ui/atom/dialog";
+import type { DialogSize, DialogPlacement, DialogScrollBehavior, DialogMotionPreset, DialogPositionerProps } from "../dialog/Dialog.js";
 
-export type AlertDialogSize = "sm" | "md";
+export type AlertDialogSize = DialogSize;
+export type AlertDialogPlacement = DialogPlacement;
+export type AlertDialogScrollBehavior = DialogScrollBehavior;
+export type AlertDialogMotionPreset = DialogMotionPreset;
+export type AlertDialogPositionerProps = DialogPositionerProps;
 export type AlertDialogFooterJustify = "start" | "center" | "end" | "between";
 export type AlertDialogRootProps = AtomAlertDialogRootProps;
 export type AlertDialogTriggerProps = AtomAlertDialogTriggerProps;
@@ -22,7 +29,8 @@ export type AlertDialogPortalProps = AtomAlertDialogPortalProps;
 export type AlertDialogOverlayProps = Omit<AtomAlertDialogOverlayProps, "disabled">;
 export interface AlertDialogContentProps extends AtomAlertDialogContentProps {
   radius?: Radius;
-  size?: AlertDialogSize;
+  size?: ResponsiveValue<AlertDialogSize>;
+  motionPreset?: AlertDialogMotionPreset;
 }
 export type AlertDialogHeaderProps = HTMLAttributes<HTMLDivElement> & {
   "data-slot"?: string;
@@ -51,6 +59,16 @@ function slotOrDefault(slot: string | undefined, fallback: string) {
 export const AlertDialogRoot = AtomAlertDialog.Root;
 export const AlertDialogPortal = AtomAlertDialog.Portal;
 
+// Atom's shared modal context retains AlertDialog's no-backdrop-dismissal policy.
+export const AlertDialogPositioner = forwardRef<HTMLDivElement, AlertDialogPositionerProps>(
+  function AlertDialogPositioner({ placement = "top", scrollBehavior = "outside", className, "data-slot": dataSlot, ...props }, ref) {
+    return <AtomDialog.Positioner {...props} ref={ref}
+      className={mergeClassName("brick-dialog-positioner brick-alert-dialog-positioner", className)}
+      data-placement={placement} data-scroll-behavior={scrollBehavior}
+      data-slot={slotOrDefault(dataSlot, "alert-dialog-positioner")} />;
+  },
+);
+
 export const AlertDialogTrigger = forwardRef<HTMLElement, AlertDialogTriggerProps>(
   function AlertDialogTrigger({ className, "data-slot": dataSlot, ...props }, ref) {
     return (
@@ -74,7 +92,7 @@ export const AlertDialogOverlay = forwardRef<
   return (
     <AtomAlertDialog.Overlay
       {...props}
-      className={mergeClassName("brick-alert-dialog-overlay", className)}
+      className={mergeClassName("brick-dialog-overlay brick-alert-dialog-overlay", className)}
       data-slot={slotOrDefault(dataSlot, "alert-dialog-overlay")}
       ref={ref}
     />
@@ -85,15 +103,16 @@ export const AlertDialogContent = forwardRef<
   HTMLDivElement,
   AlertDialogContentProps
 >(function AlertDialogContent(
-  { className, size = "md", radius, style, "data-slot": dataSlot, ...props },
+  { className, size = "md", motionPreset = "scale", radius, style, "data-slot": dataSlot, ...props },
   ref,
 ) {
   return (
     <AtomAlertDialog.Content
       {...props}
-      className={mergeClassName("brick-alert-dialog-content", className)}
+      className={mergeClassName("brick-dialog-content brick-alert-dialog-content", className)}
       style={radiusStyle(radius, "--brick-alert-dialog-radius", style)}
-      data-size={size}
+      {...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true })}
+      data-motion-preset={motionPreset}
       data-slot={slotOrDefault(dataSlot, "alert-dialog-content")}
       ref={ref}
     />
@@ -110,7 +129,7 @@ export const AlertDialogHeader = forwardRef<
   return (
     <div
       {...props}
-      className={mergeClassName("brick-alert-dialog-header", className)}
+      className={mergeClassName("brick-dialog-header brick-alert-dialog-header", className)}
       data-slot={slotOrDefault(dataSlot, "alert-dialog-header")}
       ref={ref}
     />
@@ -127,7 +146,7 @@ export const AlertDialogTitle = forwardRef<
   return (
     <AtomAlertDialog.Title
       {...props}
-      className={mergeClassName("brick-alert-dialog-title", className)}
+      className={mergeClassName("brick-dialog-title brick-alert-dialog-title", className)}
       data-slot={slotOrDefault(dataSlot, "alert-dialog-title")}
       ref={ref}
     />
@@ -144,7 +163,7 @@ export const AlertDialogDescription = forwardRef<
   return (
     <AtomAlertDialog.Description
       {...props}
-      className={mergeClassName("brick-alert-dialog-description", className)}
+      className={mergeClassName("brick-dialog-description brick-alert-dialog-description", className)}
       data-slot={slotOrDefault(dataSlot, "alert-dialog-description")}
       ref={ref}
     />
@@ -156,7 +175,7 @@ export const AlertDialogBody = forwardRef<HTMLDivElement, AlertDialogBodyProps>(
     return (
       <div
         {...props}
-        className={mergeClassName("brick-alert-dialog-body", className)}
+        className={mergeClassName("brick-dialog-body brick-alert-dialog-body", className)}
         data-slot={slotOrDefault(dataSlot, "alert-dialog-body")}
         ref={ref}
       />
@@ -174,7 +193,7 @@ export const AlertDialogFooter = forwardRef<
   return (
     <div
       {...props}
-      className={mergeClassName("brick-alert-dialog-footer", className)}
+      className={mergeClassName("brick-dialog-footer brick-alert-dialog-footer", className)}
       data-justify={justify}
       data-slot={slotOrDefault(dataSlot, "alert-dialog-footer")}
       ref={ref}
@@ -223,6 +242,7 @@ export const AlertDialog = Object.freeze({
   Root: AlertDialogRoot,
   Trigger: AlertDialogTrigger,
   Portal: AlertDialogPortal,
+  Positioner: AlertDialogPositioner,
   Overlay: AlertDialogOverlay,
   Content: AlertDialogContent,
   Header: AlertDialogHeader,

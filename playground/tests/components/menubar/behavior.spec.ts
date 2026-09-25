@@ -1,12 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/menubar"); });
+test.beforeEach(async ({ page }) => { await page.goto("/menubar?qualification=1"); });
 
 test("defaults, adjacent navigation, orientation, sizes, states, and composition work", async ({ page }) => {
   const root = page.getByTestId("menubar-overview").getByRole("menubar", { name: "Editor commands" });
   await expect(root).toHaveAttribute("data-size", "md");
-  await expect(root.getByRole("menuitem", { name: "File" })).toHaveCSS("min-height", "44px");
+  await expect(root.getByRole("menuitem", { name: "File" })).toHaveCSS("min-height", "40px");
   const fileTrigger = root.getByRole("menuitem", { name: "File" });
   const editTrigger = root.getByRole("menuitem", { name: "Edit" });
   await expect(fileTrigger).toHaveAttribute("aria-expanded", "false");
@@ -18,14 +18,19 @@ test("defaults, adjacent navigation, orientation, sizes, states, and composition
   await editTrigger.hover();
   await expect(fileTrigger).toHaveAttribute("aria-expanded", "false");
   await expect(fileMenu).toBeHidden();
+  await page.keyboard.press("Escape");
   await fileTrigger.focus(); await fileTrigger.press("ArrowRight");
-  await expect(root.getByRole("menuitem", { name: "Edit" })).toHaveAttribute("aria-expanded", "true");
+  // A closed menubar uses horizontal arrows for roving focus; Down opens its menu.
+  await expect(editTrigger).toBeFocused();
+  await expect(editTrigger).toHaveAttribute("aria-expanded", "false");
+  await editTrigger.press("ArrowDown");
+  await expect(editTrigger).toHaveAttribute("aria-expanded", "true");
   for (const [index, size] of ["sm", "md", "lg"].entries()) {
     const sizedRoot = page.getByTestId("menubar-density").locator(`.brick-menubar[data-size='${size}']`);
     await expect(sizedRoot).toHaveCount(1);
-    await expect(sizedRoot.getByRole("menuitem").first()).toHaveCSS("min-height", ["32px", "44px", "48px"][index]);
+    await expect(sizedRoot.getByRole("menuitem").first()).toHaveCSS("min-height", ["36px", "40px", "44px"][index]);
   }
-  await expect(page.getByRole("menu").first().getByRole("menuitem").first()).toHaveCSS("min-height", "44px");
+  await expect(page.getByRole("menu").first().getByRole("menuitem").first()).toHaveCSS("min-height", "32px");
   const vertical = page.getByTestId("menubar-orientation").getByRole("menubar", { name: "Editor commands" }).nth(1);
   await vertical.getByRole("menuitem", { name: "File" }).focus(); await vertical.getByRole("menuitem", { name: "File" }).press("ArrowDown");
   await expect(vertical.getByRole("menuitem", { name: "Edit" })).toBeFocused();

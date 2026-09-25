@@ -4,6 +4,15 @@ Popover follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Align the indicator example through Button's end icon slot and keep full-radius
+  examples readable with compact centered content.
+
+- Add external controller, shared triggers, state/indicator and expanded Atom
+  positioning, lifecycle, events and Content composition.
+- Add independent four-step inset recipes, body typography and initial motion control.
+- Preserve composed structural handlers and callback-ref cleanup.
+- Add documentation-style examples and multipart props navigation.
+
 - Document the padded Header/Body/Footer structure, built-in bounded Body scrolling,
   and the missing-padding/scrolling failure caused by whole-panel layout wrappers.
 - Add an explicit Agent Knowledge rule and a settings-popover inset regression.

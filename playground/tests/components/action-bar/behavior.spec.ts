@@ -1,6 +1,6 @@
 import { expect, test } from "../../evidence-test.js";
 import AxeBuilder from "@axe-core/playwright";
-test.beforeEach(async ({ page }) => { await page.emulateMedia({ reducedMotion:"reduce" }); await page.goto("/action-bar"); });
+test.beforeEach(async ({ page }) => { await page.emulateMedia({ reducedMotion:"reduce" }); await page.goto("/action-bar?qualification=1"); });
 test("default bar uses compact geometry and inset separator", async ({ page }) => {
   await page.getByRole("button", {name:"Open basic", exact:true}).click();
   const bar = page.getByRole("dialog", {name:"File actions basic"});

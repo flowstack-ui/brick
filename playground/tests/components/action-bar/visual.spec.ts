@@ -1,5 +1,5 @@
 import { expectEvidenceScreenshot, installVisualDefaults, setAppearance, test } from "../../visual-harness.js";
-installVisualDefaults("/action-bar");
+installVisualDefaults("/action-bar?qualification=1");
 for (const appearance of ["light", "dark"] as const) {
   test(`ActionBar ${appearance}`, async ({ page }) => {
     await setAppearance(page, appearance);

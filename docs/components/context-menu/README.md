@@ -36,9 +36,9 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 <ContextMenu.Root>
   <ContextMenu.Trigger>Right-click this region</ContextMenu.Trigger>
   <ContextMenu.Portal>
-    <ContextMenu.Content>
-      <ContextMenu.Item>Copy</ContextMenu.Item>
-      <ContextMenu.Item tone="danger">Remove</ContextMenu.Item>
+    <ContextMenu.Content ariaLabel="Region actions">
+      <ContextMenu.Item value="copy">Copy</ContextMenu.Item>
+      <ContextMenu.Item value="remove" tone="danger">Remove</ContextMenu.Item>
     </ContextMenu.Content>
   </ContextMenu.Portal>
 </ContextMenu.Root>
@@ -50,13 +50,23 @@ Root owns open state and size. Trigger remains a paintless interaction region. P
 
 ## API
 
-Public exports are `ContextMenu`, `ContextMenuRoot`, `ContextMenuTrigger`, `ContextMenuPortal`, `ContextMenuContent`, `ContextMenuArrow`, `ContextMenuGroup`, `ContextMenuLabel`, `ContextMenuItem`, `ContextMenuCheckboxItem`, `ContextMenuRadioGroup`, `ContextMenuRadioItem`, `ContextMenuItemIndicator`, `ContextMenuLeading`, `ContextMenuItemLabel`, `ContextMenuDescription`, `ContextMenuShortcut`, `ContextMenuSeparator`, `ContextMenuSub`, `ContextMenuSubTrigger`, `ContextMenuSubContent`, `ContextMenuRootProps`, `ContextMenuTriggerProps`, `ContextMenuPortalProps`, `ContextMenuContentProps`, `ContextMenuArrowProps`, `ContextMenuGroupProps`, `ContextMenuLabelProps`, `ContextMenuItemProps`, `ContextMenuCheckboxItemProps`, `ContextMenuRadioGroupProps`, `ContextMenuRadioItemProps`, `ContextMenuItemIndicatorProps`, `ContextMenuLeadingProps`, `ContextMenuItemLabelProps`, `ContextMenuDescriptionProps`, `ContextMenuShortcutProps`, `ContextMenuSeparatorProps`, `ContextMenuSubProps`, `ContextMenuSubTriggerProps`, `ContextMenuSubContentProps`, `ContextMenuSize`, `ContextMenuItemTone`.
+Public exports are `ContextMenu`, `ContextMenuRoot`, `ContextMenuTrigger`, `ContextMenuPortal`, `ContextMenuContent`, `ContextMenuArrow`, `ContextMenuGroup`, `ContextMenuLabel`, `ContextMenuItem`, `ContextMenuCheckboxItem`, `ContextMenuRadioGroup`, `ContextMenuRadioItem`, `ContextMenuItemIndicator`, `ContextMenuLeading`, `ContextMenuItemLabel`, `ContextMenuDescription`, `ContextMenuShortcut`, `ContextMenuSeparator`, `ContextMenuSub`, `ContextMenuSubTrigger`, `ContextMenuSubContent`, `ContextMenuRootProps`, `ContextMenuTriggerProps`, `ContextMenuPortalProps`, `ContextMenuContentProps`, `ContextMenuArrowProps`, `ContextMenuGroupProps`, `ContextMenuLabelProps`, `ContextMenuItemProps`, `ContextMenuCheckboxItemProps`, `ContextMenuRadioGroupProps`, `ContextMenuRadioItemProps`, `ContextMenuItemIndicatorProps`, `ContextMenuLeadingProps`, `ContextMenuItemLabelProps`, `ContextMenuDescriptionProps`, `ContextMenuShortcutProps`, `ContextMenuSeparatorProps`, `ContextMenuSubProps`, `ContextMenuSubTriggerProps`, `ContextMenuSubContentProps`, `ContextMenuSize`, `ContextMenuItemTone`, `ContextMenuVariant`, `ContextMenuInset`.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `Root.size` | `sm`, `md`, `lg` | `md` |
+| `Root.variant` | `subtle`, `solid`, `plain` | `subtle` |
+| `Root.tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
+| `Content/SubContent.size/variant/tone` | Same recipe values | Nearest recipe context |
+| `Content/SubContent.inset` | `none`, `sm`, `md`, `lg` | Effective size |
+| `Content/SubContent.itemInset` | `default`, `none` | `default` |
+| `Content/SubContent.leadingSpace` | `auto`, `reserve` | `auto` |
+| `Item/CheckboxItem/RadioItem/SubTrigger.tone` | Semantic tones above | Inherit |
+| `Item/CheckboxItem/RadioItem/SubTrigger.itemInset` | `default`, `none` | Inherit |
+| `Item.layout` | `row`, `stack` | `row` |
+| `SubTrigger.indicator` | `ReactNode` or `null` | Default chevron |
 
-Action-like rows accept the `neutral` or `danger` tone when exposed; `neutral` is the default. Behavioral props come from the matching Atom parts.
+Behavioral props come from the matching Atom parts. Root/popup tone selects highlighted colors while resting labels remain primary. Explicit item tone also selects resting foreground; omitted item tone inherits and explicit neutral resets.
 
 ### Shared radius selection
 
@@ -67,9 +77,47 @@ and responsive objects are not accepted. Where a legacy corner `shape` exists,
 choose either it or `radius`, not both. This does not change behavior, sizing,
 or the independently owned corners of other parts.
 
+### External controller and state
+
+`useContextMenu` creates the Atom-owned controller. Pass the unchanged result to
+`ContextMenu.RootProvider` instead of `Root`; these are alternative state owners.
+RootProvider accepts the same Brick visual settings, preserving popup recipes
+through portals. `ContextMenu.Context` renders a function with the public state.
+The controller exposes open, highlightedValue, triggerValue and their setters, reposition, and setAnchorPoint. Context exposes the current menu state and supported state actions.
+
+`ContextMenu.TriggerIndicator` is an optional decorative slot with a default
+chevron. Author it inside Trigger when an arrow is wanted; no arrow is injected
+into a composed Button. Custom children replace the default artwork.
+
+Behavior options remain Atom-owned: positioning, lifecycle/presence,
+controlled highlight, cancellable selection, outside interaction callbacks,
+and normal-link navigation preserve the same public contract as Root/Menu.
+Use uniquely valued items; scoped repeated radio values require a stable
+RadioGroup id. Keep ordinary links native and preserve modified-click behavior.
+
 ## Visual recipes and states
 
-The trigger receives no Brick surface. The overlay uses collision-aware 32/44/48px `sm`/`md`/`lg` minimum rows with accent highlighting and visible disabled, danger, and selection states.
+The trigger receives no Brick surface. Popup rows use 24/32/44px minima and 12/14/16px regular text for sm/md/lg. Long content grows; lg offers comfortable touch-oriented density.
+
+Neutral subtle highlights are the default; solid uses paired foreground/background colors. Plain removes decorative highlight fill but retains keyboard-visible focus. Checked state is represented independently by ItemIndicator. Disabled rows never gain actionable hover paint.
+
+Compose navigation items with `Link variant="plain" tone="inherit"` inside
+`Item asChild`: the menu supplies row presentation while the anchor retains
+native navigation. Leading artwork uses `Icon size="inherit" tone="inherit"`
+so it follows the menu's density and state colors. Mouse departure clears
+pointer-only highlight; keyboard focus and checked state are separate.
+
+Use Arrow only when that pointer is useful; ordinary context menus do not
+require one. Context targets may be full-width regions, unlike ordinary action
+buttons. Preserve their native semantics and provide a visible command route.
+
+The documentation route separates controlled highlight, selection cancellation,
+retained content, checkbox and radio examples. Environment and exhaustive state
+matrices remain on the qualification route instead of the normal examples.
+
+Panel inset is 0/4/6/8px for none/sm/md/lg; omission follows effective size. SubContent inherits the nearest explicit recipe, including popup inset and leading policy. itemInset=none removes inline row padding only, not vertical spacing, minimum size or focus. leadingSpace=auto avoids phantom icon tracks; reserve aligns command/choice artwork in one column. Plain string Item content is supported.
+
+SubTrigger indicator omission supplies the chevron, null suppresses it, and a node replaces it. Custom indicator content must be decorative. ItemIndicator custom children replace selection artwork. Do not add nested interactive controls or inspect child trees to control indicators.
 
 ## Tokens and CSS hooks
 
@@ -84,9 +132,13 @@ Documented tokens are `--brick-context-menu-content-background`, `--brick-contex
 
 Stable output includes `data-size`, component `data-slot` hooks, and Atom state attributes.
 
+### Overlay arrow contract
+
+Overlay arrows share a 12px square-equivalent seed (--brick-overlay-arrow-size), exposed-edge artwork and owner surface/border paint. Prefer the shipped Arrow; do not add directional filters or translations. SVG Arrow width/height remain supported; positioning gutter measures the empty gap to the tip. Explicit positioning.offset remains raw. ToggleTip inherits Popover; Select/MultiSelect retain span hosts. NavigationMenu Indicator remains separately positioned.
+
 ## Customization
 
-Set documented variables on Root or Content as applicable. Use `className` and `style` for local layout without replacing semantic state, focus, or positioning attributes.
+Apply supported recipes first, then semantic Theme values, then documented local variables on Content/SubContent or the actual Item/part. DropdownMenu and ContextMenu Root have no host for popup CSS. Recipe context crosses portals; CSS variable inheritance does not. Preserve semantic state, focus and positioning attributes.
 
 ## Responsive behavior
 

@@ -4,10 +4,10 @@
     --brick-tooltip-foreground: var(--brick-color-surface-base);
     --brick-tooltip-border-color: color-mix(in srgb, var(--brick-tooltip-foreground), transparent 72%);
     --brick-tooltip-radius: var(--brick-radius-control);
-    --brick-tooltip-shadow: 0 0.5rem 1.5rem color-mix(in srgb, var(--brick-color-shadow), transparent 28%);
+    --brick-tooltip-shadow: var(--brick-shadow-floating);
     --brick-tooltip-max-inline-size: 20rem;
-    --brick-tooltip-padding-block: var(--brick-space-2);
-    --brick-tooltip-padding-inline: var(--brick-space-3);
+    --brick-tooltip-padding-block: var(--brick-space-1);
+    --brick-tooltip-padding-inline: calc(var(--brick-space-2) + var(--brick-space-1) / 2);
     --brick-tooltip-rich-max-inline-size: 24rem;
     --brick-tooltip-rich-gap: var(--brick-space-1);
 
@@ -17,7 +17,7 @@
     max-inline-size: min(var(--brick-tooltip-max-inline-size), calc(100vi - 2rem));
     padding-block: var(--brick-tooltip-padding-block);
     padding-inline: var(--brick-tooltip-padding-inline);
-    border: var(--brick-border-width) solid var(--brick-tooltip-border-color);
+    border: 0 solid var(--brick-tooltip-border-color);
     border-radius: var(--brick-tooltip-radius);
     background: var(--brick-tooltip-background);
     box-shadow: var(--brick-tooltip-shadow);
@@ -30,34 +30,37 @@
     opacity: 0;
     overflow-wrap: anywhere;
     pointer-events: auto;
-    translate: 0 0;
+    scale: 0.96;
+    transform-origin: var(--brick-floating-arrow-transform-origin, center);
     transition:
       opacity var(--brick-motion-duration-fast) var(--brick-motion-easing-enter),
-      translate var(--brick-motion-duration-fast) var(--brick-motion-easing-enter);
+      scale var(--brick-motion-duration-fast) var(--brick-motion-easing-enter);
   }
 
   .brick-tooltip[data-positioned] {
     opacity: 1;
+    scale: 1;
   }
 
   .brick-tooltip[data-state="closed"] {
     opacity: 0;
+    scale: 0.96;
   }
 
   .brick-tooltip[data-side="top"]:not([data-state="closed"]) {
-    translate: 0 -0.2rem;
+    transform-origin: bottom center;
   }
 
   .brick-tooltip[data-side="bottom"]:not([data-state="closed"]) {
-    translate: 0 0.2rem;
+    transform-origin: top center;
   }
 
   .brick-tooltip[data-side="left"]:not([data-state="closed"]) {
-    translate: -0.2rem 0;
+    transform-origin: right center;
   }
 
   .brick-tooltip[data-side="right"]:not([data-state="closed"]) {
-    translate: 0.2rem 0;
+    transform-origin: left center;
   }
 
   .brick-tooltip[data-shape="pill"] {
@@ -70,26 +73,6 @@
     gap: var(--brick-tooltip-rich-gap);
     padding-block: var(--brick-space-3);
     padding-inline: var(--brick-space-4);
-  }
-
-  .brick-tooltip[data-side="top"] .brick-tooltip__arrow {
-    translate: 0 calc(var(--brick-border-width) * -1);
-    filter: drop-shadow(0 1px 0 var(--brick-tooltip-border-color));
-  }
-
-  .brick-tooltip[data-side="right"] .brick-tooltip__arrow {
-    translate: var(--brick-border-width) 0;
-    filter: drop-shadow(-1px 0 0 var(--brick-tooltip-border-color));
-  }
-
-  .brick-tooltip[data-side="bottom"] .brick-tooltip__arrow {
-    translate: 0 var(--brick-border-width);
-    filter: drop-shadow(0 -1px 0 var(--brick-tooltip-border-color));
-  }
-
-  .brick-tooltip[data-side="left"] .brick-tooltip__arrow {
-    translate: calc(var(--brick-border-width) * -1) 0;
-    filter: drop-shadow(1px 0 0 var(--brick-tooltip-border-color));
   }
 
   .brick-tooltip__title,
@@ -118,7 +101,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .brick-tooltip {
-      translate: 0 0;
+      scale: 1;
       transition-duration: 1ms;
     }
   }
@@ -129,6 +112,7 @@
       --brick-tooltip-foreground: CanvasText;
       --brick-tooltip-border-color: CanvasText;
       box-shadow: none;
+      border-width: var(--brick-border-width);
     }
 
     .brick-tooltip__arrow {
@@ -138,4 +122,5 @@
       stroke: CanvasText;
     }
   }
+  .brick-tooltip[data-initial-open] { transition: none; }
 }
