@@ -1,5 +1,9 @@
 export {
   ProgressCircle,
+  ProgressCircleRootProvider,
+  ProgressCircleContext,
+  type ProgressCircleRootProviderProps,
+  type ProgressCircleValueFormat,
   ProgressCircleCircle,
   ProgressCircleIndicator,
   ProgressCircleLabel,

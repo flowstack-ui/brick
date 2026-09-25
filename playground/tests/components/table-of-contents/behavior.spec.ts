@@ -25,13 +25,31 @@ test("current section, bounded article and independent rail", async ({
   ).toBeLessThan(1);
   await expect(nav).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
 });
+test("sparse responsive recipes reset cleanly and props parts have anchors", async ({ page }) => {
+  const nav = page.locator('[data-scenario="table-of-contents.sizes"] nav').nth(2);
+  const link = nav.locator("a").first();
+  await page.setViewportSize({width: 700, height: 900});
+  await expect(link).toHaveCSS("font-size", "14px");
+  await expect(nav).toHaveCSS("padding-inline-start", "0px");
+  await page.setViewportSize({width: 900, height: 900});
+  await expect(link).toHaveCSS("font-size", "16px");
+  await expect(nav).toHaveCSS("padding-inline-start", "16px");
+  await page.setViewportSize({width: 1280, height: 900});
+  await expect(link).toHaveCSS("font-size", "16px");
+  await expect(nav).toHaveCSS("padding-inline-start", "0px");
+  await expect(nav.locator('[data-toc-indicator]')).toHaveCSS("visibility", "hidden");
+  for (const part of ["root", "provider", "nav", "item", "context"]) {
+    await expect(page.locator(`#props-${part} h3`)).toHaveCount(1);
+    await expect(page.locator(`#props-${part} table`)).toHaveCount(1);
+  }
+});
 test("size recipes, indentation and indicator geometry", async ({ page }) => {
   const sizes = page.locator('[data-scenario="table-of-contents.sizes"]');
   const small = sizes
-    .locator('[data-size="sm"] .brick-table-of-contents__link')
+    .locator('nav[data-size="sm"] .brick-table-of-contents__link')
     .first();
   const medium = sizes
-    .locator('[data-size="md"] .brick-table-of-contents__link')
+    .locator('nav[data-size="md"] .brick-table-of-contents__link')
     .first();
   expect(
     parseFloat(await medium.evaluate((el) => getComputedStyle(el).fontSize)),
@@ -113,6 +131,11 @@ test("Aspect Ratio rail keeps metadata, final hash and narrow layout", async ({
   await page.goto("/aspect-ratio");
   const nav = page.getByRole("navigation", { name: "On this page" });
   await expect(nav).toBeVisible();
+  const article = page.locator("[data-playground-content]");
+  const articleBox = (await article.boundingBox())!;
+  const railBox = (await nav.boundingBox())!;
+  expect(railBox.x - articleBox.x - articleBox.width).toBeCloseTo(56, 0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   const editLink = page.getByRole("link", { name: "Edit page on GitHub (opens in a new tab)", exact: true });
   await expect(editLink).toHaveAttribute("href", "https://github.com/flowstack-ui/brick/edit/main/playground/src/components/aspect-ratio/AspectRatioDocumentation.tsx");
   await expect(editLink).toHaveAttribute("target", "_blank");

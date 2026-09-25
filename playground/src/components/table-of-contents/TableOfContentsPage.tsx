@@ -2,15 +2,32 @@ import { For, VStack } from "@flowstack-ui/brick";
 import { DocsSection } from "../../shared/DocsSection.js";
 import { ExamplePreview } from "../../shared/ExamplePreview.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
-import { TableOfContentsExample } from "./examples/TableOfContentsExample.js";
-import source from "./examples/TableOfContentsExample.tsx?raw";
-import { TableOfContentsNative } from "./examples/TableOfContentsNative.js";
-import nativeSource from "./examples/TableOfContentsNative.tsx?raw";
-import { TableOfContentsEmpty } from "./examples/TableOfContentsEmpty.js";
-import emptySource from "./examples/TableOfContentsEmpty.tsx?raw";
 import { PropsTable } from "../../shared/PropsTable.js";
-import { tableOfContentsProps } from "./props.js";
-
+import { ExampleSource } from "../../shared/ExampleSource.js";
+import fixtureSource from "./examples/TableOfContentsExample.tsx?raw";
+import { tableOfContentsParts } from "./props.js";
+import { TableOfContentsBasic } from "./examples/TableOfContentsBasic.js";
+import BasicSource from "./examples/TableOfContentsBasic.tsx?raw";
+import { TableOfContentsNested } from "./examples/TableOfContentsNested.js";
+import NestedSource from "./examples/TableOfContentsNested.tsx?raw";
+import { TableOfContentsSizes } from "./examples/TableOfContentsSizes.js";
+import SizesSource from "./examples/TableOfContentsSizes.tsx?raw";
+import { TableOfContentsVariants } from "./examples/TableOfContentsVariants.js";
+import VariantsSource from "./examples/TableOfContentsVariants.tsx?raw";
+import { TableOfContentsIndicator } from "./examples/TableOfContentsIndicator.js";
+import IndicatorSource from "./examples/TableOfContentsIndicator.tsx?raw";
+import { TableOfContentsControlled } from "./examples/TableOfContentsControlled.js";
+import ControlledSource from "./examples/TableOfContentsControlled.tsx?raw";
+import { TableOfContentsDisclosure } from "./examples/TableOfContentsDisclosure.js";
+import DisclosureSource from "./examples/TableOfContentsDisclosure.tsx?raw";
+import { TableOfContentsDynamic } from "./examples/TableOfContentsDynamic.js";
+import DynamicSource from "./examples/TableOfContentsDynamic.tsx?raw";
+import { TableOfContentsRtl } from "./examples/TableOfContentsRtl.js";
+import RtlSource from "./examples/TableOfContentsRtl.tsx?raw";
+import { TableOfContentsNative } from "./examples/TableOfContentsNative.js";
+import NativeSource from "./examples/TableOfContentsNative.tsx?raw";
+import { TableOfContentsEmpty } from "./examples/TableOfContentsEmpty.js";
+import EmptySource from "./examples/TableOfContentsEmpty.tsx?raw";
 export const tableOfContentsScenarios = [
   {
     id: "table-of-contents.basic",
@@ -88,80 +105,74 @@ export const tableOfContentsScenarios = [
       "Author the empty-state copy outside the list rather than inserting invalid list children.",
   },
 ] as const satisfies readonly ScenarioDefinition[];
+const demos = [
+  { Demo: TableOfContentsBasic, source: BasicSource },
+  { Demo: TableOfContentsNested, source: NestedSource },
+  { Demo: TableOfContentsSizes, source: SizesSource },
+  { Demo: TableOfContentsVariants, source: VariantsSource },
+  { Demo: TableOfContentsIndicator, source: IndicatorSource },
+  { Demo: TableOfContentsControlled, source: ControlledSource },
+  { Demo: TableOfContentsDisclosure, source: DisclosureSource },
+  { Demo: TableOfContentsDynamic, source: DynamicSource },
+  { Demo: TableOfContentsRtl, source: RtlSource },
+  { Demo: TableOfContentsNative, source: NativeSource },
+  { Demo: TableOfContentsEmpty, source: EmptySource },
+];
+export const tableOfContentsSections = [
+  ...tableOfContentsScenarios.map((s) => ({
+    id: s.id.split(".")[1],
+    title: s.title,
+    level: 2 as const,
+  })),
+  { id: "fixture", title: "Shared article fixture", level: 2 as const },
+  { id: "props", title: "Props", level: 2 as const },
+  ...tableOfContentsParts.map((p) => ({
+    id: p.id,
+    title: p.title,
+    level: 3 as const,
+  })),
+];
 export function TableOfContentsPage() {
   return (
     <VStack gap="16" data-component-page="table-of-contents">
       <For each={tableOfContentsScenarios}>
-        {(scenario, index) => (
-          <Scenario key={scenario.id} {...scenario} hideHeading>
-            <DocsSection
-              id={scenario.id.split(".")[1]}
-              title={scenario.title}
-              description={scenario.description}
-            >
-              <ExamplePreview
-                label={scenario.title}
-                source={
-                  index === 9
-                    ? nativeSource
-                    : index === 10
-                      ? emptySource
-                      : source
-                }
+        {(scenario, index) => {
+          const { Demo, source } = demos[index];
+          return (
+            <Scenario key={scenario.id} {...scenario} hideHeading>
+              <DocsSection
+                id={scenario.id.split(".")[1]}
+                title={scenario.title}
+                description={scenario.description}
               >
-                {index === 9 ? (
-                  <TableOfContentsNative />
-                ) : index === 10 ? (
-                  <TableOfContentsEmpty />
-                ) : index === 2 ? (
-                  <VStack gap="8">
-                    <TableOfContentsExample />
-                    <TableOfContentsExample size="md" />
-                  </VStack>
-                ) : index === 3 ? (
-                  <VStack gap="8">
-                    <For each={["plain", "line"] as const}>
-                      {(variant) => (
-                        <For
-                          key={variant}
-                          each={["neutral", "accent"] as const}
-                        >
-                          {(tone) => (
-                            <TableOfContentsExample
-                              key={tone}
-                              variant={variant}
-                              tone={tone}
-                            />
-                          )}
-                        </For>
-                      )}
-                    </For>
-                  </VStack>
-                ) : (
-                  <TableOfContentsExample
-                    nested={index === 1}
-                    variant={index === 4 || index === 8 ? "line" : undefined}
-                    indicator={index === 4 || index === 8}
-                    controlled={index === 5}
-                    disclosure={index === 6}
-                    dynamic={index === 7}
-                    rtl={index === 8}
-                  />
-                )}
-              </ExamplePreview>
-            </DocsSection>
-          </Scenario>
-        )}
+                <ExamplePreview label={scenario.title} source={source}>
+                  <Demo />
+                </ExamplePreview>
+              </DocsSection>
+            </Scenario>
+          );
+        }}
       </For>
-      <DocsSection
-        id="props"
-        title="Props"
-        description="Root options; RootProvider shares the same recipes around an existing controller. Nav's autoScroll defaults true and its getScrollElement names the independently scrolling rail."
-      >
-        <PropsTable
-          label="TableOfContents.Root props"
-          rows={tableOfContentsProps}
-        />
+      <DocsSection id="fixture" title="Shared article fixture" description="The examples above import this shared article and navigation composition. Copy it alongside the selected example.">
+        <ExampleSource label="Shared article fixture" source={fixtureSource} />
+      </DocsSection>
+      <DocsSection id="props" title="Props">
+        <For each={tableOfContentsParts}>
+          {(part) => (
+            <DocsSection
+              key={part.id}
+              id={part.id}
+              title={part.title}
+              description={part.description}
+              level={3}
+            >
+              <PropsTable
+                label={`TableOfContents.${part.title} props`}
+                rows={part.rows}
+              />
+            </DocsSection>
+          )}
+        </For>
       </DocsSection>
     </VStack>
   );

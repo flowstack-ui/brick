@@ -1,5 +1,11 @@
 # Link manual-test protocol
 
+September 12 additions (not manually performed): inspect the documentation at
+`/link`, and existing numbered scenarios at `/link?qualification=1`. Check
+responsive sizes at actual browser zoom, inherited typography, parent-href
+composition, and native modifier-click/context-menu behavior with assistive
+technology. Automated viewport checks are not actual zoom or physical devices.
+
 | Run information | Value |
 | --- | --- |
 | Component | Link |

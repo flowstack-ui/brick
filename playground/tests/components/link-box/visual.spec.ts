@@ -5,7 +5,7 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/link-box");
+installVisualDefaults("/link-box?qualification=1");
 
 test("Link Box destination and independent action", async ({ page }) => {
   await expect(page.getByTestId("link-box-destination")).toHaveScreenshot(

@@ -1,43 +1,47 @@
 @layer brick.components {
   .brick-skeleton {
-    --brick-skeleton-background: color-mix(
-      in srgb,
-      var(--brick-color-surface-base),
-      var(--brick-color-text-primary) 16%
-    );
-    --brick-skeleton-highlight: color-mix(
-      in srgb,
-      var(--brick-color-surface-base),
-      var(--brick-color-text-primary) 28%
-    );
-    --brick-skeleton-width: 100%;
-    --brick-skeleton-height: 1em;
-    --brick-skeleton-radius: var(--brick-radius-subtle);
+    --brick-skeleton-background: color-mix(in srgb, var(--brick-color-surface-base), var(--brick-color-text-primary) 16%);
+    --brick-skeleton-highlight: color-mix(in srgb, var(--brick-color-surface-base), var(--brick-color-text-primary) 28%);
     position: relative;
-    display: inline-block;
     box-sizing: border-box;
-    inline-size: var(--brick-skeleton-width);
-    block-size: var(--brick-skeleton-height);
     max-inline-size: 100%;
-    border-radius: var(--brick-skeleton-radius);
     vertical-align: middle;
   }
-  .brick-skeleton[data-loading] { overflow: hidden; background: var(--brick-skeleton-background); }
-  .brick-skeleton[data-variant="circular"] { --brick-skeleton-width: 2.5rem; --brick-skeleton-height: 2.5rem; --brick-skeleton-radius: 9999px; aspect-ratio: 1; }
-  .brick-skeleton[data-variant="rectangular"] { --brick-skeleton-height: 4rem; --brick-skeleton-radius: 0; }
-  .brick-skeleton[data-variant="rounded"] { --brick-skeleton-height: 4rem; --brick-skeleton-radius: var(--brick-radius-surface); }
-  .brick-skeleton[data-has-children] { inline-size: fit-content; block-size: fit-content; }
-  .brick-skeleton-content { display: inherit; visibility: visible; }
-  .brick-skeleton[data-loading] > .brick-skeleton-content { visibility: hidden; }
-  .brick-skeleton[data-lines] { display: flex; block-size: auto; flex-direction: column; gap: var(--brick-space-2); background: transparent; overflow: visible; }
-  .brick-skeleton-line { display: block; inline-size: 100%; block-size: var(--brick-skeleton-height); border-radius: var(--brick-skeleton-radius); background: var(--brick-skeleton-background); overflow: hidden; }
-  .brick-skeleton-line:last-child { inline-size: 72%; }
-  .brick-skeleton[data-animation="pulse"][data-loading], .brick-skeleton[data-animation="pulse"][data-loading] .brick-skeleton-line { animation: brick-skeleton-pulse 1.8s ease-in-out infinite; }
-  .brick-skeleton[data-animation="wave"][data-loading]::after, .brick-skeleton[data-animation="wave"][data-loading] .brick-skeleton-line::after { content: ""; position: absolute; inset: 0; translate: -100% 0; background: linear-gradient(90deg, transparent, var(--brick-skeleton-highlight), transparent); animation: brick-skeleton-wave 1.8s ease-in-out infinite; }
-  .brick-skeleton[data-animation="wave"][data-lines]::after { content: none; }
-  .brick-skeleton-line { position: relative; }
-  @keyframes brick-skeleton-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.52; } }
-  @keyframes brick-skeleton-wave { to { translate: 100% 0; } }
-  @media (prefers-reduced-motion: reduce) { .brick-skeleton, .brick-skeleton::after, .brick-skeleton-line, .brick-skeleton-line::after { animation: none !important; } }
-  @media (forced-colors: active) { .brick-skeleton[data-loading], .brick-skeleton-line { border: 1px solid CanvasText; background: Canvas; forced-color-adjust: auto; } }
+  .brick-skeleton:not([data-as-child]) { display: inline-block; }
+  .brick-skeleton:not([data-has-children]), .brick-skeleton[data-width] { inline-size: var(--brick-skeleton-width, 100%); }
+  .brick-skeleton:not([data-has-children]), .brick-skeleton[data-height] { block-size: var(--brick-skeleton-height, 1em); }
+  .brick-skeleton[data-skeleton-variant="circular"] { --brick-skeleton-width: 2.5rem; --brick-skeleton-height: 2.5rem; --brick-skeleton-radius: var(--brick-radius-full); flex-shrink: 0; }
+  .brick-skeleton[data-skeleton-variant="rectangular"] { --brick-skeleton-height: 4rem; --brick-skeleton-radius: 0px; }
+  .brick-skeleton[data-skeleton-variant="rounded"] { --brick-skeleton-height: 4rem; --brick-skeleton-radius: var(--brick-radius-surface); }
+  .brick-skeleton[data-skeleton-loading] {
+    overflow: hidden;
+    background: var(--brick-skeleton-background);
+    border-radius: var(--brick-skeleton-radius, var(--brick-radius-subtle));
+    color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    pointer-events: none;
+    user-select: none;
+    cursor: default;
+  }
+  .brick-skeleton[data-skeleton-loading][data-has-children] * { visibility: hidden; }
+  .brick-skeleton[data-lines] { display: flex; block-size: auto; flex-direction: column; gap: var(--brick-skeleton-gap, var(--brick-space-2)); background: transparent; overflow: visible; }
+  .brick-skeleton-line { display: block; inline-size: 100%; block-size: var(--brick-skeleton-height, 1em); border-radius: var(--brick-skeleton-radius, var(--brick-radius-subtle)); }
+  .brick-skeleton-line:last-child { inline-size: var(--brick-skeleton-last-line-width, 80%); }
+  .brick-skeleton[data-skeleton-loading] > .brick-skeleton-line { background: var(--brick-skeleton-background); }
+  .brick-skeleton[data-skeleton-animation="pulse"][data-skeleton-loading] { animation: brick-skeleton-pulse var(--brick-skeleton-duration, 1.2s) ease-in-out infinite; }
+  .brick-skeleton[data-skeleton-animation="wave"][data-skeleton-loading]:not([data-lines]),
+  .brick-skeleton[data-skeleton-animation="wave"][data-skeleton-loading] > .brick-skeleton-line {
+    background-image: linear-gradient(270deg, var(--brick-skeleton-background), var(--brick-skeleton-highlight), var(--brick-skeleton-highlight), var(--brick-skeleton-background));
+    background-size: 400% 100%;
+    animation: brick-skeleton-wave var(--brick-skeleton-duration, 5s) ease-in-out infinite;
+  }
+  .brick-skeleton:not([data-skeleton-loading])[data-has-children] { animation: brick-skeleton-reveal var(--brick-skeleton-fade-duration, 0.1s) ease-out; }
+  @keyframes brick-skeleton-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  @keyframes brick-skeleton-wave { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+  @keyframes brick-skeleton-reveal { from { opacity: 0; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .brick-skeleton, .brick-skeleton-line { animation: none !important; } }
+  @media (forced-colors: active) {
+    .brick-skeleton[data-skeleton-loading]:not([data-lines]), .brick-skeleton[data-skeleton-loading] > .brick-skeleton-line { border: 1px solid CanvasText; background: Canvas; forced-color-adjust: auto; }
+  }
 }

@@ -4,6 +4,13 @@ Toast follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Use semantic title/action weights without changing the default metrics.
+
+- Add isolated createToaster managers, lifecycle notifications, pause/resume/remove, inspection, expansion and tracked promises.
+- Add surface/solid recipes, independent tones, shared radius and responsive logical spacing.
+- Refine compact card anatomy and measured arbitrary-height stacking, including RTL center placement.
+- Document focused copyable examples and manager/announcement ownership.
+
 - Use canonical focus-width tokens while preserving existing focus ownership and compact placement.
 
 ### Changed

@@ -6,6 +6,16 @@ browser navigation behavior, native attributes, and router composition.
 
 ## When and where to use
 
+`size` accepts `ResponsiveValue<LinkSize>`: inherit, sm, md or lg. A sparse
+`size={{ lg: "lg" }}` inherits surrounding typography below lg. Explicit
+`xl: "inherit"` resets family, size, leading and tracking together. Breakpoints
+are sm 30rem, md 48rem, lg 64rem and xl 80rem. Empty objects are invalid.
+Responsive selections emit `data-size-sm`, `data-size-md`, `data-size-lg` and
+`data-size-xl` in addition to the inherited `data-size` baseline.
+With `asChild`, an optional parent `href` is forwarded through Atom; a router
+can instead supply its own destination. Keep a single real anchor and forward
+its props and ref. `asChild` owns its complete content, including icons.
+
 Use Link for an inline or standalone destination that should look like a
 hyperlink. Its default is a persistent underline independent of legacy theme
 decoration policy. The subtle and plain variants are for

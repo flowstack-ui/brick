@@ -1,12 +1,18 @@
 import {
   forwardRef,
+  createContext,
+  useContext,
   type ComponentProps,
   type HTMLAttributes,
   type ReactNode,
 } from "react";
 import {
   Toast as AtomToast,
-  toast as atomToast,
+  createToastApi,
+  createToastStore,
+  defaultToastStore,
+  type ToastStore,
+  type ToastStatusChangeDetails,
   type ToastActionProps as AtomToastActionProps,
   type ToastCloseProps as AtomToastCloseProps,
   type ToastData as AtomToastData,
@@ -17,9 +23,16 @@ import {
   type ToastSwipeDirection,
 } from "@flowstack-ui/atom/toast";
 import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+import { responsiveSpacingStyles, type SpacingValue } from "../_spacing-value/SpacingValue.js";
+import type { ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 import { Spinner } from "../spinner/Spinner.js";
 
-export type { ToastId, ToastSwipeDirection };
+export type { ToastId, ToastSwipeDirection, ToastStatusChangeDetails };
+export type ToastVariant = "surface" | "solid";
+export type ToastTone = "neutral" | "contrast" | "accent" | "success" | "danger" | "warning" | "info";
+export interface ToastPresentationProps { variant?: ToastVariant; tone?: ToastTone; radius?: Radius; }
+const ToastTypeContext = createContext<ToastType>("default");
 
 export type ToastType =
   | "default"
@@ -45,7 +58,10 @@ export interface ToastActionData {
   onClick: () => void;
 }
 
-export interface ToastOptions {
+export interface ToastOptions extends ToastPresentationProps {
+  removeDelay?: number;
+  onStatusChange?: (details: ToastStatusChangeDetails) => void;
+  meta?: Record<string, unknown>;
   id?: ToastId;
   title?: string;
   description?: string;
@@ -80,7 +96,19 @@ export interface ToastApi {
   warning(message: string, options?: Omit<ToastOptions, "title" | "type">): ToastId;
   info(message: string, options?: Omit<ToastOptions, "title" | "type">): ToastId;
   loading(message: string, options?: Omit<ToastOptions, "title" | "type">): ToastId;
-  promise<T>(promise: Promise<T>, options: ToastPromiseOptions<T>): Promise<T>;
+  promise<T>(promise: Promise<T> | (() => Promise<T>), options: ToastPromiseOptions<T>): Promise<T>;
+  track<T>(promise: Promise<T> | (() => Promise<T>), options: ToastPromiseOptions<T>): { id: ToastId; unwrap(): Promise<T> };
+  pause(id?: ToastId): void;
+  resume(id?: ToastId): void;
+  remove(id?: ToastId): void;
+  isVisible(id: ToastId): boolean;
+  isDismissed(id: ToastId): boolean;
+  getCount(): number;
+  getVisibleToasts(): ToastData[];
+  subscribe(listener: () => void): () => void;
+  expand(): void;
+  collapse(): void;
+  readonly store: ToastStore;
   dismiss(id?: ToastId): void;
   update(id: ToastId, options: ToastUpdateOptions): void;
 }
@@ -91,56 +119,48 @@ function warnForMissingMessage(options: ToastOptions) {
   }
 }
 
-function createToast(messageOrOptions: string | ToastOptions, options?: Omit<ToastOptions, "title">) {
-  const resolved = typeof messageOrOptions === "string"
-    ? { ...options, title: messageOrOptions }
-    : messageOrOptions;
-  warnForMissingMessage(resolved);
-  return atomToast(resolved);
+function bindToast(store: ToastStore): ToastApi {
+  const api = createToastApi(store);
+  const create = ((message: string | ToastOptions, options?: Omit<ToastOptions, "title">) => {
+    const resolved = typeof message === "string" ? { ...options, title: message } : message;
+    warnForMissingMessage(resolved);
+    return api(resolved);
+  }) as ToastApi;
+  return Object.assign(create, api, { subscribe: store.subscribe }) as ToastApi;
 }
 
-function typedToast(type: Exclude<ToastType, "default">) {
-  return (message: string, options?: Omit<ToastOptions, "title" | "type">) =>
-    atomToast[type](message, options);
+/** Create once per application scope, or per server request; mount one Toaster per instance. */
+export function createToaster(options: { duration?: number; removeDelay?: number } = {}): ToastApi {
+  return bindToast(createToastStore(options));
 }
-
-const brickToast = createToast as ToastApi;
-brickToast.success = typedToast("success");
-brickToast.error = typedToast("error");
-brickToast.warning = typedToast("warning");
-brickToast.info = typedToast("info");
-brickToast.loading = typedToast("loading");
-brickToast.promise = <T,>(promise: Promise<T>, options: ToastPromiseOptions<T>) =>
-  atomToast.promise(promise, options);
-brickToast.dismiss = (id?: ToastId) => atomToast.dismiss(id);
-brickToast.update = (id: ToastId, options: ToastUpdateOptions) => {
-  if (options.title === undefined && options.description === undefined) {
-    // Updates may intentionally change only duration, type, or controls.
-  }
-  atomToast.update(id, options);
-};
-
-export const toast = brickToast;
+export const toast = bindToast(defaultToastStore);
 
 function classes(base: string, className?: string) {
   return className ? `${base} ${className}` : base;
 }
 
-export type ToastRootProps = Omit<AtomToastRootProps, "type"> & {
+export type ToastRootProps = Omit<AtomToastRootProps, "type"> & ToastPresentationProps & {
   type?: ToastType;
 };
 
 export const ToastRoot = forwardRef<HTMLDivElement, ToastRootProps>(function ToastRoot(
-  { className, "data-slot": slot, ...props },
+  { className, style, variant, tone, radius, "data-slot": slot, ...props },
   ref,
 ) {
+  const record = props.toast as (ToastData | undefined);
+  const type = props.type ?? record?.type ?? "default";
   return (
+    <ToastTypeContext.Provider value={type}>
     <AtomToast.Root
       {...props}
       className={classes("brick-toast", className)}
       data-slot={slot ?? "toast"}
+      data-variant={variant ?? record?.variant ?? "surface"}
+      data-tone={tone ?? record?.tone}
+      style={radiusStyle(radius ?? record?.radius, "--brick-toast-radius", style)}
       ref={ref}
     />
+    </ToastTypeContext.Provider>
   );
 });
 
@@ -163,10 +183,11 @@ function StatusGlyph({ type }: { type: ToastType }) {
 }
 
 export const ToastIcon = forwardRef<HTMLSpanElement, ToastIconProps>(function ToastIcon(
-  { children, className, type = "default", "data-slot": slot, ...props },
+  { children, className, type, "data-slot": slot, ...props },
   ref,
 ) {
-  const content = children ?? <StatusGlyph type={type} />;
+  const inheritedType = useContext(ToastTypeContext);
+  const content = children ?? <StatusGlyph type={type ?? inheritedType} />;
   if (content === null) return null;
   return (
     <span
@@ -238,7 +259,16 @@ export const ToastClose = forwardRef<HTMLButtonElement, ToastCloseProps>(functio
   );
 });
 
-export interface ToastViewportProps extends Omit<
+export interface ToastSpacingProps {
+  gap?: ResponsiveValue<SpacingValue>;
+  offset?: ResponsiveValue<SpacingValue>;
+  offsetBlockStart?: ResponsiveValue<SpacingValue>;
+  offsetBlockEnd?: ResponsiveValue<SpacingValue>;
+  offsetInlineStart?: ResponsiveValue<SpacingValue>;
+  offsetInlineEnd?: ResponsiveValue<SpacingValue>;
+}
+
+export interface ToastViewportProps extends ToastSpacingProps, Omit<
   ComponentProps<typeof AtomToast.Viewport>,
   "position"
 > {
@@ -248,7 +278,7 @@ export interface ToastViewportProps extends Omit<
 }
 
 export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(function ToastViewport(
-  { className, position = "bottom-end", stacking = "separated", width = "responsive", "data-slot": slot, ...props },
+  { className, style, gap, offset, offsetBlockStart = offset, offsetBlockEnd = offset, offsetInlineStart = offset, offsetInlineEnd = offset, position = "bottom-end", stacking = "separated", width = "responsive", "data-slot": slot, ...props },
   ref,
 ) {
   return (
@@ -258,13 +288,21 @@ export const ToastViewport = forwardRef<HTMLDivElement, ToastViewportProps>(func
       data-slot={slot ?? "toast-viewport"}
       data-stacking={stacking}
       data-width={width}
+      style={{
+        ...(gap !== undefined && responsiveSpacingStyles("--brick-toast-viewport-gap", gap)),
+        ...(offsetBlockStart !== undefined && responsiveSpacingStyles("--brick-toast-offset-block-start", offsetBlockStart)),
+        ...(offsetBlockEnd !== undefined && responsiveSpacingStyles("--brick-toast-offset-block-end", offsetBlockEnd)),
+        ...(offsetInlineStart !== undefined && responsiveSpacingStyles("--brick-toast-offset-inline-start", offsetInlineStart)),
+        ...(offsetInlineEnd !== undefined && responsiveSpacingStyles("--brick-toast-offset-inline-end", offsetInlineEnd)),
+        ...style,
+      }}
       position={position}
       ref={ref}
     />
   );
 });
 
-export interface ToastData extends Omit<AtomToastData, "title" | "description" | "type" | "action" | "cancel"> {
+export interface ToastData extends ToastPresentationProps, Omit<AtomToastData, "title" | "description" | "type" | "action" | "cancel"> {
   title?: string;
   description?: string;
   type: ToastType;
@@ -277,10 +315,11 @@ export interface ToastRenderState {
   expanded: boolean;
 }
 
-export interface ToasterProps extends Omit<
+export interface ToasterProps extends ToastPresentationProps, ToastSpacingProps, Omit<
   HTMLAttributes<HTMLDivElement>,
   "aria-label" | "children" | "role" | "tabIndex" | "onKeyDown"
 > {
+  toaster?: ToastApi;
   position?: ToastPosition;
   maxVisible?: number;
   closeButton?: boolean;
@@ -300,19 +339,19 @@ export interface ToasterProps extends Omit<
   "data-slot"?: string;
 }
 
-function DefaultToast({ closeLabel, state }: { closeLabel: string; state: ToastRenderState }) {
+function DefaultToast({ closeLabel, state, ...presentation }: ToastPresentationProps & { closeLabel: string; state: ToastRenderState }) {
   const { toast: item, index, expanded } = state;
   const hasIcon = item.icon != null || item.type !== "default";
   return (
-    <ToastRoot key={item.id} toast={item as AtomToastData} index={index} expanded={expanded}>
+    <ToastRoot {...presentation} variant={item.variant ?? presentation.variant} tone={item.tone ?? presentation.tone} radius={item.radius ?? presentation.radius} key={item.id} toast={item as AtomToastData} index={index} expanded={expanded}>
       {hasIcon ? (
         <ToastIcon type={item.type}>{item.icon ?? <StatusGlyph type={item.type} />}</ToastIcon>
       ) : null}
       <ToastContent>
         <ToastTitle />
         <ToastDescription />
-        {item.action ? <ToastActions><ToastAction /></ToastActions> : null}
       </ToastContent>
+      {item.action ? <ToastActions><ToastAction /></ToastActions> : null}
       <ToastClose aria-label={closeLabel} />
     </ToastRoot>
   );
@@ -320,6 +359,10 @@ function DefaultToast({ closeLabel, state }: { closeLabel: string; state: ToastR
 
 export const Toaster = forwardRef<HTMLDivElement, ToasterProps>(function Toaster(
   {
+    toaster = toast,
+    variant,
+    tone,
+    radius,
     position = "bottom-end",
     maxVisible = 3,
     closeButton = true,
@@ -345,6 +388,7 @@ export const Toaster = forwardRef<HTMLDivElement, ToasterProps>(function Toaster
   const resolvedCloseLabel = closeLabel ?? localeText.closeNotification;
   return (
     <AtomToast.Provider
+      store={toaster.store}
       closeButton={closeButton}
       expandOnHover={stacking === "overlap"}
       hotkey={hotkey}
@@ -366,7 +410,7 @@ export const Toaster = forwardRef<HTMLDivElement, ToasterProps>(function Toaster
         width={width}
         renderToast={(atomState) => {
           const state = atomState as ToastRenderState;
-          return renderToast ? renderToast(state) : <DefaultToast closeLabel={resolvedCloseLabel} state={state} />;
+          return renderToast ? renderToast(state) : <DefaultToast variant={variant} tone={tone} radius={radius} closeLabel={resolvedCloseLabel} state={state} />;
         }}
       />
     </AtomToast.Provider>

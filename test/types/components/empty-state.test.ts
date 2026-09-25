@@ -11,3 +11,14 @@ void [tag, loading, align];
 // @ts-expect-error Host projection requires one element child.
 const missingHost: EmptyStateRootProps = { asChild: true };
 void missingHost;
+const responsive: EmptyStateRootProps = { size: { md: "lg", xl: "sm" }, align: { initial: "start", lg: "center" } };
+// @ts-expect-error Empty responsive objects do not define a recipe.
+const emptySize: EmptyStateRootProps = { size: {} };
+// @ts-expect-error Responsive alignment stays logical.
+const physicalAlign: EmptyStateRootProps = { align: { md: "left" } };
+// @ts-expect-error Unknown responsive sizes are rejected.
+const invalidSize: EmptyStateRootProps = { size: { sm: "xl" } };
+void [responsive, emptySize, physicalAlign, invalidSize];
+// @ts-expect-error Native color is not the Theme customization API.
+const nativeColor: EmptyStateRootProps = { color: "red" };
+void nativeColor;

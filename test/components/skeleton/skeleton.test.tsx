@@ -4,6 +4,49 @@ import { describe, expect, it } from "vitest";
 import { Skeleton } from "../../../src/skeleton.js";
 
 describe("Skeleton", () => {
+  it("normalizes line counts and limits lines to standalone text", () => {
+    const { container, rerender } = render(<Skeleton lines={Infinity} />);
+    expect(container.querySelectorAll(".brick-skeleton-line")).toHaveLength(0);
+    rerender(<Skeleton lines={1000} />);
+    expect(container.querySelectorAll(".brick-skeleton-line")).toHaveLength(100);
+    rerender(<Skeleton variant="circular" lines={3} />);
+    expect(container.querySelectorAll(".brick-skeleton-line")).toHaveLength(0);
+    rerender(<Skeleton lines={3}>Text</Skeleton>);
+    expect(container.querySelector("[data-lines]")).toBeNull();
+  });
+  it("projects onto one host without a private content wrapper", () => {
+    const ref = createRef<HTMLSpanElement>();
+    const { rerender } = render(<Skeleton asChild ref={ref}><article>Profile</article></Skeleton>);
+    expect(ref.current?.tagName).toBe("ARTICLE");
+    expect(ref.current).toHaveAttribute("inert");
+    expect(ref.current?.querySelector("span")).toBeNull();
+    const host = ref.current;
+    rerender(<Skeleton asChild ref={ref} loading={false}><article>Profile</article></Skeleton>);
+    expect(ref.current).toBe(host);
+    expect(ref.current).not.toHaveAttribute("inert");
+  });
+  it("supports equal dimensions, radius and line geometry", () => {
+    const { container } = render(<Skeleton variant="circular" width={64} radius="lg" gap={12} lastLineWidth="60%" />);
+    const root = container.firstElementChild as HTMLElement;
+    expect(root.style.getPropertyValue("--brick-skeleton-height")).toBe("64px");
+    expect(root.style.getPropertyValue("--brick-skeleton-radius")).toBe("var(--brick-radius-core-lg)");
+    expect(root.style.getPropertyValue("--brick-skeleton-gap")).toBe("12px");
+    expect(root.style.getPropertyValue("--brick-skeleton-last-line-width")).toBe("60%");
+  });
+  it("preserves child and outer refs and authored accessibility after load", () => {
+    const childRef = createRef<HTMLSpanElement>();
+    const outerRef = createRef<HTMLSpanElement>();
+    const { rerender } = render(<Skeleton asChild ref={outerRef}><span ref={childRef} aria-hidden="true">Private</span></Skeleton>);
+    expect(childRef.current).toBe(outerRef.current);
+    rerender(<Skeleton asChild ref={outerRef} loading={false}><span ref={childRef} aria-hidden="true">Private</span></Skeleton>);
+    expect(outerRef.current).toHaveAttribute("aria-hidden", "true");
+  });
+  it("keeps projected state separate from the child component state", () => {
+    const { container } = render(<Skeleton asChild><button data-variant="outline">Save</button></Skeleton>);
+    expect(container.firstChild).toHaveAttribute("data-variant", "outline");
+    expect(container.firstChild).not.toHaveAttribute("data-loading");
+    expect(container.firstChild).toHaveAttribute("data-skeleton-loading", "");
+  });
   it("renders complete defaults without a live-region role", () => {
     render(<Skeleton data-testid="skeleton" />);
     const root = screen.getByTestId("skeleton");

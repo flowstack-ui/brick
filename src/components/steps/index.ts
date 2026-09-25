@@ -1,5 +1,6 @@
 export {
-  Steps, StepsRoot, StepsList, StepsItem, StepsTrigger, StepsIndicator,
+  Steps, StepsRoot, StepsRootProvider, StepsNumber, StepsStatus, useSteps, useStepsContext, useStepsItemContext, StepsList, StepsItem, StepsTrigger, StepsIndicator,
+  type StepsRootProviderProps, type StepsNumberProps, type StepsStatusProps, type StepsLayout, type UseStepsProps, type UseStepsReturn, type StepsIds,
   StepsTitle, StepsDescription, StepsSeparator, StepsContent, StepsCompletedContent,
   StepsNextTrigger, StepsPrevTrigger, StepsContext, StepsItemContext,
   type StepsRootProps, type StepsListProps, type StepsItemProps, type StepsTriggerProps,

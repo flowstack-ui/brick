@@ -53,8 +53,8 @@ Root and RootProvider add these recipe props:
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `size` | `sm`, `md` | `sm` |
-| `variant` | `plain`, `line` | `plain` |
+| `size` | ResponsiveValue of `sm`, `md` | `sm` |
+| `variant` | ResponsiveValue of `plain`, `line` | `plain` |
 | `tone` | `neutral`, `accent` | `neutral` |
 
 Root preserves the options accepted by `useTableOfContents`:
@@ -150,7 +150,9 @@ Do not add consumer focus-protection gutters, selection fills or scroll observer
 
 ## Responsive behavior
 
-Long labels wrap and logical indentation follows dir. Component size is scalar;
+Long labels wrap and logical indentation follows dir. Size and variant accept
+scalar values or sparse initial/sm/md/lg/xl breakpoint objects. Omitted initial
+values retain sm/plain defaults; later values persist until overridden.
 Stack/Grid/Frame/ScrollArea and Show/Collapsible own responsive placement. A
 bounded rail needs an explicit height owner; content scrolling has a separate root.
 

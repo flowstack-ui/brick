@@ -2,6 +2,10 @@
 
 Status: not run. Automated checks are not manual screen-reader or physical-device evidence.
 
+Responsive extension: verify sm/plain below md, md/line at md, and md/plain at
+lg in the Sizes example. Verify keyboard focus and readable wrapped labels at
+actual browser zoom, not only an emulated viewport.
+
 | Run information | Value |
 | --- | --- |
 | Component | TableOfContents |

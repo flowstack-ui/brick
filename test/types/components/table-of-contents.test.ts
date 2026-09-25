@@ -22,3 +22,7 @@ const invalidChild: TableOfContentsLinkProps = {
   children: "text",
 };
 void [root, invalid, invalidChild];
+const responsive: TableOfContentsRootProps = { ...options, size: { md: "md" }, variant: { sm: "line", lg: "plain" } };
+// @ts-expect-error closed responsive variant vocabulary
+const invalidResponsive: TableOfContentsRootProps = { ...options, variant: { md: "solid" } };
+void [responsive, invalidResponsive];

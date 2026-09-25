@@ -20,9 +20,9 @@
     }
   ],
   "composition": [
-    "For a vertical workflow with content beside the list, compose one content/action wrapper as a sibling of List. Root wraps the two regions when constrained without duplicating the workflow tree.",
-    "Root owns count and optional controlled step. List contains indexed Items with Indicator, Title, optional Description and Separator. Trigger is optional; never nest interactive content inside it.",
-    "Compose NextTrigger and PrevTrigger asChild with Button for finished actions. Place action groups outside switching Content. Indicator already renders a localized number or completed check; do not add a duplicate."
+    "For vertical workflows, compose one content/action wrapper beside List. Use responsive layout stacked/side when needed; do not add fixed minimum widths or duplicate workflow trees.",
+    "Root owns count and optional controlled step. useSteps plus one RootProvider externalizes the same state; hooks and render contexts read it. List contains indexed Items, Indicator, Title and Separator. Trigger is optional.",
+    "Compose NextTrigger and PrevTrigger asChild with Button outside switching panels. Indicator already supplies a localized number/completed check. Number and Status customize artwork without duplicating defaults."
   ],
   "rules": [
     {
@@ -38,7 +38,7 @@
     {
       "id": "steps-presentation",
       "level": "must",
-      "statement": "Use size xs/sm/md/lg, solid/subtle and accent/neutral recipes before token overrides. Workflow indicators are deliberately circular; static documentation marker radius belongs to its own composition."
+      "statement": "Use responsive size xs/sm/md/lg, solid/subtle, accent/neutral and layout auto/stacked/side recipes before token overrides. Indicator defaults to radius full; Trigger defaults to control. Both accept shared finite Radius tokens."
     },
     {
       "id": "steps-css",

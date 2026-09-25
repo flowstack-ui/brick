@@ -7,7 +7,7 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/link");
+installVisualDefaults("/link?qualification=1");
 
 test("Link defaults and complete visual dimensions", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.getByTestId("link-overview"), "overview-light.png", { maxDiffPixelRatio: 0 });

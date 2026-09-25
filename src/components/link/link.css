@@ -97,6 +97,114 @@
     --brick-link-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
   }
 
+  @media (width >= 30rem) {
+    .brick-link[data-size-sm="sm"] {
+      --brick-link-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-link-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-link-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    }
+    .brick-link[data-size-sm="md"] {
+      --brick-link-font-family: var(--brick-typography-body-md-font-family);
+      --brick-link-font-size: var(--brick-typography-body-md-font-size);
+      --brick-link-line-height: var(--brick-typography-body-md-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    }
+    .brick-link[data-size-sm="lg"] {
+      --brick-link-font-family: var(--brick-typography-body-lg-font-family);
+      --brick-link-font-size: var(--brick-typography-body-lg-font-size);
+      --brick-link-line-height: var(--brick-typography-body-lg-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+    }
+    .brick-link[data-size-sm="inherit"] {
+      --brick-link-font-family: inherit;
+      --brick-link-font-size: inherit;
+      --brick-link-line-height: inherit;
+      --brick-link-letter-spacing: inherit;
+    }
+  }
+
+  @media (width >= 48rem) {
+    .brick-link[data-size-md="sm"] {
+      --brick-link-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-link-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-link-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    }
+    .brick-link[data-size-md="md"] {
+      --brick-link-font-family: var(--brick-typography-body-md-font-family);
+      --brick-link-font-size: var(--brick-typography-body-md-font-size);
+      --brick-link-line-height: var(--brick-typography-body-md-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    }
+    .brick-link[data-size-md="lg"] {
+      --brick-link-font-family: var(--brick-typography-body-lg-font-family);
+      --brick-link-font-size: var(--brick-typography-body-lg-font-size);
+      --brick-link-line-height: var(--brick-typography-body-lg-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+    }
+    .brick-link[data-size-md="inherit"] {
+      --brick-link-font-family: inherit;
+      --brick-link-font-size: inherit;
+      --brick-link-line-height: inherit;
+      --brick-link-letter-spacing: inherit;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .brick-link[data-size-lg="sm"] {
+      --brick-link-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-link-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-link-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    }
+    .brick-link[data-size-lg="md"] {
+      --brick-link-font-family: var(--brick-typography-body-md-font-family);
+      --brick-link-font-size: var(--brick-typography-body-md-font-size);
+      --brick-link-line-height: var(--brick-typography-body-md-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    }
+    .brick-link[data-size-lg="lg"] {
+      --brick-link-font-family: var(--brick-typography-body-lg-font-family);
+      --brick-link-font-size: var(--brick-typography-body-lg-font-size);
+      --brick-link-line-height: var(--brick-typography-body-lg-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+    }
+    .brick-link[data-size-lg="inherit"] {
+      --brick-link-font-family: inherit;
+      --brick-link-font-size: inherit;
+      --brick-link-line-height: inherit;
+      --brick-link-letter-spacing: inherit;
+    }
+  }
+
+  @media (width >= 80rem) {
+    .brick-link[data-size-xl="sm"] {
+      --brick-link-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-link-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-link-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    }
+    .brick-link[data-size-xl="md"] {
+      --brick-link-font-family: var(--brick-typography-body-md-font-family);
+      --brick-link-font-size: var(--brick-typography-body-md-font-size);
+      --brick-link-line-height: var(--brick-typography-body-md-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    }
+    .brick-link[data-size-xl="lg"] {
+      --brick-link-font-family: var(--brick-typography-body-lg-font-family);
+      --brick-link-font-size: var(--brick-typography-body-lg-font-size);
+      --brick-link-line-height: var(--brick-typography-body-lg-line-height);
+      --brick-link-letter-spacing: var(--brick-typography-body-lg-letter-spacing);
+    }
+    .brick-link[data-size-xl="inherit"] {
+      --brick-link-font-family: inherit;
+      --brick-link-font-size: inherit;
+      --brick-link-line-height: inherit;
+      --brick-link-letter-spacing: inherit;
+    }
+  }
+
   .brick-link[aria-current]:not([aria-current="false"]) {
     --brick-link-font-weight: var(--brick-typography-label-md-font-weight);
   }

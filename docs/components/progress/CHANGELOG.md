@@ -4,6 +4,12 @@ Progress follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Added outline/subtle variants, responsive size/variant, inline layout, stripes
+  and animated stripes with reduced-motion fallback.
+- Polished track sizes and typography; added RootProvider, Context and
+  useProgress, explicit IDs, initial values and raw-value formatting.
+- Added static part host composition and refreshed documentation examples.
+
 - Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
 
 - Formatted values now inherit `LocaleProvider.locale` unless Root supplies an

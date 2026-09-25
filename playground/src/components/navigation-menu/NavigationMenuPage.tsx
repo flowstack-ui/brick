@@ -1,43 +1,39 @@
-import { useState, type CSSProperties, type ReactNode } from "react";
-import { Button, Drawer, Grid, NavigationMenu, NavList, Surface, Text, VStack, type NavigationMenuSize } from "@flowstack-ui/brick";
-import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
-import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
-import { FormRenderedOutput as RenderedOutput } from "../../shared/FormEvidence.js";
-import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
-import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
-import "../../styles/menu-evidence.css";
-import "./navigation-menu.playground.css";
-
-const sizes: NavigationMenuSize[] = ["sm", "md", "lg"];
-const customStyle = { "--brick-navigation-menu-control-open-background": "#fef3c7", "--brick-navigation-menu-control-open-foreground": "#92400e", "--brick-navigation-menu-indicator-color": "#fef3c7", "--brick-navigation-menu-indicator-border": "#d97706", "--brick-navigation-menu-viewport-radius": "0.25rem" } as CSSProperties;
-function Group({ children, description, title }: { children: ReactNode; description: string; title: string }) { return <VStack as="section" className="menu-evidence-group"><VStack className="menu-evidence-heading"><Text as="h3" variant="title-sm">{title}</Text><Text as="p" tone="secondary" variant="body-sm">{description}</Text></VStack>{children}</VStack>; }
-function Cell({ children, label }: { children: ReactNode; label: string }) { return <EvidenceSurface className="menu-cell" level="canvas"><SpecimenLabel>{label}</SpecimenLabel><div className="menu-preview">{children}</div></EvidenceSurface>; }
-function ProductPanel() { return <Grid.Root columns={2} gap="3" style={{ inlineSize: "min(32rem, calc(100vw - 4rem))" }}><NavigationMenu.Link href="/analytics" variant="panel"><Surface inset="sm" level="subtle"><VStack gap="1"><Text weight="semibold">Analytics</Text><Text tone="secondary" variant="body-sm">Understand product activity and adoption.</Text></VStack></Surface></NavigationMenu.Link><NavigationMenu.Link href="/automation" variant="panel"><Surface inset="sm" level="subtle"><VStack gap="1"><Text weight="semibold">Automation</Text><Text tone="secondary" variant="body-sm">Connect repeatable team workflows.</Text></VStack></Surface></NavigationMenu.Link></Grid.Root>; }
-function PrimaryNavigation({ defaultValue, orientation = "horizontal", size = "md", style }: { defaultValue?: string; orientation?: "horizontal" | "vertical"; size?: NavigationMenuSize; style?: CSSProperties }) { return <NavigationMenu.Root aria-label="Primary navigation" defaultValue={defaultValue} orientation={orientation} size={size} style={style}><NavigationMenu.List><NavigationMenu.Item value="products"><NavigationMenu.Trigger>Products</NavigationMenu.Trigger><NavigationMenu.Content><ProductPanel /></NavigationMenu.Content></NavigationMenu.Item><NavigationMenu.Item value="solutions"><NavigationMenu.Trigger>Solutions</NavigationMenu.Trigger><NavigationMenu.Content><NavigationMenu.Link href="/teams">For product teams</NavigationMenu.Link></NavigationMenu.Content></NavigationMenu.Item><NavigationMenu.Item value="pricing"><NavigationMenu.Link active href="/pricing">Pricing</NavigationMenu.Link></NavigationMenu.Item><NavigationMenu.Indicator /></NavigationMenu.List><NavigationMenu.Viewport /></NavigationMenu.Root>; }
-
-export const navigationMenuScenarios = [
-  { id: "navigation-menu.overview", number: 1, title: "Overview", description: "The default medium horizontal Navigation Menu combines native destinations and rich disclosure panels under one labeled navigation landmark." },
-  { id: "navigation-menu.links", number: 2, title: "Direct links and disclosure", navigationTitle: "Links", description: "Direct anchors and disclosure buttons share geometry while preserving different native semantics and current-page state." },
-  { id: "navigation-menu.size", number: 3, title: "Size", description: "Small, medium, and large change only shared top-level control geometry, typography, gap, and chevron sizing." },
-  { id: "navigation-menu.orientation", number: 4, title: "Orientation", description: "Horizontal and vertical roots use explicit API and corresponding keyboard and disclosure placement without breakpoint conversion." },
-  { id: "navigation-menu.content", number: 5, title: "Content composition", navigationTitle: "Content", description: "Viewport Content accepts ordinary Brick layout, typography, media, and native navigation links without prescribing a mega-menu schema." },
-  { id: "navigation-menu.states", number: 6, title: "Controlled and current states", navigationTitle: "States", description: "Controlled disclosure, current links, disabled triggers, Indicator, and Viewport expose distinct state without changing semantics." },
-  { id: "navigation-menu.composition", number: 7, title: "Composition and output", navigationTitle: "Composition", description: "Router-style link hosts and authored root hosts retain native nav, list, button, and anchor output with Atom and Brick attributes." },
-  { id: "navigation-menu.appearance", number: 8, title: "Appearance and customization", navigationTitle: "Theme", description: "Root inherits colored parents while the Viewport resets to one readable neutral surface; exact variables customize only approved parts." },
-  { id: "navigation-menu.stress", number: 9, title: "Responsive replacement, RTL, and preferences", navigationTitle: "Stress", description: "Applications replace an unfitting horizontal menu explicitly; RTL, long labels, hover gating, reduced motion, and forced colors stay usable." },
-] as const satisfies readonly ScenarioDefinition[];
-
+import { Paragraph, VStack } from "@flowstack-ui/brick";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { ExamplePreview } from "../../shared/ExamplePreview.js";
+import { OwnerDocumentation } from "../../shared/OwnerDocumentation.js";
+import { NavigationMenuEvidence } from "./NavigationMenuEvidence.js";
+import { Basic, basicSource, examples, parts, usage } from "./documentation.js";
+export { navigationMenuScenarios } from "./NavigationMenuEvidence.js";
 export function NavigationMenuPage() {
-  const [value, setValue] = useState<string | null>(null);
-  return <VStack className="menu-page" data-component-page="navigation-menu" data-testid="navigation-menu-workbench">
-    <Scenario {...navigationMenuScenarios[0]}><EvidenceSurface className="menu-overview" inset="lg" data-testid="navigation-menu-overview"><PrimaryNavigation /></EvidenceSurface></Scenario>
-    <Scenario {...navigationMenuScenarios[1]}><Grid.Root columns={2} className="menu-grid menu-grid--two" data-testid="navigation-menu-links"><Cell label="direct current link"><NavigationMenu.Root aria-label="Direct destinations"><NavigationMenu.List><NavigationMenu.Item value="overview"><NavigationMenu.Link active href="/overview">Overview</NavigationMenu.Link></NavigationMenu.Item><NavigationMenu.Item value="pricing"><NavigationMenu.Link href="/pricing">Pricing</NavigationMenu.Link></NavigationMenu.Item></NavigationMenu.List></NavigationMenu.Root></Cell><Cell label="disclosure trigger"><NavigationMenu.Root aria-label="Product destinations"><NavigationMenu.List><NavigationMenu.Item value="products"><NavigationMenu.Trigger>Products</NavigationMenu.Trigger><NavigationMenu.Content><NavigationMenu.Link href="/analytics">Analytics</NavigationMenu.Link></NavigationMenu.Content></NavigationMenu.Item></NavigationMenu.List><NavigationMenu.Viewport /></NavigationMenu.Root></Cell></Grid.Root></Scenario>
-    <Scenario {...navigationMenuScenarios[2]}><Grid.Root columns={3} className="menu-grid menu-grid--three" data-testid="navigation-menu-size">{sizes.map((size) => <Cell key={size} label={size}><PrimaryNavigation size={size} /></Cell>)}</Grid.Root></Scenario>
-    <Scenario {...navigationMenuScenarios[3]}><Grid.Root columns={2} className="menu-grid menu-grid--two" data-testid="navigation-menu-orientation"><Cell label="vertical"><PrimaryNavigation orientation="vertical" /></Cell><Cell label="horizontal"><PrimaryNavigation /></Cell></Grid.Root></Scenario>
-    <Scenario {...navigationMenuScenarios[4]}><EvidenceSurface className="menu-overview" inset="lg" data-testid="navigation-menu-content"><PrimaryNavigation /></EvidenceSurface></Scenario>
-    <Scenario {...navigationMenuScenarios[5]}><Grid.Root columns={2} className="menu-grid menu-grid--two" data-testid="navigation-menu-states"><Cell label="controlled"><NavigationMenu.Root aria-label="Controlled navigation" value={value} onValueChange={setValue}><NavigationMenu.List><NavigationMenu.Item value="products"><NavigationMenu.Trigger>Products</NavigationMenu.Trigger><NavigationMenu.Content><NavigationMenu.Link href="/analytics">Analytics</NavigationMenu.Link></NavigationMenu.Content></NavigationMenu.Item><NavigationMenu.Item value="pricing"><NavigationMenu.Link active href="/pricing">Pricing</NavigationMenu.Link></NavigationMenu.Item><NavigationMenu.Indicator /></NavigationMenu.List><NavigationMenu.Viewport /></NavigationMenu.Root><Text tone="secondary" variant="body-sm">Open: {value ?? "none"}</Text></Cell><Cell label="disabled"><NavigationMenu.Root aria-label="Unavailable destination"><NavigationMenu.List><NavigationMenu.Item value="products"><NavigationMenu.Trigger disabled>Products</NavigationMenu.Trigger><NavigationMenu.Content><Text>Unavailable content</Text></NavigationMenu.Content></NavigationMenu.Item><NavigationMenu.Item value="pricing"><NavigationMenu.Link href="/pricing">Pricing</NavigationMenu.Link></NavigationMenu.Item></NavigationMenu.List><NavigationMenu.Viewport /></NavigationMenu.Root></Cell></Grid.Root></Scenario>
-    <Scenario {...navigationMenuScenarios[6]}><VStack className="menu-evidence-stack" data-testid="navigation-menu-composition"><Group title="Router composition" description="The authored anchor remains native and receives active state, class, slot, events, and ref behavior."><RenderedOutput label="Navigation Menu link HTML"><NavigationMenu.Root aria-label="Composed navigation"><NavigationMenu.List><NavigationMenu.Item value="docs"><NavigationMenu.Link active asChild><a data-router-link="docs" href="/docs">Documentation</a></NavigationMenu.Link></NavigationMenu.Item></NavigationMenu.List></NavigationMenu.Root></RenderedOutput></Group><Group title="Panel focus fallback" description="A panel Link keeps its own visible focus ring when its direct child is not a Surface."><NavigationMenu.Root aria-label="Panel fallback navigation"><NavigationMenu.List><NavigationMenu.Item value="fallback"><NavigationMenu.Link data-testid="navigation-menu-panel-fallback" href="/fallback" variant="panel"><span>Fallback destination</span></NavigationMenu.Link></NavigationMenu.Item></NavigationMenu.List></NavigationMenu.Root></Group></VStack></Scenario>
-    <Scenario {...navigationMenuScenarios[7]}><VStack className="menu-evidence-stack"><Group title="Scoped appearances" description="The same closed menu uses the local light and dark semantic tokens; open either trigger to inspect its neutral Viewport surface and matching Indicator arrow."><Grid.Root columns={2} className="menu-scoped-grid" data-testid="navigation-menu-appearance"><EvidenceSurface className="menu-scoped-panel" data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><PrimaryNavigation /></EvidenceSurface><EvidenceSurface className="menu-scoped-panel" data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><PrimaryNavigation /></EvidenceSurface></Grid.Root></Group><Group title="Consumer customization" description="The code and preview change only open paint, Indicator arrow, and Viewport radius through public variables."><EvidenceSurface className="playground-customization-evidence" inset="none"><Grid.Root className="playground-customization-layout" columns={2} gap="0"><VStack gap="2"><SpecimenLabel>Customized</SpecimenLabel><PlaygroundCodeBlock aria-label="Navigation Menu customization code">{`style={{\n  "--brick-navigation-menu-control-open-background": "#fef3c7",\n  "--brick-navigation-menu-control-open-foreground": "#92400e",\n  "--brick-navigation-menu-indicator-color": "#fef3c7",\n  "--brick-navigation-menu-indicator-border": "#d97706",\n  "--brick-navigation-menu-viewport-radius": "0.25rem",\n}}`}</PlaygroundCodeBlock></VStack><div className="menu-customization__preview playground-customization-preview"><PrimaryNavigation style={customStyle} /></div></Grid.Root></EvidenceSurface></Group></VStack></Scenario>
-    <Scenario {...navigationMenuScenarios[8]}><Grid.Root columns={2} className="menu-grid menu-grid--two" data-testid="navigation-menu-stress"><Cell label="explicit narrow replacement"><Drawer.Root><Drawer.Trigger asChild><Button>Open mobile navigation</Button></Drawer.Trigger><Drawer.Portal><Drawer.Content aria-label="Mobile navigation"><Drawer.Header><Drawer.Title>Navigation</Drawer.Title></Drawer.Header><Drawer.Body><NavList.Root aria-label="Mobile destinations"><NavList.List><NavList.Item><NavList.Link active href="/overview">Overview</NavList.Link></NavList.Item><NavList.Item><NavList.Link href="/products">Products</NavList.Link></NavList.Item><NavList.Item><NavList.Link href="/pricing">Pricing</NavList.Link></NavList.Item></NavList.List></NavList.Root></Drawer.Body></Drawer.Content></Drawer.Portal></Drawer.Root></Cell><Cell label="RTL"><div dir="rtl"><NavigationMenu.Root aria-label="التنقل الرئيسي" dir="rtl"><NavigationMenu.List><NavigationMenu.Item value="products"><NavigationMenu.Trigger>المنتجات</NavigationMenu.Trigger><NavigationMenu.Content><NavigationMenu.Link href="/analytics">التحليلات</NavigationMenu.Link></NavigationMenu.Content></NavigationMenu.Item><NavigationMenu.Item value="pricing"><NavigationMenu.Link href="/pricing">الأسعار</NavigationMenu.Link></NavigationMenu.Item><NavigationMenu.Indicator /></NavigationMenu.List><NavigationMenu.Viewport /></NavigationMenu.Root></div></Cell></Grid.Root></Scenario>
-  </VStack>;
+  const preview = usePreviewContext();
+  if (
+    preview ||
+    (typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).get("qualification") === "1")
+  )
+    return <NavigationMenuEvidence />;
+  return (
+    <VStack gap={12} data-component-page="navigation-menu">
+      <ExamplePreview label="NavigationMenu basic" source={basicSource}>
+        <Basic />
+      </ExamplePreview>
+      <OwnerDocumentation
+        name="NavigationMenu"
+        usage={usage}
+        examples={examples}
+        parts={parts}
+        guide={
+          <VStack gap="3">
+            <Paragraph tone="secondary">
+              NavigationMenu is site navigation: links navigate, triggers
+              disclose. Use Menu or Menubar for commands, and NavList for an
+              always-visible list of destinations.
+            </Paragraph>
+          </VStack>
+        }
+        usageDescription="Use native links and disclosure buttons for navigation, not menuitem roles. The shared viewport is optional; application code owns routing and narrow-screen alternatives."
+      />
+    </VStack>
+  );
 }

@@ -35,3 +35,8 @@ const invalidPressableRoot: LinkBoxRootProps = { asChild: true };
 void invalidRoot;
 void missingDestination;
 void invalidPressableRoot;
+import type { Radius } from "../../../src/index.js";
+const radius: Radius = "surface";
+createElement(LinkBox.Root, { radius });
+// @ts-expect-error Radius is a closed token selector, not arbitrary CSS.
+createElement(LinkBox.Root, { radius: "12px" });

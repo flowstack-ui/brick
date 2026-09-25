@@ -24,6 +24,10 @@ Provide a finished top surface and one-row start, geometrically centered, and en
 - **MUST:** Keep application-specific visibility and wrapping policy outside AppBar and implement it with Brick responsive/layout components.
 - **MUST:** When application layout references an App Bar density measurement, use the matching public comfortable or compact minimum block-size token instead of repeating Brick's value; allow the rendered bar and adjacent content to grow under zoom or enlarged content.
 - **MUST:** Load styles.css or core.css plus app-bar.css.
+- **MUST:** Use responsive layout, density, inset and gap props rather than layout CSS. Balanced keeps a geometric center; flex gives Center remaining width and End logical-end alignment. Sections accept gap. Reduce optional content with Show/Hide before controls overlap; checking page overflow alone is insufficient.
+- **MUST:** Use elevation none/low/medium/high for semantic shadows; explicit elevation overrides elevated. Responsive offset sets logical block-start positioning only and never reserves page space. Body offsets and scroll policy remain application-owned.
+- **MUST:** Accent solid AppBar adapts neutral ghost Button and IconButton colors. Preserve explicit non-ghost variants and compose overlays with their owning components.
+- **MUST:** Use treatment translucent for an opt-in preset; backgroundOpacity, backdropBlur, backdropSaturate, borderColor and borderOpacity independently tune the painted root. Exact px/rem/em blur values need no token. Preserve semantic foregrounds, native overflow and portalled popup ownership; backdrop filtering contains positioned descendants. Instance effect inputs do not inherit into nested owners. Theme defaults tune opted-in presets only.
 
 ## Common mistakes
 
@@ -35,6 +39,7 @@ Provide a finished top surface and one-row start, geometrically centered, and en
 - Check geometric centering with unequal side content, truncation, zoom, narrow widths, and RTL.
 - Confirm contained App Bars have one page-gutter owner rather than stacked Container and Toolbar insets.
 - Confirm landmark names, actions, navigation, and modular CSS are complete.
+- Verify unchanged default and legacy blurred paint, independent effect inputs, nested instances, transparent levels, unsupported filters, reduced transparency and forced colors. Do not claim opaque Theme contrast validation proves contrast over arbitrary backdrops.
 
 ## Related guidance
 

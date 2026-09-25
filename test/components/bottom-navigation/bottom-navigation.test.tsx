@@ -13,6 +13,22 @@ function DestinationContent({ label }: { label: string }) {
 }
 
 describe("BottomNavigation", () => {
+  it("exposes responsive recipes, shared radius and independent selected paint", () => {
+    render(<BottomNavigation.Root aria-label="Primary" size={{ md: "lg", xl: "sm" }}
+      arrangement={{ initial: "equal", lg: "centered" }} radius="xl" selectionRadius="control"
+      elevated elevation="none" variant="surface" selectionVariant="plain">
+      <BottomNavigation.Item value="home">Home</BottomNavigation.Item>
+    </BottomNavigation.Root>);
+    const root = screen.getByRole("navigation", { name: "Primary" });
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "lg");
+    expect(root).toHaveAttribute("data-size-xl", "sm");
+    expect(root).toHaveAttribute("data-arrangement-lg", "centered");
+    expect(root).toHaveAttribute("data-selection-variant", "plain");
+    expect(root).not.toHaveAttribute("data-elevated");
+    expect(root.style.getPropertyValue("--brick-bottom-navigation-radius-input")).toBe("var(--brick-radius-core-xl)");
+    expect(root.style.getPropertyValue("--brick-bottom-navigation-selection-radius-input")).toBe("var(--brick-radius-control)");
+  });
   it("renders the complete default landmark, link, icon, and label anatomy", () => {
     const rootRef = createRef<HTMLElement>();
     const itemRef = createRef<HTMLElement>();
@@ -189,5 +205,22 @@ describe("BottomNavigation", () => {
     expect(label.tagName).toBe("STRONG");
     expect(label).toHaveClass("brick-bottom-navigation__label", "custom-label");
     expect(label).toHaveStyle({ color: "rgb(255, 0, 0)" });
+  });
+});
+
+
+describe("surface effect compatibility", () => {
+  it("preserves legacy blur and lets explicit treatment reset it", () => {
+    const view = render(<BottomNavigation.Root data-testid="surface-effect-bar" children={<span>Navigation</span>} blurred />);
+    const bar = screen.getByTestId("surface-effect-bar");
+    expect(bar).toHaveAttribute("data-blurred");
+    expect(bar).not.toHaveAttribute("data-surface-effects");
+    view.rerender(<BottomNavigation.Root data-testid="surface-effect-bar" children={<span>Navigation</span>} blurred treatment="none" />);
+    expect(bar).not.toHaveAttribute("data-blurred");
+    expect(bar).toHaveAttribute("data-surface-effects", "none");
+    view.rerender(<BottomNavigation.Root data-testid="surface-effect-bar" children={<span>Navigation</span>} blurred backgroundOpacity={0.6} backdropBlur="18px" />);
+    expect(bar).toHaveAttribute("data-surface-effects", "legacy");
+    expect(bar.style.getPropertyValue("--brick-surface-effect-opacity")).toBe("60%");
+    expect(bar.style.getPropertyValue("--brick-surface-effect-blur")).toBe("18px");
   });
 });

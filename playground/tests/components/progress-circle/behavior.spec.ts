@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/progress-circle"); });
+test.beforeEach(async ({ page }) => { await page.goto("/progress-circle?qualification=1"); });
 
 test("defaults, values, tones, sizes, thickness, and caps are complete", async ({ page }) => {
   const root = page.getByTestId("progress-circle-overview").getByRole("progressbar", { name: "Export report" });
@@ -19,15 +19,15 @@ test("defaults, values, tones, sizes, thickness, and caps are complete", async (
     const sizeRoot = page.getByTestId("progress-circle-sizes").locator(`.brick-progress-circle[data-size='${size}']`);
     widths.push((await sizeRoot.locator("svg").boundingBox())!.width);
     const geometry = await sizeRoot.locator(".brick-progress-circle__indicator").evaluate((element) => ({
-      dash: Number(element.getAttribute("stroke-dasharray")?.split(" ")[0]),
-      offset: Number(element.getAttribute("stroke-dashoffset")),
+      dash: parseFloat(getComputedStyle(element).strokeDasharray),
+      offset: parseFloat(getComputedStyle(element).strokeDashoffset),
       total: (element as SVGCircleElement).getTotalLength(),
       vectorEffect: getComputedStyle(element).vectorEffect,
     }));
     expect(geometry.vectorEffect).toBe("none");
     expect(Math.abs(geometry.dash - geometry.total)).toBeLessThan(1);
     expect(geometry.offset / geometry.dash).toBeCloseTo(0.36, 3);
-    expect(await sizeRoot.locator(".brick-progress-circle__value").evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+    await expect(sizeRoot.locator(".brick-progress-circle__value")).toHaveCount(0);
   }
   expect(widths).toEqual([...widths].sort((a, b) => a - b));
   for (const thickness of ["thin", "regular", "thick"]) await expect(page.getByTestId("progress-circle-thickness").locator(`.brick-progress-circle[data-thickness='${thickness}']`)).toHaveCount(1);

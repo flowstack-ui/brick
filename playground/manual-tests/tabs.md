@@ -12,9 +12,26 @@
 | Physical device |  |
 | Assistive technology |  |
 | Playground route | `/tabs` |
+| Qualification route(s) | `/tabs` (docs), `/tabs?qualification=1` (matrix) |
 
 Scenario order: `01 Overview`, `02 Variants`, `03 Sizes`, `04 Layout`,
 `05 States`, `06 Behavior`, `07 Composition`, `08 Theme`, `09 Stress`.
+
+Additional parity checks: inspect filled and line indicator motion in both
+directions after scrolling; selected paint must not double. Check explicit
+lazy retention, fade exits, dynamic removal, disabled composed links, all
+responsive resets and controller/provider. Text-only panels should enter Tab
+order, while a panel with a focusable control should lead to that control.
+Switch dynamic documents repeatedly: only one non-animated panel should paint
+at any instant, with no temporary extra row or height jump. Repeat with retained
+panels. Explicit fades may cross-fade; reduced motion must remove that overlap.
+At fade completion, outgoing text must stay transparent until removal. Switch
+rapidly between all three animated panels and confirm only the final one remains.
+Add a document in LTR and RTL: the horizontal indicator must stay on its baseline
+throughout its slide, never travel diagonally from the top of the trigger.
+Human screen-reader, physical-device and actual browser-zoom results must remain
+unperformed until an operator executes them; automated viewport checks are not
+substitutes.
 Use `pass`, `fail`, `blocked`, or `not applicable`; leave results blank until
 tested.
 

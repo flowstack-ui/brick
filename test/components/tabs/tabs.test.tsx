@@ -16,6 +16,12 @@ function Example({ onValueChange = vi.fn() }: { onValueChange?: (value: string) 
 }
 
 describe("Tabs", () => {
+  it("retains recipe ownership through layout wrappers and nested roots", () => {
+    render(<Tabs.Root defaultValue="one" variant={{ initial: "plain", md: "line" }}><div><Tabs.List ariaLabel="Outer"><Tabs.Trigger value="one">One</Tabs.Trigger><Tabs.Indicator /></Tabs.List><Tabs.Content value="one"><Tabs.Root variant="solid"><Tabs.List ariaLabel="Inner" /></Tabs.Root></Tabs.Content></div></Tabs.Root>);
+    expect(screen.getByRole("tablist", { name: "Outer" })).toHaveAttribute("data-variant", "plain");
+    expect(screen.getByRole("tablist", { name: "Outer" })).toHaveAttribute("data-variant-md", "line");
+    expect(screen.getByRole("tablist", { name: "Inner" })).toHaveAttribute("data-variant", "solid");
+  });
   it("renders adopted defaults and Atom relationships", () => {
     render(<Example />);
     const root = screen.getByRole("tablist", { name: "Sections" }).parentElement!;
@@ -36,7 +42,7 @@ describe("Tabs", () => {
       const root = screen.getByRole("tablist").parentElement!;
       expect(root).toHaveAttribute("data-size", size);
       expect(root).toHaveAttribute("data-variant", variant);
-      expect(root).toHaveAttribute("data-full-width", "");
+      expect(root).toHaveAttribute("data-full-width", "true");
       expect(root).not.toHaveAttribute("size");
       expect(root).not.toHaveAttribute("variant");
       expect(root).toHaveAttribute("data-tone", "neutral");
@@ -74,7 +80,7 @@ describe("Tabs", () => {
     expect(screen.getByTestId("list")).toHaveAttribute("data-trigger-radius", "default");
     expect(screen.getByTestId("list")).not.toHaveAttribute("radius");
     expect(screen.getByTestId("list")).not.toHaveAttribute("triggerRadius");
-    expect(screen.getByTestId("list").style.getPropertyValue("--brick-tabs-radius")).toBe("");
+    expect(screen.getByTestId("list").style.getPropertyValue("--brick-tabs-radius")).toBe("0px");
   });
 
   it("exposes the independent trigger radius recipe for line tabs", () => {

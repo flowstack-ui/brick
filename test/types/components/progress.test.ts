@@ -24,3 +24,10 @@ createElement(Progress.Root, { orientation: "diagonal" });
 // @ts-expect-error Label owns its relationship id
 createElement(Progress.Label, { id: "custom" });
 void orientations; void sizes; void shapes; void tones;
+
+createElement(Progress.Root, { defaultValue: 20, size: { md: "lg" }, variant: { initial: "outline", lg: "subtle" }, layout: "inline", animated: true, valueFormat: "value", ids: { label: "task" } });
+createElement(Progress.Track, { asChild: true }, createElement("div"));
+// @ts-expect-error no invented variant
+createElement(Progress.Root, { variant: "solid" });
+// @ts-expect-error no string progress values
+createElement(Progress.Root, { defaultValue: "50" });

@@ -60,3 +60,7 @@ createElement(Link, {
 void variants;
 void tones;
 void sizes;
+createElement(Link, { asChild: true, href: "/parent", children: createElement("a") });
+createElement(Link, { href: "/responsive", size: { lg: "lg", xl: "inherit" }, children: "Responsive" });
+// @ts-expect-error Responsive values cannot be empty.
+createElement(Link, { href: "/empty", size: {}, children: "Invalid" });

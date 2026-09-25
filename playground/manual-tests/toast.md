@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Toast |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased local candidate (record exact archive digest) |
 | Reviewer |  |
 | Date |  |
 | Browser and version |  |
@@ -12,12 +12,27 @@
 | Physical device |  |
 | Assistive technology |  |
 | Playground route | `/toast` |
+| Qualification route(s) | `/toast` and `/toast?qualification=1` |
 
 Scenario order: `01 Overview`, `02 Types`, `03 Content`, `04 Queue`, `05 Positions`, `06 Async`, `07 Theme`, `08 Keyboard`, `09 Stress`. Use `pass`, `fail`, `blocked`, or `not applicable`; leave every result blank until tested.
 
 ## Step 1 — Product, types, and content
 
 Review 01–03. Expected: create/update/dismiss works; all six types retain identical geometry; glyphs reinforce authored meaning; title, description, custom icon, action, and close remain clear.
+
+Result:
+Notes or issue:
+
+## Scoped manager and modal checks
+
+Use the scoped, dialog, pause, lifecycle and overlap documentation examples.
+Check that separate managers never announce each other's content, queued time
+does not reduce reading time, and simultaneous hover/focus pauses do not resume
+prematurely. Dismiss should finish its exit before unmounted is reported;
+remove is immediate. A removed promise notification must remain removed.
+Within a dialog, verify toast controls remain reachable without escaping the
+modal focus scope. Check five different-height items, newest nearest the edge,
+then open the page on a physical device and repeat with actual browser zoom.
 
 Result:
 Notes or issue:

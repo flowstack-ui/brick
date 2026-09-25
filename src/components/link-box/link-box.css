@@ -1,4 +1,9 @@
 @layer brick.components {
+  .brick-link.brick-link-box__link {
+    position: static;
+    --brick-link-font-weight: inherit;
+  }
+
   .brick-link-box {
     --brick-link-box-radius: var(--brick-radius-surface);
     --brick-link-box-hover-ring: var(--brick-color-border-strong);

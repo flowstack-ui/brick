@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/link"); });
+test.beforeEach(async ({ page }) => { await page.goto("/link?qualification=1"); });
 
 test("default preserves native output and adopted recipes", async ({ page }) => {
   const link = page.getByTestId("link-overview").getByRole("link");

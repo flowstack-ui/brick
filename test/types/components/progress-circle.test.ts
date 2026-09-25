@@ -26,3 +26,10 @@ createElement(ProgressCircle.Indicator, { strokeDashoffset: 20 });
 // @ts-expect-error Label owns its relationship id
 createElement(ProgressCircle.Label, { id: "custom" });
 void sizes; void thicknesses; void caps; void tones;
+
+createElement(ProgressCircle.Root, { defaultValue: 20, size: { md: "xl" }, valueFormat: "value", ids: { label: "task" } });
+createElement(ProgressCircle.Circle, { asChild: true }, createElement("svg"));
+// @ts-expect-error no arbitrary responsive sizes
+createElement(ProgressCircle.Root, { size: { md: "huge" } });
+// @ts-expect-error no string task values
+createElement(ProgressCircle.Root, { defaultValue: "20" });

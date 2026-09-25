@@ -17,7 +17,9 @@ describe("SkipLink", () => {
     );
 
     const root = screen.getByRole("link", { name: "Skip to main content" });
-    const target = screen.getByRole("main");
+    const target = screen.getByText("Primary content");
+    expect(target.tagName).toBe("DIV");
+    expect(screen.queryByRole("main")).toBeNull();
     expect(root).toHaveAttribute("href", "#main-content");
     expect(root).toHaveAttribute("data-slot", "skip-link");
     expect(root).toHaveClass("brick-skip-link");
@@ -62,7 +64,7 @@ describe("SkipLink", () => {
 
     const root = screen.getByRole("link", { name: "Skip workspace tools" });
     expect(rootRef.current).toBe(root);
-    expect(targetRef.current).toBe(screen.getByRole("main"));
+    expect(targetRef.current).toBe(screen.getByText("Workspace content"));
     expect(root).toHaveClass("brick-skip-link", "consumer-root");
     expect(root).toHaveAttribute("data-owner", "workspace");
     expect(root).toHaveAttribute("data-slot", "primary-bypass");
@@ -90,7 +92,7 @@ describe("SkipLink", () => {
 
     rerender(
       <>
-        <SkipLink.Root asChild>
+        <SkipLink.Root asChild href="#child-content">
           <a data-adapter="child-root" href="#child-content">Skip tools</a>
         </SkipLink.Root>
         <SkipLink.Target asChild id="child-content">
@@ -100,10 +102,10 @@ describe("SkipLink", () => {
     );
 
     expect(screen.getByRole("link")).toHaveAttribute("data-adapter", "child-root");
+    expect(screen.getByRole("link")).toHaveAttribute("href", "#child-content");
     expect(screen.getByRole("region", { name: "Child content" })).toHaveAttribute(
       "data-adapter",
       "child-target",
     );
   });
 });
-

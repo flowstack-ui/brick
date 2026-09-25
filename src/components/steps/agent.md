@@ -15,15 +15,15 @@ Present ordered workflow progress while Atom owns progression, guards, current s
 
 ## Required composition
 
-- For a vertical workflow with content beside the list, compose one content/action wrapper as a sibling of List. Root wraps the two regions when constrained without duplicating the workflow tree.
-- Root owns count and optional controlled step. List contains indexed Items with Indicator, Title, optional Description and Separator. Trigger is optional; never nest interactive content inside it.
-- Compose NextTrigger and PrevTrigger asChild with Button for finished actions. Place action groups outside switching Content. Indicator already renders a localized number or completed check; do not add a duplicate.
+- For vertical workflows, compose one content/action wrapper beside List. Use responsive layout stacked/side when needed; do not add fixed minimum widths or duplicate workflow trees.
+- Root owns count and optional controlled step. useSteps plus one RootProvider externalizes the same state; hooks and render contexts read it. List contains indexed Items, Indicator, Title and Separator. Trigger is optional.
+- Compose NextTrigger and PrevTrigger asChild with Button outside switching panels. Indicator already supplies a localized number/completed check. Number and Status customize artwork without duplicating defaults.
 
 ## Rules
 
 - **MUST:** Keep branching, async validation, persistence, routing and actual completion in the application. Positional completion is not successful submission.
 - **MUST:** Use unique contiguous zero-based indexes below count and matching Title/Content or an explicit content name. Inactive content is retained and hidden by default.
-- **MUST:** Use size xs/sm/md/lg, solid/subtle and accent/neutral recipes before token overrides. Workflow indicators are deliberately circular; static documentation marker radius belongs to its own composition.
+- **MUST:** Use responsive size xs/sm/md/lg, solid/subtle, accent/neutral and layout auto/stacked/side recipes before token overrides. Indicator defaults to radius full; Trigger defaults to control. Both accept shared finite Radius tokens.
 - **MUST:** Load styles.css or core.css plus steps.css and the CSS of separately composed Buttons/layout. Steps modular CSS includes its default Checkmark presentation.
 - **MUST:** Retain size-selected semantic typography: caption for xs/sm, body-sm for md, body-md for lg. Use the public size recipe before overriding instance typography tokens.
 

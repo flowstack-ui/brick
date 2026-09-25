@@ -5,6 +5,18 @@ Tabs follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Retain fade animation endpoints until presence cleanup so outgoing panels do
+  not flash back to full opacity when their exit animation finishes.
+
+- Hide inactive, non-animated panels immediately during presence cleanup to
+  prevent a one-frame content jump; retain explicit fades except in reduced motion.
+
+- Add responsive recipes, subtle/plain/outline, alignment, full token radii,
+  ContentGroup, adjacent spacing, fade presence, and filled indicators.
+- Align sm/md/lg to 36/40/44px targets; preserve existing recipe names and inset defaults.
+- Expose Atom controller/provider, focus, IDs, router and independent lifecycle options.
+- Replace duplicate indicator paint with a measured readiness handoff; fix scroll-local geometry.
+
 - Use the shared semantic focus color independently of Trigger text tone,
   retaining inside placement and the forced-colors Highlight override.
 

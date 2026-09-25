@@ -1,6 +1,6 @@
 import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/toast");
+installVisualDefaults("/toast?qualification=1");
 
 test.beforeEach(async ({ page }) => {
   await page.addStyleTag({
@@ -62,4 +62,18 @@ test("Toast short content, icon alignment, close containment, and RTL placement"
 
   await page.getByRole("button", { name: "Show Arabic stress toast" }).click();
   await expect(viewport).toHaveScreenshot("active-rtl.png");
+});
+
+test("active Toast surfaces remain readable in dark and accessibility modes", async ({ page }) => {
+  const viewport = page.getByRole("region", { name: "Notifications (F8)" });
+  await setAppearance(page, "dark");
+  await page.getByRole("button", { name: "Show dark appearance", exact: true }).click();
+  await expect(viewport).toHaveAttribute("data-brick-appearance", "dark");
+  await expect(viewport).toHaveScreenshot("active-success-dark.png");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.getByRole("button", { name: "Show loading stress toast", exact: true }).click();
+  await expect(viewport).toHaveScreenshot("active-loading-reduced-motion.png");
+  await useForcedColors(page);
+  await page.getByRole("button", { name: "Show warning toast", exact: true }).click();
+  await expect(viewport).toHaveScreenshot("active-warning-forced-colors.png");
 });

@@ -51,42 +51,61 @@ matching names without the brick- prefix. Root supplies visual status context.
 | `variant` | `soft`, `surface`, `outline`, `solid` | `soft` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `inline` | boolean | `false` |
+| `align` | `start`, `center` | `start` |
+| `radius` | shared `Radius` | `surface` |
+| `accentStart` | boolean | `false` |
 
 Exports: Alert, AlertRoot, AlertIndicator, AlertContent, AlertTitle,
 AlertDescription and AlertRootProps, AlertContentProps, AlertTitleProps,
 AlertDescriptionProps, AlertIndicatorProps; AlertStatus, AlertTone,
-AlertVariant and AlertSize. Recipe props are scalar. Error status maps to danger
+AlertVariant and AlertSize. Size, variant, inline and align accept ResponsiveValue;
+status and tone remain scalar. Content accepts tone=`inherit` (default) or `primary`.
+Radius accepts none, 2xs, xs, sm, md, lg, xl, 2xl, 3xl, 4xl, subtle, control,
+surface, overlay and full. Error status maps to danger
 paint. An explicit tone changes paint without changing the status glyph.
 Indicator children replace the default glyph; omit Indicator for no icon.
 
 ## Visual recipes and states
 
 Soft has tinted fill; surface adds a semantic border; outline stays transparent;
-solid uses paired solid/on-solid colors. All reserve the same border width.
+solid uses paired solid/on-solid colors. Borders are inset paint and do not add size.
 Typography sm/md/lg is 12/14/16px at the default root size; indicator 18/20/24px.
 Padding 12/16/16px and root gap 8/12/12px. Title is medium weight, description
-regular. Inline wraps title and description horizontally. No hover or elevation
+regular, with sm/md/lg line heights 16/20/24px. Inline centers and wraps title and
+description horizontally with a 4px gap. No hover or elevation
 is implied by a static message. Radius follows the Theme surface radius.
 
 ## Tokens and CSS hooks
 
 Attributes: `data-status`, `data-tone`, `data-variant`, `data-size`,
-`data-inline`, `data-slot`. Instance variables: --brick-alert-background,
+`data-inline` (true, omitted when initially false), `data-align`, `data-accent-start`, `data-slot`.
+Responsive inline attributes serialize true/false so later breakpoints can reset.
+Responsive data attributes use sm/md/lg/xl suffixes. Instance variables: --brick-alert-background,
 --brick-alert-color, --brick-alert-border-color, --brick-alert-radius,
 --brick-alert-padding, --brick-alert-gap, --brick-alert-font-size and
---brick-alert-indicator-size. Semantic Theme palette and typography tokens
+--brick-alert-indicator-size, --brick-alert-line-height, --brick-alert-accent-width,
+--brick-alert-accent-color and --brick-alert-content-color. Semantic Theme palette and typography tokens
 remain the defaults; internal --brick-alert-tone-* values are not public hooks.
 
 ## Customization
 
 Choose recipes before overriding documented variables on the public Root.
 Custom indicators may compose Spinner; actions may compose Button and CloseButton.
+Use Icon or Spinner size="inherit" to follow the indicator box; explicit child
+sizes remain independent. accentStart paints a logical stripe without changing
+geometry. Content tone="primary" is useful on soft backgrounds; retain inherited
+foreground on solid alerts to preserve the paired contrast. Arbitrary category
+palettes are not a separate Alert API; use semantic tone or qualified instance
+paint hooks with foreground/background contrast verification.
 Load their modular CSS separately. Do not select internal SVG paths.
 
 ## Responsive behavior
 
 Root fills its parent and content shrinks and wraps. Indicator does not shrink.
 Application Frame/Stack/Grid own placement and responsive widths.
+Sparse responsive objects retain md/soft/false/start below their first breakpoint.
+Breakpoints use the shared sm/md/lg/xl system; recipes reset on viewport changes
+without JavaScript or duplicated content.
 
 ## Accessibility
 
@@ -98,7 +117,7 @@ its authored semantics. Never communicate status by color alone.
 
 ## Composition, native props, and refs
 
-Root/Content/Title/Description accept asChild with one non-Fragment element,
+All five parts accept asChild with one non-Fragment element,
 merging class/style and refs; refs target the actual HTMLElement. Default Indicator
 ref is HTMLSpanElement. Native attributes, event handlers and data-slot pass
 through; semantic color is omitted in favor of tone. Recipe props do not leak.

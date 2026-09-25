@@ -11,6 +11,7 @@ export {
   ToastViewport,
   Toaster,
   toast,
+  createToaster,
 } from "./Toast.js";
 export type {
   ToastActionData,
@@ -36,4 +37,9 @@ export type {
   ToastViewportProps,
   ToasterProps,
   ToastWidth,
+  ToastTone,
+  ToastVariant,
+  ToastPresentationProps,
+  ToastSpacingProps,
+  ToastStatusChangeDetails,
 } from "./Toast.js";

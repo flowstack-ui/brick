@@ -8,7 +8,7 @@ Use for checkout, setup, and other ordered multi-stage workflows with one curren
 
 ## When not to use
 
-Static numbered documentation should use List, Square, Surface, and typography. Use Tabs for independent panels. Steps does not perform submission, asynchronous validation, persistence, routing, or optional-stage bookkeeping.
+Static numbered documentation should use List, Square, Surface, and typography. Use Tabs for independent panels. Steps does not perform submission, asynchronous validation, persistence, or routing. Optional-stage navigation is supported through isStepSkippable.
 
 ## Installation and imports
 
@@ -53,13 +53,16 @@ Root is a div; List an ol; Item an li; Trigger, NextTrigger, and PrevTrigger nat
 
 ## API
 
-Root requires `count`. `step` and `defaultStep` (default 0) use zero-based indices; `step === count` means complete. `onStepChange(step)` requests a change. `onStepComplete` fires on an observed transition into completion, not initial completed mounting. `linear` (false) enables synchronous `isStepValid(index)` checks for crossed forward stages; `onStepInvalid({ step, targetStep })` reports the first invalid stage. Backward navigation never validates. `disabled` defaults false. `orientation` is horizontal (default) or vertical; `dir` inherits unless provided.
+Root requires `count`. `step` and `defaultStep` (default 0) use zero-based indices; `step === count` means complete. `onStepChange(step)` requests a change. `onStepComplete` fires on an observed transition into completion, not initial completed mounting. Supplied `isStepValid(index)` guards forward movement. `linear` (false) additionally checks every crossed nonoptional stage; `onStepInvalid({ step, targetStep, action })` reports the first invalid stage. Backward navigation never validates. `disabled` defaults false. `orientation` is horizontal (default) or vertical; `dir` inherits unless provided.
 
 | Visual prop | Values | Default |
 | --- | --- | --- |
 | `size` | `xs`, `sm`, `md`, `lg` | `md` |
 | `variant` | `solid`, `subtle` | `solid` |
 | `tone` | `accent`, `neutral` | `accent` |
+| `layout` | `auto`, `stacked`, `side` | `auto` |
+
+All four recipes accept ResponsiveValue. Indicator accepts `radius` (default full); Trigger accepts `radius` (default control).
 
 Item and Content take `index`. Content and CompletedContent accept `keepMounted` (true). Root Context exposes step, count, isCompleted, hasNextStep, hasPrevStep, disabled, orientation, dir, setStep, nextStep, prevStep, and resetStep. Reset returns to zero. ItemContext exposes index, current, completed, and incomplete. Indicator children replace the localized number/default completed Checkmark.
 
@@ -73,7 +76,7 @@ shared medium label weight. Indicators also use that label weight.
 Font family, line height and tracking follow the selected body recipe rather
 than local literal values. No application CSS is needed for this mapping.
 
-Marker sizes are 24, 32, 40, and 44px at a 16px root font size; icon sizes are 14, 16, 16, and 20px. Markers never shrink. Solid uses outlined future markers and filled completed markers; subtle uses muted future and soft completed fills. Current markers retain an accent edge. The terminal connector is hidden. Workflow circles are intentional; static documentation surfaces are a different composition.
+Marker sizes are 24, 32, 40, and 44px at a 16px root font size; icon sizes are 14, 16, 16, and 20px. Markers never shrink. Solid uses outlined future markers and filled completed markers; subtle uses muted future and soft completed fills. Solid current markers retain an accent edge; subtle current markers have no border, with stronger completed fill. The terminal connector is hidden. Workflow circles are the default; Indicator radius selects any shared finite radius token.
 
 ## Tokens and CSS hooks
 
@@ -89,11 +92,21 @@ One DOM tree is used for SSR and client rendering. Orientation is scalar, not br
 
 ## Accessibility
 
-Native ordered-list semantics and `aria-current="step"` describe progression. Buttons use native Tab, Space, and Enter, not tablist arrow navigation. Supply meaningful Title text and a List label. Content is named by its corresponding Title unless given an explicit accessible name. Decorative numbers/checks/connectors are hidden from assistive technology. Keep critical completion meaning in authored text. Hidden panels remain mounted by default, retaining form state. Focus moves to the active panel when a focused retained panel becomes hidden; the application owns focus when unmounting panels. Async pending/error announcements and form submission remain application-owned.
+Native ordered-list semantics and `aria-current="step"` describe progression. Buttons use native Tab, Space, and Enter, not tablist arrow navigation. Supply meaningful Title text and a List label. Content is named by its corresponding Title unless given an explicit accessible name. Decorative numbers/checks/connectors are hidden from assistive technology. Keep critical completion meaning in authored text. Hidden panels remain mounted by default, retaining form state. Focus moves to the active owned panel when focused content becomes hidden or unmounts, without claiming nested workflow panels or external focus. Async pending/error announcements and form submission remain application-owned.
 
 ## Composition, native props, and refs
 
-All host parts forward native props, refs, `asChild`, and `render` through Atom. Use native button-compatible children for triggers; supplied handlers can cancel internal navigation with preventDefault. Generated Title identifiers connect the named panels. AsChild Indicator requires an explicit host child. Steps does not style NextTrigger or PrevTrigger as actions: compose Button.
+Atom-backed host parts forward native props, refs, `asChild`, and `render` through Atom. Number is a native span with native props/ref; Status is hostless. Use native button-compatible children for triggers; supplied handlers can cancel internal navigation with preventDefault. Generated Title identifiers connect the named panels. AsChild Indicator requires an explicit host child. Steps does not style NextTrigger or PrevTrigger as actions: compose Button.
+
+### Controller and composition helpers
+
+`useSteps` accepts the Root state options; pass its result to `RootProvider value={steps}` with the same visual recipes as Root. `useStepsContext` and `useStepsItemContext` read existing providers. Controller state includes `percent`, `getItemState`, `isStepValid`, `isStepSkippable`, and `goToNextStep`/`goToPrevStep` aliases. Compose the existing Progress component for a percentage visualization; Steps does not introduce a second progress primitive.
+
+`isStepSkippable(index)` makes Next/Back bypass optional stages, while direct selection remains available. Optional stages do not block validation. Back stops at zero; Next may complete. Positional completed styling does not prove optional data was entered.
+
+Use `Steps.Number` for a localized ordinal and `Steps.Status complete={...} incomplete={...} current={...}` for custom artwork. Current defaults to incomplete. Indicator already supplies number/check by default: do not duplicate them.
+
+`id` sets the root prefix; `ids` coordinates root/list/completedContent and trigger/title/description/content IDs. Use one RootProvider per controller.
 
 ## Examples
 

@@ -13,6 +13,7 @@ Pending physical-device and assistive-technology execution; automated results ar
 | Viewport and zoom | Actual 200% and 400% pending |
 | Assistive technology | Not performed |
 | Playground route | `/steps` |
+| Qualification route(s) | `/steps` (docs); `/steps?qualification=1` (matrix) |
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
@@ -46,7 +47,9 @@ Notes or issue:
 - Linear validation: invalid forward navigation preserves stage and focus; backward movement works.
 - Touch and 200%/400% zoom: targets remain operable; narrow vertical labels wrap without marker distortion.
 - RTL, light/dark, forced colors: connectors and current/completed states remain distinguishable.
-- Retained panel focus moves into the newly active panel; unmounted-panel focus is application-owned.
+- Focus in a hidden or unmounted panel moves into the newly active owned panel without stealing external or nested-workflow focus.
+- On the docs route, test Optional stages (Next/Back bypass Details; its trigger still opens it), External controller (percentage and reset), and Content lifecycle (retained value versus discarded value).
+- Resize Responsive recipes and Vertical across breakpoints. Confirm markers, labels and controls remain contained without a duplicated workflow.
 
 Result:
 Notes or issue:

@@ -1,5 +1,34 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
-installVisualDefaults("/navigation-menu");
+installVisualDefaults("/navigation-menu?qualification=1");
+
+test("navigation-menu redesigned rich, compact and header compositions", async ({ page }) => {
+  await page.setViewportSize({ width: 1120, height: 900 });
+  for (const appearance of ["light", "dark"]) {
+    await page.goto(`/navigation-menu?appearance=${appearance}`);
+    for (const proof of ["rich", "compact", "header"]) {
+      const root = proof === "rich"
+        ? page.locator('[data-component-page="navigation-menu"] nav').first()
+        : page.locator(proof === "compact" ? '#tones nav[data-tone="contrast"]' : '#header nav');
+      const trigger = root.getByRole("button").first();
+      await trigger.click();
+      const viewport = root.locator('.brick-navigation-menu__viewport');
+      await expect(viewport).toBeVisible();
+      await viewport.evaluate(async node => {
+        await Promise.all(node.getAnimations({ subtree: true }).map(a => a.finished.catch(() => {})));
+      });
+      const link = root.getByRole("link", { name: /Getting started/ });
+      if (proof === "header") await trigger.press("ArrowDown");
+      else await link.hover();
+      const r = (await root.boundingBox())!, v = (await viewport.boundingBox())!;
+      const x = Math.max(0, Math.min(r.x, v.x) - 12), y = Math.max(0, Math.min(r.y, v.y) - 12);
+      await expect(page).toHaveScreenshot(`redesign-${proof}-${appearance}.png`, { clip: {
+        x, y, width: Math.ceil(Math.max(r.x + r.width, v.x + v.width) - x + 12),
+        height: Math.ceil(Math.max(r.y + r.height, v.y + v.height) - y + 12),
+      } });
+      await page.keyboard.press("Escape");
+    }
+  }
+});
 
 test("navigation-menu defaults and complete recipes", async ({ page }) => {
   await page.mouse.move(0, 0);
@@ -24,13 +53,15 @@ test("navigation-menu defaults and complete recipes", async ({ page }) => {
   const verticalViewport = verticalRoot.locator(".brick-navigation-menu__viewport");
   const [verticalRootBox, verticalViewportBox] = await Promise.all([verticalRoot.boundingBox(), verticalViewport.boundingBox()]);
   if (!verticalRootBox || !verticalViewportBox) throw new Error("Open vertical Navigation Menu evidence is not measurable.");
+  expect(verticalViewportBox.x).toBeGreaterThanOrEqual(7);
+  expect(verticalViewportBox.x + verticalViewportBox.width).toBeLessThanOrEqual((page.viewportSize()?.width ?? 1120) - 7);
   const verticalClipX = Math.max(0, Math.min(verticalRootBox.x, verticalViewportBox.x) - 16);
   const verticalClipY = Math.max(0, Math.min(verticalRootBox.y, verticalViewportBox.y) - 16);
-  await expect(page).toHaveScreenshot("orientation-vertical-open-light.png", { clip: { x: verticalClipX, y: verticalClipY, width: Math.ceil(Math.max(verticalRootBox.x + verticalRootBox.width, verticalViewportBox.x + verticalViewportBox.width) - verticalClipX + 16), height: Math.ceil(Math.max(verticalRootBox.y + verticalRootBox.height, verticalViewportBox.y + verticalViewportBox.height) - verticalClipY + 16) } });
+  await expect(page).toHaveScreenshot("orientation-vertical-open-light.png", { maxDiffPixelRatio: 0, clip: { x: verticalClipX, y: verticalClipY, width: Math.min((page.viewportSize()?.width ?? 1120) - verticalClipX, Math.ceil(Math.max(verticalRootBox.x + verticalRootBox.width, verticalViewportBox.x + verticalViewportBox.width) - verticalClipX + 16)), height: Math.ceil(Math.max(verticalRootBox.y + verticalRootBox.height, verticalViewportBox.y + verticalViewportBox.height) - verticalClipY + 16) } });
   const verticalSolutions = verticalRoot.getByRole("button", { name: "Solutions" });
   await verticalSolutions.click();
   await expect(verticalSolutions).toHaveAttribute("aria-expanded", "true");
-  await expect(page).toHaveScreenshot("orientation-vertical-solutions-open-light.png", { clip: { x: verticalClipX, y: verticalClipY, width: Math.ceil(Math.max(verticalRootBox.x + verticalRootBox.width, verticalViewportBox.x + verticalViewportBox.width) - verticalClipX + 16), height: Math.ceil(Math.max(verticalRootBox.y + verticalRootBox.height, verticalViewportBox.y + verticalViewportBox.height) - verticalClipY + 16) } });
+  await expect(page).toHaveScreenshot("orientation-vertical-solutions-open-light.png", { maxDiffPixelRatio: 0, clip: { x: verticalClipX, y: verticalClipY, width: Math.min((page.viewportSize()?.width ?? 1120) - verticalClipX, Math.ceil(Math.max(verticalRootBox.x + verticalRootBox.width, verticalViewportBox.x + verticalViewportBox.width) - verticalClipX + 16)), height: Math.ceil(Math.max(verticalRootBox.y + verticalRootBox.height, verticalViewportBox.y + verticalViewportBox.height) - verticalClipY + 16) } });
   await page.keyboard.press("Escape");
   await expect(verticalSolutions).toHaveAttribute("aria-expanded", "false");
   await verticalSolutions.evaluate((element) => element.blur());
@@ -40,14 +71,35 @@ test("navigation-menu defaults and complete recipes", async ({ page }) => {
   for (const [index, snapshot] of ["appearance-light-open.png", "appearance-dark-open.png"].entries()) {
     const panel = appearancePanels.nth(index);
     const trigger = panel.getByRole("button", { name: "Products" });
+    await panel.evaluate(element => element.scrollIntoView({ block: "center", inline: "nearest", behavior: "instant" }));
     await trigger.click();
     await expect(trigger).toHaveAttribute("aria-expanded", "true");
     const viewport = panel.locator(".brick-navigation-menu__viewport");
+    let previousGeometry = "";
+    let stableSamples = 0;
+    await expect.poll(async () => {
+      const box = await viewport.boundingBox();
+      const content = await viewport.locator('.brick-navigation-menu__content[data-state="open"]').boundingBox();
+      if (!box || !content || box.height < content.height - 2) return false;
+      const geometry = [box.x, box.y, box.width, box.height].map(value => Math.round(value * 10)).join(":");
+      stableSamples = geometry === previousGeometry ? stableSamples + 1 : 0;
+      previousGeometry = geometry;
+      return stableSamples >= 2;
+    }).toBe(true);
     const [panelBox, appearanceViewportBox] = await Promise.all([panel.boundingBox(), viewport.boundingBox()]);
     if (!panelBox || !appearanceViewportBox) throw new Error("Open appearance evidence is not measurable.");
-    expect(appearanceViewportBox.x).toBeGreaterThanOrEqual(panelBox.x);
-    expect(appearanceViewportBox.x + appearanceViewportBox.width).toBeLessThanOrEqual(panelBox.x + panelBox.width);
-    await expect(panel).toHaveScreenshot(snapshot);
+    const viewportWidth = page.viewportSize()?.width;
+    if (!viewportWidth) throw new Error("Browser viewport is not measurable.");
+    // Floating panels collide with the browser boundary, not their demo Surface.
+    expect(appearanceViewportBox.x).toBeGreaterThanOrEqual(7);
+    expect(appearanceViewportBox.x + appearanceViewportBox.width).toBeLessThanOrEqual(viewportWidth - 7);
+    const x = Math.max(0, Math.min(panelBox.x, appearanceViewportBox.x) - 8);
+    const y = Math.max(0, Math.min(panelBox.y, appearanceViewportBox.y) - 8);
+    await expect(page).toHaveScreenshot(snapshot, { clip: {
+      x, y,
+      width: Math.min(viewportWidth - x, Math.ceil(Math.max(panelBox.x + panelBox.width, appearanceViewportBox.x + appearanceViewportBox.width) - x + 8)),
+      height: Math.ceil(Math.max(panelBox.y + panelBox.height, appearanceViewportBox.y + appearanceViewportBox.height) - y + 8),
+    } });
     await page.keyboard.press("Escape");
     await expect(trigger).toHaveAttribute("aria-expanded", "false");
     await trigger.evaluate((element) => element.blur());

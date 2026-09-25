@@ -1,9 +1,10 @@
 import { createElement, forwardRef, type HTMLAttributes } from "react";
 import { staticPart, type StaticPartProps } from "../_internal/StaticPart.js";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 export type EmptyStateSize = "sm" | "md" | "lg";
 export type EmptyStateAlign = "start" | "center";
 export type EmptyStateTitleElement = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-export type EmptyStateRootProps = StaticPartProps & { size?: EmptyStateSize; align?: EmptyStateAlign };
+export type EmptyStateRootProps = StaticPartProps & { size?: ResponsiveValue<EmptyStateSize>; align?: ResponsiveValue<EmptyStateAlign>; color?: never };
 export type EmptyStateContentProps = StaticPartProps;
 export type EmptyStateIndicatorProps = StaticPartProps;
 export type EmptyStateDescriptionProps = StaticPartProps;
@@ -11,7 +12,10 @@ export interface EmptyStateTitleProps extends HTMLAttributes<HTMLHeadingElement>
 
 export const EmptyStateRoot = forwardRef<HTMLElement, EmptyStateRootProps>(function EmptyStateRoot(
   { size = "md", align = "center", ...props }, ref,
-) { return staticPart("div", { ...props, "data-size": size, "data-align": align } as StaticPartProps, ref, "brick-empty-state", "empty-state"); });
+) { return staticPart("div", { ...props,
+  ...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true }),
+  ...responsiveDataAttributes("data-align", align, { defaultValue: "center", alwaysInitial: true }),
+} as StaticPartProps, ref, "brick-empty-state", "empty-state"); });
 export const EmptyStateContent = forwardRef<HTMLElement, EmptyStateContentProps>((props, ref) => staticPart("div", props, ref, "brick-empty-state-content", "empty-state-content"));
 export const EmptyStateIndicator = forwardRef<HTMLElement, EmptyStateIndicatorProps>((props, ref) => staticPart("div", props, ref, "brick-empty-state-indicator", "empty-state-indicator"));
 export const EmptyStateDescription = forwardRef<HTMLElement, EmptyStateDescriptionProps>((props, ref) => staticPart("p", props, ref, "brick-empty-state-description", "empty-state-description"));

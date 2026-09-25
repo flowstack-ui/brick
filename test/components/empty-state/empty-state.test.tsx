@@ -4,6 +4,22 @@ import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { EmptyState } from "../../../src/empty-state.js";
 describe("EmptyState", () => {
+  it("serializes sparse responsive recipes with deterministic initial defaults", () => {
+    const { container } = render(<EmptyState.Root size={{ md: "lg", xl: "sm" }} align={{ lg: "start", xl: "center" }} />);
+    const root = container.firstElementChild;
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "lg");
+    expect(root).toHaveAttribute("data-size-xl", "sm");
+    expect(root).not.toHaveAttribute("data-size-sm");
+    expect(root).toHaveAttribute("data-align", "center");
+    expect(root).toHaveAttribute("data-align-lg", "start");
+    expect(root).toHaveAttribute("data-align-xl", "center");
+    expect(root).not.toHaveAttribute("size");
+    expect(root).not.toHaveAttribute("align");
+    const markup = renderToString(<EmptyState.Root size={{ md: "lg" }} />);
+    expect(markup).toContain('data-size="md"');
+    expect(markup).toContain('data-size-md="lg"');
+  });
   it("renders five optional parts with independent heading semantics", () => {
     const root = createRef<HTMLElement>(); const title = createRef<HTMLHeadingElement>();
     render(<EmptyState.Root ref={root}><EmptyState.Content><EmptyState.Indicator>+</EmptyState.Indicator><EmptyState.Title ref={title}>No projects</EmptyState.Title><EmptyState.Description>Create your first project.</EmptyState.Description></EmptyState.Content></EmptyState.Root>);

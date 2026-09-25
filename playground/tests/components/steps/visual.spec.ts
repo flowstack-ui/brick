@@ -1,5 +1,5 @@
 import { expectEvidenceScreenshot, installVisualDefaults, setAppearance, useForcedColors, test } from "../../visual-harness.js";
-installVisualDefaults("/steps");
+installVisualDefaults("/steps?qualification=1");
 test("Steps recipes", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.getByTestId("steps-recipes"), "recipes-light.png");
 });

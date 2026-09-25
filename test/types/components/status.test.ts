@@ -12,3 +12,9 @@ createElement(Status.Root, { size: "xl" });
 // @ts-expect-error closed tone
 createElement(Status.Root, { tone: "positive" });
 void sizes; void tones;
+createElement(Status.Root, { size: { md: "lg" }, asChild: true, children: createElement("span") });
+// @ts-expect-error responsive vocabulary is closed
+createElement(Status.Root, { size: { md: "huge" } });
+// @ts-expect-error asChild requires a child
+const missingChild: StatusRootProps = { asChild: true };
+void missingChild;

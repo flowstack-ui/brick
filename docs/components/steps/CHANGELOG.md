@@ -4,6 +4,9 @@ Steps follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add external controllers, Number and Status composition helpers, responsive recipes and finite radius props.
+- Refine subtle state paint and remove forced sibling widths and trigger hover fill.
+
 - Use canonical focus width and the shared outside offset.
 
 ### Fixed

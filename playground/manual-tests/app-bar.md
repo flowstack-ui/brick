@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | App Bar |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased 0.2.3 |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -12,6 +12,9 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/app-bar` |
+| Qualification route(s) | `/app-bar` (docs), `/app-bar?qualification=1` (matrix) |
+
+First inspect the documentation examples: responsive density/inset/gap, balanced and flex layouts, named elevation, sticky offset, fixed dismissal/focus return, Drawer navigation, and Popover actions. Verify these at actual browser zoom and with a screen reader; automated viewport resizing is not equivalent. Record results rather than assuming completion.
 
 Scenario order: `01 Overview`, `02 Variants`, `03 Tones`, `04 Density`,
 `05 Surface`, `06 Positions`, `07 Composition`, `08 Theme`, `09 Stress`
@@ -20,7 +23,7 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Overview and visual recipes
 
-Setup: Open `/app-bar` in system appearance and LTR direction.
+Setup: Open `/app-bar?qualification=1` in system appearance and LTR direction.
 
 Action: Inspect `01 Overview`, then compare `02 Variants` and every group in
 `03 Tones`.
@@ -112,3 +115,7 @@ Follow-up issues:
 Workbook updated:
 
 Mark unavailable physical or assistive-technology environments `blocked`.
+
+## Surface effects qualification
+
+Pending manual review: compare the translucent and exact-value example in light/dark and narrow widths; scroll bright/dark content behind the root; confirm focus and popup placement, physical reduced-transparency behavior, and low-powered mobile performance. Ordinary and legacy-only paint must match the prior recipe. Automated engine checks are recorded separately and do not complete these manual judgments.

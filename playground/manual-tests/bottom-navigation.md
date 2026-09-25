@@ -9,6 +9,7 @@
 | Physical device |  |
 | Assistive technology |  |
 | Playground route | `/bottom-navigation` |
+| Qualification route(s) | `/bottom-navigation?qualification=1` |
 
 Scenario order: `01 Overview`, `02 Recipes`, `03 Layout`, `04 Size + position`, `05 Selection`, `06 Content`, `07 Behavior`, `08 Theme`, `09 Stress`. Use `pass`, `fail`, `blocked`, or `not applicable`.
 
@@ -32,8 +33,25 @@ Review 08–09 in light/dark, RTL, narrow mobile, 200% and 400% zoom, reduced mo
 
 Navigate by landmarks, links, and buttons. Expected: every navigation has a concise name; active links announce current page; controlled destinations announce as buttons; disabled state is announced; all Icons are silent; hidden labels and Notification Badge cause no duplicate speech.
 
+## September API additions — pending manual qualification
+
+Use the normal `/bottom-navigation` docs route for responsive size/arrangement,
+surface versus transparent outline, root/selection radius, named elevation and
+soft/outline/plain selection examples. Check narrow widths, keyboard focus,
+200%/400% browser zoom, both directions and native landmark names. The fixed
+preview intentionally overlays the viewport: application content compensation
+is not supplied by BottomNavigation. Check real-device safe-area behavior.
+
+Verify disabled composed anchors have no destination, button triggers do not
+submit forms by default, and modified/download/non-self link activation does
+not change current-document selection. Automated tests do not replace these checks.
+
 ## Completion
 
 Overall result:
 Follow-up issues:
 Workbook updated:
+
+## Surface effects qualification
+
+Pending manual review: compare the translucent and exact-value example in light/dark and narrow widths; scroll bright/dark content behind the root; confirm focus and popup placement, physical reduced-transparency behavior, and low-powered mobile performance. Ordinary and legacy-only paint must match the prior recipe. Automated engine checks are recorded separately and do not complete these manual judgments.

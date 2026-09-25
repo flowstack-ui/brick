@@ -1,6 +1,6 @@
 import { expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/nav-list");
+installVisualDefaults("/nav-list?qualification=1");
 
 test("Nav List defaults and complete visual dimensions", async ({ page }) => {
   for (const name of ["overview", "variants", "tones", "sizes", "content", "sections", "composition"]) {

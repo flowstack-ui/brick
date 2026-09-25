@@ -22,7 +22,7 @@ Finished same-document navigation with current-section feedback and optional log
 - **MUST:** Let Atom's controller own tracking, activation, focus and history; never add consumer scroll listeners to repair current state.
 - **MUST:** Supply stable unique IDs and heading depths; author localized labels as children. Keep parsing, page layout, sticky offsets and responsive visibility application-owned.
 - **MUST:** Give Nav a Title or explicit accessible name. Keep nested Lists inside Item and Indicator outside List. Keep native anchors and one aria-current location per Nav.
-- **MUST:** Use sm/md size, plain/line variant and neutral/accent tone. Load styles.css or core.css plus table-of-contents.css. Do not add focus gutters or override component geometry in playground CSS.
+- **MUST:** Use responsive sm/md size and plain/line variant with scalar neutral/accent tone. Sparse breakpoint objects inherit sm/plain defaults. Load styles.css or core.css plus table-of-contents.css. Do not add focus gutters or override component geometry in playground CSS.
 - **MUST:** Distinguish the article scroll element from Nav's optional bounded rail viewport. Use managed navigation for scoped scrolling, refresh after external layout changes, and preserve controlled activeId authority.
 
 ## Common mistakes

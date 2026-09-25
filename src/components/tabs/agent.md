@@ -10,10 +10,14 @@ Style related in-page panel switching while Atom owns tab semantics, selection, 
 
 ## Choose something else when
 
-- Choices navigate to routes or multiple sections should remain open. Use Link/NavList or Accordion.
+- Choices are general site navigation rather than URL-backed peer panels, or multiple sections should remain open. Use Link/NavList or Accordion.
 
 ## Required composition
 
+- Use responsive size, variant, tone and fullWidth for presentation. List justify aligns intrinsic tabs; columns=auto resets a visual grid. Never change keyboard orientation through CSS alone.
+- useTabs and RootProvider share one Atom controller with external controls; Context and useTabsContext read it. ContentGroup is an optional structural wrapper.
+- Use explicit lazyMount and unmountOnExit independently. Legacy defaults still unmount inactive panels. Content spacing=adjacent keeps only list-facing space; animation=fade respects reduced motion.
+- Indicator is optional: line draws an edge; solid, soft/subtle and plain support filled motion. Readiness replaces fallback selected paint only after measurement. Enclosed and outline keep a static joined selection border.
 - Use Root tone=neutral for neutral selected paint; accent remains the default. Soft selection is flat, while solid retains elevation. Focus is inside; soft List has no protective inset and solid retains design padding.
 - Compose Trigger and optional Indicator inside List with matching Content values inside Root; lay out panel content with Brick components.
 - Keep the default panel inset for ordinary copy; use Content inset=none for edge-to-edge media or nested surfaces rather than overriding component CSS.
@@ -39,10 +43,11 @@ Style related in-page panel switching while Atom owns tab semantics, selection, 
 
 ## Common mistakes
 
-- **Avoid:** Using Tabs for routes, putting sorting or actions inside List to extend its divider, clipping focus/indicator edges, or mismatching Trigger and Content values. **Instead:** Use navigation links for routes, keep unrelated controls outside the tablist, continue shared decorative edges with the surrounding Brick layout, and keep complete paired tab anatomy.
+- **Avoid:** Using Tabs for general navigation, putting sorting or actions inside List to extend its divider, clipping focus/indicator edges, or mismatching Trigger and Content values. **Instead:** Use navigation links for destinations; URL-backed peer panels may compose Trigger asChild with navigate. Keep unrelated controls outside the tablist and keep complete paired tab anatomy.
 
 ## Validation checklist
 
+- Inspect the panel handoff before presence cleanup: inactive non-animated panels must not paint alongside the active panel. Only explicit fades may overlap; reduced motion removes that overlap.
 - Check automatic/manual activation, arrows, Home/End, Enter/Space, disabled, controlled, keep-mounted, overflow, complete focus rings at every List edge and inside clipping parents, themes, zoom, and RTL.
 - Confirm CSS is loaded.
 

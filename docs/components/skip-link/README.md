@@ -64,7 +64,7 @@ export function ApplicationShell() {
     <>
       <SkipLink.Root>Skip to main content</SkipLink.Root>
       <header>{/* repeated navigation */}</header>
-      <SkipLink.Target>
+      <SkipLink.Target render={<main />}>
         <h1>Workspace</h1>
         {/* primary page content */}
       </SkipLink.Target>
@@ -74,6 +74,17 @@ export function ApplicationShell() {
 ```
 
 The defaults pair `href="#main-content"` with `id="main-content"`.
+
+### Migration and navigation modes
+
+Target previously created a main landmark; it now renders div. Retain your
+landmark with `Target asChild` around an authored main, or place the div inside
+your existing main. Keep exactly one main. Set href on Root even with asChild.
+Custom destinations need to accept focus; Target provides tabIndex=-1.
+The default explicit focus mode leaves URL hash/history unchanged. Use
+focusTarget=false for native fragment navigation. Modified clicks, downloads,
+and alternate browsing targets keep native behavior. Applications own sticky
+header offsets and must ensure the destination is not obscured.
 
 ## Anatomy and DOM ownership
 
@@ -85,9 +96,9 @@ The defaults pair `href="#main-content"` with `id="main-content"`.
 | Part | Default element | Stable identity | Owner |
 | --- | --- | --- | --- |
 | `Root` | `a` | `.brick-skip-link`, `data-slot="skip-link"` | Atom semantics/behavior; Brick paint |
-| `Target` | `main` | `.brick-skip-link__target`, `data-slot="skip-link-target"` | Atom landmark/focusability; application layout |
+| `Target` | `div` | `.brick-skip-link__target`, `data-slot="skip-link-target"` | Atom focusability; application landmark/layout |
 
-Root remains focusable while translated outside the viewport. Any focus reveals
+Root remains focusable while visually clipped. Any focus reveals
 it at logical block-start and inline-start. Target defaults to `tabIndex={-1}`
 so Atom can focus it without adding another ordinary Tab stop.
 
@@ -116,10 +127,10 @@ slots, and an `HTMLAnchorElement` ref pass through.
 | `id` | `string` | `"main-content"` | Matching fragment ID |
 | `tabIndex` | `number` | `-1` | Programmatic focus without another Tab stop |
 | `children` | `ReactNode` | — | Primary content |
-| `render` | Atom render adapter | — | Replace the default `main` |
+| `render` | Atom render adapter | — | Replace the default `div` |
 | `asChild` | `boolean` | `false` | Merge into one authored landmark child |
 
-Native main props, classes, styles, data attributes, custom slots, and an
+Native div props, classes, styles, data attributes, custom slots, and an
 `HTMLElement` ref pass through.
 
 ## Visual recipes and states
@@ -127,10 +138,10 @@ Native main props, classes, styles, data attributes, custom slots, and an
 Skip Link intentionally has one visual recipe and no size, tone, shape,
 position, or motion props.
 
-- Unfocused Root is fixed and translated beyond the viewport while remaining
+- Unfocused Root is visually clipped while remaining
   keyboard focusable.
-- Focused Root appears immediately on an elevated neutral surface with accent
-  border, readable body typography, shadow, and strong focus ring.
+- Focused Root appears immediately on a compact neutral surface without a
+  default border or shadow, with small typography and a theme focus ring.
 - Hover and active paint apply only while the link remains focused.
 - Target receives Brick identity but no component layout or paint.
 - Light and dark appearance scopes substitute semantic tokens.
@@ -197,7 +208,7 @@ layout; Brick does not guess a page-specific scroll offset for Target.
 - Put Root before repeated content and make it the first useful focus target.
 - Write concise localized text that names the destination.
 - Keep Root and Target fragment identifiers unique and matching.
-- Keep the default native anchor and `main` semantics unless the composed host
+- Keep the native anchor semantics and an application-owned main unless the composed host
   supplies equivalent semantics.
 - Do not hide Root with `display:none`, `visibility:hidden`, Visually Hidden,
   or a negative `tabIndex`.
@@ -216,7 +227,7 @@ Use `render` or `asChild` for framework or semantic composition. Preserve a
 genuine anchor for Root and a primary-content landmark for Target:
 
 ```tsx
-<SkipLink.Root asChild>
+<SkipLink.Root asChild href="#reports">
   <a href="#reports">Skip report navigation</a>
 </SkipLink.Root>
 

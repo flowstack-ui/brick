@@ -16,6 +16,7 @@ Present empty content with consistent visual hierarchy and application-owned nex
 ## Required composition
 
 - Compose Root and Content with optional Indicator, Title, Description and authored actions. Choose Title's heading level independently from size.
+- Group Title and Description with VStack gap={2}; Content separates the glyph, text group and ButtonGroup. Size and align accept sparse responsive values; omitted initial values use md and center. Keep paint on Card or Surface.
 
 ## Rules
 

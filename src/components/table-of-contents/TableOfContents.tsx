@@ -7,6 +7,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 import {
   TableOfContents as Atom,
   type TableOfContentsRootProps as AtomRootProps,
@@ -34,8 +35,8 @@ export type TableOfContentsSize = "sm" | "md";
 export type TableOfContentsVariant = "plain" | "line";
 export type TableOfContentsTone = "neutral" | "accent";
 export interface TableOfContentsRecipeProps {
-  size?: TableOfContentsSize;
-  variant?: TableOfContentsVariant;
+  size?: ResponsiveValue<TableOfContentsSize>;
+  variant?: ResponsiveValue<TableOfContentsVariant>;
   tone?: TableOfContentsTone;
 }
 type Composed<T extends { children?: ReactNode; render?: unknown }> = Omit<
@@ -109,8 +110,8 @@ export const TableOfContentsNav = forwardRef<
       {...props}
       ref={ref}
       className={merge("brick-table-of-contents__nav", className)}
-      data-size={size}
-      data-variant={variant}
+      {...responsiveDataAttributes("data-size", size, { defaultValue: "sm", alwaysInitial: true })}
+      {...responsiveDataAttributes("data-variant", variant, { defaultValue: "plain", alwaysInitial: true })}
       data-tone={tone}
     />
   );

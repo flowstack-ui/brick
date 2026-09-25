@@ -2,20 +2,31 @@ import {
   createContext,
   forwardRef,
   useContext,
-  useId,
   type CSSProperties,
   type HTMLAttributes,
   type ReactNode,
+  type Ref,
 } from "react";
 import {
   Progress as AtomProgress,
   getProgressState,
   useProgressContext,
+  useProgress,
+  type ProgressController,
+  type UseProgressProps,
   type ProgressIndicatorProps as AtomProgressIndicatorProps,
   type ProgressRootProps as AtomProgressRootProps,
 } from "@flowstack-ui/atom/progress";
 import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
 import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
+import { staticPart, type StaticPartProps } from "../_internal/StaticPart.js";
+
+export { useProgress };
+export type { ProgressController, UseProgressProps };
+export type ProgressVariant = "outline" | "subtle";
+export type ProgressLayout = "stacked" | "inline";
+export type ProgressValueFormat = "percent" | "value";
 
 export type ProgressOrientation = "horizontal" | "vertical";
 export type ProgressSize = "xs" | "sm" | "md" | "lg" | "xl";
@@ -35,6 +46,7 @@ interface ProgressVisualContextValue {
   formatOptions?: ProgressFormatOptions;
   labelId: string;
   locale?: Intl.LocalesArgument;
+  valueFormat: ProgressValueFormat;
 }
 
 const ProgressVisualContext = createContext<ProgressVisualContextValue | null>(null);
@@ -56,7 +68,12 @@ export type ProgressRootProps = Omit<
   "className" | "style"
 > & RadiusShapeProps<ProgressShape> & {
   orientation?: ProgressOrientation;
-  size?: ProgressSize;
+  size?: ResponsiveValue<ProgressSize>;
+  variant?: ResponsiveValue<ProgressVariant>;
+  layout?: ProgressLayout;
+  striped?: boolean;
+  animated?: boolean;
+  valueFormat?: ProgressValueFormat;
   tone?: ProgressTone;
   bufferValue?: number | null;
   locale?: Intl.LocalesArgument;
@@ -65,8 +82,10 @@ export type ProgressRootProps = Omit<
   style?: CSSProperties;
 }
 
-export const ProgressRoot = forwardRef<HTMLDivElement, ProgressRootProps>(
-  function ProgressRoot(
+export type ProgressRootProviderProps = Omit<ProgressRootProps, keyof UseProgressProps> & { value: ProgressController };
+
+export const ProgressRootProvider = forwardRef<HTMLDivElement, ProgressRootProviderProps>(
+  function ProgressRootProvider(
     {
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
@@ -75,12 +94,15 @@ export const ProgressRoot = forwardRef<HTMLDivElement, ProgressRootProps>(
       className,
       formatOptions,
       locale,
-      max = 100,
-      min = 0,
       orientation = "horizontal",
       shape = "rounded",
       radius,
       size = "md",
+      variant = "outline",
+      layout = "stacked",
+      striped = false,
+      animated = false,
+      valueFormat = "percent",
       style,
       tone = "accent",
       value,
@@ -90,12 +112,11 @@ export const ProgressRoot = forwardRef<HTMLDivElement, ProgressRootProps>(
     ref,
   ) {
     const localeContext = useLocaleContext();
-    const generatedId = useId();
-    const labelId = `${generatedId}-label`;
+    const labelId = value.ids.label;
     const bufferState =
       bufferValue === null || bufferValue === undefined
         ? null
-        : getProgressState({ value: bufferValue, min, max });
+        : getProgressState({ value: bufferValue, min: value.min, max: value.max });
 
     return (
       <ProgressVisualContext.Provider
@@ -103,51 +124,57 @@ export const ProgressRoot = forwardRef<HTMLDivElement, ProgressRootProps>(
           bufferPercent: bufferState?.percent ?? null,
           formatOptions,
           labelId,
+          valueFormat,
           locale: locale ?? localeContext.locale,
         }}
       >
-        <AtomProgress.Root
+        <AtomProgress.RootProvider
           {...props}
           aria-label={ariaLabel}
           aria-labelledby={ariaLabelledBy ?? (ariaLabel ? undefined : labelId)}
           className={mergeClassName("brick-progress", className)}
           data-orientation={orientation}
           data-shape={radius === undefined ? shape : "rounded"}
-          data-size={size}
+          {...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true })}
+          {...responsiveDataAttributes("data-variant", variant, { defaultValue: "outline", alwaysInitial: true })}
+          data-layout={layout}
+          data-striped={striped || animated ? "" : undefined}
+          data-animated={animated ? "" : undefined}
           data-slot={dataSlot ?? "progress"}
           data-tone={tone}
-          max={max}
-          min={min}
           ref={ref}
           style={radiusStyle(radius, "--brick-progress-radius", style)}
           value={value}
         >
           {children}
-        </AtomProgress.Root>
+        </AtomProgress.RootProvider>
       </ProgressVisualContext.Provider>
     );
   },
 );
+
+export const ProgressRoot = forwardRef<HTMLDivElement, ProgressRootProps>(function ProgressRoot(
+  { value, defaultValue, onValueChange, ids, min, max, ...props }, ref,
+) {
+  const controller = useProgress({ value, defaultValue, onValueChange, ids, min, max });
+  return <ProgressRootProvider {...props} value={controller} ref={ref} />;
+});
+
+export const ProgressContext = AtomProgress.Context;
 
 export interface ProgressLabelProps extends Omit<
   HTMLAttributes<HTMLSpanElement>,
   "id"
 > {
   "data-slot"?: string;
+  asChild?: boolean;
 }
 
 export const ProgressLabel = forwardRef<HTMLSpanElement, ProgressLabelProps>(
   function ProgressLabel({ className, "data-slot": dataSlot, ...props }, ref) {
     const { labelId } = useProgressVisualContext();
-    return (
-      <span
-        {...props}
-        className={mergeClassName("brick-progress__label", className)}
-        data-slot={dataSlot ?? "progress-label"}
-        id={labelId}
-        ref={ref}
-      />
-    );
+    return staticPart("span", { ...props, className, id: labelId, "data-slot": dataSlot } as StaticPartProps,
+      ref as Ref<HTMLElement>, "brick-progress__label", "progress-label");
   },
 );
 
@@ -166,6 +193,7 @@ export interface ProgressValueProps extends Omit<
 > {
   children?: ReactNode | ((details: ProgressValueDetails) => ReactNode);
   "data-slot"?: string;
+  asChild?: boolean;
 }
 
 export const ProgressValue = forwardRef<HTMLSpanElement, ProgressValueProps>(
@@ -174,15 +202,15 @@ export const ProgressValue = forwardRef<HTMLSpanElement, ProgressValueProps>(
     ref,
   ) {
     const state = useProgressContext();
-    const { formatOptions, locale } = useProgressVisualContext();
+    const { formatOptions, locale, valueFormat } = useProgressVisualContext();
     const formattedValue =
       state.percent === null
         ? ""
         : new Intl.NumberFormat(locale, {
             maximumFractionDigits: 0,
-            style: "percent",
+            style: valueFormat === "percent" ? "percent" : "decimal",
             ...formatOptions,
-          }).format(state.percent / 100);
+          }).format(valueFormat === "percent" ? state.percent / 100 : state.value!);
     const details: ProgressValueDetails = {
       formattedValue,
       max: state.max,
@@ -194,40 +222,26 @@ export const ProgressValue = forwardRef<HTMLSpanElement, ProgressValueProps>(
     const content =
       typeof children === "function" ? children(details) : children ?? formattedValue;
 
-    return (
-      <span
-        {...props}
-        aria-hidden="true"
-        className={mergeClassName("brick-progress__value", className)}
-        data-slot={dataSlot ?? "progress-value"}
-        ref={ref}
-      >
-        {content}
-      </span>
-    );
+    return staticPart("span", { ...props, className, children: content, "aria-hidden": true, "data-slot": dataSlot } as StaticPartProps,
+      ref as Ref<HTMLElement>, "brick-progress__value", "progress-value");
   },
 );
 
 export interface ProgressTrackProps extends HTMLAttributes<HTMLDivElement> {
   "data-slot"?: string;
+  asChild?: boolean;
 }
 
 export const ProgressTrack = forwardRef<HTMLDivElement, ProgressTrackProps>(
   function ProgressTrack({ className, "data-slot": dataSlot, ...props }, ref) {
-    return (
-      <div
-        {...props}
-        aria-hidden="true"
-        className={mergeClassName("brick-progress__track", className)}
-        data-slot={dataSlot ?? "progress-track"}
-        ref={ref}
-      />
-    );
+    return staticPart("div", { ...props, className, "aria-hidden": true, "data-slot": dataSlot } as StaticPartProps,
+      ref as Ref<HTMLElement>, "brick-progress__track", "progress-track");
   },
 );
 
 export interface ProgressBufferProps extends HTMLAttributes<HTMLDivElement> {
   "data-slot"?: string;
+  asChild?: boolean;
 }
 
 export const ProgressBuffer = forwardRef<HTMLDivElement, ProgressBufferProps>(
@@ -237,17 +251,9 @@ export const ProgressBuffer = forwardRef<HTMLDivElement, ProgressBufferProps>(
       ...style,
       "--brick-progress-buffer-percent": bufferPercent ?? 0,
     } as CSSProperties;
-    return (
-      <div
-        {...props}
-        aria-hidden="true"
-        className={mergeClassName("brick-progress__buffer", className)}
-        data-present={bufferPercent === null ? undefined : ""}
-        data-slot={dataSlot ?? "progress-buffer"}
-        ref={ref}
-        style={resolvedStyle}
-      />
-    );
+    return staticPart("div", { ...props, className, "aria-hidden": true, "data-slot": dataSlot,
+      "data-present": bufferPercent === null ? undefined : "", style: resolvedStyle } as StaticPartProps,
+      ref as Ref<HTMLElement>, "brick-progress__buffer", "progress-buffer");
   },
 );
 
@@ -277,6 +283,7 @@ export const ProgressIndicator = forwardRef<
 });
 
 ProgressRoot.displayName = "Progress.Root";
+ProgressRootProvider.displayName = "Progress.RootProvider";
 ProgressLabel.displayName = "Progress.Label";
 ProgressValue.displayName = "Progress.Value";
 ProgressTrack.displayName = "Progress.Track";
@@ -285,6 +292,8 @@ ProgressIndicator.displayName = "Progress.Indicator";
 
 export const Progress = Object.freeze({
   Root: ProgressRoot,
+  RootProvider: ProgressRootProvider,
+  Context: ProgressContext,
   Label: ProgressLabel,
   Value: ProgressValue,
   Track: ProgressTrack,

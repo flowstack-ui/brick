@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Progress |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Local 0.2.3 candidate; unpublished |
 | Reviewer |  |
 | Date |  |
 | Browser and version |  |
@@ -12,6 +12,7 @@
 | Physical device |  |
 | Assistive technology |  |
 | Playground route | `/progress` |
+| Qualification route(s) | `/progress?qualification=1` (matrix); `/progress` (documentation examples) |
 
 Scenario order: `01 Overview`, `02 States`, `03 Tones`, `04 Sizes`, `05 Geometry`, `06 Buffer`, `07 Output`, `08 Theme`, `09 Stress`. Use `pass`, `fail`, `blocked`, or `not applicable`; leave every result blank until tested.
 
@@ -44,6 +45,12 @@ Result:
 Notes or issue:
 
 ## Completion
+
+Also review the documentation examples: responsive recipes, controller updates,
+raw and localized values, custom part composition, reduced motion, and visible
+text at supported sizes. Automated browser checks do not mark these manual
+steps complete. Check actual browser zoom, physical touch devices and a screen
+reader before entering a manual pass.
 
 Overall result:
 Follow-up issues:

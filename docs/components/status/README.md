@@ -47,11 +47,15 @@ Root, Indicator, and Label render native `span` elements. Indicator is always
 decorative. Status adds no live-region role, update policy, state machine, or
 interaction behavior.
 
+All parts accept `asChild` (default false) with one non-Fragment element that
+forwards props and refs. Indicator remains decorative after projection.
+Direct text inside Root is valid; Label is optional for wrapping/composition.
+
 ## API
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `size` | `ResponsiveValue<"sm" \| "md" \| "lg">` | `md` |
 | `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
 
 Public exports are `Status`, `StatusRoot`, `StatusRootProps`,
@@ -60,8 +64,10 @@ Public exports are `Status`, `StatusRoot`, `StatusRootProps`,
 
 ## Visual recipes and states
 
-Tone colors Indicator while Label remains primary text. Size coordinates dot,
-gap, and text scale. Status owns no selected, pressed, loading, or interactive
+Size values are `sm`, `md`, and `lg`; each also works inside a responsive object.
+
+Tone colors Indicator while Label remains primary text. The dot is 0.64em; gap remains 8px at all sizes. Text uses the established
+typography scale. Multiline content is centered, not first-line aligned. Status owns no selected, pressed, loading, or interactive
 state.
 
 ## Tokens and CSS hooks
@@ -81,12 +87,13 @@ Indicator or communicate state through color alone.
 ## Responsive behavior
 
 Status is content-sized and does not wrap its dot away from its label. Place it
-in Stack or Grid when surrounding layout changes responsively. Long localized
-labels remain visible and determine the component width.
+in Stack or Grid when surrounding layout changes responsively. Use Label for constrained long text; unbroken words can wrap. Sparse size
+objects inherit md until the first declared breakpoint, for example
+`size={{ md: "lg" }}`. Static CSS owns breakpoints; SSR needs no viewport logic.
 
 ## Accessibility
 
-Always provide localized state text. Normally render it through Status.Label.
+Always provide localized state text. Direct text and Status.Label are both valid.
 Indicator-only composition is allowed only when adjacent visible text or
 visually hidden text already carries the same state; mark that decorative Root
 `aria-hidden`. Indicator is `aria-hidden`. Status
@@ -95,9 +102,10 @@ region only when it owns timing, repetition, focus, and announcement policy.
 
 ## Composition, native props, and refs
 
-Compose Root with one Indicator and one Label by default. Omit Label only for
-the documented decorative indicator-only composition. All parts merge native
-attributes, events, `className`, and `style`; refs target the exact spans.
+Compose Root with one Indicator and readable text, optionally in Label.
+Indicator-only composition still requires the documented adjacent text. All parts merge native
+attributes, events, `className`, and `style`; refs target the native span or the
+projected element when using `asChild`.
 Root may receive deliberate ARIA attributes, while Indicator remains
 decorative.
 

@@ -14,6 +14,7 @@ Render finished native navigation as inline, standalone, or button-like content 
 
 ## Required composition
 
+- Size accepts sparse ResponsiveValue<LinkSize> with inherit as the baseline; an explicit inherit breakpoint resets family, size, leading and tracking. asChild accepts optional parent href and owns all content and icons.
 - Provide a real href or compose a router-owned anchor. Keep the default underline for prose, use subtle for recognizable navigation with hover/focus/active decoration, and reserve plain for unmistakable navigation without an underline. Theme is a deprecated explicit compatibility variant, not the default. All recipes retain a visible keyboard focus ring. Neutral navigation stays primary at rest and gains semantic accent emphasis on hover and press.
 - When a Link completes a sentence or paragraph, keep it inside that semantic Text owner and leave its default inherited size so typography and wrapping remain one coherent text flow; use layout components only for independently meaningful peer items.
 

@@ -1,7 +1,20 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/visually-hidden"); });
+test.beforeEach(async ({ page }) => {
+  await page.goto("/visually-hidden?qualification=1");
+  await expect(page.locator(".visually-hidden-page")).toBeVisible({ timeout: 15000 });
+});
+
+test("documentation uses focused examples and one Root props table", async ({ page }) => {
+  test.setTimeout(60000);
+  await page.goto("/visually-hidden");
+  for (const name of ["3 Notifications", "Archive completed projects", "Read more about billing", "Read more about security"]) await expect(page.getByRole("button", {name, exact: true})).toBeVisible();
+  await expect(page.getByRole("table", {name: "VisuallyHidden.Root props", exact: true})).toHaveCount(1);
+  await expect(page.locator(".brick-visually-hidden input, .brick-visually-hidden button")).toHaveCount(0);
+  await expect(page.locator(".visually-hidden-page")).toHaveCount(0);
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+});
 
 test("hidden content names controls without a visual footprint", async ({ page }) => {
   const action = page.getByTestId("visually-hidden-action").first();

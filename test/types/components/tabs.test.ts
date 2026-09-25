@@ -32,6 +32,9 @@ createElement(Tabs.List, { columns: 5 });
 createElement(Tabs.List, { radius: "full" });
 // @ts-expect-error closed list radius
 createElement(Tabs.List, { radius: "8px" });
-// @ts-expect-error closed trigger radius
 createElement(Tabs.List, { triggerRadius: "full" });
+createElement(Tabs.Root, { size: { initial: "sm", md: "lg" }, variant: { md: "plain" }, fullWidth: { initial: true, lg: false }, tone: { md: "neutral" }, lazyMount: true, unmountOnExit: false });
+createElement(Tabs.List, { columns: { initial: 2, lg: "auto" }, justify: { initial: "start", md: "end" } });
+createElement(Tabs.Content, { value: "one", spacing: "adjacent", animation: "fade" });
+createElement(Tabs.Indicator, { radius: "full", ref: createRef<HTMLDivElement>() });
 void sizes; void variants; void insets; void layouts; void listColumns; void listRadii; void triggerRadii;

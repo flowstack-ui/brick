@@ -1,5 +1,6 @@
 import type { TableOfContentsRootProps } from "@flowstack-ui/brick";
 import type { DocsPropDefinition } from "../../shared/PropsTable.js";
+import type { OwnerPart } from "../../shared/OwnerDocumentation.js";
 export const tableOfContentsProps = [
   {
     name: "items",
@@ -9,13 +10,13 @@ export const tableOfContentsProps = [
   },
   {
     name: "size",
-    typeLabel: '"sm" | "md"',
+    typeLabel: 'ResponsiveValue<"sm" | "md">',
     defaultLabel: '"sm"',
     description: "Coordinated link text and minimum row size.",
   },
   {
     name: "variant",
-    typeLabel: '"plain" | "line"',
+    typeLabel: 'ResponsiveValue<"plain" | "line">',
     defaultLabel: '"plain"',
     description:
       "Transparent navigation, optionally with a logical-start rail.",
@@ -103,3 +104,21 @@ export const tableOfContentsProps = [
       "Delegate the root to one element while preserving its relationships and ref.",
   },
 ] as const satisfies readonly DocsPropDefinition<TableOfContentsRootProps>[];
+
+export const tableOfContentsParts: OwnerPart[] = [
+  { id: "props-root", title: "Root", description: "Owns article tracking and responsive presentation.", rows: tableOfContentsProps },
+  { id: "props-provider", title: "RootProvider", description: "Shares an existing controller without adding a host; accepts the same visual recipes as Root.", rows: [
+    { name: "value", typeLabel: "TableOfContentsController", description: "The result of useTableOfContents." },
+  ] },
+  { id: "props-nav", title: "Nav", description: "Owns the named navigation and independently scrolling rail, not the article viewport.", rows: [
+    { name: "autoScroll", typeLabel: "boolean", defaultLabel: "true", description: "Keep the current link visible in the supplied rail viewport without scrolling ancestors." },
+    { name: "getScrollElement", typeLabel: "() => HTMLElement | null", description: "Returns the bounded rail viewport." },
+    { name: "aria-label", typeLabel: "string", description: "Name the navigation when no Title is supplied." },
+  ] },
+  { id: "props-item", title: "Item", description: "Connects a native list item and its Link to a registered section.", rows: [
+    { name: "value", typeLabel: "string", description: "An ID registered in Root items." },
+  ] },
+  { id: "props-context", title: "Context", description: "Read the controller for custom compositions; passive scrolling never moves focus.", rows: [
+    { name: "children", typeLabel: "(api: TableOfContentsApi) => ReactNode", description: "Provides activeId, visibleIds, pendingId, getItemState, navigateTo and refresh. Only activeId is the current location." },
+  ] },
+];

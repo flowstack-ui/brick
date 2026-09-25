@@ -7,6 +7,18 @@ const items = [
   { id: "details", depth: 3 },
 ];
 describe("TableOfContents", () => {
+  it("serializes sparse responsive recipes on Nav without leaking objects", () => {
+    render(<TableOfContents.Root items={items} enabled={false} size={{md: "md"}} variant={{sm: "line", lg: "plain"}}>
+      <TableOfContents.Nav aria-label="Responsive contents" />
+    </TableOfContents.Root>);
+    const nav = screen.getByRole("navigation");
+    expect(nav).toHaveAttribute("data-size", "sm");
+    expect(nav).toHaveAttribute("data-size-md", "md");
+    expect(nav).toHaveAttribute("data-variant", "plain");
+    expect(nav).toHaveAttribute("data-variant-sm", "line");
+    expect(nav).toHaveAttribute("data-variant-lg", "plain");
+    expect(nav).not.toHaveAttribute("size");
+  });
   it("defaults to calm plain neutral sm and preserves naming and current semantics", () => {
     render(
       <TableOfContents.Root

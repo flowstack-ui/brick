@@ -11,7 +11,7 @@ remaining work is unknown.
 
 ## When not to use
 
-Use Meter for a stable quantity, Steps for workflow stages, Skeleton when the
+Use native meter for a stable quantity, Steps for workflow stages, Skeleton when the
 finished layout is known but no task percentage exists, and Progress Circle in
 compact spaces. Progress is not an input or status message.
 
@@ -78,21 +78,28 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 | `value` | `number \| null` | `undefined` (indeterminate) |
 | `min` / `max` | `number` | `0` / `100` |
 | `bufferValue` | `number \| null` | — |
+| `variant` | Responsive `outline` or `subtle` | `outline` |
+| `layout` | `stacked` or `inline` | `stacked` |
+| `valueFormat` | `percent` or `value` | `percent` |
+| `striped` / `animated` | `boolean` | `false` |
+| `defaultValue` | `number \| null` | `null` |
+| `onValueChange` | `UseProgressProps["onValueChange"]` (normalized range state details) | — |
+| `ids` | `{ root?: string; label?: string }` | generated |
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` |
+| `size` | `ResponsiveValue<"xs" \| "sm" \| "md" \| "lg" \| "xl">` | `"md"` |
 | `shape` | `"square" \| "rounded" \| "pill"` | `"rounded"` |
 | `tone` | `"neutral" \| "accent" \| "info" \| "success" \| "warning" \| "danger"` | `"accent"` |
 | `locale` | `Intl.LocalesArgument` | `LocaleProvider.locale` |
 | `formatOptions` | `Intl.NumberFormatOptions` | percent, 0 fraction digits |
 
-Root retains released Atom Progress props including `aria-valuetext`,
+Root retains public Atom Progress props including `aria-valuetext`,
 `getValueLabel`, `render`, `asChild`, native div props, class/style, and ref.
 
 Label accepts native span props except `id`, because its generated id owns the
 default naming relationship. Value accepts native span props and either custom
 children or a render function receiving formatted value, raw value, min, max,
 percent, and state. Track and Buffer accept native div props. Indicator accepts
-released Atom Progress Indicator props. Public exports include every named
+public Atom Progress Indicator props. Public exports include every named
 part and prop type plus `ProgressOrientation`, `ProgressSize`, `ProgressShape`,
 `ProgressTone`, and `ProgressValueDetails`.
 
@@ -121,6 +128,40 @@ or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
+`variant="outline"` (default) uses a neutral recessed track; `subtle` uses a
+tinted track. Size and variant accept `ResponsiveValue` with initial/sm/md/lg/xl
+breakpoints. Sparse values retain the previous setting and default to md/outline.
+The xs/sm/md/lg/xl track heights are 6/8/10/12/16px at a 16px root font.
+`layout="stacked"` is the default; `inline` aligns Label, Track and Value in a
+single horizontal row. Put them in that DOM order for inline layout.
+`striped` is stationary; `animated` implies stripes. Both default false.
+Reduced motion stops both stripes and indeterminate movement.
+
+### Controller and formatting
+
+Additional exports are `ProgressRootProvider`, `ProgressRootProviderProps`,
+`ProgressContext`, `useProgress`, `ProgressController`, `UseProgressProps`,
+`ProgressVariant`, `ProgressLayout`, and `ProgressValueFormat`.
+`Progress.Context` renders a function child with normalized state and an
+optional setter; it adds no element. `Progress.RootProvider` accepts a
+`ProgressController` as value and the same visual/native props as Root, but
+not a second min/max/defaultValue/onValueChange/ids configuration.
+
+`useProgress({ value, defaultValue, onValueChange, min, max, ids })` returns
+state, stable root/label IDs and `setValue(number | null)`. Applications own
+task updates. Root accepts the same state options; defaultValue defaults to
+null, controlled value wins, and onValueChange receives normalized state for
+changed controller requests. `ids={{ root, label }}` overrides generated IDs.
+NaN is unknown; infinities clamp and invalid ranges normalize safely in Atom.
+
+`valueFormat="percent"` (default) formats percent / 100. `valueFormat="value"`
+formats the raw normalized value using decimal formatting by default. Both
+respect locale and formatOptions. `aria-valuetext` takes precedence over
+getValueLabel; neither is silently replaced by visible formatting. Keep help
+buttons outside Root and connect external text with aria-labelledby.
+All static parts accept asChild with one compatible element; Label owns its
+resolved id and Value/Track/Buffer remain decorative and noninteractive.
+
 Determinate progress fills to the normalized percentage; indeterminate
 progress moves a fixed segment. Optional Buffer sits behind the current value.
 Sizes change thickness, shapes change ends, and tones change the active and
@@ -133,7 +174,9 @@ Stable classes are `.brick-progress`, `.brick-progress__label`,
 `.brick-progress__value`, `.brick-progress__track`,
 `.brick-progress__buffer`, and `.brick-progress__indicator`. Default slots use
 the matching `progress-*` names. Root exposes `data-orientation`, `data-size`,
-`data-shape`, and `data-tone`; Atom exposes state/range attributes.
+`data-shape`, `data-tone`, `data-variant`, `data-layout`, `data-striped` and
+`data-animated`; responsive recipes add data-size-sm/md/lg/xl and
+data-variant-sm/md/lg/xl. Atom exposes state/range attributes.
 
 Public variables are:
 
@@ -173,7 +216,7 @@ preserves boundaries.
 ## Composition, native props, and refs
 
 Root and Indicator retain Atom `render`/`asChild` composition. Other parts
-forward their documented native props and refs. Keep Buffer before Indicator
+support `asChild` and forward documented native props and refs. Keep Buffer before Indicator
 inside Track so current progress remains visually foremost.
 
 ## Examples

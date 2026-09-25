@@ -11,13 +11,17 @@
 | Viewport and zoom | |
 | Assistive technology | |
 | Playground route | `/empty-state` |
+| Qualification route(s) | `/empty-state` and `/empty-state?qualification=1` |
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Recipes and composition
 
-Inspect all 13 numbered scenarios, including optional parts, table-cell,
+Inspect the normal documentation examples and all 13 numbered qualification scenarios, including optional parts, table-cell,
 Card and artwork examples. Confirm square indicators and transparent roots.
+Check 16/24/32px content gaps and 24/48/64px block padding for sm/md/lg.
+Resize the responsive example through 30/48/64/80rem in both directions;
+alignment must return to center at xl and use logical start in RTL.
 
 Result:
 Notes or issue:

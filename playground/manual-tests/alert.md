@@ -11,6 +11,7 @@
 | Viewport and zoom | |
 | Assistive technology | |
 | Playground route | `/alert` |
+| Qualification route(s) | `/alert`; exhaustive scenarios at `/alert?qualification=1` |
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
@@ -18,6 +19,9 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 Inspect every specimen in the 16 numbered scenarios. Compare border and text
 contrast, glyph size, padding and content containment in light and dark.
+On the docs page inspect all Preview/Code pairs and five named Props sections.
+Check responsive resets, shared radius, start-edge accent in RTL, and matching
+Spinner/Icon inherited sizes. Confirm the close action stays compact.
 
 Result:
 Notes or issue:

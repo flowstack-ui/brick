@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/progress"); });
+test.beforeEach(async ({ page }) => { await page.goto("/progress?qualification=1"); });
 
 test("defaults, states, tones, sizes, shapes, and buffer are complete", async ({ page }) => {
   const root = page.getByTestId("progress-overview").getByRole("progressbar", { name: "Upload files" });

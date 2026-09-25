@@ -36,15 +36,18 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ## Quick start
 
 ```tsx
-<Skeleton loading={isLoading} variant="rounded">
+<Skeleton asChild loading={isLoading} variant="rounded">
   <article>Loaded content</article>
 </Skeleton>
 ```
 
 ## Anatomy and DOM ownership
 
-Skeleton owns one stable `span`. Wrapped children stay under a private content
-span so their geometry is preserved while visibility removes interaction.
+Skeleton owns one stable `span` by default. Children render directly with no
+private wrapper. Use `asChild` with one non-Fragment element to retain a block,
+layout or control host; do not nest an article inside the default span.
+Loading uses native inert and hides descendant artwork; loaded content keeps
+its existing element and application state.
 Standalone multi-line text adds private line spans.
 
 ## API
@@ -59,6 +62,19 @@ Public exports are `Skeleton`, `SkeletonProps`, `SkeletonVariant`, and
 | `loading` | `boolean` | `true` |
 | `lines` | `number` | `1` |
 | `width` / `height` | CSS length or number | optional |
+| `size` | CSS length or number | optional; equal dimensions |
+| `radius` | shared `Radius` | shape default |
+| `gap` | CSS gap or number | `8px` |
+| `lastLineWidth` | CSS width or number | `80%` |
+| `asChild` | boolean | `false` |
+
+Shared Radius values are `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`,
+`3xl`, `4xl`, `subtle`, `control`, `surface`, `overlay`, and `full`.
+Explicit width/height override size. Circular width alone supplies matching
+height. Lines apply only to standalone text: finite counts normalize to 1–100,
+nonfinite counts become one. A loaded empty skeleton reserves geometry but
+does not paint placeholders. Gap is between lines; lastLineWidth only affects
+multiline text. Numeric dimensions and gaps are pixels.
 
 Native span attributes, children, class, style, slot, and ref are supported.
 
@@ -75,9 +91,17 @@ light, and dark surfaces without selecting a literal color.
 
 The stable class is `.brick-skeleton`; data hooks are `data-variant`,
 `data-animation`, `data-loading`, `data-lines`, and `data-slot`. Public tokens
+use the `--brick-skeleton-` prefix. Styling state uses `data-skeleton-variant`,
+`data-skeleton-animation` and `data-skeleton-loading` to avoid collisions when
+composed onto another component. The shorter variant/animation/loading aliases
+remain on ordinary roots only. A composed component may retain its own slot.
+Public tokens
 are `--brick-skeleton-background`, `--brick-skeleton-highlight`,
 `--brick-skeleton-width`, `--brick-skeleton-height`, and
-`--brick-skeleton-radius`.
+`--brick-skeleton-radius`, `--brick-skeleton-gap`,
+`--brick-skeleton-last-line-width`, `--brick-skeleton-duration` and
+`--brick-skeleton-fade-duration`. Pulse defaults to 1.2s, wave to 5s, and
+content reveal to 0.1s. Reduced motion disables all three.
 
 ## Customization
 
@@ -86,9 +110,10 @@ shape closely so loading does not cause a layout shift.
 
 ## Responsive behavior
 
-The default width follows its container and never exceeds it. Explicit CSS
-lengths remain consumer-owned. Multi-line placeholders use logical dimensions
-and require no RTL mirroring.
+The default width follows its container and never exceeds it. For responsive
+geometry compose `<Skeleton asChild><Frame blockSize={{ initial: 100, md: 200 }} /></Skeleton>`.
+Frame owns responsive constraints; Skeleton adds loading paint to that same
+host. Multi-line placeholders use logical dimensions and require no RTL mirroring.
 
 ## Accessibility
 

@@ -1,12 +1,13 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/toast"); });
+test.beforeEach(async ({ page }) => { await page.goto("/toast?qualification=1"); });
 
 test("creates the finished card with one live announcement path and default policy", async ({ page }) => {
   const trigger = page.getByRole("button", { name: "Create success toast" });
   await trigger.focus();
   await trigger.press("Enter");
+  await expect(page.locator("[data-slot='toast-announcer-polite']")).toContainText("Workspace published");
   await expect(trigger).toBeFocused();
   const viewport = page.getByRole("region", { name: "Notifications (F8)" });
   await expect(viewport).toHaveAttribute("data-position", "bottom-end");
@@ -20,7 +21,6 @@ test("creates the finished card with one live announcement path and default poli
   await expect(item.getByRole("button", { name: "Dismiss notification" })).toBeVisible();
   await expect(page.locator("[data-slot='toast-announcer-polite']")).toHaveCount(1);
   await expect(page.locator("[data-slot='toast-announcer-assertive']")).toHaveCount(1);
-  await expect(page.locator("[data-slot='toast-announcer-polite']")).toContainText("Workspace published");
 });
 
 test("supports F8, action/close focus, Escape dismissal, and focus restoration", async ({ page }) => {
@@ -104,14 +104,14 @@ test("queue, overlap, logical positions, mobile containment, and accessibility a
   expect(rtlBox!.x).toBeGreaterThan(700);
 });
 
-test("centers title-only content and icons within the toast row", async ({ page }) => {
+test("keeps compact text and top-aligned artwork within the toast row", async ({ page }) => {
   await page.getByRole("button", { name: "Show title only" }).click();
   const viewport = page.getByRole("region", { name: "Notifications (F8)" });
   const titleOnly = viewport.locator(".brick-toast[data-state='visible']");
   await expect(titleOnly).toHaveCount(1);
   await expect(titleOnly.locator(".brick-toast__description")).toHaveCount(0);
   await expect(titleOnly.locator(".brick-toast__icon")).toHaveCount(0);
-  await expect(titleOnly.locator(".brick-toast__content")).toHaveCSS("grid-column-start", "1");
+  await expect(titleOnly).toHaveCSS("display", "flex");
   await page.waitForTimeout(250);
   const rootBox = await titleOnly.boundingBox();
   const titleBox = await titleOnly.locator(".brick-toast__title").boundingBox();
@@ -119,12 +119,12 @@ test("centers title-only content and icons within the toast row", async ({ page 
   expect(rootBox).not.toBeNull();
   expect(titleBox).not.toBeNull();
   expect(closeBox).not.toBeNull();
-  expect(rootBox!.height).toBeLessThanOrEqual(50);
+  expect(rootBox!.height).toBeLessThanOrEqual(60);
   expect(closeBox!.x).toBeGreaterThan(rootBox!.x);
   expect(closeBox!.x + closeBox!.width).toBeLessThanOrEqual(rootBox!.x + rootBox!.width);
   const rootCenter = rootBox!.y + rootBox!.height / 2;
   expect(Math.abs(titleBox!.y + titleBox!.height / 2 - rootCenter)).toBeLessThanOrEqual(2);
-  expect(Math.abs(closeBox!.y + closeBox!.height / 2 - rootCenter)).toBeLessThanOrEqual(2);
+  expect(closeBox!.y - rootBox!.y).toBeLessThanOrEqual(6);
 
   await page.getByRole("button", { name: "Show description only" }).click();
   const descriptionOnly = viewport.locator(".brick-toast[data-state='visible']");
@@ -137,7 +137,7 @@ test("centers title-only content and icons within the toast row", async ({ page 
     .boundingBox();
   expect(descriptionRootBox).not.toBeNull();
   expect(descriptionCloseBox).not.toBeNull();
-  expect(descriptionRootBox!.height).toBeLessThanOrEqual(50);
+  expect(descriptionRootBox!.height).toBeLessThanOrEqual(60);
   expect(descriptionCloseBox!.x + descriptionCloseBox!.width).toBeLessThanOrEqual(
     descriptionRootBox!.x + descriptionRootBox!.width,
   );
@@ -148,13 +148,14 @@ test("centers title-only content and icons within the toast row", async ({ page 
     .filter({ hasText: "Custom icon" });
   await expect(customToast).toHaveCount(1);
   await expect(customToast.getByText("Custom icon", { exact: true })).toBeVisible();
+  await page.waitForTimeout(250);
   const iconBox = await customToast.locator(".brick-toast__icon").boundingBox();
   const contentBox = await customToast.locator(".brick-toast__content").boundingBox();
   expect(iconBox).not.toBeNull();
   expect(contentBox).not.toBeNull();
   expect(
     Math.abs(
-      iconBox!.y + iconBox!.height / 2 - (contentBox!.y + contentBox!.height / 2),
+      iconBox!.y - contentBox!.y,
     ),
   ).toBeLessThanOrEqual(3.5);
 });
@@ -164,4 +165,68 @@ test("action runs once and removes only its toast", async ({ page }) => {
   const viewport = page.getByRole("region", { name: "Notifications (F8)" });
   await viewport.getByRole("button", { name: "View" }).click();
   await expect(viewport).toBeHidden();
+});
+
+test("docs expose focused examples and named props parts", async ({ page }) => {
+  await page.clock.install();
+  await page.goto("/toast");
+  for (const id of ["types", "dismiss", "action", "promise", "update", "pause", "lifecycle", "recipes", "placement", "queue", "overlap", "custom", "track", "duration", "pageidle", "width", "props-toaster", "props-api", "props-root", "props-parts"]) {
+    await expect(page.locator("#" + id)).toHaveCount(1);
+  }
+  await page.getByRole("button", { name: "Create paused toast", exact: true }).click();
+  const root = page.getByRole("region", { name: "Notifications (F8)" }).locator(".brick-toast");
+  await expect(root).toHaveCount(1);
+  await page.clock.fastForward(6500);
+  await expect(root).toHaveCount(1);
+  await page.getByRole("button", { name: "Resume timer", exact: true }).click();
+  await page.clock.fastForward(6500);
+  await expect(root).toHaveCount(0);
+});
+
+test("scoped variable-height stacks remain stable above three items", async ({ page }) => {
+  await page.goto("/toast");
+  await page.getByRole("button", { name: "Show overlapping stack", exact: true }).click();
+  const viewport = page.getByRole("region", { name: "Stack example", exact: true });
+  const items = viewport.locator(".brick-toast");
+  await expect(items).toHaveCount(5);
+  await viewport.hover();
+  await expect(viewport).toHaveAttribute("data-expanded", "");
+  await page.waitForTimeout(300);
+  const before = await items.evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().toJSON()).sort((a,b) => a.top - b.top));
+  const newest = await items.filter({ hasText: "Update 5" }).boundingBox();
+  expect(newest!.y + newest!.height).toBeCloseTo(before[before.length - 1]!.bottom, 0);
+  for (let i = 1; i < before.length; i++) expect(before[i]!.top - before[i - 1]!.bottom).toBeGreaterThanOrEqual(15);
+  await page.waitForTimeout(300);
+  const after = await items.evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().height));
+  expect(after.every(height => height >= 50)).toBe(true);
+  await expect(page.getByRole("region", { name: "Notifications (F8)" })).toHaveCount(0);
+});
+
+test("center placement stays centered in RTL and solid cards use readable paint", async ({ page }) => {
+  await page.goto("/toast?appearance=dark&exampleDirection=rtl");
+  await page.getByRole("button", { name: "Show positioned toast", exact: true }).click();
+  const viewport = page.getByRole("region", { name: "Position example", exact: true });
+  await expect(viewport.locator(".brick-toast")).toHaveCount(1);
+  const bounds = await viewport.boundingBox();
+  expect(Math.abs(bounds!.x + bounds!.width / 2 - page.viewportSize()!.width / 2)).toBeLessThan(2);
+  await page.getByRole("button", { name: "Solid accent", exact: true }).click();
+  const root = page.getByRole("region", { name: "Notifications (F8)" }).locator(".brick-toast");
+  await expect(root).toHaveAttribute("data-tone", "accent");
+  await expect(root).toHaveAttribute("data-variant", "solid");
+  expect((await new AxeBuilder({ page }).include(".brick-toast-viewport").analyze()).violations).toEqual([]);
+});
+
+test("dialog-scoped notifications retain accessible controls outside the dialog surface", async ({ page }) => {
+  await page.goto("/toast");
+  await page.getByRole("button", { name: "Open notification dialog", exact: true }).click();
+  await page.getByRole("button", { name: "Notify inside dialog", exact: true }).click();
+  const viewport = page.getByRole("region", { name: "Dialog notifications (F8)" });
+  await expect(viewport).toBeVisible();
+  const close = viewport.getByRole("button", { name: "Dismiss notification", exact: true });
+  await close.focus();
+  await expect(close).toBeFocused();
+  expect(await viewport.evaluate(node => Boolean(node.closest("[inert]")))).toBe(false);
+  await close.click();
+  await expect(viewport).toHaveCount(0);
+  await expect(page.getByRole("dialog", { name: "Save changes" })).toBeVisible();
 });

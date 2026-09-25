@@ -32,6 +32,16 @@
       "id": "alert-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus alert.css; load additional composed component CSS separately."
+    },
+    {
+      "id": "alert-responsive",
+      "level": "must",
+      "statement": "Use responsive size, variant, inline and align for visual changes; status and tone remain scalar. Sparse recipes retain md, soft, false and start defaults."
+    },
+    {
+      "id": "alert-artwork",
+      "level": "must",
+      "statement": "Use Icon or Spinner size=inherit for slot-sized artwork. Use shared radius and accentStart before custom CSS; Content tone=primary is for suitable soft backgrounds, not a substitute for solid contrast pairs."
     }
   ],
   "commonMistakes": [
@@ -41,7 +51,8 @@
     }
   ],
   "validation": [
-    "Check all status/variant pairs, sizes, long content, indicator containment, light/dark, RTL and accessible actions."
+    "Check all status/variant pairs, sizes, long content, indicator containment, light/dark, RTL and accessible actions.",
+    "Verify compact line heights, invariant variant geometry, responsive resets, inherited artwork dimensions, logical accent stripe, shared radius and all five part refs."
   ],
   "related": [
     "toast",

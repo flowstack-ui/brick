@@ -10,14 +10,32 @@ import {
   type BreadcrumbSeparatorProps as AtomBreadcrumbSeparatorProps,
 } from "@flowstack-ui/atom/breadcrumb";
 
+import {
+  ButtonRoot as AtomButtonRoot,
+  type ButtonRootProps as AtomButtonRootProps,
+} from "@flowstack-ui/atom/button";
+import { Icon } from "../icon/Icon.js";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
+
+export type BreadcrumbTone = "neutral" | "accent" | "inherit";
+export type BreadcrumbTriggerProps = Omit<
+  AtomButtonRootProps,
+  "href" | "target" | "rel" | "loading" | "color"
+>;
+
 export type BreadcrumbSize = "sm" | "md" | "lg";
-export type BreadcrumbVariant = "plain" | "underline";
+export type BreadcrumbVariant = "plain" | "underline" | "subtle";
 
 export interface BreadcrumbRootProps extends AtomBreadcrumbRootProps {
   /** Typography and spacing recipe for the complete trail. @default "md" */
-  size?: BreadcrumbSize;
+  size?: ResponsiveValue<BreadcrumbSize>;
   /** Ancestor-link decoration recipe. @default "plain" */
-  variant?: BreadcrumbVariant;
+  variant?: ResponsiveValue<BreadcrumbVariant>;
+  /** Semantic foreground family. @default "neutral" */
+  tone?: BreadcrumbTone;
 }
 
 export type BreadcrumbListProps = AtomBreadcrumbListProps;
@@ -37,6 +55,7 @@ export const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbRootProps>(
       className,
       size = "md",
       variant = "plain",
+      tone = "neutral",
       "data-slot": dataSlot,
       ...props
     },
@@ -46,9 +65,16 @@ export const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbRootProps>(
       <AtomBreadcrumb.Root
         {...props}
         className={mergeClassName("brick-breadcrumb", className)}
-        data-size={size}
+        {...responsiveDataAttributes("data-size", size, {
+          defaultValue: "md",
+          alwaysInitial: true,
+        })}
         data-slot={dataSlot ?? "breadcrumb"}
-        data-variant={variant}
+        {...responsiveDataAttributes("data-variant", variant, {
+          defaultValue: "plain",
+          alwaysInitial: true,
+        })}
+        data-tone={tone}
         ref={ref}
       />
     );
@@ -81,18 +107,19 @@ export const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
   },
 );
 
-export const BreadcrumbLink = forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
-  function BreadcrumbLink({ className, "data-slot": dataSlot, ...props }, ref) {
-    return (
-      <AtomBreadcrumb.Link
-        {...props}
-        className={mergeClassName("brick-breadcrumb-link", className)}
-        data-slot={dataSlot ?? "breadcrumb-link"}
-        ref={ref}
-      />
-    );
-  },
-);
+export const BreadcrumbLink = forwardRef<
+  HTMLAnchorElement,
+  BreadcrumbLinkProps
+>(function BreadcrumbLink({ className, "data-slot": dataSlot, ...props }, ref) {
+  return (
+    <AtomBreadcrumb.Link
+      {...props}
+      className={mergeClassName("brick-breadcrumb-link", className)}
+      data-slot={dataSlot ?? "breadcrumb-link"}
+      ref={ref}
+    />
+  );
+});
 
 export const BreadcrumbPage = forwardRef<HTMLSpanElement, BreadcrumbPageProps>(
   function BreadcrumbPage({ className, "data-slot": dataSlot, ...props }, ref) {
@@ -111,12 +138,30 @@ export const BreadcrumbSeparator = forwardRef<
   HTMLLIElement,
   BreadcrumbSeparatorProps
 >(function BreadcrumbSeparator(
-  { className, "data-slot": dataSlot, ...props },
+  { className, children, "data-slot": dataSlot, ...props },
   ref,
 ) {
   return (
     <AtomBreadcrumb.Separator
       {...props}
+      children={
+        children === undefined && !props.asChild ? (
+          <Icon size="inherit" directional>
+            <svg viewBox="0 0 24 24">
+              <path
+                d="m9 5 7 7-7 7"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Icon>
+        ) : (
+          children
+        )
+      }
       className={mergeClassName("brick-breadcrumb-separator", className)}
       data-slot={dataSlot ?? "breadcrumb-separator"}
       ref={ref}
@@ -128,18 +173,50 @@ export const BreadcrumbEllipsis = forwardRef<
   HTMLSpanElement,
   BreadcrumbEllipsisProps
 >(function BreadcrumbEllipsis(
-  { className, "data-slot": dataSlot, ...props },
+  { className, children, "data-slot": dataSlot, ...props },
   ref,
 ) {
   return (
     <AtomBreadcrumb.Ellipsis
       {...props}
+      children={
+        children === undefined && !props.asChild ? (
+          <Icon size="inherit">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="5" cy="12" r="2" />
+              <circle cx="12" cy="12" r="2" />
+              <circle cx="19" cy="12" r="2" />
+            </svg>
+          </Icon>
+        ) : (
+          children
+        )
+      }
       className={mergeClassName("brick-breadcrumb-ellipsis", className)}
       data-slot={dataSlot ?? "breadcrumb-ellipsis"}
       ref={ref}
     />
   );
 });
+
+export const BreadcrumbTrigger = forwardRef<
+  HTMLElement,
+  BreadcrumbTriggerProps
+>(function BreadcrumbTrigger(
+  { className, type = "button", "data-slot": dataSlot, ...props },
+  ref,
+) {
+  return (
+    <AtomButtonRoot
+      {...props}
+      type={type}
+      ref={ref}
+      className={mergeClassName("brick-breadcrumb-trigger", className)}
+      data-slot={dataSlot ?? "breadcrumb-trigger"}
+    />
+  );
+});
+BreadcrumbTrigger.displayName = "Breadcrumb.Trigger";
 
 BreadcrumbRoot.displayName = "Breadcrumb.Root";
 BreadcrumbList.displayName = "Breadcrumb.List";
@@ -157,4 +234,5 @@ export const Breadcrumb = Object.freeze({
   Page: BreadcrumbPage,
   Separator: BreadcrumbSeparator,
   Ellipsis: BreadcrumbEllipsis,
+  Trigger: BreadcrumbTrigger,
 });

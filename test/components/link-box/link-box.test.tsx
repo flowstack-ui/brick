@@ -7,6 +7,12 @@ import {
 } from "../../../src/link-box.js";
 
 describe("LinkBox", () => {
+  it("maps shared radius without leaking the prop", () => {
+    render(<LinkBox.Root radius="none" data-testid="radius">Content</LinkBox.Root>);
+    const root = screen.getByTestId("radius");
+    expect(root.style.getPropertyValue("--brick-link-box-radius")).toBe("0px");
+    expect(root).not.toHaveAttribute("radius");
+  });
   it("renders a neutral Root and one real primary destination", () => {
     render(
       <LinkBox.Root>

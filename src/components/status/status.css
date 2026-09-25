@@ -1,6 +1,6 @@
 @layer brick.components {
   .brick-status {
-    --brick-status-indicator-size: 0.5rem;
+    --brick-status-indicator-size: 0.64em;
     --brick-status-gap: var(--brick-space-2);
     --brick-status-color: var(--brick-color-border-strong);
 
@@ -16,11 +16,10 @@
     line-height: var(--brick-typography-body-sm-line-height);
     letter-spacing: var(--brick-typography-body-sm-letter-spacing);
     vertical-align: middle;
+    overflow-wrap: anywhere;
   }
 
   .brick-status[data-size="sm"] {
-    --brick-status-indicator-size: 0.375rem;
-    --brick-status-gap: var(--brick-space-1);
     font-family: var(--brick-typography-caption-font-family);
     font-size: var(--brick-typography-caption-font-size);
     font-weight: var(--brick-typography-caption-font-weight);
@@ -29,7 +28,6 @@
   }
 
   .brick-status[data-size="lg"] {
-    --brick-status-indicator-size: 0.625rem;
     font-family: var(--brick-typography-body-md-font-family);
     font-size: var(--brick-typography-body-md-font-size);
     font-weight: var(--brick-typography-body-md-font-weight);
@@ -54,6 +52,99 @@
   }
 
   .brick-status__label { min-inline-size: 0; color: inherit; }
+
+  @media (min-width: 30rem) {
+    .brick-status[data-size-sm="sm"] {
+      font-family: var(--brick-typography-caption-font-family);
+      font-size: var(--brick-typography-caption-font-size);
+      font-weight: var(--brick-typography-caption-font-weight);
+      line-height: var(--brick-typography-caption-line-height);
+      letter-spacing: var(--brick-typography-caption-letter-spacing);
+    }
+    .brick-status[data-size-sm="md"] {
+      font-family: var(--brick-typography-body-sm-font-family);
+      font-size: var(--brick-typography-body-sm-font-size);
+      font-weight: var(--brick-typography-body-sm-font-weight);
+      line-height: var(--brick-typography-body-sm-line-height);
+      letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    }
+    .brick-status[data-size-sm="lg"] {
+      font-family: var(--brick-typography-body-md-font-family);
+      font-size: var(--brick-typography-body-md-font-size);
+      font-weight: var(--brick-typography-body-md-font-weight);
+      line-height: var(--brick-typography-body-md-line-height);
+      letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    }
+  }
+  @media (min-width: 48rem) {
+    .brick-status[data-size-md="sm"] {
+      font-family: var(--brick-typography-caption-font-family);
+      font-size: var(--brick-typography-caption-font-size);
+      font-weight: var(--brick-typography-caption-font-weight);
+      line-height: var(--brick-typography-caption-line-height);
+      letter-spacing: var(--brick-typography-caption-letter-spacing);
+    }
+    .brick-status[data-size-md="md"] {
+      font-family: var(--brick-typography-body-sm-font-family);
+      font-size: var(--brick-typography-body-sm-font-size);
+      font-weight: var(--brick-typography-body-sm-font-weight);
+      line-height: var(--brick-typography-body-sm-line-height);
+      letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    }
+    .brick-status[data-size-md="lg"] {
+      font-family: var(--brick-typography-body-md-font-family);
+      font-size: var(--brick-typography-body-md-font-size);
+      font-weight: var(--brick-typography-body-md-font-weight);
+      line-height: var(--brick-typography-body-md-line-height);
+      letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    }
+  }
+  @media (min-width: 64rem) {
+    .brick-status[data-size-lg="sm"] {
+      font-family: var(--brick-typography-caption-font-family);
+      font-size: var(--brick-typography-caption-font-size);
+      font-weight: var(--brick-typography-caption-font-weight);
+      line-height: var(--brick-typography-caption-line-height);
+      letter-spacing: var(--brick-typography-caption-letter-spacing);
+    }
+    .brick-status[data-size-lg="md"] {
+      font-family: var(--brick-typography-body-sm-font-family);
+      font-size: var(--brick-typography-body-sm-font-size);
+      font-weight: var(--brick-typography-body-sm-font-weight);
+      line-height: var(--brick-typography-body-sm-line-height);
+      letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    }
+    .brick-status[data-size-lg="lg"] {
+      font-family: var(--brick-typography-body-md-font-family);
+      font-size: var(--brick-typography-body-md-font-size);
+      font-weight: var(--brick-typography-body-md-font-weight);
+      line-height: var(--brick-typography-body-md-line-height);
+      letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    }
+  }
+  @media (min-width: 80rem) {
+    .brick-status[data-size-xl="sm"] {
+      font-family: var(--brick-typography-caption-font-family);
+      font-size: var(--brick-typography-caption-font-size);
+      font-weight: var(--brick-typography-caption-font-weight);
+      line-height: var(--brick-typography-caption-line-height);
+      letter-spacing: var(--brick-typography-caption-letter-spacing);
+    }
+    .brick-status[data-size-xl="md"] {
+      font-family: var(--brick-typography-body-sm-font-family);
+      font-size: var(--brick-typography-body-sm-font-size);
+      font-weight: var(--brick-typography-body-sm-font-weight);
+      line-height: var(--brick-typography-body-sm-line-height);
+      letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    }
+    .brick-status[data-size-xl="lg"] {
+      font-family: var(--brick-typography-body-md-font-family);
+      font-size: var(--brick-typography-body-md-font-size);
+      font-weight: var(--brick-typography-body-md-font-weight);
+      line-height: var(--brick-typography-body-md-line-height);
+      letter-spacing: var(--brick-typography-body-md-letter-spacing);
+    }
+  }
 
   @media (forced-colors: active) {
     .brick-status { color: CanvasText; }

@@ -4,6 +4,7 @@ import {
   type HTMLAttributes,
 } from "react";
 import { Link, type LinkProps } from "../link/index.js";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 
 export type LinkBoxRootElement = "div" | "article" | "section" | "li";
 export type LinkBoxVariant = "outline" | "plain";
@@ -11,6 +12,7 @@ export type LinkBoxVariant = "outline" | "plain";
 export interface LinkBoxRootProps extends HTMLAttributes<HTMLElement> {
   as?: LinkBoxRootElement;
   variant?: LinkBoxVariant;
+  radius?: Radius;
   "data-slot"?: string;
 }
 
@@ -31,6 +33,8 @@ export const LinkBoxRoot = forwardRef<HTMLElement, LinkBoxRootProps>(
       className,
       "data-slot": dataSlot = "link-box",
       variant = "outline",
+      radius,
+      style,
       ...props
     },
     ref,
@@ -40,6 +44,8 @@ export const LinkBoxRoot = forwardRef<HTMLElement, LinkBoxRootProps>(
       className: classes("brick-link-box", className),
       "data-slot": dataSlot,
       "data-variant": variant,
+      "data-radius": radius,
+      style: radiusStyle(radius, "--brick-link-box-radius", style),
       ref,
     });
   },

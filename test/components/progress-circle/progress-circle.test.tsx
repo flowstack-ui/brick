@@ -2,6 +2,8 @@ import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ProgressCircle } from "../../../src/progress-circle.js";
+import { useProgress } from "../../../src/progress.js";
+import { fireEvent } from "@testing-library/react";
 
 function Example({ value = 72 }: { value?: number | null }) {
   return (
@@ -17,6 +19,28 @@ function Example({ value = 72 }: { value?: number | null }) {
 }
 
 describe("ProgressCircle", () => {
+  it("supports sparse responsive geometry and matching SVG host projection", () => {
+    render(<ProgressCircle.Root aria-label="Export" size={{ md: "xl" }} value={0}><ProgressCircle.Circle asChild><svg><ProgressCircle.Track asChild><circle /></ProgressCircle.Track><ProgressCircle.Indicator asChild><circle /></ProgressCircle.Indicator></svg></ProgressCircle.Circle></ProgressCircle.Root>);
+    const root = screen.getByRole("progressbar");
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "xl");
+    expect(root.querySelectorAll("svg")).toHaveLength(1);
+    expect(root.querySelectorAll("circle")).toHaveLength(2);
+    expect(root.querySelector(".brick-progress-circle__indicator")).toHaveAttribute("data-percent", "0");
+  });
+  it("adapts the shared controller, explicit IDs and raw formatted values", () => {
+    function Example() {
+      const progress = useProgress({ defaultValue: 2, max: 5, ids: { label: "export-name" } });
+      return <><ProgressCircle.RootProvider value={progress} valueFormat="value"><ProgressCircle.Circle><ProgressCircle.Track /><ProgressCircle.Indicator /></ProgressCircle.Circle><ProgressCircle.Label asChild><span>Export</span></ProgressCircle.Label><ProgressCircle.Value /><ProgressCircle.Context>{state => <span>{state.percent}% completed</span>}</ProgressCircle.Context></ProgressCircle.RootProvider><button onClick={() => progress.setValue(3)}>Advance</button></>;
+    }
+    render(<Example />);
+    fireEvent.click(screen.getByText("Advance"));
+    const root = screen.getByRole("progressbar", { name: "Export" });
+    expect(root).toHaveAttribute("aria-labelledby", "export-name");
+    expect(root.querySelector(".brick-progress-circle__value")).toHaveTextContent("3");
+    expect(root).toHaveAttribute("aria-valuenow", "3");
+    expect(screen.getByText("60% completed")).toBeVisible();
+  });
   it("renders accessible defaults and deterministic SVG anatomy", () => {
     const { rerender } = render(<Example />);
     const root = screen.getByRole("progressbar", { name: "Export report" });
@@ -68,6 +92,14 @@ describe("ProgressCircle", () => {
     );
     expect(screen.getByText("3/5")).toBeVisible();
     expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "3");
+  });
+
+  it("suppresses normalized zero with a nonzero minimum and formats localized units", () => {
+    const { rerender } = render(<ProgressCircle.Root aria-label="Tasks" min={5} max={10} value={5}><ProgressCircle.Circle><ProgressCircle.Indicator data-testid="range" /></ProgressCircle.Circle></ProgressCircle.Root>);
+    expect(screen.getByTestId("range")).toHaveAttribute("data-percent", "0");
+    rerender(<ProgressCircle.Root aria-label="Tasks" min={5} max={10} value={10} locale="ar-EG" valueFormat="value"><ProgressCircle.Circle><ProgressCircle.Indicator data-testid="range" /></ProgressCircle.Circle><ProgressCircle.Value /></ProgressCircle.Root>);
+    expect(screen.getByTestId("range")).toHaveAttribute("data-percent", "100");
+    expect(screen.getByText(new Intl.NumberFormat("ar-EG").format(10))).toBeVisible();
   });
 
   it("forwards native props, class, style, slots, and refs on every part", () => {

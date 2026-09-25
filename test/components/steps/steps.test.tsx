@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { Steps } from "../../../src/steps.js";
+import { Steps, useSteps } from "../../../src/steps.js";
 import { Button } from "../../../src/button.js";
 import { LocaleProvider } from "../../../src/locale-provider.js";
 
@@ -59,6 +59,26 @@ describe("Steps", () => {
     </Steps.Root>);
     expect(screen.getByTestId("custom")).toHaveClass("brick-steps-indicator");
     fireEvent.click(screen.getByRole("button", { name: "Last" }));
-    expect(change).not.toHaveBeenCalled(); expect(invalid).toHaveBeenCalledWith({ step: 0, targetStep: 1 });
+    expect(change).not.toHaveBeenCalled(); expect(invalid).toHaveBeenCalledWith({ step: 0, targetStep: 1, action: "set" });
   });
+});
+
+it("shares controller state, responsive recipes, radius and localized custom status", () => {
+  function Demo() {
+    const steps = useSteps({ count: 2 });
+    return <LocaleProvider locale="ar-EG"><Steps.RootProvider value={steps} size={{ md: "lg" }} variant={{ initial: "subtle", lg: "solid" }} tone="neutral">
+      <Steps.List><Steps.Item index={0}><Steps.Trigger radius="none"><Steps.Indicator radius="control"><Steps.Status complete="Done" incomplete={<Steps.Number />} /></Steps.Indicator><Steps.Title>Start</Steps.Title></Steps.Trigger></Steps.Item></Steps.List>
+      <Steps.NextTrigger>Continue</Steps.NextTrigger>
+    </Steps.RootProvider></LocaleProvider>;
+  }
+  const { container } = render(<Demo />);
+  const root = container.querySelector(".brick-steps")!;
+  expect(root).toHaveAttribute("data-size", "md");
+  expect(root).toHaveAttribute("data-size-md", "lg");
+  expect(root).toHaveAttribute("data-variant-lg", "solid");
+  const indicator = container.querySelector<HTMLElement>(".brick-steps-indicator")!;
+  expect(indicator.style.getPropertyValue("--brick-steps-radius")).toBe("var(--brick-radius-control)");
+  expect(indicator).toHaveTextContent(new Intl.NumberFormat("ar-EG").format(1));
+  fireEvent.click(screen.getByRole("button", { name: "Continue" }));
+  expect(indicator).toHaveTextContent("Done");
 });

@@ -1,94 +1,163 @@
 @layer brick.components {
   .brick-navigation-menu,
   .brick-navigation-menu__sub {
-    --brick-navigation-menu-gap: var(--brick-space-1);
-    --brick-navigation-menu-control-min-block-size: var(--brick-control-target-min);
-    --brick-navigation-menu-control-padding-inline: var(--brick-space-3);
-    --brick-navigation-menu-control-radius: var(--brick-radius-control);
-    --brick-navigation-menu-control-foreground: currentColor;
-    --brick-navigation-menu-control-hover-background: var(--brick-color-surface-subtle);
-    --brick-navigation-menu-control-open-background: var(--brick-color-accent-soft);
-    --brick-navigation-menu-control-open-foreground: var(--brick-color-accent-text);
-    --brick-navigation-menu-control-current-foreground: currentColor;
-    --brick-navigation-menu-focus-ring: var(--brick-color-focus-ring);
-    --brick-navigation-menu-chevron-size: 0.375rem;
-    --brick-navigation-menu-chevron-stroke: 0.0625rem;
-    --brick-navigation-menu-chevron-gap: 0.375rem;
-    --brick-navigation-menu-current-underline-size: 0.0625rem;
-    --brick-navigation-menu-current-underline-offset: 0.25em;
-    --brick-navigation-menu-indicator-size: 0.625rem;
-    --brick-navigation-menu-indicator-offset: var(--brick-space-2);
-    --brick-navigation-menu-viewport-background: var(--brick-color-surface-overlay);
-    --brick-navigation-menu-viewport-foreground: var(--brick-color-text-primary);
-    --brick-navigation-menu-viewport-border: var(--brick-color-border-subtle);
-    --brick-navigation-menu-viewport-radius: var(--brick-radius-control);
-    --brick-navigation-menu-viewport-shadow: var(--brick-shadow-floating);
-    --brick-navigation-menu-viewport-padding: var(--brick-space-4);
-    --brick-navigation-menu-viewport-max-inline-size: min(42rem, calc(100dvi - 2 * var(--brick-space-3)));
-    --brick-navigation-menu-motion-duration: var(--brick-motion-duration-fast);
-    --brick-navigation-menu-indicator-color: var(--brick-navigation-menu-viewport-background);
-    --brick-navigation-menu-indicator-border: var(--brick-navigation-menu-viewport-border);
-
     position: relative;
     display: inline-block;
     max-inline-size: 100%;
     color: inherit;
   }
 
-  :where(.brick-navigation-menu, .brick-navigation-menu__sub)[data-size="sm"] { --brick-navigation-menu-control-min-block-size: 2rem; --brick-navigation-menu-control-padding-inline: var(--brick-space-2); --brick-navigation-menu-chevron-size: 0.3125rem; --brick-navigation-menu-indicator-size: 0.5rem; }
-  :where(.brick-navigation-menu, .brick-navigation-menu__sub)[data-size="lg"] { --brick-navigation-menu-control-min-block-size: 3rem; --brick-navigation-menu-control-padding-inline: var(--brick-space-4); --brick-navigation-menu-chevron-size: 0.4375rem; --brick-navigation-menu-indicator-size: 0.75rem; }
-
   .brick-navigation-menu__list {
     display: flex;
     min-inline-size: 0;
     align-items: center;
-    gap: var(--brick-navigation-menu-gap);
+    gap: var(--brick-navigation-menu-gap, var(--brick-space-1));
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .brick-navigation-menu__list[data-orientation="horizontal"] { flex-wrap: nowrap; }
-  .brick-navigation-menu__list[data-orientation="vertical"] { inline-size: fit-content; flex-direction: column; align-items: stretch; }
-  .brick-navigation-menu__item { min-inline-size: 0; }
+  .brick-navigation-menu__list[data-orientation="horizontal"] {
+    flex-wrap: nowrap;
+  }
+  .brick-navigation-menu__list[data-surface="raised"] {
+    padding: var(--brick-space-1);
+    border: var(--brick-border-width) solid var(--brick-navigation-menu-viewport-border, var(--brick-color-border-subtle));
+    border-radius: var(--brick-navigation-menu-viewport-radius, var(--brick-radius-core-sm));
+    background: var(--brick-navigation-menu-viewport-background, var(--brick-color-surface-overlay));
+    color: var(--brick-navigation-menu-viewport-foreground, var(--brick-color-text-primary));
+    box-shadow: var(--brick-shadow-sm);
+  }
+  .brick-navigation-menu__list[data-orientation="vertical"] {
+    inline-size: fit-content;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .brick-navigation-menu__item {
+    min-inline-size: 0;
+  }
 
   :where(.brick-navigation-menu__trigger, .brick-navigation-menu__link) {
     display: inline-flex;
     box-sizing: border-box;
     min-inline-size: 0;
-    min-block-size: var(--brick-navigation-menu-control-min-block-size);
+    min-block-size: var(
+      --brick-navigation-menu-control-min-block-size,
+      var(--brick-navigation-menu-recipe-height, 2.5rem)
+    );
     align-items: center;
     justify-content: center;
-    gap: var(--brick-navigation-menu-chevron-gap);
-    padding-inline: var(--brick-navigation-menu-control-padding-inline);
+    gap: var(
+      --brick-navigation-menu-chevron-gap,
+      var(--brick-navigation-menu-recipe-gap, 0.5rem)
+    );
+    padding-inline: var(
+      --brick-navigation-menu-control-padding-inline,
+      var(--brick-navigation-menu-recipe-padding, 1rem)
+    );
     border: 0;
-    border-radius: var(--brick-navigation-menu-control-radius);
+    border-radius: var(
+      --brick-navigation-menu-control-radius,
+      var(--brick-radius-control)
+    );
     background: transparent;
-    color: var(--brick-navigation-menu-control-foreground);
+    color: var(--brick-navigation-menu-control-foreground, currentColor);
     font-family: var(--brick-typography-control-md-font-family);
-    font-size: var(--brick-typography-control-md-font-size);
-    font-weight: var(--brick-typography-control-md-font-weight);
-    line-height: var(--brick-typography-control-md-line-height);
+    font-size: var(
+      --brick-navigation-menu-recipe-font-size,
+      var(--brick-typography-control-sm-font-size)
+    );
+    font-weight: var(--brick-typography-control-sm-font-weight);
+    line-height: var(
+      --brick-navigation-menu-recipe-line-height,
+      var(--brick-typography-control-sm-line-height)
+    );
     text-align: start;
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
     touch-action: manipulation;
   }
-  .brick-navigation-menu__trigger::after {
-    content: "";
-    inline-size: var(--brick-navigation-menu-chevron-size);
-    block-size: var(--brick-navigation-menu-chevron-size);
+  .brick-navigation-menu__adornment,
+  .brick-navigation-menu__item-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex: none;
-    border-inline-end: var(--brick-navigation-menu-chevron-stroke) solid currentColor;
-    border-block-end: var(--brick-navigation-menu-chevron-stroke) solid currentColor;
-    transform: translateY(-20%) rotate(45deg);
-    transition: transform var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-standard);
+    inline-size: 1em;
+    block-size: 1em;
+    --brick-icon-size: 1em;
   }
-  .brick-navigation-menu__trigger[data-state="open"]::after { transform: translateY(20%) rotate(225deg); }
-  :where(.brick-navigation-menu__trigger, .brick-navigation-menu__link):is(:hover, :focus-visible) { background: var(--brick-navigation-menu-control-hover-background); }
-  :where(.brick-navigation-menu__trigger, .brick-navigation-menu__link):focus-visible { outline: var(--brick-border-focus-width) solid var(--brick-navigation-menu-focus-ring); outline-offset: var(--brick-border-focus-offset); }
-  .brick-navigation-menu__trigger[data-state="open"] { background: var(--brick-navigation-menu-control-open-background); color: var(--brick-navigation-menu-control-open-foreground); }
-  .brick-navigation-menu__link[data-active] { color: var(--brick-navigation-menu-control-current-foreground); text-decoration-line: underline; text-decoration-thickness: var(--brick-navigation-menu-current-underline-size); text-underline-offset: var(--brick-navigation-menu-current-underline-offset); }
+  .brick-navigation-menu__chevron {
+    display: block;
+    content: "";
+    inline-size: var(--brick-navigation-menu-chevron-size, 0.375rem);
+    block-size: var(--brick-navigation-menu-chevron-size, 0.375rem);
+    flex: none;
+    border-right: var(--brick-navigation-menu-chevron-stroke, 0.0625rem)
+      solid currentColor;
+    border-bottom: var(--brick-navigation-menu-chevron-stroke, 0.0625rem)
+      solid currentColor;
+    transform: translateY(-20%) rotate(45deg);
+    transition: transform
+      var(
+        --brick-navigation-menu-motion-duration,
+        var(--brick-motion-duration-fast)
+      )
+      var(--brick-motion-easing-standard);
+  }
+  .brick-navigation-menu__item-indicator[data-state="open"]
+    > .brick-navigation-menu__chevron {
+    transform: translateY(20%) rotate(225deg);
+  }
+  :where(.brick-navigation-menu__trigger, .brick-navigation-menu__link):is(
+    :hover,
+    :focus-visible
+  ) {
+    background: var(
+      --brick-navigation-menu-control-hover-background,
+      var(
+        --brick-navigation-menu-recipe-soft,
+        var(--brick-color-surface-subtle)
+      )
+    );
+    color: var(--brick-navigation-menu-recipe-text, var(--brick-color-text-primary));
+  }
+  :where(
+    .brick-navigation-menu__trigger,
+    .brick-navigation-menu__link
+  ):focus-visible {
+    outline: var(--brick-border-focus-width) solid
+      var(--brick-navigation-menu-focus-ring, var(--brick-color-focus-ring));
+    outline-offset: var(--brick-border-focus-offset);
+  }
+  .brick-navigation-menu__trigger[data-state="open"] {
+    background: var(
+      --brick-navigation-menu-control-open-background,
+      var(
+        --brick-navigation-menu-recipe-soft,
+        var(--brick-color-surface-subtle)
+      )
+    );
+    color: var(
+      --brick-navigation-menu-control-open-foreground,
+      var(--brick-navigation-menu-recipe-text, var(--brick-color-text-primary))
+    );
+  }
+  .brick-navigation-menu__link[data-active] {
+    color: var(
+      --brick-navigation-menu-control-current-foreground,
+      currentColor
+    );
+    text-decoration-line: underline;
+    text-decoration-thickness: var(
+      --brick-navigation-menu-current-underline-size,
+      0.0625rem
+    );
+    text-underline-offset: var(
+      --brick-navigation-menu-current-underline-offset,
+      0.25em
+    );
+  }
   .brick-navigation-menu__link[data-variant="panel"] {
     inline-size: 100%;
     align-items: stretch;
@@ -98,15 +167,35 @@
     background: transparent;
     white-space: normal;
   }
-  .brick-navigation-menu__link[data-variant="panel"] > .brick-surface { inline-size: 100%; }
-  .brick-navigation-menu__link[data-variant="panel"]:is(:hover, :focus-visible) { background: transparent; }
-  .brick-navigation-menu__link[data-variant="panel"]:focus-visible:has(> .brick-surface) { outline: none; }
-  .brick-navigation-menu__link[data-variant="panel"]:focus-visible > .brick-surface {
-    outline: var(--brick-border-focus-width) solid var(--brick-navigation-menu-focus-ring);
+  .brick-navigation-menu__link[data-variant="panel"] > .brick-surface {
+    inline-size: 100%;
+  }
+  .brick-navigation-menu__link[data-variant="panel"]:is(
+      :hover,
+      :focus-visible
+    ) {
+    background: transparent;
+  }
+  .brick-navigation-menu__link[data-variant="panel"]:focus-visible:has(
+      > .brick-surface
+    ) {
+    outline: none;
+  }
+  .brick-navigation-menu__link[data-variant="panel"]:focus-visible
+    > .brick-surface {
+    outline: var(--brick-border-focus-width) solid
+      var(--brick-navigation-menu-focus-ring, var(--brick-color-focus-ring));
     outline-offset: var(--brick-border-focus-offset);
   }
-  .brick-navigation-menu__link[data-variant="panel"][data-active] { background: transparent; text-decoration: none; }
-  .brick-navigation-menu__trigger[data-disabled] { color: var(--brick-color-text-muted); opacity: 0.65; cursor: not-allowed; }
+  .brick-navigation-menu__link[data-variant="panel"][data-active] {
+    background: transparent;
+    text-decoration: none;
+  }
+  .brick-navigation-menu__trigger[data-disabled] {
+    color: var(--brick-color-text-muted);
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
 
   .brick-navigation-menu__indicator {
     position: absolute;
@@ -117,25 +206,61 @@
     overflow: visible;
     pointer-events: none;
     opacity: 0;
-    transition: opacity var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-enter), translate var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-standard);
+    transition:
+      inline-size var(--brick-navigation-menu-resize-duration, 300ms) var(--brick-motion-easing-standard),
+      block-size var(--brick-navigation-menu-resize-duration, 300ms) var(--brick-motion-easing-standard),
+      opacity
+        var(
+          --brick-navigation-menu-motion-duration,
+          300ms
+        )
+        var(--brick-motion-easing-enter),
+      translate
+        var(
+          --brick-navigation-menu-motion-duration,
+          300ms
+        )
+        var(--brick-motion-easing-standard);
   }
-  .brick-navigation-menu__indicator[data-state="visible"] { opacity: 1; }
+  .brick-navigation-menu__indicator[data-state="visible"] {
+    opacity: 1;
+  }
   .brick-navigation-menu__indicator[data-orientation="horizontal"] {
     inset-block-start: 100%;
     inset-inline-start: auto;
     left: 0;
     inline-size: var(--atom-navigation-menu-trigger-width);
-    block-size: var(--brick-navigation-menu-indicator-offset);
+    block-size: var(
+      --brick-navigation-menu-indicator-offset,
+      var(--brick-space-2)
+    );
     align-items: flex-end;
-    translate: var(--atom-navigation-menu-trigger-left) 0;
+    translate: calc(
+      clamp(
+        var(--atom-navigation-menu-viewport-start, var(--atom-navigation-menu-trigger-left)) + var(--brick-navigation-menu-indicator-size, calc(var(--brick-overlay-arrow-size, 12px) * 1.41421356237)) / 2 + var(--brick-radius-core-sm),
+        var(--atom-navigation-menu-trigger-center-x),
+        var(--atom-navigation-menu-viewport-end, calc(var(--atom-navigation-menu-trigger-left) + var(--atom-navigation-menu-trigger-width))) - var(--brick-navigation-menu-indicator-size, calc(var(--brick-overlay-arrow-size, 12px) * 1.41421356237)) / 2 - var(--brick-radius-core-sm)
+      ) - var(--atom-navigation-menu-trigger-width) / 2
+    ) 0;
   }
   .brick-navigation-menu__indicator[data-orientation="vertical"] {
     inset-block-start: 0;
-    inset-inline-start: 100%;
-    inline-size: var(--brick-navigation-menu-indicator-offset);
+    inset-inline-start: auto;
+    left: 100%;
+    right: auto;
+    direction: ltr;
+    inline-size: var(
+      --brick-navigation-menu-indicator-offset,
+      var(--brick-space-2)
+    );
     block-size: var(--atom-navigation-menu-trigger-height);
     justify-content: flex-end;
     translate: 0 var(--atom-navigation-menu-trigger-top);
+  }
+  .brick-navigation-menu__indicator[data-orientation="vertical"][data-side="left"] {
+    left: auto;
+    right: 100%;
+    justify-content: flex-start;
   }
   .brick-navigation-menu__indicator-arrow {
     position: relative;
@@ -150,66 +275,476 @@
     display: block;
     content: "";
   }
-  .brick-navigation-menu__indicator-arrow::before { inset: 0; background: var(--brick-navigation-menu-indicator-border); }
-  .brick-navigation-menu__indicator-arrow::after { background: var(--brick-navigation-menu-indicator-color); }
-  .brick-navigation-menu__indicator[data-orientation="horizontal"] > .brick-navigation-menu__indicator-arrow {
-    inline-size: var(--brick-navigation-menu-indicator-size);
-    block-size: calc(var(--brick-navigation-menu-indicator-size) / 2 + var(--brick-border-width));
-    background: linear-gradient(var(--brick-navigation-menu-indicator-color), var(--brick-navigation-menu-indicator-color)) bottom center / calc(100% - var(--brick-border-width) - var(--brick-border-width)) calc(var(--brick-border-width) + var(--brick-border-width)) no-repeat;
+  .brick-navigation-menu__indicator-arrow::before {
+    inset: 0;
+    background: var(
+      --brick-navigation-menu-indicator-border,
+      var(
+        --brick-navigation-menu-viewport-border,
+        var(--brick-color-border-subtle)
+      )
+    );
+  }
+  .brick-navigation-menu__indicator-arrow::after {
+    background: var(
+      --brick-navigation-menu-indicator-color,
+      var(
+        --brick-navigation-menu-viewport-background,
+        var(--brick-color-surface-overlay)
+      )
+    );
+  }
+  .brick-navigation-menu__indicator[data-orientation="horizontal"]
+    > .brick-navigation-menu__indicator-arrow {
+    inline-size: var(--brick-navigation-menu-indicator-size, calc(var(--brick-overlay-arrow-size, 12px) * 1.41421356237));
+    block-size: calc(
+      var(--brick-navigation-menu-indicator-size, calc(var(--brick-overlay-arrow-size, 12px) * 1.41421356237)) / 2 +
+        var(--brick-border-width)
+    );
+    background: linear-gradient(
+        var(
+          --brick-navigation-menu-indicator-color,
+          var(
+            --brick-navigation-menu-viewport-background,
+            var(--brick-color-surface-overlay)
+          )
+        ),
+        var(
+          --brick-navigation-menu-indicator-color,
+          var(
+            --brick-navigation-menu-viewport-background,
+            var(--brick-color-surface-overlay)
+          )
+        )
+      )
+      bottom center /
+      calc(100% - var(--brick-border-width) - var(--brick-border-width))
+      calc(var(--brick-border-width) + var(--brick-border-width)) no-repeat;
     translate: 0 var(--brick-border-width);
   }
-  .brick-navigation-menu__indicator[data-orientation="horizontal"] > .brick-navigation-menu__indicator-arrow::before { clip-path: polygon(50% 0, 100% 100%, 0 100%); }
-  .brick-navigation-menu__indicator[data-orientation="horizontal"] > .brick-navigation-menu__indicator-arrow::after { inset: var(--brick-border-width) var(--brick-border-width) 0; clip-path: polygon(50% 0, 100% 100%, 0 100%); translate: 0 var(--brick-border-width); }
-  .brick-navigation-menu__indicator[data-orientation="vertical"] > .brick-navigation-menu__indicator-arrow {
-    inline-size: calc(var(--brick-navigation-menu-indicator-size) / 2 + var(--brick-border-width));
-    block-size: var(--brick-navigation-menu-indicator-size);
-    background: linear-gradient(var(--brick-navigation-menu-indicator-color), var(--brick-navigation-menu-indicator-color)) center right / calc(var(--brick-border-width) + var(--brick-border-width)) calc(100% - var(--brick-border-width) - var(--brick-border-width)) no-repeat;
+  .brick-navigation-menu__indicator[data-orientation="horizontal"]
+    > .brick-navigation-menu__indicator-arrow::before {
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  }
+  .brick-navigation-menu__indicator[data-orientation="horizontal"]
+    > .brick-navigation-menu__indicator-arrow::after {
+    inset: var(--brick-border-width) var(--brick-border-width) 0;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    translate: 0 var(--brick-border-width);
+  }
+  .brick-navigation-menu__indicator[data-orientation="vertical"]
+    > .brick-navigation-menu__indicator-arrow {
+    inline-size: calc(
+      var(--brick-navigation-menu-indicator-size, calc(var(--brick-overlay-arrow-size, 12px) * 1.41421356237)) / 2 +
+        var(--brick-border-width)
+    );
+    block-size: var(--brick-navigation-menu-indicator-size, calc(var(--brick-overlay-arrow-size, 12px) * 1.41421356237));
+    background: linear-gradient(
+        var(
+          --brick-navigation-menu-indicator-color,
+          var(
+            --brick-navigation-menu-viewport-background,
+            var(--brick-color-surface-overlay)
+          )
+        ),
+        var(
+          --brick-navigation-menu-indicator-color,
+          var(
+            --brick-navigation-menu-viewport-background,
+            var(--brick-color-surface-overlay)
+          )
+        )
+      )
+      center right / calc(var(--brick-border-width) + var(--brick-border-width))
+      calc(100% - var(--brick-border-width) - var(--brick-border-width))
+      no-repeat;
     translate: var(--brick-border-width) 0;
   }
-  .brick-navigation-menu__indicator[data-orientation="vertical"] > .brick-navigation-menu__indicator-arrow::before { clip-path: polygon(0 50%, 100% 0, 100% 100%); }
-  .brick-navigation-menu__indicator[data-orientation="vertical"] > .brick-navigation-menu__indicator-arrow::after { inset: var(--brick-border-width) 0 var(--brick-border-width) var(--brick-border-width); clip-path: polygon(0 50%, 100% 0, 100% 100%); translate: var(--brick-border-width) 0; }
-  .brick-navigation-menu__indicator[data-orientation="vertical"]:dir(rtl) > .brick-navigation-menu__indicator-arrow { background-position: center left; translate: calc(var(--brick-border-width) * -1) 0; }
-  .brick-navigation-menu__indicator[data-orientation="vertical"]:dir(rtl) > .brick-navigation-menu__indicator-arrow::before { clip-path: polygon(100% 50%, 0 0, 0 100%); }
-  .brick-navigation-menu__indicator[data-orientation="vertical"]:dir(rtl) > .brick-navigation-menu__indicator-arrow::after { inset: var(--brick-border-width) var(--brick-border-width) var(--brick-border-width) 0; clip-path: polygon(100% 50%, 0 0, 0 100%); translate: calc(var(--brick-border-width) * -1) 0; }
+  .brick-navigation-menu__indicator[data-orientation="vertical"]
+    > .brick-navigation-menu__indicator-arrow::before {
+    clip-path: polygon(0 50%, 100% 0, 100% 100%);
+  }
+  .brick-navigation-menu__indicator[data-orientation="vertical"]
+    > .brick-navigation-menu__indicator-arrow::after {
+    inset: var(--brick-border-width) 0 var(--brick-border-width)
+      var(--brick-border-width);
+    clip-path: polygon(0 50%, 100% 0, 100% 100%);
+    translate: var(--brick-border-width) 0;
+  }
+  .brick-navigation-menu__indicator[data-orientation="vertical"][data-side="left"]
+    > .brick-navigation-menu__indicator-arrow {
+    background-position: center left;
+    translate: calc(var(--brick-border-width) * -1) 0;
+  }
+  .brick-navigation-menu__indicator[data-orientation="vertical"][data-side="left"]
+    > .brick-navigation-menu__indicator-arrow::before {
+    clip-path: polygon(100% 50%, 0 0, 0 100%);
+  }
+  .brick-navigation-menu__indicator[data-orientation="vertical"][data-side="left"]
+    > .brick-navigation-menu__indicator-arrow::after {
+    inset: var(--brick-border-width) var(--brick-border-width)
+      var(--brick-border-width) 0;
+    clip-path: polygon(100% 50%, 0 0, 0 100%);
+    translate: calc(var(--brick-border-width) * -1) 0;
+  }
 
   .brick-navigation-menu__viewport {
+    --atom-navigation-menu-viewport-side-offset: var(--brick-navigation-menu-indicator-offset, var(--brick-space-2));
     position: absolute;
     z-index: var(--brick-layer-overlay);
     box-sizing: border-box;
     inline-size: var(--atom-navigation-menu-viewport-width);
-    max-inline-size: var(--brick-navigation-menu-viewport-max-inline-size);
+    max-inline-size: var(
+      --brick-navigation-menu-viewport-max-inline-size,
+      min(42rem, calc(100dvi - 2 * var(--brick-space-3)))
+    );
     block-size: var(--atom-navigation-menu-viewport-height);
     overflow: hidden;
-    border: var(--brick-border-width) solid var(--brick-navigation-menu-viewport-border);
-    border-radius: var(--brick-navigation-menu-viewport-radius);
-    background: var(--brick-navigation-menu-viewport-background);
-    box-shadow: var(--brick-navigation-menu-viewport-shadow);
-    color: var(--brick-navigation-menu-viewport-foreground);
+    border: var(--brick-border-width) solid
+      var(
+        --brick-navigation-menu-viewport-border,
+        var(--brick-color-border-subtle)
+      );
+    border-radius: var(
+      --brick-navigation-menu-viewport-radius,
+      var(--brick-radius-core-sm)
+    );
+    background: var(
+      --brick-navigation-menu-viewport-background,
+      var(--brick-color-surface-overlay)
+    );
+    box-shadow: var(
+      --brick-navigation-menu-viewport-shadow,
+      var(--brick-shadow-floating)
+    );
+    color: var(
+      --brick-navigation-menu-viewport-foreground,
+      var(--brick-color-text-primary)
+    );
     opacity: 0;
     transform-origin: top center;
     scale: 0.98;
-    transition: inline-size var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-standard), block-size var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-standard), translate var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-standard), opacity var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-enter), scale var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-enter);
+    transition:
+      left var(--brick-navigation-menu-motion-duration, 300ms) var(--brick-motion-easing-standard),
+      inline-size var(--brick-navigation-menu-motion-duration, 300ms) var(--brick-motion-easing-standard),
+      block-size var(--brick-navigation-menu-motion-duration, 300ms) var(--brick-motion-easing-standard),
+      translate var(--brick-navigation-menu-motion-duration, 300ms) var(--brick-motion-easing-standard),
+      opacity var(--brick-navigation-menu-motion-duration, 300ms) var(--brick-motion-easing-enter),
+      scale var(--brick-navigation-menu-motion-duration, 300ms) var(--brick-motion-easing-enter);
   }
-  .brick-navigation-menu[data-orientation="horizontal"] > .brick-navigation-menu__viewport {
+  .brick-navigation-menu[data-viewport="inline"]
+    > .brick-navigation-menu__list
+    > .brick-navigation-menu__item {
+    position: relative;
+  }
+
+  :where(
+      .brick-navigation-menu,
+      .brick-navigation-menu__sub
+    )[data-orientation="horizontal"]
+    > .brick-navigation-menu__viewport {
     inset-block-start: calc(100% + var(--brick-space-2));
     inset-inline-start: auto;
     left: var(--atom-navigation-menu-viewport-left);
-    max-inline-size: min(var(--brick-navigation-menu-viewport-max-inline-size), var(--atom-navigation-menu-viewport-available-width));
+    max-inline-size: min(
+      var(
+        --brick-navigation-menu-viewport-max-inline-size,
+        min(42rem, calc(100dvi - 2 * var(--brick-space-3)))
+      ),
+      var(--atom-navigation-menu-viewport-available-width)
+    );
     translate: 0 0;
   }
-  .brick-navigation-menu[data-orientation="vertical"] > .brick-navigation-menu__viewport { inset-block-start: 0; inset-inline-start: calc(100% + var(--brick-space-2)); translate: 0 var(--atom-navigation-menu-trigger-top, 0); }
-  .brick-navigation-menu__viewport[data-state="open"] { opacity: 1; scale: 1; }
-  .brick-navigation-menu__content { box-sizing: border-box; inline-size: max-content; max-inline-size: var(--brick-navigation-menu-viewport-max-inline-size); min-block-size: 0; padding: var(--brick-navigation-menu-viewport-padding); }
-  .brick-navigation-menu__content .brick-navigation-menu__link[data-variant="control"] {
-    min-block-size: 0;
-    justify-content: flex-start;
-    padding: var(--brick-space-2);
-    white-space: normal;
+  :where(.brick-navigation-menu, .brick-navigation-menu__sub)[data-orientation="vertical"]
+    > .brick-navigation-menu__viewport {
+    inset-block-start: 0;
+    inset-inline-start: auto;
+    left: var(--atom-navigation-menu-viewport-left);
+    max-inline-size: min(
+      var(--brick-navigation-menu-viewport-max-inline-size, min(42rem, calc(100dvi - 2 * var(--brick-space-3)))),
+      var(--atom-navigation-menu-viewport-available-width)
+    );
+    translate: 0
+      var(
+        --atom-navigation-menu-viewport-top,
+        var(--atom-navigation-menu-trigger-top, 0)
+      );
   }
-  .brick-navigation-menu__content[data-motion^="from-"] { animation: brick-navigation-menu-enter var(--brick-navigation-menu-motion-duration) var(--brick-motion-easing-enter); }
+  .brick-navigation-menu__viewport[data-state="open"] {
+    opacity: 1;
+    scale: 1;
+    animation: brick-navigation-menu-open var(--brick-navigation-menu-open-duration, 200ms)
+      var(--brick-motion-easing-enter);
+  }
+  .brick-navigation-menu__viewport[data-state="closed"] {
+    pointer-events: none;
+  }
+  .brick-navigation-menu__content {
+    box-sizing: border-box;
+    inline-size: max-content;
+    max-inline-size: var(
+      --brick-navigation-menu-viewport-max-inline-size,
+      min(42rem, calc(100dvi - 2 * var(--brick-space-3)))
+    );
+    min-block-size: 0;
+    padding: var(
+      --brick-navigation-menu-viewport-padding,
+      var(--brick-navigation-menu-recipe-inset, var(--brick-space-2))
+    );
+  }
+  .brick-navigation-menu__viewport[data-orientation="vertical"] > .brick-navigation-menu__content {
+    max-inline-size: min(
+      var(--brick-navigation-menu-viewport-max-inline-size, min(42rem, calc(100dvi - 2 * var(--brick-space-3)))),
+      var(--atom-navigation-menu-viewport-available-width)
+    );
+  }
+  .brick-navigation-menu__link[data-variant="destination"] {
+    display: flex;
+    min-block-size: var(--brick-navigation-menu-recipe-height, 2.5rem);
+    justify-content: flex-start;
+    padding: var(--brick-space-2) var(--brick-space-3);
+    border-radius: var(--brick-navigation-menu-destination-radius, var(--brick-radius-core-sm));
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .brick-navigation-menu__content[data-motion^="from-"] {
+    animation: brick-navigation-menu-enter
+      var(
+        --brick-navigation-menu-content-duration,
+        250ms
+      )
+      var(--brick-motion-easing-enter);
+  }
 
-  @keyframes brick-navigation-menu-enter { from { opacity: 0; translate: 0 0.25rem; } to { opacity: 1; translate: 0 0; } }
-  @supports not (width: 100dvi) { .brick-navigation-menu, .brick-navigation-menu__sub { --brick-navigation-menu-viewport-max-inline-size: min(42rem, calc(100vw - 2 * var(--brick-space-3))); } }
-  @media (prefers-reduced-motion: reduce) { .brick-navigation-menu__trigger::after, .brick-navigation-menu__indicator, .brick-navigation-menu__viewport { transition-duration: 1ms; } .brick-navigation-menu__content { animation: none !important; } }
-  @media (forced-colors: active) { .brick-navigation-menu__viewport { border-color: CanvasText; background: Canvas; box-shadow: none; color: CanvasText; } :where(.brick-navigation-menu__trigger, .brick-navigation-menu__link):focus-visible { outline-color: Highlight; } .brick-navigation-menu__link[data-variant="panel"]:focus-visible > .brick-surface { outline-color: Highlight; } .brick-navigation-menu__link[data-active] { text-decoration-color: Highlight; } .brick-navigation-menu__indicator-arrow { --brick-navigation-menu-indicator-color: Canvas; --brick-navigation-menu-indicator-border: CanvasText; forced-color-adjust: none; } }
+  .brick-navigation-menu__viewport[data-orientation] > .brick-navigation-menu__content {
+    position: absolute;
+    max-inline-size: calc(
+      min(
+        var(--brick-navigation-menu-viewport-max-inline-size, min(42rem, calc(100dvi - 2 * var(--brick-space-3)))),
+        var(--atom-navigation-menu-viewport-available-width, 100dvi)
+      ) - 2 * var(--brick-border-width)
+    );
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    --brick-navigation-menu-enter-x: 12.5rem;
+    --brick-navigation-menu-enter-y: 0px;
+  }
+  .brick-navigation-menu__viewport > .brick-navigation-menu__content:dir(rtl) {
+    --brick-navigation-menu-enter-x: -12.5rem;
+  }
+  .brick-navigation-menu__viewport > .brick-navigation-menu__content[data-orientation="vertical"] {
+    --brick-navigation-menu-enter-x: 0px;
+    --brick-navigation-menu-enter-y: 12.5rem;
+  }
+  .brick-navigation-menu__content[data-motion="from-start"],
+  .brick-navigation-menu__content[data-motion="to-start"] {
+    --brick-navigation-menu-motion-sign: -1;
+  }
+  .brick-navigation-menu__content[data-motion="from-end"],
+  .brick-navigation-menu__content[data-motion="to-end"] {
+    --brick-navigation-menu-motion-sign: 1;
+  }
+  .brick-navigation-menu__content[data-motion^="to-"] {
+    animation: brick-navigation-menu-exit var(--brick-navigation-menu-content-duration, 250ms)
+      var(--brick-motion-easing-standard) both;
+    pointer-events: none;
+  }
+  .brick-navigation-menu__viewport[data-state="closed"] > .brick-navigation-menu__content:not([hidden]) {
+    animation: brick-navigation-menu-close-content var(--brick-navigation-menu-motion-duration, 300ms) both;
+    pointer-events: none;
+  }
+
+  :where(.brick-navigation-menu, .brick-navigation-menu__sub)[data-size="sm"] {
+    --brick-navigation-menu-recipe-height: 2.25rem;
+    --brick-navigation-menu-recipe-padding: 0.875rem;
+    --brick-navigation-menu-recipe-gap: 0.5rem;
+    --brick-navigation-menu-recipe-font-size: var(
+      --brick-typography-control-xs-font-size
+    );
+    --brick-navigation-menu-recipe-line-height: var(
+      --brick-typography-control-xs-line-height
+    );
+  }
+  :where(.brick-navigation-menu, .brick-navigation-menu__sub)[data-size="md"] {
+    --brick-navigation-menu-recipe-height: 2.5rem;
+    --brick-navigation-menu-recipe-padding: 1rem;
+    --brick-navigation-menu-recipe-gap: 0.5rem;
+    --brick-navigation-menu-recipe-font-size: var(
+      --brick-typography-control-sm-font-size
+    );
+    --brick-navigation-menu-recipe-line-height: var(
+      --brick-typography-control-sm-line-height
+    );
+  }
+  :where(.brick-navigation-menu, .brick-navigation-menu__sub)[data-size="lg"] {
+    --brick-navigation-menu-recipe-height: 2.75rem;
+    --brick-navigation-menu-recipe-padding: 1.25rem;
+    --brick-navigation-menu-recipe-gap: 0.75rem;
+    --brick-navigation-menu-recipe-font-size: var(
+      --brick-typography-body-md-font-size
+    );
+    --brick-navigation-menu-recipe-line-height: var(
+      --brick-typography-body-md-line-height
+    );
+  }
+  :where(
+    .brick-navigation-menu__trigger,
+    .brick-navigation-menu__link
+  )[data-tone="neutral"] {
+    --brick-navigation-menu-recipe-soft: var(--brick-color-surface-subtle);
+    --brick-navigation-menu-recipe-text: var(--brick-color-text-primary);
+  }
+  :where(
+    .brick-navigation-menu__trigger,
+    .brick-navigation-menu__link
+  )[data-tone="accent"] {
+    --brick-navigation-menu-recipe-soft: var(--brick-color-accent-soft);
+    --brick-navigation-menu-recipe-text: var(--brick-color-accent-text);
+  }
+  :where(
+    .brick-navigation-menu__trigger,
+    .brick-navigation-menu__link
+  )[data-tone="contrast"] {
+    --brick-navigation-menu-recipe-soft: color-mix(in srgb, var(--brick-color-text-primary) 12%, var(--brick-color-surface-overlay));
+    --brick-navigation-menu-recipe-text: var(--brick-color-text-primary);
+  }
+  :where(
+    .brick-navigation-menu__trigger,
+    .brick-navigation-menu__link
+  )[data-control-variant="plain"] {
+    --brick-navigation-menu-recipe-soft: transparent;
+    --brick-navigation-menu-recipe-text: currentColor;
+  }
+  .brick-navigation-menu__content[data-inset="none"] {
+    --brick-navigation-menu-recipe-inset: 0px;
+  }
+  .brick-navigation-menu__content[data-inset="sm"] {
+    --brick-navigation-menu-recipe-inset: var(--brick-space-2);
+  }
+  .brick-navigation-menu__content[data-inset="md"] {
+    --brick-navigation-menu-recipe-inset: var(--brick-space-4);
+  }
+  .brick-navigation-menu__content[data-inset="lg"] {
+    --brick-navigation-menu-recipe-inset: var(--brick-space-6);
+  }
+  :where(
+      .brick-navigation-menu,
+      .brick-navigation-menu__sub
+    )[data-viewport="inline"]
+    > .brick-navigation-menu__list
+    > .brick-navigation-menu__item
+    > .brick-navigation-menu__content {
+    position: absolute;
+    z-index: var(--brick-layer-overlay);
+    inset-block-start: 100%;
+    inset-inline-start: 0;
+    max-inline-size: min(42rem, calc(100dvi - 2 * var(--brick-space-3)));
+    box-shadow: var(--brick-navigation-menu-viewport-shadow, var(--brick-shadow-floating));
+    border: var(--brick-border-width) solid
+      var(
+        --brick-navigation-menu-viewport-border,
+        var(--brick-color-border-subtle)
+      );
+    border-radius: var(
+      --brick-navigation-menu-viewport-radius,
+      var(--brick-radius-core-sm)
+    );
+    background: var(
+      --brick-navigation-menu-viewport-background,
+      var(--brick-color-surface-overlay)
+    );
+    color: var(
+      --brick-navigation-menu-viewport-foreground,
+      var(--brick-color-text-primary)
+    );
+  }
+
+  /* Nested inline disclosures expand the measured parent panel, not a second
+     overlay clipped by that parent's viewport. */
+  .brick-navigation-menu__sub[data-viewport="inline"]
+    > .brick-navigation-menu__list {
+    align-items: flex-start;
+  }
+  .brick-navigation-menu__sub[data-viewport="inline"]
+    > .brick-navigation-menu__list
+    > .brick-navigation-menu__item
+    > .brick-navigation-menu__content {
+    position: relative;
+    inset: auto;
+    box-shadow: none;
+  }
+
+  @keyframes brick-navigation-menu-enter {
+    from {
+      opacity: 0;
+      translate: calc(var(--brick-navigation-menu-enter-x, 0px) * var(--brick-navigation-menu-motion-sign, 1))
+        calc(var(--brick-navigation-menu-enter-y, 0px) * var(--brick-navigation-menu-motion-sign, 1));
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+  @keyframes brick-navigation-menu-exit {
+    from { opacity: 1; translate: 0 0; }
+    to {
+      opacity: 0;
+      translate: calc(var(--brick-navigation-menu-enter-x, 0px) * var(--brick-navigation-menu-motion-sign, 1))
+        calc(var(--brick-navigation-menu-enter-y, 0px) * var(--brick-navigation-menu-motion-sign, 1));
+    }
+  }
+  @keyframes brick-navigation-menu-close-content {
+    from, to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes brick-navigation-menu-open {
+    from { opacity: 0; transform: perspective(2000px) rotateX(-15deg) scale(0.96); }
+    to { opacity: 1; transform: perspective(2000px) rotateX(0) scale(1); }
+  }
+  @supports not (width: 100dvi) {
+    .brick-navigation-menu,
+    .brick-navigation-menu__sub {
+      --brick-navigation-menu-viewport-max-inline-size: min(
+        42rem,
+        calc(100vw - 2 * var(--brick-space-3))
+      );
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brick-navigation-menu__chevron,
+    .brick-navigation-menu__indicator,
+    .brick-navigation-menu__viewport {
+      transition-duration: 1ms;
+      animation: none !important;
+    }
+    .brick-navigation-menu__content {
+      animation: none !important;
+    }
+  }
+  @media (forced-colors: active) {
+    .brick-navigation-menu__list[data-surface="raised"],
+    .brick-navigation-menu__viewport {
+      border-color: CanvasText;
+      background: Canvas;
+      box-shadow: none;
+      color: CanvasText;
+    }
+    :where(
+      .brick-navigation-menu__trigger,
+      .brick-navigation-menu__link
+    ):focus-visible {
+      outline-color: Highlight;
+    }
+    .brick-navigation-menu__link[data-variant="panel"]:focus-visible
+      > .brick-surface {
+      outline-color: Highlight;
+    }
+    .brick-navigation-menu__link[data-active] {
+      text-decoration-color: Highlight;
+    }
+    .brick-navigation-menu__indicator-arrow {
+      --brick-navigation-menu-indicator-color: Canvas;
+      --brick-navigation-menu-indicator-border: CanvasText;
+      forced-color-adjust: none;
+    }
+  }
 }

@@ -4,6 +4,11 @@ Visually Hidden follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+### Changed
+
+- Clarified stylesheet-free hiding and safe passive-host composition, including
+  visible-focus and form-owned HiddenInput boundaries. Public API is unchanged.
+
 ## 0.1.10
 
 ### Added

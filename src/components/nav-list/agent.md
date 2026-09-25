@@ -18,13 +18,16 @@ Style persistent route navigation with current state, optional section labels, a
 
 ## Rules
 
-- **MUST:** Set current destination state from the route and keep route items as links.
+- **MUST:** Use Root gap for spacing between direct navigation groups and Section gap for heading-to-content spacing. Both accept scalar Brick SpacingValue; omission retains the theme recipe, zero removes only that owner's gap. Neither changes List row density. Prefer these props over consumer spacing CSS.
+- **MUST:** Set current destination from active/current or aria-current and keep route items as links. Use Root plain for no decorative state fill and radius for shared token corners; focus and the current weight remain visible.
 - **MUST:** Use NavList's section and item anatomy rather than rebuilding rows, badges, icons, and collapse behavior with arbitrary divs.
 - **MUST:** Pass decorative artwork directly to Link or SectionTrigger startIcon; those parts own the wrapper, size, and first-label-line alignment. Do not compensate with consumer margins or transforms.
-- **MUST:** Keep decorative artwork in startIcon/endIcon; when a count or Badge is meaningful content, compose it with the label inside one Brick HStack within Link so the complete row remains one destination.
+- **MUST:** Keep decorative artwork in startIcon/endIcon. Use trailingContent for meaningful noninteractive counts or Badges; they remain in the accessible name. AsChild delegates all child anatomy. Use indicator=null to hide disclosure artwork or a decorative node to replace it; do not nest controls in a link.
 - **MUST:** Place a Divider after the complete navigation item or collapsible section it separates; never place it between a SectionTrigger and the SectionContent that trigger controls, and keep repeated boundaries under one consistent layout owner.
 - **MUST:** Let SectionLabel use NavList's size-aware typography and logical leading-column alignment; use the logical row-padding tokens only when navigation rows need independent alignment with a surrounding shell, and do not shift indicators with margins or transforms.
 - **MUST:** Load styles.css or core.css plus nav-list.css.
+- **MUST:** Use density=compact for denser navigation without shrinking size-owned text and icons. Comfortable is the default; retain comfortable md or lg for touch-oriented navigation. Section labels use primary text, idle links secondary, and tone/variant own current state.
+- **MUST:** Keep row inset and section indentation independent: Root inset=none removes horizontal row padding only; SectionContent indent=none aligns static group items with their section label while preserving row hover padding. Defaults preserve existing recipes. Use these props before consumer CSS alignment overrides.
 
 ## Common mistakes
 

@@ -21,6 +21,8 @@ Present persistent inline feedback with status indicators and semantic visual re
 
 - **MUST:** Choose role=status or role=alert explicitly for dynamic announcements; status and tone never select announcement priority.
 - **MUST:** Load styles.css or core.css plus alert.css; load additional composed component CSS separately.
+- **MUST:** Use responsive size, variant, inline and align for visual changes; status and tone remain scalar. Sparse recipes retain md, soft, false and start defaults.
+- **MUST:** Use Icon or Spinner size=inherit for slot-sized artwork. Use shared radius and accentStart before custom CSS; Content tone=primary is for suitable soft backgrounds, not a substitute for solid contrast pairs.
 
 ## Common mistakes
 
@@ -29,6 +31,7 @@ Present persistent inline feedback with status indicators and semantic visual re
 ## Validation checklist
 
 - Check all status/variant pairs, sizes, long content, indicator containment, light/dark, RTL and accessible actions.
+- Verify compact line heights, invariant variant geometry, responsive resets, inherited artwork dimensions, logical accent stripe, shared radius and all five part refs.
 
 ## Related guidance
 

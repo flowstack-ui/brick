@@ -10,3 +10,11 @@ createElement(Steps.Root, {});
 // @ts-expect-error responsive orientation is not a scalar Steps API
 createElement(Steps.Root, { count: 2, orientation: { md: "horizontal" } });
 void sizes; void tones; void variants;
+createElement(Steps.Root, { count: 3, size: { md: "lg" }, variant: { initial: "subtle", lg: "solid" }, tone: { sm: "neutral" }, layout: { initial: "stacked", md: "side" }, isStepSkippable: index => index === 1 });
+createElement(Steps.Indicator, { radius: "control" });
+createElement(Steps.Trigger, { radius: "none" });
+createElement(Steps.Status, { complete: "Done", incomplete: "Upcoming", current: "Now" });
+// @ts-expect-error semantic error tones do not describe workflow progress
+createElement(Steps.Root, { count: 2, tone: "danger" });
+// @ts-expect-error arbitrary CSS radius is not a recipe
+createElement(Steps.Indicator, { radius: "13px" });

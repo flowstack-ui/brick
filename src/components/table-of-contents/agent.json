@@ -35,7 +35,7 @@
     {
       "id": "toc-style",
       "level": "must",
-      "statement": "Use sm/md size, plain/line variant and neutral/accent tone. Load styles.css or core.css plus table-of-contents.css. Do not add focus gutters or override component geometry in playground CSS."
+      "statement": "Use responsive sm/md size and plain/line variant with scalar neutral/accent tone. Sparse breakpoint objects inherit sm/plain defaults. Load styles.css or core.css plus table-of-contents.css. Do not add focus gutters or override component geometry in playground CSS."
     },
     {
       "id": "toc-roots",

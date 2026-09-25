@@ -5,6 +5,31 @@ import { describe, expect, it, vi } from "vitest";
 import { Alert, type AlertStatus } from "../../../src/alert.js";
 
 describe("Alert", () => {
+  it("serializes sparse visual recipes with stable defaults and filters new props", () => {
+    const { container } = render(<Alert.Root size={{ md: "lg" }} variant={{ lg: "outline" }} inline={{ md: true, xl: false }} align={{ md: "center" }} radius="sm" accentStart><Alert.Content tone="primary">Notice</Alert.Content></Alert.Root>);
+    const root = container.firstElementChild!;
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "lg");
+    expect(root).toHaveAttribute("data-variant", "soft");
+    expect(root).not.toHaveAttribute("data-inline");
+    expect(root).toHaveAttribute("data-inline-xl", "false");
+    expect(root).toHaveAttribute("data-align", "start");
+    expect(root).toHaveAttribute("data-accent-start", "");
+    expect((root as HTMLElement).style.getPropertyValue("--brick-alert-radius")).toBe("var(--brick-radius-core-sm)");
+    for (const name of ["size", "variant", "inline", "align", "radius", "accentStart"]) expect(root).not.toHaveAttribute(name);
+    expect(root.firstElementChild).toHaveAttribute("data-tone", "primary");
+    expect(root.firstElementChild).not.toHaveAttribute("tone");
+  });
+  it("composes Indicator without a second wrapper or default glyph", () => {
+    const ref = createRef<HTMLSpanElement>(); const child = createRef<HTMLSpanElement>();
+    const outer = vi.fn(); const inner = vi.fn();
+    const { container } = render(<Alert.Indicator asChild ref={ref} onClick={outer}><span ref={child} onClick={inner}>Artwork</span></Alert.Indicator>);
+    expect(ref.current).toBe(child.current);
+    expect(container.querySelectorAll("span")).toHaveLength(1);
+    expect(container.querySelector("svg")).toBeNull();
+    fireEvent.click(ref.current!);
+    expect(outer).toHaveBeenCalledOnce(); expect(inner).toHaveBeenCalledOnce();
+  });
   it("has no implicit live role and renders the five public parts", () => {
     const root = createRef<HTMLElement>();
     const indicator = createRef<HTMLSpanElement>();
@@ -41,5 +66,16 @@ describe("Alert", () => {
     const markup = renderToString(<Alert.Root><Alert.Indicator><span>!</span></Alert.Indicator><Alert.Title>Notice</Alert.Title></Alert.Root>);
     expect(markup).not.toContain("<svg");
     expect(renderToString(<Alert.Root>Notice</Alert.Root>)).not.toContain("brick-alert-indicator");
+  });
+  it("renders every status and variant pair without changing semantic priority", () => {
+    for (const status of ["info", "warning", "success", "error", "neutral"] as const) {
+      for (const variant of ["soft", "surface", "outline", "solid"] as const) {
+        const html = renderToString(<Alert.Root status={status} variant={variant}><Alert.Indicator /><Alert.Title>Notice</Alert.Title></Alert.Root>);
+        expect(html).toContain(`data-status="${status}"`);
+        expect(html).toContain(`data-variant="${variant}"`);
+        expect(html).not.toContain('role="alert"');
+        expect(html).toContain('aria-hidden="true"');
+      }
+    }
   });
 });

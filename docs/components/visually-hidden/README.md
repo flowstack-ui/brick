@@ -17,7 +17,9 @@ import { VisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
 import "@flowstack-ui/brick/styles.css";
 ```
 
-The complete stylesheet above is the recommended default. For a measured
+VisuallyHidden's inline hiding works without a stylesheet. Its empty component
+CSS entry is retained for compatibility. Composed controls such as Button still
+need their styles. The complete stylesheet above is the application default. For a measured
 route-aware build, replace it with the shared foundation and this component's
 stylesheet:
 
@@ -58,6 +60,11 @@ The stable class is `.brick-visually-hidden`; the stable default hook is `data-s
 ## Customization
 
 Native attributes, consumer classes, and non-conflicting styles pass through. Do not override the hiding properties. Use visible Text instead when visual presentation is required.
+Atom applies hiding declarations after ordinary inline styles on Root, asChild
+and render elements. This does not protect against arbitrary !important rules,
+hidden/aria-hidden attributes or callbacks that discard supplied props.
+Use SkipLink for visible-on-focus navigation and form-owned HiddenInput parts
+with their visible controls instead of hiding a generic focusable input.
 
 ## Responsive behavior
 
