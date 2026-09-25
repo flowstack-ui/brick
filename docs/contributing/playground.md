@@ -1,5 +1,20 @@
 # Playground Evidence
 
+## Scroll and separator examples
+
+Keep one scroll owner per example. Use native ScrollArea by default; examples
+demonstrating custom scrollbars must opt in and provide Viewport > Content,
+plus a Scrollbar/Thumb for every enabled axis. Do not hide native scrollbars
+with application CSS or reproduce scrollbar geometry in the playground.
+Menu and virtualization integrations reuse the same viewport. Disclose any
+playground-only dependency in the source example. Bottom-following remains
+application policy, never an implicit ScrollArea behavior.
+
+Use responsive Divider orientation only for decorative, unlabeled separators.
+Match the parent layout direction and verify old-axis inset/border resets.
+Keep semantic separators' orientation scalar. Every independently configurable
+compound part gets a named Props subsection and matching nested TOC entry.
+
 ## Documentation presentation and qualification
 
 For explicitly migrated documentation pages, the public route is a readable
@@ -105,7 +120,11 @@ single-line entry. Do not wrap component-owned anatomy such as `Field.Label`,
 `Dialog.Title`, or Button content in `Text`.
 
 Raw text hosts remain valid only when the scenario is explicitly proving an
-exact `render`/`asChild` host or Text's preservation of nested native emphasis.
+exact `render`/`asChild` host, Prose's native editorial descendants, or Text's
+preservation of nested native emphasis. An explicitly named qualification-only
+native-input retention fixture may test browser state independently of Input;
+ordinary copied examples must still use Input. The validator checks actual JSX
+composition rather than exempting whole documentation directories.
 Run `npm run verify:playground-primitives` to prevent authored playground copy
 or text entry from drifting back to raw elements.
 

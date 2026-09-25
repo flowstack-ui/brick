@@ -3,7 +3,21 @@
 Atom and the browser own keyboard modality, focus movement, active descendants
 and semantics. Brick makes that state visible without changing layout.
 
-## Actions
+## Reset fallback
+
+The optional `reset.css` styles otherwise unstyled `:focus-visible` targets
+with the semantic focus color, width and offset. Token-free usage falls back
+to a 2px system Highlight outline with a 4px offset. Forced colors uses
+Highlight. The reset declares the shared cascade ordering and sits below
+component styles regardless of whether reset or core CSS is imported first.
+
+This is a fallback, not a replacement for component-owned focus on wrappers,
+tracks or active descendants. Those owners must suppress a host outline only
+when they supply their own visible indicator. Never globally remove outlines.
+Application-owned section targets receive the fallback; scrolling does not
+move their keyboard focus. Applications choose which element their IDs target.
+
+## Action recipes
 
 Button and IconButton accept `focusRing="outside" | "inside"`. Omission
 preserves outside: canonical 2px outline and 4px gap. Use inside for an

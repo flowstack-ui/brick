@@ -616,7 +616,7 @@
     {
       "intent": "preserved multi-line technical source",
       "use": "Code Block",
-      "note": "Keep syntax tokenization in a consumer adapter, pass the exact plain source separately for copy behavior, author line metadata explicitly, and use the bounded/collapse contract for long source.",
+      "note": "Keep syntax tokenization optional: createShikiAdapter bridges a consumer-loaded Shiki instance, while plain CodeBlock needs no highlighter. Pass exact source for copy, use root meta for automatic line presentation or authored Line parts, and use bounded/collapse composition for long source.",
       "destinations": [
         {
           "kind": "component",
@@ -1345,7 +1345,7 @@
       ]
     },
     {
-      "intent": "flat tabular data with composite cell navigation or row selection",
+      "intent": "flat tabular data with composite cell navigation",
       "use": "DataGrid",
       "note": "Choose Table for read-oriented comparison, TreeGrid for hierarchical rows, and an application-owned data tool for editing, column management, or an enterprise data engine.",
       "destinations": [
@@ -1366,7 +1366,7 @@
     {
       "intent": "read-oriented row and column comparison",
       "use": "Table",
-      "note": "Choose DataGrid for composite cell navigation or row selection, TreeGrid for hierarchical interactive rows, and List when meaningful column relationships are absent.",
+      "note": "Choose DataGrid for composite cell navigation, TreeGrid for hierarchical interactive rows, and List when meaningful column relationships are absent. Record selection with independent controls can use Table and the public selection utility.",
       "destinations": [
         {
           "kind": "component",
@@ -1541,9 +1541,9 @@
       ]
     },
     {
-      "intent": "editable, selectable, or submitted opaque hexadecimal color",
+      "intent": "editable, selectable, or submitted color",
       "use": "ColorPicker",
-      "note": "Choose ColorSwatch for a passive preview; richer alpha, gradient, channel, eyedropper, and color-space editing remains an Atom-first gap.",
+      "note": "Choose ColorSwatch for a passive preview. ColorPicker supports alpha, channel editing, and progressive EyeDropper integration; gradient editing remains outside its contract.",
       "destinations": [
         {
           "kind": "component",
@@ -1638,7 +1638,7 @@
     {
       "intent": "ordered or unordered content",
       "use": "List",
-      "note": "Choose NavList, an interactive collection, Table, or DataGrid when rows navigate, select, activate, or expose data relationships.",
+      "note": "Use useSelection and ActionDelegate with named controls for record lists. Choose NavList for routes, Table for columns and DataGrid for composite cell navigation.",
       "destinations": [
         {
           "kind": "component",
@@ -1660,6 +1660,12 @@
     }
   ],
   "rules": [
+    { "id": "layer-show-conditional", "level": "must", "statement": "Choose Show when with fallback for conditional content, For for collections, and Show/Hide from for CSS visibility. Keep authentication and data-access enforcement in the application/server." },
+    {
+      "id": "layer-selection-float",
+      "level": "must",
+      "statement": "Use Float for static out-of-flow edge attachment and its Anchor for an unpainted containing block. ZStack owns size-contributing layers, Bleed crosses padding, and NotificationBadge owns counts and dots. Do not add application positioning CSS for this supported relationship."
+    },
     {
       "id": "brick-first",
       "level": "must",

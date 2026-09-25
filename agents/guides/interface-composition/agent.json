@@ -7,6 +7,7 @@
   "kind": "guide",
   "purpose": "Build complete interfaces from Brick's structural, content, navigation, action, responsive, and surface components before adding narrow application styling.",
   "decisionOrder": [
+    "For secondary action rows aligned to the logical start of prose, prefer outline Buttons so their padded boundary reads intentionally in LTR and RTL. Ghost remains appropriate for intentional toolbar, icon and contextual actions; do not remove control padding or use negative margins to repair apparent text indentation.",
     "Keep standalone action focus outside by default; use Button or IconButton focusRing inside at intentional flush clipping boundaries. Do not add protective layout gutters to compensate for a compound component focus defect, remove scrolling, or override focus management in consumer CSS.",
     "Map the page into landmarks, bounded regions, layout relationships, content, navigation, actions, media, and responsive changes.",
     "Choose the Brick owner for each relationship and read every selected component guide before implementation.",
@@ -16,6 +17,30 @@
     "Audit responsive behavior, accessibility, CSS delivery, and native fallbacks before treating the composition as complete."
   ],
   "selection": [
+    {
+      "intent": "single-line input with masks, external segments or form registration",
+      "use": "Input with Field; InputAddon and Group for external segments; optional application integrations",
+      "note": "Follow docs/guides/input-integrations.md. React Hook Form, use-mask-input and react-payment-inputs are not bundled Input capabilities. Preserve refs and handlers, use one value owner, qualify caret/reset/submission, and never present card formatting as payment processing. Internal adornments can contain independently named controls; external segments are noninteractive.",
+      "destinations": [{ "kind": "component", "id": "input" }, { "kind": "component", "id": "input-addon" }, { "kind": "component", "id": "group" }, { "kind": "component", "id": "field" }, { "kind": "component", "id": "form" }]
+    },
+    {
+      "intent": "independently selectable rich form options",
+      "use": "CheckboxCard with CheckboxGroup and Fieldset for related options",
+      "note": "Compose exactly one HiddenInput per whole-label card. Keep all descendants noninteractive; use ordinary Card with a separate Checkbox for record actions. Use RadioCard for mutually exclusive choices. Grid and Stack own group layout.",
+      "destinations": [{ "kind": "component", "id": "checkbox-card" }, { "kind": "component", "id": "checkbox-group" }, { "kind": "component", "id": "fieldset" }, { "kind": "component", "id": "card" }, { "kind": "component", "id": "checkbox" }, { "kind": "component", "id": "radio-card" }, { "kind": "component", "id": "grid" }, { "kind": "component", "id": "stack" }]
+    },
+    {
+      "intent": "select records independently from opening them",
+      "use": "Table, List or Card with Checkbox, useSelection and optional ActionDelegate",
+      "note": "Preserve native host semantics. selected is presentation only. Bind useSelectionCheckbox to standalone Checkbox or Checkbox.Control, never the compound Checkbox.Root wrapper. Give each record a real named primary link or button; optional ActionDelegate forwards background clicks without turning the host into a button. Keep secondary controls independent. The application owns page scope, retained IDs, sorting, filtering, confirmation and focus recovery. Use DataGrid only when its cell-navigation model is needed.",
+      "destinations": [
+        { "kind": "component", "id": "table" },
+        { "kind": "component", "id": "list" },
+        { "kind": "component", "id": "card" },
+        { "kind": "component", "id": "checkbox" },
+        { "kind": "component", "id": "data-grid" }
+      ]
+    },
     {
       "intent": "date entry with optional calendar selection",
       "use": "DateInput, Calendar and DatePicker",
@@ -129,7 +154,7 @@
     {
       "intent": "child flex allocation",
       "use": "Stack.Item",
-      "note": "Choose content-sized, fixed, automatic, or proportional growth before writing flex CSS.",
+      "note": "Choose recipes or explicit grow/shrink/basis, order and logical auto margins before writing flex CSS. Root supplies reverse directions, independent gaps and multiline alignment. Preserve meaningful DOM and keyboard order.",
       "destinations": [
         {
           "kind": "component",
@@ -234,7 +259,7 @@
     {
       "intent": "local light or dark semantic-token boundary",
       "use": "Appearance",
-      "note": "Pass exactly one existing host; it may contain any number of descendants, and Appearance adds no paint, layout, or wrapper.",
+      "note": "Pass exactly one existing host; it may contain any number of descendants, and Appearance supplies primary foreground on explicit scopes but adds no background, layout, or wrapper.",
       "destinations": [
         {
           "kind": "component",
@@ -360,6 +385,7 @@
     }
   ],
   "rules": [
+    { "id": "interface-show-modes", "level": "must", "statement": "Use Show when for wrapper-free conditional rendering and Show/Hide from for mounted CSS visibility. Do not mix modes or infer authorization from hiding. Use responsive asChild only on one host forwarding props and refs; visible child display is preserved." },
     {
       "id": "interface-focused-composition",
       "level": "must",
@@ -524,6 +550,16 @@
       "id": "interface-comment-intent",
       "level": "must",
       "statement": "Comment non-obvious ownership, accessibility order, breakpoint, sizing, and browser-lifecycle constraints; do not add comments that only translate a component name or prop into prose."
+    },
+    {
+      "id": "composition-reset-focus",
+      "level": "must",
+      "statement": "Let the optional Brick reset supply theme-aware focus-visible for otherwise unstyled targets. Component-specific focus owners override that low-priority fallback; do not add generic consumer focus outlines to every descendant or remove focus on passive scrolling."
+    },
+    {
+      "id": "interface-composition-float",
+      "level": "must",
+      "statement": "Use Float for out-of-flow edge attachment and Float.Anchor for an unpainted containing block. Keep ZStack for size-contributing layers, Bleed for crossing padding and NotificationBadge for counts/dots. Keep clipped targets and floated content as siblings; preserve accessible meaning and focus."
     }
   ],
   "customization": {
@@ -621,6 +657,7 @@
     "highlight",
     "alert",
     "empty-state",
-    "spinner"
+    "spinner",
+    "float"
   ]
 }

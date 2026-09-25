@@ -18,6 +18,12 @@ Before publishing a package version:
    name or version that does not match Brick's exact dependency. Set the same
    absolute path in `FLOWSTACK_ATOM_TARBALL` when running the complete
    repository or release command graph locally.
+   For an owner-authorized unpublished candidate, also pass `--atom-sha256`
+   or set `FLOWSTACK_ATOM_SHA256` to its recorded digest. The checker verifies
+   the bytes before installing and logs the archive identity. Without an
+   explicit archive, the checker intentionally uses the published dependency;
+   it never silently substitutes the local installation. Candidate success
+   does not qualify the published-dependency release gate.
 5. Complete each affected component's numbered manual protocol. Any required
    physical environment not used is `blocked`, never passed by inference.
 6. Recalculate and visually inspect changed workbook sheets; verify the Index

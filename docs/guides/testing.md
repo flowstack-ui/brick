@@ -29,11 +29,37 @@ process indefinitely. Pass one or more project names directly to
 `scripts/run-release-browser-tests.mjs` when reproducing a release-profile
 failure. Main-branch and publication jobs use the same bounded project runner.
 
+Each release invocation retains JSON, HTML and failure traces in a unique
+`test-results/release-*/<project>-<shard>-of-<count>/` directory. Its parent
+`summary.json` records each shard's status and elapsed time; a missing JSON report
+fails the run. Flaky outcomes also fail even when the browser command exits
+successfully; investigate their cause instead of retrying until green.
+Preserve the entire release directory for diagnosis rather than
+only the last shard's HTML report. Ordinary focused runs retain their existing
+report paths.
+
+Packed consumer verifiers print the Brick archive SHA-256 and retain their
+temporary fixture on failure, including application browser traces. A supplied
+Atom candidate can be checked with `--atom-sha256`; registry-backed release
+qualification should not set local candidate overrides.
+
 Do not rerun the repository or release tier after every focused edit. Escalate
 when the affected component is stable or when a shared boundary requires
 broader evidence.
 
+`build` cleans package outputs only; it preserves coverage and the separately
+built playground. Explicit `clean` also removes those generated outputs. Never
+run `clean` or rebuild the playground while browser tests are serving it. A
+preserved playground is a frozen candidate, not proof that newer source was
+tested: rebuild it before qualifying any subsequent presentation changes.
+
 Focused commands:
+
+Focused unit and browser commands include supplementary files in the component's
+own test directory, not only its primary test. Visual/screenshot-named browser
+files belong to the explicit visual command. Shared integration suites still need
+to be selected when their boundary changes. The primary ownership files remain
+required even when supplementary suites exist.
 
 ```bash
 npm run test:ownership
@@ -81,6 +107,11 @@ release gate remotely. A named component remains the smallest local affected
 unit; shared or unknown changes expand to the repository gate. Reviewed macOS
 visual baselines and named physical-device checks remain explicit human release
 evidence.
+
+All visual/screenshot-named suites, including `docs-visual.spec.ts`, run only in
+local desktop Chromium. CI and other browser profiles exclude those files before
+worker startup. Functional layout tests with optional diagnostic screenshots are
+named as behavior/layout suites and remain in every applicable browser profile.
 
 CI and advanced local diagnosis can reuse an already-built playground without
 starting a development server:

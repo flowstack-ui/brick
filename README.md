@@ -1,5 +1,9 @@
 # @flowstack-ui/brick
 
+Rich independent choices: [CheckboxCard](https://github.com/flowstack-ui/brick/blob/main/docs/components/checkbox-card/README.md).
+
+Edge attachment: [Float](https://github.com/flowstack-ui/brick/blob/main/docs/components/float/README.md).
+
 QR sharing: [QrCode](https://github.com/flowstack-ui/brick/blob/main/docs/components/qr-code/README.md).
 
 Document navigation: [Table of Contents](https://github.com/flowstack-ui/brick/blob/main/docs/components/table-of-contents/README.md).
@@ -172,6 +176,7 @@ through `@flowstack-ui/brick/theme-contract.json`.
 - [CloseButton](https://github.com/flowstack-ui/brick/blob/main/docs/components/close-button/README.md)
 - [Calendar](https://github.com/flowstack-ui/brick/blob/main/docs/components/calendar/README.md)
 - [DateInput](https://github.com/flowstack-ui/brick/blob/main/docs/components/date-input/README.md)
+- [InputAddon](https://github.com/flowstack-ui/brick/blob/main/docs/components/input-addon/README.md)
 - [DatePicker](https://github.com/flowstack-ui/brick/blob/main/docs/components/date-picker/README.md)
 - [DownloadTrigger](https://github.com/flowstack-ui/brick/blob/main/docs/components/download-trigger/README.md)
 
@@ -207,3 +212,4 @@ MIT
 - [FloatingPanel](https://github.com/flowstack-ui/brick/blob/main/docs/components/floating-panel/README.md) — movable, resizable nonmodal tools.
 - [OverlayManager](https://github.com/flowstack-ui/brick/blob/main/docs/components/overlay-manager/README.md) — keyed imperative overlay orchestration.
 Multi-value text entry: [TagsInput](https://github.com/flowstack-ui/brick/blob/main/docs/components/tags-input/README.md).
+- [ToggleTip](https://github.com/flowstack-ui/brick/blob/main/docs/components/toggle-tip/README.md)

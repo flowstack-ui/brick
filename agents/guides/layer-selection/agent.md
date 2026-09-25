@@ -47,7 +47,7 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - **responsive presence:** use Show or Hide. Use CSS media visibility rather than rendering two JavaScript-controlled trees.
 - **image with resilient loading:** use Image. Use an adapter only when a framework image optimizer provides a measured capability Brick lacks.
 - **stable media or embed geometry before its content loads:** use AspectRatio. Choose Image when the asset owns resilient loading, Surface for a general visual boundary, and Skeleton for a temporary loading placeholder.
-- **preserved multi-line technical source:** use Code Block. Keep syntax tokenization in a consumer adapter, pass the exact plain source separately for copy behavior, author line metadata explicitly, and use the bounded/collapse contract for long source.
+- **preserved multi-line technical source:** use Code Block. Keep syntax tokenization optional: createShikiAdapter bridges a consumer-loaded Shiki instance, while plain CodeBlock needs no highlighter. Pass exact source for copy, use root meta for automatic line presentation or authored Line parts, and use bounded/collapse composition for long source.
 - **navigation destination:** use Link or Button with href. Use Link for ordinary navigation and Button only for an emphasized destination.
 - **grouped disclosure sections:** use Accordion. Choose Collapsible for one independent disclosure and Tabs for one shared switching panel.
 - **ordinary blocking task, form, settings flow, or focused information:** use Dialog. Choose AlertDialog for one urgent consequential decision and Drawer when the temporary task belongs at a screen edge.
@@ -76,23 +76,25 @@ Choose the correct FLOWSTACK layer and require Brick-first composition when buil
 - **one independent in-flow disclosure region:** use Collapsible. Choose Accordion for coordinated peer sections, Dialog or Drawer for a modal task, Popover for an anchored layer, and Show or Hide for responsive presence.
 - **one-column hierarchical navigation and optional selection:** use Tree. Choose TreeGrid for hierarchical rows with navigable columns, Accordion or Collapsible for arbitrary disclosure content, DataGrid for flat interactive tabular data, and List for static hierarchy.
 - **hierarchical rows with several navigable columns:** use TreeGrid. Choose Tree for one primary hierarchy column, DataGrid for flat interactive rows, Table for read-oriented tabular relationships, and an application-owned data tool for editing or independent cell controls.
-- **flat tabular data with composite cell navigation or row selection:** use DataGrid. Choose Table for read-oriented comparison, TreeGrid for hierarchical rows, and an application-owned data tool for editing, column management, or an enterprise data engine.
-- **read-oriented row and column comparison:** use Table. Choose DataGrid for composite cell navigation or row selection, TreeGrid for hierarchical interactive rows, and List when meaningful column relationships are absent.
+- **flat tabular data with composite cell navigation:** use DataGrid. Choose Table for read-oriented comparison, TreeGrid for hierarchical rows, and an application-owned data tool for editing, column management, or an enterprise data engine.
+- **read-oriented row and column comparison:** use Table. Choose DataGrid for composite cell navigation, TreeGrid for hierarchical interactive rows, and List when meaningful column relationships are absent. Record selection with independent controls can use Table and the public selection utility.
 - **changing stream of focusable articles with article-to-article keyboard movement:** use Feed. Choose List for a static sequence, Table or DataGrid for tabular relationships, Tree for hierarchy, and Stack or Grid for purely visual arrangement.
 - **linear read-only task completion or indeterminate work:** use Progress. Choose ProgressCircle when compact circular geometry is important, Slider for editable values, Toast for a transient outcome, and Skeleton for unknown content loading.
 - **compact circular read-only task completion or indeterminate work:** use ProgressCircle. Choose Progress for linear completion, Slider for editable values, and Skeleton for unknown content loading.
 - **visual count or presence dot over one owning element:** use NotificationBadge. Choose Badge for an in-flow passive label or count, Status for a named state, Button for an actionable count, and visible Text when the value must be announced or understood without the owner; NotificationBadge does not announce changes.
 - **compact identity for a named person, organization, or entity:** use Avatar. Choose Image for a larger editorial portrait and NotificationBadge only when the owning Avatar needs a separate visual count or presence indicator.
 - **short passive in-flow label, category, status, or count:** use Badge. Choose surface when a soft fill also needs a visible semantic boundary; choose NotificationBadge for an overlaid count or dot, Status for richer named state semantics, and Button when the label is actionable.
-- **editable, selectable, or submitted opaque hexadecimal color:** use ColorPicker. Choose ColorSwatch for a passive preview; richer alpha, gradient, channel, eyedropper, and color-space editing remains an Atom-first gap.
+- **editable, selectable, or submitted color:** use ColorPicker. Choose ColorSwatch for a passive preview. ColorPicker supports alpha, channel editing, and progressive EyeDropper integration; gradient editing remains outside its contract.
 - **passive preview of one color or a compact color mix:** use ColorSwatch. Choose ColorPicker when the user must edit, select, or submit the value; keep interaction on a semantic owner.
 - **short assistive-only equivalent for meaning already conveyed visually:** use VisuallyHidden. Choose visible Text for essential instructions, state, errors, or announcements, and keep an IconButton or Button itself visible while placing the hidden equivalent inside it.
 - **approximate numeric value or ordered range through spatial manipulation:** use Slider. Choose NumberInput for exact entry, Progress for read-only completion, and Rating for a short ordered score.
 - **short ordered score input or recognizable passive score aggregate:** use Rating. Choose Slider for a general numeric setting and RadioGroup when choices have distinct categorical meanings.
-- **ordered or unordered content:** use List. Choose NavList, an interactive collection, Table, or DataGrid when rows navigate, select, activate, or expose data relationships.
+- **ordered or unordered content:** use List. Use useSelection and ActionDelegate with named controls for record lists. Choose NavList for routes, Table for columns and DataGrid for composite cell navigation.
 
 ## Rules
 
+- **MUST:** Choose Show when with fallback for conditional content, For for collections, and Show/Hide from for CSS visibility. Keep authentication and data-access enforcement in the application/server.
+- **MUST:** Use Float for static out-of-flow edge attachment and its Anchor for an unpainted containing block. ZStack owns size-contributing layers, Bleed crosses padding, and NotificationBadge owns counts and dots. Do not add application positioning CSS for this supported relationship.
 - **MUST:** Use an existing Brick component when it owns the interface job instead of recreating it with native elements and application CSS.
 - **MUST:** Do not import @flowstack-ui/atom directly in an application that has selected Brick; report a Brick gap if the finished component is missing.
 - **MUST:** Load styles.css once, or core.css once plus every rendered component's modular stylesheet; never mix the two delivery modes.

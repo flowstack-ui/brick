@@ -1,5 +1,5 @@
 export const componentDocumentationContracts = {
-"checkbox-card": {
+  "checkbox-card": {
     source: "src/components/checkbox-card/CheckboxCard.tsx",
     exportSource: "src/components/checkbox-card/CheckboxCard.tsx",
     css: "src/components/checkbox-card/checkbox-card.css",
@@ -11,7 +11,7 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-size", "data-variant", "data-tone", "data-orientation", "data-align", "data-justify"],
     publicTokens: ["--brick-checkbox-card-radius", "--brick-checkbox-card-inset", "--brick-checkbox-card-gap", "--brick-checkbox-card-mark", "--brick-checkbox-card-background", "--brick-checkbox-card-foreground", "--brick-checkbox-card-border", "--brick-checkbox-card-selected-background", "--brick-checkbox-card-selected-foreground", "--brick-checkbox-card-selected-border"],
   },
-"toggle-tip": {
+  "toggle-tip": {
     source: "src/components/toggle-tip/ToggleTip.tsx",
     exportSource: "src/components/toggle-tip/index.ts",
     css: "src/components/toggle-tip/toggle-tip.css",
@@ -23,7 +23,7 @@ export const componentDocumentationContracts = {
     dataAttributes: ["data-tip-size"],
     publicTokens: ["--brick-toggle-tip-inline-space", "--brick-toggle-tip-block-space"],
   },
-float: {
+  float: {
     source: "src/components/float/Float.tsx",
     exportSource: "src/components/float/index.ts",
     css: "src/components/float/float.css",
@@ -34,7 +34,7 @@ float: {
     dataAttributes: ["data-slot", "data-placement", "data-inline"],
     publicTokens: [],
   },
-"table-of-contents": {
+  "table-of-contents": {
     source: "src/components/table-of-contents/TableOfContents.tsx",
     exportSource: "src/components/table-of-contents/TableOfContents.tsx",
     css: "src/components/table-of-contents/table-of-contents.css",
@@ -46,14 +46,14 @@ float: {
     defaults: {size: "sm", variant: "plain", tone: "neutral"},
     publicTokens: ["--brick-table-of-contents-foreground", "--brick-table-of-contents-current", "--brick-table-of-contents-focus-ring", "--brick-table-of-contents-indent", "--brick-table-of-contents-title-gap", "--brick-table-of-contents-row-gap", "--brick-table-of-contents-row-padding", "--brick-table-of-contents-row-size", "--brick-table-of-contents-rail-color", "--brick-table-of-contents-rail-gap", "--brick-table-of-contents-rail-width", "--brick-table-of-contents-font-family", "--brick-table-of-contents-font-size", "--brick-table-of-contents-font-weight", "--brick-table-of-contents-line-height", "--brick-table-of-contents-letter-spacing"]
   },
-"qr-code": {
+  "qr-code": {
     source: "src/components/qr-code/QrCode.tsx", exportSource: "src/components/qr-code/QrCode.tsx", css: "src/components/qr-code/qr-code.css",
     exports: ["QrCode", "QrCodeRoot", "QrCodeRootProvider", "QrCodeFrame", "QrCodePattern", "QrCodeOverlay", "QrCodeDownloadTrigger", "QrCodeContext", "QrCodeSize", "QrCodeRootProps", "QrCodeRootProviderProps", "QrCodeDownloadTriggerProps", "QrCodeFrameProps", "QrCodePatternProps", "QrCodeOverlayProps", "QrCodeApi", "QrCodeOptions", "QrCodeEncoding", "QrCodeResult", "QrCodeExportOptions", "QrCodeMimeType", "useQrCode", "useQrCodeContext", "encodeQrCode", "QrCodeError"],
     unions: { QrCodeSize: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "full"] }, defaults: { size: "md" }, defaultExpressions: { size: 'ownSize ?? defaults.size ?? "md"' },
     dataAttributes: ["data-size"], inheritedDataAttributes: ["data-slot", "data-state"],
     publicTokens: ["--brick-qr-code-size", "--brick-qr-code-foreground", "--brick-qr-code-background", "--brick-qr-code-overlay-size", "--brick-qr-code-overlay-padding", "--brick-qr-code-overlay-radius"]
   },
-"tags-input": {
+  "tags-input": {
     source: "src/components/tags-input/TagsInput.tsx", exportSource: "src/components/tags-input/TagsInput.tsx", css: "src/components/tags-input/tags-input.css",
     exports: ["TagsInput", "TagsInputRoot", "TagsInputRootProvider", "TagsInputContext", "TagsInputItemContext", "TagsInputLabel", "TagsInputControl", "TagsInputInput", "TagsInputItem", "TagsInputItems", "TagsInputItemPreview", "TagsInputItemText", "TagsInputItemInput", "TagsInputItemDeleteTrigger", "TagsInputClearTrigger", "TagsInputHiddenInput", "useTagsInput", "useTagsInputContext", "useTagsInputCombobox", "TagsInputSize", "TagsInputVariant", "TagsInputShape", "TagsInputItemTone", "TagsInputRootProps", "TagsInputRootProviderProps", "TagsInputLabelProps", "TagsInputControlProps", "TagsInputInputProps", "TagsInputItemProps", "TagsInputItemsProps", "TagsInputItemPreviewProps", "TagsInputItemTextProps", "TagsInputItemInputProps", "TagsInputTriggerProps", "TagsInputHiddenInputProps"],
     unions: { TagsInputVariant: ["outline", "surface", "soft", "subtle", "ghost", "plain", "underline"], TagsInputShape: ["sharp", "rounded", "pill"] },
@@ -63,13 +63,13 @@ float: {
     dataAttributes: ["data-variant", "data-shape", "data-full-width", "data-tone"], inheritedDataAttributes: ["data-slot"],
     publicTokens: ["--brick-tags-input-background", "--brick-tags-input-border", "--brick-tags-input-radius", "--brick-tags-input-item-background", "--brick-tags-input-item-foreground", "--brick-tags-input-item-radius", "--brick-tags-input-focus-ring", "--brick-tags-input-invalid-border", "--brick-tags-input-hover-background", "--brick-tags-input-hover-border", "--brick-tags-input-item-border", "--brick-tags-input-item-highlight-background"],
   },
-editable: {
+  editable: {
     source: "src/components/editable/Editable.tsx", exportSource: "src/components/editable/Editable.tsx", css: "src/components/editable/editable.css",
     exports: ["Editable", "EditableRoot", "EditableRootProvider", "EditableArea", "EditableLabel", "EditablePreview", "EditableInput", "EditableTextarea", "EditableControl", "EditableEditTrigger", "EditableSubmitTrigger", "EditableCancelTrigger", "EditableContext", "useEditable", "useEditableContext", "EditableSize", "EditableRootProps", "EditableRootProviderProps", "EditableAreaProps", "EditableLabelProps", "EditablePreviewProps", "EditableInputProps", "EditableTextareaProps", "EditableControlProps", "EditableTriggerProps"],
     unions: { EditableSize: ["sm", "md", "lg"] }, defaults: { size: "md" },
     dataAttributes: ["data-size"], inheritedDataAttributes: ["data-slot"], publicTokens: [],
   },
-"native-select": {
+  "native-select": {
     source: "src/components/native-select/NativeSelect.tsx", exportSource: "src/components/native-select/NativeSelect.tsx", css: "src/components/native-select/native-select.css",
     exports: ["NativeSelect", "NativeSelectRoot", "NativeSelectField", "NativeSelectIndicator", "NativeSelectRootProps", "NativeSelectFieldProps", "NativeSelectIndicatorProps", "NativeSelectVariant", "NativeSelectShape"],
     unions: { NativeSelectVariant: ["outline", "surface", "soft", "subtle", "ghost", "plain", "underline"], NativeSelectShape: ["sharp", "rounded", "pill"] },
@@ -77,7 +77,7 @@ editable: {
     defaults: { size: "lg", variant: "outline", shape: "rounded", fullWidth: true, multiple: false },
     dataAttributes: ["data-slot", "data-variant", "data-shape", "data-full-width", "data-list"], publicTokens: [],
   },
-marquee: {
+  marquee: {
     attributeSources: [{ path: "src/components/_internal/StaticPart.tsx", importPath: "../_internal/StaticPart.js" }],
     source: "src/components/marquee/Marquee.tsx", exportSource: "src/components/marquee/Marquee.tsx", css: "src/components/marquee/marquee.css",
     exports: ["Marquee", "MarqueeRoot", "MarqueeRootProvider", "MarqueeContext", "MarqueeViewport", "MarqueeContent", "MarqueeItem", "MarqueeEdge", "useMarquee", "useMarqueeContext", "MarqueeSide", "MarqueeSpacing", "MarqueeOptions", "MarqueeController", "MarqueeRootProps", "MarqueeRootProviderProps", "MarqueeContextProps", "MarqueeViewportProps", "MarqueeContentProps", "MarqueeItemProps", "MarqueeEdgeProps"],
@@ -86,7 +86,7 @@ marquee: {
     dataAttributes: ["data-side", "data-slot"], inheritedDataAttributes: ["data-slot"],
     publicTokens: ["--brick-marquee-edge-color", "--brick-marquee-edge-size"],
   },
-timeline: {
+  timeline: {
     source: "src/components/timeline/Timeline.tsx", exportSource: "src/components/timeline/Timeline.tsx", css: "src/components/timeline/timeline.css",
     exports: ["Timeline", "TimelineRoot", "TimelineItem", "TimelineConnector", "TimelineSeparator", "TimelineIndicator", "TimelineContent", "TimelineTitle", "TimelineDescription", "TimelineRootProps", "TimelineItemProps", "TimelineConnectorProps", "TimelineSeparatorProps", "TimelineIndicatorProps", "TimelineContentProps", "TimelineTitleProps", "TimelineDescriptionProps", "TimelineSize", "TimelineVariant", "TimelineTone", "TimelineSide", "TimelineLayout", "TimelineRecipeProps", "TimelinePropsProviderProps", "TimelinePropsProvider", "TimelineRootPropsProvider"],
     unions: { TimelineSize: ["sm", "md", "lg", "xl"], TimelineVariant: ["soft", "subtle", "solid", "outline", "plain"], TimelineTone: ["neutral", "accent", "info", "success", "warning", "danger"], TimelineSide: ["before", "after"], TimelineLayout: ["balanced", "compact"] },
@@ -95,7 +95,7 @@ timeline: {
     dataAttributes: ["data-size", "data-variant", "data-tone", "data-side", "data-show-last-separator", "data-slot", "data-layout", "data-unstyled"], inheritedDataAttributes: ["data-slot"],
     publicTokens: ["--brick-timeline-marker-size", "--brick-timeline-gap", "--brick-timeline-event-gap", "--brick-timeline-separator-color", "--brick-timeline-fill", "--brick-timeline-ink", "--brick-timeline-border"],
   },
-stat: {
+  stat: {
     attributeSources: [{ path: "src/components/_internal/StaticPart.tsx", importPath: "../_internal/StaticPart.js" }],
     source: "src/components/stat/Stat.tsx", exportSource: "src/components/stat/Stat.tsx", css: "src/components/stat/stat.css",
     exports: ["Stat", "StatRoot", "StatGroup", "StatLabel", "StatValueText", "StatValueUnit", "StatHelpText", "StatUpIndicator", "StatDownIndicator", "StatSize", "StatTone", "StatRootProps", "StatGroupProps", "StatLabelProps", "StatValueTextProps", "StatValueUnitProps", "StatHelpTextProps", "StatIndicatorProps"],
@@ -103,7 +103,7 @@ stat: {
     defaults: {}, dataAttributes: ["data-size", "data-tone", "data-slot"], inheritedDataAttributes: ["data-slot"],
     publicTokens: ["--brick-stat-gap", "--brick-stat-value-size", "--brick-stat-value-line-height", "--brick-stat-group-gap", "--brick-stat-indicator-color"],
   },
-"empty-state": {
+  "empty-state": {
     source: "src/components/empty-state/EmptyState.tsx", exportSource: "src/components/empty-state/EmptyState.tsx", css: "src/components/empty-state/empty-state.css",
     exports: ["EmptyState", "EmptyStateRoot", "EmptyStateContent", "EmptyStateIndicator", "EmptyStateTitle", "EmptyStateDescription", "EmptyStateRootProps", "EmptyStateContentProps", "EmptyStateIndicatorProps", "EmptyStateTitleProps", "EmptyStateDescriptionProps", "EmptyStateSize", "EmptyStateAlign", "EmptyStateTitleElement"],
     unions: { EmptyStateSize: ["sm", "md", "lg"], EmptyStateAlign: ["start", "center"], EmptyStateTitleElement: ["h1", "h2", "h3", "h4", "h5", "h6"] },
@@ -111,7 +111,7 @@ stat: {
     dataAttributes: ["data-size", "data-align", "data-slot"],
     publicTokens: ["--brick-empty-state-inline-padding", "--brick-empty-state-block-padding", "--brick-empty-state-gap", "--brick-empty-state-indicator-size", "--brick-empty-state-title-size", "--brick-empty-state-title-line-height", "--brick-empty-state-title-color", "--brick-empty-state-description-color", "--brick-empty-state-indicator-color"],
   },
-alert: {
+  alert: {
     source: "src/components/alert/Alert.tsx", exportSource: "src/components/alert/Alert.tsx", css: "src/components/alert/alert.css",
     exports: ["Alert", "AlertRoot", "AlertContent", "AlertTitle", "AlertDescription", "AlertIndicator", "AlertRootProps", "AlertContentProps", "AlertTitleProps", "AlertDescriptionProps", "AlertIndicatorProps", "AlertStatus", "AlertTone", "AlertVariant", "AlertSize"],
     unions: { AlertStatus: ["info", "warning", "success", "error", "neutral"], AlertTone: ["neutral", "accent", "info", "success", "warning", "danger"], AlertVariant: ["soft", "surface", "outline", "solid"], AlertSize: ["sm", "md", "lg"] },
@@ -119,7 +119,7 @@ alert: {
     dataAttributes: ["data-status", "data-tone", "data-variant", "data-size", "data-inline", "data-align", "data-accent-start", "data-slot"],
     publicTokens: ["--brick-alert-background", "--brick-alert-color", "--brick-alert-border-color", "--brick-alert-radius", "--brick-alert-padding", "--brick-alert-gap", "--brick-alert-font-size", "--brick-alert-indicator-size", "--brick-alert-line-height", "--brick-alert-accent-width", "--brick-alert-accent-color", "--brick-alert-content-color"],
   },
-spinner: {
+  spinner: {
     source: "src/components/spinner/Spinner.tsx",
     exportSource: "src/components/spinner/index.ts",
     css: "src/components/spinner/spinner.css",
@@ -129,8 +129,8 @@ spinner: {
     dataAttributes: ["data-size", "data-tone", "data-emphasis", "data-thickness", "data-slot"],
     publicTokens: ["--brick-spinner-size", "--brick-spinner-color", "--brick-spinner-thickness"],
   },
-"overlay-manager": { kind: "utility", source: "src/components/overlay-manager/index.ts", exportSource: "src/components/overlay-manager/index.ts", css: null, exports: ["createOverlay", "OverlayManager", "OverlayLifecycleProps", "OverlaySnapshotEntry"], unions: {}, defaults: {}, dataAttributes: [], publicTokens: [] },
-"floating-panel": {
+  "overlay-manager": { kind: "utility", source: "src/components/overlay-manager/index.ts", exportSource: "src/components/overlay-manager/index.ts", css: null, exports: ["createOverlay", "OverlayManager", "OverlayLifecycleProps", "OverlaySnapshotEntry"], unions: {}, defaults: {}, dataAttributes: [], publicTokens: [] },
+  "floating-panel": {
     source: "src/components/floating-panel/FloatingPanel.tsx",
     exportSource: "src/components/floating-panel/FloatingPanel.tsx",
     css: "src/components/floating-panel/floating-panel.css",
@@ -146,13 +146,13 @@ spinner: {
     unions: {}, defaults: {}, dataAttributes: [],
     publicTokens: ["--brick-floating-panel-background", "--brick-floating-panel-header-background", "--brick-floating-panel-border-color", "--brick-floating-panel-radius", "--brick-floating-panel-shadow"],
   },
-"action-bar": { source: "src/components/action-bar/ActionBar.tsx", exportSource: "src/components/action-bar/ActionBar.tsx", css: "src/components/action-bar/action-bar.css", exports: ["ActionBar", "ActionBarRoot", "ActionBarRootProvider", "ActionBarContext", "ActionBarPortal", "ActionBarPositioner", "ActionBarContent", "ActionBarSelectionTrigger", "ActionBarCloseTrigger", "ActionBarSeparator", "ActionBarTitle", "ActionBarDescription", "ActionBarRootProps", "ActionBarContentProps", "ActionBarCloseTriggerProps", "ActionBarSelectionTriggerProps", "ActionBarContextValue", "ActionBarPlacement", "ActionBarPositionerProps", "ActionBarSeparatorProps"], unions: { ActionBarPlacement: ["bottom", "bottom-start", "bottom-end"] }, defaults: { placement: "bottom" }, dataAttributes: ["data-placement", "data-state"], inheritedDataAttributes: ["data-state"], publicTokens: ["--brick-action-bar-offset", "--brick-action-bar-background", "--brick-action-bar-foreground", "--brick-action-bar-radius", "--brick-action-bar-shadow"] },
-"calendar": { source: "src/components/calendar/Calendar.tsx", exportSource: "src/components/calendar/index.ts", css: "src/components/calendar/calendar.css", exports: ["Calendar", "CalendarRootProps", "CalendarDensity"], unions: { CalendarDensity: ["compact", "comfortable"] }, defaults: { density: "comfortable" }, dataAttributes: ["data-density"], publicTokens: ["--brick-calendar-cell-size", "--brick-calendar-radius"] },
-"date-input": { source: "src/components/date-input/DateInput.tsx", exportSource: "src/components/date-input/index.ts", css: "src/components/date-input/date-input.css", exports: ["DateInput", "DateInputRootProps", "DateInputVariant", "DateInputShape", "DateInputRecipeProps", "DateInputTone"], unions: { DateInputTone: ["neutral", "accent"], DateInputVariant: ["outline", "surface", "soft", "subtle", "ghost", "plain", "underline"], DateInputShape: ["sharp", "rounded", "pill"] }, unionSources: { DateInputVariant: { type: "FieldVariant", path: "src/components/_field-variant/FieldVariant.ts", importPath: "../_field-variant/FieldVariant.js" } }, defaults: { tone: "neutral", size: "lg", variant: "outline", shape: "rounded" }, dataAttributes: ["data-tone", "data-variant", "data-shape"], publicTokens: ["--brick-date-input-background", "--brick-date-input-border", "--brick-date-input-radius"] },
-"date-picker": { source: "src/components/date-picker/DatePicker.tsx", exportSource: "src/components/date-picker/index.ts", css: "src/components/date-picker/date-picker.css", exports: ["DatePicker", "DatePickerRootProps", "DatePickerContentProps", "DatePickerCalendarProps"], unions: {}, defaults: { size: "lg", variant: "outline", shape: "rounded" }, dataAttributes: ["data-variant", "data-shape"], publicTokens: [] },
-"close-button": { source: "src/components/close-button/CloseButton.tsx", exportSource: "src/components/close-button/index.ts", css: "src/components/close-button/close-button.css", exports: ["CloseButton", "CloseButtonProps"], unions: {}, defaults: {}, dataAttributes: [], publicTokens: [] },
-"download-trigger": { source: "src/components/download-trigger/DownloadTrigger.tsx", exportSource: "src/components/download-trigger/index.ts", css: "src/components/download-trigger/download-trigger.css", exports: ["DownloadTrigger", "DownloadTriggerProps"], unions: {}, defaults: {}, dataAttributes: [], publicTokens: [] },
-splitter: {
+  "action-bar": { source: "src/components/action-bar/ActionBar.tsx", exportSource: "src/components/action-bar/ActionBar.tsx", css: "src/components/action-bar/action-bar.css", exports: ["ActionBar", "ActionBarRoot", "ActionBarRootProvider", "ActionBarContext", "ActionBarPortal", "ActionBarPositioner", "ActionBarContent", "ActionBarSelectionTrigger", "ActionBarCloseTrigger", "ActionBarSeparator", "ActionBarTitle", "ActionBarDescription", "ActionBarRootProps", "ActionBarContentProps", "ActionBarCloseTriggerProps", "ActionBarSelectionTriggerProps", "ActionBarContextValue", "ActionBarPlacement", "ActionBarPositionerProps", "ActionBarSeparatorProps"], unions: { ActionBarPlacement: ["bottom", "bottom-start", "bottom-end"] }, defaults: { placement: "bottom" }, dataAttributes: ["data-placement", "data-state"], inheritedDataAttributes: ["data-state"], publicTokens: ["--brick-action-bar-offset", "--brick-action-bar-background", "--brick-action-bar-foreground", "--brick-action-bar-radius", "--brick-action-bar-shadow"] },
+  "calendar": { source: "src/components/calendar/Calendar.tsx", exportSource: "src/components/calendar/index.ts", css: "src/components/calendar/calendar.css", exports: ["Calendar", "CalendarRootProps", "CalendarDensity"], unions: { CalendarDensity: ["compact", "comfortable"] }, defaults: { density: "comfortable" }, dataAttributes: ["data-density"], publicTokens: ["--brick-calendar-cell-size", "--brick-calendar-radius"] },
+  "date-input": { source: "src/components/date-input/DateInput.tsx", exportSource: "src/components/date-input/index.ts", css: "src/components/date-input/date-input.css", exports: ["DateInput", "DateInputRootProps", "DateInputVariant", "DateInputShape", "DateInputRecipeProps", "DateInputTone"], unions: { DateInputTone: ["neutral", "accent"], DateInputVariant: ["outline", "surface", "soft", "subtle", "ghost", "plain", "underline"], DateInputShape: ["sharp", "rounded", "pill"] }, unionSources: { DateInputVariant: { type: "FieldVariant", path: "src/components/_field-variant/FieldVariant.ts", importPath: "../_field-variant/FieldVariant.js" } }, defaults: { tone: "neutral", size: "lg", variant: "outline", shape: "rounded" }, dataAttributes: ["data-tone", "data-variant", "data-shape"], publicTokens: ["--brick-date-input-background", "--brick-date-input-border", "--brick-date-input-radius"] },
+  "date-picker": { source: "src/components/date-picker/DatePicker.tsx", exportSource: "src/components/date-picker/index.ts", css: "src/components/date-picker/date-picker.css", exports: ["DatePicker", "DatePickerRootProps", "DatePickerContentProps", "DatePickerCalendarProps"], unions: {}, defaults: { size: "lg", variant: "outline", shape: "rounded" }, dataAttributes: ["data-variant", "data-shape"], publicTokens: [] },
+  "close-button": { source: "src/components/close-button/CloseButton.tsx", exportSource: "src/components/close-button/index.ts", css: "src/components/close-button/close-button.css", exports: ["CloseButton", "CloseButtonProps"], unions: {}, defaults: {}, dataAttributes: [], publicTokens: [] },
+  "download-trigger": { source: "src/components/download-trigger/DownloadTrigger.tsx", exportSource: "src/components/download-trigger/index.ts", css: "src/components/download-trigger/download-trigger.css", exports: ["DownloadTrigger", "DownloadTriggerProps"], unions: {}, defaults: {}, dataAttributes: [], publicTokens: [] },
+  splitter: {
     source: "src/components/splitter/Splitter.tsx",
     exportSource: "src/components/splitter/index.ts",
     css: "src/components/splitter/splitter.css",
@@ -160,7 +160,7 @@ splitter: {
     unions: {}, defaults: {}, dataAttributes: [],
     publicTokens: ["--brick-splitter-border", "--brick-splitter-background", "--brick-splitter-target", "--brick-splitter-grip-width", "--brick-splitter-grip-length"],
   },
-steps: {
+  steps: {
     source: "src/components/steps/Steps.tsx",
     exportSource: "src/components/steps/index.ts",
     css: "src/components/steps/steps.css",
@@ -170,7 +170,7 @@ steps: {
     dataAttributes: ["data-size", "data-variant", "data-tone"],
     publicTokens: ["--brick-steps-marker-size", "--brick-steps-icon-size", "--brick-steps-gap", "--brick-steps-content-gap", "--brick-steps-thickness", "--brick-steps-radius"],
   },
-appearance: {
+  appearance: {
     source: "src/components/appearance/Appearance.tsx",
     exportSource: "src/components/appearance/index.ts",
     css: "src/components/appearance/appearance.css",
@@ -185,7 +185,7 @@ appearance: {
     publicTokens: [],
     sourceClaims: ["Children.only(children)"],
   },
-"locale-provider": {
+  "locale-provider": {
     source: "src/components/locale-provider/LocaleProvider.tsx",
     exportSource: "src/components/locale-provider/index.ts",
     css: "src/components/locale-provider/locale-provider.css",
@@ -204,7 +204,7 @@ appearance: {
     publicTokens: [],
     sourceClaims: ["<DirectionProvider dir={value.dir}>", "new Intl.Locale(locale)"],
   },
-"format-number": {
+  "format-number": {
     source: "src/components/format-number/FormatNumber.tsx",
     exportSource: "src/components/format-number/index.ts",
     css: "src/components/format-number/format-number.css",
@@ -214,7 +214,7 @@ appearance: {
     publicTokens: [],
     sourceClaims: ["locale ?? context.locale", "getNumberFormatter(locale, options)"],
   },
-"format-byte": {
+  "format-byte": {
     source: "src/components/format-byte/FormatByte.tsx",
     exportSource: "src/components/format-byte/index.ts",
     css: "src/components/format-byte/format-byte.css",
@@ -242,7 +242,7 @@ appearance: {
     publicTokens: [],
     sourceClaims: ["locale ?? context.locale", "style: \"unit\""],
   },
-for: {
+  for: {
     source: "src/components/for/For.tsx",
     exportSource: "src/components/for/index.ts",
     css: "src/components/for/for.css",
@@ -252,7 +252,7 @@ for: {
     publicTokens: [],
     sourceClaims: ["return each.map((item, index)", "children(item as ForItem<TCollection>, index)"],
   },
-checkmark: {
+  checkmark: {
     source: "src/components/checkmark/Checkmark.tsx",
     exportSource: "src/components/checkmark/index.ts",
     css: "src/components/checkmark/checkmark.css",
@@ -281,7 +281,7 @@ checkmark: {
     dataAttributes: ["data-disabled", "data-invalid", "data-filled", "data-size", "data-slot", "data-state", "data-tone", "data-variant"],
     publicTokens: ["--brick-checkmark-size", "--brick-checkmark-solid", "--brick-checkmark-on-solid", "--brick-checkmark-soft", "--brick-checkmark-text"],
   },
-radiomark: {
+  radiomark: {
     source: "src/components/radiomark/Radiomark.tsx",
     exportSource: "src/components/radiomark/index.ts",
     css: "src/components/radiomark/radiomark.css",
@@ -309,7 +309,7 @@ radiomark: {
     dataAttributes: ["data-disabled", "data-invalid", "data-filled", "data-size", "data-slot", "data-state", "data-tone", "data-variant"],
     publicTokens: ["--brick-radiomark-size", "--brick-radiomark-solid", "--brick-radiomark-on-solid", "--brick-radiomark-soft", "--brick-radiomark-text"],
   },
-"aspect-ratio": {
+  "aspect-ratio": {
     source: "src/components/aspect-ratio/AspectRatio.tsx",
     exportSource: "src/components/aspect-ratio/index.ts",
     css: "src/components/aspect-ratio/aspect-ratio.css",
@@ -341,7 +341,7 @@ radiomark: {
       "--brick-aspect-ratio-overflow",
     ],
   },
-"alert-dialog": {
+  "alert-dialog": {
     source: "src/components/alert-dialog/AlertDialog.tsx",
     exportSource: "src/components/alert-dialog/index.ts",
     css: "src/components/alert-dialog/alert-dialog.css",
@@ -396,7 +396,7 @@ radiomark: {
       "--brick-alert-dialog-shadow",
     ],
   },
-"app-bar": {
+  "app-bar": {
     source: "src/components/app-bar/AppBar.tsx",
     exportSource: "src/components/app-bar/index.ts",
     css: "src/components/app-bar/app-bar.css",
@@ -458,7 +458,7 @@ radiomark: {
       "--brick-app-bar-shadow",
     ],
   },
-avatar: {
+  avatar: {
     source: "src/components/avatar/Avatar.tsx",
     exportSource: "src/components/avatar/index.ts",
     css: "src/components/avatar/avatar.css",
@@ -496,7 +496,7 @@ avatar: {
     ],
     privateTokenPrefixes: ["--brick-avatar-fallback-font-size"],
   },
-"avatar-group": {
+  "avatar-group": {
     source: "src/components/avatar-group/AvatarGroup.tsx",
     exportSource: "src/components/avatar-group/index.ts",
     css: "src/components/avatar-group/avatar-group.css",
@@ -532,7 +532,7 @@ avatar: {
     ],
     privateTokenPrefixes: ["--brick-avatar-group-avatar-size"],
   },
-chip: {
+  chip: {
     source: "src/components/chip/Chip.tsx",
     exportSource: "src/components/chip/index.ts",
     css: "src/components/chip/chip.css",
@@ -594,7 +594,7 @@ chip: {
       "--brick-chip-remove-active-background",
     ],
   },
-image: {
+  image: {
     source: "src/components/image/Image.tsx",
     exportSource: "src/components/image/index.ts",
     css: "src/components/image/image.css",
@@ -649,7 +649,7 @@ image: {
     ],
     privateTokenPrefixes: ["--_brick-image"],
   },
-badge: {
+  badge: {
     source: "src/components/badge/Badge.tsx",
     exportSource: "src/components/badge/index.ts",
     css: "src/components/badge/badge.css",
@@ -692,7 +692,7 @@ badge: {
       "--brick-badge-tone-text",
     ],
   },
-checkbox: {
+  checkbox: {
     source: "src/components/checkbox/Checkbox.tsx",
     exportSource: "src/components/checkbox/index.ts",
     css: "src/components/checkbox/checkbox.css",
@@ -725,7 +725,7 @@ checkbox: {
       "--brick-checkbox-invalid-foreground",
     ],
   },
-"input-addon": {
+  "input-addon": {
     source: "src/components/input-addon/InputAddon.tsx",
     exportSource: "src/components/input-addon/index.ts",
     css: "src/components/input-addon/input-addon.css",
@@ -734,7 +734,7 @@ checkbox: {
     dataAttributes: ["data-slot"],
     publicTokens: ["--brick-input-addon-radius"],
   },
-input: {
+  input: {
     source: "src/components/input/Input.tsx",
     exportSource: "src/components/input/index.ts",
     css: "src/components/input/input.css",
@@ -798,7 +798,7 @@ input: {
       "--brick-input-clear-hover-background",
     ],
   },
-"file-upload": {
+  "file-upload": {
     source: "src/components/file-upload/FileUpload.tsx",
     exportSource: "src/components/file-upload/index.ts",
     css: "src/components/file-upload/file-upload.css",
@@ -863,7 +863,7 @@ input: {
       "--brick-file-upload-item-border",
     ],
   },
-textarea: {
+  textarea: {
     source: "src/components/textarea/Textarea.tsx",
     exportSource: "src/components/textarea/index.ts",
     css: "src/components/textarea/textarea.css",
@@ -929,7 +929,7 @@ textarea: {
       "--brick-textarea-count-over-limit-foreground",
     ],
   },
-select: {
+  select: {
     source: "src/components/select/Select.tsx",
     exportSource: "src/components/select/index.ts",
     css: "src/components/select/select.css",
@@ -1037,7 +1037,7 @@ select: {
       "--brick-select-arrow-size",
     ],
   },
-dialog: {
+  dialog: {
     source: "src/components/dialog/Dialog.tsx",
     exportSource: "src/components/dialog/index.ts",
     css: "src/components/dialog/dialog.css",
@@ -1090,7 +1090,7 @@ dialog: {
       "--brick-dialog-shadow",
     ],
   },
-drawer: {
+  drawer: {
     source: "src/components/drawer/Drawer.tsx",
     exportSource: "src/components/drawer/index.ts",
     css: "src/components/drawer/drawer.css",
@@ -1170,7 +1170,7 @@ drawer: {
       },
     },
   },
-field: {
+  field: {
     source: "src/components/field/Field.tsx",
     exportSource: "src/components/field/index.ts",
     css: "src/components/field/field.css",
@@ -1227,7 +1227,7 @@ field: {
       "--brick-field-optional-foreground",
     ],
   },
-fieldset: {
+  fieldset: {
     source: "src/components/fieldset/Fieldset.tsx",
     exportSource: "src/components/fieldset/index.ts",
     css: "src/components/fieldset/fieldset.css",
@@ -1267,7 +1267,7 @@ fieldset: {
       "--brick-fieldset-optional-foreground",
     ],
   },
-form: {
+  form: {
     source: "src/components/form/Form.tsx",
     exportSource: "src/components/form/index.ts",
     css: "src/components/form/form.css",
@@ -1278,7 +1278,7 @@ form: {
     dataAttributes: ["data-slot"],
     publicTokens: ["--brick-form-gap", "--brick-form-fieldset-gap"],
   },
-"hover-card": {
+  "hover-card": {
     source: "src/components/hover-card/HoverCard.tsx",
     exportSource: "src/components/hover-card/index.ts",
     css: "src/components/hover-card/hover-card.css",
@@ -1319,7 +1319,7 @@ form: {
       "--brick-hover-card-max-inline-size-lg",
     ],
   },
-icon: {
+  icon: {
     source: "src/components/icon/Icon.tsx",
     exportSource: "src/components/icon/index.ts",
     css: "src/components/icon/icon.css",
@@ -1375,7 +1375,7 @@ icon: {
       "--brick-icon-direction-scale",
     ],
   },
-"checkbox-group": {
+  "checkbox-group": {
     source: "src/components/checkbox-group/CheckboxGroup.tsx",
     exportSource: "src/components/checkbox-group/index.ts",
     css: "src/components/checkbox-group/checkbox-group.css",
@@ -1406,7 +1406,7 @@ icon: {
     dataAttributes: ["data-size"],
     publicTokens: ["--brick-checkbox-group-gap"],
   },
-"radio-group": {
+  "radio-group": {
     source: "src/components/radio-group/RadioGroup.tsx",
     exportSource: "src/components/radio-group/RadioGroup.tsx",
     css: "src/components/radio-group/radio-group.css",
@@ -1436,7 +1436,7 @@ icon: {
       "--brick-radio-invalid",
     ],
   },
-"radio-card": {
+  "radio-card": {
     source: "src/components/radio-card/RadioCard.tsx",
     exportSource: "src/components/radio-card/RadioCard.tsx",
     css: "src/components/radio-card/radio-card.css",
@@ -1501,7 +1501,7 @@ icon: {
       "--brick-radio-card-mark",
     ],
   },
-"segment-group": {
+  "segment-group": {
     source: "src/components/segment-group/SegmentGroup.tsx",
     exportSource: "src/components/segment-group/index.ts",
     css: "src/components/segment-group/segment-group.css",
@@ -1544,7 +1544,7 @@ icon: {
       "--brick-segment-group-focus-ring",
     ],
   },
-switch: {
+  switch: {
     source: "src/components/switch/Switch.tsx",
     exportSource: "src/components/switch/index.ts",
     css: "src/components/switch/switch.css",
@@ -1629,7 +1629,7 @@ switch: {
       "--brick-switch-label-gap",
     ],
   },
-breadcrumb: {
+  breadcrumb: {
     source: "src/components/breadcrumb/Breadcrumb.tsx",
     exportSource: "src/components/breadcrumb/index.ts",
     css: "src/components/breadcrumb/breadcrumb.css",
@@ -1688,7 +1688,7 @@ breadcrumb: {
       "--brick-breadcrumb-separator-size",
     ],
   },
-tabs: {
+  tabs: {
     source: "src/components/tabs/Tabs.tsx",
     exportSource: "src/components/tabs/index.ts",
     css: "src/components/tabs/tabs.css",
@@ -1743,7 +1743,7 @@ tabs: {
       "--brick-tabs-radius",
     ],
   },
-skeleton: {
+  skeleton: {
     source: "src/components/skeleton/Skeleton.tsx",
     exportSource: "src/components/skeleton/index.ts",
     css: "src/components/skeleton/skeleton.css",
@@ -1777,7 +1777,7 @@ skeleton: {
       "--brick-skeleton-fade-duration",
     ],
   },
-progress: {
+  progress: {
     source: "src/components/progress/Progress.tsx",
     exportSource: "src/components/progress/index.ts",
     css: "src/components/progress/progress.css",
@@ -1852,7 +1852,7 @@ progress: {
       "--brick-progress-radius",
     ],
   },
-"progress-circle": {
+  "progress-circle": {
     source: "src/components/progress-circle/ProgressCircle.tsx",
     exportSource: "src/components/progress-circle/index.ts",
     css: "src/components/progress-circle/progress-circle.css",
@@ -1909,7 +1909,7 @@ progress: {
       "--brick-progress-circle-stroke",
     ],
   },
-toast: {
+  toast: {
     source: "src/components/toast/Toast.tsx",
     exportSource: "src/components/toast/index.ts",
     css: "src/components/toast/toast.css",
@@ -1986,7 +1986,7 @@ toast: {
       "`data-swipe-direction`",
     ],
   },
-button: {
+  button: {
     source: "src/components/button/Button.tsx",
     exportSource: "src/components/button/index.ts",
     css: "src/components/button/button.css",
@@ -2051,7 +2051,7 @@ button: {
       "--brick-button-tone-",
     ],
   },
-"icon-button": {
+  "icon-button": {
     source: "src/components/icon-button/IconButton.tsx",
     exportSource: "src/components/icon-button/index.ts",
     css: "src/components/icon-button/icon-button.css",
@@ -2115,7 +2115,7 @@ button: {
       "--brick-icon-button-tone-text",
     ],
   },
-"notification-badge": {
+  "notification-badge": {
     source: "src/components/badge/Badge.tsx",
     exportSource: "src/components/badge/index.ts",
     css: "src/components/badge/badge.css",
@@ -2165,7 +2165,7 @@ button: {
       "--brick-notification-badge-translate-block",
     ],
   },
-popover: {
+  popover: {
     source: "src/components/popover/Popover.tsx",
     exportSource: "src/components/popover/index.ts",
     css: "src/components/popover/popover.css",
@@ -2226,7 +2226,7 @@ popover: {
       "--brick-popover-max-inline-size-lg",
     ],
   },
-toggle: {
+  toggle: {
     source: "src/components/toggle/Toggle.tsx",
     exportSource: "src/components/toggle/index.ts",
     css: "src/components/toggle/toggle.css",
@@ -2265,7 +2265,7 @@ toggle: {
       "--brick-toggle-icon-size",
     ],
   },
-"toggle-group": {
+  "toggle-group": {
     source: "src/components/toggle-group/ToggleGroup.tsx",
     exportSource: "src/components/toggle-group/index.ts",
     css: "src/components/toggle-group/toggle-group.css",
@@ -2311,7 +2311,7 @@ toggle: {
       "--brick-toggle-icon-size",
     ],
   },
-tooltip: {
+  tooltip: {
     source: "src/components/tooltip/Tooltip.tsx",
     exportSource: "src/components/tooltip/index.ts",
     css: "src/components/tooltip/tooltip.css",
@@ -2358,7 +2358,7 @@ tooltip: {
       "--brick-tooltip-rich-max-inline-size",
     ],
   },
-link: {
+  link: {
     source: "src/components/link/Link.tsx",
     exportSource: "src/components/link/index.ts",
     css: "src/components/link/link.css",
@@ -2437,7 +2437,7 @@ link: {
       },
     },
   },
-"link-box": {
+  "link-box": {
     source: "src/components/link-box/LinkBox.tsx",
     exportSource: "src/components/link-box/index.ts",
     css: "src/components/link-box/link-box.css",
@@ -2470,7 +2470,7 @@ link: {
       "--brick-link-box-focus-offset",
     ],
   },
-list: {
+  list: {
     source: "src/components/list/List.tsx",
     exportSource: "src/components/list/index.ts",
     css: "src/components/list/list.css",
@@ -2541,7 +2541,7 @@ list: {
       "--brick-list-description-line-height",
     ],
   },
-"reorderable-list": {
+  "reorderable-list": {
     source: "src/components/reorderable-list/ReorderableList.tsx",
     exportSource: "src/components/reorderable-list/index.ts",
     css: "src/components/reorderable-list/reorderable-list.css",
@@ -2601,7 +2601,7 @@ list: {
       "--brick-reorderable-list-horizontal-item-min-inline-size",
     ],
   },
-table: {
+  table: {
     source: "src/components/table/Table.tsx",
     exportSource: "src/components/table/index.ts",
     css: "src/components/table/table.css",
@@ -2681,7 +2681,7 @@ table: {
       "--brick-table-sort-indicator-color",
     ],
   },
-"data-grid": {
+  "data-grid": {
     source: "src/components/data-grid/DataGrid.tsx",
     exportSource: "src/components/data-grid/index.ts",
     css: "src/components/data-grid/data-grid.css",
@@ -2761,7 +2761,7 @@ table: {
       "--brick-data-grid-sort-indicator-color",
     ],
   },
-"tree-grid": {
+  "tree-grid": {
     source: "src/components/tree-grid/TreeGrid.tsx",
     exportSource: "src/components/tree-grid/index.ts",
     css: "src/components/tree-grid/tree-grid.css",
@@ -2850,7 +2850,7 @@ table: {
       "--brick-tree-grid-motion-easing",
     ],
   },
-tree: {
+  tree: {
     source: "src/components/tree/Tree.tsx",
     exportSource: "src/components/tree/index.ts",
     css: "src/components/tree/tree.css",
@@ -2907,7 +2907,7 @@ tree: {
       "--brick-tree-motion-easing",
     ],
   },
-feed: {
+  feed: {
     source: "src/components/feed/Feed.tsx",
     exportSource: "src/components/feed/index.ts",
     css: "src/components/feed/feed.css",
@@ -2961,7 +2961,7 @@ feed: {
       "--brick-feed-transition-duration",
     ],
   },
-"swipeable-item": {
+  "swipeable-item": {
     source: "src/components/swipeable-item/SwipeableItem.tsx",
     exportSource: "src/components/swipeable-item/index.ts",
     css: "src/components/swipeable-item/swipeable-item.css",
@@ -3002,7 +3002,7 @@ feed: {
       "--brick-swipeable-item-transition-easing",
     ],
   },
-text: {
+  text: {
     source: "src/components/text/Text.tsx",
     exportSource: "src/components/text/index.ts",
     css: "src/components/text/text.css",
@@ -3119,7 +3119,7 @@ text: {
       "--brick-text-foreground",
     ],
   },
-stack: {
+  stack: {
     source: "src/components/stack/Stack.tsx",
     exportSource: "src/components/stack/index.ts",
     css: "src/components/stack/stack.css",
@@ -3188,7 +3188,7 @@ stack: {
     ],
     publicTokens: ["--brick-stack-gap"],
   },
-"z-stack": {
+  "z-stack": {
     source: "src/components/z-stack/ZStack.tsx",
     exportSource: "src/components/z-stack/index.ts",
     css: "src/components/z-stack/z-stack.css",
@@ -3220,7 +3220,7 @@ stack: {
     dataAttributes: ["data-align", "data-justify", "data-slot"],
     publicTokens: [],
   },
-grid: {
+  grid: {
     source: "src/components/grid/Grid.tsx",
     exportSource: "src/components/grid/index.ts",
     css: "src/components/grid/grid.css",
@@ -3321,7 +3321,7 @@ grid: {
       "--brick-grid-item-row-end",
     ],
   },
-group: {
+  group: {
     source: "src/components/group/Group.tsx",
     exportSource: "src/components/group/index.ts",
     css: "src/components/group/group.css",
@@ -3346,7 +3346,7 @@ group: {
     ],
     publicTokens: ["--brick-group-gap", "--brick-group-overlap"],
   },
-container: {
+  container: {
     source: "src/components/container/Container.tsx",
     exportSource: "src/components/container/index.ts",
     css: "src/components/container/container.css",
@@ -3392,7 +3392,7 @@ container: {
       "--brick-container-padding-inline",
     ],
   },
-section: {
+  section: {
     source: "src/components/section/Section.tsx",
     exportSource: "src/components/section/index.ts",
     css: "src/components/section/section.css",
@@ -3420,7 +3420,7 @@ section: {
       "--brick-section-end-spacing",
     ],
   },
-frame: {
+  frame: {
     source: "src/components/frame/Frame.tsx",
     exportSource: "src/components/frame/index.ts",
     css: "src/components/frame/frame.css",
@@ -3458,7 +3458,7 @@ frame: {
       "--brick-frame-max-block-size",
     ],
   },
-center: {
+  center: {
     source: "src/components/center/Center.tsx",
     exportSource: "src/components/center/index.ts",
     css: "src/components/center/center.css",
@@ -3493,7 +3493,7 @@ center: {
     dataAttributes: ["data-inline", "data-slot"],
     publicTokens: ["--brick-center-size"],
   },
-show: {
+  show: {
     source: "src/components/show/Show.tsx",
     exportSource: "src/components/show/index.ts",
     css: "src/components/show/show.css",
@@ -3520,7 +3520,7 @@ show: {
     dataAttributes: ["data-from", "data-slot"],
     publicTokens: [],
   },
-hide: {
+  hide: {
     source: "src/components/hide/Hide.tsx",
     exportSource: "src/components/hide/index.ts",
     css: "src/components/hide/hide.css",
@@ -3547,7 +3547,7 @@ hide: {
     dataAttributes: ["data-from", "data-slot"],
     publicTokens: [],
   },
-divider: {
+  divider: {
     source: "src/components/divider/Divider.tsx",
     exportSource: "src/components/divider/index.ts",
     css: "src/components/divider/divider.css",
@@ -3598,7 +3598,7 @@ divider: {
       "--brick-divider-label-short-segment",
     ],
   },
-"scroll-area": {
+  "scroll-area": {
     source: "src/components/scroll-area/ScrollArea.tsx",
     exportSource: "src/components/scroll-area/index.ts",
     css: "src/components/scroll-area/scroll-area.css",
@@ -3650,7 +3650,7 @@ divider: {
       "--brick-scroll-area-shadow-color",
     ],
   },
-"nav-list": {
+  "nav-list": {
     source: "src/components/nav-list/NavList.tsx",
     exportSource: "src/components/nav-list/index.ts",
     css: "src/components/nav-list/nav-list.css",
@@ -3682,7 +3682,7 @@ divider: {
       "--brick-nav-list-section-label-letter-spacing",
     ],
   },
-sidebar: {
+  sidebar: {
     source: "src/components/sidebar/Sidebar.tsx",
     exportSource: "src/components/sidebar/index.ts",
     css: "src/components/sidebar/sidebar.css",
@@ -3711,7 +3711,7 @@ sidebar: {
       "--brick-sidebar-transition-duration",
     ],
   },
-bleed: {
+  bleed: {
     source: "src/components/bleed/Bleed.tsx",
     exportSource: "src/components/bleed/index.ts",
     css: "src/components/bleed/bleed.css",
@@ -3737,7 +3737,7 @@ bleed: {
     publicTokens: [],
     privateTokenPrefixes: ["--brick-bleed-"],
   },
-surface: {
+  surface: {
     source: "src/components/surface/Surface.tsx",
     exportSource: "src/components/surface/index.ts",
     css: "src/components/surface/surface.css",
@@ -3811,7 +3811,7 @@ surface: {
       "--brick-surface-elevation-high",
     ],
   },
-code: {
+  code: {
     source: "src/components/code/Code.tsx",
     exportSource: "src/components/code/index.ts",
     css: "src/components/code/code.css",
@@ -3843,7 +3843,7 @@ code: {
       "--brick-code-letter-spacing",
     ],
   },
-em: {
+  em: {
     source: "src/components/em/Em.tsx",
     exportSource: "src/components/em/index.ts",
     css: "src/components/em/em.css",
@@ -3852,7 +3852,7 @@ em: {
     dataAttributes: ["data-slot"],
     publicTokens: ["--brick-em-font-style"],
   },
-mark: {
+  mark: {
     source: "src/components/mark/Mark.tsx",
     exportSource: "src/components/mark/index.ts",
     css: "src/components/mark/mark.css",
@@ -3870,7 +3870,7 @@ mark: {
       "--brick-mark-padding-inline",
     ],
   },
-kbd: {
+  kbd: {
     source: "src/components/kbd/Kbd.tsx",
     exportSource: "src/components/kbd/index.ts",
     css: "src/components/kbd/kbd.css",
@@ -3897,7 +3897,7 @@ kbd: {
       "--brick-kbd-shadow",
     ],
   },
-blockquote: {
+  blockquote: {
     source: "src/components/blockquote/Blockquote.tsx",
     exportSource: "src/components/blockquote/index.ts",
     css: "src/components/blockquote/blockquote.css",
@@ -3952,7 +3952,7 @@ blockquote: {
       "--brick-blockquote-caption-letter-spacing",
     ],
   },
-highlight: {
+  highlight: {
     source: "src/components/highlight/Highlight.tsx",
     exportSource: "src/components/highlight/index.ts",
     css: "src/components/highlight/highlight.css",
@@ -3992,7 +3992,7 @@ highlight: {
       },
     ],
   },
-prose: {
+  prose: {
     source: "src/components/prose/Prose.tsx",
     exportSource: "src/components/prose/index.ts",
     css: "src/components/prose/prose.css",
@@ -4045,7 +4045,7 @@ prose: {
       "--brick-prose-table-cell-padding-inline",
     ],
   },
-"code-block": {
+  "code-block": {
     source: "src/components/code-block/CodeBlock.tsx",
     exportSource: "src/components/code-block/index.ts",
     css: "src/components/code-block/code-block.css",
@@ -4146,7 +4146,7 @@ prose: {
       "--brick-code-block-line-removed-border",
     ],
   },
-card: {
+  card: {
     source: "src/components/card/Card.tsx",
     exportSource: "src/components/card/index.ts",
     css: "src/components/card/card.css",
@@ -4193,10 +4193,21 @@ card: {
       "--brick-card-title-weight",
     ],
     privateTokenPrefixes: ["--brick-card-region-"],
-  }
+  },
+};
+
+const actionMenuDocumentationSources = {
+  path: "src/components/_action-menu/ActionMenuPresentation.tsx",
+  importPath: "../_action-menu/ActionMenuPresentation.js",
 };
 
 componentDocumentationContracts["dropdown-menu"] = {
+  unionSources: {
+    DropdownMenuSize: { ...actionMenuDocumentationSources, type: "ActionMenuSize" },
+    DropdownMenuItemTone: { ...actionMenuDocumentationSources, type: "ActionMenuTone" },
+  },
+  attributeSources: [actionMenuDocumentationSources],
+  documentedDefaultProps: { size: "Root.size" },
   source: "src/components/dropdown-menu/DropdownMenu.tsx",
   exportSource: "src/components/dropdown-menu/index.ts",
   css: "src/components/dropdown-menu/dropdown-menu.css",
@@ -4247,7 +4258,7 @@ componentDocumentationContracts["dropdown-menu"] = {
   ],
   unions: {
     DropdownMenuSize: ["sm", "md", "lg"],
-    DropdownMenuItemTone: ["neutral", "danger"],
+    DropdownMenuItemTone: ["neutral", "accent", "info", "success", "warning", "danger"],
   },
   defaults: { size: "md" },
   dataAttributes: ["data-size"],
@@ -4280,6 +4291,12 @@ componentDocumentationContracts["dropdown-menu"] = {
 };
 
 componentDocumentationContracts["context-menu"] = {
+  unionSources: {
+    ContextMenuSize: { ...actionMenuDocumentationSources, type: "ActionMenuSize" },
+    ContextMenuItemTone: { ...actionMenuDocumentationSources, type: "ActionMenuTone" },
+  },
+  attributeSources: [actionMenuDocumentationSources],
+  documentedDefaultProps: { size: "Root.size" },
   source: "src/components/context-menu/ContextMenu.tsx",
   exportSource: "src/components/context-menu/index.ts",
   css: "src/components/context-menu/context-menu.css",
@@ -4330,7 +4347,7 @@ componentDocumentationContracts["context-menu"] = {
   ],
   unions: {
     ContextMenuSize: ["sm", "md", "lg"],
-    ContextMenuItemTone: ["neutral", "danger"],
+    ContextMenuItemTone: ["neutral", "accent", "info", "success", "warning", "danger"],
   },
   defaults: { size: "md" },
   dataAttributes: ["data-size"],
@@ -4363,6 +4380,12 @@ componentDocumentationContracts["context-menu"] = {
 };
 
 componentDocumentationContracts["menubar"] = {
+  unionSources: {
+    MenubarSize: { ...actionMenuDocumentationSources, type: "ActionMenuSize" },
+    MenubarItemTone: { ...actionMenuDocumentationSources, type: "ActionMenuTone" },
+  },
+  attributeSources: [actionMenuDocumentationSources],
+  documentedDefaultProps: { size: "Root.size" },
   source: "src/components/menubar/Menubar.tsx",
   exportSource: "src/components/menubar/index.ts",
   css: "src/components/menubar/menubar.css",
@@ -4415,7 +4438,7 @@ componentDocumentationContracts["menubar"] = {
   ],
   unions: {
     MenubarSize: ["sm", "md", "lg"],
-    MenubarItemTone: ["neutral", "danger"],
+    MenubarItemTone: ["neutral", "accent", "info", "success", "warning", "danger"],
   },
   defaults: { size: "md" },
   dataAttributes: ["data-size"],
@@ -4465,15 +4488,17 @@ componentDocumentationContracts["navigation-menu"] = {
   ],
   unions: {
     NavigationMenuSize: ["sm", "md", "lg"],
-    NavigationMenuLinkVariant: ["control", "panel"],
+    NavigationMenuLinkVariant: ["control", "destination", "panel"],
   },
-  defaults: { size: "md", variant: "control" },
+  defaults: { size: "md", variant: "subtle", tone: "neutral", inset: "sm", surface: "transparent" },
+  documentedDefaultProps: { variant: "Root.variant", tone: "Root.tone", inset: "Content.inset", surface: "List.surface" },
   dataAttributes: ["data-size", "data-variant"],
   publicTokens: [
     "--brick-navigation-menu-gap",
     "--brick-navigation-menu-control-min-block-size",
     "--brick-navigation-menu-control-padding-inline",
     "--brick-navigation-menu-control-radius",
+    "--brick-navigation-menu-destination-radius",
     "--brick-navigation-menu-control-foreground",
     "--brick-navigation-menu-control-hover-background",
     "--brick-navigation-menu-control-open-background",
@@ -4521,9 +4546,13 @@ componentDocumentationContracts["bottom-navigation"] = {
     "BottomNavigationSize",
     "BottomNavigationPosition",
     "BottomNavigationLabelVisibility",
+    "BottomNavigationElevation",
+    "BottomNavigationSelectionVariant",
   ],
   unions: {
-    BottomNavigationVariant: ["solid", "soft", "outline", "ghost"],
+    BottomNavigationVariant: ["solid", "soft", "outline", "surface", "ghost"],
+    BottomNavigationElevation: ["none", "low", "medium", "high"],
+    BottomNavigationSelectionVariant: ["soft", "outline", "plain"],
     BottomNavigationTone: ["accent", "neutral"],
     BottomNavigationLayout: ["full", "floating"],
     BottomNavigationArrangement: ["equal", "centered"],
@@ -4642,19 +4671,28 @@ componentDocumentationContracts.rating = {
     "RatingSummaryProps",
     "RatingTone",
     "RatingVariant",
+    "RatingDensity", "RatingPresentationProps", "RatingRootProvider", "RatingRootProviderProps",
+    "RatingPropsProvider", "RatingPropsProviderProps", "RatingLabel", "RatingLabelProps",
+    "RatingControl", "RatingControlProps", "RatingItems", "RatingItemsProps",
+    "RatingItemIndicator", "RatingItemIndicatorProps", "RatingHiddenInput", "RatingHiddenInputProps",
+    "RatingContext", "RatingItemContext", "useRating", "useRatingContext", "useRatingItemContext",
+    "RatingController", "UseRatingProps", "RatingContextValue", "RatingItemContextValue",
   ],
   unions: {
-    RatingSize: ["sm", "md", "lg"],
+    RatingSize: ["xs", "sm", "md", "lg"],
+    RatingDensity: ["comfortable", "compact"],
     RatingTone: ["accent", "neutral"],
     RatingVariant: ["solid", "outline"],
   },
-  defaults: { size: "md", tone: "accent", variant: "solid" },
-  dataAttributes: ["data-size", "data-slot", "data-tone", "data-variant"],
+  defaults: { size: "md", tone: "accent", variant: "solid", density: "comfortable" },
+  defaultExpressions: { size: 'size: "md"', tone: 'tone: "accent"', variant: 'variant: "solid"', density: 'density: "comfortable"' },
+  dataAttributes: ["data-size", "data-slot", "data-tone", "data-variant", "data-density"],
   publicTokens: [
     "--brick-rating-item-size",
     "--brick-rating-gap",
     "--brick-rating-empty-color",
     "--brick-rating-fill-color",
+    "--brick-rating-summary-gap", "--brick-rating-summary-artwork-size", "--brick-rating-summary-color",
   ],
 };
 
@@ -4664,6 +4702,10 @@ componentDocumentationContracts["data-list"] = {
   css: "src/components/data-list/data-list.css",
   exports: [
     "DataList",
+    "DataListPropsProvider",
+    "DataListPropsProviderProps",
+    "DataListRecipeProps",
+    "DataListVariant",
     "DataListItem",
     "DataListItemProps",
     "DataListLabel",
@@ -4678,6 +4720,7 @@ componentDocumentationContracts["data-list"] = {
   ],
   unions: {
     DataListSize: ["sm", "md", "lg"],
+    DataListVariant: ["subtle", "bold"],
     DataListOrientation: ["vertical", "horizontal"],
     DataListLabelWidth: ["auto", "sm", "md", "lg"],
   },
@@ -4686,7 +4729,15 @@ componentDocumentationContracts["data-list"] = {
     labelWidth: "auto",
     orientation: "vertical",
     size: "md",
+    variant: "subtle",
     slot: "data-list-root",
+  },
+  defaultExpressions: {
+    divide: "divide ?? defaults.divide ?? false",
+    labelWidth: 'labelWidth ?? defaults.labelWidth ?? "auto"',
+    orientation: 'orientation ?? defaults.orientation ?? "vertical"',
+    size: 'size ?? defaults.size ?? "md"',
+    variant: 'variant ?? defaults.variant ?? "subtle"',
   },
   dataAttributes: [
     "data-divide",
@@ -4694,12 +4745,16 @@ componentDocumentationContracts["data-list"] = {
     "data-orientation",
     "data-size",
     "data-slot",
+    "data-variant",
   ],
   publicTokens: [
     "--brick-data-list-gap",
     "--brick-data-list-item-gap",
     "--brick-data-list-label-size",
     "--brick-data-list-divider-color",
+    "--brick-data-list-column-gap", "--brick-data-list-label-gap",
+    "--brick-data-list-label-color", "--brick-data-list-value-color",
+    "--brick-data-list-label-weight", "--brick-data-list-value-weight",
   ],
 };
 
@@ -4745,7 +4800,7 @@ componentDocumentationContracts["color-swatch"] = {
   ],
   unions: {
     ColorSwatchShape: ["sharp", "rounded", "circle"],
-    ColorSwatchSize: ["sm", "md", "lg"],
+    ColorSwatchSize: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "inherit", "full"],
   },
   defaults: { size: "md", shape: "rounded" },
   dataAttributes: ["data-shape", "data-size", "data-slot"],
@@ -4831,7 +4886,7 @@ componentDocumentationContracts["color-picker"] = {
   ],
   unions: {
     ColorPickerSize: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
-    ColorPickerVariant: ["outline", "soft"],
+    ColorPickerVariant: ["outline", "surface", "soft", "subtle"],
     ColorPickerControlLayout: ["separate", "integrated"],
     ColorPickerSwatchFrame: ["none", "outline"],
     ColorPickerSwatchShape: ["sharp", "rounded", "circle"],
@@ -4873,53 +4928,79 @@ componentDocumentationContracts.slider = {
   css: "src/components/slider/slider.css",
   exports: [
     "Slider",
+    "SliderControl",
+    "SliderControlProps",
+    "SliderDraggingIndicator",
+    "SliderDraggingIndicatorProps",
+    "SliderHiddenInput",
+    "SliderHiddenInputMode",
+    "SliderHiddenInputProps",
+    "SliderLabel",
+    "SliderLabelProps",
+    "SliderMark",
     "SliderMarker",
+    "SliderMarkerGroup",
+    "SliderMarkerGroupProps",
+    "SliderMarkerIndicator",
+    "SliderMarkerLabel",
     "SliderMarkerProps",
+    "SliderMarks",
+    "SliderMarksProps",
+    "SliderOrigin",
     "SliderRange",
     "SliderRangeProps",
     "SliderRoot",
     "SliderRootProps",
+    "SliderRootProvider",
+    "SliderRootProviderProps",
     "SliderSize",
     "SliderThumb",
+    "SliderThumbAlignment",
     "SliderThumbProps",
+    "SliderThumbSize",
+    "SliderThumbs",
+    "SliderThumbsProps",
+    "SliderTone",
     "SliderTrack",
     "SliderTrackProps",
+    "SliderValue",
     "SliderValueLabel",
     "SliderValueLabelDetails",
     "SliderValueLabelProps",
+    "SliderValueText",
+    "SliderValueTextProps",
     "SliderVariant",
     "SliderFrame",
+    "SliderCollisionBehavior",
+    "SliderController",
+    "UseSliderProps",
+    "useSlider",
+    "useSliderContext",
   ],
   unions: {
     SliderSize: ["sm", "md", "lg"],
-    SliderVariant: ["solid", "soft"],
-    SliderFrame: ["none", "outline"],
+    SliderVariant: ["outline", "solid", "soft"],
+    SliderTone: ["neutral", "accent", "contrast"],
+    SliderFrame: ["none", "outline", "panel", "inline"],
   },
-  defaults: { frame: "none", size: "md", variant: "solid" },
+  defaults: { frame: "none", size: "md", tone: "accent", variant: "outline" },
   dataAttributes: [
     "data-edge",
     "data-frame",
-    "data-orientation",
     "data-size",
     "data-slot",
-    "data-value",
+    "data-tone",
     "data-variant",
   ],
   publicTokens: [
-    "--brick-slider-track-background",
-    "--brick-slider-track-border",
-    "--brick-slider-track-size",
-    "--brick-slider-track-length",
-    "--brick-slider-range-background",
-    "--brick-slider-thumb-background",
-    "--brick-slider-thumb-border",
-    "--brick-slider-thumb-foreground",
-    "--brick-slider-thumb-shadow",
-    "--brick-slider-thumb-size",
+    "--brick-slider-hit-size",
     "--brick-slider-marker-color",
-    "--brick-slider-marker-border",
-    "--brick-slider-value-label-background",
-    "--brick-slider-value-label-foreground",
+    "--brick-slider-range-color",
+    "--brick-slider-thumb-border-color",
+    "--brick-slider-thumb-color",
+    "--brick-slider-thumb-size",
+    "--brick-slider-track-color",
+    "--brick-slider-track-size",
   ],
 };
 
@@ -4957,6 +5038,7 @@ componentDocumentationContracts.toolbar = {
   exportSource: "src/components/toolbar/index.ts",
   css: "src/components/toolbar/toolbar.css",
   exports: [
+    "ToolbarGroup", "ToolbarGroupProps", "ToolbarInput", "ToolbarInputProps",
     "Toolbar",
     "ToolbarButton",
     "ToolbarButtonProps",
@@ -4976,8 +5058,7 @@ componentDocumentationContracts.toolbar = {
     "ToolbarVariant",
   ],
   unions: {
-    ToolbarSize: ["sm", "md", "lg"],
-    ToolbarVariant: ["plain", "soft", "outline"],
+    ToolbarVariant: ["plain", "soft", "outline", "surface"],
   },
   documentedValues: {
     tone: ["accent", "neutral"],
@@ -4992,11 +5073,6 @@ componentDocumentationContracts.toolbar = {
     "--brick-toolbar-radius",
     "--brick-toolbar-padding",
     "--brick-toolbar-gap",
-    "--brick-toolbar-item-size",
-    "--brick-toolbar-item-padding-inline",
-    "--brick-toolbar-item-radius",
-    "--brick-toolbar-item-background",
-    "--brick-toolbar-item-selected-background",
     "--brick-toolbar-separator-color",
   ],
 };
@@ -5027,6 +5103,7 @@ componentDocumentationContracts.collapsible = {
   defaults: { variant: "plain", size: "md" },
   dataAttributes: ["data-size", "data-slot", "data-variant"],
   publicTokens: [
+    "--brick-collapsible-indicator-color",
     "--brick-collapsible-background",
     "--brick-collapsible-border-color",
     "--brick-collapsible-trigger-background",
@@ -5068,9 +5145,15 @@ componentDocumentationContracts.accordion = {
     "AccordionVariant",
     "AccordionSize",
     "AccordionIndicatorPlacement",
+    "AccordionRootProviderProps",
+    "useAccordion",
+    "useAccordionContext",
+    "useAccordionItemContext",
+    "UseAccordionOptions",
+    "UseAccordionReturn",
   ],
   unions: {
-    AccordionVariant: ["plain", "ghost", "soft", "outline"],
+    AccordionVariant: ["plain", "ghost", "soft", "outline", "subtle", "enclosed"],
     AccordionSize: ["sm", "md", "lg", "xl"],
     AccordionIndicatorPlacement: ["start", "end"],
   },
@@ -5082,6 +5165,8 @@ componentDocumentationContracts.accordion = {
     "data-variant",
   ],
   publicTokens: [
+    "--brick-accordion-expanded-background",
+    "--brick-accordion-indicator-color",
     "--brick-accordion-background",
     "--brick-accordion-border-color",
     "--brick-accordion-divider-color",
@@ -5104,62 +5189,19 @@ componentDocumentationContracts.pagination = {
   source: "src/components/pagination/Pagination.tsx",
   exportSource: "src/components/pagination/index.ts",
   css: "src/components/pagination/pagination.css",
-  exports: [
-    "Pagination",
-    "PaginationRoot",
-    "PaginationList",
-    "PaginationPrevious",
-    "PaginationItems",
-    "PaginationItem",
-    "PaginationEllipsis",
-    "PaginationNext",
-    "PaginationRootProps",
-    "PaginationListProps",
-    "PaginationPreviousProps",
-    "PaginationItemsProps",
-    "PaginationItemProps",
-    "PaginationEllipsisProps",
-    "PaginationNextProps",
-    "PaginationVariant",
-    "PaginationSize",
-  ],
-  unions: {
-    PaginationVariant: ["plain", "soft", "outline"],
-    PaginationSize: ["sm", "md", "lg"],
-  },
-  defaults: { variant: "plain", size: "md" },
-  dataAttributes: ["data-size", "data-slot", "data-variant"],
-  publicTokens: [
-    "--brick-pagination-root-background",
-    "--brick-pagination-root-border-color",
-    "--brick-pagination-root-radius",
-    "--brick-pagination-root-padding",
-    "--brick-pagination-list-gap",
-    "--brick-pagination-list-overflow-padding",
-    "--brick-pagination-control-min-size",
-    "--brick-pagination-control-inline-padding",
-    "--brick-pagination-control-radius",
-    "--brick-pagination-control-foreground",
-    "--brick-pagination-control-background",
-    "--brick-pagination-control-border-color",
-    "--brick-pagination-control-hover-background",
-    "--brick-pagination-control-pressed-background",
-    "--brick-pagination-current-background",
-    "--brick-pagination-current-foreground",
-    "--brick-pagination-current-border-color",
-    "--brick-pagination-current-hover-background",
-    "--brick-pagination-current-pressed-background",
-    "--brick-pagination-disabled-foreground",
-    "--brick-pagination-focus-ring",
-    "--brick-pagination-ellipsis-foreground",
-    "--brick-pagination-icon-size",
-    "--brick-pagination-transition-duration",
-    "--brick-pagination-font-family",
-    "--brick-pagination-font-size",
-    "--brick-pagination-font-weight",
-    "--brick-pagination-line-height",
-    "--brick-pagination-letter-spacing",
-  ],
+  exports: ["Pagination", "PaginationRoot", "PaginationRootProvider", "PaginationList",
+    "PaginationPrevious", "PaginationNext", "PaginationFirst", "PaginationLast",
+    "PaginationItems", "PaginationItem", "PaginationEllipsis", "PaginationPageText",
+    "usePagination", "usePaginationContext", "PaginationRootProps", "PaginationRootProviderProps",
+    "PaginationListProps", "PaginationPreviousProps", "PaginationNextProps",
+    "PaginationFirstProps", "PaginationLastProps", "PaginationItemsProps", "PaginationItemProps",
+    "PaginationEllipsisProps", "PaginationPageTextProps", "PaginationPageTextFormatDetails",
+    "PaginationVariant", "PaginationSize", "PaginationIds", "UsePaginationProps", "UsePaginationReturn"],
+  defaults: { variant: "ghost", selectedVariant: "outline", size: "md", tone: "neutral" },
+  defaultExpressions: { variant: 'group.variant ?? "ghost"', selectedVariant: 'root.selectedVariant ?? "outline"', size: 'group.size ?? "md"', tone: 'group.tone ?? "neutral"' },
+  aliases: { PaginationVariant: "ButtonVariant", PaginationSize: "ButtonSize" },
+  dataAttributes: ["data-slot"],
+  publicTokens: ["--brick-pagination-list-gap"],
 };
 
 componentDocumentationContracts.carousel = {
@@ -5168,6 +5210,12 @@ componentDocumentationContracts.carousel = {
   css: "src/components/carousel/carousel.css",
   exports: [
     "Carousel",
+    "CarouselRootProvider", "CarouselPropsProvider", "CarouselContext",
+    "CarouselIndicators", "CarouselProgressText", "CarouselAutoplayIndicator",
+    "useCarousel", "useCarouselContext", "UseCarouselProps",
+    "CarouselRootProviderProps", "CarouselPropsProviderProps", "CarouselRecipeProps",
+    "CarouselIndicatorsProps", "CarouselProgressTextProps", "CarouselAutoplayIndicatorProps",
+    "CarouselTone", "CarouselRadius", "CarouselPageChangeDetails", "CarouselTranslations",
     "CarouselRoot",
     "CarouselViewport",
     "CarouselTrack",
@@ -5201,12 +5249,18 @@ componentDocumentationContracts.carousel = {
   unions: {
     CarouselSize: ["sm", "md", "lg"],
     CarouselControlPlacement: ["overlay", "outside"],
-    CarouselControlSize: ["xs", "sm", "md", "lg", "xl"],
+    CarouselControlSize: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
     CarouselControlShape: ["rounded", "circle"],
-    CarouselControlVariant: ["solid", "soft", "outline", "ghost"],
+    CarouselControlVariant: ["solid", "soft", "subtle", "surface", "outline", "ghost", "plain"],
     CarouselNavigationVisibility: ["always", "interaction"],
     CarouselPickerVariant: ["surface", "bare"],
   },
+  unionSources: {
+    CarouselControlSize: { path: "src/components/button/Button.tsx", type: "ButtonSize", importPath: "../button/Button.js" },
+    CarouselControlVariant: { path: "src/components/button/Button.tsx", type: "ButtonVariant", importPath: "../button/Button.js" },
+  },
+  inheritedDataAttributes: ["data-touch-navigation"],
+  defaultExpressions: { size: 'size: "md" as const', controlPlacement: 'controlPlacement: "overlay" as const', controlShape: 'controlShape: "circle" as const', controlVariant: 'controlVariant: "soft" as const' },
   defaults: {
     size: "md",
     controlPlacement: "overlay",
@@ -5269,7 +5323,10 @@ componentDocumentationContracts["multi-select"] = {
 };
 componentDocumentationContracts["multi-select"].unions.MultiSelectVariant = [
   "outline",
+  "surface",
   "soft",
+  "subtle",
+  "ghost",
   "underline",
 ];
 delete componentDocumentationContracts["multi-select"].unions.MultiSelectSize;
@@ -5317,11 +5374,10 @@ componentDocumentationContracts.combobox = {
     "ComboboxShape",
   ],
   unions: {
-    ComboboxVariant: ["outline", "soft", "underline"],
     ComboboxShape: ["sharp", "rounded", "pill"],
   },
-  aliases: { ComboboxSize: "ControlSize" },
-  documentedValues: { size: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"] },
+  aliases: { ComboboxSize: "ControlSize", ComboboxVariant: "FieldVariant" },
+  documentedValues: { size: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"], variant: ["outline", "surface", "soft", "subtle", "ghost", "plain", "underline"] },
   defaults: {
     fullWidth: true,
     shape: "rounded",
@@ -5354,6 +5410,7 @@ componentDocumentationContracts["number-input"] = {
   exportSource: "src/components/number-input/index.ts",
   css: "src/components/number-input/number-input.css",
   exports: [
+    "NumberInputGroup", "NumberInputGroupProps", "NumberInputElement", "NumberInputElementProps",
     "NumberInput",
     "NumberInputControl",
     "NumberInputControlProps",
@@ -5374,7 +5431,7 @@ componentDocumentationContracts["number-input"] = {
     "NumberInputLayout",
   ],
   unions: {
-    NumberInputVariant: ["outline", "soft", "underline"],
+    NumberInputVariant: ["outline", "surface", "soft", "subtle", "ghost", "plain", "underline"],
     NumberInputShape: ["sharp", "rounded", "pill"],
     NumberInputStepperVisibility: ["always", "hover"],
     NumberInputLayout: ["field", "stepper"],
@@ -5434,10 +5491,12 @@ componentDocumentationContracts["pin-input"] = {
     "PinInputValueChangeDetails", "PinInputInvalidDetails", "PinInputType",
   ],
   unions: {
-    PinInputVariant: ["outline", "soft", "underline"],
+    PinInputVariant: ["outline", "surface", "soft", "subtle", "ghost", "plain", "underline"],
+    PinInputTone: ["neutral", "accent"],
     PinInputShape: ["sharp", "rounded"],
     PinInputLayout: ["separated", "attached"],
   },
+  unionSources: { PinInputVariant: { type: "FieldVariant", path: "src/components/_field-variant/FieldVariant.ts", importPath: "../_field-variant/FieldVariant.js" } },
   aliases: { PinInputSize: "ControlSize" },
   documentedValues: { size: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"] },
   defaults: {
@@ -5475,7 +5534,7 @@ componentDocumentationContracts["password-toggle-field"] = {
     "PasswordToggleFieldShape",
   ],
   unions: {
-    PasswordToggleFieldVariant: ["outline", "soft", "underline"],
+    PasswordToggleFieldVariant: ["outline", "surface", "soft", "subtle", "ghost", "plain", "underline"],
     PasswordToggleFieldShape: ["sharp", "rounded", "pill"],
   },
   aliases: { PasswordToggleFieldSize: "ControlSize" },
@@ -5495,3 +5554,16 @@ componentDocumentationContracts["password-toggle-field"] = {
   ],
   publicTokens: ["--brick-password-height", "--brick-password-radius"],
 };
+
+// Surface effects are a shared visual contract on these painted roots only.
+for (const [owner, opacity, author] of [["surface", "0.9", "surface"], ["app-bar", "0.88", "appbar"], ["bottom-navigation", "0.86", "bottomnavigation"]]) {
+  const contract = componentDocumentationContracts[owner];
+  contract.cssSources = [...(contract.cssSources ?? []), "src/components/_surface-effects/surface-effects.css"];
+  const lengthConstraint = { kind: "length", minimum: 0, units: ["px", "rem", "em"], allowUnitlessZero: true };
+  contract.themeInputs = { ...contract.themeInputs,
+    [`--brick-${owner}-translucent-opacity`]: { type: "number", fallback: opacity, supportedRange: "finite number from 0 through 1", authorPath: `${author}.translucent.opacity`, constraints: { kind: "number", minimum: 0, maximum: 1 } },
+    [`--brick-${owner}-translucent-blur`]: { type: "dimension", fallback: "0.75rem", supportedRange: "non-negative px/rem/em length or sm/md/lg", authorPath: `${author}.translucent.blur`, constraints: lengthConstraint, namedValues: { sm: "--brick-blur-sm", md: "--brick-blur-md", lg: "--brick-blur-lg" } },
+    [`--brick-${owner}-translucent-saturation`]: { type: "number", fallback: "1.15", supportedRange: "non-negative finite number", authorPath: `${author}.translucent.saturation`, constraints: { kind: "number", minimum: 0 } },
+  };
+  contract.publicTokens = [...new Set([...contract.publicTokens, ...Object.keys(contract.themeInputs), ...["opacity", "blur", "saturation", "border-color", "border-opacity"].map(name => `--brick-surface-effect-${name}`)])];
+}

@@ -15,7 +15,8 @@ Set an appearance on the document or any subtree with the DOM contract:
 </section>
 ```
 
-Remove the attribute to return to the system preference.
+Remove the document-root attribute to return to the system preference. Removing
+a subtree attribute inherits the nearest ancestor scope instead.
 
 Brick also exports a typed, server-safe composition utility for local scopes:
 
@@ -41,6 +42,11 @@ Appearance adds no background, spacing, state, persistence, toggle, or React
 provider. Use Surface when the region also needs neutral paint; use Appearance
 when only the semantic-token boundary is needed or when another component
 already owns the visual region.
+
+Explicit Appearance hosts establish primary foreground at low specificity.
+Native HTML inherits that color; explicit colors and component recipes keep
+precedence. Inherit leaves ancestor foreground intact. Appearance does not
+force colors onto every descendant or supply a background for transparent text.
 
 The complete stylesheet and modular `core.css` apply the active semantic
 canvas, primary text color, body family, body size, and body line height to the

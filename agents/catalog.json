@@ -2,16 +2,46 @@
   "schema": "flowstack.agent-catalog.v1",
   "package": "@flowstack-ui/brick",
   "layer": "brick",
-  "packageGuideIds": [
-    "interface-composition",
-    "layer-selection"
-  ],
+  "packageGuideIds": ["interface-composition", "layer-selection"],
   "classifications": [
+    {
+      "surface": "./selection",
+      "classification": "utility",
+      "documentation": "docs/guides/record-selection.md",
+      "reason": "Atom-backed record state and checkbox binding without rendered anatomy or CSS."
+    },
+    {
+      "surface": "./action-delegate",
+      "classification": "utility",
+      "documentation": "docs/guides/record-selection.md",
+      "reason": "Atom-backed semantic-preserving event delegation without a styled host or CSS entry."
+    },
     {
       "surface": "./radius",
       "classification": "utility",
       "documentation": "docs/guides/radius.md",
       "reason": "Shared token-only radius type; no independently rendered component."
+    },
+    {
+      "surface": ".#SurfaceTreatment",
+      "classification": "utility",
+      "sourceOwner": "src/components/_surface-effects",
+      "documentation": "docs/guides/surface-effects.md",
+      "reason": "Shared treatment selection on painted owners."
+    },
+    {
+      "surface": ".#BackdropBlur",
+      "classification": "utility",
+      "sourceOwner": "src/components/_surface-effects",
+      "documentation": "docs/guides/surface-effects.md",
+      "reason": "Shared named and precise blur values."
+    },
+    {
+      "surface": ".#Radius",
+      "classification": "utility",
+      "sourceOwner": "src/components/_radius",
+      "documentation": "docs/guides/radius.md",
+      "reason": "Shared public radius vocabulary for component boundary owners."
     },
     {
       "surface": "./date-value",
@@ -80,6 +110,14 @@
       "reason": "The optional reset stylesheet is a delivery surface, not a component owner."
     },
     {
+      "surface": "./badge#NotificationBadge",
+      "classification": "component",
+      "ownerId": "notification-badge",
+      "sourceOwner": "badge",
+      "documentation": "docs/components/notification-badge/README.md",
+      "reason": "NotificationBadge has an independently selectable contract while sharing Badge's implementation module and subpath."
+    },
+    {
       "surface": "./badge#NotificationBadgeProps",
       "classification": "compound-part",
       "ownerId": "notification-badge",
@@ -104,47 +142,6 @@
       "reason": "Public size type for the Notification Badge owner."
     },
     {
-      "surface": "./selection",
-      "classification": "utility",
-      "documentation": "docs/guides/record-selection.md",
-      "reason": "Atom-backed record state and checkbox binding without rendered anatomy or CSS."
-    },
-    {
-      "surface": "./action-delegate",
-      "classification": "utility",
-      "documentation": "docs/guides/record-selection.md",
-      "reason": "Atom-backed semantic-preserving event delegation without a styled host or CSS entry."
-    },
-    {
-      "surface": ".#SurfaceTreatment",
-      "classification": "utility",
-      "sourceOwner": "src/components/_surface-effects",
-      "documentation": "docs/guides/surface-effects.md",
-      "reason": "Shared treatment selection on painted owners."
-    },
-    {
-      "surface": ".#BackdropBlur",
-      "classification": "utility",
-      "sourceOwner": "src/components/_surface-effects",
-      "documentation": "docs/guides/surface-effects.md",
-      "reason": "Shared named and precise blur values."
-    },
-    {
-      "surface": ".#Radius",
-      "classification": "utility",
-      "sourceOwner": "src/components/_radius",
-      "documentation": "docs/guides/radius.md",
-      "reason": "Shared public radius vocabulary for component boundary owners."
-    },
-    {
-      "surface": "./badge#NotificationBadge",
-      "classification": "component",
-      "ownerId": "notification-badge",
-      "sourceOwner": "badge",
-      "documentation": "docs/components/notification-badge/README.md",
-      "reason": "NotificationBadge has an independently selectable contract while sharing Badge's implementation module and subpath."
-    },
-    {
       "surface": ".#SpacingValue",
       "classification": "utility",
       "sourceOwner": "src/components/_spacing-value",
@@ -153,11 +150,6 @@
     }
   ],
   "exclusions": [
-    {
-      "pattern": "src/components/_action-spinner/**",
-      "visibility": "source-only",
-      "reason": "Shared visual recipe for action controls; it exports no JavaScript surface."
-    },
     {
       "pattern": "src/components/_field-variant/**",
       "visibility": "source-only",
@@ -202,6 +194,11 @@
       "pattern": "src/components/_action-menu/**",
       "visibility": "source-only",
       "reason": "Shared visual recipe for public menu owners; it exports no JavaScript surface."
+    },
+    {
+      "pattern": "src/components/_action-spinner/**",
+      "visibility": "source-only",
+      "reason": "Shared visual recipe for action controls; it exports no JavaScript surface."
     },
     {
       "pattern": "src/components/_control-size/**",

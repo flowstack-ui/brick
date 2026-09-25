@@ -6,30 +6,34 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 
 ## Decision order
 
-1. Keep standalone action focus outside by default; use Button or IconButton focusRing inside at intentional flush clipping boundaries. Do not add protective layout gutters to compensate for a compound component focus defect, remove scrolling, or override focus management in consumer CSS.
-2. Map the page into landmarks, bounded regions, layout relationships, content, navigation, actions, media, and responsive changes.
-3. Choose the Brick owner for each relationship and read every selected component guide before implementation.
-4. Compose from the outside inward: AppBar or page landmark, Section, Container, Grid or Stack, Surface or Card, then content and controls.
-5. Decide how each child participates in its parent: content-sized, fixed, automatic, proportional, placed, stretched, or deliberately constrained.
-6. Follow the customization order completely: component owner, supported props, semantic theme tokens, component tokens, public parts, and only then a narrow stable-hook escape hatch.
-7. Audit responsive behavior, accessibility, CSS delivery, and native fallbacks before treating the composition as complete.
+1. For secondary action rows aligned to the logical start of prose, prefer outline Buttons so their padded boundary reads intentionally in LTR and RTL. Ghost remains appropriate for intentional toolbar, icon and contextual actions; do not remove control padding or use negative margins to repair apparent text indentation.
+2. Keep standalone action focus outside by default; use Button or IconButton focusRing inside at intentional flush clipping boundaries. Do not add protective layout gutters to compensate for a compound component focus defect, remove scrolling, or override focus management in consumer CSS.
+3. Map the page into landmarks, bounded regions, layout relationships, content, navigation, actions, media, and responsive changes.
+4. Choose the Brick owner for each relationship and read every selected component guide before implementation.
+5. Compose from the outside inward: AppBar or page landmark, Section, Container, Grid or Stack, Surface or Card, then content and controls.
+6. Decide how each child participates in its parent: content-sized, fixed, automatic, proportional, placed, stretched, or deliberately constrained.
+7. Follow the customization order completely: component owner, supported props, semantic theme tokens, component tokens, public parts, and only then a narrow stable-hook escape hatch.
+8. Audit responsive behavior, accessibility, CSS delivery, and native fallbacks before treating the composition as complete.
 
 ## Selection map
 
+- **single-line input with masks, external segments or form registration:** use Input with Field; InputAddon and Group for external segments; optional application integrations. Follow docs/guides/input-integrations.md. React Hook Form, use-mask-input and react-payment-inputs are not bundled Input capabilities. Preserve refs and handlers, use one value owner, qualify caret/reset/submission, and never present card formatting as payment processing. Internal adornments can contain independently named controls; external segments are noninteractive.
+- **independently selectable rich form options:** use CheckboxCard with CheckboxGroup and Fieldset for related options. Compose exactly one HiddenInput per whole-label card. Keep all descendants noninteractive; use ordinary Card with a separate Checkbox for record actions. Use RadioCard for mutually exclusive choices. Grid and Stack own group layout.
+- **select records independently from opening them:** use Table, List or Card with Checkbox, useSelection and optional ActionDelegate. Preserve native host semantics. selected is presentation only. Bind useSelectionCheckbox to standalone Checkbox or Checkbox.Control, never the compound Checkbox.Root wrapper. Give each record a real named primary link or button; optional ActionDelegate forwards background clicks without turning the host into a button. Keep secondary controls independent. The application owns page scope, retained IDs, sorting, filtering, confirmation and focus recovery. Use DataGrid only when its cell-navigation model is needed.
 - **date entry with optional calendar selection:** use DateInput, Calendar and DatePicker. Use DatePicker for a synchronized input and popup instead of wiring separate uncontrolled roots. Keep booking rules and translations in the application. Multiple mode uses ValueText plus HiddenInput, not segmented entry.
 - **shared resizable pane allocation:** use Splitter. Declare stable IDs and adjacent named resize triggers. Keep scrolling and panel paint with their separate owners.
 - **ordered interactive workflow progress:** use Steps. Compose NextTrigger and PrevTrigger with Button using asChild. Use List, Square, Surface, and text for static numbered instructions; do not add workflow semantics just for connected numbered artwork.
 - **page width and gutters:** use Container. Do not reproduce max-width and inline padding on every section.
 - **major page-region rhythm:** use Section. Keep paint in Surface, width and gutters in Container, and local child relationships in Stack or Grid.
 - **row or column relationship:** use HStack, VStack, or responsive Stack. Use fixed-axis conveniences when the axis stays fixed and Stack when the same content changes axis at a Brick breakpoint.
-- **child flex allocation:** use Stack.Item. Choose content-sized, fixed, automatic, or proportional growth before writing flex CSS.
+- **child flex allocation:** use Stack.Item. Choose recipes or explicit grow/shrink/basis, order and logical auto margins before writing flex CSS. Root supplies reverse directions, independent gaps and multiline alignment. Preserve meaningful DOM and keyboard order.
 - **child grid participation:** use Grid.Item. Use spans, placement, or self-alignment; keep a real wrapper when it establishes the participation box and use asChild only when the child should be that box.
 - **local logical size constraint:** use Frame. Use only for inline/block size or min/max constraints; keep parent participation on the owning layout Item and overflow in ScrollArea.
 - **two-axis centering or equal geometry:** use Center, Square, or Circle. Choose Square or Circle for one explicit equal size that must not shrink under flex pressure; compose Surface for paint and Icon for authored SVG sizing.
 - **overlapping depth relationship:** use ZStack. Prefer Surface media anatomy for ordinary media, scrim, and foreground compositions.
 - **track-based responsive layout:** use Grid. Use Stack when only one axis matters.
 - **visual region:** use Surface or Card. Use Card for titled or actionable contained content and Surface for a general visual boundary.
-- **local light or dark semantic-token boundary:** use Appearance. Pass exactly one existing host; it may contain any number of descendants, and Appearance adds no paint, layout, or wrapper.
+- **local light or dark semantic-token boundary:** use Appearance. Pass exactly one existing host; it may contain any number of descendants, and Appearance supplies primary foreground on explicit scopes but adds no background, layout, or wrapper.
 - **brand or content image:** use Image. Keep alt text and fallback behavior intentional.
 - **one of several peer campaigns or authored content regions:** use Carousel. Keep invariant evidence outside; let each Slide own a complete Surface when its media and message belong together.
 - **site navigation:** use NavigationMenu or NavList. Use NavigationMenu for disclosure navigation and NavList for persistent route lists.
@@ -41,6 +45,7 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 
 ## Rules
 
+- **MUST:** Use Show when for wrapper-free conditional rendering and Show/Hide from for mounted CSS visibility. Do not mix modes or infer authorization from hiding. Use responsive asChild only on one host forwarding props and refs; visible child display is preserved.
 - **MUST:** Choose focused public owners and omit redundant props only after checking component defaults and parent layout. Consider documented asChild composition to avoid unnecessary hosts, verifying refs, semantics and style precedence. Do not assume a universal styling-prop API; propose shared props only from repeated, qualified composition gaps.
 - **MUST:** Assign page structure to Brick components before writing element-level CSS.
 - **MUST:** Use Section's named responsive rhythm for major page regions; use as=div when spacing is needed without thematic section semantics.
@@ -74,6 +79,8 @@ Build complete interfaces from Brick's structural, content, navigation, action, 
 - **SHOULD:** Classify repeated purposeful sections as Block candidates and repeated page arrangements as Blueprint candidates only after real reuse evidence.
 - **SHOULD:** Split long product compositions by stable responsibility—authored content, repeated item, invariant supporting region, and outer assembly—without pretending those local modules are reusable Brick components.
 - **MUST:** Comment non-obvious ownership, accessibility order, breakpoint, sizing, and browser-lifecycle constraints; do not add comments that only translate a component name or prop into prose.
+- **MUST:** Let the optional Brick reset supply theme-aware focus-visible for otherwise unstyled targets. Component-specific focus owners override that low-priority fallback; do not add generic consumer focus outlines to every descendant or remove focus on passive scrolling.
+- **MUST:** Use Float for out-of-flow edge attachment and Float.Anchor for an unpainted containing block. Keep ZStack for size-contributing layers, Bleed for crossing padding and NotificationBadge for counts/dots. Keep clipped targets and floated content as siblings; preserve accessible meaning and focus.
 
 ## Customization order
 
@@ -146,3 +153,4 @@ Emit this record for every native/framework fallback or direct stable-hook decla
 - `alert`
 - `empty-state`
 - `spinner`
+- `float`

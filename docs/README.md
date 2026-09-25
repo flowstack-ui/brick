@@ -1,5 +1,7 @@
 # Brick documentation
 
+- [Float](components/float/README.md) — static edge attachment.
+
 - [QrCode](components/qr-code/README.md) — local QR sharing and image export.
 - [Table of Contents](components/table-of-contents/README.md) — document navigation and reading position.
 
@@ -65,6 +67,9 @@ This directory is the public documentation authority for
   navigation for bounded result sets
 - [Carousel](components/carousel/README.md) — one-slide sequences with optional
   navigation, picker dots, touch scrolling, and controlled rotation
+
+### Utilities
+
 - [Checkmark](components/checkmark/README.md) — passive checked and
   indeterminate visual state
 - [Radiomark](components/radiomark/README.md) — passive circular selected-state
@@ -107,12 +112,15 @@ This directory is the public documentation authority for
   relationships
 - [Fieldset](components/fieldset/README.md) — native related-control grouping
 - [Input](components/input/README.md) — finished native single-line text entry
+- [InputAddon](components/input-addon/README.md) — external noninteractive input segments
+- [Input integrations](guides/input-integrations.md) — optional form, mask and card formatting libraries
 - [Number Input](components/number-input/README.md) — numeric entry with bounded stepping
 - [Pin Input](components/pin-input/README.md) — segmented one-time-code entry
 - [Password Toggle Field](components/password-toggle-field/README.md) — password entry with visibility control
 - [Textarea](components/textarea/README.md) — finished native multi-line text
 - [Radio Group](components/radio-group/README.md) — finished visible single-selection choices
 - [Radio Card](components/radio-card/README.md) — rich whole-card single-selection choices
+- [CheckboxCard](components/checkbox-card/README.md) — rich independent option cards
 - [Segment Group](components/segment-group/README.md) — compact one-of-many modes with a moving indicator
 - [Switch](components/switch/README.md) — immediate binary settings
   entry with manual or bounded automatic sizing and optional character count
@@ -268,11 +276,4 @@ Every released component owns one folder containing its public `README.md` and
 - [OverlayManager](components/overlay-manager/README.md) — keyed imperative overlay orchestration.
 - [Marquee](./components/marquee/README.md) — continuous motion, safe replicas and pause controls.
 - [TagsInput](components/tags-input/README.md) — multi-value entry with validation and suggestions.
-
-- [Float](components/float/README.md) — static edge attachment.
-
-- [InputAddon](components/input-addon/README.md) — external noninteractive input segments
-
-- [CheckboxCard](components/checkbox-card/README.md) — rich independent option cards
-
 - [ToggleTip](components/toggle-tip/README.md)
