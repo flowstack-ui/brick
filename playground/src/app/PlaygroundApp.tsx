@@ -1,4 +1,5 @@
 import { useEffect, useState, type ComponentType } from "react";
+import { CheckboxCardPage, checkboxCardScenarios } from "../components/checkbox-card/CheckboxCardPage.js";
 import { StatPage, statScenarios } from "../components/stat/StatPage.js";
 import { QrCodePage, qrCodeScenarios } from "../components/qr-code/QrCodePage.js";
 import { TableOfContentsPage, tableOfContentsScenarios } from "../components/table-of-contents/TableOfContentsPage.js";
@@ -107,6 +108,7 @@ import {
   popoverScenarios,
 } from "../components/popover/PopoverPage.js";
 import { InputPage, inputScenarios } from "../components/input/InputPage.js";
+import { InputAddonPage, inputAddonScenarios } from "../components/input-addon/InputAddonPage.js";
 import {
   NumberInputPage,
   numberInputScenarios,
@@ -193,6 +195,7 @@ import {
   codeBlockScenarios,
 } from "../components/code-block/CodeBlockPage.js";
 import { StackPage, stackScenarios } from "../components/stack/StackPage.js";
+import { FloatPage, floatScenarios } from "../components/float/FloatPage.js";
 import { GroupPage, groupScenarios } from "../components/group/GroupPage.js";
 import {
   DataListPage,
@@ -400,6 +403,7 @@ const playgroundModules = {
     scenarios: checkboxGroupScenarios,
   },
   checkbox: { Page: CheckboxPage, scenarios: checkboxScenarios },
+  "checkbox-card": { Page: CheckboxCardPage, scenarios: checkboxCardScenarios },
   chip: { Page: ChipPage, scenarios: chipScenarios },
   "code-block": { Page: CodeBlockPage, scenarios: codeBlockScenarios },
   code: { Page: CodePage, scenarios: codeScenarios },
@@ -442,6 +446,7 @@ const playgroundModules = {
   icon: { Page: IconPage, scenarios: iconScenarios },
   image: { Page: ImagePage, scenarios: imageScenarios },
   input: { Page: InputPage, scenarios: inputScenarios },
+  "input-addon": { Page: InputAddonPage, scenarios: inputAddonScenarios },
   kbd: { Page: KbdPage, scenarios: kbdScenarios },
   "link-box": { Page: LinkBoxPage, scenarios: linkBoxScenarios },
   link: { Page: LinkPage, scenarios: linkScenarios },
@@ -466,6 +471,7 @@ const playgroundModules = {
     scenarios: passwordToggleFieldScenarios,
   },
   popover: { Page: PopoverPage, scenarios: popoverScenarios },
+  "toggle-tip": { Page: ToggleTipPage, scenarios: toggleTipScenarios },
   "progress-circle": {
     Page: ProgressCirclePage,
     scenarios: progressCircleScenarios,
@@ -489,6 +495,7 @@ const playgroundModules = {
   "skip-link": { Page: SkipLinkPage, scenarios: skipLinkScenarios },
   slider: { Page: SliderPage, scenarios: sliderScenarios },
   stack: { Page: StackPage, scenarios: stackScenarios },
+  float: { Page: FloatPage, scenarios: floatScenarios },
   status: { Page: StatusPage, scenarios: statusScenarios },
   surface: { Page: SurfacePage, scenarios: surfaceScenarios },
   "swipeable-item": {
@@ -591,7 +598,7 @@ function usePlaygroundPath() {
 }
 
 import { InlineExampleEnvironment } from "../preview/ExampleEnvironment.js";
-import { aspectRatioSections } from "../components/aspect-ratio/sections.js";
+import { docsRoutes } from "./docs-routes.js";
 import { usePlaygroundSettings } from "../settings/PlaygroundSettingsProvider.js";
 import { settingsKeys } from "../settings/settings-model.js";
 
@@ -622,8 +629,8 @@ export function PlaygroundApp() {
 
   return (
     <PlaygroundShell entry={entry} scenarios={scenarios} skipLink={skipLink}
-      tableOfContents={entry.id === "aspect-ratio" && new URLSearchParams(window.location.search).get("qualification") !== "1" ? aspectRatioSections : undefined}
-      editPageHref={entry.id === "aspect-ratio" ? "https://github.com/flowstack-ui/brick/edit/main/playground/src/components/aspect-ratio/AspectRatioDocumentation.tsx" : undefined}>
+      tableOfContents={new URLSearchParams(window.location.search).get("qualification") !== "1" ? docsRoutes[entry.id]?.sections : undefined}
+      editPageHref={docsRoutes[entry.id]?.editPageHref}>
       <InlineExampleEnvironment dir={settings.exampleDirection}><Page /></InlineExampleEnvironment>
     </PlaygroundShell>
   );
@@ -632,3 +639,4 @@ import { ActionBarPage, actionBarScenarios } from "../components/action-bar/Acti
 import { FloatingPanelPage, floatingPanelScenarios } from "../components/floating-panel/FloatingPanelPage.js";
 import { OverlayManagerPage, overlayManagerScenarios } from "../components/overlay-manager/OverlayManagerPage.js";
 import { MarqueePage, marqueeScenarios } from "../components/marquee/MarqueePage.js";
+import { ToggleTipPage, toggleTipScenarios } from "../components/toggle-tip/ToggleTipPage.js";

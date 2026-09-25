@@ -1,4 +1,5 @@
 export interface PlaygroundEntry {
+  kind?: "composition";
   category: PlaygroundCategory;
   description: string;
   id: string;
@@ -10,14 +11,18 @@ export type PlaygroundCategory =
   | "Accessibility"
   | "Actions"
   | "Data display"
+  | "Date and Time"
   | "Feedback"
   | "Forms"
+  | "Internationalization"
   | "Layout"
   | "Navigation"
   | "Overlays"
+  | "Utilities"
   | "Typography";
 
 export const componentEntries = [
+  { category: "Overlays", description: "Compact help opened by click or tap.", id: "toggle-tip", route: "/toggle-tip", title: "Toggle Tip" },
   { category: "Navigation", description: "Same-document section navigation and reading position.", id: "table-of-contents", route: "/table-of-contents", title: "Table of Contents" },
   { category: "Data display", description: "Local scannable SVG codes and image export.", id: "qr-code", route: "/qr-code", title: "QR Code" },
   { category: "Forms", description: "Create, edit and validate multiple short values.", id: "tags-input", route: "/tags-input", title: "Tags Input" },
@@ -29,9 +34,9 @@ export const componentEntries = [
   { category: "Feedback", description: "Empty content with consistent hierarchy and next steps.", id: "empty-state", route: "/empty-state", title: "Empty State" },
   { category: "Feedback", description: "Persistent inline feedback with semantic recipes.", id: "alert", route: "/alert", title: "Alert" },
   { category: "Feedback", description: "A theme-aware visual loading indicator.", id: "spinner", route: "/spinner", title: "Spinner" },
-  { category: "Forms", description: "Inline date selection.", id: "calendar", route: "/calendar", title: "Calendar" },
-  { category: "Forms", description: "Segmented date entry.", id: "date-input", route: "/date-input", title: "Date Input" },
-  { category: "Forms", description: "Date entry with a calendar popup.", id: "date-picker", route: "/date-picker", title: "Date Picker" },
+  { category: "Date and Time", description: "Inline date selection.", id: "calendar", route: "/calendar", title: "Calendar" },
+  { category: "Date and Time", description: "Segmented date entry.", id: "date-input", route: "/date-input", title: "Date Input" },
+  { category: "Date and Time", description: "Date entry with a calendar popup.", id: "date-picker", route: "/date-picker", title: "Date Picker" },
   { category: "Layout", description: "Resizable adjacent panels with accessible handles.", id: "splitter", route: "/splitter", title: "Splitter" },
   { category: "Actions", description: "Consistent dismissal action.", id: "close-button", route: "/close-button", title: "Close Button" },
   { category: "Actions", description: "Detached contextual selection actions.", id: "action-bar", route: "/action-bar", title: "Action Bar" },
@@ -46,63 +51,63 @@ export const componentEntries = [
     title: "Steps",
   },
   {
-    category: "Typography",
+    category: "Internationalization",
     description: "Inherited locale, direction, and Brick-owned interface text.",
     id: "locale-provider",
     route: "/locale-provider",
     title: "Locale Provider",
   },
   {
-    category: "Typography",
+    category: "Internationalization",
     description: "Locale-aware numeric, currency, and percentage output.",
     id: "format-number",
     route: "/format-number",
     title: "Format Number",
   },
   {
-    category: "Typography",
+    category: "Internationalization",
     description: "Locale-aware bit and byte quantities.",
     id: "format-byte",
     route: "/format-byte",
     title: "Format Byte",
   },
   {
-    category: "Layout",
+    category: "Utilities",
     description: "Typed wrapper-free collection rendering with a fallback.",
     id: "for",
     route: "/for",
     title: "For",
   },
   {
-    category: "Data display",
+    category: "Utilities",
     description: "Passive checked and indeterminate visual state.",
     id: "checkmark",
     route: "/checkmark",
     title: "Checkmark",
   },
   {
-    category: "Data display",
+    category: "Utilities",
     description: "Passive circular selected-state visual.",
     id: "radiomark",
     route: "/radiomark",
     title: "Radiomark",
   },
   {
-    category: "Layout",
-    description: "Explicit light, dark, and inherited semantic-token scopes.",
+    category: "Utilities",
+    description: "Light and dark token scopes with inherited native text color.",
     id: "appearance",
     route: "/appearance",
     title: "Appearance",
   },
   {
-    category: "Layout",
-    description: "CSS-only content shown from a fixed viewport breakpoint.",
+    category: "Utilities",
+    description: "Conditional rendering or CSS-only responsive visibility.",
     id: "show",
     route: "/show",
     title: "Show",
   },
   {
-    category: "Layout",
+    category: "Utilities",
     description: "CSS-only content hidden from a fixed viewport breakpoint.",
     id: "hide",
     route: "/hide",
@@ -271,14 +276,14 @@ export const componentEntries = [
   {
     category: "Actions",
     description:
-      "Manual linear ordering with drag, keyboard, touch, and direct movement.",
+      "Manual ordering across lists and grids with drag, keyboard, touch, and direct movement.",
     id: "reorderable-list",
     route: "/reorderable-list",
     title: "Reorderable List",
   },
   {
     category: "Data display",
-    description: "Native static tabular data with responsive containment.",
+    description: "Display data in rows and columns with native table semantics.",
     id: "table",
     route: "/table",
     title: "Table",
@@ -409,6 +414,13 @@ export const componentEntries = [
     id: "stack",
     route: "/stack",
     title: "Stack",
+  },
+  {
+    category: "Layout",
+    description: "Attach content to a container’s edges without taking up layout space.",
+    id: "float",
+    route: "/float",
+    title: "Float",
   },
   {
     category: "Layout",
@@ -689,6 +701,7 @@ export const componentEntries = [
     route: "/input",
     title: "Input",
   },
+  { category: "Forms", description: "External noninteractive input segments.", id: "input-addon", route: "/input-addon", title: "Input Addon" },
   {
     category: "Forms",
     description:
@@ -768,6 +781,7 @@ export const componentEntries = [
     route: "/checkbox",
     title: "Checkbox",
   },
+  { category: "Forms", description: "Rich independently selectable option cards.", id: "checkbox-card", route: "/checkbox-card", title: "Checkbox Card" },
   {
     category: "Forms",
     description: "Related checkbox selection and parent state.",
@@ -811,7 +825,7 @@ export type PlaygroundComponentId = (typeof componentEntries)[number]["id"];
 
 export function resolvePlaygroundEntry(path: string): PlaygroundEntry {
   return (
-    componentEntries.find(
+    playgroundEntries.find(
       (entry) => entry.route === (path === "/components/feed" ? "/feed" : path),
     ) ?? componentEntries[0]
   );
