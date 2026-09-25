@@ -681,7 +681,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.27.1"
+    "@flowstack-ui/atom": "0.27.2"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

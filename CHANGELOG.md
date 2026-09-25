@@ -15,8 +15,9 @@ Planned release: 0.3.0.
 - Add independent translucent surface controls to Surface, AppBar and BottomNavigation, preserving legacy blurred usage.
 - Introduce constrained theme-contract v2; upgrade to Theme 0.2.0 or a compatible dual-schema compiler before consuming this contract.
 
-- Adopt published Atom 0.27.1 as an exact dependency, replacing the local
-  qualification candidate with the registry-backed release.
+- Adopt published Atom 0.27.2 as an exact dependency, replacing the local
+  qualification candidate with the registry-backed release and preserving menu
+  trigger focus when native closing-content blur moves focus to the document body.
 
 - QR Code adds responsive display sizes, shared defaults, graphic unstyled,
   scoped IDs and host composition. Downloads use finished Button/IconButton
