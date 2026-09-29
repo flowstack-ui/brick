@@ -5,8 +5,10 @@ test("fractional sticky viewport edge contains no body ink", async ({ browser },
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2 });
   const page = await context.newPage();
   try {
-    for (const appearance of ["light", "dark"]) {
+    for (const { appearance, dir } of ["light", "dark"].flatMap(appearance =>
+      ["ltr", "rtl"].map(dir => ({ appearance, dir })))) {
       await page.goto(`http://127.0.0.1:4010/table?appearance=${appearance}#sticky`);
+      await page.locator("#sticky").evaluate((el, dir) => el.setAttribute("dir", dir), dir);
       const box = page.locator("#sticky .brick-table-container");
       await box.scrollIntoViewIfNeeded();
       const height = await box.evaluate(el => el.getBoundingClientRect().height);
@@ -24,7 +26,7 @@ test("fractional sticky viewport edge contains no body ink", async ({ browser },
         await hideInk.evaluate(el => el.parentNode?.removeChild(el));
         // Geometry assertions alone missed this raster leak. The top edge must
         // be identical whether text underneath the header is painted or not.
-        expect(before.equals(withoutBodyInk), `${appearance}, fractional offset ${fraction}`).toBe(true);
+        expect(before.equals(withoutBodyInk), `${appearance}/${dir}, fractional offset ${fraction}`).toBe(true);
         expect(rect.height).toBe(height);
       }
       await box.evaluate(el => { el.tabIndex = 0; });

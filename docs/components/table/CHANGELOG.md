@@ -9,7 +9,8 @@ Table follows the package version of `@flowstack-ui/brick`.
 - Added named sorting controls and optional TanStack Table integration examples.
 
 - Prevent fractional-coordinate body-text leakage at the top of Container-owned
-  sticky headers with a paint-only scroll-edge clip.
+  sticky headers with a paint-only scroll-edge clip and opaque compositing mask,
+  including quarter-pixel offsets on HiDPI WebKit.
 
 - Correct sticky header/column intersection stacking so scrolling cells cannot
   paint over pinned column headers.

@@ -8,6 +8,9 @@ Planned release: 0.3.0.
 
 ### Changed
 
+- Prevent Table body-text fragments leaking above sticky headers at fractional
+  HiDPI coordinates without changing layout, sticky offsets or content opacity.
+
 - Make CSS source maps package-relative and deterministically indexed while
   retaining original debug locations. Reject machine-specific source paths in
   package qualification.

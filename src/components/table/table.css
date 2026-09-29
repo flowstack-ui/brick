@@ -24,6 +24,10 @@
      edge, not the header geometry; no extra wrapper or layout inset is needed. */
   .brick-table-container:has(> .brick-table[data-sticky-header]) {
     clip-path: inset(1px 0 0);
+    /* Composite the clip with the scroll layer: WebKit otherwise leaks glyph
+       fragments at quarter-pixel offsets on HiDPI displays. Fully opaque, so
+       this changes neither table geometry nor visible content opacity. */
+    mask-image: linear-gradient(#000, #000);
   }
   .brick-table-container:has(> .brick-table[data-sticky-header]):focus-visible {
     outline-offset: calc(-1px - var(--brick-border-focus-width, 2px));

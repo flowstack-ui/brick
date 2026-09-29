@@ -135,9 +135,9 @@ content from showing through. Root `interactive` never adds activation or focus.
 With both sticky axes, Brick layers pinned body cells below headers and pinned
 header intersections above the remaining headers. No consumer z-index override
 is required for that combination.
-Container applies a one-CSS-pixel leading-edge paint clip when it directly
-contains a sticky-header Root. This prevents subpixel body-text leakage in
-WebKit without changing dimensions, padding or sticky offsets. Keyboard focus
+Container applies a one-CSS-pixel leading-edge paint clip and opaque compositing
+mask when it directly contains a sticky-header Root. This prevents subpixel
+body-text leakage in WebKit without changing dimensions, padding or sticky offsets. Keyboard focus
 is inset so the clip cannot cut off the theme focus indicator. As with other
 bounded vertical examples, use a line table and place any persistent outer
 border on the stable surrounding surface rather than the scrolling table.
