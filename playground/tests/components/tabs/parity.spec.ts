@@ -48,6 +48,17 @@ test("adding a selected tab keeps the indicator on its horizontal baseline", asy
     await page.goto("/tabs");
     const section = page.locator("#dynamic");
     await section.evaluate((node, dir) => node.setAttribute("dir", dir), dir);
+    // Route CSS can arrive after Atom's first measurement (an unstyled 18px
+    // trigger becomes 40px). Test insertion from the settled initial baseline,
+    // not that unrelated startup transition; keep insertion motion enabled.
+    await expect(section.getByRole("tab", { name: "Document 1", exact: true })).toHaveCSS("min-height", "40px");
+    await expect.poll(() => section.evaluate(section => {
+      const indicator = section.querySelector<HTMLElement>(".brick-tabs-indicator")!;
+      const selected = indicator.parentElement!.querySelector<HTMLElement>('[aria-selected="true"]')!;
+      const edge = indicator.getBoundingClientRect().bottom;
+      return Math.abs(edge - selected.getBoundingClientRect().bottom) < 0.5 &&
+        indicator.getAnimations().every(animation => animation.playState !== "running" && !animation.pending);
+    })).toBe(true);
     const samples = await section.evaluate(async section => {
       const indicator = section.querySelector<HTMLElement>(".brick-tabs-indicator")!;
       const baseline = indicator.getBoundingClientRect().y;
