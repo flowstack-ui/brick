@@ -9,7 +9,7 @@ const workflow = (name) =>
     "utf8",
   );
 
-test("scoped diagnostics build one current archive without enabling the full matrix", () => {
+test("scoped WebKit follow-up builds one current archive without enabling the full matrix", () => {
   const source = workflow("ci");
   const build = source.split("\n  release-diagnostic-build:")[1].split("\n  release-blocker-diagnostics:")[0];
   const diagnostic = source.split("\n  release-blocker-diagnostics:")[1].split("\n  package:")[0];
@@ -17,8 +17,11 @@ test("scoped diagnostics build one current archive without enabling the full mat
   assert.match(build, /npm run build:playground/);
   assert.match(build, /verify-release-diagnostic-archive.mjs.*--record/);
   assert.match(diagnostic, /needs: release-diagnostic-build/);
-  assert.equal((diagnostic.match(/- case:/g) ?? []).length, 5);
-  assert.match(diagnostic, /timeout-minutes: 12/);
+  assert.equal((diagnostic.match(/- case:/g) ?? []).length, 2);
+  assert.match(diagnostic, /case: avatar-mobile-webkit/);
+  assert.match(diagnostic, /case: toast-mobile-webkit/);
+  assert.match(diagnostic, /timeout-minutes: 16/);
+  assert.match(diagnostic, /timeout-minutes: 8/);
   assert.match(diagnostic, /name: brick-diagnostic-package/);
   assert.doesNotMatch(diagnostic, /run-id:|check:repository|test:browser:release/);
   assert.match(source.split("\n  package:")[1], /inputs.diagnostic != 'release-blockers'/);

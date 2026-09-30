@@ -44,13 +44,28 @@ function peopleAvatars(decorative = false) {
   ));
 }
 
-function Specimen({ children, label, compact = false }: { children: ReactNode; label: string; compact?: boolean }) {
-  return (
-    <EvidenceSurface className="avatar-group-specimen" inset={compact ? "none" : "md"}>
+function Specimen({
+  appearance,
+  children,
+  label,
+  compact = false,
+}: {
+  appearance?: "dark";
+  children: ReactNode;
+  label: string;
+  compact?: boolean;
+}) {
+  const surface = (
+    <EvidenceSurface
+      className="avatar-group-specimen"
+      data-flowstack-theme={appearance ? "qualification" : undefined}
+      inset={compact ? "none" : "md"}
+    >
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="avatar-group-specimen__preview">{children}</div>
     </EvidenceSurface>
   );
+  return appearance ? <Appearance value={appearance}>{surface}</Appearance> : surface;
 }
 
 export const avatarGroupScenarios = [
@@ -254,14 +269,12 @@ export function AvatarGroupEvidence() {
           columns={{ initial: 1, md: 2 }}
           data-testid="avatar-group-stress"
         >
-          <Appearance value="dark">
-            <Specimen label="dark appearance" compact>
-              <AvatarGroup size="xs" max={2} overflowLabel={(count) => `${count} more`}>
-                {peopleAvatars()}
-              </AvatarGroup>
-            </Specimen>
-          </Appearance>
-          <Specimen label="RTL source order" compact>
+          <Specimen appearance="dark" label="dark" compact>
+            <AvatarGroup size="xs" max={2} overflowLabel={(count) => `${count} more`}>
+              {peopleAvatars()}
+            </AvatarGroup>
+          </Specimen>
+          <Specimen label="RTL" compact>
             <div dir="rtl">
               <AvatarGroup
                 aria-label="مراجعون"
@@ -276,7 +289,7 @@ export function AvatarGroupEvidence() {
               </AvatarGroup>
             </div>
           </Specimen>
-          <Specimen label="localized overflow" compact>
+          <Specimen label="localized" compact>
             <AvatarGroup
               max={2}
               overflowLabel={(count) => `${count} مشاركين إضافيين`}

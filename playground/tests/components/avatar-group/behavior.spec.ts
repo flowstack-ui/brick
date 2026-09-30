@@ -153,6 +153,16 @@ test("narrow width and 200% text preserve containment", async ({ page }) => {
   await page.evaluate(() => {
     document.documentElement.style.fontSize = "200%";
   });
+  const stress = page.getByTestId("avatar-group-stress");
+  const specimens = stress.locator(".avatar-group-specimen");
+  await expect(specimens.first()).toHaveAttribute(
+    "data-brick-appearance",
+    "dark",
+  );
+  await expect(specimens.first()).toHaveAttribute(
+    "data-flowstack-theme",
+    "qualification",
+  );
   for (const group of await page
     .getByTestId("avatar-group-stress")
     .locator(".brick-avatar-group")
@@ -161,6 +171,25 @@ test("narrow width and 200% text preserve containment", async ({ page }) => {
     expect(box).not.toBeNull();
     expect(box!.x).toBeGreaterThanOrEqual(0);
     expect(box!.x + box!.width).toBeLessThanOrEqual(320.5);
+  }
+  const labels = stress.locator("[data-playground-specimen-label]");
+  await expect(labels).toHaveText(["dark", "RTL", "localized"]);
+  for (const label of await labels.all()) {
+    expect(
+      await label.evaluate(
+        (element) => element.scrollWidth <= element.clientWidth,
+      ),
+    ).toBe(true);
+    const labelBox = await label.boundingBox();
+    const specimenBox = await label
+      .locator("xpath=ancestor::*[contains(@class, 'avatar-group-specimen')]")
+      .boundingBox();
+    expect(labelBox).not.toBeNull();
+    expect(specimenBox).not.toBeNull();
+    expect(labelBox!.x).toBeGreaterThanOrEqual(specimenBox!.x);
+    expect(labelBox!.x + labelBox!.width).toBeLessThanOrEqual(
+      specimenBox!.x + specimenBox!.width,
+    );
   }
 });
 

@@ -62,20 +62,14 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && inputs.diagnostic == 'release-blockers'
     name: diagnostic (${{ matrix.case }})
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 16
     strategy:
       fail-fast: false
-      max-parallel: 5
+      max-parallel: 2
       matrix:
         include:
-          - case: avatar-firefox
-            engine: firefox
-          - case: avatar-webkit
-            engine: webkit
           - case: avatar-mobile-webkit
             engine: webkit
-          - case: toast-mobile-chromium
-            engine: chromium
           - case: toast-mobile-webkit
             engine: webkit
     steps:
@@ -103,7 +97,7 @@ jobs:
           tar -xzf "test-results/release-blockers/$DIAGNOSTIC_CASE/archive/flowstack-ui-brick-0.3.0.tgz" --strip-components=1 package/dist
       - name: Install the one diagnostic browser engine
         shell: bash
-        timeout-minutes: 5
+        timeout-minutes: 8
         env:
           DIAGNOSTIC_CASE: ${{ matrix.case }}
         run: npx playwright install --with-deps ${{ matrix.engine }} 2>&1 | tee "test-results/release-blockers/$DIAGNOSTIC_CASE/browser-install.log"
