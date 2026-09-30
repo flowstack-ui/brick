@@ -18,6 +18,7 @@ let count = options.count ?? 80;
 if (shard) count = Math.floor(count * shard[0] / shard[1]) - Math.floor(count * (shard[0] - 1) / shard[1]);
 if (shard && options.overBudget) count = 41;
 if (process.argv.includes("--list")) {
+  if (options.discoveryError) { console.log(JSON.stringify({errors:[{message:"missing packed dist"}]})); process.exit(1); }
   if (options.invalid) { console.log("invalid"); process.exit(0); }
   console.log(JSON.stringify({suites:[{specs:Array.from({length:count}, () => ({tests:[{}]}))}]}));
 } else if (options.outcome !== "missing") {

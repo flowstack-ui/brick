@@ -45,3 +45,19 @@ for (const outcome of ["passed", "missing", "flaky", "mismatch"]) {
     },
   );
 }
+
+test("failed discovery retains stdout diagnostics and launches no browser shards", () => {
+  withBrowserRunnerFixture({ discoveryError: true }, (cwd, env) => {
+    const result = spawnSync(process.execPath, [runner, "webkit"], { cwd, env, encoding: "utf8" });
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /missing packed dist/);
+    const releases = join(cwd, "test-results");
+    const directory = join(releases, readdirSync(releases)[0]);
+    const diagnostic = JSON.parse(readFileSync(join(directory, "inventory-1.json"), "utf8"));
+    assert.equal(diagnostic.status, 1);
+    assert.match(diagnostic.stdout, /missing packed dist/);
+    const summary = JSON.parse(readFileSync(join(directory, "summary.json"), "utf8"));
+    assert.equal(summary.status, "failed");
+    assert.deepEqual(summary.runs, []);
+  });
+});

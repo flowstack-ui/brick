@@ -73,3 +73,19 @@ test("publication waits for surface effects as well as all browser groups", () =
     /needs: \[validate, repository, browser, package-consumers, app-consumer, surface-effects\]/,
   );
 });
+
+for (const [name, jobs, archive] of [
+  ["ci", ["browser-pull-request-shards", "browser-main"], "brick-package"],
+  ["publish", ["browser"], "brick-release-package"],
+]) {
+  for (const job of jobs) {
+    test(`${name} ${job} restores the exact package before browser discovery`, () => {
+      const source = workflow(name);
+      const section = source.split(`\n  ${job}:`)[1].split(/\n  [a-z][a-z-]*:/)[0];
+      assert.match(section, new RegExp(`name: ${archive}\\n`));
+      const extract = section.indexOf('--strip-components=1 package/dist');
+      const run = section.indexOf('npm run test:browser:release:project:built');
+      assert.ok(extract >= 0 && extract < run);
+    });
+  }
+}

@@ -78,14 +78,29 @@ function saveSummary() {
 }
 saveSummary();
 
+let inventorySequence = 0;
 function inventory(args) {
   const result = spawnSync("npx", [...args, "--list", "--reporter=json"], {
     encoding: "utf8",
     maxBuffer: 32 * 1024 * 1024,
   });
+  const diagnostic = {
+    args,
+    status: result.status,
+    signal: result.signal,
+    error: result.error?.message,
+    stdout: result.stdout,
+    stderr: result.stderr,
+  };
+  if (reportDirectory) {
+    writeFileSync(
+      resolve(reportDirectory, `inventory-${++inventorySequence}.json`),
+      JSON.stringify(diagnostic, null, 2) + "\n",
+    );
+  }
   try {
     if (result.status !== 0)
-      throw new Error(result.stderr || "inventory command failed");
+      throw new Error(result.stderr || result.stdout || result.error?.message || "inventory command failed");
     const report = JSON.parse(result.stdout);
     if (report.errors?.length)
       throw new Error("inventory contains discovery errors");
