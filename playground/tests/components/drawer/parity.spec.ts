@@ -56,6 +56,8 @@ test("responsive placement resets dimensions without remounting", async ({page})
 });
 
 test("nonmodal leaves the page interactive and does not lock scroll", async ({page}) => {
+  // Expose the background action beside the panel for a real pointer interaction.
+  await page.setViewportSize({width:1280,height:900});
   await page.goto("/drawer");
   await page.getByRole("button",{name:"Nonmodal drawer",exact:true}).click();
   const panel=page.getByRole("dialog");

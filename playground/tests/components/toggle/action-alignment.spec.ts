@@ -1,7 +1,7 @@
 import { expect, test } from "../../evidence-test.js";
 
 for (const owner of ["toggle", "toggle-group"]) {
-  test(`${owner} uses the shared seven-size action scale`, async ({ page }) => {
+  test(`${owner} uses the shared seven-size action scale`, async ({ page }, testInfo) => {
     await page.goto(`/${owner}`);
     const sizes = page.locator("#sizes");
     const values = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
@@ -12,7 +12,7 @@ for (const owner of ["toggle", "toggle-group"]) {
       await expect(item).toHaveText(owner === "toggle" ? size : `${size} 1`);
       expect((await item.boundingBox())!.height).toBe([24, 32, 36, 40, 44, 48, 64][index]);
     }
-    await sizes.screenshot({path:`/private/tmp/${owner}-sizes-review.png`});
+    await sizes.screenshot({path: testInfo.outputPath(`${owner}-sizes-review.png`)});
   });
 }
 

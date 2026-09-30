@@ -23,7 +23,10 @@ test("today, whole-disabled paint and focused feature examples", async ({ page }
   await expect(booking.getByRole("button", { name: "09:30", exact: true })).toHaveAttribute("aria-pressed", "false");
   await expect(booking.getByText("Tuesday", { exact: true })).toBeVisible();
   await expect(booking.locator('button[data-value="2026-09-20"]')).toHaveAttribute("data-unavailable", "");
-  await expect(page.getByRole("heading", { name: "Date and Time", exact: true })).toBeVisible();
+  const category = page.locator(".evidence-sidebar").getByRole("heading", { name: "Date and Time", exact: true, includeHidden: true });
+  await expect(category).toHaveCount(1);
+  if (page.viewportSize()!.width < 768) await expect(category).toBeHidden();
+  else await expect(category).toBeVisible();
 });
 test("Calendar keeps square day targets, keyboard focus and localized grids", async ({ page }) => {
   await page.goto("/calendar?qualification=1");

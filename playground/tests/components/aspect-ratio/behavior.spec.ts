@@ -130,7 +130,10 @@ test("documentation anchors, usage snippets and media preserve geometry and sour
     await expect(section.getByRole("heading").getByRole("link")).toHaveAttribute("href", `#${id}`);
     const ratio = section.locator(".brick-aspect-ratio");
     const bounds = await box(ratio);
-    expect(bounds.width / bounds.height).toBeCloseTo(expectedRatio, 2);
+    const viewportRatio = id === "responsive" && page.viewportSize()!.width < 768
+      ? 1
+      : expectedRatio;
+    expect(bounds.width / bounds.height).toBeCloseTo(viewportRatio, 2);
     const child = await box(ratio.locator(":scope > *").first());
     expect(Math.abs(child.width - bounds.width)).toBeLessThan(1);
     expect(Math.abs(child.height - bounds.height)).toBeLessThan(1);

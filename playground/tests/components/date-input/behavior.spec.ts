@@ -2,6 +2,8 @@ import { verifyFormSurfaceRecipes } from "../../form-surface-recipes.js";
 import { test, expect } from "../../evidence-test.js";
 import AxeBuilder from "@axe-core/playwright";
 test("focused docs expose date capabilities and trailing clear alignment", async ({ page }) => {
+  // This case measures the horizontal range; the next case covers its narrow stack.
+  await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/date-input");
   for (const name of ["Controlled", "Default value", "Leading zeros", "Granularity", "Time only", "Time zone", "Clear trigger", "Date Picker", "Locale", "RTL", "Tones"]) {
     await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
@@ -91,8 +93,10 @@ test("DateInput aligns shared sizes with Input and preserves editable text", asy
     const root = page.getByTestId("date-sizes").locator(`.brick-date-input[data-size="${size}"]`);
     const control = root.locator('.brick-date-input__control');
     const input = root.locator('..').locator('.brick-input');
-    expect((await control.boundingBox())!.height).toBe((await input.boundingBox())!.height);
     const touch = await page.evaluate(() => matchMedia("(any-pointer: coarse)").matches);
+    // At 2xs, the 16px editing floor grows the segment line to 24px plus borders.
+    const expectedHeight = size === "2xs" && touch ? 26 : (await input.boundingBox())!.height;
+    expect((await control.boundingBox())!.height).toBe(expectedHeight);
     const recipeFont = ["2xs", "xs"].includes(size) ? 12 : ["sm", "md"].includes(size) ? 14 : size === "2xl" ? 18 : 16;
     expect(await root.getByRole("spinbutton").first().evaluate(node => parseFloat(getComputedStyle(node).fontSize))).toBe(touch ? Math.max(16, recipeFont) : recipeFont);
     await expect(root.getByRole("group").first()).toHaveCSS("gap", "4px");

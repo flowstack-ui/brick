@@ -58,7 +58,7 @@ test("docs examples preserve geometry, semantics, and real source", async ({ pag
   await expect(code).not.toContainText("data-testid");
 });
 
-test("docs navigation, props and accessibility are complete", async ({ page }) => {
+test("docs navigation, props and accessibility are complete", async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1600, height: 1000 });
   await page.goto("/center");
   await expect(page.getByRole("tablist")).toHaveCount(6);
@@ -70,5 +70,5 @@ test("docs navigation, props and accessibility are complete", async ({ page }) =
   await expect(page).toHaveURL(/#props$/);
   const results = await new AxeBuilder({ page }).include('[data-component-page="center"]').analyze();
   expect(results.violations).toEqual([]);
-  await page.screenshot({ path: "/private/tmp/center-docs-review.png", fullPage: true });
+  await page.screenshot({ path: testInfo.outputPath("center-docs-review.png"), fullPage: true });
 });

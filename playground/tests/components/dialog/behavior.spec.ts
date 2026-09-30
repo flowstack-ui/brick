@@ -49,7 +49,9 @@ test("Dialog exposes its default modal anatomy, relationships, and focus lifecyc
   expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
   const shellOffsets = await readShellViewportOffsets(page);
   if (shellOffsets.appBar === 0) {
-    expect(shellOffsets.sidebar).not.toBeNull();
+    // The shared shell intentionally hides its navigation rail below md.
+    if (page.viewportSize()!.width < 768) expect(shellOffsets.sidebar).toBeNull();
+    else expect(shellOffsets.sidebar).not.toBeNull();
     expect(shellOffsets.reviewHeader).not.toBeNull();
   }
   await trigger.evaluate((element) => (element as HTMLElement).click());

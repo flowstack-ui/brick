@@ -71,8 +71,16 @@ test("2xs shared minimum permits intrinsic nested-control growth", async ({ page
   ] as const) {
     await page.goto(`/${route}`);
     const control = page.locator(`${selector}[data-size='2xs']`).first();
-    await expect(control).toHaveCSS("min-height", "24px");
-    expect((await control.boundingBox())!.height).toBeCloseTo(height, 0);
+    const coarse = await page.evaluate(() => matchMedia("(pointer: coarse)").matches);
+    // NumberInput preserves two stacked 24px touch actions plus its border.
+    const expectedHeight = route === "number-input" && coarse ? 50 : height;
+    await expect(control).toHaveCSS("min-height", route === "number-input" && coarse ? "50px" : "24px");
+    expect((await control.boundingBox())!.height).toBeCloseTo(expectedHeight, 0);
+    if (route === "number-input" && coarse) {
+      for (const step of await control.locator(".brick-number-input-step").all()) {
+        expect((await step.boundingBox())!.height).toBeGreaterThanOrEqual(24);
+      }
+    }
   }
 });
 
