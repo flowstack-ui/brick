@@ -1,12 +1,41 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
+import { hasWorkflowTimeout } from "../../scripts/workflow-timeouts.mjs";
 
 const workflow = (name) =>
   readFileSync(
     new URL(`../../.github/workflows/${name}.yml`, import.meta.url),
     "utf8",
   );
+
+test("nightly inherits a verified timeout from its local reusable workflow", async () => {
+  assert.equal(
+    await hasWorkflowTimeout(".github/workflows/nightly.yml", (path) =>
+      readFileSync(new URL(`../../${path}`, import.meta.url), "utf8"),
+    ),
+    true,
+  );
+});
+
+test("timeout delegation fails closed for missing, cyclic or unbounded targets", async () => {
+  const caller =
+    "jobs:\n  release:\n    uses: ./.github/workflows/target.yml\n";
+  for (const target of [
+    undefined,
+    caller,
+    "jobs:\n  test:\n    runs-on: ubuntu-latest\n    steps: []\n",
+  ]) {
+    assert.equal(
+      await hasWorkflowTimeout("caller", (path) => {
+        if (path === "caller") return caller;
+        if (target === undefined) throw new Error("missing");
+        return target;
+      }),
+      false,
+    );
+  }
+});
 
 for (const name of ["ci", "publish"]) {
   test(`${name} distributes all profiles and retains success evidence`, () => {
