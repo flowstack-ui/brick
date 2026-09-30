@@ -28,9 +28,11 @@ if (discovered.errors?.length || count(discovered.suites) !== 1) throw new Error
 if (mode === "--plan") { console.log(JSON.stringify({ id, args, plannedTests: 1 })); process.exit(0); }
 const archive = resolve(directory, "archive/flowstack-ui-brick-0.3.0.tgz");
 const digest = createHash("sha256").update(readFileSync(archive)).digest("hex");
-if (digest !== "797bfc43d85a3a3a8a20f8350f90e44b7f213d2f5fa8e2d6fa05eb5126921262") throw new Error("Diagnostic archive does not match the qualified source archive");
-const summary = { id, project, plannedTests: 1, archiveSha256: digest, sourceRun: 36724933938,
-  sourceCommit: "8ba27e705c95905daf6e6acd54fcf6dc545aa772", checkoutCommit: spawnSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).stdout.trim(),
+const identity = JSON.parse(readFileSync(resolve(directory, "archive/identity.json"), "utf8"));
+const checkoutCommit = spawnSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).stdout.trim();
+if (digest !== identity.archiveSha256 || checkoutCommit !== identity.sourceCommit) throw new Error("Diagnostic archive identity does not match this candidate build");
+const summary = { id, project, plannedTests: 1, archiveSha256: digest, sourceRun: identity.sourceRun,
+  sourceCommit: identity.sourceCommit, checkoutCommit,
   args, retries: 0, startedAt: new Date().toISOString() };
 writeFileSync(resolve(directory, "summary.json"), JSON.stringify(summary, null, 2));
 const result = spawnSync("npx", args, { env, stdio: "inherit", timeout: 210000 });

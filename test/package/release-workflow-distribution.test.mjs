@@ -9,6 +9,21 @@ const workflow = (name) =>
     "utf8",
   );
 
+test("scoped diagnostics build one current archive without enabling the full matrix", () => {
+  const source = workflow("ci");
+  const build = source.split("\n  release-diagnostic-build:")[1].split("\n  release-blocker-diagnostics:")[0];
+  const diagnostic = source.split("\n  release-blocker-diagnostics:")[1].split("\n  package:")[0];
+  assert.match(build, /timeout-minutes: 10/);
+  assert.match(build, /npm run build:playground/);
+  assert.match(build, /verify-release-diagnostic-archive.mjs.*--record/);
+  assert.match(diagnostic, /needs: release-diagnostic-build/);
+  assert.equal((diagnostic.match(/- case:/g) ?? []).length, 5);
+  assert.match(diagnostic, /timeout-minutes: 12/);
+  assert.match(diagnostic, /name: brick-diagnostic-package/);
+  assert.doesNotMatch(diagnostic, /run-id:|check:repository|test:browser:release/);
+  assert.match(source.split("\n  package:")[1], /inputs.diagnostic != 'release-blockers'/);
+});
+
 test("nightly inherits a verified timeout from its local reusable workflow", async () => {
   assert.equal(
     await hasWorkflowTimeout(".github/workflows/nightly.yml", (path) =>

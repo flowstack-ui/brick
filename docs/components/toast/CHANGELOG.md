@@ -4,6 +4,8 @@ Toast follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Keep variable-height collapsed stacks anchored inside the viewport by preventing the shared grid row from exceeding its explicit block size.
+
 - Use semantic title/action weights without changing the default metrics.
 
 - Add isolated createToaster managers, lifecycle notifications, pause/resume/remove, inspection, expansion and tracked promises.

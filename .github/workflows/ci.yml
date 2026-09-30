@@ -23,7 +23,42 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  release-diagnostic-build:
+    if: github.event_name == 'workflow_dispatch' && inputs.diagnostic == 'release-blockers'
+    name: diagnostic exact build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Build and pack this candidate once
+        run: |
+          npm run build:playground
+          mkdir -p test-results/diagnostic-build/archive
+          npm pack --pack-destination test-results/diagnostic-build/archive
+          node scripts/verify-release-diagnostic-archive.mjs test-results/diagnostic-build/archive --record
+      - if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: brick-diagnostic-package
+          path: test-results/diagnostic-build/archive/
+          if-no-files-found: error
+          retention-days: 14
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: brick-diagnostic-playground
+          path: playground/dist/
+          if-no-files-found: error
+          retention-days: 14
+
   release-blocker-diagnostics:
+    needs: release-diagnostic-build
     if: github.event_name == 'workflow_dispatch' && inputs.diagnostic == 'release-blockers'
     name: diagnostic (${{ matrix.case }})
     runs-on: ubuntu-latest
@@ -54,23 +89,18 @@ jobs:
       - run: npm ci
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: brick-package
-          run-id: 36724933938
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          name: brick-diagnostic-package
           path: test-results/release-blockers/${{ matrix.case }}/archive
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: brick-playground
-          run-id: 36724933938
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          name: brick-diagnostic-playground
           path: playground/dist
-      - name: Verify and restore the qualified exact build
+      - name: Verify and restore the exact candidate build
         env:
           DIAGNOSTIC_CASE: ${{ matrix.case }}
         run: |
-          ARCHIVE="test-results/release-blockers/$DIAGNOSTIC_CASE/archive/flowstack-ui-brick-0.3.0.tgz"
-          echo "797bfc43d85a3a3a8a20f8350f90e44b7f213d2f5fa8e2d6fa05eb5126921262  $ARCHIVE" | sha256sum --check
-          tar -xzf "$ARCHIVE" --strip-components=1 package/dist
+          node scripts/verify-release-diagnostic-archive.mjs "test-results/release-blockers/$DIAGNOSTIC_CASE/archive"
+          tar -xzf "test-results/release-blockers/$DIAGNOSTIC_CASE/archive/flowstack-ui-brick-0.3.0.tgz" --strip-components=1 package/dist
       - name: Install the one diagnostic browser engine
         shell: bash
         timeout-minutes: 5

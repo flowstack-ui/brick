@@ -14,6 +14,7 @@
     position: fixed;
     z-index: var(--brick-toast-viewport-z-index);
     display: grid;
+    grid-template-rows: minmax(0, 1fr);
     inline-size: min(var(--brick-toast-inline-size), calc(100vw - var(--brick-toast-offset-inline-start) - var(--brick-toast-offset-inline-end) - var(--brick-toast-safe-start) - var(--brick-toast-safe-end)));
     block-size: calc(var(--atom-toast-total-height, 0px) + max(0, var(--atom-toast-count, 1) - 1) * var(--brick-toast-viewport-gap));
     max-block-size: calc(100dvh - var(--brick-toast-offset-block-start) - var(--brick-toast-offset-block-end) - env(safe-area-inset-top) - env(safe-area-inset-bottom));

@@ -76,6 +76,8 @@ The compound parts forward their native refs. Root, Title, Description, Action, 
 | stacking | `separated`, `overlap` |
 | swipe direction | `left`, `right`, `up`, `down` |
 
+Collapsed overlap cards share the viewport's explicit grid row. A taller back card does not move the newest card beyond the viewport anchor; expansion retains each measured card height and gap.
+
 `Toaster` defaults to position `bottom-end`, maximum visible `3`, close enabled, pointer/focus/page-loss timer pause, hotkey `F8`, label `Notifications`, width `responsive`, stacking `separated`, no swipe, and a 50px threshold if swipe is enabled.
 
 Ordinary, success, warning, and info durations default to 5000ms; error to 8000ms; loading and explicit `Infinity` are persistent. Invalid, zero, or negative finite durations fall back to the type default. Atom normalizes visible limits to a positive integer and update cannot replace an ID.

@@ -41,10 +41,19 @@ test("supports F8, action/close focus, Escape dismissal, and focus restoration",
 });
 
 test("queue, overlap, logical positions, mobile containment, and accessibility are complete", async ({ page }) => {
+  // Fixed notifications and the sticky app bar can cover the auto-scroll center
+  // on touch profiles. Place fixture controls in the clear strip, then retain
+  // a real, actionable pointer click.
+  const clickFixture = async (name: string) => {
+    const button = page.getByRole("button", { name, exact: true });
+    await button.evaluate(node => node.scrollIntoView({ block: "start" }));
+    await page.evaluate(() => window.scrollBy(0, -(document.querySelector(".evidence-app-bar")!.getBoundingClientRect().height + 16)));
+    await button.click();
+  };
   await page.getByRole("button", { name: "Create four queued toasts" }).click();
   let viewport = page.getByRole("region", { name: "Notifications (F8)" });
   await expect(viewport.locator(".brick-toast")).toHaveCount(3);
-  await page.getByRole("button", { name: "Create overlap queue" }).click();
+  await clickFixture("Create overlap queue");
   await expect(viewport).toHaveAttribute("data-stacking", "overlap");
   const overlapItems = viewport.locator(".brick-toast[data-state='visible']");
   await expect(overlapItems).toHaveCount(3);
@@ -58,6 +67,9 @@ test("queue, overlap, logical positions, mobile containment, and accessibility a
   ).toBeLessThanOrEqual(16);
   const collapsedViewportBox = await viewport.boundingBox();
   expect(collapsedViewportBox).not.toBeNull();
+  // The tallest back card must not enlarge the implicit grid row below the
+  // explicitly sized viewport. Its newest card anchors at the viewport end.
+  expect(Math.abs(collapsedBoxes[collapsedBoxes.length - 1]!.bottom - (collapsedViewportBox!.y + collapsedViewportBox!.height))).toBeLessThanOrEqual(1);
   const pageSize = page.viewportSize();
   expect(pageSize).not.toBeNull();
   collapsedBoxes.forEach((box) => {
@@ -81,7 +93,7 @@ test("queue, overlap, logical positions, mobile containment, and accessibility a
   stableTopValues.forEach((top, index) => {
     expect(Math.abs(top - expandedTopValues[index]!)).toBeLessThanOrEqual(1);
   });
-  await page.getByRole("button", { name: "Show top-start toast" }).click();
+  await clickFixture("Show top-start toast");
   viewport = page.getByRole("region", { name: "Notifications (F8)" });
   await expect(viewport).toHaveAttribute("data-position", "top-start");
   await page.setViewportSize({ width: 320, height: 700 });
@@ -95,7 +107,7 @@ test("queue, overlap, logical positions, mobile containment, and accessibility a
   expect((await new AxeBuilder({ page }).include(".brick-toast-viewport").analyze()).violations).toEqual([]);
 
   await page.setViewportSize({ width: 1120, height: 900 });
-  await page.getByRole("button", { name: "Show Arabic stress toast" }).click();
+  await clickFixture("Show Arabic stress toast");
   viewport = page.getByRole("region", { name: "Notifications (F8)" });
   await expect(viewport).toHaveAttribute("dir", "rtl");
   await expect(viewport).toHaveAttribute("data-position", "bottom-start");

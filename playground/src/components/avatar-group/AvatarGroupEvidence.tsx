@@ -44,9 +44,9 @@ function peopleAvatars(decorative = false) {
   ));
 }
 
-function Specimen({ children, label }: { children: ReactNode; label: string }) {
+function Specimen({ children, label, compact = false }: { children: ReactNode; label: string; compact?: boolean }) {
   return (
-    <EvidenceSurface className="avatar-group-specimen" inset="md">
+    <EvidenceSurface className="avatar-group-specimen" inset={compact ? "none" : "md"}>
       <SpecimenLabel>{label}</SpecimenLabel>
       <div className="avatar-group-specimen__preview">{children}</div>
     </EvidenceSurface>
@@ -255,18 +255,20 @@ export function AvatarGroupEvidence() {
           data-testid="avatar-group-stress"
         >
           <Appearance value="dark">
-            <Specimen label="dark appearance">
-              <AvatarGroup max={4} overflowLabel={(count) => `${count} more`}>
+            <Specimen label="dark appearance" compact>
+              <AvatarGroup size="xs" max={2} overflowLabel={(count) => `${count} more`}>
                 {peopleAvatars()}
               </AvatarGroup>
             </Specimen>
           </Appearance>
-          <Specimen label="RTL source order">
+          <Specimen label="RTL source order" compact>
             <div dir="rtl">
               <AvatarGroup
                 aria-label="مراجعون"
                 role="group"
                 stacking="first-on-top"
+                size="xs"
+                overlap="lg"
               >
                 <Avatar alt="نور" fallback="ن" />
                 <Avatar alt="ليلى" fallback="ل" />
@@ -274,7 +276,7 @@ export function AvatarGroupEvidence() {
               </AvatarGroup>
             </div>
           </Specimen>
-          <Specimen label="localized overflow">
+          <Specimen label="localized overflow" compact>
             <AvatarGroup
               max={2}
               overflowLabel={(count) => `${count} مشاركين إضافيين`}

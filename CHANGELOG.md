@@ -8,6 +8,8 @@ Planned release: 0.3.0.
 
 ### Changed
 
+- Keep collapsed variable-height Toast cards within their fixed viewport anchor.
+
 - Prevent Table body-text fragments leaking above sticky headers at fractional
   HiDPI coordinates without changing layout, sticky offsets or content opacity.
 
