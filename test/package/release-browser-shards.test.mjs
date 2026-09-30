@@ -52,10 +52,12 @@ for (const [project, budget] of [
     },
   );
   test(
-    `three CI groups partition every ${project} shard exactly once`,
+    `six CI groups partition every ${project} shard exactly once`,
     platform,
     () => {
-      const groups = ["1/3", "2/3", "3/3"].map((group) => plan(project, group));
+      const groups = Array.from({ length: 6 }, (_, i) =>
+        plan(project, `${i + 1}/6`),
+      );
       for (const result of groups)
         assert.equal(result.status, 0, result.stderr);
       const shards = groups.flatMap((result) => plannedShards(result.stdout));
@@ -69,10 +71,30 @@ for (const [project, budget] of [
   );
 }
 
-test("non-WebKit projects reject a WebKit shard group", platform, () => {
-  const result = plan("chromium", "1/3");
+for (const project of ["chromium", "firefox", "mobile-chromium"]) {
+  test(
+    `six CI groups partition every ${project} case batch once`,
+    platform,
+    () => {
+      const groups = Array.from({ length: 6 }, (_, i) =>
+        plan(project, `${i + 1}/6`),
+      );
+      for (const result of groups)
+        assert.equal(result.status, 0, result.stderr);
+      const shards = groups.flatMap((result) => plannedShards(result.stdout));
+      const total = Math.ceil(1670 / 120);
+      assert.deepEqual(
+        shards.map((item) => item.shard).sort((a, b) => a - b),
+        Array.from({ length: total }, (_, i) => i + 1),
+      );
+      assert.ok(shards.every((item) => item.total === total));
+    },
+  );
+}
+test("empty groups fail closed", platform, () => {
+  const result = plan("chromium", "6/6", 1);
   assert.notEqual(result.status, 0);
-  assert.match(result.stderr, /only valid for WebKit projects/);
+  assert.match(result.stderr, /no tests/);
 });
 
 test("invalid shard groups fail before browser work", platform, () => {

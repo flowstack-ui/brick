@@ -34,6 +34,25 @@ prevents a large catalog file from exceeding that limit; execution still uses
 one worker. Every shard is listed before execution and its report must account
 for that exact inventory. Empty, invalid or over-budget batches fail closed.
 
+CI, nightly and publication distribute each browser profile across six
+independent runner groups, with one worker per runner. Chromium pull requests
+use six groups too. Grouped non-WebKit runs use at most 120 tests per batch;
+WebKit retains its stricter 40/24 bounds. This is distribution, not reduced
+coverage or a higher local worker count. Group selection is available for all
+profiles through `FLOWSTACK_RELEASE_SHARD_GROUP=1/6` (through `6/6`); every
+group is required for complete evidence. Empty groups fail closed. Ungrouped
+local Chromium/Firefox behavior remains unchanged.
+
+Nightly calls the same CI graph instead of repeating a serial all-browser
+command. Successful and failed browser reports are retained for 14 days.
+Use focused component checks for iteration; use the distributed full gate for
+release qualification. Do not repeatedly run the serial local full gate to
+diagnose a failed browser startup. A failed group remains a failed gate until
+diagnosed; rerunning it does not erase the original failure evidence.
+Actual wall-time reduction depends on available hosted-runner concurrency and
+must be measured; six groups are not a sixfold-speed guarantee. macOS visual
+baselines and physical/manual checks retain their existing local ownership.
+
 Each release invocation retains JSON, HTML and failure traces in a unique
 `test-results/release-*/<project>-<shard>-of-<count>/` directory. Its parent
 `summary.json` records each shard's status and elapsed time; a missing JSON report

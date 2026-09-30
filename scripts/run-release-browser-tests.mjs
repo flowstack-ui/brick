@@ -112,13 +112,13 @@ for (const project of projects) {
   // WebKit after roughly 34 on the release host. Keep both below their
   // measured ceilings without adding retries or inflating test timeouts.
   const contextBudget =
-    project === "mobile-webkit" ? 24 : project === "webkit" ? 40 : undefined;
-  if (selectedShardGroup && !contextBudget) {
-    console.error(
-      `FLOWSTACK_RELEASE_SHARD_GROUP is only valid for WebKit projects; received ${project}`,
-    );
-    process.exit(1);
-  }
+    project === "mobile-webkit"
+      ? 24
+      : project === "webkit"
+        ? 40
+        : selectedShardGroup
+          ? 120
+          : undefined;
   const baseArgs = [
     "playwright",
     "test",
@@ -139,6 +139,11 @@ for (const project of projects) {
       !selectedShardGroup ||
       (shard - selectedShardGroup.group) % selectedShardGroup.groups === 0,
   );
+
+  if (selectedShards.length === 0) {
+    console.error("Selected shard group has no tests; reduce the group count");
+    process.exit(1);
+  }
 
   if (selectedShardGroup) {
     console.log(
