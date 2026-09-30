@@ -6,17 +6,92 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      diagnostic:
+        description: Bounded diagnostics only; none runs ordinary CI
+        type: choice
+        options: [none, release-blockers]
+        default: none
   workflow_call:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.ref }}-${{ inputs.diagnostic || 'none' }}
   cancel-in-progress: true
 
 jobs:
+  release-blocker-diagnostics:
+    if: github.event_name == 'workflow_dispatch' && inputs.diagnostic == 'release-blockers'
+    name: diagnostic (${{ matrix.case }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - case: avatar-firefox
+            engine: firefox
+          - case: avatar-webkit
+            engine: webkit
+          - case: avatar-mobile-webkit
+            engine: webkit
+          - case: toast-mobile-chromium
+            engine: chromium
+          - case: toast-mobile-webkit
+            engine: webkit
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: brick-package
+          run-id: 36724933938
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: test-results/release-blockers/${{ matrix.case }}/archive
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: brick-playground
+          run-id: 36724933938
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: playground/dist
+      - name: Verify and restore the qualified exact build
+        env:
+          DIAGNOSTIC_CASE: ${{ matrix.case }}
+        run: |
+          ARCHIVE="test-results/release-blockers/$DIAGNOSTIC_CASE/archive/flowstack-ui-brick-0.3.0.tgz"
+          echo "797bfc43d85a3a3a8a20f8350f90e44b7f213d2f5fa8e2d6fa05eb5126921262  $ARCHIVE" | sha256sum --check
+          tar -xzf "$ARCHIVE" --strip-components=1 package/dist
+      - name: Install the one diagnostic browser engine
+        shell: bash
+        timeout-minutes: 5
+        env:
+          DIAGNOSTIC_CASE: ${{ matrix.case }}
+        run: npx playwright install --with-deps ${{ matrix.engine }} 2>&1 | tee "test-results/release-blockers/$DIAGNOSTIC_CASE/browser-install.log"
+      - name: Run one unchanged blocker assertion with retained diagnostics
+        timeout-minutes: 4
+        env:
+          DIAGNOSTIC_CASE: ${{ matrix.case }}
+        run: node scripts/run-release-blocker-diagnostic.mjs "$DIAGNOSTIC_CASE"
+      - if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: brick-release-diagnostic-${{ matrix.case }}
+          path: test-results/release-blockers/
+          if-no-files-found: error
+          retention-days: 14
+
   package:
+    if: github.event_name != 'workflow_dispatch' || inputs.diagnostic != 'release-blockers'
     name: repository gate
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -107,7 +182,7 @@ jobs:
   browser-main:
     name: browser (${{ matrix.project }}, group ${{ matrix.group }}/6)
     needs: package
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && (github.event_name != 'workflow_dispatch' || inputs.diagnostic != 'release-blockers')
     runs-on: ubuntu-latest
     # Separate machines bound wall time without competing for one host.
     timeout-minutes: 20
