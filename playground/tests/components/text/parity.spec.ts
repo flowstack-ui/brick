@@ -7,7 +7,7 @@ import { expect, test } from "@playwright/test";
 test("Text responsive clamp resets and visual controls preserve semantic output", async ({page}) => {
   const css=await readFile("dist/styles.css","utf8");
   const markup=renderToStaticMarkup(h(Paragraph, {lineClamp:{initial:1,md:"none",lg:3}, align:{initial:"justify",lg:"end"}, fontStyle:"italic",numeric:"tabular-nums",decoration:"underline",decorationStyle:"dotted",style:{maxInlineSize:200}, children: "A sufficiently long paragraph that wraps across several lines and can be read completely after the responsive clamp is removed. 1234567890"}));
-  await page.setContent(`<style>${css}</style>${markup}`);
+  await page.setContent(`<meta name="viewport" content="width=device-width, initial-scale=1"><style>${css}</style>${markup}`);
   const text=page.locator("p");
   await page.setViewportSize({width:390,height:800});
   await expect(text).toHaveCSS("-webkit-line-clamp","1");
