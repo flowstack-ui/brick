@@ -7,6 +7,7 @@ import { Surface } from "../../../../dist/surface.js";
 import { Button } from "../../../../dist/button.js";
 
 const css = readFileSync("dist/styles.css", "utf8");
+const viewportMeta = '<meta name="viewport" content="width=device-width, initial-scale=1">';
 const children = ["Alpha", "Beta", "Gamma"].map((text) =>
   h("button", { key: text, type: "button" }, text),
 );
@@ -21,7 +22,7 @@ test("all breakpoint boundaries apply independent gaps without nested inheritanc
       children: h(Stack, { children: "Nested" }),
     }),
   );
-  await page.setContent('<meta name="viewport" content="width=device-width, initial-scale=1">' + content);
+  await page.setContent(viewportMeta + content);
   await page.addStyleTag({ content: css });
   const root = page.locator(".brick-stack").first();
   for (const [width, expected] of [
@@ -52,15 +53,16 @@ test("reverse axes map edge spacing logically and leave DOM and keyboard order i
       "column-reverse",
     ] as const) {
       await page.setContent(
-        renderToString(
-          h(Stack, {
-            dir,
-            direction,
-            startSpacing: 2,
-            endSpacing: 4,
-            children,
-          }),
-        ),
+        viewportMeta +
+          renderToString(
+            h(Stack, {
+              dir,
+              direction,
+              startSpacing: 2,
+              endSpacing: 4,
+              children,
+            }),
+          ),
       );
       await page.addStyleTag({ content: css });
       const root = page.locator(".brick-stack");
@@ -88,7 +90,8 @@ test("longhands persist across recipe transitions and zero basis stays a length"
   page,
 }) => {
   await page.setContent(
-    renderToString(
+    viewportMeta +
+      renderToString(
       h(HStack, {
         children: h(Stack.Item, {
           flex: { initial: "content", lg: 2 },
@@ -122,7 +125,7 @@ test("same-host root and Item preserve independent alignment, margins and Surfac
   const stackCss = readFileSync("src/components/stack/stack.css", "utf8");
   const surfaceCss = readFileSync("src/components/surface/surface.css", "utf8");
   for (const order of [stackCss + surfaceCss, surfaceCss + stackCss]) {
-    await page.setContent(renderToString(tree));
+    await page.setContent(viewportMeta + renderToString(tree));
     await page.addStyleTag({ content: css + order });
     const host = page.locator(".brick-stack");
     await expect(host).toHaveCount(1);
@@ -137,7 +140,8 @@ test("wrapping and line alignment expose actual flex behavior", async ({
   page,
 }) => {
   await page.setContent(
-    renderToString(
+    viewportMeta +
+      renderToString(
       h(Stack, {
         direction: "row",
         wrap: "wrap-reverse",
@@ -164,7 +168,8 @@ test("fractional allocation, logical auto margin and composed controls retain ge
   page,
 }) => {
   await page.setContent(
-    renderToString(
+    viewportMeta +
+      renderToString(
       h(HStack, {
         style: { width: 400 },
         children: [
@@ -179,7 +184,8 @@ test("fractional allocation, logical auto margin and composed controls retain ge
   expect((await tracks.nth(0).boundingBox())!.width).toBeCloseTo(100, 0);
   expect((await tracks.nth(1).boundingBox())!.width).toBeCloseTo(300, 0);
   await page.setContent(
-    renderToString(
+    viewportMeta +
+      renderToString(
       h(HStack, {
         style: { width: 400 },
         children: [
@@ -210,7 +216,7 @@ test("inline and responsive direction reset on the same host", async ({
     startSpacing: 2,
     children,
   };
-  await page.setContent(renderToString(h(Stack, props)));
+  await page.setContent(viewportMeta + renderToString(h(Stack, props)));
   await page.addStyleTag({ content: css });
   const root = page.locator(".brick-stack");
   await page.setViewportSize({ width: 700, height: 800 });

@@ -23,7 +23,8 @@ if (process.argv.includes("--list")) {
   console.log(JSON.stringify({suites:[{specs:Array.from({length:count}, () => ({tests:[{}]}))}]}));
 } else if (options.outcome !== "missing") {
   fs.mkdirSync(process.env.FLOWSTACK_TEST_ARTIFACT_DIR, {recursive:true});
-  fs.writeFileSync(path.join(process.env.FLOWSTACK_TEST_ARTIFACT_DIR, "report.json"), JSON.stringify({stats:{expected:count - (["flaky", "mismatch"].includes(options.outcome) ? 1 : 0),unexpected:0,skipped:0,flaky:options.outcome === "flaky" ? 1 : 0}}));
+  fs.writeFileSync(path.join(process.env.FLOWSTACK_TEST_ARTIFACT_DIR, "report.json"), JSON.stringify({stats:{expected:count - (["failed", "flaky", "mismatch"].includes(options.outcome) ? 1 : 0),unexpected:options.outcome === "failed" ? 1 : 0,skipped:0,flaky:options.outcome === "flaky" ? 1 : 0}}));
+  if (options.outcome === "failed") process.exit(1);
 }
 `,
       { mode: 0o755 },

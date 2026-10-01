@@ -10,7 +10,7 @@ const runner = fileURLToPath(
   new URL("../../scripts/run-release-browser-tests.mjs", import.meta.url),
 );
 
-for (const outcome of ["passed", "missing", "flaky", "mismatch"]) {
+for (const outcome of ["passed", "failed", "missing", "flaky", "mismatch"]) {
   test(
     `release runner ${outcome} shard report`,
     { skip: process.platform === "win32" },
@@ -31,7 +31,10 @@ for (const outcome of ["passed", "missing", "flaky", "mismatch"]) {
           ),
         );
         assert.equal(summary.status, fails ? "failed" : "passed");
-        assert.equal(summary.runs.length, fails ? 1 : 2);
+        assert.equal(
+          summary.runs.length,
+          ["passed", "failed"].includes(outcome) ? 2 : 1,
+        );
         assert.equal(
           new Set(summary.runs.map((run) => run.artifactDirectory)).size,
           summary.runs.length,

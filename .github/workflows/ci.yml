@@ -65,13 +65,21 @@ jobs:
     timeout-minutes: 16
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 3
       matrix:
         include:
-          - case: avatar-mobile-webkit
+          - case: reorderable-mobile-webkit
             engine: webkit
-          - case: toast-mobile-webkit
+          - case: marquee-pause-webkit
             engine: webkit
+          - case: marquee-contrast-webkit
+            engine: webkit
+          - case: marquee-contrast-mobile-webkit
+            engine: webkit
+          - case: popover-mobile-webkit
+            engine: webkit
+          - case: radio-group-firefox
+            engine: firefox
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -101,7 +109,7 @@ jobs:
         env:
           DIAGNOSTIC_CASE: ${{ matrix.case }}
         run: npx playwright install --with-deps ${{ matrix.engine }} 2>&1 | tee "test-results/release-blockers/$DIAGNOSTIC_CASE/browser-install.log"
-      - name: Run one unchanged blocker assertion with retained diagnostics
+      - name: Run one exact blocker assertion with retained diagnostics
         timeout-minutes: 4
         env:
           DIAGNOSTIC_CASE: ${{ matrix.case }}
@@ -204,7 +212,7 @@ jobs:
         run: test "$GROUP_RESULT" = success
 
   browser-main:
-    name: browser (${{ matrix.project }}, group ${{ matrix.group }}/6)
+    name: browser (${{ matrix.project }}, group ${{ matrix.group }}/8)
     needs: package
     if: github.event_name != 'pull_request' && (github.event_name != 'workflow_dispatch' || inputs.diagnostic != 'release-blockers')
     runs-on: ubuntu-latest
@@ -214,7 +222,7 @@ jobs:
       fail-fast: false
       matrix:
         project: [chromium, firefox, mobile-chromium, webkit, mobile-webkit]
-        group: [1, 2, 3, 4, 5, 6]
+        group: [1, 2, 3, 4, 5, 6, 7, 8]
         include:
           - project: chromium
             engine: chromium
@@ -248,11 +256,11 @@ jobs:
       - run: npx playwright install --with-deps ${{ matrix.engine }}
       - run: npm run test:browser:release:project:built -- ${{ matrix.project }}
         env:
-          FLOWSTACK_RELEASE_SHARD_GROUP: ${{ matrix.group }}/6
+          FLOWSTACK_RELEASE_SHARD_GROUP: ${{ matrix.group }}/8
       - if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: brick-playwright-${{ matrix.project }}-${{ matrix.group }}-of-6
+          name: brick-playwright-${{ matrix.project }}-${{ matrix.group }}-of-8
           path: |
             playwright-report/
             test-results/

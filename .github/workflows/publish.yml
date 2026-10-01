@@ -77,7 +77,7 @@ jobs:
           retention-days: 3
 
   browser:
-    name: browser (${{ matrix.project }}, group ${{ matrix.group }}/6)
+    name: browser (${{ matrix.project }}, group ${{ matrix.group }}/8)
     needs: repository
     runs-on: ubuntu-latest
     # Separate machines bound wall time without competing for one host.
@@ -86,7 +86,7 @@ jobs:
       fail-fast: false
       matrix:
         project: [chromium, firefox, mobile-chromium, webkit, mobile-webkit]
-        group: [1, 2, 3, 4, 5, 6]
+        group: [1, 2, 3, 4, 5, 6, 7, 8]
         include:
           - project: chromium
             engine: chromium
@@ -120,7 +120,7 @@ jobs:
       - run: npx playwright install --with-deps ${{ matrix.engine }}
       - run: npm run test:browser:release:project:built -- ${{ matrix.project }}
         env:
-          FLOWSTACK_RELEASE_SHARD_GROUP: ${{ matrix.group }}/6
+          FLOWSTACK_RELEASE_SHARD_GROUP: ${{ matrix.group }}/8
       - if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:

@@ -70,28 +70,43 @@ test("mouse drag commits on a valid item and abandons invalid space", async ({ p
   await page.evaluate(() => new Promise<void>((resolve) =>
     requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
   ));
-  const [handleBox, targetBox] = await Promise.all([handle.boundingBox(), target.boundingBox()]);
-  expect(handleBox!.y).toBeGreaterThanOrEqual(0);
-  expect(handleBox!.y + handleBox!.height).toBeLessThanOrEqual(viewport!.height);
-  expect(targetBox!.y).toBeGreaterThanOrEqual(0);
-  expect(targetBox!.y + targetBox!.height).toBeLessThanOrEqual(viewport!.height);
-  expect(await handle.evaluate((element) => {
-    const bounds = element.getBoundingClientRect();
-    return document.elementFromPoint(
-      bounds.x + bounds.width / 2,
-      bounds.y + bounds.height / 2,
-    )?.closest("button") === element;
-  })).toBe(true);
-  expect(await target.evaluate((element) => {
-    const bounds = element.getBoundingClientRect();
-    return element.contains(document.elementFromPoint(
-      bounds.x + bounds.width / 2,
-      bounds.y + bounds.height * 0.8,
-    ));
-  })).toBe(true);
-  await page.mouse.move(handleBox!.x + handleBox!.width / 2, handleBox!.y + handleBox!.height / 2);
+  const readPointerGeometry = () => scenario.evaluate((element) => {
+    const handle = element.querySelector<HTMLElement>(".brick-reorderable-list__handle")!;
+    const target = element.querySelector<HTMLElement>('li[data-value="verify"]')!;
+    const handleBox = handle.getBoundingClientRect();
+    const targetBox = target.getBoundingClientRect();
+    const handlePoint = {
+      x: handleBox.x + handleBox.width / 2,
+      y: handleBox.y + handleBox.height / 2,
+    };
+    const targetPoint = {
+      x: targetBox.x + targetBox.width / 2,
+      y: targetBox.y + targetBox.height * 0.8,
+    };
+    return {
+      handleBox: { x: handleBox.x, y: handleBox.y, width: handleBox.width, height: handleBox.height },
+      targetBox: { x: targetBox.x, y: targetBox.y, width: targetBox.width, height: targetBox.height },
+      handlePoint,
+      targetPoint,
+      viewport: { width: innerWidth, height: innerHeight },
+      scrollY,
+      handleVisible: handleBox.top >= 0 && handleBox.bottom <= innerHeight,
+      targetVisible: targetBox.top >= 0 && targetBox.bottom <= innerHeight,
+      handleHit: document.elementFromPoint(handlePoint.x, handlePoint.y)?.closest("button") === handle,
+      targetHit: target.contains(document.elementFromPoint(targetPoint.x, targetPoint.y)),
+    };
+  });
+  await expect.poll(readPointerGeometry).toMatchObject({
+    handleVisible: true,
+    targetVisible: true,
+    handleHit: true,
+    targetHit: true,
+  });
+  const geometry = await readPointerGeometry();
+  await page.mouse.move(geometry.handlePoint.x, geometry.handlePoint.y);
+  await expect.poll(async () => (await readPointerGeometry()).handleHit).toBe(true);
   await page.mouse.down();
-  await page.mouse.move(targetBox!.x + targetBox!.width / 2, targetBox!.y + targetBox!.height * 0.8, { steps: 8 });
+  await page.mouse.move(geometry.targetPoint.x, geometry.targetPoint.y, { steps: 8 });
   const indicator = target.locator('[data-slot="reorderable-list-drop-indicator"]');
   await expect(indicator).toHaveAttribute("data-state", "active");
   await expect(indicator).toHaveAttribute("data-position", "after");

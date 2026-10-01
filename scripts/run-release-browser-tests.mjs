@@ -77,6 +77,7 @@ function saveSummary() {
     );
 }
 saveSummary();
+let hasAssertionFailures = false;
 
 let inventorySequence = 0;
 function inventory(args) {
@@ -220,12 +221,28 @@ for (const project of projects) {
     });
     const reportedTests =
       stats && stats.expected + stats.unexpected + stats.skipped + stats.flaky;
+    const complete =
+      stats && (plannedTests === undefined || reportedTests === plannedTests);
+    const assertionFailure =
+      result.status !== 0 &&
+      complete &&
+      stats.unexpected > 0 &&
+      stats.flaky === 0;
+    if (assertionFailure) {
+      hasAssertionFailures = true;
+      summary.status = "failed";
+      saveSummary();
+      console.error(
+        `Release assertions failed for ${project} shard ${shard}; collecting the remaining independent shards`,
+      );
+      continue;
+    }
     if (
       result.status !== 0 ||
       !stats ||
       stats.unexpected > 0 ||
       stats.flaky > 0 ||
-      (plannedTests !== undefined && reportedTests !== plannedTests)
+      !complete
     ) {
       summary.status = "failed";
       saveSummary();
@@ -244,6 +261,11 @@ for (const project of projects) {
     saveSummary();
   }
 }
-summary.status = "passed";
 summary.completedAt = new Date().toISOString();
+if (hasAssertionFailures) {
+  summary.status = "failed";
+  saveSummary();
+  process.exit(1);
+}
+summary.status = "passed";
 saveSummary();

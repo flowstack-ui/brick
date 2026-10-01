@@ -174,16 +174,12 @@ test("state examples top-align fields and responsive size resolves at the active
   const responsive = page.getByRole("textbox", {
     name: "Responsive password",
   });
+  const responsiveRoot = responsive.locator("xpath=ancestor::*[contains(@class, 'brick-password-toggle-field')]");
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect((await responsiveRoot.boundingBox())?.height).toBeCloseTo(36, 1);
+  await page.setViewportSize({ width: 1024, height: 900 });
+  expect((await responsiveRoot.boundingBox())?.height).toBeCloseTo(44, 1);
+
   const rtl = page.getByRole("textbox", { name: "كلمة المرور" });
-  const [responsiveHeight, rtlHeight] = await Promise.all(
-    [responsive, rtl].map((input) =>
-      input.evaluate(
-        (element) =>
-          element
-            .closest(".brick-password-toggle-field")!
-            .getBoundingClientRect().height,
-      ),
-    ),
-  );
-  expect(responsiveHeight).toBeCloseTo(rtlHeight, 1);
+  await expect(rtl).toHaveCSS("direction", "rtl");
 });

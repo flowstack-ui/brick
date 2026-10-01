@@ -51,45 +51,49 @@ for (const [project, budget] of [
       }
     },
   );
-  test(
-    `six CI groups partition every ${project} shard exactly once`,
-    platform,
-    () => {
-      const groups = Array.from({ length: 6 }, (_, i) =>
-        plan(project, `${i + 1}/6`),
-      );
-      for (const result of groups)
-        assert.equal(result.status, 0, result.stderr);
-      const shards = groups.flatMap((result) => plannedShards(result.stdout));
-      const total = Math.ceil(1670 / budget);
-      assert.deepEqual(
-        shards.map((item) => item.shard).sort((a, b) => a - b),
-        Array.from({ length: total }, (_, i) => i + 1),
-      );
-      assert.ok(shards.every((item) => item.total === total));
-    },
-  );
+  for (const groupCount of [6, 8]) {
+    test(
+      `${groupCount} CI groups partition every ${project} shard exactly once`,
+      platform,
+      () => {
+        const groups = Array.from({ length: groupCount }, (_, i) =>
+          plan(project, `${i + 1}/${groupCount}`),
+        );
+        for (const result of groups)
+          assert.equal(result.status, 0, result.stderr);
+        const shards = groups.flatMap((result) => plannedShards(result.stdout));
+        const total = Math.ceil(1670 / budget);
+        assert.deepEqual(
+          shards.map((item) => item.shard).sort((a, b) => a - b),
+          Array.from({ length: total }, (_, i) => i + 1),
+        );
+        assert.ok(shards.every((item) => item.total === total));
+      },
+    );
+  }
 }
 
 for (const project of ["chromium", "firefox", "mobile-chromium"]) {
-  test(
-    `six CI groups partition every ${project} case batch once`,
-    platform,
-    () => {
-      const groups = Array.from({ length: 6 }, (_, i) =>
-        plan(project, `${i + 1}/6`),
-      );
-      for (const result of groups)
-        assert.equal(result.status, 0, result.stderr);
-      const shards = groups.flatMap((result) => plannedShards(result.stdout));
-      const total = Math.ceil(1670 / 120);
-      assert.deepEqual(
-        shards.map((item) => item.shard).sort((a, b) => a - b),
-        Array.from({ length: total }, (_, i) => i + 1),
-      );
-      assert.ok(shards.every((item) => item.total === total));
-    },
-  );
+  for (const groupCount of [6, 8]) {
+    test(
+      `${groupCount} CI groups partition every ${project} case batch once`,
+      platform,
+      () => {
+        const groups = Array.from({ length: groupCount }, (_, i) =>
+          plan(project, `${i + 1}/${groupCount}`),
+        );
+        for (const result of groups)
+          assert.equal(result.status, 0, result.stderr);
+        const shards = groups.flatMap((result) => plannedShards(result.stdout));
+        const total = Math.ceil(1670 / 120);
+        assert.deepEqual(
+          shards.map((item) => item.shard).sort((a, b) => a - b),
+          Array.from({ length: total }, (_, i) => i + 1),
+        );
+        assert.ok(shards.every((item) => item.total === total));
+      },
+    );
+  }
 }
 test("empty groups fail closed", platform, () => {
   const result = plan("chromium", "6/6", 1);

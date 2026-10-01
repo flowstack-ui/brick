@@ -474,8 +474,22 @@ test("Popover stacks long Footer actions inside an extreme narrow viewport", asy
 
   for (const action of actions) {
     await action.evaluate((element) =>
-      element.scrollIntoView({ block: "nearest" }),
+      element.scrollIntoView({ behavior: "auto", block: "nearest" }),
     );
+    await expect.poll(async () => {
+      const [actionBox, popoverBox] = await Promise.all([
+        action.boundingBox(),
+        viewport.boundingBox(),
+      ]);
+      return Boolean(
+        actionBox &&
+        popoverBox &&
+        actionBox.x >= popoverBox.x &&
+        actionBox.x + actionBox.width <= popoverBox.x + popoverBox.width &&
+        actionBox.y >= popoverBox.y &&
+        actionBox.y + actionBox.height <= popoverBox.y + popoverBox.height
+      );
+    }).toBe(true);
     const [actionBox, popoverBox] = await Promise.all([
       action.boundingBox(),
       viewport.boundingBox(),

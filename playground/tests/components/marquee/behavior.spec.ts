@@ -10,16 +10,29 @@ test("public pause freezes every track without changing separation", async ({ pa
     for (let cycle = 0; cycle < 3; cycle++) {
       await page.getByRole("button", { name: `Pause ${button}`, exact: true }).click();
       await expect(root).toHaveAttribute("data-state", "paused");
-      await page.waitForTimeout(50);
       const read = () => root.locator(".brick-marquee-content").evaluateAll(nodes => nodes.map(node => {
         const rect = node.getBoundingClientRect();
-        return { transform: getComputedStyle(node).transform, time: Number(node.getAnimations()[0]?.currentTime), x: rect.x, y: rect.y, width: rect.width, height: rect.height };
+        const animation = node.getAnimations()[0];
+        return { transform: getComputedStyle(node).transform, time: Number(animation?.currentTime), playState: animation?.playState, pending: animation?.pending, x: rect.x, y: rect.y, width: rect.width, height: rect.height };
       }));
+      // Atom synchronizes each replica once immediately and again after the
+      // browser commits every CSS animation's ready promise. Wait for that
+      // observable lifecycle state instead of assuming a fixed timer is long
+      // enough on every engine.
+      await expect.poll(async () => {
+        const tracks = await read();
+        const times = tracks.map(track => track.time);
+        return {
+          paused: tracks.every(track => track.playState === "paused"),
+          pending: tracks.some(track => track.pending),
+          spread: Math.max(...times) - Math.min(...times),
+        };
+      }).toEqual({ paused: true, pending: false, spread: 0 });
       const before = await read();
       await page.waitForTimeout(250);
       const after = await read();
       expect(after).toEqual(before);
-      for (const track of after) expect(Math.abs(track.time - after[0].time)).toBeLessThan(20);
+      for (const track of after) expect(track.time).toBe(after[0].time);
       const vertical = await root.getAttribute("data-orientation") === "vertical";
       const gap = await root.locator(".brick-marquee-viewport").evaluate(n => parseFloat(getComputedStyle(n).gap));
       for (let i = 1; i < after.length; i++) {

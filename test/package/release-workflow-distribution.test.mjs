@@ -9,7 +9,7 @@ const workflow = (name) =>
     "utf8",
   );
 
-test("scoped WebKit follow-up builds one current archive without enabling the full matrix", () => {
+test("scoped browser follow-up builds one current archive without enabling the full matrix", () => {
   const source = workflow("ci");
   const build = source.split("\n  release-diagnostic-build:")[1].split("\n  release-blocker-diagnostics:")[0];
   const diagnostic = source.split("\n  release-blocker-diagnostics:")[1].split("\n  package:")[0];
@@ -17,9 +17,15 @@ test("scoped WebKit follow-up builds one current archive without enabling the fu
   assert.match(build, /npm run build:playground/);
   assert.match(build, /verify-release-diagnostic-archive.mjs.*--record/);
   assert.match(diagnostic, /needs: release-diagnostic-build/);
-  assert.equal((diagnostic.match(/- case:/g) ?? []).length, 2);
-  assert.match(diagnostic, /case: avatar-mobile-webkit/);
-  assert.match(diagnostic, /case: toast-mobile-webkit/);
+  assert.equal((diagnostic.match(/- case:/g) ?? []).length, 6);
+  for (const name of [
+    "reorderable-mobile-webkit",
+    "marquee-pause-webkit",
+    "marquee-contrast-webkit",
+    "marquee-contrast-mobile-webkit",
+    "popover-mobile-webkit",
+    "radio-group-firefox",
+  ]) assert.match(diagnostic, new RegExp(`case: ${name}`));
   assert.match(diagnostic, /timeout-minutes: 16/);
   assert.match(diagnostic, /timeout-minutes: 8/);
   assert.match(diagnostic, /name: brick-diagnostic-package/);
@@ -62,11 +68,11 @@ for (const name of ["ci", "publish"]) {
       source,
       /project: \[chromium, firefox, mobile-chromium, webkit, mobile-webkit\]/,
     );
-    assert.match(source, /group: \[1, 2, 3, 4, 5, 6\]/);
+    assert.match(source, /group: \[1, 2, 3, 4, 5, 6, 7, 8\]/);
     assert.match(source, /fail-fast: false/);
     assert.match(
       source,
-      /FLOWSTACK_RELEASE_SHARD_GROUP: \$\{\{ matrix.group \}\}\/6/,
+      /FLOWSTACK_RELEASE_SHARD_GROUP: \$\{\{ matrix.group \}\}\/8/,
     );
     assert.doesNotMatch(source, /if: failure\(\)/);
     assert.match(source, /if: always\(\)/);
@@ -88,7 +94,7 @@ test("nightly reuses distributed CI and cannot cancel its caller", () => {
 test("publication waits for surface effects as well as all browser groups", () => {
   assert.match(
     workflow("publish"),
-    /needs: \[validate, repository, browser, package-consumers, app-consumer, surface-effects\]/,
+    /needs:\s*\[\s*validate,\s*repository,\s*browser,\s*package-consumers,\s*app-consumer,\s*surface-effects,?\s*\]/,
   );
 });
 

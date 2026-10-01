@@ -11,7 +11,7 @@ test("Prose isolates embedded descendants and trims wrapped content", async ({ p
     h("ul", null, h("li", null, h("p", {id:"list-copy"}, "First item"))),
     h(Prose.Exclude, null, h("p", {id:"excluded"}, "Outside prose"), h("svg", {id:"icon", width:20, height:20})),
     h("table", null, h("thead", null, h("tr", null, h("th", null, "Header"))))));
-  await page.setContent(`<style>${css}</style>${markup}`);
+  await page.setContent(`<meta name="viewport" content="width=device-width, initial-scale=1"><style>${css}</style>${markup}`);
   for (const [width,size] of [[390,14],[600,18],[800,16],[1200,18],[1400,14]] as const) {
     await page.setViewportSize({width,height:800});
     await expect(page.locator(".brick-prose")).toHaveCSS("font-size", `${size}px`);

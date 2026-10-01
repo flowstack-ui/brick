@@ -53,7 +53,11 @@ test("native form validation, submit and reset work; Hook Form connects errors",
   const hook = page.locator("#hook-form");
   await hook.getByRole("button", { name: "Save", exact: true }).click();
   await expect(hook.getByText("Choose a contact method.", { exact: true })).toBeVisible();
-  await hook.getByRole("radio", { name: "Email", exact: true }).click();
+  const hookEmail = hook.getByRole("radio", { name: "Email", exact: true });
+  await hookEmail.click();
+  await expect(hookEmail).toBeChecked();
+  await expect(hook.locator('input[name="channel"][value="email"]')).toBeChecked();
+  await expect(hook.getByText("Choose a contact method.", { exact: true })).toBeHidden();
   await hook.getByRole("button", { name: "Save", exact: true }).click();
   await expect(hook.getByRole("button", { name: "Saved", exact: true })).toBeVisible();
 });

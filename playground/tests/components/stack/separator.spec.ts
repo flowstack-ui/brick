@@ -4,12 +4,14 @@ import { renderToString } from "react-dom/server";
 import { readFileSync } from "node:fs";
 import { Stack } from "../../../../dist/stack.js";
 
+const viewportMeta = '<meta name="viewport" content="width=device-width, initial-scale=1">';
+
 test("separator gap longhands and nested axes reset at every boundary", async ({ page }) => {
   const content = renderToString(h(Stack, {
     direction: { initial: "row", sm: "column", md: "row-reverse", lg: "column-reverse", xl: "row" },
     gap: 1, rowGap: 2, columnGap: 3, separator: h(Stack.Separator),
   }, h("span", null, "First"), h(Stack, { separator: h(Stack.Separator) }, h("span", null, "Inner A"), h("span", null, "Inner B"))));
-  await page.setContent(content);
+  await page.setContent(viewportMeta + content);
   await page.addStyleTag({ content: readFileSync("dist/styles.css", "utf8") });
   for (const width of [479,480,767,768,1023,1024,1279,1280]) {
     await page.setViewportSize({ width, height: 900 });

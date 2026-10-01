@@ -4,18 +4,19 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const cases = {
-  "avatar-firefox": ["firefox", "avatar-group", "narrow width and 200% text preserve containment"],
-  "avatar-webkit": ["webkit", "avatar-group", "narrow width and 200% text preserve containment"],
-  "avatar-mobile-webkit": ["mobile-webkit", "avatar-group", "narrow width and 200% text preserve containment"],
-  "toast-mobile-chromium": ["mobile-chromium", "toast", "queue, overlap, logical positions, mobile containment, and accessibility are complete"],
-  "toast-mobile-webkit": ["mobile-webkit", "toast", "queue, overlap, logical positions, mobile containment, and accessibility are complete"],
+  "reorderable-mobile-webkit": ["mobile-webkit", "reorderable-list", "mouse drag commits on a valid item and abandons invalid space"],
+  "marquee-pause-webkit": ["webkit", "marquee", "public pause freezes every track without changing separation"],
+  "marquee-contrast-webkit": ["webkit", "marquee", "Marquee accessibility and forced-colors preserve readable originals"],
+  "marquee-contrast-mobile-webkit": ["mobile-webkit", "marquee", "Marquee accessibility and forced-colors preserve readable originals"],
+  "popover-mobile-webkit": ["mobile-webkit", "popover", "Popover stacks long Footer actions inside an extreme narrow viewport"],
+  "radio-group-firefox": ["firefox", "radio-group", "native form validation, submit and reset work; Hook Form connects errors", "documentation.spec.ts"],
 };
 const [id, mode] = process.argv.slice(2);
 if (!cases[id] || (mode && mode !== "--plan")) throw new Error("Select one known release-blocker case, optionally --plan");
-const [project, owner, title] = cases[id];
+const [project, owner, title, file = "behavior.spec.ts"] = cases[id];
 const directory = resolve("test-results/release-blockers", id);
 mkdirSync(directory, { recursive: true });
-const args = ["playwright", "test", `playground/tests/components/${owner}/behavior.spec.ts`, "--project", project,
+const args = ["playwright", "test", `playground/tests/components/${owner}/${file}`, "--project", project,
   "--grep", `${title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`, "--workers=1", "--retries=0", "--forbid-only",
   "--trace=on", "--timeout=30000", "--global-timeout=180000"];
 const env = { ...process.env, CI: "true", FLOWSTACK_DIAGNOSTIC_CAPTURE: "1", FLOWSTACK_TEST_ARTIFACT_DIR: directory };

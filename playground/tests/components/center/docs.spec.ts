@@ -22,8 +22,13 @@ test("docs examples preserve geometry, semantics, and real source", async ({ pag
   await expect(sentenceLink).toHaveCSS("vertical-align", "baseline");
   await expect(sentenceLink).toHaveCSS("align-items", "center");
   const textOffset = await sentenceLink.evaluate(link => {
+    let adjacentText: ChildNode | null = link.previousSibling;
+    while (adjacentText && (adjacentText.nodeType !== Node.TEXT_NODE || !adjacentText.textContent?.trim())) {
+      adjacentText = adjacentText.previousSibling;
+    }
+    if (!adjacentText) throw new Error("Expected rendered text before the inline Center link");
     const before = document.createRange();
-    before.selectNodeContents(link.previousSibling!);
+    before.selectNodeContents(adjacentText);
     const content = document.createRange();
     content.selectNodeContents(link.querySelector(".brick-link__content")!);
     return content.getBoundingClientRect().top - before.getBoundingClientRect().top;
