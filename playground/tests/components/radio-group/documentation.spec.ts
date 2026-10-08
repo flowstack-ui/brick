@@ -54,6 +54,9 @@ test("native form validation, submit and reset work; Hook Form connects errors",
   await hook.getByRole("button", { name: "Save", exact: true }).click();
   await expect(hook.getByText("Choose a contact method.", { exact: true })).toBeVisible();
   const hookEmail = hook.getByRole("radio", { name: "Email", exact: true });
+  // Hook Form's error focus is asynchronous. Verify it before issuing the
+  // pointer correction so its document scroll cannot race the click target.
+  await expect(hookEmail).toBeFocused();
   await hookEmail.click();
   await expect(hookEmail).toBeChecked();
   await expect(hook.locator('input[name="channel"][value="email"]')).toBeChecked();

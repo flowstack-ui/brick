@@ -169,6 +169,12 @@ test("Marquee focus and reduced motion expose only stationary originals", async 
 });
 test("Marquee accessibility and forced-colors preserve readable originals", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce", forcedColors: "active" });
+  // CSS responds before the media-query change reaches every controller. Check
+  // the complete static/accessibility contract, not just the CSS-hidden edge.
+  const viewports = page.locator(".brick-marquee-viewport");
+  await expect.poll(() => viewports.evaluateAll(nodes => nodes.every(node =>
+    node.hasAttribute("data-static") && (node as HTMLElement).tabIndex === 0,
+  ))).toBe(true);
   await expect(page.locator('[data-example="Partners"] .brick-marquee-edge').first()).toBeHidden();
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 });

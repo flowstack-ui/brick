@@ -7,6 +7,20 @@ export * from "@playwright/test";
  */
 export const test = base.extend({
   page: async ({ page, baseURL }, use, testInfo) => {
+    if (process.env.FLOWSTACK_DIAGNOSTIC_CAPTURE === "1") {
+      await page.addInitScript(() => {
+        const events: unknown[] = [];
+        Object.defineProperty(window, "releasePointerEvidence", { value: events });
+        for (const type of ["pointerdown", "pointerup", "click", "focusin", "focusout"]) {
+          document.addEventListener(type, event => {
+            const target = event.target as HTMLElement;
+            if (!target.closest?.("#hook-form")) return;
+            events.push({ type, time: performance.now(), target: target.outerHTML.slice(0, 1500),
+              scrollY, checked: document.querySelector('#hook-form [data-value="email"]')?.getAttribute("aria-checked") });
+          }, true);
+        }
+      });
+    }
     const navigate = page.goto.bind(page);
     page.goto = (input, options) => {
       const url = new URL(input, baseURL);

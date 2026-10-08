@@ -3,6 +3,15 @@ import type { Page, TestInfo } from "@playwright/test";
 /** Read-only teardown evidence; never changes test assertions or component state. */
 export async function captureReleaseDiagnostic(page: Page, testInfo: TestInfo) {
   if (process.env.FLOWSTACK_DIAGNOSTIC_CAPTURE !== "1") return;
+  const state = await page.evaluate(() => ({
+    events: (window as unknown as { releasePointerEvidence?: unknown[] }).releasePointerEvidence,
+    reducedMotion: matchMedia("(prefers-reduced-motion: reduce)").matches,
+    marquees: Array.from(document.querySelectorAll(".brick-marquee-viewport"), node => ({
+      html: node.outerHTML.slice(0, 600), tabIndex: (node as HTMLElement).tabIndex,
+      overflow: getComputedStyle(node).overflow, rootStatic: node.parentElement?.hasAttribute("data-static"),
+    })),
+  }));
+  await testInfo.attach("release-diagnostic-state", { body: Buffer.from(JSON.stringify(state, null, 2)), contentType: "application/json" });
   const geometry = await page.evaluate(() => {
     const properties = ["display", "position", "box-sizing", "overflow", "overflow-x", "overflow-y", "width", "height", "min-width", "max-width", "min-height", "max-height", "font-size", "line-height", "padding", "margin", "gap", "grid-template-columns", "align-items", "justify-content", "transform", "translate", "scale", "transform-origin", "transition", "pointer-events", "inset", "border-width"];
     const record = (el: Element) => {
