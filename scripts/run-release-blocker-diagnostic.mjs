@@ -9,7 +9,7 @@ const cases = {
   "marquee-contrast-webkit": ["webkit", "marquee", "Marquee accessibility and forced-colors preserve readable originals"],
   "marquee-contrast-mobile-webkit": ["mobile-webkit", "marquee", "Marquee accessibility and forced-colors preserve readable originals"],
   "popover-mobile-webkit": ["mobile-webkit", "popover", "Popover stacks long Footer actions inside an extreme narrow viewport"],
-  "radio-group-firefox": ["firefox", "radio-group", "native form validation, submit and reset work; Hook Form connects errors", "documentation.spec.ts"],
+  "radio-group-firefox": ["firefox", "radio-group", "Hook Form connects errors, pointer correction and submit", "documentation.spec.ts"],
 };
 const [id, mode] = process.argv.slice(2);
 if (!cases[id] || (mode && mode !== "--plan")) throw new Error("Select one known release-blocker case, optionally --plan");

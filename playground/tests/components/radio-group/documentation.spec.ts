@@ -35,7 +35,7 @@ test("native parts isolate link activation and own keyboard selection", async ({
   await expect(standard).toBeChecked();
 });
 
-test("native form validation, submit and reset work; Hook Form connects errors", async ({ page }) => {
+test("native form validation, submit and reset work", async ({ page }) => {
   const form = page.locator("#native-form");
   await form.getByRole("button", { name: "Save", exact: true }).click();
   await expect(form.getByRole("radio", { name: "Email", exact: true })).toBeFocused();
@@ -50,6 +50,11 @@ test("native form validation, submit and reset work; Hook Form connects errors",
   await expect(form.getByRole("radio", { name: "Text message", exact: true })).not.toBeChecked();
   await form.getByRole("radio", { name: "Email", exact: true }).click();
   await expect(form.getByRole("radio", { name: "Email", exact: true })).toBeChecked();
+});
+
+// Native constraint-validation UI is browser chrome, not page DOM. Exercise
+// Hook Form in its own fresh page so native-form UI cannot consume its click.
+test("Hook Form connects errors, pointer correction and submit", async ({ page }) => {
   const hook = page.locator("#hook-form");
   await hook.getByRole("button", { name: "Save", exact: true }).click();
   await expect(hook.getByText("Choose a contact method.", { exact: true })).toBeVisible();
