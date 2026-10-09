@@ -4,6 +4,13 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const cases = {
+  "mac-button-focus": ["webkit","button","Button inside focus survives clipping and every action fill","behavior.spec.ts"],
+  "mac-icon-button-focus": ["webkit","icon-button","IconButton inside focus survives clipping and every action fill","behavior.spec.ts"],
+  "mac-stack-focus": ["webkit","stack","reverse axes map edge spacing logically and leave DOM and keyboard order intact","engine.spec.ts"],
+  "mac-reset-focus": ["webkit","../integration","token-free reset retains a visible native focus fallback","reset-focus.spec.ts"],
+  "mac-navigation": ["webkit","navigation-menu","defaults, links, disclosure, sizes, orientation, state, and composition work","behavior.spec.ts"],
+  "mac-nav-list-route": ["webkit","../integration","catalog route nav-list renders without uncaught errors","catalog-routes.spec.ts"],
+  "mac-segment-containment": ["webkit","../integration","segment-group keeps labeled specimens separated and contained","review-standards.spec.ts"],
   "center-docs-mobile-webkit": ["mobile-webkit", "center", "docs examples preserve geometry, semantics, and real source", "docs.spec.ts"],
   "typography-titles-webkit": ["webkit","../integration","surface and compact titles expose the approved normalized tracking","typography-recipes.spec.ts"],
   "typography-webkit": ["webkit","../integration","labels, validation, controls, and field values resolve through shared recipes","typography-recipes.spec.ts"],

@@ -68,6 +68,27 @@ jobs:
       max-parallel: 6
       matrix:
         include:
+          - case: mac-button-focus
+            engine: webkit
+            os: macos-latest
+          - case: mac-icon-button-focus
+            engine: webkit
+            os: macos-latest
+          - case: mac-stack-focus
+            engine: webkit
+            os: macos-latest
+          - case: mac-reset-focus
+            engine: webkit
+            os: macos-latest
+          - case: mac-navigation
+            engine: webkit
+            os: macos-latest
+          - case: mac-nav-list-route
+            engine: webkit
+            os: macos-latest
+          - case: mac-segment-containment
+            engine: webkit
+            os: macos-latest
           - case: center-docs-mobile-webkit
             engine: webkit
           - case: typography-titles-webkit
@@ -151,7 +172,9 @@ jobs:
         timeout-minutes: 4
         env:
           DIAGNOSTIC_CASE: ${{ matrix.case }}
-        run: node scripts/run-release-blocker-diagnostic.mjs "$DIAGNOSTIC_CASE"
+        run: |
+          node scripts/configure-browser-host.mjs
+          node scripts/run-release-blocker-diagnostic.mjs "$DIAGNOSTIC_CASE"
       - if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
@@ -293,7 +316,9 @@ jobs:
       - name: Extract exact packed build for browser discovery
         run: tar -xzf "$RUNNER_TEMP"/brick-package/*.tgz --strip-components=1 package/dist
       - run: npx playwright install --with-deps ${{ matrix.engine }}
-      - run: npm run test:browser:release:project:built -- ${{ matrix.project }}
+      - run: |
+          node scripts/configure-browser-host.mjs
+          npm run test:browser:release:project:built -- ${{ matrix.project }}
         env:
           FLOWSTACK_RELEASE_SHARD_GROUP: ${{ matrix.group }}/8
       - if: always()

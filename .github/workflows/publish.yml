@@ -119,7 +119,9 @@ jobs:
       - name: Extract exact packed build for browser discovery
         run: tar -xzf "$RUNNER_TEMP"/brick-package/*.tgz --strip-components=1 package/dist
       - run: npx playwright install --with-deps ${{ matrix.engine }}
-      - run: npm run test:browser:release:project:built -- ${{ matrix.project }}
+      - run: |
+          node scripts/configure-browser-host.mjs
+          npm run test:browser:release:project:built -- ${{ matrix.project }}
         env:
           FLOWSTACK_RELEASE_SHARD_GROUP: ${{ matrix.group }}/8
       - if: always()
