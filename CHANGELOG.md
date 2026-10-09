@@ -8,6 +8,10 @@ Planned release: 0.3.0.
 
 ### Changed
 
+- Adopt published Atom 0.27.3 as an exact dependency. Editable autoresize and
+  live disclosure measurement coalesce observer-driven writes outside observer
+  delivery, with pending work cancelled on cleanup.
+
 - Keep collapsed variable-height Toast cards within their fixed viewport anchor.
 
 - Prevent Table body-text fragments leaking above sticky headers at fractional

@@ -3,6 +3,9 @@
 
 ## Unreleased
 
+- Adopt Atom 0.27.3's frame-coalesced textarea autoresize and cleanup cancellation
+  to avoid ResizeObserver feedback during responsive reflow.
+
 Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
 
 Editable follows the package version of `@flowstack-ui/brick`.

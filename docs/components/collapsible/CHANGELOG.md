@@ -4,6 +4,9 @@ Collapsible follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Adopt Atom 0.27.3's frame-coalesced live measurement and cleanup cancellation
+  while preserving synchronous initial sizing and the existing motion recipe.
+
 - Add responsive sizes/variants, consistent disabled fade, hover-capable paint,
   muted indicator color and coordinated content insets.
 - Animate full reveals with size/fade while preserving partial-preview opacity.
