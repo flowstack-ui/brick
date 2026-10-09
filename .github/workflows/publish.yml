@@ -79,7 +79,8 @@ jobs:
   browser:
     name: browser (${{ matrix.project }}, group ${{ matrix.group }}/8)
     needs: repository
-    runs-on: ubuntu-latest
+    # Keep native desktop WebKit qualification aligned with CI.
+    runs-on: ${{ matrix.project == 'webkit' && 'macos-latest' || 'ubuntu-latest' }}
     # Separate machines bound wall time without competing for one host.
     timeout-minutes: 20
     strategy:

@@ -64,6 +64,14 @@ test("nightly inherits a verified timeout from its local reusable workflow", asy
   );
 });
 
+test("CI and publication qualify desktop WebKit native controls on macOS without dropping a profile", () => {
+  for (const [name, job] of [["ci", "browser-main"], ["publish", "browser"]]) {
+    const body = workflow(name).split(`\n  ${job}:`)[1].split(/\n  [a-z-]+:/)[0];
+    assert.match(body, /runs-on: \$\{\{ matrix\.project == 'webkit' && 'macos-latest' \|\| 'ubuntu-latest' \}\}/);
+    assert.match(body, /project: \[chromium, firefox, mobile-chromium, webkit, mobile-webkit\]/);
+  }
+});
+
 test("timeout delegation fails closed for missing, cyclic or unbounded targets", async () => {
   const caller =
     "jobs:\n  release:\n    uses: ./.github/workflows/target.yml\n";

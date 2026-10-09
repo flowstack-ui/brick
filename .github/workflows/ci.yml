@@ -253,7 +253,8 @@ jobs:
     name: browser (${{ matrix.project }}, group ${{ matrix.group }}/8)
     needs: package
     if: github.event_name != 'pull_request' && (github.event_name != 'workflow_dispatch' || inputs.diagnostic != 'release-blockers')
-    runs-on: ubuntu-latest
+    # Linux WebKit cannot drag even plain native resize controls; macOS qualifies them.
+    runs-on: ${{ matrix.project == 'webkit' && 'macos-latest' || 'ubuntu-latest' }}
     # Separate machines bound wall time without competing for one host.
     timeout-minutes: 20
     strategy:
