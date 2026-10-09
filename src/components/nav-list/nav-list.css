@@ -311,7 +311,9 @@
       var(--brick-motion-easing-exit) both;
   }
 
-  .brick-nav-list__section-content[data-initial-open] {
+  /* Match the open recipe's specificity: initial content must not animate
+     against Atom's intrinsic-size observer during its first layout. */
+  .brick-nav-list__section-content[data-collapsible][data-state="open"][data-initial-open] {
     animation: none;
   }
 

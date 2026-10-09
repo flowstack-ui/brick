@@ -36,6 +36,8 @@ test("retained sections hide after closing and allow unclipped settled focus", a
   const root = page.getByRole("navigation", { name: "Project navigation", exact: true });
   const content = root.locator(".brick-nav-list__section-content");
   const trigger = root.getByRole("button", { name: "Projects", exact: true });
+  await expect(content).toHaveAttribute("data-initial-open", "");
+  await expect(content).toHaveCSS("animation-name", "none");
   await expect(content).toHaveCSS("overflow", "visible");
   await trigger.click();
   await expect(content).toHaveAttribute("inert", "");

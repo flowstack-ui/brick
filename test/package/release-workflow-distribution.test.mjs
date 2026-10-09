@@ -17,7 +17,7 @@ test("scoped browser follow-up builds one current archive without enabling the f
   assert.match(build, /npm run build:playground/);
   assert.match(build, /verify-release-diagnostic-archive.mjs.*--record/);
   assert.match(diagnostic, /needs: release-diagnostic-build/);
-  assert.equal((diagnostic.match(/- case:/g) ?? []).length, 40);
+  assert.equal((diagnostic.match(/- case:/g) ?? []).length, 41);
   assert.match(diagnostic, /configure-browser-host.mjs/);
   assert.match(diagnostic, /runs-on: \$\{\{ matrix\.os \|\| 'ubuntu-latest' \}\}/);
   for (const name of ["textarea-resize-webkit", "textarea-corners-webkit"]) {

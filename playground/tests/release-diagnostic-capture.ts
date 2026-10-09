@@ -17,13 +17,13 @@ export async function captureReleaseDiagnostic(page: Page, testInfo: TestInfo) {
     const properties = ["display", "position", "box-sizing", "overflow", "overflow-x", "overflow-y", "width", "height", "min-width", "max-width", "min-height", "max-height", "font-size", "line-height", "padding", "margin", "gap", "grid-template-columns", "align-items", "justify-content", "transform", "translate", "scale", "transform-origin", "transition", "pointer-events", "inset", "border-width"];
     const record = (el: Element) => {
       const css = getComputedStyle(el);
-      const variables = Array.from(css).filter(key => key.startsWith("--atom-toast-") || key.startsWith("--brick-toast-") || key.startsWith("--brick-avatar-group-"));
+      const variables = Array.from(css).filter(key => key.startsWith("--atom-toast-") || key.startsWith("--brick-toast-") || key.startsWith("--brick-avatar-group-") || key.startsWith("--radio-group-indicator-"));
       return { tag: el.tagName, class: el.className, attributes: Object.fromEntries(Array.from(el.attributes).map(a => [a.name, a.value])), rect: el.getBoundingClientRect().toJSON(), scrollWidth: el.scrollWidth, clientWidth: el.clientWidth,
         styles: Object.fromEntries([...properties, ...variables].map(key => [key, css.getPropertyValue(key)])) };
     };
     const targets = Array.from(document.querySelectorAll('[data-testid="avatar-group-stress"] .brick-avatar-group, .brick-toast-viewport, .brick-toast, .evidence-app-bar, .brick-popover, [data-slot="popover-viewport"], .brick-popover__footer'));
     return { url: location.href, viewport: { innerWidth, innerHeight, visual: visualViewport && { width: visualViewport.width, height: visualViewport.height, scale: visualViewport.scale } }, coarse: matchMedia("(pointer: coarse)").matches,
-      root: record(document.documentElement), overflow: Array.from(document.querySelectorAll("body *")).filter(el => el.getBoundingClientRect().right > document.documentElement.clientWidth + 1).slice(0, 100).map(record), targets: targets.map(el => ({ element: record(el), children: Array.from(el.children).map(record), ancestors: (() => { const list = []; let parent = el.parentElement; for (let i = 0; parent && i < 6; i++, parent = parent.parentElement) list.push(record(parent)); return list; })() })) };
+      root: record(document.documentElement), overflow: Array.from(document.querySelectorAll("body *")).filter(el => el.getBoundingClientRect().right > document.documentElement.clientWidth + 1 || el.scrollWidth > el.clientWidth + 1).slice(0, 100).map(record), targets: targets.map(el => ({ element: record(el), children: Array.from(el.children).map(record), ancestors: (() => { const list = []; let parent = el.parentElement; for (let i = 0; parent && i < 6; i++, parent = parent.parentElement) list.push(record(parent)); return list; })() })) };
   });
   await testInfo.attach("release-diagnostic-geometry", { body: Buffer.from(JSON.stringify(geometry, null, 2)), contentType: "application/json" });
   await testInfo.attach("release-diagnostic-viewport", { body: await page.screenshot({ timeout: 5000 }), contentType: "image/png" });

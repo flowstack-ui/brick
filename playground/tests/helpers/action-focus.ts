@@ -1,7 +1,10 @@
-import { expect, type Locator, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 /** Exercise the public paint matrix on a real prop-rendered host. */
 export async function verifyActionFocus(page: Page, host: Locator) {
+  // All 168 paint states remain asserted; hosted macOS can exceed 30s while
+  // making steady progress through the matrix after keyboard focus succeeds.
+  test.setTimeout(60000);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await host.scrollIntoViewIfNeeded();
   await host.focus();
