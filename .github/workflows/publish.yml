@@ -81,8 +81,8 @@ jobs:
     needs: repository
     # Keep native desktop WebKit qualification aligned with CI.
     runs-on: ${{ matrix.project == 'webkit' && 'macos-latest' || 'ubuntu-latest' }}
-    # Separate machines bound wall time without competing for one host.
-    timeout-minutes: 20
+    # Include browser provisioning and up to six sequential macOS WebKit shards.
+    timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:

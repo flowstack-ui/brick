@@ -43,7 +43,10 @@ test("CI and publication qualify desktop WebKit native controls on macOS without
   for (const [name, job] of [["ci", "browser-main"], ["publish", "browser"]]) {
     const body = workflow(name).split(`\n  ${job}:`)[1].split(/\n  [a-z-]+:/)[0];
     assert.match(body, /runs-on: \$\{\{ matrix\.project == 'webkit' && 'macos-latest' \|\| 'ubuntu-latest' \}\}/);
-    assert.match(body, /project: \[chromium, firefox, mobile-chromium, webkit, mobile-webkit\]/);
+    assert.match(body, name === "ci"
+      ? /fromJSON\('\["chromium", "firefox", "mobile-chromium", "webkit", "mobile-webkit"\]'\)/
+      : /project: \[chromium, firefox, mobile-chromium, webkit, mobile-webkit\]/);
+    assert.match(body, /timeout-minutes: 35/);
   }
 });
 
@@ -71,9 +74,13 @@ for (const name of ["ci", "publish"]) {
     const source = workflow(name);
     assert.match(
       source,
-      /project: \[chromium, firefox, mobile-chromium, webkit, mobile-webkit\]/,
+      name === "ci"
+        ? /fromJSON\('\["chromium", "firefox", "mobile-chromium", "webkit", "mobile-webkit"\]'\)/
+        : /project: \[chromium, firefox, mobile-chromium, webkit, mobile-webkit\]/,
     );
-    assert.match(source, /group: \[1, 2, 3, 4, 5, 6, 7, 8\]/);
+    assert.match(source, name === "ci"
+      ? /fromJSON\('\[1, 2, 3, 4, 5, 6, 7, 8\]'\)/
+      : /group: \[1, 2, 3, 4, 5, 6, 7, 8\]/);
     assert.match(source, /fail-fast: false/);
     assert.match(
       source,
@@ -86,6 +93,19 @@ for (const name of ["ci", "publish"]) {
     assert.match(source, /retention-days: 14/);
   });
 }
+
+test("single-group recovery is explicit, isolated and cannot add unselected engine jobs", () => {
+  const source = workflow("ci");
+  const body = source.split("\n  browser-main:")[1].split("\n  archive-consumers:")[0];
+  assert.match(source, /options: \[none, release-blockers, release-group\]\n\s+default: none/);
+  assert.match(source, /options: \['1', '2', '3', '4', '5', '6', '7', '8'\]/);
+  assert.ok(body.includes(`project: \${{ inputs.diagnostic == 'release-group' && fromJSON(format('["{0}"]', inputs.recovery_project))`));
+  assert.ok(body.includes(`group: \${{ inputs.diagnostic == 'release-group' && fromJSON(format('[{0}]', inputs.recovery_group))`));
+  assert.doesNotMatch(body, /include:|matrix\.engine/);
+  assert.match(body, /matrix.project == 'mobile-chromium' && 'chromium' \|\| matrix.project == 'mobile-webkit' && 'webkit' \|\| matrix.project/);
+  assert.ok(source.includes(`format('{0}-{1}', inputs.recovery_project, inputs.recovery_group) || 'all'`));
+  assert.match(body, /FLOWSTACK_RELEASE_SHARD_GROUP: \$\{\{ matrix.group \}\}\/8/);
+});
 
 test("nightly reuses distributed CI and cannot cancel its caller", () => {
   const nightly = workflow("nightly");

@@ -10,8 +10,18 @@ on:
       diagnostic:
         description: Bounded diagnostics only; none runs ordinary CI
         type: choice
-        options: [none, release-blockers]
+        options: [none, release-blockers, release-group]
         default: none
+      recovery_project:
+        description: Browser profile for release-group recovery only
+        type: choice
+        options: [chromium, firefox, mobile-chromium, webkit, mobile-webkit]
+        default: chromium
+      recovery_group:
+        description: One of the unchanged eight release groups; recovery only
+        type: choice
+        options: ['1', '2', '3', '4', '5', '6', '7', '8']
+        default: '1'
   workflow_call:
 
 permissions:
@@ -19,7 +29,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}-${{ inputs.diagnostic || 'none' }}
+  group: ci-${{ github.workflow }}-${{ github.ref }}-${{ inputs.diagnostic || 'none' }}-${{ inputs.diagnostic == 'release-group' && format('{0}-{1}', inputs.recovery_project, inputs.recovery_group) || 'all' }}
   cancel-in-progress: true
 
 jobs:
@@ -216,24 +226,14 @@ jobs:
     if: github.event_name != 'pull_request' && (github.event_name != 'workflow_dispatch' || inputs.diagnostic != 'release-blockers')
     # Linux WebKit cannot drag even plain native resize controls; macOS qualifies them.
     runs-on: ${{ matrix.project == 'webkit' && 'macos-latest' || 'ubuntu-latest' }}
-    # Separate machines bound wall time without competing for one host.
-    timeout-minutes: 20
+    # Include browser provisioning and up to six sequential macOS WebKit shards.
+    # Keep individual test budgets/retries unchanged; interrupted groups are not passes.
+    timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:
-        project: [chromium, firefox, mobile-chromium, webkit, mobile-webkit]
-        group: [1, 2, 3, 4, 5, 6, 7, 8]
-        include:
-          - project: chromium
-            engine: chromium
-          - project: firefox
-            engine: firefox
-          - project: mobile-chromium
-            engine: chromium
-          - project: webkit
-            engine: webkit
-          - project: mobile-webkit
-            engine: webkit
+        project: ${{ inputs.diagnostic == 'release-group' && fromJSON(format('["{0}"]', inputs.recovery_project)) || fromJSON('["chromium", "firefox", "mobile-chromium", "webkit", "mobile-webkit"]') }}
+        group: ${{ inputs.diagnostic == 'release-group' && fromJSON(format('[{0}]', inputs.recovery_group)) || fromJSON('[1, 2, 3, 4, 5, 6, 7, 8]') }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -253,7 +253,7 @@ jobs:
           path: ${{ runner.temp }}/brick-package
       - name: Extract exact packed build for browser discovery
         run: tar -xzf "$RUNNER_TEMP"/brick-package/*.tgz --strip-components=1 package/dist
-      - run: npx playwright install --with-deps ${{ matrix.engine }}
+      - run: npx playwright install --with-deps ${{ matrix.project == 'mobile-chromium' && 'chromium' || matrix.project == 'mobile-webkit' && 'webkit' || matrix.project }}
       - run: |
           node scripts/configure-browser-host.mjs
           npm run test:browser:release:project:built -- ${{ matrix.project }}
