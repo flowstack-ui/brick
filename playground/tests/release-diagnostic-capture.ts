@@ -40,26 +40,31 @@ export async function captureReleaseDiagnostic(page: Page, testInfo: TestInfo) {
       ["indicator-transform", ".brick-segment-group__indicator { translate:none!important; transform:translate(var(--radio-group-indicator-x,0),var(--radio-group-indicator-y,0))!important }"],
       ["root-scroll-contained", ".brick-segment-group { overflow:auto!important }"],
       ["stress-relative", '[data-testid="segment-group-stress"] { position:relative!important }'],
+      ["rtl-specimen-relative", '[data-testid="segment-group-stress"] > [dir="rtl"] { position:relative!important }'],
+      ["indicator-no-transition", ".brick-segment-group__indicator { transition:none!important }"],
     ]) {
       // Every intervention gets its own navigation: a layout invalidation in
       // one probe must not repair the starting state of the next experiment.
       const probe = await page.context().newPage();
       try {
+      // Install before the application mounts. Post-layout interventions can
+      // merely invalidate WebKit's cached overflow, obscuring the initial cause.
+      // The untreated control uses the identical response interception.
+      await probe.route(url => url.pathname === "/segment-group", async route => {
+        const response = await route.fetch();
+        const body = (await response.text()).replace("<head>", `<head><style id="release-overflow-probe">${rule}</style>`);
+        await route.fulfill({ response, body });
+      });
       await probe.goto(page.url());
       await probe.locator('[data-testid="segment-group-stress"]').waitFor();
       results.push(await probe.evaluate(async ({ name, rule }) => {
         const start = performance.now();
         const measure = (phase: string) => ({ phase, elapsed: performance.now() - start, width: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth });
         const settle = () => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
-        const samples = [measure("baseline")];
+        const samples = [measure("pre-render-rule")];
         await settle();
-        samples.push(measure("untreated-two-frames"));
-          const style = document.createElement("style");
-          style.textContent = rule;
-          if (rule) document.head.append(style);
-          await settle();
-          samples.push(measure("applied"));
-          style.remove();
+        samples.push(measure("pre-render-two-frames"));
+          document.getElementById("release-overflow-probe")?.remove();
           await settle();
           samples.push(measure("restored"));
         return { probe: name, samples };
