@@ -68,6 +68,8 @@ test("choice rows clear pointer highlight but retain their selection", async ({
       element.scrollIntoView({ block: "center", behavior: "instant" }),
     );
     await trigger.click();
+    // Pointer entry starts after the menu's initial focus handoff has settled.
+    await expect(page.getByRole("menu").last()).toBeFocused();
     const item = page.getByRole(role, { name: itemName, exact: true });
     await item.hover();
     await expect(item).toHaveAttribute("data-highlighted", "");

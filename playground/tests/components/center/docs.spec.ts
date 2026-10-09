@@ -21,6 +21,14 @@ test("docs examples preserve geometry, semantics, and real source", async ({ pag
   const sentenceLink = page.locator("#inline [data-example-canvas] a.brick-center");
   await expect(sentenceLink).toHaveCSS("vertical-align", "baseline");
   await expect(sentenceLink).toHaveCSS("align-items", "center");
+  // Compare baselines on one line, not the tops of independently wrapped lines.
+  // Restore normal wrapping before the narrow/RTL containment checks below.
+  const previousWhiteSpace = await sentenceLink.evaluate(link => {
+    const parent = link.parentElement!;
+    const previous = parent.style.whiteSpace;
+    parent.style.whiteSpace = "nowrap";
+    return previous;
+  });
   const textOffset = await sentenceLink.evaluate(link => {
     let adjacentText: ChildNode | null = link.previousSibling;
     while (adjacentText && (adjacentText.nodeType !== Node.TEXT_NODE || !adjacentText.textContent?.trim())) {
@@ -33,6 +41,7 @@ test("docs examples preserve geometry, semantics, and real source", async ({ pag
     content.selectNodeContents(link.querySelector(".brick-link__content")!);
     return content.getBoundingClientRect().top - before.getBoundingClientRect().top;
   });
+  await sentenceLink.evaluate((link, value) => { link.parentElement!.style.whiteSpace = value; }, previousWhiteSpace);
   expect(Math.abs(textOffset)).toBeLessThan(0.5);
   for (const appearance of ["light", "dark"]) {
     await page.evaluate(value => { document.documentElement.dataset.brickAppearance = value; }, appearance);

@@ -4,6 +4,10 @@ Popover follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Reduce Footer's own inline inset at extreme viewport widths (12rem and below)
+  so wrapped actions remain reachable in short scrolling panels without changing
+  Button typography, padding or minimum hit targets.
+
 - Align the indicator example through Button's end icon slot and keep full-radius
   examples readable with compact centered content.
 

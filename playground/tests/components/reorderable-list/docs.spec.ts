@@ -163,14 +163,18 @@ test("grid pointer preview keeps size and siblings arrive at their measured dest
   const handle = root.getByRole('button', { name: 'Reorder Blue', exact: true });
   const source = root.locator('li[data-value="Blue"]');
   const target = root.locator('li[data-value="Light blue"]');
+  // A tall one-column mobile grid can leave its first handle above the viewport.
+  await handle.hover();
   const h = (await handle.boundingBox())!;
   const s = (await source.boundingBox())!;
-  const t = (await target.boundingBox())!;
   await page.mouse.move(h.x + h.width / 2, h.y + h.height / 2);
   await page.mouse.down();
-  await page.mouse.move(t.x + t.width * 0.8, t.y + t.height / 2, { steps: 1 });
+  await page.mouse.move(h.x + h.width / 2 + 12, h.y + h.height / 2);
   const preview = page.locator('[data-slot="reorderable-list-preview"]');
   await expect(preview).toBeVisible();
+  await target.scrollIntoViewIfNeeded();
+  const t = (await target.boundingBox())!;
+  await page.mouse.move(t.x + t.width * 0.8, t.y + t.height / 2, { steps: 1 });
   const p = (await preview.boundingBox())!;
   expect(Math.abs(p.width - s.width)).toBeLessThan(1);
   expect(Math.abs(p.height - s.height)).toBeLessThan(1);

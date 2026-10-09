@@ -109,9 +109,10 @@ test("native wrapper corner resizing grows the editor and preserves the footer",
     const before = await box(root);
     const editorBefore = await box(root.locator("textarea"));
     const countBefore = index === 2 ? null : await box(root.locator(".brick-textarea-count"));
-    await page.mouse.move(before.x + before.width - 3, before.y + before.height - 3);
+    // Stay inside the rounded clip while grabbing the browser's corner handle.
+    await page.mouse.move(before.x + before.width - 8, before.y + before.height - 8);
     await page.mouse.down();
-    await page.mouse.move(before.x + before.width - 43, before.y + before.height + 77, { steps: 12 });
+    await page.mouse.move(before.x + before.width - 48, before.y + before.height + 72, { steps: 12 });
     await page.mouse.up();
     const after = await box(root);
     const editorAfter = await box(root.locator("textarea"));
@@ -141,10 +142,10 @@ test("corner handles grow and shrink compact, large, underline and RTL fields", 
     const before = await box(root);
     for (const delta of [70, -35]) {
       const current = await box(root);
-      const x = rtl ? current.x + 3 : current.x + current.width - 3;
-      await page.mouse.move(x, current.y + current.height - 3);
+      const x = rtl ? current.x + 8 : current.x + current.width - 8;
+      await page.mouse.move(x, current.y + current.height - 8);
       await page.mouse.down();
-      await page.mouse.move(x, current.y + current.height - 3 + delta, { steps: 10 });
+      await page.mouse.move(x, current.y + current.height - 8 + delta, { steps: 10 });
       await page.mouse.up();
       const changed = await box(root);
       expect(Math.abs(changed.height - current.height - delta)).toBeLessThan(4);

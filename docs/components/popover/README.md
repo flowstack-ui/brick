@@ -192,6 +192,9 @@ If an independently scrolling list is genuinely needed, compose it **inside
 Body**, with its own justified size constraint. Keep Arrow directly in Content.
 Verify the accessible name, title/description inset, alignment with body content,
 and reachability of the last action at narrow and short heights in both appearances.
+At extreme widths of 12rem and below, Footer reduces its own inline inset to
+keep long action labels from exceeding the short scrolling viewport; Button's
+typography, padding and minimum hit targets remain unchanged.
 
 Use Title and Description when they clarify the panel. Atom owns trigger
 relationships, focus behavior, outside/Escape dismissal, and portal semantics.

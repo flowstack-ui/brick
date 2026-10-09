@@ -19,7 +19,7 @@ test("Sidebar trigger composition preserves IconButton paint and size in either 
   const sidebar = await read('sidebar');
   const action = await read('icon-button');
   for (const css of [core + sidebar + action, core + action + sidebar]) {
-    await page.setContent(`<style>${css}</style>${markup}`);
+    await page.setContent(`<meta name="viewport" content="width=device-width, initial-scale=1"><style>${css}</style>${markup}`);
     for (const id of ['composed', 'standalone']) {
       await expect(page.getByRole('button', { name: id })).toHaveCSS('width', '24px');
       await expect(page.getByRole('button', { name: id })).toHaveCSS('height', '24px');
@@ -59,7 +59,7 @@ test("layout ownership survives aggregate and both modular stylesheet orders", a
   const deliveries = [await read("styles.css"), core + section + surface + remaining, core + surface + section + remaining];
   const results = [];
   for (const css of deliveries) {
-    await page.setContent(`<style>${css}</style>${markup}`);
+    await page.setContent(`<meta name="viewport" content="width=device-width, initial-scale=1"><style>${css}</style>${markup}`);
     await expect(page.locator('#region.brick-section.brick-surface')).toHaveCount(1);
     await expect(page.locator('#region')).toHaveCSS('padding-block-start', '66px');
     await expect(page.locator('.brick-sidebar__panel')).toHaveCSS('border-right-width', '0px');

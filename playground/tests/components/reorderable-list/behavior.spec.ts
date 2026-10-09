@@ -222,6 +222,7 @@ for (const withPreview of [false, true]) {
 
     for (const ending of ['drop', 'escape', 'blur', 'capture-loss']) {
       await handle.scrollIntoViewIfNeeded();
+      await handle.hover();
       const h = (await handle.boundingBox())!;
       await page.mouse.move(h.x + h.width / 2, h.y + h.height / 2);
       await expect(handle).toHaveCSS('cursor', 'grab');

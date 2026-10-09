@@ -25,14 +25,16 @@ test("public pause freezes every track without changing separation", async ({ pa
         return {
           paused: tracks.every(track => track.playState === "paused"),
           pending: tracks.some(track => track.pending),
-          spread: Math.max(...times) - Math.min(...times),
+          synchronized: Math.max(...times) - Math.min(...times) < 1,
         };
-      }).toEqual({ paused: true, pending: false, spread: 0 });
+      }).toEqual({ paused: true, pending: false, synchronized: true });
       const before = await read();
       await page.waitForTimeout(250);
       const after = await read();
       expect(after).toEqual(before);
-      for (const track of after) expect(track.time).toBe(after[0].time);
+      // Firefox can serialize synchronized CSS animation times 0.02ms apart.
+      // Keep the same sub-millisecond bound as the late-replica regression.
+      for (const track of after) expect(Math.abs(track.time - after[0].time)).toBeLessThan(1);
       const vertical = await root.getAttribute("data-orientation") === "vertical";
       const gap = await root.locator(".brick-marquee-viewport").evaluate(n => parseFloat(getComputedStyle(n).gap));
       for (let i = 1; i < after.length; i++) {

@@ -66,8 +66,9 @@ test("labels, validation, controls, and field values resolve through shared reci
   expect(label).toMatchObject({
     size: "14px",
     weight: "500",
-    lineHeight: "16.8px",
   });
+  // Engines serialize the same fractional CSS pixel value differently.
+  expect(parseFloat(label.lineHeight)).toBeCloseTo(16.8, 4);
 
   await page.goto("/fieldset?qualification=1");
   expect(
@@ -160,8 +161,6 @@ test("surface and compact titles expose the approved normalized tracking", async
   await page.getByRole("button", { name: "Project settings", exact: true }).click();
   const title = page.locator("[data-slot='popover-title']").first();
   await expect(title).toBeVisible();
-  expect(await typography(title)).toMatchObject({
-    size: "16px",
-    letterSpacing: "-0.16px",
-  });
+  await expect(title).toHaveCSS("font-size", "16px");
+  await expect(title).toHaveCSS("letter-spacing", "-0.16px");
 });

@@ -195,6 +195,12 @@
     }
   }
 
+  @media (max-width: 12rem) {
+    .brick-popover__footer {
+      padding-inline: var(--brick-space-1);
+    }
+  }
+
   @media (max-height: 20rem) {
     .brick-popover > [data-slot="popover-viewport"] {
       overflow: auto;

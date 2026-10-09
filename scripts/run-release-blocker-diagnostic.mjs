@@ -4,6 +4,12 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const cases = {
+  "center-docs-mobile-webkit": ["mobile-webkit", "center", "docs examples preserve geometry, semantics, and real source", "docs.spec.ts"],
+  "typography-titles-webkit": ["webkit","../integration","surface and compact titles expose the approved normalized tracking","typography-recipes.spec.ts"],
+  "typography-webkit": ["webkit","../integration","labels, validation, controls, and field values resolve through shared recipes","typography-recipes.spec.ts"],
+  "sidebar-paint-mobile-webkit": ["mobile-webkit","../integration","Sidebar trigger composition preserves IconButton paint and size in either CSS order","layout-ownership.spec.ts"],
+  "button-mobile-webkit": ["mobile-webkit","../integration","Button remains operable in touch device profiles","mobile.spec.ts"],
+  "card-mobile-webkit": ["mobile-webkit","../integration","Card remains contained and its child actions stay operable on touch devices","mobile.spec.ts"],
   "reorderable-mobile-webkit": ["mobile-webkit", "reorderable-list", "mouse drag commits on a valid item and abandons invalid space"],
   "marquee-pause-webkit": ["webkit", "marquee", "public pause freezes every track without changing separation"],
   "marquee-contrast-webkit": ["webkit", "marquee", "Marquee accessibility and forced-colors preserve readable originals"],
@@ -13,6 +19,14 @@ const cases = {
   "mobile-button": ["mobile-chromium", "../integration", "Button remains operable in touch device profiles", "mobile.spec.ts"],
   "mobile-card": ["mobile-chromium", "../integration", "Card remains contained and its child actions stay operable on touch devices", "mobile.spec.ts"],
   "sidebar-paint-mobile": ["mobile-chromium", "../integration", "Sidebar trigger composition preserves IconButton paint and size in either CSS order", "layout-ownership.spec.ts"],
+  "dropdown-choice-firefox": ["firefox", "dropdown-menu", "choice rows clear pointer highlight but retain their selection", "parity.spec.ts"],
+  "typography-mobile-webkit": ["mobile-webkit", "../integration", "labels, validation, controls, and field values resolve through shared recipes", "typography-recipes.spec.ts"],
+  "marquee-pause-firefox": ["firefox", "marquee", "public pause freezes every track without changing separation"],
+  "reorder-grid-mobile-chromium": ["mobile-chromium", "reorderable-list", "grid pointer preview keeps size and siblings arrive at their measured destinations", "docs.spec.ts"],
+  "reorder-grid-mobile-webkit": ["mobile-webkit", "reorderable-list", "grid pointer preview keeps size and siblings arrive at their measured destinations", "docs.spec.ts"],
+  "reorder-cursor-mobile-webkit": ["mobile-webkit", "reorderable-list", "pointer drag cursor stays grabbing across the document (no preview)"],
+  "textarea-resize-webkit": ["webkit", "textarea", "native wrapper corner resizing grows the editor and preserves the footer"],
+  "textarea-corners-webkit": ["webkit", "textarea", "corner handles grow and shrink compact, large, underline and RTL fields"],
   "radio-group-firefox": ["firefox", "radio-group", "Hook Form connects errors, pointer correction and submit", "documentation.spec.ts"],
 };
 const [id, mode] = process.argv.slice(2);
