@@ -4,6 +4,8 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const cases = {
+  "mac-editable-route": ["webkit","../integration","catalog route editable renders without uncaught errors","catalog-routes.spec.ts"],
+  "mac-collapsible-initial": ["webkit","collapsible","initial partial preview settles without resize errors across responsive widths","parity.spec.ts"],
   "mac-collapsible-route": ["webkit","../integration","catalog route collapsible renders without uncaught errors","catalog-routes.spec.ts"],
   "mac-nav-list-initial": ["webkit","nav-list","retained sections hide after closing and allow unclipped settled focus"],
   "mac-z-stack-focus": ["webkit","z-stack","composition, focus order, reflow, and accessibility remain authored"],

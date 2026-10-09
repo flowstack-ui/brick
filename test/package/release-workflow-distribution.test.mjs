@@ -17,38 +17,12 @@ test("scoped browser follow-up builds one current archive without enabling the f
   assert.match(build, /npm run build:playground/);
   assert.match(build, /verify-release-diagnostic-archive.mjs.*--record/);
   assert.match(diagnostic, /needs: release-diagnostic-build/);
-  assert.equal((diagnostic.match(/- case:/g) ?? []).length, 43);
+  assert.equal((diagnostic.match(/- case:/g) ?? []).length, 3);
   assert.match(diagnostic, /configure-browser-host.mjs/);
   assert.match(diagnostic, /runs-on: \$\{\{ matrix\.os \|\| 'ubuntu-latest' \}\}/);
-  for (const name of ["mac-collapsible-route", "mac-segment-ready", "textarea-resize-webkit", "textarea-corners-webkit"]) {
+  for (const name of ["mac-editable-route", "mac-collapsible-initial", "mac-collapsible-route"]) {
     assert.match(diagnostic, new RegExp(`case: ${name}\\n\\s+engine: webkit\\n\\s+os: macos-latest`));
   }
-  for (const name of [
-    "center-docs-mobile-webkit",
-    "typography-titles-webkit",
-    "typography-webkit",
-    "sidebar-paint-mobile-webkit",
-    "button-mobile-webkit",
-    "card-mobile-webkit",
-    "reorderable-mobile-webkit",
-    "marquee-pause-webkit",
-    "marquee-contrast-webkit",
-    "marquee-contrast-mobile-webkit",
-    "popover-mobile-webkit",
-    "popover-chromium",
-    "mobile-button",
-    "mobile-card",
-    "sidebar-paint-mobile",
-    "dropdown-choice-firefox",
-    "typography-mobile-webkit",
-    "marquee-pause-firefox",
-    "reorder-grid-mobile-chromium",
-    "reorder-grid-mobile-webkit",
-    "reorder-cursor-mobile-webkit",
-    "textarea-resize-webkit",
-    "textarea-corners-webkit",
-    "radio-group-firefox",
-  ]) assert.match(diagnostic, new RegExp(`case: ${name}`));
   assert.match(diagnostic, /timeout-minutes: 16/);
   assert.match(diagnostic, /timeout-minutes: 8/);
   assert.match(diagnostic, /name: brick-diagnostic-package/);

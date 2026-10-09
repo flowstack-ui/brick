@@ -68,113 +68,15 @@ jobs:
       max-parallel: 6
       matrix:
         include:
+          - case: mac-editable-route
+            engine: webkit
+            os: macos-latest
+          - case: mac-collapsible-initial
+            engine: webkit
+            os: macos-latest
           - case: mac-collapsible-route
             engine: webkit
             os: macos-latest
-          - case: mac-segment-ready
-            engine: webkit
-            os: macos-latest
-          - case: mac-nav-list-initial
-            engine: webkit
-            os: macos-latest
-          - case: mac-z-stack-focus
-            engine: webkit
-            os: macos-latest
-          - case: mac-z-stack-docs
-            engine: webkit
-            os: macos-latest
-          - case: mac-pagination-focus
-            engine: webkit
-            os: macos-latest
-          - case: mac-password-forced-focus
-            engine: webkit
-            os: macos-latest
-          - case: mac-password-focus
-            engine: webkit
-            os: macos-latest
-          - case: mac-grid-focus
-            engine: webkit
-            os: macos-latest
-          - case: mac-toast-focus
-            engine: webkit
-            os: macos-latest
-          - case: mac-checkbox-focus
-            engine: webkit
-            os: macos-latest
-          - case: mac-table-paint
-            engine: webkit
-            os: macos-latest
-          - case: mac-button-focus
-            engine: webkit
-            os: macos-latest
-          - case: mac-icon-button-focus
-            engine: webkit
-            os: macos-latest
-          - case: mac-stack-focus
-            engine: webkit
-            os: macos-latest
-          - case: mac-reset-focus
-            engine: webkit
-            os: macos-latest
-          - case: mac-navigation
-            engine: webkit
-            os: macos-latest
-          - case: mac-nav-list-route
-            engine: webkit
-            os: macos-latest
-          - case: mac-segment-containment
-            engine: webkit
-            os: macos-latest
-          - case: center-docs-mobile-webkit
-            engine: webkit
-          - case: typography-titles-webkit
-            engine: webkit
-          - case: typography-webkit
-            engine: webkit
-          - case: sidebar-paint-mobile-webkit
-            engine: webkit
-          - case: button-mobile-webkit
-            engine: webkit
-          - case: card-mobile-webkit
-            engine: webkit
-          - case: reorderable-mobile-webkit
-            engine: webkit
-          - case: marquee-pause-webkit
-            engine: webkit
-          - case: marquee-contrast-webkit
-            engine: webkit
-          - case: marquee-contrast-mobile-webkit
-            engine: webkit
-          - case: popover-mobile-webkit
-            engine: webkit
-          - case: popover-chromium
-            engine: chromium
-          - case: mobile-button
-            engine: chromium
-          - case: mobile-card
-            engine: chromium
-          - case: sidebar-paint-mobile
-            engine: chromium
-          - case: dropdown-choice-firefox
-            engine: firefox
-          - case: typography-mobile-webkit
-            engine: webkit
-          - case: marquee-pause-firefox
-            engine: firefox
-          - case: reorder-grid-mobile-chromium
-            engine: chromium
-          - case: reorder-grid-mobile-webkit
-            engine: webkit
-          - case: reorder-cursor-mobile-webkit
-            engine: webkit
-          - case: textarea-resize-webkit
-            engine: webkit
-            os: macos-latest
-          - case: textarea-corners-webkit
-            engine: webkit
-            os: macos-latest
-          - case: radio-group-firefox
-            engine: firefox
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

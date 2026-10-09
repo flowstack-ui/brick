@@ -13,7 +13,7 @@ export const test = base.extend({
         Object.defineProperty(window, "releasePointerEvidence", { value: events });
         // Diagnostic-only observer provenance. Native delivery and callbacks
         // remain synchronous; no errors are filtered or notifications deferred.
-        if (["/nav-list", "/collapsible"].includes(location.pathname)) {
+        if (["/nav-list", "/collapsible", "/editable"].includes(location.pathname)) {
           const observations: unknown[] = [];
           Object.defineProperty(window, "releaseResizeEvidence", { value: observations });
           const NativeObserver = window.ResizeObserver;
@@ -21,14 +21,19 @@ export const test = base.extend({
             constructor(callback: ResizeObserverCallback) {
               const stack = new Error("ResizeObserver creation").stack;
               super((entries, observer) => {
-                observations.push({ stack, time: performance.now(), entries: entries.map(entry => ({
+                const observation = { stack: stack?.split("\n").slice(0, 5).join("\n"), time: performance.now(), entries: entries.map(entry => ({
                   target: entry.target.outerHTML.slice(0, 1000), rect: entry.contentRect.toJSON(),
                   animation: getComputedStyle(entry.target).animation,
                   contentWidth: getComputedStyle(entry.target).getPropertyValue("--content-width"),
                   contentHeight: getComputedStyle(entry.target).getPropertyValue("--content-height"),
-                })) });
+                })), after: [] as unknown[] };
+                observations.push(observation);
                 if (observations.length > 100) observations.shift();
                 callback.call(observer, entries, observer);
+                observation.after = entries.map(entry => ({
+                  target: entry.target.outerHTML.slice(0, 1000), rect: entry.target.getBoundingClientRect().toJSON(),
+                  animation: getComputedStyle(entry.target).animation,
+                }));
               });
             }
           };

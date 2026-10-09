@@ -2,6 +2,27 @@ import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => { await page.goto("/collapsible"); });
 
+test("initial partial preview settles without resize errors across responsive widths", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", error => errors.push(error.message));
+  for (const width of [1280, 1024, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/collapsible");
+    await page.evaluate(() => document.fonts.ready);
+    const content = page.locator("#partial-height .brick-collapsible-content");
+    await expect(content).toHaveAttribute("inert");
+    await expect(content).toHaveCSS("height", "48px");
+    // Observe the mounted preview through its finite entrance/exit animation,
+    // not just the first rendered heading. Do not filter native page errors.
+    await content.evaluate(async node => {
+      await Promise.all(node.getAnimations().map(animation => animation.finished));
+      await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+    });
+    expect(await content.evaluate(node => node.getBoundingClientRect().height)).toBe(48);
+    expect(errors).toEqual([]);
+  }
+});
+
 test("responsive outline resets paint and Activity retains drafts while pausing effects", async ({page}) => {
   const root=page.locator("#responsive .brick-collapsible");
   await page.setViewportSize({width:1200,height:900});
