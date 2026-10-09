@@ -61,7 +61,7 @@ jobs:
     needs: release-diagnostic-build
     if: github.event_name == 'workflow_dispatch' && inputs.diagnostic == 'release-blockers'
     name: diagnostic (${{ matrix.case }})
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os || 'ubuntu-latest' }}
     timeout-minutes: 16
     strategy:
       fail-fast: false
@@ -112,8 +112,10 @@ jobs:
             engine: webkit
           - case: textarea-resize-webkit
             engine: webkit
+            os: macos-latest
           - case: textarea-corners-webkit
             engine: webkit
+            os: macos-latest
           - case: radio-group-firefox
             engine: firefox
     steps:

@@ -18,6 +18,10 @@ test("scoped browser follow-up builds one current archive without enabling the f
   assert.match(build, /verify-release-diagnostic-archive.mjs.*--record/);
   assert.match(diagnostic, /needs: release-diagnostic-build/);
   assert.equal((diagnostic.match(/- case:/g) ?? []).length, 24);
+  assert.match(diagnostic, /runs-on: \$\{\{ matrix\.os \|\| 'ubuntu-latest' \}\}/);
+  for (const name of ["textarea-resize-webkit", "textarea-corners-webkit"]) {
+    assert.match(diagnostic, new RegExp(`case: ${name}\\n\\s+engine: webkit\\n\\s+os: macos-latest`));
+  }
   for (const name of [
     "center-docs-mobile-webkit",
     "typography-titles-webkit",
