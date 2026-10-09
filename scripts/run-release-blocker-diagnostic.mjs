@@ -46,6 +46,7 @@ const cases = {
   "textarea-corners-webkit": ["webkit", "textarea", "corner handles grow and shrink compact, large, underline and RTL fields"],
   "radio-group-firefox": ["firefox", "radio-group", "Hook Form connects errors, pointer correction and submit", "documentation.spec.ts"],
 };
+cases["mac-segment-ready"] = ["webkit", "segment-group", "initial RTL indicator remains contained through measured handoff", "parity.spec.ts"];
 const [id, mode] = process.argv.slice(2);
 if (!cases[id] || (mode && mode !== "--plan")) throw new Error("Select one known release-blocker case, optionally --plan");
 const [project, owner, title, file = "behavior.spec.ts"] = cases[id];

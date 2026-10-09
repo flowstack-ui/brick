@@ -4,6 +4,19 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/segment-group");
 });
 
+test("initial RTL indicator remains contained through measured handoff", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/segment-group?qualification=1");
+  const group = page.getByRole("radiogroup", { name: "عرض المشروع", exact: true });
+  await expect(group).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+  await expect(group.locator(".brick-segment-group__indicator")).toBeVisible();
+  await aligned(group);
+  await group.getByRole("radio", { name: "Grid", exact: true }).click();
+  await aligned(group);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+});
+
 test("indicator uses its iframe owner window", async ({ page }) => {
   test.setTimeout(60_000);
   await page.evaluate(() => {

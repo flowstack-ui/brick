@@ -13,6 +13,9 @@ Segment Group follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Keep the unmeasured decorative indicator out of initial RTL layout, preserving
+  selected-item fallback paint until Atom supplies measured geometry.
+
 - Refine neutral selection with raised-surface fill, a lighter light-mode
   shadow and an outer edge instead of the dark-mode inset highlight.
 - Remove transparent indicator border spacing and soften the dark highlight;
