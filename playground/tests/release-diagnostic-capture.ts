@@ -20,7 +20,7 @@ export async function captureReleaseDiagnostic(page: Page, testInfo: TestInfo) {
       return { tag: el.tagName, class: el.className, attributes: Object.fromEntries(Array.from(el.attributes).map(a => [a.name, a.value])), rect: el.getBoundingClientRect().toJSON(), scrollWidth: el.scrollWidth, clientWidth: el.clientWidth,
         styles: Object.fromEntries([...properties, ...variables].map(key => [key, css.getPropertyValue(key)])) };
     };
-    const targets = Array.from(document.querySelectorAll('[data-testid="avatar-group-stress"] .brick-avatar-group, .brick-toast-viewport, .brick-toast, .evidence-app-bar'));
+    const targets = Array.from(document.querySelectorAll('[data-testid="avatar-group-stress"] .brick-avatar-group, .brick-toast-viewport, .brick-toast, .evidence-app-bar, .brick-popover, [data-slot="popover-viewport"], .brick-popover__footer'));
     return { url: location.href, viewport: { innerWidth, innerHeight, visual: visualViewport && { width: visualViewport.width, height: visualViewport.height, scale: visualViewport.scale } }, coarse: matchMedia("(pointer: coarse)").matches,
       root: record(document.documentElement), targets: targets.map(el => ({ element: record(el), children: Array.from(el.children).map(record), ancestors: (() => { const list = []; let parent = el.parentElement; for (let i = 0; parent && i < 6; i++, parent = parent.parentElement) list.push(record(parent)); return list; })() })) };
   });

@@ -27,6 +27,11 @@ test("Sidebar trigger composition preserves IconButton paint and size in either 
     const paints = [];
     for (const id of ['composed', 'standalone']) {
       await page.getByRole('button', { name: id }).hover();
+      await page.getByRole('button', { name: id }).evaluate(async el => {
+        // Reduced motion shortens transitions; it does not finish them synchronously.
+        getComputedStyle(el).backgroundColor;
+        await Promise.all(el.getAnimations().map(animation => animation.finished));
+      });
       paints.push(await page.getByRole('button', { name: id }).evaluate(el => {
         const c = getComputedStyle(el);
         return [c.backgroundColor, c.color, c.borderRadius, c.padding];

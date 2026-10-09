@@ -78,6 +78,14 @@ jobs:
             engine: webkit
           - case: popover-mobile-webkit
             engine: webkit
+          - case: popover-chromium
+            engine: chromium
+          - case: mobile-button
+            engine: chromium
+          - case: mobile-card
+            engine: chromium
+          - case: sidebar-paint-mobile
+            engine: chromium
           - case: radio-group-firefox
             engine: firefox
     steps:

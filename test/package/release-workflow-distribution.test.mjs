@@ -17,13 +17,17 @@ test("scoped browser follow-up builds one current archive without enabling the f
   assert.match(build, /npm run build:playground/);
   assert.match(build, /verify-release-diagnostic-archive.mjs.*--record/);
   assert.match(diagnostic, /needs: release-diagnostic-build/);
-  assert.equal((diagnostic.match(/- case:/g) ?? []).length, 6);
+  assert.equal((diagnostic.match(/- case:/g) ?? []).length, 10);
   for (const name of [
     "reorderable-mobile-webkit",
     "marquee-pause-webkit",
     "marquee-contrast-webkit",
     "marquee-contrast-mobile-webkit",
     "popover-mobile-webkit",
+    "popover-chromium",
+    "mobile-button",
+    "mobile-card",
+    "sidebar-paint-mobile",
     "radio-group-firefox",
   ]) assert.match(diagnostic, new RegExp(`case: ${name}`));
   assert.match(diagnostic, /timeout-minutes: 16/);

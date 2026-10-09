@@ -1,11 +1,11 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../evidence-test.js";
 
 const mobileProjects = new Set(["mobile-chromium", "mobile-webkit"]);
 
 test("Button remains operable in touch device profiles", async ({ page }, testInfo) => {
   test.skip(!mobileProjects.has(testInfo.project.name), "This check is specific to the release mobile profiles.");
 
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
   expect(await page.evaluate(() => matchMedia("(pointer: coarse)").matches)).toBe(true);
 
   const overview = page.getByTestId("button-overview");
@@ -13,6 +13,7 @@ test("Button remains operable in touch device profiles", async ({ page }, testIn
   await expect(overview.getByText("Pressed 1 time")).toBeVisible();
 
   const stress = page.getByTestId("button-stress");
+  await expect(stress).toBeVisible();
   for (const button of await stress.getByRole("button").all()) {
     const box = await button.boundingBox();
     const frame = await button.locator("..").boundingBox();
@@ -27,9 +28,10 @@ test("Button remains operable in touch device profiles", async ({ page }, testIn
 test("Card remains contained and its child actions stay operable on touch devices", async ({ page }, testInfo) => {
   test.skip(!mobileProjects.has(testInfo.project.name), "This check is specific to the release mobile profiles.");
 
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   expect(await page.evaluate(() => matchMedia("(pointer: coarse)").matches)).toBe(true);
   const stress = page.getByTestId("card-stress");
+  await expect(stress).toBeVisible();
   for (const card of await stress.locator(".brick-card").all()) {
     const cardBox = await card.boundingBox();
     const frameBox = await card.locator("..").boundingBox();

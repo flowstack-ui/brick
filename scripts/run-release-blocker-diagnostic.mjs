@@ -9,6 +9,10 @@ const cases = {
   "marquee-contrast-webkit": ["webkit", "marquee", "Marquee accessibility and forced-colors preserve readable originals"],
   "marquee-contrast-mobile-webkit": ["mobile-webkit", "marquee", "Marquee accessibility and forced-colors preserve readable originals"],
   "popover-mobile-webkit": ["mobile-webkit", "popover", "Popover stacks long Footer actions inside an extreme narrow viewport"],
+  "popover-chromium": ["chromium", "popover", "Popover stacks long Footer actions inside an extreme narrow viewport"],
+  "mobile-button": ["mobile-chromium", "../integration", "Button remains operable in touch device profiles", "mobile.spec.ts"],
+  "mobile-card": ["mobile-chromium", "../integration", "Card remains contained and its child actions stay operable on touch devices", "mobile.spec.ts"],
+  "sidebar-paint-mobile": ["mobile-chromium", "../integration", "Sidebar trigger composition preserves IconButton paint and size in either CSS order", "layout-ownership.spec.ts"],
   "radio-group-firefox": ["firefox", "radio-group", "Hook Form connects errors, pointer correction and submit", "documentation.spec.ts"],
 };
 const [id, mode] = process.argv.slice(2);
@@ -16,7 +20,7 @@ if (!cases[id] || (mode && mode !== "--plan")) throw new Error("Select one known
 const [project, owner, title, file = "behavior.spec.ts"] = cases[id];
 const directory = resolve("test-results/release-blockers", id);
 mkdirSync(directory, { recursive: true });
-const args = ["playwright", "test", `playground/tests/components/${owner}/${file}`, "--project", project,
+const args = ["playwright", "test", resolve("playground/tests/components", owner, file), "--project", project,
   "--grep", `${title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`, "--workers=1", "--retries=0", "--forbid-only",
   "--trace=on", "--timeout=30000", "--global-timeout=180000"];
 const env = { ...process.env, CI: "true", FLOWSTACK_DIAGNOSTIC_CAPTURE: "1", FLOWSTACK_TEST_ARTIFACT_DIR: directory };
