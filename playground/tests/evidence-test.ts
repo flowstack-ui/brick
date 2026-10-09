@@ -13,7 +13,7 @@ export const test = base.extend({
         Object.defineProperty(window, "releasePointerEvidence", { value: events });
         // Diagnostic-only observer provenance. Native delivery and callbacks
         // remain synchronous; no errors are filtered or notifications deferred.
-        if (location.pathname === "/nav-list") {
+        if (["/nav-list", "/collapsible"].includes(location.pathname)) {
           const observations: unknown[] = [];
           Object.defineProperty(window, "releaseResizeEvidence", { value: observations });
           const NativeObserver = window.ResizeObserver;
@@ -23,12 +23,25 @@ export const test = base.extend({
               super((entries, observer) => {
                 observations.push({ stack, time: performance.now(), entries: entries.map(entry => ({
                   target: entry.target.outerHTML.slice(0, 1000), rect: entry.contentRect.toJSON(),
+                  animation: getComputedStyle(entry.target).animation,
+                  contentWidth: getComputedStyle(entry.target).getPropertyValue("--content-width"),
+                  contentHeight: getComputedStyle(entry.target).getPropertyValue("--content-height"),
                 })) });
                 if (observations.length > 100) observations.shift();
                 callback.call(observer, entries, observer);
               });
             }
           };
+          window.addEventListener("error", event => {
+            observations.push({ error: event.message, time: performance.now(),
+              content: Array.from(document.querySelectorAll(".brick-collapsible-content"), el => ({
+                html: el.outerHTML.slice(0, 1200), rect: el.getBoundingClientRect().toJSON(),
+                animation: getComputedStyle(el).animation,
+                width: getComputedStyle(el).getPropertyValue("--content-width"),
+                height: getComputedStyle(el).getPropertyValue("--content-height"),
+              })),
+            });
+          });
         }
         for (const type of ["pointerdown", "pointerup", "click", "focusin", "focusout"]) {
           document.addEventListener(type, event => {
