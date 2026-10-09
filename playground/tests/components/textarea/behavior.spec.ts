@@ -12,6 +12,29 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/textarea?testMode=1&qualification=1");
 });
 
+test.afterEach(async ({ context }, testInfo) => {
+  if (!process.env.FLOWSTACK_DIAGNOSTIC_CAPTURE || testInfo.status === testInfo.expectedStatus || !/corner/.test(testInfo.title)) return;
+  // Isolate native-engine resizing from Brick CSS without altering the failed page.
+  const probe = await context.newPage();
+  const results = [];
+  for (const tag of ['textarea', 'div']) {
+    for (const overflow of ['hidden', 'auto']) {
+      for (const inset of [3, 8, 14]) {
+        await probe.setContent(`<${tag} id="probe" style="display:block;width:200px;height:120px;resize:both;overflow:${overflow};border:1px solid;padding:0;margin:30px">Native resize</${tag}>`);
+        const element = probe.locator('#probe');
+        const before = (await element.boundingBox())!;
+        await probe.mouse.move(before.x + before.width - inset, before.y + before.height - inset);
+        await probe.mouse.down();
+        await probe.mouse.move(before.x + before.width - inset + 40, before.y + before.height - inset + 50, { steps: 8 });
+        await probe.mouse.up();
+        results.push({ tag, overflow, inset, before, after: await element.boundingBox(), resize: await element.evaluate(el => getComputedStyle(el).resize) });
+      }
+    }
+  }
+  await testInfo.attach('native-resize-control-probes', { body: JSON.stringify(results, null, 2), contentType: 'application/json' });
+  await probe.close();
+});
+
 test("surface recipes preserve transparent outline and filled surface", async ({ page }) => {
   await verifyFormSurfaceRecipes(page, "textarea", ".brick-textarea", "");
 });

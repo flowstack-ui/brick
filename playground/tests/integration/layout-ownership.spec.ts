@@ -8,10 +8,12 @@ import { Sidebar } from "../../../dist/sidebar.js";
 import { IconButton } from "../../../dist/icon-button.js";
 import { expect, test } from "../evidence-test.js";
 
-test("Sidebar trigger composition preserves IconButton paint and size in either CSS order", async ({ page }) => {
+test("Sidebar trigger composition preserves IconButton paint and size in either CSS order", async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   const icon = () => h('svg', { viewBox: '0 0 24 24', 'aria-hidden': true }, h('path', { d: 'M4 4h16v16H4z' }));
-  const button = (id: string) => h(IconButton, { id, size: '2xs', variant: 'solid', tone: 'accent', 'aria-label': id, children: icon() });
+  // Sidebar starts expanded. Compare the same public action state: expanded
+  // actions deliberately retain hover paint even on coarse-pointer devices.
+  const button = (id: string) => h(IconButton, { id, size: '2xs', variant: 'solid', tone: 'accent', 'aria-label': id, 'aria-expanded': true, children: icon() });
   const markup = renderToString(h('div', null,
     h(Sidebar.Root, null, h(Sidebar.Trigger, { id: 'composed', asChild: true, children: button('composed') })), button('standalone')));
   const read = (name: string) => readFile(new URL(`../../../dist/styles/${name}.css`, import.meta.url), 'utf8');
@@ -21,10 +23,12 @@ test("Sidebar trigger composition preserves IconButton paint and size in either 
   for (const css of [core + sidebar + action, core + action + sidebar]) {
     await page.setContent(`<meta name="viewport" content="width=device-width, initial-scale=1"><style>${css}</style>${markup}`);
     for (const id of ['composed', 'standalone']) {
+      await expect(page.getByRole('button', { name: id })).toHaveAttribute('aria-expanded', 'true');
       await expect(page.getByRole('button', { name: id })).toHaveCSS('width', '24px');
       await expect(page.getByRole('button', { name: id })).toHaveCSS('height', '24px');
     }
     const paints = [];
+    const diagnostics = [];
     for (const id of ['composed', 'standalone']) {
       await page.getByRole('button', { name: id }).hover();
       await page.getByRole('button', { name: id }).evaluate(async el => {
@@ -36,7 +40,24 @@ test("Sidebar trigger composition preserves IconButton paint and size in either 
         const c = getComputedStyle(el);
         return [c.backgroundColor, c.color, c.borderRadius, c.padding];
       }));
+      diagnostics.push(await page.getByRole('button', { name: id }).evaluate(el => {
+        const c = getComputedStyle(el);
+        return {
+          html: el.outerHTML,
+          fineHover: matchMedia('(hover: hover) and (pointer: fine)').matches,
+          hover: el.matches(':hover'), active: el.matches(':active'),
+          background: c.backgroundColor,
+          base: c.getPropertyValue('--brick-button-background'),
+          hovered: c.getPropertyValue('--brick-button-background-hover'),
+          pressed: c.getPropertyValue('--brick-button-background-pressed'),
+          buttons: [...document.querySelectorAll('button')].map(button => ({
+            id: button.id, hover: button.matches(':hover'), active: button.matches(':active'),
+            background: getComputedStyle(button).backgroundColor,
+          })),
+        };
+      }));
     }
+    await testInfo.attach('sidebar-paint-comparison', { body: JSON.stringify(diagnostics, null, 2), contentType: 'application/json' });
     expect(paints[0]).toEqual(paints[1]);
   }
 });

@@ -172,9 +172,12 @@ test("grid pointer preview keeps size and siblings arrive at their measured dest
   await page.mouse.move(h.x + h.width / 2 + 12, h.y + h.height / 2);
   const preview = page.locator('[data-slot="reorderable-list-preview"]');
   await expect(preview).toBeVisible();
-  await target.scrollIntoViewIfNeeded();
+  // Active reorder transforms keep the target moving; the actionability stability
+  // wait cannot complete until the drag ends. Scroll the target synchronously.
+  await target.evaluate(el => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
   const t = (await target.boundingBox())!;
-  await page.mouse.move(t.x + t.width * 0.8, t.y + t.height / 2, { steps: 1 });
+  // Cross the trailing half in both a desktop row and a one-column mobile grid.
+  await page.mouse.move(t.x + t.width * 0.8, t.y + t.height * 0.8, { steps: 8 });
   const p = (await preview.boundingBox())!;
   expect(Math.abs(p.width - s.width)).toBeLessThan(1);
   expect(Math.abs(p.height - s.height)).toBeLessThan(1);
