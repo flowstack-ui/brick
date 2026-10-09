@@ -11,6 +11,25 @@ export const test = base.extend({
       await page.addInitScript(() => {
         const events: unknown[] = [];
         Object.defineProperty(window, "releasePointerEvidence", { value: events });
+        // Diagnostic-only observer provenance. Native delivery and callbacks
+        // remain synchronous; no errors are filtered or notifications deferred.
+        if (location.pathname === "/nav-list") {
+          const observations: unknown[] = [];
+          Object.defineProperty(window, "releaseResizeEvidence", { value: observations });
+          const NativeObserver = window.ResizeObserver;
+          window.ResizeObserver = class extends NativeObserver {
+            constructor(callback: ResizeObserverCallback) {
+              const stack = new Error("ResizeObserver creation").stack;
+              super((entries, observer) => {
+                observations.push({ stack, time: performance.now(), entries: entries.map(entry => ({
+                  target: entry.target.outerHTML.slice(0, 1000), rect: entry.contentRect.toJSON(),
+                })) });
+                if (observations.length > 100) observations.shift();
+                callback.call(observer, entries, observer);
+              });
+            }
+          };
+        }
         for (const type of ["pointerdown", "pointerup", "click", "focusin", "focusout"]) {
           document.addEventListener(type, event => {
             const target = event.target as HTMLElement;

@@ -68,6 +68,33 @@ jobs:
       max-parallel: 6
       matrix:
         include:
+          - case: mac-z-stack-focus
+            engine: webkit
+            os: macos-latest
+          - case: mac-z-stack-docs
+            engine: webkit
+            os: macos-latest
+          - case: mac-pagination-focus
+            engine: webkit
+            os: macos-latest
+          - case: mac-password-forced-focus
+            engine: webkit
+            os: macos-latest
+          - case: mac-password-focus
+            engine: webkit
+            os: macos-latest
+          - case: mac-grid-focus
+            engine: webkit
+            os: macos-latest
+          - case: mac-toast-focus
+            engine: webkit
+            os: macos-latest
+          - case: mac-checkbox-focus
+            engine: webkit
+            os: macos-latest
+          - case: mac-table-paint
+            engine: webkit
+            os: macos-latest
           - case: mac-button-focus
             engine: webkit
             os: macos-latest

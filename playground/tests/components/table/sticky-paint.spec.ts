@@ -1,6 +1,9 @@
 import { expect, test } from "@playwright/test";
 
 test("fractional sticky viewport edge contains no body ink", async ({ browser }, info) => {
+  // Thirty-two raster captures keep making progress on hosted macOS WebKit;
+  // the retained trace exhausted 30s during capture, not an assertion wait.
+  test.setTimeout(60000);
   test.skip(info.project.name.startsWith("mobile-"), "Explicit HiDPI viewport covers each browser engine once.");
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2 });
   const page = await context.newPage();

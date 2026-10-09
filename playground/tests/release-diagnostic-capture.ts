@@ -5,6 +5,7 @@ export async function captureReleaseDiagnostic(page: Page, testInfo: TestInfo) {
   if (process.env.FLOWSTACK_DIAGNOSTIC_CAPTURE !== "1") return;
   const state = await page.evaluate(() => ({
     events: (window as unknown as { releasePointerEvidence?: unknown[] }).releasePointerEvidence,
+    resizeObservers: (window as unknown as { releaseResizeEvidence?: unknown[] }).releaseResizeEvidence,
     reducedMotion: matchMedia("(prefers-reduced-motion: reduce)").matches,
     marquees: Array.from(document.querySelectorAll(".brick-marquee-viewport"), node => ({
       html: node.outerHTML.slice(0, 600), tabIndex: (node as HTMLElement).tabIndex,
@@ -22,7 +23,7 @@ export async function captureReleaseDiagnostic(page: Page, testInfo: TestInfo) {
     };
     const targets = Array.from(document.querySelectorAll('[data-testid="avatar-group-stress"] .brick-avatar-group, .brick-toast-viewport, .brick-toast, .evidence-app-bar, .brick-popover, [data-slot="popover-viewport"], .brick-popover__footer'));
     return { url: location.href, viewport: { innerWidth, innerHeight, visual: visualViewport && { width: visualViewport.width, height: visualViewport.height, scale: visualViewport.scale } }, coarse: matchMedia("(pointer: coarse)").matches,
-      root: record(document.documentElement), targets: targets.map(el => ({ element: record(el), children: Array.from(el.children).map(record), ancestors: (() => { const list = []; let parent = el.parentElement; for (let i = 0; parent && i < 6; i++, parent = parent.parentElement) list.push(record(parent)); return list; })() })) };
+      root: record(document.documentElement), overflow: Array.from(document.querySelectorAll("body *")).filter(el => el.getBoundingClientRect().right > document.documentElement.clientWidth + 1).slice(0, 100).map(record), targets: targets.map(el => ({ element: record(el), children: Array.from(el.children).map(record), ancestors: (() => { const list = []; let parent = el.parentElement; for (let i = 0; parent && i < 6; i++, parent = parent.parentElement) list.push(record(parent)); return list; })() })) };
   });
   await testInfo.attach("release-diagnostic-geometry", { body: Buffer.from(JSON.stringify(geometry, null, 2)), contentType: "application/json" });
   await testInfo.attach("release-diagnostic-viewport", { body: await page.screenshot({ timeout: 5000 }), contentType: "image/png" });

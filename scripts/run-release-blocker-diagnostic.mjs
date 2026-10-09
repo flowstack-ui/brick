@@ -4,6 +4,15 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const cases = {
+  "mac-z-stack-focus": ["webkit","z-stack","composition, focus order, reflow, and accessibility remain authored"],
+  "mac-z-stack-docs": ["webkit","z-stack","natural sizing, shared hosts and contained actions","docs.spec.ts"],
+  "mac-pagination-focus": ["webkit","pagination","Pagination localizes labels and keeps direct controls in Tab order"],
+  "mac-password-forced-focus": ["webkit","password-toggle-field","forced colors preserve the field boundary and reveal-action focus"],
+  "mac-password-focus": ["webkit","password-toggle-field","Input and reveal action own independent focus paint"],
+  "mac-grid-focus": ["webkit","grid","RTL, focus order, reflow, and accessibility remain source ordered"],
+  "mac-toast-focus": ["webkit","toast","supports F8, action/close focus, Escape dismissal, and focus restoration"],
+  "mac-checkbox-focus": ["webkit","checkbox-card","native label and keyboard activate one checkbox"],
+  "mac-table-paint": ["webkit","table","fractional sticky viewport edge contains no body ink","sticky-paint.spec.ts"],
   "mac-button-focus": ["webkit","button","Button inside focus survives clipping and every action fill","behavior.spec.ts"],
   "mac-icon-button-focus": ["webkit","icon-button","IconButton inside focus survives clipping and every action fill","behavior.spec.ts"],
   "mac-stack-focus": ["webkit","stack","reverse axes map edge spacing logically and leave DOM and keyboard order intact","engine.spec.ts"],
