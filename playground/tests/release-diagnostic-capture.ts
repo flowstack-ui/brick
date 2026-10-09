@@ -42,6 +42,10 @@ export async function captureReleaseDiagnostic(page: Page, testInfo: TestInfo) {
       ["stress-relative", '[data-testid="segment-group-stress"] { position:relative!important }'],
       ["rtl-specimen-relative", '[data-testid="segment-group-stress"] > [dir="rtl"] { position:relative!important }'],
       ["indicator-no-transition", ".brick-segment-group__indicator { transition:none!important }"],
+      ["root-transform", ".brick-segment-group { transform:translateZ(0)!important }"],
+      ["indicator-no-translate", ".brick-segment-group__indicator { translate:none!important; transform:none!important }"],
+      ["root-inline-grid", ".brick-segment-group { display:inline-grid!important; grid-auto-flow:column!important }"],
+      ["root-ltr", ".brick-segment-group { direction:ltr!important }"],
     ]) {
       // Every intervention gets its own navigation: a layout invalidation in
       // one probe must not repair the starting state of the next experiment.
