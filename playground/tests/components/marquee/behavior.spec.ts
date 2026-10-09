@@ -2,6 +2,9 @@ import { expect, test } from "../../evidence-test.js";
 import AxeBuilder from "@axe-core/playwright";
 
 test("public pause freezes every track without changing separation", async ({ page }) => {
+  // Twelve complete pause/resume cycles made forward progress until the hosted
+  // WebKit 30s deadline. Preserve every cycle and assertion with a bounded budget.
+  test.setTimeout(60000);
   await page.goto("/marquee");
   for (const [label, button] of [["Partners", "partners"], ["Reversed partners", "reversed partners"], ["Left studio gallery", "left gallery"], ["Right studio gallery", "right gallery"]]) {
     const root = page.getByRole("region", { name: label, exact: true }).first();

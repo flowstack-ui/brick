@@ -32,33 +32,40 @@ export async function captureReleaseDiagnostic(page: Page, testInfo: TestInfo) {
   if (testInfo.status !== testInfo.expectedStatus && new URL(page.url()).pathname === "/segment-group") {
     // Preserve the failed page. Probe scroll-overflow ownership in a separate
     // page after the original assertions, geometry and screenshot are retained.
-    const probe = await page.context().newPage();
-    try {
+    const results: unknown[] = [];
+    for (const [name, rule] of [
+      ["untreated", ""],
+      ["indicator-hidden", ".brick-segment-group__indicator { display:none!important }"],
+      ["rtl-stress-hidden", '[data-testid="segment-group-stress"] > [dir="rtl"] { display:none!important }'],
+      ["indicator-transform", ".brick-segment-group__indicator { translate:none!important; transform:translate(var(--radio-group-indicator-x,0),var(--radio-group-indicator-y,0))!important }"],
+      ["root-scroll-contained", ".brick-segment-group { overflow:auto!important }"],
+      ["stress-relative", '[data-testid="segment-group-stress"] { position:relative!important }'],
+    ]) {
+      // Every intervention gets its own navigation: a layout invalidation in
+      // one probe must not repair the starting state of the next experiment.
+      const probe = await page.context().newPage();
+      try {
       await probe.goto(page.url());
       await probe.locator('[data-testid="segment-group-stress"]').waitFor();
-      const results = await probe.evaluate(async () => {
-        const measure = () => ({ width: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth });
+      results.push(await probe.evaluate(async ({ name, rule }) => {
+        const start = performance.now();
+        const measure = (phase: string) => ({ phase, elapsed: performance.now() - start, width: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth });
         const settle = () => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
-        const samples: unknown[] = [{ probe: "baseline", ...measure() }];
-        for (const [name, rule] of [
-          ["indicator-hidden", ".brick-segment-group__indicator { display:none!important }"],
-          ["rtl-stress-hidden", '[data-testid="segment-group-stress"] > [dir="rtl"] { display:none!important }'],
-          ["indicator-transform", ".brick-segment-group__indicator { translate:none!important; transform:translate(var(--radio-group-indicator-x,0),var(--radio-group-indicator-y,0))!important }"],
-          ["root-scroll-contained", ".brick-segment-group { overflow:auto!important }"],
-          ["stress-relative", '[data-testid="segment-group-stress"] { position:relative!important }'],
-        ]) {
+        const samples = [measure("baseline")];
+        await settle();
+        samples.push(measure("untreated-two-frames"));
           const style = document.createElement("style");
           style.textContent = rule;
-          document.head.append(style);
+          if (rule) document.head.append(style);
           await settle();
-          samples.push({ probe: name, ...measure() });
+          samples.push(measure("applied"));
           style.remove();
           await settle();
-          samples.push({ probe: `${name}-restored`, ...measure() });
-        }
-        return samples;
-      });
-      await testInfo.attach("segment-overflow-isolation", { body: Buffer.from(JSON.stringify(results, null, 2)), contentType: "application/json" });
-    } finally { await probe.close(); }
+          samples.push(measure("restored"));
+        return { probe: name, samples };
+      }, { name, rule }));
+      } finally { await probe.close(); }
+    }
+    await testInfo.attach("segment-overflow-isolation", { body: Buffer.from(JSON.stringify(results, null, 2)), contentType: "application/json" });
   }
 }
