@@ -1,6 +1,6 @@
 import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/form");
+installVisualDefaults("/form?qualification=1");
 
 test("Form default, validation, and appearance", async ({ page }) => {
   await expect(page.getByTestId("form-overview")).toHaveScreenshot("overview-light.png");
@@ -12,7 +12,7 @@ test("Form default, validation, and appearance", async ({ page }) => {
 
 test("Form constrained and forced-color evidence", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.getByTestId("form-stress")).toHaveScreenshot("stress-mobile.png");
+  await expectEvidenceScreenshot(page, page.getByTestId("form-stress"), "stress-mobile.png");
   await page.setViewportSize({ width: 1120, height: 900 });
   await useForcedColors(page);
   await expect(page.getByTestId("form-overview")).toHaveScreenshot("overview-forced-colors.png");

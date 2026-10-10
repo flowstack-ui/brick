@@ -8,9 +8,13 @@ collection of unrelated component scales.
 
 | Size | Minimum block size | Control text | Typical use |
 | --- | ---: | ---: | --- |
-| `sm` | 36px | `control-sm` | Compact application toolbars and page headers |
-| `md` | 44px | `control-md` | General application controls |
-| `lg` | 52px | `control-lg` | Comfortable or prominent controls |
+| `2xs` | 24px | Compact 12px recipes | Deliberately dense desktop controls |
+| `xs` | 32px | Compact recipes | Compact tool strips |
+| `sm` | 36px | Control recipes | Compact application controls |
+| `md` | 40px | Control recipes | Medium controls |
+| `lg` | 44px | Control recipes | General-purpose and touch-oriented controls |
+| `xl` | 48px | Large recipes | Prominent controls |
+| `2xl` | 64px | Large recipes | Oversized actions |
 
 Button, IconButton, Select, MultiSelect, Toggle, ToggleGroup, and comparable
 button-like controls consume these shared geometry and control-typography
@@ -18,17 +22,19 @@ recipes. Their internal padding may differ when required by their anatomy, but
 their outer height, icon scale, radius family, and baseline must align when the
 same size is used.
 
-Tabs uses the same control typography and target scale. A line tab may keep a
-44px target while a nested `body-sm` label creates a deliberately quieter page
-header; the target must not be reduced just to make the text look smaller.
+The vocabulary is not a promise that every component exposes every size.
+Tabs and segmented controls have their own anatomy. Decorative Icon, Chip and
+ColorSwatch sizes are independent and must not be renamed or resized to match
+control heights.
 
 ## Editable-control exception
 
-Input, Textarea, and editable Combobox content retain at least 16px text even
-at `sm` to avoid avoidable mobile focus zoom. They still consume the shared
-36/44/52px geometry and `--brick-radius-control`, so they align with adjacent
-button-like controls without pretending that editable and action typography
-have identical constraints.
+Use the normal `lg` form-control default for 16px editable text. Compact sizes
+are deliberate dense-UI choices, not mobile-safe typography guarantees. Textarea
+and native multiple selects remain multiline. Chips, wrapping content and nested
+action targets may make a minimum-height control taller; do not clip content or
+shrink independent action targets to force 24px. Theme typography may also grow
+a control. Prefer larger sizes for touch-oriented interfaces.
 
 ## Composition
 
@@ -44,11 +50,11 @@ same size means something different.
 ## Verification
 
 - Compare Button, Select, Toggle, ToggleGroup, and other button-like peers in
-  one row at `sm`, `md`, and `lg`.
+  one row across the supported size scale, especially `2xs`.
 - Confirm matching minimum block size, vertical center, radius family, icon
   scale, and control typography.
-- Confirm editable controls remain at least 16px while preserving the same
-  outer geometry.
+- Confirm default editable controls retain 16px text and compact controls do not
+  clip text, borders, icons or nested actions.
 - Change the active Theme radius and typography inputs and confirm every peer
   updates together.
 - Check long labels, zoom, narrow widths, RTL, focus rings, and light/dark

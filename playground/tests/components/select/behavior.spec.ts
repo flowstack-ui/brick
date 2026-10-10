@@ -1,41 +1,47 @@
+import { verifyFormSurfaceRecipes } from "../../form-surface-recipes.js";
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/select"); });
+test.beforeEach(async ({ page }) => { await page.goto("/select?qualification=1"); });
 
 test("Select overview preserves canonical defaults and selection", async ({ page }) => {
   const surface = page.getByTestId("select-overview");
   const trigger = surface.getByRole("combobox", { name: "Plan" });
   await expect(trigger).toHaveAttribute("data-variant", "outline");
-  await expect(trigger).toHaveAttribute("data-size", "md");
+  await expect(trigger).toHaveAttribute("data-size", "lg");
   await expect(trigger).toHaveAttribute("data-shape", "rounded");
   await expect(trigger).toHaveAttribute("data-full-width", "");
   await expect(trigger).toContainText("Team");
   await trigger.click();
   const listbox = page.locator(`#${await trigger.getAttribute("aria-controls")}`);
-  await expect(listbox).toHaveAttribute("data-size", "md");
-  await expect(page.getByRole("option", { name: "Starter" })).toHaveCSS("min-height", "44px");
+  await expect(listbox).toHaveAttribute("data-size", "lg");
+  await expect(page.getByRole("option", { name: "Starter" })).toHaveCSS("min-height", "36px");
   await page.getByRole("option", { name: "Starter" }).click();
   await expect(trigger).toContainText("Starter");
   await expect(trigger).toBeFocused();
 });
 
+test("surface recipes preserve transparent outline and filled surface", async ({ page }) => {
+  await verifyFormSurfaceRecipes(page, "select", ".brick-select-trigger", "");
+});
+
 test("recipe comparisons change only their named dimension", async ({ page }) => {
   const variants = page.getByTestId("select-variants").getByRole("combobox");
-  await expect(variants).toHaveCount(3);
-  for (let index = 0; index < 3; index += 1) {
-    await expect(variants.nth(index)).toHaveAttribute("data-variant", ["outline", "soft", "underline"][index]);
-    await expect(variants.nth(index)).toHaveAttribute("data-size", "md");
+  await expect(variants).toHaveCount(5);
+  for (let index = 0; index < 5; index += 1) {
+    await expect(variants.nth(index)).toHaveAttribute("data-variant", ["outline", "soft", "ghost", "underline", "surface"][index]);
+    await expect(variants.nth(index)).toHaveAttribute("data-size", "lg");
   }
-  await expect(variants.nth(2)).not.toHaveAttribute("data-shape");
+  await expect(variants.nth(3)).not.toHaveAttribute("data-shape");
   const sizes = page.getByTestId("select-sizes").getByRole("combobox");
   const heights = await sizes.evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().height));
   expect(heights[0]).toBeLessThan(heights[1]); expect(heights[1]).toBeLessThan(heights[2]);
-  for (const [index, size] of ["sm", "md", "lg"].entries()) {
+  for (const [index, size] of ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"].entries()) {
     const sizeTrigger = sizes.nth(index); await sizeTrigger.click();
     const sizeListbox = page.locator(`#${await sizeTrigger.getAttribute("aria-controls")}`);
     await expect(sizeListbox).toHaveAttribute("data-size", size);
-    await expect(sizeListbox.getByRole("option").first()).toHaveCSS("min-height", ["36px", "44px", "52px"][index]);
+    const controlMinimum = await sizeTrigger.evaluate(node => parseFloat(getComputedStyle(node).minHeight));
+    await expect(sizeListbox.getByRole("option").first()).toHaveCSS("min-height", `${controlMinimum - 8}px`);
     await page.keyboard.press("Escape");
   }
   const shapes = page.getByTestId("select-shapes").getByRole("combobox");
@@ -67,6 +73,27 @@ test("keyboard, disabled options, groups, viewport, and Arrow stay integrated", 
   expect(align).not.toBeNull();
   await expect(arrow).toHaveAttribute("data-side", side!);
   await expect(arrow).toHaveAttribute("data-align", align!);
+  await expect(longList).toHaveCSS("overflow", "visible");
+  await expect(arrow).toHaveCSS("width", "12px");
+  const clipped = await arrow.evaluate(element => {
+    let parent = element.parentElement;
+    while (parent && parent !== document.body) {
+      if (["hidden", "clip", "auto", "scroll"].includes(getComputedStyle(parent).overflowY)) return true;
+      parent = parent.parentElement;
+    }
+    return false;
+  });
+  expect(clipped).toBe(false);
+  const contained = await longList.evaluate(element => {
+    const box = element.getBoundingClientRect();
+    return Array.from(element.children)
+      .filter(child => !child.hasAttribute("data-atom-floating-arrow"))
+      .every(child => {
+        const rect = child.getBoundingClientRect();
+        return rect.top >= box.top - 1 && rect.bottom <= box.bottom + 1;
+      });
+  });
+  expect(contained).toBe(true);
 });
 
 test("playground cards form separate equal-height rows and appearance evidence uses scoped surfaces", async ({ page }) => {

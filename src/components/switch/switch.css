@@ -1,23 +1,54 @@
+@import "./switch-responsive.css";
+
 @layer brick.components {
-  .brick-switch {
+  :where(.brick-switch, .brick-switch-field) {
     --brick-switch-target-size: var(--brick-control-target-min);
     --brick-switch-track-inline-size: 2.5rem;
-    --brick-switch-track-block-size: 1.5rem;
-    --brick-switch-thumb-size: 1.125rem;
-    --brick-switch-track-inset: 0.1875rem;
-    --brick-switch-track-background: var(--brick-color-surface-subtle);
+    --brick-switch-track-block-size: 1.25rem;
+    --brick-switch-thumb-size: 1rem;
+    --brick-switch-track-inset: 0.125rem;
+    --brick-switch-rail-block-size: var(--brick-switch-track-block-size);
+    --brick-switch-track-background: var(--brick-color-border-default);
     --brick-switch-track-border: var(--brick-color-border-strong);
+    --brick-switch-track-border-width: 0px;
+    --brick-switch-track-shadow: none;
     --brick-switch-thumb-background: var(--brick-color-surface-raised);
-    --brick-switch-thumb-border: var(--brick-color-border-default);
-    --brick-switch-checked-background: var(--brick-color-accent-solid);
-    --brick-switch-checked-border: var(--brick-color-accent-solid);
-    --brick-switch-checked-thumb: var(--brick-color-accent-on-solid);
-    --brick-switch-hover-background: var(--brick-color-surface-base);
-    --brick-switch-pressed-background: var(--brick-color-accent-soft-pressed);
+    --brick-switch-thumb-border: transparent;
+    --brick-switch-thumb-border-width: 0px;
+    --brick-switch-thumb-shadow: 0 0.0625rem 0.125rem color-mix(in srgb, var(--brick-color-shadow), transparent 24%), 0 0 0.0625rem color-mix(in srgb, var(--brick-color-shadow), transparent 8%);
+    --brick-switch-tone-solid: var(--brick-color-accent-solid);
+    --brick-switch-tone-on-solid: var(--brick-color-accent-on-solid);
+    --brick-switch-checked-background: var(--brick-switch-tone-solid);
+    --brick-switch-checked-border: var(--brick-switch-checked-background);
+    --brick-switch-checked-thumb: var(--brick-switch-tone-on-solid);
+    --brick-switch-checked-hover-background: color-mix(in srgb, var(--brick-switch-checked-background), var(--brick-color-text-primary) 10%);
+    --brick-switch-checked-hover-border: var(--brick-switch-checked-hover-background);
+    --brick-switch-checked-pressed-background: color-mix(in srgb, var(--brick-switch-checked-background), var(--brick-color-text-primary) 18%);
+    --brick-switch-checked-pressed-border: var(--brick-switch-checked-pressed-background);
+    --brick-switch-raised-checked-rail: color-mix(in srgb, var(--brick-switch-checked-background) 60%, transparent);
+    --brick-switch-selected-rail: var(--brick-switch-checked-background);
+    --brick-switch-selected-hover-rail: var(--brick-switch-checked-hover-background);
+    --brick-switch-selected-pressed-rail: var(--brick-switch-checked-pressed-background);
+    --brick-switch-selected-hover-thumb: var(--brick-switch-checked-thumb);
+    --brick-switch-selected-pressed-thumb: var(--brick-switch-checked-thumb);
+    --brick-switch-track-focus-width: var(--brick-border-focus-width);
+    --brick-switch-thumb-focus-width: 0px;
+    --brick-switch-hover-background: var(--brick-color-border-strong);
+    --brick-switch-pressed-background: color-mix(in srgb, var(--brick-color-border-strong), var(--brick-color-text-primary) 10%);
     --brick-switch-focus-ring: var(--brick-color-focus-ring);
     --brick-switch-invalid-border: var(--brick-color-danger-text);
-    --brick-switch-readonly-background: var(--brick-color-surface-subtle);
+    --brick-switch-readonly-background: var(--brick-switch-track-background);
+    --brick-switch-label-gap: 0.625rem;
+  }
 
+  :where(.brick-switch, .brick-switch-field)[data-tone="neutral"] { --brick-switch-tone-solid: var(--brick-color-text-secondary); --brick-switch-tone-on-solid: var(--brick-color-surface-canvas); }
+  :where(.brick-switch, .brick-switch-field)[data-tone="contrast"] { --brick-switch-tone-solid: var(--brick-color-text-primary); --brick-switch-tone-on-solid: var(--brick-color-surface-canvas); }
+  :where(.brick-switch, .brick-switch-field)[data-tone="info"] { --brick-switch-tone-solid: var(--brick-color-info-solid); --brick-switch-tone-on-solid: var(--brick-color-info-on-solid); }
+  :where(.brick-switch, .brick-switch-field)[data-tone="success"] { --brick-switch-tone-solid: var(--brick-color-success-solid); --brick-switch-tone-on-solid: var(--brick-color-success-on-solid); }
+  :where(.brick-switch, .brick-switch-field)[data-tone="warning"] { --brick-switch-tone-solid: var(--brick-color-warning-solid); --brick-switch-tone-on-solid: var(--brick-color-warning-on-solid); }
+  :where(.brick-switch, .brick-switch-field)[data-tone="danger"] { --brick-switch-tone-solid: var(--brick-color-danger-solid); --brick-switch-tone-on-solid: var(--brick-color-danger-on-solid); }
+
+  .brick-switch {
     position: relative;
     display: inline-grid;
     box-sizing: border-box;
@@ -35,105 +66,128 @@
     vertical-align: middle;
     user-select: none;
   }
-
   .brick-switch::before {
     position: absolute;
     box-sizing: border-box;
     inline-size: var(--brick-switch-track-inline-size);
-    block-size: var(--brick-switch-track-block-size);
-    border: var(--brick-border-width) solid var(--brick-switch-track-border);
+    block-size: var(--brick-switch-rail-block-size);
+    border: var(--brick-switch-track-border-width) solid var(--brick-switch-track-border);
     border-radius: var(--brick-radius-full);
     background: var(--brick-switch-track-background);
+    box-shadow: var(--brick-switch-track-shadow);
     content: "";
-    transition:
-      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+    transition: background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard), border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard), box-shadow var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
   }
-
   .brick-switch:not([data-disabled], [data-readonly]) { cursor: pointer; }
   .brick-switch[data-readonly] { cursor: default; }
-
-  .brick-switch:is(:focus-visible, [data-focus-visible]) {
-    outline: var(--brick-border-focus-width) solid var(--brick-switch-focus-ring);
-    outline-offset: var(--brick-border-focus-offset);
-  }
+  .brick-switch:is(:focus-visible, [data-focus-visible]) { outline: none; }
+  .brick-switch:is(:focus-visible, [data-focus-visible])::before { outline: var(--brick-switch-track-focus-width) solid var(--brick-switch-focus-ring); outline-offset: var(--brick-border-focus-offset); }
 
   .brick-switch-thumb {
     position: absolute;
+    z-index: 1;
     inset-inline-start: calc((100% - var(--brick-switch-track-inline-size)) / 2 + var(--brick-switch-track-inset));
-    display: block;
+    inset-block-start: 50%;
+    display: grid;
     box-sizing: border-box;
     inline-size: var(--brick-switch-thumb-size);
     block-size: var(--brick-switch-thumb-size);
-    border: var(--brick-border-width) solid var(--brick-switch-thumb-border);
+    place-items: center;
+    overflow: hidden;
+    border: var(--brick-switch-thumb-border-width) solid var(--brick-switch-thumb-border);
     border-radius: var(--brick-radius-full);
     background: var(--brick-switch-thumb-background);
-    box-shadow: var(--brick-shadow-sm);
-    transform: translateX(0);
-    transition:
-      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
-      transform var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+    box-shadow: var(--brick-switch-thumb-shadow);
+    color: var(--brick-switch-checked-background);
+    transform: translateY(-50%) translateX(0);
+    transition: background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard), border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard), box-shadow var(--brick-motion-duration-fast) var(--brick-motion-easing-standard), transform var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
   }
+  .brick-switch:is(:focus-visible, [data-focus-visible]) .brick-switch-thumb { outline: var(--brick-switch-thumb-focus-width) solid var(--brick-switch-focus-ring); outline-offset: var(--brick-border-focus-offset); }
+  .brick-switch[data-state="checked"]::before { border-color: var(--brick-switch-checked-border); background: var(--brick-switch-selected-rail); }
+  .brick-switch[data-state="checked"] .brick-switch-thumb { border-color: var(--brick-switch-checked-thumb); background: var(--brick-switch-checked-thumb); transform: translateY(-50%) translateX(calc(var(--brick-switch-track-inline-size) - var(--brick-switch-thumb-size) - 2 * var(--brick-switch-track-inset))); }
+  .brick-switch:dir(rtl)[data-state="checked"] .brick-switch-thumb { transform: translateY(-50%) translateX(calc(-1 * (var(--brick-switch-track-inline-size) - var(--brick-switch-thumb-size) - 2 * var(--brick-switch-track-inset)))); }
 
-  .brick-switch[data-state="checked"]::before {
-    border-color: var(--brick-switch-checked-border);
-    background: var(--brick-switch-checked-background);
+  .brick-switch-indicator {
+    position: absolute;
+    z-index: 1;
+    inset-inline-end: calc((100% - var(--brick-switch-track-inline-size)) / 2 + var(--brick-switch-track-inset));
+    inset-block-start: 50%;
+    display: grid;
+    box-sizing: border-box;
+    inline-size: calc(var(--brick-switch-track-block-size) - 2 * var(--brick-switch-track-inset));
+    block-size: calc(var(--brick-switch-track-block-size) - 2 * var(--brick-switch-track-inset));
+    place-items: center;
+    overflow: hidden;
+    color: var(--brick-switch-tone-on-solid);
+    font-size: calc(var(--brick-switch-track-block-size) * 0.55);
+    line-height: 1;
+    pointer-events: none;
+    transform: translateY(-50%);
   }
+  .brick-switch-indicator[data-state="checked"] { inset-inline-start: calc((100% - var(--brick-switch-track-inline-size)) / 2 + var(--brick-switch-track-inset)); inset-inline-end: auto; }
+  .brick-switch-indicator > *, .brick-switch-thumb-indicator > * { max-inline-size: 100%; max-block-size: 100%; }
+  .brick-switch-indicator > svg, .brick-switch-thumb-indicator > svg { display: block; inline-size: 100%; block-size: 100%; }
+  .brick-switch-thumb-indicator { display: grid; box-sizing: border-box; inline-size: 70%; block-size: 70%; min-inline-size: 0; min-block-size: 0; place-self: center; place-items: center; overflow: hidden; font-size: calc(var(--brick-switch-thumb-size) * 0.55); line-height: 1; pointer-events: none; }
 
-  .brick-switch[data-state="checked"] .brick-switch-thumb {
-    border-color: var(--brick-switch-checked-thumb);
-    background: var(--brick-switch-checked-thumb);
-    transform: translateX(calc(var(--brick-switch-track-inline-size) - var(--brick-switch-thumb-size) - 2 * var(--brick-switch-track-inset)));
-  }
+  .brick-switch[data-invalid]::before { border-width: var(--brick-border-width); border-color: var(--brick-switch-invalid-border); }
+  .brick-switch[data-readonly]:not([data-state="checked"])::before { background: var(--brick-switch-readonly-background); }
+  .brick-switch[data-readonly]::before { filter: saturate(0.55); opacity: 0.78; }
+  .brick-switch[data-readonly] .brick-switch-thumb { opacity: 0.82; }
+  .brick-switch[data-disabled] { cursor: not-allowed; opacity: 0.5; }
 
-  [dir="rtl"] .brick-switch[data-state="checked"] .brick-switch-thumb {
-    transform: translateX(calc(-1 * (var(--brick-switch-track-inline-size) - var(--brick-switch-thumb-size) - 2 * var(--brick-switch-track-inset))));
-  }
+  :where(.brick-switch, .brick-switch-field)[data-size="xs"] { --brick-switch-track-inline-size: 1.5rem; --brick-switch-track-block-size: 0.75rem; --brick-switch-thumb-size: 0.6rem; --brick-switch-track-inset: 0.075rem; }
+  :where(.brick-switch, .brick-switch-field)[data-size="sm"] { --brick-switch-track-inline-size: 2rem; --brick-switch-track-block-size: 1rem; --brick-switch-thumb-size: 0.8rem; --brick-switch-track-inset: 0.1rem; }
+  :where(.brick-switch, .brick-switch-field)[data-size="lg"] { --brick-switch-track-inline-size: 3rem; --brick-switch-track-block-size: 1.5rem; --brick-switch-thumb-size: 1.2rem; --brick-switch-track-inset: 0.15rem; }
 
-  .brick-switch[data-invalid]::before { border-color: var(--brick-switch-invalid-border); }
-  .brick-switch[data-readonly]::before { background: var(--brick-switch-readonly-background); }
-  .brick-switch[data-disabled] { cursor: not-allowed; opacity: 0.65; }
-
-  .brick-switch[data-size="sm"] {
-    --brick-switch-track-inline-size: 2rem;
-    --brick-switch-track-block-size: 1.25rem;
-    --brick-switch-thumb-size: 0.875rem;
-  }
-
-  .brick-switch[data-size="lg"] {
-    --brick-switch-track-inline-size: 3rem;
-    --brick-switch-track-block-size: 1.75rem;
-    --brick-switch-thumb-size: 1.375rem;
-  }
-
-  .brick-switch:not([data-disabled], [data-readonly]):active::before {
-    background: var(--brick-switch-pressed-background);
-  }
+  :where(.brick-switch, .brick-switch-field)[data-variant="solid"] { --brick-switch-rail-block-size: var(--brick-switch-track-block-size); --brick-switch-track-shadow: none; --brick-switch-checked-thumb: var(--brick-switch-tone-on-solid); --brick-switch-selected-rail: var(--brick-switch-checked-background); --brick-switch-selected-hover-rail: var(--brick-switch-checked-hover-background); --brick-switch-selected-pressed-rail: var(--brick-switch-checked-pressed-background); --brick-switch-selected-hover-thumb: var(--brick-switch-checked-thumb); --brick-switch-selected-pressed-thumb: var(--brick-switch-checked-thumb); --brick-switch-track-focus-width: var(--brick-border-focus-width); --brick-switch-thumb-focus-width: 0px; }
+  :where(.brick-switch, .brick-switch-field)[data-variant="raised"] { --brick-switch-rail-block-size: calc(var(--brick-switch-track-block-size) / 2); --brick-switch-thumb-size: var(--brick-switch-track-block-size); --brick-switch-track-inset: 0px; --brick-switch-track-shadow: inset 0 0 0 var(--brick-border-width) color-mix(in srgb, var(--brick-switch-track-border), transparent 48%); --brick-switch-thumb-shadow: var(--brick-shadow-sm); --brick-switch-checked-thumb: var(--brick-switch-checked-background); --brick-switch-selected-rail: var(--brick-switch-raised-checked-rail); --brick-switch-selected-hover-rail: color-mix(in srgb, var(--brick-switch-checked-hover-background) 60%, transparent); --brick-switch-selected-pressed-rail: color-mix(in srgb, var(--brick-switch-checked-pressed-background) 60%, transparent); --brick-switch-selected-hover-thumb: var(--brick-switch-checked-hover-background); --brick-switch-selected-pressed-thumb: var(--brick-switch-checked-pressed-background); --brick-switch-track-focus-width: 0px; --brick-switch-thumb-focus-width: var(--brick-border-focus-width); }
 
   @media (hover: hover) and (pointer: fine) {
-    .brick-switch:not([data-disabled], [data-readonly], [data-state="checked"]):hover::before {
-      background: var(--brick-switch-hover-background);
-    }
-    .brick-switch:not([data-disabled], [data-readonly])[data-state="checked"]:hover::before {
-      background: var(--brick-color-accent-solid-hover);
-      border-color: var(--brick-color-accent-solid-hover);
-    }
+    .brick-switch:not([data-disabled], [data-readonly], [data-state="checked"]):hover::before { background: var(--brick-switch-hover-background); }
+    .brick-switch:not([data-disabled], [data-readonly])[data-state="checked"]:hover::before { border-color: var(--brick-switch-checked-hover-border); background: var(--brick-switch-selected-hover-rail); }
+    .brick-switch:not([data-disabled], [data-readonly])[data-state="checked"]:hover .brick-switch-thumb { background: var(--brick-switch-selected-hover-thumb); }
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    :where(.brick-switch::before, .brick-switch-thumb) { transition-duration: 0ms; }
+  /* Active follows hover so a fine-pointer press uses the pressed tokens. */
+  .brick-switch:not([data-disabled], [data-readonly], [data-state="checked"]):active::before { background: var(--brick-switch-pressed-background); }
+  .brick-switch:not([data-disabled], [data-readonly])[data-state="checked"]:active::before { border-color: var(--brick-switch-checked-pressed-border); background: var(--brick-switch-selected-pressed-rail); }
+  .brick-switch:not([data-disabled], [data-readonly])[data-state="checked"]:active .brick-switch-thumb { background: var(--brick-switch-selected-pressed-thumb); }
+  .brick-switch-field {
+    display: inline-grid;
+    grid-template-columns: var(--brick-switch-target-size) minmax(0, 1fr);
+    align-items: start;
+    column-gap: var(--brick-switch-label-gap);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    color: var(--brick-color-text-primary);
+    font-family: var(--brick-typography-body-md-font-family);
+    font-size: var(--brick-typography-body-md-font-size);
+    line-height: var(--brick-typography-body-md-line-height);
   }
+  .brick-switch-field > .brick-switch { grid-column: 1; grid-row: 1; }
+  .brick-switch-label { grid-column: 2; grid-row: 1; min-inline-size: 0; min-block-size: var(--brick-switch-target-size); padding-block: max(0px, calc((var(--brick-switch-target-size) - 1lh) / 2)); overflow-wrap: anywhere; cursor: pointer; }
+  .brick-switch-label[data-readonly] { cursor: default; }
+  .brick-switch-label[data-disabled] { cursor: not-allowed; }
+  .brick-switch-label[data-disabled] { opacity: 0.5; }
+  .brick-switch-field[data-label-placement="start"] { grid-template-columns: minmax(0, 1fr) var(--brick-switch-target-size); }
+  .brick-switch-field[data-label-placement="start"] > .brick-switch { grid-column: 2; }
+  .brick-switch-field[data-label-placement="start"] > .brick-switch-label { grid-column: 1; }
 
+  @media (prefers-reduced-motion: reduce) { .brick-switch::before, .brick-switch .brick-switch-thumb { transition: none; } }
   @media (forced-colors: active) {
     .brick-switch { forced-color-adjust: none; }
-    .brick-switch::before { border-color: ButtonText; background: Canvas; }
-    .brick-switch-thumb { border-color: ButtonText; background: ButtonText; box-shadow: none; }
+    .brick-switch::before { border: var(--brick-border-width) solid ButtonText; background: Canvas; box-shadow: none; filter: none; opacity: 1; }
+    .brick-switch-thumb { border: var(--brick-border-width) solid ButtonText; background: ButtonText; box-shadow: none; opacity: 1; }
     .brick-switch[data-state="checked"]::before { border-color: Highlight; background: Highlight; }
     .brick-switch[data-state="checked"] .brick-switch-thumb { border-color: HighlightText; background: HighlightText; }
+    .brick-switch:is(:focus-visible, [data-focus-visible])::before, .brick-switch:is(:focus-visible, [data-focus-visible]) .brick-switch-thumb { outline-color: Highlight; }
     .brick-switch[data-invalid]::before { border-color: Mark; }
     .brick-switch[data-disabled] { opacity: 1; }
-    .brick-switch[data-disabled]::before,
-    .brick-switch[data-disabled] .brick-switch-thumb { border-color: GrayText; }
+    .brick-switch[data-disabled]::before, .brick-switch[data-disabled] .brick-switch-thumb { border-color: GrayText; }
+  }
+}
+
+@layer brick.components {
+  @media (forced-colors: active) {
+    .brick-switch-label[data-disabled] { opacity: 1; color: GrayText; }
   }
 }

@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "../../evidence-test.js";
 
 test("Dialog Footer maps logical action distribution to flex alignment", async ({ page }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   await page.getByRole("button", { name: "Edit profile" }).click();
   const footer = page.getByTestId("dialog-overview-content").locator("[data-slot='dialog-footer']");
   await expect(footer).toHaveAttribute("data-justify", "end");
@@ -20,7 +20,7 @@ async function readShellViewportOffsets(page: Page) {
       return element.getBoundingClientRect().y;
     };
     return {
-      appBar: readOffset(".evidence-app-bar"),
+      appBar: readOffset("[data-playground-app-bar]"),
       reviewHeader: readOffset(".evidence-review-header"),
       sidebar: readOffset(".evidence-sidebar"),
     };
@@ -40,16 +40,18 @@ async function expectDialogDefaults(
 test("Dialog exposes its default modal anatomy, relationships, and focus lifecycle", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
 
-  const appBar = page.locator(".evidence-app-bar");
+  const appBar = page.locator("[data-playground-app-bar]");
   const sidebar = page.locator(".evidence-sidebar");
   const trigger = page.getByRole("button", { name: "Edit profile" });
   await page.evaluate(() => window.scrollTo(0, 400));
   expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
   const shellOffsets = await readShellViewportOffsets(page);
   if (shellOffsets.appBar === 0) {
-    expect(shellOffsets.sidebar).not.toBeNull();
+    // The shared shell intentionally hides its navigation rail below md.
+    if (page.viewportSize()!.width < 768) expect(shellOffsets.sidebar).toBeNull();
+    else expect(shellOffsets.sidebar).not.toBeNull();
     expect(shellOffsets.reviewHeader).not.toBeNull();
   }
   await trigger.evaluate((element) => (element as HTMLElement).click());
@@ -65,12 +67,44 @@ test("Dialog exposes its default modal anatomy, relationships, and focus lifecyc
   await expect(dialog.locator("[data-slot='dialog-header']")).toHaveCount(1);
   await expect(dialog.locator("[data-slot='dialog-body']")).toHaveCount(1);
   await expect(dialog.locator("[data-slot='dialog-footer']")).toHaveCount(1);
+  const cornerClose = dialog.getByRole("button", {
+    name: "Close profile dialog",
+  });
+  await expect(cornerClose).toHaveAttribute("data-placement", "corner");
+  await expect.poll(async () => dialog.evaluate((element) => {
+    const close = element.querySelector<HTMLElement>(
+      '[data-slot="dialog-close"][data-placement="corner"]',
+    );
+    if (!close) throw new Error("Missing corner close control");
+    const dialogRect = element.getBoundingClientRect();
+    const closeRect = close.getBoundingClientRect();
+    return {
+      blockStartInset: Math.round((closeRect.top - dialogRect.top) * 10) / 10,
+      inlineEndInset: Math.round((dialogRect.right - closeRect.right) * 10) / 10,
+      position: getComputedStyle(close).position,
+    };
+  })).toEqual({
+    blockStartInset: 8,
+    inlineEndInset: 8,
+    position: "absolute",
+  });
+  await dialog.evaluate((element) => element.setAttribute("dir", "rtl"));
+  await expect.poll(async () => dialog.evaluate((element) => {
+    const close = element.querySelector<HTMLElement>(
+      '[data-slot="dialog-close"][data-placement="corner"]',
+    );
+    if (!close) throw new Error("Missing RTL corner close control");
+    const dialogRect = element.getBoundingClientRect();
+    const closeRect = close.getBoundingClientRect();
+    return Math.round((closeRect.left - dialogRect.left) * 10) / 10;
+  })).toBe(8);
+  await dialog.evaluate((element) => element.removeAttribute("dir"));
   const overlay = page.locator(".brick-dialog-overlay");
   await expect(overlay).toBeVisible();
   await expect(dialog).toHaveCSS("opacity", "1");
   expect(
     await overlay.evaluate((element) => getComputedStyle(element).backgroundColor),
-  ).toMatch(/^rgba\(.+,\s*0\.\d+\)$/);
+  ).toMatch(/^(rgba\(.+,\s*0\.\d+\)|color\(srgb .+ \/ 0\.\d+\))$/);
   await expect.poll(() => readShellViewportOffsets(page)).toEqual(shellOffsets);
   await expect.poll(() => page.evaluate(() => document.documentElement.style.overflow)).toBe("hidden");
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).not.toBe("hidden");
@@ -94,7 +128,7 @@ test("Dialog sizes change only preferred measure and coordinated inset", async (
   page,
 }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   const measurements: Array<{ space: number; width: number }> = [];
 
   for (const size of ["sm", "md", "lg"] as const) {
@@ -120,14 +154,14 @@ test("Dialog sizes change only preferred measure and coordinated inset", async (
 
   expect(measurements[0].width).toBeLessThan(measurements[1].width);
   expect(measurements[1].width).toBeLessThan(measurements[2].width);
-  expect(measurements[0].space).toBeLessThan(measurements[1].space);
-  expect(measurements[1].space).toBeLessThan(measurements[2].space);
+  expect(measurements[0].space).toBe(measurements[1].space);
+  expect(measurements[1].space).toBe(measurements[2].space);
 });
 
 test("Dialog renders only the anatomy authored by the consumer", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
 
   await page.getByRole("button", { name: "Open named surface" }).click();
   const titleOnly = page.getByTestId("dialog-anatomy-title");
@@ -159,7 +193,7 @@ test("Dialog renders only the anatomy authored by the consumer", async ({
 test("Dialog Title exposes every supported native heading level", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
 
   for (const level of [1, 2, 3, 4, 5, 6] as const) {
     await page.getByRole("button", { name: `Open h${level} title` }).click();
@@ -178,7 +212,7 @@ test("Dialog Title exposes every supported native heading level", async ({
 test("Dialog preserves dismissal reasons and unavailable policies", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   const eventTrigger = page.getByRole("button", { name: "Open event dialog" });
   await eventTrigger.click();
   const eventDialog = page.getByRole("dialog", { name: "Dismissal evidence" });
@@ -226,7 +260,7 @@ test("Dialog preserves dismissal reasons and unavailable policies", async ({
 test("Dialog preserves nested layers and a registered portalled branch", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   const parentTrigger = page.getByRole("button", {
     name: "Open parent dialog",
   });
@@ -266,7 +300,7 @@ test("Dialog preserves nested layers and a registered portalled branch", async (
 test("Dialog preserves scoped portals and exact customization hooks", async ({
   page,
 }) => {
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   const scopes = page.getByTestId("dialog-appearance");
 
   await scopes.getByRole("button", { name: "Light scoped dialog" }).click();
@@ -313,7 +347,7 @@ test("Dialog keeps long Body content and RTL surfaces within the viewport", asyn
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 640 });
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
 
   await page
     .getByRole("button", { name: "Open long mobile dialog" })
@@ -366,7 +400,7 @@ test("Dialog removes nonessential motion and preserves its boundary", async ({
     testInfo.project.name !== "chromium",
     "Forced colors is a Chromium release check.",
   );
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
   await page.getByRole("button", { name: "Edit profile" }).click();
   const dialog = page.getByTestId("dialog-overview-content");

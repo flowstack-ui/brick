@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-test("Field Label and Fieldset Legend share question typography and initial rhythm", async ({
+test("default Field and Fieldset share typography with distinct control and header spacing", async ({
   page,
 }) => {
-  await page.goto("/field");
+  await page.goto("/field?qualification=1");
   const field = page.getByTestId("field-overview").locator(".brick-field");
   const fieldPresentation = await field.evaluate((element) => {
     const label = element.querySelector<HTMLElement>(".brick-field-label")!;
@@ -21,7 +21,7 @@ test("Field Label and Fieldset Legend share question typography and initial rhyt
     };
   });
 
-  await page.goto("/fieldset");
+  await page.goto("/fieldset?qualification=1");
   const fieldset = page
     .getByTestId("fieldset-overview")
     .locator(".brick-fieldset");
@@ -50,5 +50,6 @@ test("Field Label and Fieldset Legend share question typography and initial rhyt
   expect(fieldsetPresentation.typography).toEqual(
     fieldPresentation.typography,
   );
-  expect(fieldsetPresentation.gap).toBeCloseTo(fieldPresentation.gap, 0);
+  expect(fieldPresentation.gap).toBeCloseTo(6, 0);
+  expect(fieldsetPresentation.gap).toBeCloseTo(8, 0);
 });

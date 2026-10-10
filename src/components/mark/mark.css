@@ -1,7 +1,7 @@
 @layer brick.components {
   .brick-mark {
     --brick-mark-background: var(--brick-color-accent-soft);
-    --brick-mark-foreground: var(--brick-color-accent-text);
+    --brick-mark-foreground: var(--brick-color-accent-on-soft);
     --brick-mark-radius: var(--brick-radius-subtle);
     --brick-mark-padding-inline: 0.125em;
 
@@ -15,11 +15,7 @@
   }
 
   .brick-mark[data-tone="neutral"] {
-    --brick-mark-background: color-mix(
-      in srgb,
-      var(--brick-color-surface-subtle),
-      var(--brick-color-text-primary) 28%
-    );
+    --brick-mark-background: var(--brick-color-surface-subtle);
     --brick-mark-foreground: var(--brick-color-text-primary);
   }
 
@@ -31,18 +27,60 @@
     --brick-mark-background: var(--brick-color-text-primary);
     --brick-mark-foreground: var(--brick-color-surface-canvas);
   }
-  .brick-mark[data-variant="plain"] {
+  .brick-mark[data-tone="info"] {
+    --brick-mark-background: var(--brick-color-info-soft);
+    --brick-mark-foreground: var(--brick-color-info-on-soft);
+  }
+  .brick-mark[data-tone="info"][data-variant="solid"] {
+    --brick-mark-background: var(--brick-color-info-solid);
+    --brick-mark-foreground: var(--brick-color-info-on-solid);
+  }
+
+  .brick-mark[data-tone="success"] {
+    --brick-mark-background: var(--brick-color-success-soft);
+    --brick-mark-foreground: var(--brick-color-success-on-soft);
+  }
+  .brick-mark[data-tone="success"][data-variant="solid"] {
+    --brick-mark-background: var(--brick-color-success-solid);
+    --brick-mark-foreground: var(--brick-color-success-on-solid);
+  }
+
+  .brick-mark[data-tone="warning"] {
+    --brick-mark-background: var(--brick-color-warning-soft);
+    --brick-mark-foreground: var(--brick-color-warning-on-soft);
+  }
+  .brick-mark[data-tone="warning"][data-variant="solid"] {
+    --brick-mark-background: var(--brick-color-warning-solid);
+    --brick-mark-foreground: var(--brick-color-warning-on-solid);
+  }
+
+  .brick-mark[data-tone="danger"] {
+    --brick-mark-background: var(--brick-color-danger-soft);
+    --brick-mark-foreground: var(--brick-color-danger-on-soft);
+  }
+  .brick-mark[data-tone="danger"][data-variant="solid"] {
+    --brick-mark-background: var(--brick-color-danger-solid);
+    --brick-mark-foreground: var(--brick-color-danger-on-solid);
+  }
+
+  .brick-mark[data-variant="plain"],
+  .brick-mark[data-variant="text"] {
     --brick-mark-background: transparent;
     --brick-mark-foreground: currentColor;
     --brick-mark-padding-inline: 0em;
   }
 
+  .brick-mark[data-variant="text"] {
+    font-weight: var(--brick-font-weight-medium);
+  }
+
   @media (forced-colors: active) {
-    .brick-mark {
+    .brick-mark[data-tone][data-variant] {
       --brick-mark-background: Highlight;
       --brick-mark-foreground: HighlightText;
     }
-    .brick-mark[data-variant="plain"] {
+    .brick-mark[data-tone][data-variant="plain"],
+    .brick-mark[data-tone][data-variant="text"] {
       --brick-mark-background: transparent;
       --brick-mark-foreground: CanvasText;
       text-decoration: underline;

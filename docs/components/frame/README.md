@@ -7,7 +7,7 @@ overflow, semantics, or behavior.
 ## When and where to use
 
 Use Frame for a minimum-width rail, maximum-width copy region, minimum-height
-media canvas, or maximum-height boundary around a ScrollArea.
+media canvas, or definite-height ScrollArea.
 
 ## When not to use
 
@@ -40,7 +40,7 @@ Public exports are `Frame`, `FrameProps`, `FrameElement`, `FrameLength`, and
 ## Quick start
 
 ```tsx
-<Frame maxInlineSize={{ initial: "100%", lg: "68ch" }}>
+<Frame maxInlineSize={{ lg: "68ch" }}>
   <Text>Readable content</Text>
 </Frame>
 ```
@@ -48,7 +48,7 @@ Public exports are `Frame`, `FrameProps`, `FrameElement`, `FrameLength`, and
 ## Anatomy and DOM ownership
 
 Frame renders one selected native host. With `asChild`, it enhances exactly one
-existing element and preserves that element's props, style, events, and ref.
+non-Fragment element and preserves that element's props, style, events, and refs (including React 19 callback cleanup).
 
 ```html
 <div class="brick-frame" data-frame data-slot="frame" style="--brick-frame-max-inline-size:68ch">...</div>
@@ -60,22 +60,26 @@ existing element and preserves that element's props, style, events, and ref.
 | --- | --- | --- |
 | `as` | `div`, `span`, `section`, `article`, `aside`, `main`, `header`, `footer`, `nav`, `ul`, `ol`, `li` | `div` |
 | `asChild` | `boolean` | `false` |
-| `inlineSize` | responsive `string \| number` | native `auto` |
-| `minInlineSize` | responsive `string \| number` | native `auto` |
-| `maxInlineSize` | responsive `string \| number` | native `none` |
-| `blockSize` | responsive `string \| number` | native `auto` |
-| `minBlockSize` | responsive `string \| number` | native `auto` |
-| `maxBlockSize` | responsive `string \| number` | native `none` |
+| `inlineSize` | responsive `string \| number` | omitted |
+| `minInlineSize` | responsive `string \| number` | omitted |
+| `maxInlineSize` | responsive `string \| number` | omitted |
+| `blockSize` | responsive `string \| number` | omitted |
+| `minBlockSize` | responsive `string \| number` | omitted |
+| `maxBlockSize` | responsive `string \| number` | omitted |
 | `slot` | `string` | `frame` |
 
-A responsive value is `{ initial, sm?, md?, lg?, xl? }`. A nonzero number is
-serialized as pixels; strings accept valid CSS values such as `rem`, `ch`,
+A responsive value is any non-empty subset of
+`{ initial?, sm?, md?, lg?, xl? }`. Without `initial`, native intrinsic sizing
+remains active below the first supplied breakpoint. A nonzero number is
+serialized as pixels; non-finite or negative numeric values throw RangeError;
+empty responsive objects throw TypeError; strings accept valid CSS values such as `rem`, `ch`,
 percentages, `min()`, `max()`, and `clamp()`.
 
 ## Visual recipes and states
 
 Frame has no visual recipe or interactive state. It only resolves authored
-logical constraints. Unset properties retain native CSS sizing behavior.
+logical constraints. Unset properties retain the composed host's own sizing behavior. Sparse
+constraints do not reset other dimensions.
 
 ## Tokens and CSS hooks
 
@@ -114,7 +118,7 @@ overflow reachable by itself.
 ```
 
 ```tsx
-<Frame maxBlockSize={{ initial: "18rem", lg: "24rem" }}>
+<Frame asChild blockSize={{ initial: "18rem", lg: "24rem" }}>
   <ScrollArea.Root>
     <ScrollArea.Viewport>...</ScrollArea.Viewport>
   </ScrollArea.Root>
@@ -128,14 +132,17 @@ HTMLElement ref pass through.
 Frame's constraint declarations live in Brick's `brick.utilities` cascade
 layer, after component defaults and before effects. This makes an explicitly
 authored Frame constraint reliable on a composed finished-component host
-without `!important` or stylesheet import-order dependence.
+without `!important` or stylesheet import-order dependence. A maximum alone
+is not a definite containing-block height for percentage-sized children.
+A constraint channel must be activated with its prop before overriding its CSS
+variables; activation attributes are internal, not authoring APIs.
 
 ## Examples
 
 ### Media canvas minimum height
 
 ```tsx
-<Frame minBlockSize={{ initial: "18rem", lg: "28rem" }}>
+<Frame asChild minBlockSize={{ initial: "18rem", lg: "28rem" }}>
   <Surface>...</Surface>
 </Frame>
 ```

@@ -1,7 +1,7 @@
 import { createRef } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { SwipeableItem } from "../../../src/swipeable-item.js";
+import { SwipeableItem, useSwipeableItem } from "../../../src/swipeable-item.js";
 
 function Example(props: Partial<React.ComponentProps<typeof SwipeableItem.Root>> = {}) {
   return (
@@ -18,6 +18,30 @@ function Example(props: Partial<React.ComponentProps<typeof SwipeableItem.Root>>
 }
 
 describe("SwipeableItem", () => {
+  it("shares radius and action spacing without leaking recipe props", () => {
+    render(<SwipeableItem.Root radius="none" motion="none">
+      <SwipeableItem.Content>Spaced row</SwipeableItem.Content>
+      <SwipeableItem.Actions side="end" aria-label="Spaced actions" gap={3} inset={0}><button>Save</button></SwipeableItem.Actions>
+    </SwipeableItem.Root>);
+    const root = screen.getByText("Spaced row").parentElement!;
+    const actions = root.querySelector<HTMLElement>('[aria-label="Spaced actions"]')!;
+    expect(root.style.getPropertyValue("--brick-swipeable-item-radius")).toBe("0px");
+    expect(root).toHaveAttribute("data-motion", "none");
+    expect(actions.style.getPropertyValue("--brick-swipeable-item-action-gap")).toBe("calc(var(--brick-space-1) * 3)");
+    expect(actions).not.toHaveAttribute("gap");
+    expect(root).not.toHaveAttribute("radius");
+  });
+
+  it("controller has safe full-swipe defaults and shares provider presentation", () => {
+    function ControllerExample() {
+      const item = useSwipeableItem({ onFullSwipe: vi.fn() });
+      expect(item.fullSwipeSides).toEqual([]);
+      return <SwipeableItem.RootProvider value={item} variant="outline" radius="sm"><SwipeableItem.Content>Provider row</SwipeableItem.Content></SwipeableItem.RootProvider>;
+    }
+    render(<ControllerExample />);
+    expect(screen.getByText("Provider row").parentElement).toHaveClass("brick-swipeable-item");
+    expect(screen.getByText("Provider row").parentElement).toHaveAttribute("data-variant", "outline");
+  });
   it("renders the adopted three-part plain contract", () => {
     render(<Example />);
     const content = screen.getByText("Quarterly report");

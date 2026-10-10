@@ -1,4 +1,5 @@
 import { createRef, forwardRef, type AnchorHTMLAttributes } from "react";
+import { renderToString } from "react-dom/server";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -9,6 +10,39 @@ import {
 } from "../../../src/link.js";
 
 describe("Link", () => {
+  it("server renders one composed destination and deterministic breakpoints", () => {
+    const html = renderToString(<Link asChild href="/guide" size={{ lg: "lg" }}><a>Guide</a></Link>);
+    expect(html.match(/<a\b/g)).toHaveLength(1);
+    expect(html).toContain('href="/guide"');
+    expect(html).toContain('data-size="inherit"');
+    expect(html).toContain('data-size-lg="lg"');
+  });
+  it("serializes sparse responsive sizes with inherited baseline", () => {
+    render(<Link href="/sizes" size={{ sm: "sm", md: "md", lg: "lg", xl: "inherit" }}>Sizes</Link>);
+    const link = screen.getByRole("link");
+    expect(link).toHaveAttribute("data-size", "inherit");
+    for (const size of ["sm", "md", "lg"]) expect(link).toHaveAttribute(`data-size-${size}`, size);
+    expect(link).toHaveAttribute("data-size-xl", "inherit");
+    expect(link).not.toHaveAttribute("size");
+  });
+
+  it("accepts a parent destination for asChild and merges refs and handlers", () => {
+    const parent = createRef<HTMLAnchorElement>();
+    const child = createRef<HTMLAnchorElement>();
+    const parentClick = vi.fn((_event: React.MouseEvent) => {});
+    const childClick = vi.fn((event: React.MouseEvent) => event.preventDefault());
+    render(<Link asChild href="/parent" ref={parent} onClick={parentClick}>
+      <a ref={child} onClick={childClick}>Composed</a>
+    </Link>);
+    const link = screen.getByRole("link");
+    expect(link).toHaveAttribute("href", "/parent");
+    expect(parent.current).toBe(link);
+    expect(child.current).toBe(link);
+    fireEvent.click(link);
+    expect(childClick).toHaveBeenCalledOnce();
+    expect(parentClick).toHaveBeenCalledOnce();
+    expect(parentClick.mock.calls[0][0].defaultPrevented).toBe(true);
+  });
   it("renders the adopted native default and forwards the anchor ref", () => {
     const ref = createRef<HTMLAnchorElement>();
     render(<Link href="/guides" ref={ref}>Read the guides</Link>);
@@ -19,7 +53,7 @@ describe("Link", () => {
     expect(link).toHaveAttribute("href", "/guides");
     expect(link).toHaveClass("brick-link");
     expect(link).toHaveAttribute("data-slot", "link");
-    expect(link).toHaveAttribute("data-variant", "theme");
+    expect(link).toHaveAttribute("data-variant", "underline");
     expect(link).toHaveAttribute("data-tone", "accent");
     expect(link).toHaveAttribute("data-size", "inherit");
     expect(link).not.toHaveAttribute("role");
@@ -30,7 +64,7 @@ describe("Link", () => {
   });
 
   it("exposes every closed visual recipe without leaking visual props", () => {
-    const variants: LinkVariant[] = ["theme", "underline", "plain"];
+    const variants: LinkVariant[] = ["underline", "subtle", "plain", "theme"];
     const tones: LinkTone[] = ["accent", "neutral", "inherit"];
     const sizes: LinkSize[] = ["inherit", "sm", "md", "lg"];
     const { rerender } = render(<Link href="/reference">Reference</Link>);

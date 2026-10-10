@@ -4,6 +4,21 @@ Dialog follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add regression coverage for Positioner layering above a mounted ActionBar;
+  requires Atom’s shared Positioner overlay-host registration fix.
+
+- Add Positioner with top/center/bottom placement and outside/inside scrolling.
+- Add xs, xl, cover and full sizes, sparse responsive sizing, and motion presets.
+- Align sm/lg widths and section spacing; use smaller body typography and restrained elevation/radius.
+- Keep final actions reachable on short viewports and retain hidden child state.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
+### Added
+
+- Added `Dialog.Close placement="corner"` for a reusable, logical top-end
+  dismiss-control inset while preserving inline Close actions by default.
+
 ## 0.1.10
 
 ### Fixed

@@ -9,3 +9,4 @@ export {
   type FieldsetLegendProps,
   type FieldsetRootProps,
 } from "./components/fieldset/index.js";
+export { FieldsetContent, FieldsetContext, useFieldsetContext, type FieldsetContentProps, type FieldsetSize } from "./components/fieldset/index.js";

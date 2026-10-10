@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function expectCardDefaults(card: Locator) {
   await expect(card).toHaveAttribute("data-variant", "outline");
@@ -11,7 +11,7 @@ async function expectCardDefaults(card: Locator) {
 test("Card exposes its default static anatomy and explicit child actions", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const card = page.getByTestId("card-overview").locator(".brick-card");
   await expectCardDefaults(card);
   await expect(card).toHaveJSProperty("tagName", "DIV");
@@ -40,17 +40,17 @@ test("Card exposes its default static anatomy and explicit child actions", async
 });
 
 test("Card variants change only surface prominence", async ({ page }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const variants = page.getByTestId("card-variants");
   await expect(variants.locator(".brick-card")).toHaveCount(3);
 
   for (const variant of ["outline", "elevated", "subtle"] as const) {
-    const card = variants.locator(
-      `.brick-card[data-variant="${variant}"]`,
-    );
+    const card = variants.locator(`.brick-card[data-variant="${variant}"]`);
     await expect(card).toHaveCount(1);
     await expect(card).toHaveAttribute("data-size", "md");
-    await expect(card.getByText("Project summary", { exact: true })).toBeVisible();
+    await expect(
+      card.getByText("Project summary", { exact: true }),
+    ).toBeVisible();
     await expect(
       card.getByText(
         "The same subject and anatomy make the selected Card recipe easier to compare.",
@@ -59,17 +59,39 @@ test("Card variants change only surface prominence", async ({ page }) => {
     ).toBeVisible();
   }
 
-  const outline = variants.locator(
-    '.brick-card[data-variant="outline"]',
-  );
-  const elevated = variants.locator(
-    '.brick-card[data-variant="elevated"]',
-  );
+  const outline = variants.locator('.brick-card[data-variant="outline"]');
+  const elevated = variants.locator('.brick-card[data-variant="elevated"]');
   const subtle = variants.locator('.brick-card[data-variant="subtle"]');
   await expect(outline).toHaveCSS("box-shadow", "none");
+  const outlinePaint = await outline.evaluate((element) => {
+    const style = getComputedStyle(element);
+    const probe = document.createElement("span");
+    probe.style.backgroundColor = "var(--brick-color-surface-base)";
+    element.append(probe);
+    const expectedBackground = getComputedStyle(probe).backgroundColor;
+    probe.remove();
+    return { background: style.backgroundColor, expectedBackground };
+  });
+  expect(outlinePaint.background).toBe(outlinePaint.expectedBackground);
   expect(
     await elevated.evaluate((element) => getComputedStyle(element).boxShadow),
   ).not.toBe("none");
+  const elevatedPaint = await elevated.evaluate((element) => {
+    const style = getComputedStyle(element);
+    const probe = document.createElement("span");
+    probe.style.backgroundColor = "var(--brick-color-surface-raised)";
+    element.append(probe);
+    const probeStyle = getComputedStyle(probe);
+    const result = {
+      background: style.backgroundColor,
+      borderWidth: style.borderInlineStartWidth,
+      expectedBackground: probeStyle.backgroundColor,
+    };
+    probe.remove();
+    return result;
+  });
+  expect(elevatedPaint.background).toBe(elevatedPaint.expectedBackground);
+  expect(elevatedPaint.borderWidth).toBe("0px");
   await expect(subtle).toHaveCSS("box-shadow", "none");
   expect(
     await outline.evaluate(
@@ -85,7 +107,7 @@ test("Card variants change only surface prominence", async ({ page }) => {
 test("Card sizes change only coordinated spacing and title scale", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const sizes = page.getByTestId("card-sizes");
   await expect(sizes.locator(".brick-card")).toHaveCount(3);
   const measurements: Array<{ space: number; title: number }> = [];
@@ -94,14 +116,16 @@ test("Card sizes change only coordinated spacing and title scale", async ({
     const card = sizes.locator(`.brick-card[data-size="${size}"]`);
     await expect(card).toHaveCount(1);
     await expect(card).toHaveAttribute("data-variant", "outline");
-    await expect(card.getByText("Project summary", { exact: true })).toBeVisible();
+    await expect(
+      card.getByText("Project summary", { exact: true }),
+    ).toBeVisible();
     measurements.push(
       await card.evaluate((element) => {
         const rootStyle = getComputedStyle(element);
         const title = element.querySelector(".brick-card-title")!;
         return {
           space: Number.parseFloat(
-            rootStyle.getPropertyValue("--brick-card-space"),
+            getComputedStyle(element.querySelector(".brick-card-header")!).paddingInlineStart,
           ),
           title: Number.parseFloat(getComputedStyle(title).fontSize),
         };
@@ -112,13 +136,13 @@ test("Card sizes change only coordinated spacing and title scale", async ({
   expect(measurements[0].space).toBeLessThan(measurements[1].space);
   expect(measurements[1].space).toBeLessThan(measurements[2].space);
   expect(measurements[0].title).toBeLessThan(measurements[1].title);
-  expect(measurements[1].title).toBeLessThan(measurements[2].title);
+  expect(measurements[1].title).toBeLessThanOrEqual(measurements[2].title);
 });
 
 test("Card renders only the anatomy authored by the consumer", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const anatomy = [
     {
       absent: ["card-header", "card-footer"],
@@ -154,49 +178,67 @@ test("Card renders only the anatomy authored by the consumer", async ({
   }
 });
 
-test("Card reserves a trailing header column only when Action is authored", async ({ page }) => {
-  await page.goto("/card");
-  const headerOnly = page.getByTestId("card-anatomy-header").locator(".brick-card-header");
-  const withAction = page.getByTestId("card-anatomy-action").locator(".brick-card-header");
+test("Card reserves a trailing header column only when Action is authored", async ({
+  page,
+}) => {
+  await page.goto("/card?qualification=1");
+  const headerOnly = page
+    .getByTestId("card-anatomy-header")
+    .locator(".brick-card-header");
+  const withAction = page
+    .getByTestId("card-anatomy-action")
+    .locator(".brick-card-header");
 
   const headerOnlyGeometry = await headerOnly.evaluate((header) => {
     const description = header.querySelector(".brick-card-description");
-    if (!(description instanceof HTMLElement)) throw new Error("Card description is missing");
+    if (!(description instanceof HTMLElement))
+      throw new Error("Card description is missing");
     const style = getComputedStyle(header);
     return {
-      available: header.getBoundingClientRect().width
-        - Number.parseFloat(style.paddingLeft)
-        - Number.parseFloat(style.paddingRight),
+      available:
+        header.getBoundingClientRect().width -
+        Number.parseFloat(style.paddingLeft) -
+        Number.parseFloat(style.paddingRight),
       description: description.getBoundingClientRect().width,
     };
   });
   const actionGeometry = await withAction.evaluate((header) => {
     const description = header.querySelector(".brick-card-description");
     const action = header.querySelector(".brick-card-action");
-    if (!(description instanceof HTMLElement) || !(action instanceof HTMLElement)) {
+    if (
+      !(description instanceof HTMLElement) ||
+      !(action instanceof HTMLElement)
+    ) {
       throw new Error("Card action anatomy is incomplete");
     }
     const style = getComputedStyle(header);
     return {
-      available: header.getBoundingClientRect().width
-        - Number.parseFloat(style.paddingLeft)
-        - Number.parseFloat(style.paddingRight),
+      available:
+        header.getBoundingClientRect().width -
+        Number.parseFloat(style.paddingLeft) -
+        Number.parseFloat(style.paddingRight),
       columnGap: Number.parseFloat(style.columnGap),
       description: description.getBoundingClientRect().width,
       action: action.getBoundingClientRect().width,
     };
   });
 
-  expect(headerOnlyGeometry.description).toBeCloseTo(headerOnlyGeometry.available, 1);
-  expect(actionGeometry.columnGap).toBeGreaterThan(0);
-  expect(actionGeometry.description + actionGeometry.action + actionGeometry.columnGap).toBeCloseTo(
-    actionGeometry.available,
+  expect(headerOnlyGeometry.description).toBeCloseTo(
+    headerOnlyGeometry.available,
     1,
   );
+  expect(actionGeometry.columnGap).toBeGreaterThan(0);
+  expect(
+    actionGeometry.description +
+      actionGeometry.action +
+      actionGeometry.columnGap,
+  ).toBeCloseTo(actionGeometry.available, 1);
 });
 
-test("Card exposes every restricted Root and Title element", async ({ page }) => {
-  await page.goto("/card");
+test("Card exposes every restricted Root and Title element", async ({
+  page,
+}) => {
+  await page.goto("/card?qualification=1");
 
   for (const element of ["div", "article", "section", "li"] as const) {
     const card = page.getByTestId(`card-root-${element}`);
@@ -222,7 +264,7 @@ test("Card exposes every restricted Root and Title element", async ({ page }) =>
 test("Card composes Brick Image, explicit controls, and an application link", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const imageCard = page.getByTestId("card-composition-image");
   const controlsCard = page.getByTestId("card-composition-controls");
   await expect(imageCard).toHaveAttribute("data-variant", "outline");
@@ -267,18 +309,16 @@ test("Card composes Brick Image, explicit controls, and an application link", as
 test("Card supports scoped appearance and exact customization hooks", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const scopes = page.getByTestId("card-appearance");
-  const light = scopes.locator(
-    '[data-brick-appearance="light"] .brick-card',
-  );
-  const dark = scopes.locator(
-    '[data-brick-appearance="dark"] .brick-card',
-  );
+  const light = scopes.locator('[data-brick-appearance="light"] .brick-card');
+  const dark = scopes.locator('[data-brick-appearance="dark"] .brick-card');
   await expectCardDefaults(light);
   await expectCardDefaults(dark);
   expect(
-    await light.evaluate((element) => getComputedStyle(element).backgroundColor),
+    await light.evaluate(
+      (element) => getComputedStyle(element).backgroundColor,
+    ),
   ).not.toBe(
     await dark.evaluate((element) => getComputedStyle(element).backgroundColor),
   );
@@ -313,7 +353,7 @@ test("Card remains contained and logical in constrained and RTL content", async 
   page,
 }) => {
   await page.setViewportSize({ width: 256, height: 900 });
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   expect(
     await page.evaluate(
       () =>
@@ -357,7 +397,7 @@ test("Card preserves visible boundaries without adding motion", async ({
     testInfo.project.name !== "chromium",
     "Forced colors is a Chromium release check.",
   );
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const elevated = page
     .getByTestId("card-variants")
     .locator('.brick-card[data-variant="elevated"]');

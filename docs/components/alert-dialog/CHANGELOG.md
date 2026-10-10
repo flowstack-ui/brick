@@ -4,6 +4,17 @@ Alert Dialog follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add regression coverage for Positioner layering above a mounted ActionBar;
+  requires Atom’s shared Positioner overlay-host registration fix.
+
+- Share Dialog visual recipes, including typography, insets, elevation, scrim,
+  radius and responsive sizes. `sm` is now 28rem and `md` 32rem.
+- Add Positioner with top/center/bottom placement and inside/outside scrolling;
+  add seven sizes and motion presets without changing strict confirmation behavior.
+- Preserve existing AlertDialog token overrides and legacy centered anatomy.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ## 0.1.10
 
 ### Fixed

@@ -16,3 +16,11 @@ createElement(Rating.Display, { value: 4.5 });
 // @ts-expect-error Summary requires a localized label
 createElement(Rating.Summary, { value: 4.8 });
 void sizes; void tones; void variants;
+const modern: RatingRootProps = { size: { md: "lg" }, density: { initial: "comfortable", lg: "compact" }, variant: { sm: "outline" }, gap: { md: 1 }, fillColor: "gold", emptyColor: "silver", onHoverChange: value => { const typed: number | null = value; void typed; }, inputMode: "manual", autoFocus: true };
+createElement(Rating.Root, modern, createElement(Rating.Label, null, "Score"), createElement(Rating.Control), createElement(Rating.HiddenInput));
+createElement(Rating.Item, { value: 1, contentMode: "content" }, "🙂");
+createElement(Rating.ItemIndicator, { icon: createElement("svg") });
+// @ts-expect-error density is closed
+createElement(Rating.Root, { density: "tiny" });
+// @ts-expect-error manual input name belongs to Root
+createElement(Rating.HiddenInput, { name: "duplicate" });

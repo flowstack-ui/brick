@@ -21,13 +21,13 @@
   "brickContract": {
     "package": {
       "name": "@flowstack-ui/brick",
-      "version": "0.2.2"
+      "version": "0.3.0"
     },
-    "schema": "flowstack.brick-theme-contract.v1",
-    "version": 4
+    "schema": "flowstack.brick-theme-contract.v2",
+    "version": 6
   },
   "compatibility": {
-    "brick": "^0.2.0"
+    "brick": "0.3.0"
   },
   "extensionNamespaces": [
     "flowstack.dev/qualification"

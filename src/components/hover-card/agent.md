@@ -14,6 +14,9 @@ Present a finished supplemental, nonessential, non-interactive preview from a ge
 
 ## Required composition
 
+- Inside Dialog use its Positioner/Content anatomy and keep HoverCard.Portal enabled to escape Body clipping with managed modal ownership. Fixed positioning alone does not escape transformed clipping ancestors. Use Stack align=start when a text trigger should anchor to its label rather than a stretched row.
+- Use valued Trigger parts and Context for one shared preview. Pass the unchanged useHoverCard controller to RootProvider for external control. Root owns positioning and lifecycle; Content already includes its positioned host.
+- Content size selects maximum width; inset xs/sm/md/lg independently selects 12/16/20/24px padding, default md. Use public Radius for corners, and preserve authored Paragraph tones. Keep Arrow directly inside Content (fragments are supported).
 - Compose HoverCard.Root with HoverCard.Trigger asChild around a genuine semantic link, plus HoverCard.Portal and HoverCard.Content; add HoverCard.Arrow only when the styled preview needs a pointer. Content may contain passive Brick text, Avatar, Badge, and layout components but no interactive descendants.
 - Choose Content size sm, md, or lg from preview measure. Brick keeps non-Arrow children in its private scrolling viewport and Arrow as a direct Content child; do not target the private viewport. Reproduce any local Appearance scope on portalled Content.
 
@@ -27,6 +30,7 @@ Present a finished supplemental, nonessential, non-interactive preview from a ge
 - **SHOULD:** Style and validate from the collision-resolved data-side and available viewport bounds rather than assuming the requested placement always wins.
 - **MUST:** When Portal leaves a local Appearance scope, reproduce that scope on Content or target a portal container inside it.
 - **MUST:** Load styles.css or core.css plus hover-card.css and every composed child component stylesheet.
+- **MUST:** Overlay arrows share a 12px square-equivalent seed (--brick-overlay-arrow-size), exposed-edge artwork and owner surface/border paint. Prefer the shipped Arrow; do not add directional filters or translations. SVG Arrow width/height remain supported; positioning gutter measures the empty gap to the tip. Explicit positioning.offset remains raw. ToggleTip inherits Popover; Select/MultiSelect retain span hosts. NavigationMenu Indicator remains separately positioned.
 
 ## Common mistakes
 

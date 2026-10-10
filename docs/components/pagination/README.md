@@ -1,37 +1,34 @@
 # Pagination
 
-Pagination navigates a finite, known set of numbered pages with native buttons
-or real URL destinations.
+Pagination navigates known result pages with native buttons or real URL destinations.
 
 ## When and where to use
 
-Use Pagination when an application knows the total page count and people benefit from direct movement to nearby or boundary pages. When each page has a URL, provide `getPageHref` and control `page` from the current route. Keep result data, page size, loading, routing, and post-load focus in the application.
+Use `count` for record totals or `totalPages` for already calculated page totals,
+never both. Fetching, filtering, URL history and result-replacement focus remain
+application-owned. Do not use Pagination for unknown totals, guide navigation,
+load-more flows, tabs or steps.
 
 ## When not to use
 
-Do not use Pagination for unknown totals, load-more flows, tabs, steps, or carousels. Do not render URL-backed results as state-only buttons.
+Do not use Pagination for unknown totals, guide navigation, load-more flows, tabs or steps.
 
 ## Installation and imports
 
-Import `Pagination` from `@flowstack-ui/brick` or `@flowstack-ui/brick/pagination`, and load `@flowstack-ui/brick/styles.css` once.
-
-
-The complete stylesheet above is the recommended default. For a measured
-route-aware build, replace it with the shared foundation and this component's
-stylesheet:
+Import `Pagination` and `usePagination` from `@flowstack-ui/brick` or
+`@flowstack-ui/brick/pagination`. Load `@flowstack-ui/brick/styles.css` once.
+For modular CSS, load `styles/core.css` plus `styles/pagination.css`; the latter
+includes its Button and Text dependencies. Add other composed owners' CSS.
 
 ```tsx
-import "@flowstack-ui/brick/styles/core.css"; // once at the application root
+import "@flowstack-ui/brick/styles/core.css";
 import "@flowstack-ui/brick/styles/pagination.css";
 ```
-
-Add the modular stylesheet for every other Brick component the route renders.
-Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ## Quick start
 
 ```tsx
-<Pagination.Root totalPages={20} aria-label="Search result pages">
+<Pagination.Root count={100} aria-label="Search result pages">
   <Pagination.List>
     <Pagination.Previous />
     <Pagination.Items />
@@ -42,136 +39,139 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ## Anatomy and DOM ownership
 
-The frozen namespace contains `Root`, `List`, `Previous`, `Items`, `Item`, `Ellipsis`, and `Next`. Root renders `nav`; List renders `ol`; every control or gap receives an Atom-owned `li`; Previous, Item, and Next render native `button type="button"` by default or anchors when Root provides `getPageHref`; Ellipsis renders an assistive-hidden span. Items has no host and renders Atom's calculated Item/Ellipsis sequence.
+Root and RootProvider render a labelled nav. List is an optional ordered list;
+controls and gaps receive li wrappers only inside List. Without List, compose
+Previous, Items and Next directly inside ButtonGroup, including attached groups.
+Items has no host. Item and boundary controls render buttons, or anchors in
+getPageHref mode. Ellipsis is an assistive-hidden span. PageText is typography.
+Context accepts a render child; usePaginationContext reads the same controller.
 
 ## API
 
 ### Exports
 
-`Pagination`, `PaginationRoot`, `PaginationList`, `PaginationPrevious`,
-`PaginationItems`, `PaginationItem`, `PaginationEllipsis`, `PaginationNext`,
-`PaginationRootProps`, `PaginationListProps`, `PaginationPreviousProps`,
-`PaginationItemsProps`, `PaginationItemProps`, `PaginationEllipsisProps`,
-`PaginationNextProps`, `PaginationVariant`, `PaginationBoundaryVariant`, and `PaginationSize` are available
-from root and subpath imports.
+Root and subpath expose PaginationRoot, PaginationRootProvider, PaginationList,
+PaginationPrevious, PaginationNext, PaginationFirst, PaginationLast,
+PaginationItems, PaginationItem, PaginationEllipsis, PaginationPageText,
+usePagination and usePaginationContext. Their props are PaginationRootProps,
+PaginationRootProviderProps, PaginationListProps, PaginationPreviousProps,
+PaginationNextProps, PaginationFirstProps, PaginationLastProps,
+PaginationItemsProps, PaginationItemProps, PaginationEllipsisProps and
+PaginationPageTextProps. Additional types: PaginationPageTextFormatDetails,
+PaginationVariant, PaginationSize, PaginationBoundaryVariant, UsePaginationProps,
+UsePaginationReturn and PaginationIds.
 
-### Root recipes
+### Root and RootProvider
 
-| Prop | Values | Default |
+Root accepts controlled `page` / `onPageChange(page)` or `defaultPage=1`.
+Count mode accepts `pageSize` / `onPageSizeChange(size)` or `defaultPageSize=10`.
+Counts and totalPages are safe nonnegative integers; page sizes are positive
+safe integers. Invalid inputs throw. Page numbers truncate and clamp;
+nonfinite page values normalize to 1. Sibling and boundary counts truncate and
+clamp to zero or greater, defaulting to 1 for nonfinite values.
+
+`siblingCount` and `boundaryCount` default to 1. Displayed page clamps when
+totals shrink, without emitting callbacks during render. Controlled state
+remains parent-owned. A requested page-size change preserves the first visible
+record where possible, then clamps. Zero pages render no navigation; one page
+retains disabled boundary controls.
+
+| Visual prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `plain`, `soft`, `outline` | `plain` |
-| `boundaryVariant` | `plain`, `outline` | `plain` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `variant` | ButtonVariant: solid, soft, subtle, surface, outline, ghost, plain | `ghost` |
+| `selectedVariant` | ButtonVariant | `outline` |
+| `tone` | neutral, contrast, accent, info, success, warning, danger | `neutral` |
+| `size` | ResponsiveValue<ButtonSize>: 2xs, xs, sm, md, lg, xl, 2xl | `md` |
+| radius | shared Radius core tokens and semantic roles | control |
+| focusRing | outside, inside | inside |
 
-Root preserves Atom's `totalPages`, controlled `page`, `defaultPage`, `onPageChange`, `siblingCount`, `boundaryCount`, `disabled`, `previousAriaLabel`, `nextAriaLabel`, `getItemAriaLabel`, and `getPageHref`. Previous and Next use logical chevrons when children are omitted. Authored children replace that visible content.
+Root supplies visual defaults; individual control overrides win. ButtonGroup
+defaults apply when Root does not specify a value. All sizes use Button
+geometry, including typography, icons and border-inclusive heights.
+`boundaryVariant="outline"` remains a legacy boundary-control shortcut.
 
-`boundaryVariant="outline"` gives only Previous and Next a bounded control
-treatment while generated page numbers retain the Root recipe. Use it instead
-of styling the two boundary parts independently.
+RootProvider accepts `value` from `usePagination`, the same visual defaults and
+native nav props. Do not mix internal Root state with a separate controller.
 
-`getPageHref` receives `page`, `currentPage`, `totalPages`, and `isCurrent`.
-When present, the application route owns the current page and activation does
-not call `onPageChange`. Ordinary anchors preserve reload, copy/share,
-Back/Forward, and modified clicks. A router may progressively enhance ordinary
-clicks through the control `onClick` prop, but must preserve the generated
-destination and modified-click behavior. Disabled and boundary links have no
-`href`, expose `aria-disabled="true"`, and leave sequential focus order.
+### Items and controls
 
-`Items` accepts shared `itemProps` and `ellipsisProps`. Explicit Item and Ellipsis composition remains supported when an application intentionally authors the complete range.
+Items accepts `render({page, isCurrent})`, decorative `ellipsis`, `itemProps`
+and `ellipsisProps`. Custom render returns one compatible control host; Atom
+merges behavior without nesting buttons. Item accepts a required page and optional
+children. Previous, Next, First and Last accept replacement children and visual
+overrides. First and Last are optional explicit boundary actions.
 
-## Visual recipes and states
+Native props, refs and asChild remain available on rendered parts. Refs target
+the real control, not a list wrapper. Root `ids` accepts root/list/control IDs,
+`item(page)` and `ellipsis(rangeIndex)` for distinct generated IDs; direct native
+id props take precedence.
 
-Variants change containing paint and padding; sizes coordinate 32px, 40px, and 48px-class controls and label recipes. Hover, active, current, focus-visible, and disabled states change paint without moving controls.
+### Controller and summaries
 
-## Tokens and CSS hooks
+`usePagination` exposes page/currentPage, totalPages, items, previousPage,
+nextPage, first/last flags, setPage and first/previous/next/last actions.
+Count mode additionally exposes count, pageSize, pageRange, setPageSize and
+slice(data). pageRange uses zero-based start and exclusive end. slice is only
+for a complete local collection, never for an already paginated server response.
+Total-pages mode does not invent a record count; slice/setPageSize reject it.
 
-Stable classes are `.brick-pagination`, `.brick-pagination__list`, `.brick-pagination__previous`, `.brick-pagination__item`, `.brick-pagination__ellipsis`, and `.brick-pagination__next`. Root exposes `data-variant` and `data-size`; Atom state, page, direction, disabled, and `data-slot` attributes remain available.
-
-Public variables:
-
-- `--brick-pagination-root-background`
-- `--brick-pagination-root-border-color`
-- `--brick-pagination-root-radius`
-- `--brick-pagination-root-padding`
-- `--brick-pagination-list-gap`
-- `--brick-pagination-list-overflow-padding`
-- `--brick-pagination-control-min-size`
-- `--brick-pagination-control-inline-padding`
-- `--brick-pagination-control-radius`
-- `--brick-pagination-control-foreground`
-- `--brick-pagination-control-background`
-- `--brick-pagination-control-border-color`
-- `--brick-pagination-control-hover-background`
-- `--brick-pagination-control-pressed-background`
-- `--brick-pagination-current-background`
-- `--brick-pagination-current-foreground`
-- `--brick-pagination-current-border-color`
-- `--brick-pagination-current-hover-background`
-- `--brick-pagination-current-pressed-background`
-- `--brick-pagination-disabled-foreground`
-- `--brick-pagination-focus-ring`
-- `--brick-pagination-ellipsis-foreground`
-- `--brick-pagination-icon-size`
-- `--brick-pagination-transition-duration`
-- `--brick-pagination-font-family`
-- `--brick-pagination-font-size`
-- `--brick-pagination-font-weight`
-- `--brick-pagination-line-height`
-- `--brick-pagination-letter-spacing`
-
-## Customization
-
-Choose a variant and size first, then use Brick semantic tokens or documented `--brick-pagination-*` variables. Compound parts, `className`, and `style` remain available for intentional local adaptation without replacing Atom behavior.
-
-## Responsive behavior
-
-Pagination remains one no-wrap row. When constrained, its ordered list scrolls along the inline axis without hiding or rearranging pages. Applications may choose smaller sibling or boundary counts for a known layout, but Brick does not make that decision responsively.
-
-## Accessibility
-
-Give Root a purpose-specific `aria-label` when more than one navigation landmark exists. Every generated page receives a destination label, the current page receives `aria-current="page"`, boundary buttons disable natively, and boundary links become inert without a destination. Ellipsis is not focusable. Tab reaches each enabled control in DOM order; there is no roving focus or arrow-key model. Use Root localization props instead of rebuilding Items.
-
-## Composition, native props, and refs
-
-Refs target the Root nav, List ol, inner button or anchor controls, and Ellipsis span. Parts preserve native props, `render`, `asChild`, custom classes, styles, and slots. Select link mode through Root `getPageHref`; do not compose an anchor while Root remains in button mode. Pagination composes beside Table, List, Select, and result summaries without owning them.
-
-## Examples
-
-### In-place state
-
-```tsx
-<Pagination.Root
-  page={page}
-  onPageChange={setPage}
-  totalPages={12}
-  variant="outline"
-  previousAriaLabel="Earlier results"
-  nextAriaLabel="Later results"
->
-  <Pagination.List>
-    <Pagination.Previous />
-    <Pagination.Items />
-    <Pagination.Next />
-  </Pagination.List>
-</Pagination.Root>
-```
+PageText accepts `format="short"` (page / total), `"compact"` (page of total,
+default), `"long"` (record range of count), or a callback receiving page,
+totalPages, count, pageRange and formatNumber. Long requires count mode.
+Numbers follow LocaleProvider; use a callback to translate connecting words.
+Use controller-derived empty results outside Root when a zero-count summary is needed.
 
 ### URL-backed results
 
-```tsx
-<Pagination.Root
-  aria-label="Incident result pages"
-  page={pageFromRoute}
-  totalPages={totalPages}
-  getPageHref={({ page }) => `/incidents?status=open&page=${page}`}
->
-  <Pagination.List>
-    <Pagination.Previous />
-    <Pagination.Items />
-    <Pagination.Next />
-  </Pagination.List>
-</Pagination.Root>
-```
+Supply `getPageHref({page, currentPage, totalPages, isCurrent})` and derive
+controlled page from the route. Anchors preserve sharing, reload, browser history
+and modified clicks; navigation does not call onPageChange. Disabled destinations
+have no href, expose aria-disabled and leave sequential focus order.
+
+## Visual recipes and states
+
+Controls reuse Button's complete selected, hover, pressed, disabled, focus and forced-color recipes. Defaults are neutral ghost controls and outline selected state. Changing variants does not change border-inclusive target dimensions.
+
+## Tokens and CSS hooks
+
+Pagination uses Button presentation rather than a second button recipe.
+Choose visual props first. `--brick-pagination-list-gap` customizes List spacing.
+Classes use `.brick-pagination` and part suffixes; controls carry Button
+data-size, data-tone and data-variant alongside Atom state attributes and `data-slot`.
+
+## Customization
+
+Previously variant painted the navigation container and sizes used a separate
+scale. Variant now styles controls; wrap in Surface when container paint is
+needed. Selected controls default to outline, not fixed accent fill. Set
+selectedVariant and tone explicitly when desired. The old pagination root,
+control, current, typography and focus CSS variables are retired in favor of
+shared Button presentation and public visual props; list-gap remains supported.
+boundaryVariant remains supported, but explicit boundary part variant is clearer.
+
+## Responsive behavior
+
+List remains a bounded, no-wrap scrolling row. Compact composition can omit
+List and use PageText with boundary controls. Sparse responsive sizes inherit
+md before their first breakpoint; width does not automatically change the range.
+
+## Accessibility
+
+Root defaults to aria-label Pagination. Use a purpose-specific label when
+multiple navigation landmarks exist. Localize previousAriaLabel, nextAriaLabel,
+firstAriaLabel, lastAriaLabel and getItemAriaLabel. Current page has aria-current.
+Tab reaches each enabled control; there is no roving arrow-key model. When Root
+is disabled, List is keyboard-focusable so its overflow can still be scrolled;
+the page controls themselves remain disabled. An explicit List tabIndex overrides
+that default, and the application then owns keeping overflow keyboard-accessible.
+
+## Composition, native props, and refs
+
+Root refs target nav, List refs target ol, and control refs target button or anchor, never li. Rendered parts preserve native props and asChild. Custom Items rendering receives merged behavior without nested interactive hosts. Use getPageHref for anchor mode; keep routing and result focus application-owned.
+
+## Examples
+
+For attached controls, compose Root > ButtonGroup attached > Previous, Items, Next without List. For a compact summary, compose Previous, PageText and Next in HStack. For custom visible content use Items render or explicit Item children.
 
 ## Evidence
 
@@ -179,9 +179,9 @@ Refs target the Root nav, List ol, inner button or anchor controls, and Ellipsis
 - [Unit tests](../../../test/components/pagination/pagination.test.tsx)
 - [Type tests](../../../test/types/components/pagination.test.ts)
 - [Browser behavior](../../../playground/tests/components/pagination/behavior.spec.ts)
-- [Visual owner](../../../playground/tests/components/pagination/visual.spec.ts)
 - [Manual protocol](../../../playground/manual-tests/pagination.md)
+- [Visual owner](../../../playground/tests/components/pagination/visual.spec.ts)
 
 ## Changelog
 
-See [`CHANGELOG.md`](CHANGELOG.md).
+See [CHANGELOG.md](CHANGELOG.md).

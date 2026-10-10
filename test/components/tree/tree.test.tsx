@@ -42,6 +42,31 @@ function Standard(props: Partial<React.ComponentProps<typeof Tree.Root>> = {}) {
 }
 
 describe("Tree", () => {
+  it("serializes sparse responsive recipes and independent selection tone", () => {
+    render(<Standard size={{ md: "xs" }} density={{ initial: "compact", lg: "comfortable" }} variant={{ md: "outline" }} tone="accent" selectionVariant="solid" />);
+    const root = screen.getByRole("tree");
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "xs");
+    expect(root).toHaveAttribute("data-density", "compact");
+    expect(root).toHaveAttribute("data-density-lg", "comfortable");
+    expect(root).toHaveAttribute("data-tone", "accent");
+    expect(root).toHaveAttribute("data-selection-variant", "solid");
+    expect(root).not.toHaveAttribute("selectionVariant");
+  });
+
+  it("renders independent checking and disclosure and derives depth from Atom", async () => {
+    const user = userEvent.setup();
+    render(<Tree.Root aria-label="Independent" checkable selectionMode="none" expandOnClick={false}>
+      <Tree.Item value="folder" expandable><Tree.ItemContent><Tree.Trigger aria-label="Open folder" /><Tree.Checkbox aria-label="Check folder" /><Tree.ItemText>Folder</Tree.ItemText></Tree.ItemContent>
+        <Tree.Group><Tree.Item value="file"><Tree.ItemContent data-testid="nested"><Tree.ItemText>File</Tree.ItemText></Tree.ItemContent></Tree.Item></Tree.Group>
+      </Tree.Item></Tree.Root>);
+    await user.click(screen.getByRole("checkbox"));
+    expect(screen.getByRole("treeitem", { name: "Folder" })).toHaveAttribute("aria-expanded", "false");
+    await user.click(screen.getByRole("button", { name: "Open folder" }));
+    expect(screen.getByTestId("nested").style.getPropertyValue("--brick-tree-level")).toBe("2");
+    expect(screen.getByRole("checkbox")).toHaveAttribute("aria-checked", "true");
+  });
+
   it("renders the six-part contract and default recipes", () => {
     render(<Standard />);
     const root = screen.getByRole("tree", { name: "Repository" });
@@ -49,6 +74,7 @@ describe("Tree", () => {
     expect(root).toHaveAttribute("aria-orientation", "vertical");
     expect(root).toHaveAttribute("data-size", "md");
     expect(root).toHaveAttribute("data-variant", "plain");
+    expect(root).toHaveAttribute("data-border-tone", "default");
     expect(root).not.toHaveAttribute("data-guide");
     expect(screen.getByRole("treeitem", { name: "src" })).toHaveClass("brick-tree__item");
     expect(root.querySelector(".brick-tree__item-content")).toBeInstanceOf(HTMLDivElement);
@@ -62,13 +88,14 @@ describe("Tree", () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();
     const ref = createRef<HTMLDivElement>();
-    render(<Standard className="custom-root" data-testid="tree" onValueChange={onValueChange} ref={ref} showGuide size="sm" variant="outline" />);
+    render(<Standard borderTone="strong" className="custom-root" data-testid="tree" onValueChange={onValueChange} ref={ref} showGuide size="sm" variant="outline" />);
     const root = screen.getByTestId("tree");
     expect(ref.current).toBe(root);
     expect(root).toHaveClass("brick-tree", "custom-root");
     expect(root).toHaveAttribute("data-guide", "");
     expect(root).toHaveAttribute("data-size", "sm");
     expect(root).toHaveAttribute("data-variant", "outline");
+    expect(root).toHaveAttribute("data-border-tone", "strong");
     expect(root).not.toHaveAttribute("showGuide");
     await user.click(screen.getByRole("treeitem", { name: "README.md" }));
     expect(onValueChange).toHaveBeenCalledWith("readme");

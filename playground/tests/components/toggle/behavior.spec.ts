@@ -1,16 +1,48 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
+import { setAppearance } from "../../visual-harness.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/toggle");
+  await page.goto("/toggle?qualification=1");
 });
+
+for (const appearance of ["light", "dark"] as const) {
+  test(`Toggle neutral ghost pointer states in ${appearance}`, async ({ page, isMobile }) => {
+    test.skip(isMobile, "Fine-pointer hover and mouse-down qualification");
+    await setAppearance(page, appearance);
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    const toggle = page.getByTestId("toggle-overview").getByRole("button", { name: "Favorite" });
+    const bg = () => toggle.evaluate(el => getComputedStyle(el).backgroundColor);
+    await page.mouse.move(0, 0);
+    await expect(toggle).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+    const before = await toggle.boundingBox();
+    await toggle.hover();
+    const hover = await bg();
+    expect(hover).not.toBe("rgba(0, 0, 0, 0)");
+    await page.mouse.down();
+    expect(await bg()).not.toBe(hover);
+    await page.mouse.up();
+    await page.mouse.move(0, 0);
+    const selected = await bg();
+    expect(selected).not.toBe(hover);
+    await expect(toggle).toHaveAttribute("aria-pressed", "true");
+    const after = await toggle.boundingBox();
+    expect(after?.width).toBe(before?.width);
+    expect(after?.height).toBe(before?.height);
+    await expect(toggle).toHaveCSS("box-shadow", "none");
+    await page.emulateMedia({ forcedColors: "active" });
+    await expect(toggle).toHaveCSS("outline-style", "solid");
+    await expect(toggle).toHaveCSS("outline-offset", "-4px");
+  });
+}
 
 test("Toggle overview preserves the default recipe and native pressed state", async ({
   page,
 }) => {
   const overview = page.getByTestId("toggle-overview");
   const toggle = overview.getByRole("button", { name: "Favorite" });
-  await expect(toggle).toHaveAttribute("data-variant", "soft");
+  await expect(toggle).toHaveAttribute("data-variant", "ghost");
+  await expect(toggle).toHaveAttribute("data-tone", "neutral");
   await expect(toggle).toHaveAttribute("data-size", "md");
   await expect(toggle).toHaveAttribute("data-shape", "rounded");
   await expect(toggle).toHaveAttribute("aria-pressed", "false");
@@ -39,7 +71,7 @@ test("Toggle comparison scenarios change only their named dimensions", async ({
       page
         .getByTestId("toggle-sizes")
         .locator(`.brick-toggle[data-size="${size}"]`),
-    ).toHaveAttribute("data-variant", "soft");
+    ).toHaveAttribute("data-variant", "ghost");
   }
 
   const neutral = page
@@ -82,8 +114,8 @@ test("Toggle pressed recipes remain visually distinct", async ({ page }) => {
       outline.evaluate((element) => getComputedStyle(element).backgroundColor),
     ]);
   expect(solidBackground).not.toBe(softBackground);
-  expect(softBackground).not.toBe(outlineBackground);
-  await expect(soft).not.toHaveCSS("box-shadow", "none");
+  expect(outlineBackground).not.toBe("rgba(0, 0, 0, 0)");
+  await expect(soft).toHaveCSS("box-shadow", "none");
   await expect(outline).toHaveCSS("box-shadow", "none");
   await expect(ghost).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
 });
@@ -110,7 +142,9 @@ test("Toggle composition, disabled state, customization, and RTL remain observab
     .getByTestId("toggle-disabled")
     .getByRole("button", { name: "Preview" });
   await expect(disabled.first()).toBeDisabled();
-  await expect(disabled.first()).toHaveCSS("opacity", "0.55");
+  await expect(disabled.first()).toHaveCSS("opacity", "0.5");
+  await expect(disabled.last()).toHaveCSS("opacity", "0.5");
+  await expect(disabled.first()).toHaveCSS("cursor", "not-allowed");
   await expect(disabled.last()).toHaveCSS("box-shadow", "none");
   expect(
     await disabled.last().evaluate((element) => {

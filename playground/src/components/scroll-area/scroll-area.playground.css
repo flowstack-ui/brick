@@ -11,7 +11,7 @@
 .scroll-area-customization .scroll-area-demo { --brick-scroll-area-scrollbar-thumb: var(--brick-color-accent-solid); --brick-scroll-area-scrollbar-track: var(--brick-color-accent-soft); }
 .scroll-area-phone { inline-size: min(100%, 20rem); }
 .scroll-area-rtl-row { inline-size: 44rem; min-block-size: 100%; align-items: center; padding: var(--brick-space-4); }
-.scroll-area-vertical-writing { writing-mode: vertical-rl; inline-size: 100%; block-size: 15rem; }
+.scroll-area-vertical-writing { writing-mode: vertical-rl; inline-size: 15rem; block-size: min(100%, 15rem); }
 .scroll-area-vertical-writing .scroll-area-demo { inline-size: 100%; block-size: 100%; }
 .scroll-area-vertical-writing .brick-text { padding: var(--brick-space-4); }
 @container (min-width: 42rem) { .scroll-area-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

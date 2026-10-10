@@ -64,7 +64,7 @@ span. The root is the forwarded `HTMLHRElement | HTMLDivElement` ref target.
 | `orientation` | `horizontal`, `vertical`      | `horizontal` |
 | `decorative`  | `boolean`                     | `true`       |
 | `variant`     | `solid`, `dashed`, `dotted`   | `solid`      |
-| `thickness`   | `subtle`, `regular`, `strong` | `subtle`     |
+| `thickness`   | `hairline`, `subtle`, `regular`, `bold`, `strong` | `subtle`     |
 | `inset`       | `none`, `start`, `both`       | `none`       |
 | `labelAlign`  | `start`, `center`, `end`      | `center`     |
 | `stretch`     | `boolean`                     | `false`      |
@@ -118,7 +118,12 @@ Public variables:
 ## Responsive behavior
 
 Divider follows its parent, uses logical properties, mirrors start/end
-geometry in RTL, and contains wrapping labels. It has no responsive prop API.
+geometry in RTL, and contains wrapping labels. Decorative unlabeled dividers
+accept responsive orientation, for example `orientation={{ md: "vertical" }}`.
+Before md the default horizontal direction applies; every later breakpoint
+carries the last authored value. Axis borders, sizes and insets reset together.
+Semantic dividers require scalar orientation, and labels remain horizontal.
+Thickness is 0.5/1/2/3/4px at the default root size; existing values are unchanged.
 
 ## Accessibility
 

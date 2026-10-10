@@ -1,0 +1,17 @@
+@layer brick.components {
+  .brick-date-picker__input { flex: 1 1 auto; min-inline-size: 0; }
+  .brick-date-picker__text-input { box-sizing: border-box; flex: 1 1 8rem; inline-size: 100%; min-inline-size: 0; min-block-size: calc(var(--brick-control-size-block) - 2 * var(--brick-border-width)); padding: 0; border: 0; outline: none; background: transparent; color: inherit; font: inherit; }
+  .brick-date-picker__text-input::placeholder { color: var(--brick-date-placeholder); opacity: 1; }
+  .brick-date-picker__indicators { display: inline-flex; align-items: center; flex: 0 0 auto; gap: var(--brick-space-1); }
+  .brick-date-picker__control { flex-wrap: nowrap; }
+  .brick-date-input__control:has(.brick-date-picker__text-input:disabled) { opacity: 0.5; cursor: not-allowed; }
+  .brick-date-picker__text-input:disabled { cursor: not-allowed; }
+  .brick-date-input__control:has(.brick-date-picker__text-input:disabled) .brick-date-input__action:disabled { opacity: 1; }
+  .brick-date-picker__input [data-slot="date-input-control"] { display: flex; flex-wrap: wrap; align-items: center; gap: var(--brick-space-3); }
+  .brick-date-picker__content { --brick-popover-max-inline-size-md: 100%; }
+  .brick-date-picker__content > [data-slot="popover-viewport"] { overflow: auto; padding: var(--brick-space-3); }
+  .brick-date-picker__content > [data-slot="popover-viewport"] .brick-calendar { padding: 0; }
+  @media (forced-colors: active) {
+    .brick-date-input__control:has(.brick-date-picker__text-input:disabled) { opacity: 1; color: GrayText; }
+  }
+}

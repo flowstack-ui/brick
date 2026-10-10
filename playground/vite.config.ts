@@ -1,4 +1,5 @@
 import { resolve } from "node:path";
+import { readFileSync } from "node:fs";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
@@ -7,10 +8,18 @@ const playgroundRoot = resolve(process.cwd(), "playground");
 export default defineConfig({
   appType: "spa",
   root: playgroundRoot,
-  plugins: [react()],
+  plugins: [react(), {
+    name: "preview-font-licenses",
+    generateBundle() {
+      for (const family of ["inter", "outfit"]) {
+        this.emitFile({ type: "asset", fileName: `licenses/${family}-OFL.txt`, source: readFileSync(resolve(process.cwd(), `node_modules/@fontsource-variable/${family}/LICENSE`), "utf8") });
+      }
+    },
+  }],
   build: {
     outDir: resolve(playgroundRoot, "dist"),
     emptyOutDir: true,
+    rollupOptions: { input: { docs: resolve(playgroundRoot, "index.html"), preview: resolve(playgroundRoot, "preview.html") } },
     target: ["chrome120", "edge120", "firefox121", "safari17.2"],
   },
   server: {

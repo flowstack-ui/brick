@@ -6,6 +6,15 @@ listings, articles, and result rows with one primary destination.
 
 ## When and where to use
 
+Root accepts the shared `Radius` values through `radius`; the default remains
+surface. Match the inner Card or Surface radius when it paints the region.
+An explicit radius emits `data-radius` and sets `--brick-link-box-radius`.
+Link inherits the title weight and stays `position: static` so its overlay is
+anchored to Root. Do not position intermediate ancestors of the primary Link:
+that would shrink its stretched target. Root supports its documented `as`
+hosts, not `asChild`; Link supports Atom-owned `asChild` and `render` plus
+responsive Link sizes. Action remains an explicit neutral div.
+
 Use Link Box when clicking most of a bounded item should navigate and the item
 may contain a separate save, compare, menu, or other control.
 

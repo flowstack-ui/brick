@@ -149,7 +149,7 @@ void tooltipContentProps;
 
 // @ts-expect-error Tooltip has no semantic tone API.
 const invalidTooltipTone: TooltipRootProps = { children: "Invalid", tone: "danger" };
-// @ts-expect-error Tooltip Content intentionally omits accessible-label overrides.
+// Tooltip Content now supports an explicit alternative label.
 const invalidTooltipLabel: TooltipContentProps = { children: "Invalid", "aria-label": "Other meaning" };
 // @ts-expect-error Tooltip is a namespace and not a callable component.
 const invalidFlatTooltip = createElement(Tooltip, { content: "Invalid" });
@@ -335,13 +335,13 @@ const invalidFlatCard = createElement(Card, null, "Invalid");
 // @ts-expect-error Card Title exposes heading elements only.
 const invalidCardTitle = createElement(Card.Title, { as: "div" }, "Invalid");
 // @ts-expect-error Dialog sizes are a closed recipe set.
-const invalidDialogSize: DialogContentProps = { "aria-label": "Invalid", size: "full" };
+const invalidDialogSize: DialogContentProps = { "aria-label": "Invalid", size: "huge" };
 // @ts-expect-error Dialog is a namespace and not a callable flat component.
 const invalidFlatDialog = createElement(Dialog, { title: "Invalid" });
 const invalidAlertDialogSize: AlertDialogContentProps = {
   children: "Invalid",
   // @ts-expect-error AlertDialog sizes are a closed recipe set.
-  size: "lg",
+  size: "huge",
 };
 // @ts-expect-error AlertDialog is a namespace and not a callable flat component.
 const invalidFlatAlertDialog = createElement(AlertDialog, {
@@ -486,7 +486,7 @@ void decorativeAvatarProps;
 
 // @ts-expect-error Avatar requires an explicit alt decision.
 const missingAvatarAlt: AvatarProps = { fallback: "AL" };
-// @ts-expect-error Avatar requires explicit fallback content.
+// Omitted fallback uses the generic person icon.
 const missingAvatarFallback: AvatarProps = { alt: "Ada Lovelace" };
 // @ts-expect-error Avatar sizes are a closed recipe set.
 const invalidAvatarSize: AvatarProps = { alt: "Ada", fallback: "A", size: "6xl" };

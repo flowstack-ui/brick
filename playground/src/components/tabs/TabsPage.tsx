@@ -1,80 +1,42 @@
-import { useState, type CSSProperties } from "react";
-import { Card, Grid, Icon, Tabs, Text, VStack, type TabsSize, type TabsVariant } from "@flowstack-ui/brick";
-import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
-import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
-import { FormEvidenceCell as Cell, FormEvidenceGroup as EvidenceGroup, FormRenderedOutput as RenderedOutput } from "../../shared/FormEvidence.js";
-import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
-import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
-import "../../shared/forms-evidence.playground.css";
-import "./tabs.playground.css";
-
-const variants: TabsVariant[] = ["line", "solid", "soft", "enclosed"];
-const sizes: TabsSize[] = ["sm", "md", "lg"];
-const customStyle = { "--brick-tabs-indicator-color": "#7c3aed", "--brick-tabs-selected-foreground": "#7c3aed", "--brick-tabs-trigger-height": "3.5rem", "--brick-tabs-radius": "0.75rem" } as CSSProperties;
-
-function Star() { return <svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.8" /></svg>; }
-
-function DemoTabs({ ariaLabel, defaultValue = "overview", fullWidth, orientation = "horizontal", size = "md", squareTriggers = false, variant = "line", indicator = true }: { ariaLabel: string; defaultValue?: string; fullWidth?: boolean; orientation?: "horizontal" | "vertical"; size?: TabsSize; squareTriggers?: boolean; variant?: TabsVariant; indicator?: boolean }) {
-  return <Tabs.Root defaultValue={defaultValue} fullWidth={fullWidth} orientation={orientation} size={size} variant={variant}><Tabs.List ariaLabel={ariaLabel} triggerRadius={squareTriggers ? "none" : undefined}><Tabs.Trigger value="overview">Overview</Tabs.Trigger><Tabs.Trigger value="activity">Activity</Tabs.Trigger><Tabs.Trigger value="settings">Settings</Tabs.Trigger>{indicator ? <Tabs.Indicator /> : null}</Tabs.List><Tabs.Content value="overview"><Text>Overview panel content.</Text></Tabs.Content><Tabs.Content value="activity"><Text>Activity panel content.</Text></Tabs.Content><Tabs.Content value="settings"><Text>Settings panel content.</Text></Tabs.Content></Tabs.Root>;
-}
-
-export const tabsScenarios = [
-  { id: "tabs.overview", number: 1, title: "Overview", description: "Tabs defaults to one medium horizontal line list with automatic activation and the first related panel selected." },
-  { id: "tabs.variants", number: 2, title: "Variants", description: "Line alone paints the optional measured indicator; solid, soft, and enclosed keep complete server-stable selected treatments." },
-  { id: "tabs.sizes", number: 3, title: "Sizes", description: "Small, medium, and large change shared trigger typography, height, spacing, and panel inset only." },
-  { id: "tabs.layout", number: 4, title: "Orientation and width", navigationTitle: "Layout", description: "Vertical orientation changes semantic keyboard direction; full width distributes horizontal triggers equally." },
-  { id: "tabs.content", number: 5, title: "Content and states", navigationTitle: "States", description: "Composed icons, long labels, selected state, and disabled state remain aligned without changing defaults unnecessarily." },
-  { id: "tabs.activation", number: 6, title: "Activation and panels", navigationTitle: "Behavior", description: "Automatic and manual activation plus mounted and focusable panels expose Atom’s complete behavior without Brick duplication." },
-  { id: "tabs.composition", number: 7, title: "Composition", description: "render and asChild replace final hosts while roles, relationships, classes, slots, and selected state remain visible in actual HTML." },
-  { id: "tabs.appearance", number: 8, title: "Appearance and customization", navigationTitle: "Theme", description: "Adjacent scopes preserve defaults; one exact custom example matches its supported CSS-variable code." },
-  { id: "tabs.stress", number: 9, title: "Responsive and RTL", navigationTitle: "Stress", description: "Constrained horizontal tabs scroll rather than wrap, and RTL reverses horizontal arrow navigation without reversing text." },
-] as const satisfies readonly ScenarioDefinition[];
-
+import { Paragraph, VStack } from "@flowstack-ui/brick";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { ExamplePreview } from "../../shared/ExamplePreview.js";
+import { OwnerDocumentation } from "../../shared/OwnerDocumentation.js";
+import { TabsEvidence } from "./TabsEvidence.js";
+import { TabsBasic } from "./examples/TabsBasic.js";
+import source from "./examples/TabsBasic.tsx?raw";
+import { examples, parts } from "./documentation.js";
+export { tabsScenarios } from "./TabsEvidence.js";
 export function TabsPage() {
-  const [manual, setManual] = useState("one");
-  return <VStack className="forms-page tabs-page" data-component-page="tabs" data-testid="tabs-workbench">
-    <Scenario {...tabsScenarios[0]}><EvidenceSurface inset="lg" data-testid="tabs-overview"><DemoTabs ariaLabel="Overview sections" /></EvidenceSurface></Scenario>
-    <Scenario {...tabsScenarios[1]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="tabs-variants">{variants.map((variant) => <Cell key={variant} label={variant}><DemoTabs ariaLabel={`${variant} sections`} squareTriggers={variant === "line"} variant={variant} /></Cell>)}</Grid.Root></Scenario>
-    <Scenario {...tabsScenarios[2]}><Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="tabs-sizes">{sizes.map((size) => <Cell key={size} label={size}><DemoTabs ariaLabel={`${size} sections`} size={size} /></Cell>)}</Grid.Root></Scenario>
-    <Scenario {...tabsScenarios[3]}>
-      <VStack gap="4" data-testid="tabs-layout">
-        <Grid.Root columns={2} className="forms-grid forms-grid--two forms-grid--preview-start">
-          <Cell label="vertical"><DemoTabs ariaLabel="Vertical sections" orientation="vertical" /></Cell>
-          <Cell label="full width"><DemoTabs ariaLabel="Fitted sections" fullWidth variant="soft" /></Cell>
-        </Grid.Root>
-        <EvidenceSurface inset="lg">
-          <SpecimenLabel>responsive visual layout</SpecimenLabel>
-          <Card.Root bordered={false} variant="elevated">
-          <Tabs.Root
-            data-testid="tabs-responsive-layout"
-            defaultValue="create"
-            layout={{ initial: "stacked", lg: "side" }}
-            orientation="vertical"
-            variant="soft"
-          >
-            <Tabs.List ariaLabel="Responsive workflow" columns={{ initial: 2, lg: 1 }} radius="none" triggerRadius="default">
-              <Tabs.Trigger value="create">Create</Tabs.Trigger>
-              <Tabs.Trigger value="build">Build</Tabs.Trigger>
-              <Tabs.Trigger value="launch">Launch</Tabs.Trigger>
-            </Tabs.List>
-            <Tabs.Content inset="none" value="create">
-              <EvidenceSurface inset="lg"><Text>Create panel content.</Text></EvidenceSurface>
-            </Tabs.Content>
-            <Tabs.Content inset="none" value="build">
-              <EvidenceSurface inset="lg"><Text>Build panel content.</Text></EvidenceSurface>
-            </Tabs.Content>
-            <Tabs.Content inset="none" value="launch">
-              <EvidenceSurface inset="lg"><Text>Launch panel content.</Text></EvidenceSurface>
-            </Tabs.Content>
-          </Tabs.Root>
-          </Card.Root>
-        </EvidenceSurface>
-      </VStack>
-    </Scenario>
-    <Scenario {...tabsScenarios[4]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="tabs-content"><Cell label="icon content"><Tabs.Root defaultValue="saved"><Tabs.List ariaLabel="Icon sections"><Tabs.Trigger value="saved"><Icon size="xs"><Star /></Icon>Saved</Tabs.Trigger><Tabs.Trigger value="recent">Recent</Tabs.Trigger></Tabs.List><Tabs.Content value="saved">Saved panel content.</Tabs.Content><Tabs.Content value="recent">Recent panel content.</Tabs.Content></Tabs.Root></Cell><Cell label="disabled"><Tabs.Root defaultValue="ready"><Tabs.List ariaLabel="State sections"><Tabs.Trigger value="ready">Ready</Tabs.Trigger><Tabs.Trigger disabled value="locked">Locked</Tabs.Trigger><Tabs.Trigger value="later">Later</Tabs.Trigger><Tabs.Indicator /></Tabs.List><Tabs.Content value="ready">Ready panel.</Tabs.Content><Tabs.Content value="later">Later panel.</Tabs.Content></Tabs.Root></Cell></Grid.Root></Scenario>
-    <Scenario {...tabsScenarios[5]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="tabs-activation"><Cell label="automatic"><DemoTabs ariaLabel="Automatic sections" /></Cell><Cell label="manual"><Tabs.Root activationMode="manual" value={manual} onValueChange={setManual}><Tabs.List ariaLabel="Manual sections"><Tabs.Trigger value="one">One</Tabs.Trigger><Tabs.Trigger value="two">Two</Tabs.Trigger></Tabs.List><Tabs.Content focusable value="one">Manual panel one.</Tabs.Content><Tabs.Content focusable keepMounted value="two">Manual panel two.</Tabs.Content></Tabs.Root><Text tone="secondary" variant="body-sm">Selected: {manual}</Text></Cell></Grid.Root></Scenario>
-    <Scenario {...tabsScenarios[6]}><VStack className="forms-evidence-stack" data-testid="tabs-composition"><EvidenceGroup title="render output" description="The final semantic hosts retain Atom and Brick output."><RenderedOutput label="Rendered Tabs HTML"><Tabs.Root defaultValue="one" render={<section data-adapter="tabs-root" />}><Tabs.List ariaLabel="Rendered sections" render={<nav data-adapter="tabs-list" />}><Tabs.Trigger value="one" render={<button data-adapter="tabs-trigger" />}>One</Tabs.Trigger></Tabs.List><Tabs.Content value="one" render={<div data-adapter="tabs-panel" />}>Panel</Tabs.Content></Tabs.Root></RenderedOutput></EvidenceGroup><EvidenceGroup title="asChild output" description="Consumer hosts receive the same roles and relationships without wrappers."><RenderedOutput label="Composed Tabs HTML"><Tabs.Root defaultValue="one" asChild><section data-adapter="child-root"><Tabs.List ariaLabel="Composed sections" asChild><nav><Tabs.Trigger value="one" asChild><button data-adapter="child-trigger">One</button></Tabs.Trigger></nav></Tabs.List><Tabs.Content value="one" asChild><div data-adapter="child-panel">Panel</div></Tabs.Content></section></Tabs.Root></RenderedOutput></EvidenceGroup></VStack></Scenario>
-    <Scenario {...tabsScenarios[7]}><VStack className="forms-evidence-stack"><EvidenceGroup title="Scoped appearances" description="The same line recipe remains coherent in both scopes."><Grid.Root columns={2} className="forms-scoped-grid" data-testid="tabs-appearance"><EvidenceSurface data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><DemoTabs ariaLabel="Light sections" /></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><DemoTabs ariaLabel="Dark sections" /></EvidenceSurface></Grid.Root></EvidenceGroup><EvidenceGroup title="Consumer customization" description="The shown variables exactly produce the purple, taller, rounded line tabs."><EvidenceSurface className="forms-customization" inset="lg"><PlaygroundCodeBlock aria-label="Tabs customization code">{`style={{\n  "--brick-tabs-indicator-color": "#7c3aed",\n  "--brick-tabs-selected-foreground": "#7c3aed",\n  "--brick-tabs-trigger-height": "3.5rem",\n  "--brick-tabs-radius": "0.75rem",\n}}`}</PlaygroundCodeBlock><Tabs.Root defaultValue="overview" style={customStyle}><Tabs.List ariaLabel="Customized sections"><Tabs.Trigger value="overview">Overview</Tabs.Trigger><Tabs.Trigger value="activity">Activity</Tabs.Trigger><Tabs.Indicator /></Tabs.List><Tabs.Content value="overview">Customized panel.</Tabs.Content><Tabs.Content value="activity">Activity panel.</Tabs.Content></Tabs.Root></EvidenceSurface></EvidenceGroup></VStack></Scenario>
-    <Scenario {...tabsScenarios[8]}><VStack className="forms-evidence-stack" data-testid="tabs-stress"><EvidenceGroup title="Constrained overflow" description="All labels stay on one row inside a native horizontal scroll region."><EvidenceSurface><div className="tabs-phone tabs-phone--equal-overflow"><Tabs.Root defaultValue="overview"><Tabs.List ariaLabel="Constrained sections">{["Overview", "Analytics", "Team access", "Billing history", "Integrations"].map((label) => <Tabs.Trigger key={label} value={label.toLowerCase()}>{label}</Tabs.Trigger>)}<Tabs.Indicator /></Tabs.List><Tabs.Content value="overview">Overview panel.</Tabs.Content></Tabs.Root></div></EvidenceSurface></EvidenceGroup><EvidenceGroup title="RTL overflow and inheritance" description="The same five-item overflow starts from the logical right edge while Atom mirrors horizontal arrows."><EvidenceSurface><div className="tabs-phone tabs-phone--equal-overflow" dir="rtl"><Tabs.Root defaultValue="one" dir="rtl"><Tabs.List ariaLabel="أقسام الحساب"><Tabs.Trigger value="one">نظرة عامة</Tabs.Trigger><Tabs.Trigger value="two">النشاط</Tabs.Trigger><Tabs.Trigger value="three">الوصول</Tabs.Trigger><Tabs.Trigger value="four">الفواتير</Tabs.Trigger><Tabs.Trigger value="five">التكاملات</Tabs.Trigger><Tabs.Indicator /></Tabs.List><Tabs.Content value="one">محتوى النظرة العامة.</Tabs.Content><Tabs.Content value="two">محتوى النشاط.</Tabs.Content><Tabs.Content value="three">محتوى الوصول.</Tabs.Content><Tabs.Content value="four">محتوى الفواتير.</Tabs.Content><Tabs.Content value="five">محتوى التكاملات.</Tabs.Content></Tabs.Root></div></EvidenceSurface></EvidenceGroup></VStack></Scenario>
-  </VStack>;
+  const preview = usePreviewContext();
+  if (
+    preview ||
+    (typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).get("qualification") === "1")
+  )
+    return <TabsEvidence />;
+  return (
+    <VStack gap={12} data-component-page="tabs">
+      <ExamplePreview label="Tabs basic" source={source}>
+        <TabsBasic />
+      </ExamplePreview>
+      <OwnerDocumentation
+        name="Tabs"
+        usage={
+          '<Tabs.Root defaultValue="members">\n  <Tabs.List ariaLabel="Project sections">\n    <Tabs.Trigger value="members">Members</Tabs.Trigger>\n  </Tabs.List>\n  <Tabs.Content value="members">Team members</Tabs.Content>\n</Tabs.Root>'
+        }
+        usageDescription="Use matching values to connect each tab to its related panel."
+        examples={examples}
+        parts={parts}
+        guide={
+          <Paragraph tone="secondary">
+            Use manual activation for expensive panels. Keep ordinary site
+            navigation as links; URL-backed peer panels can use composed
+            anchors. Soft remains an alias of subtle. Solid is the inset
+            elevated selector; enclosed also borders the panel.
+          </Paragraph>
+        }
+      />
+    </VStack>
+  );
 }

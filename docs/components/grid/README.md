@@ -14,8 +14,8 @@ asymmetric regions that need explicit item placement.
 ## When not to use
 
 Use Stack, HStack, or VStack for one-dimensional flow; Container for page width
-and gutters; Surface or Card for paint; and Atom DataGrid for interactive grid
-semantics and keyboard navigation. Grid is not a page-template language,
+and gutters; Surface or Card for paint; and Brick DataGrid for interactive grid
+semantics and keyboard navigation. Grid is not an application page shell,
 breakpoint system, generic Box, or ARIA grid widget.
 
 ## Installation and imports
@@ -42,7 +42,7 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 
 Public exports are `Grid`, `GridRootProps`, `GridItemProps`,
-`GridRootElement`, `GridItemElement`, `GridColumns`, `GridLine`, `GridSpan`,
+`GridRootElement`, `GridItemElement`, `GridColumns`, `GridLine`, `GridSpan`, `GridTrack`, `GridAutoFlow`, `GridContentAlignment`,
 `GridColumnSpan`, `GridGap`, `SpacingValue`, `GridMinItemSize`, `GridAlign`, `GridJustify`,
 `GridSelfAlign`, `GridSelfJustify`, and `ResponsiveValue`.
 
@@ -115,8 +115,7 @@ Grid hosts. Native list semantics and authored `li` children remain intact.
 | `slot` | `string` | `grid` |
 | `children` | `ReactNode` | optional |
 
-`columns` and `minItemSize` are mutually exclusive. Supplying `minItemSize`
-selects intrinsic mode; otherwise Root uses explicit mode.
+`columns`, `minItemSize` and `templateColumns` are mutually exclusive. Without an explicit mode, Root uses one equal column.
 
 ### Item
 
@@ -124,23 +123,18 @@ selects intrinsic mode; otherwise Root uses explicit mode.
 | --- | --- | --- |
 | `as` | `div`, `span`, `section`, `article`, `header`, `footer`, `aside`, `li` | `div` |
 | `asChild` | `boolean` | `false` |
-| `columnSpan` | `1`–`12`, `full`, or responsive object | unset |
-| `columnStart` / `columnEnd` | grid lines `1`–`13` | unset |
-| `rowSpan` | `1`–`12`, or responsive object | unset |
-| `rowStart` / `rowEnd` | grid lines `1`–`13` | unset |
+| `columnSpan` | positive integer, `auto`, `full`, or responsive object | unset |
+| `columnStart` / `columnEnd` | responsive numeric or named CSS grid lines | unset |
+| `rowSpan` | positive integer, `auto`, or responsive object | unset |
+| `rowStart` / `rowEnd` | responsive numeric or named CSS grid lines | unset |
 | `align` | `auto`, `stretch`, `start`, `center`, `end`, `baseline`, or responsive object | `auto` |
 | `justify` | `auto`, `stretch`, `start`, `center`, `end`, or responsive object | `auto` |
 | `slot` | `string` | `grid-item` |
 | `children` | `ReactNode` | optional |
 
-On each axis, a span and explicit end are mutually exclusive. A start may
-combine with a span or end. `columnSpan="full"` cannot combine with column
-start/end.
-
-A responsive span is deliberately unanchored and cannot combine with explicit
-start/end lines. Keep explicit lines static, or let the responsive item
-auto-place. This prevents stale line geometry when a span changes to or from
-`full`.
+On each axis, a span can combine with a start or end, but not both endpoints.
+A full column span excludes endpoints. Named area excludes other placement.
+Starts, ends and spans support responsive values and carry independently.
 
 Set `asChild` when an existing element should itself be the grid item:
 
@@ -156,6 +150,30 @@ Set `asChild` when an existing element should itself be the grid item:
 `as`. Grid classes, placement metadata, native props, events, styles, and the
 ref are merged onto that element without changing its semantics.
 
+### Native grid capabilities
+
+| Root prop | Type | Default |
+| --- | --- | --- |
+| `templateColumns` | ResponsiveValue<GridTrack> | one equal track before first value |
+| `templateRows` | ResponsiveValue<GridTrack> | none |
+| `templateAreas` | ResponsiveValue<string> | none |
+| `autoColumns`, `autoRows` | ResponsiveValue<GridTrack> | auto |
+| `autoFlow` | ResponsiveValue<GridAutoFlow> | row |
+| `alignContent`, `justifyContent` | ResponsiveValue<GridContentAlignment> | normal |
+| `inline` | ResponsiveValue<boolean> | false |
+| `asChild` | boolean | false |
+
+GridTrack is a native CSS track string, including named lines, repeat, minmax
+and subgrid. GridAutoFlow is row, column, dense, row dense or column dense.
+GridContentAlignment is normal, start, end, center, stretch, space-between,
+space-around or space-evenly. Existing align/justify act inside cells; content
+alignment distributes tracks. Item `area` is a responsive CSS area string.
+GridLine accepts numbers (including `negative` lines) or `named` CSS lines and auto.
+GridSpan accepts positive integers or auto; columnSpan also accepts full.
+Native subgrid requires parent tracks and browser support. Experimental masonry
+is not promised. Native-track input/resolved variables are implementation
+ details, not new Theme customization APIs.
+
 ## Visual recipes and states
 
 Explicit mode uses `repeat(n, minmax(0, 1fr))`. Intrinsic mode uses
@@ -164,7 +182,7 @@ for `xs` through `xl`. Legacy string gaps map to `--brick-space-0` through
 `--brick-space-6`; numeric factors calculate from `--brick-space-1`; explicit
 CSS values pass through. See [Layout spacing values](../../guides/spacing-values.md).
 
-Numeric Item column placement is for explicit-column Roots. Intrinsic Roots
+Numeric Item column placement is for explicit-column Roots. Native template grids also support named lines. Intrinsic Roots
 use native auto-placement or `columnSpan="full"` because numeric placement can
 create unintended implicit columns as the responsive track count changes.
 Row placement may create native implicit rows.
@@ -235,20 +253,20 @@ Explicit mode accepts Brick's responsive object grammar:
 </Grid.Root>
 ```
 
-Objects require `initial` and may add `sm`, `md`, `lg`, and `xl`. The same
-grammar applies to Root gaps/alignment and unanchored Item spans/alignment.
-It never changes DOM or focus order. `minItemSize` and explicit line placement
-remain static.
+Objects must contain at least one of `initial`, `sm`, `md`, `lg`, or `xl`.
+When `initial` is omitted, Grid keeps the property default below the first
+supplied breakpoint. The same grammar applies to Root gaps/alignment and
+unanchored Item spans/alignment.
+It never changes DOM or focus order. `minItemSize` remains static; line placement is responsive.
 
 ## Accessibility
 
 Grid adds no role, name, state, keyboard behavior, or focus target. Never add
 `role="grid"` merely because CSS Grid is used; interactive grid behavior
-belongs to Atom DataGrid.
+belongs to DataGrid.
 
 DOM order remains reading and sequential focus order. Item placement never
-changes it. Dense flow, `order`, reverse behavior, and responsive visual
-reordering are deliberately excluded. Choose valid semantic hosts and children
+changes it. Dense flow and responsive placement are available; never confuse their visual result with DOM or keyboard order. Choose valid semantic hosts and children
 and name repeated landmarks.
 
 Use `as="ul"` or `as="ol"` when the peer collection is meaningfully a list.
@@ -262,9 +280,9 @@ for paint. Use Item only for placement or self-alignment. Native global
 attributes, events, ARIA/data attributes, `className`, `style`, slot hook, and
 an `HTMLElement` ref pass to each authored part.
 
-Grid Root does not expose `asChild`; neither part exposes `render`. Grid also
-excludes arbitrary template strings, named areas, responsive objects, padding,
-margins, width/height, overflow, or generic style props.
+Both Root and Item support asChild with exactly one non-Fragment element,
+mutually exclusive with as. Dimensions, padding, paint and overflow remain
+with Frame, Surface and ScrollArea. Root does not duplicate Item placement.
 
 ## Examples
 

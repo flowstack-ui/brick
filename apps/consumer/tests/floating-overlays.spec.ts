@@ -1,0 +1,21 @@
+import {expect,test} from '@playwright/test';
+test('workspace inspectors compose with managed confirmation and controlled geometry',async({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/');
+  await page.getByRole('button',{name:'Inspect Design',exact:true}).click();
+  await page.getByLabel('Design title',{exact:true}).fill('Design specification');
+  await page.getByRole('button',{name:'Inspect Content',exact:true}).click();
+  await page.getByLabel('Content title',{exact:true}).fill('Content specification');
+  await page.getByRole('button',{name:'Save Content',exact:true}).click();
+  const confirmation=page.getByRole('dialog',{name:'Apply inspector changes?',exact:true});await expect(confirmation).toBeVisible();
+  await confirmation.getByRole('button',{name:'Apply changes',exact:true}).click();
+  await expect(confirmation).toBeHidden();await expect(page.getByRole('status').filter({hasText:'Saved Content specification.'})).toBeVisible();
+  await page.getByRole('button',{name:'Close Content',exact:true}).click();
+  const design=page.getByRole('dialog',{name:'Design inspector',exact:true});await expect(design).toBeVisible();
+  await page.getByRole('button',{name:'Minimize Design',exact:true}).click();await expect(page.getByLabel('Design title',{exact:true})).toBeHidden();
+  await page.getByRole('button',{name:'Restore Design',exact:true}).click();await expect(page.getByLabel('Design title',{exact:true})).toHaveValue('Design specification');
+  await design.getByRole('button',{name:'Reject resize',exact:true}).click();const before=(await design.boundingBox())!.width;
+  await design.focus();await page.keyboard.press('Control+ArrowRight');expect((await design.boundingBox())!.width).toBe(before);
+  await design.getByRole('button',{name:'Geometry',exact:true}).click();await expect(page.getByLabel('Design x',{exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'Close Design',exact:true}).click();await expect(design).toBeHidden();
+  await expect(page.getByRole('button',{name:'Inspect Design',exact:true})).toBeFocused();
+});

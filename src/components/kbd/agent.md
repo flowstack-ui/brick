@@ -15,18 +15,18 @@ Render native keyboard-input notation with finished Brick sizing and visual reci
 
 ## Required composition
 
-- Keep Kbd inside meaningful surrounding copy or repeat Kbd for each authored key in a sequence with visible separators outside the key hosts.
+- Use one Kbd for a complete authored combination or separate Kbd hosts for individual keys with visible separators. asChild projects presentation onto one authored kbd host.
 
 ## Rules
 
 - **MUST:** Preserve the one native kbd host and use it only for keyboard-input notation.
 - **MUST:** Do not register shortcuts, listen for keys, translate platform labels, or add interaction inside Kbd.
-- **MUST:** Select only the documented raised, outline, subtle, or plain variant and sm, md, or lg size.
+- **MUST:** Select documented variants, sizes and semantic tones; default raised/md/neutral.
 - **MUST:** Load styles.css or core.css plus kbd.css.
 
 ## Common mistakes
 
-- **Avoid:** Putting an entire shortcut such as Ctrl+Shift+P inside one Kbd host without authored separation. **Instead:** Use one Kbd per key and keep visible separators in the surrounding content owner.
+- **Avoid:** Expecting Kbd to register shortcuts or translate platform symbols. **Instead:** The application owns shortcut behavior and labels. Both a whole combination and separate keycaps are valid.
 
 ## Validation checklist
 

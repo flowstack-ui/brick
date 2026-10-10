@@ -1,7 +1,50 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/bottom-navigation"); });
+test.beforeEach(async ({ page }) => { await page.goto("/bottom-navigation?qualification=1"); });
+
+test("documentation shows focused examples, responsive sizing and named part tables", async ({ page }) => {
+  await page.goto("/bottom-navigation");
+  for (const part of ["Root", "Item", "Icon", "Label"]) {
+    await expect(page.getByRole("heading", { name: part, exact: true })).toBeVisible();
+    await expect(page.getByRole("table", { name: `BottomNavigation.${part} props` })).toHaveCount(1);
+  }
+  const responsive = page.getByRole("navigation", { name: "Responsive destinations" });
+  for (const [width, height] of [[390, "64px"], [1280, "80px"], [390, "64px"]] as const) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect(responsive).toHaveCSS("height", height);
+    expect(await responsive.evaluate(node => node.scrollWidth <= node.clientWidth + 1)).toBe(true);
+  }
+  const outline = page.getByRole("navigation", { name: "outline", exact: true }).first();
+  await expect(outline).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  const surface = page.getByRole("navigation", { name: "surface", exact: true });
+  await expect(surface).not.toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  const composed = page.getByRole("navigation", { name: "Composed destinations" });
+  await expect(composed.getByText("Inbox").locator("..")).not.toHaveAttribute("href");
+});
+
+test("floating overlay bars remain centered in both writing directions", async ({ page }) => {
+  const bar = page.getByTestId("bottom-navigation-layout")
+    .locator('.brick-bottom-navigation[data-layout="floating"]').first();
+  for (const direction of ["ltr", "rtl"]) {
+    for (const position of ["absolute", "fixed"]) {
+      const geometry = await bar.evaluate((node, settings) => {
+        // Remove preview containing blocks so this checks viewport geometry.
+        const clone = node.cloneNode(true) as HTMLElement;
+        clone.dir = settings.direction;
+        clone.dataset.position = settings.position;
+        document.body.append(clone);
+        try {
+          const rect = clone.getBoundingClientRect();
+          return { center: rect.left + rect.width / 2, expected: window.innerWidth / 2 };
+        } finally {
+          clone.remove();
+        }
+      }, { direction, position });
+      expect(Math.abs(geometry.center - geometry.expected)).toBeLessThanOrEqual(1);
+    }
+  }
+});
 
 test("defaults expose the complete visual and behavioral contract", async ({ page }) => {
   const navigation = page.getByTestId("bottom-navigation-overview").getByRole("navigation");
@@ -113,4 +156,17 @@ test("effects, neutral palette, safe area, mobile, RTL, and accessibility hold",
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await page.locator("html").evaluate((node) => node.scrollWidth)).toBeLessThanOrEqual(390);
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+});
+
+
+test("surface effects preserve opaque descendants and focus", async ({ page }) => {
+  await page.goto("/bottom-navigation");
+  const root = page.locator("#surface-effects .brick-bottom-navigation[data-surface-effects]").first();
+  await expect(root).toHaveAttribute("data-surface-effects", "translucent");
+  await expect(root).toHaveCSS("backdrop-filter", /blur\(18px\)/);
+  await expect(root).toHaveCSS("opacity", "1");
+  await expect(root).toHaveCSS("overflow", "visible");
+  const target = root.locator("button, a").first();
+  await target.focus();
+  await expect(target).toBeFocused();
 });

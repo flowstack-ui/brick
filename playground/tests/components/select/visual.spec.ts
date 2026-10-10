@@ -1,10 +1,10 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/select");
+installVisualDefaults("/select?qualification=1");
 
 async function removeStickyCaptureOverlap(page: import("@playwright/test").Page) {
   await page.addStyleTag({
-    content: ".evidence-app-bar, .evidence-review-header, .scenario-nav { display: none !important; }",
+    content: "[data-playground-app-bar], .evidence-review-header, .scenario-nav { display: none !important; }",
   });
   await page.waitForTimeout(50);
 }

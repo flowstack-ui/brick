@@ -2,19 +2,65 @@ import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { Pagination } from "../../../src/pagination.js";
+import { Pagination, usePagination } from "../../../src/pagination.js";
 
-function Standard(props: Partial<React.ComponentProps<typeof Pagination.Root>> = {}) {
+function Standard(props: Partial<Extract<React.ComponentProps<typeof Pagination.Root>, { totalPages: number }>> = {}) {
   return <Pagination.Root aria-label="Search result pages" totalPages={12} {...props}><Pagination.List><Pagination.Previous /><Pagination.Items /><Pagination.Next /></Pagination.List></Pagination.Root>;
 }
 
 describe("Pagination", () => {
+  it("keeps a disabled scrollable list keyboard reachable", () => {
+    render(<Pagination.Root count={100} disabled><Pagination.List><Pagination.Items /></Pagination.List></Pagination.Root>);
+    expect(screen.getByRole("list")).toHaveAttribute("tabindex", "0");
+    expect(screen.getAllByRole("button").every(button => button.hasAttribute("disabled"))).toBe(true);
+  });
+  it("shares an external controller through RootProvider and Context", async () => {
+    function Example() {
+      const value = usePagination({ count: 35 });
+      return <Pagination.RootProvider value={value}>
+        <Pagination.Context>{({ page }) => <span>External page {page}</span>}</Pagination.Context>
+        <Pagination.First /><Pagination.Items /><Pagination.Last />
+      </Pagination.RootProvider>;
+    }
+    const user = userEvent.setup();
+    render(<Example />);
+    await user.click(screen.getByRole("button", { name: "Last page" }));
+    expect(screen.getByText("External page 4")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "First page" }));
+    expect(screen.getByText("External page 1")).toBeVisible();
+  });
+  it("uses md before sparse breakpoints and shares Button selected presentation", () => {
+    render(<Pagination.Root count={50} size={{ lg: "xl" }} tone="accent" selectedVariant="solid"><Pagination.Items /></Pagination.Root>);
+    const current = screen.getByRole("button", { name: "Page 1, current page" });
+    expect(current).toHaveClass("brick-button");
+    expect(current).toHaveAttribute("data-size", "md");
+    expect(current).toHaveAttribute("data-size-lg", "xl");
+    expect(current).toHaveAttribute("data-tone", "accent");
+    expect(current).toHaveAttribute("data-variant", "solid");
+    expect(current.closest("li")).toBeNull();
+  });
+
+  it("supports PageText formats, formatter translation and custom generated hosts", async () => {
+    const user = userEvent.setup();
+    render(<Pagination.Root count={23} defaultPage={2}>
+      <Pagination.PageText format="long" />
+      <Pagination.PageText format={({ page, totalPages }) => `Seite ${page} von ${totalPages}`} />
+      <Pagination.Items render={({ page }) => <button>Open {page}</button>} />
+      <Pagination.Last />
+    </Pagination.Root>);
+    expect(screen.getByText("11 – 20 of 23")).toBeVisible();
+    expect(screen.getByText("Seite 2 von 3")).toBeVisible();
+    expect(document.querySelector("button button")).toBeNull();
+    await user.click(screen.getByRole("button", { name: "Last page" }));
+    expect(screen.getByText("21 – 23 of 23")).toBeVisible();
+  });
   it("renders the seven-part generated contract and default recipes", () => {
     render(<Standard defaultPage={6} />);
     const root = screen.getByRole("navigation", { name: "Search result pages" });
     expect(root).toHaveClass("brick-pagination");
-    expect(root).toHaveAttribute("data-size", "md");
-    expect(root).toHaveAttribute("data-variant", "plain");
+    expect(screen.getByRole("button", { name: "Next page" })).toHaveAttribute("data-size", "md");
+    expect(screen.getByRole("button", { name: "Next page" })).toHaveAttribute("data-variant", "ghost");
+    expect(screen.getByRole("button", { name: "Page 6, current page" })).toHaveAttribute("data-variant", "outline");
     expect(root.querySelector(".brick-pagination__list")).toBeInstanceOf(HTMLOListElement);
     expect(screen.getByRole("button", { name: "Page 6, current page" })).toHaveAttribute("aria-current", "page");
     expect(root.querySelectorAll(".brick-pagination__item").length).toBeGreaterThan(3);
@@ -29,9 +75,8 @@ describe("Pagination", () => {
     const rootRef = createRef<HTMLElement>();
     render(<Pagination.Root aria-label="Pages" boundaryVariant="outline" className="custom-root" defaultPage={2} getItemAriaLabel={({ page, isCurrent }) => isCurrent ? `Current ${page}` : `Open ${page}`} nextAriaLabel="Forward" onPageChange={onPageChange} previousAriaLabel="Back" ref={rootRef} size="lg" totalPages={4} variant="outline"><Pagination.List><Pagination.Previous aria-label="Earlier" /><Pagination.Items itemProps={{ className: "custom-item" }} /><Pagination.Next /></Pagination.List></Pagination.Root>);
     expect(rootRef.current).toHaveClass("brick-pagination", "custom-root");
-    expect(rootRef.current).toHaveAttribute("data-size", "lg");
-    expect(rootRef.current).toHaveAttribute("data-variant", "outline");
-    expect(rootRef.current).toHaveAttribute("data-boundary-variant", "outline");
+    expect(screen.getByRole("button", { name: "Earlier" })).toHaveAttribute("data-size", "lg");
+    expect(screen.getByRole("button", { name: "Earlier" })).toHaveAttribute("data-variant", "outline");
     expect(screen.getByRole("button", { name: "Earlier" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Current 2" })).toHaveClass("custom-item");
     await user.click(screen.getByRole("button", { name: "Forward" }));

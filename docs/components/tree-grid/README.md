@@ -1,5 +1,10 @@
 # Tree Grid
 
+File-browser rows may compose a decorative folder/file Icon with their label;
+Indicator is optional and should not add a redundant chevron column. Use
+Trigger for a separate disclosure control. Pointer-down resolves the intended
+cell before native grid focus; embedded controls retain their own focus.
+
 Tree Grid presents hierarchical rows with Atom-owned cell navigation,
 expansion, selection, active-cell semantics, and sortable-header activation.
 Brick supplies finished table paint, hierarchy artwork, recipes, and overflow;
@@ -15,10 +20,16 @@ navigable columns. Use Tree when each node has one primary value.
 Use Data Grid for flat interactive rows, Table for static tabular content, and
 a disclosure pattern when expansion reveals detail rather than child rows.
 Tree Grid does not provide schemas, sorting or filtering algorithms,
-pagination, editing, resizing, reordering, virtualization, or spreadsheet
-behavior. Interactive descendants inside cells are unsupported in this version.
+pagination engines, persistence, reordering, virtualization, or spreadsheet
+behavior. It does support opt-in cell controls and a column resize handle;
+applications own editing validation, data updates and applied column widths.
 
 ## Installation and imports
+
+Windowing is an optional application integration. The windowing example uses
+`@tanstack/react-virtual`; install it separately when copying that example.
+Keep complete logical hierarchy metadata and retain the active target and
+pending reveal target in the mounted range. Brick does not bundle a virtualizer.
 
 ```tsx
 import { TreeGrid } from "@flowstack-ui/brick";
@@ -44,6 +55,10 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ```tsx
 <TreeGrid.Container>
   <TreeGrid.Root aria-label="Release files" columnCount={2} rowCount={2} defaultExpandedValue={["src"]}>
+    <TreeGrid.ColumnGroup>
+      <TreeGrid.Column htmlWidth="50%" />
+      <TreeGrid.Column />
+    </TreeGrid.ColumnGroup>
     <TreeGrid.Caption>Release files</TreeGrid.Caption>
     <TreeGrid.Header>
       <TreeGrid.Row value="header" rowIndex={1} selectable={false}>
@@ -64,7 +79,8 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ## Anatomy and DOM ownership
 
 Container is an overflow `div`. Root is Atom TreeGrid rendered as a native
-`table` with `role="treegrid"`. Caption, Header, Body, Footer, Row,
+`table` with `role="treegrid"`. ColumnGroup and Column render native `colgroup`
+and `col`; Caption, Header, Body, Footer, Row,
 ColumnHeader, RowHeader, and Cell render `caption`, `thead`, `tbody`, `tfoot`,
 `tr`, `th`, `th`, and `td`. Indicator and SortIndicator are Brick-authored,
 decorative `span` elements. Refs target those exact elements.
@@ -73,22 +89,29 @@ Header/Body/Footer directly contain Rows. Data Rows use a column-1 RowHeader,
 then Cells. Indicator belongs at the logical start of that RowHeader and keeps
 leaf and branch text aligned. Consumers author stable row values, parent
 values, levels, one-based row and column indexes, and truthful counts.
+`Column.htmlWidth` is only a native CSS-pixel number or percentage sizing hint
+and does not accept CSS-unit values or define indexes, counts, hierarchy,
+navigation, or resizing.
 
 ## API
 
 ### Exports
 
-`TreeGrid`, `TreeGridContainer`, `TreeGridRoot`, `TreeGridCaption`,
+`TreeGrid`, `TreeGridContainer`, `TreeGridRoot`, `TreeGridColumnGroup`, `TreeGridColumn`, `TreeGridCaption`,
 `TreeGridHeader`, `TreeGridBody`, `TreeGridFooter`, `TreeGridRow`,
 `TreeGridColumnHeader`, `TreeGridRowHeader`, `TreeGridCell`,
-`TreeGridIndicator`, `TreeGridSortIndicator`, `TreeGridContainerProps`,
+`TreeGridIndicator`, `TreeGridSortIndicator`, `TreeGridContainerProps`, `TreeGridColumnGroupProps`, `TreeGridColumnProps`,
 `TreeGridRootProps`, `TreeGridCaptionProps`, `TreeGridHeaderProps`,
 `TreeGridBodyProps`, `TreeGridFooterProps`, `TreeGridRowProps`,
 `TreeGridColumnHeaderProps`, `TreeGridRowHeaderProps`, `TreeGridCellProps`,
 `TreeGridIndicatorProps`, `TreeGridSortIndicatorProps`, and `TreeGridVariant`,
 `TreeGridSize`, `TreeGridDensity`,
-`TreeGridCaptionSide`, and `TreeGridCellAlign` are available from root and
+`TreeGridCaptionSide`, `TreeGridCellAlign`, `TreeGridCellVerticalAlign`,
+`TreeGridSurface`, `TreeGridBorderTone`, and `TreeGridLayout` are available from root and
 `@flowstack-ui/brick/tree-grid` imports.
+
+`TreeGridTrigger`, `TreeGridTriggerProps`, `TreeGridColumnResizeHandle`,
+`TreeGridColumnResizeHandleProps`, and `TreeGridTone` are also exported.
 
 ### Recipes
 
@@ -97,8 +120,19 @@ values, levels, one-based row and column indexes, and truthful counts.
 | `variant` | `line`, `outline` | defaults to `"line"` |
 | `size` | `sm`, `md`, `lg` | defaults to `"md"` |
 | `density` | `compact`, `comfortable`, `spacious` | defaults to `"comfortable"` |
+| `tone` | `neutral`, `accent` | `accent` |
+| `minInlineSize` | CSS length or pixel number | `0` |
+| Cell/header `sticky` | `start`, `end` | unset |
+| Cell/header `stickyOffset` | CSS length or pixel number | `0` |
+| `surface` | `transparent`, `base` | defaults to `"transparent"` |
+| `borderTone` | `subtle`, `default`, `strong` | defaults to `"default"` |
+| `showColumnBorder` | boolean | `false` |
+| `layout` | `auto`, `fixed` | defaults to `"auto"` |
+| `striped` | boolean | `false` |
+| `stickyHeader` | boolean | `false` |
 | `side` (Caption) | `top`, `bottom` | defaults to `"bottom"` |
 | Cell/header `align` | `start`, `center`, `end` | `start`, or `end` when numeric |
+| Cell/header `verticalAlign` | `top`, `middle`, `bottom` | `middle` |
 | Cell/header `numeric` | boolean | `false` |
 
 Root forwards Atom selection, expansion and active-cell control, disabled and
@@ -107,10 +141,20 @@ events, native table props, and ref. Row forwards hierarchy, expansion,
 selection, disabled, parent, level, and coordinate props. Physical native
 `align` is deliberately replaced by logical alignment.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
-Line provides row separators; outline adds a clipped rounded outer boundary
-and column separators. Size changes typography, row metrics, and hierarchy
+Line provides row separators; outline adds a clipped rounded outer boundary,
+and `showColumnBorder` independently adds column separators. Surface, border
+tone, layout, striping, and sticky header are closed Root recipes. Size changes typography, row metrics, and hierarchy
 indent. Density changes only block padding. Active cell, selected row, hover,
 disabled, expanded, and sorted states are painted from Atom attributes without
 changing semantics or authored coordinates. Outline clips header, footer, and
@@ -130,12 +174,29 @@ Sorting is application-controlled. Give an indexed ColumnHeader `onAction`,
 update records and `sortDirection`, and render decorative SortIndicator.
 Pointer and active-header Enter invoke the same action.
 
+`size`, `density` and `variant` accept sparse responsive values. `pageSize`
+controls PageUp/PageDown movement (default 10 visible rows). Shift+click/Space
+extends multiple selection; Ctrl/Command+A toggles visible eligible rows.
+
+Set `interactive` on a Cell, RowHeader or ColumnHeader containing controls.
+Enter/F2 enters controls and Escape returns to navigation. Actionable headers
+preserve Enter sorting and use F2 to enter controls. Text editing and IME keys
+remain native. `Trigger` separates disclosure from selection; set
+`RowHeader.expandOnClick={false}` when the trigger owns pointer disclosure.
+
+Put a named `ColumnResizeHandle` inside an interactive ColumnHeader. Control
+`value`/`onValueChange` and apply that pixel width to `Column.htmlWidth`.
+`onValueCommit` reports completion; `min`, `max`, `step`, Shift acceleration and
+logical RTL arrow behavior are supported. Data mutation remains external.
+
 ## Tokens and CSS hooks
 
 Stable classes are `.brick-tree-grid`, `.brick-tree-grid-container`, and
 `.brick-tree-grid__*`; slots use matching `tree-grid-*` values. Public state
-hooks are `data-variant`, `data-size`, `data-density`, `data-side`,
-`data-align`, `data-numeric`, and `data-slot`, plus Atom hierarchy, expansion,
+hooks are `data-variant`, `data-size`, `data-density`, `data-surface`,
+`data-border-tone`, `data-column-border`, `data-layout`, `data-striped`,
+`data-sticky-header`, `data-side`, `data-align`, `data-vertical-align`,
+`data-numeric`, and `data-slot`, plus Atom hierarchy, expansion,
 selection, action, sort, active, disabled, and hidden attributes.
 
 Public variables:
@@ -148,6 +209,7 @@ Public variables:
 - `--brick-tree-grid-header-background`
 - `--brick-tree-grid-header-foreground`
 - `--brick-tree-grid-body-background`
+- `--brick-tree-grid-row-stripe-background`
 - `--brick-tree-grid-footer-background`
 - `--brick-tree-grid-cell-foreground`
 - `--brick-tree-grid-cell-padding-inline`
@@ -168,6 +230,8 @@ Public variables:
 - `--brick-tree-grid-sort-indicator-color`
 - `--brick-tree-grid-motion-duration`
 - `--brick-tree-grid-motion-easing`
+- `--brick-tree-grid-sticky-offset`
+- `--brick-tree-grid-sticky-z-index`
 
 ## Customization
 
@@ -190,8 +254,9 @@ Provide one stable accessible name. Keep the first data column a RowHeader,
 indexes one-based, parent/level relationships correct, and counts truthful.
 Atom owns roles, active descendant, keyboard movement, expansion, selection,
 disabled/read-only state, and RTL. Brick keeps active focus separate from
-selected fill and makes both indicators silent. Do not place links, buttons,
-inputs, or editable controls inside cells in this version.
+selected fill and makes both indicators silent. Opt into `interactive` before
+composing links, buttons, inputs or editors. Keep controls outside the grid when
+they act on the whole collection rather than a cell.
 
 ## Composition, native props, and refs
 

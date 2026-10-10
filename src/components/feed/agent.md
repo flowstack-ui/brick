@@ -14,12 +14,14 @@ Present a styled dynamic stream of rich focusable articles while Atom owns feed 
 
 ## Required composition
 
+- Prefer outline Buttons for article actions aligned to the logical start of surrounding text. A visible boundary makes the padded action intentional; a ghost label can appear indented. Keep normal Button padding and use Stack gap rather than negative margins or text-offset overrides.
 - Compose direct Feed.Item articles inside one named Feed.Root; give every Item a useful heading or other accessible name, accurate position metadata, and item-local actions that do not turn the article into one whole-row control.
 - Compose ScrollArea outside Root only when a Frame or another parent supplies a definite bounded size.
 - Use dividerStrength=default only when a compact utility feed needs clearer row separation; preserve the subtle default for ordinary continuous reading.
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Feed only for a dynamic rich article stream where feed semantics and article keyboard movement improve the experience.
 - **MUST:** Keep Feed.Item articles as direct Root children with useful accessible names and accurate positions and totals.
 - **MUST:** Set busy only while adding or replacing Feed DOM; do not make a passive feed a live region or treat busy paint as an announcement.
@@ -27,6 +29,7 @@ Present a styled dynamic stream of rich focusable articles while Atom owns feed 
 - **MUST:** When the stream is bounded, let Frame own the definite size and ScrollArea own overflow outside Feed.Root.
 - **MUST:** When an application windows articles, preserve stable identities and full logical positions, keep the focused and next keyboard target articles mounted or materialize them before focus moves, and remember that geometry utilities do not own feed loading or semantics.
 - **MUST:** Load styles.css or core.css plus feed.css and every composed child stylesheet.
+- **MUST:** Use responsive variant, density and dividerStrength for geometry; Feed.PropsProvider supplies styling-only defaults including radius. Explicit Root values replace defaults. Inherit documented public CSS tokens from a scope; do not add whole-row selection, size/tone recipes or Timeline artwork. Native editors retain their keyboard shortcuts; restore focus deliberately before removing a focused article.
 
 ## Common mistakes
 

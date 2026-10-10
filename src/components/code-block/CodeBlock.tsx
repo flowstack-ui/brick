@@ -23,18 +23,26 @@ import {
 } from "../collapsible/index.js";
 import { ScrollArea } from "../scroll-area/index.js";
 import { CodeBlockContext, useCodeBlockContext } from "./context.js";
+import { renderCodeBlockLines, type CodeBlockMeta } from "./lines.js";
 
 export type CodeBlockVariant = "subtle" | "bordered" | "plain";
-export type CodeBlockSize = "sm" | "md";
+export type CodeBlockSize = "sm" | "md" | "lg";
+export type CodeBlockColorScheme = "light" | "dark";
 export type CodeBlockWrap = "scroll" | "wrap";
 export type CodeBlockLineChange = "added" | "removed";
 
 export interface CodeBlockAdapterContext {
   value: string;
   language?: string;
+  meta?: CodeBlockMeta;
+  colorScheme?: CodeBlockColorScheme;
 }
 
-export type CodeBlockAdapter = (context: CodeBlockAdapterContext) => ReactNode;
+export interface CodeBlockAdapter {
+  (context: CodeBlockAdapterContext): ReactNode;
+  defaultColorScheme?: CodeBlockColorScheme;
+  getStyle?: (scheme: CodeBlockColorScheme) => CSSProperties;
+}
 
 export interface CodeBlockRootProps extends Omit<
   AtomClipboardRootProps,
@@ -45,6 +53,8 @@ export interface CodeBlockRootProps extends Omit<
   adapter?: CodeBlockAdapter;
   variant?: CodeBlockVariant;
   size?: CodeBlockSize;
+  meta?: CodeBlockMeta;
+  colorScheme?: CodeBlockColorScheme;
 }
 
 type SlottedProps<T> = T & { "data-slot"?: string };
@@ -91,11 +101,11 @@ export interface CodeBlockCollapseTriggerProps extends Omit<
 }
 export type CodeBlockCopyTriggerProps = Omit<
   AtomClipboardTriggerProps,
-  "asChild" | "render"
+  "render"
 > &
   Pick<
     ButtonProps,
-    "variant" | "tone" | "size" | "shape" | "startIcon" | "endIcon"
+    "variant" | "tone" | "size" | "shape" | "radius" | "focusRing" | "startIcon" | "endIcon"
   >;
 export type CodeBlockCopyIndicatorProps = AtomClipboardIndicatorProps;
 export type CodeBlockCopyStatusProps = AtomClipboardStatusProps;
@@ -129,27 +139,32 @@ export const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockRootProps>(
       value,
       language,
       adapter,
+      meta,
+      colorScheme: requestedColorScheme,
       variant = "subtle",
       size = "md",
       className,
       children,
+      style,
       "data-slot": dataSlot,
       ...props
     },
     ref,
   ) {
     const safeProps = withoutInjectedHtml(props);
+    const colorScheme = requestedColorScheme ?? adapter?.defaultColorScheme;
     const getAdaptedContent = useMemo(() => {
       let resolved = false;
       let adaptedContent: ReactNode;
       return () => {
         if (!resolved) {
-          adaptedContent = adapter?.({ value, language });
+          adaptedContent = adapter?.({ value, language, meta, colorScheme }) ??
+            (meta ? renderCodeBlockLines(value, meta) : undefined);
           resolved = true;
         }
         return adaptedContent;
       };
-    }, [adapter, language, value]);
+    }, [adapter, language, value, meta, colorScheme]);
     const context = useMemo(
       () => ({ value, language, getAdaptedContent, variant, size }),
       [getAdaptedContent, language, size, value, variant],
@@ -163,6 +178,10 @@ export const CodeBlockRoot = forwardRef<HTMLDivElement, CodeBlockRootProps>(
           data-size={size}
           data-slot={slot(dataSlot, "code-block")}
           data-variant={variant}
+          data-brick-appearance={colorScheme ?? (safeProps as Record<string, unknown>)["data-brick-appearance"]}
+          data-focus-lines={meta?.focusedLines?.length ? "" : undefined}
+          data-dim-unfocused={meta?.dimUnfocused ? "" : undefined}
+          style={{ ...(colorScheme ? adapter?.getStyle?.(colorScheme) : undefined), ...style }}
           ref={ref}
           value={value}
         >
@@ -439,10 +458,13 @@ export const CodeBlockCopyTrigger = forwardRef<
   CodeBlockCopyTriggerProps
 >(function CodeBlockCopyTrigger(
   {
+    asChild = false,
     variant = "ghost",
     tone = "neutral",
     size = "sm",
-    shape = "rounded",
+    shape,
+    radius,
+    focusRing,
     startIcon,
     endIcon,
     children,
@@ -451,6 +473,18 @@ export const CodeBlockCopyTrigger = forwardRef<
   },
   ref,
 ) {
+  if (asChild) {
+    return (
+      <AtomClipboard.Trigger
+        {...props}
+        asChild
+        data-slot={slot(dataSlot, "code-block-copy-trigger")}
+        ref={ref as never}
+      >
+        {children}
+      </AtomClipboard.Trigger>
+    );
+  }
   return (
     <AtomClipboard.Trigger
       {...props}
@@ -459,11 +493,12 @@ export const CodeBlockCopyTrigger = forwardRef<
       ref={ref as never}
     >
       <Button
+        {...(radius !== undefined ? { radius } : { shape })}
+        focusRing={focusRing}
         data-slot={slot(dataSlot, "code-block-copy-trigger")}
         variant={variant}
         tone={tone}
         size={size}
-        shape={shape}
         startIcon={startIcon}
         endIcon={endIcon}
       >

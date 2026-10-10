@@ -1,4 +1,7 @@
 "use client";
+import { radiusStyle, type Radius, type RadiusShapeProps } from "../_radius/Radius.js";
+import { CloseButton } from "../close-button/CloseButton.js";
+import type { MultiSelectClearTriggerProps as AtomClearTriggerProps } from "@flowstack-ui/atom/multi-select";
 
 import {
   Children,
@@ -8,9 +11,12 @@ import {
   isValidElement,
   useContext,
   type ReactNode,
+  type ReactElement,
 } from "react";
 import {
   MultiSelect as AtomMultiSelect,
+  useMultiSelectContext,
+  type UseMultiSelectReturn,
   type MultiSelectArrowProps as AtomMultiSelectArrowProps,
   type MultiSelectGroupProps as AtomMultiSelectGroupProps,
   type MultiSelectIconProps as AtomMultiSelectIconProps,
@@ -28,27 +34,33 @@ import {
   type MultiSelectValueProps as AtomMultiSelectValueProps,
   type MultiSelectViewportProps as AtomMultiSelectViewportProps,
 } from "@flowstack-ui/atom/multi-select";
+import {
+  controlSizeDataAttributes,
+  type ControlSize,
+  type ResponsiveControlSize,
+} from "../_control-size/ControlSize.js";
 
-export type MultiSelectVariant = "outline" | "soft" | "underline";
-export type MultiSelectSize = "sm" | "md" | "lg";
+export type MultiSelectVariant = "outline" | "surface" | "soft" | "subtle" | "ghost" | "underline";
+export type MultiSelectSize = ControlSize;
 export type MultiSelectShape = "sharp" | "rounded" | "pill";
 
 type MultiSelectRootSharedProps = Omit<AtomMultiSelectRootProps, "children"> & {
   children: ReactNode;
-  size?: MultiSelectSize;
+  size?: ResponsiveControlSize;
   fullWidth?: boolean;
 };
 
 export type MultiSelectRootProps = MultiSelectRootSharedProps &
   (
-    | { variant?: "outline" | "soft"; shape?: MultiSelectShape }
-    | { variant: "underline"; shape?: never }
+    | ({ variant?: "outline" | "surface" | "soft" | "subtle" | "ghost" } & RadiusShapeProps<MultiSelectShape>)
+    | { variant: "underline"; shape?: never; radius?: never }
   );
-export type MultiSelectTriggerProps = AtomMultiSelectTriggerProps;
+export type MultiSelectTriggerProps = AtomMultiSelectTriggerProps & { unstyled?: boolean };
+export type MultiSelectClearTriggerProps = Omit<AtomClearTriggerProps, "children" | "asChild" | "render"> & { children?: ReactElement };
 export type MultiSelectValueProps = AtomMultiSelectValueProps;
 export type MultiSelectIconProps = Omit<AtomMultiSelectIconProps, "children"> & { children?: ReactNode };
 export type MultiSelectPortalProps = AtomMultiSelectPortalProps;
-export type MultiSelectContentProps = AtomMultiSelectListboxProps;
+export type MultiSelectContentProps = AtomMultiSelectListboxProps & { radius?: Radius };
 export type MultiSelectListboxProps = MultiSelectContentProps;
 export type MultiSelectViewportProps = AtomMultiSelectViewportProps;
 export type MultiSelectScrollUpButtonProps = Omit<AtomMultiSelectScrollUpButtonProps, "children"> & { children?: ReactNode };
@@ -62,15 +74,16 @@ export type MultiSelectSeparatorProps = AtomMultiSelectSeparatorProps;
 export type MultiSelectArrowProps = Omit<AtomMultiSelectArrowProps, "children"> & { children?: ReactNode };
 
 interface MultiSelectVisualContextValue {
+  radius?: Radius;
   variant: MultiSelectVariant;
-  size: MultiSelectSize;
+  size: ResponsiveControlSize;
   shape?: MultiSelectShape;
   fullWidth: boolean;
 }
 
 const MultiSelectVisualContext = createContext<MultiSelectVisualContextValue>({
   variant: "outline",
-  size: "md",
+  size: "lg",
   shape: "rounded",
   fullWidth: true,
 });
@@ -119,6 +132,7 @@ function multiSelectItemText(children: ReactNode): string | undefined {
 function supplyStaticItemLabels(children: ReactNode): ReactNode {
   const mapped = Children.map(children, (child) => {
     if (!isValidElement<{ children?: ReactNode; label?: string }>(child)) return child;
+    if (typeof child.props.children === "function") return child;
     const nested = supplyStaticItemLabels(child.props.children);
     if (child.type === MultiSelectItem && child.props.label === undefined) {
       return cloneElement(child, { label: multiSelectItemText(child.props.children) }, nested);
@@ -133,31 +147,34 @@ export function MultiSelectRoot({
   children,
   fullWidth = true,
   shape = "rounded",
-  size = "md",
+  radius,
+  size = "lg",
   variant = "outline",
   ...props
 }: MultiSelectRootProps) {
-  const resolvedShape = variant === "underline" ? undefined : shape;
+  const resolvedShape = variant === "underline" ? undefined : radius === undefined ? shape : "rounded";
   return (
-    <MultiSelectVisualContext.Provider value={{ fullWidth, shape: resolvedShape, size, variant }}>
+    <MultiSelectVisualContext.Provider value={{ fullWidth, shape: resolvedShape, radius: variant === "underline" ? undefined : radius, size, variant }}>
       <AtomMultiSelect.Root {...props}>{supplyStaticItemLabels(children)}</AtomMultiSelect.Root>
     </MultiSelectVisualContext.Provider>
   );
 }
 
 export const MultiSelectTrigger = forwardRef<HTMLButtonElement, MultiSelectTriggerProps>(
-  function MultiSelectTrigger({ className, "data-slot": dataSlot, ...props }, ref) {
+  function MultiSelectTrigger({ className, style, unstyled = false, "data-slot": dataSlot, ...props }, ref) {
     const visual = useContext(MultiSelectVisualContext);
+    if (unstyled) return <AtomMultiSelect.Trigger {...props} ref={ref} className={className} style={style} data-slot={slotOrDefault(dataSlot, "multi-select-trigger")} />;
     return (
       <AtomMultiSelect.Trigger
         {...props}
-        className={mergeClassName("brick-multi-select-trigger", className)}
+        className={mergeClassName("brick-multi-select-trigger brick-control-size", className)}
         data-full-width={visual.fullWidth ? "" : undefined}
         data-shape={visual.shape}
-        data-size={visual.size}
+        style={radiusStyle(visual.radius, "--brick-multi-select-trigger-radius", style)}
         data-slot={slotOrDefault(dataSlot, "multi-select-trigger")}
         data-variant={visual.variant}
         ref={ref}
+        {...controlSizeDataAttributes(visual.size)}
       />
     );
   },
@@ -175,12 +192,19 @@ export const MultiSelectIcon = forwardRef<HTMLSpanElement, MultiSelectIconProps>
   },
 );
 
+export const MultiSelectClearTrigger = forwardRef<HTMLButtonElement, MultiSelectClearTriggerProps>(
+  function MultiSelectClearTrigger({ children, ...props }, ref) {
+    const visual = useContext(MultiSelectVisualContext);
+    return <AtomMultiSelect.ClearTrigger {...props} ref={ref} asChild>{children ?? <CloseButton aria-label="Clear selection" size={visual.size} />}</AtomMultiSelect.ClearTrigger>;
+  },
+);
+
 export const MultiSelectPortal = AtomMultiSelect.Portal;
 
 export const MultiSelectContent = forwardRef<HTMLDivElement, MultiSelectContentProps>(
-  function MultiSelectContent({ className, "data-slot": dataSlot, ...props }, ref) {
+  function MultiSelectContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) {
     const visual = useContext(MultiSelectVisualContext);
-    return <AtomMultiSelect.Content {...props} className={mergeClassName("brick-multi-select-content", className)} data-size={visual.size} data-slot={slotOrDefault(dataSlot, "multi-select-listbox")} ref={ref} />;
+    return <AtomMultiSelect.Content {...props} style={radiusStyle(radius, "--brick-multi-select-content-radius", style)} className={mergeClassName("brick-multi-select-content brick-control-size", className)} data-slot={slotOrDefault(dataSlot, "multi-select-listbox")} ref={ref} {...controlSizeDataAttributes(visual.size)} />;
   },
 );
 
@@ -248,7 +272,10 @@ MultiSelectSeparator.displayName = "MultiSelect.Separator";
 MultiSelectArrow.displayName = "MultiSelect.Arrow";
 
 export const MultiSelect = Object.freeze({
+  ClearTrigger: MultiSelectClearTrigger,
   Root: MultiSelectRoot,
+  RootProvider: MultiSelectRootProvider,
+  State: MultiSelectState,
   Trigger: MultiSelectTrigger,
   Value: MultiSelectValue,
   Icon: MultiSelectIcon,
@@ -266,3 +293,23 @@ export const MultiSelect = Object.freeze({
   Separator: MultiSelectSeparator,
   Arrow: MultiSelectArrow,
 });
+
+export { useMultiSelect } from "@flowstack-ui/atom/multi-select";
+export type { UseMultiSelectReturn } from "@flowstack-ui/atom/multi-select";
+export type MultiSelectRootProviderProps = {
+  value: UseMultiSelectReturn;
+  children: ReactNode;
+  size?: ResponsiveControlSize;
+  fullWidth?: boolean;
+} & (
+  | (RadiusShapeProps<MultiSelectShape> & { variant?: Exclude<MultiSelectVariant, "underline"> })
+  | { variant: "underline"; radius?: never; shape?: never }
+);
+export function MultiSelectRootProvider({ value, children, size = "lg", variant = "outline", shape = "rounded", radius, fullWidth = true }: MultiSelectRootProviderProps) {
+  return <MultiSelectVisualContext.Provider value={{ size, variant, shape: variant === "underline" ? undefined : radius === undefined ? shape : "rounded", radius: variant === "underline" ? undefined : radius, fullWidth }}>
+    <AtomMultiSelect.RootProvider value={value}>{children}</AtomMultiSelect.RootProvider>
+  </MultiSelectVisualContext.Provider>;
+}
+export function MultiSelectState({ children }: { children: (state: UseMultiSelectReturn["context"]) => ReactNode }) {
+  return children(useMultiSelectContext());
+}

@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/frame");
+  await page.goto("/frame?qualification=1");
 });
 
 test("the four qualified constraint families resolve without prop leakage", async ({
@@ -21,11 +21,11 @@ test("the four qualified constraint families resolve without prop leakage", asyn
   ).toBe("48ch");
   await expect(cases.nth(2)).toHaveCSS("min-height", "288px");
   await expect(cases.nth(3)).toHaveCSS("max-height", "256px");
-  await expect(cases.nth(3).locator(".brick-scroll-area")).toHaveCSS(
+  await expect(cases.nth(3)).toHaveCSS(
     "height",
     "256px",
   );
-  const scrollRoot = cases.nth(3).locator(".brick-scroll-area");
+  const scrollRoot = cases.nth(3);
   const viewport = scrollRoot.locator(".brick-scroll-area-viewport");
   const metrics = await viewport.evaluate((element) => ({
     clientHeight: element.clientHeight,

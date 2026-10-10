@@ -1,6 +1,8 @@
 export * from "./components/drawer/index.js";
 
 export {
+  DrawerContext as Context,
+  DrawerPositioner as Positioner,
   DrawerRoot as Root,
   DrawerTrigger as Trigger,
   DrawerPortal as Portal,

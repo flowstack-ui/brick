@@ -9,6 +9,11 @@ const layers: ZStackItemLayer[] = ["base", "content", "action"];
 const props: ZStackRootProps = { as: "section", align: "center", justify: "end" };
 createElement(ZStack.Root, { ...props, ref });
 createElement(ZStackRoot, props);
+createElement(ZStackRoot, { asChild: true, children: createElement("article") });
+// @ts-expect-error asChild requires one element, not text.
+createElement(ZStackRoot, { asChild: true, children: "text" });
+// @ts-expect-error Select as or asChild, not both.
+createElement(ZStackRoot, { asChild: true, as: "article", children: createElement("article") });
 createElement(RootZStack.Root, props);
 createElement(ZStack.Item, { align: "end", justify: "start" });
 createElement(ZStack.Item, { asChild: true, children: createElement("span") });
@@ -16,7 +21,6 @@ createElement(ZStack.Root, { align: { initial: "stretch", md: "center" }, justif
 createElement(ZStack.Item, { align: { initial: "auto", md: "end" }, justify: { initial: "start", lg: "center" } });
 createElement(ZStack.Root, { isolation: "open" });
 createElement(ZStack.Item, { edgeSpacing: { initial: "3", md: 5 }, layer: "action" });
-// @ts-expect-error responsive placement requires initial
 createElement(ZStack.Root, { align: { md: "center" } });
 // @ts-expect-error closed placement
 createElement(ZStack.Root, { align: "baseline" });

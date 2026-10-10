@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join, posix, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { componentStyleNames } from "./css-entrypoints.mjs";
+import { canonicalCssSourceMap } from "./css-source-map.mjs";
 
 const dryRun = process.argv.includes("--dry-run");
 const tarballArgument = process.argv.indexOf("--tarball");
@@ -20,6 +21,7 @@ const temp = await mkdtemp(join(tmpdir(), "brick-package-"));
 function readTarballFile(path) {
   const result = spawnSync("tar", ["-xOf", resolve(tarball), `package/${path}`], {
     encoding: "utf8",
+    maxBuffer: 16 * 1024 * 1024,
   });
   assert.equal(result.status, 0, `unable to read ${path} from release archive`);
   return result.stdout;
@@ -59,11 +61,28 @@ try {
   const output = JSON.parse(result.stdout);
   const pack = Array.isArray(output) ? output[0] : output;
   const files = new Set(pack.files.map((file) => file.path));
+  for (const path of files) {
+    if (!path.endsWith(".css.map")) continue;
+    const map = JSON.parse(await readPackedFile(path));
+    assert.deepEqual(map, canonicalCssSourceMap(map), `${path} must be portable and deterministically indexed`);
+  }
   for (const required of [
     "LICENSE",
     "README.md",
     "dist/index.js",
     "dist/index.d.ts",
+    "dist/locale-provider.js",
+    "dist/locale-provider.d.ts",
+    "dist/format-number.js",
+    "dist/format-number.d.ts",
+    "dist/format-byte.js",
+    "dist/format-byte.d.ts",
+    "dist/for.js",
+    "dist/for.d.ts",
+    "dist/checkmark.js",
+    "dist/checkmark.d.ts",
+    "dist/radiomark.js",
+    "dist/radiomark.d.ts",
     "dist/button.js",
     "dist/button.d.ts",
     "dist/icon-button.js",
@@ -82,6 +101,8 @@ try {
     "dist/badge.d.ts",
     "dist/avatar.js",
     "dist/avatar.d.ts",
+    "dist/avatar-group.js",
+    "dist/avatar-group.d.ts",
     "dist/styles.css",
     "dist/styles/core.css",
     ...componentStyleNames.map((name) => `dist/styles/${name}.css`),
@@ -92,10 +113,13 @@ try {
     "docs/guides/control-sizing.md",
     "docs/guides/agent-knowledge.md",
     "docs/guides/browser-support.md",
+    "docs/guides/input-integrations.md",
+    "docs/components/image/integrations.md",
     "dist/agents/manifest.json",
     "dist/agents/coverage.json",
     "dist/theme-contract.json",
     "docs/guides/theme-contract.md",
+    "docs/guides/surface-effects.md",
     "package.json",
   ]) {
     assert.ok(files.has(required), `packed artifact is missing ${required}`);
@@ -109,8 +133,11 @@ try {
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/control-sizing.md",
     "docs/guides/theme-contract.md",
+    "docs/guides/surface-effects.md",
     "docs/guides/agent-knowledge.md",
     "docs/guides/browser-support.md",
+    "docs/guides/input-integrations.md",
+    "docs/components/image/integrations.md",
   ]);
   for (const file of files) {
     const isRuntimeFile = /^dist\/.+\.(?:js|css|d\.ts)(?:\.map)?$/u.test(file);
@@ -127,10 +154,10 @@ try {
   const agentManifest = JSON.parse(await readPackedFile("dist/agents/manifest.json"));
   const agentCoverage = JSON.parse(await readPackedFile("dist/agents/coverage.json"));
   const themeContract = JSON.parse(await readPackedFile("dist/theme-contract.json"));
-  assert.equal(themeContract.$schema, "flowstack.brick-theme-contract.v1");
-  assert.equal(themeContract.contractVersion, 4);
+  assert.equal(themeContract.$schema, "flowstack.brick-theme-contract.v2");
+  assert.equal(themeContract.contractVersion, 6);
   assert.equal(themeContract.contrast.algorithm, "wcag2-relative-luminance");
-  assert.equal(themeContract.contrast.pairs.length, 91);
+  assert.equal(themeContract.contrast.pairs.length, 123);
   assert.equal(packageJson.exports["./theme-contract.json"], "./dist/theme-contract.json");
   assert.equal(agentManifest.package, packageJson.name);
   assert.equal(agentManifest.packageVersion, packageJson.version);
@@ -192,13 +219,16 @@ try {
   }
 
   const publicMarkdown = [
+    "docs/guides/input-integrations.md",
     "README.md",
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/control-sizing.md",
     "docs/guides/theme-contract.md",
+    "docs/guides/surface-effects.md",
     "docs/guides/agent-knowledge.md",
     "docs/guides/browser-support.md",
+    "docs/components/image/integrations.md",
   ];
   const forbiddenDocumentation = [
     /\bplayground\b/iu,
@@ -214,8 +244,10 @@ try {
   ];
   for (const path of publicMarkdown) {
     const source = await readPackedFile(path);
+    // Public source links are allowed; their URL paths are not prose guidance.
+    const prose = source.replace(/\]\(https?:\/\/[^)]+\)/gu, "]");
     for (const pattern of forbiddenDocumentation) {
-      assert.doesNotMatch(source, pattern, `${path} contains repository-only guidance`);
+      assert.doesNotMatch(prose, pattern, `${path} contains repository-only guidance`);
     }
     assertPackedLinksResolve(path, source, files);
   }

@@ -13,6 +13,9 @@
 | Assistive technology | |
 | Playground route | `/aspect-ratio` |
 
+Use `/aspect-ratio?qualification=1` for the exhaustive evidence scenarios below;
+the ordinary route contains the documentation examples.
+
 Scenario order: `01 Overview`, `02 Anatomy and semantics`, `03 Ratios`,
 `04 Variants`, `05 Radius and overflow`, `06 Content composition`, `07 Native
 and composition`, `08 Appearance and customization`, `09 Responsive,
@@ -21,6 +24,12 @@ localization, RTL, and preferences`.
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Geometry and framing
+
+On `/aspect-ratio#props`, also check the Prop/Default/Type table in light and
+dark appearance. Confirm the five component props and supported asChild/render
+composition options, top-aligned cells and unclipped header corners. At 320px,
+focus the labelled scroll region and scroll horizontally to read the full Type
+column without causing document-wide horizontal scrolling.
 
 Inspect 1:1, 4:3, 16:9, 21:9, and 3:4 at ordinary and constrained widths.
 Confirm plain/subtle/outline change paint only, five radii change corners only,
@@ -69,7 +78,25 @@ embedded content remains operable and clipping does not hide required targets.
 Result:
 Notes or issue:
 
-## Completion
+## Step 6 — Documentation and responsive media
+
+Follow Usage and example heading anchors. Check both Usage copy actions and
+each Image, Video, Google Map, and Responsive Preview/Code pair. Verify video
+and map loading and keyboard controls on a real network; automated suites use
+intercepted embed fixtures and do not prove third-party availability.
+Resize through 30rem, 48rem, 64rem, and 80rem. Confirm sparse defaults, nested
+ratio independence, filled media, and the natural-flow opt-out.
+
+Result:
+Notes or issue:
+
+## Latest automated pass — 2026-09-09
+
+18 behavior executions passed across Chromium, Firefox, and WebKit, including
+geometry and axe checks. Manual screen-reader, physical-device, actual browser
+zoom, and live external-player checks are not claimed by that result.
+
+## Completion record
 
 Overall result:
 Follow-up issues:

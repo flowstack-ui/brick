@@ -1,6 +1,17 @@
 {
   "schema": "flowstack.brick-playground-evidence.v1",
-  "componentCount": 95,
+  "componentCount": 129,
+  "previewEnvironment": {
+    "defaultMode": "inline",
+    "directOwnerEvidenceQuery": "testMode=1",
+    "registryGenerator": "scripts/build-preview-registry.mjs",
+    "verification": "scripts/verify-preview-environment.mjs",
+    "runtimeSuite": "playground/tests/integration/preview-environment.spec.ts",
+    "catalogSuite": "playground/tests/integration/preview-catalog.spec.ts",
+    "sourceMode": "paired-page-source",
+    "scopePolicy": "authored-props-and-local-providers-win",
+    "forbidden": ["parent-document-mutation", "arbitrary-url-module-import", "whole-popover-scroll-wrapper", "simulated-css-zoom"]
+  },
   "requiredEvidence": [
     "page",
     "unit",
@@ -23,6 +34,9 @@
   "categories": {
     "Accessibility": ["skip-link", "visually-hidden"],
     "Actions": [
+      "action-bar",
+      "close-button",
+      "download-trigger",
       "button",
       "context-menu",
       "dropdown-menu",
@@ -35,8 +49,13 @@
       "toolbar"
     ],
     "Data display": [
+      "qr-code",
+      "stat",
+      "timeline",
+      "marquee",
       "accordion",
       "avatar",
+      "avatar-group",
       "badge",
       "card",
       "carousel",
@@ -54,9 +73,14 @@
       "tree",
       "tree-grid"
     ],
-    "Feedback": ["progress", "progress-circle", "skeleton", "status", "toast"],
+    "Feedback": ["empty-state", "alert", "spinner", "progress", "progress-circle", "skeleton", "status", "toast"],
+    "Date and Time": ["calendar", "date-input", "date-picker"],
     "Forms": [
+      "tags-input",
+      "editable",
+      "native-select",
       "checkbox",
+      "checkbox-card",
       "checkbox-group",
       "color-picker",
       "combobox",
@@ -65,10 +89,12 @@
       "file-upload",
       "form",
       "input",
+      "input-addon",
       "multi-select",
       "number-input",
-      "otp-field",
+      "pin-input",
       "password-toggle-field",
+      "radio-card",
       "radio-group",
       "rating",
       "segment-group",
@@ -78,24 +104,26 @@
       "textarea"
     ],
     "Layout": [
-      "appearance",
+      "float",
+      "splitter",
       "aspect-ratio",
       "bleed",
+      "center",
       "container",
       "divider",
       "frame",
       "grid",
       "group",
-      "hide",
       "scroll-area",
       "section",
-      "show",
       "sidebar",
       "stack",
       "surface",
       "z-stack"
     ],
+    "Utilities": ["appearance", "show", "hide", "for", "checkmark", "radiomark"],
     "Navigation": [
+      "table-of-contents",
       "app-bar",
       "bottom-navigation",
       "breadcrumb",
@@ -104,9 +132,13 @@
       "nav-list",
       "navigation-menu",
       "pagination",
-      "tabs"
+      "tabs",
+      "steps"
     ],
     "Overlays": [
+      "toggle-tip",
+      "floating-panel",
+      "overlay-manager",
       "alert-dialog",
       "dialog",
       "drawer",
@@ -114,6 +146,7 @@
       "popover",
       "tooltip"
     ],
+    "Internationalization": ["locale-provider", "format-number", "format-byte"],
     "Typography": [
       "blockquote",
       "code",
@@ -232,6 +265,7 @@
       "tree-grid"
     ],
     "portal": [
+      "date-picker",
       "alert-dialog",
       "combobox",
       "context-menu",

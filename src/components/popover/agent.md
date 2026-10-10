@@ -15,11 +15,16 @@ Present a finished compact click-open interactive panel anchored to a trigger or
 
 ## Required composition
 
+- Place a decorative Indicator in Button's endIcon or startIcon slot when composing an icon-bearing trigger, not beside text inside Button children. Radius and inset are independent: full is a pill boundary, not shape-aware text padding; prefer compact centered content for pill specimens and ordinary overlay radii for multiline settings.
+- onRequestDismiss observes retained ancestor dismissal, not every Close click. Controlled owners must accept close and trigger-value changes when the active trigger disappears. Set defaultTriggerValue for default-open shared content. Pass the original usePopover controller to RootProvider without cloning it.
+- Use usePopover with RootProvider for external state, or Root directly; both remain click-only. State/usePopoverState expose state and actions. Trigger values identify shared triggers. Root positioning controls offsets, same-width, virtual references and collision. Content size remains width; inset xs/sm/md/lg selects spacing independently; explicit inset overrides density spacing. Keep Header and Body direct children so padding and bounded scrolling remain owned. Close composes Button or CloseButton; Indicator is decorative. Retained content is hidden and Activity falls back when unavailable.
 - Compose Popover.Root with Popover.Trigger and Popover.Portal; add Popover.Anchor only when positioning must reference an element other than Trigger. Inside Popover.Content, arrange Header with Title and optional Description, Body, Footer, and Close as needed; keep Arrow as a direct Content child.
 - Use density=compact for concise filter and utility panels. When a local Appearance scope owns the trigger, portal into that scope or apply the same Appearance to Content because ordinary portal ancestry does not preserve the local theme boundary.
+- Content already bounds the viewport and Body already pads and scrolls. Keep Header, Body and Footer as direct Content regions; put Title and Description in Header. Do not add a whole-panel Frame/ScrollArea wrapper to obtain ordinary scrolling.
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Use Brick Popover for compact click-open interactive work; choose Menu, Select, or Combobox when the panel's job is command or option selection, and Dialog for a larger blocking workflow.
 - **MUST:** Keep Trigger and portalled Content inside one Root, use Anchor only for a distinct positioning reference, and use the public structure parts instead of recreating panel spacing or hierarchy with private selectors.
 - **MUST:** Give Content an accessible name with one visible Title or an explicit native aria-label or aria-labelledby; add Description or native aria-describedby only when descriptive text is present.
@@ -31,11 +36,14 @@ Present a finished compact click-open interactive panel anchored to a trigger or
 - **MUST:** Style from resolved data-side and available-size variables, keep Arrow as a direct Content child, and preserve its shared border and surface paint instead of assuming requested placement or independently recoloring it.
 - **SHOULD:** Keep the panel compact and verify collision shifts and flips, constrained scrolling, action reachability, zoom, touch input, narrow viewports, and LTR and RTL placement.
 - **MUST:** Load styles.css or core.css plus popover.css.
+- **MUST:** Preserve direct Content region ownership for bounded scrolling. Bare Title/Description padding depends on direct Content ancestry; if grouping them, use Header. Do not insert layout or scroll wrappers around the full anatomy or patch the lost padding with CSS. Place a separately constrained scrolling list inside Body only when required.
+- **MUST:** Overlay arrows share a 12px square-equivalent seed (--brick-overlay-arrow-size), exposed-edge artwork and owner surface/border paint. Prefer the shipped Arrow; do not add directional filters or translations. SVG Arrow width/height remain supported; positioning gutter measures the empty gap to the tip. Explicit positioning.offset remains raw. ToggleTip inherits Popover; Select/MultiSelect retain span hosts. NavigationMenu Indicator remains separately positioned.
 
 ## Common mistakes
 
 - **Avoid:** Hand-positioning a floating div, using Popover for a menu or tooltip, forcing it modal for every utility panel, or closing it with ad hoc document listeners. **Instead:** Choose by interaction job, use complete Popover anatomy, keep ordinary popovers non-modal, and use the preventable outside-interaction contract.
 - **Avoid:** Assuming portalled Content inherits a nearby Appearance scope or placing Arrow inside an authored viewport wrapper. **Instead:** Make the portal scope explicit and keep Arrow directly under Content so placement and finished surface paint remain intact.
+- **Avoid:** Wrapping Title, Description and Body in Frame/ScrollArea, producing a flush title or a nonshrinking body despite a visually bounded popup. **Instead:** Use Content > Header(Title, Description) + Body + optional Footer. Content owns viewport bounds; Body owns padded scrolling. Verify header inset and last-action reachability, not just popup bounds.
 
 ## Validation checklist
 

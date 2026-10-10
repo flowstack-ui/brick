@@ -1,14 +1,23 @@
+"use client";
+
 import {
   Children,
-  cloneElement,
+  Fragment,
+  createContext,
+  useContext,
+  type ReactNode,
   forwardRef,
   type CSSProperties,
   type HTMLAttributes,
   type ReactElement,
-  type Ref,
 } from "react";
 
-export type IconSize = "2xs" | "xs" | "sm" | "md" | "lg" | "xl";
+import { composeHost } from "@flowstack-ui/atom/compose-host";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
+
+export type IconSize =
+  "inherit" | "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+export type ResponsiveIconSize = ResponsiveValue<IconSize>;
 export type IconTone =
   | "inherit"
   | "primary"
@@ -19,6 +28,7 @@ export type IconTone =
   | "success"
   | "warning"
   | "danger";
+export type IconEmphasis = "text" | "solid";
 
 type DecorativeIconProps = {
   label?: never;
@@ -47,7 +57,8 @@ type IconNativeProps = Omit<
 
 type IconCommonProps = IconNativeProps & {
   children: ReactElement;
-  size?: IconSize;
+  emphasis?: IconEmphasis;
+  size?: ResponsiveIconSize;
   tone?: IconTone;
   directional?: boolean;
   className?: string;
@@ -55,9 +66,7 @@ type IconCommonProps = IconNativeProps & {
   slot?: string;
 };
 
-type IconCompositionProps =
-  | { asChild: true }
-  | { asChild?: false };
+type IconCompositionProps = { asChild: true } | { asChild?: false };
 
 export type IconProps = IconCommonProps &
   IconCompositionProps &
@@ -67,41 +76,24 @@ function mergeClassName(base: string, className: string | undefined) {
   return className ? `${base} ${className}` : base;
 }
 
-function composeRefs(...refs: (Ref<unknown> | undefined)[]) {
-  return (node: unknown) => {
-    for (const ref of refs) {
-      if (ref === undefined || ref === null) continue;
-      if (typeof ref === "function") ref(node);
-      else (ref as { current: unknown }).current = node;
-    }
-  };
+export type IconPresentationProps = Pick<IconCommonProps, "size" | "tone" | "emphasis">;
+export type IconPropsProviderProps = { value: IconPresentationProps; children?: ReactNode };
+const IconDefaults = createContext<IconPresentationProps>({});
+
+/** Presentation only: undefined values inherit, responsive values replace whole. */
+export function IconPropsProvider({ value, children }: IconPropsProviderProps) {
+  const outer = useContext(IconDefaults);
+  return <IconDefaults.Provider value={{
+    size: value.size ?? outer.size,
+    tone: value.tone ?? outer.tone,
+    emphasis: value.emphasis ?? outer.emphasis,
+  }}>{children}</IconDefaults.Provider>;
 }
 
-function mergeChildProps(
-  child: ReactElement,
-  iconProps: Record<string, unknown>,
-) {
-  const childProps = child.props as Record<string, unknown>;
-  return {
-    ...childProps,
-    ...iconProps,
-    className: mergeClassName(
-      typeof childProps.className === "string" ? childProps.className : "",
-      typeof iconProps.className === "string" ? iconProps.className : undefined,
-    ).trim(),
-    style: {
-      ...(childProps.style && typeof childProps.style === "object"
-        ? childProps.style
-        : {}),
-      ...(iconProps.style && typeof iconProps.style === "object"
-        ? iconProps.style
-        : {}),
-    },
-    ref: composeRefs(
-      (child as ReactElement & { ref?: Ref<unknown> }).ref,
-      iconProps.ref as Ref<unknown> | undefined,
-    ),
-  };
+export function useIconDefaults() { return useContext(IconDefaults); }
+
+function diagnose(condition: boolean, message: string) {
+  if (condition && process.env.NODE_ENV !== "production") console.warn(`Icon: ${message}`);
 }
 
 export const Icon = forwardRef<HTMLElement | SVGSVGElement, IconProps>(
@@ -111,35 +103,50 @@ export const Icon = forwardRef<HTMLElement | SVGSVGElement, IconProps>(
       children,
       className,
       directional = false,
+      emphasis: ownEmphasis,
       label,
-      size = "md",
+      size: ownSize,
       slot = "icon",
-      tone = "inherit",
+      tone: ownTone,
       style,
       "aria-labelledby": ariaLabelledby,
       ...props
     },
     ref,
   ) {
+    const defaults = useIconDefaults();
+    const size = ownSize ?? defaults.size ?? "md";
+    const tone = ownTone ?? defaults.tone ?? "inherit";
+    const emphasis = ownEmphasis ?? defaults.emphasis ?? "text";
+    const child = Children.only(children);
+    if (child.type === Fragment || (typeof child.type === "string" && child.type !== "svg")) {
+      throw new Error("Icon requires one noninteractive SVG element; custom components must forward props and ref to one SVG.");
+    }
+    const childProps = child.props as Record<string, unknown>;
+    diagnose(label !== undefined && !label.trim(), "label must be nonempty.");
+    diagnose(ariaLabelledby !== undefined && !ariaLabelledby.trim(), "aria-labelledby must be nonempty.");
+    diagnose(label !== undefined && ariaLabelledby !== undefined, "provide label or aria-labelledby, not both.");
+    diagnose((props.tabIndex ?? -1) >= 0 || Number(childProps.tabIndex ?? -1) >= 0 || childProps.focusable === true || childProps.focusable === "true", "SVG content must be nonfocusable; label the enclosing action.");
     const informative = label !== undefined || ariaLabelledby !== undefined;
     const rootProps: Record<string, unknown> = {
       ...props,
-      "aria-hidden": informative ? undefined : true,
-      "aria-label": label,
-      "aria-labelledby": ariaLabelledby,
+      "aria-hidden": informative ? null : true,
+      "aria-label": label ?? null,
+      "aria-labelledby": label === undefined ? ariaLabelledby ?? null : null,
       className: mergeClassName("brick-icon", className),
       "data-directional": directional ? "" : undefined,
-      "data-size": size,
+      "data-emphasis": emphasis,
+      ...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true }),
       "data-slot": slot,
       "data-tone": tone,
       ref,
-      role: informative ? "img" : undefined,
+      role: informative ? "img" : null,
+      tabIndex: props.tabIndex !== undefined || (asChild && childProps.tabIndex !== undefined) ? -1 : null,
       style,
     };
 
     if (asChild) {
-      const child = Children.only(children);
-      return cloneElement(child, mergeChildProps(child, rootProps));
+      return composeHost(child, { ...rootProps, focusable: "false" });
     }
 
     return (

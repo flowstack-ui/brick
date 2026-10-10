@@ -6,6 +6,13 @@ Container follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
+- Add opt-in `asChild` host composition, merging props, classes, styles,
+  handlers and refs with one forwarding child. Native defaults are unchanged.
+- Preserve Container-owned measure and gutters on shared painted hosts,
+  independent of base stylesheet order.
+
+- Clarified composition and API boundaries in public and Agent Knowledge guides.
+
 - Expanded Agent Knowledge for aligning separate shell regions through shared
   Container measure and gutter recipes.
 

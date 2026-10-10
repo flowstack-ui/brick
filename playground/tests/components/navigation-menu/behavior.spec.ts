@@ -1,12 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/navigation-menu"); });
+test.beforeEach(async ({ page }) => { await page.goto("/navigation-menu?qualification=1"); });
 
 test("defaults, links, disclosure, sizes, orientation, state, and composition work", async ({ page }) => {
   const root = page.getByTestId("navigation-menu-overview").getByRole("navigation", { name: "Primary navigation" });
   await expect(root).toHaveAttribute("data-size", "md");
-  await expect(root.getByRole("button", { name: "Products" })).toHaveCSS("min-height", "44px");
+  await expect(root.getByRole("button", { name: "Products" })).toHaveCSS("min-height", "40px");
   const products = root.getByRole("button", { name: "Products" });
   await expect(products).toHaveAttribute("aria-expanded", "false");
   await products.click();
@@ -30,13 +30,16 @@ test("defaults, links, disclosure, sizes, orientation, state, and composition wo
   const indicatorArrow = indicator.locator(".brick-navigation-menu__indicator-arrow");
   const viewport = root.locator(".brick-navigation-menu__viewport");
   await expect(indicator).toHaveAttribute("data-state", "visible");
-  await expect(indicatorArrow).toHaveCSS("width", "10px");
-  await expect(indicatorArrow).toHaveCSS("height", "6px");
+  const indicatorSize = (await indicatorArrow.boundingBox())!;
+  expect(indicatorSize.width).toBeCloseTo(12 * Math.SQRT2, 1);
+  expect(indicatorSize.height).toBeCloseTo(6 * Math.SQRT2 + 1, 1);
   const triggerChevron = await products.evaluate((element) => {
-    const style = getComputedStyle(element, "::after");
+    const chevron = element.querySelector(".brick-navigation-menu__chevron");
+    if (!chevron) throw new Error("NavigationMenu default ItemIndicator is missing.");
+    const style = getComputedStyle(chevron);
     return { gap: getComputedStyle(element).gap, size: style.width, stroke: style.borderRightWidth };
   });
-  expect(triggerChevron).toEqual({ gap: "6px", size: "6px", stroke: "1px" });
+  expect(triggerChevron).toEqual({ gap: "8px", size: "6px", stroke: "1px" });
   const current = root.getByRole("link", { name: "Pricing" });
   await expect(current).toHaveAttribute("data-active", "");
   await expect(current).toHaveCSS("text-decoration-thickness", "1px");
@@ -54,7 +57,7 @@ test("defaults, links, disclosure, sizes, orientation, state, and composition wo
   for (const [index, size] of ["sm", "md", "lg"].entries()) {
     const sizedRoot = page.getByTestId("navigation-menu-size").locator(`.brick-navigation-menu[data-size='${size}']`);
     await expect(sizedRoot).toHaveCount(1);
-    await expect(sizedRoot.getByRole("button").first()).toHaveCSS("min-height", ["32px", "44px", "48px"][index]);
+    await expect(sizedRoot.getByRole("button").first()).toHaveCSS("min-height", ["36px", "40px", "44px"][index]);
   }
   const verticalRoot = page.getByTestId("navigation-menu-orientation").locator(".brick-navigation-menu[data-orientation='vertical']");
   await expect(page.getByTestId("navigation-menu-orientation").locator(".menu-cell").first().locator(".brick-navigation-menu[data-orientation='vertical']")).toHaveCount(1);
@@ -65,12 +68,31 @@ test("defaults, links, disclosure, sizes, orientation, state, and composition wo
   await expect(verticalIndicator).toHaveAttribute("data-state", "visible");
   const verticalArrow = verticalIndicator.locator(".brick-navigation-menu__indicator-arrow");
   await expect(verticalArrow).toBeVisible();
-  await expect(verticalArrow).toHaveCSS("width", "6px");
-  await expect(verticalArrow).toHaveCSS("height", "10px");
+  // This assertion checks settled placement, not the perspective entry frames.
+  await verticalViewport.evaluate(async (element) => {
+    await Promise.all(element.getAnimations().map((animation) => animation.finished.catch(() => {})));
+  });
+  const verticalSize = (await verticalArrow.boundingBox())!;
+  expect(verticalSize.width).toBeCloseTo(6 * Math.SQRT2 + 1, 1);
+  expect(verticalSize.height).toBeCloseTo(12 * Math.SQRT2, 1);
   const [verticalTriggerBox, verticalIndicatorBox, verticalArrowBox, verticalViewportBox] = await Promise.all([verticalProducts.boundingBox(), verticalIndicator.boundingBox(), verticalArrow.boundingBox(), verticalViewport.boundingBox()]);
   expect(verticalIndicatorBox && verticalViewportBox && verticalIndicatorBox.x + verticalIndicatorBox.width).toBeCloseTo(verticalViewportBox?.x ?? 0, 0);
   expect(verticalTriggerBox && verticalArrowBox && verticalArrowBox.y + verticalArrowBox.height / 2).toBeCloseTo((verticalTriggerBox?.y ?? 0) + (verticalTriggerBox?.height ?? 0) / 2, 0);
-  expect(verticalTriggerBox && verticalViewportBox && verticalViewportBox.y).toBeCloseTo(verticalTriggerBox?.y ?? 0, 0);
+  const centeredVerticalTop = async () => verticalViewport.evaluate((element) => {
+    const root = element.closest(".brick-navigation-menu");
+    const trigger = root?.querySelector<HTMLElement>('.brick-navigation-menu__trigger[data-state="open"]');
+    const content = element.querySelector<HTMLElement>('.brick-navigation-menu__content[data-state="open"]');
+    if (!trigger || !content) throw new Error("Open NavigationMenu geometry hosts are missing");
+    const rect = trigger.getBoundingClientRect();
+    // Placement aligns the outer bordered viewport, not the integer scroll box.
+    const height = element.getBoundingClientRect().height;
+    const boundary = element.ownerDocument.defaultView?.visualViewport;
+    const start = (boundary?.offsetTop ?? 0) + 8;
+    const end = (boundary?.offsetTop ?? 0) + (boundary?.height ?? element.ownerDocument.documentElement.clientHeight) - 8 - height;
+    const expected = Math.min(Math.max(rect.top + (rect.height - height) / 2, start), Math.max(start, end));
+    return Math.abs(element.getBoundingClientRect().top - expected);
+  });
+  await expect.poll(centeredVerticalTop).toBeLessThan(1);
   const verticalSolutions = verticalRoot.getByRole("button", { name: "Solutions" });
   await verticalSolutions.click();
   await expect(verticalSolutions).toHaveAttribute("aria-expanded", "true");
@@ -78,8 +100,9 @@ test("defaults, links, disclosure, sizes, orientation, state, and composition wo
     const [solutionTriggerBox, solutionArrowBox, solutionViewportBox] = await Promise.all([verticalSolutions.boundingBox(), verticalArrow.boundingBox(), verticalViewport.boundingBox()]);
     if (!solutionTriggerBox || !solutionArrowBox || !solutionViewportBox) return false;
     const arrowCenter = solutionArrowBox.y + solutionArrowBox.height / 2;
-    return Math.abs(solutionViewportBox.y - solutionTriggerBox.y) <= 1 && arrowCenter >= solutionViewportBox.y && arrowCenter <= solutionViewportBox.y + solutionViewportBox.height;
+    return arrowCenter >= solutionViewportBox.y && arrowCenter <= solutionViewportBox.y + solutionViewportBox.height;
   }).toBe(true);
+  await expect.poll(centeredVerticalTop).toBeLessThan(1);
   const direct = page.getByRole("navigation", { name: "Direct destinations" });
   await expect(direct.getByRole("link", { name: "Overview" })).toHaveAttribute("href", "/overview");
   const disabled = page.getByRole("navigation", { name: "Unavailable destination" }).getByRole("button", { name: "Products" });

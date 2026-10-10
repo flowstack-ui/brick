@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Dialog |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased 0.2.3 candidate |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -18,9 +18,20 @@ Scenario order: `01 Overview`, `02 Sizes`, `03 Anatomy`, `04 Semantics`,
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
+## Current recipe checks — not yet manually qualified
+
+- Open each size, cover/full and responsive transitions on `/dialog`.
+- Check light/dark, RTL, reduced motion, forced colors and each motion preset.
+- At actual browser zoom and with a virtual keyboard, scroll to the final action
+  in both scrolling modes and confirm its entire rectangle is usable.
+- Increment the retained counter, close/reopen and confirm its value remains.
+- Confirm screen-reader naming, nested focus restoration, Positioner dismissal,
+  and descendant Select/Popover behavior. Do not infer these manual results from
+  automated browser tests.
+
 ## Step 1 — Overview and focus lifecycle
 
-Setup: Open `/dialog` and `01 Overview`.
+Setup: Open `/dialog?qualification=1` and `01 Overview`. Use `/dialog` for the current recipe examples.
 
 Action: Open the Dialog with keyboard, inspect initial focus, Tab and
 Shift+Tab through it, close with its visible action, reopen, then press Escape.
@@ -41,8 +52,10 @@ Action: Open every size and anatomy example; inspect optional parts and every
 Title heading level.
 
 Expected: Sizes change preferred measure and inset only. Only authored Header,
-Body, Footer, Close, Title, and Description parts appear. Title uses the
-labeled heading level and relationships remain correct.
+Body, Footer, Close, Title, and Description parts appear. The Overview corner
+Close remains one space-2 inset from Content's logical top-end edge, while
+footer Close actions stay in normal flow. Title uses the labeled heading level
+and relationships remain correct.
 
 Result:
 Notes or issue:

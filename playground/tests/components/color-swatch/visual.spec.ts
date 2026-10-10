@@ -6,7 +6,7 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/color-swatch");
+installVisualDefaults("/color-swatch?qualification=1");
 
 test("Color Swatch colors, sizes, and mixtures", async ({ page }) => {
   await expectEvidenceScreenshot(

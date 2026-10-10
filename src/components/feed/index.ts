@@ -1,5 +1,7 @@
-export { Feed } from "./Feed.js";
+export { Feed, FeedRoot, FeedItem, FeedPropsProvider } from "./Feed.js";
 export type {
+  FeedRecipeProps,
+  FeedPropsProviderProps,
   FeedDensity,
   FeedDividerStrength,
   FeedItemProps,

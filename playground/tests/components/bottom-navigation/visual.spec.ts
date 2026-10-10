@@ -1,6 +1,11 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/bottom-navigation");
+installVisualDefaults("/bottom-navigation?qualification=1");
+
+// Exclude sticky application chrome from component-only evidence captures.
+test.beforeEach(async ({ page }) => {
+  await page.addStyleTag({ content: ".brick-app-bar, .brick-app-bar * { visibility: hidden !important; }" });
+});
 
 test("Bottom Navigation default, recipes, layout, and selection", async ({ page }) => {
   await expect(page.getByTestId("bottom-navigation-overview")).toHaveScreenshot("overview-light.png");

@@ -1,0 +1,117 @@
+import { useState, type CSSProperties, type ReactNode } from "react";
+import {
+  Badge,
+  Container,
+  For,
+  Grid,
+  NavList,
+  Text,
+  VStack,
+  type NavListSize,
+  type NavListTone,
+  type NavListVariant,
+} from "@flowstack-ui/brick";
+import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
+import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
+import { RenderedOutput } from "../../shared/RenderedOutput.js";
+import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
+import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
+import "./nav-list.playground.css";
+
+const variants: NavListVariant[] = ["soft", "solid", "outline"];
+const tones: NavListTone[] = ["accent", "neutral"];
+const sizes: NavListSize[] = ["sm", "md", "lg"];
+
+function DotIcon() {
+  return <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="4" fill="currentColor" /></svg>;
+}
+
+function ArrowIcon() {
+  return <svg viewBox="0 0 16 16"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>;
+}
+
+function BasicList({ disabled = false }: { disabled?: boolean }) {
+  return (
+    <NavList.List>
+      <NavList.Item><NavList.Link href="#workspace" active>Workspace</NavList.Link></NavList.Item>
+      <NavList.Item><NavList.Link href="#members">Members</NavList.Link></NavList.Item>
+      <NavList.Item><NavList.Link disabled={disabled} href="#billing">Billing</NavList.Link></NavList.Item>
+    </NavList.List>
+  );
+}
+
+function Cell({ children, label }: { children: ReactNode; label: string }) {
+  return <EvidenceSurface className="nav-list-cell"><SpecimenLabel>{label}</SpecimenLabel>{children}</EvidenceSurface>;
+}
+
+function SpacingExamples() {
+  return <><Grid.Root columns={{ initial: 1, lg: 2 }} gap="4">
+    <For each={["default", "none"] as const}>{(inset) =>
+      <For key={inset} each={["default", "none"] as const}>{(indent) =>
+        <Cell key={indent} label={`Row inset: ${inset}; section indent: ${indent}`}>
+          <NavList.Root aria-label={`Spacing ${inset} ${indent}`} inset={inset} density="compact">
+            <NavList.Section><NavList.SectionLabel>Workspace</NavList.SectionLabel>
+              <NavList.SectionContent indent={indent}><BasicList /></NavList.SectionContent>
+            </NavList.Section>
+          </NavList.Root>
+        </Cell>
+      }</For>
+    }</For>
+  </Grid.Root><GapExamples /></>;
+}
+function GapExamples() {
+  return <Grid.Root columns={{ initial: 1, lg: 2 }} gap="4">
+    <For each={[undefined, "6"] as const}>{(gap) =>
+      <Cell key={gap ?? "default"} label={`Group gap: ${gap ?? "default"}`}>
+        <NavList.Root aria-label={`Group gap ${gap ?? "default"}`} gap={gap} density="compact">
+          <NavList.Section><NavList.SectionLabel>Default heading gap</NavList.SectionLabel>
+            <NavList.SectionContent indent="none"><BasicList /></NavList.SectionContent>
+          </NavList.Section>
+          <NavList.Section gap={0}><NavList.SectionLabel>Heading gap: 0</NavList.SectionLabel>
+            <NavList.SectionContent indent="none"><BasicList /></NavList.SectionContent>
+          </NavList.Section>
+        </NavList.Root>
+      </Cell>
+    }</For>
+  </Grid.Root>;
+}
+function EvidenceGroup({ children, description, title }: { children: ReactNode; description: string; title: string }) { return <VStack as="section" gap="3"><VStack gap="1"><Text as="h3" variant="title-sm">{title}</Text><Text as="p" tone="secondary" variant="body-sm">{description}</Text></VStack>{children}</VStack>; }
+
+export const navListScenarios = [
+  { id: "nav-list.overview", number: 1, title: "Overview", description: "Nav List’s canonical rendering is a vertical soft accent list at the medium size, with one current destination." },
+  { id: "nav-list.variants", number: 2, title: "Variants", description: "Soft, solid, and outline change only the current-destination treatment; content, tone, and size remain at their defaults." },
+  { id: "nav-list.tones", number: 3, title: "Tones", description: "Accent and neutral are compared across every variant while the destinations and current state remain identical." },
+  { id: "nav-list.sizes", number: 4, title: "Sizes and density", description: "Size controls text and icons. Compact density reduces spacing without shrinking either; comfortable preserves the original spacing." },
+  { id: "nav-list.content", number: 5, title: "Content and states", navigationTitle: "Content", description: "Leading and trailing content, descriptions, current state, and disabled behavior remain aligned inside the same navigation anatomy." },
+  { id: "nav-list.sections", number: 6, title: "Sections and disclosure", navigationTitle: "Sections", description: "Labeled sections and controlled or uncontrolled disclosure preserve native button and region relationships." },
+  { id: "nav-list.composition", number: 7, title: "Composition and output", navigationTitle: "Composition", description: "Ordered lists and composed links retain the semantic output and state attributes owned by Atom." },
+  { id: "nav-list.appearance", number: 8, title: "Appearance and customization", navigationTitle: "Theme", description: "Semantic tokens adapt across appearance scopes; public CSS properties customize the actual navigation rows." },
+  { id: "nav-list.stress", number: 9, title: "Responsive and RTL", navigationTitle: "Stress", description: "Horizontal wrapping, narrow localized labels, and RTL logical icon order remain contained." },
+] as const satisfies readonly ScenarioDefinition[];
+
+export function NavListEvidence() {
+  const [sectionOpen, setSectionOpen] = useState(true);
+  const customStyle = {
+    "--brick-nav-list-row-radius": "0.25rem",
+    "--brick-nav-list-current-border": "var(--brick-color-accent-solid)",
+    "--brick-nav-list-link-surface-current": "var(--brick-color-surface-raised)",
+  } as CSSProperties;
+
+  return (
+    <VStack className="nav-list-page" data-component-page="nav-list">
+      <Scenario {...navListScenarios[0]}><EvidenceSurface data-testid="nav-list-overview"><NavList.Root aria-label="Workspace navigation"><BasicList /></NavList.Root></EvidenceSurface></Scenario>
+      <Scenario {...navListScenarios[1]}><Grid.Root columns={3} className="nav-list-grid">{variants.map((variant) => <Cell key={variant} label={variant}><NavList.Root aria-label={`${variant} navigation`} variant={variant}><BasicList /></NavList.Root></Cell>)}</Grid.Root></Scenario>
+      <Scenario {...navListScenarios[2]}><VStack gap="4">{variants.map((variant) => <VStack gap="2" key={variant}><Text as="h3" variant="title-sm">{variant[0].toUpperCase() + variant.slice(1)} tones</Text><Grid.Root columns={2} className="nav-list-grid">{tones.map((tone) => <Cell key={tone} label={tone}><NavList.Root aria-label={`${tone} ${variant} navigation`} tone={tone} variant={variant}><BasicList /></NavList.Root></Cell>)}</Grid.Root></VStack>)}</VStack></Scenario>
+      <Scenario {...navListScenarios[3]}><VStack gap="4">{(["comfortable", "compact"] as const).map((density) => <EvidenceGroup key={density} title={density} description="Identical content and typography at each size."><Grid.Root columns={3} className="nav-list-grid">{sizes.map((size) => <Cell key={size} label={size}><NavList.Root aria-label={`${density} ${size} navigation`} density={density} size={size}><BasicList /></NavList.Root></Cell>)}</Grid.Root></EvidenceGroup>)}</VStack></Scenario>
+      <Scenario {...navListScenarios[4]}><Grid.Root columns={2} className="nav-list-grid"><Cell label="icons and description"><NavList.Root aria-label="Project navigation"><NavList.List><NavList.Item><NavList.Link active description="Project status and activity" endIcon={<ArrowIcon />} href="#overview" startIcon={<DotIcon />}>Overview</NavList.Link></NavList.Item><NavList.Item><NavList.Link description="People with access" endIcon={<ArrowIcon />} href="#team" startIcon={<DotIcon />}>Team</NavList.Link></NavList.Item></NavList.List></NavList.Root></Cell><Cell label="current and disabled"><NavList.Root aria-label="Account navigation"><BasicList disabled /></NavList.Root></Cell></Grid.Root></Scenario>
+      <Scenario {...navListScenarios[5]}><VStack gap="6"><Grid.Root columns={2} className="nav-list-grid"><Cell label="labeled section"><NavList.Root aria-label="Settings"><NavList.Section><NavList.SectionLabel>Account</NavList.SectionLabel><NavList.SectionContent><BasicList /></NavList.SectionContent></NavList.Section></NavList.Root></Cell><Cell label="controlled disclosure"><NavList.Root aria-label="Documentation"><NavList.Section collapsible open={sectionOpen} onOpenChange={setSectionOpen}><NavList.SectionTrigger>Foundations</NavList.SectionTrigger><NavList.SectionContent><BasicList /></NavList.SectionContent></NavList.Section></NavList.Root></Cell></Grid.Root><SpacingExamples /></VStack></Scenario>
+      <Scenario {...navListScenarios[6]}><VStack gap="4"><RenderedOutput label="Ordered Nav List HTML"><NavList.Root aria-label="Setup steps"><NavList.List ordered><NavList.Item><NavList.Link active href="#install">Install</NavList.Link></NavList.Item><NavList.Item><NavList.Link href="#configure">Configure</NavList.Link></NavList.Item></NavList.List></NavList.Root></RenderedOutput><RenderedOutput label="Composed Nav List link HTML"><NavList.Root aria-label="Composed navigation"><NavList.List><NavList.Item><NavList.Link active asChild><a href="#composed">Composed destination</a></NavList.Link></NavList.Item></NavList.List></NavList.Root></RenderedOutput></VStack></Scenario>
+      <Scenario {...navListScenarios[7]}><VStack gap="4"><Grid.Root columns={2} className="nav-list-grid"><EvidenceSurface className="nav-list-cell" data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><NavList.Root aria-label="Light navigation"><BasicList /></NavList.Root></EvidenceSurface><EvidenceSurface className="nav-list-cell" data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><NavList.Root aria-label="Dark navigation"><BasicList /></NavList.Root></EvidenceSurface></Grid.Root><EvidenceSurface className="playground-customization-evidence" inset="none"><Grid.Root className="playground-customization-layout" columns={2} gap="0"><VStack gap="2"><SpecimenLabel>Customized</SpecimenLabel><Text as="h3" variant="title-sm">Nav List CSS properties</Text><Text tone="secondary" variant="body-sm">Sharper rows, a stronger current border, and a raised current surface use the documented variables shown here.</Text><PlaygroundCodeBlock tabIndex={0}>{`.custom-nav-list {
+  --brick-nav-list-row-radius: 0.25rem;
+  --brick-nav-list-current-border: var(--brick-color-accent-solid);
+  --brick-nav-list-link-surface-current: var(--brick-color-surface-raised);
+}`}</PlaygroundCodeBlock></VStack><div className="playground-customization-preview"><NavList.Root aria-label="Customized navigation" style={customStyle} variant="outline"><BasicList /></NavList.Root></div></Grid.Root></EvidenceSurface></VStack></Scenario>
+      <Scenario {...navListScenarios[8]}><Container gutter="sm" measure="narrow"><VStack gap="6"><EvidenceGroup title="Responsive boundaries" description="Horizontal destinations wrap inside a constrained application-owned width without shrinking their touch targets."><Cell label="horizontal wrap"><NavList.Root aria-label="Product navigation" orientation="horizontal"><BasicList /></NavList.Root></Cell></EvidenceGroup><EvidenceGroup title="RTL inheritance" description="Leading and trailing artwork, long labels, and current-state treatment follow the inherited right-to-left direction."><Cell label="RTL and long content"><NavList.Root aria-label="التنقل" dir="rtl"><NavList.List><NavList.Item><NavList.Link active endIcon={<ArrowIcon />} href="#one" startIcon={<DotIcon />}>مساحة العمل الدولية ذات الاسم الطويل</NavList.Link></NavList.Item><NavList.Item><NavList.Link href="#two">أعضاء الفريق</NavList.Link></NavList.Item></NavList.List></NavList.Root></Cell></EvidenceGroup></VStack></Container></Scenario>
+    </VStack>
+  );
+}

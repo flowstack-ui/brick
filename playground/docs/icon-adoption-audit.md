@@ -1,5 +1,8 @@
 # Icon playground adoption audit
 
+Navigation dismissal uses CloseButton. Its artwork and geometry belong to
+CloseButton/IconButton; the shell no longer recreates that component-owned anatomy.
+
 Status: implemented July 26, 2026.
 
 Use Brick Icon when the playground or Consumer authors an SVG as visual content

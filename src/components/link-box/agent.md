@@ -16,6 +16,7 @@ Expand one real destination across a containing region while keeping secondary c
 
 ## Required composition
 
+- Root radius uses shared Radius tokens and defaults to surface; match the painted Card or Surface. Keep the primary Link and intermediate ancestors unpositioned so its stretched target belongs to Root. Link inherits title weight and supports responsive size. Root and Action do not expose asChild.
 - Wrap the complete visual item in LinkBox.Root and put LinkBox.Link around concise destination text, usually the item title.
 - Wrap every independently interactive sibling in LinkBox.Action; never place buttons or additional links inside LinkBox.Link.
 - When an Action overlays media through ZStack, compose ZStack.Item asChild with LinkBox.Action and use ZStack.Root isolation="open" plus ZStack.Item layer="action"; use edgeSpacing when the control needs a theme-space inset.

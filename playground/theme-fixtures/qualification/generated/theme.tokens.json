@@ -1,7 +1,7 @@
 {
   "$extensions": {
     "flowstack.theme": {
-      "brickVersion": "0.2.2",
+      "brickVersion": "0.3.0",
       "id": "qualification",
       "schema": "flowstack.theme-tokens.v1"
     }
@@ -180,6 +180,16 @@
           "$type": "color",
           "$value": "#000000b8"
         },
+        "selection": {
+          "background": {
+            "$type": "color",
+            "$value": "#7dd1bd"
+          },
+          "foreground": {
+            "$type": "color",
+            "$value": "#05251e"
+          }
+        },
         "shadow": {
           "$type": "color",
           "$value": "#00000080"
@@ -325,6 +335,10 @@
         "floating": {
           "$type": "shadow",
           "$value": "0rem 0.75rem 2rem 0rem #00000042"
+        },
+        "md": {
+          "$type": "shadow",
+          "$value": "0rem 0.25rem 0.5rem 0rem #0000003d, 0rem 0rem 0.0625rem 0rem #00000080"
         },
         "modal": {
           "$type": "shadow",
@@ -512,6 +526,16 @@
           "$type": "color",
           "$value": "#1413128c"
         },
+        "selection": {
+          "background": {
+            "$type": "color",
+            "$value": "#006154"
+          },
+          "foreground": {
+            "$type": "color",
+            "$value": "#ffffff"
+          }
+        },
         "shadow": {
           "$type": "color",
           "$value": "#1413122e"
@@ -658,6 +682,10 @@
           "$type": "shadow",
           "$value": "0rem 0.75rem 2rem 0rem #14131218"
         },
+        "md": {
+          "$type": "shadow",
+          "$value": "0rem 0.25rem 0.5rem 0rem #1413121a, 0rem 0rem 0.0625rem 0rem #1413124d"
+        },
         "modal": {
           "$type": "shadow",
           "$value": "0rem 1.5rem 4.5rem 0rem #1413122c"
@@ -674,6 +702,38 @@
     }
   },
   "components": {
+    "appbar": {
+      "translucent": {
+        "blur": {
+          "$type": "dimension",
+          "$value": "var(--brick-blur-md)"
+        },
+        "opacity": {
+          "$type": "number",
+          "$value": 0.88
+        },
+        "saturation": {
+          "$type": "number",
+          "$value": 1.15
+        }
+      }
+    },
+    "bottomnavigation": {
+      "translucent": {
+        "blur": {
+          "$type": "dimension",
+          "$value": "var(--brick-blur-md)"
+        },
+        "opacity": {
+          "$type": "number",
+          "$value": 0.86
+        },
+        "saturation": {
+          "$type": "number",
+          "$value": 1.15
+        }
+      }
+    },
     "drawer": {
       "background": {
         "$type": "color",
@@ -688,6 +748,22 @@
       "decoration": {
         "$type": "fontWeight",
         "$value": "var(--brick-font-weight-medium)"
+      }
+    },
+    "surface": {
+      "translucent": {
+        "blur": {
+          "$type": "dimension",
+          "$value": "var(--brick-blur-md)"
+        },
+        "opacity": {
+          "$type": "number",
+          "$value": 0.9
+        },
+        "saturation": {
+          "$type": "number",
+          "$value": 1.15
+        }
       }
     }
   },
@@ -710,6 +786,12 @@
     }
   },
   "foundations": {
+    "blur": {
+      "md": {
+        "$type": "dimension",
+        "$value": "0.75rem"
+      }
+    },
     "radius": {
       "control": {
         "$type": "dimension",

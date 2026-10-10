@@ -1,5 +1,6 @@
+import { verifyFormSurfaceRecipes } from "../../form-surface-recipes.js";
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function box(locator: Locator) {
   const value = await locator.boundingBox();
@@ -8,7 +9,13 @@ async function box(locator: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/input");
+  await page.goto("/input?qualification=1");
+});
+
+test("surface recipes preserve transparent outline and filled surface", async ({
+  page,
+}) => {
+  await verifyFormSurfaceRecipes(page, "input", ".brick-input", "");
 });
 
 test("Input overview preserves canonical defaults and Field labeling", async ({
@@ -20,7 +27,7 @@ test("Input overview preserves canonical defaults and Field labeling", async ({
 
   await expect(root).toHaveClass(/brick-input/);
   await expect(root).toHaveAttribute("data-variant", "outline");
-  await expect(root).toHaveAttribute("data-size", "md");
+  await expect(root).toHaveAttribute("data-size", "lg");
   await expect(root).toHaveAttribute("data-shape", "rounded");
   await expect(root).toHaveAttribute("data-full-width", "");
   await expect(input).toHaveAttribute("data-slot", "input-control");
@@ -35,16 +42,16 @@ test("Input controlled comparisons change only variant, size, or shape", async (
   const variantInputs = page
     .getByTestId("input-variants")
     .getByRole("textbox", { name: "Project name" });
-  await expect(variantInputs).toHaveCount(3);
-  for (let index = 0; index < 3; index += 1) {
+  await expect(variantInputs).toHaveCount(4);
+  for (let index = 0; index < 4; index += 1) {
     await expect(variantInputs.nth(index)).toHaveValue("Brick workspace");
     await expect(variantInputs.nth(index).locator("..")).toHaveAttribute(
       "data-variant",
-      ["outline", "soft", "underline"][index],
+      ["outline", "soft", "underline", "surface"][index],
     );
     await expect(variantInputs.nth(index).locator("..")).toHaveAttribute(
       "data-size",
-      "md",
+      "lg",
     );
   }
   await expect(variantInputs.nth(2).locator("..")).not.toHaveAttribute(
@@ -52,15 +59,18 @@ test("Input controlled comparisons change only variant, size, or shape", async (
   );
   const underlineRoot = await box(variantInputs.nth(2).locator(".."));
   const underlineControl = await box(variantInputs.nth(2));
-  expect(underlineControl.x - underlineRoot.x).toBeGreaterThanOrEqual(8);
+  expect(underlineControl.x - underlineRoot.x).toBeLessThanOrEqual(1);
 
   const sizeInputs = page
     .getByTestId("input-sizes")
     .getByRole("textbox", { name: "Project name" });
   const heights: number[] = [];
-  for (let index = 0; index < 3; index += 1) {
+  for (let index = 0; index < 7; index += 1) {
     const root = sizeInputs.nth(index).locator("..");
-    await expect(root).toHaveAttribute("data-size", ["sm", "md", "lg"][index]);
+    await expect(root).toHaveAttribute(
+      "data-size",
+      ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"][index],
+    );
     await expect(root).toHaveAttribute("data-variant", "outline");
     await expect(root).toHaveAttribute("data-shape", "rounded");
     heights.push((await box(root)).height);
@@ -77,7 +87,7 @@ test("Input controlled comparisons change only variant, size, or shape", async (
       "data-shape",
       ["sharp", "rounded", "pill"][index],
     );
-    await expect(root).toHaveAttribute("data-size", "md");
+    await expect(root).toHaveAttribute("data-size", "lg");
     await expect(root).toHaveAttribute("data-variant", "outline");
   }
   await expect(shapeInputs.nth(0).locator("..")).toHaveCSS(
@@ -86,9 +96,10 @@ test("Input controlled comparisons change only variant, size, or shape", async (
   );
   expect(
     Number.parseFloat(
-      await shapeInputs.nth(2).locator("..").evaluate(
-        (element) => getComputedStyle(element).borderRadius,
-      ),
+      await shapeInputs
+        .nth(2)
+        .locator("..")
+        .evaluate((element) => getComputedStyle(element).borderRadius),
     ),
   ).toBeGreaterThan(100);
 });
@@ -101,7 +112,7 @@ test("Input adornments remain logical and Clear delegates value and focus", asyn
   await expect(inputs).toHaveCount(3);
   for (const input of await inputs.all()) {
     await expect(input).toHaveValue("Brick workspace");
-    await expect(input.locator("..")).toHaveAttribute("data-size", "md");
+    await expect(input.locator("..")).toHaveAttribute("data-size", "lg");
   }
   await expect(
     inputs.nth(0).locator("..").locator("[data-slot='input-start']"),
@@ -131,7 +142,9 @@ test("Input adornments remain logical and Clear delegates value and focus", asyn
   await expect(clear).toBeHidden();
 });
 
-test("Input state ownership and availability remain native", async ({ page }) => {
+test("Input state ownership and availability remain native", async ({
+  page,
+}) => {
   const states = page.getByTestId("input-states");
   const namedInputs = states.getByRole("textbox", { name: "Project name" });
   const uncontrolled = namedInputs.nth(0);
@@ -139,7 +152,9 @@ test("Input state ownership and availability remain native", async ({ page }) =>
   const uncontrolledRoot = await box(uncontrolled.locator(".."));
   const controlledRoot = await box(controlled.locator(".."));
   const uncontrolledCell = await box(
-    uncontrolled.locator("xpath=ancestor::*[contains(@class, 'forms-cell')][1]"),
+    uncontrolled.locator(
+      "xpath=ancestor::*[contains(@class, 'forms-cell')][1]",
+    ),
   );
   const controlledCell = await box(
     controlled.locator("xpath=ancestor::*[contains(@class, 'forms-cell')][1]"),
@@ -159,6 +174,8 @@ test("Input state ownership and availability remain native", async ({ page }) =>
   const required = namedInputs.nth(4);
   const invalid = namedInputs.nth(5);
   await expect(disabled).toBeDisabled();
+  await expect(disabled).toHaveCSS("cursor", "not-allowed");
+  await expect(disabled.locator("..")).toHaveCSS("opacity", "0.5");
   await expect(readOnly).toHaveAttribute("readonly");
   await expect(required).toHaveAttribute("required");
   await expect(required).toHaveAttribute("aria-required", "true");
@@ -169,9 +186,9 @@ test("Input state ownership and availability remain native", async ({ page }) =>
   );
   await expect(invalid.locator("..")).toHaveCSS(
     "background-color",
-    await required.locator("..").evaluate(
-      (element) => getComputedStyle(element).backgroundColor,
-    ),
+    await required
+      .locator("..")
+      .evaluate((element) => getComputedStyle(element).backgroundColor),
   );
 });
 
@@ -187,16 +204,16 @@ test("Input composes with inline validation, reset, and external ownership", asy
 
   await email.fill("ada@example.com");
   await form.getByRole("button", { name: "Save email" }).click();
-  await expect(form.locator("output")).toHaveText(
-    "Submitted: ada@example.com",
-  );
+  await expect(form.locator("output")).toHaveText("Submitted: ada@example.com");
   await expect(email).not.toHaveAttribute("data-invalid");
 
   const external = page.getByRole("textbox", { name: "External project" });
   expect(
-    await page.locator("#input-form-example").evaluate((element) =>
-      new FormData(element as HTMLFormElement).get("project"),
-    ),
+    await page
+      .locator("#input-form-example")
+      .evaluate((element) =>
+        new FormData(element as HTMLFormElement).get("project"),
+      ),
   ).toBe("Brick");
 
   await form.getByRole("button", { name: "Reset" }).click();
@@ -240,30 +257,59 @@ test("Input appearance, customization, RTL, and narrow containment remain stable
       "data-variant",
       "outline",
     );
-    await expect(input.locator("..")).toHaveAttribute("data-size", "md");
+    await expect(input.locator("..")).toHaveAttribute("data-size", "lg");
   }
 
   const custom = page.locator("[data-slot='custom-input']");
   await expect(custom).toHaveCSS("border-radius", "12px");
   await expect(custom).toHaveCSS("border-color", "rgb(24, 121, 78)");
-  await expect(custom.locator("input")).toHaveCSS("letter-spacing", "1.28px");
+  const customTypography = await custom.locator("input").evaluate((element) => {
+    const css = getComputedStyle(element);
+    return {
+      font: parseFloat(css.fontSize),
+      spacing: parseFloat(css.letterSpacing),
+    };
+  });
+  expect(customTypography.spacing).toBeCloseTo(customTypography.font * 0.08, 2);
 
   const rtl = page.getByRole("searchbox", { name: "البحث في الحساب" });
   const rtlRoot = rtl.locator("..");
   await expect(rtlRoot).toHaveCSS("direction", "rtl");
   const startBox = await box(rtlRoot.locator("[data-slot='input-start']"));
-  const clearBox = await box(
-    page.getByRole("button", { name: "مسح البحث" }),
-  );
+  const clearBox = await box(page.getByRole("button", { name: "مسح البحث" }));
   expect(startBox.x).toBeGreaterThan(clearBox.x);
 
   await page.setViewportSize({ width: 390, height: 844 });
   expect(
     await page.locator("html").evaluate((element) => element.scrollWidth),
   ).toBeLessThanOrEqual(390);
-  expect((await box(page.getByTestId("input-stress"))).width).toBeLessThanOrEqual(
-    390,
-  );
+  expect(
+    (await box(page.getByTestId("input-stress"))).width,
+  ).toBeLessThanOrEqual(390);
 
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+
+  await page.emulateMedia({ forcedColors: "active" });
+  const forcedColorsInput = page
+    .getByTestId("input-states")
+    .getByRole("textbox")
+    .first();
+  await forcedColorsInput.focus();
+  const forcedColorsRoot = forcedColorsInput.locator("..");
+  await expect(forcedColorsRoot).toHaveCSS("outline-style", "solid");
+  await expect(forcedColorsRoot).toHaveCSS("box-shadow", "none");
+});
+test("qualification adornments retain component-owned icon dimensions", async ({
+  page,
+}) => {
+  await page.goto("/input?qualification=1");
+  for (const id of ["input-adornments", "input-stress"]) {
+    const icon = page
+      .getByTestId(id)
+      .locator(".brick-input-start > svg")
+      .first();
+    // The shared lg control recipe owns an 18px icon slot.
+    await expect(icon).toHaveCSS("width", "18px");
+    await expect(icon).toHaveCSS("height", "18px");
+  }
 });

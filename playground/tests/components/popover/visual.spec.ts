@@ -7,7 +7,21 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/popover");
+installVisualDefaults("/popover?qualification=1");
+
+test("Popover documentation indicator radius and virtual anchor", async ({ page }) => {
+  for (const appearance of ["light", "dark"] as const) {
+    await page.goto(`/popover?appearance=${appearance}#indicator`);
+    await page.locator("#indicator").getByRole("button", { name: "Settings", exact: true }).scrollIntoViewIfNeeded();
+    await expect(page.locator("#indicator")).toHaveScreenshot(`indicator-${appearance}.png`);
+    await page.locator("#radius").getByRole("button", { name: "full", exact: true }).click();
+    await expect(page.getByRole("dialog", { name: "full", exact: true })).toHaveScreenshot(`full-radius-${appearance}.png`);
+    await page.keyboard.press("Escape");
+    await page.getByRole("button", { name: "Open at reference", exact: true }).click();
+    await expect(page).toHaveScreenshot(`virtual-anchor-${appearance}.png`);
+    await page.keyboard.press("Escape");
+  }
+});
 
 test("Popover default and anatomy surfaces", async ({ page }) => {
   await page.getByRole("button", { name: "Project settings" }).click();
@@ -15,7 +29,7 @@ test("Popover default and anatomy surfaces", async ({ page }) => {
   await page.keyboard.press("Escape");
   await page.addStyleTag({
     content:
-      ".evidence-app-bar, .evidence-review-header, .scenario-nav { display: none !important; }",
+      "[data-playground-app-bar], .evidence-review-header, .scenario-nav { display: none !important; }",
   });
   await expectEvidenceScreenshot(
     page,

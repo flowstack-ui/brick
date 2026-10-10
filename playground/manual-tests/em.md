@@ -3,15 +3,16 @@
 | Environment | Record before testing |
 | --- | --- |
 | Component | Em |
-| Version or commit | Brick 0.1.12 candidate |
-| Reviewer | Codex visual and accessibility review |
-| Date | 2026-08-30 |
-| Browser and version | Safari 26.5 |
-| Operating system | macOS 26.5.1 |
+| Version or commit | Brick 0.2.3 working candidate |
+| Reviewer | Record at manual execution |
+| Date | Pending manual execution |
+| Browser and version | Record actual browser |
+| Operating system | Record actual OS |
 | Viewport and zoom | 320, 390, 1440 CSS px; 100%, 200%, 400% |
-| Physical device | Not applicable; Em has no interaction or touch contract |
-| Assistive technology | macOS VoiceOver 26.5.1 |
+| Physical device | Pending selection and copy check |
+| Assistive technology | Pending screen-reader check |
 | Playground route | `/em` |
+| Qualification route(s) | `/em` and `/em?qualification=1` |
 
 Scenario order: `01 Overview`, `02 Typography contexts`, `03 Native output and stress`.
 
@@ -19,11 +20,11 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 
 ## Step 1 — Semantics, inheritance, and copy
 
-Setup: Open `/em` in system appearance and review 01–03 top to bottom.
+Setup: Open `/em?qualification=1` in system appearance and review 01–03 top to bottom. Review the documentation composition example separately.
 
 Action: Inspect the native output, compare body and heading contexts, then select and copy both complete sentences.
 
-Expected: One native `em` preserves its surrounding size, line height, color, direction, and source text while adding only stress emphasis; forwarded attributes, style, ref, and slot remain truthful.
+Expected: One native `em` preserves its surrounding size, line height, color, direction, and source text while adding only stress emphasis. Static composition preserves one authored em. Explicit data-slot wins over deprecated slot, which is not native slot forwarding.
 
 Result:
 Notes or issue:

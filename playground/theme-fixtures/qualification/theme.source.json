@@ -6,7 +6,7 @@
     "description": "High-contrast teal and orange instrument theme for Brick browser qualification."
   },
   "compatibility": {
-    "brick": "^0.2.0"
+    "brick": "0.3.0"
   },
   "appearances": {
     "supported": [
@@ -68,6 +68,10 @@
           "subtle": "#d8e3de"
         },
         "focus-ring": "{roles.brand.focus}",
+        "selection": {
+          "background": "{roles.brand.primary}",
+          "foreground": "#ffffff"
+        },
         "surface": {
           "base": "#ffffff",
           "canvas": "#f7f9f7",
@@ -104,6 +108,10 @@
           "subtle": "#28483d"
         },
         "focus-ring": "#ff9a52",
+        "selection": {
+          "background": "{roles.brand.primary-dark}",
+          "foreground": "#05251e"
+        },
         "surface": {
           "base": "#0d1d18",
           "canvas": "#081511",
@@ -126,6 +134,9 @@
       "control": "0.625rem",
       "overlay": "1.25rem",
       "surface": "1rem"
+    },
+    "blur": {
+      "md": "0.75rem"
     }
   },
   "components": {
@@ -135,6 +146,27 @@
     },
     "link": {
       "decoration": "interaction"
+    },
+    "surface": {
+      "translucent": {
+        "opacity": 0.9,
+        "blur": "md",
+        "saturation": 1.15
+      }
+    },
+    "appbar": {
+      "translucent": {
+        "opacity": 0.88,
+        "blur": "md",
+        "saturation": 1.15
+      }
+    },
+    "bottomnavigation": {
+      "translucent": {
+        "opacity": 0.86,
+        "blur": "md",
+        "saturation": 1.15
+      }
     }
   },
   "extensions": {

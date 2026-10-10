@@ -13,17 +13,17 @@ async function collectTsx(directory) {
 }
 
 const [page, registry, consumer, card, surface, audit] = await Promise.all([
-  read("playground/src/components/list/ListPage.tsx"),
+  read("playground/src/components/list/ListEvidence.tsx"),
   read("playground/src/app/component-registry.ts"),
   read("apps/consumer/src/App.tsx"),
-  read("playground/src/components/card/CardPage.tsx"),
-  read("playground/src/components/surface/SurfacePage.tsx"),
+  read("playground/src/components/card/CardEvidence.tsx"),
+  read("playground/src/components/surface/SurfaceEvidence.tsx"),
   read("playground/docs/list-adoption-audit.md"),
 ]);
 
 assert.match(registry, /route:\s*"\/list"/);
 assert.match(page, /data-component-page="list"/);
-assert.equal([...page.matchAll(/<Scenario\b/g)].length, 9);
+assert.equal([...page.matchAll(/<Scenario\b/g)].length, 10);
 assert.match(consumer, /from "@flowstack-ui\/brick\/list"/);
 assert.match(consumer, /<List\.Root marker="none">/);
 assert.match(card, /<List\.Item asChild>\{card\}<\/List\.Item>/);

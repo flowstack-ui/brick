@@ -2,6 +2,7 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { basename, join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
+import { verifyArchiveDigest } from "./verify-archive-digest.mjs";
 
 const packageRoot = resolve(".");
 const packageJson = JSON.parse(
@@ -18,13 +19,26 @@ const atomTarballArgument = process.argv.indexOf("--atom-tarball");
 const suppliedAtomTarball = atomTarballArgument === -1
   ? process.env.FLOWSTACK_ATOM_TARBALL
   : process.argv[atomTarballArgument + 1];
-const commandTimeoutMs = 180_000;
+const commandTimeoutMs = Number(process.env.FLOWSTACK_CONSUMER_TIMEOUT_MS ?? 180_000);
+if (!Number.isSafeInteger(commandTimeoutMs) || commandTimeoutMs <= 0 || commandTimeoutMs > 900_000) {
+  throw new Error("FLOWSTACK_CONSUMER_TIMEOUT_MS must be a positive integer no greater than 900000");
+}
+const atomShaArgument = process.argv.indexOf("--atom-sha256");
+const expectedAtomSha = atomShaArgument === -1
+  ? process.env.FLOWSTACK_ATOM_SHA256
+  : process.argv[atomShaArgument + 1];
 
 if (tarballArgument !== -1 && !suppliedTarball) {
   throw new Error("--tarball requires an archive path");
 }
 if (atomTarballArgument !== -1 && !suppliedAtomTarball) {
   throw new Error("--atom-tarball requires an archive path");
+}
+if (atomShaArgument !== -1 && !expectedAtomSha) {
+  throw new Error("--atom-sha256 requires an expected archive digest");
+}
+if (expectedAtomSha && !suppliedAtomTarball) {
+  throw new Error("An Atom archive digest requires --atom-tarball or FLOWSTACK_ATOM_TARBALL");
 }
 
 function run(command, args, cwd) {
@@ -42,16 +56,18 @@ function run(command, args, cwd) {
   if (result.status !== 0) {
     process.stderr.write(result.stdout);
     process.stderr.write(result.stderr);
-    process.exit(result.status ?? 1);
+    throw new Error(`${command} ${args[0] ?? ""} failed with exit code ${result.status ?? 1}`);
   }
   return result.stdout;
 }
 
+let verified = false;
 try {
   const atomInstallTarget = suppliedAtomTarball
     ? resolve(suppliedAtomTarball)
     : `@flowstack-ui/atom@${atomVersion}`;
   if (suppliedAtomTarball) {
+    const sha256 = verifyArchiveDigest(await readFile(atomInstallTarget), expectedAtomSha);
     const atomPackageSource = run(
       "tar",
       ["-xOf", atomInstallTarget, "package/package.json"],
@@ -61,7 +77,7 @@ try {
     if (atomPackage.name !== "@flowstack-ui/atom" || atomPackage.version !== atomVersion) {
       throw new Error(`Atom release archive must be @flowstack-ui/atom@${atomVersion}`);
     }
-    console.log(`Using Atom release archive ${basename(atomInstallTarget)} for clean React consumer verification...`);
+    console.log(`Using Atom archive ${basename(atomInstallTarget)} (SHA-256 ${sha256}) for clean React consumer verification; this does not establish publication.`);
   }
 
   let tarball;
@@ -75,6 +91,7 @@ try {
     tarball = join(temp, basename(filename));
   }
 
+  console.log(`React consumer Brick archive SHA-256: ${verifyArchiveDigest(await readFile(tarball))}`);
   for (const reactVersion of ["18.3.1", "19.2.3"]) {
     const reactMajor = reactVersion.split(".")[0];
     const consumer = join(temp, `react-${reactMajor}`);
@@ -85,7 +102,45 @@ try {
     );
     await writeFile(
       join(consumer, "verify.mjs"),
-      `import { AlertDialog, AppBar, Avatar, Badge, Blockquote, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, Grid, Hide, Highlight, HoverCard, IconButton, Input, Kbd, Link, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, Prose, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+      `import { AlertDialog, AppBar, Avatar, Badge, Blockquote, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Checkmark, Chip, Container, ContextMenu, Drawer, DropdownMenu, Em, For, FormatByte, FormatNumber, Grid, Hide, Highlight, HoverCard, IconButton, Input, Kbd, Link, LocaleProvider, Mark, Menubar, NavigationMenu, NotificationBadge, NumberInput, PinInput, PasswordToggleField, Popover, Prose, RadioGroup, Radiomark, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden } from "@flowstack-ui/brick";
+import { LocaleProvider as SubpathLocaleProvider } from "@flowstack-ui/brick/locale-provider";
+import { ActionDelegate, useSelection, useSelectionCheckbox } from "@flowstack-ui/brick";
+import { ActionDelegate as SubpathActionDelegate } from "@flowstack-ui/brick/action-delegate";
+import { useSelection as SubpathSelection, useSelectionCheckbox as SubpathSelectionCheckbox } from "@flowstack-ui/brick/selection";
+import { Steps } from "@flowstack-ui/brick";
+import { NativeSelect, Editable, TagsInput } from "@flowstack-ui/brick";
+import { NativeSelect as SubpathNativeSelect } from "@flowstack-ui/brick/native-select";
+import { Editable as SubpathEditable } from "@flowstack-ui/brick/editable";
+import { TagsInput as SubpathTagsInput } from "@flowstack-ui/brick/tags-input";
+import { QrCode } from "@flowstack-ui/brick";
+import { QrCode as SubpathQrCode } from "@flowstack-ui/brick/qr-code";
+import { TableOfContents } from "@flowstack-ui/brick";
+import { TableOfContents as SubpathTableOfContents } from "@flowstack-ui/brick/table-of-contents";
+import { Steps as SubpathSteps } from "@flowstack-ui/brick/steps";
+import { Alert, EmptyState, Spinner } from "@flowstack-ui/brick";
+import { Stat, Timeline } from "@flowstack-ui/brick";
+import { Stat as SubpathStat } from "@flowstack-ui/brick/stat";
+import { Marquee } from "@flowstack-ui/brick";
+import { Marquee as SubpathMarquee } from "@flowstack-ui/brick/marquee";
+import { Timeline as SubpathTimeline } from "@flowstack-ui/brick/timeline";
+import { Alert as SubpathAlert } from "@flowstack-ui/brick/alert";
+import { EmptyState as SubpathEmptyState } from "@flowstack-ui/brick/empty-state";
+import { Spinner as SubpathSpinner } from "@flowstack-ui/brick/spinner";
+import { Progress, ProgressCircle, useProgress } from "@flowstack-ui/brick";
+import { Progress as SubpathProgress, useProgress as SubpathUseProgress } from "@flowstack-ui/brick/progress";
+import { ProgressCircle as SubpathProgressCircle } from "@flowstack-ui/brick/progress-circle";
+import { FormatNumber as SubpathFormatNumber } from "@flowstack-ui/brick/format-number";
+import { FormatByte as SubpathFormatByte } from "@flowstack-ui/brick/format-byte";
+import { For as SubpathFor } from "@flowstack-ui/brick/for";
+import { Checkmark as SubpathCheckmark } from "@flowstack-ui/brick/checkmark";
+import { Radiomark as SubpathRadiomark } from "@flowstack-ui/brick/radiomark";
+import { Calendar as DateCalendar } from "@flowstack-ui/brick/calendar";
+import { DateInput } from "@flowstack-ui/brick/date-input";
+import { InputAddon } from "@flowstack-ui/brick";
+import { InputAddon as SubpathInputAddon } from "@flowstack-ui/brick/input-addon";
+import { Group as AddonGroup } from "@flowstack-ui/brick/group";
+import { DatePicker } from "@flowstack-ui/brick/date-picker";
+import { parseDate } from "@flowstack-ui/brick/date-value";
 import { AlertDialog as SubpathAlertDialog } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -96,18 +151,26 @@ import * as DrawerModule from "@flowstack-ui/brick/drawer";
 import { Badge as SubpathBadge, NotificationBadge as SubpathNotificationBadge } from "@flowstack-ui/brick/badge";
 import { Chip as SubpathChip } from "@flowstack-ui/brick/chip";
 import { Avatar as SubpathAvatar } from "@flowstack-ui/brick/avatar";
+import { AvatarGroup } from "@flowstack-ui/brick";
+import { AvatarGroup as SubpathAvatarGroup } from "@flowstack-ui/brick/avatar-group";
 import { Toggle as SubpathToggle } from "@flowstack-ui/brick/toggle";
 import { ToggleGroup as SubpathToggleGroup } from "@flowstack-ui/brick/toggle-group";
 import { Tooltip as SubpathTooltip } from "@flowstack-ui/brick/tooltip";
 import { HoverCard as SubpathHoverCard } from "@flowstack-ui/brick/hover-card";
 import { Popover as SubpathPopover } from "@flowstack-ui/brick/popover";
+import { ToggleTip as SubpathToggleTip } from "@flowstack-ui/brick/toggle-tip";
+
+if (typeof SubpathToggleTip.Root !== "function" || !SubpathToggleTip.Content) throw new Error("ToggleTip subpath unavailable");
 import { Checkbox as SubpathCheckbox } from "@flowstack-ui/brick/checkbox";
+import { CheckboxCard } from "@flowstack-ui/brick";
+import { CheckboxCard as SubpathCheckboxCard } from "@flowstack-ui/brick/checkbox-card";
 import { CheckboxGroup as SubpathCheckboxGroup } from "@flowstack-ui/brick/checkbox-group";
 import { RadioGroup as SubpathRadioGroup } from "@flowstack-ui/brick/radio-group";
+import { RadioCard as SubpathRadioCard } from "@flowstack-ui/brick/radio-card";
 import { Switch as SubpathSwitch } from "@flowstack-ui/brick/switch";
 import { Input as SubpathInput } from "@flowstack-ui/brick/input";
 import { NumberInput as SubpathNumberInput } from "@flowstack-ui/brick/number-input";
-import { OTPField as SubpathOTPField } from "@flowstack-ui/brick/otp-field";
+import { PinInput as SubpathPinInput } from "@flowstack-ui/brick/pin-input";
 import { PasswordToggleField as SubpathPasswordToggleField } from "@flowstack-ui/brick/password-toggle-field";
 import { Textarea as SubpathTextarea } from "@flowstack-ui/brick/textarea";
 import { Link as SubpathLink } from "@flowstack-ui/brick/link";
@@ -121,10 +184,16 @@ import { Prose as SubpathProse } from "@flowstack-ui/brick/prose";
 import { Grid as SubpathGrid } from "@flowstack-ui/brick/grid";
 import { Container as SubpathContainer } from "@flowstack-ui/brick/container";
 import { Surface as SubpathSurface } from "@flowstack-ui/brick/surface";
+import { Section as LayoutSection } from "@flowstack-ui/brick/section";
+import { Sidebar as LayoutSidebar, useSidebarContext as layoutSidebarContext } from "@flowstack-ui/brick/sidebar";
 import { Breadcrumb as SubpathBreadcrumb } from "@flowstack-ui/brick/breadcrumb";
 import { Tabs as SubpathTabs } from "@flowstack-ui/brick/tabs";
 import { Skeleton as SubpathSkeleton } from "@flowstack-ui/brick/skeleton";
 import { DropdownMenu as SubpathDropdownMenu } from "@flowstack-ui/brick/dropdown-menu";
+import * as RootMenuExports from "@flowstack-ui/brick";
+import * as DropdownMenuModule from "@flowstack-ui/brick/dropdown-menu";
+import * as ContextMenuModule from "@flowstack-ui/brick/context-menu";
+import * as MenubarModule from "@flowstack-ui/brick/menubar";
 import { ContextMenu as SubpathContextMenu } from "@flowstack-ui/brick/context-menu";
 import { Menubar as SubpathMenubar } from "@flowstack-ui/brick/menubar";
 import { NavigationMenu as SubpathNavigationMenu } from "@flowstack-ui/brick/navigation-menu";
@@ -136,29 +205,148 @@ import { Hide as SubpathHide } from "@flowstack-ui/brick/hide";
 import { SwipeableItem as SubpathSwipeableItem } from "@flowstack-ui/brick/swipeable-item";
 import React from "react";
 import { renderToString } from "react-dom/server";
+if (InputAddon !== SubpathInputAddon) throw new Error("InputAddon root/subpath mismatch");
+const addonMarkup = renderToString(React.createElement(AddonGroup, { attached: true },
+  React.createElement(InputAddon, { size: { base: "sm", md: "lg" } }, "https://"),
+  React.createElement(Input, { "aria-label": "Website", size: { base: "sm", md: "lg" } })));
+if (!addonMarkup.includes('data-slot="input-addon"') || !addonMarkup.includes('data-size-md="lg"') || !addonMarkup.includes("https://")) throw new Error("InputAddon packed composition failed");
+const addonCss = await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/styles/input-addon.css")), "utf8");
+if (!addonCss.includes("brick-input-addon")) throw new Error("InputAddon modular CSS missing");
+if (Progress !== SubpathProgress || ProgressCircle !== SubpathProgressCircle || useProgress !== SubpathUseProgress) throw new Error("Progress family public export mismatch");
+function ProgressFamilyFixture() {
+  const controller = useProgress({ defaultValue: 3, min: 1, max: 5, ids: { label: "task-label" } });
+  return React.createElement(React.Fragment, null,
+    React.createElement("span", { id: "task-label" }, "Export"),
+    React.createElement(Progress.RootProvider, { id: "linear-task", value: controller, variant: { base: "subtle", md: "outline" }, striped: true }, React.createElement(Progress.Track, null, React.createElement(Progress.Indicator)), React.createElement(Progress.Value)),
+    React.createElement(ProgressCircle.RootProvider, { id: "circular-task", value: controller, size: { base: "sm", md: "xl" }, valueFormat: "value" }, React.createElement(ProgressCircle.Circle, null, React.createElement(ProgressCircle.Track), React.createElement(ProgressCircle.Indicator)), React.createElement(ProgressCircle.Value)));
+}
+const progressFamilyMarkup = renderToString(React.createElement(ProgressFamilyFixture));
+if ((progressFamilyMarkup.match(/role="progressbar"/g) ?? []).length !== 2 || !progressFamilyMarkup.includes('aria-valuenow="3"') || !progressFamilyMarkup.includes('data-variant-md="outline"') || !progressFamilyMarkup.includes('data-size-md="xl"')) throw new Error("Progress family packed controller composition failed");
+import { Pagination as PackedPagination, usePagination as usePackedPagination } from "@flowstack-ui/brick";
+import { Pagination as SubpathPagination, usePagination as useSubpathPagination } from "@flowstack-ui/brick/pagination";
+if (PackedPagination !== SubpathPagination || usePackedPagination !== useSubpathPagination) throw new Error("Pagination root/subpath mismatch");
+function PaginationConsumer() {
+  const value = usePackedPagination({ count: 23, defaultPage: 2 });
+  return React.createElement(PackedPagination.RootProvider, { value },
+    React.createElement(PackedPagination.PageText, { format: "long" }),
+    React.createElement(PackedPagination.First), React.createElement(PackedPagination.Items), React.createElement(PackedPagination.Last));
+}
+const paginationMarkup = renderToString(React.createElement(PaginationConsumer));
+if (!paginationMarkup.includes("11 – 20 of 23") || !paginationMarkup.includes('aria-current="page"') || paginationMarkup.includes("<li")) throw new Error("Pagination packed controller/summary contract failed");
+const tipMarkup = renderToString(React.createElement(SubpathToggleTip.Root, null, React.createElement(SubpathToggleTip.Trigger, null, "Storage help")));
+if (!tipMarkup.includes("Storage help") || !tipMarkup.includes('aria-haspopup="dialog"')) throw new Error("ToggleTip SSR semantics missing");
+import { Collapsible as PackedCollapsible, useCollapsible as usePackedCollapsible } from "@flowstack-ui/brick/collapsible";
+function PackedDisclosure() {
+  const value = usePackedCollapsible({ collapsedHeight: 32 });
+  return React.createElement(PackedCollapsible.RootProvider, { value, unstyled: true }, React.createElement(PackedCollapsible.Trigger, { unstyled: true, asChild: true }, React.createElement(SubpathButton, null, "Details")), React.createElement(PackedCollapsible.Content, { motion: "none" }, React.createElement(PackedCollapsible.ContentInner, { inset: "none" }, "Preview")));
+}
+const disclosureMarkup = renderToString(React.createElement(PackedDisclosure));
+if (!disclosureMarkup.includes('inert=""') || !disclosureMarkup.includes('data-motion="none"') || (disclosureMarkup.match(/<button/g) ?? []).length !== 1) throw new Error("Collapsible packed partial preview/composition contract drift");
+import { Stack as PackedStack } from "@flowstack-ui/brick";
+import { Stack as SubpathStack } from "@flowstack-ui/brick/stack";
+if (PackedStack !== SubpathStack) throw new Error("Stack aggregate/subpath mismatch");
+const stackMarkup = renderToString(React.createElement(PackedStack, { asChild: true, direction: { md: "row-reverse" }, rowGap: "2", inline: { lg: true } }, React.createElement("section", null, React.createElement(PackedStack.Item, { grow: 1, shrink: 0, basis: 0, order: 2, marginInlineStart: "auto" }, "Content"))));
+if (!stackMarkup.startsWith("<section") || !stackMarkup.includes("row-reverse") || !stackMarkup.includes("brick-stack-item")) throw new Error("Stack expanded SSR contract missing");
+if (QrCode !== SubpathQrCode) throw new Error("QrCode export mismatch");
+const qrMarkup = renderToString(React.createElement(QrCode.Root, { value: "hello" }, React.createElement(QrCode.Frame, { titleText: "Share hello" })));
+if (!qrMarkup.includes("brick-qr-code-frame") || !qrMarkup.includes("<path") || !qrMarkup.includes("Share hello")) throw new Error("QrCode SSR mismatch");
+const qrCss = await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/styles/qr-code.css")), "utf8");
+if (!qrCss.includes("brick-qr-code") || !qrCss.includes("brick-button")) throw new Error("QrCode modular CSS is incomplete");
+if (TableOfContents !== SubpathTableOfContents) throw new Error("TOC entrypoints differ");
+const tocMarkup = renderToString(React.createElement(TableOfContents.Root, { items: [{id:"usage",depth:2}], defaultActiveId:"usage" },
+  React.createElement(TableOfContents.Nav, {"aria-label":"Guide contents"},
+    React.createElement(TableOfContents.List, null,
+      React.createElement(TableOfContents.Item, {value:"usage"}, React.createElement(TableOfContents.Link,null,"Usage")))),
+  React.createElement("section",{id:"usage"}, React.createElement(Button,null,"Continue"))));
+if (!tocMarkup.includes('aria-current="location"') || !tocMarkup.includes('href="#usage"') || !tocMarkup.includes("brick-table-of-contents__nav")) throw new Error("TOC packed composition failed");
+const tocCss = await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/styles/table-of-contents.css")), "utf8");
+if (!tocCss.includes("brick-table-of-contents__indicator") || !tocCss.includes("focus-visible")) throw new Error("TOC modular CSS incomplete");
+if (NativeSelect !== SubpathNativeSelect || Editable !== SubpathEditable || TagsInput !== SubpathTagsInput) throw new Error("Form entry export mismatch");
+const tagsMarkup = renderToString(React.createElement(TagsInput.Root, { name: "tags", defaultValue: ["Research"] }, React.createElement(TagsInput.Control, null, React.createElement(TagsInput.Items), React.createElement(TagsInput.Input, { "aria-label": "Tags" })), React.createElement(TagsInput.HiddenInput)));
+if (!tagsMarkup.includes("Research") || (tagsMarkup.match(/name="tags"/g) ?? []).length !== 1) throw new Error("TagsInput JSON field SSR mismatch");
+const nativeMarkup = renderToString(React.createElement(NativeSelect.Root, null, React.createElement(NativeSelect.Field, { "aria-label": "Region", defaultValue: "eu" }, React.createElement("option", { value: "eu" }, "Europe")), React.createElement(NativeSelect.Indicator)));
+if (!nativeMarkup.includes("<select") || !nativeMarkup.includes("Europe")) throw new Error("NativeSelect SSR mismatch");
+const editableMarkup = renderToString(React.createElement(Editable.Root, { defaultValue: "Title" }, React.createElement(Editable.Area, null, React.createElement(Editable.Preview), React.createElement(Editable.Input, { "aria-label": "Title" }))));
+if (!editableMarkup.includes("Title")) throw new Error("Editable SSR mismatch");
+import { FloatingPanel, createOverlay, useFloatingPanel } from "@flowstack-ui/brick";
+import { FloatingPanel as PanelSubpath } from "@flowstack-ui/brick/floating-panel";
+import { createOverlay as OverlaySubpath } from "@flowstack-ui/brick/overlay-manager";
+if (FloatingPanel !== PanelSubpath || createOverlay !== OverlaySubpath) throw new Error("Floating overlay subpath mismatch");
+function PanelConsumer() {
+  const value = useFloatingPanel({ defaultOpen: true, hideMode: "display-none" });
+  return React.createElement(FloatingPanel.RootProvider, { value }, React.createElement(FloatingPanel.Positioner, null,
+    React.createElement(FloatingPanel.Content, { "aria-label": "Packed inspector" }, React.createElement(FloatingPanel.Body, null, "Inspector draft"))));
+}
+const panelMarkup = renderToString(React.createElement(PanelConsumer));
+if (!panelMarkup.includes('role="dialog"') || !panelMarkup.includes("brick-floating-panel-content")) throw new Error("FloatingPanel SSR failed");
+const overlayManager = createOverlay(() => null);
+if (renderToString(React.createElement(overlayManager.Viewport)) !== "") throw new Error("OverlayManager SSR must be empty");
+if (!("Activity" in React)) {
+  let rejected = false;
+  try { renderToString(React.createElement(FloatingPanel.Root, { defaultOpen: true, hideMode: "activity" }, React.createElement(FloatingPanel.Content, { "aria-label": "Unsupported Activity" }))); }
+  catch (error) { rejected = /Activity/.test(error.message); }
+  if (!rejected) throw new Error("Unsupported Activity runtime must be diagnosed");
+}
+const dateReference = parseDate("2026-09-05");
+const dateMarkup = renderToString(React.createElement(DateInput.Root, { referenceDate: dateReference, defaultValue: dateReference, name: "date", "aria-label": "Date" }));
+if (!dateMarkup.includes('value="2026-09-05"') || !dateMarkup.includes('role="spinbutton"')) throw new Error("DateInput packed SSR failed");
+const calendarMarkup = renderToString(React.createElement(DateCalendar.Root, { referenceDate: dateReference }));
+if (!calendarMarkup.includes('role="grid"')) throw new Error("Calendar packed SSR failed");
+const pickerMarkup = renderToString(React.createElement(DatePicker.Root, { referenceDate: dateReference }, React.createElement(DatePicker.Control, null, React.createElement(DatePicker.Input, { "aria-label": "Date" }), React.createElement(DatePicker.Trigger))));
+if (!pickerMarkup.includes('aria-haspopup="dialog"')) throw new Error("DatePicker packed SSR failed");
 import { readFile } from "node:fs/promises";
 
 if (Button !== SubpathButton) throw new Error("Button subpath export mismatch");
+if (Alert !== SubpathAlert || EmptyState !== SubpathEmptyState || Spinner !== SubpathSpinner) throw new Error("Feedback subpath export mismatch");
+const feedbackMarkup = renderToString(React.createElement(Alert.Root, null, React.createElement(Alert.Indicator, null, React.createElement(Spinner)), React.createElement(Alert.Content, null, React.createElement(Alert.Title, null, "Preparing"))));
+if (!feedbackMarkup.includes('brick-spinner') || feedbackMarkup.includes('role="alert"')) throw new Error("Feedback SSR semantics failed");
+const emptyMarkup = renderToString(React.createElement(EmptyState.Root, null, React.createElement(EmptyState.Title, { as: "h2" }, "No results")));
+if (!emptyMarkup.includes('<h2')) throw new Error("EmptyState heading SSR failed");
+for (const id of ["alert", "empty-state", "spinner"]) {
+  const modular = await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/styles/" + id + ".css")), "utf8");
+  if (!modular.includes(".brick-" + id)) throw new Error("Feedback modular CSS missing: " + id);
+}
+if (Steps !== SubpathSteps || !["Root", "RootProvider", "Number", "Status", "Context", "ItemContext"].every(part => part in Steps)) throw new Error("Steps subpath export mismatch");
+const stepsMarkup = renderToString(React.createElement(Steps.Root, { count: 1 }, React.createElement(Steps.List, null, React.createElement(Steps.Item, { index: 0 }, React.createElement(Steps.Indicator), React.createElement(Steps.Title, null, "Account"))), React.createElement(Steps.Content, { index: 0 }, "Form")));
+if (!stepsMarkup.includes('aria-current="step"') || !stepsMarkup.includes('brick-steps-indicator') || !stepsMarkup.includes('role="group"')) throw new Error("Steps SSR smoke failed");
+if (LocaleProvider !== SubpathLocaleProvider || FormatNumber !== SubpathFormatNumber || FormatByte !== SubpathFormatByte || For !== SubpathFor || Checkmark !== SubpathCheckmark || Radiomark !== SubpathRadiomark) throw new Error("Locale helper subpath export mismatch");
+if (ActionDelegate !== SubpathActionDelegate || useSelection !== SubpathSelection || useSelectionCheckbox !== SubpathSelectionCheckbox) throw new Error("Record utility subpath export mismatch");
+function RecordProbe() { const selection = useSelection({orderedKeys:["one"]}); const binding = useSelectionCheckbox({selection,value:"one"}); return React.createElement(ActionDelegate,{targetId:"record-open"},React.createElement("article",null,React.createElement(Checkbox,{...binding,"aria-label":"Select record"}),React.createElement("button",{id:"record-open"},"Open"))); }
+if (!renderToString(React.createElement(RecordProbe)).includes("record-open")) throw new Error("Record utility SSR failed");
 if (IconButton !== SubpathIconButton) throw new Error("IconButton subpath export mismatch");
 if (AppBar !== SubpathAppBar) throw new Error("AppBar subpath export mismatch");
 if (Card !== SubpathCard) throw new Error("Card subpath export mismatch");
-if (Drawer !== SubpathDrawer || Object.keys(SubpathDrawer).length !== 12) throw new Error("Drawer subpath smoke failed");
+if (Drawer !== SubpathDrawer || Object.keys(SubpathDrawer).length !== 14 || !SubpathDrawer.Positioner || !SubpathDrawer.Context) throw new Error("Drawer subpath smoke failed");
 if (DrawerModule.Root !== Drawer.Root || DrawerModule.Trigger !== Drawer.Trigger || DrawerModule.Content !== Drawer.Content) throw new Error("Drawer module namespace smoke failed");
 if (AlertDialog !== SubpathAlertDialog) throw new Error("AlertDialog subpath export mismatch");
 if (Badge !== SubpathBadge || NotificationBadge !== SubpathNotificationBadge) throw new Error("Badge subpath export mismatch");
-if (Chip !== SubpathChip || Object.keys(SubpathChip).length !== 3) throw new Error("Chip subpath smoke failed");
+if (Chip !== SubpathChip || Object.keys(SubpathChip).sort().join(",") !== "ActionTrigger,EndElement,Label,RemoveTrigger,Root,StartElement") throw new Error("Chip subpath smoke failed");
+if (Stat !== SubpathStat || Timeline !== SubpathTimeline) throw new Error("Data display subpath smoke failed");
+if (Marquee !== SubpathMarquee) throw new Error("Marquee subpath mismatch");
+const marqueeMarkup = renderToString(React.createElement(Marquee.Root, { "aria-label": "Partners" }, React.createElement(Marquee.Viewport, null, React.createElement(Marquee.Content, { renderReplica: () => React.createElement(Marquee.Item, null, "Acme") }, React.createElement(Marquee.Item, null, "Acme")))));
+if (!marqueeMarkup.includes("brick-marquee") || !marqueeMarkup.includes("data-static") || marqueeMarkup.includes("data-replica")) throw new Error("Marquee deterministic stationary SSR failed");
+const metricMarkup = renderToString(React.createElement(Stat.Root, { size: "lg" }, React.createElement(Stat.Label, null, "Revenue"), React.createElement(Stat.ValueText, null, "12450")));
+if (!metricMarkup.includes("<dl") || !metricMarkup.includes("<dt") || !metricMarkup.includes("<dd")) throw new Error("Stat native grammar failed");
+const responsiveMetric = renderToString(React.createElement(Stat.Group, { size: { initial: "sm", md: "lg" } }, React.createElement(Stat.Root, { asChild: true }, React.createElement("dl", { "aria-label": "Revenue" }, React.createElement(Stat.ValueText, null, "12450")))));
+if (!responsiveMetric.includes('data-size-md="lg"') || !responsiveMetric.includes('role="group"') || !responsiveMetric.includes('aria-label="Revenue"')) throw new Error("Stat responsive group/projection failed");
+const eventMarkup = renderToString(React.createElement(Timeline.Root, null, React.createElement(Timeline.Item, null, React.createElement(Timeline.Connector, null, React.createElement(Timeline.Indicator, null, "1"), React.createElement(Timeline.Separator)), React.createElement(Timeline.Content, null, React.createElement(Timeline.Title, null, "Created")))));
+if (!eventMarkup.includes("<ol") || !eventMarkup.includes("<li") || !eventMarkup.includes('aria-hidden="true"')) throw new Error("Timeline chronology SSR failed");
 if (Avatar !== SubpathAvatar) throw new Error("Avatar subpath export mismatch");
+if (AvatarGroup !== SubpathAvatarGroup) throw new Error("AvatarGroup subpath export mismatch");
 if (Toggle !== SubpathToggle) throw new Error("Toggle subpath export mismatch");
 if (ToggleGroup !== SubpathToggleGroup) throw new Error("ToggleGroup subpath export mismatch");
-if (HoverCard !== SubpathHoverCard || Object.keys(SubpathHoverCard).length !== 5) throw new Error("HoverCard subpath smoke failed");
-if (Popover !== SubpathPopover || Object.keys(SubpathPopover).length !== 12) throw new Error("Popover subpath smoke failed");
+if (HoverCard !== SubpathHoverCard || Object.keys(SubpathHoverCard).length !== 7 || typeof SubpathHoverCard.RootProvider !== "function" || typeof SubpathHoverCard.Context !== "function") throw new Error("HoverCard subpath smoke failed");
+if (Popover !== SubpathPopover || Object.keys(SubpathPopover).length !== 15 || !SubpathPopover.RootProvider || !SubpathPopover.State || !SubpathPopover.Indicator) throw new Error("Popover subpath smoke failed");
 if (Checkbox !== SubpathCheckbox) throw new Error("Checkbox subpath export mismatch");
-if (CheckboxGroup !== SubpathCheckboxGroup || Object.keys(SubpathCheckboxGroup).length !== 5) throw new Error("CheckboxGroup subpath smoke failed");
-if (RadioGroup !== SubpathRadioGroup || Object.keys(SubpathRadioGroup).length !== 2) throw new Error("RadioGroup subpath smoke failed");
-if (Switch !== SubpathSwitch || Object.keys(SubpathSwitch).length !== 2) throw new Error("Switch subpath smoke failed");
+if (CheckboxCard !== SubpathCheckboxCard || Object.keys(CheckboxCard).length !== 10) throw new Error("CheckboxCard subpath export mismatch");
+const checkboxCardMarkup = renderToString(React.createElement(CheckboxCard.Root, {name:"extras", value:"backup", defaultChecked:true}, React.createElement(CheckboxCard.HiddenInput), React.createElement(CheckboxCard.Control, null, React.createElement(CheckboxCard.Label, null, "Backups"), React.createElement(CheckboxCard.Indicator))));
+if (!checkboxCardMarkup.includes('type="checkbox"') || !checkboxCardMarkup.includes("brick-checkbox-card") || checkboxCardMarkup.includes("<button")) throw new Error("CheckboxCard SSR smoke failed");
+if (CheckboxGroup !== SubpathCheckboxGroup || !CheckboxGroup.RootProvider || Object.keys(SubpathCheckboxGroup).length !== 6) throw new Error("CheckboxGroup subpath smoke failed");
+if (RadioGroup !== SubpathRadioGroup || ["Root", "RootProvider", "Item", "Label", "ItemRoot", "ItemHiddenInput", "ItemControl", "ItemIndicator", "ItemText", "ItemDescription", "Context", "ItemContext"].some(part => !SubpathRadioGroup[part])) throw new Error("RadioGroup subpath smoke failed");
+if (Switch !== SubpathSwitch || ["Root", "Field", "RootProvider", "Control", "Thumb", "Label", "HiddenInput", "Indicator", "ThumbIndicator"].some(part => !SubpathSwitch[part])) throw new Error("Switch subpath smoke failed");
 if (Input !== SubpathInput) throw new Error("Input subpath export mismatch");
-if (NumberInput !== SubpathNumberInput || Object.keys(SubpathNumberInput).length !== 4) throw new Error("Number Input subpath smoke failed");
-if (OTPField !== SubpathOTPField || Object.keys(SubpathOTPField).length !== 4) throw new Error("OTP Field subpath smoke failed");
+if (NumberInput !== SubpathNumberInput || ["Root", "RootProvider", "Input", "Control", "Group", "Element", "Increment", "Decrement", "Unit", "Label", "ValueText", "Scrubber", "Context"].some(part => !SubpathNumberInput[part])) throw new Error("Number Input subpath smoke failed");
+if (PinInput !== SubpathPinInput || Object.keys(SubpathPinInput).length !== 8) throw new Error("Pin Input subpath smoke failed");
 if (PasswordToggleField !== SubpathPasswordToggleField || Object.keys(SubpathPasswordToggleField).length !== 4) throw new Error("Password Toggle Field subpath smoke failed");
 if (Textarea !== SubpathTextarea || Object.keys(SubpathTextarea).length !== 2) throw new Error("Textarea subpath export mismatch");
 if (Link !== SubpathLink) throw new Error("Link subpath export mismatch");
@@ -168,23 +356,33 @@ if (Kbd !== SubpathKbd) throw new Error("Kbd subpath export mismatch");
 if (Grid !== SubpathGrid || Object.keys(SubpathGrid).length !== 2) throw new Error("Grid subpath smoke failed");
 if (Container !== SubpathContainer) throw new Error("Container subpath export mismatch");
 if (Surface !== SubpathSurface) throw new Error("Surface subpath export mismatch");
-if (Breadcrumb !== SubpathBreadcrumb || Object.keys(SubpathBreadcrumb).length !== 7) throw new Error("Breadcrumb subpath smoke failed");
-if (Tabs !== SubpathTabs || Object.keys(SubpathTabs).length !== 5) throw new Error("Tabs subpath smoke failed");
+if (Breadcrumb !== SubpathBreadcrumb || Object.keys(SubpathBreadcrumb).length !== 8) throw new Error("Breadcrumb subpath smoke failed");
+if (Tabs !== SubpathTabs || Object.keys(SubpathTabs).sort().join(",") !== "Content,ContentGroup,Context,Indicator,List,Root,RootProvider,Trigger") throw new Error("Tabs subpath smoke failed");
 if (Skeleton !== SubpathSkeleton) throw new Error("Skeleton subpath export mismatch");
-if (DropdownMenu !== SubpathDropdownMenu || Object.keys(SubpathDropdownMenu).length !== 20) throw new Error("Dropdown Menu subpath smoke failed");
-if (ContextMenu !== SubpathContextMenu || Object.keys(SubpathContextMenu).length !== 20) throw new Error("Context Menu subpath smoke failed");
-if (Menubar !== SubpathMenubar || Object.keys(SubpathMenubar).length !== 21) throw new Error("Menubar subpath smoke failed");
-if (NavigationMenu !== SubpathNavigationMenu || Object.keys(SubpathNavigationMenu).length !== 10) throw new Error("Navigation Menu subpath smoke failed");
+if (DropdownMenu !== SubpathDropdownMenu || Object.keys(SubpathDropdownMenu).length !== 23) throw new Error("Dropdown Menu subpath smoke failed");
+if (ContextMenu !== SubpathContextMenu || Object.keys(SubpathContextMenu).length !== 23) throw new Error("Context Menu subpath smoke failed");
+if (Menubar !== SubpathMenubar || Object.keys(SubpathMenubar).length !== 24) throw new Error("Menubar subpath smoke failed");
+if (NavigationMenu !== SubpathNavigationMenu || Object.keys(SubpathNavigationMenu).length !== 13) throw new Error("Navigation Menu subpath smoke failed");
+for (const [name, owner, module] of [["DropdownMenu", DropdownMenu, DropdownMenuModule], ["ContextMenu", ContextMenu, ContextMenuModule], ["Menubar", Menubar, MenubarModule], ["NavigationMenu", NavigationMenu, NavigationMenuModule]]) {
+  for (const part of ["RootProvider", "Context", name === "NavigationMenu" ? "ItemIndicator" : "TriggerIndicator"]) {
+    if (!owner[part] || owner[part] !== module[name + part] || owner[part] !== RootMenuExports[name + part]) throw new Error(name + "." + part + " public identity failed");
+  }
+  const hook = "use" + name;
+  if (typeof module[hook] !== "function" || module[hook] !== RootMenuExports[hook]) throw new Error(hook + " public identity failed");
+}
 if (NavigationMenuModule.Root !== NavigationMenu.Root || NavigationMenuModule.Link !== NavigationMenu.Link || NavigationMenuModule.Viewport !== NavigationMenu.Viewport) throw new Error("Navigation Menu module namespace smoke failed");
+if (NavigationMenuModule.useNavigationMenuContext !== RootMenuExports.useNavigationMenuContext || typeof NavigationMenuModule.useNavigationMenuContext !== "function") throw new Error("Navigation Menu context hook identity failed");
 if (BottomNavigation !== SubpathBottomNavigation || Object.keys(SubpathBottomNavigation).length !== 4) throw new Error("Bottom Navigation subpath smoke failed");
 if (VisuallyHidden !== SubpathVisuallyHidden || Object.keys(SubpathVisuallyHidden).length !== 1) throw new Error("Visually Hidden subpath smoke failed");
 if (Show !== SubpathShow || Hide !== SubpathHide) throw new Error("Responsive visibility subpath export mismatch");
-if (SwipeableItem !== SubpathSwipeableItem || Object.keys(SubpathSwipeableItem).length !== 3) throw new Error("Swipeable Item subpath smoke failed");
+if (SwipeableItem !== SubpathSwipeableItem || Object.keys(SubpathSwipeableItem).sort().join(",") !== "Actions,Content,Context,Root,RootProvider") throw new Error("Swipeable Item subpath smoke failed");
 if (Blockquote !== SubpathBlockquote || Object.keys(SubpathBlockquote).length !== 5) throw new Error("Blockquote subpath smoke failed");
 if (Highlight !== SubpathHighlight) throw new Error("Highlight subpath export mismatch");
 if (Prose !== SubpathProse) throw new Error("Prose subpath export mismatch");
 const markup = renderToString(React.createElement(Button, null, "Brick consumer"));
 if (!markup.includes("brick-button") || !markup.includes("Brick consumer")) throw new Error("Button SSR smoke failed");
+const localeMarkup = renderToString(React.createElement(LocaleProvider, { locale: "de-DE" }, React.createElement(React.Fragment, null, React.createElement(FormatNumber, { value: 1234.5 }), React.createElement(FormatByte, { value: 2048 }), React.createElement(For, { each: ["A"] }, (value) => React.createElement("span", null, value)), React.createElement(Checkmark, { checked: true }), React.createElement(Radiomark, { checked: true }))));
+if (!localeMarkup.includes("1.234,5") || !localeMarkup.includes("2,05") || !localeMarkup.includes("brick-checkmark") || !localeMarkup.includes("brick-radiomark")) throw new Error("Locale helper SSR smoke failed");
 const iconButtonMarkup = renderToString(React.createElement(IconButton, { "aria-label": "Search" }, React.createElement("svg")));
 if (!iconButtonMarkup.includes("brick-icon-button") || !iconButtonMarkup.includes('aria-label="Search"')) throw new Error("IconButton SSR smoke failed");
 const appBarMarkup = renderToString(React.createElement(AppBar.Root, { position: "sticky" }, React.createElement(AppBar.Toolbar, null, "Workspace")));
@@ -199,8 +397,12 @@ const chipMarkup = renderToString(React.createElement(Chip.Root, null, React.cre
 if (!chipMarkup.includes("brick-chip") || !chipMarkup.includes('aria-label="Remove Riley Chen"')) throw new Error("Chip SSR smoke failed");
 const notificationMarkup = renderToString(React.createElement(NotificationBadge, { count: 4 }, React.createElement("button", { "aria-label": "Inbox, 4 unread messages" }, "Inbox")));
 if (!notificationMarkup.includes("brick-notification-badge") || !notificationMarkup.includes('aria-hidden="true"')) throw new Error("NotificationBadge SSR smoke failed");
+const nestedNotificationMarkup = renderToString(React.createElement(LocaleProvider, {locale:"ar-EG"}, React.createElement(IconButton, {"aria-label":"Inbox, 125 unread"}, React.createElement(NotificationBadge, {count:125,size:{initial:"xs",md:"lg"},offsetInline:0,bordered:false},React.createElement("svg",{viewBox:"0 0 24 24"})))));
+if (!nestedNotificationMarkup.includes("٩٩") || !nestedNotificationMarkup.includes('data-size-md="lg"') || !nestedNotificationMarkup.includes("brick-float") || nestedNotificationMarkup.includes("data-bordered")) throw new Error("Nested localized notification SSR smoke failed");
 const avatarMarkup = renderToString(React.createElement(Avatar, { alt: "Ada Lovelace", fallback: "AL", shape: "rounded", status: "online" }));
 if (!avatarMarkup.includes("brick-avatar") || !avatarMarkup.includes('data-status="online"') || !avatarMarkup.includes("Ada Lovelace")) throw new Error("Avatar SSR smoke failed");
+const avatarGroupMarkup = renderToString(React.createElement(AvatarGroup, { max: 2, overflowLabel: (count) => count + " more", total: 4 }, React.createElement(Avatar, { alt: "Ada Lovelace", fallback: "AL" }), React.createElement(Avatar, { alt: "Grace Hopper", fallback: "GH" })));
+if (!avatarGroupMarkup.includes("brick-avatar-group") || !avatarGroupMarkup.includes('data-count="3"') || !avatarGroupMarkup.includes("3 more")) throw new Error("AvatarGroup SSR smoke failed");
 const toggleMarkup = renderToString(React.createElement(Toggle, { pressed: true }, "Favorite"));
 if (!toggleMarkup.includes("brick-toggle") || !toggleMarkup.includes('aria-pressed="true"')) throw new Error("Toggle SSR smoke failed");
 const toggleGroupMarkup = renderToString(React.createElement(ToggleGroup.Root, { value: "cards" }, React.createElement(ToggleGroup.Item, { value: "cards" }, "Cards")));
@@ -211,14 +413,18 @@ const checkboxGroupMarkup = renderToString(React.createElement(CheckboxGroup.Roo
 if (!checkboxGroupMarkup.includes("brick-checkbox-group") || !checkboxGroupMarkup.includes("brick-checkbox-group-item")) throw new Error("CheckboxGroup SSR smoke failed");
 const radioGroupMarkup = renderToString(React.createElement(RadioGroup.Root, { "aria-label": "Channel", defaultValue: "email" }, React.createElement(RadioGroup.Item, { value: "email" }, "Email")));
 if (!radioGroupMarkup.includes("brick-radio-group") || !radioGroupMarkup.includes("brick-radio-group-item") || !radioGroupMarkup.includes('aria-checked="true"')) throw new Error("RadioGroup SSR smoke failed");
+const radioCardMarkup = renderToString(React.createElement(SubpathRadioCard.Root, { "aria-label": "Plan", defaultValue: "team" }, React.createElement(SubpathRadioCard.Item, { value: "team" }, React.createElement(SubpathRadioCard.HiddenInput), React.createElement(SubpathRadioCard.Control, null, React.createElement(SubpathRadioCard.Content, null, React.createElement(SubpathRadioCard.Title, null, "Team")), React.createElement(SubpathRadioCard.Indicator)))));
+if (!radioCardMarkup.includes("brick-radio-card") || !radioCardMarkup.includes('type="radio"') || !radioCardMarkup.includes('checked=""') || radioCardMarkup.includes('role="radio"')) throw new Error("RadioCard SSR smoke failed");
 const switchMarkup = renderToString(React.createElement(Switch.Root, { "aria-label": "Reports", defaultChecked: true }, React.createElement(Switch.Thumb)));
 if (!switchMarkup.includes("brick-switch") || !switchMarkup.includes("brick-switch-thumb") || !switchMarkup.includes('aria-checked="true"')) throw new Error("Switch SSR smoke failed");
+const compoundSwitchMarkup = renderToString(React.createElement(Switch.Field, { name: "reports", value: "weekly", defaultChecked: true, size: {initial:"sm",md:"lg"}, variant: {initial:"solid",md:"raised"}, tone: "success" }, React.createElement(Switch.Control), React.createElement(Switch.Label, null, "Reports"), React.createElement(Switch.HiddenInput)));
+if ((compoundSwitchMarkup.match(/type="checkbox"/g) ?? []).length !== 1 || !compoundSwitchMarkup.includes("brick-switch-control") || !compoundSwitchMarkup.includes('data-size-md="lg"') || !compoundSwitchMarkup.includes('data-variant-md="raised"')) throw new Error("Switch compound SSR smoke failed");
 const inputMarkup = renderToString(React.createElement(Input, { "aria-label": "Search", defaultValue: "Brick", clearable: true }));
 if (!inputMarkup.includes("brick-input") || !inputMarkup.includes('aria-label="Clear input"')) throw new Error("Input SSR smoke failed");
 const numberInputMarkup = renderToString(React.createElement(NumberInput.Root, { "aria-label": "Quantity", defaultValue: 3 }, React.createElement(NumberInput.Input), React.createElement(NumberInput.Increment, { "aria-label": "Increase" }), React.createElement(NumberInput.Decrement, { "aria-label": "Decrease" })));
 if (!numberInputMarkup.includes("brick-number-input") || !numberInputMarkup.includes('role="spinbutton"')) throw new Error("Number Input SSR smoke failed");
-const otpMarkup = renderToString(React.createElement(OTPField.Root, { "aria-label": "Code", length: 2 }, React.createElement(OTPField.Group, null, React.createElement(OTPField.Input, { index: 0 }), React.createElement(OTPField.Input, { index: 1 }))));
-if (!otpMarkup.includes("brick-otp-field") || !otpMarkup.includes('aria-label="Digit 1 of 2"')) throw new Error("OTP Field SSR smoke failed");
+const otpMarkup = renderToString(React.createElement(PinInput.Root, { "aria-label": "Code", length: 2 }, React.createElement(PinInput.Group, null, React.createElement(PinInput.Input, { index: 0 }), React.createElement(PinInput.Input, { index: 1 }))));
+if (!otpMarkup.includes("brick-pin-input") || !otpMarkup.includes('aria-label="Digit 1 of 2"')) throw new Error("Pin Input SSR smoke failed");
 const passwordMarkup = renderToString(React.createElement(PasswordToggleField.Root, null, React.createElement(PasswordToggleField.Input, { "aria-label": "Password" }), React.createElement(PasswordToggleField.Toggle)));
 if (!passwordMarkup.includes("brick-password-toggle-field") || !passwordMarkup.includes('aria-label="Show password"')) throw new Error("Password Toggle Field SSR smoke failed");
 const textareaMarkup = renderToString(React.createElement(Textarea.Root, { "aria-label": "Notes", defaultValue: "Brick", maxLength: 20 }, React.createElement(Textarea.Count)));
@@ -242,12 +448,18 @@ if (!gridMarkup.includes("brick-grid") || !gridMarkup.includes("brick-grid-item"
 const containerMarkup = renderToString(React.createElement(Container, { as: "main", measure: "max", gutter: "lg" }, "Measured"));
 if (!containerMarkup.includes("brick-container") || !containerMarkup.includes('data-measure="max"') || !containerMarkup.includes('data-gutter="lg"')) throw new Error("Container SSR smoke failed");
 const surfaceMarkup = renderToString(React.createElement(Surface, { as: "section", bordered: true, inset: "md", level: "subtle" }, "Painted"));
+const layoutMarkup = renderToString(React.createElement(Surface, { asChild: true, level: "transparent" }, React.createElement(LayoutSection, { spacing: { lg: "xl" } }, React.createElement(LayoutSidebar.Root, { bordered: false }, React.createElement(LayoutSidebar.Panel, null, "Navigation"), React.createElement(LayoutSidebar.Main, null, "Content")))));
+if (!layoutMarkup.includes('data-spacing="md"') || !layoutMarkup.includes('data-level="transparent"') || !layoutMarkup.includes('data-bordered="false"') || typeof layoutSidebarContext !== "function") throw new Error("Packed layout composition failed");
 if (!surfaceMarkup.includes("brick-surface") || !surfaceMarkup.includes('data-level="subtle"') || !surfaceMarkup.includes('data-bordered=""')) throw new Error("Surface SSR smoke failed");
 const breadcrumbMarkup = renderToString(React.createElement(Breadcrumb.Root, { ariaLabel: "Current path" }, React.createElement(Breadcrumb.List, null, React.createElement(Breadcrumb.Item, null, React.createElement(Breadcrumb.Link, { href: "/" }, "Home")), React.createElement(Breadcrumb.Separator), React.createElement(Breadcrumb.Item, null, React.createElement(Breadcrumb.Page, null, "Current")))));
 if (!breadcrumbMarkup.includes("brick-breadcrumb") || !breadcrumbMarkup.includes('aria-current="page"') || !breadcrumbMarkup.includes('aria-hidden="true"')) throw new Error("Breadcrumb SSR smoke failed");
+const breadcrumbTriggerMarkup = renderToString(React.createElement(SubpathBreadcrumb.Root, { "aria-label": "Candidate path", size: { initial: "sm", md: "lg" }, variant: "subtle", tone: "accent" }, React.createElement(SubpathBreadcrumb.List, null, React.createElement(SubpathBreadcrumb.Item, null, React.createElement(SubpathBreadcrumb.Trigger, null, "Ancestors")))));
+if (!breadcrumbTriggerMarkup.includes('aria-label="Candidate path"') || !breadcrumbTriggerMarkup.includes('data-size-md="lg"') || !breadcrumbTriggerMarkup.includes('type="button"') || !breadcrumbTriggerMarkup.includes('brick-breadcrumb-trigger')) throw new Error("Breadcrumb candidate API smoke failed");
 const tabsMarkup = renderToString(React.createElement(Tabs.Root, { defaultValue: "one" }, React.createElement(Tabs.List, { ariaLabel: "Sections" }, React.createElement(Tabs.Trigger, { value: "one" }, "One")), React.createElement(Tabs.Content, { value: "one" }, "Panel")));
 if (!tabsMarkup.includes("brick-tabs") || !tabsMarkup.includes('role="tablist"') || !tabsMarkup.includes('aria-selected="true"')) throw new Error("Tabs SSR smoke failed");
 const skeletonMarkup = renderToString(React.createElement(Skeleton, { animation: "wave", lines: 3 }));
+const skeletonHostMarkup = renderToString(React.createElement(Skeleton, { asChild: true, radius: "surface" }, React.createElement("article", null, "Profile")));
+if (!skeletonHostMarkup.startsWith("<article") || !skeletonHostMarkup.includes("inert=")) throw new Error("Skeleton composed SSR host failed");
 if (!skeletonMarkup.includes("brick-skeleton") || !skeletonMarkup.includes('data-lines="3"') || !skeletonMarkup.includes('aria-hidden="true"')) throw new Error("Skeleton SSR smoke failed");
 const dropdownMarkup = renderToString(React.createElement(DropdownMenu.Root, null, React.createElement(DropdownMenu.Trigger, null, "Actions")));
 if (!dropdownMarkup.includes("brick-dropdown-menu__trigger") || !dropdownMarkup.includes('aria-haspopup="menu"')) throw new Error("Dropdown Menu SSR smoke failed");
@@ -266,10 +478,10 @@ const hideMarkup = renderToString(React.createElement(Hide, { as: "aside", from:
 if (!showMarkup.includes("brick-show") || !showMarkup.includes('data-from="md"') || !hideMarkup.includes("brick-hide") || !hideMarkup.includes('data-from="md"')) throw new Error("Responsive visibility SSR smoke failed");
 const swipeableMarkup = renderToString(React.createElement(SwipeableItem.Root, null, React.createElement(SwipeableItem.Content, null, "Message"), React.createElement(SwipeableItem.Actions, { "aria-label": "Message actions", side: "end" }, React.createElement("button", null, "Delete"))));
 if (!swipeableMarkup.includes("brick-swipeable-item") || !swipeableMarkup.includes('aria-label="Message actions"')) throw new Error("Swipeable Item SSR smoke failed");
-if (!SubpathTooltip || Object.keys(SubpathTooltip).length !== 8) throw new Error("Tooltip subpath smoke failed");
+if (!SubpathTooltip || Object.keys(SubpathTooltip).length !== 10 || !SubpathTooltip.RootProvider || !SubpathTooltip.Context) throw new Error("Tooltip subpath smoke failed");
 const css = await readFile(new URL("./node_modules/@flowstack-ui/brick/dist/styles.css", import.meta.url), "utf8");
 const themeContract = JSON.parse(await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/theme-contract.json")), "utf8"));
-if (themeContract.$schema !== "flowstack.brick-theme-contract.v1" || themeContract.package.name !== "@flowstack-ui/brick") throw new Error("Theme contract export is invalid");
+if (themeContract.$schema !== "flowstack.brick-theme-contract.v2" || themeContract.package.name !== "@flowstack-ui/brick") throw new Error("Theme contract export is invalid");
 const agentManifest = JSON.parse(await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/agents/manifest.json")), "utf8"));
 const agentCoverage = JSON.parse(await readFile(new URL(import.meta.resolve("@flowstack-ui/brick/agents/coverage.json")), "utf8"));
 if (agentManifest.schema !== "flowstack.agent-manifest.v1" || agentManifest.package !== "@flowstack-ui/brick") throw new Error("Agent Knowledge manifest export is invalid");
@@ -299,6 +511,7 @@ const buttonCss = await readFile(new URL("./node_modules/@flowstack-ui/brick/dis
 if (!coreCss.includes("--brick-color-accent-solid") || !coreCss.includes("brick.foundations") || !coreCss.includes(":where(body)") || coreCss.includes(".brick-button")) throw new Error("Modular core CSS export is invalid");
 if (!buttonCss.includes(".brick-button") || buttonCss.includes("--brick-color-accent-solid:")) throw new Error("Modular Button CSS export is invalid");
 if (!css.includes("--brick-color-accent-solid") || !css.includes(".brick-icon-button") || !css.includes(".brick-app-bar") || !css.includes(".brick-card") || !css.includes(".brick-alert-dialog-content") || !css.includes(".brick-badge") || !css.includes(".brick-chip") || !css.includes(".brick-avatar") || !css.includes(".brick-toggle") || !css.includes(".brick-toggle-group") || !css.includes(".brick-tooltip") || !css.includes(".brick-hover-card") || !css.includes(".brick-popover") || !css.includes(".brick-checkbox") || !css.includes(".brick-checkbox-group") || !css.includes(".brick-radio-group") || !css.includes(".brick-input") || !css.includes(".brick-textarea") || !css.includes(".brick-link") || !css.includes(".brick-text") || !css.includes(".brick-grid") || !css.includes(".brick-container") || !css.includes(".brick-surface")) throw new Error("CSS export missing");
+if (!css.includes(".brick-avatar-group") || !css.includes("--brick-avatar-group-overlap")) throw new Error("AvatarGroup CSS export missing");
 if (!css.includes(".brick-switch") || !css.includes("--brick-switch-track-inline-size")) throw new Error("Switch CSS export missing");
 if (!css.includes(".brick-breadcrumb") || !css.includes("--brick-breadcrumb-foreground")) throw new Error("Breadcrumb CSS export missing");
 if (!css.includes(".brick-tabs") || !css.includes("--brick-tabs-indicator-color")) throw new Error("Tabs CSS export missing");
@@ -308,8 +521,8 @@ if (!css.includes(".brick-context-menu__content") || !css.includes("--brick-cont
 if (!css.includes(".brick-menubar") || !css.includes("--brick-menubar-background")) throw new Error("Menubar CSS export missing");
 if (!css.includes(".brick-navigation-menu") || !css.includes("--brick-navigation-menu-viewport-background")) throw new Error("Navigation Menu CSS export missing");
 if (!css.includes(".brick-bottom-navigation") || !css.includes("--brick-bottom-navigation-selection-background")) throw new Error("Bottom Navigation CSS export missing");
-if (!css.includes(".brick-number-input") || !css.includes("--brick-number-input-height")) throw new Error("Number Input CSS export missing");
-if (!css.includes(".brick-otp-field") || !css.includes("--brick-otp-size")) throw new Error("OTP Field CSS export missing");
+if (!css.includes(".brick-number-input") || !css.includes("--brick-number-input-height") || !css.includes(".brick-radio-card")) throw new Error("Number Input or Radio Card CSS export missing");
+if (!css.includes(".brick-pin-input") || !css.includes("--brick-pin-input-size")) throw new Error("Pin Input CSS export missing");
 if (!css.includes(".brick-password-toggle-field") || !css.includes("--brick-password-height")) throw new Error("Password Toggle Field CSS export missing");
 if (!css.includes(".brick-show") || !css.includes(".brick-hide") || !css.includes("@media (width<48rem)") || !css.includes("@media (width>=48rem)")) throw new Error("Responsive visibility CSS export missing");
 if (!css.includes(".brick-swipeable-item") || !css.includes("--brick-swipeable-item-background")) throw new Error("Swipeable Item CSS export missing");
@@ -321,7 +534,18 @@ if (!css.includes(".brick-prose") || !css.includes("--brick-prose-measure")) thr
     await writeFile(
       join(consumer, "verify.ts"),
 	`import { createElement } from "react";
-import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, OTPField, PasswordToggleField, Popover, Prose, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HideProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type OTPFieldRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type ProseProps, type RadioGroupRootProps, type ShowProps, type SkeletonProps, type SurfaceProps, type SwipeableItemRootProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
+import { Stack, type StackProps, type StackItemProps } from "@flowstack-ui/brick/stack";
+const stackProps: StackProps = { direction: { md: "row-reverse" }, wrap: "wrap-reverse", alignContent: "space-between", rowGap: "2", columnGap: "4", inline: { lg: true }, asChild: true, children: createElement("section") };
+const stackItemProps: StackItemProps = { grow: { lg: 2 }, shrink: 0, basis: 0, order: { md: -1 }, marginInlineStart: "auto", children: "Content" };
+void Stack; void stackProps; void stackItemProps;
+import { FloatingPanel, useFloatingPanel, type FloatingPanelOptions } from "@flowstack-ui/brick/floating-panel";
+import { createOverlay, type OverlayLifecycleProps } from "@flowstack-ui/brick/overlay-manager";
+const panelOptions: FloatingPanelOptions = { position: {x: 10, y: 20}, onPositionChange(value, details) { void value.x; void details.reason; }, hideMode: "display-none" };
+function InspectorConsumer() { const value = useFloatingPanel(panelOptions); return createElement(FloatingPanel.RootProvider, {value}, createElement(FloatingPanel.Content, {"aria-label": "Inspector"})); }
+const managed = createOverlay<{title: string}, "accepted">((props: {title: string} & OverlayLifecycleProps) => createElement(FloatingPanel.Root, props));
+const managedResult: Promise<"accepted" | undefined> = managed.open("inspector", {title: "Inspector"});
+void InspectorConsumer; void managedResult;
+import { AlertDialog, AppBar, Avatar, Badge, BottomNavigation, Breadcrumb, Button, Card, Checkbox, CheckboxGroup, Chip, Container, ContextMenu, Drawer, DropdownMenu, Grid, Hide, HoverCard, IconButton, Input, Link, Menubar, NavigationMenu, NotificationBadge, NumberInput, PinInput, PasswordToggleField, Popover, Prose, RadioGroup, Show, Skeleton, Surface, SwipeableItem, Switch, Tabs, Text, Textarea, Toggle, ToggleGroup, VisuallyHidden, type AppBarRootProps, type AvatarProps, type BadgeProps, type BottomNavigationRootProps, type BreadcrumbRootProps, type ButtonProps, type CardRootProps, type CheckboxGroupRootProps, type CheckboxProps, type ChipRootProps, type ContainerProps, type ContextMenuRootProps, type DropdownMenuRootProps, type GridRootProps, type HideProps, type HoverCardContentProps, type IconButtonProps, type InputProps, type LinkProps, type MenubarRootProps, type NavigationMenuRootProps, type NotificationBadgeProps, type NumberInputRootProps, type PinInputRootProps, type PasswordToggleFieldRootProps, type PopoverContentProps, type ProseProps, type RadioGroupRootProps, type ShowProps, type SkeletonProps, type SurfaceProps, type SwipeableItemRootProps, type SwitchRootProps, type TabsRootProps, type TextareaRootProps, type TextProps, type ToggleProps, type ToggleGroupRootProps, type VisuallyHiddenRootProps } from "@flowstack-ui/brick";
 import { AlertDialog as SubpathAlertDialog, type AlertDialogContentProps } from "@flowstack-ui/brick/alert-dialog";
 import { Button as SubpathButton } from "@flowstack-ui/brick/button";
 import { IconButton as SubpathIconButton } from "@flowstack-ui/brick/icon-button";
@@ -336,27 +560,46 @@ import { Link as SubpathLink } from "@flowstack-ui/brick/link";
 import { Textarea as SubpathTextarea } from "@flowstack-ui/brick/textarea";
 import { RadioGroup as SubpathRadioGroup } from "@flowstack-ui/brick/radio-group";
 import { Switch as SubpathSwitch } from "@flowstack-ui/brick/switch";
+import type { SwitchFieldProps } from "@flowstack-ui/brick/switch";
 import { Breadcrumb as SubpathBreadcrumb } from "@flowstack-ui/brick/breadcrumb";
 import { Tabs as SubpathTabs } from "@flowstack-ui/brick/tabs";
 import { Skeleton as SubpathSkeleton } from "@flowstack-ui/brick/skeleton";
 import { VisuallyHidden as SubpathVisuallyHidden } from "@flowstack-ui/brick/visually-hidden";
 import { NumberInput as SubpathNumberInput } from "@flowstack-ui/brick/number-input";
-import { OTPField as SubpathOTPField } from "@flowstack-ui/brick/otp-field";
+import { PinInput as SubpathPinInput } from "@flowstack-ui/brick/pin-input";
 import { PasswordToggleField as SubpathPasswordToggleField } from "@flowstack-ui/brick/password-toggle-field";
 import { Show as SubpathShow } from "@flowstack-ui/brick/show";
 import { Hide as SubpathHide } from "@flowstack-ui/brick/hide";
 import { Prose as SubpathProse } from "@flowstack-ui/brick/prose";
 import { SwipeableItem as SubpathSwipeableItem } from "@flowstack-ui/brick/swipeable-item";
 import * as NavigationMenuModule from "@flowstack-ui/brick/navigation-menu";
+import { AvatarGroup, type AvatarGroupProps } from "@flowstack-ui/brick/avatar-group";
 const props: ButtonProps = { children: "Consumer" };
+import type { UseDropdownMenuReturn, UseContextMenuReturn, UseMenubarReturn, UseNavigationMenuReturn, DropdownMenuRootProviderProps, ContextMenuRootProviderProps, MenubarRootProviderProps, NavigationMenuRootProviderProps, DropdownMenuTriggerIndicatorProps, ContextMenuTriggerIndicatorProps, MenubarTriggerIndicatorProps, NavigationMenuItemIndicatorProps } from "@flowstack-ui/brick";
+import type { DropdownMenuRootProviderProps as DropdownProviderSubpath } from "@flowstack-ui/brick/dropdown-menu";
+import type { ContextMenuRootProviderProps as ContextProviderSubpath } from "@flowstack-ui/brick/context-menu";
+import type { MenubarRootProviderProps as MenubarProviderSubpath } from "@flowstack-ui/brick/menubar";
+import type { NavigationMenuRootProviderProps as NavigationProviderSubpath } from "@flowstack-ui/brick/navigation-menu";
+declare const dropdownController: UseDropdownMenuReturn;
+declare const contextController: UseContextMenuReturn;
+declare const menubarController: UseMenubarReturn;
+declare const navigationController: UseNavigationMenuReturn;
+const dropdownProvider: DropdownMenuRootProviderProps = { value: dropdownController, children: null, size: "sm", variant: "solid", tone: "accent" };
+const contextProvider: ContextMenuRootProviderProps = { value: contextController, children: null, size: "lg", tone: "danger" };
+const menubarProvider: MenubarRootProviderProps = { value: menubarController, children: null, "aria-label": "Editor", menuSize: "sm", barVariant: "plain" };
+const navigationProvider: NavigationMenuRootProviderProps = { value: navigationController, children: null, "aria-label": "Primary" };
+const providerSubpaths: [DropdownProviderSubpath, ContextProviderSubpath, MenubarProviderSubpath, NavigationProviderSubpath] = [dropdownProvider, contextProvider, menubarProvider, navigationProvider];
+const indicatorProps: [DropdownMenuTriggerIndicatorProps, ContextMenuTriggerIndicatorProps, MenubarTriggerIndicatorProps, NavigationMenuItemIndicatorProps] = [{ children: "v" }, { children: "v" }, { children: "v" }, { children: "v" }];
+void providerSubpaths; void indicatorProps;
 const iconButtonProps: IconButtonProps = { "aria-label": "Search", children: createElement("svg"), href: "/search" };
-const appBarProps: AppBarRootProps = { children: createElement(AppBar.Toolbar, null, "Workspace"), position: "sticky" };
+const appBarProps: AppBarRootProps = { treatment: "translucent", backdropBlur: "18px", backgroundOpacity: 0.82, children: createElement(AppBar.Toolbar, null, "Workspace"), position: "sticky" };
 const cardProps: CardRootProps = { as: "article", children: "Consumer" };
 const drawerModuleProps: DrawerRootProps = { children: createElement(DrawerModule.Trigger, null, "Open navigation") };
 const alertDialogProps: AlertDialogContentProps = { size: "sm", children: "Consumer" };
 const badgeProps: BadgeProps = { children: "Published", tone: "success" };
 const notificationBadgeProps: NotificationBadgeProps = { count: 4, children: createElement("button", null, "Inbox") };
 const avatarProps: AvatarProps = { alt: "Ada Lovelace", fallback: "AL", status: "online" };
+const avatarGroupProps: AvatarGroupProps = { children: createElement(Avatar, { alt: "Ada Lovelace", fallback: "AL" }), max: 3, overflowLabel: (count) => count + " more" };
 const toggleProps: ToggleProps = { children: "Favorite", pressed: true };
 const toggleGroupProps: ToggleGroupRootProps = { children: createElement(ToggleGroup.Item, { value: "cards" }, "Cards"), value: "cards" };
 const hoverCardProps: HoverCardContentProps = { children: "Preview", size: "md" };
@@ -365,9 +608,10 @@ const checkboxProps: CheckboxProps = { children: "Terms", defaultChecked: "indet
 const checkboxGroupProps: CheckboxGroupRootProps = { "aria-label": "Channels", allValues: ["email"], children: createElement(CheckboxGroup.Item, { value: "email" }, "Email") };
 const radioGroupProps: RadioGroupRootProps = { "aria-label": "Channel", defaultValue: "email", readOnly: true, children: createElement(RadioGroup.Item, { value: "email", children: "Email" }) };
 const switchProps: SwitchRootProps = { "aria-label": "Reports", defaultChecked: true, children: createElement(Switch.Thumb) };
+const switchFieldProps: SwitchFieldProps = { name: "reports", children: createElement(Switch.Control), size: { initial: "sm", md: "lg" }, variant: { initial: "solid", md: "raised" }, tone: "success", labelPlacement: "start" };
 const inputProps: InputProps = { "aria-label": "Search", clearable: true, startAdornment: "Search" };
 const numberInputProps: NumberInputRootProps = { "aria-label": "Quantity", children: createElement(NumberInput.Input), defaultValue: 3 };
-const otpProps: OTPFieldRootProps = { "aria-label": "Code", children: createElement(OTPField.Input), length: 4 };
+const otpProps: PinInputRootProps = { "aria-label": "Code", children: createElement(PinInput.Input), length: 4 };
 const passwordProps: PasswordToggleFieldRootProps = { children: createElement(PasswordToggleField.Input), showLabel: "Reveal password" };
 const textareaProps: TextareaRootProps = { "aria-label": "Notes", autoResize: true, maxRows: 8 };
 const linkProps: LinkProps = { children: "Read guides", href: "/guides", tone: "neutral" };
@@ -375,9 +619,9 @@ const textProps: TextProps = { as: "h2", children: "Consumer", variant: "title-s
 const proseProps: ProseProps = { as: "article", children: createElement("p", null, "Trusted"), measure: "narrow", size: "sm" };
 const gridProps: GridRootProps = { columns: 2, gap: "2", children: createElement(Grid.Item, { columnSpan: "full" }, "Summary") };
 const containerProps: ContainerProps = { as: "main", children: "Measured", gutter: "lg", measure: "max" };
-const surfaceProps: SurfaceProps = { as: "section", bordered: true, children: "Painted", inset: "md", level: "subtle" };
+const surfaceProps: SurfaceProps = { treatment: "translucent", backdropSaturate: 1.1, borderOpacity: 0.5, as: "section", bordered: true, children: "Painted", inset: "md", level: "subtle" };
 const chipProps: ChipRootProps = { children: createElement(Chip.Label, null, "Riley Chen"), tone: "accent", variant: "outline" };
-const breadcrumbProps: BreadcrumbRootProps = { ariaLabel: "Current path", children: createElement(Breadcrumb.List, null), size: "md", variant: "underline" };
+const breadcrumbProps: BreadcrumbRootProps = { "aria-label": "Current path", children: createElement(Breadcrumb.List, null), size: { initial: "sm", md: "lg" }, variant: { initial: "plain", md: "subtle" }, tone: "accent" };
 const tabsProps: TabsRootProps = { defaultValue: "one", size: "md", variant: "soft", children: createElement(Tabs.List, { ariaLabel: "Sections" }) };
 const skeletonProps: SkeletonProps = { animation: "wave", lines: 3, variant: "text" };
 const dropdownProps: DropdownMenuRootProps = { children: createElement(DropdownMenu.Trigger, null, "Actions"), size: "md" };
@@ -385,7 +629,7 @@ const contextProps: ContextMenuRootProps = { children: createElement(ContextMenu
 const menubarProps: MenubarRootProps = { "aria-label": "Commands", children: createElement(Menubar.Menu, { children: createElement(Menubar.Trigger, null, "File"), value: "file" }), size: "md" };
 const navigationProps: NavigationMenuRootProps = { "aria-label": "Primary", children: createElement(NavigationMenu.List), size: "md" };
 const navigationModuleProps: NavigationMenuRootProps = { "aria-label": "Module primary", children: createElement(NavigationMenuModule.List), size: "md" };
-const bottomNavigationProps: BottomNavigationRootProps = { ariaLabel: "Primary", children: createElement(BottomNavigation.Item, { value: "home" }, "Home"), safeArea: true };
+const bottomNavigationProps: BottomNavigationRootProps = { treatment: "none", backdropBlur: "md", borderColor: "white", ariaLabel: "Primary", children: createElement(BottomNavigation.Item, { value: "home" }, "Home"), safeArea: true };
 const visuallyHiddenProps: VisuallyHiddenRootProps = { children: "Search" };
 const showProps: ShowProps = { as: "aside", children: "Wide", from: "md" };
 const hideProps: HideProps = { as: "aside", children: "Compact", from: "md" };
@@ -438,6 +682,8 @@ void badgeProps;
 void notificationBadgeProps;
 void Avatar;
 void avatarProps;
+void AvatarGroup;
+void avatarGroupProps;
 void Toggle;
 void ToggleGroup;
 void toggleProps;
@@ -455,11 +701,12 @@ void SubpathRadioGroup;
 void radioGroupProps;
 void Switch;
 void SubpathSwitch;
+void switchFieldProps;
 void switchProps;
 void Input;
 void inputProps;
 void NumberInput; void SubpathNumberInput; void numberInputProps;
-void OTPField; void SubpathOTPField; void otpProps;
+void PinInput; void SubpathPinInput; void otpProps;
 void PasswordToggleField; void SubpathPasswordToggleField; void passwordProps;
 void Textarea;
 void SubpathTextarea;
@@ -517,6 +764,8 @@ void Prose; void SubpathProse; void proseProps;
     }
     console.log(`Verified clean React ${reactMajor} consumer.`);
   }
+  verified = true;
 } finally {
-  await rm(temp, { recursive: true, force: true });
+  if (verified) await rm(temp, { recursive: true, force: true });
+  else console.error(`React consumer failure evidence retained at ${temp}`);
 }

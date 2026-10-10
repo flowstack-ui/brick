@@ -2,6 +2,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createThemeContract, inspectThemeSources, themeContractSchema } from "./theme-contract.mjs";
 import { componentDocumentationContracts } from "./component-documentation-contracts.mjs";
+import { cssSourceClosure } from "./css-source-closure.mjs";
 
 const packageRoot = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const inspection = await inspectThemeSources(packageRoot);
@@ -19,7 +20,7 @@ if (unresolved.length) {
 
 const contract = await createThemeContract(packageRoot);
 if (contract.$schema !== themeContractSchema) throw new Error("Unexpected theme contract schema");
-if (contract.contractVersion !== 4) throw new Error("Component policy recipes require theme contract revision 4");
+if (contract.contractVersion !== 6) throw new Error("Constrained surface inputs require theme contract revision 6");
 if (!contract.componentThemeInputs.length) throw new Error("No component theme inputs were published");
 if (contract.tokens.some((token) => !token.classification)) {
   throw new Error("Every contract token must have a classification");
@@ -42,13 +43,18 @@ for (const pair of contract.contrast.pairs) {
 for (const [componentId, component] of Object.entries(componentDocumentationContracts)) {
   const themeInputs = component.themeInputs ?? {};
   const css = inspection.cssSources.get(component.css) ?? "";
+  const owningSources = component.css
+    ? cssSourceClosure(inspection.cssSources, component.css)
+    : new Set();
   const recipeOutputNames = new Set(Object.values(themeInputs).flatMap((input) =>
     Object.values(input.valueAssignments ?? {}).flatMap((assignments) =>
       assignments.map(({ name }) => name))));
   for (const name of component.publicTokens ?? []) {
     if (!Object.hasOwn(themeInputs, name)) {
-      if (!inspection.declaredBy.has(name) && !recipeOutputNames.has(name)) {
-        throw new Error(`${componentId} public instance token is not declared: ${name}`);
+      const consumedWithFallback = inspection.references.some(reference =>
+        reference.name === name && owningSources.has(reference.path) && reference.hasFallback);
+      if (!inspection.declaredBy.has(name) && !recipeOutputNames.has(name) && !consumedWithFallback) {
+        throw new Error(`${componentId} public instance token is neither declared nor consumed with a fallback: ${name}`);
       }
       continue;
     }
@@ -71,6 +77,14 @@ for (const [componentId, component] of Object.entries(componentDocumentationCont
           throw new Error(`${componentId} does not consume recipe output ${outputName} with fallback ${value}`);
         }
       }
+      continue;
+    }
+    if (themeInputs[name].constraints) {
+      // Constrained scalar defaults are literal values rather than semantic aliases.
+      // Imports participate in the owner closure just like shared radius recipes.
+      const consumedWithFallback = inspection.references.some(reference =>
+        reference.name === name && owningSources.has(reference.path) && reference.hasFallback);
+      if (!consumedWithFallback) throw new Error(`${componentId} does not consume constrained input ${name}`);
       continue;
     }
     if (!categorical && !inspection.semanticNames.has(fallback) && !inspection.declaredBy.has(fallback)) {

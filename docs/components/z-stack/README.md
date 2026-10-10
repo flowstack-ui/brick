@@ -25,7 +25,7 @@ The complete `@flowstack-ui/brick/styles.css` stylesheet also includes ZStack.
 Public exports are `ZStack`, `ZStackRoot`, `ZStackItem`, `ZStackRootProps`,
 `ZStackItemProps`, `ZStackElement`, `ZStackItemElement`, `ZStackAlign`,
 `ZStackJustify`, `ZStackItemAlign`, `ZStackItemJustify`, and
-`ResponsiveValue`.
+`ZStackIsolation`, `ZStackItemLayer`, `SpacingValue`, and `ResponsiveValue`.
 
 ## Quick start
 
@@ -38,7 +38,7 @@ Public exports are `ZStack`, `ZStackRoot`, `ZStackItem`, `ZStackRootProps`,
 
 ## Anatomy and DOM ownership
 
-Root renders one host. Every direct child occupies the same grid area. Item is
+Root renders one host or adopts one non-Fragment child with `asChild`. Every direct child occupies the same grid area. Item is
 optional and either renders one selected host or decorates its one child. The
 root isolates the layer group and keeps direct children at one internal
 stacking level, so later authored overlays remain above earlier positioned
@@ -56,6 +56,7 @@ Item `layer` supplies the closed `base`, `content`, and `action` depth levels;
 | Prop | Values | Root default |
 | --- | --- | --- |
 | `as` | supported semantic hosts | `div` |
+| `asChild` | `boolean` | `false` |
 | `align` | `stretch`, `start`, `center`, `end` | `stretch` |
 | `justify` | `stretch`, `start`, `center`, `end` | `stretch` |
 | `isolation` | `contained`, `open` | `contained` |
@@ -63,6 +64,7 @@ Item `layer` supplies the closed `base`, `content`, and `action` depth levels;
 
 | Item prop | Values | Default |
 | --- | --- | --- |
+| `as`, `asChild`, `slot` | supported host, boolean, string | div, false, z-stack-item |
 | `align`, `justify` | `auto`, `stretch`, `start`, `center`, `end` | `auto` |
 | `edgeSpacing` | responsive Brick spacing value | none |
 | `layer` | `base`, `content`, `action` | `base` |
@@ -84,17 +86,23 @@ component variables.
 ## Customization
 
 Use Brick props for placement. For a separately operable `LinkBox.Action`
-over media, use `isolation="open"` on Root and `layer="action"` plus
+over media, choose open isolation only when the action must participate in an
+ancestor stacking context. Ordinary actions use contained isolation and `layer="action"` plus
 `edgeSpacing` on the composed Item. Size and paint the authored children with
-Surface, Image, or application-owned styles rather than painting ZStack.
+Frame, Surface or Image rather than painting ZStack.
 
 ## Responsive behavior
 
 ZStack follows the size of its children and needs no viewport JavaScript. Root
-and Item alignment accept `{ initial, sm?, md?, lg?, xl? }` values when the
+and Item alignment accept any nonempty subset of `{ initial?, sm?, md?, lg?, xl? }` when the
 same authored layers change logical placement. This never changes source,
 paint, reading, or focus order. Use responsive Stack outside it when the
 surrounding section changes linear axis.
+
+Omitted edgeSpacing preserves the host margin; explicit zero resets it. Responsive
+spacing carries forward and does not inherit ancestor Item inputs. Control
+minimum sizes are preserved. Use Float for out-of-flow attachments that should
+not contribute to the parent size.
 
 ## Accessibility
 
@@ -102,7 +110,8 @@ ZStack adds no role or interaction. Authored DOM order remains reading, focus, a
 
 ## Composition, native props, and refs
 
-Native attributes and the root ref pass to the selected host. Item supports
+Native attributes and refs pass to the selected host, including callback-ref
+cleanup. Root and Item support
 `asChild` for applying placement to one existing element without another host.
 
 ## Examples

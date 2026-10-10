@@ -20,6 +20,18 @@ import {
 import { Grid as RootGrid } from "../../../src/index.js";
 
 const ref = createRef<HTMLElement>();
+createElement(Grid.Root, { templateColumns: { md: "[start] minmax(0, 1fr) 2fr [end]" }, templateRows: "subgrid", templateAreas: '"main aside"', autoColumns: "12rem", autoRows: "minmax(3rem, auto)", autoFlow: "column dense", inline: { sm: true }, alignContent: "space-between", justifyContent: "space-evenly" });
+createElement(Grid.Root, { asChild: true, children: createElement("section") });
+createElement(Grid.Item, { area: { initial: "main", lg: "aside" } });
+createElement(Grid.Item, { columnStart: { sm: "content-start", xl: -2 }, columnEnd: -1 });
+// @ts-expect-error Native templates and equal-column shorthand cannot conflict.
+createElement(Grid.Root, { columns: 2, templateColumns: "1fr 2fr" });
+// @ts-expect-error Area and explicit lines are alternative placement modes.
+createElement(Grid.Item, { area: "main", columnStart: 2 });
+// @ts-expect-error A span cannot accompany both explicit endpoints.
+createElement(Grid.Item, { columnStart: 1, columnEnd: 4, columnSpan: 2 });
+// @ts-expect-error A responsive full span owns both endpoints too.
+createElement(Grid.Item, { columnSpan: { initial: "full", lg: 3 }, columnStart: 2 });
 const rootElements: GridRootElement[] = [
   "div", "span", "section", "article", "nav", "header", "footer",
   "main", "aside", "ul", "ol", "li",
@@ -97,25 +109,19 @@ createElement(Grid.Root, { columns: 13 });
 createElement(Grid.Root, { minItemSize: "18rem" });
 // @ts-expect-error Responsive objects are excluded.
 createElement(Grid.Root, { columns: { base: 1, md: 3 } });
-// @ts-expect-error Responsive objects require an initial value.
 createElement(Grid.Root, { columns: { md: 3 } });
-// @ts-expect-error Responsive spans cannot combine with explicit line placement.
 createElement(Grid.Item, { columnSpan: { initial: 1, lg: 3 }, columnStart: 2 });
 // @ts-expect-error Physical alignment is excluded.
 createElement(Grid.Root, { align: "left" });
-// @ts-expect-error Span and explicit end are mutually exclusive.
 createElement(Grid.Item, { columnSpan: 2, columnEnd: 4 });
 // @ts-expect-error Full span cannot combine with a start.
 createElement(Grid.Item, { columnSpan: "full", columnStart: 2 });
-// @ts-expect-error Row span and explicit end are mutually exclusive.
 createElement(Grid.Item, { rowSpan: 2, rowEnd: 4 });
-// @ts-expect-error Placement lines are closed at 13.
 createElement(Grid.Item, { columnStart: 14 });
-// @ts-expect-error Spans are closed at 12.
 createElement(Grid.Item, { rowSpan: 13 });
 // @ts-expect-error Ordering is deliberately excluded.
 createElement(Grid.Item, { order: 2 });
-// @ts-expect-error Root deliberately has no asChild composition API.
+// @ts-expect-error Root asChild requires a child.
 createElement(Grid.Root, { asChild: true });
 // @ts-expect-error Item asChild requires exactly one React element.
 createElement(Grid.Item, { asChild: true, children: "Text" });

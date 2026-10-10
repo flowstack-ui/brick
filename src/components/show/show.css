@@ -1,7 +1,11 @@
 @layer brick.components {
-  .brick-show { display: contents !important; }
-  @media (width < 30rem) { .brick-show[data-from="sm"] { display: none !important; } }
-  @media (width < 48rem) { .brick-show[data-from="md"] { display: none !important; } }
-  @media (width < 64rem) { .brick-show[data-from="lg"] { display: none !important; } }
-  @media (width < 80rem) { .brick-show[data-from="xl"] { display: none !important; } }
+  .brick-show:not([data-show-from]) { display: contents !important; }
+  @media (width < 30rem) { .brick-show[data-show-from="sm"] { display: none !important; } }
+  @media (width < 48rem) { .brick-show[data-show-from="md"] { display: none !important; } }
+  @media (width < 64rem) { .brick-show[data-show-from="lg"] { display: none !important; } }
+  @media (width < 80rem) { .brick-show[data-show-from="xl"] { display: none !important; } }
+  @media (width < 30rem) { .brick-show:not([data-show-from])[data-from="sm"] { display: none !important; } }
+  @media (width < 48rem) { .brick-show:not([data-show-from])[data-from="md"] { display: none !important; } }
+  @media (width < 64rem) { .brick-show:not([data-show-from])[data-from="lg"] { display: none !important; } }
+  @media (width < 80rem) { .brick-show:not([data-show-from])[data-from="xl"] { display: none !important; } }
 }

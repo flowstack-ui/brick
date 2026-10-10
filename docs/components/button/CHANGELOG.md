@@ -1,13 +1,50 @@
 # Button changelog
 
-Button follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+Normalize wrapped Icon artwork alongside raw/direct SVGs in start/end slots, including flex allocation; action sizes override standalone/provider dimensions without overriding semantic color.
+
+
+Button follows the package version of `@flowstack-ui/brick`.
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+- Add subtle, surface and plain recipes while preserving soft.
+- Add loadingText, spinner and spinnerPlacement on normal/render hosts.
+- Add ButtonGroup visual defaults over Group layout for Button and IconButton.
+- Add expanded trigger presentation and documentation-style examples.
+
+- Support scalar focusRing="outside" | "inside"; omission stays outside. Inside uses paired foreground and canonical negative-width offset without changing Atom behavior.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
+### Changed
+
+- Loading uses the shared 500ms visual ring and a static arc with reduced motion.
+
+- Keep loading spinners centered when animations are disabled; shared spinner
+  positioning no longer depends on the rotation keyframes.
+
+- Expanded Button to the seven-step `2xs`–`2xl` action scale, including the
+  refined 40px `md` recipe, while preserving the visible 44px default as `lg`.
+- Responsive size objects may now omit `initial`; sparse values inherit the
+  normal component default until their first supplied breakpoint.
+
+- Added the `contrast` tone for high-emphasis neutral actions while preserving
+  the quieter existing `neutral` recipe.
+- Refined the default 44px action recipe to 16/24 text, 20px icons, and 20px
+  logical padding.
+- Added mobile-first responsive `size` values so one Button can change its
+  complete recipe at shared Brick breakpoints.
+- Added the `2xl` recipe as a 64px target with semantic `control-xl`
+  typography and 28px logical padding for prominent marketing and onboarding
+  actions.
 
 ### Added
 
 - Initial direct `Button` API and root/component-subpath exports.
-- Four variants, six semantic tones, five sizes, and three shapes.
+- Four variants, seven semantic tones, seven sizes, and three shapes.
 - Explicit full-width layout, start/end icons, and stable loading presentation.
 - Native action and link semantics, form behavior, loading and disabled states,
   `HTMLElement` ref, and mutually exclusive `asChild`/`render` composition.
@@ -32,3 +69,5 @@ Button follows the package version of `@flowstack-ui/brick`.
 - Loading presentation now uses the shared private action-spinner recipe while
   preserving Button-specific sizing, colors, disabled treatment, and RTL and
   preference behavior.
+
+- Consolidated shared action presentation and icon-only custom loading.

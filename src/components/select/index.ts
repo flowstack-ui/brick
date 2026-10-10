@@ -1,4 +1,11 @@
 export {
+  useSelect,
+  SelectRootProvider,
+  SelectState,
+  type UseSelectReturn,
+  type SelectRootProviderProps,
+  SelectClearTrigger,
+  type SelectClearTriggerProps,
   Select,
   SelectArrow,
   SelectContent,

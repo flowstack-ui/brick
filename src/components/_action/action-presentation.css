@@ -1,0 +1,7 @@
+@layer brick.components {
+  :where(.brick-button, .brick-password-toggle-field-toggle) {
+    --brick-action-ghost-hover: color-mix(in srgb, currentColor 10%, transparent);
+    --brick-action-ghost-pressed: color-mix(in srgb, currentColor 16%, transparent);
+    --brick-action-neutral-foreground: var(--brick-color-text-primary);
+  }
+}

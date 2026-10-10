@@ -2,17 +2,21 @@ import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
+import { withBrowserRunnerFixture } from "./release-browser-fixture.mjs";
 
-const script = fileURLToPath(new URL("../../scripts/run-release-browser-tests.mjs", import.meta.url));
+const script = fileURLToPath(
+  new URL("../../scripts/run-release-browser-tests.mjs", import.meta.url),
+);
+const platform = { skip: process.platform === "win32" };
 
-function plan(project, shardGroup) {
-  return spawnSync(process.execPath, [script, "--plan", project], {
-    encoding: "utf8",
-    env: {
-      ...process.env,
-      ...(shardGroup ? { FLOWSTACK_RELEASE_SHARD_GROUP: shardGroup } : {}),
-    },
-  });
+function plan(project, shardGroup, count = 1670) {
+  return withBrowserRunnerFixture({ count }, (cwd, env) =>
+    spawnSync(process.execPath, [script, "--plan", project], {
+      cwd,
+      encoding: "utf8",
+      env: { ...env, FLOWSTACK_RELEASE_SHARD_GROUP: shardGroup ?? "" },
+    }),
+  );
 }
 
 function plannedShards(output) {
@@ -22,58 +26,104 @@ function plannedShards(output) {
   }));
 }
 
-test("the complete WebKit plan preserves all 16 one-worker restarts", () => {
-  const result = plan("webkit");
-  assert.equal(result.status, 0, result.stderr);
-  assert.deepEqual(
-    plannedShards(result.stdout),
-    Array.from({ length: 16 }, (_, index) => ({ shard: index + 1, total: 16 })),
+for (const [project, budget] of [
+  ["webkit", 40],
+  ["mobile-webkit", 24],
+]) {
+  test(
+    `${project} derives bounded test-level shards from catalog size`,
+    platform,
+    () => {
+      for (const count of [budget, budget + 1, 1670]) {
+        const result = plan(project, undefined, count);
+        assert.equal(result.status, 0, result.stderr);
+        assert.match(result.stdout, /--workers=1 --fully-parallel/);
+        const total = Math.ceil(count / budget);
+        if (total > 1)
+          assert.deepEqual(
+            plannedShards(result.stdout),
+            Array.from({ length: total }, (_, index) => ({
+              shard: index + 1,
+              total,
+            })),
+          );
+        else assert.deepEqual(plannedShards(result.stdout), []);
+      }
+    },
   );
-});
+  for (const groupCount of [6, 8]) {
+    test(
+      `${groupCount} CI groups partition every ${project} shard exactly once`,
+      platform,
+      () => {
+        const groups = Array.from({ length: groupCount }, (_, i) =>
+          plan(project, `${i + 1}/${groupCount}`),
+        );
+        for (const result of groups)
+          assert.equal(result.status, 0, result.stderr);
+        const shards = groups.flatMap((result) => plannedShards(result.stdout));
+        const total = Math.ceil(1670 / budget);
+        assert.deepEqual(
+          shards.map((item) => item.shard).sort((a, b) => a - b),
+          Array.from({ length: total }, (_, i) => i + 1),
+        );
+        assert.ok(shards.every((item) => item.total === total));
+      },
+    );
+  }
+}
 
-test("three CI groups partition every Desktop WebKit shard exactly once", () => {
-  const groups = ["1/3", "2/3", "3/3"].map((group) => plan("webkit", group));
-  for (const result of groups) assert.equal(result.status, 0, result.stderr);
-
-  const shards = groups.flatMap((result) => plannedShards(result.stdout));
-  assert.equal(shards.length, 16);
-  assert.deepEqual(
-    shards.map(({ shard }) => shard).sort((left, right) => left - right),
-    Array.from({ length: 16 }, (_, index) => index + 1),
-  );
-  assert.ok(shards.every(({ total }) => total === 16));
-});
-
-test("the complete Mobile WebKit plan preserves all 32 one-worker restarts", () => {
-  const result = plan("mobile-webkit");
-  assert.equal(result.status, 0, result.stderr);
-  assert.deepEqual(
-    plannedShards(result.stdout),
-    Array.from({ length: 32 }, (_, index) => ({ shard: index + 1, total: 32 })),
-  );
-});
-
-test("three CI groups partition every Mobile WebKit shard exactly once", () => {
-  const groups = ["1/3", "2/3", "3/3"].map((group) => plan("mobile-webkit", group));
-  for (const result of groups) assert.equal(result.status, 0, result.stderr);
-
-  const shards = groups.flatMap((result) => plannedShards(result.stdout));
-  assert.equal(shards.length, 32);
-  assert.deepEqual(
-    shards.map(({ shard }) => shard).sort((left, right) => left - right),
-    Array.from({ length: 32 }, (_, index) => index + 1),
-  );
-  assert.ok(shards.every(({ total }) => total === 32));
-});
-
-test("non-WebKit projects reject a WebKit shard group", () => {
-  const result = plan("chromium", "1/3");
+for (const project of ["chromium", "firefox", "mobile-chromium"]) {
+  for (const groupCount of [6, 8]) {
+    test(
+      `${groupCount} CI groups partition every ${project} case batch once`,
+      platform,
+      () => {
+        const groups = Array.from({ length: groupCount }, (_, i) =>
+          plan(project, `${i + 1}/${groupCount}`),
+        );
+        for (const result of groups)
+          assert.equal(result.status, 0, result.stderr);
+        const shards = groups.flatMap((result) => plannedShards(result.stdout));
+        const total = Math.ceil(1670 / 120);
+        assert.deepEqual(
+          shards.map((item) => item.shard).sort((a, b) => a - b),
+          Array.from({ length: total }, (_, i) => i + 1),
+        );
+        assert.ok(shards.every((item) => item.total === total));
+      },
+    );
+  }
+}
+test("empty groups fail closed", platform, () => {
+  const result = plan("chromium", "6/6", 1);
   assert.notEqual(result.status, 0);
-  assert.match(result.stderr, /only valid for WebKit projects/);
+  assert.match(result.stderr, /no tests/);
 });
 
-test("invalid shard groups fail before browser work", () => {
+test("invalid shard groups fail before browser work", platform, () => {
   const result = plan("webkit", "4/3");
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /must select a valid group/);
 });
+
+for (const options of [{ count: 0 }, { invalid: true }, { overBudget: true }]) {
+  test(
+    `invalid browser inventory fails closed: ${JSON.stringify(options)}`,
+    platform,
+    () => {
+      const result = withBrowserRunnerFixture(options, (cwd, env) =>
+        spawnSync(process.execPath, [script, "webkit"], {
+          cwd,
+          env,
+          encoding: "utf8",
+        }),
+      );
+      assert.notEqual(result.status, 0);
+      assert.match(
+        result.stderr,
+        /Cannot safely plan|exceeds its browser context budget/,
+      );
+    },
+  );
+}

@@ -1,6 +1,9 @@
 export {
   Grid,
   type GridAlign,
+  type GridAutoFlow,
+  type GridContentAlignment,
+  type GridTrack,
   type GridColumnSpan,
   type GridColumns,
   type GridGap,

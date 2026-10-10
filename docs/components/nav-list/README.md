@@ -3,6 +3,27 @@
 Nav List renders finished native navigation lists, current destinations, and
 optional grouped disclosure sections on Atom NavList behavior.
 
+### Presentation and composition controls
+
+Root accepts `variant="soft|solid|outline|ghost|plain"` (default soft),
+`radius: Radius` (default control), and the existing size, density, tone, gap
+and inset controls. Plain removes decorative hover, press and current fills;
+keyboard focus and current weight remain. Radius uses shared core/semantic tokens.
+
+Link accepts `trailingContent` for meaningful noninteractive metadata, such as
+`<Badge>12 unread</Badge>`. Unlike decorative `startIcon`/`endIcon`, it is not
+aria-hidden or constrained to an icon square. Never nest buttons inside links.
+
+SectionTrigger accepts `indicator`: omission keeps the chevron, a decorative
+node replaces it, and null removes it. With `asChild`, supply complete child
+anatomy; no automatic indicator or supporting-content wrappers are added.
+
+Resolved `aria-current` controls both announcement and emphasis. An explicit
+false overrides active. Disabled composed anchors have no href. Closing content
+becomes inert and aria-hidden immediately while shared presence retains exit
+animation; focus inside closing content returns to the section trigger.
+`forceMount` keeps closed content mounted but hidden, including horizontal lists.
+
 ## When and where to use
 
 Use Nav List for sidebar destinations, settings sections, documentation
@@ -77,13 +98,42 @@ recipes and aligned Link content.
 
 ## API
 
+### Independent group spacing
+
+`NavList.Root gap` sets spacing between direct groups. `NavList.Section gap`
+sets spacing between its heading/trigger and content. Both accept optional
+scalar `SpacingValue` (number or string), resolved like Stack spacing: `"6"`
+uses the spacing token, numeric factors use the base spacing unit, and explicit
+CSS lengths are supported. Responsive objects are not accepted.
+
+Omitting either prop preserves `--brick-nav-list-section-gap` (normally 8px).
+Root gap does not cascade into Section gap; `gap={0}` explicitly removes the
+selected gap. Neither prop changes the List's row spacing or density. The
+component-owned `--brick-nav-list-gap-input` carries each host's resolved prop
+and resets at each Root/Section boundary; prefer the props for local spacing.
+
+```tsx
+<NavList.Root gap="6">
+  <NavList.Section>
+    <NavList.SectionLabel>Components</NavList.SectionLabel>
+    <NavList.SectionContent indent="none">
+      <NavList.List>{/* NavList.Item > NavList.Link */}</NavList.List>
+    </NavList.SectionContent>
+  </NavList.Section>
+</NavList.Root>
+```
+
 ### Root recipes
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `soft`, `solid`, `outline`, `ghost` | `soft` |
+| `variant` | `soft`, `solid`, `outline`, `ghost`, `plain` | `soft` |
 | `tone` | `accent`, `neutral` | `accent` |
 | `size` | `sm`, `md`, `lg` | `md` |
+| `density` | `comfortable`, `compact` | `comfortable` |
+| `inset` | `default`, `none` (horizontal row padding) | `default` |
+| `radius` | `Radius` | `control` |
+| `gap` | scalar `SpacingValue` | theme recipe |
 | `orientation` | `vertical`, `horizontal` | `vertical` |
 
 ### Link additions
@@ -94,34 +144,54 @@ recipes and aligned Link content.
 | `startIcon` | `ReactNode` | none |
 | `endIcon` | `ReactNode` | none |
 | `description` | `ReactNode` | none |
+| `trailingContent` | meaningful noninteractive `ReactNode` | none |
 
 Link also preserves Atom `href`, `active`, `current`, `disabled`,
 `aria-current`, `render`, and `asChild`. `asChild` delegates all content and
-therefore cannot be combined with the three Brick anatomy props.
+therefore cannot be combined with Brick's supporting-content props.
 
 ### SectionTrigger additions
 
 | Prop | Type | Default |
 | --- | --- | --- |
 | `startIcon` | `ReactNode` | none |
+| `indicator` | decorative `ReactNode`; null suppresses | default chevron |
 
 The trigger start icon uses the same decorative size and alignment owner as a
 Link start icon. `asChild` delegates the complete trigger anatomy and therefore
-cannot be combined with `startIcon`.
+cannot be combined with `startIcon` or `indicator`; no automatic chevron is added.
 
 `startIcon` and `endIcon` are decorative and their wrappers are hidden from
-assistive technology. A meaningful count or Badge belongs in `children`; use a
-Brick HStack inside Link to arrange the label and metadata while preserving one
-complete clickable destination row.
+assistive technology. A meaningful count or Badge belongs in `trailingContent`
+or in `children`; preserve one complete destination without nested controls.
 
 List preserves `ordered`. Section preserves `collapsible`, `open`,
 `defaultOpen`, `onOpenChange`, and `disabled`. SectionLabel preserves
 `as="h2|h3|h4|h5|h6|div"`. SectionContent preserves `forceMount`. Every part
 preserves native props, class, style, slot, ref, `render`, and `asChild`.
 
-Section labels use the active size recipe and the same logical leading-column
-inset as destination rows. This keeps a static group title aligned with the
-row icons without Block-owned padding or text-transform overrides.
+Section labels share the row's logical leading inset. For static aligned
+groups, use `SectionContent indent="none"`; default indent retains the existing
+size-aware nesting offset. The row's reserved 1px border is independent.
+
+SectionContent accepts `indent: NavListIndent` (`default | none`, default
+`default`) and emits `data-indent`. Root accepts `inset: NavListInset`
+(`default | none`) and emits `data-inset`. Inset changes horizontal row padding
+only; density still owns vertical spacing. These controls do not change
+disclosure, focus or navigation semantics and work with `render` / `asChild`.
+
+```tsx
+<NavList.Root aria-label="Components">
+  <NavList.Section>
+    <NavList.SectionLabel>Layout</NavList.SectionLabel>
+    <NavList.SectionContent indent="none">
+      <NavList.List>
+        <NavList.Item><NavList.Link href="/stack">Stack</NavList.Link></NavList.Item>
+      </NavList.List>
+    </NavList.SectionContent>
+  </NavList.Section>
+</NavList.Root>
+```
 
 ## Visual recipes and states
 
@@ -139,7 +209,24 @@ and wrap. Neutral soft current rows use an opaque appearance-aware layered
 surface instead of a raised surface that can disappear against a base panel;
 their current-hover paint remains separately visible.
 
-Root emits `data-variant`, `data-tone`, and `data-size` for visual recipes.
+Root emits `data-variant`, `data-tone`, `data-size`, and `data-density` for visual recipes.
+
+Density changes spacing independently of typography and icon size. Comfortable
+preserves the original size recipes. Compact uses a 1px row gap and, at the
+default root font size, 28/35/42px minimum rows for sm/md/lg (including borders).
+Long labels and descriptions grow naturally. Use compact for dense desktop
+navigation; retain comfortable md or lg for touch-oriented navigation.
+
+```tsx
+<NavList.Root aria-label="Documentation" density="compact">
+  <NavList.List>
+    <NavList.Item><NavList.Link href="/guide">Guide</NavList.Link></NavList.Item>
+  </NavList.List>
+</NavList.Root>
+```
+
+Section labels use primary text and strong weight; idle destinations use
+secondary text. Current and hover styling remain owned by tone and variant.
 Collapsible SectionContent animates through Atom's measured open/close lifecycle
 and becomes immediate under reduced motion.
 
@@ -169,6 +256,7 @@ link foreground/surface state variables, including the current-hover surface,
 `--brick-nav-list-current-border`, `--brick-nav-list-focus-ring`,
 icon size/gap, description foreground, label typography aliases, and
 `--brick-nav-list-section-label-padding-inline`,
+`--brick-nav-list-section-label-foreground`,
 `--brick-nav-list-section-label-font-size`,
 `--brick-nav-list-section-label-font-weight`,
 `--brick-nav-list-section-label-line-height`,

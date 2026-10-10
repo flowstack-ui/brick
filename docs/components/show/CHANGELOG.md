@@ -4,6 +4,10 @@ Show follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add wrapper-free conditional rendering with fallback and typed value children.
+- Add responsive asChild projection preserving visible display and refs.
+- Move documentation to Utilities with separate conditional/responsive examples.
+
 ### Added
 
 - Made visible Show hosts layout-transparent so parent flex and grid structures

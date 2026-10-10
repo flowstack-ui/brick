@@ -21,7 +21,8 @@
   ],
   "composition": [
     "Keep Code inside the surrounding Text or component content owner when the literal completes that sentence or label.",
-    "Choose subtle for an independently visible inline token and plain with tone inherit when the surrounding component already owns paint and foreground."
+    "Choose subtle for an independently visible inline token and plain with tone inherit when the surrounding component already owns paint and foreground.",
+    "Use the solid, outline and surface variants with semantic tones when needed. Size inherit follows surrounding text; xs, sm, md and lg select explicit recipes. Static asChild projects presentation onto one semantic code host, not an interactive behavior owner."
   ],
   "rules": [
     {

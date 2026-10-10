@@ -1,32 +1,35 @@
-import { NavList } from "@flowstack-ui/brick";
+import { NavList, type NavListDensity } from "@flowstack-ui/brick";
 import type { PlaygroundEntry } from "../app/component-registry.js";
+import { orderNavigation } from "./navigation-order.js";
 
 export function ComponentNavigation({
   currentRoute,
   entries,
   onNavigate,
+  density,
 }: {
   currentRoute: string;
   entries: readonly PlaygroundEntry[];
   onNavigate?: () => void;
+  density?: NavListDensity;
 }) {
-  const categories = Array.from(
-    new Set(entries.map((entry) => entry.category)),
-  ).sort((left, right) => left.localeCompare(right));
+  const ordered = orderNavigation(entries);
+  const categories = Array.from(new Set(ordered.map((entry) => entry.category)));
 
   return (
     <NavList.Root
       aria-label="Component navigation"
       className="evidence-navigation"
+      density={density}
+      gap="6"
     >
       {categories.map((category) => (
         <NavList.Section className="evidence-navigation__group" key={category}>
           <NavList.SectionLabel>{category}</NavList.SectionLabel>
-          <NavList.SectionContent>
+          <NavList.SectionContent indent="none">
             <NavList.List>
-              {entries
+              {ordered
                 .filter((entry) => entry.category === category)
-                .sort((left, right) => left.title.localeCompare(right.title))
                 .map((entry) => (
                   <NavList.Item key={entry.id}>
                     <NavList.Link

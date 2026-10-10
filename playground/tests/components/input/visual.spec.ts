@@ -7,28 +7,29 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/input");
+installVisualDefaults("/input?qualification=1");
 
-async function removeStickyCaptureOverlap(page: import("@playwright/test").Page) {
+async function removeStickyCaptureOverlap(
+  page: import("@playwright/test").Page,
+) {
   await page
-    .locator(".evidence-app-bar, .evidence-review-header")
+    .locator("[data-playground-app-bar], .evidence-review-header")
     .evaluateAll((elements) => {
       for (const element of elements) {
         (element as HTMLElement).style.display = "none";
       }
-  });
+    });
 }
 
 test("Input recipes, geometry, content, and states", async ({ page }) => {
+  await removeStickyCaptureOverlap(page);
   await expect(page.getByTestId("input-overview")).toHaveScreenshot(
     "overview-light.png",
   );
   await expect(page.getByTestId("input-variants")).toHaveScreenshot(
     "variants-light.png",
   );
-  await expect(page.getByTestId("input-sizes")).toHaveScreenshot(
-    "sizes-light.png",
-  );
+  await expectEvidenceScreenshot(page, page.getByTestId("input-sizes"), "sizes-light.png");
   await expect(page.getByTestId("input-shapes")).toHaveScreenshot(
     "shapes-light.png",
   );
@@ -46,6 +47,7 @@ test("Input recipes, geometry, content, and states", async ({ page }) => {
 test("Input dark, constrained, RTL, and forced-color evidence", async ({
   page,
 }) => {
+  await removeStickyCaptureOverlap(page);
   await setAppearance(page, "dark");
   await expect(page.getByTestId("input-appearance")).toHaveScreenshot(
     "appearance-dark.png",

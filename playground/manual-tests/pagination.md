@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Pagination |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased 0.2.3 |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -13,7 +13,21 @@
 | Assistive technology | |
 | Playground route | `/pagination` |
 
-Scenario order: `01 Overview`, `02 Anatomy and semantics`, `03 Variants`, `04 Sizes`, `05 State and boundaries`, `06 Localization and custom content`, `07 Appearance and customization`, `08 Responsive overflow and RTL`, `09 URL-backed results`.
+Scenario order: `01 pagination.overview` → `02 pagination.anatomy` → `03 pagination.variants` → `04 pagination.sizes` → `05 pagination.state` → `06 pagination.localization` → `07 pagination.appearance` → `08 pagination.stress` → `09 pagination.urls`.
+
+Use `?qualification=1` for this preserved scenario sequence; review the ordinary documentation examples separately.
+
+Normal route uses focused documentation examples. Legacy numbered qualification
+scenarios remain at `/pagination?qualification=1`.
+
+## Controller and composition
+
+Check count/page-size transitions, clamping, custom Items hosts, attached borders,
+PageText formats and translations, First/Last and disabled states. Confirm
+Button peers share named sizes, including sparse responsive default md.
+
+Result:
+Notes or issue:
 
 ## Step 0 — URL-backed results
 
@@ -38,9 +52,8 @@ Notes or issue:
 ## Step 2 — Visual recipes and preferences
 
 Inspect all variants and sizes in light, dark, forced colors, and reduced motion. Confirm stable geometry across hover, active, current, focus-visible, and disabled states; visible focus; centered labels and icons; and current/disabled meaning beyond color.
-Confirm the current page retains its accent-on-solid foreground and uses the
-accent-solid hover and pressed states instead of the neutral page-control
-background.
+Confirm neutral ghost controls and outline current page by default. Explicit
+selectedVariant and tone must preserve the shared Button interaction palette.
 Confirm `boundaryVariant="outline"` borders only Previous and Next while page
 numbers retain the Root recipe.
 

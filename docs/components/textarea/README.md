@@ -1,8 +1,5 @@
 # Textarea
 
-Textarea is Brick's finished native multi-line plain-text control. It composes
-released Atom value, form, Field, validation, auto-resize, and character-count
-behavior with Brick's visual recipes and customization hooks.
 
 ## When and where to use
 
@@ -38,7 +35,6 @@ import "@flowstack-ui/brick/styles/textarea.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 ## Quick start
 
 ```tsx
@@ -48,7 +44,7 @@ import { Field, Textarea } from "@flowstack-ui/brick";
   <Field.Label>Project summary</Field.Label>
   <Textarea.Root name="summary" />
   <Field.Description>Explain the intended result.</Field.Description>
-</Field.Root>
+</Field.Root>;
 ```
 
 ## Anatomy and DOM ownership
@@ -59,10 +55,10 @@ import { Field, Textarea } from "@flowstack-ui/brick";
 </Textarea.Root>
 ```
 
-| Part | Default element | Owner | Ref target |
-| --- | --- | --- | --- |
-| `Root` | visual `span` containing native `textarea` | Brick wrapper + Atom Textarea Root | native `HTMLTextAreaElement` |
-| `Count` | `span` | Atom count state + Brick styling | `HTMLSpanElement` |
+| Part    | Default element                            | Owner                              | Ref target                   |
+| ------- | ------------------------------------------ | ---------------------------------- | ---------------------------- |
+| `Root`  | visual `span` containing native `textarea` | Brick wrapper + Atom Textarea Root | native `HTMLTextAreaElement` |
+| `Count` | `span`                                     | Atom count state + Brick styling   | `HTMLSpanElement`            |
 
 Root always preserves native textarea semantics. Its wrapper is non-semantic
 and never focusable. Count is optional and follows the current Atom value.
@@ -71,29 +67,33 @@ and never focusable. Count is optional and follows the current Atom value.
 
 ### Root
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `variant` | `"outline" \| "soft" \| "underline"` | `"outline"` |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` |
-| `shape` | `"sharp" \| "rounded"` | `"rounded"` |
-| `fullWidth` | `boolean` | `true` |
-| `minRows` | `number` | `3` |
-| `autoResize` | `boolean` | `false` |
-| `maxRows` | `number` | only with `autoResize` |
-| `resize` | `"none" \| "vertical" \| "horizontal" \| "both"` | `"vertical"` when not auto-resizing |
-| `className`, `style` | wrapper customization | — |
-| `textareaClassName`, `textareaStyle` | native control customization | — |
+| Prop                                 | Type                                             | Default                             |
+| ------------------------------------ | ------------------------------------------------ | ----------------------------------- |
+| `variant`                            | responsive `"outline" \| "surface" \| "soft" \| "subtle" \| "ghost" \| "plain" \| "underline"` | `"outline"` |
+| `size`                               | `"2xs" \| "xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl"`; or a responsive value | `"lg"` |
+| `shape`                              | `"sharp" \| "rounded"`                           | `"rounded"`                         |
+| `radius`                             | `Radius`                                         | component default                   |
+| `value`, `defaultValue`               | `string`                                         | —                                   |
+| `onValueChange`                       | `(value: string) => void`                         | —                                   |
+| `fullWidth`                          | `boolean`                                        | `true`                              |
+| `minRows`                            | `number`                                         | `3`                                 |
+| `autoResize`                         | `boolean`                                        | `false`                             |
+| `maxRows`                            | `number`                                         | only with `autoResize`              |
+| `resize`                             | `"none" \| "vertical" \| "horizontal" \| "both"` | `"vertical"` when not auto-resizing |
+| `className`, `style`                 | wrapper customization                            | —                                   |
+| `textareaClassName`, `textareaStyle` | native control customization                     | —                                   |
 
-Auto-resize and manual `resize` are intentionally exclusive. Underline has
-fixed sharp geometry and rejects `shape`. Root otherwise accepts released Atom
+Auto-resize and manual `resize` are intentionally exclusive. A responsive
+variant has breakpoint-dependent geometry, so it rejects both `shape` and
+`radius`; scalar underline likewise has fixed sharp geometry. Root otherwise accepts released Atom
 Textarea props and supported native textarea props, including controlled and
 uncontrolled values, `name`, `form`, `rows`, `cols`, `wrap`, `placeholder`,
 `minLength`, `maxLength`, validation, events, ARIA, and data attributes.
 
 Closed values are:
 
-- variants: `outline`, `soft`, `underline`;
-- sizes: `sm`, `md`, `lg`;
+- variants: `outline`, `surface`, `soft`, `subtle`, `ghost`, `plain`, `underline`;
+- sizes: `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`;
 - shapes: `sharp`, `rounded`;
 - manual resize: `none`, `vertical`, `horizontal`, `both`.
 
@@ -107,14 +107,34 @@ Public exports are `Textarea`, `TextareaRoot`, `TextareaCount`,
 `TextareaRootProps`, `TextareaCountProps`, `TextareaVariant`, `TextareaSize`,
 `TextareaShape`, and `TextareaResize`.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
-- `outline` uses a complete border and raised/base control surface.
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+Textarea is Brick's finished native multi-line plain-text control. It composes
+released Atom value, form, Field, validation, auto-resize, and character-count
+behavior with Brick's visual recipes and customization hooks.
+
+- `outline` uses a complete border over a transparent rest and hover surface,
+  matching Input on shared form surfaces.
 - `soft` uses a subtle filled surface and restrained border.
+- `subtle` uses a lighter low-emphasis fill.
+- `ghost` exposes its boundary on hover and focus.
+- `plain` is visually quiet until focus.
 - `underline` uses a transparent surface and bottom indicator.
 - Sizes change padding and typography while keeping the same native row count.
-- Shapes change only outline/soft corner geometry.
-- Invalid changes the border; compose Field.Error for non-color meaning.
+- Shape or radius changes corners on scalar variants other than underline.
+- Hover never overrides focused, invalid, disabled, or read-only treatment.
+- Invalid changes the border and focus ring; compose Field.Error for non-color meaning.
 - Disabled and read-only remain visually and semantically distinct.
 - Count aligns to the logical end and uses danger text for Atom over-limit
   state.
@@ -128,7 +148,8 @@ Stable classes and the `data-slot` defaults:
 - `.brick-textarea-control` / `data-slot="textarea-control"`
 - `.brick-textarea-count` / `data-slot="textarea-count"`
 
-Root exposes `data-variant`, `data-size`, `data-shape`, `data-resize`,
+Root exposes `data-variant` and breakpoint `data-variant-*` attributes,
+`data-size`, `data-shape`, `data-resize`,
 `data-full-width`, and `data-autoresize`. Atom state remains on the native
 control and Count.
 
@@ -169,11 +190,13 @@ the native editing surface.
 ```tsx
 <Textarea.Root
   aria-label="Notes"
-  style={{
-    "--brick-textarea-border": "#18794e",
-    "--brick-textarea-focus-ring": "#18794e",
-    "--brick-textarea-radius": "0.75rem",
-  } as React.CSSProperties}
+  style={
+    {
+      "--brick-textarea-border": "#18794e",
+      "--brick-textarea-focus-ring": "#18794e",
+      "--brick-textarea-radius": "0.75rem",
+    } as React.CSSProperties
+  }
   textareaStyle={{ letterSpacing: "0.04em" }}
 />
 ```
@@ -181,10 +204,23 @@ the native editing surface.
 ## Responsive behavior
 
 Root defaults to full width, keeps `min-inline-size: 0`, and cannot exceed its
-container. Editable text remains at least 16 CSS pixels. Logical alignment
-supports RTL. Applications own surrounding responsive layout and may opt out
-of full width. Horizontal/both manual resize remains constrained by the
-container.
+container. The browser-native handle belongs to the outer visual wrapper, not
+the inner textarea. Manual resizing grows the editing area while Count keeps a
+compact footer with clearance from the handle. Horizontal and both remain constrained
+by the parent. The `lg` default uses 16px editable text; compact recipes are
+deliberate dense-interface choices. Logical alignment supports RTL.
+Applications own surrounding responsive layout and may opt out of full width.
+
+Use Root `style` for constraints on the complete manually resizable field, and
+`textareaStyle` for constraints on the editor itself. Disabled controls have
+no resize handle; read-only controls retain resizing for reading. Explicit
+`dir` applies to both the visual boundary and the native control. The wrapper
+does not gain a role, tab stop, custom pointer handlers, or keyboard behavior.
+
+Atom owns auto-resize measurement. It preserves authored CSS height constraints,
+applies normalized `minRows`/`maxRows` bounds, recalculates after width, font,
+class, visibility, value, and form-reset changes, and restores the latest
+authored inline dimensions when auto-resize is disabled or unmounted.
 
 ## Accessibility
 
@@ -219,12 +255,7 @@ external `form` ownership, and inline/native validation.
 ### Bounded auto-resize
 
 ```tsx
-<Textarea.Root
-  aria-label="Description"
-  autoResize
-  minRows={3}
-  maxRows={8}
-/>
+<Textarea.Root aria-label="Description" autoResize minRows={3} maxRows={8} />
 ```
 
 ### Manual resize

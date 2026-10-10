@@ -16,6 +16,7 @@ Apply native stress emphasis while preserving the surrounding Brick typography a
 ## Required composition
 
 - Keep Em inside the Text, heading, link, or component content owner whose sentence it completes.
+- Use asChild only with one authored element that preserves em semantics. Prefer data-slot; legacy slot is a deprecated data-slot alias, not native slot forwarding. Explicit data-slot wins.
 
 ## Rules
 

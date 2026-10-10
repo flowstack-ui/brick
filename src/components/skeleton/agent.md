@@ -24,6 +24,8 @@ Preserve expected content geometry during a short application-owned load without
 - **MUST:** Keep the contextual default paint or another semantic Theme role visibly distinct from the actual containing surface in light and dark appearance.
 - **MUST:** Preserve reduced-motion and forced-colors behavior and avoid application animation overrides.
 - **MUST:** Load styles.css or core.css plus skeleton.css.
+- **MUST:** Use asChild to retain an existing block or layout host. Do not put block content inside the default span. Loading makes the host inert; do not put the loading toggle inside it.
+- **SHOULD:** Use shared radius, size, gap and lastLineWidth before CSS overrides. Compose responsive dimensions with Skeleton asChild around Frame. Lines only affect standalone text; finite counts normalize to 1–100.
 
 ## Common mistakes
 

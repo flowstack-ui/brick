@@ -1,9 +1,28 @@
 # Accordion manual-test protocol
 
+## 2026-09-18 additions (human results remain open)
+
+Normal `/accordion` contains source-paired feature examples. Historical numbered
+scenarios below now live at `/accordion?qualification=1`.
+
+- Review all six recipes in light/dark and forced colors; inspect enclosed
+  corner paint, subtle expanded paint, dividers and first/last focus outlines.
+- Resize responsive size/variant examples across shared breakpoints; no stale
+  border or nested-indicator positioning may survive a recipe change.
+- Use Store actions and retained inputs. Close from a focused descendant:
+  focus returns to its trigger and closed content is unavailable to AT.
+- Open nested disclosures independently; compare logical start/end indicators
+  in RTL and horizontal compositions. Collapse and reopen the parent, wait for
+  its entrance motion to finish, then expand the child; the parent must grow to
+  reveal the complete child panel without clipping. Test rapid reversal and
+  reduced motion.
+- Inspect Button delegation, custom indicators, avatars, subtext and sibling
+  actions. At 200–400% zoom, check wrapping and interactive target separation.
+
 | Run information | Value |
 | --- | --- |
 | Component | Accordion |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Local 0.2.3 candidate; record archive digest |
 | Reviewer |  |
 | Date |  |
 | Browser and version |  |
@@ -12,6 +31,7 @@
 | Physical device |  |
 | Assistive technology |  |
 | Playground route | `/accordion` |
+| Qualification route(s) | `/accordion` and `/accordion?qualification=1` |
 
 Scenario order: `01 Overview`, `02 Variants`, `03 Sizes`, `04 Selection`,
 `05 States`, `06 Orientation`, `07 Composition`, `08 Theme`, `09 Stress`.
@@ -33,7 +53,7 @@ horizontal with Left/Right, then repeat horizontal in RTL at 09. Activate with
 Enter and Space. Inspect 07 output. Expected: focus follows enabled Triggers in
 visual reading order; disabled items are skipped; activation happens once;
 expanded, controls, IDs, labels, headings, and optional region role match. The
-default Indicator points down while closed and up while open.
+default Indicator points toward inline-end while closed and down while open.
 
 ## Step 3 — Appearance, responsive overflow, and motion
 

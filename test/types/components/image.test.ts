@@ -20,10 +20,14 @@ createElement(ImageRoot, { src: "/workspace.jpg" },
 createElement(Image.Content, {});
 // @ts-expect-error Fit values are closed.
 createElement(Image.Root, { fit: "crop" });
-// @ts-expect-error Position values are closed.
 createElement(Image.Root, { position: "left" });
+createElement(Image.Root, { srcSet: "/small.jpg 400w", fit: { md: "contain" }, position: { initial: "start", lg: "25% 70%" }, ratio: { md: 1 } });
+// @ts-expect-error Position requires CSS strings, not booleans.
+createElement(Image.Root, { position: true });
+// @ts-expect-error Ratio stays numeric.
+createElement(Image.Root, { ratio: { md: "square" } });
 // @ts-expect-error Radius values are closed.
-createElement(Image.Root, { radius: "2xl" });
+createElement(Image.Root, { radius: "invalid" });
 // @ts-expect-error src belongs to Root, not Content.
 createElement(Image.Content, { alt: "Workspace", src: "/workspace.jpg" });
 

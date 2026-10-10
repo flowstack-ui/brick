@@ -8,10 +8,12 @@ import {
 } from "../../../src/tooltip.js";
 
 describe("Tooltip", () => {
-  it("exposes exactly the approved eight-part namespace", () => {
+  it("exposes the approved compound and controller namespace", () => {
     expect(Object.keys(Tooltip)).toEqual([
       "Provider",
       "Root",
+      "RootProvider",
+      "Context",
       "Trigger",
       "Portal",
       "Content",

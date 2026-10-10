@@ -1,9 +1,17 @@
-import { Sidebar, type SidebarPosition, type SidebarRootProps, type SidebarSize, type SidebarSurface, type SidebarVariant } from "../../../src/sidebar.js";
+import { Sidebar, type SidebarPosition, type SidebarRootProps, type SidebarSize, type SidebarSurface, type SidebarVariant, type SidebarInset, type SidebarContentProps } from "../../../src/sidebar.js";
+const inset: SidebarInset = "none";
+const content: SidebarContentProps = { inset, children: null };
+void content;
+// @ts-expect-error closed region inset
+const badInset: SidebarInset = "sm";
+void badInset;
 const variant: SidebarVariant = "docked";
 const size: SidebarSize = "md";
 const position: SidebarPosition = "sticky";
 const surface: SidebarSurface = "transparent";
 const root: SidebarRootProps = { children: null, variant, size, position, surface, collapsedState: "rail" };
+const borderless: SidebarRootProps = { bordered: false };
+void borderless;
 void Sidebar; void root;
 // @ts-expect-error unsupported variant
 const badVariant: SidebarVariant = "solid";

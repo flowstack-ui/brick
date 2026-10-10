@@ -34,4 +34,7 @@ export {
   type CodeBlockTitleProps,
   type CodeBlockVariant,
   type CodeBlockWrap,
+  type CodeBlockColorScheme,
 } from "./CodeBlock.js";
+export { createShikiAdapter, type CodeBlockShikiHighlighter, type CodeBlockShikiOptions } from "./shiki.js";
+export { type CodeBlockMeta, type CodeBlockToken } from "./lines.js";

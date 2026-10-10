@@ -1,6 +1,6 @@
 import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/data-grid");
+installVisualDefaults("/data-grid?qualification=1");
 
 test("Data Grid defaults, recipes, sizing, selection, and sorting", async ({ page }) => {
   await page.setViewportSize({ width: 1120, height: 1500 });

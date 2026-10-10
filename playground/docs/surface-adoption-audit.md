@@ -9,6 +9,21 @@ CSS under `playground/src`.
 
 ## Decision rule
 
+The date-family and recent utility pass retains the same ownership:
+
+| Owner | Surface responsibility | Layout retained by |
+| --- | --- | --- |
+| Toggle Tip | shared Preview/Code canvas only | Popover owns the toggled panel paint; Button owns its trigger |
+| Float | Its child owns paint; Float itself is placement-only | Anchor establishes containment and Root owns logical offsets |
+| Marquee | Surface and Card own content paint; optional Edge explicitly matches its surface | Frame bounds vertical height; Marquee owns tracks; two scoped artwork transforms are deliberate illustration CSS |
+| Calendar | shared Specimen surface only | Calendar cell and range paint remains component-owned |
+| Date Input | shared Specimen surface only | input recipe, segment focus and grouping remain DateInput-owned |
+| Date Picker | shared Specimen surface only | input and popup recipes remain component-owned; Popover owns portal presentation |
+| Close Button | shared Specimen surface only | IconButton action geometry and state paint |
+| Download Trigger | shared Specimen surface only | Button geometry and pending presentation |
+| Steps | shared Specimen surface only | progress markers, connectors and current state |
+| Splitter | shared Specimen surface only | boundary, grip and panel geometry |
+
 Use Brick Surface when one complete generic wrapper owns a neutral background,
 optional border/elevation/radius, and inset. Surface owns only that paint.
 Container continues to own measure; Stack and Grid continue to own layout.
@@ -62,10 +77,17 @@ different owner.
 | Container | generic appearance/customization stage only when Container remains the measured child | measure boundaries, dashed width guides, nesting, full-bleed, vertical-writing geometry |
 | Section | contained paint examples where Surface remains the visual owner | page-region rhythm, semantic region choice, logical start/end spacing, and wrapper-free Surface composition |
 | Frame | generic evidence surfaces around bounded content | logical size constraints, definite-parent percentage sizing, nested-variable isolation, and Scroll Area bounds |
+| Center | centered evidence surfaces and the paint around Square/Circle icon wells | centering, equal inline/block geometry, responsive sizing, flex resistance, and inline/RTL behavior |
 | Bleed | generic evidence stages around inset parents | negative logical margin geometry, responsive edge ownership, nested-variable isolation, and overflow diagnostics |
 | Surface | none of the recipe specimens; they intentionally isolate Surface against raw contrasting stages | all Surface recipe stages, inset marker, nesting and elevation contrast; code block |
 | ZStack | overview, placement, composition, and stress evidence stages | ZStack overlap and placement geometry; the stage layer being positioned; source-order evidence |
 | Appearance | overview, nested-scope, portal-action, and semantic-host evidence surfaces | Appearance boundaries themselves; explicit semantic-token scope and wrapper-free host composition |
+| Locale Provider | generic specimen and comparison surfaces | provider context, inherited locale/direction output, and wrapper-free ownership |
+| Format Number | generic specimen surface | locale-formatted inline output and inherited typography |
+| Format Byte | generic specimen surface | locale-formatted inline output, unit scaling, and inherited typography |
+| For | generic specimen and fallback surfaces | wrapper-free item output, semantic collection host, and fallback content |
+| Checkmark | generic specimen and appearance surfaces | passive state recipes, SVG geometry, and forced-color output |
+| Radiomark | generic specimen and appearance surfaces | passive state recipes, circular geometry, and forced-color output |
 | Divider | overview, appearance, customization, and generic specimen cells | Divider line recipes, measured inset/axis stages, and forced-color evidence |
 | Scroll Area | generic specimen cells, appearance scopes, and customization shell | Scroll Area viewport boundaries, axis constraints, native scrollbar paint, and code sample |
 | Code | generic overview/cell/appearance/customization stages | Code recipes, inline wrapping, native output, and technical literal paint |
@@ -76,6 +98,14 @@ different owner.
 | Highlight | overview, recipe, and adaptation evidence stages | Highlight's inline match paint, native semantic output, and exact Atom segmentation |
 | Prose | overview, scale, content, and adaptation evidence stages | Prose descendant typography, reading measure, editorial overflow, and native document structure |
 | Code Block | generic outer evidence cells and appearance stages | Code Block recipes, technical surface paint, overflow, selection, and source anatomy |
+| QR Code | outer specimen cells and comparison regions | QR symbol geometry, quiet zone, logo placement, export and scanner-safe paint |
+| Table of Contents | outer specimen cells and comparison regions | navigation hierarchy, current location, indicator, scroll containment and focus paint |
+| Tags Input | outer specimen cells and comparison regions | Editing field, chips, focus and suggestions remain component-owned |
+| Input Addon | shared example and specimen canvas | InputAddon segment paint and Group attachment geometry remain component-owned |
+| Checkbox Card | shared example and specimen canvas | CheckboxCard selection, border, focus, and disabled recipes remain component-owned |
+| Native Select | outer specimen cells and comparison regions | Native control boundary, indicator and form states remain component-owned |
+| Editable | outer specimen cells and comparison regions | Preview, edit field and action focus remain component-owned |
+| Pin Input | outer specimen cells and comparison regions | Individual cells, group spacing and focus remain component-owned |
 | List | overview, specimen cells, appearance scopes, customization shell, and stress panel | List markers, dividers, borders, anatomy, nesting, and exact output |
 | Data List | overview, comparison cells, appearance scopes, customization shell, and stress panels | Data List label/value semantics, orientation, dividers, and logical label-measure evidence |
 | Table | overview, comparison cells, appearance scopes, customization shell, and stress explanation | Table boundaries, section paint, sticky/overflow geometry, and rendered native output |
@@ -106,6 +136,7 @@ different owner.
 | Color Picker | overview, recipe, form, state, and responsive evidence panels | Color Picker controls, inputs, preset triggers, floating content, swatches, form behavior, and state paint |
 | Notification Badge | overview/semantics/stress panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Notification Badge anchor, overlap, placement, and owning-control paint; code block |
 | Avatar | overview/control/image-state/stress outer panels, specimen-grid shell/cells, appearance scopes, customization shell/preview | Avatar image/fallback/status paint and media crop diagnostics; code block |
+| Avatar Group | overview, recipe, overflow, composition, and stress evidence stages | Avatar overlap, stacking, overflow identity, descendant geometry, and constrained-width behavior |
 | Toggle | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Toggle recipes and selected-state customization; code block |
 | Toggle Group | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Toggle Group recipes, attachment geometry, and selected-state customization; code block |
 | Segment Group | overview, size/layout cells, appearance scopes, customization shell/preview, and stress panel | Segment Group root/item/indicator recipes, measured selection geometry, and radio-state evidence; code block |
@@ -122,6 +153,7 @@ different owner.
 | Checkbox | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | Checkbox control/state paint and native form evidence; code block |
 | Checkbox Group | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | group aggregation, parent state, Fieldset relationships and attribute readouts; code block |
 | Radio Group | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | radio control/state paint, roving-focus evidence, Fieldset relationships, native form output, and composition output; code block |
+| Radio Card | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | Radio Card item boundary, checked state, orientation, control placement, and native form evidence; code block |
 | Switch | shared forms overview/grid/cells, appearance scopes, customization shell/preview, stress panel | Switch track/thumb/state paint, Field relationships, native form output, and composition output; code block |
 | Select | overview, specimen-grid shell/cells, appearance scopes, customization shell/preview, stress panel | Select trigger/content/item recipes, portal positioning, option scrolling, native form evidence, and composition output; code block |
 | Combobox | overview, comparison cells, appearance scopes, customization shell, and stress panel | Combobox control/content/item recipes, portal positioning, filtering, narrow and RTL geometry, and rendered output |
@@ -194,6 +226,17 @@ playground pass:
    layout shells and lets Surface variables win over legacy page selectors.
 
 ## Completion gate
+
+| Owner | Shared evidence surface | Retained component paint |
+| --- | --- | --- |
+| Spinner | Specimen comparison cells | Ring and optional track only |
+| Stat | Metric comparison cells and nested appearance specimens | Native metric anatomy, typography, unit alignment and semantic trend indicators; no root surface |
+| Timeline | Chronology specimen cells and nested appearance examples | Native event list, indicator paint, logical tracks and stretched decorative separators; no root surface |
+| Action Bar | Shared evidence surfaces | Action Bar floating surface and interaction state paint |
+| Floating Panel | Shared evidence surfaces | Window surface, titlebar and resize boundaries |
+| Overlay Manager | Shared evidence surfaces | Registered overlay components retain their own presentation |
+| Alert | Specimen comparison cells | Status recipes, border and indicator anatomy |
+| Empty State | Specimen comparison cells | Transparent composition; explicit Card and Table examples own their surfaces |
 
 The migration is complete only when:
 

@@ -59,15 +59,23 @@ Public exports are `CheckboxGroup`, `CheckboxGroupRoot`, `CheckboxGroupItem`,
 
 | Root prop | Values | Default |
 | --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `size` | Responsive `xs`, `sm`, `md`, `lg` | `md` |
+| `variant` | `solid`, `outline`, `subtle` | `solid` |
+| `tone` | `neutral`, `accent`, `contrast`, `info`, `success`, `warning`, `danger` | `accent` |
+| `radius` | `Radius` | `subtle` |
+| `density` | `comfortable`, `compact` | `comfortable` |
+| `labelPlacement` | `start`, `end` | `end` |
+| `gap` | `SpacingValue` | `1.5` |
+| `maxSelectedValues` | Nonnegative integer | — |
 | `orientation` | `vertical`, `horizontal` | `vertical` |
 | `asChild` | `boolean` | `false` |
 
 Root inherits Atom group value/defaultValue/change, orientation, disabled,
 invalid, required, name/form, and relationship props and adds
 the shared size recipe.
-Item requires Atom `value`. Parent inherits Atom aggregate behavior including
-`allValues`. Label and Description require children. Every part uses the
+Item requires Atom `value`. Root owns `allValues`, the explicit selectable set
+required when rendering Parent. Parent derives its aggregate state from Root;
+do not pass `allValues` to Parent. Label and Description require children. Every part uses the
 discriminated `asChild` or `render` composition contract.
 
 ## Visual recipes and states
@@ -83,7 +91,7 @@ squares.
 Stable classes/slots cover group, item, label, description, and parent with
 Atom state/value/orientation attributes and Root `data-size`. Public group
 token is `--brick-checkbox-group-gap`; public Checkbox tokens style the shared
-visual. Internal mark DOM is not composable.
+visual. Supply replacement artwork through `indicator` on Item or Parent.
 
 ## Customization
 
@@ -111,8 +119,13 @@ listed under anatomy.
 ## Examples
 
 ```tsx
-<CheckboxGroup.Root value={value} onValueChange={setValue}>
-  <CheckboxGroup.Parent allValues={["email", "sms"]}>Select all</CheckboxGroup.Parent>
+<CheckboxGroup.Root
+  aria-label="Notification channels"
+  allValues={["email", "sms"]}
+  value={value}
+  onValueChange={setValue}
+>
+  <CheckboxGroup.Parent>Select all</CheckboxGroup.Parent>
   <CheckboxGroup.Item value="email">Email</CheckboxGroup.Item>
   <CheckboxGroup.Item value="sms">SMS</CheckboxGroup.Item>
 </CheckboxGroup.Root>
@@ -128,5 +141,19 @@ listed under anatomy.
 - [Manual protocol](../../../playground/manual-tests/checkbox-group.md)
 
 ## Changelog
+
+### Controllers, limits and linked labels
+
+`useCheckboxGroup` exposes value, setValue, toggleValue and item helpers.
+`CheckboxGroup.RootProvider value={controller}` supplies the same group behavior
+to Item and Parent. Root accepts `maxSelectedValues`; selected choices remain
+removable at the limit, and lowering a limit never discards controlled values.
+Parent skips unavailable registered items and selects in Root `allValues` order.
+
+For links, call `useCheckboxGroupItem({ value })` inside the group and spread its
+binding on `Checkbox.Control`, with a sibling `Checkbox.Label` in `Checkbox.Root`.
+When the surrounding Fieldset is required, set `required={false}` on that Field
+Root: the group requires one eligible choice, not every individual checkbox.
+Group validation ignores selected values without an enabled mounted form item.
 
 See [`CHANGELOG.md`](CHANGELOG.md).

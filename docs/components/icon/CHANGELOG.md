@@ -1,8 +1,21 @@
 # Icon changelog
 
+## Unreleased
+
+Add responsive sizes, createIcon and presentation-only IconPropsProvider; use Atom ref/event composition, authoritative SVG naming and nonfocusable direct output. Modernize focused documentation examples and retain qualification scenarios.
+
 Icon follows the package version of `@flowstack-ui/brick`.
 
-## Unreleased
+### Fixed
+
+- Directional artwork follows its own resolved text direction, including LTR content nested inside RTL containers.
+
+### Added
+
+- Added orthogonal `emphasis="text" | "solid"` paint selection so semantic
+  tones do not multiply into compound values.
+- Expanded the closed Icon scale with `inherit`, a 28px `lg`, and `2xl` for
+  deliberate 40px display glyphs while retaining `md` as the default.
 
 ### Fixed
 

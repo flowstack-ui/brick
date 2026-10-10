@@ -3,6 +3,7 @@ import {
   Toast,
   Toaster,
   toast,
+  createToaster,
   type ToastApi,
   type ToastOptions,
   type ToastPosition,
@@ -18,6 +19,14 @@ const types: ToastType[] = ["default", "success", "error", "warning", "info", "l
 const widths: ToastWidth[] = ["responsive", "compact", "full"];
 const stacking: ToastStacking[] = ["separated", "overlap"];
 const api: ToastApi = toast;
+const scoped = createToaster({ duration: 6000, removeDelay: 200 });
+createElement(Toaster, { toaster: scoped, variant: "solid", tone: "accent", radius: "sm", gap: { initial: 2, md: 4 }, offsetInlineEnd: 6 });
+scoped.pause(); scoped.resume(); scoped.remove("id"); scoped.expand(); scoped.collapse();
+scoped("Saved", { onStatusChange: ({ status }) => void status, variant: "surface", tone: "contrast" });
+const tracked: Promise<number> = scoped.track(() => Promise.resolve(1), { loading: "Loading", success: "Saved", error: "Failed" }).unwrap();
+void tracked;
+// @ts-expect-error arbitrary color strings are not tones
+createElement(Toaster, { tone: "purple" });
 const options: ToastOptions = { title: "Saved", description: "Available in history", action: { label: "View", onClick() {} }, icon: createElement("span") };
 createElement(Toaster, { ref, position: "bottom-end", width: "full", stacking: "overlap", swipeDirection: "left", className: "custom" });
 createElement(RootToaster, { portalDisabled: true });

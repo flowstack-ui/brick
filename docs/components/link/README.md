@@ -6,9 +6,19 @@ browser navigation behavior, native attributes, and router composition.
 
 ## When and where to use
 
+`size` accepts `ResponsiveValue<LinkSize>`: inherit, sm, md or lg. A sparse
+`size={{ lg: "lg" }}` inherits surrounding typography below lg. Explicit
+`xl: "inherit"` resets family, size, leading and tracking together. Breakpoints
+are sm 30rem, md 48rem, lg 64rem and xl 80rem. Empty objects are invalid.
+Responsive selections emit `data-size-sm`, `data-size-md`, `data-size-lg` and
+`data-size-xl` in addition to the inherited `data-size` baseline.
+With `asChild`, an optional parent `href` is forwarded through Atom; a router
+can instead supply its own destination. Keep a single real anchor and forward
+its props and ref. `asChild` owns its complete content, including icons.
+
 Use Link for an inline or standalone destination that should look like a
-hyperlink. Its default follows the active theme's approved Link decoration,
-with an underline as Brick's accessible fallback. The plain variant is for
+hyperlink. Its default is a persistent underline independent of legacy theme
+decoration policy. The subtle and plain variants are for
 clear navigation contexts where layout already communicates that the item is
 a link.
 
@@ -68,7 +78,7 @@ spans:
   data-size="inherit"
   data-slot="link"
   data-tone="accent"
-  data-variant="theme"
+  data-variant="underline"
   href="/guides"
 >
   <span class="brick-link__content">Read the component guides</span>
@@ -96,7 +106,7 @@ content or icon spans. The ref targets the final `HTMLAnchorElement`.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `theme`, `underline`, `plain` | `theme` |
+| `variant` | `underline`, `subtle`, `plain`, deprecated `theme` | `underline` |
 | `tone` | `accent`, `neutral`, `inherit` | `accent` |
 | `size` | `inherit`, `sm`, `md`, `lg` | `inherit` |
 | `startIcon` | `ReactNode` | none |
@@ -113,8 +123,9 @@ no `disabled`, `loading`, action, shape, width, or filled-variant prop.
 
 ## Visual recipes and states
 
-- `theme` follows `--brick-link-decoration`, which falls back to `underline`.
-- `underline` keeps a visible underline at rest regardless of the theme.
+- `underline` is the default and keeps a visible underline regardless of legacy theme decoration policies.
+- `subtle` has no resting underline and shows it on hover, keyboard focus and active press. Use for recognizable navigation/resource links, not unqualified color-only links in prose.
+- `theme` is deprecated compatibility for existing compiled decoration policies; it follows `--brick-link-decoration`, falling back to `underline`. Migrate persistent decoration to `underline`, interaction decoration to `subtle` after checking context and contrast.
 - `plain` removes decoration in every interaction state. Use it only where a
   navigation container, placement, current state, hover/pressed treatment,
   and focus ring make the destination affordance clear without an underline.
@@ -165,12 +176,41 @@ Choose public props first, customize global semantic tokens for system-wide
 policy, then override Link variables in a scoped class. `className` and
 `style` remain final escape hatches.
 
-A compiled theme may set `components.link.decoration` to `underline` or
-`none`. `none` removes the resting underline only for `variant="theme"` links;
-hover, focus-visible, and active interaction restore it. Explicit
-`variant="underline"` and `variant="plain"` always win locally. Themes using
-`none` must satisfy Brick's declared 3:1 accent-link/primary-text distinction
-in every supported appearance.
+A compiled theme may set `components.link.decoration` to `always` or
+`interaction`. `interaction` removes the resting underline only for deprecated `variant="theme"` links;
+hover, focus-visible, and active interaction restore it.
+Explicit `underline`, `subtle` and `plain` select their own behavior. Applications
+using interaction-only decoration in prose must check actual adjacent-text
+contrast or provide another resting cue; theme compilation alone does not
+qualify arbitrary Link compositions.
+
+Decoration defaults to a 20%-currentColor mix, `0.08em` thickness and `0.18em`
+offset. Variant controls when the underline appears; decoration color controls
+its strength independently. `underline` therefore has a soft line at rest,
+while `subtle` shows that same soft line only on interaction.
+`--brick-link-decoration-color`, thickness and offset can inherit from an
+application scope or be overridden locally. The fallback follows theme text;
+these customization tokens do not add a new Theme compiler input. Validate
+custom surfaces/colors and the complete resting link affordance. The soft line
+is not a universal contrast guarantee: where the underline is the sole cue
+identifying a link, use a stronger decoration and verify its contrast.
+Forced colors and increased-contrast preference use full currentColor.
+Do not fade the entire Link or its independent keyboard focus outline.
+
+```css
+.article-links {
+  --brick-link-decoration-color: currentColor;
+}
+```
+
+This scoped override strengthens both persistent and interaction-only lines
+without changing either variant's behavior. No opacity prop or extra variant
+is needed; this is a component extension, not a Theme compiler input.
+
+The absence of an underline is not permission to rely only on hue. Inline
+links distinguished only by color require at least 3:1 against surrounding
+text, in addition to text/background contrast. Hover does not fix a failure at
+rest; touch users may never hover. Prefer the default in paragraphs.
 
 ```tsx
 <Link
@@ -205,8 +245,8 @@ horizontal scrolling.
 - Keep a real final `a[href]`; do not use Link for an action.
 - The Brick fallback underline provides a non-color affordance. Plain requires
   unmistakable navigational context plus visible current, hover/pressed, and
-  focus treatment. A theme that removes resting underlines
-  must pass the declared link/text distinction check.
+  focus treatment. Compositions that remove resting underlines must check
+  actual link/text distinction or provide another identifying cue.
 - Decorative icon wrappers are hidden from assistive technology. Visible text
   or an explicit native ARIA label must name the destination.
 - Browser Enter activation, modifier keys, context menus, target, download,

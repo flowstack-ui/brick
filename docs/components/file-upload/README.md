@@ -1,6 +1,5 @@
 # File Upload
 
-File Upload is Brick's styled file picker, drop target, and removable selected-file list, backed directly by Atom. It works alone or as the sole control in one `Field`; file transfer, upload progress, persistence, and server policy remain application concerns.
 
 ## When and where to use
 
@@ -8,7 +7,7 @@ Use File Upload when people need to select one or more local files, see the acce
 
 ## When not to use
 
-Use Input for textual paths or URLs and Button for an action that does not own a file input. Do not use File Upload as a network uploader: it does not provide previews, transfer progress, retry, persistence, capture or directory modes, paste handling, transforms, or duplicate policy.
+Use Input for textual paths or URLs and Button for unrelated actions. File Upload supports previews, capture, directories, clipboard intake and transforms, but network transfer, retry, persistence, duplicate policy and server security remain application-owned.
 
 ## Installation and imports
 
@@ -71,17 +70,22 @@ The same exports are available from `@flowstack-ui/brick`.
 | `Item` | `li`, `HTMLLIElement` | Provides one file to its item parts. |
 | `ItemName` | `span`, `HTMLSpanElement` | Defaults to the file name. |
 | `ItemSize` | `span`, `HTMLSpanElement` | Defaults to Atom's formatted byte size. |
-| `ItemDeleteTrigger` | `button`, `HTMLButtonElement` | Removes its file; Brick supplies a private decorative delete icon when children are omitted. |
+| `ItemDeleteTrigger` | `button`, `HTMLButtonElement` | Removes its file using shared CloseButton presentation. |
+| `RootProvider`, `Context` | `div` / render function | Connect an external useFileUpload controller and read selection state. |
+| `ClearTrigger`, `FileText`, `Label` | `button`, `span`, `label` | Clear selection and compose readable file controls. |
+| `DropzoneContent`, `ItemContent` | `div` | Group dropzone copy or file metadata. |
+| `ItemPreview`, `ItemPreviewImage` | `div`, `img` | MIME-filtered preview with automatic object-URL cleanup. |
+| `Items`, `List` | rows / `ul` | Ready-made accepted-file rows or complete list. |
 
-Brick adds no required wrapper inside these public parts.
+Actions use Button/IconButton internal artwork and loading wrappers without adding another interactive element.
 
 ## API
 
-Root adds four visual props:
+Root adds uploader visual props; action presentation is independent:
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `outline`, `soft` | `outline` |
+| `variant` | `outline`, `surface`, `soft` | `outline` |
 | `size` | `sm`, `md`, `lg` | `md` |
 | `shape` | `sharp`, `rounded` | `rounded` |
 | `fullWidth` | boolean | `true` |
@@ -90,19 +94,43 @@ Root otherwise forwards Atom's `files`, `defaultFiles`, `onFilesChange`, `onReje
 
 Named exports are `FileUpload`, `FileUploadRoot`, `FileUploadHiddenInput`, `FileUploadTrigger`, `FileUploadDropzone`, `FileUploadItemGroup`, `FileUploadItem`, `FileUploadItemName`, `FileUploadItemSize`, and `FileUploadItemDeleteTrigger`. Types are `FileUploadRootProps`, `FileUploadHiddenInputProps`, `FileUploadTriggerProps`, `FileUploadDropzoneProps`, `FileUploadItemGroupProps`, `FileUploadItemProps`, `FileUploadItemNameProps`, `FileUploadItemSizeProps`, `FileUploadItemDeleteTriggerProps`, `FileUploadVariant`, `FileUploadSize`, and `FileUploadShape`.
 
+Additional named parts are `FileUploadRootProvider`, `FileUploadContext`, `FileUploadClearTrigger`, `FileUploadFileText`, `FileUploadLabel`, `FileUploadDropzoneContent`, `FileUploadItemContent`, `FileUploadItemPreview`, `FileUploadItemPreviewImage`, `FileUploadItems`, and `FileUploadList`. Hooks are `useFileUpload`, `useFileUploadContext`, and `useFileUploadItemContext`.
+
+Root also accepts `minSize`, structured `accept` (string, array or MIME-to-extension map), contextual `validateFile`, `onFileAccept`, `onFileReject`, `onFileChange`, `transformFiles`, `onTransformError`, `directory`, `capture`, `allowDrop`, and `translations`. Async intake is invalidated by newer selection, clear, removal, reset, disabled/readOnly or unmount. Context exposes `remainingFiles`, `maxFilesReached`, `transforming`, `transformError`, `setFilesFromList`, `setClipboardFiles`, `clearFiles`, and `clearRejectedFiles`.
+
+Trigger and ClearTrigger support all Button sizes (including responsive values), variants, tones, icons, focus geometry and loading options. Trigger defaults to outline/neutral/lg; ClearTrigger to ghost/neutral/lg. ItemDeleteTrigger accepts CloseButton props. Compose custom Button or IconButton with `asChild` on one host; never nest buttons. Custom hosts own their presentation. Root density does not set action size.
+
+Dropzone `disableClick` opts out of background picker activation. ItemGroup `type="rejected"` renders rejected candidates. ItemPreview `type` filters MIME types and `fallback` supplies artwork. ItemPreviewImage owns URL cleanup. ItemSize inherits LocaleProvider (or explicit `locale`). FileText `fallback` replaces empty text. List/Items `showSize` and `clearable` default true.
+
 Rejected-file feedback does not automatically mark the Field invalid. Use `onRejectedFilesChange` for selection-policy feedback and use `invalid` or form validation for the Field's validity state.
+
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
-`outline` uses a dashed raised dropzone; `soft` uses a quiet filled surface and solid border. Size changes the complete dropzone density and type scale. Shape changes the dropzone, items, and actions together. Atom state attributes drive empty, filled, dragging, accepted, rejected, disabled, read-only, required, and invalid presentation without changing the public anatomy.
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+Use outline for a transparent resting dropzone, surface for a neutral raised fill, and soft for a subdued surface. Dropzones show hover/drop feedback. Actions independently use shared Button and CloseButton recipes.
+
+
+File Upload is Brick's styled file picker, drop target, and removable selected-file list, backed directly by Atom. It works alone or as the sole control in one `Field`; file transfer, upload progress, persistence, and server policy remain application concerns.
+
+`outline` uses a dashed transparent dropzone; `soft` uses a quiet filled surface and solid border. Size changes uploader density and type scale. Shape/radius changes dropzone and items; action geometry is independent. Atom state attributes drive empty, filled, dragging, accepted, rejected, disabled, read-only, required, invalid and transforming states.
 
 ## Tokens and CSS hooks
 
-Stable classes are `.brick-file-upload`, `.brick-file-upload__dropzone`, `__trigger`, `__items`, `__item`, `__item-name`, `__item-size`, and `__delete`. The `data-slot` defaults use `file-upload`, `file-upload-hidden-input`, `file-upload-trigger`, `file-upload-dropzone`, `file-upload-item-group`, `file-upload-item`, `file-upload-item-name`, `file-upload-item-size`, and `file-upload-item-delete-trigger`.
+Stable classes are `.brick-file-upload`, `.brick-file-upload__dropzone`, `__items`, `__item`, `__item-name`, `__item-size`, `__item-content`, `__dropzone-content`, `__preview`, and `__preview-image`. Actions use shared Button/CloseButton classes; existing file-upload data slots remain available.
 
-Public variables are `--brick-file-upload-gap`, `--brick-file-upload-dropzone-min-block-size`, `--brick-file-upload-dropzone-padding`, `--brick-file-upload-radius`, `--brick-file-upload-background`, `--brick-file-upload-border`, `--brick-file-upload-foreground`, `--brick-file-upload-muted-foreground`, `--brick-file-upload-hover-background`, `--brick-file-upload-accept-border`, `--brick-file-upload-reject-border`, `--brick-file-upload-trigger-background`, `--brick-file-upload-trigger-foreground`, `--brick-file-upload-item-background`, `--brick-file-upload-item-border`, and `--brick-file-upload-delete-foreground`.
+Public variables are `--brick-file-upload-gap`, `--brick-file-upload-dropzone-min-block-size`, `--brick-file-upload-dropzone-padding`, `--brick-file-upload-radius`, `--brick-file-upload-background`, `--brick-file-upload-border`, `--brick-file-upload-foreground`, `--brick-file-upload-muted-foreground`, `--brick-file-upload-hover-background`, `--brick-file-upload-accept-border`, `--brick-file-upload-reject-border`, `--brick-file-upload-item-background`, and `--brick-file-upload-item-border`. Former uploader-specific trigger/delete paint variables are replaced by Button props and tokens.
 
-Root exposes `data-size`, `data-shape`, `data-variant`, and `data-full-width`; Atom also exposes relevant `data-state`, `data-drag`, `data-filled`, `data-rejected`, `data-disabled`, `data-readonly`, `data-required`, and `data-invalid` attributes.
+Root exposes `data-slot`, `data-size`, `data-shape`, `data-variant`, and `data-full-width`; Atom also exposes relevant `data-state`, `data-drag`, `data-filled`, `data-rejected`, `data-disabled`, `data-readonly`, `data-required`, and `data-invalid` attributes.
 
 ## Customization
 
@@ -116,7 +144,13 @@ Prefer visual props, then semantic tokens, then the File Upload variables. Compo
 
 ## Responsive behavior
 
-Root is full width by default and can opt into intrinsic width with `fullWidth={false}`. File names truncate rather than forcing page overflow; item metadata and the 44px remove action remain contained. Parts use logical geometry, so the item action visibly mirrors in RTL. Applications decide surrounding columns and preview layouts.
+For a filename control beside Clear, use `Stack.Item flex={1}` around the
+full-width trigger and `Stack.Item flex="fixed"` around Clear. Stretch the row
+within Root so the filename consumes remaining space without squeezing Clear.
+`Dropzone disableClick` removes background picker activation and clickable hover
+paint; file-drag feedback and the nested Trigger remain available.
+
+Root is full width by default and can opt into intrinsic width with `fullWidth={false}`. Actions remain intrinsic unless explicitly full width. File names truncate rather than forcing page overflow; action sizes follow Button/CloseButton. Parts use logical geometry and mirror in RTL. Applications decide surrounding columns and preview layouts.
 
 ## Accessibility
 

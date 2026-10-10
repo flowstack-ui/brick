@@ -11,4 +11,7 @@ export {
   type FieldOrientation,
   type FieldRequiredIndicatorProps,
   type FieldRootProps,
+  type FieldSize,
+  type FieldTone,
 } from "./Field.js";
+export { FieldItem, FieldContext, FieldErrorIcon, useFieldContext, type FieldItemProps } from "./Field.js";

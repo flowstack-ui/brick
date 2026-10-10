@@ -22,15 +22,15 @@ import { Text as RootText } from "../../../src/index.js";
 
 const ref = createRef<HTMLElement>();
 const elements: TextElement[] = ["span", "p", "div", "h1", "h2", "h3", "h4", "h5", "h6"];
-const variants: TextVariant[] = ["display", "display-sm", "display-md", "display-lg", "title-lg", "title-md", "title-sm", "body-lg", "body-md", "body-sm", "caption", "eyebrow"];
+const variants: TextVariant[] = ["display", "display-sm", "display-md", "display-lg", "display-xl", "title-xl", "title-lg", "title-md", "title-sm", "title-xs", "title-2xs", "body-xl", "body-lg", "body-md", "body-sm", "caption", "eyebrow"];
 const tones: TextTone[] = ["inherit", "primary", "secondary", "muted", "accent", "info", "success", "warning", "danger"];
-const weights: TextWeight[] = ["inherit", "regular", "medium", "semibold"];
+const weights: TextWeight[] = ["inherit", "thin", "extralight", "light", "regular", "medium", "semibold", "bold", "extrabold", "black"];
 const aligns: TextAlign[] = ["start", "center", "end"];
 const wraps: TextWrap[] = ["wrap", "nowrap", "balance", "pretty"];
 const transforms: TextTransform[] = ["none", "uppercase", "lowercase", "capitalize"];
 const headingLevels: HeadingLevel[] = [1, 2, 3, 4, 5, 6];
-const headingVariants: HeadingVariant[] = ["display", "display-sm", "display-md", "display-lg", "title-lg", "title-md", "title-sm"];
-const paragraphVariants: ParagraphVariant[] = ["body-lg", "body-md", "body-sm"];
+const headingVariants: HeadingVariant[] = ["display", "display-sm", "display-md", "display-lg", "display-xl", "title-xl", "title-lg", "title-md", "title-sm", "title-xs", "title-2xs"];
+const paragraphVariants: ParagraphVariant[] = ["body-xl", "body-lg", "body-md", "body-sm"];
 const clamps: TextLineClamp[] = [2, 3, 4, 5, 6];
 const props: TextProps = {
   "aria-describedby": "description",
@@ -51,6 +51,8 @@ createElement(Text, { children: "Summary", lineClamp: 3 });
 createElement(Text, { children: "Summary", transform: "uppercase" });
 createElement(Heading, { children: "Account settings", level: 2 });
 createElement(Heading, { children: "Account settings", level: 3, variant: "title-sm" });
+createElement(Heading, { children: "Small feature title", level: 4, variant: "title-xs" });
+createElement(Heading, { children: "Dense navigation group", level: 4, variant: "title-2xs" });
 createElement(Heading, { children: "Product heading", level: 1, variant: { initial: "display-sm", md: "display-md", lg: "display-lg" } });
 createElement(Paragraph, { align: { initial: "center", lg: "start" }, children: "Responsive alignment" });
 createElement(Paragraph, { children: "Supporting copy" });
@@ -79,8 +81,10 @@ createElement(Text, { children: "Copy", tone: "brand" });
 createElement(Text, { align: "left", children: "Copy" });
 // @ts-expect-error Arbitrary numeric weight is excluded.
 createElement(Text, { children: "Copy", weight: 700 });
-// @ts-expect-error Clamp values are bounded.
 createElement(Text, { children: "Copy", lineClamp: 7 });
+createElement(Text, { children: "Copy", lineClamp: { initial: 1, md: "none", lg: 8 }, align: "justify", fontStyle: "italic", numeric: "tabular-nums", decoration: "underline", decorationStyle: "dotted" });
+// @ts-expect-error Empty responsive objects are invalid.
+createElement(Text, { children: "Copy", lineClamp: {} });
 // @ts-expect-error Truncate and lineClamp are mutually exclusive.
 createElement(Text, { children: "Copy", lineClamp: 3, truncate: true });
 // @ts-expect-error Links belong to Link.

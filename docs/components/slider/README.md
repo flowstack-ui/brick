@@ -1,139 +1,156 @@
 # Slider
 
-Slider is Brick's styled numeric single-value and range input, backed by Atom 0.19.6. It works alone or as the sole control in `Field`; it is not a grouped choice collection and does not require `Fieldset`.
+Containment uses the visible thumb, independently of its expanded 44px pointer
+area. Keep pointer/focus clearance around the rail; do not add track padding or
+set `thumbSize` to the hit-target size to compensate. Responsive visual sizes
+are measured automatically. Scalar boundary fills reach the rail caps; ranges
+join thumb centers. Primary track activation focuses the chosen thumb without
+scrolling; secondary mouse buttons do not edit the value.
+
+Slider is Brick's styled approximate numeric input for one value or an ordered range. Atom owns state, interaction, coordinates, focus, accessibility and forms; Brick owns recipes and convenience composition.
 
 ## When and where to use
 
-Use Slider when people can choose an approximate numeric value or bounded range by pointer, touch, or keyboard.
+Use Slider when direct manipulation of an approximate numeric value or bounded range is more useful than exact entry.
 
 ## When not to use
 
-Use Number Input when exact entry matters, Select for a small set of named choices, and Progress for read-only completion.
+Use Number Input for exact entry, Select or Radio Group for a small named choice set, and Progress for read-only completion.
 
 ## Installation and imports
 
 ```tsx
-import { Slider } from "@flowstack-ui/brick/slider";
-import { Field } from "@flowstack-ui/brick/field";
+import { Slider, useSlider } from "@flowstack-ui/brick/slider";
 import "@flowstack-ui/brick/styles.css";
 ```
 
-The complete stylesheet above is the recommended default. For a measured
-route-aware build, replace it with the shared foundation and this component's
-stylesheet:
+For route-aware modular CSS, replace the complete stylesheet with both imports:
 
 ```tsx
-import "@flowstack-ui/brick/styles/core.css"; // once at the application root
+import "@flowstack-ui/brick/styles/core.css";
 import "@flowstack-ui/brick/styles/slider.css";
 ```
 
-Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
-
 
 ## Quick start
 
 ```tsx
-<Field.Root>
-  <Field.Label>Volume</Field.Label>
-  <Slider.Root defaultValue={[40]} name="volume">
-    <Slider.Track><Slider.Range /><Slider.Thumb /></Slider.Track>
-  </Slider.Root>
-  <Field.Description>Choose from 0 to 100.</Field.Description>
-  <Field.Error>Choose a volume.</Field.Error>
-</Field.Root>
+<Slider.Root defaultValue={40}>
+  <Slider.Label>Volume</Slider.Label>
+  <Slider.Control>
+    <Slider.Track><Slider.Range /></Slider.Track>
+    <Slider.Thumb />
+  </Slider.Control>
+</Slider.Root>
 ```
 
 ## Anatomy and DOM ownership
 
-`Slider` exposes `Root`, `Track`, `Range`, `Thumb`, `Marker`, and `ValueLabel`. Root and Track forward `HTMLDivElement`; Range, Thumb, Marker, and ValueLabel forward `HTMLSpanElement`. Each range value requires one indexed Thumb. Marker belongs inside Track. ValueLabel is optional and belongs inside Thumb.
+| Part | Default element and responsibility | Ref |
+| --- | --- | --- |
+| `Root` / `RootProvider` | Shared behavior, state, direction and form owner | `HTMLElement` |
+| `Control` | Pointer-coordinate and interaction region | `HTMLDivElement` |
+| `Track` | Visual track; legacy interaction owner when Control is absent | `HTMLDivElement` |
+| `Range` | Decorative selected fill | `HTMLSpanElement` |
+| `Thumb` | Focusable slider for one indexed value | `HTMLSpanElement` |
+| `Label` | Shared visible naming source | `HTMLLabelElement` |
+| `ValueText` | External ordinary value output | `HTMLOutputElement` |
+| `MarkerGroup`, `Marker`, `MarkerIndicator`, `MarkerLabel` | Decorative scale positioning, artwork and text | `HTMLDivElement` / `HTMLSpanElement` |
+| `ValueLabel` | Persistent bubble inside one Thumb | `HTMLSpanElement` |
+| `DraggingIndicator` | Active pointer-drag bubble | `HTMLSpanElement` |
+| `HiddenInput` | Explicit-mode native form proxy | `HTMLInputElement` |
+
+`Thumbs` and `Marks` are Brick shortcuts over the same parts. Legacy `Root > Track > Range + Thumb` and simple Marker text remain supported. Do not put both Control and Track in charge of the same pointer geometry.
 
 ## API
 
+Root accepts scalar or array `value`/`defaultValue`, `onValueChange`, `onValueCommit`, `min`, `max`, `step`, `largeStep`, `minStepsBetweenThumbs`, availability/validation props, `orientation`, `dir`, `origin`, `thumbAlignment`, `thumbSize`, `thumbCollisionBehavior`, `name`, `form`, `hiddenInputMode`, naming props and `ariaValueText`.
+
 | Prop | Values | Default |
 | --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
-| `variant` | `solid`, `soft` | `solid` |
+| `size` | responsive `sm`, `md`, `lg` | `md` |
+| `variant` | responsive `outline`, `solid`, `soft` | `outline` |
+| `tone` | `neutral`, `accent`, `contrast` | `accent` |
+| `frame` | `none`, `outline`, `panel`, `inline` | `none` |
+| `origin` | `start`, `center`, `end` | `start` |
+| `thumbAlignment` | `contain`, `center` | `contain` |
+| `thumbCollisionBehavior` | `none`, `push`, `swap` | `none` |
+| `hiddenInputMode` | `automatic`, `explicit` | `automatic` |
 
-Root forwards Atom's controlled and uncontrolled values, `min`, `max`, `step`, `largeStep`, `orientation`, `dir`, form, and validation props. Marker requires numeric `value`; ValueLabel may render its `index`, `percent`, and `value`.
+`useSlider` returns the same `SliderController` used by Root. Give it to RootProvider and use Context or `useSliderContext` to read values, IDs, focus/drag indices and part helpers without creating another owner.
 
-Named exports are `Slider`, `SliderRoot`, `SliderTrack`, `SliderRange`,
-`SliderThumb`, `SliderMarker`, and `SliderValueLabel`. Public types are
-`SliderRootProps`, `SliderTrackProps`, `SliderRangeProps`, `SliderThumbProps`,
-`SliderMarkerProps`, `SliderValueLabelProps`, `SliderValueLabelDetails`,
-`SliderSize`, and `SliderVariant`.
+Named component exports are `SliderRoot`, `SliderRootProvider`, `SliderControl`, `SliderTrack`, `SliderRange`, `SliderThumb`, `SliderThumbs`, `SliderLabel`, `SliderValueText`, `SliderMarkerGroup`, `SliderMarker`, `SliderMarkerIndicator`, `SliderMarkerLabel`, `SliderMarks`, `SliderValueLabel`, `SliderDraggingIndicator`, and `SliderHiddenInput`.
+
+Public prop and helper types are `SliderRootProps`, `SliderRootProviderProps`, `SliderControlProps`, `SliderTrackProps`, `SliderRangeProps`, `SliderThumbProps`, `SliderThumbsProps`, `SliderLabelProps`, `SliderValueTextProps`, `SliderMarkerGroupProps`, `SliderMarkerProps`, `SliderMarksProps`, `SliderMark`, `SliderValueLabelProps`, `SliderValueLabelDetails`, `SliderDraggingIndicatorProps`, `SliderHiddenInputProps`, `UseSliderProps`, `SliderValue`, `SliderSize`, `SliderVariant`, `SliderTone`, `SliderFrame`, `SliderOrigin`, `SliderThumbAlignment`, `SliderThumbSize`, `SliderCollisionBehavior`, and `SliderHiddenInputMode`.
 
 ## Visual recipes and states
 
-Recipes change paint and geometry only. Atom state attributes drive disabled, read-only, invalid, orientation, and direction presentation. Slider does not show a number by default; author ValueLabel only when persistent thumb-adjacent output is useful.
+Disabled controls preserve their recipe and use one 50% fade with a not-allowed cursor. Forced colors restores full opacity and uses system disabled colors.
+
+The visible sm/md/lg thumbs are 16/20/24px, tracks are 6/8/10px, and the target remains at least 44px. Outline uses a canvas thumb with colored border; solid uses a filled thumb; soft reduces emphasis. Explicit `variant="solid"` now has filled-thumb semantics. Choose outline for the former appearance. Tone selects paint while invalid remains independent state. Arbitrary Chakra-style color palettes are intentionally outside this API.
+
+Brick presentation emits `data-size`, `data-variant`, `data-tone`, `data-frame`, `data-slot`, and marker `data-edge`; Atom emits orientation, value, origin, alignment, collision, selected, focus, dragging, availability and validation state on the appropriate parts.
 
 ## Tokens and CSS hooks
 
-Stable classes are `.brick-slider` and its `__track`, `__range`, `__thumb`, `__marker`, and `__value-label` parts. Root exposes `data-size`, `data-variant`, and `data-slot`; Marker exposes `data-edge`, `data-orientation`, `data-selected`, `data-value`, and `data-slot`.
+Stable hooks include `.brick-slider`, `.brick-slider__control`, `__track`, `__range`, `__thumb`, `__label`, `__value-text`, `__marker-group`, `__marker`, `__marker-indicator`, `__marker-label`, `__value-label`, `__dragging-indicator` and `__hidden-input`.
 
-Public variables are `--brick-slider-track-background`,
-`--brick-slider-track-border`, `--brick-slider-track-size`,
-`--brick-slider-track-length`, `--brick-slider-track-inset`,
-`--brick-slider-range-background`,
-`--brick-slider-thumb-background`, `--brick-slider-thumb-border`,
-`--brick-slider-thumb-shadow`, `--brick-slider-thumb-size`,
-`--brick-slider-marker-color`, `--brick-slider-marker-selected-color`,
-`--brick-slider-marker-border`,
-`--brick-slider-marker-size`,
-`--brick-slider-value-label-background`, and
-`--brick-slider-value-label-foreground`.
+Public variables are `--brick-slider-track-size`, `--brick-slider-thumb-size`, `--brick-slider-hit-size`, `--brick-slider-track-color`, `--brick-slider-range-color`, `--brick-slider-thumb-color`, `--brick-slider-thumb-border-color` and `--brick-slider-marker-color`.
 
 ## Customization
 
-Prefer recipes, then scope public variables: `<Slider.Root style={{ "--brick-slider-range-background": "var(--brick-color-accent-background)" }} />`.
-`--brick-slider-track-inset` defaults to half the complete Thumb target. Set
-it to `0px` only when the surrounding composition provides enough space for
-the endpoint target and focus ring to extend beyond the visual Track.
+Prefer recipes, then scope public variables on Root. The old `--brick-slider-track-inset` workaround is retired because Atom owns target containment; applying it again would double-correct endpoints.
+
+```tsx
+<Slider.Root
+  defaultValue={60}
+  style={{ "--brick-slider-range-color": "var(--brick-color-accent-solid)" }}
+>
+  <Slider.Label>Mix</Slider.Label>
+  <Slider.Control><Slider.Track><Slider.Range /></Slider.Track><Slider.Thumb /></Slider.Control>
+</Slider.Root>
+```
 
 ## Responsive behavior
 
-Brick preserves 44px thumb targets, logical RTL geometry, vertical layout,
-narrow containment, zoom, forced colors, and reduced motion. Horizontal
-and vertical Tracks reserve half a target at each endpoint so the complete
-Thumb hit area and focus treatment remain inside the Slider boundary, even
-when a surrounding disclosure or scrolling region clips overflow. Horizontal
-endpoint marker dots remain visibly inset within the rounded Track caps while
-optional endpoint labels remain contained. The neutral Track keeps a clear
-appearance-aware contrast from its surrounding surface. Unselected dots use
-the primary foreground while selected dots use the active canvas surface with
-a subtle derived border. Every dot is centered on its Track axis. Both adapt to the active
-appearance, accent, and solid or soft recipe. Horizontal ValueLabel receives
-dedicated space; for dense ranges or long values, use an external
-application-owned output to avoid collisions.
+Size and variant accept sparse breakpoint objects and emit static data attributes. Contain alignment keeps the visible thumb inside the rail, not its expanded 44px pointer area or focus ring; leave unclipped clearance for both. Center alignment additionally permits visible endpoint overhang. Do not compensate with track padding or a 44px `thumbSize`. Local `dir` controls horizontal pointer, range, thumb and marker geometry; vertical composition also respects logical inline placement. Responsive visual thumb changes are remeasured. Hidden and zero-sized controls recover when revealed or resized.
 
 ## Accessibility
 
-Atom owns pointer and touch dragging, keyboard input, RTL and vertical axes, dependent range bounds, pointer cancellation, controlled state, hidden form inputs, reset, Field state inheritance, and ARIA. Each Thumb is a separately named slider. Disabled controls leave tab order; read-only controls remain focusable; markers and value labels are decorative. Use one Field for the complete Slider, or label standalone thumbs explicitly.
+Explicit Thumb `aria-label` or `aria-labelledby` wins over Root naming; Root naming wins over Slider.Label or Field fallback. Give range thumbs distinct names. `ariaValueText` formats assistive output; ValueText is not a live region and markers never name the control. Arrow keys use `step`; Shift+Arrow and Page Up/Down use `largeStep`; Home/End use bounds. Visible focus, invalid+focus, forced colors and reduced motion are supported.
 
 ## Composition, native props, and refs
 
-DOM parts preserve native props, ARIA, events, `className`, `style`, data attributes, slots, and exact refs. Root may receive `aria-label`, `invalid`, `disabled`, `readOnly`, and `required` standalone. A named single Slider submits one value; a named range submits all values through Atom's form contract.
+Every value needs one indexed Thumb or `Thumbs`. Origin changes scalar fill only; arrays fill between their extreme values. None constrains collisions, push propagates neighbors and swap transfers active pointer identity; keyboard movement remains constrained. Cancellation restores pointer-start values without commit, while lost capture commits latest values once.
+
+Automatic form mode emits one hidden input per named thumb in index order. Explicit mode requires one authored HiddenInput per submitted thumb. Disabled values are omitted; reset restores uncontrolled defaults; `form` supports external ownership. React Hook Form Controller is optional and should own the scalar/array value and explicit input ref.
 
 ## Examples
 
 ```tsx
-<Slider.Root defaultValue={[20, 75]} min={0} max={100} aria-label="Price range">
-  <Slider.Track>
-    <Slider.Range />
-    <Slider.Marker value={0}>0</Slider.Marker>
-    <Slider.Marker value={100}>100</Slider.Marker>
-    <Slider.Thumb /><Slider.Thumb />
-  </Slider.Track>
+<Slider.Root defaultValue={[20, 80]} minStepsBetweenThumbs={10}>
+  <Slider.Label>Price range</Slider.Label>
+  <Slider.ValueText>{({ values }) => `$${values[0]}–$${values[1]}`}</Slider.ValueText>
+  <Slider.Control>
+    <Slider.Track><Slider.Range /></Slider.Track>
+    <Slider.Marks marks={[0, { value: 50, label: "Mid" }, 100]} />
+    <Slider.Thumb aria-label="Minimum price" index={0} />
+    <Slider.Thumb aria-label="Maximum price" index={1} />
+    <Slider.DraggingIndicator />
+  </Slider.Control>
 </Slider.Root>
 ```
 
+Use external ValueText for dense ranges or long localized values. ValueLabel stays persistent; DraggingIndicator is drag-only. Automatic value-label collision avoidance is not promised.
+
 ## Evidence
 
-- [Playground source](../../../playground/src/components/slider/)
-- [Unit tests](../../../test/components/slider/)
-- [Type tests](../../../test/types/components/slider.test.ts)
-- [Browser behavior](../../../playground/tests/components/slider/behavior.spec.ts)
-- [Visual owner](../../../playground/tests/components/slider/visual.spec.ts)
+- [Playground](../../../playground/src/components/slider/)
+- [Unit tests](../../../test/components/slider/slider.test.tsx)
+- [Type owner](../../../test/types/components/slider.test.ts)
+- [Browser spec](../../../playground/tests/components/slider/behavior.spec.ts)
+- [Visual spec](../../../playground/tests/components/slider/visual.spec.ts)
 - [Manual protocol](../../../playground/manual-tests/slider.md)
 
 ## Changelog

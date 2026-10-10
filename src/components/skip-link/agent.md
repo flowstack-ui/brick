@@ -14,7 +14,7 @@ Provide a visibly focused skip-navigation control and matching main-content targ
 
 ## Required composition
 
-- Place Root as the first useful focus target and one matching Target at main content; let Target own the main landmark unless custom-rendered.
+- Place Root as the first useful focus target and one matching Target at main content; Target defaults to div, so place it inside main or use asChild on the existing main. Set href on Root even with asChild. Native mode preserves hash navigation; explicit focus does not update the URL.
 
 ## Rules
 

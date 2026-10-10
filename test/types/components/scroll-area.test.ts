@@ -18,3 +18,8 @@ createElement(ScrollArea.Root, { scrollbarGutter: "both-edges" });
 createElement(ScrollArea.Root, { scrollbarVisibility: "hidden" });
 // @ts-expect-error component-owned max-size props are excluded
 createElement(ScrollArea.Root, { maxHeight: "20rem" });
+createElement(ScrollArea.Root, { scrollbar: "custom", size: "xs", scrollShadow: "both" });
+// @ts-expect-error sizes apply to custom bars only
+createElement(ScrollArea.Root, { size: "lg" });
+// @ts-expect-error shadows need measured custom anatomy
+createElement(ScrollArea.Root, { scrollbar: "native", scrollShadow: "vertical" });

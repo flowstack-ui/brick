@@ -1,10 +1,39 @@
 # Tabs changelog
 
+
 Tabs follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Retain fade animation endpoints until presence cleanup so outgoing panels do
+  not flash back to full opacity when their exit animation finishes.
+
+- Hide inactive, non-animated panels immediately during presence cleanup to
+  prevent a one-frame content jump; retain explicit fades except in reduced motion.
+
+- Add responsive recipes, subtle/plain/outline, alignment, full token radii,
+  ContentGroup, adjacent spacing, fade presence, and filled indicators.
+- Align sm/md/lg to 36/40/44px targets; preserve existing recipe names and inset defaults.
+- Expose Atom controller/provider, focus, IDs, router and independent lifecycle options.
+- Replace duplicate indicator paint with a measured readiness handoff; fix scroll-local geometry.
+
+- Use the shared semantic focus color independently of Trigger text tone,
+  retaining inside placement and the forced-colors Highlight override.
+
+- Calculate default Trigger corners from the actual List padding, preserving
+  equal individual corners when the soft List has zero inset.
+
+- Focus paints inside Triggers and Content. Soft List has zero protective inset; solid keeps design padding. Scrolling and selection remain unchanged.
+
+- Add `tone="neutral"` with the existing accent default preserved. Remove
+  selected elevation from soft tabs; keep solid elevation and focus geometry.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ### Fixed
+
+- Preserve independent default Trigger corners when List radius is none;
+  the List-only override no longer zeroes the inherited Trigger radius token.
 
 - Kept line-tab labels and icons on primary text in the selected state so the
   accent remains reserved for the indicator and authored metadata such as a

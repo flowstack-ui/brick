@@ -10,19 +10,27 @@ import {
   DividerRoot as AtomDividerRoot,
   type DividerRootProps,
 } from "@flowstack-ui/atom/divider";
+import {
+  normalizeResponsiveValue,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
 
 export type DividerOrientation = "horizontal" | "vertical";
 export type DividerVariant = "solid" | "dashed" | "dotted";
-export type DividerThickness = "subtle" | "regular" | "strong";
+export type DividerThickness =
+  | "hairline"
+  | "subtle"
+  | "regular"
+  | "bold"
+  | "strong";
 export type DividerInset = "none" | "start" | "both";
 export type DividerLabelAlign = "start" | "center" | "end";
 export type DividerElement = HTMLHRElement | HTMLDivElement;
 
 type DividerSharedProps = Omit<
   DividerRootProps,
-  "asChild" | "children" | "className" | "orientation" | "style"
+  "asChild" | "children" | "className" | "orientation" | "style" | "decorative"
 > & {
-  orientation?: DividerOrientation;
   variant?: DividerVariant;
   thickness?: DividerThickness;
   inset?: DividerInset;
@@ -32,19 +40,25 @@ type DividerSharedProps = Omit<
   slot?: string;
 };
 
-export interface DividerLineProps extends DividerSharedProps {
-  children?: never;
-  labelAlign?: never;
-  asChild?: false;
-}
+type DividerDirectionProps =
+  | { decorative?: true; orientation?: ResponsiveValue<DividerOrientation> }
+  | { decorative: false; orientation?: DividerOrientation };
+export type DividerLineProps = DividerSharedProps &
+  DividerDirectionProps & {
+    children?: never;
+    labelAlign?: never;
+    asChild?: false;
+  };
 
-export interface DividerComposedProps extends DividerSharedProps {
-  asChild: true;
-  children: ReactElement;
-  labelAlign?: never;
-}
+export type DividerComposedProps = DividerSharedProps &
+  DividerDirectionProps & {
+    asChild: true;
+    children: ReactElement;
+    labelAlign?: never;
+  };
 
 export interface DividerLabelProps extends DividerSharedProps {
+  decorative?: boolean;
   children: ReactNode;
   orientation?: "horizontal";
   labelAlign?: DividerLabelAlign;
@@ -72,12 +86,30 @@ function DividerImpl(
     stretch = false,
     thickness = "subtle",
     variant = "solid",
+    decorative = true,
     ...props
   }: DividerProps,
   ref: ForwardedRef<DividerElement>,
 ) {
   const composed = asChild && isValidElement(children);
   const labeled = !composed && children !== undefined && children !== null;
+  const responsive = typeof orientation === "object";
+  const values = normalizeResponsiveValue(orientation);
+  const baseOrientation = values.initial ?? "horizontal";
+  let effective = baseOrientation;
+  const orientationAttributes = Object.fromEntries(
+    (["initial", "sm", "md", "lg", "xl"] as const).map((key) => {
+      effective = values[key] ?? effective;
+      return [
+        key === "initial" ? "data-orientation" : `data-orientation-${key}`,
+        effective,
+      ];
+    }),
+  );
+  if (responsive && !decorative)
+    console.warn(
+      "Responsive Divider orientation is decorative; use a scalar orientation for a semantic separator.",
+    );
 
   return (
     <AtomDividerRoot
@@ -86,15 +118,19 @@ function DividerImpl(
       className={mergeClassName(className)}
       data-inset={inset}
       data-label-align={labeled ? labelAlign : undefined}
-      data-orientation={orientation}
+      {...orientationAttributes}
+      data-orientation={baseOrientation}
       data-stretch={stretch ? "" : undefined}
       data-thickness={thickness}
       data-variant={variant}
       data-slot={slot}
-      orientation={orientation}
+      orientation={baseOrientation}
+      decorative={responsive ? true : decorative}
       ref={ref}
     >
-      {composed ? children : labeled ? (
+      {composed ? (
+        children
+      ) : labeled ? (
         <>
           <span
             aria-hidden="true"

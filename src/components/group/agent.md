@@ -11,7 +11,7 @@ Create a compact inline visual cluster and optionally attach direct children wit
 
 ## Choose something else when
 
-- The relationship needs responsive direction, wrapping, distribution, or ordinary block layout. Use Stack/HStack/VStack.
+- The relationship is ordinary application layout rather than a compact group of controls. Use Stack/HStack/VStack.
 - Commands need roving focus or items own pressed selection. Use Toolbar or ToggleGroup.
 - Tags, skills, social destinations, profile facts, or responsive actions form a content collection rather than one attached control silhouette. Use List, Grid, DataList, or Stack.
 
@@ -21,11 +21,12 @@ Create a compact inline visual cluster and optionally attach direct children wit
 
 ## Rules
 
-- **MUST:** Use attached only for one unwrapped row or column whose direct children form one continuous visual silhouette.
+- **MUST:** Use attached for joined direct hosts. Wrapping is supported but attachment follows source order, not visual row boundaries; prefer detached wrap for multiple lines.
 - **MUST:** Author role=group and an accessible name only when the controls form a genuine accessibility relationship; Group adds neither by default.
 - **MUST:** Keep keyboard behavior with the composed controls; Group never substitutes for Toolbar, ToggleGroup, or a form group.
 - **MUST:** Do not use Group for tags, skills, social destinations, profile facts, or responsive action rows; use List, Grid, DataList, or Stack unless direct children need one compact attached control silhouette.
 - **MUST:** Load styles.css or core.css plus group.css and every composed child component stylesheet.
+- **MUST:** With skip or stacking, forward grouping data attributes and style through custom children. Excluded children stay rendered. Group owns layout only; it never supplies selection, keyboard behavior or child paint.
 
 ## Common mistakes
 

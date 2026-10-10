@@ -30,7 +30,6 @@ import "@flowstack-ui/brick/styles/badge.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 ## Quick start
 
 ```tsx
@@ -48,14 +47,23 @@ Badge's public exports are `Badge`, `BadgeProps`, `BadgeVariant`, `BadgeTone`,
 `BadgeSize`, and `BadgeShape`. The shared `badge` subpath also exports the
 separately documented Notification Badge family.
 
-| Prop | Values | Default |
-| --- | --- | --- |
-| `variant` | `soft`, `solid`, `outline` | `soft` |
-| `tone` | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
-| `size` | `sm`, `md`, `lg`, `xl` | `md` |
-| `shape` | `rounded`, `pill`, `circle` | `rounded` |
+| Prop      | Values                                                      | Default   |
+| --------- | ----------------------------------------------------------- | --------- |
+| `variant` | `soft`, `solid`, `outline`, `surface`, `plain`                       | `soft`    |
+| `tone`    | `neutral`, `accent`, `info`, `success`, `warning`, `danger` | `neutral` |
+| `size`    | `xs`, `sm`, `md`, `lg`, `xl`                                | `md`      |
+| `shape`   | `rounded`, `pill`, `circle`                                 | `rounded` |
 
 Atom/native span props are inherited except native `color`.
+
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
@@ -65,8 +73,21 @@ geometry. Circle is for one passive icon or single character with nearby
 context; use IconButton for actions and Status for dot-and-label state. Badge
 is passive and has no interactive state.
 
+Tone and variant are deliberately orthogonal. Use `tone="accent"` with
+`variant="solid"` for solid accent paint; do not encode paint treatment in a
+compound tone name. The `xs` recipe is a 16px micro badge with 10px text,
+matching compact percentage and metadata labels.
+
+`surface` combines the selected tone's soft fill and on-soft foreground with a
+visible semantic boundary. `soft` keeps that fill borderless, while `outline`
+uses a transparent background and the stronger text foreground.
+
 The `xl` size supplies a deliberate passive icon well for empty states and
 similar noninteractive illustrations. It is not an action target.
+
+`lg` uses a 28px minimum block size and roomier padding while retaining compact
+14px label text. Use `lg` when the label needs more container presence; do not
+switch to `md` only to reduce the type size.
 
 ## Tokens and CSS hooks
 
@@ -107,8 +128,10 @@ rendered span; composed output must remain passive.
 ```tsx
 <Badge variant="outline" tone="success">Ready</Badge>
 
-<Badge aria-label="Verified" shape="circle" tone="accent">
-  <Icon aria-hidden size="xs">{checkIcon}</Icon>
+<Badge variant="surface" tone="accent">Fast and secure</Badge>
+
+<Badge shape="circle" tone="accent">
+  <Icon label="Verified" size="inherit">{checkIcon}</Icon>
 </Badge>
 ```
 
@@ -116,7 +139,7 @@ Badge applies its public gap token when children include an icon and label:
 
 ```tsx
 <Badge tone="accent" shape="pill">
-  <Icon size="xs">{icon}</Icon>
+  <Icon size="inherit">{icon}</Icon>
   Built for business
 </Badge>
 ```
@@ -126,8 +149,10 @@ foreground so the selected Badge recipe continues to own contrast:
 
 ```tsx
 <Badge tone="accent" shape="pill">
-  <Icon size="xs">{icon}</Icon>
-  <Text tone="inherit" variant="caption">Built for business</Text>
+  <Icon size="inherit">{icon}</Icon>
+  <Text tone="inherit" variant="caption">
+    Built for business
+  </Text>
 </Badge>
 ```
 
@@ -150,3 +175,22 @@ it does not switch to the inverse black/white pair between appearances.
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).
+
+### Responsive recipes and plain treatment
+
+Size and variant accept ResponsiveValue with initial/sm/md/lg/xl keys. Omitted
+initial values inherit md and soft. Tone remains scalar. Plain keeps the same
+reserved border and spacing but uses transparent paint and semantic text.
+
+```tsx
+<Badge size={{ sm: "xs", md: "lg" }} variant={{ md: "plain", xl: "soft" }}>
+  Published
+</Badge>
+```
+
+Use Icon size="inherit" for text-relative artwork. Badge does not name a generic
+span from aria-label; a meaningful icon needs Icon label or visible context.
+The optional --brick-badge-circle-icon-size hook controls passive circle artwork.
+The normal playground route uses focused Preview/Code examples; exhaustive legacy
+scenarios remain at /badge?qualification=1. Independent category palettes are not
+part of the six semantic tone recipes.

@@ -1,6 +1,6 @@
 # Show
 
-Show keeps content mounted and adds it to visual layout from one fixed viewport breakpoint. It is CSS responsive visibility, not conditional React rendering. When visible, its host is layout-transparent so parent flex and grid spacing continue to apply directly to its children.
+Show offers two exclusive modes: `when` conditionally renders content without a host; `from` keeps content mounted and controls CSS visibility. Responsive `asChild` preserves an existing child's layout box.
 
 ## When and where to use
 
@@ -8,7 +8,7 @@ Use Show for a secondary desktop treatment when deterministic SSR and always-mou
 
 ## When not to use
 
-Do not use Show to prevent effects, fetching, state initialization, or access to essential functionality. Use application CSS for custom/container queries and React conditionals for actual mounting.
+Do not use responsive Show to prevent effects, fetching or state initialization. Conditional Show removes the inactive subtree, but is not authorization, focus recovery or a data-fetching policy.
 
 ## Installation and imports
 
@@ -41,7 +41,7 @@ Exports: `Show`, `ShowProps`, `ShowBreakpoint`, and `ShowElement`.
 
 ## Anatomy and DOM ownership
 
-Show renders one native host, `div` by default, with `.brick-show`, `data-from`, and `data-slot="show"`. The host remains in the DOM and the ref targets it, but its visible `display: contents` layout contributes no wrapper box. Children are not inspected or conditionally rendered.
+Responsive Show renders one native host by default, with `.brick-show`, `data-from`, and `data-slot="show"`. Its visible `display: contents` contributes no wrapper box. With `asChild`, `data-show-from` carries the threshold on the existing child and visible display is untouched. Conditional Show renders no host.
 
 ## API
 
@@ -51,6 +51,23 @@ Show renders one native host, `div` by default, with `.brick-show`, `data-from`,
 | `as` | `div`, `span`, `section`, `article`, `nav`, `header`, `footer`, `main`, `aside`, `ul`, `ol`, `li` | `div` |
 | `slot` | string | `show` |
 | `children` | ReactNode | required |
+| `asChild` | boolean (responsive mode only) | false |
+
+Alternatively use `when: T`, optional `fallback: ReactNode` (default null), and
+`children: ReactNode | ((value: Truthy<T>) => ReactNode)`. Never combine this mode
+with `from`, native host props, `as`, `asChild` or a ref. Zero, empty string,
+false, null, undefined and NaN are falsy; empty arrays are truthy. Use a length
+comparison for collections. Function children run only for truthy values;
+already evaluated JSX expressions are not deferred. Normal React reconciliation
+applies. The type excludes representable falsy union members, not zero/NaN from
+the broad number type.
+
+```tsx
+<Show when={user} fallback={<Text>No user</Text>}>
+  {(user) => <Text>{user.name}</Text>}
+</Show>
+<Show from="md" asChild><HStack gap="3">Desktop tools</HStack></Show>
+```
 
 Thresholds are `30rem`, `48rem`, `64rem`, and `80rem`.
 
@@ -76,7 +93,12 @@ Show adds no role or ARIA. `display:none` removes hidden descendants from focus 
 
 ## Composition, native props, and refs
 
-Omit `as` when the default `div` is sufficient. Use `as` only for deliberate HTML semantics or valid document structure; it does not create a layout box. Put backgrounds, borders, padding, and sizing on a child layout component rather than the layout-transparent Show host. Show has no `asChild`, render, fallback, `when`, or unmount API. Avoid invalid table grammar and duplicate IDs/forms/landmarks across responsive copies.
+Omit default `as`. Responsive `asChild` requires one non-Fragment child forwarding
+props and refs; do not combine with `as`. Classes, styles, events and refs merge.
+The child retains its slot unless explicitly overridden. Use projection for valid
+table grammar. Put paint/geometry on the child. Avoid duplicate identities;
+CSS-hidden controls may still submit and portals are outside the hidden host.
+Use separate hosts for nested responsive rules, not two projections on one host.
 
 ## Examples
 

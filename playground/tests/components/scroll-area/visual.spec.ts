@@ -1,6 +1,15 @@
 import { expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/scroll-area");
+installVisualDefaults("/scroll-area?qualification=1");
+
+test("custom docs light dark and narrow", async ({ page }) => {
+  await page.goto("/scroll-area");
+  await expectEvidenceScreenshot(page, page.locator("#sizes"), "custom-sizes-light.png");
+  await setAppearance(page, "dark");
+  await expectEvidenceScreenshot(page, page.locator("#both"), "custom-both-dark.png");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expectEvidenceScreenshot(page, page.locator("#rtl"), "custom-rtl-narrow.png");
+});
 
 test("Scroll Area defaults, axes, gutter, and visibility", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.locator('[data-scenario="scroll-area.overview"]'), "overview-light.png");

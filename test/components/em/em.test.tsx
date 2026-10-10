@@ -4,6 +4,22 @@ import { describe, expect, it } from "vitest";
 import { Em } from "../../../src/em.js";
 
 describe("Em", () => {
+  it("projects onto one authored em and merges refs and hooks", () => {
+    const outer = createRef<HTMLElement>();
+    const inner = createRef<HTMLElement>();
+    const { unmount } = render(<Em asChild ref={outer} className="outer" slot="legacy" data-slot="explicit"><em ref={inner} className="inner">first</em></Em>);
+    const host = screen.getByText("first");
+    expect(host.tagName).toBe("EM");
+    expect(host.querySelector("em")).toBeNull();
+    expect(host).toHaveClass("brick-em", "outer", "inner");
+    expect(host).toHaveAttribute("data-slot", "explicit");
+    expect(host).not.toHaveAttribute("slot");
+    expect(outer.current).toBe(host);
+    expect(inner.current).toBe(host);
+    unmount();
+    expect(outer.current).toBeNull();
+    expect(inner.current).toBeNull();
+  });
   it("renders the native semantic host and adopted defaults", () => {
     const ref = createRef<HTMLElement>();
     render(<p>Ship <Em ref={ref}>carefully</Em>.</p>);

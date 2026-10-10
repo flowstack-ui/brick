@@ -17,7 +17,7 @@ async function collectTsx(directory) {
 
 const [page, registry, output, outputCss, consumer, inventory, audit] =
   await Promise.all([
-    read("playground/src/components/surface/SurfacePage.tsx"),
+    read("playground/src/components/surface/SurfaceEvidence.tsx"),
     read("playground/src/app/component-registry.ts"),
     read("playground/src/shared/RenderedOutput.tsx"),
     read("playground/src/shared/rendered-output.playground.css"),
@@ -82,16 +82,16 @@ for (const { path, source } of playgroundTsx) {
 }
 
 const customizationContracts = new Map([
-  ["playground/src/components/aspect-ratio/AspectRatioPage.tsx", "shared"],
-  ["playground/src/components/bottom-navigation/BottomNavigationPage.tsx", "shared"],
-  ["playground/src/components/context-menu/ContextMenuPage.tsx", "shared"],
-  ["playground/src/components/divider/DividerPage.tsx", "shared"],
-  ["playground/src/components/navigation-menu/NavigationMenuPage.tsx", "shared"],
-  ["playground/src/components/rating/RatingPage.tsx", "shared"],
+  ["playground/src/components/aspect-ratio/AspectRatioEvidence.tsx", "shared"],
+  ["playground/src/components/bottom-navigation/BottomNavigationEvidence.tsx", "shared"],
+  ["playground/src/components/context-menu/ContextMenuEvidence.tsx", "shared"],
+  ["playground/src/components/divider/DividerEvidence.tsx", "shared"],
+  ["playground/src/components/navigation-menu/NavigationMenuEvidence.tsx", "shared"],
+  ["playground/src/components/rating/RatingEvidence.tsx", "shared"],
   ["playground/src/components/slider/SliderPage.tsx", "shared"],
-  ["playground/src/components/surface/SurfacePage.tsx", "shared"],
-  ["playground/src/components/toast/ToastPage.tsx", "shared"],
-  ["playground/src/components/hover-card/HoverCardPage.tsx", "legacy"],
+  ["playground/src/components/surface/SurfaceEvidence.tsx", "shared"],
+  ["playground/src/components/toast/ToastEvidence.tsx", "shared"],
+  ["playground/src/components/hover-card/HoverCardEvidence.tsx", "legacy"],
   ["playground/src/components/popover/PopoverPage.tsx", "legacy"],
   ["playground/src/components/tooltip/TooltipPage.tsx", "legacy"],
 ]);

@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/group");
+  await page.goto("/group?qualification=1");
 });
 
 test("default is one role-free inline cluster", async ({ page }) => {

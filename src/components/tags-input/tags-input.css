@@ -1,0 +1,268 @@
+@import "./tags-input-variants.css";
+@layer brick.components {
+  .brick-tags-input {
+    --brick-tags-input-background: transparent;
+    --brick-tags-input-border: var(--brick-color-border-strong);
+    --brick-tags-input-radius: var(--brick-radius-control);
+    --brick-tags-input-item-background: var(--brick-tags-input-neutral-item-background, var(--brick-color-surface-subtle));
+    --brick-tags-input-item-foreground: var(--brick-color-text-primary);
+    --brick-tags-input-item-radius: var(--brick-radius-subtle);
+    --brick-tags-input-row-height: clamp(1.375rem, calc(var(--brick-control-size-block) - 0.75rem), 2.5rem);
+    --brick-tags-input-target: max(1.5rem, var(--brick-tags-input-row-height));
+    --brick-tags-input-focus-ring: var(--brick-color-focus-ring);
+    --brick-tags-input-invalid-border: var(--brick-color-danger-text);
+    --brick-tags-input-item-border: var(--brick-color-border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: var(--brick-space-2);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    color: var(--brick-color-text-primary);
+    font-family: var(--brick-control-size-value-font-family);
+    font-size: var(--brick-control-size-value-font-size);
+    font-weight: var(--brick-control-size-value-font-weight);
+    line-height: var(--brick-control-size-value-line-height);
+    letter-spacing: var(--brick-control-size-value-letter-spacing);
+  }
+  .brick-tags-input[data-full-width] {
+    inline-size: 100%;
+  }
+  .brick-tags-input-label {
+    font-family: var(--brick-typography-label-md-font-family);
+    font-size: var(--brick-typography-label-md-font-size);
+    font-weight: var(--brick-typography-label-md-font-weight);
+    line-height: var(--brick-typography-label-md-line-height);
+  }
+  .brick-tags-input-control {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--brick-space-1);
+    box-sizing: border-box;
+    min-inline-size: 0;
+    min-block-size: var(--brick-control-size-block);
+    padding-inline: var(--brick-tags-input-inset);
+    padding-block: max(
+      0px,
+      calc(
+        (
+            var(--brick-control-size-block) - 2 * var(--brick-border-width) -
+              var(--brick-tags-input-row-height)
+          ) /
+          2
+      )
+    );
+    border: var(--brick-border-width) solid var(--brick-tags-input-border);
+    border-width: var(--brick-tags-input-border-width);
+    border-radius: var(--brick-tags-input-resolved-radius);
+    background: var(--brick-tags-input-background);
+    transition: border-color var(--brick-motion-duration-fast)
+      var(--brick-motion-easing-standard);
+  }
+  .brick-tags-input[data-shape="sharp"] {
+    --brick-tags-input-radius: 0;
+    --brick-tags-input-item-radius: 0;
+  }
+  .brick-tags-input[data-shape="pill"] {
+    --brick-tags-input-radius: var(--brick-radius-full);
+    --brick-tags-input-item-radius: var(--brick-radius-full);
+  }
+  .brick-tags-input-input,
+  .brick-tags-input-item-input {
+    box-sizing: border-box;
+    min-inline-size: 0;
+    min-block-size: var(--brick-tags-input-row-height);
+    block-size: var(--brick-tags-input-row-height);
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: max(1rem, var(--brick-control-size-value-font-size));
+    line-height: var(--brick-control-size-value-line-height);
+  }
+  .brick-tags-input-input {
+    flex: 1 1 6ch;
+    inline-size: 6ch;
+    max-inline-size: 100%;
+    padding-inline: var(--brick-tags-input-draft-inset);
+  }
+  .brick-tags-input-input::placeholder {
+    color: var(--brick-color-text-muted);
+  }
+  .brick-tags-input-item {
+    --brick-tags-input-item-highlight-background: color-mix(in srgb, var(--brick-tags-input-item-background), var(--brick-tags-input-item-foreground) 12%);
+    display: flex;
+    align-items: center;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+  .brick-tags-input-item-preview {
+    display: inline-flex;
+    align-items: center;
+    max-inline-size: 100%;
+    block-size: var(--brick-tags-input-row-height);
+    gap: var(--brick-space-1);
+    border-radius: var(--brick-tags-input-item-radius);
+    background: var(--brick-tags-input-item-background);
+    color: var(--brick-tags-input-item-foreground);
+    padding-inline-start: var(--brick-space-2);
+    box-sizing: border-box;
+    box-shadow: inset 0 0 0 var(--brick-border-width)
+      var(--brick-tags-input-item-border);
+  }
+  .brick-tags-input-item-text {
+    min-inline-size: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: var(--brick-control-size-value-line-height);
+  }
+  .brick-tags-input-delete,
+  .brick-tags-input-clear {
+    margin-inline-start: auto;
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    inline-size: var(--brick-tags-input-target);
+    block-size: var(--brick-tags-input-target);
+    margin-block: calc((var(--brick-tags-input-row-height) - var(--brick-tags-input-target)) / 2);
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+  .brick-tags-input-clear {
+    color: var(--brick-color-text-secondary);
+    border-radius: var(--brick-radius-subtle);
+  }
+  .brick-tags-input-delete svg,
+  .brick-tags-input-clear svg {
+    inline-size: var(--brick-control-size-icon);
+    block-size: var(--brick-control-size-icon);
+    max-inline-size: 1rem;
+    max-block-size: 1rem;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+  .brick-tags-input-item-input {
+    max-inline-size: 100%;
+    padding-inline: var(--brick-space-2);
+    border-radius: var(--brick-tags-input-item-radius);
+    box-shadow: inset 0 0 0 var(--brick-border-width)
+      var(--brick-color-focus-ring);
+  }
+  .brick-tags-input [hidden] {
+    display: none;
+  }
+  .brick-tags-input-control:focus-within {
+    border-color: var(--brick-tags-input-focus-ring);
+    box-shadow: var(--brick-tags-input-focus-shadow) var(--brick-tags-input-focus-ring);
+    outline: none;
+  }
+  .brick-tags-input-item-preview[data-highlighted] {
+    background: var(--brick-tags-input-item-highlight-background);
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: 1px;
+  }
+  .brick-tags-input-delete:focus-visible,
+  .brick-tags-input-clear:focus-visible {
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: calc(-1 * var(--brick-border-focus-width));
+  }
+  .brick-tags-input[data-invalid] {
+    --brick-tags-input-focus-ring: var(--brick-tags-input-invalid-border);
+  }
+  .brick-tags-input[data-invalid] .brick-tags-input-control { border-color: var(--brick-tags-input-invalid-border); }
+  .brick-tags-input[data-readonly] .brick-tags-input-control { background: var(--brick-color-surface-subtle); }
+  .brick-tags-input[data-readonly] :is(.brick-tags-input-delete, .brick-tags-input-clear) { display: none; }
+  .brick-tags-input[data-readonly] .brick-tags-input-item-preview { padding-inline-end: var(--brick-space-2); }
+  .brick-tags-input[data-readonly] .brick-tags-input-input { cursor: default; }
+  .brick-tags-input[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .brick-tags-input-item[data-disabled] {
+    opacity: 0.5;
+  }
+  .brick-tags-input[data-disabled] .brick-tags-input-item[data-disabled] { opacity: 1; }
+  .brick-tags-input-input:disabled { cursor: not-allowed; }
+  .brick-tags-input-item[data-disabled] .brick-tags-input-item-preview {
+    color: inherit;
+  }
+  .brick-tags-input-delete:disabled,
+  .brick-tags-input-clear:disabled {
+    cursor: not-allowed;
+    color: inherit;
+  }
+  .brick-tags-input-item[data-tone="contrast"] {
+    --brick-tags-input-item-background: var(--brick-color-text-primary);
+    --brick-tags-input-item-foreground: var(--brick-color-surface-base);
+  }
+  .brick-tags-input-item[data-tone="accent"] {
+    --brick-tags-input-item-background: var(--brick-color-accent-soft);
+    --brick-tags-input-item-foreground: var(--brick-color-accent-on-soft);
+  }
+  .brick-tags-input-item[data-tone="info"] {
+    --brick-tags-input-item-background: var(--brick-color-info-soft);
+    --brick-tags-input-item-foreground: var(--brick-color-info-on-soft);
+  }
+  .brick-tags-input-item[data-tone="success"] {
+    --brick-tags-input-item-background: var(--brick-color-success-soft);
+    --brick-tags-input-item-foreground: var(--brick-color-success-on-soft);
+  }
+  .brick-tags-input-item[data-tone="warning"] {
+    --brick-tags-input-item-background: var(--brick-color-warning-soft);
+    --brick-tags-input-item-foreground: var(--brick-color-warning-on-soft);
+  }
+  .brick-tags-input-item[data-tone="danger"] {
+    --brick-tags-input-item-background: var(--brick-color-danger-soft);
+    --brick-tags-input-item-foreground: var(--brick-color-danger-on-soft);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .brick-tags-input:not([data-disabled], [data-readonly], [data-invalid])
+      .brick-tags-input-control:not(:focus-within):hover {
+      border-color: var(--brick-tags-input-hover-border);
+      background: var(--brick-tags-input-hover-background);
+    }
+    .brick-tags-input-delete:not(:disabled):hover,
+    .brick-tags-input-clear:not(:disabled):hover {
+      background: color-mix(in srgb, currentColor 14%, transparent);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brick-tags-input-control {
+      transition: none;
+    }
+  }
+  @media (forced-colors: active) {
+    .brick-tags-input-control,
+    .brick-tags-input-item-preview {
+      border: 1px solid ButtonText;
+      background: Canvas;
+      color: CanvasText;
+      box-shadow: none;
+    }
+    .brick-tags-input-item-preview[data-highlighted] {
+      outline-color: Highlight;
+    }
+    .brick-tags-input-control:focus-within { outline: var(--brick-border-focus-width) solid Highlight; outline-offset: 0; box-shadow: none; }
+    .brick-tags-input[data-disabled] .brick-tags-input-control,
+    .brick-tags-input-item[data-disabled] .brick-tags-input-item-preview { color: GrayText; border-color: GrayText; }
+    .brick-tags-input[data-disabled],
+    .brick-tags-input-delete:disabled,
+    .brick-tags-input-clear:disabled {
+      color: GrayText;
+    }
+  }
+}
+
+@layer brick.components {
+  @media (forced-colors: active) {
+    .brick-tags-input[data-disabled], .brick-tags-input-item[data-disabled] { opacity: 1; color: GrayText; }
+  }
+}

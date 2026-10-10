@@ -1,10 +1,29 @@
 # Brick documentation
 
+- [Float](components/float/README.md) — static edge attachment.
+
+- [QrCode](components/qr-code/README.md) — local QR sharing and image export.
+- [Table of Contents](components/table-of-contents/README.md) — document navigation and reading position.
+
+- [EmptyState](components/empty-state/README.md) — empty content and next steps.
+- [Stat](components/stat/README.md) — labeled metrics, units and comparisons.
+- [NativeSelect](components/native-select/README.md) — browser-native option selection.
+- [Editable](components/editable/README.md) — inline text editing with commit and cancellation.
+- [Timeline](components/timeline/README.md) — static chronological events.
+
+- [Alert](components/alert/README.md) — persistent inline feedback.
+
+- [Spinner](components/spinner/README.md) — visual loading feedback.
+
 This directory is the public documentation authority for
 `@flowstack-ui/brick`.
 
 ## Start here
 
+- [Focus presentation](guides/focus-presentation.md) — placement, clipping,
+  semantic paint, forced colors and composite ownership
+- [Radius](guides/radius.md) — core and semantic choices, migrated owners,
+  legacy shape compatibility and nested corners
 - [Installation](guides/installation.md) — package, peer dependency, and CSS
   setup
 - [Appearance and tokens](guides/appearance-and-tokens.md) — light, dark,
@@ -27,8 +46,13 @@ This directory is the public documentation authority for
 
 - [Appearance](components/appearance/README.md) — explicit light, dark, and
   inherited semantic-token scopes without a provider or required wrapper
+- [Locale Provider](components/locale-provider/README.md) — inherited locale,
+  logical direction, and overridable Brick-authored accessibility text
 
 ### Actions and selection
+
+- [CloseButton](components/close-button/README.md) — localized close action
+- [DownloadTrigger](components/download-trigger/README.md) — generated file downloads
 
 - [Button](components/button/README.md) — styled actions and button-like
   navigation
@@ -43,6 +67,13 @@ This directory is the public documentation authority for
   navigation for bounded result sets
 - [Carousel](components/carousel/README.md) — one-slide sequences with optional
   navigation, picker dots, touch scrolling, and controlled rotation
+
+### Utilities
+
+- [Checkmark](components/checkmark/README.md) — passive checked and
+  indeterminate visual state
+- [Radiomark](components/radiomark/README.md) — passive circular selected-state
+  visual
 
 ### Accessibility
 
@@ -63,8 +94,16 @@ This directory is the public documentation authority for
   article-by-article keyboard navigation
 - [Swipeable Item](components/swipeable-item/README.md) — item-level quick
   actions with logical reveal panels and a required visible alternative
+- [Format Number](components/format-number/README.md) — provider-aware
+  locale-sensitive numbers, currencies, percentages, and measurements
+- [Format Byte](components/format-byte/README.md) — provider-aware bit and byte
+  quantities with localized units
 
 ### Forms and choices
+
+- [Calendar](components/calendar/README.md)
+- [DateInput](components/date-input/README.md)
+- [DatePicker](components/date-picker/README.md)
 
 - [Color Picker](components/color-picker/README.md) — Atom-backed area, channel, alpha, format, preset, native, EyeDropper, popup, and form editing
 - [Form](components/form/README.md) — native submission boundary and form
@@ -73,11 +112,15 @@ This directory is the public documentation authority for
   relationships
 - [Fieldset](components/fieldset/README.md) — native related-control grouping
 - [Input](components/input/README.md) — finished native single-line text entry
+- [InputAddon](components/input-addon/README.md) — external noninteractive input segments
+- [Input integrations](guides/input-integrations.md) — optional form, mask and card formatting libraries
 - [Number Input](components/number-input/README.md) — numeric entry with bounded stepping
-- [OTP Field](components/otp-field/README.md) — segmented one-time-code entry
+- [Pin Input](components/pin-input/README.md) — segmented one-time-code entry
 - [Password Toggle Field](components/password-toggle-field/README.md) — password entry with visibility control
 - [Textarea](components/textarea/README.md) — finished native multi-line text
 - [Radio Group](components/radio-group/README.md) — finished visible single-selection choices
+- [Radio Card](components/radio-card/README.md) — rich whole-card single-selection choices
+- [CheckboxCard](components/checkbox-card/README.md) — rich independent option cards
 - [Segment Group](components/segment-group/README.md) — compact one-of-many modes with a moving indicator
 - [Switch](components/switch/README.md) — immediate binary settings
   entry with manual or bounded automatic sizing and optional character count
@@ -113,6 +156,8 @@ This directory is the public documentation authority for
   overflow, language metadata, and copy feedback
 - [Avatar](components/avatar/README.md) — identity image, fallback, and visual
   status
+- [AvatarGroup](components/avatar-group/README.md) — overlapping identity stacks
+  with explicit accessible overflow
 - [Badge](components/badge/README.md) — passive inline labels
 - [Status](components/status/README.md) — passive semantic dot and label
 - [Color Swatch](components/color-swatch/README.md) — passive solid, alpha-aware, mixed, sharp, rounded, and circular color preview
@@ -174,11 +219,15 @@ This directory is the public documentation authority for
   and decorative or informative accessibility
 - [Image](components/image/README.md) — responsive media, authored fallback,
   fit, focal position, ratio, and finished framing
+- [For](components/for/README.md) — typed wrapper-free collection rendering
+  with an explicit fallback
 
 ### Navigation and layout
 
 - [Breadcrumb](components/breadcrumb/README.md) — hierarchical page location
   and ancestor navigation
+- [Steps](components/steps/README.md) — ordered workflow progression and validation.
+- [Splitter](components/splitter/README.md) — adjacent resizable regions.
 - [Tabs](components/tabs/README.md) — related peer panels with complete keyboard
   navigation
 - [Navigation Menu](components/navigation-menu/README.md) — destination
@@ -196,6 +245,8 @@ This directory is the public documentation authority for
   structure
 - [Stack](components/stack/README.md) — tokenized one-dimensional rows and
   columns
+- [Center](components/center/README.md) — two-axis centering and invariant
+  square or circular geometry
 - [Group](components/group/README.md) — compact inline clusters with optional
   attached borders and logical corners
 - [ZStack](components/z-stack/README.md) — source-ordered overlapping layers
@@ -220,3 +271,9 @@ This directory is the public documentation authority for
 
 Every released component owns one folder containing its public `README.md` and
 `CHANGELOG.md`.
+- [ActionBar](components/action-bar/README.md) — detached contextual actions.
+- [FloatingPanel](components/floating-panel/README.md) — movable, resizable nonmodal tools.
+- [OverlayManager](components/overlay-manager/README.md) — keyed imperative overlay orchestration.
+- [Marquee](./components/marquee/README.md) — continuous motion, safe replicas and pause controls.
+- [TagsInput](components/tags-input/README.md) — multi-value entry with validation and suggestions.
+- [ToggleTip](components/toggle-tip/README.md)

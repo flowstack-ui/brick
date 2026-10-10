@@ -4,6 +4,10 @@ Color Swatch follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Expand fixed sizes to 14–32px plus inherit/full; align sm/md/lg to 18/20/24px.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ## 0.2.0 - 2026-08-31
 
 ### Added

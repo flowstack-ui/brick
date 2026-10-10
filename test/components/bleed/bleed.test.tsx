@@ -4,6 +4,18 @@ import { describe, expect, it } from "vitest";
 import { Bleed } from "../../../src/bleed.js";
 
 describe("Bleed", () => {
+  it("keeps token amounts, zero overrides and nested defaults independent", () => {
+    render(<Bleed inline="6" inlineEnd={0} data-testid="outer"><Bleed data-testid="inner">Nested</Bleed></Bleed>);
+    const outer = screen.getByTestId("outer").style;
+    const inner = screen.getByTestId("inner").style;
+    expect(outer.getPropertyValue("--brick-bleed-inline-start")).toBe("var(--brick-space-6)");
+    for (const suffix of ["", "-sm", "-md", "-lg", "-xl"]) {
+      expect(outer.getPropertyValue(`--brick-bleed-inline-end${suffix}`)).toBe("var(--brick-space-0)");
+      for (const edge of ["inline-start", "inline-end", "block-start", "block-end"]) {
+        expect(inner.getPropertyValue(`--brick-bleed-${edge}${suffix}`)).toBe("var(--brick-space-0)");
+      }
+    }
+  });
   it("renders one neutral host and serializes logical responsive spacing", () => {
     const ref = createRef<HTMLElement>();
     render(
@@ -29,6 +41,17 @@ describe("Bleed", () => {
     expect(bleed.style.getPropertyValue("--brick-bleed-block-start")).toBe("calc(var(--brick-space-1) * 3)");
     expect(bleed).not.toHaveAttribute("inline");
     expect(bleed).not.toHaveAttribute("blockStart");
+  });
+
+  it("uses zero bleed below the first sparse responsive edge", () => {
+    render(<Bleed data-testid="bleed" inline={{ lg: 6 }}>Media</Bleed>);
+    const style = screen.getByTestId("bleed").style;
+    expect(style.getPropertyValue("--brick-bleed-inline-start")).toBe(
+      "var(--brick-space-0)",
+    );
+    expect(style.getPropertyValue("--brick-bleed-inline-start-lg")).toBe(
+      "calc(var(--brick-space-1) * 6)",
+    );
   });
 
   it("composes onto one existing semantic host without a wrapper", () => {

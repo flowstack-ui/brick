@@ -1,6 +1,14 @@
 import { expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/blockquote");
+installVisualDefaults("/blockquote?qualification=1");
+
+test("Blockquote documentation recipes and composed decoration", async ({ page }) => {
+  await page.goto("/blockquote");
+  await expectEvidenceScreenshot(page, page.locator('#variants'), "docs-variants.png");
+  await expectEvidenceScreenshot(page, page.locator('#icon'), "docs-icon.png");
+  await expectEvidenceScreenshot(page, page.locator('#with-avatar'), "docs-avatar.png");
+  await expectEvidenceScreenshot(page, page.locator('#typography'), "docs-typography.png");
+});
 
 test("Blockquote overview and recipes", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.locator('[data-scenario="blockquote.overview"]'), "overview-light.png");

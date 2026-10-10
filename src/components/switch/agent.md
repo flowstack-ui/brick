@@ -2,42 +2,49 @@
 
 ## Purpose
 
-Present a finished immediately applied on/off setting while Atom owns switch semantics, controlled or uncontrolled state, keyboard activation, validation, and optional form participation.
+Present a finished immediately applied binary setting while Atom owns state, interaction, IDs, validation, native forms and composition.
 
 ## Use when
 
-- A setting becomes active or inactive immediately when the user operates it.
+- An on/off setting takes effect immediately.
 
 ## Choose something else when
 
-- The choice is a form answer applied later, a command whose pressed state remains active, or one of several exclusive values. Use Checkbox, Toggle, or RadioGroup.
+- The choice is submitted later, represents a pressed command, or is one of several exclusive values. Use Checkbox, Toggle, or RadioGroup.
 
 ## Required composition
 
-- Give Switch.Root a stable visible or native accessible setting name and add Switch.Thumb as its decorative movable part. Compose Root in Field when visible Label, Description, Error, required, or invalid context is needed; use name, value, and form when checked state must submit.
-- Choose Root size sm, md, or lg for the finished track, thumb, travel, and target geometry. Keep Thumb decorative and let Atom state attributes drive Brick paint.
+- Prefer Switch.Field with exactly one Switch.Control, one Switch.Label and one Switch.HiddenInput. Field is the only state/form owner; Control supplies one default Thumb only when children are omitted.
+- Retain Switch.Root plus an explicit Switch.Thumb for the compatible standalone button path. Root owns its automatic native proxy, keeps an HTMLButtonElement ref and boolean onCheckedChange, and must not also receive HiddenInput.
+- Use Switch.RootProvider with one useSwitch controller. Its value prop is the controller; inputValue is the submitted checkbox value. Indicators are decorative and links remain outside Control.
 
 ## Rules
 
-- **MUST:** Use Switch only for an immediately applied on/off setting; use Checkbox for a deferred form answer and Toggle for a persistent pressed command.
-- **MUST:** Give Root a complete stable accessible setting name with visible Field Label, native labeling, aria-label, or aria-labelledby; Thumb remains decorative and aria-hidden.
-- **MUST:** Use checked with onCheckedChange for controlled state or defaultChecked for uncontrolled state and preserve role=switch with boolean aria-checked.
-- **MUST:** Use readOnly when the setting must stay focusable while Enter, Space, pointer, and custom-element activation cannot change state; do not replace it with disabled.
-- **MUST:** Preserve named checked-value submission, required validity, Field state and descriptions, validation focus, external form association, and uncontrolled reset when form behavior applies.
-- **MUST:** Use Brick's canonical checked, unchecked, focus, disabled, read-only, and invalid paint; invalid changes the boundary without replacing the checked meaning, and mixed or loading state is unsupported.
-- **SHOULD:** Keep intrinsic geometry and complete target size, allow surrounding label text to reflow, and verify logical thumb travel in RTL without reversing on/off meaning.
-- **MUST:** Load styles.css or core.css plus switch.css and Field CSS when composed.
+- **MUST:** Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+- **MUST:** Use Field or RootProvider ids for custom control/label/input associations in SSR. Local part id overrides synchronize after mounting; explicit aria-labelledby and htmlFor remain caller-owned.
+- **MUST:** Use Switch only for an immediately applied on/off setting; mixed, loading and pending state are unsupported.
+- **MUST:** Keep one state owner and exactly one native checkbox: Root manages its own proxy; Field and RootProvider require exactly one HiddenInput.
+- **MUST:** Give Control or Root one stable accessible name. Put visible text and independent links in Label, never inside Control, and keep Indicator and ThumbIndicator decorative.
+- **MUST:** Use checked plus onCheckedChange for controlled state or defaultChecked for uncontrolled state; preserve the boolean callback and Atom-owned role, aria-checked, keyboard and cancellation behavior.
+- **MUST:** Use readOnly for a focusable immutable setting and disabled for an unavailable, non-submitting setting. Preserve checked identity with read-only, invalid and disabled combinations.
+- **MUST:** Preserve checked-only submission, repeated names, named and unnamed reset, required focus, external form ownership and disabled fieldset behavior. For optional React Hook Form integration, connect Controller boolean state to Field and its ref to HiddenInput.
+- **SHOULD:** Choose responsive xs/sm/md/lg size, responsive solid/raised variant, and neutral/accent/contrast/info/success/warning/danger tone. Tone does not imply invalid state; labelPlacement applies to compound owners.
+- **MUST:** Use documented checked rest/hover/pressed tokens for independent brand colors so interaction never reverts to accent. Raised uses a softened selected rail and solid thumb.
+- **MUST:** Use effective element direction and logical edges for mirrored travel, preserve centered endpoints through responsive changes, and make reduced motion immediate.
+- **MUST:** Keep Indicator centered in the open half of the track opposite Thumb, and keep ThumbIndicator centered and clipped inside Thumb in both states.
+- **MUST:** Load styles.css or core.css plus switch.css; do not repair Switch library defects in playground or application CSS.
 
 ## Common mistakes
 
-- **Avoid:** Using Switch for a submit-later checkbox or pressed command, relying on Thumb as the accessible control, or changing the setting label between states. **Instead:** Choose by timing and semantics, name Root directly, keep Thumb decorative, and preserve one stable setting name.
-- **Avoid:** Using disabled when the value should remain discoverable and read-only or inventing mixed, loading, tone, or shape props. **Instead:** Use readOnly for locked focusable state and stay within the canonical binary visual recipe.
+- **Avoid:** Nesting HiddenInput under Root, omitting it from Field, or giving Control separate checked state. **Instead:** Choose one standalone or compound path and keep one state/input owner.
+- **Avoid:** Appending Thumb when Control already has explicit indicator artwork, or putting a help link inside Control. **Instead:** Omit children for the default Thumb; explicit children own artwork, and links belong in or beside Label.
+- **Avoid:** Treating tone as validation or adding colorPalette/style-prop APIs. **Instead:** Use tone for semantic selected paint, invalid independently, and documented theme/component tokens for brand colors.
 
 ## Validation checklist
 
-- Verify accessible name, role and aria-checked, controlled and uncontrolled updates, pointer, Enter, and Space activation, disabled and read-only behavior, Thumb state inheritance, and native, asChild, and render semantics.
-- Verify named checked-value submission, required validity with and without name, invalid and Field descriptions, validation focus, external form association, and uncontrolled reset.
-- Verify three sizes, checked and unchecked contrast, focus, disabled, read-only and invalid paint, intrinsic and narrow layout, mobile targets, 200% text and 400% zoom, RTL travel, reduced motion, forced colors, and complete CSS.
+- Verify legacy Root DOM/ref/callback/forms and compound label/control/input associations, single-input ownership, controlled/uncontrolled/provider state, pointer/keyboard/cancellation, refs, render/asChild, SSR/hydration and React 18/19.
+- Verify native and optional Hook Form submission/reset/validation, required/external form, repeated names, unnamed reset and disabled fieldsets.
+- Verify responsive geometry and 44px targets, contained indicator geometry in both states, all tones, custom checked rest/hover/press, light/dark, effective nested RTL, rapid/reduced motion, focus, forced colors and availability combinations. Record screen-reader, device and zoom checks manually.
 
 ## Related guidance
 
@@ -47,3 +54,4 @@ Present a finished immediately applied on/off setting while Atom owns switch sem
 - `radio-group`
 - `field`
 - `form`
+- `tooltip`

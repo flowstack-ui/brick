@@ -9,12 +9,17 @@
 | Physical device |  |
 | Assistive technology |  |
 | Playground route | `/visually-hidden` |
+| Qualification route(s) | `/visually-hidden?qualification=1` |
 
 Scenario order: `01 Overview`, `02 Naming`, `03 Output`, `04 Composition`, `05 Native props`, `06 Stress`. Use `pass`, `fail`, `blocked`, or `not applicable`.
 
 ## 1 — Naming and output
 
-Open `/visually-hidden`; review 01–03. Expected: hidden text never appears or changes layout; the Search action is announced as “Search projects”; the destructive action is announced as “Delete project permanently”; inspected HTML retains a span, Brick class/slot, and Atom inline hiding styles.
+Open `/visually-hidden?qualification=1`; review 01–03. Expected: hidden text never appears or changes layout; the Search action is announced as “Search projects”; the destructive action is announced as “Delete project permanently”; inspected HTML retains a span, Brick class/slot, and Atom inline hiding styles.
+
+Also review the normal documentation route: visible buttons have complete names
+“3 Notifications”, “Archive completed projects”, “Read more about billing” and
+“Read more about security”. Only supporting text is hidden; focus stays visible.
 
 ## 2 — Composition and native ownership
 

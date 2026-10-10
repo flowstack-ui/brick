@@ -10,8 +10,8 @@ import {
 import { Input as RootInput } from "../../../src/index.js";
 
 const ref = createRef<HTMLInputElement>();
-const variants: InputVariant[] = ["outline", "soft", "underline"];
-const sizes: InputSize[] = ["sm", "md", "lg"];
+const variants: InputVariant[] = ["outline", "soft", "underline", "surface"];
+const sizes: InputSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: InputShape[] = ["sharp", "rounded", "pill"];
 const types: InputType[] = [
   "text",
@@ -35,6 +35,7 @@ const props: InputProps = {
 };
 
 createElement(Input, { ...props, ref });
+createElement(Input, { "aria-label": "Responsive", size: { lg: "xl" } });
 createElement(RootInput, { ...props, ref });
 
 // @ts-expect-error underline has fixed sharp geometry
@@ -52,3 +53,6 @@ void variants;
 void sizes;
 void shapes;
 void types;
+
+const surfaceRecipe: Pick<import("react").ComponentProps<typeof Input>, "variant"> = { variant: "surface" };
+void surfaceRecipe;

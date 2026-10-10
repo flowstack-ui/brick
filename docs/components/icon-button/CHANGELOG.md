@@ -1,8 +1,31 @@
 # Icon Button changelog
 
-Icon Button follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+
+Icon Button follows the package version of `@flowstack-ui/brick`.
+
+- Preserve action-owned icon sizing through an immediate NotificationBadge, without resizing its indicator.
+
+- Support subtle, surface and plain recipes and ButtonGroup visual defaults.
+
+- Support scalar focusRing="outside" | "inside"; omission stays outside. Inside uses paired foreground and canonical negative-width offset without changing Atom behavior.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
+### Changed
+
+- Loading uses the shared 500ms visual ring and a static arc with reduced motion.
+
+- Keep loading and disabled-loading spinners centered when animations are
+  disabled, independently of their rotation, in both directions.
+
+- Expanded IconButton to the responsive seven-step `2xs`–`2xl` action scale,
+  including sparse responsive values, while preserving its visible 44px
+  default as `lg`.
 
 ### Added
 
@@ -10,11 +33,14 @@ Icon Button follows the package version of `@flowstack-ui/brick`.
   CSS-delivery, recurring mistakes, and validation.
 
 - Added the Atom-backed Icon Button action and genuine link paths.
-- Added four variants, six tones, five square sizes, rounded/circle geometry,
+- Added four variants, six tones, seven square sizes, rounded/circle geometry,
   loading, disabled, forced-colors, dark, and reduced-motion presentation.
 
 ### Fixed
 
+- Kept neutral and semantic ghost hover/pressed feedback perceptible on every
+  finished surface, including overlays whose background equals the neutral
+  subtle token.
 - Disabled Icon Buttons now use the disabled foreground and stronger fading so
   they do not resemble enabled neutral outline actions.
 - Icon Buttons composed as disclosure triggers now retain their pressed recipe
@@ -31,3 +57,5 @@ Icon Button follows the package version of `@flowstack-ui/brick`.
   `asChild` composition removes the decorative wrapper.
 - Loading presentation now uses the shared private action-spinner recipe and
   retains a visible system-color spinner in forced-color environments.
+
+- Consolidated shared action presentation and icon-only custom loading.

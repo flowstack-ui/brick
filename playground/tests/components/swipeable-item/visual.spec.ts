@@ -1,6 +1,23 @@
 import { expectEvidenceScreenshot, installVisualDefaults, test } from "../../visual-harness.js";
 
-installVisualDefaults("/swipeable-item");
+installVisualDefaults("/swipeable-item?qualification=1");
+
+test("Swipeable Item documentation composition and armed full swipe", async ({ page }) => {
+  await page.goto('/swipeable-item?testMode=1&appearance=light');
+  await expectEvidenceScreenshot(page, page.locator('#composition'), 'composition-light.png');
+  const demo = page.locator('#fullswipe');
+  const content = demo.locator('.brick-swipeable-item__content');
+  await content.scrollIntoViewIfNeeded();
+  const box = await content.boundingBox();
+  if (!box) throw new Error('No full-swipe geometry');
+  await page.mouse.move(box.x + box.width * 0.85, box.y + box.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width * 0.1, box.y + box.height / 2, { steps: 8 });
+  await expectEvidenceScreenshot(page, demo, 'fullswipe-armed-light.png');
+  await page.mouse.up();
+  await page.goto('/swipeable-item?testMode=1&appearance=dark');
+  await expectEvidenceScreenshot(page, page.locator('#composition'), 'composition-dark.png');
+});
 
 test("Swipeable Item defaults, variants, actions, and controlled state", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.getByTestId("swipeable-overview"), "overview-light.png");

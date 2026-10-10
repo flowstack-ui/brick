@@ -1,5 +1,11 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
+
+// The recipe matrix intentionally includes full desktop navigation. Narrow
+// composition is exercised explicitly below and on the documentation route.
+test.beforeEach(async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+});
 
 async function expectRootDefaults(root: Locator) {
   await expect(root).toHaveAttribute("data-position", "static");
@@ -17,7 +23,7 @@ async function expectRootDefaults(root: Locator) {
 test("AppBar exposes its default landmark, anatomy, and geometric center", async ({
   page,
 }) => {
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   const root = page
     .getByTestId("app-bar-overview")
     .locator('.brick-app-bar[aria-label="Default AppBar"]');
@@ -50,7 +56,7 @@ test("AppBar exposes its default landmark, anatomy, and geometric center", async
 test("AppBar Toolbar can yield inline inset to a containing layout owner", async ({
   page,
 }) => {
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   const toolbar = page
     .getByTestId("app-bar-overview")
     .locator("[data-slot='appbar-toolbar']");
@@ -68,7 +74,7 @@ test("AppBar Toolbar can yield inline inset to a containing layout owner", async
 test("AppBar variants change only the default neutral surface treatment", async ({
   page,
 }) => {
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   const roots = page.getByTestId("app-bar-variants").locator(".brick-app-bar");
   await expect(roots).toHaveCount(3);
 
@@ -93,7 +99,7 @@ test("AppBar variants change only the default neutral surface treatment", async 
 });
 
 test("AppBar exposes the complete tone by variant matrix", async ({ page }) => {
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   const matrix = page.getByTestId("app-bar-tones");
   await expect(matrix.locator(".brick-app-bar")).toHaveCount(6);
 
@@ -130,7 +136,7 @@ test("AppBar exposes the complete tone by variant matrix", async ({ page }) => {
 });
 
 test("AppBar density changes only Toolbar geometry", async ({ page }) => {
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   const density = page.getByTestId("app-bar-density");
   const comfortable = density.locator(
     '.brick-app-bar[aria-label="comfortable density AppBar"]',
@@ -201,7 +207,7 @@ test("AppBar density changes only Toolbar geometry", async ({ page }) => {
 });
 
 test("AppBar surface options remain independent", async ({ page }) => {
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   const options = page.getByTestId("app-bar-options");
   const elevated = options.locator(
     '.brick-app-bar[aria-label="Elevated AppBar"]',
@@ -249,7 +255,7 @@ test("AppBar surface options remain independent", async ({ page }) => {
 test("AppBar applies every position without changing unrelated defaults", async ({
   page,
 }) => {
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   const samples = page.getByTestId("app-bar-positions");
   for (const position of ["static", "absolute", "sticky", "fixed"] as const) {
     const root = samples.locator(
@@ -270,7 +276,7 @@ test("AppBar applies every position without changing unrelated defaults", async 
 test("AppBar preserves anatomy through every Root composition path", async ({
   page,
 }) => {
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   const composition = page.getByTestId("app-bar-composition");
 
   for (const testId of [
@@ -294,7 +300,7 @@ test("AppBar preserves anatomy through every Root composition path", async ({
 test("AppBar supports scoped appearance and exact customization hooks", async ({
   page,
 }) => {
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   const light = page.locator(
     '.brick-app-bar[aria-label="Light appearance AppBar"]',
   );
@@ -337,7 +343,7 @@ test("AppBar stays contained and preserves logical RTL placement", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 320, height: 720 });
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   expect(
     await page.evaluate(
       () =>
@@ -390,7 +396,7 @@ test("AppBar restores opaque and system-safe surfaces for preferences", async ({
   await session.send("Emulation.setEmulatedMedia", {
     features: [{ name: "prefers-reduced-transparency", value: "reduce" }],
   });
-  await page.goto("/app-bar");
+  await page.goto("/app-bar?qualification=1");
   const blurred = page.locator(
     '.brick-app-bar[aria-label="Blurred AppBar"]',
   );
@@ -415,4 +421,17 @@ test("AppBar restores opaque and system-safe surfaces for preferences", async ({
     ),
   ).toBeGreaterThanOrEqual(1);
   await expect(overview).toHaveCSS("box-shadow", "none");
+});
+
+
+test("surface effects preserve opaque descendants and focus", async ({ page }) => {
+  await page.goto("/app-bar");
+  const root = page.locator("#surface-effects .brick-app-bar[data-surface-effects]").first();
+  await expect(root).toHaveAttribute("data-surface-effects", "translucent");
+  await expect(root).toHaveCSS("backdrop-filter", /blur\(18px\)/);
+  await expect(root).toHaveCSS("opacity", "1");
+  await expect(root).toHaveCSS("overflow", "visible");
+  const target = root.locator("button, a").first();
+  await target.focus();
+  await expect(target).toBeFocused();
 });

@@ -16,6 +16,12 @@ function Example({ onValueChange = vi.fn() }: { onValueChange?: (value: string) 
 }
 
 describe("Tabs", () => {
+  it("retains recipe ownership through layout wrappers and nested roots", () => {
+    render(<Tabs.Root defaultValue="one" variant={{ initial: "plain", md: "line" }}><div><Tabs.List ariaLabel="Outer"><Tabs.Trigger value="one">One</Tabs.Trigger><Tabs.Indicator /></Tabs.List><Tabs.Content value="one"><Tabs.Root variant="solid"><Tabs.List ariaLabel="Inner" /></Tabs.Root></Tabs.Content></div></Tabs.Root>);
+    expect(screen.getByRole("tablist", { name: "Outer" })).toHaveAttribute("data-variant", "plain");
+    expect(screen.getByRole("tablist", { name: "Outer" })).toHaveAttribute("data-variant-md", "line");
+    expect(screen.getByRole("tablist", { name: "Inner" })).toHaveAttribute("data-variant", "solid");
+  });
   it("renders adopted defaults and Atom relationships", () => {
     render(<Example />);
     const root = screen.getByRole("tablist", { name: "Sections" }).parentElement!;
@@ -23,6 +29,7 @@ describe("Tabs", () => {
     expect(root).toHaveClass("brick-tabs");
     expect(root).toHaveAttribute("data-size", "md");
     expect(root).toHaveAttribute("data-variant", "line");
+    expect(root).toHaveAttribute("data-tone", "accent");
     expect(list).toHaveAttribute("data-radius", "default");
     expect(screen.getByRole("tab", { name: "One" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByRole("tabpanel")).toHaveAttribute("aria-labelledby", screen.getByRole("tab", { name: "One" }).id);
@@ -31,13 +38,15 @@ describe("Tabs", () => {
   it("supports every recipe without leaking visual props", () => {
     const { rerender } = render(<Tabs.Root><Tabs.List /></Tabs.Root>);
     for (const size of ["sm", "md", "lg"] as const) for (const variant of ["line", "solid", "soft", "enclosed"] as const) {
-      rerender(<Tabs.Root fullWidth size={size} variant={variant}><Tabs.List /></Tabs.Root>);
+      rerender(<Tabs.Root fullWidth size={size} variant={variant} tone="neutral"><Tabs.List /></Tabs.Root>);
       const root = screen.getByRole("tablist").parentElement!;
       expect(root).toHaveAttribute("data-size", size);
       expect(root).toHaveAttribute("data-variant", variant);
-      expect(root).toHaveAttribute("data-full-width", "");
+      expect(root).toHaveAttribute("data-full-width", "true");
       expect(root).not.toHaveAttribute("size");
       expect(root).not.toHaveAttribute("variant");
+      expect(root).toHaveAttribute("data-tone", "neutral");
+      expect(root).not.toHaveAttribute("tone");
     }
   });
 
@@ -71,6 +80,7 @@ describe("Tabs", () => {
     expect(screen.getByTestId("list")).toHaveAttribute("data-trigger-radius", "default");
     expect(screen.getByTestId("list")).not.toHaveAttribute("radius");
     expect(screen.getByTestId("list")).not.toHaveAttribute("triggerRadius");
+    expect(screen.getByTestId("list").style.getPropertyValue("--brick-tabs-radius")).toBe("0px");
   });
 
   it("exposes the independent trigger radius recipe for line tabs", () => {

@@ -7,9 +7,19 @@ import {
   type TextareaCountProps as AtomTextareaCountProps,
   type TextareaRootProps as AtomTextareaRootProps,
 } from "@flowstack-ui/atom/textarea";
+import {
+  controlSizeDataAttributes,
+  type ControlSize,
+  type ResponsiveControlSize,
+} from "../_control-size/ControlSize.js";
+import {
+  fieldVariantAttributes,
+  type ResponsiveFieldVariant,
+} from "../_field-variant/FieldVariant.js";
 
-export type TextareaVariant = "outline" | "soft" | "underline";
-export type TextareaSize = "sm" | "md" | "lg";
+export type TextareaVariant = "outline" | "surface" | "soft" | "subtle" | "ghost" | "plain" | "underline";
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
+export type TextareaSize = ControlSize;
 export type TextareaShape = "sharp" | "rounded";
 export type TextareaResize = "none" | "vertical" | "horizontal" | "both";
 
@@ -22,8 +32,8 @@ type TextareaRootSharedProps = Omit<
   | "size"
   | "style"
 > & {
-  /** Complete control size. @default "md" */
-  size?: TextareaSize;
+  /** Complete responsive control size. @default "lg" */
+  size?: ResponsiveControlSize;
   /** Stretch to the available inline size. @default true */
   fullWidth?: boolean;
   /** Class applied to the visual wrapper. */
@@ -37,15 +47,15 @@ type TextareaRootSharedProps = Omit<
 };
 
 type TextareaVariantProps =
-  | {
+  | (RadiusShapeProps<TextareaShape> & {
       /** Visual container recipe. @default "outline" */
-      variant?: "outline" | "soft";
+      variant?: Exclude<TextareaVariant, "underline">;
       /** Visual container geometry. @default "rounded" */
-      shape?: TextareaShape;
-    }
+    })
   | {
-      variant: "underline";
+      variant: ResponsiveFieldVariant;
       shape?: never;
+      radius?: never;
     };
 
 type TextareaResizeProps =
@@ -84,7 +94,8 @@ export const TextareaRoot = forwardRef<HTMLTextAreaElement, TextareaRootProps>(
       minRows = 3,
       resize = "vertical",
       shape = "rounded",
-      size = "md",
+      radius,
+      size = "lg",
       style,
       textareaClassName,
       textareaStyle,
@@ -94,20 +105,22 @@ export const TextareaRoot = forwardRef<HTMLTextAreaElement, TextareaRootProps>(
     },
     ref,
   ) {
-    const resolvedShape = variant === "underline" ? undefined : shape;
+    const hasFixedGeometry = typeof variant === "string" && variant !== "underline";
+    const resolvedShape = hasFixedGeometry ? radius === undefined ? shape : "rounded" : undefined;
     const resolvedResize = autoResize ? "none" : resize;
 
     return (
       <span
-        className={mergeClassName("brick-textarea", className)}
+        dir={props.dir}
+        className={mergeClassName("brick-textarea brick-control-size", className)}
         data-autoresize={autoResize ? "" : undefined}
         data-full-width={fullWidth ? "" : undefined}
         data-resize={resolvedResize}
         data-shape={resolvedShape}
-        data-size={size}
         data-slot={dataSlot ?? "textarea"}
-        data-variant={variant}
-        style={style}
+        {...fieldVariantAttributes(variant)}
+        style={radiusStyle(hasFixedGeometry ? radius : undefined, "--brick-textarea-radius", style)}
+        {...controlSizeDataAttributes(size)}
       >
         <AtomTextarea.Root
           {...props}

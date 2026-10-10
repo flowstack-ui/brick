@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function expectCssPixels(
   locator: Locator,
@@ -17,7 +17,7 @@ async function expectCssPixels(
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/section");
+  await page.goto("/section?qualification=1");
 });
 
 test("default is one semantic root with medium logical rhythm", async ({ page }) => {

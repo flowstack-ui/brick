@@ -7,6 +7,26 @@ import { Rating } from "../../../src/rating.js";
 function Example(props: React.ComponentProps<typeof Rating.Root> = {}) { return <Rating.Root aria-label="Product rating" defaultValue={3} {...props}>{[1,2,3,4,5].map((value) => <Rating.Item key={value} value={value} />)}</Rating.Root>; }
 
 describe("Rating", () => {
+  it("generates a control, labels it and respects deliberately empty children", () => {
+    const { rerender } = render(<Rating.Root><Rating.Label>Experience</Rating.Label><Rating.Control /></Rating.Root>);
+    expect(screen.getByRole("slider", { name: "Experience" }).querySelectorAll(".brick-rating__item")).toHaveLength(5);
+    rerender(<Rating.Root aria-label="Empty">{null}</Rating.Root>);
+    expect(screen.getByRole("slider").querySelectorAll(".brick-rating__item")).toHaveLength(0);
+  });
+  it("composes one asChild host and does not layer explicit indicators or emoji twice", () => {
+    const ref = createRef<HTMLSpanElement>();
+    render(<Rating.Root aria-label="Score"><Rating.Item asChild ref={ref} value={1}><span data-host="custom"><Rating.ItemIndicator /></span></Rating.Item><Rating.Item value={2} contentMode="content"><Rating.ItemContext>{() => "🙂"}</Rating.ItemContext></Rating.Item></Rating.Root>);
+    expect(ref.current).toHaveAttribute("data-host", "custom");
+    expect(ref.current?.querySelectorAll("svg")).toHaveLength(2);
+    expect(screen.getByText("🙂")).toBeInTheDocument();
+  });
+  it("inherits responsive recipes and makes explicit colors win over authored variables", () => {
+    render(<Rating.PropsProvider size={{ md: "lg" }} density="compact"><Rating.Root aria-label="Score" fillColor="gold" emptyColor="silver" style={{ "--brick-rating-fill-color": "red" } as React.CSSProperties} /></Rating.PropsProvider>);
+    const root = screen.getByRole("slider");
+    expect(root).toHaveAttribute("data-size", "md"); expect(root).toHaveAttribute("data-size-md", "lg");
+    expect(root).toHaveAttribute("data-density", "compact");
+    expect(root.style.getPropertyValue("--brick-rating-fill-color")).toBe("gold");
+  });
   it("renders one slider with decorative proportional items and default recipes", () => {
     render(<Example />); const root = screen.getByRole("slider", { name: "Product rating" });
     expect(root).toHaveClass("brick-rating"); expect(root).toHaveAttribute("data-size", "md"); expect(root).toHaveAttribute("data-tone", "accent"); expect(root).toHaveAttribute("data-variant", "solid"); expect(root).toHaveAttribute("aria-valuenow", "3");

@@ -1,6 +1,6 @@
 import { expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/highlight");
+installVisualDefaults("/highlight?qualification=1");
 
 test("Highlight overview and recipes", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.locator('[data-scenario="highlight.overview"]'), "overview-light.png");

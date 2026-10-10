@@ -13,7 +13,7 @@ test("Agent Knowledge catalog reconciles every public Brick surface", async () =
   assert.equal(report.schema, "flowstack.agent-coverage.v1");
   assert.equal(report.package, "@flowstack-ui/brick");
   assert.equal(report.layer, "brick");
-  assert.equal(report.summary.componentOwners, 95);
+  assert.equal(report.summary.componentOwners, 129);
   assert.equal(report.summary.packageGuides, 2);
   assert.equal(report.summary.unclassified, 0);
   assert.equal(report.summary.invalidExclusions, 0);
@@ -38,7 +38,8 @@ test("Agent Knowledge catalog reconciles every public Brick surface", async () =
     markdown: "src/components/badge/notification-badge/agent.md",
   });
 
-  assert.equal(report.exclusions.length, 5);
+  assert.equal(report.exclusions.length, 16);
+  assert.ok(report.exclusions.every(({ visibility, status }) => visibility === "source-only" && status === "covered"));
   assert.equal(report.nativeApplicationDestinations.length, 0);
   assert.equal(
     report.surfaces.find(({ surface }) => surface === ".").classification,
@@ -59,10 +60,18 @@ test("Agent Knowledge catalog reconciles every public Brick surface", async () =
     ),
   );
 
+  const layerGuide = JSON.parse(await readFile(new URL("../../agents/guides/layer-selection/agent.json", import.meta.url), "utf8"));
+  for (const id of ["native-select", "editable", "tags-input", "pin-input"]) {
+    assert.ok(layerGuide.selection.some(({ destinations }) =>
+      destinations?.some((destination) => destination.kind === "component" && destination.id === id)),
+    `${id} must be discoverable through the package selection map`);
+  }
+  const popoverIndex = layerGuide.selection.findIndex(({ intent }) => intent === "compact anchored interactive panel");
+  assert.notEqual(popoverIndex, -1);
   const popoverSelection = report.selectionDestinations.find(
-    ({ guideId, destinations }) =>
+    ({ guideId, selection }) =>
       guideId === "layer-selection"
-      && destinations.some(({ kind, id }) => kind === "component" && id === "popover"),
+      && selection === popoverIndex + 1,
   );
   assert.equal(popoverSelection.status, "covered");
   assert.ok(

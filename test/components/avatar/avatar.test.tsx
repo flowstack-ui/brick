@@ -40,6 +40,22 @@ afterEach(() => {
 });
 
 describe("Avatar", () => {
+  it("composes native image parts with a generic fallback and token recipes", () => {
+    const imageRef = createRef<HTMLImageElement>();
+    const { container } = render(
+      <Avatar.Root alt="Ada" src="/ada.png" tone="accent" variant="outline" radius="sm">
+        <Avatar.Image ref={imageRef} loading="lazy" srcSet="/ada2.png 2x" sizes="40px" />
+        <Avatar.Fallback />
+      </Avatar.Root>,
+    );
+    expect(imageRef.current).toBe(container.querySelector("img"));
+    expect(imageRef.current).toHaveAttribute("srcset", "/ada2.png 2x");
+    expect(container.firstChild).toHaveAttribute("data-variant", "outline");
+    expect(container.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+    expect(screen.getByRole("img", { name: "Ada" })).toHaveClass("brick-avatar__fallback");
+    fireEvent.load(imageRef.current!);
+    expect(screen.getByRole("img", { name: "Ada" })).toBe(imageRef.current);
+  });
   it("renders explicit informative fallback with closed visual defaults", () => {
     render(<Avatar alt="Ada Lovelace" fallback="AL" />);
 
@@ -69,7 +85,8 @@ describe("Avatar", () => {
   });
 
   it("routes one source through Atom and preserves loaded image semantics", async () => {
-    vi.stubGlobal("Image", MockImage);
+    const preload = vi.fn();
+    vi.stubGlobal("Image", preload);
     const statuses: string[] = [];
     render(
       <Avatar
@@ -91,23 +108,25 @@ describe("Avatar", () => {
     expect(image).toHaveAttribute("src", "/ada.png");
     expect(image).toHaveClass("brick-avatar__image");
     expect(image).toHaveAttribute("data-slot", "avatar-image");
+    fireEvent.load(image);
+    expect(preload).not.toHaveBeenCalled();
     expect(screen.queryByText("AL")).toBeNull();
     expect(statuses).toContain("loading");
     expect(statuses).toContain("loaded");
   });
 
   it("restores the full accessible fallback when an image fails", async () => {
-    vi.stubGlobal("Image", MockImage);
     render(<Avatar alt="Ada Lovelace" fallback="AL" src="/broken.png" />);
+    fireEvent.error(document.querySelector("img")!);
 
     await waitFor(() => {
       expect(screen.getByRole("img", { name: "Ada Lovelace" })).toHaveTextContent("AL");
     });
-    expect(document.querySelector("img")).toBeNull();
+    expect(document.querySelector("img")).toHaveAttribute("hidden");
   });
 
   it("exposes every size, shape, and optional status as closed metadata", () => {
-    const sizes: AvatarSize[] = ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl"];
+    const sizes: AvatarSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "full"];
     const shapes: AvatarShape[] = ["circle", "rounded"];
     const statuses: AvatarStatus[] = ["online", "away", "busy", "offline"];
     const { rerender } = render(<Avatar alt="Ada" fallback="A" />);

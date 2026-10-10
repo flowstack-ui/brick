@@ -4,6 +4,15 @@ Drawer follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add xs/default-xs sizing, responsive size and placement, Positioner inset and
+  container geometry, Context, and corner Close composition.
+- Align typography, spacing, scrim and elevation with the dialog family.
+- Support explicit nonmodal policies and preserve retained child state through Atom.
+- Flush panels now default to square corners; inset panels default to control
+  radius. Choose sm to retain the previous default 28rem desktop width.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ### Fixed
 
 - Top and bottom Drawers now grow naturally with their content until the
@@ -12,7 +21,7 @@ Drawer follows the package version of `@flowstack-ui/brick`.
   value while retaining `--brick-color-surface-overlay` as its default.
 - Drawer radius now accepts an inherited `--brick-drawer-radius` theme value
   instead of redeclaring and shadowing it on every Content instance; the
-  default still falls back to `--brick-radius-overlay`.
+  current corner defaults are described above.
 - Inherited Atom's document-only scroll lock so sticky application chrome
   remains anchored while Drawer is open at a nonzero page offset.
 

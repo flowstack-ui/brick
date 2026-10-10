@@ -1,0 +1,5 @@
+/* Documentation-shell placement only; component paint/indent/focus stay in Brick. */
+.docs-table-of-contents-rail {
+  position: sticky;
+  inset-block-start: var(--evidence-app-bar-block-size);
+}

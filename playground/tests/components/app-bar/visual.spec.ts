@@ -1,6 +1,6 @@
 import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/app-bar");
+installVisualDefaults("/app-bar?qualification=1");
 
 test("App Bar surfaces and options", async ({ page }) => {
   await expect(page.getByTestId("app-bar-variants")).toHaveScreenshot("variants-light.png");

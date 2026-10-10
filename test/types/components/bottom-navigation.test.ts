@@ -59,3 +59,22 @@ void invalidSize;
 void invalidItemCircle;
 void invalidItemSafeArea;
 void missingValue;
+
+const responsive: BottomNavigationRootProps = {
+  children: null, "aria-label": "Primary", size: { sm: "lg", md: "sm" },
+  arrangement: { initial: "equal", lg: "centered" }, radius: "xl",
+  selectionRadius: "control", selectionVariant: "plain", elevation: "medium", variant: "surface",
+};
+void responsive;
+// @ts-expect-error status palettes do not describe navigation selection
+const invalidTone: BottomNavigationRootProps = { children: null, tone: "danger" };
+// @ts-expect-error selection curvature is a shared closed radius value
+const invalidRadius: BottomNavigationRootProps = { children: null, selectionRadius: "rounded" };
+void invalidTone; void invalidRadius;
+
+// Surface effect parameters preserve exact CSS lengths without a styling runtime.
+createElement(BottomNavigation.Root, { children: null, treatment: "translucent", backgroundOpacity: 0.8, backdropBlur: "18px", backdropSaturate: 1.1, borderColor: "white", borderOpacity: 0.5 });
+// @ts-expect-error Blur percentages are not lengths.
+createElement(BottomNavigation.Root, { children: null, backdropBlur: "20%" });
+// @ts-expect-error No universal responsive paint API.
+createElement(BottomNavigation.Root, { children: null, backgroundOpacity: { initial: 0.8 } });

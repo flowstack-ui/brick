@@ -15,7 +15,8 @@ Set an appearance on the document or any subtree with the DOM contract:
 </section>
 ```
 
-Remove the attribute to return to the system preference.
+Remove the document-root attribute to return to the system preference. Removing
+a subtree attribute inherits the nearest ancestor scope instead.
 
 Brick also exports a typed, server-safe composition utility for local scopes:
 
@@ -42,16 +43,25 @@ provider. Use Surface when the region also needs neutral paint; use Appearance
 when only the semantic-token boundary is needed or when another component
 already owns the visual region.
 
+Explicit Appearance hosts establish primary foreground at low specificity.
+Native HTML inherits that color; explicit colors and component recipes keep
+precedence. Inherit leaves ancestor foreground intact. Appearance does not
+force colors onto every descendant or supply a background for transparent text.
+
 The complete stylesheet and modular `core.css` apply the active semantic
 canvas, primary text color, body family, body size, and body line height to the
 document body through a low-specificity foundation rule. Themes normally
 change those semantic values rather than adding another body rule. Consumer
 CSS in a later layer can deliberately replace the document treatment.
 
-The optional reset stylesheet also maps native text selection to the active
-accent solid/on-solid pair, with system `Highlight` colors in forced-colors mode.
-This makes drag selection follow the compiled theme without requiring
-application CSS.
+The optional reset stylesheet maps native text selection to the paired,
+appearance-aware `--brick-color-selection-background` and
+`--brick-color-selection-foreground` roles. The background is intentionally
+opaque: its declared foreground contrast therefore remains stable over neutral,
+accent, status, and image-backed content. Both roles belong to the atomic
+accent family and must be authored together. Forced-colors mode uses the system
+`Highlight` and `HighlightText` colors. Drag selection follows the compiled
+theme without requiring application CSS.
 
 ## Custom themes
 
@@ -100,7 +110,7 @@ return after a dark nested scope.
 Appearance-independent typography, radius, density, and motion values may
 remain on the outer theme root. Every color role claimed by an appearance must
 be complete, including surfaces, text, borders, focus, interaction states,
-status colors, scrim, and shadow.
+status colors, the paired selection roles, scrim, and shadow.
 
 Brick reserves `flowstack.theme` between its token and foundation layers. The
 generated [theme contract](theme-contract.md) publishes the exact semantic and
@@ -138,6 +148,8 @@ client context. This preserves server rendering and Atom's portal ownership.
 - Test the theme's document default and every supported explicit appearance.
 - Test light -> dark -> light and dark -> light -> dark nesting.
 - Test hover, pressed, selected, disabled, focus, and status treatments.
+- Drag-select text over neutral, accent, status, and image-backed regions in
+  both appearances; verify the selection pair remains readable.
 - Test Drawer, Dialog, Menu, Popover, Tooltip, Select, and other portals used
   by the product.
 - Test native form controls, forced colors, reduced motion, and contrast.
@@ -160,8 +172,8 @@ spacing. Every recipe has these five variables:
 
 The public recipe names are:
 
-- authored content: `display`, `title-lg`, `title-md`, `title-sm`, `body-lg`,
-  `body-md`, `body-sm`, and `caption`;
+- authored content: `display`, `title-lg`, `title-md`, `title-sm`, `title-xs`,
+  `title-2xs`, `body-lg`, `body-md`, `body-sm`, and `caption`;
 - component anatomy: `label-md`, `label-strong`, `supporting-sm`,
   `validation-sm`, `overlay-title`, `compact-title`, `compact-title-lg`,
   `surface-title-sm`, `surface-title-md`, `surface-title-lg`,

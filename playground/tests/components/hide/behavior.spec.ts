@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 test.beforeEach(async ({ page }) => {
-  await page.goto("/hide");
+  await page.goto("/hide?qualification=1");
 });
 test("Hide uses exact md boundary, stays mounted, and stays layout-transparent", async ({
   page,

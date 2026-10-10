@@ -3,7 +3,7 @@ import {
   installVisualDefaults,
   test,
 } from "../../visual-harness.js";
-installVisualDefaults("/hide");
+installVisualDefaults("/hide?qualification=1");
 test("Hide overview, breakpoints, and stress", async ({ page }) => {
   await page.setViewportSize({ width: 600, height: 900 });
   await expectEvidenceScreenshot(

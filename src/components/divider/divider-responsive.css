@@ -1,0 +1,316 @@
+@layer brick.components {
+  .brick-divider[data-thickness="hairline"] {
+    --brick-divider-thickness: 0.5px;
+  }
+  .brick-divider[data-thickness="bold"] {
+    --brick-divider-thickness: 0.1875rem;
+  }
+  .brick-divider.brick-divider[data-orientation="horizontal"]:not(
+      [data-label-align]
+    ) {
+    border-block-start: var(--brick-divider-thickness)
+      var(--brick-divider-style) var(--brick-divider-color);
+    border-inline-start: 0;
+    inline-size: 100%;
+    block-size: auto;
+    margin-inline: 0;
+    margin-block: 0;
+  }
+  .brick-divider.brick-divider[data-orientation="horizontal"]:not(
+      [data-label-align]
+    )[data-inset="start"] {
+    block-size: auto;
+    margin-block: 0;
+    margin-inline: 0;
+    inline-size: calc(100% - var(--brick-divider-inset));
+    margin-inline-start: var(--brick-divider-inset);
+  }
+  .brick-divider.brick-divider[data-orientation="horizontal"]:not(
+      [data-label-align]
+    )[data-inset="both"] {
+    block-size: auto;
+    margin-block: 0;
+    margin-inline: 0;
+    inline-size: calc(100% - 2 * var(--brick-divider-inset));
+    margin-inline-start: var(--brick-divider-inset);
+    margin-inline-end: var(--brick-divider-inset);
+  }
+  .brick-divider.brick-divider[data-orientation="vertical"]:not(
+      [data-label-align]
+    ) {
+    border-block-start: 0;
+    border-inline-start: var(--brick-divider-thickness)
+      var(--brick-divider-style) var(--brick-divider-color);
+    inline-size: auto;
+    block-size: auto;
+    margin-inline: 0;
+    margin-block: 0;
+  }
+  .brick-divider.brick-divider[data-orientation="vertical"]:not(
+      [data-label-align]
+    )[data-inset="start"] {
+    inline-size: auto;
+    margin-inline: 0;
+    margin-block: 0;
+    block-size: calc(100% - var(--brick-divider-inset));
+    margin-block-start: var(--brick-divider-inset);
+  }
+  .brick-divider.brick-divider[data-orientation="vertical"]:not(
+      [data-label-align]
+    )[data-inset="both"] {
+    inline-size: auto;
+    margin-inline: 0;
+    margin-block: 0;
+    block-size: calc(100% - 2 * var(--brick-divider-inset));
+    margin-block-start: var(--brick-divider-inset);
+    margin-block-end: var(--brick-divider-inset);
+  }
+  @media (min-width: 480px) {
+    .brick-divider.brick-divider[data-orientation-sm="horizontal"]:not(
+        [data-label-align]
+      ) {
+      border-block-start: var(--brick-divider-thickness)
+        var(--brick-divider-style) var(--brick-divider-color);
+      border-inline-start: 0;
+      inline-size: 100%;
+      block-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+    }
+    .brick-divider.brick-divider[data-orientation-sm="horizontal"]:not(
+        [data-label-align]
+      )[data-inset="start"] {
+      block-size: auto;
+      margin-block: 0;
+      margin-inline: 0;
+      inline-size: calc(100% - var(--brick-divider-inset));
+      margin-inline-start: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-sm="horizontal"]:not(
+        [data-label-align]
+      )[data-inset="both"] {
+      block-size: auto;
+      margin-block: 0;
+      margin-inline: 0;
+      inline-size: calc(100% - 2 * var(--brick-divider-inset));
+      margin-inline-start: var(--brick-divider-inset);
+      margin-inline-end: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-sm="vertical"]:not(
+        [data-label-align]
+      ) {
+      border-block-start: 0;
+      border-inline-start: var(--brick-divider-thickness)
+        var(--brick-divider-style) var(--brick-divider-color);
+      inline-size: auto;
+      block-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+    }
+    .brick-divider.brick-divider[data-orientation-sm="vertical"]:not(
+        [data-label-align]
+      )[data-inset="start"] {
+      inline-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+      block-size: calc(100% - var(--brick-divider-inset));
+      margin-block-start: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-sm="vertical"]:not(
+        [data-label-align]
+      )[data-inset="both"] {
+      inline-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+      block-size: calc(100% - 2 * var(--brick-divider-inset));
+      margin-block-start: var(--brick-divider-inset);
+      margin-block-end: var(--brick-divider-inset);
+    }
+  }
+  @media (min-width: 768px) {
+    .brick-divider.brick-divider[data-orientation-md="horizontal"]:not(
+        [data-label-align]
+      ) {
+      border-block-start: var(--brick-divider-thickness)
+        var(--brick-divider-style) var(--brick-divider-color);
+      border-inline-start: 0;
+      inline-size: 100%;
+      block-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+    }
+    .brick-divider.brick-divider[data-orientation-md="horizontal"]:not(
+        [data-label-align]
+      )[data-inset="start"] {
+      block-size: auto;
+      margin-block: 0;
+      margin-inline: 0;
+      inline-size: calc(100% - var(--brick-divider-inset));
+      margin-inline-start: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-md="horizontal"]:not(
+        [data-label-align]
+      )[data-inset="both"] {
+      block-size: auto;
+      margin-block: 0;
+      margin-inline: 0;
+      inline-size: calc(100% - 2 * var(--brick-divider-inset));
+      margin-inline-start: var(--brick-divider-inset);
+      margin-inline-end: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-md="vertical"]:not(
+        [data-label-align]
+      ) {
+      border-block-start: 0;
+      border-inline-start: var(--brick-divider-thickness)
+        var(--brick-divider-style) var(--brick-divider-color);
+      inline-size: auto;
+      block-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+    }
+    .brick-divider.brick-divider[data-orientation-md="vertical"]:not(
+        [data-label-align]
+      )[data-inset="start"] {
+      inline-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+      block-size: calc(100% - var(--brick-divider-inset));
+      margin-block-start: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-md="vertical"]:not(
+        [data-label-align]
+      )[data-inset="both"] {
+      inline-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+      block-size: calc(100% - 2 * var(--brick-divider-inset));
+      margin-block-start: var(--brick-divider-inset);
+      margin-block-end: var(--brick-divider-inset);
+    }
+  }
+  @media (min-width: 1024px) {
+    .brick-divider.brick-divider[data-orientation-lg="horizontal"]:not(
+        [data-label-align]
+      ) {
+      border-block-start: var(--brick-divider-thickness)
+        var(--brick-divider-style) var(--brick-divider-color);
+      border-inline-start: 0;
+      inline-size: 100%;
+      block-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+    }
+    .brick-divider.brick-divider[data-orientation-lg="horizontal"]:not(
+        [data-label-align]
+      )[data-inset="start"] {
+      block-size: auto;
+      margin-block: 0;
+      margin-inline: 0;
+      inline-size: calc(100% - var(--brick-divider-inset));
+      margin-inline-start: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-lg="horizontal"]:not(
+        [data-label-align]
+      )[data-inset="both"] {
+      block-size: auto;
+      margin-block: 0;
+      margin-inline: 0;
+      inline-size: calc(100% - 2 * var(--brick-divider-inset));
+      margin-inline-start: var(--brick-divider-inset);
+      margin-inline-end: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-lg="vertical"]:not(
+        [data-label-align]
+      ) {
+      border-block-start: 0;
+      border-inline-start: var(--brick-divider-thickness)
+        var(--brick-divider-style) var(--brick-divider-color);
+      inline-size: auto;
+      block-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+    }
+    .brick-divider.brick-divider[data-orientation-lg="vertical"]:not(
+        [data-label-align]
+      )[data-inset="start"] {
+      inline-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+      block-size: calc(100% - var(--brick-divider-inset));
+      margin-block-start: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-lg="vertical"]:not(
+        [data-label-align]
+      )[data-inset="both"] {
+      inline-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+      block-size: calc(100% - 2 * var(--brick-divider-inset));
+      margin-block-start: var(--brick-divider-inset);
+      margin-block-end: var(--brick-divider-inset);
+    }
+  }
+  @media (min-width: 1280px) {
+    .brick-divider.brick-divider[data-orientation-xl="horizontal"]:not(
+        [data-label-align]
+      ) {
+      border-block-start: var(--brick-divider-thickness)
+        var(--brick-divider-style) var(--brick-divider-color);
+      border-inline-start: 0;
+      inline-size: 100%;
+      block-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+    }
+    .brick-divider.brick-divider[data-orientation-xl="horizontal"]:not(
+        [data-label-align]
+      )[data-inset="start"] {
+      block-size: auto;
+      margin-block: 0;
+      margin-inline: 0;
+      inline-size: calc(100% - var(--brick-divider-inset));
+      margin-inline-start: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-xl="horizontal"]:not(
+        [data-label-align]
+      )[data-inset="both"] {
+      block-size: auto;
+      margin-block: 0;
+      margin-inline: 0;
+      inline-size: calc(100% - 2 * var(--brick-divider-inset));
+      margin-inline-start: var(--brick-divider-inset);
+      margin-inline-end: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-xl="vertical"]:not(
+        [data-label-align]
+      ) {
+      border-block-start: 0;
+      border-inline-start: var(--brick-divider-thickness)
+        var(--brick-divider-style) var(--brick-divider-color);
+      inline-size: auto;
+      block-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+    }
+    .brick-divider.brick-divider[data-orientation-xl="vertical"]:not(
+        [data-label-align]
+      )[data-inset="start"] {
+      inline-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+      block-size: calc(100% - var(--brick-divider-inset));
+      margin-block-start: var(--brick-divider-inset);
+    }
+    .brick-divider.brick-divider[data-orientation-xl="vertical"]:not(
+        [data-label-align]
+      )[data-inset="both"] {
+      inline-size: auto;
+      margin-inline: 0;
+      margin-block: 0;
+      block-size: calc(100% - 2 * var(--brick-divider-inset));
+      margin-block-start: var(--brick-divider-inset);
+      margin-block-end: var(--brick-divider-inset);
+    }
+  }
+}

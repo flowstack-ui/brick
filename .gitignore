@@ -4,6 +4,8 @@ dist/
 coverage/
 playground/dist/
 playwright-report/
+.playwright-cli/
+output/playwright/
 test-results/
 *.tgz
 *.tsbuildinfo

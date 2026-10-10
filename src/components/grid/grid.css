@@ -1,3 +1,4 @@
+@import "./grid-native.css";
 @layer brick.components {
   .brick-grid {
     --brick-grid-columns: 1;

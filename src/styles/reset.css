@@ -1,4 +1,12 @@
+@import "./layers.css";
+
 @layer brick.reset {
+  :where(:focus-visible) {
+    outline: var(--brick-border-focus-width, 2px) solid
+      var(--brick-color-focus-ring, Highlight);
+    outline-offset: var(--brick-border-focus-offset, 4px);
+  }
+
   *,
   *::before,
   *::after {
@@ -14,11 +22,13 @@
   body {
     min-block-size: 100%;
     margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    background: var(--brick-color-accent-solid);
-    color: var(--brick-color-accent-on-solid);
+    background: var(--brick-color-selection-background);
+    color: var(--brick-color-selection-foreground);
   }
 
   blockquote,
@@ -47,6 +57,10 @@
   }
 
   @media (forced-colors: active) {
+    :where(:focus-visible) {
+      outline-color: Highlight;
+    }
+
     ::selection {
       background: Highlight;
       color: HighlightText;

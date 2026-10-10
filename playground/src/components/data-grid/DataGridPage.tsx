@@ -6,13 +6,15 @@ import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import { Scenario } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./data-grid.playground.css";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { DataGridDocumentation } from "./DataGridDocumentation.js";
 
 const rows = [{ id: "atom", project: "Atom", status: "Ready", checks: 492 }, { id: "brick", project: "Brick", status: "Review", checks: 238 }, { id: "consumer", project: "Consumer", status: "Ready", checks: 24 }];
 const customStyle = { "--brick-data-grid-border-color": "var(--brick-color-accent-border)", "--brick-data-grid-header-background": "var(--brick-color-accent-subtle)", "--brick-data-grid-radius": "1rem" } as CSSProperties;
 
-function Cell({ children, label }: { children: ReactNode; label: string }) { return <EvidenceSurface className="data-grid-cell"><SpecimenLabel>{label}</SpecimenLabel>{children}</EvidenceSurface>; }
+function Cell({ children, label }: { children: ReactNode; label: string }) { return <EvidenceSurface className="data-grid-cell"><SpecimenLabel>{label}</SpecimenLabel><DataGrid.Container>{children}</DataGrid.Container></EvidenceSurface>; }
 function ProjectGrid({ disabled = false, ...props }: React.ComponentProps<typeof DataGrid.Root> & { disabled?: boolean }) {
-  return <DataGrid.Root {...props} aria-label="Project verification" columnCount={3} rowCount={rows.length + 2}><DataGrid.Caption>Project verification</DataGrid.Caption><DataGrid.Header><DataGrid.Row rowIndex={1}><DataGrid.ColumnHeader columnIndex={1}>Project</DataGrid.ColumnHeader><DataGrid.ColumnHeader columnIndex={2}>Status</DataGrid.ColumnHeader><DataGrid.ColumnHeader columnIndex={3} numeric>Checks</DataGrid.ColumnHeader></DataGrid.Row></DataGrid.Header><DataGrid.Body>{rows.map((row, index) => <DataGrid.Row disabled={disabled && index === 1} key={row.id} rowIndex={index + 2} selectable value={row.id}><DataGrid.Cell columnIndex={1}>{row.project}</DataGrid.Cell><DataGrid.Cell columnIndex={2}><Badge size="sm" tone={row.status === "Ready" ? "success" : "warning"}>{row.status}</Badge></DataGrid.Cell><DataGrid.Cell columnIndex={3} numeric>{row.checks}</DataGrid.Cell></DataGrid.Row>)}</DataGrid.Body><DataGrid.Footer><DataGrid.Row rowIndex={rows.length + 2}><DataGrid.Cell columnIndex={1}>Total</DataGrid.Cell><DataGrid.Cell columnIndex={2} /><DataGrid.Cell columnIndex={3} numeric>754</DataGrid.Cell></DataGrid.Row></DataGrid.Footer></DataGrid.Root>;
+  return <DataGrid.Root {...props} aria-label="Project verification" columnCount={3} rowCount={rows.length + 2}><DataGrid.ColumnGroup><DataGrid.Column htmlWidth="50%" /><DataGrid.Column /><DataGrid.Column htmlWidth="18%" /></DataGrid.ColumnGroup><DataGrid.Caption>Project verification</DataGrid.Caption><DataGrid.Header><DataGrid.Row rowIndex={1}><DataGrid.ColumnHeader columnIndex={1}>Project</DataGrid.ColumnHeader><DataGrid.ColumnHeader columnIndex={2}>Status</DataGrid.ColumnHeader><DataGrid.ColumnHeader columnIndex={3} numeric>Checks</DataGrid.ColumnHeader></DataGrid.Row></DataGrid.Header><DataGrid.Body>{rows.map((row, index) => <DataGrid.Row disabled={disabled && index === 1} key={row.id} rowIndex={index + 2} selectable value={row.id}><DataGrid.Cell columnIndex={1}>{row.project}</DataGrid.Cell><DataGrid.Cell columnIndex={2}><Badge size="sm" tone={row.status === "Ready" ? "success" : "warning"}>{row.status}</Badge></DataGrid.Cell><DataGrid.Cell columnIndex={3} numeric>{row.checks}</DataGrid.Cell></DataGrid.Row>)}</DataGrid.Body><DataGrid.Footer><DataGrid.Row rowIndex={rows.length + 2}><DataGrid.Cell columnIndex={1}>Total</DataGrid.Cell><DataGrid.Cell columnIndex={2} /><DataGrid.Cell columnIndex={3} numeric>754</DataGrid.Cell></DataGrid.Row></DataGrid.Footer></DataGrid.Root>;
 }
 function SortingGrid() {
   const [direction, setDirection] = useState<"ascending" | "descending">("ascending");
@@ -27,7 +29,7 @@ function RtlProjectGrid() {
 export const dataGridScenarios = [
   { id: "data-grid.overview", number: 1, title: "Overview", description: "The canonical navigable, selectable project grid." },
   { id: "data-grid.anatomy", number: 2, title: "Anatomy and semantics", navigationTitle: "Anatomy", description: "Native table anatomy, grid roles, indexes, counts, caption, and footer remain inspectable." },
-  { id: "data-grid.variants", number: 3, title: "Variants", description: "Line and outline change structural paint only." },
+  { id: "data-grid.variants", number: 3, title: "Structure and paint", description: "Outline, optional base fill, border strength, column dividers, striping, and sticky headers remain independent visual decisions." },
   { id: "data-grid.sizing", number: 4, title: "Sizes and density", navigationTitle: "Sizing", description: "Typography and row metrics vary independently from block padding." },
   { id: "data-grid.navigation", number: 5, title: "Navigation and disabled state", navigationTitle: "Navigation", description: "One root focus target tracks an active cell and skips disabled content." },
   { id: "data-grid.selection", number: 6, title: "Row selection", navigationTitle: "Selection", description: "Controlled multiple row selection is visibly and semantically stable." },
@@ -36,7 +38,12 @@ export const dataGridScenarios = [
   { id: "data-grid.stress", number: 9, title: "Responsive, RTL, and boundary", navigationTitle: "Stress", description: "Explicit overflow and logical RTL remain separate from layout Grid, static Table, and Tree Grid." },
 ];
 
-export function DataGridPage() {
+export function DataGridPage(): React.ReactElement {
+  const preview = usePreviewContext();
+  return preview || new URLSearchParams(window.location.search).get("qualification") === "1" ? <DataGridEvidence /> : <DataGridDocumentation />;
+}
+
+function DataGridEvidence() {
   const [selection, setSelection] = useState<string[]>(["atom"]);
   const variants: DataGridVariant[] = ["line", "outline"];
   const sizes: DataGridSize[] = ["sm", "md", "lg"];
@@ -44,7 +51,7 @@ export function DataGridPage() {
   return <VStack className="data-grid-page" data-component-page="data-grid" gap="6">
     <Scenario {...dataGridScenarios[0]}><EvidenceSurface><ProjectGrid selectionMode="single" defaultValue="atom" selectOnRowClick /></EvidenceSurface></Scenario>
     <Scenario {...dataGridScenarios[1]}><RenderedOutput label="Rendered Data Grid HTML"><ProjectGrid /></RenderedOutput></Scenario>
-    <Scenario {...dataGridScenarios[2]}><Grid.Root className="data-grid-specimens" columns={2} gap="4">{variants.map(variant => <Cell key={variant} label={variant}><ProjectGrid variant={variant} /></Cell>)}</Grid.Root></Scenario>
+    <Scenario {...dataGridScenarios[2]}><Grid.Root className="data-grid-specimens" columns={3} gap="4">{variants.map(variant => <Cell key={variant} label={variant}><ProjectGrid variant={variant} /></Cell>)}<Cell label="base surface"><ProjectGrid surface="base" /></Cell><Cell label="striped"><ProjectGrid striped /></Cell><Cell label="subtle outline + columns"><ProjectGrid borderTone="subtle" showColumnBorder variant="outline" /></Cell><Cell label="strong sticky outline"><ProjectGrid borderTone="strong" stickyHeader variant="outline" /></Cell></Grid.Root></Scenario>
     <Scenario {...dataGridScenarios[3]}><VStack gap="4"><Grid.Root className="data-grid-specimens" columns={3} gap="4">{sizes.map(size => <Cell key={size} label={size}><ProjectGrid size={size} /></Cell>)}</Grid.Root><Grid.Root className="data-grid-specimens" columns={3} gap="4">{densities.map(density => <Cell key={density} label={density}><ProjectGrid density={density} /></Cell>)}</Grid.Root></VStack></Scenario>
     <Scenario {...dataGridScenarios[4]}><Cell label="arrow-key navigation with one disabled row"><ProjectGrid defaultActiveCell={{ rowIndex: 1, columnIndex: 1 }} disabled /></Cell></Scenario>
     <Scenario {...dataGridScenarios[5]}><Cell label="multiple selection"><ProjectGrid selectionMode="multiple" value={selection} onValueChange={value => setSelection(Array.isArray(value) ? value : value ? [value] : [])} selectOnRowClick /></Cell></Scenario>

@@ -1,13 +1,18 @@
 @layer brick.components {
+  .brick-fieldset-content { display: flex; flex-direction: column; min-inline-size: 0; gap: var(--brick-fieldset-content-gap-input, var(--brick-fieldset-control-gap)); }
+  @media (min-width: 480px) { .brick-fieldset-content { gap: var(--brick-fieldset-content-gap-sm-input, var(--brick-fieldset-content-gap-input, var(--brick-fieldset-control-gap))); } }
+  @media (min-width: 768px) { .brick-fieldset-content { gap: var(--brick-fieldset-content-gap-md-input, var(--brick-fieldset-content-gap-sm-input, var(--brick-fieldset-content-gap-input, var(--brick-fieldset-control-gap)))); } }
+  @media (min-width: 1024px) { .brick-fieldset-content { gap: var(--brick-fieldset-content-gap-lg-input, var(--brick-fieldset-content-gap-md-input, var(--brick-fieldset-content-gap-sm-input, var(--brick-fieldset-content-gap-input, var(--brick-fieldset-control-gap))))); } }
+  @media (min-width: 1280px) { .brick-fieldset-content { gap: var(--brick-fieldset-content-gap-xl-input, var(--brick-fieldset-content-gap-lg-input, var(--brick-fieldset-content-gap-md-input, var(--brick-fieldset-content-gap-sm-input, var(--brick-fieldset-content-gap-input, var(--brick-fieldset-control-gap)))))); } }
   .brick-fieldset {
-    --brick-fieldset-gap: var(--brick-space-3);
+    --brick-fieldset-gap: var(--brick-space-4);
     --brick-fieldset-control-gap: var(--brick-space-4);
     --brick-fieldset-legend-foreground: var(--brick-color-text-primary);
-    --brick-fieldset-legend-foreground-disabled: var(--brick-color-text-secondary);
-    --brick-fieldset-legend-font-family: var(--brick-typography-label-md-font-family);
-    --brick-fieldset-legend-font-size: var(--brick-typography-label-md-font-size);
-    --brick-fieldset-legend-font-weight: var(--brick-typography-label-md-font-weight);
-    --brick-fieldset-legend-line-height: var(--brick-typography-label-md-line-height);
+    --brick-fieldset-legend-foreground-disabled: var(--brick-fieldset-legend-foreground);
+    --brick-fieldset-legend-font-family: var(--brick-typography-control-sm-font-family);
+    --brick-fieldset-legend-font-size: var(--brick-typography-control-sm-font-size);
+    --brick-fieldset-legend-font-weight: var(--brick-typography-control-sm-font-weight);
+    --brick-fieldset-legend-line-height: var(--brick-typography-control-sm-line-height);
     --brick-fieldset-indicator-foreground: var(--brick-color-danger-text);
     --brick-fieldset-indicator-gap: var(--brick-space-1);
     --brick-fieldset-optional-foreground: var(--brick-color-text-secondary);
@@ -31,7 +36,15 @@
     margin-block-start: var(--brick-fieldset-control-gap);
   }
 
-  .brick-fieldset > .brick-fieldset-legend + * {
+  .brick-fieldset > .brick-fieldset-content,
+  .brick-fieldset > .brick-fieldset-description + *,
+  .brick-fieldset > .brick-fieldset-description + input:is([type="hidden"], [aria-hidden="true"]) + * {
+    margin-block-start: var(--brick-fieldset-gap);
+  }
+
+  /* A form owner can insert a hidden validation proxy before its visible region. */
+  .brick-fieldset > .brick-fieldset-legend + :not(input),
+  .brick-fieldset > .brick-fieldset-legend + input:is([type="hidden"], [aria-hidden="true"]) + * {
     clear: both;
     margin-block-start: 0;
   }
@@ -46,9 +59,15 @@
     font-family: var(--brick-fieldset-legend-font-family);
     font-size: var(--brick-fieldset-legend-font-size);
     font-weight: var(--brick-fieldset-legend-font-weight);
-    letter-spacing: var(--brick-typography-label-md-letter-spacing);
+    letter-spacing: var(--brick-typography-control-sm-letter-spacing);
     line-height: var(--brick-fieldset-legend-line-height);
     overflow-wrap: anywhere;
+  }
+
+  /* Keep the native legend direct; the description belongs to its visual header,
+     while the size-dependent gap separates that header from the controls. */
+  .brick-fieldset:has(> .brick-fieldset-description) > .brick-fieldset-legend {
+    margin-block-end: var(--brick-space-2);
   }
 
   .brick-fieldset-legend > :where(
@@ -84,9 +103,9 @@
   }
 
   .brick-fieldset-error {
-    position: relative;
-    padding-block-start: var(--brick-fieldset-control-gap);
-    padding-inline-start: var(--brick-space-2);
+    display: flex;
+    align-items: center;
+    gap: var(--brick-space-2);
     color: var(--brick-fieldset-error-foreground);
     font-family: var(--brick-typography-validation-sm-font-family);
     font-size: var(--brick-fieldset-error-font-size);
@@ -95,37 +114,42 @@
     line-height: var(--brick-fieldset-error-line-height);
   }
 
-  .brick-fieldset-error::before {
-    position: absolute;
-    inset-block: var(--brick-fieldset-control-gap) 0;
-    inset-inline-start: 0;
-    inline-size: max(var(--brick-border-width), 0.125rem);
-    background: var(--brick-fieldset-error-foreground);
-    content: "";
-  }
 
-  .brick-fieldset[data-disabled] .brick-fieldset-legend {
+  .brick-fieldset-legend[data-disabled] {
     color: var(--brick-fieldset-legend-foreground-disabled);
+    opacity: 0.5;
   }
 
-  .brick-fieldset[data-invalid] .brick-fieldset-legend {
-    text-decoration-line: underline;
-    text-decoration-style: wavy;
-    text-decoration-color: var(--brick-fieldset-error-foreground);
-    text-underline-offset: 0.2em;
-  }
 
   @media (forced-colors: active) {
+    .brick-fieldset-legend[data-disabled] { opacity: 1; color: GrayText; }
     .brick-fieldset-error {
       color: CanvasText;
     }
 
-    .brick-fieldset-error::before {
-      background: Mark;
-    }
 
-    .brick-fieldset[data-invalid] .brick-fieldset-legend {
-      text-decoration-color: Mark;
-    }
+  }
+  .brick-fieldset[data-size="sm"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 2); --brick-fieldset-control-gap: calc(var(--brick-space-1) * 1.5); --brick-fieldset-legend-font-family: var(--brick-typography-control-sm-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-control-sm-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-control-sm-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-control-sm-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-fieldset[data-size="md"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 4); --brick-fieldset-control-gap: var(--brick-space-4); --brick-fieldset-legend-font-family: var(--brick-typography-control-sm-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-control-sm-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-control-sm-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-control-sm-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-fieldset[data-size="lg"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 6); --brick-fieldset-control-gap: var(--brick-space-4); --brick-fieldset-legend-font-family: var(--brick-typography-label-md-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-label-md-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-label-md-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-label-md-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-label-md-letter-spacing); }
+  @media (min-width: 480px) {
+  .brick-fieldset[data-size-sm="sm"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 2); --brick-fieldset-control-gap: calc(var(--brick-space-1) * 1.5); --brick-fieldset-legend-font-family: var(--brick-typography-control-sm-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-control-sm-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-control-sm-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-control-sm-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-fieldset[data-size-sm="md"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 4); --brick-fieldset-control-gap: var(--brick-space-4); --brick-fieldset-legend-font-family: var(--brick-typography-control-sm-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-control-sm-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-control-sm-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-control-sm-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-fieldset[data-size-sm="lg"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 6); --brick-fieldset-control-gap: var(--brick-space-4); --brick-fieldset-legend-font-family: var(--brick-typography-label-md-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-label-md-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-label-md-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-label-md-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-label-md-letter-spacing); }
+  }
+  @media (min-width: 768px) {
+  .brick-fieldset[data-size-md="sm"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 2); --brick-fieldset-control-gap: calc(var(--brick-space-1) * 1.5); --brick-fieldset-legend-font-family: var(--brick-typography-control-sm-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-control-sm-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-control-sm-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-control-sm-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-fieldset[data-size-md="md"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 4); --brick-fieldset-control-gap: var(--brick-space-4); --brick-fieldset-legend-font-family: var(--brick-typography-control-sm-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-control-sm-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-control-sm-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-control-sm-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-fieldset[data-size-md="lg"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 6); --brick-fieldset-control-gap: var(--brick-space-4); --brick-fieldset-legend-font-family: var(--brick-typography-label-md-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-label-md-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-label-md-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-label-md-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-label-md-letter-spacing); }
+  }
+  @media (min-width: 1024px) {
+  .brick-fieldset[data-size-lg="sm"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 2); --brick-fieldset-control-gap: calc(var(--brick-space-1) * 1.5); --brick-fieldset-legend-font-family: var(--brick-typography-control-sm-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-control-sm-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-control-sm-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-control-sm-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-fieldset[data-size-lg="md"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 4); --brick-fieldset-control-gap: var(--brick-space-4); --brick-fieldset-legend-font-family: var(--brick-typography-control-sm-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-control-sm-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-control-sm-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-control-sm-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-fieldset[data-size-lg="lg"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 6); --brick-fieldset-control-gap: var(--brick-space-4); --brick-fieldset-legend-font-family: var(--brick-typography-label-md-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-label-md-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-label-md-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-label-md-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-label-md-letter-spacing); }
+  }
+  @media (min-width: 1280px) {
+  .brick-fieldset[data-size-xl="sm"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 2); --brick-fieldset-control-gap: calc(var(--brick-space-1) * 1.5); --brick-fieldset-legend-font-family: var(--brick-typography-control-sm-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-control-sm-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-control-sm-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-control-sm-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-fieldset[data-size-xl="md"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 4); --brick-fieldset-control-gap: var(--brick-space-4); --brick-fieldset-legend-font-family: var(--brick-typography-control-sm-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-control-sm-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-control-sm-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-control-sm-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-control-sm-letter-spacing); }
+  .brick-fieldset[data-size-xl="lg"] { --brick-fieldset-gap: calc(var(--brick-space-1) * 6); --brick-fieldset-control-gap: var(--brick-space-4); --brick-fieldset-legend-font-family: var(--brick-typography-label-md-font-family); --brick-fieldset-legend-font-size: var(--brick-typography-label-md-font-size); --brick-fieldset-legend-font-weight: var(--brick-typography-label-md-font-weight); --brick-fieldset-legend-line-height: var(--brick-typography-label-md-line-height); --brick-fieldset-legend-letter-spacing: var(--brick-typography-label-md-letter-spacing); }
   }
 }

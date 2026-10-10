@@ -25,11 +25,14 @@ Coordinate related multi-selection with structured item labels, optional descrip
 - **MUST:** Use Checkbox Group only for related multi-selection; keep one-of-many choice, independent consent, remote search, and application filter execution in their owning patterns.
 - **MUST:** Give Root a persistent accessible group name and every Item a complete visible associated label; placeholder or surrounding layout does not name the group.
 - **MUST:** Give every Item a unique stable string value and let the application own persistence, query synchronization, result counts, and filtering side effects.
-- **MUST:** Supply Parent allValues explicitly from the selectable declared set and do not include disabled choices or derive the set from DOM children.
+- **MUST:** Supply allValues on Root, not Parent, from the selectable declared set. Never derive the complete set from DOM children.
 - **MUST:** Use the vertical default for scan-heavy groups and horizontal only when wrapped reading order remains clear under narrow widths, zoom, and localization.
 - **MUST:** Keep required or invalid messaging at group scope when any eligible option can satisfy the requirement; do not paint every Item as individually invalid.
 - **MUST:** Preserve disabled and read-only Items, one-or-more required validity, first-enabled validation focus, Fieldset relationships, named repeated-value submission, external form association, and uncontrolled reset.
 - **MUST:** Load styles.css or core.css plus checkbox-group.css and any Fieldset styles used.
+- **MUST:** Use the same selection recipes as Checkbox on Root, with optional Item/Parent overrides. Root owns allValues and maxSelectedValues. At capacity selected choices remain removable; controlled values are not truncated.
+- **MUST:** For linked labels, call useCheckboxGroupItem inside Root and spread its props and ref onto Checkbox.Control within Checkbox.Root and sibling Checkbox.Label. Set the individual Checkbox.Root required={false} when a surrounding Fieldset requires at least one group choice. Never nest links in Item or ItemLabel.
+- **MUST:** Use useCheckboxGroup with RootProvider for external control. The application resets controller-managed values; uncontrolled Root resets natively. Forward binding refs for group validation and eligibility.
 
 ## Common mistakes
 

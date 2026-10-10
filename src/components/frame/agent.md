@@ -11,11 +11,12 @@ Own responsive logical size constraints for one local element without taking ove
 ## Choose something else when
 
 - The need is shared page measure, child arrangement, paint, aspect ratio, or scrolling. Use Container, Stack/Grid, Surface, AspectRatio, or ScrollArea.
+- The need is one equal-size centered square or circle. Use Square or Circle.
 
 ## Required composition
 
 - Use Frame inside a layout Item, or let Stack.Item/Grid.Item compose asChild around Frame when one host must own both parent participation and internal constraints.
-- For bounded long content, put ScrollArea inside a maxBlockSize Frame; Frame constrains and ScrollArea scrolls.
+- For bounded long content, compose a definite blockSize Frame asChild around ScrollArea.Root; a maximum alone does not establish descendant percentage height. Omitted dimensions preserve the host recipe; sparse values activate at their first breakpoint.
 
 ## Rules
 
@@ -39,6 +40,7 @@ Own responsive logical size constraints for one local element without taking ove
 
 - `stack`
 - `grid`
+- `center`
 - `container`
 - `section`
 - `surface`

@@ -1,0 +1,585 @@
+/* Native track and placement values; each owner resets inherited inputs. */
+@layer brick.components {
+  .brick-grid.brick-grid {
+    --brick-grid-template-columns-initial-input: initial;
+    --brick-grid-template-columns-sm-input: initial;
+    --brick-grid-template-columns-md-input: initial;
+    --brick-grid-template-columns-lg-input: initial;
+    --brick-grid-template-columns-xl-input: initial;
+    --brick-grid-template-columns-resolved-initial: var(
+      --brick-grid-template-columns-initial-input,
+      minmax(0, 1fr)
+    );
+    --brick-grid-template-columns-resolved-sm: var(
+      --brick-grid-template-columns-sm-input,
+      var(--brick-grid-template-columns-resolved-initial)
+    );
+    --brick-grid-template-columns-resolved-md: var(
+      --brick-grid-template-columns-md-input,
+      var(--brick-grid-template-columns-resolved-sm)
+    );
+    --brick-grid-template-columns-resolved-lg: var(
+      --brick-grid-template-columns-lg-input,
+      var(--brick-grid-template-columns-resolved-md)
+    );
+    --brick-grid-template-columns-resolved-xl: var(
+      --brick-grid-template-columns-xl-input,
+      var(--brick-grid-template-columns-resolved-lg)
+    );
+    --brick-grid-template-columns-active: var(
+      --brick-grid-template-columns-resolved-initial
+    );
+    --brick-grid-template-rows-initial-input: initial;
+    --brick-grid-template-rows-sm-input: initial;
+    --brick-grid-template-rows-md-input: initial;
+    --brick-grid-template-rows-lg-input: initial;
+    --brick-grid-template-rows-xl-input: initial;
+    --brick-grid-template-rows-resolved-initial: var(
+      --brick-grid-template-rows-initial-input,
+      none
+    );
+    --brick-grid-template-rows-resolved-sm: var(
+      --brick-grid-template-rows-sm-input,
+      var(--brick-grid-template-rows-resolved-initial)
+    );
+    --brick-grid-template-rows-resolved-md: var(
+      --brick-grid-template-rows-md-input,
+      var(--brick-grid-template-rows-resolved-sm)
+    );
+    --brick-grid-template-rows-resolved-lg: var(
+      --brick-grid-template-rows-lg-input,
+      var(--brick-grid-template-rows-resolved-md)
+    );
+    --brick-grid-template-rows-resolved-xl: var(
+      --brick-grid-template-rows-xl-input,
+      var(--brick-grid-template-rows-resolved-lg)
+    );
+    --brick-grid-template-rows-active: var(
+      --brick-grid-template-rows-resolved-initial
+    );
+    --brick-grid-template-areas-initial-input: initial;
+    --brick-grid-template-areas-sm-input: initial;
+    --brick-grid-template-areas-md-input: initial;
+    --brick-grid-template-areas-lg-input: initial;
+    --brick-grid-template-areas-xl-input: initial;
+    --brick-grid-template-areas-resolved-initial: var(
+      --brick-grid-template-areas-initial-input,
+      none
+    );
+    --brick-grid-template-areas-resolved-sm: var(
+      --brick-grid-template-areas-sm-input,
+      var(--brick-grid-template-areas-resolved-initial)
+    );
+    --brick-grid-template-areas-resolved-md: var(
+      --brick-grid-template-areas-md-input,
+      var(--brick-grid-template-areas-resolved-sm)
+    );
+    --brick-grid-template-areas-resolved-lg: var(
+      --brick-grid-template-areas-lg-input,
+      var(--brick-grid-template-areas-resolved-md)
+    );
+    --brick-grid-template-areas-resolved-xl: var(
+      --brick-grid-template-areas-xl-input,
+      var(--brick-grid-template-areas-resolved-lg)
+    );
+    --brick-grid-template-areas-active: var(
+      --brick-grid-template-areas-resolved-initial
+    );
+    --brick-grid-auto-columns-initial-input: initial;
+    --brick-grid-auto-columns-sm-input: initial;
+    --brick-grid-auto-columns-md-input: initial;
+    --brick-grid-auto-columns-lg-input: initial;
+    --brick-grid-auto-columns-xl-input: initial;
+    --brick-grid-auto-columns-resolved-initial: var(
+      --brick-grid-auto-columns-initial-input,
+      auto
+    );
+    --brick-grid-auto-columns-resolved-sm: var(
+      --brick-grid-auto-columns-sm-input,
+      var(--brick-grid-auto-columns-resolved-initial)
+    );
+    --brick-grid-auto-columns-resolved-md: var(
+      --brick-grid-auto-columns-md-input,
+      var(--brick-grid-auto-columns-resolved-sm)
+    );
+    --brick-grid-auto-columns-resolved-lg: var(
+      --brick-grid-auto-columns-lg-input,
+      var(--brick-grid-auto-columns-resolved-md)
+    );
+    --brick-grid-auto-columns-resolved-xl: var(
+      --brick-grid-auto-columns-xl-input,
+      var(--brick-grid-auto-columns-resolved-lg)
+    );
+    --brick-grid-auto-columns-active: var(
+      --brick-grid-auto-columns-resolved-initial
+    );
+    --brick-grid-auto-rows-initial-input: initial;
+    --brick-grid-auto-rows-sm-input: initial;
+    --brick-grid-auto-rows-md-input: initial;
+    --brick-grid-auto-rows-lg-input: initial;
+    --brick-grid-auto-rows-xl-input: initial;
+    --brick-grid-auto-rows-resolved-initial: var(
+      --brick-grid-auto-rows-initial-input,
+      auto
+    );
+    --brick-grid-auto-rows-resolved-sm: var(
+      --brick-grid-auto-rows-sm-input,
+      var(--brick-grid-auto-rows-resolved-initial)
+    );
+    --brick-grid-auto-rows-resolved-md: var(
+      --brick-grid-auto-rows-md-input,
+      var(--brick-grid-auto-rows-resolved-sm)
+    );
+    --brick-grid-auto-rows-resolved-lg: var(
+      --brick-grid-auto-rows-lg-input,
+      var(--brick-grid-auto-rows-resolved-md)
+    );
+    --brick-grid-auto-rows-resolved-xl: var(
+      --brick-grid-auto-rows-xl-input,
+      var(--brick-grid-auto-rows-resolved-lg)
+    );
+    --brick-grid-auto-rows-active: var(--brick-grid-auto-rows-resolved-initial);
+    --brick-grid-auto-flow-initial-input: initial;
+    --brick-grid-auto-flow-sm-input: initial;
+    --brick-grid-auto-flow-md-input: initial;
+    --brick-grid-auto-flow-lg-input: initial;
+    --brick-grid-auto-flow-xl-input: initial;
+    --brick-grid-auto-flow-resolved-initial: var(
+      --brick-grid-auto-flow-initial-input,
+      row
+    );
+    --brick-grid-auto-flow-resolved-sm: var(
+      --brick-grid-auto-flow-sm-input,
+      var(--brick-grid-auto-flow-resolved-initial)
+    );
+    --brick-grid-auto-flow-resolved-md: var(
+      --brick-grid-auto-flow-md-input,
+      var(--brick-grid-auto-flow-resolved-sm)
+    );
+    --brick-grid-auto-flow-resolved-lg: var(
+      --brick-grid-auto-flow-lg-input,
+      var(--brick-grid-auto-flow-resolved-md)
+    );
+    --brick-grid-auto-flow-resolved-xl: var(
+      --brick-grid-auto-flow-xl-input,
+      var(--brick-grid-auto-flow-resolved-lg)
+    );
+    --brick-grid-auto-flow-active: var(--brick-grid-auto-flow-resolved-initial);
+    --brick-grid-align-content-initial-input: initial;
+    --brick-grid-align-content-sm-input: initial;
+    --brick-grid-align-content-md-input: initial;
+    --brick-grid-align-content-lg-input: initial;
+    --brick-grid-align-content-xl-input: initial;
+    --brick-grid-align-content-resolved-initial: var(
+      --brick-grid-align-content-initial-input,
+      normal
+    );
+    --brick-grid-align-content-resolved-sm: var(
+      --brick-grid-align-content-sm-input,
+      var(--brick-grid-align-content-resolved-initial)
+    );
+    --brick-grid-align-content-resolved-md: var(
+      --brick-grid-align-content-md-input,
+      var(--brick-grid-align-content-resolved-sm)
+    );
+    --brick-grid-align-content-resolved-lg: var(
+      --brick-grid-align-content-lg-input,
+      var(--brick-grid-align-content-resolved-md)
+    );
+    --brick-grid-align-content-resolved-xl: var(
+      --brick-grid-align-content-xl-input,
+      var(--brick-grid-align-content-resolved-lg)
+    );
+    --brick-grid-align-content-active: var(
+      --brick-grid-align-content-resolved-initial
+    );
+    --brick-grid-justify-content-initial-input: initial;
+    --brick-grid-justify-content-sm-input: initial;
+    --brick-grid-justify-content-md-input: initial;
+    --brick-grid-justify-content-lg-input: initial;
+    --brick-grid-justify-content-xl-input: initial;
+    --brick-grid-justify-content-resolved-initial: var(
+      --brick-grid-justify-content-initial-input,
+      normal
+    );
+    --brick-grid-justify-content-resolved-sm: var(
+      --brick-grid-justify-content-sm-input,
+      var(--brick-grid-justify-content-resolved-initial)
+    );
+    --brick-grid-justify-content-resolved-md: var(
+      --brick-grid-justify-content-md-input,
+      var(--brick-grid-justify-content-resolved-sm)
+    );
+    --brick-grid-justify-content-resolved-lg: var(
+      --brick-grid-justify-content-lg-input,
+      var(--brick-grid-justify-content-resolved-md)
+    );
+    --brick-grid-justify-content-resolved-xl: var(
+      --brick-grid-justify-content-xl-input,
+      var(--brick-grid-justify-content-resolved-lg)
+    );
+    --brick-grid-justify-content-active: var(
+      --brick-grid-justify-content-resolved-initial
+    );
+    --brick-grid-display-initial-input: initial;
+    --brick-grid-display-sm-input: initial;
+    --brick-grid-display-md-input: initial;
+    --brick-grid-display-lg-input: initial;
+    --brick-grid-display-xl-input: initial;
+    --brick-grid-display-resolved-initial: var(
+      --brick-grid-display-initial-input,
+      grid
+    );
+    --brick-grid-display-resolved-sm: var(
+      --brick-grid-display-sm-input,
+      var(--brick-grid-display-resolved-initial)
+    );
+    --brick-grid-display-resolved-md: var(
+      --brick-grid-display-md-input,
+      var(--brick-grid-display-resolved-sm)
+    );
+    --brick-grid-display-resolved-lg: var(
+      --brick-grid-display-lg-input,
+      var(--brick-grid-display-resolved-md)
+    );
+    --brick-grid-display-resolved-xl: var(
+      --brick-grid-display-xl-input,
+      var(--brick-grid-display-resolved-lg)
+    );
+    --brick-grid-display-active: var(--brick-grid-display-resolved-initial);
+  }
+  @media (min-width: 30rem) {
+    .brick-grid.brick-grid {
+      --brick-grid-template-columns-active: var(
+        --brick-grid-template-columns-resolved-sm
+      );
+      --brick-grid-template-rows-active: var(
+        --brick-grid-template-rows-resolved-sm
+      );
+      --brick-grid-template-areas-active: var(
+        --brick-grid-template-areas-resolved-sm
+      );
+      --brick-grid-auto-columns-active: var(
+        --brick-grid-auto-columns-resolved-sm
+      );
+      --brick-grid-auto-rows-active: var(--brick-grid-auto-rows-resolved-sm);
+      --brick-grid-auto-flow-active: var(--brick-grid-auto-flow-resolved-sm);
+      --brick-grid-align-content-active: var(
+        --brick-grid-align-content-resolved-sm
+      );
+      --brick-grid-justify-content-active: var(
+        --brick-grid-justify-content-resolved-sm
+      );
+      --brick-grid-display-active: var(--brick-grid-display-resolved-sm);
+    }
+  }
+  @media (min-width: 48rem) {
+    .brick-grid.brick-grid {
+      --brick-grid-template-columns-active: var(
+        --brick-grid-template-columns-resolved-md
+      );
+      --brick-grid-template-rows-active: var(
+        --brick-grid-template-rows-resolved-md
+      );
+      --brick-grid-template-areas-active: var(
+        --brick-grid-template-areas-resolved-md
+      );
+      --brick-grid-auto-columns-active: var(
+        --brick-grid-auto-columns-resolved-md
+      );
+      --brick-grid-auto-rows-active: var(--brick-grid-auto-rows-resolved-md);
+      --brick-grid-auto-flow-active: var(--brick-grid-auto-flow-resolved-md);
+      --brick-grid-align-content-active: var(
+        --brick-grid-align-content-resolved-md
+      );
+      --brick-grid-justify-content-active: var(
+        --brick-grid-justify-content-resolved-md
+      );
+      --brick-grid-display-active: var(--brick-grid-display-resolved-md);
+    }
+  }
+  @media (min-width: 64rem) {
+    .brick-grid.brick-grid {
+      --brick-grid-template-columns-active: var(
+        --brick-grid-template-columns-resolved-lg
+      );
+      --brick-grid-template-rows-active: var(
+        --brick-grid-template-rows-resolved-lg
+      );
+      --brick-grid-template-areas-active: var(
+        --brick-grid-template-areas-resolved-lg
+      );
+      --brick-grid-auto-columns-active: var(
+        --brick-grid-auto-columns-resolved-lg
+      );
+      --brick-grid-auto-rows-active: var(--brick-grid-auto-rows-resolved-lg);
+      --brick-grid-auto-flow-active: var(--brick-grid-auto-flow-resolved-lg);
+      --brick-grid-align-content-active: var(
+        --brick-grid-align-content-resolved-lg
+      );
+      --brick-grid-justify-content-active: var(
+        --brick-grid-justify-content-resolved-lg
+      );
+      --brick-grid-display-active: var(--brick-grid-display-resolved-lg);
+    }
+  }
+  @media (min-width: 80rem) {
+    .brick-grid.brick-grid {
+      --brick-grid-template-columns-active: var(
+        --brick-grid-template-columns-resolved-xl
+      );
+      --brick-grid-template-rows-active: var(
+        --brick-grid-template-rows-resolved-xl
+      );
+      --brick-grid-template-areas-active: var(
+        --brick-grid-template-areas-resolved-xl
+      );
+      --brick-grid-auto-columns-active: var(
+        --brick-grid-auto-columns-resolved-xl
+      );
+      --brick-grid-auto-rows-active: var(--brick-grid-auto-rows-resolved-xl);
+      --brick-grid-auto-flow-active: var(--brick-grid-auto-flow-resolved-xl);
+      --brick-grid-align-content-active: var(
+        --brick-grid-align-content-resolved-xl
+      );
+      --brick-grid-justify-content-active: var(
+        --brick-grid-justify-content-resolved-xl
+      );
+      --brick-grid-display-active: var(--brick-grid-display-resolved-xl);
+    }
+  }
+  .brick-grid-item.brick-grid-item {
+    --brick-grid-placement-column-start-initial-input: initial;
+    --brick-grid-placement-column-start-sm-input: initial;
+    --brick-grid-placement-column-start-md-input: initial;
+    --brick-grid-placement-column-start-lg-input: initial;
+    --brick-grid-placement-column-start-xl-input: initial;
+    --brick-grid-placement-column-start-resolved-initial: var(
+      --brick-grid-placement-column-start-initial-input,
+      var(--brick-grid-item-column-start)
+    );
+    --brick-grid-placement-column-start-resolved-sm: var(
+      --brick-grid-placement-column-start-sm-input,
+      var(--brick-grid-placement-column-start-resolved-initial)
+    );
+    --brick-grid-placement-column-start-resolved-md: var(
+      --brick-grid-placement-column-start-md-input,
+      var(--brick-grid-placement-column-start-resolved-sm)
+    );
+    --brick-grid-placement-column-start-resolved-lg: var(
+      --brick-grid-placement-column-start-lg-input,
+      var(--brick-grid-placement-column-start-resolved-md)
+    );
+    --brick-grid-placement-column-start-resolved-xl: var(
+      --brick-grid-placement-column-start-xl-input,
+      var(--brick-grid-placement-column-start-resolved-lg)
+    );
+    --brick-grid-placement-column-start-active: var(
+      --brick-grid-placement-column-start-resolved-initial
+    );
+    --brick-grid-placement-column-end-initial-input: initial;
+    --brick-grid-placement-column-end-sm-input: initial;
+    --brick-grid-placement-column-end-md-input: initial;
+    --brick-grid-placement-column-end-lg-input: initial;
+    --brick-grid-placement-column-end-xl-input: initial;
+    --brick-grid-placement-column-end-resolved-initial: var(
+      --brick-grid-placement-column-end-initial-input,
+      var(--brick-grid-item-column-end)
+    );
+    --brick-grid-placement-column-end-resolved-sm: var(
+      --brick-grid-placement-column-end-sm-input,
+      var(--brick-grid-placement-column-end-resolved-initial)
+    );
+    --brick-grid-placement-column-end-resolved-md: var(
+      --brick-grid-placement-column-end-md-input,
+      var(--brick-grid-placement-column-end-resolved-sm)
+    );
+    --brick-grid-placement-column-end-resolved-lg: var(
+      --brick-grid-placement-column-end-lg-input,
+      var(--brick-grid-placement-column-end-resolved-md)
+    );
+    --brick-grid-placement-column-end-resolved-xl: var(
+      --brick-grid-placement-column-end-xl-input,
+      var(--brick-grid-placement-column-end-resolved-lg)
+    );
+    --brick-grid-placement-column-end-active: var(
+      --brick-grid-placement-column-end-resolved-initial
+    );
+    --brick-grid-placement-row-start-initial-input: initial;
+    --brick-grid-placement-row-start-sm-input: initial;
+    --brick-grid-placement-row-start-md-input: initial;
+    --brick-grid-placement-row-start-lg-input: initial;
+    --brick-grid-placement-row-start-xl-input: initial;
+    --brick-grid-placement-row-start-resolved-initial: var(
+      --brick-grid-placement-row-start-initial-input,
+      var(--brick-grid-item-row-start)
+    );
+    --brick-grid-placement-row-start-resolved-sm: var(
+      --brick-grid-placement-row-start-sm-input,
+      var(--brick-grid-placement-row-start-resolved-initial)
+    );
+    --brick-grid-placement-row-start-resolved-md: var(
+      --brick-grid-placement-row-start-md-input,
+      var(--brick-grid-placement-row-start-resolved-sm)
+    );
+    --brick-grid-placement-row-start-resolved-lg: var(
+      --brick-grid-placement-row-start-lg-input,
+      var(--brick-grid-placement-row-start-resolved-md)
+    );
+    --brick-grid-placement-row-start-resolved-xl: var(
+      --brick-grid-placement-row-start-xl-input,
+      var(--brick-grid-placement-row-start-resolved-lg)
+    );
+    --brick-grid-placement-row-start-active: var(
+      --brick-grid-placement-row-start-resolved-initial
+    );
+    --brick-grid-placement-row-end-initial-input: initial;
+    --brick-grid-placement-row-end-sm-input: initial;
+    --brick-grid-placement-row-end-md-input: initial;
+    --brick-grid-placement-row-end-lg-input: initial;
+    --brick-grid-placement-row-end-xl-input: initial;
+    --brick-grid-placement-row-end-resolved-initial: var(
+      --brick-grid-placement-row-end-initial-input,
+      var(--brick-grid-item-row-end)
+    );
+    --brick-grid-placement-row-end-resolved-sm: var(
+      --brick-grid-placement-row-end-sm-input,
+      var(--brick-grid-placement-row-end-resolved-initial)
+    );
+    --brick-grid-placement-row-end-resolved-md: var(
+      --brick-grid-placement-row-end-md-input,
+      var(--brick-grid-placement-row-end-resolved-sm)
+    );
+    --brick-grid-placement-row-end-resolved-lg: var(
+      --brick-grid-placement-row-end-lg-input,
+      var(--brick-grid-placement-row-end-resolved-md)
+    );
+    --brick-grid-placement-row-end-resolved-xl: var(
+      --brick-grid-placement-row-end-xl-input,
+      var(--brick-grid-placement-row-end-resolved-lg)
+    );
+    --brick-grid-placement-row-end-active: var(
+      --brick-grid-placement-row-end-resolved-initial
+    );
+    --brick-grid-item-area-initial-input: initial;
+    --brick-grid-item-area-sm-input: initial;
+    --brick-grid-item-area-md-input: initial;
+    --brick-grid-item-area-lg-input: initial;
+    --brick-grid-item-area-xl-input: initial;
+    --brick-grid-item-area-resolved-initial: var(
+      --brick-grid-item-area-initial-input,
+      auto
+    );
+    --brick-grid-item-area-resolved-sm: var(
+      --brick-grid-item-area-sm-input,
+      var(--brick-grid-item-area-resolved-initial)
+    );
+    --brick-grid-item-area-resolved-md: var(
+      --brick-grid-item-area-md-input,
+      var(--brick-grid-item-area-resolved-sm)
+    );
+    --brick-grid-item-area-resolved-lg: var(
+      --brick-grid-item-area-lg-input,
+      var(--brick-grid-item-area-resolved-md)
+    );
+    --brick-grid-item-area-resolved-xl: var(
+      --brick-grid-item-area-xl-input,
+      var(--brick-grid-item-area-resolved-lg)
+    );
+    --brick-grid-item-area-active: var(--brick-grid-item-area-resolved-initial);
+  }
+  @media (min-width: 30rem) {
+    .brick-grid-item.brick-grid-item {
+      --brick-grid-placement-column-start-active: var(
+        --brick-grid-placement-column-start-resolved-sm
+      );
+      --brick-grid-placement-column-end-active: var(
+        --brick-grid-placement-column-end-resolved-sm
+      );
+      --brick-grid-placement-row-start-active: var(
+        --brick-grid-placement-row-start-resolved-sm
+      );
+      --brick-grid-placement-row-end-active: var(
+        --brick-grid-placement-row-end-resolved-sm
+      );
+      --brick-grid-item-area-active: var(--brick-grid-item-area-resolved-sm);
+    }
+  }
+  @media (min-width: 48rem) {
+    .brick-grid-item.brick-grid-item {
+      --brick-grid-placement-column-start-active: var(
+        --brick-grid-placement-column-start-resolved-md
+      );
+      --brick-grid-placement-column-end-active: var(
+        --brick-grid-placement-column-end-resolved-md
+      );
+      --brick-grid-placement-row-start-active: var(
+        --brick-grid-placement-row-start-resolved-md
+      );
+      --brick-grid-placement-row-end-active: var(
+        --brick-grid-placement-row-end-resolved-md
+      );
+      --brick-grid-item-area-active: var(--brick-grid-item-area-resolved-md);
+    }
+  }
+  @media (min-width: 64rem) {
+    .brick-grid-item.brick-grid-item {
+      --brick-grid-placement-column-start-active: var(
+        --brick-grid-placement-column-start-resolved-lg
+      );
+      --brick-grid-placement-column-end-active: var(
+        --brick-grid-placement-column-end-resolved-lg
+      );
+      --brick-grid-placement-row-start-active: var(
+        --brick-grid-placement-row-start-resolved-lg
+      );
+      --brick-grid-placement-row-end-active: var(
+        --brick-grid-placement-row-end-resolved-lg
+      );
+      --brick-grid-item-area-active: var(--brick-grid-item-area-resolved-lg);
+    }
+  }
+  @media (min-width: 80rem) {
+    .brick-grid-item.brick-grid-item {
+      --brick-grid-placement-column-start-active: var(
+        --brick-grid-placement-column-start-resolved-xl
+      );
+      --brick-grid-placement-column-end-active: var(
+        --brick-grid-placement-column-end-resolved-xl
+      );
+      --brick-grid-placement-row-start-active: var(
+        --brick-grid-placement-row-start-resolved-xl
+      );
+      --brick-grid-placement-row-end-active: var(
+        --brick-grid-placement-row-end-resolved-xl
+      );
+      --brick-grid-item-area-active: var(--brick-grid-item-area-resolved-xl);
+    }
+  }
+  .brick-grid.brick-grid {
+    grid-template-rows: var(--brick-grid-template-rows-active);
+    grid-template-areas: var(--brick-grid-template-areas-active);
+    grid-auto-columns: var(--brick-grid-auto-columns-active);
+    grid-auto-rows: var(--brick-grid-auto-rows-active);
+    grid-auto-flow: var(--brick-grid-auto-flow-active);
+    align-content: var(--brick-grid-align-content-active);
+    justify-content: var(--brick-grid-justify-content-active);
+    display: var(--brick-grid-display-active);
+  }
+  .brick-grid.brick-grid[data-grid-template] {
+    grid-template-columns: var(--brick-grid-template-columns-active);
+  }
+  .brick-grid-item.brick-grid-item {
+    grid-column-start: var(--brick-grid-placement-column-start-active);
+    grid-column-end: var(--brick-grid-placement-column-end-active);
+    grid-row-start: var(--brick-grid-placement-row-start-active);
+    grid-row-end: var(--brick-grid-placement-row-end-active);
+  }
+  .brick-grid-item.brick-grid-item[data-grid-area] {
+    grid-area: var(--brick-grid-item-area-active);
+  }
+  .brick-grid.brick-grid[hidden],
+  .brick-grid-item.brick-grid-item[hidden] {
+    display: none;
+  }
+}

@@ -11,6 +11,8 @@ import {
 } from "../../../src/drawer.js";
 
 const placement: DrawerPlacement = "start";
+const responsive: DrawerContentProps = { children: null, size: { md: "xl" }, placement: { initial: "bottom", lg: "end" } };
+void responsive;
 const size: DrawerSize = "xl";
 const rootProps: DrawerRootProps = {
   children: createElement(Drawer.Trigger, null, "Open filters"),

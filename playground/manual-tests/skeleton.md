@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Skeleton |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Local 0.2.3 candidate |
 | Reviewer |  |
 | Date |  |
 | Browser and version |  |
@@ -12,6 +12,7 @@
 | Physical device |  |
 | Assistive technology |  |
 | Playground route | `/skeleton` |
+| Qualification route(s) | `/skeleton?qualification=1` |
 
 Scenario order: `01 Overview`, `02 Variants`, `03 Animation`, `04 Dimensions`,
 `05 Text lines`, `06 Loading`, `07 Composition`, `08 Theme`, `09 Stress`.
@@ -20,7 +21,7 @@ tested.
 
 ## Step 1 — Shapes, motion, dimensions
 
-Open `/skeleton`; review 01–05. Expected: four distinct shapes, three distinct
+Open `/skeleton?qualification=1`; review 01–05. Expected: four distinct shapes, three distinct
 motion recipes, exact dimensions, and correct one/three/five-line geometry.
 
 ## Step 2 — Loading and composition
@@ -43,6 +44,10 @@ Traverse the busy-region example. Expected: placeholders are silent and never
 focus; the owning region exposes busy state and its accessible name.
 
 ## Completion
+
+Also inspect the ordinary `/skeleton` documentation page: responsive Frame
+host, asChild controls, reveal motion, line spacing and shared radius. Check
+root and descendant focus exclusion while loading; verify no nested pulse.
 
 Overall result:
 Follow-up issues:

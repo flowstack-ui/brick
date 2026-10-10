@@ -15,22 +15,24 @@ Present a finished urgent or consequential decision that requires an explicit re
 
 ## Required composition
 
-- Compose AlertDialog.Root with AlertDialog.Trigger and AlertDialog.Portal; inside Portal keep AlertDialog.Overlay and AlertDialog.Content as siblings. Inside Content, arrange Header with the required Title and Description, use a short optional Body only when needed, and place Cancel before Action in Footer.
+- Compose AlertDialog.Root with AlertDialog.Trigger and AlertDialog.Portal; inside Portal keep Overlay beside Positioner, with Content directly inside Positioner. Inside Content, arrange Header with the required Title and Description, use a short optional Body only when needed, and place Cancel before Action in Footer.
 - Compose Brick Button through Cancel and Action so each response keeps its visual and behavioral role. When a local Appearance scope owns the trigger, portal into that scope or apply the same Appearance to the portalled visual root.
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Reserve AlertDialog for one urgent or consequential decision; use Dialog for ordinary tasks, forms, or complex workflows.
 - **MUST:** Keep the alertdialog semantics and provide both an accessible name with visible Title or native labeling and an accessible description with Description or native aria-describedby.
 - **MUST:** Place a visible enabled Cancel before Action and make Cancel the safe initial focus target for consequential actions unless an explicitly safer workflow target is supplied.
 - **MUST:** Do not add backdrop dismissal; require Cancel, Action, or an intentionally permitted Escape path to resolve the decision.
-- **MUST:** Render Overlay and Content as siblings inside Portal and rely on AlertDialog's inherited modal focus, isolation, scroll, and top-layer ownership.
+- **MUST:** Render Overlay beside Positioner, never around Content. Keep Content directly inside Positioner. Legacy sibling Overlay/Content remains supported. Rely on Atom for modal focus, isolation, scrolling and strict dismissal.
 - **MUST:** Apply destructive or cautionary tone to the Action Button, not to the entire dialog surface, and keep Cancel visually safe and unambiguous.
 - **MUST:** When an Action starts asynchronous validation or work, prevent its automatic close until the application confirms success, preserves errors, and intentionally updates open state.
 - **MUST:** Keep permissions, authorization, persistence, pending state, error recovery, and the actual destructive operation in application code; AlertDialog owns presentation and interaction semantics only.
 - **SHOULD:** Keep the decision concise; use the bounded Body only for essential supporting context and move complex forms or third-party interactive portals to Dialog.
 - **MUST:** When Portal leaves a local Appearance scope, reproduce that scope on the portalled visual root or target a portal container inside it.
 - **MUST:** Load styles.css or core.css plus alert-dialog.css.
+- **MUST:** Use the shared Dialog visual recipes: responsive xs/sm/md/lg/xl/cover/full size, radius and motionPreset on Content; placement and scrollBehavior on Positioner. Use Positioner for viewport modes. Do not duplicate Dialog CSS. Confirmation safeguards remain independent.
 
 ## Common mistakes
 

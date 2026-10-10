@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/kbd"); });
+test.beforeEach(async ({ page }) => { await page.goto("/kbd?qualification=1"); });
 
 test("Kbd preserves native semantics and closed recipes", async ({ page }) => {
   const overview = page.getByTestId("kbd-overview").locator(".brick-kbd");

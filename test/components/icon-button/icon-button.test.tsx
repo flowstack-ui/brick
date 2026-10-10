@@ -15,6 +15,12 @@ function TestIcon() {
 }
 
 describe("IconButton", () => {
+  it("owns focus placement on the final host", () => {
+    render(<IconButton focusRing="inside" aria-label="Inspect"><TestIcon /></IconButton>);
+    const host = screen.getByRole("button", { name: "Inspect" });
+    expect(host).toHaveAttribute("data-focus-ring", "inside");
+    expect(host).not.toHaveAttribute("focusRing");
+  });
   it("renders the adopted defaults over Atom Button", () => {
     render(<IconButton aria-label="Open menu"><TestIcon /></IconButton>);
     const button = screen.getByRole("button", { name: "Open menu" });
@@ -22,7 +28,7 @@ describe("IconButton", () => {
     expect(button).toHaveAttribute("type", "button");
     expect(button).toHaveAttribute("data-variant", "ghost");
     expect(button).toHaveAttribute("data-tone", "neutral");
-    expect(button).toHaveAttribute("data-size", "md");
+    expect(button).toHaveAttribute("data-size", "lg");
     expect(button).toHaveAttribute("data-shape", "rounded");
     expect(screen.getByTestId("icon").parentElement).toHaveAttribute("aria-hidden", "true");
   });
@@ -106,9 +112,9 @@ describe("IconButton", () => {
   });
 
   it("exposes every closed visual recipe", () => {
-    const variants: IconButtonVariant[] = ["solid", "soft", "outline", "ghost"];
+    const variants: IconButtonVariant[] = ["solid", "soft", "subtle", "surface", "outline", "ghost", "plain"];
     const tones: IconButtonTone[] = ["neutral", "accent", "info", "success", "warning", "danger"];
-    const sizes: IconButtonSize[] = ["xs", "sm", "md", "lg", "xl"];
+    const sizes: IconButtonSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
     const shapes: IconButtonShape[] = ["rounded", "circle"];
     const { rerender } = render(<IconButton aria-label="Recipe"><TestIcon /></IconButton>);
     const button = screen.getByRole("button", { name: "Recipe" });
@@ -128,5 +134,17 @@ describe("IconButton", () => {
       rerender(<IconButton aria-label="Recipe" shape={shape}><TestIcon /></IconButton>);
       expect(button).toHaveAttribute("data-shape", shape);
     }
+  });
+
+  it("emits sparse responsive size attributes over the visible default", () => {
+    render(
+      <IconButton aria-label="Responsive menu" size={{ lg: "md" }}>
+        <TestIcon />
+      </IconButton>,
+    );
+    const button = screen.getByRole("button", { name: "Responsive menu" });
+    expect(button).toHaveAttribute("data-size", "lg");
+    expect(button).toHaveAttribute("data-size-lg", "md");
+    expect(button).not.toHaveAttribute("size");
   });
 });

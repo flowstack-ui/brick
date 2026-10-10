@@ -12,13 +12,14 @@
   "avoidWhen": [
     {
       "condition": "Content should be visually hidden but remain available to assistive technology, or should not render for business reasons.",
-      "useInstead": "VisuallyHidden or application conditional rendering"
+      "useInstead": "VisuallyHidden or Show when"
     }
   ],
   "composition": [
     "Wrap the smallest complete region whose presence changes; pair with Show only when desktop and mobile genuinely need distinct compositions."
   ],
   "rules": [
+    { "id": "hide-projection", "level": "must", "statement": "Use asChild to project responsive visibility onto one non-Fragment prop/ref-forwarding host without changing visible display. Do not combine as and asChild. CSS hiding retains mounted state and form participation and cannot hide external portals. Use Show when for conditional removal." },
     {
       "id": "hide-css-breakpoint",
       "level": "must",

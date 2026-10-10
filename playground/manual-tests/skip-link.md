@@ -1,5 +1,13 @@
 # Skip Link manual test
 
+## September 2026 regression additions (manual results pending)
+
+- Check default div inside main and asChild on main preserve one main landmark.
+- Test first Tab, Enter, and next Tab with a screen reader. Confirm the compact panel and target focus are clear.
+- Test actual browser zoom, forced colors, narrow RTL, and physical-device keyboard navigation.
+- Check sticky headers do not obscure destinations and native mode updates the URL.
+- Test the cross-document portal fixture and modified-click behavior without focus theft.
+
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result. Do not
 infer a human result from automated evidence.
 
@@ -98,4 +106,3 @@ Overall result:
 Follow-up issues:
 
 Workbook updated:
-

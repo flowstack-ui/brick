@@ -62,6 +62,9 @@ does not invent a size: the consumer provides the relevant constraint.
 | `orientation` | `vertical`, `horizontal`, `both` | `vertical` |
 | `scrollbarGutter` | `auto`, `stable` | `auto` |
 | `scrollbarVisibility` | `auto`, `always`, `interaction` | `auto` |
+| `scrollbar` | `native`, `custom` | `native` |
+| `size` | `xs`, `sm`, `md`, `lg` (custom only) | `md` |
+| `scrollShadow` | `none`, `vertical`, `horizontal`, `both` (custom only) | `none` |
 | `Viewport.focusable` | `boolean` | `false` |
 | Root and Viewport composition | `render`, `asChild` | native `div` |
 
@@ -81,7 +84,8 @@ Public exports are `ScrollArea`, `ScrollAreaRoot`, `ScrollAreaViewport`,
 Orientation changes only enabled physical axes. Gutter changes only reserved
 scrollbar space. Visibility changes only the native scrollbar request and
 authored color visibility; it never disables scrolling. The component has no
-tone, size, radius, disabled, loading, validation, or motion recipe.
+tone, radius, disabled, loading or validation recipe. Custom mode adds four
+track sizes (4/6/8/12px), short visibility transitions and optional edge fades.
 
 ## Tokens and CSS hooks
 
@@ -93,6 +97,11 @@ Public variables:
 
 - `--brick-scroll-area-scrollbar-thumb`
 - `--brick-scroll-area-scrollbar-track`
+- `--brick-scroll-area-scrollbar-size`
+- `--brick-scroll-area-scrollbar-margin`
+- `--brick-scroll-area-thumb-min-size`
+- `--brick-scroll-area-shadow-size`
+- `--brick-scroll-area-shadow-color`
 
 ## Customization
 
@@ -107,7 +116,7 @@ Public variables:
 </ScrollArea.Root>
 ```
 
-Customize only scrollbar colors through these public variables. Application
+Customize scrollbar presentation through these public variables. Application
 layout continues to own the viewport constraint.
 
 ## Responsive behavior
@@ -131,6 +140,57 @@ Root and Viewport forward native props, events, classes, styles, refs,
 Stack/Grid arrange and Container constrains; none replaces this scroll owner.
 
 ## Examples
+
+### Custom scrolling
+
+```tsx
+<Frame blockSize="16rem" asChild>
+  <ScrollArea.Root scrollbar="custom" scrollbarGutter="stable">
+    <ScrollArea.Viewport focusable aria-label="Activity">
+      <ScrollArea.Content>{content}</ScrollArea.Content>
+    </ScrollArea.Viewport>
+    <ScrollArea.Scrollbar />
+  </ScrollArea.Root>
+</Frame>
+```
+
+Custom mode requires Content and one Scrollbar per enabled axis. Scrollbar
+supplies Thumb when children are omitted; an explicit Thumb inherits its axis.
+For both axes add a horizontal Scrollbar and Corner. All DOM parts forward native
+props, refs, `asChild` and `render`. Native mode rejects custom-only size/shadow
+props. Until custom anatomy is measured, native bars remain available. Forced
+colors also restores native bars. Never remove both scrolling affordances.
+
+Auto and interaction custom bars reveal on hover, focus, scrolling or dragging.
+Always shows only overflowing axes. Stable gutter reserves the enabled axes;
+auto overlays tracks. Minimum thumb length is clamped to the available track.
+Shadows fade only edges with remaining content and are hidden during focus so
+they do not obscure focus indicators. Use native mode for vertical writing.
+
+Additional exports: ScrollAreaContent, ScrollAreaScrollbar, ScrollAreaThumb,
+ScrollAreaCorner, ScrollAreaRootProvider, ScrollAreaContext and matching Props;
+useScrollArea, ScrollAreaController, UseScrollAreaProps, ScrollAreaIds,
+ScrollAreaAxis, ScrollAreaEdge, ScrollAreaState, ScrollAreaScrollbarState,
+ScrollAreaScrollToDetails, ScrollAreaScrollToEdgeDetails, ScrollAreaSize and
+ScrollAreaScrollShadow. The ScrollArea namespace exposes each named part.
+
+### Controller and application integrations
+
+`useScrollArea({ orientation?, ids? })` supplies the value for RootProvider.
+The hook or Context render prop subscribes to edge and overflow booleans.
+`getScrollProgress()` returns clamped fractions (x is logical, y vertical).
+`scrollTo({ top?, left?, behavior?, duration?, easing? })` uses native coordinates;
+RTL left coordinates are negative. `scrollToEdge({ edge, ...options })` accepts
+physical top/right/bottom/left. Custom duration uses milliseconds and easing
+maps 0–1 to 0–1. New commands or user input cancel animations; reduced motion is
+instant. Before mounting, commands do nothing.
+
+`getScrollbarState({ orientation? })` exposes hidden/hovering/scrolling/dragging.
+Viewport/content callback refs are also available for advanced composition;
+standard parts already register them. Do not create a second viewport owner.
+Bottom following, menu policy and virtualization remain application integrations.
+The playground demonstrates an optional `@tanstack/react-virtual` dependency;
+it is not shipped in Brick runtime dependencies.
 
 ### Horizontal rail
 

@@ -8,15 +8,16 @@ import {
   Link as AtomLink,
   type LinkRootProps as AtomLinkRootProps,
 } from "@flowstack-ui/atom/link";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 
-export type LinkVariant = "theme" | "underline" | "plain";
+export type LinkVariant = "underline" | "subtle" | "plain" | /** @deprecated Use an explicit decoration variant. */ "theme";
 export type LinkTone = "accent" | "neutral" | "inherit";
 export type LinkSize = "inherit" | "sm" | "md" | "lg";
 
 interface LinkVisualProps {
   variant?: LinkVariant;
   tone?: LinkTone;
-  size?: LinkSize;
+  size?: ResponsiveValue<LinkSize>;
 }
 
 type LinkNativeProps = Omit<
@@ -52,6 +53,7 @@ type LinkRenderProps = LinkCommonProps & {
 
 type LinkAsChildProps = LinkCommonProps & {
     asChild: true;
+    href?: string;
     children: ReactElement;
     render?: never;
     startIcon?: never;
@@ -66,7 +68,7 @@ function mergeClassName(className: string | undefined) {
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   {
-    variant = "theme",
+    variant = "underline",
     tone = "accent",
     size = "inherit",
     startIcon,
@@ -109,7 +111,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     ...rootProps,
     asChild,
     className: mergeClassName(className),
-    "data-size": size,
+    ...responsiveDataAttributes("data-size", size, { defaultValue: "inherit", alwaysInitial: true }),
     "data-slot": dataSlot,
     "data-tone": tone,
     "data-variant": variant,

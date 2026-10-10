@@ -1,22 +1,32 @@
-import { forwardRef, type HTMLAttributes } from "react";
+import { createContext, forwardRef, useContext, type HTMLAttributes } from "react";
 import {
   Reorder as AtomReorder,
+  useReorderContext,
   type ReorderDropIndicatorProps as AtomReorderDropIndicatorProps,
   type ReorderHandleProps as AtomReorderHandleProps,
   type ReorderItemProps as AtomReorderItemProps,
   type ReorderNamedMoveProps as AtomReorderNamedMoveProps,
   type ReorderRootProps as AtomReorderRootProps,
+  type ReorderPreviewProps as AtomReorderPreviewProps,
 } from "@flowstack-ui/atom/reorder";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 
 export type ReorderableListSize = "sm" | "md" | "lg";
-export type ReorderableListVariant = "outline" | "soft";
+export type ReorderableListVariant = "outline" | "surface" | "soft";
 
 export interface ReorderableListRootProps extends AtomReorderRootProps {
   /** Item and control scale. @default "md" */
-  size?: ReorderableListSize;
+  size?: ResponsiveValue<ReorderableListSize>;
   /** Item surface recipe. @default "outline" */
-  variant?: ReorderableListVariant;
+  variant?: ResponsiveValue<ReorderableListVariant>;
+  radius?: Radius;
+  /** Animate item displacement. Reduced motion always takes precedence. */
+  motion?: boolean;
 }
+type Recipe = Pick<ReorderableListRootProps, "size" | "variant" | "radius">;
+const RecipeContext = createContext<Recipe>({});
+export interface ReorderableListPreviewProps extends AtomReorderPreviewProps {}
 
 export interface ReorderableListItemProps extends AtomReorderItemProps {}
 
@@ -42,19 +52,48 @@ function mergeClassName(base: string, className?: string) {
 
 export const ReorderableListRoot = forwardRef<HTMLOListElement, ReorderableListRootProps>(
   function ReorderableListRoot(
-    { className, size = "md", variant = "outline", "data-slot": dataSlot, ...props },
+    { className, size = "md", variant = "outline", radius, motion = true, style, "data-slot": dataSlot, ...props },
     ref,
   ) {
     return (
-      <AtomReorder.Root
+      <RecipeContext.Provider value={{ size, variant, radius }}><AtomReorder.Root
         {...props}
         className={mergeClassName("brick-reorderable-list", className)}
-        data-size={size}
+        {...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true })}
         data-slot={dataSlot ?? "reorderable-list"}
-        data-variant={variant}
+        {...responsiveDataAttributes("data-variant", variant, { defaultValue: "outline", alwaysInitial: true })}
+        data-motion={motion ? "true" : "false"}
+        style={radiusStyle(radius, "--brick-reorderable-list-item-radius", style)}
         ref={ref}
-      />
+      /></RecipeContext.Provider>
     );
+  },
+);
+
+function DefaultPreviewContent({ value }: { value: string }) {
+  const { getItemLabel } = useReorderContext();
+  return <div className="brick-reorderable-list__preview-content">
+    <span className="brick-reorderable-list__handle" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" focusable="false">
+        <circle cx="9" cy="5" r="1" /><circle cx="15" cy="5" r="1" />
+        <circle cx="9" cy="12" r="1" /><circle cx="15" cy="12" r="1" />
+        <circle cx="9" cy="19" r="1" /><circle cx="15" cy="19" r="1" />
+      </svg>
+    </span>
+    <span className="brick-reorderable-list__content">{getItemLabel(value)}</span>
+  </div>;
+}
+
+export const ReorderableListPreview = forwardRef<HTMLDivElement, ReorderableListPreviewProps>(
+  function ReorderableListPreview({ children, className, style, "data-slot": slot = "reorderable-list-preview", ...props }, ref) {
+    const { size = "md", variant = "outline", radius } = useContext(RecipeContext);
+    return <AtomReorder.Preview {...props} ref={ref}
+      className={mergeClassName("brick-reorderable-list brick-reorderable-list__preview", className)}
+      {...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true })}
+      {...responsiveDataAttributes("data-variant", variant, { defaultValue: "outline", alwaysInitial: true })}
+      data-slot={slot} style={radiusStyle(radius, "--brick-reorderable-list-item-radius", style)}>
+      {children === undefined ? (value => <DefaultPreviewContent value={value} />) : children}
+    </AtomReorder.Preview>;
   },
 );
 
@@ -189,4 +228,5 @@ export const ReorderableList = Object.freeze({
   MoveToStart: ReorderableListMoveToStart,
   MoveToEnd: ReorderableListMoveToEnd,
   DropIndicator: ReorderableListDropIndicator,
+  Preview: ReorderableListPreview,
 });

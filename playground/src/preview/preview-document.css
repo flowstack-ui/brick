@@ -1,0 +1,3 @@
+/* Document geometry, not a component recipe. Fixed-height viewports deliberately scroll. */
+body { margin: 0; padding: var(--brick-space-4); }
+#root { min-inline-size: 0; }

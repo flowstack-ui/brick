@@ -12,6 +12,7 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/hover-card` |
+| Qualification route(s) | `/hover-card?qualification=1` |
 
 Scenario order: `01 Overview`, `02 Sizes`, `03 Sides`, `04 Alignments`,
 `05 States`, `06 Composition`, `07 Theme`, `08 Stress`
@@ -20,7 +21,7 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Overview and genuine link behavior
 
-Setup: Open `/hover-card` and `01 Overview`.
+Setup: Open `/hover-card?qualification=1` and `01 Overview`.
 
 Action: Focus and hover `Ada Lovelace`, move the pointer between link and
 preview, close with Escape, then activate the underlying link.
@@ -102,6 +103,18 @@ Result:
 Notes or issue:
 
 ## Completion
+
+## Additional parity checks
+
+On the normal `/hover-card` documentation route, verify shared triggers switch
+the same preview host, keyboard navigation opens the matching subject, disabled
+links remain navigable, and Escape dismisses an inner preview before its Dialog.
+Check every inset and radius in light and dark appearance. Confirm retained
+content is hidden after dismissal, the external controller works, and matching
+width respects the documented maximum width. Test preventable dismissal.
+
+These are instructions, not a completed manual run. Screen-reader, physical
+device and actual browser zoom results remain unrecorded.
 
 Overall result:
 Follow-up issues:

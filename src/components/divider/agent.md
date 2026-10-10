@@ -21,6 +21,7 @@ Render a finished decorative or semantic content boundary with horizontal or ver
 - **MUST:** Choose semantic versus decorative behavior independently from color, thickness, and orientation.
 - **MUST:** Place Divider between complete semantic or interactive groups under one consistent layout owner; do not split a trigger from the content it controls.
 - **MUST:** Load styles.css or core.css plus divider.css.
+- **MUST:** Responsive orientation is only for decorative unlabeled dividers. Meaningful separators use scalar orientation; labeled dividers remain horizontal. Match parent direction breakpoints and verify stale-axis inset resets.
 
 ## Common mistakes
 

@@ -4,7 +4,23 @@ Text follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Added justified alignment, font style, numeric glyph and decoration controls.
+  Line clamping accepts responsive positive integers and an explicit none reset;
+  named text exports share these controls.
+
+### Changed
+
+- Refined the authored display and large-copy scale to 36/44, 48/60, 18/27,
+  and 18/28 so marketing and application compositions no longer require local
+  typography overrides; component-owned Card title recipes remain unchanged.
+- Moved `title-xs` from 14px to 16px so small structural headings can align
+  with `body-md` copy while retaining independent weight and semantic level.
+
 ### Added
+
+- Added `title-2xs` as the 14px Text and Heading recipe for compact structural
+  headings in dense navigation, table, and side-panel compositions.
+- Added the `title-xs` Text and Heading recipe for small structural headings.
 
 - Added themeable `display-sm`, `display-md`, and `display-lg` recipes plus
   responsive visual-variant and logical-alignment values that keep the
@@ -36,3 +52,9 @@ Text follows the package version of `@flowstack-ui/brick`.
 - Native attributes, an `HTMLElement` ref, stable class/slot/recipe metadata,
   public Text variables, expanded semantic type tokens, appearance, forced
   colors, RTL, and narrow-layout support.
+# Unreleased: complete explicit weight scale
+
+Text and its named exports accept thin/100, extralight/200, light/300,
+bold/700, extrabold/800 and black/900 in addition to existing weights.
+Existing recipe defaults and regular/400 naming remain unchanged.
+Applications supply font faces supporting the requested weights.

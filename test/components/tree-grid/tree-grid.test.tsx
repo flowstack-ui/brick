@@ -1,7 +1,7 @@
 import { createRef } from "react";
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { TreeGrid, type TreeGridDensity, type TreeGridSize, type TreeGridVariant } from "../../../src/tree-grid.js";
+import { TreeGrid, type TreeGridBorderTone, type TreeGridDensity, type TreeGridLayout, type TreeGridSize, type TreeGridSurface, type TreeGridVariant } from "../../../src/tree-grid.js";
 
 Element.prototype.scrollIntoView = vi.fn();
 
@@ -10,18 +10,28 @@ function Example(props: Partial<React.ComponentProps<typeof TreeGrid.Root>> = {}
 }
 
 describe("TreeGrid", () => {
-  it("renders the twelve-part anatomy, refs, defaults, and slots", () => {
+  it("renders the fourteen-part anatomy, refs, defaults, and slots", () => {
     const containerRef = createRef<HTMLDivElement>();
     const rootRef = createRef<HTMLElement>();
+    const columnGroupRef = createRef<HTMLTableColElement>();
+    const columnRef = createRef<HTMLTableColElement>();
     const rowHeaderRef = createRef<HTMLTableCellElement>();
-    const { getByTestId, getByText } = render(<TreeGrid.Container ref={containerRef} data-testid="container"><TreeGrid.Root ref={rootRef} aria-label="Files" columnCount={1} rowCount={1} data-testid="root"><TreeGrid.Caption>Files</TreeGrid.Caption><TreeGrid.Header><TreeGrid.Row value="header" rowIndex={1} selectable={false}><TreeGrid.ColumnHeader columnIndex={1}>Name<TreeGrid.SortIndicator data-testid="sort-indicator" /></TreeGrid.ColumnHeader></TreeGrid.Row></TreeGrid.Header><TreeGrid.Body><TreeGrid.Row value="src" rowIndex={2} level={1} expandable><TreeGrid.RowHeader columnIndex={1} ref={rowHeaderRef}><TreeGrid.Indicator data-testid="indicator" />src</TreeGrid.RowHeader></TreeGrid.Row></TreeGrid.Body><TreeGrid.Footer><TreeGrid.Row value="footer" rowIndex={3} selectable={false}><TreeGrid.Cell columnIndex={1}>1 item</TreeGrid.Cell></TreeGrid.Row></TreeGrid.Footer></TreeGrid.Root></TreeGrid.Container>);
+    const { getByTestId, getByText } = render(<TreeGrid.Container ref={containerRef} data-testid="container"><TreeGrid.Root ref={rootRef} aria-label="Files" columnCount={1} rowCount={1} data-testid="root"><TreeGrid.ColumnGroup ref={columnGroupRef} data-testid="column-group"><TreeGrid.Column ref={columnRef} htmlWidth="50%" data-testid="column" /></TreeGrid.ColumnGroup><TreeGrid.Caption>Files</TreeGrid.Caption><TreeGrid.Header><TreeGrid.Row value="header" rowIndex={1} selectable={false}><TreeGrid.ColumnHeader columnIndex={1}>Name<TreeGrid.SortIndicator data-testid="sort-indicator" /></TreeGrid.ColumnHeader></TreeGrid.Row></TreeGrid.Header><TreeGrid.Body><TreeGrid.Row value="src" rowIndex={2} level={1} expandable><TreeGrid.RowHeader columnIndex={1} ref={rowHeaderRef}><TreeGrid.Indicator data-testid="indicator" />src</TreeGrid.RowHeader></TreeGrid.Row></TreeGrid.Body><TreeGrid.Footer><TreeGrid.Row value="footer" rowIndex={3} selectable={false}><TreeGrid.Cell columnIndex={1}>1 item</TreeGrid.Cell></TreeGrid.Row></TreeGrid.Footer></TreeGrid.Root></TreeGrid.Container>);
     expect(getByTestId("container")).toBe(containerRef.current);
     expect(rootRef.current?.tagName).toBe("TABLE");
+    expect(columnGroupRef.current?.tagName).toBe("COLGROUP");
+    expect(columnRef.current?.tagName).toBe("COL");
+    expect(getByTestId("column-group")).toHaveClass("brick-tree-grid__column-group");
+    expect(getByTestId("column")).toHaveAttribute("width", "50%");
+    expect(getByTestId("column")).not.toHaveAttribute("htmlWidth");
     expect(rowHeaderRef.current?.tagName).toBe("TH");
     expect(getByTestId("root")).toHaveAttribute("role", "treegrid");
     expect(getByTestId("root")).toHaveAttribute("data-variant", "line");
     expect(getByTestId("root")).toHaveAttribute("data-size", "md");
     expect(getByTestId("root")).toHaveAttribute("data-density", "comfortable");
+    expect(getByTestId("root")).toHaveAttribute("data-surface", "transparent");
+    expect(getByTestId("root")).toHaveAttribute("data-border-tone", "default");
+    expect(getByTestId("root")).toHaveAttribute("data-layout", "auto");
     expect(getByText("Files")).toHaveAttribute("data-side", "bottom");
     expect(getByTestId("indicator")).toHaveAttribute("aria-hidden", "true");
     expect(getByTestId("sort-indicator")).toHaveAttribute("aria-hidden", "true");
@@ -31,16 +41,26 @@ describe("TreeGrid", () => {
     const variants: TreeGridVariant[] = ["line", "outline"];
     const sizes: TreeGridSize[] = ["sm", "md", "lg"];
     const densities: TreeGridDensity[] = ["compact", "comfortable", "spacious"];
+    const surfaces: TreeGridSurface[] = ["transparent", "base"];
+    const borderTones: TreeGridBorderTone[] = ["subtle", "default", "strong"];
+    const layouts: TreeGridLayout[] = ["auto", "fixed"];
     const { getByTestId, rerender } = render(<Example />);
     for (const variant of variants) { rerender(<Example variant={variant} />); expect(getByTestId("root")).toHaveAttribute("data-variant", variant); }
     for (const size of sizes) { rerender(<Example size={size} />); expect(getByTestId("root")).toHaveAttribute("data-size", size); }
     for (const density of densities) { rerender(<Example density={density} />); expect(getByTestId("root")).toHaveAttribute("data-density", density); }
+    for (const surface of surfaces) { rerender(<Example surface={surface} />); expect(getByTestId("root")).toHaveAttribute("data-surface", surface); }
+    for (const borderTone of borderTones) { rerender(<Example borderTone={borderTone} />); expect(getByTestId("root")).toHaveAttribute("data-border-tone", borderTone); }
+    for (const layout of layouts) { rerender(<Example layout={layout} />); expect(getByTestId("root")).toHaveAttribute("data-layout", layout); }
+    rerender(<Example showColumnBorder striped stickyHeader />);
+    expect(getByTestId("root")).toHaveAttribute("data-column-border", "");
+    expect(getByTestId("root")).toHaveAttribute("data-striped", "");
+    expect(getByTestId("root")).toHaveAttribute("data-sticky-header", "");
     expect(getByTestId("root")).not.toHaveAttribute("variant");
     expect(getByTestId("root")).not.toHaveAttribute("density");
   });
 
   it("maps hierarchy, alignment, numeric, selection, and expansion state", () => {
-    const { getByTestId } = render(<TreeGrid.Root aria-label="Files" columnCount={3} rowCount={1} selectionMode="single" value="src" defaultExpandedValue={["src"]}><TreeGrid.Body><TreeGrid.Row rowIndex={1} value="src" level={3} expandable selectable data-testid="row"><TreeGrid.RowHeader columnIndex={1} data-testid="name"><TreeGrid.Indicator data-testid="indicator" />src</TreeGrid.RowHeader><TreeGrid.Cell columnIndex={2} align="center" data-testid="center">Folder</TreeGrid.Cell><TreeGrid.Cell columnIndex={3} numeric data-testid="numeric">42</TreeGrid.Cell></TreeGrid.Row></TreeGrid.Body></TreeGrid.Root>);
+    const { getByTestId } = render(<TreeGrid.Root aria-label="Files" columnCount={3} rowCount={1} selectionMode="single" value="src" defaultExpandedValue={["src"]}><TreeGrid.Body><TreeGrid.Row rowIndex={1} value="src" level={3} expandable selectable data-testid="row"><TreeGrid.RowHeader columnIndex={1} verticalAlign="top" data-testid="name"><TreeGrid.Indicator data-testid="indicator" />src</TreeGrid.RowHeader><TreeGrid.Cell columnIndex={2} align="center" verticalAlign="bottom" data-testid="center">Folder</TreeGrid.Cell><TreeGrid.Cell columnIndex={3} numeric data-testid="numeric">42</TreeGrid.Cell></TreeGrid.Row></TreeGrid.Body></TreeGrid.Root>);
     expect(getByTestId("row")).toHaveAttribute("aria-level", "3");
     expect(getByTestId("row")).toHaveAttribute("aria-expanded", "true");
     expect(getByTestId("row")).toHaveAttribute("aria-selected", "true");
@@ -48,6 +68,9 @@ describe("TreeGrid", () => {
     expect(getByTestId("center")).toHaveAttribute("data-align", "center");
     expect(getByTestId("numeric")).toHaveAttribute("data-align", "end");
     expect(getByTestId("numeric")).toHaveAttribute("data-numeric", "");
+    expect(getByTestId("name")).toHaveAttribute("data-vertical-align", "top");
+    expect(getByTestId("center")).toHaveAttribute("data-vertical-align", "bottom");
+    expect(getByTestId("numeric")).toHaveAttribute("data-vertical-align", "middle");
     expect(getByTestId("numeric")).not.toHaveAttribute("numeric");
   });
 

@@ -1,9 +1,9 @@
-import { expect, installVisualDefaults, setAppearance, test } from "../../visual-harness.js";
+import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test } from "../../visual-harness.js";
 
-installVisualDefaults("/visually-hidden");
+installVisualDefaults("/visually-hidden?qualification=1");
 
 test("Visually Hidden naming, output, and composition", async ({ page }) => {
-  await expect(page.locator(".visually-hidden-page")).toHaveScreenshot("page-spacing-light.png");
+  await expectEvidenceScreenshot(page, page.locator(".visually-hidden-page"), "page-spacing-light.png");
   await expect(page.locator("#scenario-visually-hidden-overview")).toHaveScreenshot("overview-light.png");
   await expect(page.locator("#scenario-visually-hidden-naming")).toHaveScreenshot("naming-light.png");
   await expect(page.locator("#scenario-visually-hidden-output")).toHaveScreenshot("output-light.png");

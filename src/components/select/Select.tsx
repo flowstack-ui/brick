@@ -1,4 +1,8 @@
 "use client";
+import { fieldVariantAttributes, type FieldVariant, type ResponsiveFieldVariant } from "../_field-variant/FieldVariant.js";
+import { radiusStyle, type Radius, type RadiusShapeProps } from "../_radius/Radius.js";
+import { CloseButton } from "../close-button/CloseButton.js";
+import type { SelectClearTriggerProps as AtomClearTriggerProps } from "@flowstack-ui/atom/select";
 
 import {
   Children,
@@ -8,9 +12,12 @@ import {
   isValidElement,
   useContext,
   type ReactNode,
+  type ReactElement,
 } from "react";
 import {
   Select as AtomSelect,
+  useSelectContext,
+  type UseSelectReturn,
   type SelectArrowProps as AtomSelectArrowProps,
   type SelectGroupProps as AtomSelectGroupProps,
   type SelectIconProps as AtomSelectIconProps,
@@ -28,27 +35,33 @@ import {
   type SelectValueProps as AtomSelectValueProps,
   type SelectViewportProps as AtomSelectViewportProps,
 } from "@flowstack-ui/atom/select";
+import {
+  controlSizeDataAttributes,
+  type ControlSize,
+  type ResponsiveControlSize,
+} from "../_control-size/ControlSize.js";
 
-export type SelectVariant = "outline" | "soft" | "underline";
-export type SelectSize = "sm" | "md" | "lg";
+export type SelectVariant = "outline" | "surface" | "soft" | "subtle" | "ghost" | "plain" | "underline";
+export type SelectSize = ControlSize;
 export type SelectShape = "sharp" | "rounded" | "pill";
 
 type SelectRootSharedProps = Omit<AtomSelectRootProps, "children"> & {
   children: ReactNode;
-  size?: SelectSize;
+  size?: ResponsiveControlSize;
   fullWidth?: boolean;
 };
 
 export type SelectRootProps = SelectRootSharedProps &
   (
-    | { variant?: "outline" | "soft"; shape?: SelectShape }
-    | { variant: "underline"; shape?: never }
+    | ({ variant?: Exclude<SelectVariant, "underline"> } & RadiusShapeProps<SelectShape>)
+    | { variant: ResponsiveFieldVariant; shape?: never; radius?: never }
   );
-export type SelectTriggerProps = AtomSelectTriggerProps;
+export type SelectTriggerProps = AtomSelectTriggerProps & { unstyled?: boolean };
+export type SelectClearTriggerProps = Omit<AtomClearTriggerProps, "children" | "asChild" | "render"> & { children?: ReactElement };
 export type SelectValueProps = AtomSelectValueProps;
 export type SelectIconProps = Omit<AtomSelectIconProps, "children"> & { children?: ReactNode };
 export type SelectPortalProps = AtomSelectPortalProps;
-export type SelectContentProps = AtomSelectListboxProps;
+export type SelectContentProps = AtomSelectListboxProps & { radius?: Radius };
 export type SelectListboxProps = SelectContentProps;
 export type SelectViewportProps = AtomSelectViewportProps;
 export type SelectScrollUpButtonProps = Omit<AtomSelectScrollUpButtonProps, "children"> & { children?: ReactNode };
@@ -62,15 +75,16 @@ export type SelectSeparatorProps = AtomSelectSeparatorProps;
 export type SelectArrowProps = Omit<AtomSelectArrowProps, "children"> & { children?: ReactNode };
 
 interface SelectVisualContextValue {
-  variant: SelectVariant;
-  size: SelectSize;
+  radius?: Radius;
+  variant: ResponsiveFieldVariant;
+  size: ResponsiveControlSize;
   shape?: SelectShape;
   fullWidth: boolean;
 }
 
 const SelectVisualContext = createContext<SelectVisualContextValue>({
   variant: "outline",
-  size: "md",
+  size: "lg",
   shape: "rounded",
   fullWidth: true,
 });
@@ -119,6 +133,7 @@ function selectItemText(children: ReactNode): string | undefined {
 function supplyStaticItemLabels(children: ReactNode): ReactNode {
   const mapped = Children.map(children, (child) => {
     if (!isValidElement<{ children?: ReactNode; label?: string }>(child)) return child;
+    if (typeof child.props.children === "function") return child;
     const nested = supplyStaticItemLabels(child.props.children);
     if (child.type === SelectItem && child.props.label === undefined) {
       return cloneElement(child, { label: selectItemText(child.props.children) }, nested);
@@ -133,31 +148,34 @@ export function SelectRoot({
   children,
   fullWidth = true,
   shape = "rounded",
-  size = "md",
+  radius,
+  size = "lg",
   variant = "outline",
   ...props
 }: SelectRootProps) {
-  const resolvedShape = variant === "underline" ? undefined : shape;
+  const resolvedShape = variant === "underline" ? undefined : radius === undefined ? shape : "rounded";
   return (
-    <SelectVisualContext.Provider value={{ fullWidth, shape: resolvedShape, size, variant }}>
+    <SelectVisualContext.Provider value={{ fullWidth, shape: resolvedShape, radius: variant === "underline" ? undefined : radius, size, variant }}>
       <AtomSelect.Root {...props}>{supplyStaticItemLabels(children)}</AtomSelect.Root>
     </SelectVisualContext.Provider>
   );
 }
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(
-  function SelectTrigger({ className, "data-slot": dataSlot, ...props }, ref) {
+  function SelectTrigger({ className, style, unstyled = false, "data-slot": dataSlot, ...props }, ref) {
     const visual = useContext(SelectVisualContext);
+    if (unstyled) return <AtomSelect.Trigger {...props} ref={ref} className={className} style={style} data-slot={slotOrDefault(dataSlot, "select-trigger")} />;
     return (
       <AtomSelect.Trigger
         {...props}
-        className={mergeClassName("brick-select-trigger", className)}
+        className={mergeClassName("brick-select-trigger brick-control-size", className)}
         data-full-width={visual.fullWidth ? "" : undefined}
         data-shape={visual.shape}
-        data-size={visual.size}
+        style={radiusStyle(visual.radius, "--brick-select-trigger-radius", style)}
         data-slot={slotOrDefault(dataSlot, "select-trigger")}
-        data-variant={visual.variant}
+        {...fieldVariantAttributes(visual.variant)}
         ref={ref}
+        {...controlSizeDataAttributes(visual.size)}
       />
     );
   },
@@ -175,12 +193,19 @@ export const SelectIcon = forwardRef<HTMLSpanElement, SelectIconProps>(
   },
 );
 
+export const SelectClearTrigger = forwardRef<HTMLButtonElement, SelectClearTriggerProps>(
+  function SelectClearTrigger({ children, ...props }, ref) {
+    const visual = useContext(SelectVisualContext);
+    return <AtomSelect.ClearTrigger {...props} ref={ref} asChild>{children ?? <CloseButton aria-label="Clear selection" size={visual.size} />}</AtomSelect.ClearTrigger>;
+  },
+);
+
 export const SelectPortal = AtomSelect.Portal;
 
 export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
-  function SelectContent({ className, "data-slot": dataSlot, ...props }, ref) {
+  function SelectContent({ className, radius, style, "data-slot": dataSlot, ...props }, ref) {
     const visual = useContext(SelectVisualContext);
-    return <AtomSelect.Content {...props} className={mergeClassName("brick-select-content", className)} data-size={visual.size} data-slot={slotOrDefault(dataSlot, "select-listbox")} ref={ref} />;
+    return <AtomSelect.Content {...props} style={radiusStyle(radius, "--brick-select-content-radius", style)} className={mergeClassName("brick-select-content brick-control-size", className)} data-slot={slotOrDefault(dataSlot, "select-listbox")} ref={ref} {...controlSizeDataAttributes(visual.size)} />;
   },
 );
 
@@ -248,7 +273,10 @@ SelectSeparator.displayName = "Select.Separator";
 SelectArrow.displayName = "Select.Arrow";
 
 export const Select = Object.freeze({
+  ClearTrigger: SelectClearTrigger,
   Root: SelectRoot,
+  RootProvider: SelectRootProvider,
+  State: SelectState,
   Trigger: SelectTrigger,
   Value: SelectValue,
   Icon: SelectIcon,
@@ -266,3 +294,23 @@ export const Select = Object.freeze({
   Separator: SelectSeparator,
   Arrow: SelectArrow,
 });
+
+export { useSelect } from "@flowstack-ui/atom/select";
+export type { UseSelectReturn } from "@flowstack-ui/atom/select";
+export type SelectRootProviderProps = {
+  value: UseSelectReturn;
+  children: ReactNode;
+  size?: ResponsiveControlSize;
+  fullWidth?: boolean;
+} & (
+  | (RadiusShapeProps<SelectShape> & { variant?: Exclude<SelectVariant, "underline"> })
+  | { variant: ResponsiveFieldVariant; radius?: never; shape?: never }
+);
+export function SelectRootProvider({ value, children, size = "lg", variant = "outline", shape = "rounded", radius, fullWidth = true }: SelectRootProviderProps) {
+  return <SelectVisualContext.Provider value={{ size, variant, shape: variant === "underline" ? undefined : radius === undefined ? shape : "rounded", radius: variant === "underline" ? undefined : radius, fullWidth }}>
+    <AtomSelect.RootProvider value={value}>{children}</AtomSelect.RootProvider>
+  </SelectVisualContext.Provider>;
+}
+export function SelectState({ children }: { children: (state: UseSelectReturn["context"]) => ReactNode }) {
+  return children(useSelectContext());
+}

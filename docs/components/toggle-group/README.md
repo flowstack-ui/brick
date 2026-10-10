@@ -59,9 +59,10 @@ values, and `(value: string) => void`; multiple mode requires
 
 | Root prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
-| `tone` | `accent`, `neutral` | `accent` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `variant` | `solid`, `soft`, `subtle`, `surface`, `outline`, `ghost`, `plain` | `ghost` |
+| `tone` | `accent`, `neutral`, `contrast` | `neutral` |
+| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` (responsive) | `md` |
+| `focusRing` | `outside`, `inside` | theme default |
 | `shape` | `rounded`, `pill` | `rounded` |
 | `attached` | `boolean` | `false` |
 | `fullWidth` | `boolean` | `false` |
@@ -78,13 +79,27 @@ Neutral solid selection uses a strong theme-derived neutral surface with the
 normal foreground instead of the inverse black/white pair.
 
 Outline selection uses the tone's solid accent for its border while preserving
-the normal primary foreground. This keeps selection visible without tinting
-labels or turning the outline recipe into a soft fill.
+the normal primary foreground. Selected outline adds a soft fill.
 
 Disabled Items use Toggle's faded disabled foreground and quiet surface;
 selected disabled Items do not retain enabled outline or inset emphasis.
+Each disabled Item fades once to 50%; Root remains fully opaque to prevent
+compounding. Forced colors keeps Item opacity at 1 and uses system colors.
+
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
 
 ## Visual recipes and states
+
+The default is neutral ghost, matching Toggle: transparent when off and a flat
+soft fill when on. Shared state paint preserves hover, active and disabled
+precedence. Soft uses a uniform border without a bottom inset shadow.
 
 Root variant and tone recipes cascade uniformly to Items. Separated groups use a gap and may
 wrap; attached groups join borders and logical corners. `fullWidth` distributes
@@ -104,6 +119,10 @@ are `--brick-toggle-group-gap`, `--brick-toggle-min-block-size`,
 
 Set group props first so Items remain consistent, then use public group/Toggle
 tokens. Use part `className` or `style` only for scoped exceptions.
+
+### Shared action scale
+
+Sizes share Button geometry: 24, 32, 36, 40, 44, 48, and 64px. Default md is 40px. Use `size={{ lg: "lg" }}` for md below lg and lg above it; explicit initial values are supported. Toggle retains Atom behavior instead of nesting Button. Contrast supplies inverse solid selection; neutral remains the default. Subtle is borderless, surface has an inset edge, and plain marks selection with a bottom edge.
 
 ## Responsive behavior
 

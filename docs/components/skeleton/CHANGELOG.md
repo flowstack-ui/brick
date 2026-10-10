@@ -6,6 +6,16 @@ Skeleton follows the package version of `@flowstack-ui/brick`.
 
 ### Changed
 
+- Fixed loaded multiline paint and compounded pulse opacity; polished wave
+  motion and added a reduced-motion-aware content reveal.
+- Removed the private content wrapper; loading hosts now use native inert.
+- Normalized standalone text counts to 1–100 and made the final line 80% wide.
+
+### Added
+
+- Added asChild composition, shared radius, equal size, gap and lastLineWidth
+  controls, plus duration and fade-duration customization hooks.
+
 - Strengthened opaque semantic placeholder and highlight mixes so loading
   geometry stays visible on base, raised, and overlay surfaces in both
   appearances.

@@ -1,5 +1,5 @@
 import { createRef } from "react";
-import { render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   Image,
@@ -32,16 +32,27 @@ class MockImage {
 afterEach(() => { pending.length = 0; vi.unstubAllGlobals(); });
 
 describe("Image", () => {
+  it("uses shared radius tokens while preserving omission and style overrides", () => {
+    const { getByTestId, rerender } = render(<Image.Root data-testid="radius" />);
+    const root = getByTestId("radius");
+    expect(root.style.getPropertyValue("--brick-image-radius")).toBe("");
+    rerender(<Image.Root data-testid="radius" radius="xl" />);
+    expect(root.style.getPropertyValue("--brick-image-radius")).toBe("var(--brick-radius-core-xl)");
+    rerender(<Image.Root data-testid="radius" radius="surface" />);
+    expect(root.style.getPropertyValue("--brick-image-radius")).toBe("var(--brick-radius-surface)");
+    rerender(<Image.Root data-testid="radius" radius="full" style={{ "--brick-image-radius": "3px" } as React.CSSProperties} />);
+    expect(root.style.getPropertyValue("--brick-image-radius")).toBe("3px");
+  });
   it("exposes direct RSC-safe parts without changing the compound family", () => {
     expect(Image.Root).toBe(ImageRoot);
     expect(Image.Content).toBe(ImageContent);
     expect(Image.Fallback).toBe(ImageFallback);
   });
 
-  it("renders closed defaults and authored fallback while loading", () => {
+  it("preserves the native image while loading and shows fallback on error", () => {
     vi.stubGlobal("Image", MockImage);
     const ref = createRef<HTMLDivElement>();
-    const { getByTestId, getByText } = render(
+    const { getByTestId, getByText, queryByText } = render(
       <Image.Root data-testid="root" ref={ref} src="/workspace.jpg">
         <Image.Content alt="Designers reviewing a workspace" />
         <Image.Fallback>Image unavailable</Image.Fallback>
@@ -58,8 +69,12 @@ describe("Image", () => {
     expect(root).toHaveAttribute("data-frame", "none");
     expect(root).not.toHaveAttribute("data-fill");
     expect(root).not.toHaveAttribute("data-ratio");
+    expect(queryByText("Image unavailable")).toBeNull();
+    const image = root.querySelector("img")!;
+    expect(image).toHaveAttribute("src", "/workspace.jpg");
+    expect(pending).toHaveLength(0);
+    fireEvent.error(image);
     expect(getByText("Image unavailable")).toHaveClass("brick-image__fallback");
-    expect(root.querySelector("img")).toBeNull();
   });
 
   it("exposes explicit parent-filling geometry without leaking the prop", () => {
@@ -83,7 +98,8 @@ describe("Image", () => {
         <Image.Fallback>Image unavailable</Image.Fallback>
       </Image.Root>,
     );
-    pending[0].finish("load");
+    expect(pending).toHaveLength(0);
+    fireEvent.load(container.querySelector("img")!);
     await waitFor(() => expect(container.querySelector("img")).not.toBeNull());
     const image = container.querySelector("img")!;
     expect(image).toBe(contentRef.current);
@@ -129,5 +145,27 @@ describe("Image", () => {
     expect(root).toHaveStyle({ aspectRatio: "1.3333333333333333" });
     expect(root.querySelector("figcaption")).toHaveClass("brick-image__fallback");
     expect(root.querySelector("figcaption")).toHaveAttribute("data-slot", "project-fallback");
+  });
+});
+
+describe("Image responsive presentation", () => {
+  it("serializes a complete local responsive cascade with sparse defaults and authored precedence", () => {
+    const { getByTestId } = render(<Image.Root data-testid="responsive" fit={{ md: "contain" }} position={{ lg: "25% 70%" }} ratio={{ md: 1 }} style={{ "--brick-image-fit": "none" } as React.CSSProperties} />);
+    const style = getByTestId("responsive").style;
+    expect(style.getPropertyValue("--_brick-image-fit-initial")).toBe("cover");
+    expect(style.getPropertyValue("--_brick-image-fit-xl")).toBe("contain");
+    expect(style.getPropertyValue("--_brick-image-position-initial")).toBe("center");
+    expect(style.getPropertyValue("--_brick-image-position-xl")).toBe("25% 70%");
+    expect(style.getPropertyValue("--_brick-image-ratio-initial")).toBe(String(16 / 9));
+    expect(style.getPropertyValue("--_brick-image-ratio-xl")).toBe("1");
+    expect(style.getPropertyValue("--brick-image-fit")).toBe("none");
+    expect(style.aspectRatio).toContain("--_brick-image-ratio-current");
+  });
+  it("supports one picture host, native source order and phrasing fallback", () => {
+    const { container } = render(<Image.Root asChild ratio={1}><picture><source srcSet="/small.jpg" /><Image.Content alt="Studio" /><Image.Fallback asChild><span>Unavailable</span></Image.Fallback></picture></Image.Root>);
+    expect(container.firstElementChild?.tagName).toBe("PICTURE");
+    expect(container.querySelector("picture > source")).not.toBeNull();
+    expect(container.querySelector("picture > span.brick-image__fallback")).not.toBeNull();
+    expect(container.querySelector("picture > div")).toBeNull();
   });
 });

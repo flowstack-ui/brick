@@ -1,6 +1,6 @@
 @layer brick.components {
   .brick-color-swatch {
-    --brick-color-swatch-size: 1.5rem;
+    --brick-color-swatch-size: 1.25rem;
     --brick-color-swatch-value: transparent;
     --brick-color-swatch-border-color: var(--brick-color-border-default);
     --brick-color-swatch-radius: var(--brick-radius-subtle);
@@ -31,8 +31,14 @@
     content: "";
   }
 
-  .brick-color-swatch[data-size="sm"] { --brick-color-swatch-size: 1rem; }
-  .brick-color-swatch[data-size="lg"] { --brick-color-swatch-size: 2rem; }
+  .brick-color-swatch[data-size="2xs"] { --brick-color-swatch-size: 0.875rem; }
+  .brick-color-swatch[data-size="xs"] { --brick-color-swatch-size: 1rem; }
+  .brick-color-swatch[data-size="sm"] { --brick-color-swatch-size: 1.125rem; }
+  .brick-color-swatch[data-size="lg"] { --brick-color-swatch-size: 1.5rem; }
+  .brick-color-swatch[data-size="xl"] { --brick-color-swatch-size: 1.75rem; }
+  .brick-color-swatch[data-size="2xl"] { --brick-color-swatch-size: 2rem; }
+  .brick-color-swatch[data-size="inherit"] { inline-size: inherit; block-size: inherit; }
+  .brick-color-swatch[data-size="full"] { --brick-color-swatch-size: 100%; }
   .brick-color-swatch[data-shape="sharp"] { --brick-color-swatch-radius: 0; }
   .brick-color-swatch[data-shape="circle"] { --brick-color-swatch-radius: var(--brick-radius-full); }
 

@@ -1,46 +1,46 @@
 import { forwardRef, type ReactElement } from "react";
+import { Float, type FloatRootProps } from "../float/Float.js";
+import { NotificationCount } from "./notification-badge/NotificationCount.js";
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 import {
   Badge as AtomBadge,
   type BadgeRootProps as AtomBadgeRootProps,
 } from "@flowstack-ui/atom/badge";
 
-export type BadgeVariant = "soft" | "solid" | "outline";
+export type BadgeVariant = "soft" | "solid" | "outline" | "surface" | "plain";
 
 export type BadgeTone =
-  | "neutral"
-  | "accent"
-  | "info"
-  | "success"
-  | "warning"
-  | "danger";
+  "neutral" | "accent" | "info" | "success" | "warning" | "danger";
 
-export type BadgeSize = "sm" | "md" | "lg" | "xl";
+export type BadgeSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type BadgeShape = "rounded" | "pill" | "circle";
 
-export type BadgeProps = Omit<AtomBadgeRootProps, "color"> & {
-  variant?: BadgeVariant;
+export type BadgeProps = Omit<AtomBadgeRootProps, "color"> & RadiusShapeProps<BadgeShape> & {
+  variant?: ResponsiveValue<BadgeVariant>;
   tone?: BadgeTone;
-  size?: BadgeSize;
-  shape?: BadgeShape;
+  size?: ResponsiveValue<BadgeSize>;
 };
 
 export type NotificationBadgePlacement =
-  | "top-start"
-  | "top-end"
-  | "bottom-start"
-  | "bottom-end";
+  "top-start" | "top-end" | "bottom-start" | "bottom-end";
 
 export type NotificationBadgeOverlap = "rectangular" | "circular";
-export type NotificationBadgeSize = "sm" | "md" | "lg";
+export type NotificationBadgeSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 type NotificationBadgeBaseProps = Omit<
   AtomBadgeRootProps,
   "asChild" | "children" | "color"
 > & {
   children: ReactElement;
-  tone?: BadgeTone;
-  size?: NotificationBadgeSize;
-  placement?: NotificationBadgePlacement;
+  tone?: BadgeTone | "contrast";
+  size?: ResponsiveValue<NotificationBadgeSize>;
+  placement?: ResponsiveValue<NotificationBadgePlacement>;
+  offset?: FloatRootProps["offset"];
+  offsetInline?: FloatRootProps["offsetInline"];
+  offsetBlock?: FloatRootProps["offsetBlock"];
+  bordered?: boolean;
+  locale?: string;
   overlap?: NotificationBadgeOverlap;
   invisible?: boolean;
 };
@@ -71,7 +71,10 @@ function isValidCount(count: number) {
 }
 
 function resolveMaximum(max: number | undefined) {
-  return max !== undefined && Number.isFinite(max) && Number.isInteger(max) && max > 0
+  return max !== undefined &&
+    Number.isFinite(max) &&
+    Number.isInteger(max) &&
+    max > 0
     ? max
     : 99;
 }
@@ -82,6 +85,8 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     tone = "neutral",
     size = "md",
     shape = "rounded",
+    radius,
+    style,
     className,
     ...props
   },
@@ -91,10 +96,11 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     <AtomBadge.Root
       {...props}
       className={mergeClassName("brick-badge", className)}
-      data-shape={shape}
-      data-size={size}
+      data-shape={radius === undefined ? shape : "rounded"}
+      style={radiusStyle(radius, "--brick-badge-radius", style)}
+      {...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true })}
       data-tone={tone}
-      data-variant={variant}
+      {...responsiveDataAttributes("data-variant", variant, { defaultValue: "soft", alwaysInitial: true })}
       ref={ref}
     />
   );
@@ -110,6 +116,11 @@ export const NotificationBadge = forwardRef<
     size = "md",
     placement = "top-end",
     overlap = "rectangular",
+    offset,
+    offsetInline,
+    offsetBlock,
+    bordered = true,
+    locale,
     invisible = false,
     count,
     dot = false,
@@ -129,9 +140,14 @@ export const NotificationBadge = forwardRef<
       (count !== undefined &&
         isValidCount(count) &&
         (count !== 0 || showZero)));
-  const content =
-    !isDot && count !== undefined && count > maximum ? `${maximum}+` : count;
-  const shape = isDot || (typeof content === "number" && content < 10) ? "circle" : "pill";
+  const overflowed = !isDot && count !== undefined && count > maximum;
+  const content = overflowed ? maximum : count;
+  const shape =
+    isDot || (!overflowed && typeof content === "number" && content < 10) ? "circle" : "pill";
+  const baseOffset = overlap === "circular" ? "14.6447%" : 0;
+  const resolvedOffset = typeof offset === "object" && offset !== null
+    ? { initial: baseOffset, ...offset }
+    : offset ?? baseOffset;
 
   return (
     <AtomBadge.Root
@@ -139,23 +155,29 @@ export const NotificationBadge = forwardRef<
       className={mergeClassName("brick-notification-badge", className)}
       data-invisible={!showIndicator ? "" : undefined}
       data-overlap={overlap}
-      data-placement={placement}
-      data-size={size}
+      {...responsiveDataAttributes("data-placement", placement, { defaultValue: "top-end", alwaysInitial: true })}
+      {...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true })}
+      data-bordered={bordered ? "" : undefined}
       data-slot={dataSlot}
       data-tone={tone}
       ref={ref}
     >
       {children}
       {showIndicator ? (
-        <span
+        <Float.Root
+          as="span"
+          placement={placement}
+          offset={resolvedOffset}
+          offsetInline={offsetInline}
+          offsetBlock={offsetBlock}
           aria-hidden="true"
           className="brick-notification-badge__indicator"
           data-shape={shape}
-          data-slot="notification-badge-indicator"
+          slot="notification-badge-indicator"
           data-variant={isDot ? "dot" : "count"}
         >
-          {isDot ? null : content}
-        </span>
+          {isDot ? null : <NotificationCount value={content!} locale={locale} overflowed={overflowed} />}
+        </Float.Root>
       ) : null}
     </AtomBadge.Root>
   );

@@ -1,7 +1,8 @@
 import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { Progress } from "../../../src/progress.js";
+import { Progress, useProgress } from "../../../src/progress.js";
+import { fireEvent } from "@testing-library/react";
 
 function Example({ value = 40, ...props }: { value?: number | null; bufferValue?: number; orientation?: "horizontal" | "vertical" }) {
   return (
@@ -17,6 +18,35 @@ function Example({ value = 40, ...props }: { value?: number | null; bufferValue?
 }
 
 describe("Progress", () => {
+  it("exposes responsive recipes, inline layout and animated stripes", () => {
+    render(<Progress.Root aria-label="Upload" size={{ md: "lg" }} variant={{ initial: "outline", lg: "subtle" }} layout="inline" animated><Progress.Track><Progress.Indicator /></Progress.Track></Progress.Root>);
+    const root = screen.getByRole("progressbar");
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "lg");
+    expect(root).toHaveAttribute("data-variant-lg", "subtle");
+    expect(root).toHaveAttribute("data-layout", "inline");
+    expect(root).toHaveAttribute("data-striped", "");
+    expect(root).toHaveAttribute("data-animated", "");
+  });
+  it("projects parts and formats raw values without extra announcements", () => {
+    render(<Progress.Root defaultValue={3} max={5} valueFormat="value" ids={{ label: "task-label" }}><Progress.Label asChild><span>Upload</span></Progress.Label><Progress.Value asChild>{({ formattedValue }) => <span>{formattedValue}</span>}</Progress.Value><Progress.Track asChild><div><Progress.Indicator /></div></Progress.Track></Progress.Root>);
+    const root = screen.getByRole("progressbar", { name: "Upload" });
+    expect(root).toHaveAttribute("aria-labelledby", "task-label");
+    expect(root.querySelector(".brick-progress__value")).toHaveTextContent("3");
+    expect(root.querySelector(".brick-progress__value")).toHaveAttribute("aria-hidden", "true");
+    expect(root.querySelectorAll("[aria-live]")).toHaveLength(0);
+    expect(root.children).toHaveLength(3);
+  });
+  it("shares the external controller and exposes Context", () => {
+    function Controlled() {
+      const progress = useProgress({ defaultValue: 20 });
+      return <><Progress.RootProvider value={progress} aria-label="Upload"><Progress.Track><Progress.Indicator /></Progress.Track><Progress.Context>{state => <span>{state.percent}</span>}</Progress.Context></Progress.RootProvider><button onClick={() => progress.setValue(50)}>Advance</button></>;
+    }
+    render(<Controlled />);
+    fireEvent.click(screen.getByText("Advance"));
+    expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "50");
+    expect(screen.getByText("50")).toBeVisible();
+  });
   it("renders the complete default linear anatomy and visible-label relationship", () => {
     render(<Example />);
     const root = screen.getByRole("progressbar", { name: "Upload files" });

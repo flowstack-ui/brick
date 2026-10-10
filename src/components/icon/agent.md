@@ -19,6 +19,8 @@ Normalize one consumer-authored SVG with Brick sizing, semantic foreground, alig
 - Pass exactly one consumer-authored SVG element; prefer the default span wrapper and use asChild only when the direct root must remain that SVG.
 - When visible nearby text already provides the meaning, keep Icon decorative; when a standalone icon conveys information, provide label or aria-labelledby.
 - Inside an icon-only control, label the control and leave its nested Icon decorative.
+- Use createIcon at module scope for reusable authored geometry and an SVGSVGElement ref; choose exactly one d or path, retaining fixed authored fills.
+- Let Button/IconButton own artwork dimensions; no redundant Icon size is needed, and explicit semantic tone remains available.
 
 ## Rules
 
@@ -26,10 +28,17 @@ Normalize one consumer-authored SVG with Brick sizing, semantic foreground, alig
 - **MUST:** Keep the decorative default when meaning is redundant, or provide exactly one nonempty label or aria-labelledby reference when the standalone graphic is informative.
 - **MUST:** Give an icon-only Button, IconButton, Toggle, or other control its accessible name on the control, not on its nested Icon.
 - **SHOULD:** Use currentColor for single-color SVG fills or strokes so Brick tone and inherited control state can apply.
+- **MUST:** Choose the semantic palette with tone and choose readable text paint versus stronger solid paint with emphasis; do not encode a compound palette name or use paint as the only carrier of meaning.
 - **MUST:** Enable directional only for glyphs whose meaning reverses in RTL, such as arrows and forward/back controls.
 - **MUST:** Use asChild only with one direct non-interactive SVG; never compose Icon onto a button, anchor, input, or other interactive host.
-- **MUST:** Use Brick Stack, layout components, or an owning component icon slot for sibling alignment instead of wrapper spans or application offsets.
+- **MUST:** Use Center, Square, or Circle when an icon needs two-axis centering or invariant equal-size geometry; compose Surface for its paint. Use Stack or an owning component icon slot for sibling alignment instead of wrapper spans or application offsets.
 - **MUST:** Load styles.css or core.css plus icon.css.
+- **MUST:** Presentation resolves instance > nearest provider > factory > library. IconPropsProvider accepts only size, tone and emphasis; undefined inherits outer properties and responsive sizes replace whole values.
+- **MUST:** Use ResponsiveIconSize with initial/sm/md/lg/xl. Sparse values start at md, omitted breakpoints retain the last active value, and inherit follows typography outside action slots.
+- **MUST:** Use one noninteractive SVG for asChild. Atom composeHost preserves both refs, React 19 callback cleanup, child class/style and owner-first events; default prevention does not suppress the child handler. Owner naming wins.
+- **MUST:** Icon and its provider consume client context and support React SSR/hydration. Define createIcon calls in client modules in RSC applications; do not claim server-only factory execution.
+- **MUST:** Factory defaults never carry contextual names, refs or host substitution. Name each informative instance using label or aria-labelledby; factory output is exactly one SVG.
+- **MUST:** Directional mirroring follows effective :dir(rtl), including nested LTR. Independent scale composes with authored transforms; do not mirror both SVG and wrapper.
 
 ## Common mistakes
 
@@ -39,8 +48,9 @@ Normalize one consumer-authored SVG with Brick sizing, semantic foreground, alig
 
 ## Validation checklist
 
-- Check decorative and informative accessibility trees, icon-only control naming, all sizes and tones, currentColor adoption, flex shrinking, and RTL directional mirroring.
+- Check decorative and informative accessibility trees, icon-only control naming, all sizes, tones, and emphases, currentColor adoption, flex shrinking, and RTL directional mirroring.
 - Confirm asChild targets only one SVG and that CSS is present.
+- Verify React 18/19 refs, StrictMode cleanup, SSR/hydration, responsive md/inherit restoration, provider/factory precedence and all seven action-slot sizes.
 
 ## Related guidance
 
@@ -48,4 +58,5 @@ Normalize one consumer-authored SVG with Brick sizing, semantic foreground, alig
 - `image`
 - `button`
 - `stack`
+- `center`
 - `text`

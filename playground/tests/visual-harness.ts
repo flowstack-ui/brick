@@ -1,4 +1,4 @@
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "./evidence-test.js";
 
 export function installVisualDefaults(route: string) {
   test.beforeEach(async ({ page }, testInfo) => {
@@ -37,6 +37,7 @@ export async function expectEvidenceScreenshot(
   page: Page,
   locator: Locator,
   name: string,
+  options: { maxDiffPixelRatio?: number } = {},
 ) {
   await page.addStyleTag({
     content: ".evidence-review-header { position: static !important; }",
@@ -57,7 +58,7 @@ export async function expectEvidenceScreenshot(
       window.scrollBy(0, offset);
     }, visibleBox.y - 350);
   }
-  await expect(locator).toHaveScreenshot(name);
+  await expect(locator).toHaveScreenshot(name, options);
   await page.setViewportSize(originalViewport);
 }
 

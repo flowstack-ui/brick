@@ -2,6 +2,9 @@ export * from "./components/navigation-menu/index.js";
 
 export {
   NavigationMenuRoot as Root,
+  NavigationMenuRootProvider as RootProvider,
+  NavigationMenuContext as Context,
+  NavigationMenuItemIndicator as ItemIndicator,
   NavigationMenuSub as Sub,
   NavigationMenuList as List,
   NavigationMenuItem as Item,

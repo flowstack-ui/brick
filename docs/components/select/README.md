@@ -1,10 +1,5 @@
 # Select
 
-Select is Brick's finished single-value, select-only choice control. It is
-built directly on Atom Select: Atom owns values, open state, option
-registration, keyboard/typeahead, focus, dismissal, positioning, ARIA, native
-form participation, validation, and reset. Brick owns the complete visual
-system and default decorative artwork.
 
 ## When and where to use
 
@@ -115,12 +110,57 @@ Brick wrapper. Refs target each Atom-owned element listed above.
 
 ## API
 
+### Selection policy and presentation
+
+Root accepts `closeOnSelect`, `loopFocus`, controlled/default highlighting and
+`positioning` from Atom. Select defaults to closing after selection; MultiSelect
+stays open by default. Looping remains enabled unless explicitly disabled. Single Select
+also supports `deselectable`. Values remain string/string[] respectively.
+
+Use `subtle` for neutral muted fill and a transparent border, distinct from
+`soft`. Both owners support `ghost` and seven responsive sizes. Popup rows use
+compact content padding rather than full control height.
+
+Place `ClearTrigger` beside `Trigger`, never inside its button. Supply a
+localized `aria-label`. For IconButton-owned appearance, compose Trigger with
+`unstyled asChild`: this delegates presentation, not selection semantics.
+
+
+### Current composition and documentation
+
+The default playground route provides focused Preview/Code examples. The
+exhaustive qualification route remains available with `?qualification=1`.
+The visual size family is `2xs | xs | sm | md | lg | xl | 2xl` (default lg),
+including sparse responsive objects. Variants are outline, surface, soft,
+subtle, ghost, and underline. Subtle uses neutral muted fill;
+soft retains its existing recipe. Underline does not accept radius/shape.
+
+Root forwards Atom's items, IDs, controlled highlight, closeOnSelect,
+loopFocus, positioning, lazyMount, unmountOnExit, present, onExitComplete,
+onFocusOutside, onPointerDownOutside and onEscapeKeyDown. Use preventDefault
+on the appropriate dismissal event. Content owns onInteractOutside.
+
+For custom or asynchronously rendered Items, pass the same explicit records
+(`value`, `label`, optional `disabled`) to Root and the rendered collection.
+This preserves labels and native form values before the popup mounts.
+
+Import `useSelect` from Brick, then pass the original controller to
+`Select.RootProvider`. It adds the same visual recipe as Root without
+copying Atom behavior. `Select.State` exposes a render function for current
+state. Controller native form ownership remains on RootProvider.
+
+Use Trigger `unstyled asChild` when composing an IconButton or Button.
+Render ClearTrigger beside Trigger, with a localized accessible name. Never
+put a clear button or removable chip button inside Trigger. Use a summary
+instead. Mount policy retains closed content inertly when requested.
+
+
 ### Root recipes
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `outline`, `soft`, `underline` | `outline` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `variant` | `outline`, `surface`, `soft`, `subtle`, `ghost`, `underline` | `outline` |
+| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`; or a responsive value | `lg` |
 | `shape` | `sharp`, `rounded`, `pill` | `rounded` |
 | `fullWidth` | `boolean` | `true` |
 
@@ -141,15 +181,51 @@ artwork; consumers then own its semantics.
 for the displayed value and accessible option name. Item may contain additional
 decorative content, but never nested controls.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
-- `outline` uses a raised surface and strong complete border.
+### Overlay arrow contract
+
+Select.Arrow retains its span ref and host. Its default diamond uses --brick-overlay-arrow-size (12px); --brick-select-arrow-size is the local override. Keep Arrow directly in Content, outside Viewport. Viewport owns scrolling so Content can leave the arrow visible. positioning.gutter measures empty space to the tip; do not add compensation. The trigger Icon is not the popup Arrow.
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+
+Use outline for a transparent rest/hover control and surface for a neutral raised fill with the same border and geometry, without a shadow or extra Surface wrapper. Soft remains subdued. Popup backgrounds are independent; preserve explicit disabled, read-only, invalid and forced-colors states.
+
+
+Select is Brick's finished single-value, select-only choice control. It is
+built directly on Atom Select: Atom owns values, open state, option
+registration, keyboard/typeahead, focus, dismissal, positioning, ARIA, native
+form participation, validation, and reset. Brick owns the complete visual
+system and default decorative artwork.
+
+The field recipes are `outline`, `surface`, `soft`, `subtle`, `ghost`,
+`plain` and `underline`, with responsive initial/sm/md/lg/xl values. Subtle
+has a neutral fill and transparent border; ghost gains only a neutral hover
+fill; plain has no hover fill. Underline uses zero start inset and bottom-only
+focus. Other breakpoints restore normal geometry. Responsive variant objects
+exclude explicit radius/shape. These choices do not repaint independent popups
+or stepper action buttons.
+
+- `outline` uses a transparent surface and strong complete border so it blends with its owning panel.
 - `soft` uses a subtle fill and restrained border.
+- `ghost` has no resting fill or border, gains a restrained hover surface, and
+  keeps the standard focus-visible ring.
 - `underline` uses a transparent surface and bottom line.
-- `sm`, `md`, and `lg` use 36px, 44px, and 52px minimum trigger and option-row heights plus the shared `control-sm`, `control-md`, and `control-lg` typography used by button-like peers.
+- `2xs` through `2xl` use 24, 32, 36, 40, 44, 48, and 64px minimum trigger and
+  option-row heights plus the shared control typography used by button-like peers.
 - `sharp`, `rounded`, and `pill` change Trigger geometry only.
 
-The popup and options do not change with Trigger variant. Atom's data state
+The popup and options do not change with Trigger variant. Its default boundary uses the standard overlay border token, matching Popover and action-menu surfaces. Atom's data state
 drives open, highlighted, selected, disabled, read-only, and invalid paint.
 State changes never alter control or item geometry. Value text truncates before
 it can displace Icon; ItemIndicator owns one fixed logical-end column.
@@ -166,6 +242,13 @@ behavior remains unchanged by Brick visual props; Brick `size` is control
 geometry and never the native select's numeric `size` attribute.
 
 ### Groups, scrolling, portal, and Arrow
+
+Inside Brick Dialog, keep Content's default portal enabled. Atom registers the
+portalled popup with the modal's focus and dismissal scope. `disablePortal`
+leaves it under Dialog.Body's scrolling clip and Dialog.Content's clipping
+boundary; a larger z-index cannot escape those ancestors. Use an explicit
+container only when it is outside clipping ancestors and verify focus,
+isolation, pointer selection and Escape. Do not remove Dialog overflow.
 
 Place Label and Items inside Group to expose an accessible option group. Use
 Separator between authored groups. Viewport owns option scrolling; the

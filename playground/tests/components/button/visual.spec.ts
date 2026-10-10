@@ -7,7 +7,12 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/button");
+installVisualDefaults("/button?qualification=1");
+
+// Capture the component, not the sticky shell crossing a tall element screenshot.
+test.beforeEach(async ({ page }) => {
+  await page.addStyleTag({ content: ".brick-app-bar { visibility: hidden !important; }" });
+});
 
 test("Button recipes and high-risk states", async ({ page }) => {
   await expect(page.getByTestId("button-variants")).toHaveScreenshot(
@@ -22,13 +27,14 @@ test("Button recipes and high-risk states", async ({ page }) => {
     "composition-output-light.png",
   );
   await setAppearance(page, "dark");
-  await expect(page.getByTestId("button-tones")).toHaveScreenshot(
+  await expectEvidenceScreenshot(page, page.getByTestId("button-tones"),
     "tones-dark.png",
+    { maxDiffPixelRatio: 0 },
   );
   await expect(page.getByTestId("button-sizes")).toHaveScreenshot(
     "sizes-dark.png",
   );
-  await expect(page.locator("#scenario-button-appearance")).toHaveScreenshot(
+  await expectEvidenceScreenshot(page, page.locator("#scenario-button-appearance"),
     "appearance-dark.png",
   );
 });

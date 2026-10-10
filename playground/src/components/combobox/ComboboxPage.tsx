@@ -6,6 +6,8 @@ import { RenderedOutput } from "../../shared/RenderedOutput.js";
 import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
 import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
 import "./combobox.playground.css";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { ComboboxDocumentation } from "./ComboboxDocumentation.js";
 
 const cities = [
   { value: "boston", label: "Boston" },
@@ -14,7 +16,7 @@ const cities = [
   { value: "lisbon", label: "Lisbon" },
   { value: "tokyo", label: "Tokyo" },
 ];
-const customStyle = { "--brick-combobox-border": "var(--brick-color-accent-border)", "--brick-combobox-background": "var(--brick-color-accent-subtle)", "--brick-combobox-radius": "1rem" } as CSSProperties;
+const customStyle = { "--brick-combobox-border": "var(--brick-color-accent-border)", "--brick-combobox-background": "var(--brick-color-accent-soft)", "--brick-combobox-radius": "1rem" } as CSSProperties;
 
 function Example({ defaultValue, disabled, error, freeSolo, invalid, label = "City", loading, onValueChange, options = cities, placeholder = "Search cities", readOnly, shape, size, style, value, variant }: { defaultValue?: string; disabled?: boolean; error?: string; freeSolo?: boolean; invalid?: boolean; label?: string; loading?: boolean; onValueChange?: (value: string | null) => void; options?: typeof cities; placeholder?: string; readOnly?: boolean; shape?: ComboboxShape; size?: ComboboxSize; style?: CSSProperties; value?: string | null; variant?: ComboboxVariant }) {
   const id = useId();
@@ -27,7 +29,7 @@ function ControlledExample() { const [value, setValue] = useState<string | null>
 export const comboboxScenarios = [
   { id: "combobox.overview", number: 1, title: "Overview", description: "A searchable single-value choice control with filtering, selection, clearing, and collision-aware positioning." },
   { id: "combobox.anatomy", number: 2, title: "Anatomy and semantics", navigationTitle: "Anatomy", description: "The fourteen-part compound API preserves Atom's combobox, trigger, listbox, option, label, and portal semantics." },
-  { id: "combobox.recipes", number: 3, title: "Variants", description: "Outline, soft, and underline change control paint without changing filtering behavior." },
+  { id: "combobox.recipes", number: 3, title: "Variants", description: "Outline, surface, soft, and underline change control paint without changing filtering behavior." },
   { id: "combobox.sizing", number: 4, title: "Sizes and shapes", navigationTitle: "Sizing", description: "Three control sizes and three corner treatments preserve input and clear-button geometry." },
   { id: "combobox.filtering", number: 5, title: "Filtering and empty state", navigationTitle: "Filtering", description: "Typing filters authored options and announces a useful empty result." },
   { id: "combobox.behavior", number: 6, title: "Selection, clearing, and free text", navigationTitle: "Behavior", description: "Applications may own selection while freeSolo permits an authored value outside the option set." },
@@ -37,7 +39,9 @@ export const comboboxScenarios = [
 ] as const satisfies readonly ScenarioDefinition[];
 
 export function ComboboxPage() {
-  const variants: ComboboxVariant[] = ["outline", "soft", "underline"]; const sizes: ComboboxSize[] = ["sm", "md", "lg"]; const shapes: ComboboxShape[] = ["sharp", "rounded", "pill"];
+  const preview = usePreviewContext();
+  if (!preview && !(typeof window !== "undefined" && new URLSearchParams(window.location.search).get("qualification") === "1")) return <ComboboxDocumentation />;
+  const variants: ComboboxVariant[] = ["outline", "soft", "underline", "surface"]; const sizes: ComboboxSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"]; const shapes: ComboboxShape[] = ["sharp", "rounded", "pill"];
   return <VStack className="combobox-page" data-component-page="combobox" gap="6">
     <Scenario {...comboboxScenarios[0]}><EvidenceSurface inset="lg"><Example defaultValue="chicago" /></EvidenceSurface></Scenario>
     <Scenario {...comboboxScenarios[1]}><RenderedOutput label="Rendered Combobox HTML"><Example /></RenderedOutput></Scenario>
@@ -46,7 +50,7 @@ export function ComboboxPage() {
     <Scenario {...comboboxScenarios[4]}><Grid.Root className="combobox-grid" columns={2} gap="4"><Cell label="type to filter"><Example /></Cell><Cell label="empty result"><Example options={[]} /></Cell></Grid.Root></Scenario>
     <Scenario {...comboboxScenarios[5]}><Grid.Root className="combobox-grid" columns={2} gap="4"><Cell label="application-owned selection"><ControlledExample /></Cell><Cell label="free text allowed"><Example freeSolo label="Destination" /></Cell></Grid.Root></Scenario>
     <Scenario {...comboboxScenarios[6]}><Grid.Root className="combobox-grid" columns={2} gap="4"><Cell label="disabled"><Example disabled /></Cell><Cell label="read-only"><Example defaultValue="boston" readOnly /></Cell><Cell label="invalid Field"><Example error="Choose an available city." invalid /></Cell><Cell label="loading"><Example loading options={[]} /></Cell></Grid.Root></Scenario>
-    <Scenario {...comboboxScenarios[7]}><VStack gap="5"><Grid.Root className="combobox-grid" columns={2} gap="4"><EvidenceSurface className="combobox-appearance-surface" data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><Example /></EvidenceSurface><EvidenceSurface className="combobox-appearance-surface" data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><Example /></EvidenceSurface></Grid.Root><EvidenceSurface className="combobox-customization-surface" inset="none"><Grid.Root className="combobox-customization" columns={2} gap="0"><VStack gap="2"><SpecimenLabel>Customized</SpecimenLabel><Text as="h3" variant="title-sm">Combobox CSS properties</Text><Text tone="secondary" variant="body-sm">The accent control surface, border, and radius use only the documented properties below.</Text><PlaygroundCodeBlock>{`--brick-combobox-background: var(--brick-color-accent-subtle);\n--brick-combobox-border: var(--brick-color-accent-border);\n--brick-combobox-radius: 1rem;`}</PlaygroundCodeBlock></VStack><Example style={customStyle} /></Grid.Root></EvidenceSurface></VStack></Scenario>
+    <Scenario {...comboboxScenarios[7]}><VStack gap="5"><Grid.Root className="combobox-grid" columns={2} gap="4"><EvidenceSurface className="combobox-appearance-surface" data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><Example /></EvidenceSurface><EvidenceSurface className="combobox-appearance-surface" data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><Example /></EvidenceSurface></Grid.Root><EvidenceSurface className="combobox-customization-surface" inset="none"><Grid.Root className="combobox-customization" columns={2} gap="0"><VStack gap="2"><SpecimenLabel>Customized</SpecimenLabel><Text as="h3" variant="title-sm">Combobox CSS properties</Text><Text tone="secondary" variant="body-sm">The accent control surface, border, and radius use only the documented properties below.</Text><PlaygroundCodeBlock>{`--brick-combobox-background: var(--brick-color-accent-soft);\n--brick-combobox-border: var(--brick-color-accent-border);\n--brick-combobox-radius: 1rem;`}</PlaygroundCodeBlock></VStack><Example style={customStyle} /></Grid.Root></EvidenceSurface></VStack></Scenario>
     <Scenario {...comboboxScenarios[8]}><Grid.Root className="combobox-grid" columns={2} gap="4"><Cell label="narrow viewport"><div className="combobox-narrow"><Example /></div></Cell><Cell label="RTL localized"><div dir="rtl"><Example label="المدينة" placeholder="ابحث عن مدينة" options={[{ value: "cairo", label: "القاهرة" }, { value: "dubai", label: "دبي" }, { value: "doha", label: "الدوحة" }]} /></div></Cell></Grid.Root></Scenario>
   </VStack>;
 }

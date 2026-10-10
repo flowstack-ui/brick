@@ -1,6 +1,5 @@
 # Field
 
-Field coordinates one control’s label, description, error, and required state.
 
 ## When and where to use
 
@@ -34,9 +33,11 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ## Quick start
 
 ```tsx
-<Field.Root name="email" required>
+import { Input } from "@flowstack-ui/brick/input";
+
+<Field.Root required>
   <Field.Label>Email</Field.Label>
-  <input type="email" />
+  <Input name="email" type="email" />
   <Field.Description>Work email only.</Field.Description>
   <Field.Error>Please enter a valid email.</Field.Error>
 </Field.Root>
@@ -45,39 +46,55 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ## Anatomy and DOM ownership
 
 Public parts are `Root` (`div`), `Label` (`label`), `Description` (`p`),
-`Error` (`p`), and `RequiredIndicator` (`span`) with matching element refs.
-All parts wrap public Atom Field parts; Brick adds no private DOM.
+`Error` (`p`), `RequiredIndicator` (`span`), `Item` (`div`), `Context` (no host),
+and `ErrorIcon` (`svg`). DOM parts forward refs. Behavioral parts wrap Atom;
+ErrorIcon uses Brick Icon.
 
 ## API
 
 Public exports are `Field`, `FieldRoot`, `FieldLabel`, `FieldDescription`,
-`FieldError`, `FieldRequiredIndicator`, their corresponding
+`FieldError`, `FieldRequiredIndicator`, `FieldItem`, `FieldContext`,
+`FieldErrorIcon`, `useFieldContext`, their corresponding
 `FieldRootProps`, `FieldLabelProps`, `FieldDescriptionProps`,
-`FieldErrorProps`, `FieldRequiredIndicatorProps`, and `FieldOrientation`.
+`FieldErrorProps`, `FieldRequiredIndicatorProps`, `FieldOrientation`,
+`FieldSize`, and `FieldTone`.
 
 | Root prop | Values | Default |
 | --- | --- | --- |
-| `orientation` | `vertical`, `horizontal` | `vertical` |
+| `orientation` | responsive `vertical`, `horizontal` | `vertical` |
+| `size` | responsive `xs`, `sm`, `md` | `md` |
+| `labelWidth` | CSS inline size or pixel number | intrinsic |
+| `target` | Item value | primary control |
+| `ids` | control, label, description, error IDs | generated |
+| `tone` | `primary`, `secondary` | `primary` |
 | `asChild` | `boolean` | `false` |
 
 Root inherits Atom relationship, generated-id, required, disabled, invalid,
-name, and control-ownership props. Label renders its default required marker
+and control-ownership props. Label renders its default required marker
 when Root is required; do not add a second RequiredIndicator inside that Label.
 Use Label's `requiredIndicator` or `optionalIndicator` props to replace its
 inline indicator. Use the standalone RequiredIndicator part only when an
 explicitly separate conditional indicator is needed; it accepts `fallback`.
-Every part requires children and supports either one `asChild` element or
-Atom `render`, never both.
+Label, Description and Error require children and support either one `asChild`
+element or Atom `render`, never both. Context uses a render-function child;
+ErrorIcon follows Icon presentation props.
 
 ## Visual recipes and states
 
+Disabled labels and legends fade to 50%; the structural container does not fade. Descendant controls own their disabled treatment so Fieldset inheritance never compounds opacity.
+
+Field coordinates a control's label, description, error and required state,
+including a compound value with one targeted primary control.
+
 Vertical layout stacks relationships; horizontal aligns label and control
 regions and can fall back under constraint. Atom ownership marks Description
-and Error for generated `aria-describedby` and state propagation.
+and Error for generated `aria-describedby` and state propagation. `size`
+coordinates label density; `tone="secondary"` provides the quieter label
+hierarchy used by compact property and inspector panels.
 
 ## Tokens and CSS hooks
 
-Stable classes/slots are `brick-field`, `brick-field-label`,
+Stable Root attributes are `data-size` and `data-tone`. Stable classes/slots are `brick-field`, `brick-field-label`,
 `brick-field-description`, `brick-field-error`, and
 `brick-field-required-indicator` with their matching slots and Atom state/
 orientation attributes. Every part forwards its overridable `data-slot`.
@@ -140,3 +157,20 @@ Each part forwards its Atom/native props and uses a discriminated `asChild` or
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).
+### Form-family API
+
+Field adds Item, Context, ErrorIcon and useFieldContext. Item takes a unique
+value; Root.target selects the Item activated by Label. Secondary controls need
+an accessible name. Root.ids accepts control, label, description and error IDs;
+use ids.control for an authored control ID. Existing one-control composition
+still works unchanged. Field invalidity is independent of Fieldset's summary.
+
+size and orientation accept responsive initial/sm/md/lg/xl values. labelWidth
+accepts a CSS inline size or pixel number for horizontal labels. Existing
+primary/secondary tone remains label emphasis, not control paint. ErrorIcon
+uses Icon presentation props and defaults to inherited text size.
+
+Labels/messages use quieter spacing and text styling; read-only no longer adds
+italics and invalid no longer adds wavy underlines or error-edge stripes.
+Required markers remain automatic: disable the default before adding a custom
+RequiredIndicator. Keep error text meaningful, not color alone.

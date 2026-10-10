@@ -14,11 +14,13 @@ Present a finished brief supplemental text description for an already named trig
 
 ## Required composition
 
+- Use Root or useTooltip with RootProvider, not both. Context exposes public state; Provider shares timing. Use unique Trigger values for shared hints, positioning for geometry, and lifecycle props for hidden retained content. Explicit interactive controls hover retention, never focusable content. Content supports asChild/render and alternative text.
 - Compose Tooltip.Root with Tooltip.Trigger asChild around one already named focusable control, plus Tooltip.Portal and Tooltip.Content; add Tooltip.Arrow only when the styled hint needs a pointer. Use Tooltip.Provider when a coherent region shares timing policy.
 - Use plain Content for one short hint or Root variant=rich with presentational Tooltip.Title and Tooltip.Description for a concise title and supporting text. Both recipes remain non-interactive descriptions. Reproduce any local Appearance scope on portalled Content.
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Give Trigger a complete accessible name independently; Tooltip supplies only a supplemental aria-describedby description while open and never replaces the control name.
 - **MUST:** Keep plain and rich Content free of links, buttons, inputs, and every other focusable control; use Popover for interaction.
 - **SHOULD:** Keep plain Content to one short hint and rich Content to a concise Title and Description; render essential instructions, errors, warnings, recovery, and full truncated text visibly.
@@ -28,6 +30,7 @@ Present a finished brief supplemental text description for an already named trig
 - **MUST:** Use rounded by default and pill only for deliberately compact labels; keep optional Arrow decorative and aligned to the collision-resolved side without independently recoloring its surface seam.
 - **MUST:** When Portal leaves a local Appearance scope, reproduce that scope on Content or target a portal container inside it.
 - **MUST:** Load styles.css or core.css plus tooltip.css and every composed trigger component stylesheet.
+- **MUST:** Overlay arrows share a 12px square-equivalent seed (--brick-overlay-arrow-size), exposed-edge artwork and owner surface/border paint. Prefer the shipped Arrow; do not add directional filters or translations. SVG Arrow width/height remain supported; positioning gutter measures the empty gap to the tip. Explicit positioning.offset remains raw. ToggleTip inherits Popover; Select/MultiSelect retain span hosts. NavigationMenu Indicator remains separately positioned.
 
 ## Common mistakes
 

@@ -1,6 +1,6 @@
 import { expect, installVisualDefaults, test } from "../../visual-harness.js";
 
-installVisualDefaults("/z-stack");
+installVisualDefaults("/z-stack?qualification=1");
 
 test("ZStack overview and placement", async ({ page }) => {
   await expect(page.getByTestId("z-stack-overview")).toHaveScreenshot("overview-light.png");

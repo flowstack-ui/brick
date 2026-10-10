@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/color-swatch");
+  await page.goto("/color-swatch?qualification=1");
 });
 
 test("renders passive solid, alpha, mixed, and named swatches", async ({
@@ -22,7 +22,7 @@ test("renders passive solid, alpha, mixed, and named swatches", async ({
   );
   await expect(page.getByTestId("color-swatch-mix-three")).toHaveCSS(
     "width",
-    "24px",
+    "20px",
   );
   const alphaBackground = await page
     .getByTestId("color-swatch-alpha")
@@ -33,9 +33,9 @@ test("renders passive solid, alpha, mixed, and named swatches", async ({
 });
 
 test("keeps the closed size geometry", async ({ page }) => {
-  await expect(page.getByTestId("color-swatch-sm")).toHaveCSS("width", "16px");
-  await expect(page.getByTestId("color-swatch-md")).toHaveCSS("width", "24px");
-  await expect(page.getByTestId("color-swatch-lg")).toHaveCSS("width", "32px");
+  await expect(page.getByTestId("color-swatch-sm")).toHaveCSS("width", "18px");
+  await expect(page.getByTestId("color-swatch-md")).toHaveCSS("width", "20px");
+  await expect(page.getByTestId("color-swatch-lg")).toHaveCSS("width", "24px");
 });
 
 test("keeps the closed sharp, rounded, and circle geometry", async ({ page }) => {

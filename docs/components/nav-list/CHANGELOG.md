@@ -4,6 +4,20 @@ Nav List follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Keep initially open sections unanimated by giving the initial-state rule
+  precedence over the opening recipe; later disclosure transitions are unchanged.
+
+- Add plain navigation, shared radius, accessible trailing content and replaceable disclosure indicators; preserve hidden horizontal sections and settled-open focus rings.
+
+- Add independent scalar `gap` props to Root and Section using shared Brick
+  spacing values; preserve default theme gaps and item density.
+
+- Add independent horizontal row inset and section indentation controls,
+  preserving defaults and allowing aligned static group titles and items.
+
+- Add independent comfortable/compact density, preserving text and icon sizes.
+- Use primary section-label text through a documented foreground token.
+
 ### Changed
 
 - Changed neutral soft current rows to an opaque appearance-aware layered

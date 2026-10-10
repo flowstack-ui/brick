@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/notification-badge");
+  await page.goto("/notification-badge?qualification=1");
 });
 
 test("NotificationBadge overview exposes canonical defaults", async ({
@@ -69,11 +69,11 @@ test("all logical placements occupy distinct corners", async ({ page }) => {
     "bottom-start",
     "bottom-end",
   ]) {
-    await expect(roots.filter({ has: page.locator(`[data-placement="${placement}"]`) })).toHaveCount(0);
+    await expect(roots.filter({ has: page.locator(`.brick-notification-badge__indicator[data-placement="${placement}"]`) })).toHaveCount(1);
     await expect(
       page
         .getByTestId("notification-badge-placements")
-        .locator(`[data-placement="${placement}"]`),
+        .locator(`.brick-notification-badge[data-placement="${placement}"]`),
     ).toHaveCount(1);
   }
   const positions = await roots.evaluateAll((items) =>

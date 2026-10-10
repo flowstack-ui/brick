@@ -11,7 +11,8 @@
 | Viewport and zoom | |
 | Physical device | |
 | Assistive technology | |
-| Playground route | `/component-route` |
+| Playground route | `/_template` |
+| Qualification route(s) | `/component-route` |
 
 Scenario order: `01 Overview`, `02 Scenario name`
 

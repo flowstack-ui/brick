@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
-test("released Atom behavior provides first focus, target focus, scroll, and continuation", async ({ browserName, page }) => {
+test("Atom behavior provides first focus, target focus, scroll, and continuation", async ({ browserName, page }) => {
   await page.goto("/skip-link/fixture");
   const root = page.getByRole("link", { name: "Skip fixture navigation" });
   const target = page.getByRole("main");
@@ -9,7 +9,7 @@ test("released Atom behavior provides first focus, target focus, scroll, and con
 
   const hiddenBox = await root.boundingBox();
   expect(hiddenBox).not.toBeNull();
-  expect(hiddenBox!.y + hiddenBox!.height).toBeLessThanOrEqual(0);
+  await expect(root).toHaveCSS("clip-path", "inset(50%)");
 
   await page.keyboard.press(forwardTab);
   await expect(root).toBeFocused();
@@ -27,7 +27,35 @@ test("released Atom behavior provides first focus, target focus, scroll, and con
 });
 
 test.beforeEach(async ({ page }) => {
+  await page.goto("/skip-link?qualification=1");
+});
+
+test("docs show concise examples and named part tables", async ({ page }) => {
   await page.goto("/skip-link");
+  await expect(page.getByRole("heading", { name: "Root", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Target", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Scoped appearances" })).toHaveCount(0);
+  const target = page.locator("#skip-basic-content");
+  await expect(target).toHaveJSProperty("tagName", "DIV");
+  await page.getByRole("button", { name: "Focus skip link", exact: true }).click();
+  const link = page.getByRole("link", { name: "Skip to example content", exact: true });
+  await expect(link).toBeFocused();
+  await expect(link).toHaveCSS("box-shadow", "none");
+  await expect(link).toHaveCSS("border-top-width", "0px");
+  await page.keyboard.press("Enter");
+  await expect(target).toBeFocused();
+  await expect(page.getByRole("main")).toHaveCount(1);
+});
+
+test("iframe destinations use their own document and preserve keyboard continuation", async ({ browserName, page }) => {
+  await page.goto("/skip-link/fixture?ownerDocument=frame");
+  const frame = page.frameLocator('iframe[title="Skip link document"]');
+  const link = frame.getByRole("link", { name: "Skip fixture navigation" });
+  await link.focus();
+  await page.keyboard.press("Enter");
+  await expect(frame.getByRole("main")).toBeFocused();
+  await page.keyboard.press(browserName === "webkit" && process.platform === "darwin" ? "Alt+Tab" : "Tab");
+  await expect(frame.getByRole("link", { name: "First main-content link" })).toBeFocused();
 });
 
 test("focus reveal is immediate, contained, and above sticky chrome", async ({ page }) => {
@@ -182,8 +210,8 @@ test("long localized labels, RTL logical placement, zoom, and axe remain sound",
   const box = await rtl.boundingBox();
   expect(box).not.toBeNull();
   expect(box!.x).toBeGreaterThanOrEqual(0);
-  expect(390 - (box!.x + box!.width)).toBeGreaterThanOrEqual(8);
-  expect(390 - (box!.x + box!.width)).toBeLessThanOrEqual(16);
+  expect(390 - (box!.x + box!.width)).toBeGreaterThanOrEqual(23);
+  expect(390 - (box!.x + box!.width)).toBeLessThanOrEqual(25);
   expect(await page.locator("html").evaluate((node) => node.scrollWidth)).toBeLessThanOrEqual(390);
 
   await page.evaluate(() => { document.documentElement.style.zoom = "2"; });

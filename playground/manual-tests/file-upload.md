@@ -1,5 +1,21 @@
 # File Upload manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
+## Dropzone and filename-row regression
+
+- Clicking the default dropzone background opens the picker once; clicking its
+  nested Browse action also opens it once, not twice.
+- With `disableClick`, the background neither opens the picker nor gains clickable
+  hover paint. The nested Browse action and file-drag feedback still work.
+- In Input appearance, Clear stays on one line at desktop and narrow widths,
+  including after a long filename is selected. Clearing restores the fallback.
+
 | Run information | Value |
 | --- | --- |
 | Component | File Upload |
@@ -12,10 +28,19 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/file-upload` |
+| Qualification route(s) | `/file-upload` (docs); `/file-upload?qualification=1` (matrix) |
 
 Scenario order: `01 Overview`, `02 Variants`, `03 Sizes and shapes`, `04 Acceptance and limits`, `05 States`, `06 File content`, `07 Form and Field`, `08 Appearance and customization`, `09 Responsive and RTL`
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
+
+## New capability qualification
+
+Verify camera capture on a physical mobile device, native folder selection and nested
+directory dropping, paste from a real clipboard, preview cleanup after navigation,
+screen-reader naming for custom Button/IconButton actions, and actual browser zoom.
+Verify asynchronous preparation can be cleared/reset without restoring stale files.
+These are manual gates; an automated browser profile is not physical-device evidence.
 
 ## Step 1 — Picker, drag, validation, and removal
 Setup: Review 01–06 with representative accepted and rejected files. Action: Open the native picker, select one and multiple files, drag acceptable and unacceptable files, then remove selected files. Expected: Feedback is stable before and after drop, rejected feedback is distinct from field invalidity, file metadata remains readable, and removal has an understandable focus target. Result:
@@ -38,3 +63,9 @@ Overall result:
 Follow-up issues:
 Workbook updated:
 Yes — the recalculated File Upload sheet records 27 of 28 requirements resolved; this human protocol is the sole open row.
+
+## Form surface comparison
+
+- Compare outline and surface on light/dark canvas and raised parents: outline stays transparent; surface owns its neutral fill without adding a shadow.
+- Hover, focus, disable and mark invalid; preserve visible boundaries and explicit state treatment. Compare matched size recipes including their outer borders.
+- Check narrow/RTL containment and forced colors. Popup panels and selection marks must retain their independent paint.

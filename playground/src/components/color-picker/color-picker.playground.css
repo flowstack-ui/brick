@@ -13,16 +13,12 @@
   align-items: stretch;
 }
 
-.color-picker-value-row > :where(select, input) {
+.color-picker-value-row > input {
   min-inline-size: 0;
 }
 
 .color-picker-value-row > .brick-color-picker__input {
   flex: 1 1 7rem;
-}
-
-.color-picker-value-row > .brick-color-picker__format-select {
-  inline-size: 4.5rem;
 }
 
 .color-picker-value-row > .brick-color-picker__channel-input {

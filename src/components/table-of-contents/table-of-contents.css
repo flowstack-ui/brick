@@ -1,0 +1,263 @@
+@layer brick.components {
+  .brick-table-of-contents {
+    min-inline-size: 0;
+  }
+  .brick-table-of-contents__nav {
+    --brick-table-of-contents-foreground: var(--brick-color-text-secondary);
+    --brick-table-of-contents-current: var(--brick-color-text-primary);
+    --brick-table-of-contents-focus-ring: var(--brick-color-focus-ring);
+    --brick-table-of-contents-indent: var(--brick-space-4);
+    --brick-table-of-contents-title-gap: var(--brick-space-3);
+    --brick-table-of-contents-row-gap: var(--brick-space-1);
+    --brick-table-of-contents-row-padding: var(--brick-space-1);
+    --brick-table-of-contents-row-size: 1.75rem;
+    --brick-table-of-contents-rail-color: var(--brick-color-border-default);
+    --brick-table-of-contents-rail-gap: var(--brick-space-4);
+    --brick-table-of-contents-rail-width: 1px;
+    --brick-table-of-contents-font-family: var(
+      --brick-typography-body-sm-font-family
+    );
+    --brick-table-of-contents-font-size: var(
+      --brick-typography-body-sm-font-size
+    );
+    --brick-table-of-contents-font-weight: var(
+      --brick-typography-body-sm-font-weight
+    );
+    --brick-table-of-contents-line-height: var(
+      --brick-typography-body-sm-line-height
+    );
+    --brick-table-of-contents-letter-spacing: var(
+      --brick-typography-body-sm-letter-spacing
+    );
+    position: relative;
+    min-inline-size: 0;
+    color: var(--brick-table-of-contents-foreground);
+    font-family: var(--brick-table-of-contents-font-family);
+    font-size: var(--brick-table-of-contents-font-size);
+    font-weight: var(--brick-table-of-contents-font-weight);
+    line-height: var(--brick-table-of-contents-line-height);
+    letter-spacing: var(--brick-table-of-contents-letter-spacing);
+  }
+  .brick-table-of-contents__nav[data-size="md"] {
+    --brick-table-of-contents-font-family: var(
+      --brick-typography-body-md-font-family
+    );
+    --brick-table-of-contents-font-size: var(
+      --brick-typography-body-md-font-size
+    );
+    --brick-table-of-contents-font-weight: var(
+      --brick-typography-body-md-font-weight
+    );
+    --brick-table-of-contents-line-height: var(
+      --brick-typography-body-md-line-height
+    );
+    --brick-table-of-contents-letter-spacing: var(
+      --brick-typography-body-md-letter-spacing
+    );
+    --brick-table-of-contents-row-size: 2.25rem;
+  }
+  .brick-table-of-contents__nav[data-tone="accent"] {
+    --brick-table-of-contents-current: var(--brick-color-accent-text);
+  }
+  .brick-table-of-contents__nav[data-variant="line"] {
+    --brick-table-of-contents-indicator-visibility: visible;
+    border-inline-start: var(--brick-table-of-contents-rail-width) solid
+      var(--brick-table-of-contents-rail-color);
+    padding-inline-start: var(--brick-table-of-contents-rail-gap);
+  }
+  .brick-table-of-contents__title {
+    margin: 0 0 var(--brick-table-of-contents-title-gap);
+    color: var(--brick-color-text-primary);
+    font: inherit;
+    font-weight: var(--brick-typography-label-strong-font-weight);
+  }
+  .brick-table-of-contents__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--brick-table-of-contents-row-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    min-inline-size: 0;
+  }
+  .brick-table-of-contents__item {
+    min-inline-size: 0;
+  }
+  .brick-table-of-contents__link {
+    display: block;
+    box-sizing: border-box;
+    min-block-size: var(--brick-table-of-contents-row-size);
+    padding-block: var(--brick-table-of-contents-row-padding);
+    padding-inline-start: calc(
+      var(--atom-table-of-contents-level, 0) *
+        var(--brick-table-of-contents-indent)
+    );
+    color: var(--brick-table-of-contents-foreground);
+    font: inherit;
+    letter-spacing: inherit;
+    text-decoration: none;
+    text-underline-offset: 0.2em;
+    overflow-wrap: anywhere;
+  }
+  .brick-table-of-contents__link:is(
+    :hover,
+    :active,
+    [aria-current="location"]
+  ) {
+    color: var(--brick-table-of-contents-current);
+    text-decoration: underline;
+  }
+  .brick-table-of-contents__link:focus-visible {
+    outline: var(--brick-border-focus-width) solid
+      var(--brick-table-of-contents-focus-ring);
+    outline-offset: calc(-1 * var(--brick-border-focus-width));
+  }
+  .brick-table-of-contents__indicator {
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: var(--atom-table-of-contents-indicator-block-start, 0px);
+    block-size: var(--atom-table-of-contents-indicator-block-size, 0px);
+    inline-size: 2px;
+    background: var(--brick-table-of-contents-current);
+    pointer-events: none;
+    visibility: hidden;
+    transition:
+      inset-block-start 120ms ease,
+      block-size 120ms ease;
+  }
+  .brick-table-of-contents__nav[data-indicator-ready]
+    > .brick-table-of-contents__indicator {
+    visibility: var(--brick-table-of-contents-indicator-visibility, hidden);
+  }
+  @media (min-width: 40rem) {
+    .brick-table-of-contents__nav[data-size-sm="sm"] {
+      --brick-table-of-contents-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-table-of-contents-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-table-of-contents-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-table-of-contents-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-table-of-contents-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-table-of-contents-row-size: 1.75rem;
+    }
+    .brick-table-of-contents__nav[data-size-sm="md"] {
+      --brick-table-of-contents-font-family: var(--brick-typography-body-md-font-family);
+      --brick-table-of-contents-font-size: var(--brick-typography-body-md-font-size);
+      --brick-table-of-contents-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-table-of-contents-line-height: var(--brick-typography-body-md-line-height);
+      --brick-table-of-contents-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-table-of-contents-row-size: 2.25rem;
+    }
+    .brick-table-of-contents__nav[data-variant-sm="plain"] {
+      border-inline-start: 0;
+      padding-inline-start: 0;
+      --brick-table-of-contents-indicator-visibility: hidden;
+    }
+    .brick-table-of-contents__nav[data-variant-sm="line"] {
+      border-inline-start: var(--brick-table-of-contents-rail-width) solid var(--brick-table-of-contents-rail-color);
+      padding-inline-start: var(--brick-table-of-contents-rail-gap);
+      --brick-table-of-contents-indicator-visibility: visible;
+    }
+  }
+  @media (min-width: 48rem) {
+    .brick-table-of-contents__nav[data-size-md="sm"] {
+      --brick-table-of-contents-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-table-of-contents-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-table-of-contents-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-table-of-contents-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-table-of-contents-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-table-of-contents-row-size: 1.75rem;
+    }
+    .brick-table-of-contents__nav[data-size-md="md"] {
+      --brick-table-of-contents-font-family: var(--brick-typography-body-md-font-family);
+      --brick-table-of-contents-font-size: var(--brick-typography-body-md-font-size);
+      --brick-table-of-contents-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-table-of-contents-line-height: var(--brick-typography-body-md-line-height);
+      --brick-table-of-contents-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-table-of-contents-row-size: 2.25rem;
+    }
+    .brick-table-of-contents__nav[data-variant-md="plain"] {
+      border-inline-start: 0;
+      padding-inline-start: 0;
+      --brick-table-of-contents-indicator-visibility: hidden;
+    }
+    .brick-table-of-contents__nav[data-variant-md="line"] {
+      border-inline-start: var(--brick-table-of-contents-rail-width) solid var(--brick-table-of-contents-rail-color);
+      padding-inline-start: var(--brick-table-of-contents-rail-gap);
+      --brick-table-of-contents-indicator-visibility: visible;
+    }
+  }
+  @media (min-width: 64rem) {
+    .brick-table-of-contents__nav[data-size-lg="sm"] {
+      --brick-table-of-contents-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-table-of-contents-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-table-of-contents-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-table-of-contents-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-table-of-contents-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-table-of-contents-row-size: 1.75rem;
+    }
+    .brick-table-of-contents__nav[data-size-lg="md"] {
+      --brick-table-of-contents-font-family: var(--brick-typography-body-md-font-family);
+      --brick-table-of-contents-font-size: var(--brick-typography-body-md-font-size);
+      --brick-table-of-contents-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-table-of-contents-line-height: var(--brick-typography-body-md-line-height);
+      --brick-table-of-contents-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-table-of-contents-row-size: 2.25rem;
+    }
+    .brick-table-of-contents__nav[data-variant-lg="plain"] {
+      border-inline-start: 0;
+      padding-inline-start: 0;
+      --brick-table-of-contents-indicator-visibility: hidden;
+    }
+    .brick-table-of-contents__nav[data-variant-lg="line"] {
+      border-inline-start: var(--brick-table-of-contents-rail-width) solid var(--brick-table-of-contents-rail-color);
+      padding-inline-start: var(--brick-table-of-contents-rail-gap);
+      --brick-table-of-contents-indicator-visibility: visible;
+    }
+  }
+  @media (min-width: 80rem) {
+    .brick-table-of-contents__nav[data-size-xl="sm"] {
+      --brick-table-of-contents-font-family: var(--brick-typography-body-sm-font-family);
+      --brick-table-of-contents-font-size: var(--brick-typography-body-sm-font-size);
+      --brick-table-of-contents-font-weight: var(--brick-typography-body-sm-font-weight);
+      --brick-table-of-contents-line-height: var(--brick-typography-body-sm-line-height);
+      --brick-table-of-contents-letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+      --brick-table-of-contents-row-size: 1.75rem;
+    }
+    .brick-table-of-contents__nav[data-size-xl="md"] {
+      --brick-table-of-contents-font-family: var(--brick-typography-body-md-font-family);
+      --brick-table-of-contents-font-size: var(--brick-typography-body-md-font-size);
+      --brick-table-of-contents-font-weight: var(--brick-typography-body-md-font-weight);
+      --brick-table-of-contents-line-height: var(--brick-typography-body-md-line-height);
+      --brick-table-of-contents-letter-spacing: var(--brick-typography-body-md-letter-spacing);
+      --brick-table-of-contents-row-size: 2.25rem;
+    }
+    .brick-table-of-contents__nav[data-variant-xl="plain"] {
+      border-inline-start: 0;
+      padding-inline-start: 0;
+      --brick-table-of-contents-indicator-visibility: hidden;
+    }
+    .brick-table-of-contents__nav[data-variant-xl="line"] {
+      border-inline-start: var(--brick-table-of-contents-rail-width) solid var(--brick-table-of-contents-rail-color);
+      padding-inline-start: var(--brick-table-of-contents-rail-gap);
+      --brick-table-of-contents-indicator-visibility: visible;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brick-table-of-contents__indicator {
+      transition: none;
+    }
+  }
+  @media (forced-colors: active) {
+    .brick-table-of-contents__nav {
+      --brick-table-of-contents-current: LinkText;
+      --brick-table-of-contents-foreground: LinkText;
+      --brick-table-of-contents-focus-ring: Highlight;
+    }
+    .brick-table-of-contents__link[aria-current="location"] {
+      text-decoration: underline double;
+    }
+    .brick-table-of-contents__indicator {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+  }
+}

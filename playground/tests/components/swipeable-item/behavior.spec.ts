@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/swipeable-item");
+  await page.goto("/swipeable-item?qualification=1");
   await expect(page.getByTestId("swipeable-overview-item")).toBeVisible();
 });
 

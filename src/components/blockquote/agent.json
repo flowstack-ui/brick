@@ -15,12 +15,12 @@
   ],
   "composition": [
     "Place Blockquote.Content and optional Blockquote.Caption as siblings inside Blockquote.Root; put the source URL on Content through cite.",
-    "Use Blockquote.Cite inside Caption only for a referenced work or source, not merely for the person quoted."
+    "Use Blockquote.Cite inside Caption only for a referenced work or source, not merely for the person quoted. Use asChild only with a host retaining the part semantics. Compose Float.Anchor with Root for positioned decoration and Paragraph inside Content for explicit typography."
   ],
   "rules": [
     { "id": "blockquote-native", "level": "must", "statement": "Preserve figure Root, blockquote Content, sibling figcaption Caption, and native cite Cite." },
     { "id": "blockquote-attribution", "level": "must", "statement": "Keep attribution outside Content so it is not represented as part of the quotation." },
-    { "id": "blockquote-recipes", "level": "must", "statement": "Select only the documented accent, surface, or plain variant and start, center, or end alignment." },
+    { "id": "blockquote-recipes", "level": "must", "statement": "Choose subtle, solid, surface, plain or legacy accent plus semantic tone and logical alignment. Subtle/neutral/start is the default; solid strengthens the rule and icon, not the background." },
     { "id": "blockquote-icon", "level": "must", "statement": "Keep Icon decorative unless a consumer intentionally overrides aria-hidden for meaningful custom content." },
     { "id": "blockquote-css", "level": "must", "statement": "Load styles.css or core.css plus blockquote.css." }
   ],

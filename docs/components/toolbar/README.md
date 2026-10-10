@@ -35,57 +35,62 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ## Anatomy and DOM ownership
 
-`Root` renders the Atom `div[role=toolbar]`; `Button` and `ToggleItem` render buttons; `Link` renders an anchor; `Separator` renders a semantic separator; and `ToggleGroup` renders a named group. Brick adds no DOM. Refs target Root, Button, Link, and ToggleItem hosts.
+`Root` renders the Atom `div[role=toolbar]`; `Button` and `ToggleItem` render buttons; `Link` renders an anchor; `Separator` renders a semantic separator; and `ToggleGroup` renders a named group. Group renders a named div; Input uses the existing Input wrapper and a native input. Action content uses the existing Button wrappers without nesting buttons. All eight parts forward refs to their corresponding host (Input to the input).
 
 ## API
 
+Named exports: ToolbarRoot, ToolbarButton, ToolbarLink, ToolbarSeparator,
+ToolbarGroup, ToolbarInput, ToolbarToggleGroup and ToolbarToggleItem.
+Their public props are ToolbarRootProps, ToolbarButtonProps, ToolbarLinkProps,
+ToolbarSeparatorProps, ToolbarGroupProps, ToolbarInputProps,
+ToolbarToggleGroupProps and ToolbarToggleItemProps.
+
 | Prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `plain`, `soft`, `outline` | `soft` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `variant` | `plain`, `soft`, `outline`, `surface` | `soft` |
+| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` (responsive) | `md` |
 
 `Toolbar.ToggleGroup` configures every direct ToggleItem while preserving
 Toolbar keyboard behavior.
 
 | ToggleGroup prop | Values | Default |
 | --- | --- | --- |
-| `variant` | `solid`, `soft`, `outline`, `ghost` | `soft` |
-| `tone` | `accent`, `neutral` | `accent` |
+| `variant` | `solid`, `soft`, `subtle`, `surface`, `outline`, `ghost`, `plain` | `ghost` |
+| `tone` | `accent`, `neutral`, `contrast` | `neutral` |
 
-Root inherits Atom `orientation`, `dir`, `loop`, and `ariaLabel`. The other
-five parts preserve their Atom props, including controlled/uncontrolled single
-or multiple toggle values. Named exports are `Toolbar`, `ToolbarRoot`,
-`ToolbarButton`, `ToolbarLink`, `ToolbarSeparator`, `ToolbarToggleGroup`, and
-`ToolbarToggleItem`. Public types are `ToolbarRootProps`, `ToolbarButtonProps`,
-`ToolbarLinkProps`, `ToolbarSeparatorProps`, `ToolbarToggleGroupProps`,
-`ToolbarToggleItemProps`, `ToolbarToggleTone`, `ToolbarToggleVariant`,
-`ToolbarSize`, and `ToolbarVariant`.
+Root inherits Atom `orientation`, `dir`, `loop`, `disabled` and `ariaLabel`; native `aria-label` also works. Named exports include `ToolbarGroup`, `ToolbarInput` and their `ToolbarGroupProps`/`ToolbarInputProps` types alongside the original Root, Button, Link, Separator, ToggleGroup and ToggleItem exports and matching Props types. `ToolbarSize`, `ToolbarVariant`, `ToolbarToggleTone` and `ToolbarToggleVariant` describe recipes.
 
-Neutral solid ToggleItems use a layered selected surface: raised and white-ish
-over a light Toolbar, and a stronger raised neutral over a dark Toolbar. Hover
-and pressed stay between the selected surface and the Toolbar surface instead
-of collapsing into the container. This Toolbar recipe intentionally
-differs from a neutral solid Button while retaining the same non-accent intent.
+Button shares Button's variant, tone, responsive size, radius/shape, fullWidth, icons and loading presentation. Defaults are neutral ghost, inherited size and inside focus ring. It remains a command rather than a destination; use Link for navigation. Link shares Button visual props and native link semantics. ToggleItem shares Toggle geometry and paint, with iconOnly, responsive size, radius and focusRing. ToggleGroup supplies visual defaults; explicit item props override them. Toggle tones are neutral, accent and contrast. Single selection accepts strings; multiple selection requires type="multiple" and string arrays. Use onValueChange for controlled state.
+
+Root size defaults to md and supplies all uncomposed controls; explicit asChild/render hosts own presentation and should receive their own size and inside focus ring. Do not nest interactive hosts. Root disabled dominates all parts. Button focusableWhenDisabled preserves discovery, never activation. Separator defaults perpendicular to Root and supports decorative. Group introduces no new keyboard scope. Input shares Input's variants, responsive sizing, radius/shape, native value/defaultValue and accessible labeling, but intentionally excludes clear/adornment actions that would add unmanaged Tab stops. Place a single Input last in a horizontal toolbar; native editing arrows and Home/End stay with it, and Tab exits.
+
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
 
 ## Visual recipes and states
 
 Variants change the root surface; sizes coordinate target and typography geometry. Hover, focus-visible, disabled, and pressed states do not change layout. Focus-visible uses an inward ring so first, middle, and last controls remain fully visible inside the scrolling root.
 
-Disabled commands and ToggleItems remove selected/outlined emphasis, use the
-disabled foreground, and fade as a whole without acquiring hover or pressed
-paint.
+Disabled commands use a faded disabled foreground. Disabled ToggleItems share
+Toggle's quiet disabled surface and border, and neither acquires hover or
+pressed paint.
 
 ## Tokens and CSS hooks
 
-Stable classes are `.brick-toolbar`, `.brick-toolbar__button`, `.brick-toolbar__link`, `.brick-toolbar__separator`, `.brick-toolbar__toggle-group`, and `.brick-toolbar__toggle-item`. Root exposes `data-variant`, `data-size`, and Atom orientation; ToggleGroup exposes `data-variant` and `data-tone`; toggle items expose Atom pressed state.
+Stable classes are `.brick-toolbar`, `.brick-toolbar__button`, `.brick-toolbar__link`, `.brick-toolbar__separator`, `.brick-toolbar__toggle-group`, `.brick-toolbar__group`, `.brick-input` and `.brick-toggle`. Root exposes `data-variant`, `data-size`, and Atom orientation; ToggleGroup exposes `data-variant` and `data-tone`; toggle items expose Atom pressed state.
 
 Public variables are `--brick-toolbar-surface`,
 `--brick-toolbar-border-color`, `--brick-toolbar-radius`,
 `--brick-toolbar-padding`, `--brick-toolbar-gap`,
-`--brick-toolbar-item-size`, `--brick-toolbar-item-padding-inline`,
-`--brick-toolbar-item-radius`, `--brick-toolbar-item-background`,
-`--brick-toolbar-item-selected-background`, and
 `--brick-toolbar-separator-color`.
+
+Actions and selection now use the shared Button/Toggle variables and classes. The former toolbar-item geometry/paint variables are replaced by those owners’ props and variables; migrate item-selected-background to --brick-toggle-selected-background. Outline is transparent; use surface for the former filled bordered treatment.
 
 ## Customization
 
@@ -97,7 +102,7 @@ Toolbar never wraps. It stays content-sized up to its container and scrolls on i
 
 ## Accessibility
 
-Provide `ariaLabel` on Root and icon-only controls. Tab enters once; orientation-aware arrows, Home/End, looping, disabled omission, link behavior, and `aria-pressed` are Atom-owned. Avoid descendants that consume the same arrow keys.
+Provide `ariaLabel` on Root and icon-only controls. Tab enters once; orientation-aware arrows, Home/End, looping, disabled omission, link behavior, and `aria-pressed` are Atom-owned. Input retains native editing keys as described above. Avoid additional composites that consume the same navigation axis.
 
 ## Composition, native props, and refs
 

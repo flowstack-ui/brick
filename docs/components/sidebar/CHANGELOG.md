@@ -1,8 +1,20 @@
 # Sidebar changelog
 
+## Unreleased
+
+- Prevent reopening height flicker by settling panel geometry before fading in.
+- Let composed action recipes override the minimal trigger presentation.
+
+- Fix direct-trigger layout and floating offcanvas gap; add border control and expose rail context; preserve region child handlers and ref cleanup.
+- Add modular documentation examples and part-scoped props while retaining qualification scenarios.
+
 Sidebar follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+- Add default/none inset to Header, Content and Footer without changing defaults.
+- Preserve the supplied region host's children with asChild rather than nesting
+  a duplicate host.
 
 ### Fixed
 

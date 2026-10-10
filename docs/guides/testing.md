@@ -28,12 +28,74 @@ bounded shards so a long qualification run cannot accumulate one browser
 process indefinitely. Pass one or more project names directly to
 `scripts/run-release-browser-tests.mjs` when reproducing a release-profile
 failure. Main-branch and publication jobs use the same bounded project runner.
+WebKit batches derive from the selected test inventory, not fixed shard counts:
+at most 40 desktop or 24 mobile cases per browser process. Test-level sharding
+prevents a large catalog file from exceeding that limit; execution still uses
+one worker. Every shard is listed before execution and its report must account
+for that exact inventory. Empty, invalid or over-budget batches fail closed.
+
+CI, nightly and publication distribute each browser profile across six
+independent runner groups, with one worker per runner. Chromium pull requests
+use six groups too. Grouped non-WebKit runs use at most 120 tests per batch;
+WebKit retains its stricter 40/24 bounds. This is distribution, not reduced
+coverage or a higher local worker count. Group selection is available for all
+profiles through `FLOWSTACK_RELEASE_SHARD_GROUP=1/6` (through `6/6`); every
+group is required for complete evidence. Empty groups fail closed. Ungrouped
+local Chromium/Firefox behavior remains unchanged.
+
+Nightly calls the same CI graph instead of repeating a serial all-browser
+command. Successful and failed browser reports are retained for 14 days.
+Use focused component checks for iteration; use the distributed full gate for
+release qualification. Do not repeatedly run the serial local full gate to
+diagnose a failed browser startup. A failed group remains a failed gate until
+diagnosed; rerunning it does not erase the original failure evidence.
+Actual wall-time reduction depends on available hosted-runner concurrency and
+must be measured; six groups are not a sixfold-speed guarantee. macOS visual
+baselines and physical/manual checks retain their existing local ownership.
+
+Each release invocation retains JSON, HTML and failure traces in a unique
+`test-results/release-*/<project>-<shard>-of-<count>/` directory. Its parent
+`summary.json` records each shard's status and elapsed time; a missing JSON report
+fails the run. Flaky outcomes also fail even when the browser command exits
+successfully; investigate their cause instead of retrying until green.
+Preserve the entire release directory for diagnosis rather than
+only the last shard's HTML report. Ordinary focused runs retain their existing
+report paths.
+
+Packed consumer verifiers print the Brick archive SHA-256 and retain their
+temporary fixture on failure, including application browser traces. A supplied
+Atom candidate can be checked with `--atom-sha256`; registry-backed release
+qualification should not set local candidate overrides.
+
+CSS builds keep package-relative source paths and canonical source/name indices
+in source maps. Mappings are decoded and reindexed together with embedded source
+content, preserving debug locations without leaking checkout paths. The package
+gate rejects noncanonical CSS maps. Regression coverage includes repeated real
+bundles from independent checkout roots; the codec is a development dependency,
+not consumer runtime code.
+The dedicated CSS build process bounds Lightning CSS's native pool to one
+worker: multithreaded bundling reproduced incorrect original-file references,
+not only unstable ordering. Keep that bound until an upstream version passes
+the repeated original-location regression; see the related
+[upstream source-map report](https://github.com/parcel-bundler/lightningcss/issues/1167).
 
 Do not rerun the repository or release tier after every focused edit. Escalate
 when the affected component is stable or when a shared boundary requires
 broader evidence.
 
+`build` cleans package outputs only; it preserves coverage and the separately
+built playground. Explicit `clean` also removes those generated outputs. Never
+run `clean` or rebuild the playground while browser tests are serving it. A
+preserved playground is a frozen candidate, not proof that newer source was
+tested: rebuild it before qualifying any subsequent presentation changes.
+
 Focused commands:
+
+Focused unit and browser commands include supplementary files in the component's
+own test directory, not only its primary test. Visual/screenshot-named browser
+files belong to the explicit visual command. Shared integration suites still need
+to be selected when their boundary changes. The primary ownership files remain
+required even when supplementary suites exist.
 
 ```bash
 npm run test:ownership
@@ -81,6 +143,11 @@ release gate remotely. A named component remains the smallest local affected
 unit; shared or unknown changes expand to the repository gate. Reviewed macOS
 visual baselines and named physical-device checks remain explicit human release
 evidence.
+
+All visual/screenshot-named suites, including `docs-visual.spec.ts`, run only in
+local desktop Chromium. CI and other browser profiles exclude those files before
+worker startup. Functional layout tests with optional diagnostic screenshots are
+named as behavior/layout suites and remain in every applicable browser profile.
 
 CI and advanced local diagnosis can reuse an already-built playground without
 starting a development server:

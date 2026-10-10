@@ -15,8 +15,12 @@
     --brick-code-block-font-weight: var(--brick-typography-code-block-md-font-weight);
     --brick-code-block-line-height: var(--brick-typography-code-block-md-line-height);
     --brick-code-block-letter-spacing: var(--brick-typography-code-block-md-letter-spacing);
-    --brick-code-block-selection-background: var(--brick-color-accent-soft);
-    --brick-code-block-selection-foreground: var(--brick-color-accent-text);
+    --brick-code-block-selection-background: var(
+      --brick-color-selection-background
+    );
+    --brick-code-block-selection-foreground: var(
+      --brick-color-selection-foreground
+    );
     --brick-code-block-line-number-foreground: var(
       --brick-color-text-secondary
     );
@@ -74,6 +78,21 @@
       var(--brick-code-block-border-color);
   }
 
+  .brick-code-block[data-size="lg"] {
+    --brick-code-block-header-padding: var(--brick-space-4) var(--brick-space-5);
+    --brick-code-block-content-padding: var(--brick-space-5);
+    --brick-code-block-content-padding-block: var(--brick-space-5);
+    --brick-code-block-content-padding-inline: var(--brick-space-5);
+  }
+
+  .brick-code-block[data-focus-lines][data-dim-unfocused] .brick-code-block-line:not([data-focused]) {
+    opacity: 0.65;
+  }
+  .brick-code-block[data-focus-lines][data-dim-unfocused]:is(:hover, :focus-within) .brick-code-block-line {
+    opacity: 1;
+  }
+  .brick-code-block-line-ending { display: none; }
+
   .brick-code-block-title {
     min-inline-size: 0;
     overflow: hidden;
@@ -113,8 +132,8 @@
 
   .brick-code-block-content[data-max-lines] {
     max-block-size: calc(
-      var(--brick-code-block-max-block-size) + 2 *
-        var(--brick-code-block-content-padding-block) - 0.5lh - 1px
+      var(--brick-code-block-max-block-size) +
+        var(--brick-code-block-content-padding-block)
     );
     overflow-y: auto;
   }
@@ -139,6 +158,8 @@
   }
 
   .brick-code-block-pre > .brick-code {
+    display: block;
+    color: inherit;
     font: inherit;
     letter-spacing: inherit;
     white-space: inherit;
@@ -172,7 +193,27 @@
 
   .brick-code-block-line-content {
     min-inline-size: 0;
+    min-block-size: 1lh;
   }
+  .brick-code-block-line,
+  .brick-code-block-line-content,
+  .brick-code-block-token {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+  .brick-code-block-pre:has(.brick-code-block-line[data-change]) .brick-code-block-line {
+    padding-inline-start: calc(var(--brick-code-block-content-padding-inline) + 1ch);
+  }
+  .brick-code-block-line[data-change]::after {
+    position: absolute;
+    inset-inline-start: 0.25ch;
+    color: currentColor;
+    user-select: none;
+  }
+  .brick-code-block-line[data-change="added"]::after { content: "+"; }
+  .brick-code-block-line[data-change="removed"]::after { content: "−"; }
   .brick-code-block-line[data-highlighted] {
     background: var(--brick-code-block-line-highlight-background);
   }
@@ -216,6 +257,14 @@
   .brick-code-block-collapse-trigger {
     grid-column: 1;
     grid-row: 3;
+  }
+
+  /* This action is flush with the clipped CodeBlock, unlike a standalone disclosure. */
+  .brick-code-block .brick-code-block-collapse-trigger:focus-visible {
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: calc(-1 * var(--brick-border-focus-width));
+    border-end-start-radius: max(0px, calc(var(--brick-code-block-radius) - var(--brick-border-width)));
+    border-end-end-radius: max(0px, calc(var(--brick-code-block-radius) - var(--brick-border-width)));
   }
 
   .brick-code-block-collapse
@@ -270,6 +319,8 @@
   }
 
   @media (forced-colors: active) {
+    .brick-code-block-token { color: CanvasText !important; }
+    .brick-code-block[data-focus-lines][data-dim-unfocused] .brick-code-block-line { opacity: 1; }
     .brick-code-block {
       --brick-code-block-background: Canvas;
       --brick-code-block-foreground: CanvasText;

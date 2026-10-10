@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function box(locator: Locator) {
   const value = await locator.boundingBox();
@@ -8,7 +8,7 @@ async function box(locator: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/stack");
+  await page.goto("/stack?qualification=1");
 });
 
 test("Stack defaults and family conveniences preserve one contract", async ({ page }) => {

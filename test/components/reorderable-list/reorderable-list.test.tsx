@@ -37,6 +37,17 @@ function Example({ onItemsChange = vi.fn(), ...rootProps }: Partial<React.Compon
 }
 
 describe("ReorderableList", () => {
+  it("serializes responsive recipes, radius and motion without leaking props", () => {
+    render(<Example size={{ md: "lg" }} variant={{ sm: "surface" }} radius="none" motion={false} />);
+    const root = screen.getByRole("list");
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "lg");
+    expect(root).toHaveAttribute("data-variant-sm", "surface");
+    expect(root).toHaveAttribute("data-motion", "false");
+    expect(root.style.getPropertyValue("--brick-reorderable-list-item-radius")).toBe("0px");
+    expect(root).not.toHaveAttribute("radius");
+    expect(root).not.toHaveAttribute("motion");
+  });
   it("renders the adopted ordered-list anatomy and default recipe", () => {
     render(<Example />);
     const root = screen.getByRole("list");

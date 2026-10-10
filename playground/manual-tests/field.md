@@ -1,5 +1,12 @@
 # Field manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 | Run information | Value |
 | --- | --- |
 | Component | Field |
@@ -94,3 +101,29 @@ Follow-up issues:
 Workbook updated:
 
 Mark unavailable assistive-technology environments `blocked`.
+## Additional qualification — unrun
+
+1. Activate the Price label in Target control. Confirm Amount receives focus,
+   Currency retains its own accessible name, and both controls have unique IDs.
+2. With a screen reader, inspect helper/error associations before and after an
+   error is removed. Confirm the decorative ErrorIcon is not announced.
+3. At 200% and 400% zoom and in RTL, check horizontal reflow, label width,
+   long messages, required-marker count and keyboard focus visibility.
+
+Result: Unrun. Record actual browser, device and assistive-technology versions.
+
+Field adds Item, Context, ErrorIcon and useFieldContext. Item takes a unique
+value; Root.target selects the Item activated by Label. Secondary controls need
+an accessible name. Root.ids accepts control, label, description and error IDs;
+use ids.control for an authored control ID. Existing one-control composition
+still works unchanged. Field invalidity is independent of Fieldset's summary.
+
+size and orientation accept responsive initial/sm/md/lg/xl values. labelWidth
+accepts a CSS inline size or pixel number for horizontal labels. Existing
+primary/secondary tone remains label emphasis, not control paint. ErrorIcon
+uses Icon presentation props and defaults to inherited text size.
+
+Labels/messages use quieter spacing and text styling; read-only no longer adds
+italics and invalid no longer adds wavy underlines or error-edge stripes.
+Required markers remain automatic: disable the default before adding a custom
+RequiredIndicator. Keep error text meaningful, not color alone.

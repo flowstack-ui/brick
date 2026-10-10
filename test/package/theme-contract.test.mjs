@@ -10,12 +10,22 @@ import {
 
 const packageRoot = new URL("../../", import.meta.url);
 
+test("Link decoration extension tokens inherit through owning CSS fallbacks", async () => {
+  const source = await inspectThemeSources(packageRoot.pathname);
+  const contract = await createThemeContract(packageRoot.pathname);
+  for (const name of ["--brick-link-decoration-color", "--brick-link-decoration-thickness", "--brick-link-decoration-offset"]) {
+    assert.equal(source.declaredBy.has(name), false);
+    assert.ok(source.references.some(reference => reference.name === name && reference.path === "src/components/link/link.css" && reference.hasFallback));
+    assert.equal(contract.tokens.find(token => token.name === name)?.classification, "optional-extension");
+  }
+});
+
 test("generated theme contract stays aligned with Brick authority", async () => {
   const generated = await createThemeContract(packageRoot.pathname);
   const packed = await readFile(new URL("../../dist/theme-contract.json", import.meta.url), "utf8");
 
   assert.equal(generated.$schema, themeContractSchema);
-  assert.equal(generated.contractVersion, 4);
+  assert.equal(generated.contractVersion, 6);
   assert.equal(packed, serializeThemeContract(generated));
   assert.deepEqual(generated.css.themeLayerPosition, {
     after: "brick.tokens",
@@ -23,7 +33,7 @@ test("generated theme contract stays aligned with Brick authority", async () => 
   });
   assert.deepEqual(
     generated.componentThemeInputs.map(({ name }) => name),
-    ["--brick-drawer-background", "--brick-drawer-radius", "--brick-link-decoration-policy"],
+    ["--brick-drawer-background", "--brick-drawer-radius", "--brick-link-decoration-policy", ...["app-bar", "bottom-navigation", "surface"].flatMap(owner => ["blur", "opacity", "saturation"].map(parameter => `--brick-${owner}-translucent-${parameter}`))].sort(),
   );
   assert.deepEqual(
     generated.componentThemeInputs.find(({ name }) => name === "--brick-link-decoration-policy")?.allowedValues,
@@ -35,7 +45,14 @@ test("generated theme contract stays aligned with Brick authority", async () => 
   );
   assert.equal(generated.contrast.algorithm, "wcag2-relative-luminance");
   assert.equal(generated.contrast.colorSpace, "srgb");
-  assert.equal(generated.contrast.pairs.length, 91);
+  assert.equal(generated.contrast.pairs.length, 123);
+  assert.deepEqual(
+    generated.atomicColorFamilies.find(({ id }) => id === "accent")?.tokens.filter((name) =>
+      name.startsWith("--brick-color-selection-")),
+    ["--brick-color-selection-background", "--brick-color-selection-foreground"],
+  );
+  assert.ok(generated.contrast.pairs.some(({ id }) =>
+    id.startsWith("selection-foreground-on-background/")));
   assert.deepEqual(
     [...new Set(generated.contrast.pairs.map(({ kind }) => kind))].sort(),
     ["non-text", "text"],

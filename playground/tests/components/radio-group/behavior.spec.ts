@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function controlSize(radio: Locator) {
   return radio.locator(".brick-radio-group-control").evaluate((control) => {
@@ -8,7 +8,7 @@ async function controlSize(radio: Locator) {
   });
 }
 
-test.beforeEach(async ({ page }) => { await page.goto("/radio-group"); });
+test.beforeEach(async ({ page }) => { await page.goto("/radio-group?qualification=1"); });
 
 test("defaults and sizes preserve one selected medium vertical recipe", async ({ page }) => {
   const overview = page.getByTestId("radio-group-overview").getByRole("radiogroup");

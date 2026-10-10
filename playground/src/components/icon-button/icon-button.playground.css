@@ -70,6 +70,10 @@
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
+.icon-button-specimen-grid--seven {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
 .icon-button-specimen-grid--two {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -233,6 +237,7 @@
   }
 
   .icon-button-specimen-grid--five,
+  .icon-button-specimen-grid--seven,
   .icon-button-specimen-grid--three {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }

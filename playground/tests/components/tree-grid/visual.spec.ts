@@ -1,6 +1,14 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/tree-grid");
+installVisualDefaults("/tree-grid?qualification=1");
+
+test("public file grid artwork", async ({ page }) => {
+  await page.goto("/tree-grid");
+  for (const appearance of ["light", "dark"] as const) {
+    await setAppearance(page, appearance);
+    await expect(page.getByRole("treegrid", { name: "Project files", exact: true }).first()).toHaveScreenshot(`file-artwork-${appearance}.png`);
+  }
+});
 
 test("Tree Grid defaults, recipes, sizing, hierarchy, and controlled state", async ({ page }) => {
   await page.setViewportSize({ width: 1120, height: 1600 });

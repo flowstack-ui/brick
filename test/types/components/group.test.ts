@@ -26,12 +26,16 @@ const props: GroupProps = {
 
 createElement(Group, { ...props, ref });
 createElement(RootGroup, { attached: true });
+createElement(Group, { asChild: true, children: createElement("section"), align: { sm: "end" }, justify: "space-between", wrap: { lg: "wrap" }, grow: { md: true }, stacking: "first-on-top", skip: child => child.key === "exclude" });
+// @ts-expect-error asChild and as are mutually exclusive.
+createElement(Group, { asChild: true, as: "span", children: createElement("span") });
+// @ts-expect-error Responsive objects must not be empty.
+createElement(Group, { align: {} });
 
 // @ts-expect-error Hosts are deliberately closed.
 createElement(Group, { as: "button" });
 // @ts-expect-error Orientations are deliberately closed.
 createElement(Group, { orientation: "diagonal" });
-// @ts-expect-error Responsive orientation belongs to Stack/application policy.
 createElement(Group, { orientation: { initial: "vertical", md: "horizontal" } });
 // @ts-expect-error No wrap API; attached chains remain continuous.
 createElement(Group, { wrap: true });

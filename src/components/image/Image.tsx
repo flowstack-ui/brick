@@ -1,6 +1,7 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, type CSSProperties } from "react";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
 import { AspectRatio } from "@flowstack-ui/atom/aspect-ratio";
 import {
   Image as AtomImage,
@@ -9,17 +10,23 @@ import {
   type ImageRootProps as AtomImageRootProps,
 } from "@flowstack-ui/atom/image";
 
+import { normalizeResponsiveValue, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
+
 export type ImageFit = "cover" | "contain" | "fill" | "none" | "scale-down";
-export type ImagePosition = "center" | "top" | "bottom" | "start" | "end";
-export type ImageRadius = "none" | "sm" | "md" | "lg" | "full";
+export type ImagePositionPreset = "center" | "top" | "bottom" | "start" | "end";
+export type ImagePosition = ImagePositionPreset | NonNullable<CSSProperties["objectPosition"]>;
+export type ResponsiveImageFit = ResponsiveValue<ImageFit>;
+export type ResponsiveImagePosition = ResponsiveValue<ImagePosition>;
+export type ResponsiveImageRatio = ResponsiveValue<number>;
+export type ImageRadius = Radius;
 export type ImageFrame = "none" | "subtle";
 
 export interface ImageRootProps extends AtomImageRootProps {
-  fit?: ImageFit;
-  position?: ImagePosition;
+  fit?: ResponsiveImageFit;
+  position?: ResponsiveImagePosition;
   radius?: ImageRadius;
   frame?: ImageFrame;
-  ratio?: number;
+  ratio?: ResponsiveImageRatio;
   fill?: boolean;
 }
 
@@ -34,25 +41,46 @@ export const ImageRoot = forwardRef<HTMLDivElement, ImageRootProps>(function Ima
   {
     fit = "cover",
     position = "center",
-    radius = "none",
+    radius,
     frame = "none",
     ratio,
     fill = false,
     className,
+    style,
     "data-slot": dataSlot = "image",
     ...props
   },
   ref,
 ) {
+  const presentation: CSSProperties & Record<string, string | number | undefined> = {};
+  const positions = { center: "center", top: "center top", bottom: "center bottom", start: "var(--_brick-image-start)", end: "var(--_brick-image-end)" };
+  const fitValues = normalizeResponsiveValue(fit);
+  const positionValues = normalizeResponsiveValue(position);
+  const ratioValues = normalizeResponsiveValue(ratio ?? 16 / 9);
+  const normalizeRatio = (value: number) => Number.isFinite(value) && value > 0 ? value : 16 / 9;
+  let currentFit: ImageFit = "cover";
+  let currentPosition: ImagePosition = "center";
+  let currentRatio = 16 / 9;
+  // Assign the full local cascade so a nested Image cannot inherit a parent's
+  // breakpoint values. Authored CSS is serialized as values, never CSS text.
+  for (const breakpoint of ["initial", "sm", "md", "lg", "xl"] as const) {
+    currentFit = fitValues[breakpoint] ?? currentFit;
+    currentPosition = positionValues[breakpoint] ?? currentPosition;
+    currentRatio = normalizeRatio(ratioValues[breakpoint] ?? currentRatio);
+    presentation[`--_brick-image-fit-${breakpoint}`] = currentFit;
+    presentation[`--_brick-image-position-${breakpoint}`] = positions[currentPosition as ImagePositionPreset] ?? currentPosition;
+    presentation[`--_brick-image-ratio-${breakpoint}`] = currentRatio;
+  }
   const root = (
     <AtomImage.Root
       {...props}
+      style={radiusStyle(radius, "--brick-image-radius", { ...presentation, ...style })}
       className={mergeClassName("brick-image", className)}
-      data-fit={fit}
+      data-fit={typeof fit === "object" ? "responsive" : fit}
       data-frame={frame}
       data-fill={fill ? "" : undefined}
-      data-position={position}
-      data-radius={radius}
+      data-position={typeof position === "object" ? "responsive" : position}
+      data-radius={radius ?? "none"}
       data-ratio={ratio === undefined ? undefined : ""}
       data-slot={dataSlot}
       ref={ref}
@@ -60,7 +88,7 @@ export const ImageRoot = forwardRef<HTMLDivElement, ImageRootProps>(function Ima
   );
 
   return ratio === undefined ? root : (
-    <AspectRatio.Root asChild data-slot={dataSlot} ratio={ratio}>
+    <AspectRatio.Root asChild data-slot={dataSlot} ratio={normalizeRatio(ratioValues.initial ?? 16 / 9)} ratioVariable={typeof ratio === "object" ? "--_brick-image-ratio-current" : undefined}>
       {root}
     </AspectRatio.Root>
   );

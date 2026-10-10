@@ -1,6 +1,13 @@
 @layer flowstack.theme {
   :where([data-flowstack-theme="qualification"]) {
     color-scheme: light dark;
+    --brick-app-bar-translucent-blur: var(--brick-blur-md);
+    --brick-app-bar-translucent-opacity: 0.88;
+    --brick-app-bar-translucent-saturation: 1.15;
+    --brick-blur-md: 0.75rem;
+    --brick-bottom-navigation-translucent-blur: var(--brick-blur-md);
+    --brick-bottom-navigation-translucent-opacity: 0.86;
+    --brick-bottom-navigation-translucent-saturation: 1.15;
     --brick-color-accent-border: #65b9a8;
     --brick-color-accent-on-soft: #064c43;
     --brick-color-accent-on-solid: #ffffff;
@@ -41,6 +48,8 @@
     --brick-color-link-text-hover: #333185;
     --brick-color-link-text-pressed: #2a2579;
     --brick-color-scrim: #1413128c;
+    --brick-color-selection-background: #006154;
+    --brick-color-selection-foreground: #ffffff;
     --brick-color-shadow: #1413122e;
     --brick-color-success-border: #7bd1ad;
     --brick-color-success-on-soft: #136e4c;
@@ -83,9 +92,13 @@
     --brick-radius-overlay: 1.25rem;
     --brick-radius-surface: 1rem;
     --brick-shadow-floating: 0rem 0.75rem 2rem 0rem #14131218;
+    --brick-shadow-md: 0rem 0.25rem 0.5rem 0rem #1413121a, 0rem 0rem 0.0625rem 0rem #1413124d;
     --brick-shadow-modal: 0rem 1.5rem 4.5rem 0rem #1413122c;
     --brick-shadow-raised: 0rem 0.5rem 1.5rem -0.25rem #1413122e;
     --brick-shadow-sm: 0rem 0.125rem 0.375rem 0rem #1413122e;
+    --brick-surface-translucent-blur: var(--brick-blur-md);
+    --brick-surface-translucent-opacity: 0.9;
+    --brick-surface-translucent-saturation: 1.15;
     --flowstack-theme-extensions-flowstack-dev-qualification-chart-revenue: #0ea5e9;
     --flowstack-theme-extensions-flowstack-dev-qualification-marketing-promotion: #8b5cf6;
     --flowstack-theme-palettes-ember-400: #ff9a52;
@@ -152,6 +165,8 @@
       --brick-color-link-text-hover: #b7c1ff;
       --brick-color-link-text-pressed: #c6cfff;
       --brick-color-scrim: #000000b8;
+      --brick-color-selection-background: #7dd1bd;
+      --brick-color-selection-foreground: #05251e;
       --brick-color-shadow: #00000080;
       --brick-color-success-border: #237350;
       --brick-color-success-on-soft: #7bd1ad;
@@ -186,6 +201,7 @@
       --brick-color-warning-surface: #3d2707;
       --brick-color-warning-text: #f2bd59;
       --brick-shadow-floating: 0rem 0.75rem 2rem 0rem #00000042;
+      --brick-shadow-md: 0rem 0.25rem 0.5rem 0rem #0000003d, 0rem 0rem 0.0625rem 0rem #00000080;
       --brick-shadow-modal: 0rem 1.5rem 4.5rem 0rem #0000007a;
       --brick-shadow-raised: 0rem 0.5rem 1.5rem -0.25rem #00000080;
       --brick-shadow-sm: 0rem 0.125rem 0.375rem 0rem #00000080;
@@ -235,6 +251,8 @@
     --brick-color-link-text-hover: #333185;
     --brick-color-link-text-pressed: #2a2579;
     --brick-color-scrim: #1413128c;
+    --brick-color-selection-background: #006154;
+    --brick-color-selection-foreground: #ffffff;
     --brick-color-shadow: #1413122e;
     --brick-color-success-border: #7bd1ad;
     --brick-color-success-on-soft: #136e4c;
@@ -269,6 +287,7 @@
     --brick-color-warning-surface: #fff7e3;
     --brick-color-warning-text: #714904;
     --brick-shadow-floating: 0rem 0.75rem 2rem 0rem #14131218;
+    --brick-shadow-md: 0rem 0.25rem 0.5rem 0rem #1413121a, 0rem 0rem 0.0625rem 0rem #1413124d;
     --brick-shadow-modal: 0rem 1.5rem 4.5rem 0rem #1413122c;
     --brick-shadow-raised: 0rem 0.5rem 1.5rem -0.25rem #1413122e;
     --brick-shadow-sm: 0rem 0.125rem 0.375rem 0rem #1413122e;
@@ -317,6 +336,8 @@
     --brick-color-link-text-hover: #b7c1ff;
     --brick-color-link-text-pressed: #c6cfff;
     --brick-color-scrim: #000000b8;
+    --brick-color-selection-background: #7dd1bd;
+    --brick-color-selection-foreground: #05251e;
     --brick-color-shadow: #00000080;
     --brick-color-success-border: #237350;
     --brick-color-success-on-soft: #7bd1ad;
@@ -351,6 +372,7 @@
     --brick-color-warning-surface: #3d2707;
     --brick-color-warning-text: #f2bd59;
     --brick-shadow-floating: 0rem 0.75rem 2rem 0rem #00000042;
+    --brick-shadow-md: 0rem 0.25rem 0.5rem 0rem #0000003d, 0rem 0rem 0.0625rem 0rem #00000080;
     --brick-shadow-modal: 0rem 1.5rem 4.5rem 0rem #0000007a;
     --brick-shadow-raised: 0rem 0.5rem 1.5rem -0.25rem #00000080;
     --brick-shadow-sm: 0rem 0.125rem 0.375rem 0rem #00000080;

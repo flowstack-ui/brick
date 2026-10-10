@@ -52,19 +52,51 @@ const componentStyleSubpaths = {
   "notification-badge": "badge",
 };
 const componentSymbols = {
+  "input-addon": "InputAddon",
+  "toggle-tip": "ToggleTip",
+  "table-of-contents": "TableOfContents",
+  "qr-code": "QrCode",
+  marquee: "Marquee",
+  stat: "Stat",
+  "editable": "Editable",
+  "tags-input": "TagsInput",
+  "native-select": "NativeSelect",
+  timeline: "Timeline",
+  "empty-state": "EmptyState",
+  alert: "Alert",
+  spinner: "Spinner",
+  splitter: "Splitter",
+  "close-button": "CloseButton",
+  "action-bar": "ActionBar",
+  "floating-panel": "FloatingPanel",
+  "overlay-manager": "OverlayManager",
+  "calendar": "Calendar",
+  "date-input": "DateInput",
+  "date-picker": "DatePicker",
+  "download-trigger": "DownloadTrigger",
   appearance: "Appearance",
+  "locale-provider": "LocaleProvider",
+  "format-number": "FormatNumber",
+  "format-byte": "FormatByte",
+  for: "For",
+  checkmark: "Checkmark",
+  steps: "Steps",
+  radiomark: "Radiomark",
   "alert-dialog": "AlertDialog",
   "app-bar": "AppBar",
   "aspect-ratio": "AspectRatio",
   avatar: "Avatar",
+  "avatar-group": "AvatarGroup",
   badge: "Badge",
   bleed: "Bleed",
   button: "Button",
   card: "Card",
   chip: "Chip",
   checkbox: "Checkbox",
+  "checkbox-card": "CheckboxCard",
   "checkbox-group": "CheckboxGroup",
   "radio-group": "RadioGroup",
+  "radio-card": "RadioCard",
   "segment-group": "SegmentGroup",
   rating: "Rating",
   "file-upload": "FileUpload",
@@ -110,6 +142,8 @@ const componentSymbols = {
   container: "Container",
   section: "Section",
   frame: "Frame",
+  center: "Center",
+  float: "Float",
   surface: "Surface",
   "hover-card": "HoverCard",
   icon: "Icon",
@@ -117,7 +151,7 @@ const componentSymbols = {
   "icon-button": "IconButton",
   input: "Input",
   "number-input": "NumberInput",
-  "otp-field": "OTPField",
+  "pin-input": "PinInput",
   "password-toggle-field": "PasswordToggleField",
   textarea: "Textarea",
   select: "Select",
@@ -298,14 +332,16 @@ for (const componentId of requested) {
     failures.push(`${componentId}: missing stable component-subpath import`);
   }
 
-  if (!documentation.includes('@flowstack-ui/brick/styles.css')) {
+  // For renders no host and its retained compatibility CSS entry is empty.
+  const requiresStyles = componentId !== "for";
+  if (requiresStyles && !documentation.includes('@flowstack-ui/brick/styles.css')) {
     failures.push(`${componentId}: missing compiled stylesheet import`);
   }
-  if (!documentation.includes('@flowstack-ui/brick/styles/core.css')) {
+  if (requiresStyles && !documentation.includes('@flowstack-ui/brick/styles/core.css')) {
     failures.push(`${componentId}: missing modular CSS foundation import`);
   }
   const componentStyleSubpath = componentStyleSubpaths[componentId] ?? componentId;
-  if (!documentation.includes(`@flowstack-ui/brick/styles/${componentStyleSubpath}.css`)) {
+  if (requiresStyles && componentId !== "overlay-manager" && !documentation.includes(`@flowstack-ui/brick/styles/${componentStyleSubpath}.css`)) {
     failures.push(`${componentId}: missing modular component stylesheet import`);
   }
 

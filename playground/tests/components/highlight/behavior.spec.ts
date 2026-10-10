@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/highlight"); });
+test.beforeEach(async ({ page }) => { await page.goto("/highlight?qualification=1"); });
 
 test("Highlight preserves Atom matching, native semantics, and literal queries", async ({ page }) => {
   const overview = page.getByTestId("highlight-overview").locator(".brick-highlight");

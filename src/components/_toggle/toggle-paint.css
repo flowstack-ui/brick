@@ -1,0 +1,182 @@
+/* Shared pressed-command paint; owners retain geometry and behavior. */
+@layer brick.components {
+
+  :where(.brick-toggle, .brick-toggle-group-item, .brick-toolbar__toggle-item) {
+    border-color: transparent;
+    --brick-toggle-tone-solid: var(--brick-color-accent-solid);
+    --brick-toggle-tone-solid-hover: var(--brick-color-accent-solid-hover);
+    --brick-toggle-tone-solid-pressed: var(--brick-color-accent-solid-pressed);
+    --brick-toggle-tone-on-solid: var(--brick-color-accent-on-solid);
+    --brick-toggle-tone-soft: var(--brick-color-accent-soft);
+    --brick-toggle-tone-soft-hover: var(--brick-color-accent-soft-hover);
+    --brick-toggle-tone-soft-pressed: var(--brick-color-accent-soft-pressed);
+    --brick-toggle-tone-on-soft: var(--brick-color-accent-on-soft);
+    --brick-toggle-tone-border: var(--brick-color-accent-border);
+    --brick-toggle-tone-text: var(--brick-color-accent-text);
+    --brick-toggle-tone-outline-border: var(--brick-color-accent-solid);
+    --brick-toggle-tone-outline-foreground: var(--brick-color-text-primary);
+    background: var(--brick-toggle-rest-background, var(--brick-color-surface-subtle));
+    color: var(--brick-color-text-primary);
+    transition:
+      background-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
+      border-color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard),
+      color var(--brick-motion-duration-fast) var(--brick-motion-easing-standard);
+  }
+
+  :where(
+    .brick-toggle[data-tone="neutral"],
+    .brick-toggle-group[data-tone="neutral"] > .brick-toggle-group-item, .brick-toolbar__toggle-group[data-tone="neutral"] > .brick-toolbar__toggle-item
+  ) {
+    --brick-toggle-tone-solid: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 16%
+    );
+    --brick-toggle-tone-solid-hover: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 22%
+    );
+    --brick-toggle-tone-solid-pressed: color-mix(
+      in srgb,
+      var(--brick-color-surface-subtle),
+      var(--brick-color-text-primary) 28%
+    );
+    --brick-toggle-tone-on-solid: var(--brick-color-text-primary);
+    --brick-toggle-tone-soft: color-mix(in srgb, var(--brick-color-surface-base), var(--brick-color-text-primary) 12%);
+    --brick-toggle-tone-soft-hover: color-mix(in srgb, var(--brick-color-surface-base), var(--brick-color-text-primary) 16%);
+    --brick-toggle-tone-soft-pressed: color-mix(in srgb, var(--brick-color-surface-base), var(--brick-color-text-primary) 20%);
+    --brick-toggle-tone-on-soft: var(--brick-color-text-primary);
+    --brick-toggle-tone-border: var(--brick-color-border-default);
+    --brick-toggle-tone-text: var(--brick-color-text-primary);
+    --brick-toggle-tone-outline-border: var(--brick-color-border-strong);
+    --brick-toggle-tone-outline-foreground: var(--brick-color-text-primary);
+  }
+
+  :where(.brick-toggle:not([data-disabled]), .brick-toggle-group-item:not([data-disabled]), .brick-toolbar__toggle-item:not([data-disabled])) {
+    cursor: pointer;
+  }
+
+  :where(.brick-toggle:focus-visible, .brick-toggle-group-item:focus-visible, .brick-toolbar__toggle-item:focus-visible) {
+    z-index: 1;
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: var(--brick-toggle-focus-offset, var(--brick-border-focus-offset));
+  }
+
+  :where(.brick-toggle[data-state="on"], .brick-toggle-group-item[data-state="on"], .brick-toolbar__toggle-item[data-state="on"]) {
+    border-color: var(--brick-toggle-tone-border);
+    background: var(--brick-toggle-selected-background, var(--brick-toggle-tone-soft));
+    color: var(--brick-toggle-tone-on-soft);
+    box-shadow: none;
+  }
+
+  :where(.brick-toggle[data-variant="solid"][data-state="on"], .brick-toggle-group[data-variant="solid"] > .brick-toggle-group-item[data-state="on"], .brick-toolbar__toggle-group[data-variant="solid"] > .brick-toolbar__toggle-item[data-state="on"]) {
+    border-color: var(--brick-toggle-tone-solid);
+    background: var(--brick-toggle-tone-solid);
+    color: var(--brick-toggle-tone-on-solid);
+    box-shadow: none;
+  }
+
+  :where(.brick-toggle[data-variant="outline"], .brick-toggle-group[data-variant="outline"] > .brick-toggle-group-item, .brick-toolbar__toggle-group[data-variant="outline"] > .brick-toolbar__toggle-item) {
+    border-color: var(--brick-color-border-default);
+    background: transparent;
+  }
+
+  :where(.brick-toggle[data-variant="outline"][data-state="on"], .brick-toggle-group[data-variant="outline"] > .brick-toggle-group-item[data-state="on"], .brick-toolbar__toggle-group[data-variant="outline"] > .brick-toolbar__toggle-item[data-state="on"]) {
+    border-color: var(--brick-toggle-tone-outline-border);
+    background: transparent;
+    color: var(--brick-toggle-tone-outline-foreground);
+    box-shadow: none;
+  }
+
+  :where(.brick-toggle[data-variant="ghost"], .brick-toggle-group[data-variant="ghost"] > .brick-toggle-group-item, .brick-toolbar__toggle-group[data-variant="ghost"] > .brick-toolbar__toggle-item) {
+    background: var(--brick-toggle-rest-background, transparent);
+  }
+
+  :where(.brick-toggle[data-variant="ghost"][data-state="on"], .brick-toggle-group[data-variant="ghost"] > .brick-toggle-group-item[data-state="on"], .brick-toolbar__toggle-group[data-variant="ghost"] > .brick-toolbar__toggle-item[data-state="on"]) {
+    border-color: transparent;
+    background: var(--brick-toggle-selected-background, var(--brick-toggle-tone-soft));
+    box-shadow: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    :where(.brick-toggle:not([data-disabled]):hover, .brick-toggle-group-item:not([data-disabled]):hover, .brick-toolbar__toggle-item:not([data-disabled]):hover) {
+      background: color-mix(in srgb, var(--brick-color-surface-base), var(--brick-color-text-primary) 6%);
+    }
+
+    :where(.brick-toggle:not([data-disabled])[data-state="on"]:hover, .brick-toggle-group-item:not([data-disabled])[data-state="on"]:hover, .brick-toolbar__toggle-item:not([data-disabled])[data-state="on"]:hover) {
+      background: var(--brick-toggle-tone-soft-hover);
+    }
+
+    :where(.brick-toggle[data-variant="solid"][data-state="on"]:not([data-disabled]):hover, .brick-toggle-group[data-variant="solid"] > .brick-toggle-group-item[data-state="on"]:not([data-disabled]):hover, .brick-toolbar__toggle-group[data-variant="solid"] > .brick-toolbar__toggle-item[data-state="on"]:not([data-disabled]):hover) {
+      border-color: var(--brick-toggle-tone-solid-hover);
+      background: var(--brick-toggle-tone-solid-hover);
+    }
+
+    :where(.brick-toggle[data-variant="ghost"]:not([data-disabled]):hover, .brick-toggle-group[data-variant="ghost"] > .brick-toggle-group-item:not([data-disabled]):hover, .brick-toolbar__toggle-group[data-variant="ghost"] > .brick-toolbar__toggle-item:not([data-disabled]):hover) {
+      background: color-mix(in srgb, var(--brick-color-surface-base), var(--brick-color-text-primary) 6%);
+    }
+
+    :where(.brick-toggle[data-variant="ghost"]:not([data-disabled])[data-state="on"]:hover, .brick-toggle-group[data-variant="ghost"] > .brick-toggle-group-item:not([data-disabled])[data-state="on"]:hover, .brick-toolbar__toggle-group[data-variant="ghost"] > .brick-toolbar__toggle-item:not([data-disabled])[data-state="on"]:hover) {
+      background: var(--brick-toggle-tone-soft-hover);
+    }
+  }
+
+  :where(.brick-toggle:not([data-disabled]):active, .brick-toggle-group-item:not([data-disabled]):active, .brick-toolbar__toggle-item:not([data-disabled]):active) {
+    background: var(--brick-toggle-tone-soft-pressed);
+  }
+
+  :where(.brick-toggle[data-variant="solid"][data-state="on"]:not([data-disabled]):active, .brick-toggle-group[data-variant="solid"] > .brick-toggle-group-item[data-state="on"]:not([data-disabled]):active, .brick-toolbar__toggle-group[data-variant="solid"] > .brick-toolbar__toggle-item[data-state="on"]:not([data-disabled]):active) {
+    border-color: var(--brick-toggle-tone-solid-pressed);
+    background: var(--brick-toggle-tone-solid-pressed);
+  }
+
+  :where(.brick-toggle[data-disabled], .brick-toggle-group-item[data-disabled], .brick-toolbar__toggle-item[data-disabled]) {
+    border-color: var(--brick-color-border-subtle);
+    background: var(--brick-color-surface-subtle);
+    color: var(--brick-color-text-disabled);
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  :where(.brick-toggle[data-disabled][data-state="on"], .brick-toggle-group-item[data-disabled][data-state="on"], .brick-toolbar__toggle-item[data-disabled][data-state="on"]) {
+    border-color: var(--brick-color-border-subtle);
+    background: var(--brick-color-surface-base);
+    box-shadow: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.brick-toggle, .brick-toggle-group-item, .brick-toolbar__toggle-item) {
+      transition-duration: 0ms;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.brick-toggle, .brick-toggle-group-item, .brick-toolbar__toggle-item) {
+      border-color: ButtonText;
+      background: ButtonFace;
+      color: ButtonText;
+    }
+
+    :where(.brick-toggle[data-state="on"], .brick-toggle-group-item[data-state="on"], .brick-toolbar__toggle-item[data-state="on"]) {
+      border-color: Highlight;
+      background: ButtonFace;
+      color: ButtonText;
+      outline: 0.125rem solid Highlight;
+      outline-offset: -0.25rem;
+      box-shadow: none;
+    }
+
+    :where(.brick-toggle:focus-visible, .brick-toggle-group-item:focus-visible, .brick-toolbar__toggle-item:focus-visible) {
+      outline-color: Highlight;
+      outline-offset: var(--brick-toggle-focus-offset, var(--brick-border-focus-offset));
+    }
+
+    :where(.brick-toggle[data-disabled], .brick-toggle-group-item[data-disabled], .brick-toolbar__toggle-item[data-disabled]) {
+      border-color: GrayText;
+      color: GrayText;
+      opacity: 1;
+    }
+  }
+}

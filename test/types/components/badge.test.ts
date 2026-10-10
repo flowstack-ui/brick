@@ -8,7 +8,7 @@ import {
   type BadgeVariant,
 } from "../../../src/badge.js";
 
-const variants: BadgeVariant[] = ["soft", "solid", "outline"];
+const variants: BadgeVariant[] = ["soft", "solid", "outline", "surface", "plain"];
 const tones: BadgeTone[] = [
   "neutral",
   "accent",
@@ -17,7 +17,7 @@ const tones: BadgeTone[] = [
   "warning",
   "danger",
 ];
-const sizes: BadgeSize[] = ["sm", "md", "lg", "xl"];
+const sizes: BadgeSize[] = ["xs", "sm", "md", "lg", "xl"];
 const shapes: BadgeShape[] = ["rounded", "pill", "circle"];
 const ref = createRef<HTMLSpanElement>();
 const nativeProps: BadgeProps = {
@@ -67,3 +67,9 @@ void invalidShape;
 void invalidColor;
 void invalidSelected;
 void invalidRemove;
+
+createElement(Badge, {size: {sm:"xs", md:"xl", lg:"md"}, variant: {md:"plain", xl:"soft"}, radius:"sm"});
+// @ts-expect-error responsive recipes remain closed
+createElement(Badge, {size: {md:"huge"}});
+// @ts-expect-error empty responsive values are ambiguous
+createElement(Badge, {variant: {}});

@@ -1,5 +1,42 @@
 # Nav List manual-test protocol
 
+## Docs parity regression
+
+Use `/nav-list` for focused examples; use `/nav-list?qualification=1` for the
+exhaustive scenarios below. Results remain unperformed until a human records them.
+Check plain hover has no fill but keyboard focus is visible; inspect radius,
+meaningful unread count announcements, one custom indicator and null suppression.
+Close a section while its child has focus: focus must return to its trigger.
+Closed retained children must not be keyboard reachable. Check composed disabled
+links cannot open via modified clicks or the context menu. Repeat light/dark,
+RTL, narrow viewport, real browser zoom and a screen reader.
+
+## Independent gaps
+
+In Sections, compare the default and Group gap: 6 examples. The second has
+more space between groups, but the same spacing between links. Each example's
+Heading gap: 0 group removes only the heading-to-content gap. Repeat in RTL;
+check that labels and padded row backgrounds keep their alignment. Results
+require manual observation and are not implied by automated tests.
+
+## Inset and indentation regression
+
+In Sections, compare default/none row inset independently of default/none
+section indent. Flat titles and links should share their leading text column
+(apart from the row's 1px border), while padded rows keep their hover area.
+Repeat in RTL, with keyboard focus and at narrow widths. Verify the desktop
+sidebar and mobile Drawer both use flat static groups. Record actual results.
+
+## Density and hierarchy regression
+
+- Compare comfortable and compact at every size in Sizes and density. Text and
+  icons retain their size; compact reduces row padding and inter-row gaps.
+- Check section titles are primary/strong and idle links secondary in light
+  and dark. Check current, hover and keyboard focus remain distinguishable.
+- Check desktop shell compact navigation and the mobile Drawer's comfortable
+  navigation, including long labels, zoom and touch. Record actual results;
+  automated browser evidence does not complete physical-device checks.
+
 | Run information | Value |
 | --- | --- |
 | Component | Nav List |

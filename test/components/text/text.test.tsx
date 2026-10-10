@@ -18,6 +18,35 @@ import {
 } from "../../../src/text.js";
 
 describe("Text", () => {
+  it("shares presentation controls and responsive clamp resets with named exports", () => {
+    render(<Paragraph align="justify" fontStyle="italic" numeric="tabular-nums" decoration="underline" decorationStyle="dotted" lineClamp={{ initial: 1, md: "none", lg: 8 }}>Long copy</Paragraph>);
+    const node = screen.getByText("Long copy");
+    expect(node.tagName).toBe("P");
+    expect(node).toHaveAttribute("data-align", "justify");
+    expect(node).toHaveAttribute("data-font-style", "italic");
+    expect(node).toHaveAttribute("data-decoration", "underline");
+    expect(node).toHaveStyle({ fontVariantNumeric: "tabular-nums" });
+    expect(node).toHaveAttribute("data-line-clamp-md", "none");
+    expect(node.style.getPropertyValue("--_brick-text-clamp-lg")).toBe("8");
+    expect(node).not.toHaveAttribute("numeric");
+  });
+  it("rejects invalid numeric clamps instead of silently hiding content", () => {
+    for (const lineClamp of [0, -1, 1.5, NaN, Infinity]) {
+      expect(() => render(<Text lineClamp={lineClamp}>Copy</Text>)).toThrow(RangeError);
+    }
+  });
+  it("shares all explicit weights across named text exports without changing semantics", () => {
+    const weights: TextWeight[] = ["thin", "extralight", "light", "regular", "medium", "semibold", "bold", "extrabold", "black"];
+    const { rerender } = render(<Text>Default</Text>);
+    for (const weight of weights) {
+      rerender(<><Heading level={3} weight={weight}>Title</Heading><Paragraph weight={weight}>Body</Paragraph><Caption weight={weight}>Caption</Caption><Eyebrow weight={weight}>Eyebrow</Eyebrow></>);
+      for (const label of ["Title", "Body", "Caption", "Eyebrow"]) {
+        expect(screen.getByText(label)).toHaveAttribute("data-weight", weight);
+      }
+      expect(screen.getByRole("heading").tagName).toBe("H3");
+      expect(screen.getByText("Body").tagName).toBe("P");
+    }
+  });
   it("renders the adopted inline default without invented semantics", () => {
     const ref = createRef<HTMLElement>();
     render(<Text ref={ref}>Build dependable interfaces.</Text>);
@@ -51,9 +80,9 @@ describe("Text", () => {
 
   it("exposes every closed visual recipe through stable metadata", () => {
     const variants: TextVariant[] = [
-      "display", "display-sm", "display-md", "display-lg",
-      "title-lg", "title-md", "title-sm",
-      "body-lg", "body-md", "body-sm", "caption", "eyebrow",
+      "display", "display-sm", "display-md", "display-lg", "display-xl",
+      "title-xl", "title-lg", "title-md", "title-sm", "title-xs", "title-2xs",
+      "body-xl", "body-lg", "body-md", "body-sm", "caption", "eyebrow",
     ];
     const tones: TextTone[] = [
       "inherit", "primary", "secondary", "muted", "accent",
@@ -106,7 +135,7 @@ describe("Text", () => {
       <Heading
         level={1}
         align={{ initial: "center", lg: "start" }}
-        variant={{ initial: "display-sm", md: "display-md", lg: "display-lg" }}
+        variant={{ initial: "display-sm", md: "display-md", lg: "display-xl" }}
       >
         Responsive product heading
       </Heading>,
@@ -116,7 +145,7 @@ describe("Text", () => {
     expect(heading.tagName).toBe("H1");
     expect(heading).toHaveAttribute("data-variant", "display-sm");
     expect(heading).toHaveAttribute("data-variant-md", "display-md");
-    expect(heading).toHaveAttribute("data-variant-lg", "display-lg");
+    expect(heading).toHaveAttribute("data-variant-lg", "display-xl");
     expect(heading).toHaveAttribute("data-align", "center");
     expect(heading).toHaveAttribute("data-align-lg", "start");
   });
@@ -126,20 +155,25 @@ describe("Text", () => {
       <>
         <Heading level={3}>Project settings</Heading>
         <Heading level={2} variant="title-sm">Compact section</Heading>
+        <Heading level={4} variant="title-xs">Small feature title</Heading>
+        <Heading level={4} variant="title-2xs">Dense navigation group</Heading>
         <Paragraph>Readable supporting copy.</Paragraph>
-        <Paragraph variant="body-lg">Prominent supporting copy.</Paragraph>
+        <Paragraph variant="body-xl">Prominent supporting copy.</Paragraph>
         <Caption>5 Blocks</Caption>
         <Eyebrow>Application</Eyebrow>
       </>,
     );
 
     expect(screen.getByText("Project settings").tagName).toBe("H3");
-    expect(screen.getByText("Project settings")).toHaveAttribute("data-variant", "title-lg");
+    expect(screen.getByText("Project settings")).toHaveAttribute("data-variant", "title-md");
     expect(screen.getByText("Compact section").tagName).toBe("H2");
     expect(screen.getByText("Compact section")).toHaveAttribute("data-variant", "title-sm");
+    expect(screen.getByText("Dense navigation group").tagName).toBe("H4");
+    expect(screen.getByText("Small feature title")).toHaveAttribute("data-variant", "title-xs");
+    expect(screen.getByText("Dense navigation group")).toHaveAttribute("data-variant", "title-2xs");
     expect(screen.getByText("Readable supporting copy.").tagName).toBe("P");
     expect(screen.getByText("Readable supporting copy.")).toHaveAttribute("data-variant", "body-md");
-    expect(screen.getByText("Prominent supporting copy.")).toHaveAttribute("data-variant", "body-lg");
+    expect(screen.getByText("Prominent supporting copy.")).toHaveAttribute("data-variant", "body-xl");
     expect(screen.getByText("5 Blocks").tagName).toBe("SPAN");
     expect(screen.getByText("5 Blocks")).toHaveAttribute("data-variant", "caption");
     expect(screen.getByText("Application")).toHaveAttribute("data-variant", "eyebrow");

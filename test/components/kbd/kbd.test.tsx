@@ -4,6 +4,29 @@ import { describe, expect, it } from "vitest";
 import { Kbd, type KbdSize, type KbdVariant } from "../../../src/kbd.js";
 
 describe("Kbd", () => {
+  it("projects one semantic host and merges refs, attributes and classes", () => {
+    const outer = createRef<HTMLElement>();
+    const inner = createRef<HTMLElement>();
+    const { container, unmount } = render(<Kbd asChild ref={outer} tone="accent" className="outer"><kbd ref={inner} className="inner">Ctrl + K</kbd></Kbd>);
+    expect(container.querySelectorAll("kbd")).toHaveLength(1);
+    expect(outer.current).toBe(inner.current);
+    expect(outer.current).toHaveClass("brick-kbd", "outer", "inner");
+    expect(outer.current).toHaveAttribute("data-tone", "accent");
+    unmount();
+    expect(outer.current).toBeNull();
+    expect(inner.current).toBeNull();
+  });
+
+  it("supports all semantic tones without adding interaction", () => {
+    const { rerender } = render(<Kbd>Ctrl + K</Kbd>);
+    for (const tone of ["neutral", "accent", "info", "success", "warning", "danger"] as const) {
+      rerender(<Kbd tone={tone}>Ctrl + K</Kbd>);
+      const key = screen.getByText("Ctrl + K");
+      expect(key).toHaveAttribute("data-tone", tone);
+      expect(key).not.toHaveAttribute("tabindex");
+      expect(key).not.toHaveAttribute("role");
+    }
+  });
   it("renders native defaults and every closed recipe", () => {
     const ref = createRef<HTMLElement>();
     const { rerender } = render(<Kbd ref={ref}>Enter</Kbd>);

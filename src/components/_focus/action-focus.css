@@ -1,0 +1,23 @@
+/* Shared action placement. Atom/browser state owns when focus is visible. */
+@layer brick.components {
+  .brick-button[data-focus-ring="inside"]:focus-visible,
+  .brick-icon-button[data-focus-ring="inside"]:focus-visible {
+    outline: var(--brick-border-focus-width) solid;
+    outline-offset: calc(-1 * var(--brick-border-focus-width));
+  }
+
+  .brick-button[data-focus-ring="inside"]:focus-visible {
+    outline-color: var(--brick-button-foreground);
+  }
+
+  .brick-icon-button[data-focus-ring="inside"]:focus-visible {
+    outline-color: var(--brick-icon-button-foreground);
+  }
+
+  @media (forced-colors: active) {
+    .brick-button[data-focus-ring="inside"]:focus-visible,
+    .brick-icon-button[data-focus-ring="inside"]:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

@@ -1,6 +1,4 @@
 import {
-  Children,
-  cloneElement,
   createElement,
   forwardRef,
   type CSSProperties,
@@ -8,134 +6,217 @@ import {
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
-  type Ref,
 } from "react";
 import {
   responsiveDataAttributes,
   type ResponsiveBreakpoint,
   type ResponsiveValue,
 } from "../_responsive-value/ResponsiveValue.js";
+import type { SpacingValue } from "../_spacing-value/SpacingValue.js";
+import { stackHost } from "./stack-host.js";
+import { separatedChildren, StackSeparator } from "./StackSeparator.js";
 import {
-  responsiveSpacingStyles,
-  type SpacingValue,
-} from "../_spacing-value/SpacingValue.js";
+  basisValue,
+  cssValue,
+  enumValue,
+  factor,
+  spacingValue,
+  stackStyles,
+  stackValues,
+} from "./stack-values.js";
 
-export type { ResponsiveValue };
-export type { SpacingValue };
+export type { ResponsiveValue, SpacingValue };
 export type StackBreakpoint = ResponsiveBreakpoint;
 export type StackElement =
-  | "div" | "span" | "section" | "article" | "nav" | "header"
-  | "footer" | "main" | "aside" | "ul" | "ol" | "li";
+  | "div"
+  | "span"
+  | "section"
+  | "article"
+  | "nav"
+  | "header"
+  | "footer"
+  | "main"
+  | "aside"
+  | "ul"
+  | "ol"
+  | "li";
 export type StackItemElement =
-  | "div" | "span" | "section" | "article" | "header" | "footer"
-  | "aside" | "li";
-export type StackDirection = "row" | "column";
+  | "div"
+  | "span"
+  | "section"
+  | "article"
+  | "header"
+  | "footer"
+  | "aside"
+  | "li";
+export type StackDirection =
+  | "row"
+  | "column"
+  | "row-reverse"
+  | "column-reverse";
 export type StackGap = SpacingValue;
-export type StackAlign = "stretch" | "start" | "center" | "end" | "baseline";
+export type StackAlign = NonNullable<CSSProperties["alignItems"]>;
 export type StackJustify =
-  | "start" | "center" | "end" | "between" | "around" | "evenly";
-export type StackItemAlign = "auto" | StackAlign;
+  | NonNullable<CSSProperties["justifyContent"]>
+  | "between"
+  | "around"
+  | "evenly";
+export type StackItemAlign = NonNullable<CSSProperties["alignSelf"]>;
 export type StackItemFlex = "content" | "fixed" | "auto" | 1 | 2 | 3 | 4;
-
-type StackNativeProps = Omit<HTMLAttributes<HTMLElement>, "children" | "className" | "style">;
-
-export interface StackProps extends StackNativeProps {
-  as?: StackElement;
-  children?: ReactNode;
+export type StackWrap = boolean | "nowrap" | "wrap" | "wrap-reverse";
+export type StackAlignContent = NonNullable<CSSProperties["alignContent"]>;
+export type StackBasis = string | number;
+type NativeProps = Omit<
+  HTMLAttributes<HTMLElement>,
+  "children" | "className" | "style"
+>;
+type HostProps<T> =
+  | { as?: T; asChild?: false; children?: ReactNode }
+  | { as?: never; asChild: true; children: ReactElement };
+type LayoutProps = {
   direction?: ResponsiveValue<StackDirection>;
   gap?: ResponsiveValue<StackGap>;
+  rowGap?: ResponsiveValue<StackGap>;
+  columnGap?: ResponsiveValue<StackGap>;
   align?: ResponsiveValue<StackAlign>;
   justify?: ResponsiveValue<StackJustify>;
-  wrap?: ResponsiveValue<boolean>;
+  alignContent?: ResponsiveValue<StackAlignContent>;
+  wrap?: ResponsiveValue<StackWrap>;
+  inline?: ResponsiveValue<boolean>;
   startSpacing?: ResponsiveValue<StackGap>;
   endSpacing?: ResponsiveValue<StackGap>;
   className?: string;
   style?: CSSProperties;
   slot?: string;
-}
-
-export type HStackProps = Omit<StackProps, "direction">;
-export type VStackProps = Omit<StackProps, "direction">;
-
-type StackItemHostProps =
-  | { as?: StackItemElement; asChild?: false; children?: ReactNode }
-  | { as?: never; asChild: true; children: ReactElement };
-
-export type StackItemProps = StackNativeProps & StackItemHostProps & {
-  align?: ResponsiveValue<StackItemAlign>;
-  flex?: ResponsiveValue<StackItemFlex>;
-  className?: string;
-  style?: CSSProperties;
-  slot?: string;
 };
-
-function mergeClassName(base: string, className: string | undefined) {
-  return className ? `${base} ${className}` : base;
-}
-
-function composeRefs<T>(...refs: Array<Ref<T> | undefined>) {
-  return (value: T | null) => {
-    for (const ref of refs) {
-      if (typeof ref === "function") ref(value);
-      else if (ref) ref.current = value;
-    }
+type StackHostProps =
+  | (HostProps<StackElement> & { separator?: never })
+  | { as?: Exclude<StackElement, "ul" | "ol">; asChild?: false; children?: ReactNode; separator: ReactElement };
+export type StackProps = NativeProps & StackHostProps & LayoutProps;
+export type HStackProps = NativeProps & StackHostProps & Omit<LayoutProps, "direction">;
+export type VStackProps = HStackProps;
+export type StackItemProps = NativeProps &
+  HostProps<StackItemElement> & {
+    align?: ResponsiveValue<StackItemAlign>;
+    flex?: ResponsiveValue<StackItemFlex>;
+    grow?: ResponsiveValue<number>;
+    shrink?: ResponsiveValue<number>;
+    basis?: ResponsiveValue<StackBasis>;
+    order?: ResponsiveValue<number>;
+    marginInlineStart?: ResponsiveValue<SpacingValue>;
+    marginInlineEnd?: ResponsiveValue<SpacingValue>;
+    marginBlockStart?: ResponsiveValue<SpacingValue>;
+    marginBlockEnd?: ResponsiveValue<SpacingValue>;
+    className?: string;
+    style?: CSSProperties;
+    slot?: string;
   };
-}
 
-function mergeComposedProps(original: Record<string, unknown>, override: Record<string, unknown>) {
-  const merged = { ...original, ...override };
-  for (const [key, value] of Object.entries(override)) {
-    const current = original[key];
-    if (key.startsWith("on") && typeof current === "function" && typeof value === "function") {
-      merged[key] = (...args: unknown[]) => { value(...args); current(...args); };
-    } else if (key === "className" && typeof current === "string" && typeof value === "string") {
-      merged[key] = `${current} ${value}`;
-    } else if (key === "style" && current && value && typeof current === "object" && typeof value === "object") {
-      merged[key] = { ...current, ...value };
-    }
-  }
-  return merged;
-}
+const directions = ["column", "row", "column-reverse", "row-reverse"] as const;
+const recipes = {
+  content: [0, 1, "auto"],
+  fixed: [0, 0, "auto"],
+  auto: [1, 1, "auto"],
+  1: [1, 1, "0px"],
+  2: [2, 1, "0px"],
+  3: [3, 1, "0px"],
+  4: [4, 1, "0px"],
+} as const;
+const justifyValue = (value: StackJustify) =>
+  ({
+    between: "space-between",
+    around: "space-around",
+    evenly: "space-evenly",
+  })[value as "between"] ?? cssValue(value, "start");
+const metadata = <T,>(
+  attribute: `data-${string}`,
+  value: ResponsiveValue<T> | undefined,
+  options = {},
+) =>
+  value === undefined
+    ? {}
+    : responsiveDataAttributes(
+        attribute,
+        stackValues(value) as ResponsiveValue<T>,
+        options,
+      );
 
 function StackImpl(
   {
     as = "div",
+    asChild = false,
     direction = "column",
     gap = "0",
+    rowGap,
+    columnGap,
     align = "stretch",
     justify = "start",
+    alignContent,
     wrap = false,
-    startSpacing = "0",
-    endSpacing = "0",
+    inline,
+    startSpacing,
+    endSpacing,
     className,
     slot = "stack",
     style,
     children,
+    separator,
     ...props
   }: StackProps,
   ref: ForwardedRef<HTMLElement>,
 ) {
-  const wrapAttributes = responsiveDataAttributes("data-wrap", wrap, { defaultValue: false });
+  if (separator !== undefined && (asChild || as === "ul" || as === "ol")) throw new TypeError("Stack separator cannot be combined with asChild or a list host. Use explicit valid children instead.");
+  const wrapAttributes = metadata("data-wrap", wrap, { defaultValue: false });
   if (wrapAttributes["data-wrap"] === "true") wrapAttributes["data-wrap"] = "";
-  return createElement(as, {
+  const owner = {
     ...props,
-    ...responsiveDataAttributes("data-direction", direction, { alwaysInitial: true }),
-    ...responsiveDataAttributes("data-gap", gap, { alwaysInitial: true }),
-    ...responsiveDataAttributes("data-align", align, { defaultValue: "stretch" }),
-    ...responsiveDataAttributes("data-justify", justify, { defaultValue: "start" }),
+    ...metadata("data-direction", direction, { alwaysInitial: true }),
+    ...metadata("data-stack-direction", direction, { alwaysInitial: true }),
+    ...metadata("data-gap", gap, { alwaysInitial: true }),
+    ...metadata("data-align", align, { defaultValue: "stretch" }),
+    ...metadata("data-justify", justify, { defaultValue: "start" }),
+    ...metadata("data-start-spacing", startSpacing, { defaultValue: "0" }),
+    ...metadata("data-end-spacing", endSpacing, { defaultValue: "0" }),
     ...wrapAttributes,
-    ...responsiveDataAttributes("data-start-spacing", startSpacing, { defaultValue: "0" }),
-    ...responsiveDataAttributes("data-end-spacing", endSpacing, { defaultValue: "0" }),
-    className: mergeClassName("brick-stack", className),
+    "data-stack-layout": "",
+    "data-stack-separated": separator !== undefined ? "" : undefined,
+    "data-stack-edges":
+      startSpacing !== undefined || endSpacing !== undefined ? "" : undefined,
+    className: ["brick-stack", className].filter(Boolean).join(" "),
     "data-slot": slot,
     ref,
     style: {
-      ...responsiveSpacingStyles("--brick-stack-gap", gap),
-      ...responsiveSpacingStyles("--brick-stack-start-spacing", startSpacing),
-      ...responsiveSpacingStyles("--brick-stack-end-spacing", endSpacing),
+      ...stackStyles("--brick-stack-direction", direction, (v) =>
+        enumValue(v, directions, "column"),
+      ),
+      ...stackStyles("--brick-stack-gap", gap, spacingValue),
+      ...stackStyles("--brick-stack-row-gap", rowGap, spacingValue),
+      ...stackStyles("--brick-stack-column-gap", columnGap, spacingValue),
+      ...stackStyles("--brick-stack-align", align, (v) =>
+        cssValue(v, "stretch"),
+      ),
+      ...stackStyles("--brick-stack-justify", justify, justifyValue),
+      ...stackStyles("--brick-stack-align-content", alignContent, cssValue),
+      ...stackStyles("--brick-stack-wrap", wrap, (v) =>
+        typeof v === "boolean"
+          ? v
+            ? "wrap"
+            : "nowrap"
+          : enumValue(v, ["nowrap", "wrap", "wrap-reverse"], "nowrap"),
+      ),
+      ...stackStyles("--brick-stack-display", inline, (v) =>
+        enumValue(v, [true, false], "false") === "true"
+          ? "inline-flex"
+          : "flex",
+      ),
+      ...stackStyles("--brick-stack-start-spacing", startSpacing, spacingValue),
+      ...stackStyles("--brick-stack-end-spacing", endSpacing, spacingValue),
       ...style,
     },
-  }, children);
+  };
+  return asChild
+    ? stackHost(children, owner, ref)
+    : createElement(as, owner, separator === undefined ? children : separatedChildren(children, separator));
 }
 
 function StackItemImpl(
@@ -144,6 +225,14 @@ function StackItemImpl(
     asChild = false,
     align = "auto",
     flex = "content",
+    grow,
+    shrink,
+    basis,
+    order,
+    marginInlineStart,
+    marginInlineEnd,
+    marginBlockStart,
+    marginBlockEnd,
     className,
     slot = "stack-item",
     style,
@@ -152,51 +241,84 @@ function StackItemImpl(
   }: StackItemProps,
   ref: ForwardedRef<HTMLElement>,
 ) {
-  const itemProps = {
+  const recipe = (value: StackItemFlex, index: number) =>
+    String((recipes[value] ?? recipes.content)[index]);
+  const owner = {
     ...props,
-    ...responsiveDataAttributes("data-align", align, { defaultValue: "auto" }),
-    ...responsiveDataAttributes("data-flex", flex, { alwaysInitial: true }),
-    className: mergeClassName("brick-stack-item", className),
+    ...metadata("data-align", align, { defaultValue: "auto" }),
+    ...metadata("data-flex", flex, { alwaysInitial: true }),
     "data-stack-item-composed": asChild ? "" : undefined,
+    "data-stack-item": "",
+    "data-stack-margin-inline-start":
+      marginInlineStart !== undefined ? "" : undefined,
+    "data-stack-margin-inline-end":
+      marginInlineEnd !== undefined ? "" : undefined,
+    "data-stack-margin-block-start":
+      marginBlockStart !== undefined ? "" : undefined,
+    "data-stack-margin-block-end":
+      marginBlockEnd !== undefined ? "" : undefined,
+    className: ["brick-stack-item", className].filter(Boolean).join(" "),
     "data-slot": slot,
     ref,
-    style,
+    style: {
+      ...stackStyles("--brick-stack-item-recipe-grow", flex, (v) =>
+        recipe(v, 0),
+      ),
+      ...stackStyles("--brick-stack-item-recipe-shrink", flex, (v) =>
+        recipe(v, 1),
+      ),
+      ...stackStyles("--brick-stack-item-recipe-basis", flex, (v) =>
+        recipe(v, 2),
+      ),
+      ...stackStyles("--brick-stack-item-grow", grow, (v) => factor(v, 0)),
+      ...stackStyles("--brick-stack-item-shrink", shrink, (v) => factor(v, 1)),
+      ...stackStyles("--brick-stack-item-basis", basis, basisValue),
+      ...stackStyles("--brick-stack-item-order", order, (v) =>
+        factor(v, 0, true),
+      ),
+      ...stackStyles("--brick-stack-item-align", align, (v) =>
+        cssValue(v, "auto"),
+      ),
+      ...stackStyles(
+        "--brick-stack-item-margin-inline-start",
+        marginInlineStart,
+        spacingValue,
+      ),
+      ...stackStyles(
+        "--brick-stack-item-margin-inline-end",
+        marginInlineEnd,
+        spacingValue,
+      ),
+      ...stackStyles(
+        "--brick-stack-item-margin-block-start",
+        marginBlockStart,
+        spacingValue,
+      ),
+      ...stackStyles(
+        "--brick-stack-item-margin-block-end",
+        marginBlockEnd,
+        spacingValue,
+      ),
+      ...style,
+    },
   };
-
-  if (asChild) {
-    const child = Children.only(children) as ReactElement<Record<string, unknown>>;
-    const childRef = (
-      "ref" in child.props
-        ? child.props.ref
-        : (child as ReactElement & { ref?: Ref<HTMLElement> }).ref
-    ) as Ref<HTMLElement> | undefined;
-    return cloneElement(child, mergeComposedProps(child.props, {
-      ...itemProps,
-      ref: childRef || ref ? composeRefs(childRef, ref) : undefined,
-    }));
-  }
-
-  return createElement(as, itemProps, children);
+  return asChild
+    ? stackHost(children, owner, ref)
+    : createElement(as, owner, children);
 }
-
-const StackRoot = forwardRef<HTMLElement, StackProps>(StackImpl);
-StackRoot.displayName = "Stack";
-
-const StackItem = forwardRef<HTMLElement, StackItemProps>(StackItemImpl);
-StackItem.displayName = "Stack.Item";
-
-export const Stack = Object.assign(StackRoot, { Item: StackItem });
-
-export const HStack = forwardRef<HTMLElement, HStackProps>(
-  function HStack({ align = "center", ...props }, ref) {
-    return <StackRoot {...props} align={align} direction="row" ref={ref} />;
-  },
-);
-HStack.displayName = "HStack";
-
+const Root = forwardRef<HTMLElement, StackProps>(StackImpl);
+Root.displayName = "Stack";
+const Item = forwardRef<HTMLElement, StackItemProps>(StackItemImpl);
+Item.displayName = "Stack.Item";
+export const Stack = Object.assign(Root, { Item, Separator: StackSeparator });
+export const HStack = forwardRef<HTMLElement, HStackProps>(function HStack(
+  { align = "center", ...props },
+  ref,
+) {
+  return <Root {...props} direction="row" align={align} ref={ref} />;
+});
 export const VStack = forwardRef<HTMLElement, VStackProps>(
   function VStack(props, ref) {
-    return <StackRoot {...props} direction="column" ref={ref} />;
+    return <Root {...props} direction="column" ref={ref} />;
   },
 );
-VStack.displayName = "VStack";

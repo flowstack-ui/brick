@@ -4,6 +4,475 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
 
 ## Unreleased
 
+Planned release: 0.3.0.
+
+### Changed
+
+- Adopt published Atom 0.27.3 as an exact dependency. Editable autoresize and
+  live disclosure measurement coalesce observer-driven writes outside observer
+  delivery, with pending work cancelled on cleanup.
+
+- Keep collapsed variable-height Toast cards within their fixed viewport anchor.
+
+- Prevent Table body-text fragments leaking above sticky headers at fractional
+  HiDPI coordinates without changing layout, sticky offsets or content opacity.
+
+- Make CSS source maps package-relative and deterministically indexed while
+  retaining original debug locations. Reject machine-specific source paths in
+  package qualification.
+
+- Add independent translucent surface controls to Surface, AppBar and BottomNavigation, preserving legacy blurred usage.
+- Introduce constrained theme-contract v2; upgrade to Theme 0.2.0 or a compatible dual-schema compiler before consuming this contract.
+
+- Adopt published Atom 0.27.2 as an exact dependency, replacing the local
+  qualification candidate with the registry-backed release and preserving menu
+  trigger focus when native closing-content blur moves focus to the document body.
+
+- QR Code adds responsive display sizes, shared defaults, graphic unstyled,
+  scoped IDs and host composition. Downloads use finished Button/IconButton
+  recipes; composed refs and root-scoped overlay customization are corrected.
+
+- Timeline adds subtle and responsive recipes, compact date columns, shared visual
+  defaults and unstyled parts. Inherited marker customization and composed ref
+  cleanup are corrected, with refined marker typography and content spacing.
+
+- Carousel adds measured pages, multiple and variable-size slides, vertical layout,
+  mouse drag, a shared controller/provider, automatic indicators and progress.
+  Controls use shared action recipes. Loop transport, reduced motion, visible-peer
+  access, narrow layout and inherited customization are corrected.
+
+- Feed adds responsive recipes, styling defaults, named parts and source-paired
+  documentation. Inherited customization tokens and hidden-item dividers now work.
+
+- Data List adds responsive compact recipes, subtle/bold emphasis and shared defaults;
+  fixes reverse orientation, long-content containment and grouped term/value layout.
+
+- Tree adds controllers, independent disclosure/checking, lazy loading and interactive
+  rows. Tree Grid adds interactive cells, disclosure and column resizing. Both
+  support responsive recipes, logical depth and focused integration examples.
+
+- Table and Data Grid share responsive row geometry and recipes. Data Grid adds
+  interactive-cell focus, page/range selection, row headers, logical sticky cells,
+  keyboard/pointer column resizing, and optional engine/virtualization examples.
+
+- PinInput adds seven responsive field variants, neutral/accent tones, coherent
+  invalid and underline focus, and focused form-integration documentation.
+
+- Stat adds responsive sizing, group semantics, Atom-backed projection and
+  focused docs examples. Corrected progress composition and custom-indicator
+  paint; aligned numeral styling and comparison spacing.
+
+- Chip adds subtle and contrast, sparse responsive size/variant/density,
+  Atom-backed static-part projection and unstyled delegation. Correct palette
+  borders, close foregrounds, compact geometry and unavailable-action fading
+  while preserving defaults. Add 18 focused source-paired examples and expanded
+  regression coverage.
+
+- Accordion adds controller/provider composition, context readers, configurable
+  IDs, safe retained/Activity lifecycle, responsive recipes, subtle and enclosed
+  variants, and unstyled trigger composition. Collapsible adds responsive recipes
+  and an older-React Activity fallback. Disclosure motion, nested indicators,
+  disabled styling and feature-focused examples are aligned.
+
+- Checkmark supports responsive variants; Checkmark and Radiomark add passive invalid styling and documented palette hooks. Their recipes align subtle, inverted, large artwork and outlined-dot treatments, with a disabled cursor.
+
+- Calendar gains focused selection, constraints, week-number and booking examples;
+  Calendar, Date Input and Date Picker are grouped under Date and Time.
+  Root and date/navigation triggers inherit Atom's safe `asChild` composition.
+- Calendar today markers are underlined; disabled calendars use one fade and a
+  disabled cursor. Header controls, weekdays, hover and row spacing are refined.
+
+- Radio Group adds responsive selection recipes, native open item composition,
+  controller/provider, contexts and source-paired form examples. Default md now
+  uses a 20px solid mark; outline is the nearest earlier visual treatment.
+
+- Swipeable Item adds controller composition, Radius and action spacing, explicit per-side full swipe, dismissal options, interruptible theme-driven motion and source-paired documentation examples.
+- Textarea now provides all seven responsive field variants, rebuilt documentation examples including optional React Hook Form integration, and focused browser qualification for real manual and bounded automatic resizing.
+- Image supports responsive fit, CSS focal position and numeric ratio, plus Root srcSet metadata for server-rendered source state.
+
+- Textarea preserves complete-boundary manual resize, uses bottom-only underline focus with zero horizontal inset, and aligns hover, focus, invalid, disabled, and read-only precedence with Input, Select, and NumberInput.
+- Image logical focal presets honor root-local direction and nested opposite-direction scopes.
+
+- Add responsive Icon sizes, createIcon and IconPropsProvider with explicit precedence.
+- Icon preserves composed handlers and React 18/19 refs through Atom composeHost; enforce direct SVG naming and nonfocusability.
+- Normalize wrapped artwork in Button, Toggle and Input slots; document and qualify the new surfaces.
+
+- Expand Switch with Atom-owned compound forms and controller composition,
+  responsive size/variant recipes, semantic tones and state-aware indicators.
+  Preserve standalone Root while fixing checked interaction colors, effective
+  RTL travel, raised rail/thumb separation and read-only clarity.
+
+- Complete PasswordToggleField parity with seven responsive field recipes,
+  independent Input/Toggle focus presentation, LocaleProvider-backed action
+  labels, source-paired public examples, and privacy-safe form and
+  strength-integration guidance while retaining Atom-owned behavior.
+
+- `InputAddon` provides external noninteractive segments with responsive field recipes and control sizes.
+
+- `Input`, `Select`, `NativeSelect`, `NumberInput` and `PasswordToggleField` share seven responsive field recipes with bottom-only underline focus and consistent invalid feedback.
+- `Input` supports intrinsic text adornments and attached Group boundaries; optional form, mask and payment formatting integrations remain application-owned.
+
+- Refine SkipLink focus-reveal styling and change its default Target to div; use an explicit main with asChild/render to retain a landmark. Preserve native modified activation and document-local focus destinations.
+
+- Add `CheckboxCard` for rich independent form choices, with compound anatomy, group integration and responsive recipes.
+
+- Keep floating BottomNavigation bars centered in RTL as well as LTR.
+
+- Coordinate Checkbox, CheckboxGroup and Checkmark selection recipes with
+  responsive sizes, tones and radius. Add Checkbox controller/provider and
+  indicator composition, group selection limits and linked-label item bindings.
+
+- Expand Toolbar with Group/Input, root disabled, discoverable disabled actions, responsive seven-size recipes and shared Button/Toggle presentation. Outline is transparent; surface retains a filled border. Replace legacy toolbar-item variables with shared control props.
+
+- Expand BottomNavigation with responsive sizing/arrangement, radius, named
+  elevation and independent selected paint. Outline is now transparent; use
+  surface for the previous opaque treatment. Preserve native names and composed
+  button/link behavior, including current-document selection semantics.
+
+- Expand Toast with isolated managers, lifecycle controls and tracked promises.
+  Add independent surface/solid presentation, tones, shared radius and responsive
+  logical spacing; refine compact anatomy and measured stack geometry.
+
+- Add responsive NotificationBadge sizes and corner placement, logical offsets,
+  optional borders and localized counts. Preserve IconButton artwork sizing
+  for both direct icons and nested notification badges.
+
+- Expand Progress with responsive variants, inline layout, stripes, controller
+  composition and raw-value formatting. Refine ProgressCircle size/stroke
+  geometry, centered typography, indeterminate motion and responsive composition.
+
+- Add responsive Spinner sizes and custom artwork projection; refine RTL arc paint.
+
+- Fix Skeleton loading paint and geometry; add host composition, radius,
+  equal sizing, line controls and refined motion.
+
+- Polish Alert typography and indicator geometry; add responsive recipes, radius and focused content customization.
+
+- Correct EmptyState spacing and title rhythm; support responsive density and alignment.
+
+- Breadcrumb adds a styled Trigger, responsive sizes/variants and semantic tones.
+- Ship icon gaps, directional separators, linked-current focus and token overrides.
+- Change default geometry and plain decoration; subtle preserves the old interaction underline.
+- Add real menu/router/closed-wrapper examples and preserve native landmark labels.
+
+- Expand Pagination with count/page-size state, controller/provider access,
+  first/last controls, custom hosts, summaries and shared Button presentation.
+  Container variants migrate to Surface composition.
+
+- Clean up Avatar separation edges with an in-box border and omit peer
+  separation when AvatarGroup renders a single item, including overflow-only output.
+
+- Polish SegmentGroup, add neutral/accent/contrast tones and Items; fix named
+  form separators and initial selection paint using Atom-owned indicator geometry.
+
+- Add NavList plain styling, shared radius, meaningful trailing content and
+  replaceable disclosure artwork; correct retained-content hiding and focus clipping.
+
+- Unify overlay arrow artwork, theme paint and the shared arrow-size seed across
+  menus, popovers, hover cards, tooltips and selects; preserve owner APIs.
+
+- Enlarge menu arrows to rotated-square proportions and paint only their exposed
+  edges, masking the popup border at the join. Preserve custom arrow children.
+
+- Keep action-menu arrows above the popup shadow so their theme-colored paint
+  remains visible at the popup boundary.
+
+- Appearance establishes inherited native foreground in explicit light/dark scopes without adding background paint, and preserves callback-ref cleanup through Atom composition.
+
+- Prevent Sidebar reopening height flicker and preserve composed action styling
+  on its triggers.
+
+- Preserve Section sparse spacing, add transparent Surface paint and shared
+  elevation roles, and correct Surface host-ref composition and Scrim direction.
+- Correct Sidebar direct-trigger geometry and floating offcanvas gap; add
+  independent borders and public state context, preserving region events and refs.
+
+- Expand HoverCard with shared valued triggers, a controller/provider API,
+  positioning and presence options, independent inset and radius recipes, and
+  refreshed documentation examples. Preserve passive previews and native links.
+
+- Align the shared `2xs` form-control minimum and ColorPicker control recipe to
+  24px, matching Button, IconButton and Toggle. Preserve intrinsic growth for
+  multiline controls and nested action targets.
+
+- Expand List with inherited typography, semantic marker tones, responsive nested
+  indentation and static part composition. Align leading visuals to the first
+  line and respect native ordered-list marker types.
+
+- Add Em static asChild composition and explicit data-slot, preserving its legacy
+  slot alias and inherited typography.
+
+- Expand Highlight with text/plain variants, semantic tones and the public
+  findHighlightSegments utility; align Mark color pairs and fix forced colors.
+
+- Expand Mark with text variant, semantic tones and static asChild composition.
+  Fix forced-colors precedence and use semantic neutral surface colors.
+
+- Add Kbd semantic tones and static asChild composition; refine compact sizes,
+  raised keycap borders and consistent plain padding.
+
+- Expand Blockquote with semantic tones, subtle/solid rules, static asChild
+  composition and a stable SVG quote mark. Refine default typography and spacing.
+
+- Expand Code sizes, semantic tones, surface recipes and static `asChild`
+  composition. Add CodeBlock line metadata, compact typography, local color
+  schemes and an optional Shiki token adapter without a runtime Shiki dependency.
+
+- Add responsive Link sizes and parent href typing for asChild. Refine LinkBox
+  with shared radius selection, inherited title weight and a stable stretched target.
+
+- Expand Prose document styling with responsive sizing, content boundaries,
+  reading measure and explicit code/table layout options. Add typography
+  decoration, numeric styling, justification and responsive line clamping.
+
+- Expand ColorSwatch sizing and ColorPicker responsive recipes, subtle appearance,
+  controller composition, channel helpers, and default editing anatomy.
+
+- Add `ToggleTip` for compact click-open contextual help with shared Popover behavior.
+
+- Add Button subtle/surface/plain variants, loading presentation options and ButtonGroup.
+- Support new shared recipes and ButtonGroup defaults in IconButton.
+
+- Add Stack separator composition and the decorative Stack.Separator part.
+
+- Document For under Utilities with executable examples and clarify that the
+  wrapper-free renderer requires no stylesheet of its own.
+
+- Add conditional Show with typed values and fallback, and responsive Show/Hide
+  projection preserving child layout and refs. Add Utilities documentation pages.
+
+- Prevent duplicate quotation borders and extra content padding when Blockquote
+  is composed inside Prose.
+
+- Expand Collapsible with highlight control, unstyled trigger composition,
+  controller/provider/context, partial previews, explicit mount policies,
+  Activity hiding, exit callbacks, inner inset and optional motion.
+
+- Preserve composed control geometry when Frame dimensions are omitted or
+  activate at a later breakpoint. Reject invalid numeric constraints and
+  preserve callback-ref cleanup during layout composition.
+- Add ZStack Root `asChild`, preserve control minimum sizes, and isolate
+  responsive Item spacing without resetting unauthored host margins.
+
+- Expand Grid with native responsive templates, areas, flow, line placement
+  and Root composition. Expand Group with responsive layout, wrapping,
+  child exclusion, stacking and single-host composition.
+
+- Add `Float` with Root and Anchor for static edge attachment, signed responsive
+  offsets, RTL placement and one-host composition.
+
+- Expand Stack flex layout with reverse directions, independent gaps,
+  multiline alignment, inline/asChild, and Item longhands/order/logical margins.
+
+- Add Container `asChild` for one-host composition with existing components,
+  preserving native defaults and width/gutter recipes.
+
+- Add an optional compound Checkbox API for independently interactive links in
+  labels, with existing Atom field/form behavior and unchanged closed Checkbox.
+
+- Preserve text baselines when composing inline Center with Link; retain
+  existing middle alignment for inline Square and Circle.
+
+- Refine Bleed documentation with shared preview/source examples, logical-edge
+  and responsive demonstrations, props and TOC; correct inset-token examples
+  without changing Bleed's runtime API.
+
+- Add independent NavList Root and Section gap props for group spacing without
+  changing link density or requiring consumer CSS.
+
+- Add Sidebar region inset and independent NavList row inset/section indent
+  controls; preserve Sidebar asChild region content without a duplicate host.
+
+- Add a theme-aware, low-priority focus-visible fallback to the optional reset,
+  with system-color fallback and import-order-safe cascade placement. Preserve
+  Switch's single track-owned ring.
+
+- Add NavList compact density independently of size, and primary section labels.
+
+- Add `TableOfContents` with native document links, scoped reading-position
+  feedback, plain/line recipes and an optional current-location indicator.
+
+- Make AspectRatio outline transparent while retaining its border.
+
+- Add generated standard numeric `aspectRatios` and matching CSS foundation
+  tokens. Migrate Image/AspectRatio to shared Radius; use subtle/control/surface
+  to preserve former sm/md/lg semantics. Omission retains no rounding.
+- Separate AspectRatio documentation from its explicit qualification view;
+  document focused composition, inherited defaults and same-host Frame use in
+  canonical Agent Knowledge.
+
+- AspectRatio supports CSS-only responsive numeric ratios and fills its immediate
+  element child by default. Use `contentLayout="flow"` to retain natural-flow
+  child layout.
+
+- Add `focusRing="inside"` to Button and IconButton, inherited by CloseButton
+  and forwarded by DownloadTrigger; omitted placement remains outside. Repair
+  forced-colors field focus in PasswordToggleField and NumberInput, and use
+  contained focus outlines for Tabs and CodeBlock's collapse action. Add a
+  source-policy guard with explicit focus ownership for every component.
+
+- Add neutral Tabs tone and flatten soft selection without changing focus
+  geometry. Add CodeBlock CopyTrigger asChild for icon-only composition using
+  its existing Clipboard behavior.
+
+- Make Link default to `underline`, add interaction-only `subtle`, preserve
+  decoration-free `plain`, and deprecate explicit `theme` as a compatibility
+  option. Soften theme-adaptive underline paint while retaining high-contrast
+  fallbacks, inherited decoration overrides and native anchor behavior.
+
+- Begin token-only radius normalization: export `Radius`, expose core radius
+  foundations, and add boundary selection to the owners listed in the Radius
+  guide. Preserve omitted defaults, legacy shapes and independent popup radii.
+  Repair attached ToggleGroup corners and clamp nested action radii to zero.
+  Remaining owner migration and coordinated default changes are not complete.
+- Add `QrCode`: scan-safe size recipes, accessible SVG anatomy, logo overlays,
+  shared controllers and SVG/PNG/JPEG/WebP download actions powered by Atom.
+
+- Add `TagsInput` with Atom-owned transactions, optional suggestions, native JSON forms and responsive control recipes.
+
+- Replace `OTPField` with `PinInput` (no alias), array values, opt-in OTP,
+  controller parts and full-code validity. Keep the seven shared form sizes
+  and add transparent outline with native password masking delegated to Atom.
+
+- Add `Editable` inline editing with preview/editor geometry, controlled draft
+  transactions, cancellation, multiline autoresize and native form integration.
+
+- Add `NativeSelect` with browser-native options and form behavior, seven
+  responsive control sizes and the seven shared field recipes.
+
+- Add `Marquee` with Atom-owned motion, safe replicas and Brick-owned track and fade styling.
+
+- Add `Timeline` static chronology with logical content tracks, fixed marker
+  sizes, semantic tones and stretching decorative connectors.
+
+- `EmptyState` adds consistent empty-content hierarchy, density and authored action composition.
+- `Stat` adds native metric presentation, units, grouped sizes and trend indicators.
+- `Chip` adds compact density, xl, semantic surface/solid recipes and independent action/adornment parts while preserving existing defaults.
+
+- `Alert` adds composable persistent feedback with semantic palettes and explicit announcement policy.
+
+- `Spinner` provides a reusable visual loading ring with semantic colors,
+  sizes, thickness, customization and reduced-motion support.
+
+- Fixed shared Button/IconButton loading spinner centering when animations
+  are disabled, including disabled-loading and RTL presentation.
+
+- Calendar supports seven scalar sizes with density compatibility. Checkmark
+  and Radiomark add `filled` and `inverted` visual recipes.
+
+- Nested DatePicker content remains above Dialog content; custom triggers
+  preserve their supplied control geometry. DateInput spacing, nested corners
+  and fine-pointer type follow control sizing while touch retains a 16px floor.
+- Vertical Steps place progress beside content and wrap within narrow hosts.
+
+- `Calendar`, `DateInput` and `DatePicker` provide typed, localized date selection and entry with shared control sizing and one coordinated calendar popup. `date-value` exposes immutable date helpers. `LocaleProvider` adds date-action and endpoint labels.
+
+- `CloseButton` provides a localized standard close action; `DownloadTrigger`
+  combines Atom download behavior with Button presentation.
+
+- `Splitter` presents resizable adjacent panels with a theme-aware grip.
+
+- Added `Steps` for ordered workflows with controlled state, validation gates,
+  semantic progress markers, localized numbers, and solid/subtle recipes.
+
+- Refined NumberInput's split stepper with proper minus/plus artwork and a
+  readable numeric value scale; added Switch `xs`, `solid`, and `raised`
+  recipes with polished 2:1 geometry; and updated elevated Card to a
+  borderless raised surface with layered medium elevation.
+
+- Expanded the semantic radius ladder through `4xl` while preserving legacy
+  aliases, and expanded Text/Heading across the complete 2xs–9xl type scale
+  with named body, title, and display recipes. Heading now defaults to the
+  explicit 20px `title-md` recipe.
+- Normalized Input, Textarea, Select, MultiSelect, Combobox, NumberInput,
+  PasswordToggleField, and PinInput on one responsive 2xs–2xl control-size
+  contract. Their 44px `lg` recipe is now the shared default and sparse
+  breakpoint objects inherit that default below their first override.
+- Added Select `variant="ghost"` for a borderless, transparent resting trigger
+  with a restrained hover surface and the standard focus-visible ring.
+- Added Atom-backed `ColumnGroup` and `Column` parts across Table, DataGrid,
+  and TreeGrid so native column sizing hints no longer require block CSS.
+- Added transparent/base surface, semantic border tone, independent column
+  borders, native table layout, and vertical cell alignment recipes across
+  Table, DataGrid, and TreeGrid; DataGrid and TreeGrid also gained striping
+  and sticky-header parity, while Tree gained semantic border tones.
+- Added Table `Root minInlineSize` and `Row variant="section"` so comparison
+  widths and row-group headings no longer require Block selectors.
+
+- Expanded Button and IconButton to the seven-step `2xs`–`2xl` action scale,
+  preserved their visible 44px default as `lg`, and added sparse responsive
+  size values that inherit the component default without a required `initial`.
+- Expanded the shared `ResponsiveValue` contract so every existing responsive
+  Brick owner accepts a non-empty sparse breakpoint object while preserving
+  CSS-only deterministic rendering.
+
+- Added `LocaleProvider` with locale-derived logical direction and overridable
+  Brick-authored accessibility text; added `FormatNumber` and `FormatByte`
+  components plus string helpers that inherit its locale.
+- Added the wrapper-free `For` collection helper with an explicit fallback.
+- Fixed `For` inference for heterogeneous readonly collection unions by making
+  `each` authoritative for the callback item type.
+- Added passive `Checkmark` and `Radiomark` visuals for compositions whose
+  existing parent already owns selection behavior and accessible state.
+- Added a 16px `xs` Badge recipe with 10px text for compact percentage and
+  metadata labels.
+- Added orthogonal Icon `emphasis="text" | "solid"` paint selection and
+  expanded the closed Icon scale with inherited, 28px, and 40px recipes.
+- Added a closed `inset` recipe to List so ordinary rows can retain the
+  existing size-owned inline padding or align flush with sibling content.
+- Added a closed `align` recipe to List for start-, center-, or end-aligned
+  structured rows without consumer CSS.
+- Added `RadioCard` for rich single-choice cards, a reusable Number Input
+  `Control` and square `stepper` layout, and supported decorative content in
+  Slider thumbs.
+
+- Added `Center`, `Square`, and `Circle` as one responsive layout family for
+  explicit two-axis centering and non-shrinking equal geometry.
+- Added Badge `variant="surface"` for soft semantic fill with a visible
+  tone-specific boundary.
+- Added `AvatarGroup` for reusable overlapping identity stacks with explicit,
+  accessible overflow composition.
+- Added `Dialog.Close placement="corner"` for authored icon-only dismiss
+  controls that need the standard logical top-end Content inset.
+- Added mobile-first responsive Button sizes so one semantic action can change
+  its complete recipe at shared Brick breakpoints.
+
+- Refined Segment Group with component-owned label sizing and inline padding,
+  inset item separators, and a borderless selected indicator with a shallow
+  appearance-aware elevation shadow.
+- Kept semantic Icon palettes independent from paint strength by replacing the
+  compound `accent-solid` tone with `tone="accent" emphasis="solid"`.
+- Refined Button's `md` and `xl` recipes to use the intended control typography,
+  padding, icon geometry, and 44px/64px targets.
+- Expanded Text and Heading with a compact 14px `title-2xs` recipe and a
+  small 16px `title-xs` recipe.
+- Made the optional reset use consistent grayscale font smoothing on macOS
+  browsers without changing authored typography values.
+
+- Added a contrast-paired accent-subtle Surface recipe through
+  `tone="accent" level="subtle"` for quiet branded and conversion planes.
+- Added an opaque, appearance-aware native text-selection background and
+  foreground pair to the atomic accent theme contract. Selection now keeps
+  predictable contrast over neutral, accent, status, and image-backed content,
+  while forced-colors mode retains system Highlight colors.
+
+- Preserved opaque render-function descendants such as `For` while Select and
+  MultiSelect derive static option labels, so closing a collection popup no
+  longer replaces the helper's required child callback.
+- Kept large Badge labels at the compact 14px scale while preserving the
+  recipe's 28px container and padding.
+- Kept Color Picker channel thumbs above their tracks at middle and endpoint
+  values, and preserved semantic checkerboards beneath translucent current-value
+  and preset swatches even when Atom supplies the represented color inline.
+- Refined Color Picker area and channel presentation with borderless color
+  planes, one inherited semantic radius for tracks and transparency checks, and
+  a white thumb ring with the small Theme shadow instead of a hard dark outline.
+- Kept Color Picker alpha tracks on a stable white and light-neutral canvas so
+  the zero-opacity end does not turn black, while current-value and preset
+  swatches retain an appearance-aware checker in dark mode.
+- Kept the alpha-channel thumb's color preview opaque at every slider value so
+  the zero-opacity endpoint does not split between the checker and its surface.
+
 ## 0.2.2 - 2026-08-31
 
 ### Added
@@ -840,3 +1309,5 @@ All notable public changes to `@flowstack-ui/brick` are recorded here.
   Fields stack before narrow layouts become cramped.
 - Fieldset Legend typography and flow match Field Label while preserving group
   spacing, logical RTL treatment, and Error separation under consumer resets.
+- Add `ActionBar` for detached contextual actions with Atom-owned focus and dismissal.
+- Add `FloatingPanel` for movable and resizable nonmodal tool windows and `OverlayManager` for CSS-free imperative overlay hosting.

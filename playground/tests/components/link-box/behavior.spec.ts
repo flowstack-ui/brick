@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/link-box");
+  await page.goto("/link-box?qualification=1");
 });
 
 test("the native Link owns the complete visual target and focus ring", async ({
@@ -69,7 +69,7 @@ test("a secondary action remains independent from navigation", async ({
       name: "Remove Stride Run 360 from saved products",
     }),
   ).toBeVisible();
-  await expect(page).toHaveURL(/\/link-box$/);
+  expect(new URL(page.url()).hash).toBe("");
 });
 
 test("a ZStack media action stays above the expanded destination", async ({
@@ -88,7 +88,7 @@ test("a ZStack media action stays above the expanded destination", async ({
   await expect(
     root.getByRole("button", { name: "Remove workspace from saved projects" }),
   ).toBeVisible();
-  await expect(page).toHaveURL(/\/link-box$/);
+  expect(new URL(page.url()).hash).toBe("");
   await link.focus();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/#link-box-workspace$/);

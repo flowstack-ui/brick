@@ -3,6 +3,7 @@ import type {
   ResponsiveBreakpoint,
   ResponsiveValue,
 } from "../_responsive-value/ResponsiveValue.js";
+import { normalizeResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 
 export type SpacingValue = number | string;
 
@@ -52,13 +53,12 @@ export function responsiveSpacingStyles(
   variable: `--brick-${string}`,
   value: ResponsiveValue<SpacingValue>,
 ): SpacingStyle {
-  const values =
-    typeof value === "object" && value !== null && "initial" in value
-      ? value
-      : { initial: value };
-  const styles = {
-    [`${variable}-input`]: resolveSpacingValue(values.initial),
-  } as SpacingStyle;
+  const values = normalizeResponsiveValue(value);
+  const styles = {} as SpacingStyle;
+
+  if (values.initial !== undefined) {
+    styles[`${variable}-input`] = resolveSpacingValue(values.initial);
+  }
 
   for (const breakpoint of breakpoints) {
     const next = (values as Partial<Record<ResponsiveBreakpoint, SpacingValue>>)[breakpoint];

@@ -18,7 +18,7 @@ async function togglePresentation(toggle: Locator) {
 test("Toggle and ToggleGroup Items share the same default recipe and selected paint", async ({
   page,
 }) => {
-  await page.goto("/toggle");
+  await page.goto("/toggle?qualification=1");
   const standaloneStates = page
     .getByTestId("toggle-recipes")
     .locator(".toggle-evidence-group")
@@ -27,7 +27,7 @@ test("Toggle and ToggleGroup Items share the same default recipe and selected pa
   const standaloneOff = await togglePresentation(standaloneStates.nth(0));
   const standaloneOn = await togglePresentation(standaloneStates.nth(1));
 
-  await page.goto("/toggle-group");
+  await page.goto("/toggle-group?qualification=1");
   const group = page.getByRole("group", { name: "soft project view" });
   const groupedOn = await togglePresentation(
     group.getByRole("button", { name: "Cards" }),

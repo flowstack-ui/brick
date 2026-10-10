@@ -8,6 +8,15 @@ import {
 } from "../../../src/section.js";
 
 describe("Section", () => {
+  it("inherits md before a sparse breakpoint without freezing independent edges", () => {
+    render(<Section data-testid="sparse" spacing={{ lg: "xl" }} startSpacing={{ md: "none" }} />);
+    const section = screen.getByTestId("sparse");
+    expect(section).toHaveAttribute("data-spacing", "md");
+    expect(section).toHaveAttribute("data-spacing-lg", "xl");
+    expect(section).not.toHaveAttribute("data-start-spacing");
+    expect(section).toHaveAttribute("data-start-spacing-md", "none");
+    expect(section).not.toHaveAttribute("data-end-spacing");
+  });
   it("renders the adopted semantic one-root defaults", () => {
     const ref = createRef<HTMLElement>();
     render(<Section data-testid="section" ref={ref}>Content</Section>);

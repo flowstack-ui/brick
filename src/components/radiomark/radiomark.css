@@ -1,0 +1,406 @@
+@layer brick.components {
+  .brick-radiomark {
+    --brick-radiomark-size: 1.25rem;
+
+    --brick-radiomark-solid: var(--brick-color-accent-solid);
+    --brick-radiomark-on-solid: var(--brick-color-accent-on-solid);
+    --brick-radiomark-soft: var(--brick-color-accent-soft);
+    --brick-radiomark-text: var(--brick-color-accent-text);
+    display: inline-grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    place-items: center;
+    box-sizing: border-box;
+    inline-size: var(--brick-radiomark-size);
+    block-size: var(--brick-radiomark-size);
+    flex: 0 0 var(--brick-radiomark-size);
+    border: var(--brick-border-width) solid var(--brick-mark-border);
+    border-radius: var(--brick-radius-full);
+    background: var(--brick-mark-background);
+    color: transparent;
+    vertical-align: middle;
+  }
+  .brick-radiomark__dot {
+    inline-size: 100%;
+    block-size: 100%;
+    border-radius: inherit;
+    background: currentColor;
+    transform: scale(var(--brick-mark-dot-scale));
+  }
+  .brick-radiomark__artwork {
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    place-items: center;
+    inline-size: 70%;
+    block-size: 70%;
+    min-inline-size: 0;
+    min-block-size: 0;
+    font-size: calc(var(--brick-radiomark-size) * 0.6);
+    line-height: 1;
+  }
+  .brick-radiomark__artwork > svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+  .brick-radiomark[data-state="unchecked"]
+    :is(.brick-radiomark__dot, .brick-radiomark__artwork) {
+    visibility: hidden;
+  }
+  .brick-radiomark[data-filled] {
+    --brick-mark-rest-background: var(--brick-color-surface-canvas);
+  }
+  .brick-radiomark[data-tone="neutral"] {
+    --brick-radiomark-solid: var(--brick-color-text-primary);
+    --brick-radiomark-on-solid: var(--brick-color-surface-canvas);
+    --brick-radiomark-soft: var(--brick-color-surface-subtle);
+    --brick-radiomark-text: var(--brick-color-text-primary);
+  }
+  .brick-radiomark[data-tone="contrast"] {
+    --brick-radiomark-solid: var(--brick-color-text-primary);
+    --brick-radiomark-on-solid: var(--brick-color-surface-canvas);
+    --brick-radiomark-soft: var(--brick-color-surface-subtle);
+    --brick-radiomark-text: var(--brick-color-text-primary);
+  }
+  .brick-radiomark[data-tone="info"] {
+    --brick-radiomark-solid: var(--brick-color-info-solid);
+    --brick-radiomark-on-solid: var(--brick-color-info-on-solid);
+    --brick-radiomark-soft: var(--brick-color-info-soft);
+    --brick-radiomark-text: var(--brick-color-info-text);
+  }
+  .brick-radiomark[data-tone="success"] {
+    --brick-radiomark-solid: var(--brick-color-success-solid);
+    --brick-radiomark-on-solid: var(--brick-color-success-on-solid);
+    --brick-radiomark-soft: var(--brick-color-success-soft);
+    --brick-radiomark-text: var(--brick-color-success-text);
+  }
+  .brick-radiomark[data-tone="warning"] {
+    --brick-radiomark-solid: var(--brick-color-warning-solid);
+    --brick-radiomark-on-solid: var(--brick-color-warning-on-solid);
+    --brick-radiomark-soft: var(--brick-color-warning-soft);
+    --brick-radiomark-text: var(--brick-color-warning-text);
+  }
+  .brick-radiomark[data-tone="danger"] {
+    --brick-radiomark-solid: var(--brick-color-danger-solid);
+    --brick-radiomark-on-solid: var(--brick-color-danger-on-solid);
+    --brick-radiomark-soft: var(--brick-color-danger-soft);
+    --brick-radiomark-text: var(--brick-color-danger-text);
+  }
+  .brick-radiomark[data-size="xs"] {
+    --brick-radiomark-size: 0.75rem;
+  }
+  .brick-radiomark[data-size="sm"] {
+    --brick-radiomark-size: 1rem;
+  }
+  .brick-radiomark[data-size="md"] {
+    --brick-radiomark-size: 1.25rem;
+  }
+  .brick-radiomark[data-size="lg"] {
+    --brick-radiomark-size: 1.5rem;
+  }
+  .brick-radiomark[data-variant="solid"] {
+    --brick-mark-background: var(--brick-mark-rest-background, transparent);
+    --brick-mark-border: var(--brick-color-border-strong);
+    --brick-mark-selected-background: var(--brick-radiomark-solid);
+    --brick-mark-selected-border: var(--brick-radiomark-solid);
+    --brick-mark-selected-foreground: var(--brick-radiomark-on-solid);
+    --brick-mark-dot-scale: 0.4;
+  }
+  .brick-radiomark[data-variant="outline"] {
+    --brick-mark-background: var(--brick-mark-rest-background, transparent);
+    --brick-mark-border: var(--brick-color-border-default);
+    --brick-mark-selected-background: var(
+      --brick-mark-rest-background,
+      transparent
+    );
+    --brick-mark-selected-border: var(--brick-radiomark-solid);
+    --brick-mark-selected-foreground: var(--brick-radiomark-text);
+    --brick-mark-dot-scale: 0.6;
+  }
+  .brick-radiomark[data-variant="soft"] {
+    --brick-mark-background: var(--brick-radiomark-soft);
+    --brick-mark-border: var(--brick-radiomark-soft);
+    --brick-mark-selected-background: var(--brick-radiomark-soft);
+    --brick-mark-selected-border: var(--brick-radiomark-soft);
+    --brick-mark-selected-foreground: var(--brick-radiomark-text);
+    --brick-mark-dot-scale: 0.4;
+  }
+  .brick-radiomark[data-variant="subtle"] {
+    --brick-mark-background: var(--brick-radiomark-soft);
+    --brick-mark-border: var(--brick-radiomark-soft);
+    --brick-mark-selected-background: var(--brick-radiomark-soft);
+    --brick-mark-selected-border: var(--brick-radiomark-soft);
+    --brick-mark-selected-foreground: var(--brick-radiomark-text);
+    --brick-mark-dot-scale: 0.4;
+  }
+  .brick-radiomark[data-variant="inverted"] {
+    --brick-mark-background: var(--brick-color-surface-canvas);
+    --brick-mark-border: var(--brick-color-border-default);
+    --brick-mark-selected-background: var(--brick-color-surface-canvas);
+    --brick-mark-selected-border: var(--brick-radiomark-solid);
+    --brick-mark-selected-foreground: var(--brick-radiomark-solid);
+    --brick-mark-dot-scale: 0.4;
+  }
+  @media (min-width: 30rem) {
+    .brick-radiomark[data-size-sm="xs"] {
+      --brick-radiomark-size: 0.75rem;
+    }
+    .brick-radiomark[data-size-sm="sm"] {
+      --brick-radiomark-size: 1rem;
+    }
+    .brick-radiomark[data-size-sm="md"] {
+      --brick-radiomark-size: 1.25rem;
+    }
+    .brick-radiomark[data-size-sm="lg"] {
+      --brick-radiomark-size: 1.5rem;
+    }
+    .brick-radiomark[data-variant-sm="solid"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-strong);
+      --brick-mark-selected-background: var(--brick-radiomark-solid);
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-on-solid);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-sm="outline"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.6;
+    }
+    .brick-radiomark[data-variant-sm="soft"] {
+      --brick-mark-background: var(--brick-radiomark-soft);
+      --brick-mark-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-background: var(--brick-radiomark-soft);
+      --brick-mark-selected-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-sm="subtle"] {
+      --brick-mark-background: var(--brick-radiomark-soft);
+      --brick-mark-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-background: var(--brick-radiomark-soft);
+      --brick-mark-selected-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-sm="inverted"] {
+      --brick-mark-background: var(--brick-color-surface-canvas);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(--brick-color-surface-canvas);
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-solid);
+      --brick-mark-dot-scale: 0.4;
+    }
+  }
+  @media (min-width: 48rem) {
+    .brick-radiomark[data-size-md="xs"] {
+      --brick-radiomark-size: 0.75rem;
+    }
+    .brick-radiomark[data-size-md="sm"] {
+      --brick-radiomark-size: 1rem;
+    }
+    .brick-radiomark[data-size-md="md"] {
+      --brick-radiomark-size: 1.25rem;
+    }
+    .brick-radiomark[data-size-md="lg"] {
+      --brick-radiomark-size: 1.5rem;
+    }
+    .brick-radiomark[data-variant-md="solid"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-strong);
+      --brick-mark-selected-background: var(--brick-radiomark-solid);
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-on-solid);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-md="outline"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.6;
+    }
+    .brick-radiomark[data-variant-md="soft"] {
+      --brick-mark-background: var(--brick-radiomark-soft);
+      --brick-mark-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-background: var(--brick-radiomark-soft);
+      --brick-mark-selected-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-md="subtle"] {
+      --brick-mark-background: var(--brick-radiomark-soft);
+      --brick-mark-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-background: var(--brick-radiomark-soft);
+      --brick-mark-selected-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-md="inverted"] {
+      --brick-mark-background: var(--brick-color-surface-canvas);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(--brick-color-surface-canvas);
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-solid);
+      --brick-mark-dot-scale: 0.4;
+    }
+  }
+  @media (min-width: 64rem) {
+    .brick-radiomark[data-size-lg="xs"] {
+      --brick-radiomark-size: 0.75rem;
+    }
+    .brick-radiomark[data-size-lg="sm"] {
+      --brick-radiomark-size: 1rem;
+    }
+    .brick-radiomark[data-size-lg="md"] {
+      --brick-radiomark-size: 1.25rem;
+    }
+    .brick-radiomark[data-size-lg="lg"] {
+      --brick-radiomark-size: 1.5rem;
+    }
+    .brick-radiomark[data-variant-lg="solid"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-strong);
+      --brick-mark-selected-background: var(--brick-radiomark-solid);
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-on-solid);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-lg="outline"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.6;
+    }
+    .brick-radiomark[data-variant-lg="soft"] {
+      --brick-mark-background: var(--brick-radiomark-soft);
+      --brick-mark-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-background: var(--brick-radiomark-soft);
+      --brick-mark-selected-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-lg="subtle"] {
+      --brick-mark-background: var(--brick-radiomark-soft);
+      --brick-mark-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-background: var(--brick-radiomark-soft);
+      --brick-mark-selected-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-lg="inverted"] {
+      --brick-mark-background: var(--brick-color-surface-canvas);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(--brick-color-surface-canvas);
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-solid);
+      --brick-mark-dot-scale: 0.4;
+    }
+  }
+  @media (min-width: 80rem) {
+    .brick-radiomark[data-size-xl="xs"] {
+      --brick-radiomark-size: 0.75rem;
+    }
+    .brick-radiomark[data-size-xl="sm"] {
+      --brick-radiomark-size: 1rem;
+    }
+    .brick-radiomark[data-size-xl="md"] {
+      --brick-radiomark-size: 1.25rem;
+    }
+    .brick-radiomark[data-size-xl="lg"] {
+      --brick-radiomark-size: 1.5rem;
+    }
+    .brick-radiomark[data-variant-xl="solid"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-strong);
+      --brick-mark-selected-background: var(--brick-radiomark-solid);
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-on-solid);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-xl="outline"] {
+      --brick-mark-background: var(--brick-mark-rest-background, transparent);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(
+        --brick-mark-rest-background,
+        transparent
+      );
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.6;
+    }
+    .brick-radiomark[data-variant-xl="soft"] {
+      --brick-mark-background: var(--brick-radiomark-soft);
+      --brick-mark-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-background: var(--brick-radiomark-soft);
+      --brick-mark-selected-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-xl="subtle"] {
+      --brick-mark-background: var(--brick-radiomark-soft);
+      --brick-mark-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-background: var(--brick-radiomark-soft);
+      --brick-mark-selected-border: var(--brick-radiomark-soft);
+      --brick-mark-selected-foreground: var(--brick-radiomark-text);
+      --brick-mark-dot-scale: 0.4;
+    }
+    .brick-radiomark[data-variant-xl="inverted"] {
+      --brick-mark-background: var(--brick-color-surface-canvas);
+      --brick-mark-border: var(--brick-color-border-default);
+      --brick-mark-selected-background: var(--brick-color-surface-canvas);
+      --brick-mark-selected-border: var(--brick-radiomark-solid);
+      --brick-mark-selected-foreground: var(--brick-radiomark-solid);
+      --brick-mark-dot-scale: 0.4;
+    }
+  }
+  .brick-radiomark[data-state]:not([data-state="unchecked"]) {
+    background: var(--brick-mark-selected-background);
+    border-color: var(--brick-mark-selected-border);
+    color: var(--brick-mark-selected-foreground);
+  }
+  .brick-radiomark[data-invalid] {
+    --brick-radiomark-solid: var(--brick-color-danger-solid);
+    --brick-radiomark-on-solid: var(--brick-color-danger-on-solid);
+    --brick-radiomark-soft: var(--brick-color-danger-soft);
+    --brick-radiomark-text: var(--brick-color-danger-text);
+    border-color: var(--brick-color-danger-border);
+  }
+  .brick-radiomark[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  @media (forced-colors: active) {
+    .brick-radiomark[data-state] {
+      border-color: CanvasText;
+      background: Canvas;
+    }
+    .brick-radiomark[data-state]:not([data-state="unchecked"]) {
+      border-color: Highlight;
+      background: Highlight;
+      color: HighlightText;
+    }
+    .brick-radiomark[data-invalid] {
+      border-color: LinkText;
+    }
+    .brick-radiomark[data-disabled][data-state] {
+      border-color: GrayText;
+      background: Canvas;
+      color: GrayText;
+      opacity: 1;
+    }
+  }
+}

@@ -4,6 +4,50 @@ Slider follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+Disabled controls preserve their recipe and use one 50% fade with a not-allowed cursor. Forced colors restores full opacity and uses system disabled colors.
+
+### Added
+
+- Added the shared Atom controller, `useSlider`, RootProvider and Context; Control, Label, ValueText, MarkerGroup, MarkerIndicator, MarkerLabel, DraggingIndicator and HiddenInput parts; and Brick Thumbs and Marks shortcuts.
+- Added start/center/end scalar origins, contain/center thumb alignment, explicit thumb dimensions, none/push/swap pointer collisions and Shift+Arrow large steps.
+
+### Changed
+
+- Made size and outline/solid/soft variants responsive, added neutral/accent/contrast tones, corrected local RTL/vertical geometry and changed the default variant metadata to `outline`.
+- `variant="solid"` now renders a truly filled thumb. Existing consumers that want the former outlined appearance should use `variant="outline"`.
+- Replaced the CSS track-inset workaround with Atom-owned target containment while retaining legacy Track-with-Thumb and Marker-text composition.
+
+### Fixed
+
+- Resolve label, output and marker typography through shared semantic tokens;
+  preserve compact value-bubble leading and existing text measurements.
+
+- Corrected visible-thumb containment and scalar rail-end fill while preserving expanded 44px hit targets.
+- Centered vertical RTL tracks and thumb artwork; removed disabled/read-only drag feedback and restored cross-axis scrolling.
+- Resolved soft paint through the selected tone, restored component CSS layering and shared focus tokens.
+- Adopted primary-pointer filtering, scroll-safe track focus, grab offsets and stale-session cleanup from Atom.
+
+- Added automatic/explicit hidden-input ownership, per-thumb naming precedence, external value output and drag-only value presentation.
+
+## Unreleased
+
+### Added
+
+- Added supported decorative content inside `Slider.Thumb`, including a
+  public foreground hook and size-aware containment that does not affect
+  `Slider.ValueLabel`.
+
+- Added the opt-in `frame="outline"` control shell for form-aligned slider
+  compositions.
+
+### Changed
+
+- Completed the `sm`/`md`/`lg` Thumb and Track progression at 16/6px, 20/8px,
+  and 24/10px; Thumb artwork can now use `Icon size="inherit"` for the owned
+  14px content scale.
+- Refined the default neutral Track and outlined Thumb to use translucent
+  emphasized paint, a canvas Thumb surface, and no incidental elevation.
+
 ## 0.1.10
 
 ### Fixed

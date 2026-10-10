@@ -24,6 +24,9 @@ Provide a finished application-shell side region with expanded, rail, and offcan
 - **MUST:** Choose panel paint with surface; use transparent when an ancestor Surface owns the shell background instead of overriding Sidebar background selectors.
 - **MUST:** Keep Sidebar.Content flexible and compose a bounded ScrollArea when long panel content must remain reachable; do not clip or assign ad hoc overflow to navigation children.
 - **MUST:** Load styles.css or core.css plus sidebar.css and every composed child stylesheet.
+- **MUST:** Use Header, Content or Footer inset=none when another composition owns padding. Default preserves the region recipe. Keep ScrollArea as the scroll owner; do not override region or viewport padding just to undo duplicate shell gutters.
+- **MUST:** Prefer Trigger inside Main, never the only reopening trigger inside an offcanvas Panel. Direct Root triggers get a separate leading row. Use bordered=false to remove structural edges, and useSidebarContext for rail-aware descendants instead of duplicating controlled state. Region asChild/render composition preserves both handlers and ref cleanup.
+- **MUST:** Compose a named IconButton with Trigger asChild for compact controls; align it to start in a column. Keep state labels and rail content synchronized through context. Do not add width-transition CSS to restore sliding: Sidebar settles geometry before fading to prevent transient text reflow and page-height flicker.
 
 ## Common mistakes
 

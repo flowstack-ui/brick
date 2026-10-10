@@ -13,8 +13,19 @@ import {
 } from "../../../src/field.js";
 
 describe("Field", () => {
+  it("forwards targeted IDs, responsive recipes and decorative error artwork", () => {
+    render(<Field.Root target="amount" ids={{control:"price"}} size={{initial:"xs",md:"md"}} orientation={{initial:"vertical",md:"horizontal"}} invalid>
+      <Field.Label>Price</Field.Label><Field.Item value="amount"><Input.Root /></Field.Item>
+      <Field.Error><Field.ErrorIcon />Check the amount</Field.Error>
+    </Field.Root>);
+    expect(screen.getByRole("textbox", {name:"Price"})).toHaveAttribute("id", "price-item-amount");
+    expect(document.querySelector(".brick-field")).toHaveAttribute("data-size-md", "md");
+    expect(document.querySelector(".brick-field")).toHaveAttribute("data-orientation-md", "horizontal");
+    expect(document.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+  });
   it("owns the exact frozen namespace", () => {
     expect(Object.keys(Field)).toEqual([
+      "Item", "Context", "ErrorIcon",
       "Root",
       "Label",
       "Description",
@@ -41,6 +52,8 @@ describe("Field", () => {
     const field = screen.getByText("Email").closest(".brick-field");
     const input = screen.getByRole("textbox", { name: "Email" });
     expect(field).toHaveAttribute("data-orientation", "vertical");
+    expect(field).toHaveAttribute("data-size", "md");
+    expect(field).toHaveAttribute("data-tone", "primary");
     expect(field).toHaveAttribute("data-disabled");
     expect(field).toHaveAttribute("data-required");
     expect(field).toHaveAttribute("data-readonly");
@@ -53,6 +66,18 @@ describe("Field", () => {
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toBeDisabled();
     expect(field?.querySelector('[data-slot="field-required-indicator"]')).toHaveTextContent("*");
+  });
+
+  it("exposes compact secondary labels for dense application forms", () => {
+    render(
+      <Field.Root id="dense" size="xs" tone="secondary">
+        <Field.Label>Width</Field.Label>
+        <Input.Root />
+      </Field.Root>,
+    );
+    const field = screen.getByText("Width").closest(".brick-field");
+    expect(field).toHaveAttribute("data-size", "xs");
+    expect(field).toHaveAttribute("data-tone", "secondary");
   });
 
   it("owns optional, required, conditional, and forced messages", () => {

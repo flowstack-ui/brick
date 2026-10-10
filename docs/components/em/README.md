@@ -44,10 +44,12 @@ interaction.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `slot` | `string` | `em` |
+| `asChild` | `boolean` | `false` |
+| `data-slot` | `string` | `em` |
+| `slot` | deprecated `string` alias | — |
 
 `EmProps` forwards native `HTMLElement` attributes and requires `children`.
-Public exports are `Em` and `EmProps`. The host is intentionally fixed.
+Public exports are `Em` and `EmProps`. The default host is native em. With asChild, provide one React element that preserves em semantics.
 
 ## Visual recipes and states
 
@@ -60,8 +62,7 @@ Use `.brick-em`, `data-slot`, and `--brick-em-font-style`.
 
 ## Customization
 
-Prefer the inherited default. A theme may set the documented variable for a
-deliberate typographic system decision.
+Prefer the inherited default. The documented variable supports an instance-level override. It is not an approved global Theme component input.
 
 ## Responsive behavior
 
@@ -76,7 +77,13 @@ selectable, copyable, and readable in forced colors.
 
 Compose Em inside Text, Heading, Link, Prose, or another content owner. Native
 attributes, events, class, style, slot, children, and an `HTMLElement` ref pass
-to the `em` host.
+to the `em` host. Explicit `data-slot` wins over deprecated `slot`, which remains a data-slot alias for compatibility and does not forward the HTML shadow-DOM slot attribute.
+
+```tsx
+<Em asChild><em lang="en">before publishing</em></Em>
+```
+
+Static composition merges classes, styles and refs without an extra wrapper. Keep native stress semantics; do not substitute a span merely for italic paint.
 
 ## Examples
 

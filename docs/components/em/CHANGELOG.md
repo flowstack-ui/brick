@@ -6,7 +6,8 @@ Em follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
-- No unreleased changes.
+- Add static asChild composition and explicit data-slot; retain deprecated slot alias.
+- Clarify instance-level customization and provide focused documentation examples.
 
 ## 0.1.12 — 2026-08-30
 

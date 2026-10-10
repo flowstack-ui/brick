@@ -95,3 +95,21 @@ Follow-up issues:
 Workbook updated:
 
 Mark unavailable touch or assistive-technology environments `blocked`.
+## Additional qualification — unrun
+
+1. Submit the async example, reset immediately, and wait for completion. Confirm
+   no submitted state returns and keyboard focus remains usable.
+2. Submit twice with different completion delays. Confirm only the latest
+   attempt controls pending/submitted feedback; application requests are not cancelled.
+3. At 200% and 400% browser zoom, check responsive spacing, external actions,
+   and native validation. With a screen reader, confirm each error is announced
+   once. Record actual browser, device and assistive-technology versions.
+
+Result: Unrun. Automated regressions do not replace these human checks.
+
+Form accepts responsive `gap` using Brick spacing values (default 5).
+Callback submission metadata belongs to the latest attempt. Reset and unmount
+invalidate older pending completions without canceling application requests.
+Use preventDefaultOnSubmit for callback-only workflows. React function actions
+retain React-owned pending/reset behavior. Native attributes, external form
+association, refs, asChild and render remain available.

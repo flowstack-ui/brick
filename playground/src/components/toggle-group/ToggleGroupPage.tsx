@@ -1,3 +1,5 @@
+import { ToggleGroupDocumentation } from "./ToggleGroupDocumentation.js";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type ReactNode } from "react";
 import {
@@ -42,10 +44,10 @@ function StandardGroup({ label = "Project view", variant, tone, size, shape }: {
 }
 
 export const toggleGroupScenarios = [
-  { description: "ToggleGroup’s canonical rendering is a separated horizontal single-selection group with soft medium rounded Items. One roving tab stop and native pressed buttons remain Atom-owned.", id: "toggle-group.overview", number: 1, title: "Overview" },
+  { description: "ToggleGroup’s canonical rendering is a separated horizontal single-selection group with neutral ghost medium rounded Items. One roving tab stop and native pressed buttons remain Atom-owned.", id: "toggle-group.overview", number: 1, title: "Overview" },
   { description: "Single mode owns one string and permits empty selection; multiple mode owns a string array. Both keep the same default separated recipe.", id: "toggle-group.selection", navigationTitle: "Selection", number: 2, title: "Selection modes" },
   { description: "Variant changes only the shared Item paint treatment. Selection, size, shape, orientation, attachment, and content remain identical.", id: "toggle-group.variants", number: 3, title: "Variants" },
-  { description: "Size changes only shared target geometry and typography. Every group retains the default soft rounded separated recipe and identical values.", id: "toggle-group.sizes", number: 4, title: "Sizes" },
+  { description: "Size changes only shared target geometry and typography. Every group retains the default neutral ghost rounded separated recipe and identical values.", id: "toggle-group.sizes", number: 4, title: "Sizes" },
   { description: "Shape changes group Item radius only. Icon-only is an Item content mode with a complete name, not a divergent group recipe.", id: "toggle-group.shapes", navigationTitle: "Shapes", number: 5, title: "Shapes and icon content" },
   { description: "Attached removes gaps and joins logical edges; full-width distributes equal flexible Items. Each comparison changes only its named layout dimension.", id: "toggle-group.layout", navigationTitle: "Layout", number: 6, title: "Attachment and width" },
   { description: "Vertical orientation changes arrow-key axis and stacking. Disabled Root and disabled Item preserve visible state while Atom skips unavailable commands.", id: "toggle-group.interaction", navigationTitle: "States", number: 7, title: "Orientation and disabled state" },
@@ -53,7 +55,8 @@ export const toggleGroupScenarios = [
   { description: "Separated groups wrap long content, attached groups expose fit pressure honestly, and logical corners plus arrow navigation mirror in genuine RTL.", id: "toggle-group.stress", navigationTitle: "Stress", number: 9, title: "Responsive and RTL" },
 ] as const satisfies readonly ScenarioDefinition[];
 
-export function ToggleGroupPage() {
+export function ToggleGroupPage(){ const preview=usePreviewContext(); if(!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <ToggleGroupDocumentation/>; return <ToggleGroupEvidence/>; }
+function ToggleGroupEvidence() {
   const [view, setView] = useState("cards");
   const [filters, setFilters] = useState<string[]>(["active"]);
   return (
@@ -116,6 +119,21 @@ export function ToggleGroupPage() {
               <ToggleGroup.Root ariaLabel="Canvas view" defaultValue="grid">
                 <ToggleGroup.Item ariaLabel="Grid view" iconOnly value="grid"><GridIcon /></ToggleGroup.Item>
                 <ToggleGroup.Item ariaLabel="List view" iconOnly value="list"><span aria-hidden="true">≡</span></ToggleGroup.Item>
+              </ToggleGroup.Root>
+            </EvidenceSurface>
+          </EvidenceGroup>
+          <EvidenceGroup description="Neutral ghost defaults stay quiet until pressed. Multiple commands can remain selected independently." title="Text formatting">
+            <EvidenceSurface inset="lg">
+              <ToggleGroup.Root ariaLabel="Text formatting" type="multiple" defaultValue={["bold"]}>
+                <ToggleGroup.Item ariaLabel="Bold" iconOnly value="bold">
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 12h8a4 4 0 0 1 0 8H6V4h7a4 4 0 0 1 0 8" /></svg>
+                </ToggleGroup.Item>
+                <ToggleGroup.Item ariaLabel="Italic" iconOnly value="italic">
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M19 4h-9m4 16H5M15 4 9 20" /></svg>
+                </ToggleGroup.Item>
+                <ToggleGroup.Item ariaLabel="Underline" iconOnly value="underline">
+                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16" /></svg>
+                </ToggleGroup.Item>
               </ToggleGroup.Root>
             </EvidenceSurface>
           </EvidenceGroup>

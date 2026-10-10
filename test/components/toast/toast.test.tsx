@@ -1,14 +1,72 @@
 import { createRef } from "react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { Toast, Toaster, toast } from "../../../src/toast.js";
+import { Toast, Toaster, toast, createToaster } from "../../../src/toast.js";
 
 afterEach(() => {
-  toast.dismiss();
+  toast.remove();
   vi.useRealTimers();
 });
 
 describe("Toast", () => {
+  it("preserves compound Root callbacks for manager-driven timeout and removal", async () => {
+    vi.useFakeTimers();
+    const scoped = createToaster();
+    const auto = vi.fn(), dismissed = vi.fn();
+    render(<Toaster toaster={scoped} portalDisabled renderToast={state => <Toast.Root {...state} onAutoClose={auto} onDismiss={dismissed}><Toast.Title /></Toast.Root>} />);
+    await act(async () => { scoped("Timed", { duration: 1000 }); });
+    await act(async () => vi.advanceTimersByTime(1000));
+    expect(auto).toHaveBeenCalledTimes(1);
+    expect(dismissed).not.toHaveBeenCalled();
+    await act(async () => vi.advanceTimersByTime(210));
+    expect(dismissed).toHaveBeenCalledTimes(1);
+  });
+
+  it("uses the portal owner document for hotkeys and restores its focus", async () => {
+    vi.useFakeTimers();
+    const iframe = document.createElement("iframe");
+    document.body.append(iframe);
+    const doc = iframe.contentDocument!;
+    const before = doc.createElement("button");
+    before.textContent = "Before";
+    doc.body.append(before);
+    const scoped = createToaster();
+    const view = render(<Toaster toaster={scoped} container={doc.body} />);
+    before.focus();
+    await act(async () => { scoped("Foreign document", { duration: Infinity }); });
+    const region = doc.querySelector<HTMLElement>("[role=region]")!;
+    fireEvent.keyDown(doc, { code: "F8", key: "F8" });
+    expect(doc.activeElement).toBe(region);
+    fireEvent.keyDown(region, { key: "Escape" });
+    await act(async () => { vi.advanceTimersByTime(210); });
+    expect(doc.activeElement).toBe(before);
+    view.unmount();
+    iframe.remove();
+  });
+
+  it("isolates managers and forwards lifecycle, recipes and logical spacing", async () => {
+    vi.useFakeTimers();
+    const first = createToaster();
+    const second = createToaster();
+    const events: string[] = [];
+    render(<><Toaster toaster={first} label="First" portalDisabled variant="solid" tone="accent" radius="sm" offset={6} gap={{ initial: 2, md: 4 }} /><Toaster toaster={second} label="Second" portalDisabled /></>);
+    let id = "";
+    await act(async () => { id = first("Scoped", { duration: Infinity, onStatusChange: ({ status }) => events.push(status) }); });
+    expect(screen.getByRole("region", { name: "First (F8)" }).querySelector(".brick-toast")).toHaveAttribute("data-tone", "accent");
+    expect(screen.queryByRole("region", { name: "Second (F8)" })).not.toBeInTheDocument();
+    expect(first.isVisible(id)).toBe(true);
+    expect(second.getCount()).toBe(0);
+    await act(async () => first.dismiss(id));
+    expect(document.querySelector(".brick-toast")).toHaveAttribute("data-state", "exiting");
+    await act(async () => vi.advanceTimersByTime(210));
+    expect(events).toEqual(["queued", "visible", "dismissing", "unmounted"]);
+    expect(first.getCount()).toBe(0);
+  });
+
+  it("inherits icon type from compound Root", () => {
+    const { container } = render(<Toast.Root type="success" duration={Infinity}><Toast.Icon /><Toast.Title>Saved</Toast.Title></Toast.Root>);
+    expect(container.querySelector(".brick-toast__icon path")).toHaveAttribute("d", "m5 12 4 4 10-10");
+  });
   it("renders the imperative default anatomy and exactly one announcement path", async () => {
     const ref = createRef<HTMLDivElement>();
     render(<Toaster ref={ref} portalDisabled data-testid="viewport" />);
@@ -56,7 +114,7 @@ describe("Toast", () => {
     expect(viewport.querySelector("[data-type='loading'] .brick-toast__spinner")).toBeInTheDocument();
     expect(viewport.querySelector("[data-type='loading']")).toHaveAttribute("data-swipe-direction", "right");
 
-    toast.dismiss();
+    act(() => toast.remove());
     await act(async () => {
       toast({ id: "custom", title: "Custom", icon: <span data-testid="custom-icon">C</span>, closeButton: false, duration: Infinity });
     });

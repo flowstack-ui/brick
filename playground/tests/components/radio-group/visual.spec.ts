@@ -1,6 +1,6 @@
 import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/radio-group");
+installVisualDefaults("/radio-group?qualification=1");
 
 test("Radio Group defaults, dimensions, composition, and appearance", async ({ page }) => {
   await expect(page.getByTestId("radio-group-overview")).toHaveScreenshot("overview-light.png");
@@ -17,4 +17,15 @@ test("Radio Group responsive, RTL, and forced-color states", async ({ page }) =>
   await page.setViewportSize({ width: 1120, height: 900 });
   await useForcedColors(page);
   await expect(page.getByTestId("radio-group-states")).toHaveScreenshot("states-forced-colors.png");
+});
+
+test("Radio Group documented variants and native descriptions", async ({ page }) => {
+  await page.goto("/radio-group?appearance=light");
+  await expect(page.locator("#variants")).toHaveScreenshot("docs-variants-light.png");
+  await expect(page.locator("#open")).toHaveScreenshot("docs-open-light.png");
+  await page.goto("/radio-group?appearance=dark");
+  await expect(page.locator("#variants")).toHaveScreenshot("docs-variants-dark.png");
+  await expect(page.locator("#states")).toHaveScreenshot("docs-states-dark.png");
+  await expect(page.locator("#indicator")).toHaveScreenshot("docs-indicator-dark.png");
+  await expect(page.locator("#density")).toHaveScreenshot("docs-density-dark.png");
 });

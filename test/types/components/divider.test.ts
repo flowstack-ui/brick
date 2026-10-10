@@ -24,3 +24,9 @@ createElement(Divider, { children: "Label", orientation: "vertical" });
 // @ts-expect-error asChild does not create labeled anatomy
 createElement(Divider, { asChild: true, children: createElement("div"), labelAlign: "center" });
 void orientations; void variants; void thicknesses; void insets; void alignments;
+createElement(Divider, { orientation: { md: "vertical", lg: "horizontal" }, thickness: "hairline" });
+createElement(Divider, { thickness: "bold" });
+// @ts-expect-error responsive semantic orientation would expose stale ARIA
+createElement(Divider, { decorative: false, orientation: { md: "vertical" } });
+// @ts-expect-error labeled dividers remain horizontal
+createElement(Divider, { children: "Label", orientation: { md: "vertical" } });

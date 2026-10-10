@@ -1,6 +1,6 @@
 # Drawer
 
-Drawer is a modal task surface that enters from a logical or physical edge.
+Drawer is a temporary task surface that enters from a logical edge. Modal is the default.
 
 ## When and where to use
 
@@ -43,18 +43,20 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
   <Drawer.Trigger>Open</Drawer.Trigger>
   <Drawer.Portal>
     <Drawer.Overlay />
+    <Drawer.Positioner>
     <Drawer.Content>
       <Drawer.Header><Drawer.Title>Settings</Drawer.Title></Drawer.Header>
       <Drawer.Body>Settings content</Drawer.Body>
       <Drawer.Footer><Drawer.Close>Done</Drawer.Close></Drawer.Footer>
     </Drawer.Content>
+    </Drawer.Positioner>
   </Drawer.Portal>
 </Drawer.Root>
 ```
 
 ## Anatomy and DOM ownership
 
-Atom owns `Root`, `Trigger`, `Portal`, `Overlay`, `Content`, `Title`,
+Atom owns `Root`, `Context`, `Positioner`, `Trigger`, `Portal`, `Overlay`, `Content`, `Title`,
 `Description`, `Close`, and modal `Branch`. Brick adds structural `Header`,
 `Body`, and `Footer` divs. Overlay/Content/structure refs are
 `HTMLDivElement`; Title is `HTMLHeadingElement`, Description
@@ -67,10 +69,13 @@ Public exports are the `Drawer` namespace; named `DrawerRoot`,
 `DrawerHeader`, `DrawerTitle`, `DrawerDescription`, `DrawerBody`,
 `DrawerFooter`, `DrawerClose`, and `DrawerBranch` parts; their corresponding
 prop types; and `DrawerPlacement`, `DrawerSize`, plus `DrawerFooterJustify`.
+Additional exports are `DrawerPositioner`, `DrawerContext`,
+`DrawerPositionerProps`, `DrawerContextProps`, `DrawerContextValue`,
+`DrawerPositioning`, `DrawerInset`, and `DrawerClosePlacement`.
 
 The component subpath additionally exports `Root`, `Trigger`, `Portal`,
 `Overlay`, `Content`, `Header`, `Title`, `Description`, `Body`, `Footer`,
-`Close`, and `Branch` as short aliases for the recommended RSC-safe
+`Close`, `Context`, `Positioner`, and `Branch` as short aliases for the recommended RSC-safe
 module-namespace composition.
 
 ```ts
@@ -91,7 +96,25 @@ DrawerBranchProps
 | Content prop | Values | Default |
 | --- | --- | --- |
 | `placement` | `start`, `end`, `top`, `bottom` | `end` |
-| `size` | `sm`, `md`, `lg`, `xl`, `full` | `md` |
+| `size` | `xs`, `sm`, `md`, `lg`, `xl`, `full` | `xs` |
+
+Both `size` and `placement` accept `ResponsiveValue`. Scalars apply everywhere;
+`{ md: "lg" }` uses the normal default before md. All four Brick breakpoints
+are CSS-only; changing size or edge does not remount children.
+
+`Positioner` accepts `inset="none|sm|md|lg"` and
+`positioning="fixed|absolute"`. Pair absolute Positioner with absolute Overlay
+inside a positioned container. Portal destination alone does not change geometry.
+`Close placement="corner"` positions an authored CloseButton; inline is default.
+`Context` accepts a render function receiving `{ open, setOpen }`.
+
+Root adds `modal` (true), `trapFocus` and `preventScroll` (default to modal),
+cancelable native `onEscapeKeyDown` and `onInteractOutside` events, alongside
+`open`, `defaultOpen`, `onOpenChange`, `disabled`, `keepMounted`,
+`onExitComplete`, `closeOnEscape`, and `closeOnBackdropClick`.
+Nonmodal is opt-in: omit Overlay and use Positioner, whose empty area is
+pointer-transparent. Geometry containment does not scope document modality.
+Retained content preserves the same host, uncontrolled inputs and child state.
 
 | Footer prop | Values | Default |
 | --- | --- | --- |
@@ -105,12 +128,22 @@ distribution; use layout components inside Footer for more complex grouping,
 and use `Button fullWidth` when an action itself should fill the row. Footer
 reflects the selected value through `data-justify`.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 Placement selects the entering edge; start/end are logical. Size selects fixed
 inline dimensions for side drawers and content-responsive block-size caps for
 top/bottom drawers. `xl` may grow to the available viewport but still shrinks
-around shorter content; `full` always uses the viewport. A top/bottom Drawer
+around shorter content; `full` fills the available Positioner region (the viewport
+when no container or inset is supplied). A top/bottom Drawer
 grows with its authored content until the selected cap, then Body becomes the
 scroll owner. Atom owns state, focus trap/return, dismissal, presence, portal,
 and placement state.
@@ -132,7 +165,15 @@ reflects `data-size`; Atom reflects placement. Public tokens are
 `--brick-drawer-background` and `--brick-drawer-radius` may be set on a theme
 ancestor to change every Drawer in that scope, or on one Content instance for
 a local exception. When unset, they fall back to
-`--brick-color-surface-overlay` and `--brick-radius-overlay`, respectively.
+`--brick-color-surface-overlay` and square corners, respectively. Inset panels
+default to the control radius. Full uses the available Positioner region.
+The new smallest tokens are `--brick-drawer-inline-size-xs` and
+`--brick-drawer-block-size-xs`; Positioner exposes `--brick-drawer-inset`.
+
+Side widths are 20rem, 28rem, 32rem, 42rem, 56rem, and full. The default changed
+from md to xs; consumers needing the old 28rem desktop width should choose sm.
+Non-full sizes may converge at a narrow viewport. Footer actions no longer
+silently stretch on mobile; use Button fullWidth or responsive layout explicitly.
 
 ## Customization
 

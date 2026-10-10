@@ -8,7 +8,7 @@ Use Toast after actions such as save, publish, copy, upload, or connection chang
 
 ## When not to use
 
-Do not use Toast as the sole location of essential information, for inline validation, persistent subscription notices, numeric progress, or a required decision. Use Field/Form validation, a future in-flow Alert/Banner, Progress, or AlertDialog respectively.
+Do not use Toast as the sole location of essential information, for inline validation, persistent subscription notices, numeric progress, or a required decision. Use Field/Form validation, Alert, Progress, or AlertDialog respectively.
 
 ## Installation and imports
 
@@ -37,8 +37,15 @@ The same exports are available from `@flowstack-ui/brick`.
 Install one Toaster near the application root, then call the imperative helper from event handlers:
 
 ```tsx
+import { Button } from "@flowstack-ui/brick/button";
+
 export function App() {
-  return <><Toaster /><button onClick={() => toast.success("Workspace saved")}>Save</button></>;
+  return (
+    <>
+      <Toaster />
+      <Button onClick={() => toast.success("Workspace saved")}>Save</Button>
+    </>
+  );
 }
 ```
 
@@ -69,6 +76,8 @@ The compound parts forward their native refs. Root, Title, Description, Action, 
 | stacking | `separated`, `overlap` |
 | swipe direction | `left`, `right`, `up`, `down` |
 
+Collapsed overlap cards share the viewport's explicit grid row. A taller back card does not move the newest card beyond the viewport anchor; expansion retains each measured card height and gap.
+
 `Toaster` defaults to position `bottom-end`, maximum visible `3`, close enabled, pointer/focus/page-loss timer pause, hotkey `F8`, label `Notifications`, width `responsive`, stacking `separated`, no swipe, and a 50px threshold if swipe is enabled.
 
 Ordinary, success, warning, and info durations default to 5000ms; error to 8000ms; loading and explicit `Infinity` are persistent. Invalid, zero, or negative finite durations fall back to the type default. Atom normalizes visible limits to a positive integer and update cannot replace an ID.
@@ -77,9 +86,37 @@ Ordinary, success, warning, and info durations default to 5000ms; error to 8000m
 
 Named part exports are `ToastRoot`, `ToastIcon`, `ToastContent`, `ToastTitle`, `ToastDescription`, `ToastActions`, `ToastAction`, `ToastClose`, and `ToastViewport`. Public types include `ToastApi`, `ToastOptions`, `ToasterProps`, `ToastRenderState`, `ToastType`, `ToastPosition`, `ToastWidth`, `ToastStacking`, and `ToastSwipeDirection`, plus data, update, promise, action, and individual compound-part prop types.
 
+### Scoped managers and lifecycle
+
+`createToaster({ duration?, removeDelay? })` creates an isolated callable manager
+with the same API as `toast`. Create it once per application scope (or per server
+request), and mount exactly one `<Toaster toaster={manager} />` for that store.
+Do not share a module-global default store between server requests.
+For dialog notifications, mount a scoped Toaster inside the Dialog React tree
+so its portalled controls and announcers belong to the modal focus/isolation scope.
+
+`pause(id?)` and `resume(id?)` control manual pause independently of hover,
+focus, window and page-visibility pauses. Queued time is not reading time.
+`dismiss(id?)` retains visible cards for exit; `remove(id?)` removes immediately.
+`onStatusChange` reports queued, visible, dismissing and unmounted;
+`onDismiss` runs once after removal. Queued records can go directly to unmounted.
+An update cannot revive a dismissed or removed record.
+
+Inspect with `isVisible(id)`, `isDismissed(id)`, `getCount()`,
+`getVisibleToasts()` and `subscribe(listener)`. Use `expand()` and `collapse()`
+for overlap presentation. `promise` accepts a promise or async factory and
+returns its result. `track` additionally returns `{ id, unwrap() }`; handle
+rejections from the returned promise. Removed notifications stay removed even
+when their promises settle. Metadata is opaque application data.
+
+`gap`, `offset`, `offsetBlockStart`, `offsetBlockEnd`, `offsetInlineStart`,
+and `offsetInlineEnd` accept responsive spacing factors or CSS lengths.
+Per-toast variant/tone/radius override Toaster defaults. A custom renderer sets
+these on its own Root; Icon inherits Root type unless explicitly overridden.
+
 ## Visual recipes and states
 
-Toast has one raised card recipe. Six types alter only the accent/glyph and announcement priority, not geometry. Default toasts without an authored icon omit the icon slot and its gutter; title-only and single-line description-only cards use compact content-driven height. Responsive width is near-full on narrow screens and compact on larger screens; `full` fills the safe available viewport width. Overlap layers inactive cards and expands on pointer or keyboard entry. Entering, exiting, optional swipe, dark, forced-colors, and reduced-motion states are driven by stable data attributes and media preferences.
+Toast has `surface` (default) and explicit `solid` recipes. `tone` changes presentation independently from status; `radius` selects a shared core or semantic radius. Six types alter only the accent/glyph and announcement priority, not geometry. Default toasts without an authored icon omit the icon slot and its gutter; title-only and single-line description-only cards use compact content-driven height. Responsive width is near-full on narrow screens and compact on larger screens; `full` fills the safe available viewport width. Overlap layers inactive cards and expands on pointer or keyboard entry. Entering, exiting, optional swipe, dark, forced-colors, and reduced-motion states are driven by stable data attributes and media preferences.
 
 ## Tokens and CSS hooks
 
@@ -93,13 +130,13 @@ Prefer public props, then semantic tokens, component variables, compound parts, 
 
 ## Responsive behavior
 
-Logical placement and anatomy follow direction. Cards wrap localized text and remain inside safe-area-aware gutters at 320px and zoom. Application chrome collision remains application-owned; override a public offset variable when a fixed bottom navigation occupies the same edge.
+Logical placement and anatomy follow direction. Cards wrap localized text and remain inside safe-area-aware gutters at 320px and zoom. Application chrome collision remains application-owned; set `offset` or a logical per-edge offset prop when a fixed bottom navigation occupies the same edge.
 
 ## Accessibility
 
-Default, success, info, and loading updates announce politely; warning and error announce assertively. Each event has exactly one persistent announcement path. Appearance never steals focus. F8 focuses the region when notifications exist; Tab reaches action and close controls; focus/hover/page focus loss pauses finite timers; Escape dismisses only while focus is in the region and restores the previous focus target when empty. Actions and close are native buttons with 44px close targeting. Reduced motion removes translation and spinner rotation; forced colors preserves boundaries and focus.
+Default, success, info, and loading updates announce politely; warning and error announce assertively. Each event has exactly one persistent announcement path. Appearance never steals focus. F8 focuses the region when notifications exist; Tab reaches action and close controls; focus/hover/page focus loss pauses finite timers; Escape dismisses only while focus is in the region and restores the previous focus target when empty. Actions and close are native buttons, with a compact 24px close control and 44px coarse-pointer targets. Reduced motion removes translation and spinner rotation; forced colors preserves boundaries and focus.
 
-Consumers must include meaning in message text, keep essential outcomes and optional actions available elsewhere, localize the Toaster `label`/`closeLabel`, and use assertive types only for genuinely important feedback.
+Consumers must include meaning in message text, keep essential outcomes and optional actions available elsewhere, and use assertive types only for genuinely important feedback. `label` and `closeLabel` inherit Brick's generic localized text from `LocaleProvider`; explicit props remain authoritative.
 
 ## Composition, native props, and refs
 

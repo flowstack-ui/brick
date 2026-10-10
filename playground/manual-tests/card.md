@@ -26,8 +26,9 @@ Action: Inspect `01 Overview`; compare outline, elevated, and subtle in
 `02 Variants`, then the complete scale in `03 Sizes`.
 
 Expected: The Card surface is clearly distinguishable from the specimen
-background. Variants change prominence only. Sizes change coordinated padding
-and title scale without changing content order or semantics.
+background. Variants change prominence only; outline owns a structural border,
+while elevated uses a borderless raised panel and layered medium shadow. Sizes change coordinated
+padding and title scale without changing content order or semantics.
 
 Result:
 Notes or issue:
@@ -103,8 +104,32 @@ Notes or issue:
 
 ## Completion
 
+### Additional recipe and composition checks
+
+On the normal Card documentation route, check the basic card before Usage,
+then separate variants, form, sizes, image, horizontal and avatar examples.
+At narrow and wide widths verify that title/content remain contained, form
+fields have visible labels, natural equal-height cards align their footers and
+the media crop has no artificial dark margins. Verify all three explicit-border
+examples draw their boundaries. Resize responsive recipes in both directions;
+inset, paint, header gap and footer justification must reset without stale values.
+Review local recipe and selected primary text in both appearances. Tab through
+the examples and check focus at clip/visible boundaries. Manual results remain
+unfilled until the corresponding human checks are performed.
+
+
 Overall result:
 Follow-up issues:
 Workbook updated:
 
 Mark unavailable physical or assistive-technology environments `blocked`.
+
+## Record selection addition (manual run pending)
+
+Automated integration: record-selection.spec.ts. On the record scenario,
+select a named checkbox, activate the primary control and then a secondary
+action. Only the intended action changes state. The host adds no tab stop,
+button role or aria-selected. Check light/dark, RTL, high zoom, physical touch
+and screen-reader output. Selection paint must not change dimensions or be
+the only selection indicator. Manual screen-reader and physical-device checks
+remain unperformed; do not mark them passed from automation.

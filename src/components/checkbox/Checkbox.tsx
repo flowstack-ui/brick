@@ -9,16 +9,27 @@ import {
   type CheckboxRootProps as AtomCheckboxRootProps,
 } from "@flowstack-ui/atom/checkbox";
 import { CheckboxVisual } from "./CheckboxVisual.js";
+import {
+  useCheckboxPresentation,
+  checkboxPresentationAttributes,
+  type CheckboxPresentationProps,
+} from "./CheckboxPresentation.js";
 
-export type CheckboxSize = "sm" | "md" | "lg";
+export type {
+  CheckboxSize,
+  CheckboxVariant,
+  CheckboxTone,
+  CheckboxPresentationProps,
+} from "./CheckboxPresentation.js";
 
 type CheckboxSharedProps = Omit<
   AtomCheckboxRootProps,
   "asChild" | "children" | "render"
-> & {
-  /** Complete checkbox row and control size. @default "md" */
-  size?: CheckboxSize;
-};
+> &
+  CheckboxPresentationProps & {
+    /** Complete checkbox row and control size. @default "md" */
+    indicator?: ReactNode;
+  };
 
 export type CheckboxProps = CheckboxSharedProps &
   (
@@ -38,10 +49,10 @@ function mergeClassName(base: string, className: string | undefined) {
   return className ? `${base} ${className}` : base;
 }
 
-function withVisual(children: ReactNode) {
+function withVisual(children: ReactNode, indicator?: ReactNode) {
   return (
     <>
-      <CheckboxVisual />
+      <CheckboxVisual>{indicator}</CheckboxVisual>
       {children}
     </>
   );
@@ -54,29 +65,44 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
       children,
       className,
       render,
-      size = "md",
+      size,
+      variant,
+      tone,
+      radius,
+      density,
+      labelPlacement,
+      style,
+      indicator,
       "data-slot": dataSlot,
       ...props
     },
     ref,
   ) {
+    const presentation = useCheckboxPresentation({
+      size,
+      variant,
+      tone,
+      radius,
+      density,
+      labelPlacement,
+    });
     const visualChildren = asChild
       ? (() => {
           const child = children as ReactElement<{ children?: ReactNode }>;
           return cloneElement(
             child,
             undefined,
-            withVisual(child.props.children),
+            withVisual(child.props.children, indicator),
           );
         })()
-      : withVisual(children);
+      : withVisual(children, indicator);
 
     return (
       <AtomCheckbox.Root
         {...props}
         asChild={asChild}
         className={mergeClassName("brick-checkbox", className)}
-        data-size={size}
+        {...checkboxPresentationAttributes(presentation, style)}
         data-slot={dataSlot ?? "checkbox"}
         ref={ref}
         render={render}

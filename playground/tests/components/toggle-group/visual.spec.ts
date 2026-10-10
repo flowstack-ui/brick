@@ -1,55 +1,42 @@
 import {
-  expect,
+  expectEvidenceScreenshot,
   installVisualDefaults,
   setAppearance,
   test,
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/toggle-group");
+installVisualDefaults("/toggle-group?qualification=1");
+
+test.beforeEach(async ({ page }) => {
+  await page.addStyleTag({ content: ".evidence-review-header, [data-playground-app-bar] { position: static !important; visibility: hidden; }" });
+});
+
+test("ToggleGroup formatting defaults in both appearances", async ({ page }) => {
+  const group = page.getByRole("group", { name: "Text formatting", exact: true });
+  await expectEvidenceScreenshot(page, group, "formatting-light.png", { maxDiffPixelRatio: 0 });
+  await setAppearance(page, "dark");
+  await expectEvidenceScreenshot(page, group, "formatting-dark.png", { maxDiffPixelRatio: 0 });
+});
 
 test("Toggle Group selection and recipes", async ({ page }) => {
-  await expect(page.getByTestId("toggle-group-selection")).toHaveScreenshot(
-    "selection-light.png",
-  );
-  await expect(page.getByTestId("toggle-group-tones")).toHaveScreenshot(
-    "tones-light.png",
-  );
-  await expect(page.getByTestId("toggle-group-variants")).toHaveScreenshot(
-    "variants-light.png",
-  );
-  await expect(page.getByTestId("toggle-group-sizes")).toHaveScreenshot(
-    "sizes-light.png",
-  );
-  await expect(page.getByTestId("toggle-group-shapes")).toHaveScreenshot(
-    "shapes-light.png",
-  );
-  await expect(page.getByTestId("toggle-group-layout")).toHaveScreenshot(
-    "layout-light.png",
-  );
-  await expect(page.getByTestId("toggle-group-interaction")).toHaveScreenshot(
-    "interaction-light.png",
-  );
-  await expect(
-    page.locator("#scenario-toggle-group-appearance"),
-  ).toHaveScreenshot("appearance-customization-light.png");
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-group-selection"), "selection-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-group-tones"), "tones-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-group-variants"), "variants-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-group-sizes"), "sizes-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-group-shapes"), "shapes-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-group-layout"), "layout-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-group-interaction"), "interaction-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.locator("#scenario-toggle-group-appearance"), "appearance-customization-light.png", { maxDiffPixelRatio: 0 });
   await setAppearance(page, "dark");
-  await expect(page.getByTestId("toggle-group-tones")).toHaveScreenshot(
-    "tones-dark.png",
-  );
-  await expect(page.getByTestId("toggle-group-overview")).toHaveScreenshot(
-    "overview-dark.png",
-  );
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-group-tones"), "tones-dark.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-group-overview"), "overview-dark.png", { maxDiffPixelRatio: 0 });
 });
 
 test("Toggle Group constrained and forced-color evidence", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.getByTestId("toggle-group-stress")).toHaveScreenshot(
-    "stress-mobile.png",
-  );
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-group-stress"), "stress-mobile.png", { maxDiffPixelRatio: 0 });
   await page.setViewportSize({ width: 1120, height: 900 });
   await useForcedColors(page);
-  await expect(page.getByTestId("toggle-group-variants")).toHaveScreenshot(
-    "variants-forced-colors.png",
-  );
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-group-variants"), "variants-forced-colors.png", { maxDiffPixelRatio: 0 });
 });

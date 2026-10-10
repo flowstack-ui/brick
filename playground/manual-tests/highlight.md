@@ -3,15 +3,16 @@
 | Environment | Record before testing |
 | --- | --- |
 | Component | Highlight |
-| Version or commit | Brick 0.1.12 candidate with Atom 0.25.1 |
-| Reviewer | Codex visual and accessibility review |
-| Date | 2026-08-30 |
-| Browser and version | Safari 26.5 |
-| Operating system | macOS 26.5.1 |
-| Viewport and zoom | 320, 390, 1440 CSS px; 100%, 200%, 400% |
-| Physical device | Not applicable; Highlight has no interaction or touch contract |
-| Assistive technology | macOS VoiceOver 26.5.1 |
+| Version or commit | Brick 0.2.3 working candidate / installed Atom 0.26.1 |
+| Reviewer | Record at manual execution |
+| Date | Pending manual execution |
+| Browser and version | Record actual browser |
+| Operating system | Record actual OS |
+| Viewport and zoom | Test 320, 390, 1440 CSS px; actual 100%, 200%, 400% zoom |
+| Physical device | Pending physical selection/copy check |
+| Assistive technology | Pending screen-reader check |
 | Playground route | `/highlight` |
+| Qualification route(s) | `/highlight` and `/highlight?qualification=1` |
 
 Scenario order: `01 Overview`, `02 Matching and recipes`, `03 Adaptation and exact output`.
 
@@ -19,11 +20,11 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for each result.
 
 ## Step 1 — Exact matching, recipes, and copy
 
-Setup: Open `/highlight` in system appearance and review 01–03 top to bottom.
+Setup: Open `/highlight?qualification=1` in system appearance and review 01–03 top to bottom; review the documentation examples separately.
 
 Action: Compare longest-overlap, literal punctuation, case-sensitive, first-only, and Unicode whole-word examples; compare every variant/tone; select and copy full strings.
 
-Expected: Native span/mark output preserves original strings and Atom 0.25.1 matching; copied text contains no generated separators; recipes never imply focus or current-result state.
+Expected: Native span/mark output preserves original strings and Atom matching; copied text contains no generated separators; recipes never imply focus or current-result state. Custom rendering preserves unmatched text. Text/plain retain surrounding color; the filled matrix matches Mark in both appearances.
 
 Result:
 Notes or issue:

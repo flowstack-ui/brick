@@ -1,6 +1,6 @@
 import { expect, expectEvidenceScreenshot, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/dialog");
+installVisualDefaults("/dialog?qualification=1");
 
 test("Dialog default and anatomy surfaces", async ({ page }) => {
   await page.getByRole("button", { name: "Edit profile" }).click();

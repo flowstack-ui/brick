@@ -1,7 +1,7 @@
 # Appearance
 
 Appearance applies an explicit light, dark, or inherited semantic-token scope
-to one native or existing Brick host. It adds no paint, spacing, state,
+to one native or existing Brick host and establishes primary foreground on explicit light/dark scopes. It adds no background, spacing, state,
 persistence, or required client provider.
 
 ## When and where to use
@@ -58,7 +58,8 @@ author that element explicitly as the child.
 Appearance has no component recipe or state. It applies
 `data-brick-appearance`; the complete token stylesheet assigns `color-scheme`
 and semantic values. Themes must supply complete assignments for every
-appearance they support.
+appearance they support, including the paired native selection background and
+foreground roles.
 
 ## Tokens and CSS hooks
 
@@ -97,6 +98,13 @@ visual root:
 ```
 
 Appearance refs compose with the child ref and target the existing host.
+React 19 callback-ref cleanup is preserved through Atom host composition.
+
+An explicit boundary supplies low-specificity primary text color so native
+HTML inherits the active foreground too. Secondary Brick text and explicit
+host/descendant colors retain precedence. An inherited boundary leaves the
+ancestor foreground untouched. Transparent regions still require compatible
+surrounding paint; use Surface when a background is needed.
 Appearance adds its class and data attribute; every authored prop remains on
 the child, which keeps its component slot.
 

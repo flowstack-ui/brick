@@ -20,10 +20,11 @@
     }
   ],
   "composition": [
+    "Use CopyTrigger asChild with a named Brick IconButton for icon-only copying. The child owns recipes; Root already owns Clipboard behavior. Do not add a second Clipboard Root. Reserve space when positioning the action over Content with ZStack.",
     "Pass the exact plain-text source to Root value, then place Content inside Root and give focusable Content a specific accessible label.",
     "Author Header, Title, Language, Actions, CopyTrigger, CopyStatus, and CopyIndicator only when the interface needs those optional parts.",
     "For syntax highlighting, pass a synchronous adapter or trusted React token nodes to Content while keeping Root value identical to the plain text that must be copied.",
-    "Use Line for authored line numbers, highlighting, focus, additions, and removals; metadata remains independent so one line can carry more than one relevant state.",
+    "Use Root meta for automatic line presentation or manual Line parts. Preserve source and explain diffs accessibly; visual signs and numbers are not copied.",
     "Use Content maxLines for a bounded scroll region. For expansion, put bounded Content in CollapsePreview, unbounded Content in CollapseContent, and author CollapseTrigger so Brick Collapsible owns the real disclosure relationship and lifecycle."
   ],
   "rules": [
@@ -35,7 +36,7 @@
     {
       "id": "code-block-highlighting-owner",
       "level": "must",
-      "statement": "Keep tokenization, language loading, and syntax palettes in a pure synchronous consumer adapter; Brick accepts trusted React nodes and does not bundle a highlighter or unsafe HTML path."
+      "statement": "Initialize optional createShikiAdapter once outside rendering, or supply a pure synchronous React adapter. Keep loading/retry/disposal application-owned; Brick never bundles Shiki or accepts highlighted HTML."
     },
     {
       "id": "code-block-scroll-owner",
@@ -58,9 +59,19 @@
       "statement": "Keep standalone maxLines content reachable through its focusable viewport; for expansion, pair CollapsePreview and CollapseContent with an accessible CollapseTrigger so only the current source view is exposed."
     },
     {
+      "id": "code-block-selection-pair",
+      "level": "must",
+      "statement": "Inherit Brick's shared selection background and foreground by default; when a syntax palette needs local selection paint, override both public Code Block selection variables together and verify their text contrast."
+    },
+    {
       "id": "code-block-css",
       "level": "must",
       "statement": "Load styles.css or core.css plus code-block.css and its documented component dependencies."
+    },
+    {
+      "id": "code-block-focus-presentation",
+      "level": "must",
+      "statement": "The flush collapse action paints focus inside its clipped boundary; copy success remains icon-only with an accessible announcement."
     }
   ],
   "commonMistakes": [

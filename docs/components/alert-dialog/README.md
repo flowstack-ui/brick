@@ -55,6 +55,7 @@ export function RemoveProject() {
       </AlertDialog.Trigger>
       <AlertDialog.Portal>
         <AlertDialog.Overlay />
+        <AlertDialog.Positioner>
         <AlertDialog.Content>
           <AlertDialog.Header>
             <AlertDialog.Title>Remove project?</AlertDialog.Title>
@@ -71,13 +72,14 @@ export function RemoveProject() {
             </AlertDialog.Action>
           </AlertDialog.Footer>
         </AlertDialog.Content>
+        </AlertDialog.Positioner>
       </AlertDialog.Portal>
     </AlertDialog.Root>
   );
 }
 ```
 
-Overlay and Content must remain siblings. Every AlertDialog needs a visible
+Overlay must remain beside Positioner, with Content directly inside Positioner. Legacy Overlay/Content siblings remain supported and centered. Every AlertDialog needs a visible
 Title and a Description or explicit native `aria-describedby` relationship.
 Destructive confirmation should retain an enabled Cancel response.
 
@@ -89,6 +91,7 @@ Destructive confirmation should retain an enabled Cancel response.
 | `Trigger` | `button` | Opens AlertDialog; supports Atom composition |
 | `Portal` | no wrapper | Renders into `body`, a container, or inline |
 | `Overlay` | `div` | Non-dismissible scrim |
+| `Positioner` | `div` | Viewport alignment and owned scrolling; never dismisses outside |
 | `Content` | `div[role="alertdialog"]` | Modal surface, focus scope, ARIA owner, and size |
 | `Header` | `div` | Title and required alert message region |
 | `Title` | `h2` | Visible accessible name; supports `h1`–`h6` |
@@ -106,10 +109,10 @@ consumer class.
 
 Public exports are the `AlertDialog` namespace; named `AlertDialogRoot`,
 `AlertDialogTrigger`, `AlertDialogPortal`, `AlertDialogOverlay`,
-`AlertDialogContent`, `AlertDialogHeader`, `AlertDialogTitle`,
+`AlertDialogPositioner`, `AlertDialogContent`, `AlertDialogHeader`, `AlertDialogTitle`,
 `AlertDialogDescription`, `AlertDialogBody`, `AlertDialogFooter`,
 `AlertDialogCancel`, and `AlertDialogAction` parts; and their corresponding
-prop types plus `AlertDialogSize` and `AlertDialogFooterJustify`.
+prop types plus `AlertDialogSize`, `AlertDialogPlacement`, `AlertDialogScrollBehavior`, `AlertDialogMotionPreset` and `AlertDialogFooterJustify`.
 
 ```ts
 AlertDialogRootProps
@@ -117,6 +120,7 @@ AlertDialogTriggerProps
 AlertDialogPortalProps
 AlertDialogOverlayProps
 AlertDialogContentProps
+AlertDialogPositionerProps
 AlertDialogHeaderProps
 AlertDialogTitleProps
 AlertDialogDescriptionProps
@@ -136,11 +140,20 @@ blocked and no `closeOnBackdropClick` prop is exposed. Root renders no DOM.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `size` | `sm`, `md` | `md` |
+| `size` | `ResponsiveValue<AlertDialogSize>`: `xs`, `sm`, `md`, `lg`, `xl`, `cover`, `full` | `md` |
+| `motionPreset` | `scale`, `slide-in-top`, `slide-in-bottom`, `slide-in-left`, `slide-in-right`, `none` | `scale` |
+| `radius` | `Radius` | `control` |
 
-Size changes only the
-preferred maximum inline measure. Content also forwards supported native ARIA,
-`role`, `initialFocus`, and `finalFocus` properties.
+Widths are 24/28/32/42/56rem for xs/sm/md/lg/xl. Cover and full use the
+viewport and require Positioner. Sparse objects such as `size={{ lg: "xl" }}`
+use md below lg; explicit initial values replace that baseline. Content forwards
+native ARIA, `initialFocus` and `finalFocus`; its alertdialog role cannot change.
+
+### Positioner
+
+`placement` accepts `top` (default), `center`, or `bottom`. `scrollBehavior`
+accepts `outside` (default) or `inside`. Positioner forwards native div props and
+refs through Atom's shared modal boundary. Direct outside clicks remain blocked.
 
 ### Portal and Overlay
 
@@ -184,13 +197,21 @@ Title defaults to `h2`; `as` accepts `h1` through `h6`. Description supplies
 the alert message. If the Description part is intentionally omitted, Content
 must point `aria-describedby` at equivalent visible text.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
-Content supports `sm` and `md`; `md` is the default. Atom's public
-`data-state`, `data-positioned`, and disabled outputs drive state styling.
-AlertDialog intentionally has no tone, variant, placement, fullscreen, or
-arbitrary-width prop. Apply destructive presentation to the composed Action
-Button, normally with `tone="danger"`.
+AlertDialog shares Dialog's visual recipes, including typography, insets,
+surface, scrim, elevation, radius and motion. It retains separate semantics and
+public hooks. There is no surface tone or variant; apply destructive presentation
+to the composed Action Button, normally with `tone="danger"`.
 
 ## Tokens and CSS hooks
 
@@ -198,6 +219,7 @@ Button, normally with `tone="danger"`.
 | --- | --- | --- |
 | Trigger | `.brick-alert-dialog-trigger` | `alert-dialog-trigger` |
 | Overlay | `.brick-alert-dialog-overlay` | `alert-dialog-overlay` |
+| Positioner | `.brick-alert-dialog-positioner` | `alert-dialog-positioner` |
 | Content | `.brick-alert-dialog-content` | `alert-dialog-content` |
 | Header | `.brick-alert-dialog-header` | `alert-dialog-header` |
 | Title | `.brick-alert-dialog-title` | `alert-dialog-title` |
@@ -215,8 +237,9 @@ Content exposes:
 - `--brick-alert-dialog-radius`
 - `--brick-alert-dialog-shadow`
 
-All DOM-rendering parts expose overridable `data-slot`; Content also reflects
-`data-size`.
+All DOM-rendering parts expose overridable `data-slot`; Content also reflects responsive `data-size` attributes and `data-motion-preset`.
+Positioner reflects `data-placement` and `data-scroll-behavior`. The modular
+AlertDialog stylesheet imports the shared Dialog recipe automatically.
 
 Brick honors reduced motion and forced colors. Consumers must reverify layout
 and accessibility after arbitrary class, style, or token overrides.
@@ -230,9 +253,10 @@ title, required alert message, safe initial focus, and explicit responses.
 
 ## Responsive behavior
 
-Content remains centered and bounded by safe-area-aware viewport gaps and
-dynamic viewport height. Body scrolls independently so the message and
-responses remain reachable. The Footer wraps in source order and its responses
+With Positioner, Content follows the chosen placement and scroll behavior;
+without it, legacy Content remains centered. Both are bounded by safe-area-aware
+viewport gaps and dynamic height. Inside mode scrolls Body; outside mode scrolls
+the whole panel. Short-viewport fallbacks keep responses reachable. The Footer wraps in source order and its responses
 fill the available width on narrow screens. Logical properties support RTL.
 At extreme zoom or unusually short viewports where fixed regions cannot fit,
 the bounded Content becomes the scroll fallback so no response is clipped.
@@ -285,3 +309,11 @@ Dialog rather than AlertDialog.
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md).
+
+### Migration to shared Dialog recipes
+
+The old sm width of 24rem is now xs; sm is 28rem. The default md is now 32rem
+(previously 30rem). Insets no longer grow with size. Existing AlertDialog token
+overrides remain supported; omitted values use the shared Dialog recipe. Keep
+confirmation content concise even when using larger sizes. Do not copy the
+shared Dialog CSS into consumer code.

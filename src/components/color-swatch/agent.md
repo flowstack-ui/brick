@@ -17,9 +17,11 @@ Preview one color or a compact mix of colors with a finished alpha-aware visual 
 - Render Root for one color and Mix for two or more colors.
 - Choose sharp, rounded, or circle through shape rather than application border-radius CSS.
 - Place the passive swatch inside its owning control when it represents a selectable option.
+- Sizes 2xs/xs/sm/md/lg/xl/2xl are 14/16/18/20/24/28/32px. inherit and full require a definitely sized parent; these remain passive previews, not target sizes.
 
 ## Rules
 
+- **MUST:** Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers.
 - **MUST:** Do not use the swatch as the only carrier of a color name, selection state, validation state, or action.
 - **MUST:** Leave decorative swatches unlabeled, or provide label when the swatch itself must be exposed as an image.
 - **SHOULD:** Use the closed shape prop for sharp, rounded, or circle geometry before overriding the public radius variable.

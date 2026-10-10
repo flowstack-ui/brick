@@ -1,8 +1,36 @@
 # Color Picker changelog
 
-Color Picker follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+
+Color Picker follows the package version of `@flowstack-ui/brick`.
+
+- Add controller/provider, default editor anatomy, sliders and eyedropper shortcuts, subtle and responsive sizing.
+
+- Add surface as a neutral filled-and-bordered alternative with unchanged geometry; preserve outline defaults.
+- Keep outline transparent at rest and on hover, independently of popup paint.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
+### Fixed
+
+- Separated the compact current-value preview from selectable preset sizing so
+  integrated color fields use a polished 16px `xs` or 18px `sm` ValueSwatch
+  without shrinking the popup palette.
+- Kept channel-slider thumbs above their tracks across the full value range and
+  kept semantic checkerboards visible beneath translucent `ValueSwatch` and
+  `Swatch` colors supplied by Atom.
+- Removed hard area and track borders, made channel tracks and transparency
+  checks share one semantic radius, and replaced the thumb's dark outline with
+  the small Theme shadow while retaining its white contrast ring.
+- Made alpha-track transparency checks appearance-independent white and
+  light-neutral canvases while keeping swatch checks appearance-aware, so the
+  opacity ramp stays legible without turning dark-mode swatches white.
+- Made the alpha thumb preview the selected color at full opacity across the
+  complete range, including the zero-opacity endpoint.
 
 ## 0.2.2 - 2026-08-31
 

@@ -1,9 +1,15 @@
 import {
+  createElement,
   forwardRef,
   type HTMLAttributes,
+  type ReactElement,
   type ReactNode,
 } from "react";
-
+import { layoutHost } from "../_internal/layout-host.js";
+import {
+  responsiveDataAttributes,
+  type ResponsiveValue,
+} from "../_responsive-value/ResponsiveValue.js";
 export type StatusSize = "sm" | "md" | "lg";
 export type StatusTone =
   | "neutral"
@@ -12,90 +18,100 @@ export type StatusTone =
   | "success"
   | "warning"
   | "danger";
-
-export interface StatusRootProps
-  extends Omit<HTMLAttributes<HTMLSpanElement>, "children" | "color"> {
-  children?: ReactNode;
-  size?: StatusSize;
-  tone?: StatusTone;
-  "data-slot"?: string;
-}
-
-export interface StatusPartProps
-  extends Omit<HTMLAttributes<HTMLSpanElement>, "children" | "color" | "aria-hidden"> {
-  children?: ReactNode;
-  "data-slot"?: string;
-}
-
+type HostProps =
+  | { asChild?: false; children?: ReactNode }
+  | { asChild: true; children: ReactElement };
+export type StatusRootProps = Omit<
+  HTMLAttributes<HTMLSpanElement>,
+  "children" | "color"
+> &
+  HostProps & {
+    size?: ResponsiveValue<StatusSize>;
+    tone?: StatusTone;
+    "data-slot"?: string;
+  };
+export type StatusPartProps = Omit<
+  HTMLAttributes<HTMLSpanElement>,
+  "children" | "color" | "aria-hidden"
+> &
+  HostProps & { "data-slot"?: string };
 function classes(base: string, className?: string) {
   return className ? `${base} ${className}` : base;
 }
-
 export const StatusRoot = forwardRef<HTMLSpanElement, StatusRootProps>(
   function StatusRoot(
     {
+      asChild = false,
+      children,
       className,
       size = "md",
       tone = "neutral",
       "data-slot": slot = "status-root",
-      ...props
+      ...native
     },
     ref,
   ) {
-    return (
-      <span
-        {...props}
-        className={classes("brick-status", className)}
-        data-size={size}
-        data-slot={slot}
-        data-tone={tone}
-        ref={ref}
-      />
-    );
+    const props = {
+      ...native,
+      className: classes("brick-status", className),
+      ...responsiveDataAttributes("data-size", size, {
+        defaultValue: "md",
+        alwaysInitial: true,
+      }),
+      "data-slot": slot,
+      "data-tone": tone,
+    };
+    return asChild
+      ? layoutHost(children, props, ref, "Status.Root")
+      : createElement("span", { ...props, ref }, children);
   },
 );
-
 export const StatusIndicator = forwardRef<HTMLSpanElement, StatusPartProps>(
   function StatusIndicator(
     {
+      asChild = false,
+      children,
       className,
       "data-slot": slot = "status-indicator",
-      ...props
+      ...native
     },
     ref,
   ) {
-    return (
-      <span
-        {...props}
-        aria-hidden="true"
-        className={classes("brick-status__indicator", className)}
-        data-slot={slot}
-        ref={ref}
-      />
-    );
+    const props = {
+      ...native,
+      "aria-hidden": true,
+      className: classes("brick-status__indicator", className),
+      "data-slot": slot,
+    };
+    return asChild
+      ? layoutHost(children, props, ref, "Status.Indicator")
+      : createElement("span", { ...props, ref }, children);
   },
 );
-
 export const StatusLabel = forwardRef<HTMLSpanElement, StatusPartProps>(
   function StatusLabel(
-    { className, "data-slot": slot = "status-label", ...props },
+    {
+      asChild = false,
+      children,
+      className,
+      "data-slot": slot = "status-label",
+      ...native
+    },
     ref,
   ) {
-    return (
-      <span
-        {...props}
-        className={classes("brick-status__label", className)}
-        data-slot={slot}
-        ref={ref}
-      />
-    );
+    const props = {
+      ...native,
+      className: classes("brick-status__label", className),
+      "data-slot": slot,
+    };
+    return asChild
+      ? layoutHost(children, props, ref, "Status.Label")
+      : createElement("span", { ...props, ref }, children);
   },
 );
-
 StatusRoot.displayName = "Status.Root";
 StatusIndicator.displayName = "Status.Indicator";
 StatusLabel.displayName = "Status.Label";
-
 export const Status = Object.freeze({
   Root: StatusRoot,
   Indicator: StatusIndicator,

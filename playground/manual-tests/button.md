@@ -1,5 +1,18 @@
 # Button manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
+## Pending parity review
+
+- [ ] Compare subtle, soft and surface in light/dark; verify plain stays clear.
+- [ ] Verify loading text and custom indicators at actual browser zoom.
+- [ ] Verify ButtonGroup and split-menu keyboard/device use in both directions.
+
 | Run information | Value |
 | --- | --- |
 | Component | Button |
@@ -53,10 +66,13 @@ Notes or issue:
 
 Setup: Open `04 Sizes` and `05 Shape`.
 
-Action: Compare xs, sm, md, lg, and xl. Then compare sharp, rounded, and pill;
-finally resize the browser around the Full-width behavior example.
+Action: Compare xs, sm, md, lg, and xl. Resize across the large breakpoint and
+confirm the responsive example changes from `md` to `xl`. Then compare sharp,
+rounded, and pill; finally resize around the Full-width behavior example.
 
-Expected: Sizes change coordinated control geometry and typography only. Shape
+Expected: Sizes change coordinated control geometry and typography only. The
+responsive example is 44px with 16/24 text and 20px logical padding below the
+large breakpoint, then 40px with 14/20 text and 16px logical padding. Shape
 changes corner geometry only. `fullWidth` fills its specimen container and
 does not overflow or change the Button’s intrinsic height unexpectedly.
 
@@ -87,7 +103,7 @@ disabled-plus-loading specimens. Focus the loading Button and attempt
 activation.
 
 Expected: Icons are decorative unless their surrounding content supplies the
-meaning. Disabled cannot activate, preserves the default medium geometry, and
+meaning. Disabled cannot activate, preserves the default large geometry, and
 uses the readable disabled foreground with a subtle boundary rather than
 resembling an enabled neutral outline. Outline and ghost specimens retain a
 transparent surface rather than adding a disabled fill.
@@ -175,6 +191,21 @@ transitions without hiding loading status. Forced colors preserves usable
 system-color contrast and focus.
 
 Result:
+Notes or issue:
+
+## Step 11 — Focus presentation qualification
+
+Action: Keyboard-focus every button action or owned focus part, including
+first and last items where relevant. Repeat in light/dark, RTL, OS high
+contrast and actual 200%/400% zoom. Check selected/loading states where
+supported and rounded or scrolling boundaries.
+
+Expected: Visible focus without layout shifts or clipped edges. Inside
+actions use paired foreground paint; field focus survives without shadows
+in high contrast. Selection and focus remain distinguishable. Browser
+emulation does not replace OS or assistive-technology checks.
+
+Result: not run for this manual protocol revision.
 Notes or issue:
 
 ## Completion

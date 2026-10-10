@@ -1,0 +1,83 @@
+@layer brick.components {
+  .brick-splitter {
+    --brick-splitter-border: var(--brick-color-border-default);
+    --brick-splitter-background: var(--brick-color-surface-canvas);
+    --brick-splitter-target: 1.5rem;
+    --brick-splitter-grip-width: 0.5rem;
+    --brick-splitter-grip-length: 1.5rem;
+    inline-size: 100%;
+  }
+  .brick-splitter-trigger {
+    z-index: 1;
+    cursor: col-resize;
+    outline: none;
+  }
+  .brick-splitter-trigger::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: calc(var(--brick-splitter-target) / -2);
+    width: var(--brick-splitter-target);
+  }
+  .brick-splitter-separator {
+    position: absolute;
+    inset-block: 0;
+    left: -0.5px;
+    width: 1px;
+    background: var(--brick-splitter-border);
+    pointer-events: none;
+  }
+  .brick-splitter-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    width: var(--brick-splitter-grip-width);
+    height: var(--brick-splitter-grip-length);
+    border: 1px solid var(--brick-splitter-border);
+    border-radius: var(--brick-radius-full);
+    background: var(--brick-splitter-background);
+    box-shadow: var(--brick-shadow-sm);
+    pointer-events: none;
+  }
+  .brick-splitter-trigger:hover > .brick-splitter-indicator { border-color: var(--brick-color-border-strong); }
+  .brick-splitter-trigger:focus-visible > .brick-splitter-indicator,
+  .brick-splitter-trigger:focus-visible:not(:has(.brick-splitter-indicator))::before {
+    outline: var(--brick-border-focus-width) solid var(--brick-color-focus-ring);
+    outline-offset: var(--brick-border-focus-offset);
+  }
+  .brick-splitter-trigger:focus-visible > .brick-splitter-indicator {
+    background: var(--brick-color-accent-soft);
+    border-color: var(--brick-color-border-strong);
+  }
+  .brick-splitter-trigger[data-state="dragging"] > .brick-splitter-indicator { background: var(--brick-color-accent-solid); }
+  .brick-splitter-trigger[data-disabled] { cursor: default; }
+  .brick-splitter-trigger[data-disabled]::before { pointer-events: none; }
+  .brick-splitter-trigger[data-disabled] > .brick-splitter-indicator { visibility: hidden; }
+  .brick-splitter-trigger[data-orientation="vertical"] { cursor: row-resize; }
+  .brick-splitter-trigger[data-orientation="vertical"]::before {
+    inset-inline: 0;
+    top: calc(var(--brick-splitter-target) / -2);
+    bottom: auto;
+    width: auto;
+    height: var(--brick-splitter-target);
+  }
+  .brick-splitter-trigger[data-orientation="vertical"] > .brick-splitter-separator {
+    inset-inline: 0;
+    top: -0.5px;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+  .brick-splitter-trigger[data-orientation="vertical"] > .brick-splitter-indicator {
+    width: var(--brick-splitter-grip-length);
+    height: var(--brick-splitter-grip-width);
+  }
+  @media (pointer: coarse) { .brick-splitter { --brick-splitter-target: 2.75rem; } }
+  @media (forced-colors: active) {
+    .brick-splitter { --brick-splitter-border: CanvasText; --brick-splitter-background: Canvas; }
+    .brick-splitter-separator { forced-color-adjust: none; }
+    .brick-splitter-indicator { box-shadow: none; }
+  }
+}

@@ -12,11 +12,14 @@ Overlap authored children in one depth-aware layout while preserving source, rea
 
 - Content follows one row or column. Use Stack.
 - Content is an ordinary image-backed card or hero. Use Surface.Media, Surface.Scrim, and Surface.Content.
+- One in-flow region only needs two-axis centering or equal square/circle geometry. Use Center, Square, or Circle.
+- The attachment should not contribute to its parent's natural size. Use Float.
 
 ## Required composition
 
 - Place natural-size layers directly in ZStack.Root and use ZStack.Item only when one layer needs its own nine-position alignment.
-- For a corner action over media, use ZStack.Root isolation="open" and ZStack.Item layer="action" with edgeSpacing instead of recreating stacking, z-index, and inset margins in local CSS.
+- For a corner action, use ZStack.Item layer="action" with edgeSpacing. Keep Root isolation="contained" unless layers must participate in an ancestor stacking context.
+- Root and Item accept asChild with one non-Fragment child that forwards props and ref. Compose Frame for size and Surface for paint.
 
 ## Rules
 
@@ -27,12 +30,13 @@ Overlap authored children in one depth-aware layout while preserving source, rea
 - **MUST:** Use the closed content and action layers only for authored overlay participation; do not invent arbitrary z-index values or use layer to reorder meaning.
 - **MUST:** Use edgeSpacing for a positioned layer that needs theme-space inset from its aligned edges; it supports the same responsive spacing vocabulary as Stack.
 - **MUST:** Load styles.css or core.css plus z-stack.css.
+- **MUST:** Omit edgeSpacing to preserve host margins; use zero to reset them. Sparse breakpoint spacing is local and never inherits ancestor Item values.
 
 ## Common mistakes
 
 - **Avoid:** Replacing ordinary linear layout with overlap. **Instead:** Use Stack or Grid unless layers intentionally share space.
 - **Avoid:** Rebuilding Surface media anatomy. **Instead:** Prefer Surface for standard media-backed content.
-- **Avoid:** Adding inline isolation, z-index, or margin styles to make an overlay action clickable and inset. **Instead:** Use isolation="open", layer="action", and edgeSpacing on ZStack's public composition API.
+- **Avoid:** Adding inline isolation, z-index, or margin styles to make an overlay action clickable and inset. **Instead:** Use layer="action" and edgeSpacing; ordinary clickable actions do not require isolation="open".
 
 ## Validation checklist
 
@@ -44,3 +48,6 @@ Overlap authored children in one depth-aware layout while preserving source, rea
 - `grid`
 - `surface`
 - `image`
+- `center`
+- `frame`
+- `float`

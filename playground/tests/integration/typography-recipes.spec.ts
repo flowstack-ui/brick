@@ -31,7 +31,7 @@ async function rootRecipe(page: Page, recipe: string) {
 test("Text and supporting component anatomy consume the same content recipes", async ({
   page,
 }) => {
-  await page.goto("/text");
+  await page.goto("/text?qualification=1");
   const textBodySm = await typography(
     page.getByTestId("text-variants").locator("[data-variant='body-sm']"),
   );
@@ -43,13 +43,13 @@ test("Text and supporting component anatomy consume the same content recipes", a
     letterSpacing: "0em",
   });
 
-  await page.goto("/field");
+  await page.goto("/field?qualification=1");
   const field = page.getByTestId("field-overview");
   expect(await typography(field.locator(".brick-field-description"))).toEqual(
     textBodySm,
   );
 
-  await page.goto("/fieldset");
+  await page.goto("/fieldset?qualification=1");
   expect(
     await typography(
       page.getByTestId("fieldset-overview").locator(".brick-fieldset-description"),
@@ -60,32 +60,33 @@ test("Text and supporting component anatomy consume the same content recipes", a
 test("labels, validation, controls, and field values resolve through shared recipes", async ({
   page,
 }) => {
-  await page.goto("/field");
+  await page.goto("/field?qualification=1");
   const field = page.getByTestId("field-overview");
   const label = await typography(field.locator(".brick-field-label"));
   expect(label).toMatchObject({
-    size: "16px",
+    size: "14px",
     weight: "500",
-    lineHeight: "24px",
   });
+  // Engines serialize the same fractional CSS pixel value differently.
+  expect(parseFloat(label.lineHeight)).toBeCloseTo(16.8, 4);
 
-  await page.goto("/fieldset");
+  await page.goto("/fieldset?qualification=1");
   expect(
     await typography(
       page.getByTestId("fieldset-overview").locator(".brick-fieldset-legend"),
     ),
   ).toEqual(label);
 
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
   const button = await typography(
-    page.getByTestId("button-overview").locator(".brick-button"),
+    page.getByTestId("button-sizes").locator('.brick-button[data-size="md"]'),
   );
-  await page.goto("/toggle");
+  await page.goto("/toggle?qualification=1");
   expect(
     await typography(page.getByTestId("toggle-overview").locator(".brick-toggle")),
   ).toEqual(button);
 
-  await page.goto("/input");
+  await page.goto("/input?qualification=1");
   const input = page.getByTestId("input-overview").locator(".brick-input-control");
   expect(await typography(input)).toMatchObject({
     size: "16px",
@@ -97,7 +98,7 @@ test("labels, validation, controls, and field values resolve through shared reci
 test("overlay titles share one normalized title recipe", async ({ page }) => {
   const titles = [];
 
-  await page.goto("/dialog");
+  await page.goto("/dialog?qualification=1");
   await page.getByRole("button", { name: "Edit profile" }).click();
   titles.push(
     await typography(
@@ -107,7 +108,7 @@ test("overlay titles share one normalized title recipe", async ({ page }) => {
     ),
   );
 
-  await page.goto("/alert-dialog");
+  await page.goto("/alert-dialog?qualification=1");
   await page.getByRole("button", { name: "Delete project?" }).click();
   titles.push(
     await typography(
@@ -117,7 +118,7 @@ test("overlay titles share one normalized title recipe", async ({ page }) => {
     ),
   );
 
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
   await page.getByRole("button", { name: "Filter projects" }).click();
   titles.push(
     await typography(
@@ -130,17 +131,17 @@ test("overlay titles share one normalized title recipe", async ({ page }) => {
   expect(titles[1]).toEqual(titles[0]);
   expect(titles[2]).toEqual(titles[0]);
   expect(titles[0]).toMatchObject({
-    size: "20px",
+    size: "18px",
     weight: "600",
-    lineHeight: "24px",
-    letterSpacing: "-0.2px",
+    lineHeight: "27px",
+    letterSpacing: "-0.18px",
   });
 });
 
 test("surface and compact titles expose the approved normalized tracking", async ({
   page,
 }) => {
-  await page.goto("/card");
+  await page.goto("/card?qualification=1");
   const cardTitles = page.getByTestId("card-sizes").locator(".brick-card-title");
   await expect(cardTitles).toHaveCount(3);
   expect(await typography(cardTitles.nth(0))).toMatchObject({
@@ -156,11 +157,10 @@ test("surface and compact titles expose the approved normalized tracking", async
     letterSpacing: "-0.2px",
   });
 
-  await page.goto("/popover");
+  await page.goto("/popover?qualification=1");
+  await page.getByRole("button", { name: "Project settings", exact: true }).click();
   const title = page.locator("[data-slot='popover-title']").first();
   await expect(title).toBeVisible();
-  expect(await typography(title)).toMatchObject({
-    size: "16px",
-    letterSpacing: "-0.16px",
-  });
+  await expect(title).toHaveCSS("font-size", "16px");
+  await expect(title).toHaveCSS("letter-spacing", "-0.16px");
 });

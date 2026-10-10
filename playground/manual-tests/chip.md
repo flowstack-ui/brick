@@ -1,5 +1,25 @@
 # Chip manual-test protocol
 
+## Documentation radius review (not run)
+
+On `/chip`, switch the shared radius setting between Square, Small and Large
+in light and dark appearances. Regular styled examples must follow the control
+radius; only the explicit Pill example keeps fully rounded ends. The unstyled
+composition retains its delegated Button presentation. The qualification route
+continues to demonstrate the library's unchanged pill default.
+
+## September 7 expansion review (not run)
+
+1. Compare compact passive and removable sm/md/lg/xl: passive targets are
+   18/20/24/32px; controls have at least 24px targets plus the root border.
+2. Inspect four variants and six semantic tones in light/dark and forced colors.
+3. Inspect StartElement/EndElement icons and avatars for square geometry and
+   label alignment at every compact size, narrow width and RTL.
+4. Keyboard-activate ActionTrigger and its sibling RemoveTrigger; verify independent
+   accessible names, no nested button, disabled treatment and visible focus.
+5. Verify legacy comfortable sizes, custom glyphs and direct children still work.
+6. Check actual zoom and physical touch targets; emulation is not a manual pass.
+
 | Run information | Value |
 | --- | --- |
 | Component | Chip |
@@ -65,6 +85,17 @@ automation.
 
 Result:
 Notes or issue:
+
+## Modernization checks
+
+Check subtle equals soft, surface has a tone border, and contrast differs from
+neutral in both appearances. Inspect xl typography and compact sm padding.
+Resize both directions across all breakpoints without remounting the value.
+Check independently disabled sibling actions, native fieldset disabling, and
+consumer-owned focus when using unstyled. Inspect image/avatar slots, Arabic
+content, long action labels and actual 200–400% zoom. Review the DatePicker
+multiple-value removal focus and TagsInput integration separately.
+Automation is not a substitute for physical-device or screen-reader signoff.
 
 ## Completion
 

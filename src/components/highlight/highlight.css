@@ -1,7 +1,7 @@
 @layer brick.components {
   .brick-highlight {
     --brick-highlight-background: var(--brick-color-accent-soft);
-    --brick-highlight-foreground: var(--brick-color-accent-text);
+    --brick-highlight-foreground: var(--brick-color-accent-on-soft);
     --brick-highlight-radius: var(--brick-radius-subtle);
     --brick-highlight-padding-inline: 0.125em;
     --brick-highlight-decoration-color: var(--brick-color-accent-border);
@@ -10,11 +10,7 @@
   }
 
   .brick-highlight[data-tone="neutral"] {
-    --brick-highlight-background: color-mix(
-      in srgb,
-      var(--brick-color-surface-subtle),
-      var(--brick-color-text-primary) 28%
-    );
+    --brick-highlight-background: var(--brick-color-surface-subtle);
     --brick-highlight-foreground: var(--brick-color-text-primary);
     --brick-highlight-decoration-color: var(--brick-color-border-strong);
   }
@@ -29,6 +25,43 @@
     --brick-highlight-foreground: var(--brick-color-surface-canvas);
   }
 
+  .brick-highlight[data-tone="info"] {
+    --brick-highlight-background: var(--brick-color-info-soft);
+    --brick-highlight-foreground: var(--brick-color-info-on-soft);
+    --brick-highlight-decoration-color: var(--brick-color-info-border);
+  }
+  .brick-highlight[data-tone="info"][data-variant="solid"] {
+    --brick-highlight-background: var(--brick-color-info-solid);
+    --brick-highlight-foreground: var(--brick-color-info-on-solid);
+  }
+  .brick-highlight[data-tone="success"] {
+    --brick-highlight-background: var(--brick-color-success-soft);
+    --brick-highlight-foreground: var(--brick-color-success-on-soft);
+    --brick-highlight-decoration-color: var(--brick-color-success-border);
+  }
+  .brick-highlight[data-tone="success"][data-variant="solid"] {
+    --brick-highlight-background: var(--brick-color-success-solid);
+    --brick-highlight-foreground: var(--brick-color-success-on-solid);
+  }
+  .brick-highlight[data-tone="warning"] {
+    --brick-highlight-background: var(--brick-color-warning-soft);
+    --brick-highlight-foreground: var(--brick-color-warning-on-soft);
+    --brick-highlight-decoration-color: var(--brick-color-warning-border);
+  }
+  .brick-highlight[data-tone="warning"][data-variant="solid"] {
+    --brick-highlight-background: var(--brick-color-warning-solid);
+    --brick-highlight-foreground: var(--brick-color-warning-on-solid);
+  }
+  .brick-highlight[data-tone="danger"] {
+    --brick-highlight-background: var(--brick-color-danger-soft);
+    --brick-highlight-foreground: var(--brick-color-danger-on-soft);
+    --brick-highlight-decoration-color: var(--brick-color-danger-border);
+  }
+  .brick-highlight[data-tone="danger"][data-variant="solid"] {
+    --brick-highlight-background: var(--brick-color-danger-solid);
+    --brick-highlight-foreground: var(--brick-color-danger-on-solid);
+  }
+
   .brick-highlight [data-slot="highlight-match"] {
     box-decoration-break: clone;
     padding-inline: var(--brick-highlight-padding-inline);
@@ -37,6 +70,16 @@
     color: var(--brick-highlight-foreground);
     font: inherit;
     -webkit-box-decoration-break: clone;
+  }
+
+  .brick-highlight[data-variant="plain"] [data-slot="highlight-match"],
+  .brick-highlight[data-variant="text"] [data-slot="highlight-match"] {
+    --brick-highlight-background: transparent;
+    --brick-highlight-foreground: currentColor;
+    --brick-highlight-padding-inline: 0em;
+  }
+  .brick-highlight[data-variant="text"] [data-slot="highlight-match"] {
+    font-weight: var(--brick-font-weight-medium);
   }
 
   .brick-highlight[data-variant="underline"] [data-slot="highlight-match"] {
@@ -52,15 +95,18 @@
   }
 
   @media (forced-colors: active) {
-    .brick-highlight {
+    .brick-highlight[data-tone][data-variant] {
       --brick-highlight-background: Highlight;
       --brick-highlight-foreground: HighlightText;
       --brick-highlight-decoration-color: Highlight;
     }
 
-    .brick-highlight[data-variant="underline"] [data-slot="highlight-match"] {
+    .brick-highlight[data-tone][data-variant="plain"] [data-slot="highlight-match"],
+    .brick-highlight[data-tone][data-variant="text"] [data-slot="highlight-match"],
+    .brick-highlight[data-tone][data-variant="underline"] [data-slot="highlight-match"] {
       --brick-highlight-background: transparent;
       --brick-highlight-foreground: CanvasText;
+      text-decoration-line: underline;
     }
   }
 }

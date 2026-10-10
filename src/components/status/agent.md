@@ -14,11 +14,11 @@ Present a compact passive state with a semantic indicator and readable label, or
 
 ## Required composition
 
-- Compose Root with one decorative Indicator and one visible Label by default. Omit Label only when adjacent visible or visually hidden text already carries the complete state and the indicator-only Root is aria-hidden.
+- Compose Root with one decorative Indicator and readable direct text or optional Label. For indicator-only composition, adjacent text must carry the complete state and Root must be decorative. All parts support asChild with one forwarding host; Indicator stays aria-hidden.
 
 ## Rules
 
-- **MUST:** Always provide state text. Render it through Label by default; indicator-only composition is allowed only when adjacent visible or visually hidden text already carries the complete meaning and the Root is decorative.
+- **MUST:** Always provide state text, directly or through optional Label; indicator-only composition is allowed only when adjacent visible or visually hidden text already carries the complete meaning and the Root is decorative.
 - **MUST:** Choose success, warning, danger, info, accent, or neutral from the state meaning, not from decorative preference.
 - **MUST:** Do not assume Status announces changes; author role=status or live-region attributes only when the application owns and validates that announcement policy.
 - **MUST:** Load styles.css or core.css plus status.css.
@@ -29,7 +29,7 @@ Present a compact passive state with a semantic indicator and readable label, or
 
 ## Validation checklist
 
-- Check visible state text, semantic tone, decorative indicator, primary label color, light/dark, forced colors, zoom, RTL, and deliberate live-region ownership.
+- Check sparse responsive sizes, all-part asChild refs/semantics, proportional dots, wrapping and centered multiline alignment. Check visible state text, semantic tone, decorative indicator, primary label color, light/dark, forced colors, zoom, RTL, and deliberate live-region ownership.
 
 ## Related guidance
 

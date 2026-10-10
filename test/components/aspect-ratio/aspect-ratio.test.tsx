@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import {
   AspectRatio,
+  aspectRatios,
   AspectRatioRoot,
   type AspectRatioOverflow,
   type AspectRatioRadius,
@@ -10,6 +11,35 @@ import {
 } from "../../../src/aspect-ratio.js";
 
 describe("AspectRatio", () => {
+  it("exposes immutable numeric standard ratios and shared radius", () => {
+    expect(Object.isFrozen(aspectRatios)).toBe(true);
+    expect(aspectRatios).toEqual({ square: 1, landscape: 4 / 3, portrait: 3 / 4, wide: 16 / 9, ultrawide: 18 / 5, golden: 1.618 });
+    const { rerender } = render(<AspectRatio.Root data-testid="tokens" ratio={aspectRatios.wide} radius="xl" />);
+    const root = screen.getByTestId("tokens");
+    expect(root.style.getPropertyValue("--brick-aspect-ratio-radius")).toBe("var(--brick-radius-core-xl)");
+    rerender(<AspectRatio.Root data-testid="tokens" radius="control" />);
+    expect(root.style.getPropertyValue("--brick-aspect-ratio-radius")).toBe("var(--brick-radius-control)");
+    rerender(<AspectRatio.Root data-testid="tokens" radius="full" style={{ "--brick-aspect-ratio-radius": "3px" } as React.CSSProperties} />);
+    expect(root.style.getPropertyValue("--brick-aspect-ratio-radius")).toBe("3px");
+    rerender(<AspectRatio.Root data-testid="tokens" />);
+    expect(root.style.getPropertyValue("--brick-aspect-ratio-radius")).toBe("");
+    expect(root).toHaveAttribute("data-radius", "none");
+  });
+  it("serializes sparse responsive ratios with local normalized fallbacks", () => {
+    const { rerender } = render(<AspectRatio.Root data-testid="ratio" ratio={{ md: 1, lg: 0, xl: 2 }} contentLayout="flow" />);
+    const root = screen.getByTestId("ratio");
+    expect(root.style.aspectRatio).toBe(`var(--_brick-aspect-ratio-current, ${16 / 9})`);
+    expect(root.style.getPropertyValue("--_brick-aspect-ratio-sm")).toBe(String(16 / 9));
+    expect(root.style.getPropertyValue("--_brick-aspect-ratio-md")).toBe("1");
+    expect(root.style.getPropertyValue("--_brick-aspect-ratio-lg")).toBe(String(16 / 9));
+    expect(root.style.getPropertyValue("--_brick-aspect-ratio-xl")).toBe("2");
+    expect(root).toHaveAttribute("data-content-layout", "flow");
+    expect(root).not.toHaveAttribute("ratioVariable");
+    rerender(<AspectRatio.Root data-testid="ratio" ratio={1} />);
+    expect(root.style.aspectRatio).toBe("1");
+    expect(root.style.getPropertyValue("--_brick-aspect-ratio-md")).toBe("");
+    expect(root).toHaveAttribute("data-content-layout", "fill");
+  });
   it("renders the adopted one-root defaults over Atom", () => {
     const ref = createRef<HTMLDivElement>();
     render(<AspectRatio.Root data-testid="ratio" ref={ref}>Media</AspectRatio.Root>);

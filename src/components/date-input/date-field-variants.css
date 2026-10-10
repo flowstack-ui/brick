@@ -1,0 +1,395 @@
+@layer brick.components {
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="outline"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="surface"] {
+ --brick-date-input-background: var(--brick-color-surface-raised);
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: var(--brick-color-surface-raised);
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="soft"] {
+ --brick-date-input-background: var(--brick-color-surface-subtle);
+ --brick-date-input-border: var(--brick-color-border-subtle);
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="subtle"] {
+ --brick-date-input-background: var(--brick-color-surface-subtle);
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="ghost"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="plain"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant="underline"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: 0 0 var(--brick-border-width);
+ --brick-date-control-radius: 0;
+ --brick-date-input-padding: 0;
+ --brick-date-focus-y: var(--brick-border-focus-width);
+ --brick-date-focus-spread: 0px;
+}
+@media (min-width: 30rem) {
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="outline"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="surface"] {
+ --brick-date-input-background: var(--brick-color-surface-raised);
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: var(--brick-color-surface-raised);
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="soft"] {
+ --brick-date-input-background: var(--brick-color-surface-subtle);
+ --brick-date-input-border: var(--brick-color-border-subtle);
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="subtle"] {
+ --brick-date-input-background: var(--brick-color-surface-subtle);
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="ghost"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="plain"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-sm="underline"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: 0 0 var(--brick-border-width);
+ --brick-date-control-radius: 0;
+ --brick-date-input-padding: 0;
+ --brick-date-focus-y: var(--brick-border-focus-width);
+ --brick-date-focus-spread: 0px;
+}
+}
+@media (min-width: 48rem) {
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="outline"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="surface"] {
+ --brick-date-input-background: var(--brick-color-surface-raised);
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: var(--brick-color-surface-raised);
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="soft"] {
+ --brick-date-input-background: var(--brick-color-surface-subtle);
+ --brick-date-input-border: var(--brick-color-border-subtle);
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="subtle"] {
+ --brick-date-input-background: var(--brick-color-surface-subtle);
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="ghost"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="plain"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-md="underline"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: 0 0 var(--brick-border-width);
+ --brick-date-control-radius: 0;
+ --brick-date-input-padding: 0;
+ --brick-date-focus-y: var(--brick-border-focus-width);
+ --brick-date-focus-spread: 0px;
+}
+}
+@media (min-width: 64rem) {
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="outline"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="surface"] {
+ --brick-date-input-background: var(--brick-color-surface-raised);
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: var(--brick-color-surface-raised);
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="soft"] {
+ --brick-date-input-background: var(--brick-color-surface-subtle);
+ --brick-date-input-border: var(--brick-color-border-subtle);
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="subtle"] {
+ --brick-date-input-background: var(--brick-color-surface-subtle);
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="ghost"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="plain"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-lg="underline"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: 0 0 var(--brick-border-width);
+ --brick-date-control-radius: 0;
+ --brick-date-input-padding: 0;
+ --brick-date-focus-y: var(--brick-border-focus-width);
+ --brick-date-focus-spread: 0px;
+}
+}
+@media (min-width: 80rem) {
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="outline"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="surface"] {
+ --brick-date-input-background: var(--brick-color-surface-raised);
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: var(--brick-color-surface-raised);
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="soft"] {
+ --brick-date-input-background: var(--brick-color-surface-subtle);
+ --brick-date-input-border: var(--brick-color-border-subtle);
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="subtle"] {
+ --brick-date-input-background: var(--brick-color-surface-subtle);
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="ghost"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: var(--brick-color-surface-subtle);
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="plain"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: transparent;
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: transparent;
+ --brick-date-input-border-width: var(--brick-border-width);
+ --brick-date-control-radius: var(--brick-date-input-radius);
+ --brick-date-input-padding: var(--brick-control-size-padding-inline);
+ --brick-date-focus-y: 0px;
+ --brick-date-focus-spread: var(--brick-border-focus-width);
+}
+:is(.brick-date-input, .brick-date-picker).brick-control-size[data-variant-xl="underline"] {
+ --brick-date-input-background: transparent;
+ --brick-date-input-border: var(--brick-color-border-default);
+ --brick-date-hover-background: transparent;
+ --brick-date-hover-border: var(--brick-color-accent-border);
+ --brick-date-input-border-width: 0 0 var(--brick-border-width);
+ --brick-date-control-radius: 0;
+ --brick-date-input-padding: 0;
+ --brick-date-focus-y: var(--brick-border-focus-width);
+ --brick-date-focus-spread: 0px;
+}
+}
+}

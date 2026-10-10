@@ -1,11 +1,11 @@
 @layer brick.components {
   .brick-dialog-overlay {
     position: fixed;
-    z-index: var(--brick-layer-overlay);
+    z-index: calc(var(--brick-layer-overlay) + var(--atom-overlay-layer, 0));
     inset: 0;
-    background: var(--brick-color-scrim);
+    background: color-mix(in srgb, var(--brick-color-scrim) 65%, transparent);
     opacity: 1;
-    transition: opacity var(--brick-motion-duration-fast) var(--brick-motion-easing-exit);
+    transition: opacity var(--brick-motion-duration-moderate) var(--brick-motion-easing-exit);
   }
 
   .brick-dialog-overlay[data-state="closed"] {
@@ -16,59 +16,52 @@
     --brick-dialog-max-inline-size: 32rem;
     --brick-dialog-max-block-size: calc(100dvb - 2rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     --brick-dialog-space: var(--brick-space-5);
-    --brick-dialog-radius: var(--brick-radius-overlay);
-    --brick-dialog-shadow: var(--brick-shadow-modal);
+    --brick-dialog-radius: var(--brick-radius-control);
+    --brick-dialog-shadow: var(--brick-shadow-raised);
 
     position: fixed;
-    z-index: calc(var(--brick-layer-overlay) + 1);
+    z-index: calc(var(--brick-layer-overlay) + var(--atom-overlay-layer, 0) + 1);
     inset-block-start: 50%;
     left: 50%;
     display: flex;
     box-sizing: border-box;
     inline-size: min(
-      var(--brick-dialog-max-inline-size),
+      var(--brick-dialog-measure-override, var(--brick-dialog-max-inline-size)),
       calc(100vi - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right))
     );
     max-inline-size: calc(100vi - 2rem - env(safe-area-inset-left) - env(safe-area-inset-right));
-    max-block-size: var(--brick-dialog-max-block-size);
+    max-block-size: var(--brick-dialog-height-override, var(--brick-dialog-max-block-size));
     flex-direction: column;
-    overflow: hidden;
-    border: var(--brick-border-width) solid var(--brick-color-border-subtle);
-    border-radius: var(--brick-dialog-radius);
+    overflow: auto;
+    border: 0 solid var(--brick-color-border-subtle);
+    border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius));
     background: var(--brick-color-surface-overlay);
-    box-shadow: var(--brick-dialog-shadow);
+    box-shadow: var(--brick-dialog-elevation-override, var(--brick-dialog-shadow));
     color: var(--brick-color-text-primary);
+    font-family: var(--brick-typography-body-sm-font-family);
+    font-size: var(--brick-typography-body-sm-font-size);
+    line-height: var(--brick-typography-body-sm-line-height);
     opacity: 1;
     overflow-wrap: anywhere;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(var(--brick-dialog-translate-x, -50%), var(--brick-dialog-translate-y, -50%)) scale(1);
     transform-origin: center;
     transition:
-      opacity var(--brick-motion-duration-fast) var(--brick-motion-easing-exit),
-      transform var(--brick-motion-duration-fast) var(--brick-motion-easing-exit);
-  }
-
-  .brick-dialog-content[data-size="sm"] {
-    --brick-dialog-max-inline-size: 24rem;
-    --brick-dialog-space: var(--brick-space-4);
-  }
-
-  .brick-dialog-content[data-size="lg"] {
-    --brick-dialog-max-inline-size: 44rem;
-    --brick-dialog-space: var(--brick-space-6);
+      opacity var(--brick-motion-duration-moderate) var(--brick-motion-easing-exit),
+      transform var(--brick-motion-duration-moderate) var(--brick-motion-easing-exit);
   }
 
   .brick-dialog-content[data-state="closed"] {
     opacity: 0;
-    transform: translate(-50%, -48%) scale(0.985);
+    transform: translate(calc(var(--brick-dialog-translate-x, -50%) + var(--brick-dialog-enter-x, 0px)), calc(var(--brick-dialog-translate-y, -50%) + var(--brick-dialog-enter-y, 0px))) scale(var(--brick-dialog-enter-scale, 0.95));
   }
 
   .brick-dialog-header {
     display: grid;
     flex: none;
-    gap: var(--brick-space-1);
+    gap: var(--brick-space-2);
     min-inline-size: 0;
-    padding: var(--brick-dialog-space);
-    padding-block-end: var(--brick-space-3);
+    padding: var(--brick-dialog-inset-override, var(--brick-dialog-space));
+    padding-block-end: var(--brick-space-4);
   }
 
   .brick-dialog-title,
@@ -83,29 +76,35 @@
     font-size: var(--brick-typography-overlay-title-font-size);
     font-weight: var(--brick-typography-overlay-title-font-weight);
     letter-spacing: var(--brick-typography-overlay-title-letter-spacing);
-    line-height: var(--brick-typography-overlay-title-line-height);
+    line-height: var(--brick-typography-body-lg-line-height);
   }
 
   .brick-dialog-description {
     color: var(--brick-color-text-secondary);
-    font-family: var(--brick-typography-supporting-sm-font-family);
-    font-size: var(--brick-typography-supporting-sm-font-size);
-    font-weight: var(--brick-typography-supporting-sm-font-weight);
-    letter-spacing: var(--brick-typography-supporting-sm-letter-spacing);
-    line-height: var(--brick-typography-supporting-sm-line-height);
+    font-family: var(--brick-typography-body-sm-font-family);
+    font-size: var(--brick-typography-body-sm-font-size);
+    font-weight: var(--brick-typography-body-sm-font-weight);
+    letter-spacing: var(--brick-typography-body-sm-letter-spacing);
+    line-height: var(--brick-typography-body-sm-line-height);
+  }
+
+  .brick-dialog-close[data-placement="corner"] {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: var(--brick-space-2);
+    inset-inline-end: var(--brick-space-2);
   }
 
   .brick-dialog-body {
     min-block-size: 0;
     min-inline-size: 0;
     flex: 1 1 auto;
-    padding-inline: var(--brick-dialog-space);
-    padding-block: var(--brick-space-2) var(--brick-dialog-space);
+    padding-inline: var(--brick-dialog-inset-override, var(--brick-dialog-space));
+    padding-block: var(--brick-space-2) var(--brick-dialog-inset-override, var(--brick-dialog-space));
     overflow: auto;
     overscroll-behavior: contain;
     color: var(--brick-color-text-primary);
-    line-height: var(--brick-typography-body-md-line-height);
-    scrollbar-gutter: stable;
+
   }
 
   .brick-dialog-footer {
@@ -115,8 +114,8 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
-    gap: var(--brick-space-2);
-    padding: var(--brick-space-3) var(--brick-dialog-space) var(--brick-dialog-space);
+    gap: var(--brick-space-3);
+    padding: var(--brick-space-2) var(--brick-dialog-inset-override, var(--brick-dialog-space)) var(--brick-space-4);
   }
 
   .brick-dialog-footer[data-justify="start"] {
@@ -155,7 +154,7 @@
 
     .brick-dialog-content,
     .brick-dialog-content[data-state="closed"] {
-      transform: translate(-50%, -50%);
+      transform: translate(var(--brick-dialog-translate-x, -50%), var(--brick-dialog-translate-y, -50%));
     }
   }
 
@@ -166,8 +165,171 @@
     }
 
     .brick-dialog-content {
-      border-color: CanvasText;
+      border: 1px solid CanvasText;
       box-shadow: none;
     }
+  }
+
+  .brick-dialog-content[hidden] { display: none; }
+  .brick-dialog-positioner {
+    position: fixed;
+    z-index: calc(var(--brick-layer-overlay) + var(--atom-overlay-layer, 0) + 1);
+    inset: 0;
+    display: flex;
+    box-sizing: border-box;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 4rem 1rem;
+    scroll-padding-block: var(--brick-space-2);
+    overflow: auto;
+    overscroll-behavior: contain;
+    pointer-events: none;
+  }
+  .brick-dialog-positioner[data-state="open"] { pointer-events: auto; }
+  .brick-dialog-positioner[data-state="closed"]:not(:has(.brick-dialog-content:not([hidden]))) { display: none; }
+  .brick-dialog-positioner > .brick-dialog-content {
+    --brick-dialog-translate-x: 0%;
+    --brick-dialog-translate-y: 0%;
+    position: relative;
+    inset: auto;
+    flex-shrink: 0;
+    inline-size: 100%;
+    max-inline-size: var(--brick-dialog-measure-override, var(--brick-dialog-max-inline-size));
+    max-block-size: none;
+    overflow: visible;
+    pointer-events: auto;
+  }
+  .brick-dialog-positioner[data-placement="center"] > .brick-dialog-content { margin-block: auto; }
+  .brick-dialog-positioner[data-placement="bottom"] > .brick-dialog-content { margin-block-start: auto; }
+  .brick-dialog-positioner[data-scroll-behavior="inside"] > .brick-dialog-content {
+    max-block-size: calc(100dvb - 8rem);
+    overflow: auto;
+  }
+  .brick-dialog-content[data-state="closed"] { pointer-events: none; }
+  .brick-dialog-content[data-motion-preset^="slide-in"] { --brick-dialog-enter-scale: 1; }
+  .brick-dialog-content[data-motion-preset="slide-in-top"] { --brick-dialog-enter-y: -2rem; }
+  .brick-dialog-content[data-motion-preset="slide-in-bottom"] { --brick-dialog-enter-y: 2rem; }
+  .brick-dialog-content[data-motion-preset="slide-in-left"] { --brick-dialog-enter-x: -2rem; }
+  .brick-dialog-content[data-motion-preset="slide-in-right"] { --brick-dialog-enter-x: 2rem; }
+  .brick-dialog-content[data-motion-preset="none"] { transition: none; --brick-dialog-enter-scale: 1; }
+  .brick-dialog-header:has(~ .brick-dialog-close[data-placement="corner"]) { padding-inline-end: calc(var(--brick-space-5) + var(--brick-space-6)); }
+  .brick-dialog-positioner[data-scroll-behavior="outside"] > .brick-dialog-content > .brick-dialog-body { overflow: visible; }
+  .brick-dialog-content[data-size="xs"] { --brick-dialog-max-inline-size: 24rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size="xs"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size="xs"] { max-block-size: none; }
+  .brick-dialog-content[data-size="sm"] { --brick-dialog-max-inline-size: 28rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size="sm"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size="sm"] { max-block-size: none; }
+  .brick-dialog-content[data-size="md"] { --brick-dialog-max-inline-size: 32rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size="md"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size="md"] { max-block-size: none; }
+  .brick-dialog-content[data-size="lg"] { --brick-dialog-max-inline-size: 42rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size="lg"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size="lg"] { max-block-size: none; }
+  .brick-dialog-content[data-size="xl"] { --brick-dialog-max-inline-size: 56rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size="xl"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size="xl"] { max-block-size: none; }
+  .brick-dialog-content[data-size="cover"] { --brick-dialog-max-inline-size: 100%; --brick-dialog-size-block-limit: calc(100dvb - 5rem); min-block-size: calc(100dvb - 5rem); border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size="cover"]) { padding: 2.5rem; }
+  .brick-dialog-positioner > .brick-dialog-content[data-size="cover"] { max-block-size: calc(100dvb - 5rem); }
+  .brick-dialog-content[data-size="full"] { --brick-dialog-max-inline-size: 100%; --brick-dialog-size-block-limit: 100dvb; min-block-size: 100dvb; border-radius: 0; }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size="full"]) { padding: 0; }
+  .brick-dialog-positioner > .brick-dialog-content[data-size="full"] { max-block-size: 100dvb; }
+  @media (min-width: 40rem) {
+  .brick-dialog-content[data-size-sm="xs"] { --brick-dialog-max-inline-size: 24rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-sm="xs"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-sm="xs"] { max-block-size: none; }
+  .brick-dialog-content[data-size-sm="sm"] { --brick-dialog-max-inline-size: 28rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-sm="sm"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-sm="sm"] { max-block-size: none; }
+  .brick-dialog-content[data-size-sm="md"] { --brick-dialog-max-inline-size: 32rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-sm="md"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-sm="md"] { max-block-size: none; }
+  .brick-dialog-content[data-size-sm="lg"] { --brick-dialog-max-inline-size: 42rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-sm="lg"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-sm="lg"] { max-block-size: none; }
+  .brick-dialog-content[data-size-sm="xl"] { --brick-dialog-max-inline-size: 56rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-sm="xl"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-sm="xl"] { max-block-size: none; }
+  .brick-dialog-content[data-size-sm="cover"] { --brick-dialog-max-inline-size: 100%; --brick-dialog-size-block-limit: calc(100dvb - 5rem); min-block-size: calc(100dvb - 5rem); border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-sm="cover"]) { padding: 2.5rem; }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-sm="cover"] { max-block-size: calc(100dvb - 5rem); }
+  .brick-dialog-content[data-size-sm="full"] { --brick-dialog-max-inline-size: 100%; --brick-dialog-size-block-limit: 100dvb; min-block-size: 100dvb; border-radius: 0; }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-sm="full"]) { padding: 0; }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-sm="full"] { max-block-size: 100dvb; }
+  }
+  @media (min-width: 48rem) {
+  .brick-dialog-content[data-size-md="xs"] { --brick-dialog-max-inline-size: 24rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-md="xs"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-md="xs"] { max-block-size: none; }
+  .brick-dialog-content[data-size-md="sm"] { --brick-dialog-max-inline-size: 28rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-md="sm"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-md="sm"] { max-block-size: none; }
+  .brick-dialog-content[data-size-md="md"] { --brick-dialog-max-inline-size: 32rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-md="md"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-md="md"] { max-block-size: none; }
+  .brick-dialog-content[data-size-md="lg"] { --brick-dialog-max-inline-size: 42rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-md="lg"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-md="lg"] { max-block-size: none; }
+  .brick-dialog-content[data-size-md="xl"] { --brick-dialog-max-inline-size: 56rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-md="xl"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-md="xl"] { max-block-size: none; }
+  .brick-dialog-content[data-size-md="cover"] { --brick-dialog-max-inline-size: 100%; --brick-dialog-size-block-limit: calc(100dvb - 5rem); min-block-size: calc(100dvb - 5rem); border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-md="cover"]) { padding: 2.5rem; }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-md="cover"] { max-block-size: calc(100dvb - 5rem); }
+  .brick-dialog-content[data-size-md="full"] { --brick-dialog-max-inline-size: 100%; --brick-dialog-size-block-limit: 100dvb; min-block-size: 100dvb; border-radius: 0; }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-md="full"]) { padding: 0; }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-md="full"] { max-block-size: 100dvb; }
+  }
+  @media (min-width: 64rem) {
+  .brick-dialog-content[data-size-lg="xs"] { --brick-dialog-max-inline-size: 24rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-lg="xs"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-lg="xs"] { max-block-size: none; }
+  .brick-dialog-content[data-size-lg="sm"] { --brick-dialog-max-inline-size: 28rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-lg="sm"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-lg="sm"] { max-block-size: none; }
+  .brick-dialog-content[data-size-lg="md"] { --brick-dialog-max-inline-size: 32rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-lg="md"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-lg="md"] { max-block-size: none; }
+  .brick-dialog-content[data-size-lg="lg"] { --brick-dialog-max-inline-size: 42rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-lg="lg"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-lg="lg"] { max-block-size: none; }
+  .brick-dialog-content[data-size-lg="xl"] { --brick-dialog-max-inline-size: 56rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-lg="xl"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-lg="xl"] { max-block-size: none; }
+  .brick-dialog-content[data-size-lg="cover"] { --brick-dialog-max-inline-size: 100%; --brick-dialog-size-block-limit: calc(100dvb - 5rem); min-block-size: calc(100dvb - 5rem); border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-lg="cover"]) { padding: 2.5rem; }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-lg="cover"] { max-block-size: calc(100dvb - 5rem); }
+  .brick-dialog-content[data-size-lg="full"] { --brick-dialog-max-inline-size: 100%; --brick-dialog-size-block-limit: 100dvb; min-block-size: 100dvb; border-radius: 0; }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-lg="full"]) { padding: 0; }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-lg="full"] { max-block-size: 100dvb; }
+  }
+  @media (min-width: 80rem) {
+  .brick-dialog-content[data-size-xl="xs"] { --brick-dialog-max-inline-size: 24rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-xl="xs"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-xl="xs"] { max-block-size: none; }
+  .brick-dialog-content[data-size-xl="sm"] { --brick-dialog-max-inline-size: 28rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-xl="sm"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-xl="sm"] { max-block-size: none; }
+  .brick-dialog-content[data-size-xl="md"] { --brick-dialog-max-inline-size: 32rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-xl="md"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-xl="md"] { max-block-size: none; }
+  .brick-dialog-content[data-size-xl="lg"] { --brick-dialog-max-inline-size: 42rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-xl="lg"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-xl="lg"] { max-block-size: none; }
+  .brick-dialog-content[data-size-xl="xl"] { --brick-dialog-max-inline-size: 56rem; --brick-dialog-size-block-limit: calc(100dvb - min(8rem, 16dvb)); min-block-size: auto; border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-xl="xl"]) { padding: max(min(4rem, 8dvb), env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(min(4rem, 8dvb), env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-xl="xl"] { max-block-size: none; }
+  .brick-dialog-content[data-size-xl="cover"] { --brick-dialog-max-inline-size: 100%; --brick-dialog-size-block-limit: calc(100dvb - 5rem); min-block-size: calc(100dvb - 5rem); border-radius: var(--brick-dialog-corner-override, var(--brick-dialog-radius)); }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-xl="cover"]) { padding: 2.5rem; }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-xl="cover"] { max-block-size: calc(100dvb - 5rem); }
+  .brick-dialog-content[data-size-xl="full"] { --brick-dialog-max-inline-size: 100%; --brick-dialog-size-block-limit: 100dvb; min-block-size: 100dvb; border-radius: 0; }
+  .brick-dialog-positioner:has(> .brick-dialog-content[data-size-xl="full"]) { padding: 0; }
+  .brick-dialog-positioner > .brick-dialog-content[data-size-xl="full"] { max-block-size: 100dvb; }
+  }
+
+  .brick-dialog-positioner[data-scroll-behavior="inside"] > .brick-dialog-content { max-block-size: var(--brick-dialog-size-block-limit, calc(100dvb - min(8rem, 16dvb))); }
+  @media (max-height: 30rem) {
+    .brick-dialog-body { flex-shrink: 0; }
   }
 }

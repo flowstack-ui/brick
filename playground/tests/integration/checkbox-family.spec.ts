@@ -20,13 +20,13 @@ async function checkboxGeometry(checkbox: Locator) {
 test("Checkbox and CheckboxGroup Item share default medium row geometry", async ({
   page,
 }) => {
-  await page.goto("/checkbox");
+  await page.goto("/checkbox?qualification=1");
   const standalone = page
     .getByTestId("checkbox-overview")
     .getByRole("checkbox", { name: "Ready to publish" });
   const standaloneGeometry = await checkboxGeometry(standalone);
 
-  await page.goto("/checkbox-group");
+  await page.goto("/checkbox-group?qualification=1");
   const grouped = page
     .getByTestId("checkbox-group-overview")
     .getByRole("checkbox", { name: "Email reports" });
@@ -36,13 +36,13 @@ test("Checkbox and CheckboxGroup Item share default medium row geometry", async 
 test("Checkbox and CheckboxGroup preserve independent, shared-group, and item invalid cues", async ({
   page,
 }) => {
-  await page.goto("/checkbox");
+  await page.goto("/checkbox?qualification=1");
   const standalone = page
     .getByTestId("checkbox-validity")
     .getByRole("checkbox", { name: "Preview" })
     .nth(1);
   const standaloneCue = await standalone.evaluate((element) => {
-    const style = getComputedStyle(element);
+    const style = getComputedStyle(element.querySelector(".brick-checkbox-control")!);
     return {
       color: style.borderLeftColor,
       style: style.borderLeftStyle,
@@ -50,7 +50,7 @@ test("Checkbox and CheckboxGroup preserve independent, shared-group, and item in
     };
   });
 
-  await page.goto("/checkbox-group");
+  await page.goto("/checkbox-group?qualification=1");
   const sharedGroup = page.getByRole("group", {
     name: "Invalid delivery methods",
   });
@@ -61,12 +61,16 @@ test("Checkbox and CheckboxGroup preserve independent, shared-group, and item in
     .getByRole("group", { name: "Individual delivery validation" })
     .getByRole("checkbox", { name: "Email reports" });
 
-  await expect(sharedGroup).toHaveCSS("border-left-style", "solid");
+  await expect(sharedGroup).toHaveCSS("border-left-style", "none");
   await expect(sharedItem).toHaveCSS("border-left-style", "none");
   await expect(sharedItem).toHaveAttribute("aria-invalid", "true");
+  // Group validity belongs to shared messaging, not one stripe per row or a
+  // false implication that each checkbox is independently required.
+  const sharedCue = await sharedItem.locator(".brick-checkbox-control").evaluate((element) => getComputedStyle(element).borderLeftColor);
+  expect(sharedCue).not.toBe(standaloneCue.color);
   expect(
     await individualItem.evaluate((element) => {
-      const style = getComputedStyle(element);
+      const style = getComputedStyle(element.querySelector(".brick-checkbox-control")!);
       return {
         color: style.borderLeftColor,
         style: style.borderLeftStyle,

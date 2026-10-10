@@ -1,5 +1,10 @@
 # Link Box manual-test protocol
 
+September 12 additions (not manually performed): use `/link-box` for the docs
+and `/link-box?qualification=1` for numbered scenarios. Verify title weight,
+shared radius focus boundaries, native context menus and modified clicks, and
+independent secondary controls. Repeat at actual zoom and on a physical device.
+
 | Run information | Value |
 | --- | --- |
 | Component | Link Box |

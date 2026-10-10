@@ -1,4 +1,11 @@
 export {
+  useMultiSelect,
+  MultiSelectRootProvider,
+  MultiSelectState,
+  type UseMultiSelectReturn,
+  type MultiSelectRootProviderProps,
+  MultiSelectClearTrigger,
+  type MultiSelectClearTriggerProps,
   MultiSelect,
   MultiSelectArrow,
   MultiSelectContent,

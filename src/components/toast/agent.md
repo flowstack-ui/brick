@@ -19,6 +19,8 @@ Present queued finished transient updates while Atom owns store identity, timers
 
 ## Rules
 
+- **MUST:** Mount a dialog-scoped Toaster inside the dialog React tree for modal focus/isolation ownership. Create scoped managers once with createToaster and mount one Toaster per manager; isolate server requests. Dismiss animates, remove is immediate. Manual pause composes with hover/focus/page pauses; queued time never consumes duration. Handle promise rejections and never recreate removed async results.
+- **SHOULD:** Choose surface or solid presentation, independent tone and shared radius; do not select assertive status for color alone. Use responsive gap and logical offset props before CSS. Pass toast/index/expanded to custom Root and let Icon inherit its type.
 - **MUST:** Never make Toast the sole home of essential, response-required, validation, or durable information because it is transient and does not move focus when it appears.
 - **MUST:** Keep Viewport's persistent polite and assertive announcers as the only live path; do not add role=status, role=alert, or aria-live to visible Root cards.
 - **MUST:** Use warning and error assertion only for genuinely important feedback, keep Title and Description concise, include meaning beyond color and glyph, and update content only when a new announcement is intended.

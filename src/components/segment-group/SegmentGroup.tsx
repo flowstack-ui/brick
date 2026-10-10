@@ -1,50 +1,43 @@
 "use client";
-
-import {
-  forwardRef,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type HTMLAttributes,
-  type ReactNode,
-} from "react";
+import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import {
   RadioGroup as AtomRadioGroup,
-  useRadioGroupContext,
   type RadioGroupRootProps as AtomRootProps,
   type RadioRootProps as AtomItemProps,
 } from "@flowstack-ui/atom/radio-group";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+import { For } from "../for/For.js";
 
-export type SegmentGroupSize = "sm" | "md" | "lg";
-
+export type SegmentGroupSize = "2xs" | "xs" | "sm" | "md" | "lg";
+export type SegmentGroupTone = "neutral" | "accent" | "contrast";
 export interface SegmentGroupRootProps extends AtomRootProps {
-  /** Shared item and indicator geometry. @default "md" */
+  radius?: Radius;
+  /** Shared geometry. @default "md" */
   size?: SegmentGroupSize;
-  /** Fill the available inline width and distribute items. @default false */
+  /** Selected fill and foreground pair. @default "neutral" */
+  tone?: SegmentGroupTone;
+  /** Distribute items across the available width. @default false */
   fullWidth?: boolean;
 }
-
 export interface SegmentGroupItemProps extends AtomItemProps {
-  /** Use square padding for icon-only content. @default false */
   iconOnly?: boolean;
 }
-
-export interface SegmentGroupItemTextProps extends HTMLAttributes<HTMLSpanElement> {
+export interface SegmentGroupItemTextProps
+  extends HTMLAttributes<HTMLSpanElement> {
   "data-slot"?: string;
 }
-
-export interface SegmentGroupIndicatorProps extends HTMLAttributes<HTMLSpanElement> {
+export interface SegmentGroupIndicatorProps
+  extends HTMLAttributes<HTMLSpanElement> {
   "data-slot"?: string;
 }
-
-function mergeClassName(base: string, className?: string) {
-  return className ? `${base} ${className}` : base;
+export interface SegmentGroupItemsProps {
+  items: readonly (
+    | string
+    | { value: string; label: ReactNode; disabled?: boolean }
+  )[];
 }
-
-const useSafeLayoutEffect =
-  typeof window === "undefined" ? useEffect : useLayoutEffect;
+const mergeClassName = (base: string, extra?: string) =>
+  extra ? `${base} ${extra}` : base;
 
 export const SegmentGroupRoot = forwardRef<
   HTMLDivElement,
@@ -55,7 +48,10 @@ export const SegmentGroupRoot = forwardRef<
     fullWidth = false,
     orientation = "horizontal",
     size = "md",
-    "data-slot": dataSlot,
+    tone = "neutral",
+    radius,
+    style,
+    "data-slot": slot,
     ...props
   },
   ref,
@@ -63,118 +59,90 @@ export const SegmentGroupRoot = forwardRef<
   return (
     <AtomRadioGroup.Root
       {...props}
-      className={mergeClassName("brick-segment-group", className)}
-      data-full-width={fullWidth ? "" : undefined}
-      data-size={size}
-      data-slot={dataSlot ?? "segment-group"}
-      orientation={orientation}
       ref={ref}
+      orientation={orientation}
+      className={mergeClassName("brick-segment-group", className)}
+      style={radiusStyle(radius, "--brick-segment-group-radius", style)}
+      data-size={size}
+      data-tone={tone}
+      data-full-width={fullWidth ? "" : undefined}
+      data-slot={slot ?? "segment-group"}
     />
   );
 });
-
 export const SegmentGroupItem = forwardRef<
   HTMLButtonElement,
   SegmentGroupItemProps
 >(function SegmentGroupItem(
-  { className, iconOnly = false, "data-slot": dataSlot, ...props },
+  { className, iconOnly = false, "data-slot": slot, ...props },
   ref,
 ) {
   return (
     <AtomRadioGroup.Radio
       {...props}
+      ref={ref}
       className={mergeClassName("brick-segment-group__item", className)}
       data-icon-only={iconOnly ? "" : undefined}
-      data-slot={dataSlot ?? "segment-group-item"}
-      ref={ref}
+      data-slot={slot ?? "segment-group-item"}
     />
   );
 });
-
 export const SegmentGroupItemText = forwardRef<
   HTMLSpanElement,
   SegmentGroupItemTextProps
 >(function SegmentGroupItemText(
-  { className, "data-slot": dataSlot, ...props },
+  { className, "data-slot": slot, ...props },
   ref,
 ) {
   return (
     <span
       {...props}
-      className={mergeClassName("brick-segment-group__item-text", className)}
-      data-slot={dataSlot ?? "segment-group-item-text"}
       ref={ref}
+      className={mergeClassName("brick-segment-group__item-text", className)}
+      data-slot={slot ?? "segment-group-item-text"}
     />
   );
 });
-
 export const SegmentGroupIndicator = forwardRef<
   HTMLSpanElement,
   SegmentGroupIndicatorProps
 >(function SegmentGroupIndicator(
-  { className, style, "data-slot": dataSlot, ...props },
-  forwardedRef,
+  { className, "data-slot": slot, ...props },
+  ref,
 ) {
-  const indicatorRef = useRef<HTMLSpanElement | null>(null);
-  const context = useRadioGroupContext();
-  const [geometry, setGeometry] = useState<CSSProperties>();
-
-  useSafeLayoutEffect(() => {
-    const indicator = indicatorRef.current;
-    const selected = context.getRadioElement(context.activeValue);
-    const root = indicator?.closest<HTMLElement>("[data-slot='segment-group']");
-
-    if (!indicator || !selected || !root) {
-      setGeometry(undefined);
-      return;
-    }
-
-    const updateGeometry = () => {
-      const rootRect = root.getBoundingClientRect();
-      const selectedRect = selected.getBoundingClientRect();
-      setGeometry({
-        "--brick-segment-group-indicator-block-size": `${selectedRect.height}px`,
-        "--brick-segment-group-indicator-inline-size": `${selectedRect.width}px`,
-        "--brick-segment-group-indicator-x": `${selectedRect.left - rootRect.left - root.clientLeft}px`,
-        "--brick-segment-group-indicator-y": `${selectedRect.top - rootRect.top - root.clientTop}px`,
-      } as CSSProperties);
-    };
-
-    updateGeometry();
-    if (typeof ResizeObserver === "undefined") return;
-    const observer = new ResizeObserver(updateGeometry);
-    observer.observe(root);
-    observer.observe(selected);
-    return () => observer.disconnect();
-  }, [context.activeValue, context]);
-
-  const setRefs = (node: HTMLSpanElement | null) => {
-    indicatorRef.current = node;
-    if (typeof forwardedRef === "function") forwardedRef(node);
-    else if (forwardedRef) forwardedRef.current = node;
-  };
-
   return (
-    <span
+    <AtomRadioGroup.Indicator
       {...props}
-      aria-hidden="true"
+      ref={ref}
       className={mergeClassName("brick-segment-group__indicator", className)}
-      data-ready={geometry ? "" : undefined}
-      data-slot={dataSlot ?? "segment-group-indicator"}
-      ref={setRefs}
-      style={{ ...style, ...geometry }}
+      data-slot={slot ?? "segment-group-indicator"}
     />
   );
 });
-
-SegmentGroupRoot.displayName = "SegmentGroup.Root";
-SegmentGroupItem.displayName = "SegmentGroup.Item";
-SegmentGroupItemText.displayName = "SegmentGroup.ItemText";
-SegmentGroupIndicator.displayName = "SegmentGroup.Indicator";
-
+/** Use Item directly for custom native props or icon-only labels. */
+export function SegmentGroupItems({ items }: SegmentGroupItemsProps) {
+  return (
+    <For each={items}>
+      {(entry) => {
+        const item =
+          typeof entry === "string" ? { value: entry, label: entry } : entry;
+        return (
+          <SegmentGroupItem
+            key={item.value}
+            value={item.value}
+            disabled={item.disabled}
+          >
+            <SegmentGroupItemText>{item.label}</SegmentGroupItemText>
+          </SegmentGroupItem>
+        );
+      }}
+    </For>
+  );
+}
 export const SegmentGroup = Object.freeze({
   Root: SegmentGroupRoot,
   Item: SegmentGroupItem,
   ItemText: SegmentGroupItemText,
   Indicator: SegmentGroupIndicator,
+  Items: SegmentGroupItems,
 });

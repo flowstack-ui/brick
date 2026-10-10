@@ -22,7 +22,7 @@ Keep a short authored name or equivalent context available to assistive technolo
 - **MUST:** Do not visually hide keyboard-focusable or interactive content; keep an icon-only Button visible and place VisuallyHidden text inside it.
 - **MUST:** Do not use VisuallyHidden as a substitute for visible feedback or deliberate application-owned live-region behavior.
 - **MUST:** Do not override Atom's authoritative hiding geometry or confuse visually hidden accessible content with aria-hidden decorative content.
-- **MUST:** Load styles.css or core.css plus visually-hidden.css.
+- **MUST:** Load styles for composed Brick controls. VisuallyHidden hiding is inline and needs no stylesheet; the empty CSS entry is retained for compatibility.
 
 ## Common mistakes
 

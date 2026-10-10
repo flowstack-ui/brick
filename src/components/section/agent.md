@@ -23,6 +23,7 @@ Own themeable responsive block rhythm for major semantic page and application re
 - **MUST:** Keep paint in Surface, inline measure in Container, and child arrangement in Stack or Grid rather than adding those responsibilities to Section.
 - **MUST:** Choose a named recipe first; customize documented Section variables only when the theme or one deliberate region needs a value the scale cannot express.
 - **MUST:** Load styles.css or core.css plus section.css.
+- **MUST:** Omit default spacing; sparse spacing inherits md, while sparse startSpacing/endSpacing follow spacing until explicitly overridden. slot remains a data-slot hook, not a native shadow-DOM slot.
 
 ## Common mistakes
 

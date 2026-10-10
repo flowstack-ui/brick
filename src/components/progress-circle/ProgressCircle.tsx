@@ -2,17 +2,25 @@ import {
   createContext,
   forwardRef,
   useContext,
-  useId,
   type CSSProperties,
   type HTMLAttributes,
   type ReactNode,
   type SVGProps,
+  type Ref,
 } from "react";
 import {
   Progress as AtomProgress,
   useProgressContext,
+  useProgress,
+  type ProgressController,
+  type UseProgressProps,
   type ProgressRootProps as AtomProgressRootProps,
 } from "@flowstack-ui/atom/progress";
+import { useLocaleContext } from "../locale-provider/LocaleProvider.js";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
+import { staticPart, type StaticPartProps } from "../_internal/StaticPart.js";
+import { layoutHost } from "../_internal/layout-host.js";
+export type ProgressCircleValueFormat = "percent" | "value";
 
 export type ProgressCircleSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type ProgressCircleThickness = "thin" | "regular" | "thick";
@@ -29,6 +37,7 @@ interface ProgressCircleVisualContextValue {
   formatOptions?: Intl.NumberFormatOptions;
   labelId: string;
   locale?: Intl.LocalesArgument;
+  valueFormat: ProgressCircleValueFormat;
 }
 
 const ProgressCircleVisualContext =
@@ -55,7 +64,8 @@ export interface ProgressCircleRootProps extends Omit<
   AtomProgressRootProps,
   "className" | "style"
 > {
-  size?: ProgressCircleSize;
+  size?: ResponsiveValue<ProgressCircleSize>;
+  valueFormat?: ProgressCircleValueFormat;
   thickness?: ProgressCircleThickness;
   cap?: ProgressCircleCap;
   tone?: ProgressCircleTone;
@@ -65,10 +75,12 @@ export interface ProgressCircleRootProps extends Omit<
   style?: CSSProperties;
 }
 
-export const ProgressCircleRoot = forwardRef<
+export type ProgressCircleRootProviderProps = Omit<ProgressCircleRootProps, keyof UseProgressProps> & { value: ProgressController };
+
+export const ProgressCircleRootProvider = forwardRef<
   HTMLDivElement,
-  ProgressCircleRootProps
->(function ProgressCircleRoot(
+  ProgressCircleRootProviderProps
+>(function ProgressCircleRootProvider(
   {
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
@@ -76,6 +88,8 @@ export const ProgressCircleRoot = forwardRef<
     children,
     className,
     formatOptions,
+    valueFormat = "percent",
+    value,
     locale,
     size = "md",
     style,
@@ -86,17 +100,18 @@ export const ProgressCircleRoot = forwardRef<
   },
   ref,
 ) {
-  const generatedId = useId();
-  const labelId = `${generatedId}-label`;
+  const localeContext = useLocaleContext();
+  const labelId = value.ids.label;
   return (
-    <ProgressCircleVisualContext.Provider value={{ formatOptions, labelId, locale }}>
-      <AtomProgress.Root
+    <ProgressCircleVisualContext.Provider value={{ formatOptions, valueFormat, labelId, locale: locale ?? localeContext.locale }}>
+      <AtomProgress.RootProvider
         {...props}
+        value={value}
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy ?? (ariaLabel ? undefined : labelId)}
         className={mergeClassName("brick-progress-circle", className)}
         data-cap={cap}
-        data-size={size}
+        {...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true })}
         data-slot={dataSlot ?? "progress-circle"}
         data-thickness={thickness}
         data-tone={tone}
@@ -104,10 +119,18 @@ export const ProgressCircleRoot = forwardRef<
         style={style}
       >
         {children}
-      </AtomProgress.Root>
+      </AtomProgress.RootProvider>
     </ProgressCircleVisualContext.Provider>
   );
 });
+
+export const ProgressCircleRoot = forwardRef<HTMLDivElement, ProgressCircleRootProps>(function ProgressCircleRoot(
+  { value, defaultValue, onValueChange, ids, min, max, ...props }, ref,
+) {
+  const controller = useProgress({ value, defaultValue, onValueChange, ids, min, max });
+  return <ProgressCircleRootProvider {...props} value={controller} ref={ref} />;
+});
+export const ProgressCircleContext = AtomProgress.Context;
 
 export interface ProgressCircleCircleProps extends Omit<
   SVGProps<SVGSVGElement>,
@@ -115,15 +138,17 @@ export interface ProgressCircleCircleProps extends Omit<
 > {
   children?: ReactNode;
   "data-slot"?: string;
+  asChild?: boolean;
 }
 
 export const ProgressCircleCircle = forwardRef<
   SVGSVGElement,
   ProgressCircleCircleProps
 >(function ProgressCircleCircle(
-  { children, className, "data-slot": dataSlot, ...props },
+  { children, className, asChild, "data-slot": dataSlot, ...props },
   ref,
 ) {
+  if (asChild) return layoutHost(children, { ...props, "aria-hidden": true, className: mergeClassName("brick-progress-circle__circle", className), "data-slot": dataSlot ?? "progress-circle-circle", focusable: "false", viewBox: "0 0 100 100" }, ref as unknown as Ref<HTMLElement>, "ProgressCircle.Circle");
   return (
     <svg
       {...props}
@@ -144,18 +169,21 @@ export interface ProgressCircleTrackProps extends Omit<
   "cx" | "cy" | "r"
 > {
   "data-slot"?: string;
+  asChild?: boolean;
 }
 
 export const ProgressCircleTrack = forwardRef<
   SVGCircleElement,
   ProgressCircleTrackProps
 >(function ProgressCircleTrack(
-  { className, "data-slot": dataSlot, ...props },
+  { className, asChild, children, "data-slot": dataSlot, ...props },
   ref,
 ) {
+  if (asChild) return layoutHost(children, { ...props, "aria-hidden": true, className: mergeClassName("brick-progress-circle__track", className), "data-slot": dataSlot ?? "progress-circle-track", cx: 50, cy: 50, r: PROGRESS_CIRCLE_RADIUS }, ref as unknown as Ref<HTMLElement>, "ProgressCircle.Track");
   return (
     <circle
       {...props}
+      aria-hidden="true"
       className={mergeClassName("brick-progress-circle__track", className)}
       cx="50"
       cy="50"
@@ -171,16 +199,24 @@ export interface ProgressCircleIndicatorProps extends Omit<
   "cx" | "cy" | "r" | "pathLength" | "strokeDasharray" | "strokeDashoffset"
 > {
   "data-slot"?: string;
+  asChild?: boolean;
 }
 
 export const ProgressCircleIndicator = forwardRef<
   SVGCircleElement,
   ProgressCircleIndicatorProps
 >(function ProgressCircleIndicator(
-  { className, style, "data-slot": dataSlot, ...props },
+  { className, style, asChild, children, "data-slot": dataSlot, ...props },
   ref,
 ) {
   const state = useProgressContext();
+  const resolvedStyle = { ...style, "--brick-progress-circle-percent": state.percent ?? 0 } as CSSProperties;
+  if (asChild) return layoutHost(children, { ...props, "aria-hidden": true,
+    className: mergeClassName("brick-progress-circle__indicator", className), "data-slot": dataSlot ?? "progress-circle-indicator",
+    "data-state": state.dataState, "data-percent": state.percent ?? undefined, "data-min": state.min, "data-max": state.max, "data-value": state.value ?? undefined,
+    cx: 50, cy: 50, r: PROGRESS_CIRCLE_RADIUS, strokeDasharray: `${PROGRESS_CIRCLE_CIRCUMFERENCE} ${PROGRESS_CIRCLE_CIRCUMFERENCE}`,
+    strokeDashoffset: state.percent === null ? 0 : PROGRESS_CIRCLE_CIRCUMFERENCE * (1 - state.percent / 100), style: resolvedStyle,
+  }, ref as unknown as Ref<HTMLElement>, "ProgressCircle.Indicator");
   return (
     <circle
       {...props}
@@ -202,7 +238,7 @@ export const ProgressCircleIndicator = forwardRef<
           ? 0
           : PROGRESS_CIRCLE_CIRCUMFERENCE * (1 - state.percent / 100)
       }
-      style={style}
+      style={resolvedStyle}
     />
   );
 });
@@ -212,6 +248,7 @@ export interface ProgressCircleLabelProps extends Omit<
   "id"
 > {
   "data-slot"?: string;
+  asChild?: boolean;
 }
 
 export const ProgressCircleLabel = forwardRef<
@@ -222,15 +259,8 @@ export const ProgressCircleLabel = forwardRef<
   ref,
 ) {
   const { labelId } = useProgressCircleVisualContext();
-  return (
-    <span
-      {...props}
-      className={mergeClassName("brick-progress-circle__label", className)}
-      data-slot={dataSlot ?? "progress-circle-label"}
-      id={labelId}
-      ref={ref}
-    />
-  );
+  return staticPart("span", { ...props, className, id: labelId, "data-slot": dataSlot } as StaticPartProps,
+    ref as Ref<HTMLElement>, "brick-progress-circle__label", "progress-circle-label");
 });
 
 export interface ProgressCircleValueDetails {
@@ -248,6 +278,7 @@ export interface ProgressCircleValueProps extends Omit<
 > {
   children?: ReactNode | ((details: ProgressCircleValueDetails) => ReactNode);
   "data-slot"?: string;
+  asChild?: boolean;
 }
 
 export const ProgressCircleValue = forwardRef<
@@ -258,15 +289,15 @@ export const ProgressCircleValue = forwardRef<
   ref,
 ) {
   const state = useProgressContext();
-  const { formatOptions, locale } = useProgressCircleVisualContext();
+  const { formatOptions, locale, valueFormat } = useProgressCircleVisualContext();
   const formattedValue =
     state.percent === null
       ? ""
       : new Intl.NumberFormat(locale, {
           maximumFractionDigits: 0,
-          style: "percent",
+          style: valueFormat === "percent" ? "percent" : "decimal",
           ...formatOptions,
-        }).format(state.percent / 100);
+        }).format(valueFormat === "percent" ? state.percent / 100 : state.value!);
   const details: ProgressCircleValueDetails = {
     formattedValue,
     max: state.max,
@@ -277,20 +308,12 @@ export const ProgressCircleValue = forwardRef<
   };
   const content =
     typeof children === "function" ? children(details) : children ?? formattedValue;
-  return (
-    <span
-      {...props}
-      aria-hidden="true"
-      className={mergeClassName("brick-progress-circle__value", className)}
-      data-slot={dataSlot ?? "progress-circle-value"}
-      ref={ref}
-    >
-      {content}
-    </span>
-  );
+  return staticPart("span", { ...props, className, children: content, "aria-hidden": true, "data-slot": dataSlot } as StaticPartProps,
+    ref as Ref<HTMLElement>, "brick-progress-circle__value", "progress-circle-value");
 });
 
 ProgressCircleRoot.displayName = "ProgressCircle.Root";
+ProgressCircleRootProvider.displayName = "ProgressCircle.RootProvider";
 ProgressCircleCircle.displayName = "ProgressCircle.Circle";
 ProgressCircleTrack.displayName = "ProgressCircle.Track";
 ProgressCircleIndicator.displayName = "ProgressCircle.Indicator";
@@ -299,6 +322,8 @@ ProgressCircleValue.displayName = "ProgressCircle.Value";
 
 export const ProgressCircle = Object.freeze({
   Root: ProgressCircleRoot,
+  RootProvider: ProgressCircleRootProvider,
+  Context: ProgressCircleContext,
   Circle: ProgressCircleCircle,
   Track: ProgressCircleTrack,
   Indicator: ProgressCircleIndicator,

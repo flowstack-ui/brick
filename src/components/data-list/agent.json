@@ -20,7 +20,8 @@
     }
   ],
   "composition": [
-    "Compose Root with Item groups; place one or more Label parts before one or more Value parts inside every Item."
+    "Compose Root with Item groups; place one or more Label parts before one or more Value parts inside every Item.",
+    "Choose responsive size, subtle/bold variant, orientation and labelWidth. PropsProvider supplies styling defaults without a host; explicit Root props override them, including false and sparse maps."
   ],
   "rules": [
     {
@@ -31,7 +32,7 @@
     {
       "id": "data-list-responsive-source",
       "level": "must",
-      "statement": "Keep one label-then-value source order and use responsive orientation rather than duplicating mobile and desktop metadata trees."
+      "statement": "Keep one label-then-value source order and use responsive orientation rather than duplicating mobile and desktop metadata trees. Horizontal measures are bounded to 40% of the row; the label-size token also works with auto. Do not squeeze comparison examples into narrow fixed-label columns."
     },
     {
       "id": "data-list-labels",
@@ -51,7 +52,7 @@
     }
   ],
   "validation": [
-    "Check dl/div/dt/dd anatomy, complete visible labels, source order, horizontal and vertical orientation, long values, links inside Value, zoom, RTL, forced colors, and CSS loading."
+    "Check dl/div/dt/dd anatomy, complete visible labels, grouped and nested facts, all refs, provider overrides, both responsive orientation directions, sparse maps, measured sizes, long values, links inside Value, zoom, RTL, forced colors, and CSS loading."
   ],
   "related": ["list", "table", "data-grid", "field", "stack"]
 }

@@ -13,8 +13,9 @@ rows.
 ## When not to use
 
 Use Table for static comparison, Grid for page layout, and Tree Grid for
-hierarchical rows. Data Grid does not provide editing, filtering, pagination,
-column resizing, virtualization, schemas, or enterprise data processing.
+hierarchical rows. Data Grid provides cell-control entry/exit and column resize
+interaction, not an editing transaction or data engine. Filtering, pagination,
+virtualization, validation, persistence and enterprise processing stay application-owned.
 
 ## Installation and imports
 
@@ -42,6 +43,10 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ```tsx
 <DataGrid.Container>
   <DataGrid.Root aria-label="Projects" columnCount={2} rowCount={2}>
+    <DataGrid.ColumnGroup>
+      <DataGrid.Column htmlWidth="50%" />
+      <DataGrid.Column />
+    </DataGrid.ColumnGroup>
     <DataGrid.Caption>Current projects</DataGrid.Caption>
     <DataGrid.Header>
       <DataGrid.Row rowIndex={1}>
@@ -63,22 +68,27 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ## Anatomy and DOM ownership
 
 Container is an explicit overflow `div`; Root remains a native `table` with
-`role="grid"`. The remaining parts render `caption`, `thead`, `tbody`, `tfoot`,
-`tr`, `th`, and `td`, and refs target those exact elements. Indices are
-one-based and counts describe the complete logical data set.
+`role="grid"`. ColumnGroup and Column render native `colgroup` and `col`; the
+remaining parts render `caption`, `thead`, `tbody`, `tfoot`, `tr`, `th`, and
+`td`, and refs target those exact elements. Indices are one-based and counts
+describe the complete logical data set. `Column.htmlWidth` is only a native
+CSS-pixel number or percentage sizing hint and does not accept CSS-unit values
+or define indexes, counts, navigation, or resizing.
 
 ## API
 
 ### Exports
 
-`DataGrid`, `DataGridContainer`, `DataGridRoot`, `DataGridCaption`,
+`DataGrid`, `DataGridContainer`, `DataGridRoot`, `DataGridColumnGroup`, `DataGridColumn`, `DataGridCaption`,
 `DataGridHeader`, `DataGridBody`, `DataGridFooter`, `DataGridRow`,
-`DataGridColumnHeader`, `DataGridCell`, `DataGridSortIndicator`,
-`DataGridContainerProps`, `DataGridRootProps`, `DataGridCaptionProps`,
+`DataGridColumnHeader`, `DataGridCell`, `DataGridRowHeader`, `DataGridColumnResizeHandle`, `DataGridSortIndicator`,
+`DataGridContainerProps`, `DataGridRootProps`, `DataGridColumnGroupProps`, `DataGridColumnProps`, `DataGridCaptionProps`,
 `DataGridHeaderProps`, `DataGridBodyProps`, `DataGridFooterProps`,
-`DataGridRowProps`, `DataGridColumnHeaderProps`, `DataGridCellProps`,
+`DataGridRowProps`, `DataGridColumnHeaderProps`, `DataGridCellProps`, `DataGridRowHeaderProps`, `DataGridColumnResizeHandleProps`,
 `DataGridSortIndicatorProps`, `DataGridVariant`, `DataGridSize`,
-`DataGridDensity`, `DataGridCaptionSide`, and `DataGridCellAlign` are available
+`DataGridDensity`, `DataGridCaptionSide`, `DataGridCellAlign`,
+`DataGridCellVerticalAlign`, `DataGridSurface`, `DataGridBorderTone`, and
+`DataGridLayout` are available
 from root and subpath imports.
 
 ### Root recipes
@@ -88,8 +98,15 @@ from root and subpath imports.
 | `variant` | `line`, `outline` | defaults to `"line"` |
 | `size` | `sm`, `md`, `lg` | defaults to `"md"` |
 | `density` | `compact`, `comfortable`, `spacious` | defaults to `"comfortable"` |
+| `surface` | `transparent`, `base` | defaults to `"transparent"` |
+| `borderTone` | `subtle`, `default`, `strong` | defaults to `"default"` |
+| `showColumnBorder` | boolean | `false` |
+| `layout` | `auto`, `fixed` | defaults to `"auto"` |
+| `striped` | boolean | `false` |
+| `stickyHeader` | boolean | `false` |
 | `side` (Caption) | `top`, `bottom` | `bottom` |
 | Cell/header `align` | `start`, `center`, `end` | `start`, or `end` when numeric |
+| Cell/header `verticalAlign` | `top`, `middle`, `bottom` | `middle` |
 | Cell/header `numeric` | boolean | `false` |
 
 Atom props remain available, including selection state, active-cell state,
@@ -97,17 +114,29 @@ direction, looping, wrapping, disabled/read-only state, indexes, counts,
 `sortDirection`, composition, events, and refs. Physical native `align` values
 are deliberately replaced by logical values.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
-Line separates rows; outline adds outer and column boundaries. Size changes
-typography and row metrics, while density changes block padding. Hover,
+Line separates rows; outline adds the outer boundary, and
+`showColumnBorder` independently adds logical column separators. Surface,
+border tone, native table layout, striping, and sticky header are closed Root
+recipes. Size changes typography and row metrics, while density changes block padding. Hover,
 selected, active, disabled, and sorted paint is driven by Atom state attributes
 without moving cell geometry.
 
 ### Keyboard, selection, and sorting
 
 Root is the single focus target and exposes the active descendant. Arrow keys
-move by cell, Home/End move within a row, PageUp/PageDown move by row, and
+move by cell, Home/End move within a row, PageUp/PageDown move by `pageSize`
+mounted enabled rows (default 10), and
 Ctrl/Meta+Home or End reaches the first or last cell. Space applies Atom's row
 selection behavior. Disabled cells and rows are skipped according to Atom's
 contract.
@@ -124,7 +153,35 @@ invoke `onAction`; only the sorted header should expose a direction.
 ```
 
 Compose external Toolbar and Pagination components around the grid when those
-features are needed. Cells should remain non-editing in this version.
+features are needed. Use `Cell interactive` for named controls: Enter/F2 enters,
+child arrow keys remain native, and Escape returns to grid navigation. Tab exits
+without trapping. Author `ColumnHeader interactive` children with `tabIndex={-1}`.
+The application owns validation, draft, save/cancel, and control disabled/readOnly.
+
+`RowHeader` renders a native th with rowheader semantics. `ColumnResizeHandle`
+is a named separator inside an interactive header. Apply its controlled `value`
+to `Column.htmlWidth`; defaults are 160px width, 40/1200px bounds and 10px step.
+Left/Right follow direction; Shift increases the step; Home/End reach bounds.
+Escape and pointer cancellation restore the drag-start value. Commit is emitted
+on pointer release or keyboard adjustment, never on cancellation.
+
+Multiple selection supports Shift range extension and Ctrl/Meta+A for mounted
+selectable rows; offscreen selected IDs are retained. Full-dataset selection is
+an explicit application policy, not an implied consequence of select-all.
+
+### Responsive and integration recipes
+
+`size`, `density`, and `variant` accept sparse `initial/sm/md/lg/xl` objects.
+The sizes use 14/14/16px type, 8/12/16px inline insets, and 40/48/56px comfortable
+minimum rows. Compact reduces the minimum by 8px; spacious adds 8px. Content may
+grow beyond the minimum. `tone` is `accent` (default) or `neutral` selection paint.
+Use `minInlineSize`, logical `sticky="start" | "end"` and `stickyOffset` on matching
+header/body cells. SortIndicator preserves custom decorative children.
+
+The playground demonstrates optional `@tanstack/react-table@8.21.3` and
+`@tanstack/react-virtual@3.14.11`. They are not Brick runtime dependencies. Keep
+logical totals/indexes accurate and retain the active row in the virtual range;
+the application maps full-data movement before the requested row mounts.
 
 ## Tokens and CSS hooks
 
@@ -135,8 +192,10 @@ surfaces, cell spacing, row size, caption, active outline, selected/hover
 surfaces, disabled opacity, and sort-indicator geometry. Prefer recipes before
 scoped variable overrides.
 
-Public state hooks are `data-variant`, `data-size`, `data-density`, `data-side`,
-`data-align`, `data-numeric`, and `data-slot`. Atom additionally exposes its
+Public state hooks are `data-variant`, `data-size`, `data-density`,
+`data-surface`, `data-border-tone`, `data-column-border`, `data-layout`,
+`data-striped`, `data-sticky-header`, `data-side`, `data-align`,
+`data-vertical-align`, `data-numeric`, and `data-slot`. Atom additionally exposes its
 behavioral state attributes.
 
 Public variables:
@@ -149,6 +208,7 @@ Public variables:
 - `--brick-data-grid-header-background`
 - `--brick-data-grid-header-foreground`
 - `--brick-data-grid-body-background`
+- `--brick-data-grid-row-stripe-background`
 - `--brick-data-grid-footer-background`
 - `--brick-data-grid-cell-foreground`
 - `--brick-data-grid-cell-padding-inline`
@@ -164,6 +224,8 @@ Public variables:
 - `--brick-data-grid-disabled-opacity`
 - `--brick-data-grid-sort-indicator-size`
 - `--brick-data-grid-sort-indicator-color`
+- `--brick-data-grid-sticky-offset`
+- `--brick-data-grid-sticky-z-index`
 
 ## Customization
 

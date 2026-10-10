@@ -3,12 +3,13 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { Carousel } from "../../../src/carousel.js";
+import { Button } from "../../../src/button.js";
 
 const originalScrollIntoView = HTMLElement.prototype.scrollIntoView;
 beforeAll(() => { HTMLElement.prototype.scrollIntoView = vi.fn(); });
 afterAll(() => { HTMLElement.prototype.scrollIntoView = originalScrollIntoView; });
 
-function Standard(props: Partial<React.ComponentProps<typeof Carousel.Root>> = {}) {
+function Standard(props: Omit<React.ComponentProps<typeof Carousel.Root>, "page" | "defaultPage" | "onPageChange"> = {}) {
   return <Carousel.Root aria-label="Featured work" defaultValue="one" {...props}>
     <Carousel.Viewport><Carousel.Track>
       <Carousel.Slide value="one" label="First story">First</Carousel.Slide>
@@ -21,6 +22,17 @@ function Standard(props: Partial<React.ComponentProps<typeof Carousel.Root>> = {
 }
 
 describe("Carousel", () => {
+  it("composes a normal text button on one host without square presentation", async () => {
+    const ref = createRef<HTMLButtonElement>();
+    render(<Carousel.Root defaultValue="one" loop={false}><Carousel.Viewport><Carousel.Track><Carousel.Slide value="one">One</Carousel.Slide><Carousel.Slide value="two">Two</Carousel.Slide></Carousel.Track></Carousel.Viewport><Carousel.Next asChild unstyled ref={ref}><Button variant="outline" tone="contrast">Continue reading</Button></Carousel.Next></Carousel.Root>);
+    const action=screen.getByRole("button",{name:"Next slide"});
+    expect(action).toHaveClass("brick-button","brick-carousel__next");
+    expect(action).not.toHaveClass("brick-icon-button");
+    expect(action.querySelector("button")).toBeNull();
+    expect(ref.current).toBe(action);
+    await userEvent.click(action);
+    expect(action).toBeDisabled();
+  });
   it("renders finished defaults and all public parts", () => {
     render(<Standard />);
     const root = screen.getByRole("group", { name: "Featured work" });
@@ -59,6 +71,22 @@ describe("Carousel", () => {
     render(<Carousel.Root aria-label="Gallery" defaultValue="one"><Carousel.Viewport><Carousel.Track><Carousel.Slide value="one">Only slide</Carousel.Slide></Carousel.Track></Carousel.Viewport></Carousel.Root>);
     expect(screen.getByRole("group", { name: "Gallery" })).toBeVisible();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
+  });
+
+  it("uses complete shared control recipes and sparse size overrides", () => {
+    render(<Carousel.PropsProvider value={{controlVariant:"solid",controlTone:"accent",controlSize:"xl"}}><Carousel.Root defaultValue="one"><Carousel.Viewport><Carousel.Track><Carousel.Slide value="one">One</Carousel.Slide><Carousel.Slide value="two">Two</Carousel.Slide></Carousel.Track></Carousel.Viewport><Carousel.Next variant="soft" tone="neutral" size={{md:"sm"}} /></Carousel.Root></Carousel.PropsProvider>);
+    const action=screen.getByRole("button",{name:"Next slide"});
+    expect(action).toHaveClass("brick-button","brick-icon-button");
+    expect(action).toHaveAttribute("data-variant","soft");
+    expect(action).toHaveAttribute("data-tone","neutral");
+    expect(action).toHaveAttribute("data-size-md","sm");
+    expect(action).toHaveAttribute("data-size","lg");
+  });
+
+  it("generates page indicators and custom progress text", () => {
+    render(<Carousel.Root defaultValue="one"><Carousel.Viewport><Carousel.Track><Carousel.Slide value="one">One</Carousel.Slide><Carousel.Slide value="two">Two</Carousel.Slide></Carousel.Track></Carousel.Viewport><Carousel.Indicators variant="bare" /><Carousel.ProgressText format={(page,count)=>`${page} of ${count}`} /></Carousel.Root>);
+    expect(screen.getByRole("button",{name:"Go to page 1"})).toHaveAttribute("aria-current","true");
+    expect(screen.getByText("1 of 2")).toBeVisible();
   });
 
   it("exposes independent compact control, picker, and navigation recipes", () => {

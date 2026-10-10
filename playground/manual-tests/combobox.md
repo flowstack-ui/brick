@@ -1,5 +1,12 @@
 # Combobox Manual Test Protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 Status: Unrun
 
 | Environment | Record before testing |
@@ -9,15 +16,22 @@ Status: Unrun
 | Viewport and zoom | |
 | Assistive technology | |
 | Playground route | `/combobox` |
+
+Scenario order: `01 combobox.overview` → `02 combobox.anatomy` → `03 combobox.recipes` → `04 combobox.sizing` → `05 combobox.filtering` → `06 combobox.behavior` → `07 combobox.states` → `08 combobox.appearance` → `09 combobox.stress`.
+
+Use `?qualification=1` for this preserved scenario sequence; review the ordinary documentation examples separately.
 | Mobile URL | Use the LAN URL printed by `npm run dev:playground:network` |
 
-Scenario order: Overview; Anatomy and semantics; Variants; Sizes and shapes; Filtering and empty state; Selection, clearing, and free text; Disabled, read-only, and loading; Appearance and customization; Responsive, RTL, keyboard, and touch.
+Default route: focused feature examples with Usage, Examples and Props TOC.
+The original nine scenario fixtures remain at `/combobox?qualification=1`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every Result. Record reviewer, date, commit/version, and an issue for failures.
 
 ## Step 1: Visual hierarchy and recipes
 
-Scan 01–09 at 100% zoom. Expect aligned controls, compact appearance badges, no abnormal gap between 08 and 09, no sticky navigation overlap, and each named recipe to change only its documented dimension. Confirm `sm`, `md`, and `lg` controls and option rows match at 36px, 44px, and 52px minimum heights.
+Scan the focused examples and qualification fixtures at 100% zoom. Expect aligned
+controls, compact option rows and recipe-specific styling. The control uses the
+shared seven-size scale; option minimum heights are 24/24/28/32/36/40/56px.
 
 Result:
 
@@ -47,8 +61,27 @@ Result:
 
 ## Completion
 
+## Added parity checks (manual status: Unrun)
+
+- Multiple: select/remove Chips, required submission and native reset; announce
+  selected options and the multiple listbox without moving focus off the input.
+- Controller: preserve controlled refusal; reset defaults; rehydrate labels.
+- Opening: click, focus, query threshold and arrow-key policies independently.
+- Input behavior: first-match highlight, keyboard completion, preserved query.
+- Virtualization: Home/End and arrows reach offscreen rows with valid active IDs.
+- Links: pointer/keyboard activation, disabled links, custom host refs.
+- Dialog: fixed popup remains reachable while scrolling, with safe dismissal.
+- Motion: rapid open/close, exit content inert, reduced-motion preferences.
+- Creatable and optional Hook Form: stable values, errors, focus and reset.
+
 Overall result:
 
 Follow-up issues:
 
 Workbook updated:
+
+## Form surface comparison
+
+- Compare outline and surface on light/dark canvas and raised parents: outline stays transparent; surface owns its neutral fill without adding a shadow.
+- Hover, focus, disable and mark invalid; preserve visible boundaries and explicit state treatment. Compare matched size recipes including their outer borders.
+- Check narrow/RTL containment and forced colors. Popup panels and selection marks must retain their independent paint.

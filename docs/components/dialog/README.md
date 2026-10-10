@@ -11,7 +11,7 @@ that temporarily block interaction with the page.
 
 ## When not to use
 
-Use a future AlertDialog for urgent destructive confirmation, Drawer for
+Use AlertDialog for urgent destructive confirmation, Drawer for
 side-attached modal content, and Popover or Menu when the page must remain
 interactive.
 
@@ -55,6 +55,7 @@ export function ProfileDialog() {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
+        <Dialog.Positioner>
         <Dialog.Content>
           <Dialog.Header>
             <Dialog.Title>Edit profile</Dialog.Title>
@@ -70,13 +71,14 @@ export function ProfileDialog() {
             <Button form="profile-form" type="submit">Save</Button>
           </Dialog.Footer>
         </Dialog.Content>
+        </Dialog.Positioner>
       </Dialog.Portal>
     </Dialog.Root>
   );
 }
 ```
 
-Overlay and Content must remain siblings. Nesting Content inside Overlay places
+Overlay must remain outside Content ancestry. Render it beside Positioner. Nesting Content inside Overlay places
 the dialog inside an accessibility-hidden subtree and is rejected by Atom.
 
 ## Anatomy and DOM ownership
@@ -87,13 +89,14 @@ the dialog inside an accessibility-hidden subtree and is rejected by Atom.
 | `Trigger` | `button` | Opens Dialog; supports Atom `asChild` and `render` |
 | `Portal` | no wrapper | Renders into `body`, a container, or inline |
 | `Overlay` | `div` | Scrim and exact-target backdrop dismissal |
+| `Positioner` | `div` | Registered outer scroll boundary, placement and scrolling recipes |
 | `Content` | `div[role="dialog"]` | Modal surface, focus scope, ARIA owner, and size |
 | `Header` | `div` | Title and optional description region |
 | `Title` | `h2` | Visible accessible name; supports `h1`–`h6` |
 | `Description` | `p` | Optional accessible description |
 | `Body` | `div` | Primary bounded scroll region |
 | `Footer` | `div` | Wrapping action region in source order |
-| `Close` | `button` | Closes with Atom's `closeClick` reason |
+| `Close` | `button` | Closes with Atom's `closeClick` reason; optionally anchors an authored control to Content's logical top-end corner |
 | `Branch` | `div` | Registers a third-party portalled subtree |
 
 All DOM-rendering parts accept their relevant native props, refs, `className`,
@@ -103,15 +106,17 @@ consumer class.
 ## API
 
 Public exports are the `Dialog` namespace; named `DialogRoot`,
-`DialogTrigger`, `DialogPortal`, `DialogOverlay`, `DialogContent`,
+`DialogTrigger`, `DialogPortal`, `DialogOverlay`, `DialogPositioner`, `DialogContent`,
 `DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogBody`,
 `DialogFooter`, `DialogClose`, and `DialogBranch` parts; and their
-corresponding prop types plus `DialogSize` and `DialogFooterJustify`.
+corresponding prop types plus `DialogSize`, `DialogFooterJustify`, and
+`DialogClosePlacement`, `DialogPlacement`, `DialogScrollBehavior`, and `DialogMotionPreset`.
 
 ```ts
 DialogRootProps
 DialogTriggerProps
 DialogPortalProps
+DialogPositionerProps
 DialogOverlayProps
 DialogContentProps
 DialogHeaderProps
@@ -120,24 +125,36 @@ DialogDescriptionProps
 DialogBodyProps
 DialogFooterProps
 DialogCloseProps
+DialogClosePlacement
 DialogBranchProps
 ```
 
 ### Root
 
 Forwards Atom's `open`, `defaultOpen`, `onOpenChange`, `closeOnEscape`,
-`closeOnBackdropClick`, `disabled`, and `keepMounted` contract. Root renders no
+`closeOnBackdropClick`, `disabled`, `keepMounted`, and `onExitComplete` contract. Retained Content preserves child state and is hidden after exit. Root renders no
 DOM element and has no ref.
 
 ### Content
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `size` | ResponsiveValue of `xs`, `sm`, `md`, `lg`, `xl`, `cover`, `full` | `md` |
+| `motionPreset` | `scale`, `slide-in-top`, `slide-in-bottom`, `slide-in-left`, `slide-in-right`, `none` | `scale` |
+| `radius` | Radius | `control` |
 
-Size changes
-the preferred maximum inline measure only. Content also forwards native ARIA,
+Widths are 24, 28, 32, 42 and 56rem. Cover and full require Positioner and occupy its viewport area. Content also forwards native ARIA,
 `role`, `initialFocus`, and `finalFocus` supported by Atom.
+
+### Positioner
+
+`placement`: `top` (default), `center`, or `bottom`.
+`scrollBehavior`: `outside` (default) scrolls the whole panel; `inside` scrolls Body.
+Positioner owns a registered scrolling boundary, not dialog semantics. Its ref is
+HTMLDivElement and native props are forwarded. Use it as a direct Content parent
+and sibling of Overlay. Outside clicks honor Root dismissal policy. A native
+onClick handler may prevent dismissal. Overlay disabled only controls Overlay;
+use Root closeOnBackdropClick=false to disable both dismissal surfaces.
 
 ### Portal and Overlay
 
@@ -160,18 +177,33 @@ value through `data-justify`.
 These parts forward Atom's `asChild` and `render` composition. The composed
 element must accept the merged props and ref and retain valid semantics.
 
+Close additionally supports `placement="inline" | "corner"`, defaulting to
+`inline`. Use `corner` only as a direct descendant of Content; Brick anchors
+the consumer-authored control one space-2 inset from Content's logical
+top-end corner. Brick does not generate the icon or accessible name.
+
 ### Title
 
 Title defaults to `h2`; `as` accepts `h1` through `h6`. A visible Title supplies
 the generated accessible name. Consumers that intentionally omit it must add
 an explicit native `aria-label` or `aria-labelledby` to Content.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
-Content supports `sm`, `md`, and `lg`; `md` is the default. Atom's public
+Content supports seven sizes; `md` is the default. Atom's public
 `data-state`, `data-positioned`, and disabled outputs drive open, closed,
-positioned, and unavailable styling. Dialog intentionally has no tone, variant,
-placement, fullscreen, or arbitrary-width prop.
+positioned, and unavailable styling. Dialog Content intentionally has no tone,
+variant, placement, fullscreen, or arbitrary-width prop. Close has the
+independent inline/corner visual placement described above.
 
 ## Tokens and CSS hooks
 
@@ -181,6 +213,7 @@ Stable classes and default slots are:
 | --- | --- | --- |
 | Trigger | `.brick-dialog-trigger` | `dialog-trigger` |
 | Overlay | `.brick-dialog-overlay` | `dialog-overlay` |
+| Positioner | `.brick-dialog-positioner` | `dialog-positioner` |
 | Content | `.brick-dialog-content` | `dialog-content` |
 | Header | `.brick-dialog-header` | `dialog-header` |
 | Title | `.brick-dialog-title` | `dialog-title` |
@@ -198,9 +231,10 @@ Content exposes these component tokens:
 - `--brick-dialog-radius`
 - `--brick-dialog-shadow`
 
-Atom owns `data-state` and `data-positioned`; Content adds `data-size`. Brick
-honors reduced motion and forced colors. Consumers own accessibility and layout
-verification after arbitrary class, style, or token overrides.
+Atom owns `data-state` and `data-positioned`; Content adds `data-size`, responsive data-size-sm/md/lg/xl and `data-motion-preset`; Positioner adds `data-placement` and `data-scroll-behavior`, and
+Close adds `data-placement`. Brick honors reduced motion and forced colors.
+Consumers own accessibility and layout verification after arbitrary class,
+style, or token overrides.
 
 ## Customization
 
@@ -211,9 +245,11 @@ contracts.
 
 ## Responsive behavior
 
-Content is centered and bounded by safe-area-aware viewport gaps and dynamic
-viewport height. Body uses contained scrolling so Header and Footer remain
-reachable with long content. All sizes shrink to available width. Footer wraps
+Use `size={{ initial: "full", md: "lg" }}` for mobile fullscreen and desktop panel;
+`size={{ lg: "xl" }}` uses md below lg. Transitions reset viewport height, radius
+and insets as well as width. Positioner supports top/center/bottom with safe-area
+gaps. Without Positioner, existing Content retains its centered bounded layout.
+Short viewports permit scrolling to footer actions instead of clipping them. Footer wraps
 without reversing action or focus order, and logical properties support RTL.
 
 ## Accessibility
@@ -244,6 +280,25 @@ All DOM-rendering parts forward their documented native props and refs. Root
 and Portal render no element and therefore expose no DOM ref.
 
 ## Examples
+
+### Corner close control
+
+```tsx
+<Dialog.Content>
+  <Dialog.Header>
+    <Dialog.Title>Contact us</Dialog.Title>
+    <Dialog.Description>Tell us how we can help.</Dialog.Description>
+  </Dialog.Header>
+  <Dialog.Body>{/* form */}</Dialog.Body>
+  <Dialog.Close placement="corner" asChild>
+    <IconButton aria-label="Close dialog" size="sm" variant="ghost">
+      <CloseIcon />
+    </IconButton>
+  </Dialog.Close>
+</Dialog.Content>
+```
+
+Use the default `inline` placement for a Close-wrapped footer Cancel button.
 
 ### Portals, scopes, and Branch
 

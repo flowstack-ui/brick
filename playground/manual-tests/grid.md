@@ -1,5 +1,14 @@
 # Grid manual-test protocol
 
+## Native-grid expansion (unperformed)
+
+1. Open `/grid` and inspect every docs example in light/dark and RTL.
+2. Check unequal tracks, named areas, all responsive placement breakpoints,
+   dense flow and source/focus order at real 200%/400% zoom.
+3. Follow Props → Root and Item links with keyboard and a screen reader.
+4. Use `/grid?qualification=1` for the retained exhaustive scenarios below.
+5. Record physical-device and assistive-technology results only after running them.
+
 | Run information | Value |
 | --- | --- |
 | Component | Grid |

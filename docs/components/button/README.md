@@ -1,8 +1,5 @@
 # Button
 
-Button presents a finished action or emphasized native link. Brick owns its
-visual recipes and styling; the public Atom Button owns semantics, interaction,
-form behavior, unavailable/loading behavior, and composition.
 
 ## When and where to use
 
@@ -22,7 +19,7 @@ action.
 - Use variants for normal hierarchy. Reserve `info`, `success`, `warning`, and
   `danger` tones for actions with that actual meaning.
 
-Button intentionally has no `label`, `iconOnly`, `loadingText`,
+Button intentionally has no `label`, `iconOnly`,
 `loadingIndicator`, icon registry, arbitrary radius/color, gradient, or
 translucent prop.
 
@@ -51,7 +48,6 @@ import "@flowstack-ui/brick/styles/button.css";
 Add the modular stylesheet for every other Brick component the route renders.
 Do not combine modular styles with `styles.css` or `tokens.css`.
 
-
 Brick currently requires React 18 or newer and the package's exact released
 Atom dependency.
 
@@ -61,7 +57,7 @@ Atom dependency.
 <Button onPress={() => saveProject()}>Save changes</Button>
 ```
 
-The defaults are `variant="solid"`, `tone="accent"`, `size="md"`,
+The defaults are `variant="solid"`, `tone="accent"`, `size="lg"`,
 `shape="rounded"`, and `fullWidth={false}`.
 
 ## Anatomy and DOM ownership
@@ -80,7 +76,7 @@ On the default and `render` paths, Brick adds private content wrappers:
   data-slot="button"
   data-variant="solid"
   data-tone="accent"
-  data-size="md"
+  data-size="lg"
   data-shape="rounded"
   type="button"
 >
@@ -94,53 +90,76 @@ On the default and `render` paths, Brick adds private content wrappers:
 implementation details, not public parts or customization hooks.
 
 `asChild` leaves the single child element's content unchanged and therefore
-adds none of these wrappers. Loading adds a CSS pseudo-element, not semantic
+adds none of these wrappers. Default loading adds a CSS pseudo-element, not semantic
 DOM, while retaining the original content as the accessible name and layout
 footprint.
 
 ## API
 
+### Recipe and group additions
+
+Additional variants: `subtle` is a borderless quiet fill; `surface` has an inset
+boundary; `plain` has no hover/expanded fill. Soft remains unchanged.
+Other recipes retain hover presentation when `aria-expanded=true`.
+
+Normal/render hosts accept `loadingText?: ReactNode`, `spinner?: ReactNode`
+and `spinnerPlacement?: "start" | "end"` (default start). Loading text replaces
+visible content and may change width. Without text a custom spinner overlays
+the original content, preserving its name/footprint. Without customization the
+CSS loader is unchanged. asChild rejects these content-replacement props.
+Custom indicators are decorative and must not contain interactive elements.
+
+`ButtonGroup` and `ButtonGroupProps` are exported from the root and button
+subpath. All Group layout/host props are supported, plus size, variant, tone,
+radius and focusRing defaults for Button/IconButton. Individual props win;
+child shape overrides inherited radius. Nested groups reset the scope.
+Omitted values preserve component defaults. Ref targets the Group host.
+Disabled/loading/events and toolbar behavior are not shared.
+The modular Button stylesheet includes Group and Spinner styles.
+
 ### Exports
 
 ```ts
-Button
-ButtonProps
-ButtonVariant
-ButtonTone
-ButtonSize
-ButtonShape
+Button;
+ButtonProps;
+ButtonVariant;
+ButtonGroup;
+ButtonGroupProps;
+ButtonTone;
+ButtonSize;
+ButtonShape;
 ```
 
 ### Brick visual props
 
-| Prop | Allowed values | Default |
-| --- | --- | --- |
-| `variant` | `"solid"`, `"soft"`, `"outline"`, `"ghost"` | `"solid"` |
-| `tone` | `"neutral"`, `"accent"`, `"info"`, `"success"`, `"warning"`, `"danger"` | `"accent"` |
-| `size` | `"xs"`, `"sm"`, `"md"`, `"lg"`, `"xl"` | `"md"` |
-| `shape` | `"sharp"`, `"rounded"`, `"pill"` | `"rounded"` |
-| `fullWidth` | `boolean` | `false` |
-| `startIcon` | `ReactNode` | none |
-| `endIcon` | `ReactNode` | none |
+| Prop        | Allowed values                                                                        | Default     |
+| ----------- | ------------------------------------------------------------------------------------- | ----------- |
+| `variant` | `"solid"`, `"soft"`, `"subtle"`, `"surface"`, `"outline"`, `"ghost"`, `"plain"` | `"solid"` |
+| `tone`      | `"neutral"`, `"contrast"`, `"accent"`, `"info"`, `"success"`, `"warning"`, `"danger"` | `"accent"`  |
+| `size`      | `"2xs"`, `"xs"`, `"sm"`, `"md"`, `"lg"`, `"xl"`, `"2xl"`, or a non-empty responsive value | `"lg"` |
+| `shape`     | `"sharp"`, `"rounded"`, `"pill"`                                                      | `"rounded"` |
+| `fullWidth` | `boolean`                                                                             | `false`     |
+| `startIcon` | `ReactNode`                                                                           | none        |
+| `endIcon`   | `ReactNode`                                                                           | none        |
 
 ### Inherited Atom and native props
 
 Button preserves the applicable public Atom Button contract:
 
-| Prop | Contract |
-| --- | --- |
-| `children` | Visible content and accessible name on the normal path |
-| `href` | Renders a native anchor when present |
-| `target`, `rel` | Native anchor behavior; Atom preserves safe new-tab relationships |
-| `disabled` | Blocks activation and exposes the unavailable state |
-| `loading` | Blocks activation, remains focusable, and exposes `aria-busy` |
-| `onPress` | `MouseEventHandler<HTMLElement>` normalized by Atom |
-| `onClick`, `onKeyDown` | Native-compatible handlers composed by Atom |
-| `type` | `"button"`, `"submit"`, or `"reset"`; defaults to `"button"` |
-| `asChild` | Uses one child element as the host; defaults to `false` |
-| `render` | Uses an Atom render element or callback as the host |
-| `data-slot` | Defaults to `"button"` and may be overridden |
-| native/global props | Applicable form, ARIA, `data-*`, event, `className`, and `style` props |
+| Prop                   | Contract                                                               |
+| ---------------------- | ---------------------------------------------------------------------- |
+| `children`             | Visible content and accessible name on the normal path                 |
+| `href`                 | Renders a native anchor when present                                   |
+| `target`, `rel`        | Native anchor behavior; Atom preserves safe new-tab relationships      |
+| `disabled`             | Blocks activation and exposes the unavailable state                    |
+| `loading`              | Blocks activation, remains focusable, and exposes `aria-busy`          |
+| `onPress`              | `MouseEventHandler<HTMLElement>` normalized by Atom                    |
+| `onClick`, `onKeyDown` | Native-compatible handlers composed by Atom                            |
+| `type`                 | `"button"`, `"submit"`, or `"reset"`; defaults to `"button"`           |
+| `asChild`              | Uses one child element as the host; defaults to `false`                |
+| `render`               | Uses an Atom render element or callback as the host                    |
+| `data-slot`            | Defaults to `"button"` and may be overridden                           |
+| native/global props    | Applicable form, ARIA, `data-*`, event, `className`, and `style` props |
 
 The native `color` attribute is intentionally omitted because Brick uses
 semantic `tone`.
@@ -149,20 +168,38 @@ semantic `tone`.
 `children` must be one `ReactElement`, and `startIcon`/`endIcon` are rejected
 by the public type. Put any icon inside that child instead.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+
+Button presents a finished action or emphasized native link. Brick owns its
+visual recipes and styling; the public Atom Button owns semantics, interaction,
+form behavior, unavailable/loading behavior, and composition.
 
 ### Variants
 
-| Variant | Intended hierarchy |
-| --- | --- |
-| `solid` | Highest local emphasis |
-| `soft` | Quieter filled treatment |
-| `outline` | Secondary transparent treatment with a visible border |
-| `ghost` | Lowest standalone emphasis with a transparent rest border |
+| Variant   | Intended hierarchy                                        |
+| --------- | --------------------------------------------------------- |
+| `solid`   | Highest local emphasis                                    |
+| `soft`    | Quieter filled treatment                                  |
+| `outline` | Secondary transparent treatment with a visible border     |
+| `ghost`   | Lowest standalone emphasis with a transparent rest border |
 
 ### Tones
 
-`neutral` supports secondary and cancel actions. `accent` is the normal product
+`neutral` supports secondary and cancel actions. `contrast` is the
+high-emphasis neutral action that uses foreground-on-surface inversion without
+introducing brand color. `accent` is the normal product
 action. `info`, `success`, `warning`, and `danger` communicate genuine semantic
 meaning; they are not decorative palette choices.
 
@@ -178,12 +215,24 @@ hover or pressed paint.
 ### Sizes and shapes
 
 | Size | Minimum block size |
-| --- | ---: |
-| `xs` | 28px |
-| `sm` | 36px |
-| `md` | 44px |
-| `lg` | 52px |
-| `xl` | 60px |
+| ---- | -----------------: |
+| `2xs` |              24px |
+| `xs`  |              32px |
+| `sm`  |              36px |
+| `md`  |              40px |
+| `lg`  |              44px |
+| `xl`  |              48px |
+| `2xl` |              64px |
+
+The default `lg` recipe uses 16/24 text, 20px icons, and 20px logical padding
+inside its 44px target. The `2xl` recipe uses the semantic `control-xl`
+typography, 24px icons, and 28px logical padding inside its 64px target.
+
+Responsive objects are mobile first and may omit `initial`. A sparse value
+such as `size={{ lg: "md" }}` uses the normal `lg` default below the `lg`
+breakpoint, then changes the complete recipe to `md`. Supply `initial` only
+when the mobile baseline must differ from the component default. Empty objects
+are invalid.
 
 `sharp`, `rounded`, and `pill` change radius only. `fullWidth` changes inline
 width only and is independent of size or shape.
@@ -200,7 +249,9 @@ Button.
 
 - root class: `.brick-button`
 - default overridable slot: `data-slot="button"`
-- visual attributes: `data-variant`, `data-tone`, `data-size`, `data-shape`
+- visual attributes: `data-variant`, `data-tone`, `data-size`, `data-shape`,
+  plus `data-size-sm`, `data-size-md`, `data-size-lg`, and `data-size-xl` when
+  their responsive overrides are supplied
 - conditional layout attribute: `data-full-width`
 - Atom state attributes: `data-disabled`, `data-loading`
 - native `className` and `style`
@@ -269,6 +320,18 @@ zoom or localization, padding and icon order use logical directions, and the
 root remains constrained by its container. It never becomes full width
 automatically.
 
+Use a responsive `size` value when one action should adopt a different
+coordinated recipe at Brick's shared breakpoints:
+
+```tsx
+<Button size={{ lg: "md" }}>Get started</Button>
+```
+
+This keeps the normal `lg` recipe below the breakpoint and then changes the
+complete Button recipe—minimum block size, typography,
+padding, gap, and icon size—without duplicating the Button or overriding its
+height.
+
 Use `fullWidth` for unconditional width. Breakpoint-dependent width, placement,
 visibility, or grouping remains application layout:
 
@@ -289,6 +352,11 @@ chevron for the current writing direction.
 
 ## Accessibility
 
+### Focus presentation
+
+Support scalar focusRing="outside" | "inside"; omission stays outside. Inside uses paired foreground and canonical negative-width offset without changing Atom behavior.
+See [Focus presentation](../../guides/focus-presentation.md).
+
 Provide meaningful visible children for the accessible name. Use the default
 button path for actions and `href` for navigation.
 
@@ -302,8 +370,8 @@ source of meaning. Loading retains the original accessible name; put detailed
 asynchronous status in adjacent live feedback and connect it with
 `aria-describedby` when useful.
 
-The `md` default supplies a 44 CSS pixel minimum block size. If using `xs` or
-`sm` on touch interfaces, the application must provide adequate surrounding
+The `lg` default supplies a 44 CSS pixel minimum block size. If using `2xs`,
+`xs`, `sm`, or `md` on touch interfaces, the application must provide adequate surrounding
 target spacing.
 
 ## Composition, native props, and refs
@@ -375,3 +443,12 @@ host.
 ## Changelog
 
 See [`CHANGELOG.md`](CHANGELOG.md).
+
+### Shared action family
+
+Button owns shared rendering and recipes. IconButton wraps its internal icon-only path; CloseButton wraps IconButton. Equal explicit variant/tone values share hover, expanded, disabled and focus presentation. Icon-only controls remain square and named. Custom spinner is available on ordinary/render IconButton and CloseButton; IconButton asChild excludes it. No visible loadingText or fullWidth icon-only mode. This supersedes earlier independent IconButton paint rules.
+
+
+### Icon artwork sizing
+
+The owning artwork slot sets final Icon dimensions even with larger standalone/provider sizes; do not add compensating Icon size props. Text and interactive adornments retain their own layout.

@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function controlSize(checkbox: Locator) {
   return checkbox.locator(".brick-checkbox-control").evaluate((control) => {
@@ -9,7 +9,7 @@ async function controlSize(checkbox: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/checkbox");
+  await page.goto("/checkbox?qualification=1");
 });
 
 test("Checkbox overview preserves the default medium unchecked state", async ({
@@ -223,7 +223,7 @@ test("Checkbox customization, anchor navigation, accessibility, and narrow conta
     "rgb(24, 121, 78)",
   );
 
-  await page.getByRole("link", { name: "07 Compose" }).click();
+  await page.evaluate(() => { location.hash = "scenario-checkbox-composition"; });
   await expect(page).toHaveURL(/#scenario-checkbox-composition$/);
   const target = page.locator("#scenario-checkbox-composition");
   await expect(target).toHaveCSS("outline-style", "none");

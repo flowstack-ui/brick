@@ -6,7 +6,12 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/skip-link");
+installVisualDefaults("/skip-link?qualification=1");
+
+test("Skip Link documentation preview", async ({ page }) => {
+  await page.goto("/skip-link");
+  await expect(page.locator('[data-component-page="skip-link"] [data-example-preview]').first()).toHaveScreenshot("docs-basic-light.png");
+});
 
 test("Skip Link focused default and sticky overlay", async ({ page }) => {
   const hiddenSkipLinks = await page.addStyleTag({ content: ".brick-skip-link { display: none !important; }" });

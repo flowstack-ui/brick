@@ -15,6 +15,12 @@ npm ci
 
 ## Development surfaces
 
+Run `npm run verify:focus` when changing focus styles or adding a component.
+Classify each new owner in `scripts/focus-policy.json`; explain any intentional
+geometry exception. The source guard does not replace keyboard, clipped-edge,
+contrast, or forced-colors browser qualification. See
+[`docs/guides/focus-presentation.md`](docs/guides/focus-presentation.md).
+
 Run the component catalog locally:
 
 ```bash

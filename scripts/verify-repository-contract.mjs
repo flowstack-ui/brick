@@ -1,6 +1,7 @@
 import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import configuration from "../verification.config.mjs";
+import { hasWorkflowTimeout } from "./workflow-timeouts.mjs";
 
 const repositoryRoot = resolve(import.meta.dirname, "..");
 const packageJson = JSON.parse(await readFile(resolve(repositoryRoot, "package.json"), "utf8"));
@@ -24,7 +25,7 @@ for (const workflow of Object.values(configuration.workflows)) {
   try {
     const source = await readFile(resolve(repositoryRoot, workflow), "utf8");
     if (/uses:\s+[^\n#]+@(v\d+|main|master)\b/u.test(source)) errors.push(`${workflow} contains a mutable action reference`);
-    if (!source.includes("timeout-minutes:")) errors.push(`${workflow} has no job timeout`);
+    if (!await hasWorkflowTimeout(workflow, (path) => readFile(resolve(repositoryRoot, path), "utf8"))) errors.push(`${workflow} has no job timeout (direct or reusable workflow)`);
   } catch { /* missing path is already reported */ }
 }
 for (const server of configuration.servers) {

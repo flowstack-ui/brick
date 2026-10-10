@@ -11,7 +11,7 @@ toolbars, dialogs, and other bounded regions.
 ## When not to use
 
 Use linear Progress when horizontal space communicates change more clearly,
-Meter for stable measurements, Steps for workflow stages, and Skeleton for
+native meter for stable measurements, Steps for workflow stages, and Skeleton for
 layout placeholders. Do not use it as a decorative activity spinner without
 an accessible task name.
 
@@ -67,14 +67,14 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 | --- | --- | --- |
 | `value` | `number \| null` | `undefined` (indeterminate) |
 | `min` / `max` | `number` | `0` / `100` |
-| `size` | `"xs" \| "sm" \| "md" \| "lg" \| "xl"` | `"md"` |
+| `size` | `ResponsiveValue<"xs" \| "sm" \| "md" \| "lg" \| "xl">` | `"md"` |
 | `thickness` | `"thin" \| "regular" \| "thick"` | `"regular"` |
 | `cap` | `"round" \| "butt"` | `"round"` |
 | `tone` | `"neutral" \| "accent" \| "info" \| "success" \| "warning" \| "danger"` | `"accent"` |
-| `locale` | `Intl.LocalesArgument` | runtime locale |
+| `locale` | `Intl.LocalesArgument` | `LocaleProvider.locale` |
 | `formatOptions` | `Intl.NumberFormatOptions` | percent, 0 fraction digits |
 
-Root retains released Atom Progress props. Circle accepts SVG props except
+Root retains public Atom Progress props. Circle accepts SVG props except
 `viewBox`; Track accepts circle props except component-owned `cx`, `cy`, and
 `r`; Indicator also owns `pathLength`, `strokeDasharray`, and
 `strokeDashoffset` so its circumference-based visible arc always matches
@@ -105,9 +105,38 @@ Closed values are:
 ## Visual recipes and states
 
 Determinate Indicator advances clockwise from twelve o'clock. Indeterminate
-Indicator rotates a fixed arc. Five sizes change diameter while the SVG keeps
-the regular stroke proportional; thickness overrides stroke; cap changes arc ends; tone changes the
-active ring. Track remains visible in every state.
+Indicator rotates a changing arc. At a 16px root font, xs/sm/md/lg/xl diameter
+is 24/32/40/48/64px and regular stroke is 4/5/6/7/8px. Thin multiplies stroke
+by 0.5; thick by 1.5. The radius follows stroke width so the outer paint stays
+inside the allocated square. Zero normalized progress has no active paint,
+including with round caps and a nonzero minimum. Cap changes arc ends; tone
+changes the active ring. Track remains visible in every state.
+
+Size accepts ResponsiveValue with initial/sm/md/lg/xl breakpoints. Sparse
+objects start at md and inherit previous values. Value uses real typography,
+not a paint transform: caption for xs/sm/md, body-sm for lg, body-md for xl.
+Use outside labels for small rings; use xl for centered percentages or longer
+values. Arbitrary content can exceed a ring's useful text area.
+
+### Controller and formatting
+
+Additional exports are `ProgressCircleRootProvider`,
+`ProgressCircleRootProviderProps`, `ProgressCircleContext` and
+`ProgressCircleValueFormat`. `ProgressCircle.Context` renders its function
+child with normalized state and an optional setter, adding no DOM element.
+`ProgressCircle.RootProvider` takes an external `ProgressController` as value
+plus Root's visual/native props, without a second min/max/defaultValue/ids.
+
+Import shared `useProgress`, `ProgressController` and `UseProgressProps` from
+`@flowstack-ui/brick/progress` or the package root. The hook serves both visual
+owners; no separate circular state machine is created. Root accepts optional
+defaultValue (null), onValueChange (normalized changed controller requests),
+and ids (explicit root/label IDs). Controlled value is authoritative.
+
+`valueFormat="percent"` (default) formats percent / 100; `value` formats the
+normalized raw task value. Both use locale and formatOptions. Accessible
+aria-valuetext/getValueLabel are independent; explicit aria-valuetext wins.
+NaN is indeterminate, infinities clamp and invalid ranges normalize in Atom.
 
 ## Tokens and CSS hooks
 
@@ -132,6 +161,14 @@ Public variables are:
 Prefer recipes, then semantic tokens, then public variables. Keep sufficient
 track and indicator contrast on custom backgrounds.
 
+`--brick-progress-circle-stroke` remains unitless in the 100-unit viewBox;
+it is not a pixel length. Its size-specific default now gives the paired
+stroke progression above. Thickness multiplies it, with a safe 0–100 clamp.
+`--brick-progress-circle-size` is a CSS length. Native radius/dash attributes
+are unstyled fallbacks; recipe CSS owns thickness-aware radius, circumference
+and offset. State percentage, effective stroke, stroke factor, circumference
+and value-size variables are internal, not public customization inputs.
+
 ## Responsive behavior
 
 The ring keeps a square aspect ratio and never reverses in RTL: determinate and
@@ -149,7 +186,9 @@ retains both track and indicator.
 ## Composition, native props, and refs
 
 Root retains Atom `render`/`asChild`; the SVG and text parts retain their
-documented native props and refs. Use Track before Indicator within Circle.
+documented native props and refs and support `asChild`. Project Circle only
+onto svg, Track/Indicator only onto circle, and text onto noninteractive text
+hosts. ViewBox and progress geometry remain owned. Use Track before Indicator within Circle.
 Value and Label are optional; an accessible name is not optional.
 
 ## Examples

@@ -6,7 +6,8 @@ Mark follows the package version of `@flowstack-ui/brick`.
 
 ### Added
 
-- No unreleased changes.
+- Add text variant, semantic tones and static asChild composition.
+- Use paired neutral surface colors and fix forced-colors precedence for all recipes.
 
 ## 0.1.12 — 2026-08-30
 

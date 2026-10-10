@@ -1,8 +1,14 @@
 # Code Block changelog
 
+
 Code Block follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+- The flush collapse action paints focus inside its clipped boundary; copy success remains icon-only with an accessible announcement.
+
+- Support `CopyTrigger asChild` for a supplied IconButton, preserving the
+  existing Clipboard owner, refs, states and default Button rendering.
 
 ### Added
 
@@ -11,6 +17,9 @@ Code Block follows the package version of `@flowstack-ui/brick`.
 
 ### Fixed
 
+- Made Code Block selection inherit Brick's shared appearance-aware selection
+  pair while preserving both public component variables as paired local
+  overrides.
 - Kept collapsible source at its preview height while the full region opens,
   eliminating the collapse-to-zero visual glitch.
 - Prevented bounded source from revealing a clipped fragment of the next line.
@@ -35,3 +44,9 @@ Code Block follows the package version of `@flowstack-ui/brick`.
 - Added compound technical surfaces, Code and Scroll Area composition,
   explicit language, scroll/wrap policies, trusted highlighted nodes, optional
   header metadata/actions, and Atom-backed copy parts.
+# Unreleased parity additions
+
+Code typography is now 12px-equivalent small and 14px-equivalent regular/large,
+using shared rem-based recipes. Line and syntax-token spans retain monospace.
+
+Added optional safe Shiki integration, automatic line metadata, light/dark syntax schemes and lg density. Diff signs no longer rely solely on color; collapse focus follows the theme and copy actions accept current Button recipes.

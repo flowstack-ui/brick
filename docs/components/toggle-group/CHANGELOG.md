@@ -4,6 +4,16 @@ Toggle Group follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Restore Toggle's single 50% disabled Item fade without fading Root or
+  compounding opacity; retain opaque system colors in forced-colors mode.
+
+- Share seven responsive action sizes, expanded variants, contrast tone and inside focus rings with Toggle.
+
+- Match Toggle's neutral ghost default and flat selected appearance. Consolidate
+  shared state paint so group variant rules cannot mask hover, disabled or forced
+  colors. Retain selection, attachment, sizing and radius APIs.
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ## 0.1.10
 
 ### Added

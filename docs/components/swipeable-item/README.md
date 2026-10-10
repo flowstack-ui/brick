@@ -63,7 +63,8 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 ## API
 
-`SwipeableItem`, `SwipeableItemRoot`, `SwipeableItemContent`,
+`SwipeableItem`, `SwipeableItemRoot`, `SwipeableItemRootProvider`,
+`SwipeableItemContext`, `SwipeableItemContent`,
 `SwipeableItemActions`, `SwipeableItemRootProps`,
 `SwipeableItemContentProps`, `SwipeableItemActionsProps`, and
 `SwipeableItemVariant` are exported from both the root package and stable
@@ -75,9 +76,57 @@ component subpath.
 
 Root preserves Atom controlled/uncontrolled state, direction, disabled and
 read-only behavior, native props, `render`, `asChild`, styles, classes, slots,
-and refs. Actions requires a localized `aria-label`. Brick deliberately omits
-Atom's full-swipe execution props so a gesture never invokes a destructive
-command directly.
+and refs. Actions requires a localized `aria-label`. Full swipe is off by default:
+author `fullSwipeSides` and `onFullSwipe` explicitly and preserve a visible
+equivalent control. Never use it as an unconfirmed destructive shortcut.
+
+### Root and controller options
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `radius` | shared `Radius` | surface |
+| `openSide` / `defaultOpenSide` | start, end, null | null |
+| `onOpenSideChange` | `(side) => void` | — |
+| `threshold` | number, fraction of action width | 0.35 |
+| `thresholds` | partial start/end fractions | shared threshold |
+| `activationDistance` | CSS px | 8 |
+| `velocityThreshold` | recent px/ms | 0.5 |
+| `resistance` | 0–1 | 0 |
+| `fullSwipeSides` | readonly logical sides | [] |
+| `fullSwipeThreshold` | fraction of content width | 0.6 |
+| `onFullSwipe` | `(side) => void` | — |
+| `closeOnOutsideClick` / `closeOnContentClick` | boolean | false |
+| `motion` | default, none | default |
+| `onSettle` | `({ openSide, offset }) => void` | — |
+| `disabled` / `readOnly` | boolean | false |
+
+`useSwipeableItem(options)` returns one controller for
+`SwipeableItem.RootProvider value={controller}`. RootProvider also accepts
+Root's visual props and host composition. `SwipeableItem.Context` reads it
+inside either root. These parts, hook, `SwipeableItemController`,
+`UseSwipeableItemProps` and `SwipeableItemRootProviderProps` are exported from
+the root and component subpath.
+
+Call `open(side)`, `close()` or `reset()`; reset skips animated travel.
+Controlled owners must accept requests. `onOpenSideChange` is not a motion
+completion event. `onSettle` reports completion and is canceled when superseded.
+The controller exposes `dragging`, `settling`, `armedSide`, and destination
+`offset`; `getOffset()` and `getProgress()` read the current presentation.
+
+### Actions
+
+`gap` and `inset` use shared `SpacingValue`, both defaulting to 2.
+`closeOnClick` defaults to true for an unprevented button/link/action activation;
+panel padding does not close. Use false for application-owned async completion.
+Buttons and IconButtons retain their own sizes and recipes. Choose usable
+targets rather than relying on a wrapper to enlarge a compact control.
+
+### Content
+
+Content defaults to `tabIndex=0`; disabled forces -1, read-only remains
+focusable. Native editing controls retain their gesture ownership; use
+`data-swipeable-ignore` on other drag-owning descendants. A recognized swipe
+suppresses its following pointer click, not normal taps or keyboard activation.
 
 ## Visual recipes and states
 
@@ -109,6 +158,7 @@ Public variables:
 - `--brick-swipeable-item-action-padding-inline`
 - `--brick-swipeable-item-action-min-size`
 - `--brick-swipeable-item-transition-duration`
+- `--brick-swipeable-item-transition-easing`
 
 ## Customization
 

@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  Children,
-  cloneElement,
   createElement,
   forwardRef,
   isValidElement,
@@ -11,6 +9,9 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
+import { composeHost } from "@flowstack-ui/atom/compose-host";
+export { useSidebarContext } from "@flowstack-ui/atom/sidebar";
+export type { SidebarContextValue, SidebarState, SidebarSide, SidebarCollapsedState } from "@flowstack-ui/atom/sidebar";
 import {
   Sidebar as AtomSidebar,
   type SidebarMainProps as AtomMainProps,
@@ -23,6 +24,7 @@ export type SidebarVariant = "docked" | "floating";
 export type SidebarSize = "sm" | "md" | "lg";
 export type SidebarPosition = "static" | "sticky";
 export type SidebarSurface = "transparent" | "base" | "raised";
+export type SidebarInset = "default" | "none";
 
 type ComposedProps<T extends { children?: ReactNode; render?: unknown }> = Omit<T, "asChild" | "children" | "render"> & (
   | { asChild: true; render?: never; children: ReactElement<{ children?: ReactNode }> }
@@ -34,6 +36,7 @@ export type SidebarRootProps = Omit<ComposedProps<AtomRootProps>, "size"> & {
   size?: SidebarSize;
   position?: SidebarPosition;
   surface?: SidebarSurface;
+  bordered?: boolean;
 };
 export type SidebarPanelProps = ComposedProps<AtomPanelProps>;
 export type SidebarMainProps = ComposedProps<AtomMainProps>;
@@ -41,6 +44,7 @@ export type SidebarTriggerProps = ComposedProps<AtomTriggerProps>;
 
 type RenderProp = string | ReactElement | ((props: Record<string, unknown>) => ReactElement);
 export type SidebarRegionProps = Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
+  inset?: SidebarInset;
   children?: ReactNode;
   render?: RenderProp;
   asChild?: boolean;
@@ -53,45 +57,23 @@ export type SidebarFooterProps = SidebarRegionProps;
 const mergeClassName = (base: string, value?: string) => value ? `${base} ${value}` : base;
 const slot = (value: string | undefined, fallback: string) => value ?? fallback;
 
-function composeRefs(...refs: (Ref<unknown> | undefined)[]) {
-  return (node: unknown) => {
-    for (const ref of refs) {
-      if (!ref) continue;
-      if (typeof ref === "function") ref(node);
-      else (ref as { current: unknown }).current = node;
-    }
-  };
-}
-
-function mergeProps(original: Record<string, unknown>, override: Record<string, unknown>) {
-  const result = { ...original };
-  for (const [key, value] of Object.entries(override)) {
-    if (value === undefined) continue;
-    const current = original[key];
-    if (key === "className" && typeof current === "string" && typeof value === "string") result[key] = `${current} ${value}`;
-    else if (key === "style" && current && value && typeof current === "object" && typeof value === "object") result[key] = { ...current, ...value };
-    else if (key === "ref") result[key] = composeRefs(current as Ref<unknown> | undefined, value as Ref<unknown> | undefined);
-    else result[key] = value;
-  }
-  return result;
-}
-
 function Region({ baseClass, defaultSlot, props, ref }: { baseClass: string; defaultSlot: string; props: SidebarRegionProps; ref: Ref<HTMLDivElement> }) {
-  const { asChild = false, children, className, render, "data-slot": dataSlot, ...rest } = props;
-  const merged = { ...rest, children, className: mergeClassName(baseClass, className), "data-slot": slot(dataSlot, defaultSlot), ref };
+  const { asChild = false, children, className, inset = "default", render, "data-slot": dataSlot, ...rest } = props;
+  const merged = { ...rest, children, className: mergeClassName(baseClass, className), "data-inset": inset, "data-slot": slot(dataSlot, defaultSlot), ref };
   if (asChild) {
-    const child = Children.only(children) as ReactElement;
-    return cloneElement(child, mergeProps(child.props as Record<string, unknown>, merged));
+    // The supplied child is the host, not another copy of its own children.
+    const { children: _host, ...hostProps } = merged;
+    return composeHost(children, hostProps);
   }
   if (typeof render === "function") return render(merged);
   if (typeof render === "string") return createElement(render, merged);
-  if (isValidElement(render)) return cloneElement(render, mergeProps(render.props as Record<string, unknown>, merged));
-  return <div {...rest} className={merged.className} data-slot={merged["data-slot"]} ref={ref}>{children}</div>;
+  if (isValidElement(render)) return composeHost(render, merged);
+  return <div {...rest} className={merged.className} data-inset={inset} data-slot={merged["data-slot"]} ref={ref}>{children}</div>;
 }
 
-export const SidebarRoot = forwardRef<HTMLDivElement, SidebarRootProps>(function SidebarRoot({ asChild = false, children, className, position = "static", render, size = "md", surface, variant = "docked", "data-slot": dataSlot, ...props }, ref) {
+export const SidebarRoot = forwardRef<HTMLDivElement, SidebarRootProps>(function SidebarRoot({ asChild = false, bordered = true, children, className, position = "static", render, size = "md", surface, variant = "docked", "data-slot": dataSlot, ...props }, ref) {
   const resolvedSurface = surface ?? (variant === "floating" ? "raised" : "base");
-  return <AtomSidebar.Root {...props} asChild={asChild} className={mergeClassName("brick-sidebar", className)} data-position={position} data-size={size} data-slot={slot(dataSlot, "sidebar")} data-surface={resolvedSurface} data-variant={variant} ref={ref} render={render}>{children}</AtomSidebar.Root>;
+  return <AtomSidebar.Root {...props} asChild={asChild} className={mergeClassName("brick-sidebar", className)} data-bordered={bordered ? "true" : "false"} data-position={position} data-size={size} data-slot={slot(dataSlot, "sidebar")} data-surface={resolvedSurface} data-variant={variant} ref={ref} render={render}>{children}</AtomSidebar.Root>;
 });
 export const SidebarTrigger = forwardRef<HTMLButtonElement, SidebarTriggerProps>(function SidebarTrigger({ asChild = false, children, className, render, "data-slot": dataSlot, ...props }, ref) {
   return <AtomSidebar.Trigger {...props} asChild={asChild} className={mergeClassName("brick-sidebar__trigger", className)} data-slot={slot(dataSlot, "sidebar-trigger")} ref={ref} render={render}>{children}</AtomSidebar.Trigger>;

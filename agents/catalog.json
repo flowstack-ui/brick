@@ -2,11 +2,53 @@
   "schema": "flowstack.agent-catalog.v1",
   "package": "@flowstack-ui/brick",
   "layer": "brick",
-  "packageGuideIds": [
-    "interface-composition",
-    "layer-selection"
-  ],
+  "packageGuideIds": ["interface-composition", "layer-selection"],
   "classifications": [
+    {
+      "surface": "./selection",
+      "classification": "utility",
+      "documentation": "docs/guides/record-selection.md",
+      "reason": "Atom-backed record state and checkbox binding without rendered anatomy or CSS."
+    },
+    {
+      "surface": "./action-delegate",
+      "classification": "utility",
+      "documentation": "docs/guides/record-selection.md",
+      "reason": "Atom-backed semantic-preserving event delegation without a styled host or CSS entry."
+    },
+    {
+      "surface": "./radius",
+      "classification": "utility",
+      "documentation": "docs/guides/radius.md",
+      "reason": "Shared token-only radius type; no independently rendered component."
+    },
+    {
+      "surface": ".#SurfaceTreatment",
+      "classification": "utility",
+      "sourceOwner": "src/components/_surface-effects",
+      "documentation": "docs/guides/surface-effects.md",
+      "reason": "Shared treatment selection on painted owners."
+    },
+    {
+      "surface": ".#BackdropBlur",
+      "classification": "utility",
+      "sourceOwner": "src/components/_surface-effects",
+      "documentation": "docs/guides/surface-effects.md",
+      "reason": "Shared named and precise blur values."
+    },
+    {
+      "surface": ".#Radius",
+      "classification": "utility",
+      "sourceOwner": "src/components/_radius",
+      "documentation": "docs/guides/radius.md",
+      "reason": "Shared public radius vocabulary for component boundary owners."
+    },
+    {
+      "surface": "./date-value",
+      "classification": "utility",
+      "documentation": "docs/guides/date-values.md",
+      "reason": "Immutable public date values and parsers shared with Atom."
+    },
     {
       "surface": ".",
       "classification": "aggregate",
@@ -109,6 +151,46 @@
   ],
   "exclusions": [
     {
+      "pattern": "src/components/_field-variant/**",
+      "visibility": "source-only",
+      "reason": "Private responsive visual recipe serialization for field boundary owners."
+    },
+    {
+      "pattern": "src/components/_floating-arrow/**",
+      "visibility": "source-only",
+      "reason": "Shared overlay arrow artwork and static sizing styles; Atom owns geometry and positioning."
+    },
+    {
+      "pattern": "src/components/_surface-effects/**",
+      "visibility": "source-only",
+      "reason": "Shared visual parameter normalization and CSS used by painted component owners."
+    },
+    {
+      "pattern": "src/components/_radius/**",
+      "visibility": "source-only",
+      "reason": "Internal finite radius token mapping and compatibility types; public Radius is explicitly classified."
+    },
+    {
+      "pattern": "src/components/_spinner-ring/**",
+      "visibility": "source-only",
+      "reason": "Shared visual loading ring; no JavaScript or behavior surface."
+    },
+    {
+      "pattern": "src/components/_toggle/**",
+      "visibility": "source-only",
+      "reason": "Shared pressed-command paint for Toggle, ToggleGroup and Toolbar; not a public component or behavior owner."
+    },
+    {
+      "pattern": "src/components/_focus/**",
+      "visibility": "source-only",
+      "reason": "Shared static action focus placement; no public utility or headless behavior."
+    },
+    {
+      "pattern": "src/components/_action/**",
+      "visibility": "source-only",
+      "reason": "Shared action-family paint values reused by finished action owners; no public utility or behavior owner."
+    },
+    {
       "pattern": "src/components/_action-menu/**",
       "visibility": "source-only",
       "reason": "Shared visual recipe for public menu owners; it exports no JavaScript surface."
@@ -119,9 +201,24 @@
       "reason": "Shared visual recipe for action controls; it exports no JavaScript surface."
     },
     {
+      "pattern": "src/components/_control-size/**",
+      "visibility": "source-only",
+      "reason": "Shared implementation-only responsive size normalization and CSS recipes for public form controls."
+    },
+    {
+      "pattern": "src/components/_selection-mark/**",
+      "visibility": "source-only",
+      "reason": "Shared passive square geometry and semantic paint inputs for Checkbox, CheckboxGroup and Checkmark; no public JavaScript surface."
+    },
+    {
       "pattern": "src/components/_internal/**",
       "visibility": "source-only",
       "reason": "Shared implementation-only React helpers with no public export."
+    },
+    {
+      "pattern": "src/components/_intl/**",
+      "visibility": "source-only",
+      "reason": "Shared implementation-only cached Intl formatter support for public localization helpers."
     },
     {
       "pattern": "src/components/_responsive-value/**",

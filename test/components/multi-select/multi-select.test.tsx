@@ -1,8 +1,10 @@
 import { createRef } from "react";
+import { useMultiSelect } from "../../../src/multi-select.js";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { Field } from "../../../src/field.js";
+import { For } from "../../../src/for.js";
 import {
   MultiSelect,
   type MultiSelectShape,
@@ -33,6 +35,24 @@ function Example({ defaultOpen = false }: { defaultOpen?: boolean }) {
 }
 
 describe("MultiSelect", () => {
+  it("supports subtle and a separately named clear action", async () => {
+    const user = userEvent.setup();
+    const changed = vi.fn();
+    render(<MultiSelect.Root variant="subtle" onValueChange={changed}><MultiSelect.Trigger aria-label="Choice" /><MultiSelect.ClearTrigger aria-label="Clear choice" /></MultiSelect.Root>);
+    const trigger = screen.getByRole("button", { name: "Choice" });
+    expect(trigger).toHaveAttribute("data-variant", "subtle");
+    await user.click(screen.getByRole("button", { name: "Clear choice" }));
+    expect(changed).toHaveBeenCalledWith([]);
+    expect(trigger).toHaveFocus();
+  });
+
+  it("can delegate trigger presentation without losing semantics", () => {
+    render(<MultiSelect.Root><MultiSelect.Trigger unstyled aria-label="Custom" className="custom-trigger">Choice</MultiSelect.Trigger></MultiSelect.Root>);
+    const trigger = screen.getByRole("button", { name: "Custom" });
+    expect(trigger).toHaveClass("custom-trigger");
+    expect(trigger).not.toHaveClass("brick-multi-select-trigger");
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+  });
   beforeAll(() => { Element.prototype.scrollIntoView = vi.fn(); });
 
   it("renders canonical defaults, array summary, and default decorative artwork", () => {
@@ -42,7 +62,7 @@ describe("MultiSelect", () => {
     expect(trigger).toBe(ref.current);
     expect(trigger).toHaveClass("brick-multi-select-trigger");
     expect(trigger).toHaveAttribute("data-variant", "outline");
-    expect(trigger).toHaveAttribute("data-size", "md");
+    expect(trigger).toHaveAttribute("data-size", "lg");
     expect(trigger).toHaveAttribute("data-shape", "rounded");
     expect(trigger).toHaveAttribute("data-full-width", "");
     expect(trigger).toHaveTextContent("Design (+1 more)");
@@ -50,8 +70,8 @@ describe("MultiSelect", () => {
   });
 
   it("exposes variants, sizes, shapes, and intrinsic width without prop leakage", () => {
-    const variants: MultiSelectVariant[] = ["outline", "soft", "underline"];
-    const sizes: MultiSelectSize[] = ["sm", "md", "lg"];
+    const variants: MultiSelectVariant[] = ["outline", "soft", "underline", "surface"];
+    const sizes: MultiSelectSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
     const shapes: MultiSelectShape[] = ["sharp", "rounded", "pill"];
     const { rerender } = render(<Example />);
     for (const variant of variants) {
@@ -78,7 +98,7 @@ describe("MultiSelect", () => {
 
   it("styles every authored anatomy part and preserves replaceable artwork", () => {
     render(<Example defaultOpen />);
-    expect(screen.getByRole("listbox")).toHaveAttribute("data-size", "md");
+    expect(screen.getByRole("listbox")).toHaveAttribute("data-size", "lg");
     expect(screen.getByRole("listbox")).toHaveClass("brick-multi-select-content");
     expect(screen.getByRole("listbox")).toHaveAttribute("aria-multiselectable", "true");
     expect(document.querySelector(".brick-multi-select-viewport")).toBeInTheDocument();
@@ -90,6 +110,13 @@ describe("MultiSelect", () => {
     expect(document.querySelector(".brick-multi-select-item-indicator .brick-multi-select-check-artwork")).toBeInTheDocument();
     expect(document.querySelector(".brick-multi-select-separator")).toBeInTheDocument();
     expect(document.querySelector(".brick-multi-select-arrow-artwork")).toBeInTheDocument();
+  });
+
+  it("keeps sparse responsive size metadata on the trigger and portalled content", () => {
+    render(<MultiSelect.Root defaultOpen size={{ lg: "xl" }}><MultiSelect.Trigger aria-label="Skills" /><MultiSelect.Content><MultiSelect.Item value="design">Design</MultiSelect.Item></MultiSelect.Content></MultiSelect.Root>);
+    expect(screen.getByRole("button", { name: "Skills" })).toHaveAttribute("data-size", "lg");
+    expect(screen.getByRole("button", { name: "Skills" })).toHaveAttribute("data-size-lg", "xl");
+    expect(screen.getByRole("listbox")).toHaveAttribute("data-size-lg", "xl");
   });
 
   it("toggles array values without closing and preserves disabled options", async () => {
@@ -104,6 +131,24 @@ describe("MultiSelect", () => {
     expect(screen.getByRole("listbox")).toBeInTheDocument();
     await user.click(screen.getByRole("option", { name: "Design" }));
     expect(onValueChange).toHaveBeenLastCalledWith([]);
+  });
+
+  it("preserves For render callbacks while deriving static item labels", () => {
+    render(
+      <MultiSelect.Root defaultOpen>
+        <MultiSelect.Trigger aria-label="Skills" />
+        <MultiSelect.Content disablePortal>
+          <MultiSelect.Viewport>
+            <For each={["design", "engineering"]}>{(value) => (
+              <MultiSelect.Item key={value} value={value}>
+                <MultiSelect.ItemText>{value}</MultiSelect.ItemText>
+              </MultiSelect.Item>
+            )}</For>
+          </MultiSelect.Viewport>
+        </MultiSelect.Content>
+      </MultiSelect.Root>,
+    );
+    expect(screen.getAllByRole("option")).toHaveLength(2);
   });
 
   it("preserves Field ownership and native multiple form state", () => {
@@ -128,4 +173,16 @@ describe("MultiSelect", () => {
     expect(trigger).toHaveStyle({ marginInlineStart: "4px" });
     expect(screen.getAllByRole("button")).toHaveLength(1);
   });
+});
+it("MultiSelect controller preserves visual defaults and closed form values", () => {
+  function ControllerExample() {
+    const controller = useMultiSelect({ name: "choice", defaultValue: ["b"], items: [{value:"b",label:"Beta"}] });
+    return <form aria-label="Controller form"><MultiSelect.RootProvider value={controller} variant="subtle"><MultiSelect.Trigger aria-label="Controller choice"><MultiSelect.Value /></MultiSelect.Trigger><MultiSelect.State>{state => <span>{state.isOpen ? "Open" : "Closed"}</span>}</MultiSelect.State></MultiSelect.RootProvider></form>;
+  }
+  render(<ControllerExample />);
+  const trigger=screen.getByRole("button", {name:"Controller choice"});
+  expect(trigger).toHaveTextContent("Beta");
+  expect(trigger).toHaveAttribute("data-size","lg");
+  expect(trigger).toHaveAttribute("data-variant","subtle");
+  expect(new FormData(screen.getByRole("form") as HTMLFormElement).getAll("choice")).toEqual(["b"]);
 });

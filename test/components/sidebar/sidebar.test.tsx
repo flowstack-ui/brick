@@ -1,9 +1,34 @@
 import { createRef, useState } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { Sidebar } from "../../../src/sidebar.js";
+import { Sidebar, useSidebarContext } from "../../../src/sidebar.js";
 
 describe("Sidebar", () => {
+  it("composes region handlers and callback cleanup instead of replacing them", () => {
+    const calls: string[] = [];
+    const ref = createRef<HTMLDivElement>();
+    const view = render(<Sidebar.Content asChild ref={ref} onClick={() => calls.push("owner")}>
+      <div onClick={() => calls.push("child")} ref={() => () => { calls.push("cleanup"); }}>Region</div>
+    </Sidebar.Content>);
+    fireEvent.click(screen.getByText("Region"));
+    view.unmount();
+    expect(calls).toEqual(["owner", "child", "cleanup"]);
+    expect(ref.current).toBeNull();
+  });
+  it("exposes rail context and independent border control", () => {
+    function State() { return <span>{useSidebarContext().state}</span>; }
+    render(<Sidebar.Root bordered={false} defaultState="rail"><Sidebar.Panel><State /></Sidebar.Panel></Sidebar.Root>);
+    expect(screen.getByText("rail").closest(".brick-sidebar")).toHaveAttribute("data-bordered", "false");
+  });
+  it("regions preserve default padding or opt out without leaking inset", () => {
+    render(<><Sidebar.Header>Header</Sidebar.Header><Sidebar.Content inset="none" asChild><section>Content</section></Sidebar.Content><Sidebar.Footer inset="none" render={<footer />}>Footer</Sidebar.Footer></>);
+    expect(screen.getByText("Header")).toHaveAttribute("data-inset", "default");
+    expect(screen.getByText("Content").querySelector("section")).toBeNull();
+    for (const name of ["Content", "Footer"]) {
+      expect(screen.getByText(name)).toHaveAttribute("data-inset", "none");
+      expect(screen.getByText(name)).not.toHaveAttribute("inset");
+    }
+  });
   it("renders complete default anatomy and recipes", () => {
     const ref = createRef<HTMLDivElement>();
     render(<Sidebar.Root ref={ref}><Sidebar.Trigger>Toggle</Sidebar.Trigger><Sidebar.Panel aria-label="Workspace"><Sidebar.Header>Brand</Sidebar.Header><Sidebar.Content>Navigation</Sidebar.Content><Sidebar.Footer>Account</Sidebar.Footer></Sidebar.Panel><Sidebar.Main>Main</Sidebar.Main></Sidebar.Root>);

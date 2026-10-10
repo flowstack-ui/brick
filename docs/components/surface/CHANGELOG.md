@@ -1,11 +1,24 @@
 # Surface changelog
 
+## Unreleased
+
+- Add transparent paint, align elevation with shared shadow roles, preserve composed ref cleanup, and honor Scrim's own text direction.
+- Add modular documentation examples and part-scoped props while retaining qualification scenarios.
+
 Surface follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
 ### Changed
 
+- Strengthened the neutral `bordered` recipe to the shared default structural
+  boundary used by Card, Divider, and preview canvases, without changing the
+  closed boolean API or accent-border behavior.
+- Added a paired accent-subtle plane through
+  `tone="accent" level="subtle"`, while preserving accent-solid as the default
+  accent/base result.
 - Expanded `inset` with page-panel `xl` and `2xl` recipes and Brick's shared
   responsive value grammar while keeping paint, radius, border, and elevation
   nonresponsive.
@@ -30,3 +43,8 @@ Surface follows the package version of `@flowstack-ui/brick`.
 - Initial one-root `Surface` API with four semantic levels, independent border,
   elevation, radius, and inset recipes, controlled semantic hosts, native
   prop/ref forwarding, forced-colors boundaries, and public CSS variables.
+
+## Unreleased — surface effects
+
+- Add independent treatment, background alpha, named/exact backdrop blur, saturation and structural border controls on the painted root.
+- Preserve ordinary defaults and existing blurred usage; add scoped input isolation and filter/preference fallbacks.

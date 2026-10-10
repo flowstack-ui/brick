@@ -1,6 +1,14 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/table");
+installVisualDefaults("/table?qualification=1");
+test("TanStack sorting indicators align with their labels", async ({ page }) => {
+  await page.goto("/table");
+  await expect(page.locator("#engine table")).toHaveScreenshot("engine-indicators-light.png");
+});
+test.beforeEach(async ({ page }) => {
+  // Keep sticky application chrome out of component evidence crops.
+  await page.addStyleTag({ content: ".brick-app-bar { visibility: hidden !important; }" });
+});
 
 test("Table defaults, recipes, anatomy, and sorting", async ({ page }) => {
   await page.setViewportSize({ width: 1120, height: 1500 });

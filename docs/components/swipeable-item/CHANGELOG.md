@@ -4,6 +4,14 @@ Swipeable Item follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Added controller/RootProvider/Context, deliberate per-side full swipe,
+  side thresholds, bounded resistance, optional dismissal and motion completion.
+- Added shared radius and action gap/inset props. Action controls retain their
+  own sizing instead of receiving a forced minimum on every direct child.
+- Aligned settlement easing with theme motion and preserved direct tracking.
+- Replaced the normal route with focused source-paired documentation while
+  retaining separate qualification scenarios.
+
 ## 0.1.10
 
 ### Added

@@ -28,3 +28,6 @@ Form follows the package version of `@flowstack-ui/brick`.
 - `validationBehavior` now inherits to compatible Fields and Fieldsets;
   authored errors select inline validation while an explicit native
   presentation remains available.
+## Unreleased
+
+- Add responsive gap and reset-safe callback submission metadata.

@@ -34,6 +34,12 @@ Setup: Enable the recorded screen reader. Action: Navigate below and above md. E
 Notes or issue:
 
 ## Completion
+Additional projection pass: resize a projected control across its threshold;
+verify authored semantics and normal layout return with a screen reader and at
+actual browser zoom. Record focus recovery needs when the active control hides.
+Result:
+Notes or issue:
+
 Overall result:
 Follow-up issues:
 Workbook updated:

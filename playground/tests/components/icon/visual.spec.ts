@@ -1,6 +1,6 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/icon");
+installVisualDefaults("/icon?qualification=1");
 
 test("Icon defaults, sizes, tones, and sources", async ({ page }) => {
   await expect(page.locator("#scenario-icon-overview")).toHaveScreenshot("overview-light.png");
@@ -19,4 +19,14 @@ test("Icon appearance, RTL, mobile, and forced colors", async ({ page }) => {
   await page.setViewportSize({ width: 1120, height: 900 });
   await useForcedColors(page);
   await expect(page.locator("#scenario-icon-tones")).toHaveScreenshot("tones-forced-colors.png");
+});
+
+test("Icon factory, provider and action examples in both appearances", async ({page}) => {
+  await page.goto('/icon');
+  for (const appearance of ['light','dark'] as const) {
+    await setAppearance(page,appearance);
+    for(const id of ['factory','sizes','provider','controls']) {
+      await expect(page.locator(`#${id} [role=tabpanel]`)).toHaveScreenshot(`docs-${id}-${appearance}.png`);
+    }
+  }
 });

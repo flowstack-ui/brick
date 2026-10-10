@@ -1,9 +1,42 @@
 import { createElement, createRef } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { CodeBlock } from "../../../src/code-block.js";
+import { CodeBlock, createShikiAdapter } from "../../../src/code-block.js";
+import { createHighlighter } from "shiki";
+import { IconButton } from "../../../src/icon-button.js";
 
 const source = "const answer = 42;";
+
+it("renders real Shiki tokens safely, switches paired palettes and preserves exact source", async () => {
+  const highlighter = await createHighlighter({ langs: ["typescript"], themes: ["github-light", "github-dark"] });
+  const load = vi.fn(() => highlighter);
+  try {
+    const adapter = await createShikiAdapter({ load, themes: { light: "github-light", dark: "github-dark" } });
+    const value = '  const html = "<img src=x onerror=alert(1)>";\r\n\r\n';
+    const { container, rerender } = render(<CodeBlock.Root adapter={adapter} value={value} language="typescript" meta={{ showLineNumbers: true, addedLines: [1], focusedLines: [1], dimUnfocused: true }}><CodeBlock.Content aria-label="Code" /></CodeBlock.Root>);
+    expect(container.querySelector("pre")?.textContent).toBe(value);
+    expect(container.querySelector("img")).toBeNull();
+    expect(container.querySelectorAll(".brick-code-block-token").length).toBeGreaterThan(2);
+    expect(container.querySelectorAll(".brick-code-block-line")).toHaveLength(3);
+    expect(container.firstChild).toHaveAttribute("data-brick-appearance", "dark");
+    const darkStyle = container.firstElementChild?.getAttribute("style");
+    rerender(<CodeBlock.Root adapter={adapter} value={value} language="typescript" colorScheme="light"><CodeBlock.Content aria-label="Code" /></CodeBlock.Root>);
+    expect(container.firstChild).toHaveAttribute("data-brick-appearance", "light");
+    expect(container.firstElementChild?.getAttribute("style")).not.toBe(darkStyle);
+    expect(load).toHaveBeenCalledTimes(1);
+    rerender(<CodeBlock.Root adapter={adapter} value={value} language="unknown"><CodeBlock.Content aria-label="Code" /></CodeBlock.Root>);
+    expect(container.querySelector("pre")?.textContent).toBe(value);
+    expect(container.querySelector(".brick-code-block-token")).toBeNull();
+  } finally { highlighter.dispose(); }
+});
+
+it("propagates loader failure and renders metadata without a highlighter", async () => {
+  await expect(createShikiAdapter({ load: () => Promise.reject(new Error("offline")), themes: { light: "light", dark: "dark" } })).rejects.toThrow("offline");
+  const { container } = render(<CodeBlock.Root value={"a\nb"} meta={{ showLineNumbers: true, highlightLines: [2], removedLines: [1] }} size="lg"><CodeBlock.Content aria-label="Plain source" /></CodeBlock.Root>);
+  expect(container.querySelector("pre")?.textContent).toBe("a\nb");
+  expect(container.querySelector('[data-line-number="2"]')).toHaveAttribute("data-highlighted");
+  expect(container.querySelector('[data-line-number="1"]')).toHaveAttribute("data-change", "removed");
+});
 
 function CompleteBlock({ writeValue = vi.fn().mockResolvedValue(undefined) }) {
   return (
@@ -30,6 +63,31 @@ function CompleteBlock({ writeValue = vi.fn().mockResolvedValue(undefined) }) {
 }
 
 describe("CodeBlock", () => {
+  it("composes one IconButton and preserves Clipboard success, errors and refs", async () => {
+    const ref = createRef<HTMLElement>();
+    const writeValue = vi.fn().mockResolvedValueOnce(undefined).mockRejectedValueOnce(new Error("Denied"));
+    render(<CodeBlock.Root value={source} writeValue={writeValue}>
+      <CodeBlock.CopyTrigger asChild ref={ref}>
+        <IconButton size="sm" aria-label="Copy code"><span>Icon</span></IconButton>
+      </CodeBlock.CopyTrigger>
+      <CodeBlock.CopyStatus>
+        <CodeBlock.CopyIndicator when="copied">Copied</CodeBlock.CopyIndicator>
+        <CodeBlock.CopyIndicator when="error">Failed</CodeBlock.CopyIndicator>
+      </CodeBlock.CopyStatus>
+    </CodeBlock.Root>);
+    const button = screen.getByRole("button", { name: "Copy code" });
+    expect(screen.getAllByRole("button")).toHaveLength(1);
+    expect(ref.current).toBe(button);
+    expect(button).toHaveClass("brick-icon-button");
+    expect(button).toHaveClass("brick-button");
+    fireEvent.click(button);
+    await screen.findByText("Copied");
+    expect(writeValue).toHaveBeenCalledWith(source);
+    fireEvent.click(button);
+    await screen.findByText("Failed");
+    expect(screen.queryByText("Copied")).toBeNull();
+  });
+
   it("renders only authored anatomy and canonical pre/code structure", () => {
     const ref = createRef<HTMLDivElement>();
     render(

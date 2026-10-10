@@ -30,3 +30,14 @@ App Bar follows the package version of `@flowstack-ui/brick`.
   optional border, elevation, and blur.
 - Logical RTL layout, geometric center alignment, public customization tokens,
   forced-colors support, and server-safe rendering.
+# Unreleased
+
+- Add responsive row layout, density, inset, spacing and logical positioning offset.
+- Add named elevation using shared shadow roles; retain the `elevated` alias.
+- Align neutral ghost action colors on accent solid bars without overriding other variants.
+- Refresh documentation examples and narrow-layout guidance.
+
+## Unreleased — surface effects
+
+- Add independent treatment, background alpha, named/exact backdrop blur, saturation and structural border controls on the painted root.
+- Preserve ordinary defaults and existing blurred usage; add scoped input isolation and filter/preference fallbacks.

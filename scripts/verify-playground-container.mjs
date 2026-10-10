@@ -2,10 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import postcss from "postcss";
 
-const shellSource = fs.readFileSync(
-  path.resolve("playground/src/shell/PlaygroundShell.tsx"),
-  "utf8",
-);
+// The shell's Container-owned regions are split into dedicated components.
+const shellSource = ["PlaygroundShell", "PlaygroundPageHeader", "PlaygroundFooter"]
+  .map(name => fs.readFileSync(path.resolve(`playground/src/shell/${name}.tsx`), "utf8"))
+  .join("\n");
 const shellCss = fs.readFileSync(
   path.resolve("playground/src/styles/shell.css"),
   "utf8",
@@ -19,7 +19,9 @@ for (const required of [
   'className="evidence-page-header"',
   'className="scenario-nav"',
   'data-playground-content=""',
-  'className="evidence-footer"',
+  // Footer now shares its parent's Container; it must not recreate gutters.
+  'as="footer"',
+  'aria-label="Adjacent component pages"',
 ]) {
   if (!shellSource.includes(required)) {
     failures.push(`PlaygroundShell is missing ${required}`);

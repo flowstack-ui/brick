@@ -43,11 +43,47 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 ## Anatomy and DOM ownership
 
 Public parts are `Provider`, `Root`, `Trigger`, `Portal`, `Content`, `Title`,
-`Description`, and `Arrow`. Title/Description default to `span` and are
+`Description`, `Arrow`, `RootProvider`, and `Context`. Title/Description default to `span` and are
 Brick-owned structure parts; other behavior parts use Atom. Content ref is
 `HTMLDivElement`, Arrow `SVGSVGElement`, and composed parts `HTMLElement`.
 
 ## API
+
+### Controller, state and lifecycle
+
+`Tooltip.RootProvider` and `useTooltip` share Root's state owner. Use
+`useTooltip(options)` and pass its result as `value` to RootProvider; do not
+nest another Root. `Tooltip.Context` accepts a child callback receiving
+`open`, `setOpen`, `triggerValue`, and `setTriggerValue`.
+
+Root supports `closeOnClick`, `closeOnPointerDown`, `closeOnScroll`, and
+`closeOnEscape` (all true), plus `interactive` hover retention. Plain defaults
+to no retention; legacy rich defaults to retention. Set `interactive` explicitly
+when you need a separate pointer policy. Both recipes remain non-interactive.
+
+Use distinct Trigger `value` strings with `triggerValue`, `defaultTriggerValue`
+and `onTriggerValueChange(value)` for one shared tooltip. Only the active
+trigger receives the owned description. Existing description IDs are retained.
+Root `id`, `ids` (`content`, `arrow`, `trigger` string or value-to-ID function)
+and `aria-label` support explicit relationships and alternative tooltip text.
+
+Root lifecycle props are `lazyMount=true`, `unmountOnExit=true`, `present`,
+`onExitComplete`, `immediate=false`, `skipAnimationOnMount=false` and
+`hideMode="display-none"`. Activity hiding requires React 19.2+. Kept content
+is hidden and inaccessible when closed. Content supports `asChild`, `render`
+and `ariaLabel`; preserve the composed host's ref, style and native attributes.
+
+Root `positioning: TooltipPositioningOptions` supports `placement`, `strategy`,
+`gutter`, `offset` (`mainAxis`, `crossAxis`), `flip`, `slide`, `boundary`,
+`overflowPadding`, `sameWidth`, `fitViewport`, `hideWhenDetached`, `listeners`,
+`animationFrame`, `arrowPadding`, `shift`, `overlap`, `sizeMiddleware`,
+`onPositioned`, `getAnchorElement`, and `getAnchorRect`. Supplied fields override
+legacy Content placement fallbacks. Virtual rectangles use `{x,y,width,height}`.
+
+Additional exports: `TooltipRootProvider`, `TooltipContext`, `useTooltip`,
+`UseTooltipOptions`, `UseTooltipReturn`, `TooltipRootProviderProps`,
+`TooltipState`, `TooltipStateProps`, `TooltipPositioningOptions`, `TooltipIds`,
+and `TooltipLifecycleOptions`.
 
 Public exports are the `Tooltip` namespace; named `TooltipProvider`,
 `TooltipRoot`, `TooltipTrigger`, `TooltipPortal`, `TooltipContent`,
@@ -70,7 +106,21 @@ Root and Provider inherit Atom state/delay props. Content adds
 the shape recipe and excludes Atom `aria-label` spellings. Title and
 Description accept native attributes plus `asChild` or `render`.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
+
+### Overlay arrow contract
+
+Overlay arrows share a 12px square-equivalent seed (--brick-overlay-arrow-size), exposed-edge artwork and owner surface/border paint. Prefer the shipped Arrow; do not add directional filters or translations. SVG Arrow width/height remain supported; positioning gutter measures the empty gap to the tip. Explicit positioning.offset remains raw. ToggleTip inherits Popover; Select/MultiSelect retain span hosts. NavigationMenu Indicator remains separately positioned.
+
 
 Shape changes Content geometry. Plain text remains compact; Title and
 Description create rich structured content. Atom owns open/closed state,

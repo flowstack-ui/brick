@@ -1,9 +1,16 @@
 # Icon Button manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 | Run information | Value |
 | --- | --- |
 | Component | Icon Button |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Unreleased candidate — record exact commit and archive digest |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -21,14 +28,14 @@ does not automatically apply after a route or scenario change.
 
 ## Step 1 — Overview
 
-Setup: Open `/icon-button` at the default review viewport with system
+Setup: Open `/icon-button?qualification=1` at the default review viewport with system
 appearance and LTR direction.
 
 Action: Inspect `01 Overview`, activate `Search workspace` once, and observe
 the status message.
 
 Expected: The canonical Icon Button is a neutral ghost, medium, rounded action.
-It is a 44 × 44 CSS-pixel square, contains one centered search icon, has a
+It is a 44 × 44 CSS-pixel square under the default `lg` name, contains one centered search icon, has a
 visible focus treatment, and announces `Activated 1 time` without moving focus.
 
 Result:
@@ -38,8 +45,8 @@ Notes or issue:
 
 Setup: Open `02 Variants`, then `03 Tones`.
 
-Action: Compare solid, soft, outline, and ghost. In Tones, review neutral,
-accent, info, success, warning, and danger inside every variant group.
+Action: Compare solid, soft, subtle, surface, outline, ghost, and plain. In
+Tones, review neutral, contrast, accent, info, success, warning, and danger.
 
 Expected: Variants change emphasis and boundary only. Tones change semantic
 color treatment only. Every specimen remains square, centered, medium,
@@ -52,9 +59,9 @@ Notes or issue:
 
 Setup: Open `04 Sizes` and `05 Shapes`.
 
-Action: Compare xs, sm, md, lg, and xl, then rounded and circle.
+Action: Compare 2xs, xs, sm, md, lg, xl, and 2xl, then rounded and circle.
 
-Expected: Sizes increase in a clear five-step scale while every target stays
+Expected: Sizes increase in a clear seven-step scale while every target stays
 square and its icon remains centered and proportional. Shape changes corner
 geometry only; it does not change target size, icon size, tone, or action.
 
@@ -101,9 +108,11 @@ Action: Switch system, light, and dark appearance. Compare each displayed code
 example with its live customized Icon Button.
 
 Expected: Appearance affects only the intended scope. Icons, boundaries, focus,
-disabled, and loading states remain readable. Component tokens produce the
-purple solid result. Consumer hooks produce the dashed result while preserving
-square geometry, `.brick-icon-button`, and the custom slot.
+disabled, and loading states remain readable. Hover each ghost control and
+confirm its feedback remains distinct from both owning surfaces. Component
+tokens produce the purple solid result. Consumer hooks produce the dashed
+result while preserving square geometry, `.brick-icon-button`, and the custom
+slot.
 
 Result:
 Notes or issue:
@@ -169,6 +178,21 @@ removes nonessential transitions without hiding the loading spinner.
 Forced colors preserves usable system-color boundaries and focus.
 
 Result:
+Notes or issue:
+
+## Step 11 — Focus presentation qualification
+
+Action: Keyboard-focus every icon-button action or owned focus part, including
+first and last items where relevant. Repeat in light/dark, RTL, OS high
+contrast and actual 200%/400% zoom. Check selected/loading states where
+supported and rounded or scrolling boundaries.
+
+Expected: Visible focus without layout shifts or clipped edges. Inside
+actions use paired foreground paint; field focus survives without shadows
+in high contrast. Selection and focus remain distinguishable. Browser
+emulation does not replace OS or assistive-technology checks.
+
+Result: not run for this manual protocol revision.
 Notes or issue:
 
 ## Completion

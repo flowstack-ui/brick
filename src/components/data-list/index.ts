@@ -1,5 +1,9 @@
 export {
   DataList,
+  DataListPropsProvider,
+  type DataListPropsProviderProps,
+  type DataListRecipeProps,
+  type DataListVariant,
   DataListItem,
   DataListLabel,
   DataListRoot,

@@ -9,8 +9,11 @@ import {
 } from "../../../src/popover.js";
 
 describe("Popover", () => {
-  it("exposes exactly the adopted frozen twelve-part namespace", () => {
+  it("exposes the adopted frozen namespace with controller and state parts", () => {
     expect(Object.keys(Popover)).toEqual([
+      "RootProvider",
+      "State",
+      "Indicator",
       "Root",
       "Anchor",
       "Trigger",
@@ -170,5 +173,41 @@ describe("Popover", () => {
     expect(trigger).toBeDisabled();
     await user.click(trigger);
     expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("keeps composed Content anatomy, IDs and independent inset", () => {
+    render(<Popover.Root defaultOpen ids={{ content: "composed-panel", title: "composed-name" }}>
+      <Popover.Content asChild inset="md" density="compact">
+        <section data-testid="composed-panel">
+          <Popover.Header><Popover.Title>Composed panel</Popover.Title></Popover.Header>
+          <Popover.Body>Body</Popover.Body><Popover.Arrow />
+        </section>
+      </Popover.Content>
+    </Popover.Root>);
+    const panel = screen.getByRole("dialog", { name: "Composed panel" });
+    expect(panel.tagName).toBe("SECTION");
+    expect(panel).toHaveAttribute("id", "composed-panel");
+    expect(panel).toHaveAttribute("data-inset", "md");
+    expect(panel).toHaveAttribute("data-density", "compact");
+    expect(panel.querySelector(':scope > [data-slot="popover-viewport"]')).not.toBeNull();
+    expect(panel.querySelector(':scope > [data-slot="popover-arrow"]')).not.toBeNull();
+  });
+
+  it("composes structural handlers and decorative Indicator without extra controls", () => {
+    const child = vi.fn();
+    const owner = vi.fn();
+    render(<Popover.Root defaultOpen>
+      <Popover.Trigger>Settings<Popover.Indicator>+</Popover.Indicator></Popover.Trigger>
+      <Popover.Content aria-label="Handlers">
+        <Popover.Body asChild onClick={owner}><section onClick={child}>Click body</section></Popover.Body>
+      </Popover.Content>
+    </Popover.Root>);
+    fireEvent.click(screen.getByText("Click body"));
+    expect(child).toHaveBeenCalledTimes(1);
+    expect(owner).toHaveBeenCalledTimes(1);
+    const indicator = screen.getByText("+");
+    expect(indicator).toHaveAttribute("aria-hidden", "true");
+    expect(indicator).toHaveClass("brick-popover-indicator");
+    expect(screen.getAllByRole("button")).toHaveLength(1);
   });
 });

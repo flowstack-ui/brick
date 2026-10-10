@@ -12,3 +12,10 @@ const invalidRender: HighlightProps = { text: "Text", query: "Text", render: () 
 // @ts-expect-error Highlight never accepts injected HTML in place of its plain-text source.
 const invalidDangerousHtml: HighlightProps = { text: "Text", query: "Text", dangerouslySetInnerHTML: { __html: "<mark>Unsafe</mark>" } };
 void invalidChildren; void invalidActive; void invalidRender; void invalidDangerousHtml;
+import { findHighlightSegments, type HighlightOptions, type HighlightSegment } from "../../../src/highlight.js";
+const options: HighlightOptions = { query: ["literal.*"], matchAll: false };
+const segments: HighlightSegment[] = findHighlightSegments("literal.*", options);
+const semantic: HighlightProps = { text: "text", query: "text", tone: "warning", variant: "text" };
+void segments; void semantic;
+// @ts-expect-error Queries are not executable regular expressions.
+findHighlightSegments("text", { query: /text/ });

@@ -2,17 +2,18 @@
   .brick-z-stack {
     box-sizing: border-box;
     display: grid;
-    min-inline-size: 0;
-    min-block-size: 0;
     grid-template: minmax(0, auto) / minmax(0, 1fr);
     align-items: stretch;
     justify-items: stretch;
     isolation: isolate;
   }
 
-  .brick-z-stack > * {
+  /* Shrink ordinary content without resetting finished control targets. */
+  :where(.brick-z-stack, .brick-z-stack > *) {
     min-inline-size: 0;
     min-block-size: 0;
+  }
+  .brick-z-stack > * {
     grid-area: 1 / 1;
     z-index: 0;
   }
@@ -26,14 +27,17 @@
   .brick-z-stack[data-isolation="open"] { isolation: auto; }
 
   .brick-z-stack-item {
-    --brick-z-stack-item-edge-spacing: var(--brick-space-0);
+    --brick-z-stack-item-edge-spacing-input: initial;
+    --brick-z-stack-item-edge-spacing-sm-input: initial;
+    --brick-z-stack-item-edge-spacing-md-input: initial;
+    --brick-z-stack-item-edge-spacing-lg-input: initial;
+    --brick-z-stack-item-edge-spacing-xl-input: initial;
 
     box-sizing: border-box;
     align-self: auto;
     justify-self: auto;
-    margin: var(--brick-z-stack-item-edge-spacing);
   }
-  .brick-z-stack-item[data-edge-spacing] { --brick-z-stack-item-edge-spacing: var(--brick-z-stack-item-edge-spacing-input, var(--brick-space-0)); }
+  .brick-z-stack-item[data-edge-spacing] { margin: var(--brick-z-stack-item-edge-spacing-input, var(--brick-space-0)); }
   .brick-z-stack-item[data-layer="content"] { z-index: 1; }
   .brick-z-stack-item[data-layer="action"] { z-index: 2; }
   .brick-z-stack-item[data-align="stretch"] { align-self: stretch; }
@@ -46,7 +50,7 @@
   .brick-z-stack-item[data-justify="end"] { justify-self: end; }
 
   @media (width >= 30rem) {
-    .brick-z-stack-item[data-edge-spacing-sm] { --brick-z-stack-item-edge-spacing: var(--brick-z-stack-item-edge-spacing-sm-input, var(--brick-z-stack-item-edge-spacing)); }
+    .brick-z-stack-item[data-edge-spacing-sm] { margin: var(--brick-z-stack-item-edge-spacing-sm-input, var(--brick-z-stack-item-edge-spacing-input, var(--brick-space-0))); }
     .brick-z-stack[data-align-sm="stretch"] { align-items: stretch; }
     .brick-z-stack[data-align-sm="start"] { align-items: start; }
     .brick-z-stack[data-align-sm="center"] { align-items: center; }
@@ -68,7 +72,7 @@
   }
 
   @media (width >= 48rem) {
-    .brick-z-stack-item[data-edge-spacing-md] { --brick-z-stack-item-edge-spacing: var(--brick-z-stack-item-edge-spacing-md-input, var(--brick-z-stack-item-edge-spacing)); }
+    .brick-z-stack-item[data-edge-spacing-md] { margin: var(--brick-z-stack-item-edge-spacing-md-input, var(--brick-z-stack-item-edge-spacing-sm-input, var(--brick-z-stack-item-edge-spacing-input, var(--brick-space-0)))); }
     .brick-z-stack[data-align-md="stretch"] { align-items: stretch; }
     .brick-z-stack[data-align-md="start"] { align-items: start; }
     .brick-z-stack[data-align-md="center"] { align-items: center; }
@@ -90,7 +94,7 @@
   }
 
   @media (width >= 64rem) {
-    .brick-z-stack-item[data-edge-spacing-lg] { --brick-z-stack-item-edge-spacing: var(--brick-z-stack-item-edge-spacing-lg-input, var(--brick-z-stack-item-edge-spacing)); }
+    .brick-z-stack-item[data-edge-spacing-lg] { margin: var(--brick-z-stack-item-edge-spacing-lg-input, var(--brick-z-stack-item-edge-spacing-md-input, var(--brick-z-stack-item-edge-spacing-sm-input, var(--brick-z-stack-item-edge-spacing-input, var(--brick-space-0))))); }
     .brick-z-stack[data-align-lg="stretch"] { align-items: stretch; }
     .brick-z-stack[data-align-lg="start"] { align-items: start; }
     .brick-z-stack[data-align-lg="center"] { align-items: center; }
@@ -112,7 +116,7 @@
   }
 
   @media (width >= 80rem) {
-    .brick-z-stack-item[data-edge-spacing-xl] { --brick-z-stack-item-edge-spacing: var(--brick-z-stack-item-edge-spacing-xl-input, var(--brick-z-stack-item-edge-spacing)); }
+    .brick-z-stack-item[data-edge-spacing-xl] { margin: var(--brick-z-stack-item-edge-spacing-xl-input, var(--brick-z-stack-item-edge-spacing-lg-input, var(--brick-z-stack-item-edge-spacing-md-input, var(--brick-z-stack-item-edge-spacing-sm-input, var(--brick-z-stack-item-edge-spacing-input, var(--brick-space-0)))))); }
     .brick-z-stack[data-align-xl="stretch"] { align-items: stretch; }
     .brick-z-stack[data-align-xl="start"] { align-items: start; }
     .brick-z-stack[data-align-xl="center"] { align-items: center; }

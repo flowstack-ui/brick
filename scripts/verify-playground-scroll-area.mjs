@@ -3,11 +3,11 @@ import { readFile } from "node:fs/promises";
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 const [page, registry, shell, stack, appBar, audit, source, styles] = await Promise.all([
-  read("playground/src/components/scroll-area/ScrollAreaPage.tsx"),
+  read("playground/src/components/scroll-area/ScrollAreaEvidence.tsx"),
   read("playground/src/app/component-registry.ts"),
-  read("playground/src/shell/PlaygroundShell.tsx"),
-  read("playground/src/components/stack/StackPage.tsx"),
-  read("playground/src/components/app-bar/AppBarPage.tsx"),
+  Promise.all([read("playground/src/shell/PlaygroundShell.tsx"), read("playground/src/shell/PlaygroundPageHeader.tsx")]).then(parts => parts.join("\n")),
+  read("playground/src/components/stack/StackEvidence.tsx"),
+  read("playground/src/components/app-bar/AppBarEvidence.tsx"),
   read("playground/docs/scroll-area-adoption-audit.md"),
   read("src/components/scroll-area/ScrollArea.tsx"),
   read("src/components/scroll-area/scroll-area.css"),

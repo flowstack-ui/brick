@@ -1,4 +1,6 @@
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { PopoverDocumentation } from "./PopoverDocumentation.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   Grid,
@@ -82,6 +84,11 @@ export const popoverScenarios = [
 ] as const satisfies readonly ScenarioDefinition[];
 
 export function PopoverPage() {
+  const preview = usePreviewContext();
+  if (!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <PopoverDocumentation />;
+  return <PopoverEvidence />;
+}
+function PopoverEvidence() {
   const [controlledOpen, setControlledOpen] = useState(false);
   return <VStack className="popover-page" data-component-page="popover" data-testid="popover-workbench">
     <Scenario {...popoverScenarios[0]}><EvidenceSurface className="popover-overview" data-testid="popover-overview" inset="lg" level="canvas"><SettingsPopover label="Project settings" /></EvidenceSurface></Scenario>

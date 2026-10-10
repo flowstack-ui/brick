@@ -19,9 +19,9 @@ describe("Code", () => {
   });
 
   it("exposes every closed recipe independently", () => {
-    const variants: CodeVariant[] = ["subtle", "plain"];
-    const tones: CodeTone[] = ["neutral", "inherit"];
-    const sizes: CodeSize[] = ["inherit", "sm", "md"];
+    const variants: CodeVariant[] = ["subtle", "plain", "solid", "outline", "surface"];
+    const tones: CodeTone[] = ["neutral", "inherit", "accent", "info", "success", "warning", "danger"];
+    const sizes: CodeSize[] = ["inherit", "xs", "sm", "md", "lg"];
     const { rerender } = render(<Code>token</Code>);
     for (const variant of variants) {
       rerender(<Code variant={variant}>token</Code>);
@@ -35,6 +35,15 @@ describe("Code", () => {
       rerender(<Code size={size}>token</Code>);
       expect(screen.getByText("token")).toHaveAttribute("data-size", size);
     }
+  });
+
+  it("projects one code host and both refs without nesting", () => {
+    const outer = createRef<HTMLElement>();
+    const inner = createRef<HTMLElement>();
+    const { container } = render(<Code asChild ref={outer} tone="accent"><code ref={inner} className="custom">source</code></Code>);
+    expect(container.querySelectorAll("code")).toHaveLength(1);
+    expect(inner.current).toBe(outer.current);
+    expect(inner.current).toHaveClass("brick-code", "custom");
   });
 
   it("forwards native content, attributes, events, hooks, style, and ref", () => {

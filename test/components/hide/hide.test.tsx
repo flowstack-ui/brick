@@ -4,6 +4,13 @@ import { describe, expect, it } from "vitest";
 import { Hide, type HideBreakpoint, type HideElement } from "../../../src/hide.js";
 
 describe("Hide", () => {
+  it("projects hide metadata without replacing the child's display or slot", () => {
+    const child = createRef<HTMLDivElement>();
+    render(<Hide from="md" asChild><div ref={child} style={{ display: "grid" }} data-slot="grid">Grid</div></Hide>);
+    expect(child.current).toHaveAttribute("data-hide-from", "md");
+    expect(child.current).toHaveAttribute("data-slot", "grid");
+    expect(child.current?.style.display).toBe("grid");
+  });
   it("renders one server-safe native root with required breakpoint metadata", () => {
     const ref = createRef<HTMLElement>();
     render(<Hide data-testid="hide" from="md" ref={ref}>Compact tools</Hide>);

@@ -1,3 +1,4 @@
+@import "./divider-responsive.css";
 @layer brick.components {
   .brick-divider {
     --brick-divider-color: var(--brick-color-border-default);

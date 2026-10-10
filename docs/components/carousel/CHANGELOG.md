@@ -4,6 +4,22 @@ Carousel follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Use semantic body typography for progress text.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
+### Added
+
+- Add the shared controller/provider, automatic page indicators, progress,
+  thumbnail treatment, vertical and variable-size layouts, and mouse dragging.
+- Support shared action variants, tones and responsive sizes, including normal
+  text Button composition through the unstyled single-host path.
+
+### Fixed
+
+- Respect reduced-motion changes, local action variants and RTL control centering.
+- Keep narrow controls coherent and preserve existing public customization hooks.
+
 ### Added
 
 - Added `Carousel.Root radius="surface|none"` so Viewport and overlay-focus

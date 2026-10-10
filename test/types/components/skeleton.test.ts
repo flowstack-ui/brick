@@ -12,3 +12,7 @@ createElement(Skeleton, { variant: "pill" });
 // @ts-expect-error closed animation
 createElement(Skeleton, { animation: "spin" });
 void variants; void animations;
+createElement(Skeleton, { asChild: true, radius: "surface", size: 48 }, createElement("article"));
+createElement(Skeleton, { lines: 3, gap: 12, lastLineWidth: "60%" });
+// @ts-expect-error finite radius vocabulary
+createElement(Skeleton, { radius: "huge" });

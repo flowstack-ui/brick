@@ -37,6 +37,96 @@
   }
 
   .brick-code[data-tone="inherit"] { --brick-code-foreground: currentColor; }
+  .brick-code[data-variant="outline"] {
+    --brick-code-background: transparent;
+    --brick-code-border-color: var(--brick-color-border-strong);
+  }
+  .brick-code[data-variant="solid"] {
+    --brick-code-background: var(--brick-color-text-primary);
+    --brick-code-foreground: var(--brick-color-surface-base);
+    --brick-code-border-color: transparent;
+  }
+  .brick-code[data-variant="surface"] {
+    --brick-code-border-color: var(--brick-color-border-strong);
+  }
+  .brick-code[data-size="xs"] {
+    --brick-code-font-size: var(--brick-typography-caption-font-size);
+    --brick-code-line-height: var(--brick-typography-caption-line-height);
+  }
+  .brick-code[data-size="lg"] {
+    --brick-code-font-size: var(--brick-typography-body-lg-font-size);
+    --brick-code-line-height: var(--brick-typography-body-lg-line-height);
+  }
+  .brick-code[data-tone="accent"] {
+    --brick-code-foreground: var(--brick-color-accent-on-soft);
+    --brick-code-background: var(--brick-color-accent-soft);
+    --brick-code-border-color: var(--brick-color-accent-border);
+  }
+  .brick-code[data-tone="accent"][data-variant="solid"] {
+    --brick-code-foreground: var(--brick-color-accent-on-solid);
+    --brick-code-background: var(--brick-color-accent-solid);
+    --brick-code-border-color: transparent;
+  }
+  .brick-code[data-tone="accent"]:is([data-variant="outline"], [data-variant="plain"]) {
+    --brick-code-foreground: var(--brick-color-accent-text);
+    --brick-code-background: transparent;
+  }
+  .brick-code[data-tone="info"] {
+    --brick-code-foreground: var(--brick-color-info-on-soft);
+    --brick-code-background: var(--brick-color-info-soft);
+    --brick-code-border-color: var(--brick-color-info-border);
+  }
+  .brick-code[data-tone="info"][data-variant="solid"] {
+    --brick-code-foreground: var(--brick-color-info-on-solid);
+    --brick-code-background: var(--brick-color-info-solid);
+    --brick-code-border-color: transparent;
+  }
+  .brick-code[data-tone="info"]:is([data-variant="outline"], [data-variant="plain"]) {
+    --brick-code-foreground: var(--brick-color-info-text);
+    --brick-code-background: transparent;
+  }
+  .brick-code[data-tone="success"] {
+    --brick-code-foreground: var(--brick-color-success-on-soft);
+    --brick-code-background: var(--brick-color-success-soft);
+    --brick-code-border-color: var(--brick-color-success-border);
+  }
+  .brick-code[data-tone="success"][data-variant="solid"] {
+    --brick-code-foreground: var(--brick-color-success-on-solid);
+    --brick-code-background: var(--brick-color-success-solid);
+    --brick-code-border-color: transparent;
+  }
+  .brick-code[data-tone="success"]:is([data-variant="outline"], [data-variant="plain"]) {
+    --brick-code-foreground: var(--brick-color-success-text);
+    --brick-code-background: transparent;
+  }
+  .brick-code[data-tone="warning"] {
+    --brick-code-foreground: var(--brick-color-warning-on-soft);
+    --brick-code-background: var(--brick-color-warning-soft);
+    --brick-code-border-color: var(--brick-color-warning-border);
+  }
+  .brick-code[data-tone="warning"][data-variant="solid"] {
+    --brick-code-foreground: var(--brick-color-warning-on-solid);
+    --brick-code-background: var(--brick-color-warning-solid);
+    --brick-code-border-color: transparent;
+  }
+  .brick-code[data-tone="warning"]:is([data-variant="outline"], [data-variant="plain"]) {
+    --brick-code-foreground: var(--brick-color-warning-text);
+    --brick-code-background: transparent;
+  }
+  .brick-code[data-tone="danger"] {
+    --brick-code-foreground: var(--brick-color-danger-on-soft);
+    --brick-code-background: var(--brick-color-danger-soft);
+    --brick-code-border-color: var(--brick-color-danger-border);
+  }
+  .brick-code[data-tone="danger"][data-variant="solid"] {
+    --brick-code-foreground: var(--brick-color-danger-on-solid);
+    --brick-code-background: var(--brick-color-danger-solid);
+    --brick-code-border-color: transparent;
+  }
+  .brick-code[data-tone="danger"]:is([data-variant="outline"], [data-variant="plain"]) {
+    --brick-code-foreground: var(--brick-color-danger-text);
+    --brick-code-background: transparent;
+  }
   .brick-code[data-size="sm"] {
     --brick-code-font-size: var(--brick-typography-body-sm-font-size);
     --brick-code-line-height: var(--brick-typography-body-sm-line-height);

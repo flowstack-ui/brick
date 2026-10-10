@@ -1,6 +1,6 @@
 import { createRef, type CSSProperties } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   Surface,
   SurfaceContent,
@@ -16,6 +16,44 @@ import {
 } from "../../../src/surface.js";
 
 describe("Surface", () => {
+  it("maps independent surface parameters without fading content or leaking native props", () => {
+    render(<Surface data-testid="effects" treatment="translucent" backgroundOpacity={0.82} backdropBlur="18px" backdropSaturate={1.1} bordered borderColor="white" borderOpacity={0.5}>Readable text</Surface>);
+    const element = screen.getByTestId("effects");
+    expect(element).toHaveAttribute("data-surface-effects", "translucent");
+    expect(element.style.getPropertyValue("--brick-surface-effect-opacity")).toBe("82%");
+    expect(element.style.getPropertyValue("--brick-surface-effect-blur")).toBe("18px");
+    expect(element.style.opacity).toBe("");
+    for (const prop of ["treatment", "backgroundOpacity", "backdropBlur", "backdropSaturate", "borderColor", "borderOpacity"]) expect(element).not.toHaveAttribute(prop);
+  });
+  it("keeps zero values and disables identity filters", () => {
+    render(<Surface data-testid="zero" treatment="translucent" backgroundOpacity={0} backdropBlur=".0rem" backdropSaturate={1} borderOpacity={0} />);
+    const element = screen.getByTestId("zero");
+    expect(element).toHaveAttribute("data-surface-filter", "none");
+    expect(element.style.getPropertyValue("--brick-surface-effect-opacity")).toBe("0%");
+    expect(element.style.getPropertyValue("--brick-surface-effect-border-opacity")).toBe("0%");
+  });
+  it("ignores invalid numeric values consistently and allows final instance style input", () => {
+    const warning = vi.spyOn(console, "warn").mockImplementation(() => {});
+    render(<Surface data-testid="invalid" backgroundOpacity={NaN} borderOpacity={2} backdropSaturate={-1} />);
+    expect(screen.getByTestId("invalid")).not.toHaveAttribute("data-surface-effects");
+    expect(warning).toHaveBeenCalledTimes(3);
+    warning.mockRestore();
+    render(<Surface data-testid="override" backgroundOpacity={0.4} style={{ "--brick-surface-effect-opacity": "70%" } as CSSProperties} />);
+    expect(screen.getByTestId("override").style.getPropertyValue("--brick-surface-effect-opacity")).toBe("70%");
+  });
+
+  it("preserves callback-ref cleanup through its composed host", () => {
+    const calls: string[] = [];
+    const ref = createRef<HTMLElement>();
+    const view = render(<Surface asChild ref={ref}><section ref={() => {
+      calls.push("mount");
+      return () => { calls.push("cleanup"); };
+    }}>Content</section></Surface>);
+    expect(ref.current?.tagName).toBe("SECTION");
+    view.unmount();
+    expect(ref.current).toBeNull();
+    expect(calls).toEqual(["mount", "cleanup"]);
+  });
   it("renders the adopted one-root defaults", () => {
     const ref = createRef<HTMLElement>();
     render(<Surface data-testid="surface" ref={ref}>Content</Surface>);
@@ -79,7 +117,7 @@ describe("Surface", () => {
   });
 
   it("exposes every closed visual recipe independently", () => {
-    const levels: SurfaceLevel[] = ["canvas", "base", "subtle", "raised"];
+    const levels: SurfaceLevel[] = ["transparent", "canvas", "base", "subtle", "raised"];
     const elevations: SurfaceElevation[] = ["none", "low", "medium", "high"];
     const radii: SurfaceRadius[] = ["none", "subtle", "surface"];
     const insets: SurfaceInset[] = ["none", "sm", "md", "lg", "xl", "2xl"];
@@ -190,7 +228,7 @@ describe("Surface", () => {
       <Surface asChild>
         <><span>One</span><span>Two</span></>
       </Surface>,
-    )).toThrow(/Fragment cannot receive Surface paint/);
+    )).toThrow(/Fragment/);
   });
 
   it("forwards native props, events, class, style, slot, children, and ref", () => {

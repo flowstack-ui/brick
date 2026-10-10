@@ -55,50 +55,65 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 | `Root` | `div` with `radiogroup` | Atom behavior + Brick layout | `HTMLDivElement` |
 | `Item` | `button` with `radio` | Atom behavior + Brick visual | `HTMLButtonElement` |
 
-Each Item contains stable internal control, dot, and label slots. They are
-customization hooks, not separately exported parts.
+Item retains its button ref and automatic passive Radiomark. For open composition,
+use ItemRoot (div), exactly one ItemHiddenInput (native radio), ItemControl,
+ItemIndicator, ItemText (label), and optional ItemDescription. Label names the
+group. Context and ItemContext expose state through render-function children.
+RootProvider accepts the controller returned by useRadioGroup.
 
 ## API
 
 Root accepts released Atom Radio Group props, including `value`,
 `defaultValue`, `onValueChange`, `name`, `form`, `disabled`, `readOnly`,
 `required`, `invalid`, `validationBehavior`, `orientation`, `loop`, `render`,
-`dir`, and `asChild`. Brick adds `size: "sm" | "md" | "lg"`, defaulting to `"md"`.
+`dir`, and `asChild`. Brick adds responsive `size: "xs" | "sm" | "md" | "lg"`, defaulting to `"md"`.
 Item requires `value` and visible `children`, and accepts Atom Item native,
-disabled, render, and asChild props. Root owns the shared size.
+disabled, render, and asChild props. Root presentation inherits into Item and
+ItemRoot; explicit item overrides win.
 
-Public exports are `RadioGroup`, `RadioGroupRoot`, `RadioGroupItem`,
-`RadioGroupRootProps`, `RadioGroupItemProps`, and `RadioGroupSize`.
+Every namespace part is also exported with a RadioGroup prefix. Hooks are
+useRadioGroup, useRadioGroupContext and useRadioGroupItemContext.
+Named exports include RadioGroupRoot, RadioGroupItem, RadioGroupRootProps,
+RadioGroupItemProps, RadioGroupSize and RadioGroupVariant.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `size` | responsive `xs`, `sm`, `md`, `lg` | `md` |
+| `variant` | responsive `solid`, `outline`, `subtle` | `solid` |
+| `tone` | accent, neutral, contrast, info, success, warning, danger | accent |
+| `density` | comfortable, compact | comfortable |
+| `labelPlacement` | start, end | end |
+| `gap` | responsive SpacingValue | theme space 1 |
 | `orientation` | `vertical`, `horizontal` | `vertical` |
 | `asChild` | `boolean` | `false` |
 
 ## Visual recipes and states
 
-Radio Group has one canonical unchecked circle and accent checked dot. Vertical
-groups stack full-width rows; horizontal groups use fit-content rows and wrap.
-Small, medium, and large change control/dot size, gap, padding, and typography.
-Focus, hover, active, disabled, read-only, and invalid states have explicit
-paint. There are no variant, tone, color, shape, or gap props.
+Sizes use the selection-family 12/16/20/24px mark scale at a 16px root.
+Rows are intrinsic; horizontal groups wrap. Outline stays transparent; solid
+fills checked marks; subtle keeps the circle visible. Neutral and contrast
+currently share a palette. Danger tone does not imply invalid semantics.
+Read-only keeps normal contrast; disabled dims once. Focus uses the Theme ring.
 
 ## Tokens and CSS hooks
 
 Stable hooks are `.brick-radio-group`, `.brick-radio-group-item`,
-`.brick-radio-group-control`, `.brick-radio-group-dot`, and
-`.brick-radio-group-label`, with matching `data-slot` values. Root exposes
-`data-size`; Atom exposes orientation and state attributes.
+`.brick-radio-group-control` and `.brick-radio-group-label`. The passive dot
+is now Radiomark's `.brick-radiomark__dot`. Root and items expose responsive
+size/variant data attributes (`data-size`, `data-variant`), tone, density and label placement.
 
 Public variables include `--brick-radio-group-gap`,
-`--brick-radio-control-size`, `--brick-radio-dot-size`,
+`--brick-radio-control-size`,
 `--brick-radio-target-min-size`, `--brick-radio-item-gap`,
 `--brick-radio-item-padding-inline`, `--brick-radio-item-radius`,
-`--brick-radio-foreground`, `--brick-radio-control-background`,
-`--brick-radio-control-border`, `--brick-radio-checked`,
-`--brick-radio-focus-ring`, `--brick-radio-invalid`, and
-`--brick-radio-readonly-background`.
+`--brick-radio-foreground`, `--brick-radio-checked`,
+`--brick-radio-focus-ring` and `--brick-radio-invalid`.
+
+Migration: default md changes from 18px to 20px and selected paint becomes solid.
+Use outline for the nearest previous appearance. The old dot-size,
+control-background/control-border and readonly-background variables are retired:
+use the variant/tone API and Radiomark presentation hooks rather than painting a
+read-only row. The invalid side stripe and compulsory row hover are removed.
 
 ## Customization
 
@@ -108,9 +123,9 @@ the visible focus or checked distinction.
 
 ## Responsive behavior
 
-Horizontal rows wrap; vertical rows fill the group. Long labels wrap within
-their item. Logical spacing and the invalid cue support RTL. Minimum targets,
-narrow widths, mobile, and 200%/400% zoom remain contained.
+Horizontal rows wrap; both orientations use intrinsic items. Size, variant and
+gap accept sparse responsive values. Orientation is scalar because it owns
+keyboard semantics. Labels and descriptions wrap; logical placement supports RTL.
 
 ## Accessibility
 
@@ -127,6 +142,18 @@ otherwise Atom uses its nearest Direction provider.
 Root and Item retain Atom `render` and `asChild`; Brick preserves the built-in
 control/dot/label content in custom hosts. Native props pass through unless
 Atom owns them. Root and Item refs target their rendered elements.
+
+Closed Item children must be noninteractive. Use the native open anatomy for
+links. Clicking a link in ItemText must not change selection; description text
+is associated separately with aria-describedby. Do not add role or tabIndex to
+ItemControl/ItemIndicator, and never put a second hidden input beside the owned one.
+Native input refs target ItemHiddenInput. Stable unique nonempty values are required.
+Missing/disabled selected values recover an enabled Tab entry without changing
+application state; required validity needs an available selected choice.
+
+React Hook Form is an optional separate dependency: use Controller with value,
+onValueChange and onBlur; attach field.ref to a closed Item or ItemHiddenInput
+for error focus. Do not spread register onto a group div.
 
 ## Examples
 

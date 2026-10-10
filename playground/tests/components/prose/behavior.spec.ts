@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/prose"); });
+test.beforeEach(async ({ page }) => { await page.goto("/prose?qualification=1"); });
 
 test("Prose preserves trusted native structure and contains editorial overflow", async ({ page }) => {
   const overview = page.getByTestId("prose-overview").locator(".brick-prose");

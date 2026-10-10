@@ -17,15 +17,16 @@ Apply finished descendant typography, rhythm, and readable measure to trusted Re
 ## Required composition
 
 - Pass trusted native React descendants to Prose and let the application own document structure, trust, and data loading.
-- Use direct Brick components when richer anatomy or behavior is needed; their classes intentionally override Prose's low-specificity descendant styles.
+- Use Prose.Exclude for embedded interface subtrees; explicit component classes alone do not prevent document margins or media rules.
 
 ## Rules
 
 - **MUST:** Sanitize and parse untrusted external content before it becomes Prose children; Prose never makes raw HTML safe.
 - **MUST:** Keep heading hierarchy, landmark choice, link destinations, table headers, language, and alternative text application-owned.
-- **MUST:** Use the narrow, default, wide, or none reading measure intentionally rather than adding duplicate width CSS.
+- **MUST:** Choose narrow, default, wide, reading (65ch), or none intentionally; size accepts the shared sparse responsive contract.
 - **MUST:** Use direct Link, List, Blockquote, Code Block, Table, or Image components when their richer public contract is required, including accessible preserved horizontal scrolling for source or complex tables.
 - **MUST:** Load styles.css or core.css plus prose.css.
+- **MUST:** Use Prose.Content at the immediate parent of rendered document nodes and Prose.Exclude around embedded UI; specificity alone does not isolate descendant spacing or media rules. Exclude resets UI typography and does not allow nested Prose re-entry. Size is responsive; reading is 65ch; body tone defaults secondary independently of primary headings. codeOverflow=scroll needs a named keyboard-reachable pre region; tableLayout=auto is optional. Prose never sanitizes content or implements editing.
 
 ## Common mistakes
 

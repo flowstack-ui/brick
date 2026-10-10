@@ -4,6 +4,9 @@ Divider follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Added hairline and bold thicknesses plus responsive decorative orientation,
+  preserving existing line weights and scalar semantic separators.
+
 ### Changed
 
 - Changed the default line paint from the quiet subtle border role to the

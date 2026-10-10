@@ -14,7 +14,7 @@ Provide a finished native submission boundary and consistent form rhythm while A
 
 ## Required composition
 
-- Compose Form -> Field for each independently labelled control -> a named submit Button; add Fieldset only when multiple controls answer one meaningful group question.
+- Compose Form -> Field for each independently labelled control -> a named submit Button; add Fieldset only when multiple controls answer one meaningful group question. Use responsive gap for form rhythm; input paint belongs to each control.
 
 ## Rules
 
@@ -30,6 +30,7 @@ Provide a finished native submission boundary and consistent form rhythm while A
 
 - Submit with keyboard and pointer.
 - Inspect submitted values, invalid relationships, spacing, and narrow-layout behavior.
+- Reset while callback validation or submission is pending. Obsolete completion must not restore submitted metadata. Application requests are not cancelled; React actions retain React-owned state.
 
 ## Related guidance
 

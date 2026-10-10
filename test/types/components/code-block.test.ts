@@ -3,6 +3,7 @@ import {
   type CodeBlockAdapter,
   type CodeBlockCollapseTriggerProps,
   type CodeBlockContentProps,
+  type CodeBlockCopyTriggerProps,
   type CodeBlockLineChange,
   type CodeBlockLineProps,
   type CodeBlockRootProps,
@@ -10,6 +11,8 @@ import {
 } from "../../../src/code-block.js";
 
 const wrap: CodeBlockWrap = "scroll";
+const iconCopy: CodeBlockCopyTriggerProps = { asChild: true, children: null };
+void iconCopy;
 const root: CodeBlockRootProps = {
   children: null,
   value: "const value = 1",
@@ -52,3 +55,11 @@ void missingValue;
 void unsafe;
 void unsafeContent;
 void unsafeLine;
+import type { CodeBlockMeta, CodeBlockColorScheme, CodeBlockShikiOptions } from "../../../src/code-block.js";
+const metadata: CodeBlockMeta = { showLineNumbers: true, focusedLines: [1], dimUnfocused: true, addedLines: [2] };
+const scheme: CodeBlockColorScheme = "dark";
+const options: CodeBlockShikiOptions = { load: async () => ({ codeToTokens: () => ({ tokens: [] }), getTheme: () => ({ fg: "black", bg: "white" }), getLoadedLanguages: () => [] }), themes: { light: "light", dark: "dark" } };
+void metadata; void scheme; void options;
+// @ts-expect-error Root metadata is line numbers, not a selector string.
+const invalidMetadata: CodeBlockMeta = { highlightLines: "1-3" };
+void invalidMetadata;

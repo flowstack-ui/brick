@@ -1,8 +1,31 @@
 # MultiSelect changelog
 
-MultiSelect follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
+
+Disabled presentation preserves the selected recipe and fades once to 50%, with a not-allowed cursor on the disabled hit target. Keep read-only separate; do not add an opacity wrapper around an already disabled control. Forced colors uses system disabled colors.
+
+
+MultiSelect follows the package version of `@flowstack-ui/brick`.
+
+- Correct the dialog example's popup portal and document nested-modal clipping.
+
+- Added focused documentation examples and per-part API tables.
+- Unified sizing with the shared responsive control recipe.
+- Added controller/provider/state composition and independent clear actions.
+- Added neutral subtle appearance and compact popup rows without duplicate size rules.
+
+- Add subtle presentation and a separately composable ClearTrigger.
+- Allow Trigger presentation delegation with unstyled.
+- Use compact neutral popup options and responsive family geometry.
+
+- Add surface as a neutral filled-and-bordered alternative with unchanged geometry; preserve outline defaults.
+- Keep outline transparent at rest and on hover, independently of popup paint.
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
+- Expanded MultiSelect triggers and portalled options to the responsive shared
+  2xs–2xl control-size scale and made the 44px `lg` recipe the default.
 
 ## 0.1.10
 

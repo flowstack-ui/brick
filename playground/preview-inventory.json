@@ -1,0 +1,1940 @@
+{
+  "schema": "flowstack.playground-preview-inventory.v1",
+  "components": [
+    {
+      "component": "accordion",
+      "source": "playground/src/components/accordion/AccordionPage.tsx",
+      "sourceSha256": "f7d508a46e61146191b96dba75722c075dbb1dc700fda891de1c5e774daa6b7e",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "action-bar",
+      "source": "playground/src/components/action-bar/ActionBarPage.tsx",
+      "sourceSha256": "ae5610b9d09be779b9da8bd9692bac4c8549f4cef1afaecc6bcdda2bd80f5d6f",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "alert",
+      "source": "playground/src/components/alert/AlertPage.tsx",
+      "sourceSha256": "d54d98e7be636a4321ec5e7872fed7b76388f7bb364b0310a2d9deb3db94a7f4",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "alert-dialog",
+      "source": "playground/src/components/alert-dialog/AlertDialogPage.tsx",
+      "sourceSha256": "c45e775f597098522e5bd6e52e5ebf600f49637afcad30e95266cc041221e94b",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "app-bar",
+      "source": "playground/src/components/app-bar/AppBarPage.tsx",
+      "sourceSha256": "25122add09cf593f396e1e1c2753e92be63bfaed13321c6b0ae4c86f3b6ba577",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "appearance",
+      "source": "playground/src/components/appearance/AppearancePage.tsx",
+      "sourceSha256": "3a225a8c50fa83e9aaa7f3db5d68d82a5df42707abd2add255620392d5065439",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "aspect-ratio",
+      "source": "playground/src/components/aspect-ratio/AspectRatioPage.tsx",
+      "sourceSha256": "3fbc2093ddc206e1b7a54b0601bdf08e1aa8cd19e9aba880eeb573ef0c470991",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "avatar",
+      "source": "playground/src/components/avatar/AvatarPage.tsx",
+      "sourceSha256": "318e067218ce486139659333e062612cfce39d8faa0ab4708f911f7292b7ee67",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "avatar-group",
+      "source": "playground/src/components/avatar-group/AvatarGroupPage.tsx",
+      "sourceSha256": "bb049a74cdd9889264aa0bfb7e37bd3703e461d30ccd8014f1524b3387c25206",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "badge",
+      "source": "playground/src/components/badge/BadgePage.tsx",
+      "sourceSha256": "f4b374b9f93c9487766f4809c2bc1e28f82c4eecc33f9c72ffd7b92c469b7e9a",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "bleed",
+      "source": "playground/src/components/bleed/BleedPage.tsx",
+      "sourceSha256": "c72216a7f6389e5bd0594d2be13b4a1298e6d0a2f434aeb5d9abc83a390f4107",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "blockquote",
+      "source": "playground/src/components/blockquote/BlockquotePage.tsx",
+      "sourceSha256": "af1988d6882b065a2d224550403ce841c5e9c33e60a73f18d83c4e75763c0f2a",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "bottom-navigation",
+      "source": "playground/src/components/bottom-navigation/BottomNavigationPage.tsx",
+      "sourceSha256": "f6539ffcbbdfc78fa5f633357b5a091dcdfe8a23055ebee860ada3b9da4d7080",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "breadcrumb",
+      "source": "playground/src/components/breadcrumb/BreadcrumbPage.tsx",
+      "sourceSha256": "45f08f95db6e9bd58a34573b717fe69828d2c6d87138e6fc4e20dc9fec66e543",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "button",
+      "source": "playground/src/components/button/ButtonPage.tsx",
+      "sourceSha256": "b15ce7de6d072df1d09b34f30093240f85fdd281e78cbbd3ce3fd67938075c4f",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "calendar",
+      "source": "playground/src/components/calendar/CalendarPage.tsx",
+      "sourceSha256": "10673cb6186be399b530f16d1cb08e8af7c0dfa0edafe14c7df6ebb0432879b9",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "card",
+      "source": "playground/src/components/card/CardPage.tsx",
+      "sourceSha256": "6880c44c726924be68ea036398a6d62473d590dcff4b3c2dee1ca7495154acbc",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "carousel",
+      "source": "playground/src/components/carousel/CarouselPage.tsx",
+      "sourceSha256": "9f16823c9d9fcec345c3d624f2a131188c4bfacfeecc2b5d3c34a0725c82abe8",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "center",
+      "source": "playground/src/components/center/CenterPage.tsx",
+      "sourceSha256": "c9bc1295584403812fb97b975732b68e681ffd9a14ec93ca1721746d7c2f975e",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "checkbox",
+      "source": "playground/src/components/checkbox/CheckboxPage.tsx",
+      "sourceSha256": "9b7d7b1faf9fe8ec28e6240fa495b2c22bc948210b7e9c13eb66635f09a21e07",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "checkbox-card",
+      "source": "playground/src/components/checkbox-card/CheckboxCardPage.tsx",
+      "sourceSha256": "0778d562759e27d7174e4393daa891c4f4116c970b947e6bf5e62e408ab890db",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "checkbox-group",
+      "source": "playground/src/components/checkbox-group/CheckboxGroupPage.tsx",
+      "sourceSha256": "96f8deee8781b1b90c4183915b0d00a5dfc4574c02f815f97a4f65895ae25b82",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "checkmark",
+      "source": "playground/src/components/checkmark/CheckmarkPage.tsx",
+      "sourceSha256": "a170f77ab2fcf184c0129075d042b5440fbaa9e47ff0a40d8d33827dc8bcc00d",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "chip",
+      "source": "playground/src/components/chip/ChipPage.tsx",
+      "sourceSha256": "7b61988e74ea7a58ee0a8977fc3d29b173c987ac18e7347982b8a6c839b87c17",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "close-button",
+      "source": "playground/src/components/close-button/CloseButtonPage.tsx",
+      "sourceSha256": "80d9c4734f4288f4ef178e7d7667717c1e5bb92b732cacfdbf2021916ddfb564",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": true,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "code",
+      "source": "playground/src/components/code/CodePage.tsx",
+      "sourceSha256": "b40d6bafa9eed33c7e6ca39ae2e5c6a5334fc507a7e8fbea351856e835b8173a",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "code-block",
+      "source": "playground/src/components/code-block/CodeBlockPage.tsx",
+      "sourceSha256": "6b12c8ef4410a34ce8e64cff46b1e667d790c480bc6e993a30b49ca55192abbe",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "collapsible",
+      "source": "playground/src/components/collapsible/CollapsiblePage.tsx",
+      "sourceSha256": "f2267bb95c5e84bea890f9bef9008d5ac8f3ee06cee1470d54a04e5a341cb8b2",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "color-picker",
+      "source": "playground/src/components/color-picker/ColorPickerPage.tsx",
+      "sourceSha256": "5cf4eb993a0962a323d7261945779038b19e3f1171da46acbfa2c2168f81c905",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "color-swatch",
+      "source": "playground/src/components/color-swatch/ColorSwatchPage.tsx",
+      "sourceSha256": "c91bf7619b03b85fff384afb4caefeb185a6b3b96c1e4082a0b044d7909e201a",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "combobox",
+      "source": "playground/src/components/combobox/ComboboxPage.tsx",
+      "sourceSha256": "d05153c6d9a85c1434a5c0b87aec59c9af91f3d5141cf9a79b6fc5cbaf7bb878",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "container",
+      "source": "playground/src/components/container/ContainerPage.tsx",
+      "sourceSha256": "9587ec748da7378d49a41f6b4987f30b24250da40fa07caedf48ac0185264bf0",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "context-menu",
+      "source": "playground/src/components/context-menu/ContextMenuPage.tsx",
+      "sourceSha256": "d91de705bb6c833e08fec6e137462fcfa7beb3a31539ca74c12b9077999c48e1",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "data-grid",
+      "source": "playground/src/components/data-grid/DataGridPage.tsx",
+      "sourceSha256": "9455d71ab9ce04254f66fd94f4ed883449dc12e2f3384deb7f80012d9299de7e",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "data-list",
+      "source": "playground/src/components/data-list/DataListPage.tsx",
+      "sourceSha256": "65bdf8293f36d74b3ef89c2fd07b1e7d030d24407aced27fdee23af022f4a6a0",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "date-input",
+      "source": "playground/src/components/date-input/DateInputPage.tsx",
+      "sourceSha256": "94258c05d3f4cf81b4cf6fbeeb3501ba78136566642966f7d5e432bcb90c8c55",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "date-picker",
+      "source": "playground/src/components/date-picker/DatePickerPage.tsx",
+      "sourceSha256": "060e1d62975ce1f87a78f983e11871f070ee3d37794f7ceea6f1ee71207249b3",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "dialog",
+      "source": "playground/src/components/dialog/DialogPage.tsx",
+      "sourceSha256": "19de6face9c7380613186f035830ca6c3df3085d88dc44919cb4c4a867119c57",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "divider",
+      "source": "playground/src/components/divider/DividerPage.tsx",
+      "sourceSha256": "4b93e6e8eb7acdeda2c05875daac7347e33422d0f1f6ef26a6e70ccdb6908d82",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "download-trigger",
+      "source": "playground/src/components/download-trigger/DownloadTriggerPage.tsx",
+      "sourceSha256": "e7bc09d08c08cc2b3cd159fe0251d1dd9d64c9aa59f65ec5a9ce16acdd093eec",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "drawer",
+      "source": "playground/src/components/drawer/DrawerPage.tsx",
+      "sourceSha256": "534e1349372bb1639409ce0ca58710b16eef349b3c70f0eb38a3429c20bcc3c8",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "dropdown-menu",
+      "source": "playground/src/components/dropdown-menu/DropdownMenuPage.tsx",
+      "sourceSha256": "9f473961281251adee0ba3e1926f42003e35b998736f846da7ae93f882ccad86",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "editable",
+      "source": "playground/src/components/editable/EditablePage.tsx",
+      "sourceSha256": "7dda170e8debdffcc6ff0b40316795e75b8c646d80dcc121d00d2e907e7d2056",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "em",
+      "source": "playground/src/components/em/EmPage.tsx",
+      "sourceSha256": "71ac759dfd4803a404bfbd3a986c46e62e4988df148c79d1420840004bf18181",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "empty-state",
+      "source": "playground/src/components/empty-state/EmptyStatePage.tsx",
+      "sourceSha256": "47a8a4c47821e797ef942195418a9e810b9f08aa6e1eb4844d9a1bf0dbfd2530",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "feed",
+      "source": "playground/src/components/feed/FeedPage.tsx",
+      "sourceSha256": "f8ea2233c72ddc5e501e829c78a19b3c57a5d80be62d73fb88480e83e9d5ed46",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "field",
+      "source": "playground/src/components/field/FieldPage.tsx",
+      "sourceSha256": "fdf4f4f7ff74903a11f91e045a93dc3e1706e4044a793397f10dfca5c3ccb6a7",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "fieldset",
+      "source": "playground/src/components/fieldset/FieldsetPage.tsx",
+      "sourceSha256": "94472d1621debcd48445d34a62c101ba61af73342621dbeb07f238578ce4c622",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "file-upload",
+      "source": "playground/src/components/file-upload/FileUploadPage.tsx",
+      "sourceSha256": "975f253b407849dc1989c4862dc56fadb20a7917fb322d78f6be25837d920503",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "float",
+      "source": "playground/src/components/float/FloatPage.tsx",
+      "sourceSha256": "223994d663223f4bdcab0f92a1d23b7d49a73ce0f0e45149af47ea1f1e91f970",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "floating-panel",
+      "source": "playground/src/components/floating-panel/FloatingPanelPage.tsx",
+      "sourceSha256": "4a09bd2ce90695c9d8d8e28aae507fa70da9f7cd3d8278fc6b7a90a3be745330",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "for",
+      "source": "playground/src/components/for/ForPage.tsx",
+      "sourceSha256": "2facc7bc07cd3dbf1a7ff0dc7b844f35c34228e1adfa880c55013d56e9804dad",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "form",
+      "source": "playground/src/components/form/FormPage.tsx",
+      "sourceSha256": "c920f07e0915b43c62be0f5f2e3790e4cb5dc728dc85a9141470eeca85d786f9",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "format-byte",
+      "source": "playground/src/components/format-byte/FormatBytePage.tsx",
+      "sourceSha256": "755d44c3b0b093bcfd4075aa708a3c267d002108fb0721b20538016bd3dc459f",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": true,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "format-number",
+      "source": "playground/src/components/format-number/FormatNumberPage.tsx",
+      "sourceSha256": "d0884ccb9a359872fd2079fdaf950ea47dc387f0259f5aaedb31afd00bc1232e",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": true,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "frame",
+      "source": "playground/src/components/frame/FramePage.tsx",
+      "sourceSha256": "b9ce1eb79c221f839083283abba59eea5000faece634e64ea1f5ea5a39c41abc",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "grid",
+      "source": "playground/src/components/grid/GridPage.tsx",
+      "sourceSha256": "d80901d27b65e6b012746f55b475f146479c65264db7797ac1cf86e18f605300",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "group",
+      "source": "playground/src/components/group/GroupPage.tsx",
+      "sourceSha256": "1ebd65b4716b5daa68e4119c3381c4e1afc736cca38d8ecfb4b5a421c64bb537",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "hide",
+      "source": "playground/src/components/hide/HidePage.tsx",
+      "sourceSha256": "99e19da099238079366c70e116c2733c73e19182e602e68b0ef1bfbe2eb0ad45",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "highlight",
+      "source": "playground/src/components/highlight/HighlightPage.tsx",
+      "sourceSha256": "7300a44f7c558a1c10694daa3889bc6b9038b3e103809fc71ab9d1208ab4270a",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "hover-card",
+      "source": "playground/src/components/hover-card/HoverCardPage.tsx",
+      "sourceSha256": "7b7c7719cd44aa4d697653bb7ad2abfd786990c5a08a167b2fe4f2349c4988c7",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "icon",
+      "source": "playground/src/components/icon/IconPage.tsx",
+      "sourceSha256": "82da22203352446970ad30b69acf3890f0b6901b678d9590608c7e15ca9db123",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "icon-button",
+      "source": "playground/src/components/icon-button/IconButtonPage.tsx",
+      "sourceSha256": "54cb571b2c6d34367242d577e2d94e0d7650f484754ac51e9d4042e93b995032",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "image",
+      "source": "playground/src/components/image/ImagePage.tsx",
+      "sourceSha256": "4dfda33f06e53deca48a9b5332e46faa8b496b600982f66b511999aa4a2d9007",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "input",
+      "source": "playground/src/components/input/InputPage.tsx",
+      "sourceSha256": "b27fc86b102b395503816de0a532a4a9b62aa505939ee0e0f9d5a3f74bf3b068",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "input-addon",
+      "source": "playground/src/components/input-addon/InputAddonPage.tsx",
+      "sourceSha256": "d47cdc7813e9ca1772b3c923050b3857a47cd5ffd53592e9e682785c5e959a00",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "kbd",
+      "source": "playground/src/components/kbd/KbdPage.tsx",
+      "sourceSha256": "6d307130bd9f3ef86cf2da5dce8dccdeb5f0c7e9e6fffd6a7c53b82d365d7740",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "link",
+      "source": "playground/src/components/link/LinkPage.tsx",
+      "sourceSha256": "3d2db959a9a04e7d0d04b20360452e2701e6d7aa5012abff84131df284bf251a",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "link-box",
+      "source": "playground/src/components/link-box/LinkBoxPage.tsx",
+      "sourceSha256": "d5bc3d394f11a8789fcf34b6d23b72d747004e3387ba29fa04d404867c8f4b0b",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "list",
+      "source": "playground/src/components/list/ListPage.tsx",
+      "sourceSha256": "0e2b6f9271e0d548dedb15319e89aed51bdb67513fdb844024c5e0f0d1d290fb",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "locale-provider",
+      "source": "playground/src/components/locale-provider/LocaleProviderPage.tsx",
+      "sourceSha256": "99ba16154294c3833ca2487291bfae601e6b039b9790a2ae7318857cc5e97646",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": true,
+        "locale": true,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "mark",
+      "source": "playground/src/components/mark/MarkPage.tsx",
+      "sourceSha256": "ae4bf08511f51fd0a4a026ebdcbda0affa47ccb407ce71245e158966b56bfb41",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "marquee",
+      "source": "playground/src/components/marquee/MarqueePage.tsx",
+      "sourceSha256": "9737ba4fe11a0d1bc0ce2b0b95a1d7241b160b4123079957fae29eda9058f7fd",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "menubar",
+      "source": "playground/src/components/menubar/MenubarPage.tsx",
+      "sourceSha256": "bc93ab213757c5cf3b3cbcc64839ca3dc1a5ee1962cf33790fc6e8d065396f2d",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "multi-select",
+      "source": "playground/src/components/multi-select/MultiSelectPage.tsx",
+      "sourceSha256": "72a1ec29e1130ceb2fc087c7c383ed39224b81a9cf26621503f4323db36d6e17",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "native-select",
+      "source": "playground/src/components/native-select/NativeSelectPage.tsx",
+      "sourceSha256": "55fb9931b76b1e15aacf173b9112b2541c999d17dae7c6ac40b184f1b216caab",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "nav-list",
+      "source": "playground/src/components/nav-list/NavListPage.tsx",
+      "sourceSha256": "ff92dae30915773ef452848f183c0295a1734abda37035e52901f220220e77dc",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "navigation-menu",
+      "source": "playground/src/components/navigation-menu/NavigationMenuPage.tsx",
+      "sourceSha256": "012d1563363af0e8a298a1f465057a6f8854cc1a07769735b21ad45d0ea5042d",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "notification-badge",
+      "source": "playground/src/components/notification-badge/NotificationBadgePage.tsx",
+      "sourceSha256": "c7e43e9210b3a4ee756e22a40c4505eeb465d7fb6dbbc572acdf73dcf4eecf08",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "number-input",
+      "source": "playground/src/components/number-input/NumberInputPage.tsx",
+      "sourceSha256": "942c8e4eef9c7d2b1108dac97dfac216fa86c13b159385da3ed17a6857631e36",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": true,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "overlay-manager",
+      "source": "playground/src/components/overlay-manager/OverlayManagerPage.tsx",
+      "sourceSha256": "b2254eafbd8a49034fd3f52fd2f4c4339a92e77e5ca764e34b86f801490e4321",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "pagination",
+      "source": "playground/src/components/pagination/PaginationPage.tsx",
+      "sourceSha256": "fe272dd3d7fd1c9389792dd6ea72b0c5122c5dfa3f1567b4b7f88da8d6e8d813",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "password-toggle-field",
+      "source": "playground/src/components/password-toggle-field/PasswordToggleFieldPage.tsx",
+      "sourceSha256": "29db2f5d0f5ac14df1654b643a6b3e015e1f7ad6bc8346f4d9bff59a88db9b47",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "pin-input",
+      "source": "playground/src/components/pin-input/PinInputPage.tsx",
+      "sourceSha256": "8e18a0aa526174b946f4c5b235e08deb987acad639ebb722913eb0f097248cca",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "popover",
+      "source": "playground/src/components/popover/PopoverPage.tsx",
+      "sourceSha256": "3dd4214d12afe79b1b358fbad81dd05e23efaddb45ea59f74db2a3063dcff0ed",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "progress",
+      "source": "playground/src/components/progress/ProgressPage.tsx",
+      "sourceSha256": "bcb0851285c8c5a08d05abe3ca56ab1580852cdd60bfd4c3aa80bf0918723f07",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "progress-circle",
+      "source": "playground/src/components/progress-circle/ProgressCirclePage.tsx",
+      "sourceSha256": "430beccde4bc7f6aacf970ec62e64e24560e64152f49af9a91fc8b65813c32c1",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "prose",
+      "source": "playground/src/components/prose/ProsePage.tsx",
+      "sourceSha256": "78cbdbb523dc7accfd9a0b03b0c8187a7ead05a09b5ebfe019ca6596918c2ea6",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "qr-code",
+      "source": "playground/src/components/qr-code/QrCodePage.tsx",
+      "sourceSha256": "339fed469dc8211cbfc034e2f26e3b54a76d78c81aaf2e9d7ca6c0401f7304d0",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "radio-card",
+      "source": "playground/src/components/radio-card/RadioCardPage.tsx",
+      "sourceSha256": "70b33793e54384485327ea41c50868506a1a8fc14c30a18cc16ebc2d508366ba",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "radio-group",
+      "source": "playground/src/components/radio-group/RadioGroupPage.tsx",
+      "sourceSha256": "bbe5f241d6c20e816f4fe14d588c989d65f2d5d8856d6fa031e0c2fd21e2be8f",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "radiomark",
+      "source": "playground/src/components/radiomark/RadiomarkPage.tsx",
+      "sourceSha256": "67000cc2852602f5a43f0ead1b69d0fcd8a555eba5616b0effa3d3a852dbe632",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "rating",
+      "source": "playground/src/components/rating/RatingPage.tsx",
+      "sourceSha256": "c0151efa5bfcfec6137275c925b70fdcf77531d9e89984590762e3c230b9fb31",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "reorderable-list",
+      "source": "playground/src/components/reorderable-list/ReorderableListPage.tsx",
+      "sourceSha256": "0dde7ab6172c8d88a3b1cadb7f58d550f26a06b2f549bca23d16582f25471f29",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "scroll-area",
+      "source": "playground/src/components/scroll-area/ScrollAreaPage.tsx",
+      "sourceSha256": "744e3cc840203c910ebbabef7af039ccda538454e8b0d5246781abb05adeae4c",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "section",
+      "source": "playground/src/components/section/SectionPage.tsx",
+      "sourceSha256": "b728dcfd6d16dc2054b978b33a976a82b4cc9537cfed46a63d385d5333e86516",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "segment-group",
+      "source": "playground/src/components/segment-group/SegmentGroupPage.tsx",
+      "sourceSha256": "e4845e0ff43be3acd2122bbab04603df022c6eff7ffd8748883feb5070cf6497",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "select",
+      "source": "playground/src/components/select/SelectPage.tsx",
+      "sourceSha256": "5fda528594b2aac37e1474164746194923fc1cb231ce34818b6d6c98e3e98281",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "show",
+      "source": "playground/src/components/show/ShowPage.tsx",
+      "sourceSha256": "74557c630e86c3d3da51fb264996aa88e10ac779dd17f4a94ef4c30e823aa5f2",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "sidebar",
+      "source": "playground/src/components/sidebar/SidebarPage.tsx",
+      "sourceSha256": "08653588c22e9cd449328987590e572057fe92555a960db29c51771038b03205",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "skeleton",
+      "source": "playground/src/components/skeleton/SkeletonPage.tsx",
+      "sourceSha256": "f011052bf5575d8ade909b7a21937583d6dadbb83607747f0ce8d2615cf04d84",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "skip-link",
+      "source": "playground/src/components/skip-link/SkipLinkPage.tsx",
+      "sourceSha256": "8184ea71bf3eb50d6f72bf123709144c4a6243d66bcec3008aee240771947280",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "slider",
+      "source": "playground/src/components/slider/SliderPage.tsx",
+      "sourceSha256": "3f1c994c737981e4037f8dbf14fb6b2fe443f8f40e40c7cd0e1ea2eae8d07e6c",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "spinner",
+      "source": "playground/src/components/spinner/SpinnerPage.tsx",
+      "sourceSha256": "5994e8eb9316f1bf31c1f50889d0118835cc1c5231c7e2224ce9f7335c07c07f",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "splitter",
+      "source": "playground/src/components/splitter/SplitterPage.tsx",
+      "sourceSha256": "b11d11e6f858067bc20c9317dda08a61af4112add230c96dc3a485357581712e",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "stack",
+      "source": "playground/src/components/stack/StackPage.tsx",
+      "sourceSha256": "6e8e03d32b1ede875dc95cdb742aafb47c6db6e0689d2a8b6d4ae1eae9710071",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "stat",
+      "source": "playground/src/components/stat/StatPage.tsx",
+      "sourceSha256": "869d0d9e24be33d5cfb9ce4e12d5fef73e4a08cc2b4f0aeb2f92979aa3e5a9a0",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "status",
+      "source": "playground/src/components/status/StatusPage.tsx",
+      "sourceSha256": "5b9dff27acbcbfea3ef24b437d12b59ba17f4009653d29f9fa1679689f5f64c9",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "steps",
+      "source": "playground/src/components/steps/StepsPage.tsx",
+      "sourceSha256": "292aaf078682378c807db10e090522bede26cbb85a97115f0be7d3175cf1dd61",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "surface",
+      "source": "playground/src/components/surface/SurfacePage.tsx",
+      "sourceSha256": "4b65efc1bbf394f8669357d1e2932a38188584587882d713099720875b0696c0",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "swipeable-item",
+      "source": "playground/src/components/swipeable-item/SwipeableItemPage.tsx",
+      "sourceSha256": "e60c90ef57ab1399e4dff2869dc66d1224763b979547534a5cf5965a6a0410eb",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "switch",
+      "source": "playground/src/components/switch/SwitchPage.tsx",
+      "sourceSha256": "5b4d6e5fc7357b7fff2605e9a90a88161f8cdf560e51a43d2d689667ed7ccc41",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "table",
+      "source": "playground/src/components/table/TablePage.tsx",
+      "sourceSha256": "c1640f19ff4071c3b5737db0cfa7a011dda83d8a41c71b3c1bbac2a044bb6c0e",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "table-of-contents",
+      "source": "playground/src/components/table-of-contents/TableOfContentsPage.tsx",
+      "sourceSha256": "093ea9bddb2ccffaadb088914ab3bec2fc311661587f7a17622c19318d43f16e",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "tabs",
+      "source": "playground/src/components/tabs/TabsPage.tsx",
+      "sourceSha256": "cb362875806acfc600eb23a94f8207d5f679dffc1b6bc85c28aa39f111540d3d",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "tags-input",
+      "source": "playground/src/components/tags-input/TagsInputPage.tsx",
+      "sourceSha256": "daa8749349bff23dbcb15fd8130dc21989bd3190904bb954e35a2dcd466f8552",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "text",
+      "source": "playground/src/components/text/TextPage.tsx",
+      "sourceSha256": "167fd5886027174331e63b8c7281cc46eb13ef7f5a85e5828b66f840b0ef2734",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "textarea",
+      "source": "playground/src/components/textarea/TextareaPage.tsx",
+      "sourceSha256": "fd0ed805f71379b9b3be47abbf73d64dfbf07ee3052a2421ed43b7ae9fda2320",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "timeline",
+      "source": "playground/src/components/timeline/TimelinePage.tsx",
+      "sourceSha256": "8d52c053708d64a6856595211ebbecf63aae447ff1db87d88593f75fd11e3090",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "toast",
+      "source": "playground/src/components/toast/ToastPage.tsx",
+      "sourceSha256": "804b4c46e0fbc7182dc4c3c251ef139b3436e60d5f592fc7cbb2b68f741dc010",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "toggle",
+      "source": "playground/src/components/toggle/TogglePage.tsx",
+      "sourceSha256": "32bc85466bb35787b00657964974920499b58756ec06b29e9241bccb36fd34a7",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "toggle-group",
+      "source": "playground/src/components/toggle-group/ToggleGroupPage.tsx",
+      "sourceSha256": "3af27977a858c872f8cc907a0c1d3b3cc3f6551cb358c9e8bf5e2d79a320c8b8",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "toggle-tip",
+      "source": "playground/src/components/toggle-tip/ToggleTipPage.tsx",
+      "sourceSha256": "bd1bb17d3e90563855d4d976aa9c289900464fadd114c799f0b1b9b4f8babbf8",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "toolbar",
+      "source": "playground/src/components/toolbar/ToolbarPage.tsx",
+      "sourceSha256": "349d909e1c837c0b96d0a007675f4d65e0c52314340f2a3dd069c2f521dea3ab",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "tooltip",
+      "source": "playground/src/components/tooltip/TooltipPage.tsx",
+      "sourceSha256": "ee404c0ef9195d34511987876f8e6cf3934c82a9e6e0d1f6ba6f3d9c22199e2a",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "tree",
+      "source": "playground/src/components/tree/TreePage.tsx",
+      "sourceSha256": "67400bc2eda7a85f0c2a1aa1b5cea754c8d34e7a3e761e501af10fc796202f99",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "tree-grid",
+      "source": "playground/src/components/tree-grid/TreeGridPage.tsx",
+      "sourceSha256": "b42c922cd3d5888387e711b43442448fc4dfedc7c97521d3cddb0d32eccea43c",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": true,
+        "explicitDirection": true,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "visually-hidden",
+      "source": "playground/src/components/visually-hidden/VisuallyHiddenPage.tsx",
+      "sourceSha256": "5838afa712d7a620581f675151467bcfd27d89f9f3915b3ebb5559bd4d426f32",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    },
+    {
+      "component": "z-stack",
+      "source": "playground/src/components/z-stack/ZStackPage.tsx",
+      "sourceSha256": "94e0cc025d66aab9cd68804c5d724e52ba134148a55505144d512a2679d16714",
+      "mode": "inline",
+      "sourceMode": "paired-page-source",
+      "heightPolicy": "authored-layout",
+      "scopePolicy": "authored-local-providers-and-props-win",
+      "reviewSignals": {
+        "explicitAppearance": false,
+        "explicitDirection": false,
+        "locale": false,
+        "portalOrShadowRoot": false
+      }
+    }
+  ]
+}

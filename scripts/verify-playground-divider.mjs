@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 const [page, registry, audit, consumer, source, styles] = await Promise.all([
-  read("playground/src/components/divider/DividerPage.tsx"),
+  read("playground/src/components/divider/DividerEvidence.tsx"),
   read("playground/src/app/component-registry.ts"),
   read("playground/docs/divider-adoption-audit.md"),
   read("apps/consumer/src/App.tsx"),

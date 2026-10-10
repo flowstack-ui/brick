@@ -1,5 +1,4 @@
 .aspect-ratio-page { inline-size: 100%; }
-.aspect-ratio-overview { max-inline-size: 42rem; }
 .aspect-ratio-grid { align-items: stretch; }
 .aspect-ratio-cell { min-inline-size: 0; block-size: 100%; }
 .aspect-ratio-frame { color: var(--brick-color-text-primary); }

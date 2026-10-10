@@ -1,7 +1,20 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 test.beforeEach(async ({ page }) => {
-  await page.goto("/sidebar");
+  await page.goto("/sidebar?qualification=1");
+});
+
+test("region inset can be removed without changing panel geometry", async ({ page }) => {
+  for (const inset of ["default", "none"]) {
+    const root = page.getByTestId(`sidebar-inset-${inset}`);
+    for (const region of ["header", "content", "footer"]) {
+      const part = root.locator(`.brick-sidebar__${region}`);
+      for (const edge of ["padding-top", "padding-bottom", "padding-left", "padding-right"]) {
+        await expect(part).toHaveCSS(edge, inset === "none" ? "0px" : "16px");
+      }
+    }
+    expect((await root.locator(".brick-sidebar__panel").boundingBox())!.width).toBeCloseTo(272, 0);
+  }
 });
 
 test("defaults and closed recipes own coordinated geometry", async ({
@@ -86,7 +99,7 @@ test("desktop playground shell consumes Sidebar while mobile policy remains Draw
       .click();
     await expect(page.getByRole("dialog")).toBeVisible();
   } else {
-    const shell = page.locator("[data-playground-shell] > .brick-sidebar");
+    const shell = page.locator("[data-playground-shell] > .brick-container > .brick-sidebar");
     await expect(shell).toHaveClass(/evidence-layout/);
     await expect(shell.locator(":scope > .brick-sidebar__panel")).toContainText(
       "Sidebar",

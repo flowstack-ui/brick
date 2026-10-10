@@ -1,7 +1,8 @@
 import { createRef, useState } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { Collapsible } from "../../../src/collapsible.js";
+import { Collapsible, useCollapsible } from "../../../src/collapsible.js";
+import { Button } from "../../../src/button.js";
 
 function Example(props: React.ComponentProps<typeof Collapsible.Root> = {}) {
   return (
@@ -18,6 +19,66 @@ function Example(props: React.ComponentProps<typeof Collapsible.Root> = {}) {
 }
 
 describe("Collapsible", () => {
+  it("serializes responsive recipes without leaking objects onto native hosts", () => {
+    render(<Example size={{ md: "lg" }} variant={{ initial: "plain", md: "outline" }} />);
+    const root=screen.getByRole("button").closest(".brick-collapsible");
+    expect(root).toHaveAttribute("data-size", "md");
+    expect(root).toHaveAttribute("data-size-md", "lg");
+    expect(root).toHaveAttribute("data-variant-md", "outline");
+    expect(root).not.toHaveAttribute("size");
+    expect(root).not.toHaveAttribute("variant");
+  });
+  it("preserves composed inner callback-ref cleanup", () => {
+    const cleanup = vi.fn();
+    const ref = vi.fn(() => cleanup);
+    const { unmount } = render(<Collapsible.Root defaultOpen><Collapsible.Trigger>Details</Collapsible.Trigger><Collapsible.Content><Collapsible.ContentInner asChild><section ref={ref}>Retained host</section></Collapsible.ContentInner></Collapsible.Content></Collapsible.Root>);
+    expect(ref).toHaveBeenCalled();
+    unmount();
+    expect(cleanup).toHaveBeenCalled();
+  });
+  it("delegates a composed Button without introducing a second control", () => {
+    const changed = vi.fn();
+    render(<Collapsible.Root unstyled onOpenChange={changed}><Collapsible.Trigger unstyled asChild><Button>Composed</Button></Collapsible.Trigger><Collapsible.Content motion="none"><Collapsible.ContentInner inset="none" asChild><section>Details</section></Collapsible.ContentInner></Collapsible.Content></Collapsible.Root>);
+    const trigger = screen.getByRole("button", { name: "Composed" });
+    expect(trigger).toHaveClass("brick-button", "brick-collapsible-trigger");
+    expect(trigger).toHaveAttribute("data-unstyled");
+    expect(screen.getAllByRole("button")).toHaveLength(1);
+    fireEvent.click(trigger);
+    expect(changed).toHaveBeenCalledExactlyOnceWith(true);
+    expect(screen.getByRole("region")).toHaveAttribute("data-motion", "none");
+    expect(screen.getByText("Details")).toHaveAttribute("data-inset", "none");
+    expect(screen.getByText("Details").tagName).toBe("SECTION");
+  });
+
+  it("supports provider recipes and context-driven closing", () => {
+    function Store() {
+      const value = useCollapsible({ defaultOpen: true });
+      return <Collapsible.RootProvider value={value} variant="outline" size="sm"><Collapsible.Trigger highlight="none">Store<Collapsible.Indicator placement="inline" /></Collapsible.Trigger><Collapsible.Content><Collapsible.ContentInner><Collapsible.Context>{({ onClose }) => <button onClick={onClose}>Close now</button>}</Collapsible.Context></Collapsible.ContentInner></Collapsible.Content></Collapsible.RootProvider>;
+    }
+    render(<Store />);
+    const trigger = screen.getByRole("button", { name: "Store" });
+    expect(trigger).toHaveAttribute("data-highlight", "none");
+    expect(trigger.closest(".brick-collapsible")).toHaveAttribute("data-variant", "outline");
+    expect(trigger.querySelector(".brick-collapsible-indicator")).toHaveAttribute("data-state", "open");
+    fireEvent.click(screen.getByRole("button", { name: "Close now" }));
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("keeps partial content inert and its props off the DOM", () => {
+    render(<Example collapsedHeight={40} />);
+    const content = screen.getByRole("region", { hidden: true });
+    expect(content).toHaveAttribute("inert");
+    expect(content).toHaveAttribute("aria-hidden", "true");
+    expect(content).not.toHaveAttribute("hidden");
+    expect(content).not.toHaveAttribute("collapsedHeight");
+  });
+
+  it("diagnoses competing unstyled trigger recipes", () => {
+    const warning = vi.spyOn(console, "warn").mockImplementation(() => {});
+    render(<Collapsible.Root><Collapsible.Trigger unstyled highlight="none" iconOnly aria-label="Details" /></Collapsible.Root>);
+    expect(warning).toHaveBeenCalledWith(expect.stringContaining("ignored"));
+    warning.mockRestore();
+  });
   it("renders the five-part default contract and Atom relationships", () => {
     render(<Example />);
     const root = screen.getByText("Advanced settings").closest(".brick-collapsible");

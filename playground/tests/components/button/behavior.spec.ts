@@ -1,16 +1,23 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
+import { verifyActionFocus } from "../../helpers/action-focus.js";
+import { setExampleDirection } from "../../helpers/example-direction.js";
+
+test("Button inside focus survives clipping and every action fill", async ({ page }) => {
+  await page.goto("/button?qualification=1");
+  await verifyActionFocus(page, page.getByTestId("button-inside-focus"));
+});
 
 test("Button exposes the approved recipes and native semantics", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const overview = page.getByTestId("button-overview");
   const primary = overview.getByRole("button", { name: "Publish project" });
   await expect(primary).toHaveAttribute("data-variant", "solid");
   await expect(primary).toHaveAttribute("data-tone", "accent");
-  await expect(primary).toHaveAttribute("data-size", "md");
+  await expect(primary).toHaveAttribute("data-size", "lg");
   await expect(primary).toHaveAttribute("data-shape", "rounded");
   await expect(primary.locator(".brick-button__icon")).toHaveCount(0);
 
@@ -26,7 +33,7 @@ test("Button exposes the approved recipes and native semantics", async ({
     await expect(link).toHaveAttribute("href", "#scenario-button-states");
     await expect(link).toHaveAttribute("data-variant", "solid");
     await expect(link).toHaveAttribute("data-tone", "accent");
-    await expect(link).toHaveAttribute("data-size", "md");
+    await expect(link).toHaveAttribute("data-size", "lg");
     await expect(link).toHaveAttribute("data-shape", "rounded");
   }
   const output = page
@@ -43,22 +50,22 @@ test("Button exposes the approved recipes and native semantics", async ({
 test("Button specimens change only the dimension owned by their scenario", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const variants = page.getByTestId("button-variants").locator(".brick-button");
   await expect(variants).toHaveCount(4);
   for (const control of await variants.all()) {
     await expect(control).toHaveText("Action");
     await expect(control).toHaveAttribute("data-tone", "accent");
-    await expect(control).toHaveAttribute("data-size", "md");
+    await expect(control).toHaveAttribute("data-size", "lg");
     await expect(control).toHaveAttribute("data-shape", "rounded");
   }
 
   const tones = page.getByTestId("button-tones").locator(".brick-button");
-  await expect(tones).toHaveCount(24);
+  await expect(tones).toHaveCount(28);
   for (const control of await tones.all()) {
     await expect(control).toHaveText("Action");
-    await expect(control).toHaveAttribute("data-size", "md");
+    await expect(control).toHaveAttribute("data-size", "lg");
     await expect(control).toHaveAttribute("data-shape", "rounded");
   }
   expect(
@@ -75,6 +82,15 @@ test("Button specimens change only the dimension owned by their scenario", async
         return style.backgroundColor !== primary && style.color === primary;
       }),
   ).toBe(true);
+  expect(
+    await page
+      .getByTestId("button-tones")
+      .locator('.brick-button[data-variant="solid"][data-tone="contrast"]')
+      .evaluate((element) => {
+        const style = getComputedStyle(element);
+        return style.backgroundColor !== style.color;
+      }),
+  ).toBe(true);
 
   const shapes = page.getByTestId("button-shapes").locator(".brick-button");
   await expect(shapes).toHaveCount(3);
@@ -82,7 +98,7 @@ test("Button specimens change only the dimension owned by their scenario", async
     await expect(control).toHaveText("Action");
     await expect(control).toHaveAttribute("data-variant", "solid");
     await expect(control).toHaveAttribute("data-tone", "accent");
-    await expect(control).toHaveAttribute("data-size", "md");
+    await expect(control).toHaveAttribute("data-size", "lg");
   }
 
   for (const testId of [
@@ -95,31 +111,18 @@ test("Button specimens change only the dimension owned by their scenario", async
     await expect(control).toHaveText("Action");
     await expect(control).toHaveAttribute("data-variant", "solid");
     await expect(control).toHaveAttribute("data-tone", "accent");
-    await expect(control).toHaveAttribute("data-size", "md");
+    await expect(control).toHaveAttribute("data-size", "lg");
     await expect(control).toHaveAttribute("data-shape", "rounded");
   }
   const disabled = page.getByTestId("button-disabled");
-  await expect(disabled).toHaveCSS("opacity", "1");
-  expect(
-    await disabled.evaluate((element) => {
-      const probe = document.createElement("span");
-      probe.style.color = "var(--brick-color-text-disabled)";
-      document.body.append(probe);
-      const expected = getComputedStyle(probe).color;
-      probe.remove();
-      return getComputedStyle(element).color === expected;
-    }),
-  ).toBe(true);
-  expect(
-    await disabled.evaluate((element) => {
-      const probe = document.createElement("span");
-      probe.style.color = "var(--brick-color-border-subtle)";
-      document.body.append(probe);
-      const expected = getComputedStyle(probe).color;
-      probe.remove();
-      return getComputedStyle(element).borderTopColor === expected;
-    }),
-  ).toBe(true);
+  await expect(disabled).toHaveCSS("opacity", "0.5");
+  await expect(disabled).toHaveCSS("cursor", "not-allowed");
+  for (const property of ["color", "background-color", "border-top-color"]) {
+    const enabledPaint = await page.getByTestId("button-start-icon").evaluate(
+      (element, name) => getComputedStyle(element).getPropertyValue(name), property,
+    );
+    await expect(disabled).toHaveCSS(property, enabledPaint);
+  }
 
   const consumerHooks = page.locator(
     '.button-customization [data-slot="custom-action"]',
@@ -129,7 +132,7 @@ test("Button specimens change only the dimension owned by their scenario", async
   await expect(consumerHooks).toHaveClass(/dashed-action/);
   await expect(consumerHooks).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
   await expect(consumerHooks).toHaveCSS("border-top-style", "dashed");
-  await expect(consumerHooks).toHaveCSS("letter-spacing", "0.6px");
+  await expect(consumerHooks).toHaveCSS("letter-spacing", "0.64px");
 
   const tokenCustomization = page.getByTestId("button-token-customization");
   await expect(tokenCustomization).toHaveText("Action");
@@ -161,7 +164,7 @@ test("Button specimens change only the dimension owned by their scenario", async
 test("Button native actions compose with Brick Form and Field", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const form = page.getByRole("form", {
     name: "Button native form example",
@@ -210,7 +213,7 @@ test("Button native actions compose with Brick Form and Field", async ({
 test("Button preserves loading layout and adopted target sizes", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const loading = page.getByTestId("button-loading");
   await expect(loading).toHaveAttribute("aria-busy", "true");
@@ -220,7 +223,15 @@ test("Button preserves loading layout and adopted target sizes", async ({
   expect(loadingAfter).toEqual(loadingBefore);
 
   const sizeCanvas = page.getByTestId("button-sizes");
-  const expected = { xs: 28, sm: 36, md: 44, lg: 52, xl: 60 } as const;
+  const expected = {
+    "2xs": 24,
+    xs: 32,
+    sm: 36,
+    md: 40,
+    lg: 44,
+    xl: 48,
+    "2xl": 64,
+  } as const;
   for (const [size, minimum] of Object.entries(expected)) {
     const control = sizeCanvas.locator(`.brick-button[data-size="${size}"]`);
     await expect(control).toHaveAttribute("data-variant", "solid");
@@ -231,10 +242,33 @@ test("Button preserves loading layout and adopted target sizes", async ({
   }
 });
 
+test("Button responsive size changes the complete recipe at the shared breakpoint", async ({
+  page,
+}) => {
+  const responsive = page.getByTestId("button-responsive-size");
+
+  await page.setViewportSize({ width: 768, height: 900 });
+  await page.goto("/button?qualification=1");
+  await expect(responsive).toHaveAttribute("data-size", "lg");
+  await expect(responsive).toHaveAttribute("data-size-lg", "md");
+  await expect(responsive).toHaveCSS("min-height", "44px");
+  await expect(responsive).toHaveCSS("font-size", "16px");
+  await expect(responsive).toHaveCSS("line-height", "24px");
+  await expect(responsive).toHaveCSS("padding-left", "20px");
+  await expect(responsive).toHaveCSS("padding-right", "20px");
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await expect(responsive).toHaveCSS("min-height", "40px");
+  await expect(responsive).toHaveCSS("font-size", "14px");
+  expect(await responsive.evaluate(node => Number.parseFloat(getComputedStyle(node).lineHeight))).toBeCloseTo(16.8, 2);
+  await expect(responsive).toHaveCSS("padding-left", "16px");
+  await expect(responsive).toHaveCSS("padding-right", "16px");
+});
+
 test("Button keeps standard icons token-sized while its slot follows larger component content", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const button = page.getByTestId("button-end-icon");
   const icon = button.locator(".brick-button__icon");
@@ -244,14 +278,14 @@ test("Button keeps standard icons token-sized while its slot follows larger comp
     svg.boundingBox(),
   ]);
   expect(iconBox).toEqual(svgBox);
-  expect(svgBox?.width).toBe(18);
-  expect(svgBox?.height).toBe(18);
+  expect(svgBox?.width).toBe(20);
+  expect(svgBox?.height).toBe(20);
 });
 
 test("Button keeps loading centered and directional icons semantic in RTL", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const loading = page.getByTestId("button-loading");
   await page.addStyleTag({
@@ -265,24 +299,25 @@ test("Button keeps loading centered and directional icons semantic in RTL", asyn
       const pseudo = getComputedStyle(element, "::after");
       const matrix = new DOMMatrixReadOnly(pseudo.transform);
       const spinnerWidth = Number.parseFloat(pseudo.width);
+      const [translateX, translateY] = pseudo.translate.split(" ").map(Number.parseFloat);
       const spinnerX =
         buttonStyle.direction === "rtl"
           ? button.right -
             Number.parseFloat(buttonStyle.borderRightWidth) -
             Number.parseFloat(pseudo.right) -
             spinnerWidth +
-            matrix.e +
+            matrix.e + spinnerWidth * translateX / 100 +
             spinnerWidth / 2
           : button.left +
             Number.parseFloat(buttonStyle.borderLeftWidth) +
             Number.parseFloat(pseudo.left) +
-            matrix.e +
+            matrix.e + spinnerWidth * translateX / 100 +
             spinnerWidth / 2;
       const spinnerY =
         button.top +
         Number.parseFloat(buttonStyle.borderTopWidth) +
         Number.parseFloat(pseudo.top) +
-        matrix.f +
+        matrix.f + Number.parseFloat(pseudo.height) * translateY / 100 +
         Number.parseFloat(pseudo.height) / 2;
       return {
         buttonX: button.left + button.width / 2,
@@ -295,7 +330,7 @@ test("Button keeps loading centered and directional icons semantic in RTL", asyn
   expect(ltrSpinnerCenter.spinnerX).toBeCloseTo(ltrSpinnerCenter.buttonX, 0);
   expect(ltrSpinnerCenter.spinnerY).toBeCloseTo(ltrSpinnerCenter.buttonY, 0);
 
-  await page.getByRole("button", { name: "RTL", exact: true }).click();
+  await setExampleDirection(page, "rtl");
   const rtlSpinnerCenter = await readSpinnerCenter();
   expect(rtlSpinnerCenter.spinnerX).toBeCloseTo(rtlSpinnerCenter.buttonX, 0);
   expect(rtlSpinnerCenter.spinnerY).toBeCloseTo(rtlSpinnerCenter.buttonY, 0);
@@ -327,13 +362,13 @@ test("Button evidence uses complete tone groups and balanced variant rows", asyn
   page,
 }) => {
   await page.setViewportSize({ width: 700, height: 900 });
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   for (const variant of ["Solid", "Soft", "Outline", "Ghost"]) {
     const group = page
       .getByRole("heading", { name: `${variant} tones` })
       .locator("../..");
-    await expect(group.getByRole("button")).toHaveCount(6);
+    await expect(group.getByRole("button")).toHaveCount(7);
   }
 
   const [toneScenarioGap, toneStackGap] = await Promise.all([
@@ -380,7 +415,7 @@ test("Button evidence uses complete tone groups and balanced variant rows", asyn
 test("full-width evidence fills its available specimen container", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const button = page.getByRole("button", { name: "Explicit full width" });
   const frame = button.locator("..");
@@ -394,7 +429,7 @@ test("full-width evidence fills its available specimen container", async ({
 test("Button preserves native keyboard activation and visible focus", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const overview = page.getByTestId("button-overview");
   const primary = overview.getByRole("button", { name: "Publish project" });
@@ -416,7 +451,7 @@ test("Button preserves native keyboard activation and visible focus", async ({
 test("Button keeps disabled loading presentation centered and unavailable", async ({
   page,
 }) => {
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const unavailableLoading = page.getByTestId("button-disabled-loading");
   await expect(unavailableLoading).toBeDisabled();
@@ -428,6 +463,7 @@ test("Button keeps disabled loading presentation centered and unavailable", asyn
     const spinner = getComputedStyle(element, "::after");
     const matrix = new DOMMatrixReadOnly(spinner.transform);
     const spinnerWidth = Number.parseFloat(spinner.width);
+    const [translateX, translateY] = spinner.translate.split(" ").map(Number.parseFloat);
     return {
       rootX: root.left + root.width / 2,
       rootY: root.top + root.height / 2,
@@ -435,13 +471,13 @@ test("Button keeps disabled loading presentation centered and unavailable", asyn
         root.left +
         Number.parseFloat(style.borderLeftWidth) +
         Number.parseFloat(spinner.left) +
-        matrix.e +
+        matrix.e + spinnerWidth * translateX / 100 +
         spinnerWidth / 2,
       spinnerY:
         root.top +
         Number.parseFloat(style.borderTopWidth) +
         Number.parseFloat(spinner.top) +
-        matrix.f +
+        matrix.f + Number.parseFloat(spinner.height) * translateY / 100 +
         Number.parseFloat(spinner.height) / 2,
     };
   });
@@ -451,7 +487,7 @@ test("Button keeps disabled loading presentation centered and unavailable", asyn
 
 test("Button reflows in a constrained mobile viewport", async ({ page }) => {
   await page.setViewportSize({ width: 256, height: 800 });
-  await page.goto("/button");
+  await page.goto("/button?qualification=1");
 
   const stress = page.getByTestId("button-stress");
   const longButton = stress.getByRole("button", {

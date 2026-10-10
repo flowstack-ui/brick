@@ -37,6 +37,17 @@ function OpenDialog({
 }
 
 describe("Dialog", () => {
+  it("forwards positioner recipes and sparse responsive sizes without leaking props", () => {
+    render(<Dialog.Root defaultOpen><Dialog.Positioner placement="bottom" scrollBehavior="inside"><Dialog.Content aria-label="Recipes" size={{ lg: "xl" }} motionPreset="slide-in-top">Content</Dialog.Content></Dialog.Positioner></Dialog.Root>);
+    const panel = screen.getByRole("dialog", { name: "Recipes" });
+    expect(panel).toHaveAttribute("data-size", "md");
+    expect(panel).toHaveAttribute("data-size-lg", "xl");
+    expect(panel).toHaveAttribute("data-motion-preset", "slide-in-top");
+    expect(panel.parentElement).toHaveAttribute("data-placement", "bottom");
+    expect(panel.parentElement).toHaveAttribute("data-scroll-behavior", "inside");
+    expect(panel).not.toHaveAttribute("size");
+    expect(panel.parentElement).not.toHaveAttribute("scrollBehavior");
+  });
   it("renders the approved anatomy, default size, and generated relationships", () => {
     render(<OpenDialog />);
 
@@ -54,6 +65,8 @@ describe("Dialog", () => {
       .toHaveClass("brick-dialog-footer");
     expect(screen.getByRole("button", { name: "Cancel" }).parentElement)
       .toHaveAttribute("data-justify", "end");
+    expect(screen.getByRole("button", { name: "Cancel" }))
+      .toHaveAttribute("data-placement", "inline");
     expect(document.querySelector(".brick-dialog-overlay")).toHaveAttribute(
       "data-slot",
       "dialog-overlay",
@@ -134,6 +147,23 @@ describe("Dialog", () => {
     expect(close).toHaveClass("brick-dialog-close", "close-child");
     await user.click(close);
     expect(onOpenChange).toHaveBeenLastCalledWith(false, "closeClick");
+  });
+
+  it("reflects the visual-only corner placement on a composed Close control", () => {
+    render(
+      <Dialog.Root defaultOpen>
+        <Dialog.Portal disabled>
+          <Dialog.Content aria-label="Corner close dialog">
+            <Dialog.Close placement="corner" asChild>
+              <button>Close corner dialog</button>
+            </Dialog.Close>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>,
+    );
+
+    expect(screen.getByRole("button", { name: "Close corner dialog" }))
+      .toHaveAttribute("data-placement", "corner");
   });
 
   it("preserves disabled Root behavior through native and composed triggers", async () => {

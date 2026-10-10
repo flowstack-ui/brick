@@ -1,5 +1,4 @@
 import {
-  expect,
   expectEvidenceScreenshot,
   installVisualDefaults,
   setAppearance,
@@ -7,52 +6,34 @@ import {
   useForcedColors,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/toggle");
+installVisualDefaults("/toggle?qualification=1");
+
+test.beforeEach(async ({ page }) => {
+  await page.addStyleTag({ content: ".evidence-review-header, [data-playground-app-bar] { position: static !important; visibility: hidden; }" });
+});
 
 test("Toggle recipes and state", async ({ page }) => {
-  await expect(page.getByTestId("toggle-variants")).toHaveScreenshot(
-    "variants-light.png",
-  );
-  await expect(page.getByTestId("toggle-tones")).toHaveScreenshot(
-    "tones-light.png",
-  );
-  await expect(page.getByTestId("toggle-recipes")).toHaveScreenshot(
-    "recipes-light.png",
-  );
-  await expect(page.getByTestId("toggle-sizes")).toHaveScreenshot(
-    "sizes-light.png",
-  );
-  await expect(page.getByTestId("toggle-shapes-icons")).toHaveScreenshot(
-    "shapes-icons-light.png",
-  );
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-variants"), "variants-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-tones"), "tones-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-recipes"), "recipes-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-sizes"), "sizes-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-shapes-icons"), "shapes-icons-light.png", { maxDiffPixelRatio: 0 });
   await expectEvidenceScreenshot(
     page,
     page.getByTestId("toggle-composition"),
     "composition-output-light.png",
   );
-  await expect(page.getByTestId("toggle-disabled")).toHaveScreenshot(
-    "disabled-light.png",
-  );
-  await expect(page.locator("#scenario-toggle-appearance")).toHaveScreenshot(
-    "appearance-customization-light.png",
-  );
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-disabled"), "disabled-light.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.locator("#scenario-toggle-appearance"), "appearance-customization-light.png", { maxDiffPixelRatio: 0 });
   await setAppearance(page, "dark");
-  await expect(page.getByTestId("toggle-tones")).toHaveScreenshot(
-    "tones-dark.png",
-  );
-  await expect(page.getByTestId("toggle-overview")).toHaveScreenshot(
-    "overview-dark.png",
-  );
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-tones"), "tones-dark.png", { maxDiffPixelRatio: 0 });
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-overview"), "overview-dark.png", { maxDiffPixelRatio: 0 });
 });
 
 test("Toggle constrained and forced-color evidence", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.getByTestId("toggle-stress")).toHaveScreenshot(
-    "stress-mobile.png",
-  );
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-stress"), "stress-mobile.png", { maxDiffPixelRatio: 0 });
   await page.setViewportSize({ width: 1120, height: 900 });
   await useForcedColors(page);
-  await expect(page.getByTestId("toggle-variants")).toHaveScreenshot(
-    "variants-forced-colors.png",
-  );
+  await expectEvidenceScreenshot(page, page.getByTestId("toggle-variants"), "variants-forced-colors.png", { maxDiffPixelRatio: 0 });
 });

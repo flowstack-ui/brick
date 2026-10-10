@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 test("AlertDialog Footer maps logical response distribution to flex alignment", async ({ page }) => {
-  await page.goto("/alert-dialog");
+  await page.goto("/alert-dialog?qualification=1");
   await page.getByRole("button", { name: "Delete project?" }).click();
   const footer = page.getByTestId("alert-dialog-overview-content").locator("[data-slot='alert-dialog-footer']");
   await expect(footer).toHaveAttribute("data-justify", "end");
@@ -25,7 +25,7 @@ async function expectAlertDefaults(
 test("AlertDialog exposes default alert semantics, safe focus, and explicit responses", async ({
   page,
 }) => {
-  await page.goto("/alert-dialog");
+  await page.goto("/alert-dialog?qualification=1");
   const trigger = page.getByRole("button", { name: "Delete project?" });
   await trigger.click();
   const alert = page.getByTestId("alert-dialog-overview-content");
@@ -52,11 +52,11 @@ test("AlertDialog exposes default alert semantics, safe focus, and explicit resp
   await expect(trigger).toBeFocused();
 });
 
-test("AlertDialog sizes change only preferred measure and coordinated inset", async ({
+test("AlertDialog sizes change preferred measure with shared inset", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1000, height: 800 });
-  await page.goto("/alert-dialog");
+  await page.goto("/alert-dialog?qualification=1");
   const measurements: Array<{ space: number; width: number }> = [];
 
   for (const size of ["sm", "md"] as const) {
@@ -81,13 +81,13 @@ test("AlertDialog sizes change only preferred measure and coordinated inset", as
   }
 
   expect(measurements[0].width).toBeLessThan(measurements[1].width);
-  expect(measurements[0].space).toBeLessThan(measurements[1].space);
+  expect(measurements[0].space).toBe(measurements[1].space);
 });
 
 test("AlertDialog covers optional Body, native description, acknowledgement, and Title levels", async ({
   page,
 }) => {
-  await page.goto("/alert-dialog");
+  await page.goto("/alert-dialog?qualification=1");
 
   await page.getByRole("button", { name: "Inspect decision anatomy" }).click();
   const bodyAlert = page.getByTestId("alert-dialog-anatomy-body");
@@ -139,7 +139,7 @@ test("AlertDialog covers optional Body, native description, acknowledgement, and
 test("AlertDialog preserves decision reasons and strict modal policies", async ({
   page,
 }) => {
-  await page.goto("/alert-dialog");
+  await page.goto("/alert-dialog?qualification=1");
   const trackedTrigger = page.getByRole("button", {
     name: "Open tracked decision",
   });
@@ -203,7 +203,7 @@ test("AlertDialog preserves decision reasons and strict modal policies", async (
 test("nested AlertDialog returns focus and ownership to its parent Dialog", async ({
   page,
 }) => {
-  await page.goto("/alert-dialog");
+  await page.goto("/alert-dialog?qualification=1");
   const parentTrigger = page.getByRole("button", {
     name: "Edit draft project",
   });
@@ -225,7 +225,7 @@ test("nested AlertDialog returns focus and ownership to its parent Dialog", asyn
 test("AlertDialog preserves scoped portals and exact customization hooks", async ({
   page,
 }) => {
-  await page.goto("/alert-dialog");
+  await page.goto("/alert-dialog?qualification=1");
   const scopes = page.getByTestId("alert-dialog-appearance");
 
   await scopes.getByRole("button", { name: "Light decision" }).click();
@@ -277,7 +277,7 @@ test("AlertDialog keeps long detail and RTL decisions within a narrow viewport",
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 640 });
-  await page.goto("/alert-dialog");
+  await page.goto("/alert-dialog?qualification=1");
 
   await page.getByRole("button", { name: "Open long decision" }).click();
   const longAlert = page.getByTestId("alert-dialog-long-content-surface");
@@ -328,7 +328,7 @@ test("AlertDialog responses remain reachable under extreme reflow", async ({
     { width: 320, height: 200 },
   ]) {
     await page.setViewportSize(viewport);
-    await page.goto("/alert-dialog");
+    await page.goto("/alert-dialog?qualification=1");
     await page
       .getByRole("button", { name: "Open tracked decision" })
       .focus();
@@ -388,7 +388,7 @@ test("AlertDialog removes nonessential motion and preserves its boundary", async
     testInfo.project.name !== "chromium",
     "Forced colors is a Chromium release check.",
   );
-  await page.goto("/alert-dialog");
+  await page.goto("/alert-dialog?qualification=1");
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
   await page.getByRole("button", { name: "Delete project?" }).click();
   const alert = page.getByTestId("alert-dialog-overview-content");

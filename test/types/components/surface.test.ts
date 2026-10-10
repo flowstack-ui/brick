@@ -61,11 +61,12 @@ createElement(Surface, { as: "button" });
 createElement(Surface, { level: "accent" });
 // @ts-expect-error Elevation is semantic rather than numeric.
 createElement(Surface, { elevation: 8 });
-// @ts-expect-error Radius uses a closed semantic recipe.
 createElement(Surface, { radius: "full" });
+// @ts-expect-error Radius uses a closed token vocabulary, not arbitrary lengths.
+createElement(Surface, { radius: "8px" });
 // @ts-expect-error Inset uses a closed recipe.
 createElement(Surface, { inset: "3xl" });
-// @ts-expect-error Responsive inset requires the shared initial key.
+// @ts-expect-error Responsive breakpoints are deliberately closed.
 createElement(Surface, { inset: { base: "sm", lg: "lg" } });
 // @ts-expect-error Historical runtime color scope is excluded.
 createElement(Surface, { surfaceColor: "accent" });
@@ -89,3 +90,10 @@ void levels;
 void elevations;
 void radii;
 void insets;
+
+// Surface effect parameters preserve exact CSS lengths without a styling runtime.
+createElement(Surface, { treatment: "translucent", backgroundOpacity: 0.8, backdropBlur: "18px", backdropSaturate: 1.1, borderColor: "white", borderOpacity: 0.5 });
+// @ts-expect-error Blur percentages are not lengths.
+createElement(Surface, { backdropBlur: "20%" });
+// @ts-expect-error No universal responsive paint API.
+createElement(Surface, { backgroundOpacity: { initial: 0.8 } });

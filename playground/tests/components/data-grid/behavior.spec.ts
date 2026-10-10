@@ -1,7 +1,20 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/data-grid"); await expect(page.locator("#scenario-data-grid-overview .brick-data-grid")).toBeVisible(); });
+test.beforeEach(async ({ page }) => { await page.goto("/data-grid?qualification=1"); await expect(page.locator("#scenario-data-grid-overview .brick-data-grid")).toBeVisible(); });
+
+test("first pointer entry targets the clicked cell before mouse release", async ({ page }) => {
+  await page.goto("/data-grid");
+  const grid = page.getByRole("grid", { name: "Project estimates", exact: true }).first();
+  const cell = grid.getByRole("gridcell", { name: "Sam", exact: true });
+  await cell.scrollIntoViewIfNeeded();
+  const box = (await cell.boundingBox())!;
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down();
+  await expect(grid).toHaveAttribute("aria-activedescendant", (await cell.getAttribute("id"))!);
+  await page.mouse.up();
+  await expect(grid).toHaveAttribute("aria-activedescendant", (await cell.getAttribute("id"))!);
+});
 
 test("defaults and grid anatomy are deterministic", async ({ page }) => {
   const root = page.locator("#scenario-data-grid-overview .brick-data-grid");
@@ -33,7 +46,7 @@ test("navigation, selection, sorting, and containment remain Atom-owned", async 
   await page.locator("#scenario-data-grid-sorting .brick-data-grid").evaluate(node => node.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "Enter" })));
   await expect(sortable).toHaveAttribute("aria-sort", "ascending");
   await page.setViewportSize({ width: 390, height: 844 });
-  const container = page.locator("#scenario-data-grid-stress .brick-data-grid-container").first();
+  const container = page.locator("#scenario-data-grid-stress .brick-data-grid-container:has(> .brick-data-grid)").first();
   expect(await container.evaluate(node => node.scrollWidth > node.clientWidth)).toBe(true);
 });
 

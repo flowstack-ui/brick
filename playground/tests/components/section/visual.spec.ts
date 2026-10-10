@@ -5,7 +5,7 @@ import {
   test,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/section");
+installVisualDefaults("/section?qualification=1");
 
 test("Section scale and composition", async ({ page }) => {
   await expectEvidenceScreenshot(

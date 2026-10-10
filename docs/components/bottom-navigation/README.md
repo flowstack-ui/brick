@@ -58,11 +58,15 @@ Public exports are `BottomNavigation`, `BottomNavigationRoot`, `BottomNavigation
 
 | Part/property | Values | Default |
 | --- | --- | --- |
-| `variant` | `solid`, `soft`, `outline`, `ghost` | `outline` |
+| `variant` | `solid`, `soft`, `outline`, `surface`, `ghost` | `outline` |
 | `tone` | `accent`, `neutral` | `accent` |
 | `layout` | `full`, `floating` | `full` |
-| `arrangement` | `equal`, `centered` | `equal` |
-| `size` | `sm`, `md`, `lg` | `md` |
+| `arrangement` | `ResponsiveValue<"equal" \| "centered">` | `equal` |
+| `size` | `ResponsiveValue<"sm" \| "md" \| "lg">` | `md` |
+| `radius` | `Radius` | `none` for full, `overlay` for floating |
+| `selectionRadius` | `Radius` | selection shape |
+| `selectionVariant` | `soft`, `outline`, `plain` | `soft` |
+| `elevation` | `none`, `low`, `medium`, `high` | omitted; overrides `elevated` |
 | `position` | `static`, `sticky`, `absolute`, `fixed` | `static` |
 | `labelVisibility` | `always`, `active`, `hidden` | `always` |
 | `blurred` | boolean | `false` |
@@ -78,9 +82,23 @@ Public exports are `BottomNavigation`, `BottomNavigationRoot`, `BottomNavigation
 
 Deprecated `showLabels={false}` maps to `labelVisibility="active"` only when `labelVisibility` is absent.
 
+Additional public types are `BottomNavigationElevation` and
+`BottomNavigationSelectionVariant`. Root accepts `value`, `defaultValue` and
+`onChange(value)`, plus native `aria-label` and `aria-labelledby`; `ariaLabel`
+is a compatibility alias. Item also accepts `target`, `rel`, `download` and
+native button `type` (default `button`).
+
 ## Visual recipes and states
 
-Variant controls the bar surface: solid is strong, soft is quiet, outline has a boundary, and ghost is transparent. Tone is either accent or fully neutral. Layout controls full-width versus inset floating geometry; arrangement controls equal versus centered closed tracks. Size coordinates Root padding, Item targets, Icon, indicator, and label typography.
+Variant controls the bar surface: solid is strong, soft is quiet, outline is transparent with a boundary, surface is opaque with a boundary, and ghost is transparent without a boundary. Tone controls destination paint; keyboard focus still follows the shared focus policy. Layout controls full-width versus inset floating geometry; arrangement controls equal versus centered tracks. Size coordinates Root padding, Item targets, Icon, indicator, and label typography.
+
+Use `variant="surface"` to retain the older opaque outline appearance, especially
+above scrolling content. `selectionVariant` changes only selected paint:
+`soft` fills it, `outline` retains only its boundary, and `plain` uses a short
+underline. `selectionRadius` overrides curvature without changing circle
+dimensions. `radius` affects Root only. `elevation` uses shared semantic shadow
+roles; explicit `none` overrides `elevated`. Blur keeps an opaque material
+fallback even when the unblurred variant is transparent.
 
 `selection="indicator"` paints Icon only; `selection="item"` paints the full target. Their discriminated shapes prevent a circular whole Item. Elevation and blur are independent and never imply position or layout. Hover, pressed, current, focus-visible, disabled, reduced motion/transparency, forced colors, light/dark, and RTL are styled.
 
@@ -94,7 +112,33 @@ Public variables are `--brick-bottom-navigation-background`, `--brick-bottom-nav
 
 Set documented variables on Root for local customization. Keep every coordinated value together and verify contrast in both appearances. Compose NotificationBadge inside `BottomNavigation.Icon` around the Brick Icon child when a destination needs a count; Bottom Navigation does not duplicate badge behavior.
 
+### Surface effects
+
+The painted root accepts `treatment`, `backgroundOpacity`, `backdropBlur`,
+`backdropSaturate`, `borderColor` and `borderOpacity`. Use `treatment="translucent"`
+for finished defaults or direct values such as `backdropBlur="18px"`.
+`SurfaceTreatment` and `BackdropBlur` describe the shared types. See the
+[surface effects guide](../../guides/surface-effects.md) for values, precedence,
+legacy `blurred` behavior, scoped Theme defaults, fallbacks and composition.
+
+Local input variables: `--brick-surface-effect-opacity`,
+`--brick-surface-effect-blur`, `--brick-surface-effect-saturation`,
+`--brick-surface-effect-border-color`, `--brick-surface-effect-border-opacity`.
+Inherited Theme input: `--brick-bottom-navigation-translucent-opacity`.
+Inherited Theme input: `--brick-bottom-navigation-translucent-blur`.
+Inherited Theme input: `--brick-bottom-navigation-translucent-saturation`.
+
+
 ## Responsive behavior
+
+`size` and `arrangement` accept scalar values or sparse `initial`, `sm`, `md`,
+`lg`, `xl` objects. Omitted initial values use the component default and later
+breakpoints inherit until overridden. For example, `size={{ initial: "sm", md:
+"md" }}` changes geometry without JavaScript or changing destination order.
+
+Arrangement values are `equal` and `centered`; sizes are `sm`, `md` and `lg`.
+Additional state hooks are `data-selection-variant`, `data-elevation` and
+responsive `data-size-*` / `data-arrangement-*` breakpoint attributes.
 
 Full layout fills its containing width. Floating layout remains centered, capped to the available width, and keeps an outer gutter. Equal arrangement divides available space; centered arrangement keeps closed target widths. Each size keeps a stable base height across widths and label policies. Visible labels remain one line and truncate visually when necessary while their complete authored text remains the accessible name.
 
@@ -102,11 +146,17 @@ Static remains in flow and does not consume viewport safe area. Sticky remains i
 
 ## Accessibility
 
-Give Root a concise unique `ariaLabel` when multiple navigation landmarks exist. Keep visible labels when possible. `always`, `active`, and `hidden` change only visual presentation; authored Label text remains available to assistive technology. `aria-current="page"` identifies the current destination. Focus paint covers the complete Item, and selected state has a non-color boundary.
+Give Root a concise unique `aria-label` or `aria-labelledby` when multiple navigation landmarks exist. Native naming takes precedence over the `ariaLabel` alias. Keep visible labels when possible. `always`, `active`, and `hidden` change only visual presentation; authored Label text remains available to assistive technology. `aria-current="page"` identifies the current destination. Focus paint covers the complete Item, and selected state has a boundary or underline.
 
 ## Composition, native props, and refs
 
 Root and Item preserve Atom native props, handlers, refs, custom slots, and `render`/`asChild`. Icon and Label preserve span props, refs, classes, styles, and composition. Place NotificationBadge inside `BottomNavigation.Icon` around its Brick Icon child so the badge anchors to the glyph instead of the wider selection slot. Router adapters belong on Item. Bottom Navigation does not own route matching, page padding, keyboard avoidance, scroll-driven hiding, or responsive replacement with Sidebar.
+
+Composed native buttons receive `type="button"` unless explicitly overridden;
+disabled composed anchors lose `href`. Custom adapters must forward behavior
+props and supply correct native semantics for their final host. Cancelled,
+modified, download and non-self link activations do not change selection. For
+routes, control `value` from the actual application location.
 
 ## Examples
 

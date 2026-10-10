@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Status |
-| Version or commit | Unreleased 0.1.9 |
+| Version or commit | Local 0.2.3 |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -13,8 +13,11 @@
 | Assistive technology | |
 | Playground route | `/status` |
 
-Scenario order: `01 Overview`, `02 Tones`, `03 Sizes`, `04 Composition`,
-`05 Semantics`, `06 Theme`, `07 Stress`
+Scenario order: `01 Overview`, `02 Tones`, `03 Sizes`
+
+These scenarios remain at `/status?qualification=1`. The normal `/status`
+page has Basic, Label, Sizes, Responsive, Composition, Decorative indicator,
+Customization, Live updates, and three part Props sections.
 
 Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
@@ -34,7 +37,7 @@ Notes or issue:
 
 ## Step 2 — Composition and semantics
 
-Setup: Open `04 Composition` and `05 Semantics`.
+Setup: Open Composition, Decorative indicator and Live updates on `/status`.
 
 Action: Inspect Root, Indicator, and Label in accessibility tools, then compare
 the passive example with the explicitly application-authored live-status
@@ -51,7 +54,7 @@ Notes or issue:
 
 ## Step 3 — Theme and system preferences
 
-Setup: Open `06 Theme` and `07 Stress`; switch system, light, and dark
+Setup: Open `/status?qualification=1` for matched tone/size comparisons and Composition on `/status`; switch system, light, and dark
 appearance, then enable forced colors and reduced motion.
 
 Action: Inspect every tone and focus any interactive content placed alongside
@@ -70,7 +73,7 @@ Setup: Use 320 px, 200% text, and 400% zoom, then enable RTL.
 Action: Inspect short and long localized labels in wrapping containers.
 
 Expected: Labels wrap naturally without clipping or horizontal page overflow;
-indicator stays aligned with the first line and logical ordering follows RTL.
+indicator stays vertically centered beside the label and logical ordering follows RTL.
 
 Result:
 Notes or issue:

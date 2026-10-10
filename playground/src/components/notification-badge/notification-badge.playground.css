@@ -126,10 +126,6 @@
   justify-content: center;
 }
 
-.notification-badge-page .brick-icon-button > svg {
-  inline-size: 1.25em;
-  block-size: 1.25em;
-}
 
 .notification-badge-scoped-appearance-grid {
   grid-template-columns: minmax(0, 1fr);

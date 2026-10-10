@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/image");
+  await page.goto("/image?qualification=1");
   await page.locator("#scenario-image-overview img").waitFor();
 });
 

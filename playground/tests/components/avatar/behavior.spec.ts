@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/avatar");
+  await page.goto("/avatar?qualification=1");
 });
 
 test("Avatar overview exposes canonical defaults only", async ({ page }) => {
@@ -35,11 +35,11 @@ test("five sizes are exact square frames and change no other recipe", async ({
     }),
   );
   expect(evidence).toEqual([
-    { height: 24, shape: "circle", status: null, width: 24 },
     { height: 32, shape: "circle", status: null, width: 32 },
+    { height: 36, shape: "circle", status: null, width: 36 },
     { height: 40, shape: "circle", status: null, width: 40 },
+    { height: 44, shape: "circle", status: null, width: 44 },
     { height: 48, shape: "circle", status: null, width: 48 },
-    { height: 64, shape: "circle", status: null, width: 64 },
   ]);
 });
 
@@ -81,7 +81,7 @@ test("loaded, broken, and missing sources preserve informative fallback semantic
   await expect(
     states.getByRole("img", { name: "Ada Lovelace" }),
   ).toHaveText("AL");
-  await expect(states.locator("img")).toHaveCount(0);
+  await expect(states.locator("img")).toBeHidden();
 
   await states.getByRole("button", { name: "Missing" }).click();
   await expect(
@@ -228,4 +228,32 @@ test("Avatar frame and status geometry survive forced colors", async ({
   expect(computed.borderWidth).toBeGreaterThanOrEqual(1);
   expect(computed.ringWidth).toBeGreaterThanOrEqual(2);
   await expect(page.getByText("Online", { exact: true })).toBeVisible();
+});
+
+test("optional separation insets fallback without enlarging Avatar", async ({ page }) => {
+  const avatars = page.getByTestId("avatar-sizes").locator(".brick-avatar");
+  const avatar = avatars.first();
+  await expect(avatar).toBeVisible();
+  const before = await avatar.boundingBox();
+  await avatar.evaluate((element) => {
+    (element as HTMLElement).style.setProperty("--brick-avatar-outline-width", "1px");
+  });
+  const after = await avatar.boundingBox();
+  expect(after!.width).toBe(before!.width);
+  expect(after!.height).toBe(before!.height);
+  const paint = await avatar.evaluate((element) => {
+    const root = element.getBoundingClientRect();
+    const fallback = element.querySelector(".brick-avatar__fallback")!.getBoundingClientRect();
+    return { inset: fallback.x - root.x, clip: getComputedStyle(element).backgroundClip };
+  });
+  expect(paint).toEqual({ inset: 1, clip: "padding-box" });
+  await avatar.evaluate((element) => element.setAttribute("data-status", "online"));
+  const status = await avatar.evaluate((element) => {
+    const ring = getComputedStyle(element, "::after");
+    return { inset: ring.left, width: parseFloat(ring.width), stroke: parseFloat(ring.borderLeftWidth) };
+  });
+  expect(status.inset).toBe("0px");
+  expect(status.width).toBe(before!.width - 2);
+  expect(status.stroke).toBe(2);
+
 });

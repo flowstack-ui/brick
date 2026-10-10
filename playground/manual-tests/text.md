@@ -24,12 +24,13 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 Setup: Open `/text`; review `01` through `03` top to bottom.
 
-Action: Compare repeated copy across the default, twelve variants, and nine
+Action: Compare repeated copy across the default, fourteen variants, and nine
 tones.
 
 Expected: The default is ordinary primary body text. Type recipes form a clear,
-restrained hierarchy without changing content or host; eyebrow is a short,
-uppercase, tracked label. Primary is neutral
+restrained hierarchy without changing content or host; title-2xs is a compact
+14px structural heading, title-xs is a small 16px structural heading, and
+eyebrow is a short, uppercase, tracked label. Primary is neutral
 high-emphasis text; accent is brand-colored. Every tone remains readable and
 does not change size, weight, or spacing.
 
@@ -110,3 +111,14 @@ Workbook updated:
 
 Mark unavailable physical-device or assistive-technology environments
 `blocked`.
+# Explicit weight scale
+
+Check the weight specimens from thin through black with a font supplying
+100–900. Confirm omitted weight retains the recipe and inherit follows the
+parent. Check light/dark and a responsive heading variant with explicit bold.
+Do not interpret a missing font face's synthesized weight as a Brick recipe.
+## Presentation parity follow-up — not run
+
+1. Inspect /text and /text?qualification=1 at normal and narrow widths in both appearances.
+2. Check all typography roles, numeric glyph alignment, decorations, responsive clamp removal and semantic heading order.
+3. Exercise native browser text resize, actual zoom, RTL and screen-reader reading order. Record these separately from automated browser tests; no human pass is preclaimed.

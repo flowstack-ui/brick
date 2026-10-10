@@ -1,9 +1,14 @@
-import { forwardRef, type HTMLAttributes } from "react";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+import { forwardRef, type CSSProperties, type HTMLAttributes } from "react";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 import {
   DataGrid as AtomDataGrid,
   type DataGridBodyProps as AtomDataGridBodyProps,
   type DataGridCaptionProps as AtomDataGridCaptionProps,
   type DataGridCellProps as AtomDataGridCellProps,
+  type DataGridColumnResizeHandleProps as AtomResizeProps,
+  type DataGridColumnGroupProps as AtomDataGridColumnGroupProps,
+  type DataGridColumnProps as AtomDataGridColumnProps,
   type DataGridColumnHeaderProps as AtomDataGridColumnHeaderProps,
   type DataGridFooterProps as AtomDataGridFooterProps,
   type DataGridHeaderProps as AtomDataGridHeaderProps,
@@ -16,26 +21,45 @@ export type DataGridSize = "sm" | "md" | "lg";
 export type DataGridDensity = "compact" | "comfortable" | "spacious";
 export type DataGridCaptionSide = "top" | "bottom";
 export type DataGridCellAlign = "start" | "center" | "end";
+export type DataGridCellVerticalAlign = "top" | "middle" | "bottom";
+export type DataGridSurface = "transparent" | "base";
+export type DataGridBorderTone = "subtle" | "default" | "strong";
+export type DataGridLayout = "auto" | "fixed";
 
 export interface DataGridContainerProps extends HTMLAttributes<HTMLDivElement> { "data-slot"?: string; }
-export interface DataGridRootProps extends AtomDataGridRootProps { variant?: DataGridVariant; size?: DataGridSize; density?: DataGridDensity; }
+export interface DataGridRootProps extends AtomDataGridRootProps {
+  radius?: Radius; variant?: ResponsiveValue<DataGridVariant>; size?: ResponsiveValue<DataGridSize>; density?: ResponsiveValue<DataGridDensity>; tone?: "neutral" | "accent"; minInlineSize?: string | number; surface?: DataGridSurface; borderTone?: DataGridBorderTone; showColumnBorder?: boolean; layout?: DataGridLayout; striped?: boolean; stickyHeader?: boolean; }
 export interface DataGridCaptionProps extends AtomDataGridCaptionProps { side?: DataGridCaptionSide; }
+export interface DataGridColumnGroupProps extends AtomDataGridColumnGroupProps {}
+export interface DataGridColumnProps extends AtomDataGridColumnProps {}
 export interface DataGridHeaderProps extends AtomDataGridHeaderProps {}
 export interface DataGridBodyProps extends AtomDataGridBodyProps {}
 export interface DataGridFooterProps extends AtomDataGridFooterProps {}
 export interface DataGridRowProps extends AtomDataGridRowProps {}
-export interface DataGridColumnHeaderProps extends Omit<AtomDataGridColumnHeaderProps, "align"> { align?: DataGridCellAlign; numeric?: boolean; }
-export interface DataGridCellProps extends Omit<AtomDataGridCellProps, "align"> { align?: DataGridCellAlign; numeric?: boolean; }
+export interface DataGridColumnHeaderProps extends Omit<AtomDataGridColumnHeaderProps, "align"> { sticky?: "start" | "end"; stickyOffset?: string | number; align?: DataGridCellAlign; verticalAlign?: DataGridCellVerticalAlign; numeric?: boolean; }
+export interface DataGridCellProps extends Omit<AtomDataGridCellProps, "align"> { sticky?: "start" | "end"; stickyOffset?: string | number; align?: DataGridCellAlign; verticalAlign?: DataGridCellVerticalAlign; numeric?: boolean; }
+export type DataGridRowHeaderProps = Omit<DataGridCellProps, "rowHeader">;
+export type DataGridColumnResizeHandleProps = AtomResizeProps;
 export interface DataGridSortIndicatorProps extends HTMLAttributes<HTMLSpanElement> { "data-slot"?: string; }
 
 function mergeClassName(base: string, className?: string) { return className ? `${base} ${className}` : base; }
 function slot(value: string | undefined, fallback: string) { return value ?? fallback; }
+function length(value: string | number) { return typeof value === "number" ? `${value}px` : value; }
+function stickyStyle(sticky: "start" | "end" | undefined, offset: string | number, style?: CSSProperties): CSSProperties {
+  return { ...style, ...(sticky ? { "--brick-data-grid-sticky-inline-offset": length(offset) } : {}) } as CSSProperties;
+}
 
 export const DataGridContainer = forwardRef<HTMLDivElement, DataGridContainerProps>(function DataGridContainer({ className, "data-slot": dataSlot, ...props }, ref) {
   return <div {...props} className={mergeClassName("brick-data-grid-container", className)} data-slot={slot(dataSlot, "data-grid-container")} ref={ref} />;
 });
-export const DataGridRoot = forwardRef<HTMLTableElement, DataGridRootProps>(function DataGridRoot({ variant = "line", size = "md", density = "comfortable", className, "data-slot": dataSlot, ...props }, ref) {
-  return <AtomDataGrid.Root {...props} className={mergeClassName("brick-data-grid", className)} data-density={density} data-size={size} data-slot={slot(dataSlot, "data-grid")} data-variant={variant} ref={ref} />;
+export const DataGridRoot = forwardRef<HTMLTableElement, DataGridRootProps>(function DataGridRoot({ variant = "line", size = "md", density = "comfortable", tone = "accent", minInlineSize, surface = "transparent", borderTone = "default", showColumnBorder = false, layout = "auto", striped = false, stickyHeader = false, className, radius, style, "data-slot": dataSlot, ...props }, ref) {
+  return <AtomDataGrid.Root {...props} className={mergeClassName("brick-data-grid", className)} style={{ ...radiusStyle(radius, "--brick-data-grid-radius", style), ...(minInlineSize === undefined ? {} : { "--brick-data-grid-min-inline-size": length(minInlineSize) }) } as CSSProperties} data-border-tone={borderTone} data-column-border={showColumnBorder ? "" : undefined} {...responsiveDataAttributes("data-density", density, { defaultValue: "comfortable", alwaysInitial: true })} data-layout={layout} {...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true })} data-tone={tone} data-slot={slot(dataSlot, "data-grid")} data-sticky-header={stickyHeader ? "" : undefined} data-striped={striped ? "" : undefined} data-surface={surface} {...responsiveDataAttributes("data-variant", variant, { defaultValue: "line", alwaysInitial: true })} ref={ref} />;
+});
+export const DataGridColumnGroup = forwardRef<HTMLTableColElement, DataGridColumnGroupProps>(function DataGridColumnGroup({ className, "data-slot": dataSlot, ...props }, ref) {
+  return <AtomDataGrid.ColumnGroup {...props} className={mergeClassName("brick-data-grid__column-group", className)} data-slot={slot(dataSlot, "data-grid-column-group")} ref={ref} />;
+});
+export const DataGridColumn = forwardRef<HTMLTableColElement, DataGridColumnProps>(function DataGridColumn({ className, "data-slot": dataSlot, ...props }, ref) {
+  return <AtomDataGrid.Column {...props} className={mergeClassName("brick-data-grid__column", className)} data-slot={slot(dataSlot, "data-grid-column")} ref={ref} />;
 });
 export const DataGridCaption = forwardRef<HTMLTableCaptionElement, DataGridCaptionProps>(function DataGridCaption({ side = "bottom", className, "data-slot": dataSlot, ...props }, ref) {
   return <AtomDataGrid.Caption {...props} className={mergeClassName("brick-data-grid__caption", className)} data-side={side} data-slot={slot(dataSlot, "data-grid-caption")} ref={ref} />;
@@ -52,18 +76,26 @@ export const DataGridFooter = forwardRef<HTMLTableSectionElement, DataGridFooter
 export const DataGridRow = forwardRef<HTMLTableRowElement, DataGridRowProps>(function DataGridRow({ className, "data-slot": dataSlot, ...props }, ref) {
   return <AtomDataGrid.Row {...props} className={mergeClassName("brick-data-grid__row", className)} data-slot={slot(dataSlot, "data-grid-row")} ref={ref} />;
 });
-export const DataGridColumnHeader = forwardRef<HTMLTableCellElement, DataGridColumnHeaderProps>(function DataGridColumnHeader({ align, numeric = false, className, "data-slot": dataSlot, ...props }, ref) {
-  return <AtomDataGrid.ColumnHeader {...props} className={mergeClassName("brick-data-grid__column-header", className)} data-align={align ?? (numeric ? "end" : "start")} data-numeric={numeric ? "" : undefined} data-slot={slot(dataSlot, "data-grid-column-header")} ref={ref} />;
+export const DataGridColumnHeader = forwardRef<HTMLTableCellElement, DataGridColumnHeaderProps>(function DataGridColumnHeader({ sticky, stickyOffset = 0, style, align, verticalAlign = "middle", numeric = false, className, "data-slot": dataSlot, ...props }, ref) {
+  return <AtomDataGrid.ColumnHeader {...props} data-sticky={sticky} style={stickyStyle(sticky, stickyOffset, style)} className={mergeClassName("brick-data-grid__column-header", className)} data-align={align ?? (numeric ? "end" : "start")} data-numeric={numeric ? "" : undefined} data-slot={slot(dataSlot, "data-grid-column-header")} data-vertical-align={verticalAlign} ref={ref} />;
 });
-export const DataGridCell = forwardRef<HTMLTableCellElement, DataGridCellProps>(function DataGridCell({ align, numeric = false, className, "data-slot": dataSlot, ...props }, ref) {
-  return <AtomDataGrid.Cell {...props} className={mergeClassName("brick-data-grid__cell", className)} data-align={align ?? (numeric ? "end" : "start")} data-numeric={numeric ? "" : undefined} data-slot={slot(dataSlot, "data-grid-cell")} ref={ref} />;
+export const DataGridCell = forwardRef<HTMLTableCellElement, DataGridCellProps>(function DataGridCell({ sticky, stickyOffset = 0, style, align, verticalAlign = "middle", numeric = false, className, "data-slot": dataSlot, ...props }, ref) {
+  return <AtomDataGrid.Cell {...props} data-sticky={sticky} style={stickyStyle(sticky, stickyOffset, style)} className={mergeClassName("brick-data-grid__cell", className)} data-align={align ?? (numeric ? "end" : "start")} data-numeric={numeric ? "" : undefined} data-slot={slot(dataSlot, "data-grid-cell")} data-vertical-align={verticalAlign} ref={ref} />;
+});
+export const DataGridRowHeader = forwardRef<HTMLTableCellElement, DataGridRowHeaderProps>(function DataGridRowHeader({ className, "data-slot": dataSlot, ...props }, ref) {
+  return <DataGridCell {...props} rowHeader className={mergeClassName("brick-data-grid__row-header", className)} data-slot={slot(dataSlot, "data-grid-row-header")} ref={ref} />;
+});
+export const DataGridColumnResizeHandle = forwardRef<HTMLDivElement, DataGridColumnResizeHandleProps>(function DataGridColumnResizeHandle({ className, ...props }, ref) {
+  return <AtomDataGrid.ColumnResizeHandle {...props} className={mergeClassName("brick-data-grid__resize-handle", className)} ref={ref} />;
 });
 export const DataGridSortIndicator = forwardRef<HTMLSpanElement, DataGridSortIndicatorProps>(function DataGridSortIndicator({ className, "data-slot": dataSlot, children, ...props }, ref) {
-  return <span {...props} aria-hidden="true" className={mergeClassName("brick-data-grid__sort-indicator", className)} data-slot={slot(dataSlot, "data-grid-sort-indicator")} ref={ref}>{children ?? <svg aria-hidden="true" viewBox="0 0 16 16"><path d="m4 6 4-4 4 4M12 10l-4 4-4-4" /></svg>}</span>;
+  return <span {...props} aria-hidden="true" className={mergeClassName("brick-data-grid__sort-indicator", className)} data-slot={slot(dataSlot, "data-grid-sort-indicator")} ref={ref}>{children ?? <svg aria-hidden="true" viewBox="0 0 16 16"><path data-sort-up="" d="m4 6 4-4 4 4" /><path data-sort-down="" d="m4 10 4 4 4-4" /></svg>}</span>;
 });
 
 DataGridContainer.displayName = "DataGrid.Container";
 DataGridRoot.displayName = "DataGrid.Root";
+DataGridColumnGroup.displayName = "DataGrid.ColumnGroup";
+DataGridColumn.displayName = "DataGrid.Column";
 DataGridCaption.displayName = "DataGrid.Caption";
 DataGridHeader.displayName = "DataGrid.Header";
 DataGridBody.displayName = "DataGrid.Body";
@@ -73,4 +105,4 @@ DataGridColumnHeader.displayName = "DataGrid.ColumnHeader";
 DataGridCell.displayName = "DataGrid.Cell";
 DataGridSortIndicator.displayName = "DataGrid.SortIndicator";
 
-export const DataGrid = Object.freeze({ Container: DataGridContainer, Root: DataGridRoot, Caption: DataGridCaption, Header: DataGridHeader, Body: DataGridBody, Footer: DataGridFooter, Row: DataGridRow, ColumnHeader: DataGridColumnHeader, Cell: DataGridCell, SortIndicator: DataGridSortIndicator });
+export const DataGrid = Object.freeze({ Container: DataGridContainer, Root: DataGridRoot, ColumnGroup: DataGridColumnGroup, Column: DataGridColumn, Caption: DataGridCaption, Header: DataGridHeader, Body: DataGridBody, Footer: DataGridFooter, Row: DataGridRow, ColumnHeader: DataGridColumnHeader, Cell: DataGridCell, RowHeader: DataGridRowHeader, ColumnResizeHandle: DataGridColumnResizeHandle, SortIndicator: DataGridSortIndicator });

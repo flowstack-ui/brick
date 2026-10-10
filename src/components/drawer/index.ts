@@ -1,5 +1,13 @@
 export {
   Drawer,
+  DrawerContext,
+  DrawerPositioner,
+  type DrawerContextProps,
+  type DrawerContextValue,
+  type DrawerPositionerProps,
+  type DrawerPositioning,
+  type DrawerInset,
+  type DrawerClosePlacement,
   DrawerBody,
   DrawerBranch,
   DrawerClose,

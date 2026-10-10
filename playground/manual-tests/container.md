@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Container |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Record the local candidate/commit under test |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -21,7 +21,7 @@ Use `pass`, `fail`, `blocked`, or `not applicable` for every result.
 
 ## Step 1 — Defaults, measures, and gutters
 
-Setup: Open `/container`; review `01` through `03` while resizing the window.
+Setup: Open `/container?qualification=1`; review `01` through `03` while resizing the window.
 
 Action: Compare the default, five measures, and four gutters top to bottom.
 
@@ -74,6 +74,17 @@ Result:
 Notes or issue:
 
 ## Completion
+
+Also review ordinary `/container`: seven preview/code pairs, Usage, Guide,
+Props, TOC links, light/dark and narrow layouts. Check that source matches the
+live example, centered children align, and both shared-region text edges match.
+Large measures may look identical in the constrained docs column; compare their
+actual maximums in the wide standalone qualification surface.
+
+In Composition, inspect one article carrying both Container and Surface classes,
+with no extra Container wrapper. Resize, change direction and appearance;
+verify gutters remain and source matches the adopted host. For custom hosts,
+check forwarding and refs, and avoid competing inline width/padding styles.
 
 Overall result:
 Follow-up issues:

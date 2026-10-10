@@ -4,6 +4,18 @@ Checkbox Group follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Resolve label sizes and leading through shared semantic typography while preserving the existing size scale.
+
+- Add inherited selection recipes, responsive sizes, radius, density, logical
+  label placement and configurable gap with per-item visual overrides.
+- Add controller/provider and item binding helpers, selection limits, eligible
+  Parent selection and linked-label compositions with group validation.
+
+### Fixed
+
+- Corrected the select-all example and API guidance: `allValues` belongs on
+  `CheckboxGroup.Root`, not `CheckboxGroup.Parent`.
+
 ## 0.1.10
 
 ### Added

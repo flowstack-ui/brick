@@ -29,7 +29,6 @@ createElement(RootSection, { as: "div", spacing: "2xl" });
 createElement(Section, { as: "main" });
 // @ts-expect-error Spacing uses a closed recipe.
 createElement(Section, { spacing: "3rem" });
-// @ts-expect-error Responsive values require initial.
 createElement(Section, { spacing: { lg: "xl" } });
 // @ts-expect-error Breakpoints are deliberately closed.
 createElement(Section, { spacing: { initial: "md", xxl: "2xl" } });

@@ -1,6 +1,6 @@
 import { expectEvidenceScreenshot, installVisualDefaults, test } from "../../visual-harness.js";
 
-installVisualDefaults("/file-upload");
+installVisualDefaults("/file-upload?qualification=1");
 
 test("File Upload visual evidence", async ({ page }) => {
   await expectEvidenceScreenshot(page, page.getByTestId("file-upload-overview"), "overview-light.png");

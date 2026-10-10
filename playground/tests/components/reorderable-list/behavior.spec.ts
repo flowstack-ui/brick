@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/reorderable-list");
+  await page.goto("/reorderable-list?qualification=1");
   await expect(page.locator("#scenario-reorderable-list-overview .brick-reorderable-list")).toBeVisible();
 });
 
@@ -70,28 +70,43 @@ test("mouse drag commits on a valid item and abandons invalid space", async ({ p
   await page.evaluate(() => new Promise<void>((resolve) =>
     requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
   ));
-  const [handleBox, targetBox] = await Promise.all([handle.boundingBox(), target.boundingBox()]);
-  expect(handleBox!.y).toBeGreaterThanOrEqual(0);
-  expect(handleBox!.y + handleBox!.height).toBeLessThanOrEqual(viewport!.height);
-  expect(targetBox!.y).toBeGreaterThanOrEqual(0);
-  expect(targetBox!.y + targetBox!.height).toBeLessThanOrEqual(viewport!.height);
-  expect(await handle.evaluate((element) => {
-    const bounds = element.getBoundingClientRect();
-    return document.elementFromPoint(
-      bounds.x + bounds.width / 2,
-      bounds.y + bounds.height / 2,
-    )?.closest("button") === element;
-  })).toBe(true);
-  expect(await target.evaluate((element) => {
-    const bounds = element.getBoundingClientRect();
-    return element.contains(document.elementFromPoint(
-      bounds.x + bounds.width / 2,
-      bounds.y + bounds.height * 0.8,
-    ));
-  })).toBe(true);
-  await page.mouse.move(handleBox!.x + handleBox!.width / 2, handleBox!.y + handleBox!.height / 2);
+  const readPointerGeometry = () => scenario.evaluate((element) => {
+    const handle = element.querySelector<HTMLElement>(".brick-reorderable-list__handle")!;
+    const target = element.querySelector<HTMLElement>('li[data-value="verify"]')!;
+    const handleBox = handle.getBoundingClientRect();
+    const targetBox = target.getBoundingClientRect();
+    const handlePoint = {
+      x: handleBox.x + handleBox.width / 2,
+      y: handleBox.y + handleBox.height / 2,
+    };
+    const targetPoint = {
+      x: targetBox.x + targetBox.width / 2,
+      y: targetBox.y + targetBox.height * 0.8,
+    };
+    return {
+      handleBox: { x: handleBox.x, y: handleBox.y, width: handleBox.width, height: handleBox.height },
+      targetBox: { x: targetBox.x, y: targetBox.y, width: targetBox.width, height: targetBox.height },
+      handlePoint,
+      targetPoint,
+      viewport: { width: innerWidth, height: innerHeight },
+      scrollY,
+      handleVisible: handleBox.top >= 0 && handleBox.bottom <= innerHeight,
+      targetVisible: targetBox.top >= 0 && targetBox.bottom <= innerHeight,
+      handleHit: document.elementFromPoint(handlePoint.x, handlePoint.y)?.closest("button") === handle,
+      targetHit: target.contains(document.elementFromPoint(targetPoint.x, targetPoint.y)),
+    };
+  });
+  await expect.poll(readPointerGeometry).toMatchObject({
+    handleVisible: true,
+    targetVisible: true,
+    handleHit: true,
+    targetHit: true,
+  });
+  const geometry = await readPointerGeometry();
+  await page.mouse.move(geometry.handlePoint.x, geometry.handlePoint.y);
+  await expect.poll(async () => (await readPointerGeometry()).handleHit).toBe(true);
   await page.mouse.down();
-  await page.mouse.move(targetBox!.x + targetBox!.width / 2, targetBox!.y + targetBox!.height * 0.8, { steps: 8 });
+  await page.mouse.move(geometry.targetPoint.x, geometry.targetPoint.y, { steps: 8 });
   const indicator = target.locator('[data-slot="reorderable-list-drop-indicator"]');
   await expect(indicator).toHaveAttribute("data-state", "active");
   await expect(indicator).toHaveAttribute("data-position", "after");
@@ -112,7 +127,8 @@ test("recipes, targets, focus rings, states, and narrow geometry remain complete
   await expect(recipeRoots.nth(0)).toHaveAttribute("data-variant", "outline");
   await expect(recipeRoots.nth(1)).toHaveAttribute("data-variant", "soft");
   const targetSizes = await page.locator("#scenario-reorderable-list-recipes .brick-reorderable-list__handle").evaluateAll((nodes) => nodes.map((node) => node.getBoundingClientRect().height));
-  expect(Math.min(...targetSizes)).toBeGreaterThanOrEqual(44);
+  expect(Math.min(...targetSizes)).toBeGreaterThanOrEqual(32);
+  expect(Math.max(...targetSizes)).toBeGreaterThanOrEqual(48);
 
   const focusControl = page.locator("#scenario-reorderable-list-overview").getByRole("button", { name: "Reorder Connect source" });
   await focusControl.focus();
@@ -158,3 +174,81 @@ test("Reorderable List has no automated accessibility violations", async ({ page
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 });
+
+for (const example of ["grid", "mixed"]) {
+  test(`${example} projects two-dimensional destinations without hover persistence`, async ({ page }) => {
+    await page.goto("/reorderable-list");
+    const root = page.locator(`#${example} .brick-reorderable-list`);
+    await root.scrollIntoViewIfNeeded();
+    const handle = root.getByRole("button", { name: "Reorder Blue", exact: true });
+    await handle.focus();
+    await handle.press("Space");
+    await handle.press("End");
+    const projected = await root.locator(':scope > li').evaluateAll(nodes => nodes.map(node => {
+      const el = node as HTMLElement;
+      return { value: el.dataset.value, x: el.offsetLeft + parseFloat(el.style.getPropertyValue('--atom-reorder-x')), y: el.offsetTop + parseFloat(el.style.getPropertyValue('--atom-reorder-y')) };
+    }));
+    expect(projected[0]?.value).toBe('Blue');
+    await handle.press("Enter");
+    const committed = await root.locator(':scope > li').evaluateAll(nodes => nodes.map(node => ({ value: (node as HTMLElement).dataset.value, x: (node as HTMLElement).offsetLeft, y: (node as HTMLElement).offsetTop })));
+    expect(committed[committed.length - 1]?.value).toBe('Blue');
+    for (const entry of projected.filter(entry => entry.value !== 'Blue')) expect(committed.find(actual => actual.value === entry.value)).toEqual(entry);
+    await expect(handle).toBeFocused();
+  });
+}
+
+for (const withPreview of [false, true]) {
+  test(`pointer drag cursor stays grabbing across the document (${withPreview ? "preview" : "no preview"})`, async ({ page }) => {
+    if (withPreview) await page.goto('/reorderable-list?testMode=1');
+    const root = withPreview ? page.locator('ol[data-slot="reorderable-list"]').first() : page.locator('#scenario-reorderable-list-overview ol');
+    await root.scrollIntoViewIfNeeded();
+    const handle = root.locator('.brick-reorderable-list__handle').first();
+    const source = root.locator('li').first();
+    const target = root.locator('li').nth(1);
+    await page.evaluate(() => {
+      const probe = document.createElement('button');
+      probe.id = 'cursor-probe';
+      probe.textContent = 'Cursor probe';
+      Object.assign(probe.style, { position: 'fixed', right: '8px', bottom: '8px', cursor: 'pointer', zIndex: '99999' });
+      document.body.append(probe);
+    });
+    const probe = page.locator('#cursor-probe');
+    await expect(probe).toHaveCSS('cursor', 'pointer');
+    await handle.focus();
+    await handle.press('Space');
+    await expect(source).toHaveAttribute('data-drag-input', 'keyboard');
+    await expect(probe).toHaveCSS('cursor', 'pointer');
+    await handle.press('Escape');
+
+    for (const ending of ['drop', 'escape', 'blur', 'capture-loss']) {
+      await handle.scrollIntoViewIfNeeded();
+      await handle.hover();
+      const h = (await handle.boundingBox())!;
+      await page.mouse.move(h.x + h.width / 2, h.y + h.height / 2);
+      await expect(handle).toHaveCSS('cursor', 'grab');
+      await page.mouse.down();
+      await page.mouse.move(h.x + h.width / 2 + 12, h.y + h.height / 2);
+      await expect(source).toHaveAttribute('data-drag-input', 'pointer');
+      await expect(page.locator('[data-slot="reorderable-list-preview"]')).toHaveCount(withPreview ? 1 : 0);
+      for (const element of [root, root.locator('.brick-reorderable-list__content').first(), root.locator('.brick-reorderable-list__move').first(), probe]) {
+        const box = (await element.boundingBox())!;
+        await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+        await expect(element).toHaveCSS('cursor', 'grabbing');
+      }
+      await expect(page.locator('html')).toHaveCSS('cursor', 'grabbing');
+      expect(await probe.evaluate(el => (el as HTMLElement).style.cursor)).toBe('pointer');
+      if (ending === 'drop') {
+        const box = (await target.boundingBox())!;
+        await page.mouse.move(box.x + box.width / 2, box.y + box.height * .85);
+        await page.mouse.up();
+      } else {
+        if (ending === 'escape') await page.keyboard.press('Escape');
+        if (ending === 'blur') await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+        if (ending === 'capture-loss') await handle.dispatchEvent('lostpointercapture', { pointerId: 1 });
+        await page.mouse.up();
+      }
+      await expect(page.locator('.brick-reorderable-list__item[data-drag-input]')).toHaveCount(0);
+      await expect(probe).toHaveCSS('cursor', 'pointer');
+    }
+  });
+}

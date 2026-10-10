@@ -1,6 +1,6 @@
 {
   "name": "@flowstack-ui/brick",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Opinionated styled React components built on @flowstack-ui/atom.",
   "type": "module",
   "license": "MIT",
@@ -27,6 +27,106 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
+    "./input-addon": {
+      "types": "./dist/input-addon.d.ts",
+      "default": "./dist/input-addon.js"
+    },
+    "./toggle-tip": {
+      "types": "./dist/toggle-tip.d.ts",
+      "default": "./dist/toggle-tip.js"
+    },
+    "./selection": {
+      "types": "./dist/selection.d.ts",
+      "default": "./dist/selection.js"
+    },
+    "./action-delegate": {
+      "types": "./dist/action-delegate.d.ts",
+      "default": "./dist/action-delegate.js"
+    },
+    "./table-of-contents": {
+      "types": "./dist/table-of-contents.d.ts",
+      "default": "./dist/table-of-contents.js"
+    },
+    "./radius": {
+      "types": "./dist/radius.d.ts",
+      "default": "./dist/radius.js"
+    },
+    "./qr-code": {
+      "types": "./dist/qr-code.d.ts",
+      "default": "./dist/qr-code.js"
+    },
+    "./tags-input": {
+      "types": "./dist/tags-input.d.ts",
+      "default": "./dist/tags-input.js"
+    },
+    "./editable": {
+      "types": "./dist/editable.d.ts",
+      "default": "./dist/editable.js"
+    },
+    "./native-select": {
+      "types": "./dist/native-select.d.ts",
+      "default": "./dist/native-select.js"
+    },
+    "./marquee": {
+      "types": "./dist/marquee.d.ts",
+      "default": "./dist/marquee.js"
+    },
+    "./stat": {
+      "types": "./dist/stat.d.ts",
+      "default": "./dist/stat.js"
+    },
+    "./timeline": {
+      "types": "./dist/timeline.d.ts",
+      "default": "./dist/timeline.js"
+    },
+    "./empty-state": {
+      "types": "./dist/empty-state.d.ts",
+      "default": "./dist/empty-state.js"
+    },
+    "./alert": {
+      "types": "./dist/alert.d.ts",
+      "default": "./dist/alert.js"
+    },
+    "./spinner": {
+      "types": "./dist/spinner.d.ts",
+      "default": "./dist/spinner.js"
+    },
+    "./floating-panel": {
+      "types": "./dist/floating-panel.d.ts",
+      "default": "./dist/floating-panel.js"
+    },
+    "./overlay-manager": {
+      "types": "./dist/overlay-manager.d.ts",
+      "default": "./dist/overlay-manager.js"
+    },
+    "./action-bar": {
+      "types": "./dist/action-bar.d.ts",
+      "default": "./dist/action-bar.js"
+    },
+    "./calendar": {
+      "types": "./dist/calendar.d.ts",
+      "default": "./dist/calendar.js"
+    },
+    "./date-input": {
+      "types": "./dist/date-input.d.ts",
+      "default": "./dist/date-input.js"
+    },
+    "./date-picker": {
+      "types": "./dist/date-picker.d.ts",
+      "default": "./dist/date-picker.js"
+    },
+    "./date-value": {
+      "types": "./dist/date-value.d.ts",
+      "default": "./dist/date-value.js"
+    },
+    "./download-trigger": {
+      "types": "./dist/download-trigger.d.ts",
+      "default": "./dist/download-trigger.js"
+    },
+    "./close-button": {
+      "types": "./dist/close-button.d.ts",
+      "default": "./dist/close-button.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
@@ -39,6 +139,30 @@
     "./appearance": {
       "types": "./dist/appearance.d.ts",
       "default": "./dist/appearance.js"
+    },
+    "./locale-provider": {
+      "types": "./dist/locale-provider.d.ts",
+      "default": "./dist/locale-provider.js"
+    },
+    "./format-number": {
+      "types": "./dist/format-number.d.ts",
+      "default": "./dist/format-number.js"
+    },
+    "./format-byte": {
+      "types": "./dist/format-byte.d.ts",
+      "default": "./dist/format-byte.js"
+    },
+    "./for": {
+      "types": "./dist/for.d.ts",
+      "default": "./dist/for.js"
+    },
+    "./checkmark": {
+      "types": "./dist/checkmark.d.ts",
+      "default": "./dist/checkmark.js"
+    },
+    "./radiomark": {
+      "types": "./dist/radiomark.d.ts",
+      "default": "./dist/radiomark.js"
     },
     "./button": {
       "types": "./dist/button.d.ts",
@@ -92,6 +216,10 @@
       "types": "./dist/avatar.d.ts",
       "default": "./dist/avatar.js"
     },
+    "./avatar-group": {
+      "types": "./dist/avatar-group.d.ts",
+      "default": "./dist/avatar-group.js"
+    },
     "./status": {
       "types": "./dist/status.d.ts",
       "default": "./dist/status.js"
@@ -140,6 +268,10 @@
       "types": "./dist/checkbox.d.ts",
       "default": "./dist/checkbox.js"
     },
+    "./checkbox-card": {
+      "types": "./dist/checkbox-card.d.ts",
+      "default": "./dist/checkbox-card.js"
+    },
     "./checkbox-group": {
       "types": "./dist/checkbox-group.d.ts",
       "default": "./dist/checkbox-group.js"
@@ -147,6 +279,10 @@
     "./radio-group": {
       "types": "./dist/radio-group.d.ts",
       "default": "./dist/radio-group.js"
+    },
+    "./radio-card": {
+      "types": "./dist/radio-card.d.ts",
+      "default": "./dist/radio-card.js"
     },
     "./segment-group": {
       "types": "./dist/segment-group.d.ts",
@@ -159,6 +295,14 @@
     "./breadcrumb": {
       "types": "./dist/breadcrumb.d.ts",
       "default": "./dist/breadcrumb.js"
+    },
+    "./splitter": {
+      "types": "./dist/splitter.d.ts",
+      "default": "./dist/splitter.js"
+    },
+    "./steps": {
+      "types": "./dist/steps.d.ts",
+      "default": "./dist/steps.js"
     },
     "./tabs": {
       "types": "./dist/tabs.d.ts",
@@ -252,9 +396,9 @@
       "types": "./dist/number-input.d.ts",
       "default": "./dist/number-input.js"
     },
-    "./otp-field": {
-      "types": "./dist/otp-field.d.ts",
-      "default": "./dist/otp-field.js"
+    "./pin-input": {
+      "types": "./dist/pin-input.d.ts",
+      "default": "./dist/pin-input.js"
     },
     "./password-toggle-field": {
       "types": "./dist/password-toggle-field.d.ts",
@@ -324,6 +468,10 @@
       "types": "./dist/stack.d.ts",
       "default": "./dist/stack.js"
     },
+    "./center": {
+      "types": "./dist/center.d.ts",
+      "default": "./dist/center.js"
+    },
     "./group": {
       "types": "./dist/group.d.ts",
       "default": "./dist/group.js"
@@ -335,6 +483,10 @@
     "./z-stack": {
       "types": "./dist/z-stack.d.ts",
       "default": "./dist/z-stack.js"
+    },
+    "./float": {
+      "types": "./dist/float.d.ts",
+      "default": "./dist/float.js"
     },
     "./grid": {
       "types": "./dist/grid.d.ts",
@@ -422,21 +574,28 @@
     "docs/guides/installation.md",
     "docs/guides/appearance-and-tokens.md",
     "docs/guides/theme-contract.md",
+    "docs/guides/surface-effects.md",
     "docs/guides/control-sizing.md",
+    "docs/guides/input-integrations.md",
     "docs/guides/agent-knowledge.md",
-    "docs/guides/browser-support.md"
+    "docs/guides/browser-support.md",
+    "docs/components/image/integrations.md"
   ],
   "scripts": {
     "clean": "node scripts/clean.mjs",
-    "build": "npm run clean && npm run build:js && npm run build:css && npm run build:theme-contract && npm run agents:build",
+    "build": "node scripts/clean.mjs --package-only && npm run build:js && npm run build:css && npm run build:theme-contract && npm run agents:build",
     "agents:build": "node scripts/build-agent-knowledge.mjs",
     "agents:check": "node scripts/build-agent-knowledge.mjs --check",
-    "build:js": "tsc -p tsconfig.build.json",
-    "build:css": "node scripts/build-styles.mjs --mode production",
-    "build:css:dev": "node scripts/build-styles.mjs --mode development",
+    "build:js": "node scripts/generate-aspect-ratios.mjs --check && tsc -p tsconfig.build.json",
+    "build:css": "node scripts/generate-pin-input-variant-css.mjs --check && node scripts/generate-chip-recipes.mjs --check && node scripts/generate-disclosure-recipes.mjs --check && node scripts/generate-tags-input-variant-css.mjs --check && node scripts/generate-textarea-variant-css.mjs --check && node scripts/generate-color-picker-size-css.mjs --check && node scripts/generate-action-size-css.mjs --check && node scripts/generate-form-control-size-css.mjs --check && node scripts/build-styles.mjs --mode production",
+    "build:css:dev": "node scripts/generate-pin-input-variant-css.mjs --check && node scripts/generate-chip-recipes.mjs --check && node scripts/generate-disclosure-recipes.mjs --check && node scripts/generate-tags-input-variant-css.mjs --check && node scripts/generate-textarea-variant-css.mjs --check && node scripts/generate-color-picker-size-css.mjs --check && node scripts/generate-action-size-css.mjs --check && node scripts/generate-form-control-size-css.mjs --check && node scripts/build-styles.mjs --mode development",
+    "generate:action-sizes": "node scripts/generate-action-size-css.mjs",
+    "generate:action-sizes:check": "node scripts/generate-action-size-css.mjs --check",
+    "generate:form-control-sizes": "node scripts/generate-form-control-size-css.mjs",
+    "generate:form-control-sizes:check": "node scripts/generate-form-control-size-css.mjs --check",
     "build:theme-contract": "node scripts/build-theme-contract.mjs",
     "build:playground": "npm run build && npm run build:playground:built",
-    "build:playground:built": "vite build --config playground/vite.config.ts",
+    "build:playground:built": "node scripts/verify-preview-environment.mjs && vite build --config playground/vite.config.ts",
     "build:consumer": "npm run build && npm run build:consumer:built",
     "build:consumer:built": "npm run build -w apps/consumer",
     "dev": "npm run dev:playground",
@@ -462,14 +621,15 @@
     "test:ownership": "node scripts/verify-component-tests.mjs",
     "test:integration": "vitest run test/integration --coverage=false && npm run build:playground && npm run test:processes && playwright test playground/tests/integration --project=chromium",
     "test:css": "node scripts/prototype-css.mjs",
+    "test:surface-effects": "node scripts/verify-surface-effects-browser.mjs",
     "test:browser": "npm run build:playground && npm run test:browser:project:built -- chromium",
     "test:browser:project:built": "npm run test:processes && node scripts/run-browser-project.mjs",
     "test:browser:release": "npm run build:playground && npm run test:browser:release:built",
     "test:browser:release:built": "npm run test:processes && node scripts/run-release-browser-tests.mjs",
     "test:browser:release:project:built": "npm run test:processes && node scripts/run-release-browser-tests.mjs",
     "test:consumer": "npm run build && npm test -w apps/consumer",
-    "test:visual": "npm run build:playground && npm run test:processes && playwright test playground/tests/components/*/visual.spec.ts --project=chromium",
-    "test:visual:update": "npm run build:playground && npm run test:processes && playwright test playground/tests/components/*/visual.spec.ts --project=chromium --update-snapshots",
+    "test:visual": "npm run build:playground && npm run test:processes && node scripts/run-browser-project.mjs chromium --visual",
+    "test:visual:update": "npm run build:playground && npm run test:processes && node scripts/run-browser-project.mjs chromium --visual --update-snapshots",
     "test:all": "npm run check:release",
     "size:css": "node scripts/report-css-size.mjs",
     "pack:check": "node scripts/verify-package.mjs --dry-run",
@@ -485,8 +645,11 @@
     "verify:theme-qualification": "node scripts/verify-theme-qualification.mjs",
     "test:processes": "node scripts/check-test-ports.mjs",
     "verify:typography": "node scripts/verify-typography.mjs",
+    "verify:focus": "node scripts/verify-focus-policy.mjs",
     "verify:playground-primitives": "node scripts/verify-playground-primitives.mjs",
     "verify:playground-contract": "node scripts/verify-playground-contract.mjs",
+    "format:playground-examples": "node scripts/format-playground-examples.mjs --write",
+    "verify:playground-examples": "node scripts/format-playground-examples.mjs",
     "verify:playground-stack": "node scripts/verify-playground-stack.mjs",
     "verify:playground-grid": "node scripts/verify-playground-grid.mjs",
     "verify:playground-container": "node scripts/verify-playground-container.mjs",
@@ -502,8 +665,8 @@
     "verify:playground-composition": "node scripts/verify-playground-composition.mjs",
     "check": "npm run check:repository",
     "check:focused": "npm run test:component",
-    "check:repository": "npm run verify:repository-contract && npm run verify:theme-contract && npm run test:ownership && npm run verify:playground-contract && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run verify:playground-code && npm run verify:playground-nav-list && npm run verify:playground-sidebar && npm run verify:playground-icon && npm run verify:playground-image && npm run verify:playground-list && npm run verify:playground-composition && npm run build && npm run agents:check && npm run verify:theme-qualification && npm run typecheck:built && npm run test:node:built && npm run test:components && npm run test:css && npm run build:playground:built && npm run build:consumer:built && npm run pack:check && npm run verify:consumers:built",
-    "check:release": "npm run check:repository && npm run test:browser:release:built && npm run verify:consumer:built && npm run size:css",
+    "check:repository": "npm run verify:repository-contract && npm run verify:focus && npm run verify:theme-contract && npm run test:ownership && npm run verify:playground-contract && npm run docs:component && npm run docs:component:semantic && npm run verify:typography && npm run verify:playground-primitives && npm run verify:playground-stack && npm run verify:playground-grid && npm run verify:playground-container && npm run verify:playground-surface && npm run verify:playground-divider && npm run verify:playground-scroll-area && npm run verify:playground-code && npm run verify:playground-nav-list && npm run verify:playground-sidebar && npm run verify:playground-icon && npm run verify:playground-image && npm run verify:playground-list && npm run verify:playground-composition && npm run build && npm run agents:check && npm run verify:theme-qualification && npm run typecheck:built && npm run test:node:built && npm run test:components && npm run test:css && npm run build:playground:built && npm run build:consumer:built && npm run pack:check && npm run verify:consumers:built",
+    "check:release": "npm run check:repository && npm run test:browser:release:built && npm run verify:consumer:built && npm run size:css && npm run test:surface-effects",
     "prepublishOnly": "npm run build"
   },
   "browserslist": [
@@ -518,28 +681,40 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flowstack-ui/atom": "0.26.1"
+    "@flowstack-ui/atom": "0.27.3"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
+    "@fontsource-variable/inter": "5.3.0",
+    "@fontsource-variable/outfit": "5.3.0",
+    "@jridgewell/sourcemap-codec": "1.5.5",
     "@playwright/test": "^1.61.1",
+    "@tanstack/react-table": "8.21.3",
+    "@tanstack/react-virtual": "3.14.11",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^26.1.1",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
+    "@types/react-payment-inputs": "1.1.4",
     "@vitejs/plugin-react": "^4.7.0",
-    "@vitest/coverage-v8": "^3.2.7",
-    "browserslist": "^4.28.6",
+    "@vitest/coverage-v8": "4.1.11",
+    "browserslist": "4.28.7",
+    "check-password-strength": "3.0.0",
     "jsdom": "^26.1.0",
     "lightningcss": "^1.32.0",
     "lucide-react": "^0.468.0",
+    "prettier": "3.6.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "react-hook-form": "7.88.0",
+    "react-payment-inputs": "1.2.0",
+    "shiki": "4.4.3",
     "typescript": "^5.9.3",
+    "use-mask-input": "3.14.2",
     "vite": "^6.4.3",
-    "vitest": "^3.2.7"
+    "vitest": "4.1.11"
   },
   "directories": {
     "doc": "docs",

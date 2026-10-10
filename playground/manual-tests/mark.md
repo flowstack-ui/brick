@@ -1,5 +1,9 @@
 # Mark manual-test protocol
 
+Parity revision: inspect /mark and /mark?qualification=1. Verify all tones, text
+versus plain, heading inheritance, multiline wrapping and native asChild.
+Renew actual zoom, physical-device and screen-reader checks; these remain pending.
+
 | Environment | Record before testing |
 | --- | --- |
 | Component | Mark |

@@ -1,16 +1,14 @@
+import { surfaceEffects, type SurfaceEffectProps } from "../_surface-effects/SurfaceEffects.js";
 import {
-  Children,
-  cloneElement,
   createElement,
   forwardRef,
-  Fragment,
   type CSSProperties,
   type ForwardedRef,
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
-  type Ref,
 } from "react";
+import { composeHost } from "@flowstack-ui/atom/compose-host";
 import {
   responsiveDataAttributes,
   type ResponsiveValue,
@@ -28,10 +26,11 @@ export type SurfaceElement =
   | "form"
   | "li";
 
-export type SurfaceLevel = "canvas" | "base" | "subtle" | "raised";
+export type SurfaceLevel = "transparent" | "canvas" | "base" | "subtle" | "raised";
 export type SurfaceTone = "neutral" | "accent";
 export type SurfaceElevation = "none" | "low" | "medium" | "high";
-export type SurfaceRadius = "none" | "subtle" | "surface";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+export type SurfaceRadius = Radius;
 export type SurfaceInset = "none" | "sm" | "md" | "lg" | "xl" | "2xl";
 export type SurfaceScrimStrength = "soft" | "medium" | "strong";
 export type SurfaceScrimDirection =
@@ -50,7 +49,7 @@ type SurfaceHostProps =
   | { as?: SurfaceElement; asChild?: false; children?: ReactNode }
   | { as?: never; asChild: true; children: ReactElement };
 
-export type SurfaceProps = SurfaceNativeProps & SurfaceHostProps & {
+export type SurfaceProps = SurfaceNativeProps & SurfaceHostProps & SurfaceEffectProps & {
   level?: SurfaceLevel;
   tone?: SurfaceTone;
   bordered?: boolean;
@@ -93,52 +92,9 @@ function mergeClassName(className: string | undefined) {
   return className ? `brick-surface ${className}` : "brick-surface";
 }
 
-function composeRefs<T>(...refs: Array<Ref<T> | undefined>) {
-  return (value: T | null) => {
-    for (const ref of refs) {
-      if (typeof ref === "function") ref(value);
-      else if (ref) ref.current = value;
-    }
-  };
-}
-
-function mergeComposedProps(
-  original: Record<string, unknown>,
-  override: Record<string, unknown>,
-) {
-  const merged = { ...original, ...override };
-  for (const [key, value] of Object.entries(override)) {
-    const current = original[key];
-    if (
-      key.startsWith("on") &&
-      typeof current === "function" &&
-      typeof value === "function"
-    ) {
-      merged[key] = (...args: unknown[]) => {
-        value(...args);
-        current(...args);
-      };
-    } else if (
-      key === "className" &&
-      typeof current === "string" &&
-      typeof value === "string"
-    ) {
-      merged[key] = `${current} ${value}`;
-    } else if (
-      key === "style" &&
-      current &&
-      value &&
-      typeof current === "object" &&
-      typeof value === "object"
-    ) {
-      merged[key] = { ...current, ...value };
-    }
-  }
-  return merged;
-}
-
 function SurfaceImpl(
   {
+    treatment, backgroundOpacity, backdropBlur, backdropSaturate, borderColor, borderOpacity,
     as = "div",
     asChild = false,
     bordered = false,
@@ -147,45 +103,33 @@ function SurfaceImpl(
     elevation = "none",
     inset = "none",
     level = "base",
-    radius = "surface",
+    radius: explicitRadius,
+    style,
     slot = "surface",
     tone = "neutral",
     ...props
   }: SurfaceProps,
   ref: ForwardedRef<HTMLElement>,
 ) {
+  const effects = surfaceEffects({ treatment, backgroundOpacity, backdropBlur, backdropSaturate, borderColor, borderOpacity });
+  const radius = explicitRadius ?? "surface";
   const rootProps = {
     ...props,
+    ...effects.attributes,
     ...responsiveDataAttributes("data-inset", inset, { alwaysInitial: true }),
     className: mergeClassName(className),
     "data-bordered": bordered ? "" : undefined,
     "data-elevation": elevation,
     "data-level": level,
     "data-radius": radius,
+    style: radiusStyle(explicitRadius, "--brick-surface-radius", { ...effects.style, ...style }),
     "data-slot": slot,
     "data-tone": tone,
     ref,
   };
 
   if (asChild) {
-    const child = Children.only(children) as ReactElement<Record<string, unknown>>;
-    if (child.type === Fragment) {
-      throw new Error(
-        "Surface with asChild requires one DOM or component host; a Fragment cannot receive Surface paint.",
-      );
-    }
-    const childRef = (
-      "ref" in child.props
-        ? child.props.ref
-        : (child as ReactElement & { ref?: Ref<HTMLElement> }).ref
-    ) as Ref<HTMLElement> | undefined;
-    return cloneElement(
-      child,
-      mergeComposedProps(child.props, {
-        ...rootProps,
-        ref: childRef || ref ? composeRefs(childRef, ref) : undefined,
-      }),
-    );
+    return composeHost(children, rootProps);
   }
 
   return createElement(as, rootProps, children);

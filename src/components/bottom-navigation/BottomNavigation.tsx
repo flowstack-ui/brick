@@ -1,6 +1,9 @@
+import { surfaceEffects, type SurfaceEffectProps } from "../_surface-effects/SurfaceEffects.js";
 "use client";
 
 import { forwardRef } from "react";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 import {
   BottomNavigation as AtomBottomNavigation,
   type BottomNavigationItemProps as AtomBottomNavigationItemProps,
@@ -13,7 +16,9 @@ import {
   type StaticSpanPartProps,
 } from "../_internal/StaticSpanPart.js";
 
-export type BottomNavigationVariant = "solid" | "soft" | "outline" | "ghost";
+export type BottomNavigationVariant = "solid" | "soft" | "outline" | "surface" | "ghost";
+export type BottomNavigationElevation = "none" | "low" | "medium" | "high";
+export type BottomNavigationSelectionVariant = "soft" | "outline" | "plain";
 export type BottomNavigationTone = "accent" | "neutral";
 export type BottomNavigationLayout = "full" | "floating";
 export type BottomNavigationArrangement = "equal" | "centered";
@@ -35,20 +40,28 @@ type ItemSelection = {
   selectionShape?: "square" | "rounded" | "pill";
 };
 
-export type BottomNavigationRootProps = AtomBottomNavigationRootProps &
+export type BottomNavigationRootProps = AtomBottomNavigationRootProps & SurfaceEffectProps &
   (IndicatorSelection | ItemSelection) & {
     /** Destination distribution. @default "equal" */
-    arrangement?: BottomNavigationArrangement;
+    arrangement?: ResponsiveValue<BottomNavigationArrangement>;
     /** Add a translucent backdrop treatment. @default false */
     blurred?: boolean;
     /** Add static surface separation. @default false */
     elevated?: boolean;
+    /** Semantic shadow role; overrides elevated. */
+    elevation?: BottomNavigationElevation;
+    /** Root corners; defaults to none for full and overlay for floating. */
+    radius?: Radius;
+    /** Selected area corners; overrides selectionShape curvature, not circle geometry. */
+    selectionRadius?: Radius;
+    /** Selected paint independent from the bar surface. @default "soft" */
+    selectionVariant?: BottomNavigationSelectionVariant;
     /** Edge-to-edge or inset geometry. @default "full" */
     layout?: BottomNavigationLayout;
     /** Include viewport safe-area protection. @default true */
     safeArea?: boolean;
     /** Coordinated target, icon, indicator, and label geometry. @default "md" */
-    size?: BottomNavigationSize;
+    size?: ResponsiveValue<BottomNavigationSize>;
     /** Navigation palette. @default "accent" */
     tone?: BottomNavigationTone;
     /** Root surface treatment. @default "outline" */
@@ -67,9 +80,15 @@ export const BottomNavigationRoot = forwardRef<HTMLElement, BottomNavigationRoot
   function BottomNavigationRoot(
     {
       arrangement = "equal",
+      treatment, backgroundOpacity, backdropBlur, backdropSaturate, borderColor, borderOpacity,
       blurred = false,
       className,
       elevated = false,
+      elevation,
+      radius,
+      selectionRadius,
+      selectionVariant = "soft",
+      style,
       layout = "full",
       safeArea = true,
       selection = "indicator",
@@ -82,21 +101,27 @@ export const BottomNavigationRoot = forwardRef<HTMLElement, BottomNavigationRoot
     },
     ref,
   ) {
+    const effects = surfaceEffects({ treatment, backgroundOpacity, backdropBlur, backdropSaturate, borderColor, borderOpacity }, blurred);
     return (
       <AtomBottomNavigation.Root
         {...props}
+        {...effects.attributes}
         className={mergeClassName("brick-bottom-navigation", className)}
-        data-arrangement={arrangement}
-        data-blurred={blurred ? "" : undefined}
-        data-elevated={elevated ? "" : undefined}
+        {...responsiveDataAttributes("data-arrangement", arrangement, { defaultValue: "equal", alwaysInitial: true })}
+        data-blurred={effects.blurred ? "" : undefined}
+        data-elevated={(elevation ?? (elevated ? "low" : "none")) !== "none" ? "" : undefined}
+        data-elevation={elevation ?? (elevated ? "low" : "none")}
         data-layout={layout}
         data-safe-area={safeArea ? "" : undefined}
         data-selection={selection}
         data-selection-shape={selectionShape}
-        data-size={size}
+        data-selection-variant={selectionVariant}
+        {...responsiveDataAttributes("data-size", size, { defaultValue: "md", alwaysInitial: true })}
         data-slot={dataSlot ?? "bottom-navigation"}
         data-tone={tone}
         data-variant={variant}
+        style={radiusStyle(radius, "--brick-bottom-navigation-radius-input",
+          radiusStyle(selectionRadius, "--brick-bottom-navigation-selection-radius-input", { ...effects.style, ...style }))}
         ref={ref}
       />
     );

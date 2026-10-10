@@ -1,5 +1,12 @@
 # Fieldset manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 | Run information | Value |
 | --- | --- |
 | Component | Fieldset |
@@ -90,3 +97,30 @@ Follow-up issues:
 Workbook updated:
 
 Mark unavailable touch or assistive-technology environments `blocked`.
+## Additional qualification — unrun
+
+1. Navigate Grouped choices with keyboard and screen reader. Confirm the
+   legend names the group and each checkbox has its own name/state.
+2. Compare Group errors: only Email is invalid. Correct an invalid child in
+   an interactive form and confirm the group summary clears without invalidating siblings.
+3. Check disabled groups, nested groups, Content spacing and responsive sizes
+   at 200% and 400% zoom and on a physical touch device.
+
+Result: Unrun. Record actual browser, device and assistive-technology versions.
+
+4. Compose CheckboxGroup directly after Legend with native required validation.
+   Confirm its hidden validation input does not push the visible cards beside
+   the legend or collapse their width, in LTR/RTL and at narrow widths. Confirm
+   validation and reset still work. Automated geometry is not screen-reader proof.
+
+Fieldset adds Content, Context and useFieldsetContext. Content renders a div,
+accepts native HTML attributes, forwards its ref, supports asChild and responsive
+gap. It owns vertical rhythm between related controls without adding paint.
+Root.size accepts responsive sm/md/lg (default md). Each size adjusts group
+spacing and legend hierarchy.
+
+Group invalid state does not mark every independent Field invalid. Apply invalid
+to the fields that need correction; Fieldset may summarize their state. Native
+fieldset/legend grouping and disabled semantics remain. Required-group rules
+such as selecting at least one choice belong to the choice primitive/application.
+Legends and error text no longer use wavy underlines or error-edge stripes.

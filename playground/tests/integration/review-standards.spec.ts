@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../evidence-test.js";
 
 const contract = JSON.parse(
   readFileSync(
@@ -17,7 +17,7 @@ for (const owner of contract.reviewStandards.labeledSpecimenOwners) {
       { width: 390, height: 844 },
     ]) {
       await page.setViewportSize(viewport);
-      await page.goto(`/${owner}`);
+      await page.goto(`/${owner}?qualification=1`);
       await expect(page.locator(`[data-component-page="${owner}"]`)).toBeVisible();
       const overflow = await page.evaluate(() =>
         document.documentElement.scrollWidth - document.documentElement.clientWidth,

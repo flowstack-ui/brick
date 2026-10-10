@@ -19,6 +19,9 @@ Present compact circular read-only task progress with Brick-owned SVG ring geome
 
 ## Rules
 
+- **MUST:** Use the shared useProgress from the Brick root or progress subpath with RootProvider; do not create a second circular state model. Root accepts value/defaultValue/onValueChange/ids and valueFormat percent or value.
+- **MUST:** Size is responsive and pairs diameter with stroke. Unitless stroke customization uses the 100-unit viewBox; recipe CSS owns the thickness-aware radius and range. Use larger rings for centered text, external labels for small sizes.
+- **MUST:** Project Circle only onto svg and Track/Indicator only onto circle. Preserve owned geometry and refs. Context adds no DOM; keep interactive help outside Root and do not add live announcements.
 - **MUST:** Give Root an accessible task name through Label or native ARIA; Circle, Track, Indicator, and visible Value are decorative or silent and do not replace that name.
 - **MUST:** Use a numeric value only for measurable work, pass null or omit it for indeterminate work, and preserve Atom's truthful min/max normalization, clamping, state, and aria-valuenow behavior.
 - **MUST:** Treat Circle, Track, and Indicator as Brick-owned fixed SVG presentation over Atom Progress context; keep one Circle, order Track before Indicator, and do not override viewBox, radius, circumference, dash array, or dash offset.

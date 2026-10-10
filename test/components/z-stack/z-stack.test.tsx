@@ -1,9 +1,22 @@
-import { createRef } from "react";
+import { createRef, Fragment } from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { ZStack } from "../../../src/z-stack.js";
 
 describe("ZStack", () => {
+  it("composes Root and Item with one host and preserves cleanup", () => {
+    for (const Part of [ZStack.Root, ZStack.Item]) {
+      const cleanup = vi.fn();
+      const childCleanup = vi.fn();
+      const { unmount } = render(<Part asChild ref={() => cleanup}><article data-testid="host" ref={() => childCleanup}>Layer</article></Part>);
+      expect(screen.getByTestId("host").tagName).toBe("ARTICLE");
+      expect(screen.getByTestId("host")).toHaveClass(Part === ZStack.Root ? "brick-z-stack" : "brick-z-stack-item");
+      unmount();
+      expect(cleanup).toHaveBeenCalledTimes(1);
+      expect(childCleanup).toHaveBeenCalledTimes(1);
+      expect(() => render(<Part asChild><Fragment><span /></Fragment></Part>)).toThrow(/Fragment/);
+    }
+  });
   it("renders a paintless overlapping root with adopted defaults", () => {
     const ref = createRef<HTMLElement>();
     render(<ZStack.Root data-testid="root" ref={ref}><span>Back</span><span>Front</span></ZStack.Root>);

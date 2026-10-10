@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Breadcrumb |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Local 0.2.3 Breadcrumb parity candidate |
 | Reviewer |  |
 | Date |  |
 | Browser and version |  |
@@ -20,9 +20,9 @@ the named environment is actually tested.
 
 ## Step 1 — Defaults, variants, and sizes
 
-Setup: Open `/breadcrumb`; review scenarios 01–03 top to bottom.
+Setup: Open `/breadcrumb?qualification=1`; review scenarios 01–03 top to bottom.
 Action: Hover and focus ancestor links, then compare `sm`, `md`, and `lg`.
-Expected: Order and content match; plain underlines only on interaction;
+Expected: Order and content match; plain has no underline except inherit interaction feedback; subtle underlines on interaction;
 underline persists; only typography and spacing change with size.
 Result:
 Notes or issue:
@@ -59,7 +59,7 @@ Notes or issue:
 Setup: Continue to scenario 08 and use the page appearance controls.
 Action: Focus scoped and customized ancestor links.
 Expected: Both scopes remain equivalent; only the customized trail uses the
-shown purple links, green page, wider spacing, and thicker underline; focus holds.
+shown semantic accent links, primary current text, wider spacing and thicker underline; focus holds.
 Result:
 Notes or issue:
 
@@ -82,7 +82,25 @@ are announced once in order; decorative separators are silent; control name is c
 Result:
 Notes or issue:
 
+## Step 8 — Documentation, menus and current destinations
+
+Setup: Open `/breadcrumb` in light and dark appearance, then RTL.
+Action: Open both ancestor menus with Enter/Space; move through destination links,
+close with Escape and outside interaction. Inspect the linked current page and
+resize the responsive example.
+Expected: One named button, correct destination links and menu-owned keyboard
+navigation; focus returns to the stable trigger. Current destination is a real
+anchor. Responsive recipes and token overrides hold; compact targets expand for
+coarse input. All eight Props tables and their TOC links are usable on a phone.
+Result:
+Notes or issue:
+
 ## Completion
+
+Review correction: compare neutral, accent and inherit in light/dark appearance.
+Accent ancestor hover should change color without moving; inherit should retain
+the parent color and underline on interaction. Confirm numeric closed-wrapper
+spacing renders as pixels, including zero. Status tones are no longer supported.
 
 Overall result:
 Follow-up issues:

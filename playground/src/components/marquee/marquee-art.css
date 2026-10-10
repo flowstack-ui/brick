@@ -1,0 +1,6 @@
+/* Deliberate artwork transforms. Layout, paint, spacing and motion use Brick. */
+.marquee-art-diagonal { transform: rotate(-2deg); }
+.marquee-art-perspective { transform: perspective(900px) rotateX(12deg) rotateY(-5deg); }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-art-diagonal, .marquee-art-perspective { transform: none; }
+}

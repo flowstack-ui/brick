@@ -4,6 +4,35 @@ Navigation Menu follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Coordinate moving-arrow and panel fade durations through Atom presence.
+
+- Anchor non-viewport top-level panels to their own item, keep horizontal
+  chevrons vertical in RTL, and contain indicator artwork inside shared panels.
+- Demonstrate asChild with an unstyled anchor so navigation recipes have one owner.
+
+- Add coordinated raised List surface, retaining transparent header integration.
+- Default Content links to compact destination rows; preserve explicit control
+  and custom panel presentations and reset nested navigation context.
+- Default Content inset to sm; rich grids can retain md explicitly.
+- Separate destination corners from control radius and soften contrast hover.
+
+- Keep non-viewport panels out of the navigation row's flow; omit the shared
+  indicator in that composition.
+- Replace status palettes with neutral/accent/contrast navigation tones.
+- Differentiate small typography from medium; retain 36/40/44px control heights.
+- Apply interaction foreground alongside background to inner links and triggers.
+
+- Coordinate shared viewport positioning and resizing with layered directional
+  panel exchanges; use a more compact default viewport radius.
+- Support explicit navigation-root viewport anchoring alongside the default
+  trigger anchor, and demonstrate structured navigation destinations.
+
+- Add subtle/plain control recipes, navigation tones, shared radius and
+  Content inset. Match Button control geometry and preserve inherited hooks.
+- Expose independent pointer/delay policies, retained/inline panels, real
+  Content refs, viewport alignment and cancelable selection/dismissal events.
+- Add controller, RootProvider, Context and replaceable ItemIndicator artwork.
+
 ### Changed
 
 - Replaced the thick open-trigger Indicator bar with a small surface-matched

@@ -6,6 +6,17 @@ Link follows the package version of `@flowstack-ui/brick`.
 
 ### Changed
 
+- Added responsive size selection with sparse inherited defaults and corrected
+  optional parent href typing for asChild composition.
+
+- Default Link now uses persistent `underline`, independent of legacy Theme
+  decoration policy. `theme` remains a deprecated explicit compatibility option.
+- Added `subtle` for hover/focus-visible/active underlining; `plain` retains its
+  no-underline contract. No native navigation or external-link behavior changed.
+- Softened decoration using theme-adaptive currentColor at 20% with a 0.18em
+  offset; color, thickness and offset overrides inherit correctly. Forced colors
+  and increased contrast retain full-strength decoration and visible focus.
+
 - Changed neutral Link interaction paint from muted text to the semantic
   accent hover and pressed roles, so plain navigation gains emphasis instead
   of becoming less prominent when people interact with it.

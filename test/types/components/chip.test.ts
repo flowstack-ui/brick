@@ -18,6 +18,13 @@ const tone: ChipTone = "accent";
 const size: ChipSize = "lg";
 const shape: ChipShape = "rounded";
 const rootProps: ChipRootProps = { variant, tone, size, shape };
+const responsive: ChipRootProps = {size:{sm:"sm",md:"lg"},density:{initial:"compact",lg:"comfortable"},variant:{md:"subtle"},tone:"contrast",unstyled:true};
+const projected: ChipLabelProps = {asChild:true,unstyled:true,children:createElement("strong",null,"Design")};
+// @ts-expect-error shared breakpoints exclude arbitrary names
+const invalidBreakpoint: ChipRootProps = {size:{tablet:"md"}};
+// @ts-expect-error radius and shape are mutually exclusive
+const invalidRadius: ChipRootProps = {radius:"control",shape:"pill"};
+void responsive; void projected; void invalidBreakpoint; void invalidRadius;
 const labelProps: ChipLabelProps = { children: "Riley" };
 const removeProps: ChipRemoveTriggerProps = {
   ariaLabel: "Remove Riley",
@@ -38,11 +45,11 @@ void ChipLabel;
 void ChipRemoveTrigger;
 
 // @ts-expect-error Chip variants are closed.
-const badVariant: ChipVariant = "solid";
-// @ts-expect-error Chip tones are intentionally not status tones.
-const badTone: ChipTone = "danger";
+const badVariant: ChipVariant = "ghost";
+// @ts-expect-error Chip tones use semantic roles, not arbitrary colors.
+const badTone: ChipTone = "purple";
 // @ts-expect-error Chip sizes are closed.
-const badSize: ChipSize = "xl";
+const badSize: ChipSize = "huge";
 // @ts-expect-error Chip shapes are closed.
 const badShape: ChipShape = "circle";
 // @ts-expect-error RemoveTrigger requires a localized accessible name.

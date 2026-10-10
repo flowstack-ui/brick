@@ -8,9 +8,19 @@ import {
 } from "../../../src/hover-card.js";
 
 describe("HoverCard", () => {
-  it("exposes exactly the approved frozen five-part namespace", () => {
+  it("preserves composed Content, independent inset/radius and fragment arrows", () => {
+    const ref = createRef<HTMLDivElement>();
+    render(<HoverCard.Root defaultOpen><HoverCard.Trigger asChild><a href="/ada">Ada</a></HoverCard.Trigger><HoverCard.Content asChild ref={ref} inset="xs" radius="none"><div data-purpose="custom-host"><><p>Summary</p><HoverCard.Arrow /></></div></HoverCard.Content></HoverCard.Root>);
+    expect(ref.current).toHaveAttribute("data-purpose", "custom-host");
+    expect(ref.current).toHaveAttribute("data-inset", "xs");
+    expect(ref.current?.style.getPropertyValue("--brick-hover-card-radius")).toBe("0px");
+    expect(ref.current?.querySelector("svg")?.parentElement).toBe(ref.current);
+  });
+  it("exposes the frozen parts and controller composition namespace", () => {
     expect(Object.keys(HoverCard)).toEqual([
       "Root",
+      "RootProvider",
+      "Context",
       "Trigger",
       "Portal",
       "Content",

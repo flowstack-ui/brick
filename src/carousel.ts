@@ -2,6 +2,12 @@ export * from "./components/carousel/index.js";
 
 export {
   CarouselRoot as Root,
+  CarouselRootProvider as RootProvider,
+  CarouselPropsProvider as PropsProvider,
+  CarouselContext as Context,
+  CarouselIndicators as Indicators,
+  CarouselProgressText as ProgressText,
+  CarouselAutoplayIndicator as AutoplayIndicator,
   CarouselViewport as Viewport,
   CarouselTrack as Track,
   CarouselSlide as Slide,

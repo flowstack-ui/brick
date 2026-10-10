@@ -9,6 +9,8 @@ import {
   type FieldOrientation,
   type FieldRequiredIndicatorProps,
   type FieldRootProps,
+  type FieldItemProps,
+  type FieldsetContentProps,
   type FieldsetDescriptionProps,
   type FieldsetErrorProps,
   type FieldsetLegendProps,
@@ -120,6 +122,31 @@ void fieldsetLegendProps;
 void fieldsetDescriptionProps;
 void fieldsetErrorProps;
 void refs;
+
+const familyComposition = (
+  <Form gap={{ initial: "3", md: "5" }}>
+    <Fieldset.Root size={{ initial: "sm", md: "lg" }}>
+      <Fieldset.Legend>Payment</Fieldset.Legend>
+      <Fieldset.Content gap={{ initial: "2", md: "4" }} ref={fieldRef}>
+        <Field.Root target="amount" ids={{ control: "payment", label: "payment-label" }}
+          size={{ initial: "xs", md: "md" }} orientation={{ initial: "vertical", md: "horizontal" }} labelWidth="8rem">
+          <Field.Label>Amount</Field.Label>
+          <Field.Item value="amount" ref={fieldRef}><input /></Field.Item>
+          <Field.Error><Field.ErrorIcon />Required</Field.Error>
+          <Field.Context>{(state) => String(state.invalid)}</Field.Context>
+        </Field.Root>
+      </Fieldset.Content>
+      <Fieldset.Context>{(state) => String(state.disabled)}</Fieldset.Context>
+    </Fieldset.Root>
+  </Form>
+);
+// @ts-expect-error Item asChild must receive one element.
+const invalidItem: FieldItemProps = { value: "amount", asChild: true, children: "Amount" };
+// @ts-expect-error Content asChild must receive one element.
+const invalidContent: FieldsetContentProps = { asChild: true, children: "Fields" };
+void familyComposition;
+void invalidItem;
+void invalidContent;
 
 // @ts-expect-error Form render and asChild are mutually exclusive.
 const invalidFormComposition: FormProps = { asChild: true, children: createElement("form"), render: createElement("form") };

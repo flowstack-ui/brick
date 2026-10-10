@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/collapsible"); });
+test.beforeEach(async ({ page }) => { await page.goto("/collapsible?qualification=1"); });
 
 test("defaults and recipe comparisons preserve controlled differences", async ({ page }) => {
   const root = page.getByTestId("collapsible-overview").locator(".brick-collapsible");

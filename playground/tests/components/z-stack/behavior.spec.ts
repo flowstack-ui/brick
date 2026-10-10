@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../evidence-test.js";
 
-test.beforeEach(async ({ page }) => { await page.goto("/z-stack"); });
+test.beforeEach(async ({ page }) => { await page.goto("/z-stack?qualification=1"); });
 
 test("ZStack overlaps children in source order with logical placement", async ({ page }) => {
   const overview = page.getByTestId("z-stack-overview");

@@ -4,6 +4,9 @@ Link Box follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Added shared radius selection, inherited title weight and an explicitly
+  static primary anchor for the full-region destination.
+
 - No unreleased changes.
 
 ## 0.1.11 - 2026-08-28

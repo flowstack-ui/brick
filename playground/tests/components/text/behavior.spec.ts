@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function box(locator: Locator) {
   const value = await locator.boundingBox();
@@ -8,7 +8,7 @@ async function box(locator: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/text");
+  await page.goto("/text?qualification=1");
 });
 
 test("Text overview preserves the canonical semantic and visual defaults", async ({
@@ -35,11 +35,11 @@ test("Text controlled comparisons change only variant, tone, weight, or alignmen
   const variantTexts = page
     .getByTestId("text-variants")
     .locator(".brick-text");
-  await expect(variantTexts).toHaveCount(12);
+  await expect(variantTexts).toHaveCount(17);
   const expectedVariants = [
-    "display", "display-sm", "display-md", "display-lg",
-    "title-lg", "title-md", "title-sm",
-    "body-lg", "body-md", "body-sm", "caption", "eyebrow",
+    "display", "display-sm", "display-md", "display-lg", "display-xl",
+    "title-xl", "title-lg", "title-md", "title-sm", "title-xs", "title-2xs",
+    "body-xl", "body-lg", "body-md", "body-sm", "caption", "eyebrow",
   ];
   const sizes: number[] = [];
   for (let index = 0; index < expectedVariants.length; index += 1) {
@@ -50,10 +50,12 @@ test("Text controlled comparisons change only variant, tone, weight, or alignmen
     await expect(text).toHaveText("Build dependable interfaces.");
     sizes.push(Number.parseFloat(await text.evaluate((node) => getComputedStyle(node).fontSize)));
   }
-  expect(sizes).toEqual([40, 40, 52, 64, 32, 24, 20, 20, 16, 14, 12, 12]);
-  await expect(variantTexts.nth(11)).toHaveCSS("font-weight", "600");
-  await expect(variantTexts.nth(11)).toHaveCSS("letter-spacing", "0.96px");
-  await expect(variantTexts.nth(11)).toHaveCSS("text-transform", "uppercase");
+  expect(sizes).toEqual([36, 36, 48, 60, 72, 30, 24, 20, 18, 16, 14, 20, 18, 16, 14, 12, 12]);
+  await expect(variantTexts.nth(7)).toHaveCSS("font-weight", "600");
+  await expect(variantTexts.nth(8)).toHaveCSS("font-weight", "600");
+  await expect(variantTexts.nth(16)).toHaveCSS("font-weight", "600");
+  await expect(variantTexts.nth(16)).toHaveCSS("letter-spacing", "0.96px");
+  await expect(variantTexts.nth(16)).toHaveCSS("text-transform", "uppercase");
 
   const responsiveHeading = page.getByTestId("text-responsive-variant");
   await expect(responsiveHeading).toHaveAttribute("data-variant", "display-sm");
@@ -61,7 +63,7 @@ test("Text controlled comparisons change only variant, tone, weight, or alignmen
   await expect(responsiveHeading).toHaveAttribute("data-variant-lg", "display-lg");
   await expect(responsiveHeading).toHaveAttribute("data-align", "center");
   await expect(responsiveHeading).toHaveAttribute("data-align-lg", "start");
-  await expect(responsiveHeading).toHaveCSS("font-size", "64px");
+  await expect(responsiveHeading).toHaveCSS("font-size", "60px");
   await expect(responsiveHeading).toHaveCSS("text-align", "start");
 
   const toneTexts = page.getByTestId("text-tones").locator(".brick-text");
@@ -78,7 +80,7 @@ test("Text controlled comparisons change only variant, tone, weight, or alignmen
   for (const text of await weightTexts.all()) {
     weightValues.push(await text.evaluate((node) => getComputedStyle(node).fontWeight));
   }
-  expect(weightValues).toEqual(["400", "400", "500", "600"]);
+  expect(weightValues).toEqual(["400", "100", "200", "300", "400", "500", "600", "700", "800", "900"]);
 
   const alignmentTexts = page.getByTestId("text-alignments").locator(".brick-text");
   await expect(alignmentTexts.nth(0)).toHaveCSS("text-align", "start");
@@ -132,7 +134,7 @@ test("Text semantic hosts retain identical visual recipes and actual output", as
 
   const named = page.getByTestId("text-named");
   await expect(named.getByRole("heading", { level: 3, name: "Project settings" }))
-    .toHaveAttribute("data-variant", "title-lg");
+    .toHaveAttribute("data-variant", "title-md");
   await expect(named.getByText("Manage the defaults shared by this workspace."))
     .toHaveJSProperty("tagName", "P");
   await expect(named.getByText("Updated today")).toHaveAttribute("data-variant", "caption");

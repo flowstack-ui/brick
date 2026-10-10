@@ -1,5 +1,6 @@
 # Tabs
 
+
 Tabs switches between related peer panels while preserving complete keyboard,
 selection, and panel relationships through Atom.
 
@@ -11,7 +12,8 @@ without changing the page's primary location.
 ## When not to use
 
 Do not use Tabs for site navigation, sequential steps, independent form
-choices, or content whose activation is actually a route transition.
+choices. URL-backed peer panels may compose anchors with a router callback;
+ordinary site navigation remains Link/NavList.
 
 ## Installation and imports
 
@@ -58,24 +60,36 @@ role="tab"`, Content to `div role="tabpanel"`, and Indicator to a decorative
 Public exports are `Tabs`, `TabsRoot`, `TabsList`, `TabsTrigger`, `TabsContent`,
 `TabsIndicator`, `TabsRootProps`, `TabsListProps`, `TabsTriggerProps`,
 `TabsContentProps`, `TabsIndicatorProps`, `TabsContentInset`, `TabsLayout`,
-`TabsListColumns`, `TabsListRadius`, `TabsSize`, and `TabsVariant`.
+`TabsListColumns`, `TabsListRadius`, `TabsSize`, `TabsTone`, and `TabsVariant`.
+
+Root accepts `tone="accent|neutral"` (default `accent`). Neutral uses primary
+selected text, a neutral subtle surface for soft tabs, and a primary indicator
+for line tabs. Soft selection is flat; solid retains its elevated treatment.
+Tone does not change sizes, focus placement or List padding. The rendered
+Root exposes `data-tone`, not a native `tone` attribute.
 
 | Prop | Values | Default |
 | --- | --- | --- |
 | `size` | `sm`, `md`, `lg` | `md` |
-| `variant` | `line`, `solid`, `soft`, `enclosed` | `line` |
+| `variant` | `line`, `solid`, `soft`, `subtle`, `enclosed`, `outline`, `plain` | `line` |
+| `tone` | `accent`, `neutral` | `accent` |
 | `fullWidth` | `boolean` | `false` |
 | `layout` | `auto`, `stacked`, `side`, or responsive object | `auto` |
 
-List accepts `columns={1|2|3|4}` or a responsive object. Omission preserves
+Size, variant, tone and fullWidth accept sparse responsive values. Sizes use
+36/40/44px minimum heights with 14/14/16px text. `fullWidth` serializes as
+`data-full-width="true|false"`, including responsive false resets.
+
+List accepts `columns="auto"` or `columns={1|2|3|4}` or a responsive object. Omission preserves
 the ordinary one-axis list. Explicit columns create equal visual tracks while
 keeping Atom's orientation, DOM order, arrow keys, selection, and ARIA model.
 
-List accepts `radius="default|none"`. `default` preserves the variant recipe;
+List accepts shared token-only [Radius](../../guides/radius.md) choices and the
+legacy `default` spelling. Omission or `default` preserves the variant recipe;
 `none` removes List and Trigger corners for a solid or soft selector nested
 inside a clipping parent that owns the outer corners.
 
-List also accepts `triggerRadius="default|none"` for every variant. Use
+List also accepts `triggerRadius={Radius}` or `"default"` for every variant. Use
 `triggerRadius="none"` for square line tabs when the selected underline, not a
 rounded tab silhouette, should own the active geometry.
 
@@ -87,16 +101,24 @@ List, Trigger, Content, and Indicator extend their exact Atom props. Atom also
 supplies `orientation`, `activationMode`, `loop`, controlled/uncontrolled
 value, `keepMounted`, and `focusable`.
 
+### Shared radius selection
+
+The parts listed for this component in the [Radius guide](../../guides/radius.md)
+accept the shared token-only `Radius` contract. Omission preserves the owner’s
+normal corners. Core sizes and semantic roles are distinct; arbitrary lengths
+and responsive objects are not accepted. Where a legacy corner `shape` exists,
+choose either it or `radius`, not both. This does not change behavior, sizing,
+or the independently owned corners of other parts.
+
 ## Visual recipes and states
 
 Line emphasizes selection with a server-rendered accent edge and an optional
-moving Indicator after Atom can measure the active Trigger while its active
-label and icon use primary text rather than accent color. The Indicator is a
-line-only visual enhancement: solid, soft, and enclosed hide it and render
-their complete selected treatment directly on the active Trigger. This keeps
-every recipe visually stable on the first paint and through hydration. Sizes
-change control typography and rhythm. Hover, active, selected, disabled, and
-focus-visible remain distinct.
+moving Indicator after Atom can measure the active Trigger. Active line labels
+use primary text. Solid, soft/subtle and plain support filled indicators;
+enclosed and outline keep a static joined border. Readiness replaces fallback
+selected paint rather than drawing both. Soft and subtle are aliases. Solid is
+an inset elevated selector; enclosed additionally borders the panel; outline
+does not. Hover, selection, disabled and focus-visible remain distinct.
 
 ## Tokens and CSS hooks
 
@@ -110,16 +132,21 @@ include `--brick-tabs-foreground`, `--brick-tabs-selected-foreground`,
 `--brick-tabs-focus-ring`, `--brick-tabs-gap`, `--brick-tabs-trigger-gap`,
 `--brick-tabs-trigger-height`, `--brick-tabs-trigger-padding`,
 `--brick-tabs-panel-padding`, `--brick-tabs-list-padding`, and
-`--brick-tabs-radius`. Solid and soft recipes reserve at least the complete
-focus-ring reach in List padding so a clipping parent cannot crop edge
-Triggers.
+`--brick-tabs-radius`. Focus is drawn inside Triggers and Content. Soft List
+has zero default inset; solid retains space-1 design padding. The focus-color
+extension defaults to the shared `--brick-color-focus-ring`, independently of
+the Trigger text tone. Forced colors uses Highlight. The Theme contract checks
+the focus color against neutral surfaces and the selected accent-soft fill.
+Default Trigger corners subtract the actual List padding from its radius.
+Soft therefore keeps the full List radius on every Trigger; solid accounts for
+its inset. First, middle and last Triggers use the same corner treatment.
 
 ## Customization
 
 Set supported variables on Root. Use `className` or `style` for local layout;
 do not replace selected/focus affordances or rewrite Atom state attributes.
-Use `Tabs.Indicator` only when a line recipe benefits from the moving accent;
-the selected state remains visible without it.
+Use `Tabs.Indicator` for a moving line or filled selection. Its `radius` accepts
+shared Radius tokens. Selection remains visible without it.
 
 ## Responsive behavior
 
@@ -151,18 +178,54 @@ place non-tab controls inside the tablist for visual convenience.
 
 ## Accessibility
 
+### Focus presentation
+
+Focus paints inside Triggers and Content. Soft List has zero protective inset; solid keeps design padding. Scrolling and selection remain unchanged.
+See [Focus presentation](../../guides/focus-presentation.md).
+
 Give every List a useful label, pair each Trigger value with one Content value,
 and choose an initial value. Automatic activation is the default; choose manual
 when activating a panel is costly. Disabled tabs are skipped. Forced colors and
-reduced motion retain selection and focus. Keep the shipped List padding when
-solid or soft Tabs sit inside a clipped Card or Surface; it is part of the
-focus-visible geometry rather than decorative spacing.
+reduced motion retain selection and focus. Inside focus paint does not require
+protective List padding at clipping edges. Keep intentional solid surface spacing.
 
 ## Composition, native props, and refs
 
 Root, List, Trigger, and Content preserve Atom `render`, `asChild`, native
 attributes, class, style, custom slot, and refs. Indicator accepts native div
-attributes, class, style, and slot.
+attributes, class, style, slot, render/asChild and a forwarded ref.
+
+### Controller and lifecycle
+
+Additional exports: `TabsRootProvider`, `TabsContext`, `TabsContentGroup`,
+`useTabs`, `useTabsContext`, `TabsRootProviderProps`, `TabsContentGroupProps`,
+`TabsContentSpacing`, `TabsContentAnimation`, `TabsJustify`, `TabsRecipeProps`,
+`UseTabsProps`, `UseTabsReturn`, `TabsIds`, and `TabsContextValue`.
+
+`useTabs(options)` creates the controller for `Tabs.RootProvider value={tabs}`.
+RootProvider accepts all Brick recipes; `Tabs.Context` reads the controller via
+a render-function child. ContentGroup optionally groups panels without behavior.
+List `justify="start|center|end"` is responsive and preserves overflow access.
+
+Root/controller adds `loopFocus` (overrides `loop`), `deselectable` (clear to an
+empty string), `onFocusChange({ focusedValue })`, `navigate({ value, node, href })`,
+`id`, `ids`, `composite`, `lazyMount`, `unmountOnExit`, `hideMode`, and
+`onExitComplete`. Keep unique nonempty values and valid custom IDs. Disabled
+composed anchors cannot navigate; modified clicks retain native link behavior.
+The application owns URL synchronization and selection after dynamic removal.
+
+Explicit lazyMount/unmountOnExit are independent; the unspecified partner
+defaults to false. Without either, inactive Content still unmounts by default;
+keepMounted retains it eagerly. Content can override lifecycle flags. Activity
+uses React support when available and otherwise falls back to display-none
+retention, which does not pause React 18 effects.
+
+Content `spacing="inset|adjacent"` defaults to inset; adjacent retains only
+list-facing space. `animation="none|fade"` opts into reduced-motion-aware
+presence animation. Without fade, inactive panels stop painting immediately,
+even while presence cleanup retains their DOM. Reduced motion also hides outgoing
+fade panels immediately. Text-only panels are automatically tabbable; focusable=false
+opts out, and an explicit tabIndex wins. Inactive panels are inert during exit.
 
 ## Examples
 

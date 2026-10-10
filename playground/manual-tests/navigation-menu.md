@@ -1,9 +1,53 @@
 # Navigation Menu manual-test protocol
 
+## Expanded recipe and policy review
+
+### Visual redesign checks (unperformed manual qualification)
+
+- Hover an inline destination beyond closeDelay: it must remain usable until
+  the pointer leaves the panel. Repeat inside nested disclosures.
+- Scroll an open vertical menu toward the browser edge: its collision position
+  must update without resizing the browser.
+- Close a menu and reopen during exit: the arrow must fade with the panel at
+  its last position, not disappear early or jump. Repeat with reduced motion.
+
+1. Hover each destination: the whole row highlights with compact corners;
+   leaving it clears paint. Contrast must not create an inverse white pill.
+2. Compare a raised bar, Viewport and arrow in light/dark: paint is coordinated,
+   the arrow seam is closed, and keyboard focus is not clipped.
+3. Inspect rich grids, transparent header integration, inline and nested
+   disclosures at 200% actual browser zoom and with long localized titles.
+4. Switch unequal panels rapidly, close/reopen, and enable reduced motion.
+   No origin flash, diagonal jump, stale panel or clipped destination is allowed.
+5. Open the second inline disclosure: its panel starts at its own Item, not
+   the first trigger. In the header example, the panel and arrow center on
+   Resources; the arrow's entire base remains inside the panel corners,
+   including after resizing.
+6. Verify an asChild native anchor retains destination styling without a
+   second styled Link owner. In horizontal RTL, the disclosure chevron points
+   down when closed and up when open, never sideways.
+
+These additional manual checks are unperformed until a human completes them;
+automated results do not substitute for screen-reader or physical-device review.
+
+- Compare sm/md/lg: 36/40/44px controls, 12/14/16px type, neutral
+  subtle hover/open and plain unchanged backgrounds, with visible focus.
+- Review light/dark, tone, radius and content inset. Check panel Link focus on
+  a direct Surface and its fallback without one.
+- Replace indicator with custom ItemIndicator, remove with null and repeat
+  asChild. No duplicated glyph or unwanted accessible artwork should appear.
+- Inspect shared and inline panels, start/center/end alignment, RTL/vertical,
+  nested Sub, and large content in one bounded ScrollArea.
+- Type a retained draft, close and reopen. Hidden content must be unavailable
+  to keyboard/screen readers while its state survives.
+- Verify controller/Context, independent delays, pointer policy flags,
+  canceled selection/dismissal and Dialog composition without clipping/focus
+  leakage. Repeat relevant cases on touch and actual browser zoom.
+
 | Run information | Value |
 | --- | --- |
 | Component | Navigation Menu |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Local 0.2.3 worktree; unpublished changes |
 | Reviewer |  |
 | Date |  |
 | Browser and version |  |
@@ -21,7 +65,7 @@ Use `pass`, `fail`, `blocked`, or `not applicable`; leave results blank until te
 Open `/navigation-menu` and review scenarios 01–03 top to bottom. Operate each example.
 Expected: the default is medium; only the named size or anatomy changes; text,
 icons, shortcuts, focus, and popup geometry remain aligned. Confirm `sm`, `md`,
-and `lg` links and triggers have 32px, 44px, and 48px minimum heights. Confirm
+and `lg` links and triggers have 36px, 40px, and 44px minimum heights. Confirm
 the automatic chevrons remain visually compact and current links use a thin,
 offset underline. Confirm panel Links fill their grid cell, wrap rich content,
 and make each direct Surface child one coherent clickable and focused area.
@@ -55,6 +99,12 @@ radius remain visibly distinct; logical alignment and keyboard direction
 mirror; focus and state remain visible without required motion.
 
 ## Step 5 — Assistive technology
+
+Before the assistive-technology pass, compare the basic shared navigation in
+LTR and RTL. Switch both directions rapidly, grow and shrink the panel, close
+and reopen it, then enable reduced motion. Expected: no snap, stacked panels,
+clipped trailing edge or empty closing box. The basic example uses navigation
+anchoring; the other default examples continue to follow their active trigger.
 
 Traverse the default example with a screen reader and keyboard. Expected:
 trigger, menu or navigation structure, open/selected/disabled state, groups,

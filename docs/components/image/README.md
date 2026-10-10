@@ -1,5 +1,13 @@
 # Image
 
+### Shared radius migration
+
+`ImageRadius` now aliases shared `Radius`; omission still means none.
+Historical sm/md/lg mapped to subtle/control/surface. Use those semantic names
+to preserve that appearance; sm/md/lg now select core sizes. Other core and
+semantic Radius values are supported, including xl and overlay. Image loading,
+fitting, intrinsic dimensions and numeric ratio behavior are unchanged.
+
 Image presents ordinary raster or vector media with authored alternative text,
 deterministic loading/fallback anatomy, fit and focal-position recipes, stable
 aspect ratio, and finished framing. Atom owns source lifecycle; Brick owns paint.
@@ -45,7 +53,8 @@ Do not combine modular styles with `styles.css` or `tokens.css`.
 
 Public exports are `Image`, `ImageRoot`, `ImageContent`, `ImageFallback`,
 `ImageRootProps`, `ImageContentProps`, `ImageFallbackProps`, `ImageFit`,
-`ImagePosition`, `ImageRadius`, and `ImageFrame`.
+`ImagePosition`, `ImagePositionPreset`, `ResponsiveImageFit`,
+`ResponsiveImagePosition`, `ResponsiveImageRatio`, `ImageRadius`, and `ImageFrame`.
 Direct parts are equivalent to the compound namespace and support imports from
 React Server Components without a client wrapper around `Image`.
 
@@ -67,8 +76,8 @@ React Server Components without a client wrapper around `Image`.
 | `Image.Fallback` | `div` | `HTMLDivElement` | authored selected non-loaded content |
 
 `ratio` is adapted through Atom Aspect Ratio on the same Root element; it adds
-no wrapper. Content and Fallback occupy the same grid area and are mutually
-exclusive under Atom's source state.
+no wrapper. Content and Fallback occupy the same grid area. Default fallback
+selects idle/error; explicit loading fallback may overlay the pending image.
 
 ## API
 
@@ -76,12 +85,12 @@ exclusive under Atom's source state.
 
 | Prop | Values | Default |
 | --- | --- | --- |
-| `src` | image URL string | absent / `idle` |
-| `fit` | `cover`, `contain`, `fill`, `none`, `scale-down` | `cover` |
-| `position` | `center`, `top`, `bottom`, `start`, `end` | `center` |
-| `radius` | `none`, `sm`, `md`, `lg`, `full` | `none` |
+| `src` / `srcSet` | URL / native candidate-list string | absent / `idle` |
+| `fit` | responsive `cover`, `contain`, `fill`, `none`, `scale-down` | `cover` |
+| `position` | responsive `center`, `top`, `bottom`, `start`, `end` or authored CSS object-position | `center` |
+| `radius` | shared `Radius` core sizes and semantic roles | `none` |
 | `frame` | `none`, `subtle` | `none` |
-| `ratio` | positive finite number | intrinsic |
+| `ratio` | responsive positive finite number | intrinsic |
 | `fill` | `boolean` | `false` |
 | `onLoadingStatusChange` | `(status) => void` | none |
 
@@ -90,10 +99,14 @@ exclusive under Atom's source state.
 `Image.Content` requires `alt`. It forwards native image attributes including
 `width`, `height`, `srcSet`, `sizes`, `loading`, `decoding`, `fetchPriority`,
 `crossOrigin`, `referrerPolicy`, events, data/ARIA attributes, class, style, and
-its image ref. `src` belongs to Root.
+its image ref. Canonical `src` and `srcSet` belong to Root so SSR starts loading
+without a false idle fallback. Content `srcSet` overrides Root for compatibility;
+Content-only/custom-host sources synchronize after mounting and cannot inform
+Root during SSR. Avoid conflicting candidate definitions. Use exactly one
+Content per Root. Clearing the last effective source restores idle.
 
 `Image.Fallback` accepts Atom `when="idle" | "loading" | "error"` or an array
-of those values. Its default covers all three non-loaded states. All parts
+of those values. Its default covers idle/error; loading is explicit opt-in. All parts
 retain Atom `render` and `asChild` composition.
 
 `fill` makes Root, Content, and Fallback consume a block size established by
@@ -119,9 +132,14 @@ frame. `frame="none"` reserves no border geometry, so embedded media reaches
 the Root edge. `frame="subtle"` adds a semantic canvas and one-pixel border.
 Ratio reserves the box; without it, loaded native dimensions remain intrinsic.
 
-Atom exposes `data-state="idle | loading | loaded | error"`. Content appears
-only when loaded. Authored Fallback fills the same reserved box for its selected
-states.
+Atom exposes `data-state="idle | loading | loaded | error"`. Content is present
+in server HTML and while loading. Atom observes the actual native image, without
+detached preloading; responsive sources and request hints participate in initial
+browser discovery. Error content remains mounted but hidden. Authored Fallback
+fills the reserved box for its selected states. Use loading covers deliberately;
+they can delay visible content. Multiple state-specific fallbacks are valid.
+On error Content is hidden; without authored fallback the result is empty.
+Supply a meaningful fallback for informative media. Custom image hosts must forward their real img ref.
 
 ## Tokens and CSS hooks
 
@@ -160,6 +178,23 @@ selection, optimization, priority policy, and fallback content.
 
 ## Responsive behavior
 
+Fit, position and ratio accept scalar values or `{ initial, sm, md, lg, xl }`
+objects at 30/48/64/80rem. Omitted breakpoints inherit the last active value.
+Sparse fit starts cover and position center. Omitted ratio remains intrinsic;
+a supplied sparse ratio such as `{ md: 1 }` starts at 16/9. Nonpositive or
+nonfinite ratios normalize to 16/9, like AspectRatio. Each nested Root resets
+its own values. No viewport JavaScript is required.
+
+Logical start/end follow effective `:dir()` including root-local RTL and nested
+LTR re-entry. Physical `left` or `25% 70%` stays physical. Inline authored public
+CSS variables override recipes. Responsive metadata uses `data-fit="responsive"`
+and `data-position="responsive"`; private breakpoint variables are not public hooks.
+
+Frame owns display dimensions; native Content width/height reserve intrinsic
+geometry. Full radius needs a square ratio or square geometry to form a circle.
+
+
+
 Root and Content stay within their available inline size. Native width/height
 reserve intrinsic ratio; `srcSet` and `sizes` let the browser choose a source.
 Image defines no breakpoints. Its owner chooses surrounding Grid, Stack,
@@ -197,6 +232,15 @@ Image has no keyboard interaction. Forced colors preserves a visible subtle
 frame and readable fallback.
 
 ## Composition, native props, and refs
+
+For native art direction, compose Root as `picture`, keep `source` before Content,
+and render any fallback as a phrasing `span`. Ratio/fill require Content to remain
+a direct child of Root; a nested picture wrapper is unsupported for those recipes.
+Use the Root-as-picture alternative. Browser selection changes currentSrc without
+a detached request. Next/CDN delivery remains optional and application-owned;
+see [framework integration and delivery](integrations.md).
+
+
 
 Root, Content, and Fallback retain Atom `render` and `asChild`. A composed
 Content must remain a native `img`; source and state stay on Root. When Root is

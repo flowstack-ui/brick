@@ -1,16 +1,14 @@
+@import "../_surface-effects/surface-effects.css";
 @layer brick.components {
   .brick-surface {
     --brick-surface-background: var(--brick-color-surface-base);
     --brick-surface-foreground: var(--brick-color-text-primary);
-    --brick-surface-border-color: var(--brick-color-border-subtle);
+    --brick-surface-border-color: var(--brick-color-border-default);
     --brick-surface-border-width: 0rem;
     --brick-surface-elevation-none: none;
-    --brick-surface-elevation-low: 0 0.25rem 0.75rem
-      color-mix(in srgb, var(--brick-color-shadow), transparent 58%);
-    --brick-surface-elevation-medium: 0 0.75rem 2rem
-      color-mix(in srgb, var(--brick-color-shadow), transparent 38%);
-    --brick-surface-elevation-high: 0 1.5rem 4.5rem
-      color-mix(in srgb, var(--brick-color-shadow), transparent 18%);
+    --brick-surface-elevation-low: var(--brick-shadow-sm);
+    --brick-surface-elevation-medium: var(--brick-shadow-floating);
+    --brick-surface-elevation-high: var(--brick-shadow-modal);
     --brick-surface-shadow: var(--brick-surface-elevation-none);
     --brick-surface-radius: var(--brick-radius-surface);
     --brick-surface-inset-none: var(--brick-space-0);
@@ -123,7 +121,7 @@
     );
   }
 
-  :dir(rtl) > .brick-surface__scrim[data-direction="inline-start"] {
+  .brick-surface__scrim:dir(rtl)[data-direction="inline-start"] {
     background: linear-gradient(
       to left,
       var(--brick-surface-scrim-paint),
@@ -139,7 +137,7 @@
     );
   }
 
-  :dir(rtl) > .brick-surface__scrim[data-direction="inline-end"] {
+  .brick-surface__scrim:dir(rtl)[data-direction="inline-end"] {
     background: linear-gradient(
       to right,
       var(--brick-surface-scrim-paint),
@@ -185,6 +183,20 @@
     --brick-surface-background: var(--brick-color-accent-solid);
     --brick-surface-foreground: var(--brick-color-accent-on-solid);
     --brick-surface-border-color: var(--brick-color-accent-border);
+  }
+
+  .brick-surface[data-tone="accent"][data-level="subtle"] {
+    --brick-surface-background: var(--brick-color-accent-soft);
+    --brick-surface-foreground: var(--brick-color-accent-on-soft);
+  }
+
+  .brick-surface[data-level="transparent"] {
+    --brick-surface-background: transparent;
+    --brick-surface-foreground: var(--brick-color-text-primary);
+  }
+
+  .brick-surface[data-tone="accent"][data-level="transparent"] {
+    --brick-surface-foreground: var(--brick-color-accent-text);
   }
 
   .brick-surface[data-bordered] {

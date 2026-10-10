@@ -10,7 +10,7 @@ import {
 import { Link as RootLink } from "../../../src/index.js";
 
 const ref = createRef<HTMLAnchorElement>();
-const variants: LinkVariant[] = ["underline", "plain"];
+const variants: LinkVariant[] = ["underline", "subtle", "plain", "theme"];
 const tones: LinkTone[] = ["accent", "neutral", "inherit"];
 const sizes: LinkSize[] = ["inherit", "sm", "md", "lg"];
 const render: LinkRenderProp = (props) => createElement("a", props);
@@ -60,3 +60,7 @@ createElement(Link, {
 void variants;
 void tones;
 void sizes;
+createElement(Link, { asChild: true, href: "/parent", children: createElement("a") });
+createElement(Link, { href: "/responsive", size: { lg: "lg", xl: "inherit" }, children: "Responsive" });
+// @ts-expect-error Responsive values cannot be empty.
+createElement(Link, { href: "/empty", size: {}, children: "Invalid" });

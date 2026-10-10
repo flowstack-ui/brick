@@ -2,18 +2,18 @@
   .brick-hover-card {
     --brick-hover-card-background: var(--brick-color-surface-raised);
     --brick-hover-card-foreground: var(--brick-color-text-primary);
-    --brick-hover-card-muted-foreground: var(--brick-color-text-primary);
+    --brick-hover-card-muted-foreground: var(--brick-color-text-secondary);
     --brick-hover-card-border: var(--brick-color-border-subtle);
     --brick-hover-card-radius: var(--brick-radius-overlay);
-    --brick-hover-card-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--brick-color-shadow), transparent 68%);
-    --brick-hover-card-padding: var(--brick-space-4);
+    --brick-hover-card-shadow: var(--brick-shadow-floating);
+    --brick-hover-card-padding: calc(var(--brick-space-4) + var(--brick-space-1));
     --brick-hover-card-gap: var(--brick-space-3);
     --brick-hover-card-max-inline-size-sm: 16rem;
     --brick-hover-card-max-inline-size-md: 20rem;
     --brick-hover-card-max-inline-size-lg: 24rem;
     --brick-hover-card-max-block-size: min(32rem, calc(100dvb - 2rem));
 
-    z-index: calc(var(--brick-layer-overlay) - 1);
+    z-index: calc(var(--brick-layer-overlay) + var(--atom-overlay-layer, 0) + 1);
     box-sizing: border-box;
     display: block;
     inline-size: max-content;
@@ -23,6 +23,11 @@
     background: var(--brick-hover-card-background);
     box-shadow: var(--brick-hover-card-shadow);
     color: var(--brick-hover-card-foreground);
+    font-family: var(--brick-typography-body-sm-font-family);
+    font-size: var(--brick-typography-body-sm-font-size);
+    font-weight: var(--brick-typography-body-sm-font-weight);
+    line-height: var(--brick-typography-body-sm-line-height);
+    letter-spacing: var(--brick-typography-body-sm-letter-spacing);
     opacity: 0;
     overflow-wrap: anywhere;
     scale: 0.98;
@@ -41,6 +46,12 @@
     overflow: auto;
     border-radius: inherit;
   }
+
+  .brick-hover-card[data-inset="xs"] { --brick-hover-card-padding: var(--brick-space-3); }
+  .brick-hover-card[data-inset="sm"] { --brick-hover-card-padding: var(--brick-space-4); }
+  .brick-hover-card[data-inset="lg"] { --brick-hover-card-padding: var(--brick-space-5); }
+  .brick-hover-card[data-radius="full"] .brick-hover-card__viewport { padding-inline: max(var(--brick-hover-card-padding), 2em); }
+  .brick-hover-card[data-initial-open] { transition: none; }
 
   .brick-hover-card[data-size="sm"] {
     max-inline-size: min(var(--brick-hover-card-max-inline-size-sm), calc(100dvi - 2rem));
@@ -66,27 +77,7 @@
     --brick-floating-arrow-stroke: var(--brick-hover-card-border);
   }
 
-  .brick-hover-card[data-side="top"] .brick-hover-card__arrow {
-    translate: 0 calc(var(--brick-border-width) * -1);
-    filter: drop-shadow(0 1px 0 var(--brick-hover-card-border));
-  }
-
-  .brick-hover-card[data-side="right"] .brick-hover-card__arrow {
-    translate: var(--brick-border-width) 0;
-    filter: drop-shadow(-1px 0 0 var(--brick-hover-card-border));
-  }
-
-  .brick-hover-card[data-side="bottom"] .brick-hover-card__arrow {
-    translate: 0 var(--brick-border-width);
-    filter: drop-shadow(0 -1px 0 var(--brick-hover-card-border));
-  }
-
-  .brick-hover-card[data-side="left"] .brick-hover-card__arrow {
-    translate: calc(var(--brick-border-width) * -1) 0;
-    filter: drop-shadow(1px 0 0 var(--brick-hover-card-border));
-  }
-
-  .brick-hover-card :where(p) {
+  :where(.brick-hover-card) :where(p:not([class])) {
     margin: 0;
     color: var(--brick-hover-card-muted-foreground);
   }

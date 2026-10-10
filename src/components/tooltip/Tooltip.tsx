@@ -1,5 +1,7 @@
 "use client";
 
+import { FloatingArrowArtwork, floatingArrowWidth, floatingArrowHeight, floatingArrowStyle } from "../_floating-arrow/FloatingArrowArtwork.js";
+
 import {
   cloneElement,
   forwardRef,
@@ -12,6 +14,7 @@ import {
 } from "react";
 import {
   Tooltip as AtomTooltip,
+  useTooltip,
   type TooltipArrowProps as AtomTooltipArrowProps,
   type TooltipContentProps as AtomTooltipContentProps,
   type TooltipPortalProps as AtomTooltipPortalProps,
@@ -20,18 +23,16 @@ import {
   type TooltipTriggerProps as AtomTooltipTriggerProps,
 } from "@flowstack-ui/atom/tooltip";
 
+import { radiusStyle, type RadiusShapeProps } from "../_radius/Radius.js";
+
 export type TooltipProviderProps = AtomTooltipProviderProps;
 export type TooltipRootProps = AtomTooltipRootProps;
 export type TooltipTriggerProps = AtomTooltipTriggerProps;
 export type TooltipPortalProps = AtomTooltipPortalProps;
 export type TooltipShape = "rounded" | "pill";
-export type TooltipContentProps = Omit<
-  AtomTooltipContentProps,
-  "aria-label" | "ariaLabel"
-> & {
-  /** Surface shape. @default "rounded" */
-  shape?: TooltipShape;
-};
+export type TooltipContentProps = AtomTooltipContentProps & RadiusShapeProps<TooltipShape>;
+export { useTooltip };
+export type { UseTooltipOptions, UseTooltipReturn, TooltipRootProviderProps, TooltipState, TooltipStateProps, TooltipPositioningOptions, TooltipIds, TooltipLifecycleOptions } from "@flowstack-ui/atom/tooltip";
 export type TooltipArrowProps = AtomTooltipArrowProps;
 
 export interface TooltipTextProps extends HTMLAttributes<HTMLElement> {
@@ -72,9 +73,17 @@ function renderTextPart(
   const candidate = render ?? (asChild && isValidElement(children) ? children : null);
   if (candidate && isValidElement<Record<string, unknown>>(candidate)) {
     const candidateProps = candidate.props;
+    const events: Record<string, unknown> = {};
+    for (const [key, outer] of Object.entries(props)) {
+      const inner = candidateProps[key];
+      if (key.startsWith("on") && typeof outer === "function" && typeof inner === "function") {
+        events[key] = (...args: unknown[]) => { inner(...args); outer(...args); };
+      }
+    }
     return cloneElement(candidate, {
       ...candidateProps,
       ...props,
+      ...events,
       children: render ? children : candidateProps.children,
       className: mergeClassName(
         className,
@@ -103,6 +112,8 @@ function renderTextPart(
 
 export const TooltipProvider = AtomTooltip.Provider;
 export const TooltipRoot = AtomTooltip.Root;
+export const TooltipRootProvider = AtomTooltip.RootProvider;
+export const TooltipContext = AtomTooltip.Context;
 export const TooltipPortal = AtomTooltip.Portal;
 
 export const TooltipTrigger = forwardRef<HTMLElement, TooltipTriggerProps>(
@@ -120,14 +131,15 @@ export const TooltipTrigger = forwardRef<HTMLElement, TooltipTriggerProps>(
 
 export const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
   function TooltipContent(
-    { className, shape = "rounded", sideOffset = 8, "data-slot": dataSlot, ...props },
+    { className, shape = "rounded", radius, style, sideOffset = 8, "data-slot": dataSlot, ...props },
     ref,
   ) {
     return (
       <AtomTooltip.Content
         {...props}
         className={mergeClassName("brick-tooltip", className)}
-        data-shape={shape}
+        data-shape={radius === undefined ? shape : "rounded"}
+        style={radiusStyle(radius, "--brick-tooltip-radius", style)}
         data-slot={slotOrDefault(dataSlot, "tooltip")}
         ref={ref}
         sideOffset={sideOffset}
@@ -171,11 +183,15 @@ export const TooltipDescription = forwardRef<HTMLElement, TooltipDescriptionProp
 );
 
 export const TooltipArrow = forwardRef<SVGSVGElement, TooltipArrowProps>(
-  function TooltipArrow({ className, "data-slot": dataSlot, ...props }, ref) {
+  function TooltipArrow({ className, children, width, height, style, "data-slot": dataSlot, ...props }, ref) {
     return (
       <AtomTooltip.Arrow
         {...props}
-        className={mergeClassName("brick-tooltip__arrow", className)}
+        width={width ?? floatingArrowWidth}
+        height={height ?? floatingArrowHeight}
+        style={floatingArrowStyle(width, height, style)}
+        className={mergeClassName("brick-tooltip__arrow brick-floating-arrow", className)}
+        children={children ?? (props.asChild || props.render ? undefined : <FloatingArrowArtwork width={width ?? floatingArrowWidth} height={height ?? floatingArrowHeight} />)}
         data-slot={slotOrDefault(dataSlot, "tooltip-arrow")}
         ref={ref}
       />
@@ -192,6 +208,8 @@ TooltipArrow.displayName = "Tooltip.Arrow";
 export const Tooltip = Object.freeze({
   Provider: TooltipProvider,
   Root: TooltipRoot,
+  RootProvider: TooltipRootProvider,
+  Context: TooltipContext,
   Trigger: TooltipTrigger,
   Portal: TooltipPortal,
   Content: TooltipContent,

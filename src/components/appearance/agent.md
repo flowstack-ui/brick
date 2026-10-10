@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Apply one explicit light, dark, or inherited semantic-token boundary without adding visual paint, layout, state, or a required client provider.
+Apply one explicit light, dark, or inherited semantic-token boundary with primary foreground, without adding background paint, layout, state, or a required client provider.
 
 ## Use when
 
@@ -21,7 +21,8 @@ Apply one explicit light, dark, or inherited semantic-token boundary without add
 
 ## Rules
 
-- **MUST:** Use Appearance only with a theme that supplies a complete appearance-dependent color and shadow assignment for the requested explicit appearance.
+- **MUST:** Explicit boundaries establish low-specificity primary foreground for native HTML; component and author colors retain precedence. Inherit follows ancestor foreground. Supply compatible surrounding paint or compose Surface; Appearance adds no background.
+- **MUST:** Use Appearance only with a theme that supplies a complete appearance-dependent color and shadow assignment for the requested explicit appearance, including both paired native selection roles.
 - **MUST:** Do not recolor descendants component by component after establishing the scope.
 - **MUST:** Pass exactly one existing host. Do not pass a Fragment, string, or multiple direct children; author a semantic host explicitly when the region does not already have one.
 - **MUST:** Do not assume a portal inherits the trigger's local CSS scope; preserve it with a scoped container or explicit portalled root scopes.
@@ -39,6 +40,7 @@ Apply one explicit light, dark, or inherited semantic-token boundary without add
 - Inspect the DOM and confirm Appearance adds no wrapper while preserving child classes, styles, native props, handlers, component slot, and refs.
 - Test light to dark to light and dark to light to dark with representative controls and interaction states.
 - Test every used portalled family, native controls, contrast, forced colors, SSR, and hydration.
+- Drag-select text over neutral, accent, status, and image-backed content in light and dark; confirm the opaque selection background and foreground change together and remain readable.
 
 ## Related guidance
 

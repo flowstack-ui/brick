@@ -119,3 +119,21 @@ Follow-up issues:
 Workbook updated:
 
 Mark unavailable assistive-technology environments `blocked`.
+# Compound and native-image regression pass
+
+Use the normal Avatar docs route for focused examples and `?qualification=1`
+for the numbered evidence. Verify sizes 2xs–5xl, constrained full, all
+variants/tones in both appearances, transparent outline and radius. Test native
+lazy loading, image replacement, missing/error fallback, delay changes and
+custom image hosts/refs. Confirm one accessible identity and equal image/fallback
+frames. Screen-reader, physical-device and actual zoom checks require a human;
+do not infer their completion from browser tests.
+
+## Separation-edge regression (September 14, 2026)
+
+Inspect solid initials and loaded images at 32px, circular and rounded, on light
+and dark surfaces, at normal and fractional zoom. Compare standalone, singleton,
+overflow-only, overlapping pair, non-overlapping and borderless groups.
+Expected: no separator on a singleton or overflow-only group; clean peer borders
+without a dark outer fringe; unchanged outer size, centered content and status.
+Result: pending owner physical-device/zoom review.

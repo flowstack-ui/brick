@@ -1,5 +1,15 @@
 export {
   NavigationMenu,
+  NavigationMenuRootProvider,
+  NavigationMenuContext,
+  NavigationMenuItemIndicator,
+  useNavigationMenu,
+  useNavigationMenuContext,
+  type NavigationMenuRootProviderProps,
+  type NavigationMenuItemIndicatorProps,
+  type UseNavigationMenuOptions,
+  type UseNavigationMenuReturn,
+  type NavigationMenuApi,
   NavigationMenuRoot,
   NavigationMenuSub,
   NavigationMenuList,
@@ -22,4 +32,7 @@ export {
   type NavigationMenuViewportProps,
   type NavigationMenuSize,
   type NavigationMenuLinkVariant,
+  type NavigationMenuVariant,
+  type NavigationMenuTone,
+  type NavigationMenuInset,
 } from "./NavigationMenu.js";

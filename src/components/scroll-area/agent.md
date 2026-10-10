@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Style a bounded scroll viewport and native scrollbar presentation while preserving Atom and native input behavior.
+Style native or opt-in custom scrollbars while preserving Atom-owned native scrolling and controller behavior.
 
 ## Use when
 
@@ -14,7 +14,7 @@ Style a bounded scroll viewport and native scrollbar presentation while preservi
 
 ## Required composition
 
-- Compose Viewport inside Root and give Root a real size constraint from its parent layout; Brick's current native scrollbar presentation needs no authored Scrollbar or Thumb parts.
+- Constrain Root with Frame or parent layout. Native mode needs Viewport only. Custom mode requires Content inside Viewport and a Scrollbar per enabled axis; omitted Scrollbar children supply Thumb. Add Corner for both axes. RootProvider receives useScrollArea, and Context exposes subscribed state.
 
 ## Rules
 
@@ -22,6 +22,7 @@ Style a bounded scroll viewport and native scrollbar presentation while preservi
 - **MUST:** Identify the parent that owns the maximum or fixed block size before styling Viewport; do not apply a random height directly to the scrolling part.
 - **MUST:** Preserve wheel, trackpad, touch, keyboard, focus, and nested page scrolling.
 - **MUST:** Load styles.css or core.css plus scroll-area.css.
+- **MUST:** Use scrollbar=custom for size or scrollShadow; keep native fallback until anatomy is ready and in forced colors. Keep one native scroll owner. Virtualization and bottom-following are application policies.
 
 ## Common mistakes
 

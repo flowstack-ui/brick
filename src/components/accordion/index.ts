@@ -1,4 +1,10 @@
 export {
+  AccordionRootProvider,
+  AccordionContext,
+  AccordionItemContext,
+  useAccordion,
+  useAccordionContext,
+  useAccordionItemContext,
   Accordion,
   AccordionContent,
   AccordionContentInner,
@@ -9,9 +15,13 @@ export {
   AccordionTrigger,
 } from "./Accordion.js";
 export type {
+  AccordionRootProviderProps,
+  UseAccordionOptions,
+  UseAccordionReturn,
   AccordionContentInnerProps,
   AccordionContentProps,
   AccordionHeaderProps,
+  AccordionIndicatorPlacement,
   AccordionIndicatorProps,
   AccordionItemProps,
   AccordionRootProps,

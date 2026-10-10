@@ -1,8 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 test("Drawer Footer maps logical action distribution to flex alignment", async ({ page }) => {
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
   await page.getByRole("button", { name: "Filter projects" }).click();
   const footer = page.getByTestId("drawer-overview-content").locator("[data-slot='drawer-footer']");
   await expect(footer).toHaveAttribute("data-justify", "end");
@@ -17,7 +17,7 @@ async function expectDrawerDefaults(
   slot = "drawer-content",
 ) {
   await expect(drawer).toHaveAttribute("data-placement", "end");
-  await expect(drawer).toHaveAttribute("data-size", "md");
+  await expect(drawer).toHaveAttribute("data-size", "xs");
   await expect(drawer).toHaveAttribute("role", "dialog");
   await expect(drawer).toHaveAttribute("aria-modal", "true");
   await expect(drawer).toHaveAttribute("data-slot", slot);
@@ -35,7 +35,7 @@ async function expectDrawerSettled(drawer: Locator) {
 test("Drawer exposes its default anatomy, composed filters, and focus lifecycle", async ({
   page,
 }) => {
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
   const trigger = page.getByRole("button", { name: "Filter projects" });
   await trigger.click();
   const drawer = page.getByTestId("drawer-overview-content");
@@ -54,6 +54,8 @@ test("Drawer exposes its default anatomy, composed filters, and focus lifecycle"
   await expect(
     drawer.getByRole("checkbox", { name: "Active projects" }),
   ).toHaveAttribute("data-state", "checked");
+  await expectDrawerSettled(drawer);
+  await expect(drawer).toHaveCSS("opacity", "1");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await drawer.getByRole("button", { name: "Cancel" }).click();
   await expect(drawer).toBeHidden();
@@ -62,7 +64,7 @@ test("Drawer exposes its default anatomy, composed filters, and focus lifecycle"
 
 test("Drawer placements change only the attached edge", async ({ page }) => {
   await page.setViewportSize({ width: 1000, height: 800 });
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
 
   for (const placement of ["start", "end", "top", "bottom"] as const) {
     await page
@@ -70,7 +72,7 @@ test("Drawer placements change only the attached edge", async ({ page }) => {
       .click();
     const drawer = page.getByTestId(`drawer-placement-${placement}`);
     await expect(drawer).toHaveAttribute("data-placement", placement);
-    await expect(drawer).toHaveAttribute("data-size", "md");
+    await expect(drawer).toHaveAttribute("data-size", "xs");
     await expect(drawer).toHaveAccessibleName("Filter projects");
     await expectDrawerSettled(drawer);
     const box = await drawer.boundingBox();
@@ -85,11 +87,11 @@ test("Drawer placements change only the attached edge", async ({ page }) => {
   }
 });
 
-test("Drawer sizes remain ordered and only full occupies a mobile viewport", async ({
+test("Drawer sizes are capped safely by the mobile viewport", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 640 });
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
   const widths: number[] = [];
 
   for (const size of ["sm", "md", "lg", "xl", "full"] as const) {
@@ -106,10 +108,10 @@ test("Drawer sizes remain ordered and only full occupies a mobile viewport", asy
     await drawer.getByRole("button", { name: "Cancel" }).click();
   }
 
-  expect(widths[0]).toBeLessThan(widths[1]);
-  expect(widths[1]).toBeLessThan(widths[2]);
-  expect(widths[2]).toBeLessThan(widths[3]);
-  expect(widths[3]).toBeLessThan(widths[4]);
+  expect(widths[0]).toBeLessThanOrEqual(widths[1]);
+  expect(widths[1]).toBeLessThanOrEqual(widths[2]);
+  expect(widths[2]).toBeLessThanOrEqual(widths[3]);
+  expect(widths[3]).toBeLessThanOrEqual(widths[4]);
   expect(widths[4]).toBeCloseTo(390, 0);
 });
 
@@ -117,7 +119,7 @@ test("top Drawer grows with content until its size cap, then Body scrolls", asyn
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 640 });
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
   await page.getByRole("button", { name: "Open top drawer" }).click();
 
   const drawer = page.getByTestId("drawer-placement-top");
@@ -136,7 +138,7 @@ test("top Drawer grows with content until its size cap, then Body scrolls", asyn
     }
   });
 
-  await expect.poll(async () => (await drawer.boundingBox())?.height).toBeCloseTo(384, 0);
+  await expect.poll(async () => (await drawer.boundingBox())?.height).toBeCloseTo(256, 0);
   expect(
     await body.evaluate((element) => element.scrollHeight > element.clientHeight),
   ).toBe(true);
@@ -145,7 +147,7 @@ test("top Drawer grows with content until its size cap, then Body scrolls", asyn
 test("Drawer renders only authored anatomy and every supported Title level", async ({
   page,
 }) => {
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
 
   await page.getByRole("button", { name: "Open minimum drawer" }).click();
   const minimum = page.getByTestId("drawer-anatomy-minimum");
@@ -190,7 +192,7 @@ test("Drawer renders only authored anatomy and every supported Title level", asy
 test("Drawer preserves default and disabled dismissal policies", async ({
   page,
 }) => {
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
   const trigger = page.getByRole("button", { name: "Open event drawer" });
   await trigger.click();
   let drawer = page.getByRole("dialog", { name: "Dismissal evidence" });
@@ -239,7 +241,7 @@ test("Drawer preserves default and disabled dismissal policies", async ({
 test("Drawer preserves nested layers and a registered portalled Branch", async ({
   page,
 }) => {
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
   const parentTrigger = page.getByRole("button", {
     name: "Open parent drawer",
   });
@@ -287,7 +289,7 @@ test("Drawer preserves nested layers and a registered portalled Branch", async (
 test("Drawer preserves scoped portals and exact customization hooks", async ({
   page,
 }) => {
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
   const scopes = page.getByTestId("drawer-appearance");
 
   await scopes
@@ -339,7 +341,7 @@ test("Drawer keeps long Body content and RTL start placement within the viewport
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 640 });
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
 
   await page.getByRole("button", { name: "Open long drawer" }).click();
   const longDrawer = page.getByTestId("drawer-long-content-surface");
@@ -360,7 +362,7 @@ test("Drawer keeps long Body content and RTL start placement within the viewport
     .click();
   const rtl = page.getByTestId("drawer-rtl-content");
   await expect(rtl).toHaveAttribute("data-placement", "start");
-  await expect(rtl).toHaveAttribute("data-size", "md");
+  await expect(rtl).toHaveAttribute("data-size", "xs");
   await expect(rtl).toHaveAttribute("dir", "rtl");
   await expectDrawerSettled(rtl);
   await expect(rtl.locator("[data-slot='drawer-title']")).toHaveCSS(
@@ -381,7 +383,7 @@ test("Drawer remains reachable at extreme height and preserves preference bounda
   page,
 }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 160 });
-  await page.goto("/drawer");
+  await page.goto("/drawer?qualification=1");
   await page.getByRole("button", { name: "Open long drawer" }).focus();
   await page.keyboard.press("Enter");
   let drawer = page.getByTestId("drawer-long-content-surface");

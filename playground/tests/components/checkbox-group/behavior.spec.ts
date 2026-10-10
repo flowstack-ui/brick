@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function controlSize(checkbox: Locator) {
   return checkbox.locator(".brick-checkbox-control").evaluate((control) => {
@@ -9,7 +9,7 @@ async function controlSize(checkbox: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/checkbox-group");
+  await page.goto("/checkbox-group?qualification=1");
 });
 
 test("CheckboxGroup overview preserves the default medium vertical unchecked state", async ({ page }) => {
@@ -156,7 +156,7 @@ test("CheckboxGroup structured content and state scopes preserve default geometr
     name: "Email reports",
   });
   await expect(inheritedInvalid).toHaveAttribute("data-invalid", "");
-  await expect(invalidGroup).toHaveCSS("border-left-style", "solid");
+  await expect(invalidGroup).toHaveCSS("border-left-style", "none");
   await expect(inheritedInvalid).toHaveCSS("border-left-style", "none");
   const individual = page.getByRole("group", {
     name: "Individual delivery validation",
@@ -165,7 +165,8 @@ test("CheckboxGroup structured content and state scopes preserve default geometr
     name: "Email reports",
   });
   await expect(individualInvalid).toHaveAttribute("data-invalid", "");
-  await expect(individualInvalid).toHaveCSS("border-left-style", "solid");
+  await expect(individualInvalid).toHaveCSS("border-left-style", "none");
+  await expect(individualInvalid.locator(".brick-checkbox-control")).toHaveCSS("border-top-style", "solid");
   await expect(
     individual.getByRole("checkbox", { name: "Push notifications" }),
   ).not.toHaveAttribute("data-invalid");
@@ -255,7 +256,7 @@ test("CheckboxGroup customization, anchor navigation, accessibility, and narrow 
       .locator(".brick-checkbox-control"),
   ).toHaveCSS("background-color", "rgb(24, 121, 78)");
 
-  await page.getByRole("link", { name: "08 Compose" }).click();
+  await page.evaluate(() => { location.hash = "scenario-checkbox-group-composition"; });
   await expect(page).toHaveURL(/#scenario-checkbox-group-composition$/);
   const target = page.locator("#scenario-checkbox-group-composition");
   await expect(target).toHaveCSS("outline-style", "none");

@@ -1,6 +1,9 @@
 import { Code } from "@flowstack-ui/brick/code";
 import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
 import { useState, type CSSProperties, type ReactNode } from "react";
+import { TooltipDocumentation } from "./TooltipDocumentation.js";
+import { TooltipEnvironment } from "./TooltipEnvironment.js";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
 import {
   Grid,
   HStack,
@@ -46,7 +49,7 @@ function Hint({ align = "center", arrow = true, label, shape, side = "top" }: {
   side?: "top" | "right" | "bottom" | "left";
 }) {
   return (
-    <Tooltip.Root>
+    <Tooltip.Root interactive closeDelay={150}>
       <Tooltip.Trigger asChild><IconButton aria-label={label} tone="neutral" variant="outline"><SearchIcon /></IconButton></Tooltip.Trigger>
       <Tooltip.Portal><Tooltip.Content align={align} shape={shape} side={side}>{label}{arrow ? <Tooltip.Arrow /> : null}</Tooltip.Content></Tooltip.Portal>
     </Tooltip.Root>
@@ -76,6 +79,12 @@ export const tooltipScenarios = [
 ] as const satisfies readonly ScenarioDefinition[];
 
 export function TooltipPage() {
+  const preview = usePreviewContext();
+  if (new URLSearchParams(window.location.search).get("qualification") === "environment") return <TooltipEnvironment />;
+  if (!preview && new URLSearchParams(window.location.search).get("qualification") !== "1") return <TooltipDocumentation />;
+  return <TooltipEvidence />;
+}
+function TooltipEvidence() {
   const [controlledOpen, setControlledOpen] = useState(false);
   return (
     <Tooltip.Provider closeDelay={0} openDelay={0}>

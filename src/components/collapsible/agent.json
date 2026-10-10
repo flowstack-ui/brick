@@ -24,7 +24,7 @@
     "Use Indicator inside Trigger for the canonical decorative state cue; the default points down while closed and up while open, and normal Brick layout and content components belong inside ContentInner.",
     "Use Trigger iconOnly for a square, centered disclosure control; give it a complete accessible name and let the Root size own its target."
   ],
-  "rules": [
+  "rules": [{"id":"collapsible-radius","level":"must","statement":"Use the shared token-only radius contract only on the public parts listed in docs/guides/radius.md. Omit it to retain the owner default; do not combine it with legacy corner shape or forward it to native elements. Core names and semantic roles are distinct; popup boundaries are independent of their triggers."},
     {
       "id": "collapsible-anatomy",
       "level": "must",
@@ -33,12 +33,12 @@
     {
       "id": "collapsible-single-owner-trigger",
       "level": "must",
-      "statement": "Let Collapsible Trigger own its finished control recipe; do not compose Button or Icon Button into Trigger because competing visual recipes would own one element."
+      "statement": "Use Trigger highlight=none to remove hover/open backgrounds while retaining focus. For a finished Button or IconButton, compose Trigger unstyled asChild so the child alone owns visuals. asChild by itself does not remove the Trigger recipe. Root unstyled is independent and removes only the containing visual/layout recipe."
     },
     {
       "id": "collapsible-content-padding",
       "level": "must",
-      "statement": "Keep visible padding in ContentInner rather than Content so Atom can measure and animate the region accurately."
+      "statement": "Keep visible padding in ContentInner rather than Content so Atom can measure and animate the region accurately. Use ContentInner inset=none and asChild when a Brick layout should own spacing. Use Content motion=none for an immediate reveal, not application animation overrides."
     },
     {
       "id": "collapsible-layout-role",
@@ -48,7 +48,7 @@
     {
       "id": "collapsible-presence",
       "level": "must",
-      "statement": "Leave keepMounted false unless retained DOM or exit animation is required; when enabled, preserve Atom's closed hidden state and never expose retained descendants to interaction."
+      "statement": "Root lazyMount and unmountOnExit default true. Set unmountOnExit=false to retain state after first opening; lazyMount=false also mounts before first opening. keepMounted is deprecated and explicitly overrides both options with a conflict warning. Partial collapsedHeight/collapsedWidth previews stay mounted but are inert and aria-hidden while closed: keep required summaries/actions outside Content. Activity pauses hidden effects on React 19.2+; older React falls back to display-none without pausing effects. Size and variant accept sparse responsive objects."
     },
     {
       "id": "collapsible-live-measurement",
@@ -73,8 +73,8 @@
   ],
   "commonMistakes": [
     {
-      "mistake": "Using Collapsible Trigger asChild around a finished Button or Icon Button.",
-      "correction": "Use Trigger as the only visual control owner and author its label, icon, and optional Indicator directly."
+      "mistake": "Using Collapsible Trigger asChild around a finished Button or IconButton without unstyled.",
+      "correction": "Add Trigger unstyled to delegate visuals. Do not add iconOnly or highlight in this mode; the child recipe owns those decisions."
     },
     {
       "mistake": "Forcing a normal Trigger into a square with Frame or local alignment CSS.",
@@ -92,7 +92,7 @@
   "validation": [
     "Test the accessible Trigger name, aria-expanded/aria-controls relationship, Enter and Space, controlled and uncontrolled state, disabled behavior, focus retention, the default down/up Indicator state, and icon-only centering.",
     "Test default unmount, keepMounted hidden descendants, initial-open state, open/close measurement, dynamic and responsive width/height changes, exit presence, reduced motion, long labels, narrow widths, RTL, and horizontal overflow without unintended page-load entrance motion.",
-    "When adapting Collapsible inside another surface, report any Root geometry override instead of silently treating plain as a behavior-only recipe."
+    "Test RootProvider/useCollapsible/Context, IDs, partial inertness, cancelled exits, nested orientation and indicators, Button composition, all highlight modes, inset=none, motion=none and Activity runtime support. Use Root unstyled when removing containing geometry; plain is not behavior-only."
   ],
   "related": [
     { "kind": "package", "package": "@flowstack-ui/atom", "id": "collapsible", "versionPolicy": "installed-exact" },

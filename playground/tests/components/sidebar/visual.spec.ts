@@ -5,7 +5,7 @@ import {
   test,
   useForcedColors,
 } from "../../visual-harness.js";
-installVisualDefaults("/sidebar");
+installVisualDefaults("/sidebar?qualification=1");
 test("Sidebar complete visual dimensions", async ({ page }) => {
   for (const name of [
     "overview",

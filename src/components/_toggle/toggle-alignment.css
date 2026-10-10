@@ -1,0 +1,210 @@
+/* Selected-command states extend shared semantic action tokens. */
+@layer brick.components {
+  :where(.brick-toggle[data-variant="soft"], .brick-toggle-group[data-variant="soft"] > .brick-toggle-group-item, .brick-toolbar__toggle-group[data-variant="soft"] > .brick-toolbar__toggle-item):not([data-disabled]) {
+    border-color: var(--brick-toggle-tone-border);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    :where(.brick-toggle:is([data-variant="subtle"], [data-variant="surface"], [data-variant="outline"]), .brick-toggle-group:is([data-variant="subtle"], [data-variant="surface"], [data-variant="outline"]) > .brick-toggle-group-item, .brick-toolbar__toggle-group:is([data-variant="subtle"], [data-variant="surface"], [data-variant="outline"]) > .brick-toolbar__toggle-item):not([data-disabled]):hover {
+      background: var(--brick-toggle-tone-soft-pressed);
+    }
+  }
+  :where(.brick-toggle:is([data-variant="subtle"], [data-variant="surface"], [data-variant="outline"]), .brick-toggle-group:is([data-variant="subtle"], [data-variant="surface"], [data-variant="outline"]) > .brick-toggle-group-item, .brick-toolbar__toggle-group:is([data-variant="subtle"], [data-variant="surface"], [data-variant="outline"]) > .brick-toolbar__toggle-item):not([data-disabled]):active {
+    background: var(--brick-toggle-tone-soft-pressed);
+  }
+  :where(
+    .brick-toggle[data-variant="subtle"],
+    .brick-toggle-group[data-variant="subtle"] > .brick-toggle-group-item,
+    .brick-toolbar__toggle-group[data-variant="subtle"]
+      > .brick-toolbar__toggle-item
+  ) {
+    background: var(--brick-toggle-tone-soft);
+    border-color: transparent;
+  }
+  :where(
+    .brick-toggle[data-variant="subtle"][data-state="on"],
+    .brick-toggle-group[data-variant="subtle"]
+      > .brick-toggle-group-item[data-state="on"],
+    .brick-toolbar__toggle-group[data-variant="subtle"]
+      > .brick-toolbar__toggle-item[data-state="on"]
+  ) {
+    background: var(
+      --brick-toggle-selected-background,
+      var(--brick-toggle-tone-soft-hover)
+    );
+    border-color: transparent;
+  }
+  :where(
+    .brick-toggle[data-variant="surface"],
+    .brick-toggle-group[data-variant="surface"] > .brick-toggle-group-item,
+    .brick-toolbar__toggle-group[data-variant="surface"]
+      > .brick-toolbar__toggle-item
+  ) {
+    background: var(--brick-toggle-tone-soft);
+    border-color: transparent;
+  }
+  :where(
+    .brick-toggle[data-variant="surface"][data-state="on"],
+    .brick-toggle-group[data-variant="surface"]
+      > .brick-toggle-group-item[data-state="on"],
+    .brick-toolbar__toggle-group[data-variant="surface"]
+      > .brick-toolbar__toggle-item[data-state="on"]
+  ) {
+    background: var(
+      --brick-toggle-selected-background,
+      var(--brick-toggle-tone-soft-hover)
+    );
+    border-color: transparent;
+  }
+  :where(
+    .brick-toggle[data-variant="surface"],
+    .brick-toggle-group[data-variant="surface"] > .brick-toggle-group-item,
+    .brick-toolbar__toggle-group[data-variant="surface"]
+      > .brick-toolbar__toggle-item
+  ) {
+    box-shadow: inset 0 0 0 var(--brick-border-width)
+      var(--brick-toggle-tone-border);
+  }
+  :where(
+    .brick-toggle[data-variant="outline"][data-state="on"],
+    .brick-toggle-group[data-variant="outline"]
+      > .brick-toggle-group-item[data-state="on"],
+    .brick-toolbar__toggle-group[data-variant="outline"]
+      > .brick-toolbar__toggle-item[data-state="on"]
+  ) {
+    background: var(
+      --brick-toggle-selected-background,
+      var(--brick-toggle-tone-soft)
+    );
+  }
+  :where(
+    .brick-toggle[data-variant="plain"],
+    .brick-toggle-group[data-variant="plain"] > .brick-toggle-group-item,
+    .brick-toolbar__toggle-group[data-variant="plain"]
+      > .brick-toolbar__toggle-item
+  ) {
+    background: transparent;
+    border-color: transparent;
+  }
+  :where(
+    .brick-toggle[data-variant="plain"][data-state="on"],
+    .brick-toggle-group[data-variant="plain"]
+      > .brick-toggle-group-item[data-state="on"],
+    .brick-toolbar__toggle-group[data-variant="plain"]
+      > .brick-toolbar__toggle-item[data-state="on"]
+  ) {
+    background: transparent;
+    border-color: transparent;
+    border-block-end-color: currentColor;
+    color: var(--brick-toggle-tone-text);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    :where(
+      .brick-toggle[data-variant="plain"]:not([data-disabled]):hover,
+      .brick-toggle-group[data-variant="plain"]
+        > .brick-toggle-group-item:not([data-disabled]):hover,
+      .brick-toolbar__toggle-group[data-variant="plain"]
+        > .brick-toolbar__toggle-item:not([data-disabled]):hover
+    ) {
+      background: transparent;
+    }
+  }
+  :where(
+    .brick-toggle[data-variant="plain"]:not([data-disabled]):active,
+    .brick-toggle-group[data-variant="plain"]
+      > .brick-toggle-group-item:not([data-disabled]):active,
+    .brick-toolbar__toggle-group[data-variant="plain"]
+      > .brick-toolbar__toggle-item:not([data-disabled]):active
+  ) {
+    background: transparent;
+  }
+  :where(
+    .brick-toggle[data-tone="contrast"],
+    .brick-toggle-group[data-tone="contrast"] > .brick-toggle-group-item,
+    .brick-toolbar__toggle-group[data-tone="contrast"]
+      > .brick-toolbar__toggle-item
+  ) {
+    --brick-toggle-tone-solid: var(--brick-color-text-primary);
+    --brick-toggle-tone-solid-hover: color-mix(
+      in srgb,
+      var(--brick-color-text-primary),
+      var(--brick-color-surface-base) 12%
+    );
+    --brick-toggle-tone-solid-pressed: color-mix(
+      in srgb,
+      var(--brick-color-text-primary),
+      var(--brick-color-surface-base) 20%
+    );
+    --brick-toggle-tone-on-solid: var(--brick-color-surface-base);
+    --brick-toggle-tone-soft: var(--brick-color-surface-subtle);
+    --brick-toggle-tone-soft-hover: var(--brick-color-surface-base);
+    --brick-toggle-tone-soft-pressed: var(--brick-color-border-subtle);
+    --brick-toggle-tone-on-soft: var(--brick-color-text-primary);
+    --brick-toggle-tone-border: var(--brick-color-border-default);
+    --brick-toggle-tone-text: var(--brick-color-text-primary);
+  }
+  :where(
+    .brick-toggle[data-disabled],
+    .brick-toggle-group-item[data-disabled],
+    .brick-toolbar__toggle-item[data-disabled]
+  ) {
+    opacity: 0.5;
+    color: var(--brick-color-text-disabled);
+  }
+  :where(
+    .brick-toggle[data-variant="ghost"][data-disabled][data-state="off"],
+    .brick-toggle-group[data-variant="ghost"]
+      > .brick-toggle-group-item[data-disabled][data-state="off"],
+    .brick-toolbar__toggle-group[data-variant="ghost"]
+      > .brick-toolbar__toggle-item[data-disabled][data-state="off"]
+  ) {
+    background: transparent;
+    border-color: transparent;
+  }
+  :where(
+    .brick-toggle[data-variant="outline"][data-disabled][data-state="off"],
+    .brick-toggle-group[data-variant="outline"]
+      > .brick-toggle-group-item[data-disabled][data-state="off"],
+    .brick-toolbar__toggle-group[data-variant="outline"]
+      > .brick-toolbar__toggle-item[data-disabled][data-state="off"]
+  ) {
+    background: transparent;
+  }
+  :where(
+    .brick-toggle[data-variant="plain"][data-disabled][data-state="off"],
+    .brick-toggle-group[data-variant="plain"]
+      > .brick-toggle-group-item[data-disabled][data-state="off"],
+    .brick-toolbar__toggle-group[data-variant="plain"]
+      > .brick-toolbar__toggle-item[data-disabled][data-state="off"]
+  ) {
+    background: transparent;
+    border-color: transparent;
+  }
+  :where(
+    .brick-toggle[data-focus-ring="inside"],
+    .brick-toggle-group[data-focus-ring="inside"] > .brick-toggle-group-item
+  ):focus-visible {
+    outline-offset: calc(-1 * var(--brick-border-focus-width));
+    outline-color: currentColor;
+  }
+  @media (forced-colors: active) {
+    :where(.brick-toggle[data-disabled], .brick-toggle-group-item[data-disabled], .brick-toolbar__toggle-item[data-disabled]) {
+      opacity: 1;
+      color: GrayText;
+    }
+    :where(
+      .brick-toggle,
+      .brick-toggle-group-item,
+      .brick-toolbar__toggle-item
+    ):focus-visible {
+      outline-color: Highlight;
+    }
+    :where(
+      .brick-toggle[data-variant="surface"],
+      .brick-toggle-group[data-variant="surface"] > .brick-toggle-group-item,
+      .brick-toolbar__toggle-group[data-variant="surface"]
+        > .brick-toolbar__toggle-item
+    ) {
+      box-shadow: none;
+    }
+  }
+}

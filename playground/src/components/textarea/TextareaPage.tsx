@@ -21,11 +21,17 @@ import {
   FormRenderedOutput as RenderedOutput,
 } from "../../shared/FormEvidence.js";
 import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { DocsSection } from "../../shared/DocsSection.js";
+import { ExamplePreview } from "../../shared/ExamplePreview.js";
+import { ExampleSource } from "../../shared/ExampleSource.js";
+import { PropsTable } from "../../shared/PropsTable.js";
+import { Basic, basicSource, countRows, examples, rootRows } from "./documentation.js";
 import "../../shared/forms-evidence.playground.css";
 import "./textarea.playground.css";
 
-const variants: TextareaVariant[] = ["outline", "soft", "underline"];
-const sizes: TextareaSize[] = ["sm", "md", "lg"];
+const variants: TextareaVariant[] = ["outline", "surface", "soft", "subtle", "ghost", "plain", "underline"];
+const sizes: TextareaSize[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"];
 const shapes: TextareaShape[] = ["sharp", "rounded"];
 const sample = "Describe the workspace goals and expected result.";
 
@@ -47,9 +53,9 @@ function PreviewField({ children, id }: { children: ReactNode; id: string }) {
 }
 
 export const textareaScenarios = [
-  { number: 1, id: "textarea.overview", title: "Overview", description: "Textarea’s canonical rendering is a full-width medium outline control with a rounded shape, three visible rows, and vertical manual resize. Field supplies its visible label." },
-  { number: 2, id: "textarea.variants", title: "Variants", description: "Outline, soft, and underline change paint only. Content, size, row count, Field relationship, and behavior remain at their defaults." },
-  { number: 3, id: "textarea.sizes", title: "Sizes", description: "Small, medium, and large change padding and typography only. Every specimen uses the default outline, rounded shape, three rows, and identical content." },
+  { number: 1, id: "textarea.overview", title: "Overview", description: "Textarea’s canonical rendering is a full-width lg outline field with a rounded shape, three visible rows, and vertical manual resize. Field supplies its visible label." },
+  { number: 2, id: "textarea.variants", title: "Variants", description: "All seven shared field variants change presentation only. Content, size, row count, Field relationship, and behavior remain at their defaults." },
+  { number: 3, id: "textarea.sizes", title: "Sizes", description: "All seven sizes change field rhythm and typography without imposing a single-line height. Every specimen keeps identical content and rows." },
   { number: 4, id: "textarea.shapes", title: "Shapes", description: "Sharp and rounded change outline geometry only. Underline has intentionally fixed sharp geometry and Textarea excludes pill geometry." },
   { number: 5, id: "textarea.resize", title: "Resize and auto-resize", navigationTitle: "Resize", description: "Manual resize directions and Atom-powered content growth are separate sizing models. Auto-resize grows between its minimum and maximum rows before scrolling." },
   { number: 6, id: "textarea.states", title: "Content and states", navigationTitle: "States", description: "Value ownership, Count, disabled, read-only, required, and invalid examples retain the default visual recipe so only the named behavior changes." },
@@ -59,6 +65,26 @@ export const textareaScenarios = [
 ] as const satisfies readonly ScenarioDefinition[];
 
 export function TextareaPage() {
+  const preview = usePreviewContext();
+  if (preview || (typeof window !== "undefined" && new URLSearchParams(window.location.search).get("qualification") === "1")) {
+    return <TextareaEvidence />;
+  }
+  return <VStack gap={12} data-component-page="textarea">
+    <ExamplePreview label="Textarea basic" source={basicSource}><Basic /></ExamplePreview>
+    <DocsSection id="usage" title="Usage" level={2} description="Use Textarea for native plain multi-line entry. Field supplies its label and messages; the Root ref targets the native textarea.">
+      <ExampleSource label="Textarea import" source={'import { Textarea } from "@flowstack-ui/brick";'} />
+      <ExampleSource label="Textarea usage" source={'<Textarea.Root aria-label="Notes" />'} />
+    </DocsSection>
+    <DocsSection id="examples" title="Examples" level={2}><VStack gap={16}>{examples.map(({ id, title, description, Demo, source }) =>
+      <DocsSection key={id} id={id} title={title} level={3} description={description}><ExamplePreview label={title} source={source}><Demo /></ExamplePreview></DocsSection>)}</VStack></DocsSection>
+    <DocsSection id="props" title="Props" level={2}><VStack gap={10}>
+      <DocsSection id="props-root" title="Root" level={3} description="The wrapper owns className/style and presentation; native props, textareaClassName/textareaStyle and the ref target the textarea."><PropsTable label="Textarea Root props" rows={rootRows} /></DocsSection>
+      <DocsSection id="props-count" title="Count" level={3} description="Optional native span that reads value and maximum from Root."><PropsTable label="Textarea Count props" rows={countRows} /></DocsSection>
+    </VStack></DocsSection>
+  </VStack>;
+}
+
+function TextareaEvidence() {
   const [controlled, setControlled] = useState(sample);
   const [status, setStatus] = useState("No form event yet");
 
@@ -92,11 +118,11 @@ export function TextareaPage() {
         <VStack className="forms-evidence-stack" data-testid="textarea-resize">
           <EvidenceGroup title="Manual resize" description="Each control differs only by its user-operated resize direction.">
             <Grid.Root columns={4} className="forms-grid forms-grid--four forms-grid--preview-start">
-              {(["none", "vertical", "horizontal", "both"] as const).map((resize) => <Cell key={resize} label={resize}><PreviewField id={`textarea-resize-${resize}`}><Textarea.Root defaultValue={sample} resize={resize} /></PreviewField></Cell>)}
+              {(["none", "vertical", "horizontal", "both"] as const).map((resize) => <Cell key={resize} label={resize}><PreviewField id={`textarea-resize-${resize}`}><Textarea.Root defaultValue={sample} resize={resize}>{resize === "vertical" || resize === "both" ? <Textarea.Count aria-live="off" /> : null}</Textarea.Root></PreviewField></Cell>)}
             </Grid.Root>
           </EvidenceGroup>
           <EvidenceGroup title="Bounded auto-resize" description="Type new lines to grow from two rows through five rows; additional content scrolls inside the control.">
-            <EvidenceSurface className="forms-overview"><PreviewField id="textarea-autoresize"><Textarea.Root autoResize defaultValue={sample} maxRows={5} minRows={2} /></PreviewField></EvidenceSurface>
+            <EvidenceSurface className="forms-overview"><PreviewField id="textarea-autoresize"><Textarea.Root autoResize defaultValue={sample} maxRows={5} minRows={2} textareaStyle={{ minHeight: "5rem", maxHeight: "9rem" }} /></PreviewField></EvidenceSurface>
           </EvidenceGroup>
         </VStack>
       </Scenario>
@@ -169,6 +195,7 @@ export function TextareaPage() {
 
       <Scenario {...textareaScenarios[8]}>
         <VStack className="forms-evidence-stack" data-testid="textarea-stress">
+          <EvidenceGroup title="Responsive recipe transition" description="Underline changes to outline at the shared md breakpoint without retaining underline geometry."><EvidenceSurface className="forms-stress-panel"><Field.Root id="textarea-responsive"><Field.Label>Responsive notes</Field.Label><Textarea.Root variant={{ initial: "underline", md: "outline", xl: "subtle" }} /></Field.Root></EvidenceSurface></EvidenceGroup>
           <EvidenceGroup title="Constrained-width stress" description="Long unbroken and multi-line content remains editable inside a narrow application-owned frame."><EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame"><Field.Root id="textarea-long"><Field.Label>Localized recovery notes</Field.Label><Textarea.Root defaultValue={`ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-without-a-natural-break\n${sample}`} /></Field.Root></div></EvidenceSurface></EvidenceGroup>
           <EvidenceGroup title="RTL inheritance" description="The control and logical Count alignment inherit genuine right-to-left direction in their own specimen."><EvidenceSurface className="forms-stress-panel"><div className="forms-phone-frame" dir="rtl"><Field.Root id="textarea-rtl"><Field.Label>ملاحظات المشروع</Field.Label><Textarea.Root defaultValue="اكتب ملخصًا واضحًا للمشروع والنتيجة المتوقعة." maxLength={160}><Textarea.Count /></Textarea.Root></Field.Root></div></EvidenceSurface></EvidenceGroup>
         </VStack>

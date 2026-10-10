@@ -1,5 +1,12 @@
 # Checkbox manual-test protocol
 
+## Disabled appearance regression
+
+Compare individual and Fieldset-inherited disabled states in light/dark and
+forced colors. Preserve variant paint, fade each visual boundary once, and
+check the cursor over labels, editors, indicators and nested actions. Read-only
+remains separate. Record physical-device and assistive checks independently.
+
 | Run information | Value |
 | --- | --- |
 | Component | Checkbox |
@@ -90,8 +97,25 @@ Notes or issue:
 
 ## Completion
 
+For the September 16 recipes, additionally verify custom checked/mixed artwork,
+12/16/20/24px squares, 24px compact and 44px comfortable targets, responsive sizes,
+logical label placement, and invalid versus selected tone in forced colors.
+Physical touch, real zoom and screen-reader qualification remain unperformed
+until a dated operator result is recorded.
+
 Overall result:
 Follow-up issues:
 Workbook updated:
 
 Mark unavailable touch or assistive-technology environments `blocked`.
+
+## Compound linked labels
+
+- In Linked label, label text toggles once; links navigate without toggling.
+- Tab visits the control and link separately; Space operates the control and
+  Enter operates the link. Check focus rings in forced colors.
+- Submit unchecked to reveal the required error; check and submit, then reset.
+- Inspect sm/md/lg first-line alignment, long wrapping, RTL and 320px width.
+- Disabled/read-only choices remain inert; reference links remain operable.
+- Confirm a screen reader announces label, mixed state, help and errors, without
+  announcing the automatic form proxy twice. Record manual availability honestly.

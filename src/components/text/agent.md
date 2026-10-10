@@ -14,10 +14,11 @@ Apply Brick typography roles, tones, weight, alignment, wrapping, and deliberate
 
 ## Required composition
 
-- Choose the named semantic export when it fits. Heading requires an explicit level and keeps that level independent from its visual variant. Otherwise choose Text's semantic element first, then its closest visual variant and tone. Keep inline components that complete the same sentence inside that text owner, and use Stack only for separately meaningful text peers.
+- Choose the named semantic export when it fits. Heading requires an explicit level and keeps that level independent from its visual variant; use title-2xs for a compact 14px structural heading and title-xs for a small 16px structural heading instead of spelling a heading as generic Text plus a body recipe. Otherwise choose Text's semantic element first, then its closest visual variant and tone. Keep inline components that complete the same sentence inside that text owner, and use Stack only for separately meaningful text peers.
 
 ## Rules
 
+- **MUST:** Use weight for explicit thin (100), extralight (200), light (300), regular (400), medium (500), semibold (600), bold (700), extrabold (800), or black (900) text. Omit it to retain the typography recipe or use inherit for parent weight. All named text exports share this API; the application must load font faces that support its selected weights.
 - **MUST:** Do not choose heading or paragraph semantics solely from the desired font size. Use the display scale, responsive visual variant, or responsive logical alignment without changing the correct semantic level.
 - **MUST:** Author real names and titles with their correct casing. Use transform only for deliberate visual presentation; CSS capitalize is not language-aware title case and must not repair registry or product content.
 - **MUST:** Prefer Heading, Paragraph, Caption, or Eyebrow for ordinary roles; use Text when their fixed semantic host or restricted visual family does not fit.
@@ -28,10 +29,11 @@ Apply Brick typography roles, tones, weight, alignment, wrapping, and deliberate
 - **MUST:** Keep a Link or other inline component that completes one sentence inside the semantic Text paragraph and let it inherit the surrounding typography and natural wrapping.
 - **SHOULD:** Give separately meaningful inline peer labels compatible typography metrics and arrange them with HStack gap rather than literal spaces or manual positional offsets.
 - **MUST:** Load styles.css or core.css plus text.css.
+- **MUST:** Use fontStyle, numeric, decoration and decorationStyle for visual presentation; use semantic emphasis for meaning. align supports justify. lineClamp accepts responsive positive integers or none; preserve truncate exclusivity and a way to read essential hidden content. Native style is the deliberate escape hatch for font metrics and decoration details, not a missing capability or a new generic style-prop system.
 
 ## Common mistakes
 
-- **Avoid:** Using five spans to build brand text, repeatedly spelling ordinary headings and paragraphs as Text plus as, using capitalize to repair authored titles, selecting all-caps eyebrow styling for paragraph descriptions, allowing nested Text to override a parent's foreground, splitting one sentence into layout siblings, or aligning independent peer labels with literal whitespace. **Instead:** Use the named semantic exports where they fit, author correct casing, reserve transforms and display treatments for their intended roles, inherit the owning foreground, keep one sentence in one text flow, and use HStack gap only between separate peers.
+- **Avoid:** Using five spans to build brand text, repeatedly spelling ordinary headings and paragraphs as Text plus as, using Text as a heading with body-sm only to obtain compact sizing, using capitalize to repair authored titles, selecting all-caps eyebrow styling for paragraph descriptions, allowing nested Text to override a parent's foreground, splitting one sentence into layout siblings, or aligning independent peer labels with literal whitespace. **Instead:** Use the named semantic exports where they fit, choose Heading title-2xs for compact structural headings or title-xs for small 16px headings, author correct casing, reserve transforms and display treatments for their intended roles, inherit the owning foreground, keep one sentence in one text flow, and use HStack gap only between separate peers.
 
 ## Validation checklist
 

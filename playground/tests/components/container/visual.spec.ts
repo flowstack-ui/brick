@@ -6,7 +6,18 @@ import {
   test,
 } from "../../visual-harness.js";
 
-installVisualDefaults("/container");
+installVisualDefaults("/container?qualification=1");
+
+test("Container documentation examples", async ({ page }) => {
+  await page.goto("/container?appearance=light");
+  await expect(page.locator("[data-example-canvas]").first()).toHaveScreenshot("docs-basic-light.png");
+  await expect(page.locator("#gutters [data-example-canvas]")).toHaveScreenshot("docs-gutters-light.png");
+  await expect(page.locator("#as-child [data-example-canvas]")).toHaveScreenshot("docs-as-child-light.png");
+  await setAppearance(page, "dark");
+  await expect(page.locator("[data-example-canvas]").first()).toHaveScreenshot("docs-basic-dark.png");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator("#shared-alignment [data-example-canvas]")).toHaveScreenshot("docs-alignment-mobile.png");
+});
 
 test("Container defaults, measures, gutters, and composition", async ({ page }) => {
   await expect(page.getByTestId("container-default")).toHaveScreenshot(

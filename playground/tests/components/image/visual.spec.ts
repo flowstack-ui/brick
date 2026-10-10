@@ -1,6 +1,6 @@
 import { expect, installVisualDefaults, setAppearance, test, useForcedColors } from "../../visual-harness.js";
 
-installVisualDefaults("/image");
+installVisualDefaults("/image?qualification=1");
 
 test("Image defaults, fits, positions, and geometry", async ({ page }) => {
   await page.setViewportSize({ width: 1120, height: 1600 });
@@ -22,7 +22,9 @@ test("Image appearance, fallback, mobile, and forced colors", async ({ page }) =
   await page.locator("#scenario-image-stress img").evaluateAll(async (images) => {
     await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
   });
+  const headerStyle = await page.addStyleTag({ content: ".evidence-app-bar { visibility: hidden !important; }" });
   await expect(page.locator("#scenario-image-stress")).toHaveScreenshot("stress-mobile.png");
+  await headerStyle.evaluate((element) => element.parentNode?.removeChild(element));
   await page.setViewportSize({ width: 1120, height: 900 });
   await useForcedColors(page);
   await expect(page.locator("#scenario-image-appearance")).toHaveScreenshot("appearance-forced-colors.png");

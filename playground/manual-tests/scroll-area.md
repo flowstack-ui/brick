@@ -3,7 +3,7 @@
 | Run information | Value |
 | --- | --- |
 | Component | Scroll Area |
-| Version or commit | Unreleased 0.1.0 |
+| Version or commit | Record tested package/archive identity |
 | Reviewer | |
 | Date | |
 | Browser and version | |
@@ -12,13 +12,38 @@
 | Physical device | |
 | Assistive technology | |
 | Playground route | `/scroll-area` |
+| Qualification route | `/scroll-area?qualification=1` |
 
-Scenario order: `01 Overview`, `02 Orientations`, `03 Layout constraints`,
+The documentation route contains concise public examples. The qualification
+route preserves this exhaustive native-regression order.
+
+Scenario order:
+`01 Overview`, `02 Orientations`, `03 Layout constraints`,
 `04 Scrollbar gutter`, `05 Scrollbar visibility`, `06 Focus and semantics`,
 `07 Composition and output`, `08 Appearance and customization`, and
 `09 Responsive and RTL`.
 
 Use `pass`, `fail`, `blocked`, or `not applicable`.
+
+## Custom-mode parity review
+
+On `/scroll-area`, inspect sizes, horizontal/both axes, visibility, gutter,
+controller/shadows, customization, RTL, dynamic content, bottom-following,
+virtualization, menu integration and native mode. Repeat light/dark, a narrow
+viewport, real zoom and a physical touch device. Drag each thumb beyond its
+track, cancel a drag, and use native wheel/keyboard input. Check the two-axis
+corner, shadow edges and focus visibility. In OS high contrast, custom bars
+must disappear and native scrolling must remain usable. OS settings may hide
+native bars until scrolling, so compare with an ordinary native scroller.
+
+Use a screen reader to verify named regions and menu item announcements. Custom
+tracks are not extra keyboard stops or ARIA sliders. In the conversation, adding
+a message follows only when already at the bottom. Scrolling away must preserve
+position. The virtual archive must reach all 10,000 rows without rendering them
+all simultaneously. Record observed results, not inferred passes from CI.
+
+Result:
+Notes or issue:
 
 ## Step 1 — Default, axes, constraints, and gutter
 

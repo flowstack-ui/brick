@@ -12,6 +12,14 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
+test("SegmentGroup public subpath coordinates selection and indicator", async ({page}) => {
+  const group=page.getByRole("radiogroup",{name:"Workspace presentation"});
+  await group.getByRole("radio",{name:"Grid",exact:true}).click();
+  await expect(page.getByText("Current presentation: Grid",{exact:true})).toBeVisible();
+  await expect(group.locator('[data-slot="segment-group-indicator"]')).toHaveAttribute("data-ready","");
+  await expect(group.locator('input[name="presentation"]:checked')).toHaveValue("Grid");
+});
+
 test("renders the release palette through the public Color Swatch subpath", async ({ page }) => {
   const palette = page.getByTestId("consumer-color-swatch");
   await expect(palette).toBeVisible();
@@ -20,6 +28,25 @@ test("renders the release palette through the public Color Swatch subpath", asyn
   await expect(palette.getByRole("img", { name: "Release and review mix" })).toBeVisible();
   await expect(palette.getByRole("img", { name: "Release violet" })).toHaveAttribute("data-shape", "sharp");
   await expect(palette.getByRole("img", { name: "Review rose" })).toHaveAttribute("data-shape", "circle");
+});
+
+test("composes Center, Square, Circle, and the Badge surface recipe through public subpaths", async ({ page }) => {
+  const center = page.getByTestId("consumer-center-family");
+  await expect(center).toHaveCSS("align-items", "center");
+  await expect(center).toHaveCSS("justify-content", "center");
+  for (const testId of ["consumer-square", "consumer-circle"]) {
+    const holder = page.getByTestId(testId);
+    await expect(holder).toHaveCSS("width", "32px");
+    await expect(holder).toHaveCSS("height", "32px");
+    await expect(holder).toHaveCSS("flex-shrink", "0");
+    await expect(holder).toHaveClass(/brick-surface/);
+  }
+  const badge = center.getByText("Surface badge");
+  await expect(badge).toHaveAttribute("data-variant", "surface");
+  expect(await badge.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return style.backgroundColor !== "rgba(0, 0, 0, 0)" && style.borderTopColor !== "rgba(0, 0, 0, 0)";
+  })).toBe(true);
 });
 
 test("edits a release accent through the packed Color Picker subpath", async ({ page }) => {
@@ -93,7 +120,7 @@ test("composes File Upload through its public subpath without network transfer",
 
 test("composes Pagination through its public subpath", async ({ page }) => {
   const pagination = page.getByRole("navigation", { name: "Release report pages" });
-  await expect(pagination).toHaveAttribute("data-variant", "outline");
+  await expect(pagination.getByRole("button", { name: "Next page" })).toHaveAttribute("data-variant", "outline");
   await expect(pagination.getByRole("button", { name: "Page 1, current page" })).toHaveAttribute("aria-current", "page");
   await pagination.getByRole("button", { name: "Next page" }).click();
   await expect(pagination.getByRole("button", { name: "Page 2, current page" })).toBeVisible();
@@ -222,11 +249,30 @@ test("composes specialized fields through their public subpaths and Field", asyn
   await code.locator("input").first().pressSequentially("123456");
   await expect(code.locator("input").last()).toHaveValue("6");
 
-  const password = page.getByLabel("Account password");
-  await password.fill("correct horse");
+  const password = page.getByRole("textbox", { name: "Account password" });
+  const passwordForm = page.getByRole("form", {
+    name: "Account password check",
+  });
+  const syntheticPassword = "synthetic consumer password";
+  await expect(password).toHaveAttribute("autocomplete", "current-password");
+  await password.fill(syntheticPassword);
   await expect(password).toHaveAttribute("type", "password");
-  await page.getByRole("button", { name: "Show password" }).click();
+  await passwordForm.getByRole("button", { name: "Show password" }).click();
   await expect(password).toHaveAttribute("type", "text");
+  await passwordForm.getByRole("button", { name: "Check password" }).click();
+  await expect(page.getByTestId("password-status")).toHaveText(
+    "Account password is ready for verification.",
+  );
+  await expect(page.getByTestId("password-status")).not.toContainText(
+    syntheticPassword,
+  );
+  await expect(password).toHaveAttribute("type", "text");
+  await passwordForm.getByRole("button", { name: "Reset" }).click();
+  await expect(password).toHaveValue("");
+  await expect(password).toHaveAttribute("type", "password");
+  await expect(page.getByTestId("password-status")).toHaveText(
+    "Account password check was reset.",
+  );
 });
 
 test("composes Multi Select through its public subpath with repeated-value form behavior", async ({ page }) => {
@@ -518,11 +564,13 @@ test("composes Card through its public package without inventing interaction", a
 
   const workspace = page.locator(".workspace-grid");
   await expect(workspace).toHaveClass(/brick-grid/);
-  await expect(workspace).toHaveAttribute("data-columns", "3");
+  await expect(workspace).toHaveAttribute("data-columns", "1");
+  await expect(workspace).toHaveAttribute("data-columns-md", "3");
   await expect(workspace).toHaveAttribute("data-gap", "4");
   const featured = workspace.locator(".workspace-featured");
   await expect(featured).toHaveClass(/brick-grid-item/);
-  await expect(featured).toHaveAttribute("data-column-span", "2");
+  await expect(featured).toHaveAttribute("data-column-span", "full");
+  await expect(featured).toHaveAttribute("data-column-span-md", "2");
 
   const project = page.getByRole("article", { name: "Mobile checkout refresh" });
   await expect(project).toHaveAttribute("data-slot", "card");
@@ -671,8 +719,10 @@ test("composes Badge and NotificationBadge through their public subpath", async 
 });
 
 test("composes Avatar status and fallback states through its public subpath", async ({ page }) => {
-  const adaImage = page.getByRole("img", { name: "Ada Lovelace" });
-  const ada = adaImage.locator("..");
+  const ada = page.locator("[data-slot='avatar'][data-size='lg']").filter({
+    has: page.getByRole("img", { name: "Ada Lovelace" }),
+  });
+  const adaImage = ada.getByRole("img", { name: "Ada Lovelace" });
   await expect(ada).toHaveAttribute("data-slot", "avatar");
   await expect(ada).toHaveAttribute("data-size", "lg");
   await expect(ada).toHaveAttribute("data-shape", "circle");
@@ -685,8 +735,10 @@ test("composes Avatar status and fallback states through its public subpath", as
   await expect(adaWrapper).toHaveClass(/brick-notification-badge/);
   await expect(adaWrapper.locator("[data-slot='notification-badge-indicator']")).toHaveText("2");
 
-  const graceFallback = page.getByRole("img", { name: "Grace Hopper" });
-  const grace = graceFallback.locator("..");
+  const grace = page.locator("[data-slot='avatar'][data-size='lg']").filter({
+    has: page.getByRole("img", { name: "Grace Hopper" }),
+  });
+  const graceFallback = grace.getByRole("img", { name: "Grace Hopper" });
   await expect(grace).toHaveAttribute("data-shape", "rounded");
   await expect(grace).toHaveAttribute("data-status", "busy");
   await expect(graceFallback).toContainText("GH");
@@ -872,4 +924,17 @@ test("consumes Visually Hidden through the packed public subpath", async ({ page
   const hidden = backToTop.locator(".brick-visually-hidden");
   await expect(hidden).toHaveAttribute("data-slot", "visually-hidden");
   await expect(hidden).toHaveCSS("position", "absolute");
+});
+
+
+test("Breadcrumb public Trigger opens ancestor destinations and restores focus", async ({ page }) => {
+ const breadcrumb = page.getByRole("navigation", { name: "Current workspace path" });
+ const trigger = breadcrumb.getByRole("button", { name: "Projects", exact: true });
+ await trigger.focus();
+ await trigger.press("Enter");
+ const menu = page.getByRole("menu", { name: "Projects", exact: true });
+ await expect(menu).toBeVisible();
+ await expect(menu.getByRole("menuitem", { name: "Workspace", exact: true })).toHaveAttribute("href", "#workspace");
+ await page.keyboard.press("Escape");
+ await expect(trigger).toBeFocused();
 });

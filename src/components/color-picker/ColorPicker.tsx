@@ -1,10 +1,14 @@
 "use client";
+import { radiusStyle, type Radius } from "../_radius/Radius.js";
+import { responsiveDataAttributes, type ResponsiveValue } from "../_responsive-value/ResponsiveValue.js";
 
 import {
+  createContext,
   forwardRef,
   type ForwardRefExoticComponent,
   type ReactNode,
   type RefAttributes,
+  useContext,
 } from "react";
 import {
   ColorPicker as AtomColorPicker,
@@ -29,6 +33,7 @@ import {
   type ColorPickerNativeInputProps as AtomNativeInputProps,
   type ColorPickerPositionerProps as AtomPositionerProps,
   type ColorPickerRootProps as AtomRootProps,
+  type ColorPickerRootProviderProps as AtomRootProviderProps,
   type ColorPickerSwatchGroupProps as AtomSwatchGroupProps,
   type ColorPickerSwatchIndicatorProps as AtomSwatchIndicatorProps,
   type ColorPickerSwatchProps as AtomSwatchProps,
@@ -38,19 +43,26 @@ import {
   type ColorPickerValueSwatchProps as AtomValueSwatchProps,
   type ColorPickerValueTextProps as AtomValueTextProps,
   type ColorPickerViewProps as AtomViewProps,
+  useColorPickerContext,
 } from "@flowstack-ui/atom/color-picker";
 
 export type ColorPickerSize = "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
-export type ColorPickerVariant = "outline" | "soft";
+export type ColorPickerVariant = "outline" | "surface" | "soft" | "subtle";
 export type ColorPickerControlLayout = "separate" | "integrated";
 export type ColorPickerSwatchFrame = "none" | "outline";
 export type ColorPickerSwatchShape = "sharp" | "rounded" | "circle";
 
 export type ColorPickerRootProps = Omit<AtomRootProps, "className"> & {
   className?: string;
-  size?: ColorPickerSize;
+  size?: ResponsiveValue<ColorPickerSize>;
   variant?: ColorPickerVariant;
 };
+export type ColorPickerRootProviderProps = AtomRootProviderProps & {
+  size?: ResponsiveValue<ColorPickerSize>;
+  variant?: ColorPickerVariant;
+};
+export { useColorPicker, useColorPickerContext, parseColorPickerValue, normalizeColorPickerValue } from "@flowstack-ui/atom/color-picker";
+export type { UseColorPickerOptions, UseColorPickerReturn } from "@flowstack-ui/atom/color-picker";
 export type ColorPickerLabelProps = AtomLabelProps;
 export type ColorPickerControlProps = Omit<AtomControlProps, "className"> & {
   className?: string;
@@ -61,11 +73,12 @@ export type ColorPickerChannelInputProps = AtomChannelInputProps;
 export type ColorPickerNativeInputProps = AtomNativeInputProps;
 export type ColorPickerTriggerProps = AtomTriggerProps;
 export type ColorPickerPositionerProps = AtomPositionerProps;
-export type ColorPickerContentProps = AtomContentProps;
+export type ColorPickerContentProps = AtomContentProps & { radius?: Radius };
 export type ColorPickerValueTextProps = AtomValueTextProps;
 export type ColorPickerValueSwatchProps = Omit<AtomValueSwatchProps, "className"> & {
   className?: string;
   shape?: ColorPickerSwatchShape;
+  radius?: Radius;
 };
 export type ColorPickerAreaProps = AtomAreaProps;
 export type ColorPickerAreaBackgroundProps = AtomAreaBackgroundProps;
@@ -82,10 +95,12 @@ export type ColorPickerSwatchTriggerProps = Omit<AtomSwatchTriggerProps, "classN
   className?: string;
   frame?: ColorPickerSwatchFrame;
   shape?: ColorPickerSwatchShape;
+  radius?: Radius;
 };
 export type ColorPickerSwatchProps = Omit<AtomSwatchProps, "className"> & {
   className?: string;
   shape?: ColorPickerSwatchShape;
+  radius?: Radius;
 };
 export type ColorPickerSwatchIndicatorProps = AtomSwatchIndicatorProps;
 export type ColorPickerFormatSelectProps = AtomFormatSelectProps;
@@ -98,17 +113,27 @@ function classes(base: string, className?: string) {
 
 type Forward<Element, Props> = ForwardRefExoticComponent<Props & RefAttributes<Element>>;
 
+const ColorPickerChannelContext = createContext<ColorPickerChannelSliderProps["channel"] | null>(null);
+
 export const ColorPickerRoot: Forward<HTMLDivElement, ColorPickerRootProps> = forwardRef<HTMLDivElement, ColorPickerRootProps>(
   function ColorPickerRoot({ className, size = "md", variant = "outline", ...props }, ref) {
     return (
       <AtomColorPicker.Root
         {...props}
         className={classes("brick-color-picker", className)}
-        data-size={size}
+        {...responsiveDataAttributes("data-size", size, {defaultValue: "md", alwaysInitial: true})}
         data-variant={variant}
         ref={ref}
       />
     );
+  },
+);
+
+export const ColorPickerRootProvider: Forward<HTMLDivElement, ColorPickerRootProviderProps> = forwardRef<HTMLDivElement, ColorPickerRootProviderProps>(
+  function ColorPickerRootProvider({className, size = "md", variant = "outline", ...props}, ref) {
+    return <AtomColorPicker.RootProvider {...props} ref={ref}
+      className={classes("brick-color-picker", className)} data-variant={variant}
+      {...responsiveDataAttributes("data-size", size, {defaultValue: "md", alwaysInitial: true})} />;
   },
 );
 
@@ -149,8 +174,8 @@ export const ColorPickerPositioner: Forward<HTMLDivElement, ColorPickerPositione
   },
 );
 export const ColorPickerContent: Forward<HTMLDivElement, ColorPickerContentProps> = forwardRef<HTMLDivElement, ColorPickerContentProps>(
-  function ColorPickerContent({ className, ...props }, ref) {
-    return <AtomColorPicker.Content {...props} className={classes("brick-color-picker__content", className)} ref={ref} />;
+  function ColorPickerContent({ className, radius, style, ...props }, ref) {
+    return <AtomColorPicker.Content {...props} style={radiusStyle(radius, "--brick-color-picker-content-radius", style)} className={classes("brick-color-picker__content", className)} ref={ref} />;
   },
 );
 export const ColorPickerValueText: Forward<HTMLSpanElement, ColorPickerValueTextProps> = forwardRef<HTMLSpanElement, ColorPickerValueTextProps>(
@@ -159,13 +184,15 @@ export const ColorPickerValueText: Forward<HTMLSpanElement, ColorPickerValueText
   },
 );
 export const ColorPickerValueSwatch: Forward<HTMLDivElement, ColorPickerValueSwatchProps> = forwardRef<HTMLDivElement, ColorPickerValueSwatchProps>(
-  function ColorPickerValueSwatch({ className, shape = "rounded", ...props }, ref) {
-    return <AtomColorPicker.ValueSwatch {...props} className={classes("brick-color-picker__value-swatch", className)} data-shape={shape} ref={ref} />;
+  function ColorPickerValueSwatch({ className, shape = "rounded", radius, style, ...props }, ref) {
+    return <AtomColorPicker.ValueSwatch {...props} className={classes("brick-color-picker__value-swatch", className)} data-shape={shape} style={radiusStyle(radius, "--brick-color-picker-swatch-radius", style)} ref={ref} />;
   },
 );
 export const ColorPickerArea: Forward<HTMLDivElement, ColorPickerAreaProps> = forwardRef<HTMLDivElement, ColorPickerAreaProps>(
-  function ColorPickerArea({ className, ...props }, ref) {
-    return <AtomColorPicker.Area {...props} className={classes("brick-color-picker__area", className)} ref={ref} />;
+  function ColorPickerArea({ className, children, ...props }, ref) {
+    return <AtomColorPicker.Area {...props} className={classes("brick-color-picker__area", className)} ref={ref}>
+      {children === undefined ? <><ColorPickerAreaBackground /><ColorPickerAreaThumb /></> : children}
+    </AtomColorPicker.Area>;
   },
 );
 export const ColorPickerAreaBackground: Forward<HTMLDivElement, ColorPickerAreaBackgroundProps> = forwardRef<HTMLDivElement, ColorPickerAreaBackgroundProps>(
@@ -179,8 +206,22 @@ export const ColorPickerAreaThumb: Forward<HTMLDivElement, ColorPickerAreaThumbP
   },
 );
 export const ColorPickerChannelSlider: Forward<HTMLDivElement, ColorPickerChannelSliderProps> = forwardRef<HTMLDivElement, ColorPickerChannelSliderProps>(
-  function ColorPickerChannelSlider({ className, ...props }, ref) {
-    return <AtomColorPicker.ChannelSlider {...props} className={classes("brick-color-picker__channel-slider", className)} ref={ref} />;
+  function ColorPickerChannelSlider({ channel, className, children, ...props }, ref) {
+    return (
+      <ColorPickerChannelContext.Provider value={channel}>
+        <AtomColorPicker.ChannelSlider
+          {...props}
+          channel={channel}
+          className={classes("brick-color-picker__channel-slider", className)}
+          ref={ref}
+        >
+          {children === undefined ? <>
+            {channel === "alpha" ? <ColorPickerTransparencyGrid /> : null}
+            <ColorPickerChannelSliderTrack /><ColorPickerChannelSliderThumb />
+          </> : children}
+        </AtomColorPicker.ChannelSlider>
+      </ColorPickerChannelContext.Provider>
+    );
   },
 );
 export const ColorPickerChannelSliderLabel: Forward<HTMLLabelElement, ColorPickerChannelSliderLabelProps> = forwardRef<HTMLLabelElement, ColorPickerChannelSliderLabelProps>(
@@ -194,8 +235,21 @@ export const ColorPickerChannelSliderTrack: Forward<HTMLDivElement, ColorPickerC
   },
 );
 export const ColorPickerChannelSliderThumb: Forward<HTMLDivElement, ColorPickerChannelSliderThumbProps> = forwardRef<HTMLDivElement, ColorPickerChannelSliderThumbProps>(
-  function ColorPickerChannelSliderThumb({ className, ...props }, ref) {
-    return <AtomColorPicker.ChannelSliderThumb {...props} className={classes("brick-color-picker__channel-slider-thumb", className)} ref={ref} />;
+  function ColorPickerChannelSliderThumb({ className, style, ...props }, ref) {
+    const channel = useContext(ColorPickerChannelContext);
+    const colorPicker = useColorPickerContext();
+    const thumbStyle = channel === "alpha"
+      ? { ...style, background: colorPicker.value.withChannelValue("alpha", 1).toString("css") }
+      : style;
+
+    return (
+      <AtomColorPicker.ChannelSliderThumb
+        {...props}
+        className={classes("brick-color-picker__channel-slider-thumb", className)}
+        ref={ref}
+        style={thumbStyle}
+      />
+    );
   },
 );
 export const ColorPickerChannelSliderValueText: Forward<HTMLSpanElement, ColorPickerChannelSliderValueTextProps> = forwardRef<HTMLSpanElement, ColorPickerChannelSliderValueTextProps>(
@@ -227,13 +281,13 @@ export const ColorPickerSwatchGroup: Forward<HTMLDivElement, ColorPickerSwatchGr
   },
 );
 export const ColorPickerSwatchTrigger: Forward<HTMLButtonElement, ColorPickerSwatchTriggerProps> = forwardRef<HTMLButtonElement, ColorPickerSwatchTriggerProps>(
-  function ColorPickerSwatchTrigger({ className, frame = "outline", shape = "circle", ...props }, ref) {
-    return <AtomColorPicker.SwatchTrigger {...props} className={classes("brick-color-picker__swatch-trigger", className)} data-frame={frame} data-shape={shape} ref={ref} />;
+  function ColorPickerSwatchTrigger({ className, frame = "outline", shape = "circle", radius, style, ...props }, ref) {
+    return <AtomColorPicker.SwatchTrigger {...props} className={classes("brick-color-picker__swatch-trigger", className)} data-frame={frame} data-shape={shape} style={radiusStyle(radius, "--brick-color-picker-swatch-radius", style)} ref={ref} />;
   },
 );
 export const ColorPickerSwatch: Forward<HTMLDivElement, ColorPickerSwatchProps> = forwardRef<HTMLDivElement, ColorPickerSwatchProps>(
-  function ColorPickerSwatch({ className, shape, ...props }, ref) {
-    return <AtomColorPicker.Swatch {...props} className={classes("brick-color-picker__swatch", className)} data-shape={shape} ref={ref} />;
+  function ColorPickerSwatch({ className, shape, radius, style, ...props }, ref) {
+    return <AtomColorPicker.Swatch {...props} className={classes("brick-color-picker__swatch", className)} data-shape={shape} style={radiusStyle(radius, "--brick-color-picker-swatch-radius", style)} ref={ref} />;
   },
 );
 export const ColorPickerSwatchIndicator: Forward<HTMLSpanElement, ColorPickerSwatchIndicatorProps> = forwardRef<HTMLSpanElement, ColorPickerSwatchIndicatorProps>(
@@ -258,6 +312,32 @@ export const ColorPickerView: Forward<HTMLDivElement, ColorPickerViewProps> = fo
 );
 export const ColorPickerContext: (props: ColorPickerContextProps) => ReactNode = AtomColorPicker.Context;
 
+export const ColorPickerSliders = forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<"div">>(
+  function ColorPickerSliders({className, children, ...props}, ref) {
+    return <div {...props} className={classes("brick-color-picker__sliders", className)} ref={ref}>
+      {children === undefined ? <><ColorPickerChannelSlider channel="hue" /><ColorPickerChannelSlider channel="alpha" /></> : children}
+    </div>;
+  },
+);
+export type ColorPickerChannelTextProps = React.ComponentPropsWithoutRef<"span"> & {channel: AtomChannelInputProps["channel"]};
+export const ColorPickerChannelText = forwardRef<HTMLSpanElement, ColorPickerChannelTextProps>(
+  function ColorPickerChannelText({channel, className, children, ...props}, ref) {
+    const {value} = useColorPickerContext();
+    const result = channel === "hex" || channel === "css" ? value.toString(channel)
+      : value.toFormat(channel === "lightness" ? "hsla" : ["red", "green", "blue"].includes(channel) ? "rgba" : "hsba").getChannelValue(channel);
+    return <span {...props} className={classes("brick-color-picker__channel-text", className)} ref={ref}>{children ?? String(result)}</span>;
+  },
+);
+export function getColorChannels(format: "rgba" | "hsla" | "hsba" | "hexa"): Array<AtomChannelInputProps["channel"]> {
+  switch (format) {
+    case "rgba": return ["red", "green", "blue", "alpha"];
+    case "hsla": return ["hue", "saturation", "lightness", "alpha"];
+    case "hsba": return ["hue", "saturation", "brightness", "alpha"];
+    case "hexa": return ["hex", "alpha"];
+  }
+}
+export const ColorPickerEyeDropper = ColorPickerEyeDropperTrigger;
+
 const displayNames = [
   [ColorPickerRoot, "ColorPicker.Root"], [ColorPickerLabel, "ColorPicker.Label"],
   [ColorPickerControl, "ColorPicker.Control"], [ColorPickerInput, "ColorPicker.Input"],
@@ -278,6 +358,10 @@ for (const [component, name] of displayNames) component.displayName = name;
 
 export const ColorPicker: Readonly<{
   Root: typeof ColorPickerRoot;
+  RootProvider: typeof ColorPickerRootProvider;
+  Sliders: typeof ColorPickerSliders;
+  ChannelText: typeof ColorPickerChannelText;
+  EyeDropper: typeof ColorPickerEyeDropper;
   Context: typeof ColorPickerContext;
   Label: typeof ColorPickerLabel;
   Control: typeof ColorPickerControl;
@@ -309,6 +393,10 @@ export const ColorPicker: Readonly<{
   View: typeof ColorPickerView;
 }> = Object.freeze({
   Root: ColorPickerRoot,
+  RootProvider: ColorPickerRootProvider,
+  Sliders: ColorPickerSliders,
+  ChannelText: ColorPickerChannelText,
+  EyeDropper: ColorPickerEyeDropper,
   Context: ColorPickerContext,
   Label: ColorPickerLabel,
   Control: ColorPickerControl,

@@ -1,9 +1,25 @@
 import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { Highlight, type HighlightTone, type HighlightVariant } from "../../../src/highlight.js";
+import { Highlight, findHighlightSegments, type HighlightTone, type HighlightVariant } from "../../../src/highlight.js";
+import { findHighlightSegments as atomSegments } from "@flowstack-ui/atom/highlight";
+import { renderToString } from "react-dom/server";
 
 describe("Highlight", () => {
+  it("re-exports Atom segmentation without changing its contract", () => {
+    expect(findHighlightSegments).toBe(atomSegments);
+    const segments = findHighlightSegments("A design system", { query: ["design", "design system"] });
+    expect(segments.filter((part) => part.match).map((part) => part.text)).toEqual(["design system"]);
+    expect(segments.map((part) => part.text).join("")).toBe("A design system");
+    expect(findHighlightSegments("<script>literal.*</script>", { query: "literal.*" })[1].text).toBe("literal.*");
+    expect(findHighlightSegments("text", { query: "" })).toEqual([{ text: "text", match: false, start: 0, end: 4 }]);
+  });
+  it("preserves safe server-rendered text", () => {
+    const html = renderToString(<Highlight query="safe" text="<safe>" />);
+    expect(html).toContain("&lt;");
+    expect(html).toContain("<mark");
+    expect(html).not.toContain("<safe>");
+  });
   it("delegates matching to Atom and renders closed Brick recipes", () => {
     const ref = createRef<HTMLSpanElement>();
     const { rerender } = render(<Highlight query={["system", "design system"]} ref={ref} text="A design system is a system." />);
@@ -16,11 +32,11 @@ describe("Highlight", () => {
     expect(root.querySelectorAll("mark")).toHaveLength(2);
     expect(root.querySelector("mark")?.textContent).toBe("design system");
     expect(root.textContent).toBe("A design system is a system.");
-    for (const variant of ["subtle", "solid", "underline"] satisfies HighlightVariant[]) {
+    for (const variant of ["subtle", "solid", "underline", "text", "plain"] satisfies HighlightVariant[]) {
       rerender(<Highlight query="system" text="system" variant={variant} />);
       expect(screen.getByText("system").parentElement).toHaveAttribute("data-variant", variant);
     }
-    for (const tone of ["accent", "neutral"] satisfies HighlightTone[]) {
+    for (const tone of ["accent", "neutral", "info", "success", "warning", "danger"] satisfies HighlightTone[]) {
       rerender(<Highlight query="system" text="system" tone={tone} />);
       expect(screen.getByText("system").parentElement).toHaveAttribute("data-tone", tone);
     }

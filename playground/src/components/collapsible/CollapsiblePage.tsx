@@ -1,47 +1,68 @@
-import { useState, type CSSProperties } from "react";
-import { Button, Collapsible, Grid, Surface, Text, VStack, type CollapsibleSize, type CollapsibleVariant } from "@flowstack-ui/brick";
-import { Scenario, type ScenarioDefinition } from "../../shared/Scenario.js";
-import { FormEvidenceCell as Cell, FormEvidenceGroup as EvidenceGroup } from "../../shared/FormEvidence.js";
-import { EvidenceSurface } from "../../shared/EvidenceSurface.js";
-import { PlaygroundCodeBlock } from "../../shared/PlaygroundCodeBlock.js";
-import { RenderedOutput } from "../../shared/RenderedOutput.js";
-import { SpecimenLabel } from "../../shared/SpecimenLabel.js";
-import "../../shared/forms-evidence.playground.css";
-import "./collapsible.playground.css";
-
-const variants: CollapsibleVariant[] = ["plain", "soft", "outline"];
-const sizes: CollapsibleSize[] = ["sm", "md", "lg"];
-const customStyle = { "--brick-collapsible-background": "#f3e8ff", "--brick-collapsible-border-color": "#9333ea", "--brick-collapsible-radius": "1rem" } as CSSProperties;
-
-function Disclosure({ children = "Notification details", ...props }: React.ComponentProps<typeof Collapsible.Root> & { children?: string }) {
-  const content = children === "تفاصيل الإشعارات" ? "تُرسل الملخصات الأسبوعية كل يوم جمعة." : "Weekly summaries are delivered every Friday.";
-  return <Collapsible.Root {...props}><Collapsible.Trigger>{children}<Collapsible.Indicator /></Collapsible.Trigger><Collapsible.Content><Collapsible.ContentInner><Text variant="body-sm" tone="secondary">{content}</Text></Collapsible.ContentInner></Collapsible.Content></Collapsible.Root>;
-}
-
-export const collapsibleScenarios = [
-  { id: "collapsible.overview", number: 1, title: "Overview", description: "Collapsible defaults to one closed, plain, medium disclosure with a decorative end indicator and an unmounted panel." },
-  { id: "collapsible.variants", number: 2, title: "Variants", description: "Plain, soft, and outline change only the containing surface while size, content, and state remain at their defaults." },
-  { id: "collapsible.sizes", number: 3, title: "Sizes", description: "Small, medium, and large coordinate trigger height, typography, indicator, gap, and inner content padding." },
-  { id: "collapsible.states", number: 4, title: "Content and states", navigationTitle: "States", description: "Open, controlled, disabled, and mounted states preserve one disclosure model and clear state feedback." },
-  { id: "collapsible.indicator", number: 5, title: "Indicator and content", navigationTitle: "Anatomy", description: "Default and authored decorative indicators coexist with a padding-free motion boundary and padding-owning ContentInner." },
-  { id: "collapsible.composition", number: 6, title: "Composition", description: "Atom-backed parts preserve render and asChild composition while the rendered relationships remain intact." },
-  { id: "collapsible.appearance", number: 7, title: "Appearance and customization", navigationTitle: "Theme", description: "Semantic recipes adapt across appearances; supported component variables produce the exact custom example shown." },
-  { id: "collapsible.orientation", number: 8, title: "Orientation and motion", navigationTitle: "Orientation", description: "Vertical disclosures animate measured height; horizontal disclosures reveal measured width without changing their natural height." },
-  { id: "collapsible.stress", number: 9, title: "Responsive and accessibility", navigationTitle: "Stress", description: "Live content, narrow width, RTL, zoom, reduced motion, and forced colors retain logical placement and operability." },
-] as const satisfies readonly ScenarioDefinition[];
+import { Paragraph, VStack } from "@flowstack-ui/brick";
+import { usePreviewContext } from "../../preview/PreviewContext.js";
+import { DocsSection } from "../../shared/DocsSection.js";
+import { ExamplePreview } from "../../shared/ExamplePreview.js";
+import { OwnerDocumentation } from "../../shared/OwnerDocumentation.js";
+import { CollapsibleEvidence } from "./CollapsibleEvidence.js";
+import { collapsibleExamples } from "./documentation.js";
+import { collapsibleParts } from "./parts.js";
+import { CollapsibleBasic } from "./examples/CollapsibleBasic.js";
+import source from "./examples/CollapsibleBasic.tsx?raw";
+export { collapsibleScenarios } from "./CollapsibleEvidence.js";
 
 export function CollapsiblePage() {
-  const [controlledOpen, setControlledOpen] = useState(false);
-  const [extraContent, setExtraContent] = useState(false);
-  return <VStack className="forms-page collapsible-page" data-component-page="collapsible" data-testid="collapsible-workbench">
-    <Scenario {...collapsibleScenarios[0]}><EvidenceSurface inset="lg" data-testid="collapsible-overview"><Disclosure /></EvidenceSurface></Scenario>
-    <Scenario {...collapsibleScenarios[1]}><Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="collapsible-variants">{variants.map((variant) => <Cell key={variant} label={variant}><Disclosure variant={variant} /></Cell>)}</Grid.Root></Scenario>
-    <Scenario {...collapsibleScenarios[2]}><Grid.Root columns={3} className="forms-grid forms-grid--three" data-testid="collapsible-sizes">{sizes.map((size) => <Cell key={size} label={size}><Disclosure size={size} variant="outline" /></Cell>)}</Grid.Root></Scenario>
-    <Scenario {...collapsibleScenarios[3]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="collapsible-states"><Cell label="default open"><Disclosure defaultOpen /></Cell><Cell label="controlled"><VStack gap="2"><Disclosure open={controlledOpen} onOpenChange={setControlledOpen} /><Text variant="caption" tone="secondary">State: {controlledOpen ? "open" : "closed"}</Text></VStack></Cell><Cell label="disabled"><Disclosure disabled /></Cell><Cell label="keep mounted"><Collapsible.Root><Collapsible.Trigger>Notification details<Collapsible.Indicator /></Collapsible.Trigger><Collapsible.Content keepMounted><Collapsible.ContentInner><Text variant="body-sm" tone="secondary">This panel remains mounted when closed.</Text></Collapsible.ContentInner></Collapsible.Content></Collapsible.Root></Cell></Grid.Root></Scenario>
-    <Scenario {...collapsibleScenarios[4]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="collapsible-indicator"><Cell label="default indicator"><Disclosure /></Cell><Cell label="custom indicator"><Collapsible.Root><Collapsible.Trigger>Notification details<Collapsible.Indicator><span className="collapsible-plus">+</span></Collapsible.Indicator></Collapsible.Trigger><Collapsible.Content><Collapsible.ContentInner><Text variant="body-sm" tone="secondary">Custom artwork remains decorative.</Text></Collapsible.ContentInner></Collapsible.Content></Collapsible.Root></Cell><Cell label="icon-only trigger"><Collapsible.Root size="sm"><Collapsible.Trigger aria-label="Open compact details" iconOnly><svg aria-hidden="true" fill="none" height="16" viewBox="0 0 16 16" width="16"><path d="M3 4h10M3 8h10M3 12h10" stroke="currentColor" strokeLinecap="round" /></svg></Collapsible.Trigger><Collapsible.Content><Collapsible.ContentInner><Text variant="body-sm" tone="secondary">Compact details.</Text></Collapsible.ContentInner></Collapsible.Content></Collapsible.Root></Cell></Grid.Root></Scenario>
-    <Scenario {...collapsibleScenarios[5]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="collapsible-composition"><Cell label="rendered section"><Collapsible.Root defaultOpen render="section"><Collapsible.Trigger>Notification details<Collapsible.Indicator /></Collapsible.Trigger><Collapsible.Content render="article"><Collapsible.ContentInner>Rendered semantic hosts retain Atom relationships.</Collapsible.ContentInner></Collapsible.Content></Collapsible.Root></Cell><Cell label="rendered output"><RenderedOutput label="Collapsible relationship HTML"><Collapsible.Root defaultOpen render="section"><Collapsible.Trigger>Notification details<Collapsible.Indicator /></Collapsible.Trigger><Collapsible.Content render="article"><Collapsible.ContentInner>Rendered semantic hosts retain Atom relationships.</Collapsible.ContentInner></Collapsible.Content></Collapsible.Root></RenderedOutput></Cell></Grid.Root></Scenario>
-    <Scenario {...collapsibleScenarios[6]}><VStack className="forms-evidence-stack"><EvidenceGroup title="Scoped appearances" description="The same default recipe uses semantic tokens in both appearances."><Grid.Root columns={2} className="forms-scoped-grid" data-testid="collapsible-appearance"><EvidenceSurface data-brick-appearance="light"><SpecimenLabel>Light</SpecimenLabel><div className="collapsible-appearance-preview"><Disclosure /></div></EvidenceSurface><EvidenceSurface data-brick-appearance="dark"><SpecimenLabel>Dark</SpecimenLabel><div className="collapsible-appearance-preview"><Disclosure /></div></EvidenceSurface></Grid.Root></EvidenceGroup><EvidenceGroup title="Consumer customization" description="These supported variables exactly produce the purple rounded outline disclosure."><EvidenceSurface className="playground-customization-evidence" inset="none"><Grid.Root className="collapsible-customization playground-customization-layout" columns={2} gap="0"><VStack gap="2"><SpecimenLabel>Customized</SpecimenLabel><Text as="h4" variant="title-sm">Collapsible CSS properties</Text><Text as="p" tone="secondary" variant="body-sm">Only the documented surface, border, and radius properties change.</Text><PlaygroundCodeBlock aria-label="Collapsible customization code">{`--brick-collapsible-background: #f3e8ff;\n--brick-collapsible-border-color: #9333ea;\n--brick-collapsible-radius: 1rem;`}</PlaygroundCodeBlock></VStack><div className="collapsible-customization__preview"><Disclosure defaultOpen style={customStyle} variant="outline" /></div></Grid.Root></EvidenceSurface></EvidenceGroup></VStack></Scenario>
-    <Scenario {...collapsibleScenarios[7]}><Grid.Root columns={2} className="forms-grid forms-grid--two" data-testid="collapsible-orientation"><Cell label="vertical"><Disclosure defaultOpen /></Cell><Cell label="horizontal"><Disclosure defaultOpen orientation="horizontal" /></Cell></Grid.Root></Scenario>
-    <Scenario {...collapsibleScenarios[8]}><VStack className="forms-evidence-stack" data-testid="collapsible-stress"><EvidenceGroup title="Live measured content" description="Height is remeasured when content changes while the vertical disclosure is open."><EvidenceSurface inset="lg"><VStack gap="3"><SpecimenLabel>Live content</SpecimenLabel><Collapsible.Root defaultOpen><Collapsible.Trigger>Notification details<Collapsible.Indicator /></Collapsible.Trigger><Collapsible.Content><Collapsible.ContentInner><VStack gap="2"><Text variant="body-sm" tone="secondary">Weekly summaries are delivered every Friday.</Text>{extraContent && <Surface bordered inset="sm"><Text variant="body-sm">This content was added after opening, so the measured height must update.</Text></Surface>}</VStack></Collapsible.ContentInner></Collapsible.Content></Collapsible.Root><Button variant="outline" onPress={() => setExtraContent((value) => !value)}>{extraContent ? "Remove extra content" : "Add extra content"}</Button></VStack></EvidenceSurface></EvidenceGroup><EvidenceGroup title="Narrow and long content" description="The trigger wraps while its indicator stays visible at the logical end."><EvidenceSurface><VStack gap="4"><SpecimenLabel>Narrow</SpecimenLabel><div className="collapsible-phone"><Disclosure>Review notification and communication preferences for every workspace member</Disclosure></div></VStack></EvidenceSurface></EvidenceGroup><EvidenceGroup title="RTL" description="Logical placement moves the indicator to the left while closed and open direction remain meaningful."><EvidenceSurface dir="rtl"><VStack gap="4"><SpecimenLabel>RTL</SpecimenLabel><Disclosure defaultOpen orientation="horizontal">تفاصيل الإشعارات</Disclosure></VStack></EvidenceSurface></EvidenceGroup></VStack></Scenario>
-  </VStack>;
+  const preview = usePreviewContext();
+  if (
+    preview ||
+    new URLSearchParams(window.location.search).get("qualification") === "1"
+  )
+    return <CollapsibleEvidence />;
+  return (
+    <VStack gap={12} data-component-page="collapsible">
+      <ExamplePreview label="Collapsible basic" source={source}>
+        <CollapsibleBasic />
+      </ExamplePreview>
+      <OwnerDocumentation
+        name="Collapsible"
+        usage={
+          "<Collapsible.Root>\n  <Collapsible.Trigger>Details<Collapsible.Indicator /></Collapsible.Trigger>\n  <Collapsible.Content>\n    <Collapsible.ContentInner>Content</Collapsible.ContentInner>\n  </Collapsible.Content>\n</Collapsible.Root>"
+        }
+        examples={collapsibleExamples}
+        parts={collapsibleParts}
+      />
+      <DocsSection
+        id="guide"
+        title="Guide"
+        level={2}
+        description="Separate behavior, visibility and visual ownership."
+      >
+        <Paragraph tone="secondary">
+          Root defaults to lazy mounting and unmounting after exit. Set
+          unmountOnExit=false to preserve a form value; set lazyMount=false as
+          well to render retained content before its first opening. keepMounted
+          remains a deprecated compatibility override, not a second mounting
+          system.
+        </Paragraph>
+        <Paragraph tone="secondary">
+          A partial preview stays mounted but is entirely inert and hidden from
+          assistive technology while collapsed. Put the trigger and any summary
+          that must remain readable outside Content. Do not put required links
+          or actions in the closed preview.
+        </Paragraph>
+        <Paragraph tone="secondary">
+          Content owns clipping and measured motion. ContentInner owns padding.
+          Root unstyled removes the containing recipe only; Trigger unstyled
+          delegates trigger visuals explicitly. Never stack two finished recipes
+          on the same trigger without unstyled.
+        </Paragraph>
+        <Paragraph tone="secondary">
+          Use onOpenChange for requested state changes and onExitComplete for a
+          completed exit. Reopening cancels exit completion. React 19.2 or newer
+          can pause hidden effects with Activity; earlier React versions use
+          the display-none fallback and retain state without pausing effects.
+          IDs and visibility are rendered without browser breakpoint detection.
+        </Paragraph>
+      </DocsSection>
+    </VStack>
+  );
 }

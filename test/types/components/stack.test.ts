@@ -64,11 +64,9 @@ createElement(Stack.Item, { asChild: true, children: createElement("section") })
 
 // @ts-expect-error Stack hosts are deliberately closed.
 createElement(Stack, { as: "table" });
-// @ts-expect-error Reverse direction is excluded.
 createElement(Stack, { direction: "row-reverse" });
-// @ts-expect-error Physical alignment is excluded.
-createElement(Stack, { align: "left" });
-// @ts-expect-error CSS spelling is mapped to the public vocabulary.
+// @ts-expect-error Direction has a closed CSS vocabulary.
+createElement(Stack, { direction: "diagonal" });
 createElement(Stack, { justify: "space-between" });
 // @ts-expect-error Wrapping is boolean only.
 createElement(Stack, { wrap: "reverse" });
@@ -78,10 +76,13 @@ createElement(HStack, { direction: "column" });
 createElement(VStack, { direction: "row" });
 // @ts-expect-error Root has no asChild composition API.
 createElement(Stack, { asChild: true });
-// @ts-expect-error Responsive values require an initial value.
 createElement(Stack, { direction: { lg: "row" } });
-// @ts-expect-error Item visual ordering is excluded.
 createElement(Stack.Item, { order: 2 });
+
+createElement(Stack, { asChild: true, children: createElement("section"), inline: { lg: true }, rowGap: 3, columnGap: 4, alignContent: "space-between", wrap: "wrap-reverse" });
+createElement(Stack.Item, { grow: 0.5, shrink: { lg: 0 }, basis: { initial: "auto", lg: "35%" }, marginInlineStart: "auto" });
+// @ts-expect-error Host choices are mutually exclusive.
+createElement(Stack, { asChild: true, as: "section", children: createElement("div") });
 
 void elements;
 void directions;

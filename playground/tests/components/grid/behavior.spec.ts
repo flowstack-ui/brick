@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator } from "../../evidence-test.js";
 
 async function box(locator: Locator) {
   const value = await locator.boundingBox();
@@ -8,7 +8,7 @@ async function box(locator: Locator) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/grid");
+  await page.goto("/grid?qualification=1");
 });
 
 test("Grid default is one explicit equal track with no semantic invention", async ({

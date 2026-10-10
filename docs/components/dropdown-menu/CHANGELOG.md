@@ -4,6 +4,34 @@ Dropdown Menu follows the package version of `@flowstack-ui/brick`.
 
 ## Unreleased
 
+- Match rotated-square arrow proportions (approximately 16.97px base and 8.49px
+  height), with an open edge stroke and seamless popup-border join.
+
+- Preserve popup-arrow paint above the content shadow and document arrow clearance
+  and plain destination-link composition.
+
+- Support unpadded native triggers for avatars without extra Button chrome.
+- Correct pointer-leave highlighting and nested dialog menu ordering through Atom.
+
+- Expose the public controller, RootProvider, Context and state types, preserving
+  one Atom behavior owner and the same Brick visual settings.
+- Add an explicitly composed TriggerIndicator with replaceable decorative artwork.
+
+- Add shared subtle/solid/plain popup variants, semantic tones, compact complete
+  size recipes, panel and inline item inset, optional leading reservation and
+  centered item layout. Neutral subtle is the new default highlight.
+- Fix plain-label layout, local token precedence across sizes and composed Link
+  state colors. Support replaceable or suppressed submenu chevrons and owned
+  selection artwork without duplicate indicators.
+
+
+- Add shared token-only radius selection to the boundary parts documented in the Radius guide; preserve omitted defaults and independent internal geometry.
+
+### Fixed
+
+- Use the standard overlay boundary token so popup and submenu edges remain
+  visible against raised application surfaces.
+
 ## 0.1.10
 
 ### Fixed

@@ -11,3 +11,4 @@ export {
   type CheckboxGroupParentProps,
   type CheckboxGroupRootProps,
 } from "./CheckboxGroup.js";
+export * from "./CheckboxGroupController.js";

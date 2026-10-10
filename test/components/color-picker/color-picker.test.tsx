@@ -2,9 +2,33 @@ import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import { ColorPicker } from "../../../src/color-picker.js";
+import { ColorPicker, useColorPicker, getColorChannels, parseColorPickerValue } from "../../../src/color-picker.js";
 
 describe("ColorPicker", () => {
+  it("provides default anatomy without duplicating explicit children", () => {
+    const {container,rerender}=render(<ColorPicker.Root inline><ColorPicker.Area /><ColorPicker.Sliders /></ColorPicker.Root>);
+    expect(container.querySelectorAll(".brick-color-picker__area-thumb")).toHaveLength(1);
+    expect(container.querySelectorAll(".brick-color-picker__channel-slider-thumb")).toHaveLength(2);
+    expect(container.querySelectorAll(".brick-color-picker__transparency-grid")).toHaveLength(1);
+    rerender(<ColorPicker.Root inline><ColorPicker.Area>{null}</ColorPicker.Area><ColorPicker.ChannelSlider channel="hue"><ColorPicker.ChannelSliderThumb /></ColorPicker.ChannelSlider></ColorPicker.Root>);
+    expect(container.querySelectorAll(".brick-color-picker__area-thumb")).toHaveLength(0);
+    expect(container.querySelectorAll(".brick-color-picker__channel-slider-thumb")).toHaveLength(1);
+    expect(container.querySelectorAll(".brick-color-picker__channel-slider-track")).toHaveLength(0);
+  });
+
+  it("styles an external controller with sparse sizes and reads converted channels", () => {
+    function Demo(){
+      const controller=useColorPicker({defaultValue:"#ff0000"});
+      return <ColorPicker.RootProvider value={controller} size={{lg:"xl"}} variant="subtle"><ColorPicker.ChannelText channel="red" /><ColorPicker.ValueSwatch radius="none" /></ColorPicker.RootProvider>;
+    }
+    const {container}=render(<Demo />);
+    expect(container.firstChild).toHaveAttribute("data-size","md");
+    expect(container.firstChild).toHaveAttribute("data-size-lg","xl");
+    expect(container.firstChild).toHaveAttribute("data-variant","subtle");
+    expect(screen.getByText("255")).toBeInTheDocument();
+    expect(getColorChannels("hsla")).toEqual(["hue","saturation","lightness","alpha"]);
+    expect(parseColorPickerValue("not a color")).toBeNull();
+  });
   it("adapts the complete released Atom anatomy with stable Brick hooks", () => {
     const ref = createRef<HTMLDivElement>();
     render(
@@ -103,6 +127,21 @@ describe("ColorPicker", () => {
       rerender(<ColorPicker.Root size={size}><ColorPicker.Input /></ColorPicker.Root>);
       expect(document.querySelector("[data-slot='color-picker']")).toHaveAttribute("data-size", size);
     }
+  });
+
+  it("keeps the alpha thumb preview opaque at the transparent endpoint", () => {
+    render(
+      <ColorPicker.Root defaultValue="rgba(0, 144, 255, 0)" inline>
+        <ColorPicker.ChannelSlider channel="alpha">
+          <ColorPicker.TransparencyGrid />
+          <ColorPicker.ChannelSliderTrack />
+          <ColorPicker.ChannelSliderThumb />
+        </ColorPicker.ChannelSlider>
+      </ColorPicker.Root>,
+    );
+
+    expect(document.querySelector("[data-slot='color-picker-channel-slider-thumb']"))
+      .toHaveStyle({ background: "rgb(0, 144, 255)" });
   });
 
   it("exposes integrated controls and matching swatch frame recipes", () => {
