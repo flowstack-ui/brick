@@ -44,6 +44,7 @@ import { sections as drawerSections } from "../components/drawer/documentation.j
 import { sections as floatingPanelSections } from "../components/floating-panel/documentation.js";
 import { sections as hoverCardSections } from "../components/hover-card/documentation.js";
 import { sections as overlayManagerSections } from "../components/overlay-manager/documentation.js";
+import { richTextEditorSections } from "../compositions/rich-text-editor/RichTextEditorPage.js";
 import { sections as emSections } from "../components/em/documentation.js";
 import { sections as statusSections } from "../components/status/documentation.js";
 import { sections as timelineSections } from "../components/timeline/documentation.js";
@@ -162,6 +163,7 @@ export const docsRoutes: Partial<Record<string, { sections: readonly DocsSection
   "hover-card": { sections: hoverCardSections, editPageHref: "https://github.com/flowstack-ui/brick/edit/main/playground/src/components/hover-card/documentation.ts" },
   dialog: { sections: dialogSections, editPageHref: "https://github.com/flowstack-ui/brick/edit/main/playground/src/components/dialog/documentation.ts" },
   "alert-dialog": { sections: alertDialogSections, editPageHref: "https://github.com/flowstack-ui/brick/edit/main/playground/src/components/alert-dialog/documentation.ts" },
+  "rich-text-editor": { sections: richTextEditorSections, editPageHref: "https://github.com/flowstack-ui/brick/edit/main/playground/src/compositions/rich-text-editor/RichTextEditorPage.tsx" },
   em: { sections: emSections, editPageHref: "https://github.com/flowstack-ui/brick/edit/main/playground/src/components/em/documentation.ts" },
   status: { sections: statusSections, editPageHref: "https://github.com/flowstack-ui/brick/edit/main/playground/src/components/status/documentation.ts" },
   timeline: { sections: timelineSections, editPageHref: "https://github.com/flowstack-ui/brick/edit/main/playground/src/components/timeline/documentation.ts" },

@@ -1,0 +1,2 @@
+# The generated editor bundle contains Markdown hard breaks with two trailing spaces.
+/playground/public/previews/rich-text-editor/preview.js whitespace=-blank-at-eol
