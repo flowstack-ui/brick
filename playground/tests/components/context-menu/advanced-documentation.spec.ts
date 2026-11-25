@@ -137,7 +137,15 @@ test("selected choice rows lose hover without losing their selection", async ({
     await page
       .locator(`#${section} .brick-context-menu__trigger`)
       .click({ button: "right" });
-    const item = page.getByRole(role, { name, exact: true });
+    const menu = page.getByRole("menu").last();
+    await expect(menu).toHaveAttribute("data-positioned", "");
+    await menu.evaluate(async (element) => {
+      await Promise.all(
+        element.getAnimations().map((animation) => animation.finished),
+      );
+    });
+    await page.mouse.move(0, 0);
+    const item = menu.getByRole(role, { name, exact: true });
     await item.hover();
     await expect(item).toHaveAttribute("data-highlighted", "");
     await page.mouse.move(0, 0);
