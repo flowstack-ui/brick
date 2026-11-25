@@ -199,7 +199,7 @@ export function App() {
       <AppBar.Root aria-label="Primary" treatment="translucent" backgroundOpacity={0.88} backdropBlur="md" className="site-header" position="sticky">
         <AppBar.Toolbar className="site-header-toolbar" density="compact">
           <AppBar.Start>
-            <Link className="brand" href="#top" aria-label="Brick Consumer home" tone="inherit" variant="plain">
+            <Link className="brand" href="#top" tone="inherit" variant="plain">
               <span className="brand-mark" aria-hidden="true">B</span>
               <span>Brick Consumer</span>
             </Link>
@@ -634,10 +634,13 @@ export function App() {
                 <Heading level={2} id="skills-title" variant="title-lg">Choose team skills</Heading>
                 <Text tone="secondary">One realistic packed-package Multi Select with repeated-value submission and reset.</Text>
               </VStack>
-              <Field.Root id="consumer-team-skills" required>
+              <Field.Root id="consumer-team-skills" ids={{ label: "consumer-team-skills-label" }} required>
                 <Field.Label>Team skills</Field.Label>
                 <MultiSelect.Root defaultValue={["design", "engineering"]} name="skills" required>
-                  <MultiSelect.Trigger><MultiSelect.Value placeholder="Choose skills" /><MultiSelect.Icon /></MultiSelect.Trigger>
+                  <MultiSelect.Trigger aria-labelledby="consumer-team-skills-label consumer-team-skills-value">
+                    <MultiSelect.Value id="consumer-team-skills-value" placeholder="Choose skills" />
+                    <MultiSelect.Icon />
+                  </MultiSelect.Trigger>
                   <MultiSelect.Content>
                     <MultiSelect.Viewport>
                       <MultiSelect.Group>
@@ -1089,9 +1092,9 @@ export function App() {
           </Card.Header>
           <Card.Content>
             <Tree.Root aria-label="Release files" defaultExpandedValue={["packages"]} defaultValue="brick" showGuide variant="outline">
-              <Tree.Item value="packages"><Tree.ItemContent><Tree.Indicator /><Tree.ItemText>packages</Tree.ItemText><Badge size="sm" tone="neutral" variant="soft">2</Badge></Tree.ItemContent><Tree.Group>
+              <Tree.Item value="packages"><Tree.ItemContent><Tree.Indicator /><Tree.ItemText>packages{" "}<Badge size="sm" tone="neutral" variant="soft">2</Badge></Tree.ItemText></Tree.ItemContent><Tree.Group>
                 <Tree.Item value="atom"><Tree.ItemContent><Tree.Indicator /><Tree.ItemText>atom</Tree.ItemText></Tree.ItemContent></Tree.Item>
-                <Tree.Item value="brick"><Tree.ItemContent><Tree.Indicator /><Tree.ItemText>brick</Tree.ItemText><Badge size="sm" tone="success">ready</Badge></Tree.ItemContent></Tree.Item>
+                <Tree.Item value="brick"><Tree.ItemContent><Tree.Indicator /><Tree.ItemText>brick{" "}<Badge size="sm" tone="success">ready</Badge></Tree.ItemText></Tree.ItemContent></Tree.Item>
               </Tree.Group></Tree.Item>
               <Tree.Item value="readme"><Tree.ItemContent><Tree.Indicator /><Tree.ItemText>README.md</Tree.ItemText></Tree.ItemContent></Tree.Item>
             </Tree.Root>

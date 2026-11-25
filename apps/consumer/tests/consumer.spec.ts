@@ -774,24 +774,41 @@ test("composes Toggle and ToggleGroup as application-owned persistent views", as
 });
 
 test("has no automatically detectable accessibility violations", async ({ page }) => {
-  const lightResults = await new AxeBuilder({ page }).analyze();
-  expect(lightResults.violations).toEqual([]);
+  const releaseFiles = page.getByRole("tree", { name: "Release files" });
+  const packages = releaseFiles.getByRole("treeitem", { name: "packages 2", exact: true });
+  await expect(packages).toHaveAttribute("aria-expanded", "true");
+  await expect(packages.getByRole("treeitem", { name: "atom", exact: true })).toBeVisible();
+  await expect(packages.getByRole("treeitem", { name: "brick ready", exact: true })).toBeVisible();
+  const packageBranch = `#${await packages.getAttribute("id")}`;
+  const expectNoViolations = async () => {
+    const { violations } = await new AxeBuilder({ page }).analyze();
+    // axe-core #5505 includes child treeitems in the visible label of an expanded parent.
+    // The assertions above verify the actual accessible names separately.
+    const findings = violations.flatMap(({ id, nodes }) =>
+      nodes
+        .filter(({ target }) =>
+          id !== "label-content-name-mismatch" ||
+          target.length !== 1 ||
+          target[0] !== packageBranch
+        )
+        .map((node) => ({ id, ...node })),
+    );
+    expect(findings).toEqual([]);
+  };
+  await expectNoViolations();
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.getByRole("button", { name: "Dark appearance" }).click();
   await page.getByRole("button", { name: "Publish project" }).click();
-  const darkResults = await new AxeBuilder({ page }).analyze();
-  expect(darkResults.violations).toEqual([]);
+  await expectNoViolations();
 
   await page.keyboard.press("Escape");
   await page.getByRole("button", { name: "Remove project" }).click();
-  const alertResults = await new AxeBuilder({ page }).analyze();
-  expect(alertResults.violations).toEqual([]);
+  await expectNoViolations();
 
   await page.getByRole("button", { name: "Keep project" }).click();
   await page.getByRole("button", { name: "Filter projects" }).click();
-  const drawerResults = await new AxeBuilder({ page }).analyze();
-  expect(drawerResults.violations).toEqual([]);
+  await expectNoViolations();
 });
 
 test("contains the layout at the project viewport", async ({ page }) => {
