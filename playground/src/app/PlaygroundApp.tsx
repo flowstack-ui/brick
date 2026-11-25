@@ -1,5 +1,6 @@
 import { useEffect, useState, type ComponentType } from "react";
 import { CheckboxCardPage, checkboxCardScenarios } from "../components/checkbox-card/CheckboxCardPage.js";
+import { RichTextEditorPage } from "../compositions/rich-text-editor/RichTextEditorPage.js";
 import { StatPage, statScenarios } from "../components/stat/StatPage.js";
 import { QrCodePage, qrCodeScenarios } from "../components/qr-code/QrCodePage.js";
 import { TableOfContentsPage, tableOfContentsScenarios } from "../components/table-of-contents/TableOfContentsPage.js";
@@ -617,7 +618,7 @@ export function PlaygroundApp() {
 
   const entry = resolvePlaygroundEntry(path === "/" ? "/button" : path);
   const { Page, scenarios } =
-    playgroundModules[entry.id as PlaygroundComponentId];
+    entry.kind === "composition" ? { Page: RichTextEditorPage, scenarios: [] } : playgroundModules[entry.id as PlaygroundComponentId];
   const skipLink =
     entry.id === "skip-link"
       ? {
@@ -631,7 +632,7 @@ export function PlaygroundApp() {
     <PlaygroundShell entry={entry} scenarios={scenarios} skipLink={skipLink}
       tableOfContents={new URLSearchParams(window.location.search).get("qualification") !== "1" ? docsRoutes[entry.id]?.sections : undefined}
       editPageHref={docsRoutes[entry.id]?.editPageHref}>
-      <InlineExampleEnvironment dir={settings.exampleDirection}><Page /></InlineExampleEnvironment>
+      {entry.kind === "composition" ? <Page /> : <InlineExampleEnvironment dir={settings.exampleDirection}><Page /></InlineExampleEnvironment>}
     </PlaygroundShell>
   );
 }

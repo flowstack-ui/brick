@@ -1,3 +1,5 @@
+import { compositionEntries } from "./composition-registry.js";
+
 export interface PlaygroundEntry {
   kind?: "composition";
   category: PlaygroundCategory;
@@ -819,7 +821,7 @@ export const componentEntries = [
   },
 ] as const satisfies readonly PlaygroundEntry[];
 
-export const playgroundEntries: readonly PlaygroundEntry[] = componentEntries;
+export const playgroundEntries: readonly PlaygroundEntry[] = [...componentEntries, ...compositionEntries];
 
 export type PlaygroundComponentId = (typeof componentEntries)[number]["id"];
 
